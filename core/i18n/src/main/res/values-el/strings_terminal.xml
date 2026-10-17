@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Τερματικό</string>
+    <string name="terminal_runtime_summary">Χρησιμοποιεί τη χωριστά εγκατεστημένη εφαρμογή Termux. Εγκαταστήστε το Termux και όλα τα πρόσθετά του από την ίδια πηγή. Το κέλυφος εκτελείται στο Termux, εκτός Telos.</string>
+    <string name="terminal_open_failed">Δεν ήταν δυνατό το άνοιγμα του Termux ή της ιστοσελίδας.</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_radio2_record">Rekam</string>
+    <string name="au2_radio2_stop_recording">Hentikan perekaman</string>
+    <string name="au7_vidfolders_action">Atur ke dalam folder Film dan Serial</string>
+    <string name="au_phonea_action_failed">Tidak dapat menyimpan perubahan. Periksa izin kontak.</string>
+    <string name="hc_failed_try_again">Gagal, coba lagi</string>
+    <string name="hc_install">Instal</string>
+    <string name="hc_menu">Menu</string>
+    <string name="hc_open">Buka</string>
+    <string name="hc_play_from_the_web">Putar dari web</string>
+    <string name="hc_sleep_timer">Pengatur waktu tidur</string>
+    <string name="hc_video_services">Layanan video</string>
+    <string name="network_widget_cellular">Data seluler</string>
+    <string name="network_widget_connected">Terhubung</string>
+    <string name="network_widget_disconnected">Tidak ada koneksi</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="preference_dock_background_opacity">Opasitas latar belakang</string>
+    <string name="preference_drawer_background">Latar belakang laci aplikasi</string>
+    <string name="preference_drawer_background_summary">Tampilkan latar belakang di balik laci aplikasi</string>
+</resources>

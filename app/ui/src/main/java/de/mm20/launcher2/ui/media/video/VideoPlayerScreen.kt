@@ -178,7 +178,7 @@ private fun PlayerContent(
         // FFmpeg software decoders (AC3, E-AC3, DTS, TrueHD, ...) take over where the phone has no decoder
         val renderers = io.github.anilbeesetti.nextlib.media3ext.ffdecoder.NextRenderersFactory(context)
             .setExtensionRendererMode(androidx.media3.exoplayer.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
-        ExoPlayer.Builder(context, renderers)
+        ExoPlayer.Builder(context, renderers).setWakeMode(androidx.media3.common.C.WAKE_MODE_NETWORK)
             // addresses of network storages (rem://) are read through Telos Files
             .setMediaSourceFactory(androidx.media3.exoplayer.source.DefaultMediaSourceFactory(RemoteRoutingDataSource.factory(context)))
             // audio focus (other apps pause or duck) and pausing when the headphones are unplugged
@@ -346,9 +346,9 @@ private fun PlayerContent(
         }
     }
     LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) { saveProgress() }
-    // there is no service behind the player: when the screen is left (and it is not the picture-in-picture
-    // window), sound must not go on in the background
-    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { player.pause(); videoState("stopped") }
+    // VideoPlaybackService owns the media session while the activity is stopped/locked.
+    // Explicit close and composition disposal still release the player.
+    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { saveProgress() }
 
     var playbackError by remember { mutableStateOf(false) }
     var playbackStage by remember(player) { mutableStateOf(player.playbackState) }

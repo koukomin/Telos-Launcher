@@ -28,7 +28,7 @@ data class NetworkWidget(
     }
 
     override fun getLabel(context: Context): String {
-        return context.getString(R.string.widget_name_network)
+        return context.getString(R.string.net_hub_title)
     }
 
     companion object {

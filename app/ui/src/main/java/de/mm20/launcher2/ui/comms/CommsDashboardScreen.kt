@@ -5,7 +5,6 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
@@ -141,14 +140,32 @@ fun CommsDashboardScreen(
 
     val inSubScreen = selectedTab == CommsTab.Keypad || selectedTab == CommsTab.Messages
 
+    val headerMenu: @Composable () -> Unit = {
+        Box {
+            IconButton(onClick = { menuOpen = true }) {
+                Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_menu))
+            }
+            DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.hc_messages)) },
+                    onClick = { menuOpen = false; selectedTab = CommsTab.Messages },
+                )
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.hc_settings)) },
+                    onClick = { menuOpen = false; backStack.add(CommsSettingsRoute) },
+                )
+            }
+        }
+    }
+
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             Column(Modifier.statusBarsPadding()) {
-                Row(
+                if (inSubScreen) Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(56.dp)
+                        .heightIn(min = 48.dp)
                         .padding(start = if (inSubScreen) 4.dp else 20.dp, end = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -164,21 +181,7 @@ fun CommsDashboardScreen(
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.weight(1f).padding(start = if (inSubScreen) 8.dp else 0.dp),
                     )
-                    Box {
-                        IconButton(onClick = { menuOpen = true }) {
-                            Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_menu))
-                        }
-                        DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.hc_messages)) },
-                                onClick = { menuOpen = false; selectedTab = CommsTab.Messages },
-                            )
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.hc_settings)) },
-                                onClick = { menuOpen = false; backStack.add(CommsSettingsRoute) },
-                            )
-                        }
-                    }
+                    headerMenu()
                 }
                 if (!inSubScreen) {
                     TelosSearchBar(
@@ -191,8 +194,8 @@ fun CommsDashboardScreen(
                                 else -> R.string.tsp_search_contacts
                             }
                         ),
-                        trailing = if (selectedTab == CommsTab.Recents) {
-                            {
+                        trailing = {
+                            if (selectedTab == CommsTab.Recents) {
                                 IconButton(onClick = { showFilters = !showFilters }) {
                                     Icon(
                                         painterResource(R.drawable.filter_alt_24px),
@@ -202,7 +205,8 @@ fun CommsDashboardScreen(
                                     )
                                 }
                             }
-                        } else null,
+                            headerMenu()
+                        },
                     )
                 }
             }
@@ -217,6 +221,7 @@ fun CommsDashboardScreen(
                         Triple(CommsTab.Favorites, R.drawable.star_24px, CommsTab.Favorites.label),
                         Triple(CommsTab.Recents, R.drawable.schedule_24px, CommsTab.Recents.label),
                         Triple(CommsTab.Contacts, R.drawable.person_24px_filled, CommsTab.Contacts.label),
+                        Triple(CommsTab.Messages, R.drawable.sms_24px, CommsTab.Messages.label),
                     ).forEach { (tab, icon, label) ->
                         NavigationBarItem(
                             selected = selectedTab == tab,

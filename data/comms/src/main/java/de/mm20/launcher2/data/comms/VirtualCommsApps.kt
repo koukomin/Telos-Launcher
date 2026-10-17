@@ -1068,6 +1068,7 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualCalendarApp(context),
         VirtualDownloadsApp(context),
         VirtualNetworkApp(context),
+        VirtualTerminalApp(context),
     ) + listOfNotNull(VirtualIronewolfApp(context).takeIf {
         de.mm20.launcher2.webapp.IronewolfRuntime.isBundled(context)
     })

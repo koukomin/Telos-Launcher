@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Gjenoppretter tidligere aktiv VPN når Android tillater det. Manuell stopp respekteres.</string>
+    <string name="netfw_u_unmetered">Blokker på nettverk uten forbruksmåling</string>
+    <string name="netfw_vpn_bypass">Omgå VPN</string>
+</resources>

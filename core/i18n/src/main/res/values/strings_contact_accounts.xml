@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Accounts</string>
+    <string name="contacts_accounts_all">All accounts</string>
+    <string name="contacts_accounts_selected">Selected accounts (%1$d)</string>
+    <string name="contacts_account_device">On this device</string>
+    <string name="contacts_delete_confirm">Delete %1$s from all linked accounts? This cannot be undone.</string>
+</resources>

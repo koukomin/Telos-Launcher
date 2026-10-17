@@ -170,3 +170,7 @@ without it Telos cannot reliably identify that app. Other existing notification,
 system-package protections remain separate. The check applies to the current Android profile.
 
 Frozen application targets assigned to icon shutters and folder children use the same app-lock and verified thaw-before-launch path as drawer and dock icons. An authorized freeze backend is required to thaw an app.
+
+## Foreground permission and notification
+
+Usage access is requested when enabling foreground-app protection and is only listed while that protection is enabled and access is missing. The quick-freeze notification is hidden when no installed, thawed, eligible candidates remain; expand it to see their app names. Virtual app targets can be saved in dock shutters.

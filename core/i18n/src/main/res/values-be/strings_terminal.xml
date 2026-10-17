@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Тэрмінал</string>
+    <string name="terminal_runtime_summary">Выкарыстоўвае асобна ўсталяваны Termux. Усталюйце Termux і ўсе дадаткі з адной крыніцы. Абалонка працуе ў Termux па-за Telos.</string>
+    <string name="terminal_open_failed">Не ўдалося адкрыць Termux або сайт.</string>
+</resources>

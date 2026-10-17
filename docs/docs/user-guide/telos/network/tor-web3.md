@@ -4,7 +4,7 @@ Open **Telos Network → Tor / Web3**. These are separate tools: Tor routes netw
 
 ## Tor
 
-Stop Telos Network before changing Tor mode, then turn the VPN on again. The bundled Tor client starts inside the same VPN; Orbot and a second VPN are not needed. The connection status is shown on this screen.
+Tor mode can be changed while Telos Network is running; the VPN reconnects automatically to apply its routes. The bundled Tor client starts inside the same VPN; Orbot and a second VPN are not needed. The connection status, bootstrap percentage and startup errors are shown on this screen. A previously active Tor session is requested again after Network restoration.
 
 - `.onion` DNS queries seen by this VPN go only to the local Tor resolver. They never fall back to public DNS, including when Tor mode is off. Tor maps onion names to reserved virtual IPv4/IPv6 addresses, which the VPN sends only through Tor SOCKS.
 - **Start Tor automatically** waits for a visible `.onion` DNS query instead of connecting immediately. Retry the website after Tor connects. This needs the VPN already running; private/encrypted DNS, cached requests and literal addresses cannot trigger it. Choosing any Tor-only apps starts Tor immediately so those apps can connect.

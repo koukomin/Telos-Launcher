@@ -201,7 +201,7 @@ fun MusicScreen(
                         onShareTrack = { shareTrack(it) },
                     )
                 } else {
-                    TabRow(selectedTabIndex = tab, containerColor = Color.Transparent, divider = {}) {
+                    ScrollableTabRow(selectedTabIndex = tab, containerColor = Color.Transparent, edgePadding = 16.dp, divider = {}) {
                         listOf(stringResource(R.string.au10_music_tab_home), stringResource(R.string.au_music_tab_songs), stringResource(R.string.hc_albums), stringResource(R.string.au_music_tab_artists)).forEachIndexed { i, title ->
                             Tab(selected = tab == i, onClick = { tab = i }, text = { Text(title, fontWeight = if (tab == i) FontWeight.SemiBold else FontWeight.Normal) })
                         }

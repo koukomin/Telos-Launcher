@@ -222,6 +222,12 @@ class UiSettings internal constructor(
         launcherDataStore.update { it.copy(grid = it.grid.copy(drawerBackgroundEnabled = enabled)) }
     }
 
+    val widgetsGlassBackground get() = launcherDataStore.data.map { it.grid.widgetsGlassBackground }.distinctUntilChanged()
+
+    fun setWidgetsGlassBackground(enabled: Boolean) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(widgetsGlassBackground = enabled)) }
+    }
+
     val drawerBackgroundColor
         get() = launcherDataStore.data.map { it.grid.drawerBackgroundColor }.distinctUntilChanged()
 

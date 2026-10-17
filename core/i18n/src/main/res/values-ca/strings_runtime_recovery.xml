@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Restaura la VPN que estava activa si Android ho permet. L’aturada manual es manté.</string>
+    <string name="netfw_u_unmetered">Bloqueja en xarxes no mesurades</string>
+    <string name="netfw_vpn_bypass">Omet la VPN</string>
+    <string name="hc_allow">Permet</string>
+    <string name="hc_new_message">Missatge nou</string>
+    <string name="hc_notes">Notes</string>
+    <string name="hc_save">Desa</string>
+    <string name="hc_set">Estableix</string>
+    <string name="hc_settings">Configuració</string>
+    <string name="preference_freeze_usage_access">Accés a les dades d’ús</string>
+    <string name="preference_freeze_usage_access_summary_not_granted">No concedit. Sense aquest accés, una aplicació es pot congelar automàticament mentre la feu servir. Toqueu per concedir-lo.</string>
+</resources>

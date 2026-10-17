@@ -9,6 +9,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
@@ -71,12 +77,23 @@ private const val FILTER_ALL = 0
 private const val FILTER_USER = 1
 private const val FILTER_SYSTEM = 2
 private const val FILTER_RULES = 3
+private const val FILTER_ALLOWED = 4
+private const val FILTER_BLOCKED = 5
 
 /** Per app firewall: switches for every connection type, bulk actions, and the way to the rule pages. */
 @Composable
 fun NetworkFirewallScreen() {
     val fw: FirewallController = koinInject()
     val directory: AppDirectory = koinInject()
+    val engine: de.mm20.launcher2.network.NetworkEngine = koinInject()
+    val networkSettings: de.mm20.launcher2.network.api.NetworkSettings = koinInject()
+    val netConfig by networkSettings.values.collectAsState()
+    val ipRules by fw.ipRules.collectAsState()
+    val domainRules by fw.domainRules.collectAsState()
+    val wg: de.mm20.launcher2.network.api.WireguardController = koinInject()
+    val assignments by wg.assignments.collectAsState()
+    val logs: de.mm20.launcher2.network.api.LogController = koinInject()
+    val totals by logs.appSummaries.collectAsState()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val backStack = LocalBackStack.current
@@ -113,6 +130,8 @@ fun NetworkFirewallScreen() {
                     FILTER_USER -> !app.isSystem
                     FILTER_SYSTEM -> app.isSystem
                     FILTER_RULES -> rules.containsKey(app.appId)
+                    FILTER_ALLOWED -> rules[app.appId]?.blockAll != true
+                    FILTER_BLOCKED -> rules[app.appId]?.blockAll == true
                     else -> true
                 }
         }
@@ -217,6 +236,8 @@ fun NetworkFirewallScreen() {
             ) {
                 listOf(
                     FILTER_ALL to R.string.netfw_filter_all,
+                    FILTER_ALLOWED to R.string.netfw_r_default,
+                    FILTER_BLOCKED to R.string.netfw_blocked,
                     FILTER_USER to R.string.netfw_filter_user,
                     FILTER_SYSTEM to R.string.netfw_filter_system,
                     FILTER_RULES to R.string.netfw_filter_rules,
@@ -260,7 +281,24 @@ fun NetworkFirewallScreen() {
                 backgroundDetection = detection,
                 expanded = expanded == app.appId,
                 onToggleExpanded = { expanded = if (expanded == app.appId) null else app.appId },
-                onRule = { scope.launch { fw.setAppRule(it) } },
+                onRule = { next -> scope.launch {
+                    fw.setAppRule(next)
+                    if (next.blockLan && !rule.blockLan && !netConfig.routeLan) {
+                        networkSettings.setRouteLan(true); networkSettings.flush()
+                        if (engine.state.value is de.mm20.launcher2.network.NetState.On) engine.restart()
+                    } else if (next.excludeFromVpn != rule.excludeFromVpn && engine.state.value is de.mm20.launcher2.network.NetState.On) engine.restart()
+                    else engine.closeAllConnections()
+                } },
+                allowVpnExclusion = !netConfig.torEnabled && netConfig.torAppIds.isEmpty(),
+                direct = assignments[app.appId] == de.mm20.launcher2.network.api.WgAssignment.Direct,
+                onDirect = { enabled -> scope.launch {
+                    wg.assign(app.appId, if (enabled) de.mm20.launcher2.network.api.WgAssignment.Direct else de.mm20.launcher2.network.api.WgAssignment.SystemDefault)
+                    engine.closeAllConnections()
+                } },
+                traffic = totals.firstOrNull { it.appId == app.appId }?.bytes ?: 0,
+                ipCount = ipRules.count { it.scope == de.mm20.launcher2.network.api.RuleScope.App(app.appId) },
+                domainCount = domainRules.count { it.scope == de.mm20.launcher2.network.api.RuleScope.App(app.appId) },
+                onCustomRules = { backStack.add(NetworkAppRulesRoute(app.appId)) },
                 onTempAllow = { ms -> scope.launch { fw.allowTemporarily(app.appId, ms) } },
                 onCancelTemp = { scope.launch { fw.cancelTemporaryAllow(app.appId) } },
                 onAllowNew = { scope.launch { fw.allowNewApp(app.appId) } },
@@ -277,6 +315,7 @@ fun NetworkFirewallScreen() {
 }
 
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 private fun AppRuleRow(
     app: AppEntry,
     rule: AppRule,
@@ -290,6 +329,13 @@ private fun AppRuleRow(
     onCancelTemp: () -> Unit,
     onAllowNew: () -> Unit,
     onGrantUsageAccess: () -> Unit,
+    allowVpnExclusion: Boolean,
+    direct: Boolean,
+    onDirect: (Boolean) -> Unit,
+    traffic: Long,
+    ipCount: Int,
+    domainCount: Int,
+    onCustomRules: () -> Unit,
 ) {
     val context = LocalContext.current
     val blockedTypes = buildList {
@@ -317,14 +363,25 @@ private fun AppRuleRow(
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         Preference(
-            title = { Text(app.label, maxLines = 1) },
-            summary = { Text(summary, maxLines = 2) },
+            title = { Text(app.label) },
+            summary = { Text(summary + "\n" + app.packages.joinToString(" · ") + " (" + app.appId + ")\n" + android.text.format.Formatter.formatShortFileSize(context, traffic)) },
             icon = { NetAppIcon(app.packageName) },
             onClick = onToggleExpanded,
             controls = {
                 Switch(checked = rule.blockAll, onCheckedChange = { onRule(rule.copy(blockAll = it)) })
             },
         )
+        FlowRow(Modifier.fillMaxWidth().padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            @Composable fun AllowChip(label: Int, blocked: Boolean, change: () -> Unit, enabled: Boolean = !rule.blockAll && !rule.bypassFirewall && !rule.excludeFromVpn) {
+                FilterChip(selected = !blocked, onClick = change, enabled = enabled, label = { Text(stringResource(label)) })
+            }
+            FilterChip(selected = rule.excludeFromVpn, enabled = allowVpnExclusion,
+                onClick = { onRule(rule.copy(excludeFromVpn = !rule.excludeFromVpn)) }, label = { Text(stringResource(R.string.netfw_vpn_bypass)) })
+            AllowChip(R.string.netfw_t_wifi, rule.blockWifi, { onRule(rule.copy(blockWifi = !rule.blockWifi)) })
+            AllowChip(R.string.netfw_t_mobile, rule.blockMobile, { onRule(rule.copy(blockMobile = !rule.blockMobile)) })
+            AllowChip(R.string.netfw_t_lan, rule.blockLan, { onRule(rule.copy(blockLan = !rule.blockLan)) })
+            AllowChip(R.string.netfw_t_vpn, rule.blockVpn, { onRule(rule.copy(blockVpn = !rule.blockVpn)) })
+        }
         AnimatedVisibility(visible = expanded) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 if (newAppBlocked) {
@@ -333,11 +390,7 @@ private fun AppRuleRow(
                         onClick = onAllowNew,
                     )
                 }
-                SwitchPreference(title = stringResource(R.string.netfw_block_wifi), icon = IconsNetworkFirewallScreen.wifi_24px, value = rule.blockWifi, onValueChanged = { onRule(rule.copy(blockWifi = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_block_mobile), icon = IconsNetworkFirewallScreen.signal_cellular_alt_24px, value = rule.blockMobile, onValueChanged = { onRule(rule.copy(blockMobile = it)) })
                 SwitchPreference(title = stringResource(R.string.netfw_block_roaming), icon = IconsNetworkFirewallScreen.public_24px, value = rule.blockRoaming, onValueChanged = { onRule(rule.copy(blockRoaming = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_block_lan), icon = IconsNetworkFirewallScreen.lan_24px, value = rule.blockLan, onValueChanged = { onRule(rule.copy(blockLan = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_block_vpn), icon = IconsNetworkFirewallScreen.lock_24px, value = rule.blockVpn, onValueChanged = { onRule(rule.copy(blockVpn = it)) })
                 SwitchPreference(title = stringResource(R.string.netfw_block_background), icon = IconsNetworkFirewallScreen.pause_24px, value = rule.blockBackground, onValueChanged = { onRule(rule.copy(blockBackground = it)) })
                 SwitchPreference(title = stringResource(R.string.netfw_block_screen_off), icon = IconsNetworkFirewallScreen.schedule_24px, value = rule.blockScreenOff, onValueChanged = { onRule(rule.copy(blockScreenOff = it)) })
                 if (!backgroundDetection && rule.blockBackground) {
@@ -346,9 +399,26 @@ private fun AppRuleRow(
                         controls = { TextButton(onClick = onGrantUsageAccess) { Text(stringResource(R.string.netfw_usage_grant)) } },
                     )
                 }
+                SwitchPreference(title = stringResource(R.string.netfw_u_metered), value = rule.blockMetered, onValueChanged = { onRule(rule.copy(blockMetered = it)) })
+                SwitchPreference(title = stringResource(R.string.netfw_u_unmetered), value = rule.blockUnmetered, onValueChanged = { onRule(rule.copy(blockUnmetered = it)) })
+                SwitchPreference(title = stringResource(R.string.nwg_direct), value = direct, onValueChanged = onDirect)
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    TextButton(onClick = onCustomRules) { Text("$ipCount · " + stringResource(R.string.netfw_r_ip)) }
+                    TextButton(onClick = onCustomRules) { Text("$domainCount · " + stringResource(R.string.netfw_r_domain)) }
+                }
+                var editNote by remember { mutableStateOf(false) }
+                Preference(title = stringResource(R.string.hc_notes), summary = rule.note, onClick = { editNote = true })
+                if (editNote) {
+                    var note by remember { mutableStateOf(rule.note) }
+                    AlertDialog(onDismissRequest = { editNote = false },
+                        title = { Text(stringResource(R.string.hc_notes)) },
+                        text = { OutlinedTextField(note, { note = it }, modifier = Modifier.fillMaxWidth()) },
+                        confirmButton = { TextButton(onClick = { onRule(rule.copy(note = note.trim())); editNote = false }) { Text(stringResource(R.string.hc_save)) } },
+                        dismissButton = { TextButton(onClick = { editNote = false }) { Text(stringResource(R.string.hc_cancel)) } })
+                }
                 SwitchPreference(title = stringResource(R.string.netfw_ignore_universal), value = rule.ignoreUniversalRules, onValueChanged = { onRule(rule.copy(ignoreUniversalRules = it)) })
                 SwitchPreference(title = stringResource(R.string.netfw_bypass_firewall), value = rule.bypassFirewall, onValueChanged = { onRule(rule.copy(bypassFirewall = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_exclude_vpn), value = rule.excludeFromVpn, onValueChanged = { onRule(rule.copy(excludeFromVpn = it)) })
+                SwitchPreference(title = stringResource(R.string.netfw_exclude_vpn), enabled = allowVpnExclusion, value = rule.excludeFromVpn, onValueChanged = { onRule(rule.copy(excludeFromVpn = it)) })
                 if (tempUntilMs != null) {
                     Preference(
                         title = stringResource(R.string.netfw_temp_allowed_until, formatClock(context, tempUntilMs)),

@@ -1,0 +1,21 @@
+<resources>
+    <string name="au2_radio2_record">הקלטה</string>
+    <string name="au2_radio2_stop_recording">הפסקת הקלטה</string>
+    <string name="au7_vidfolders_action">ארגון בתיקיות סרטים וסדרות</string>
+    <string name="au_phonea_action_failed">לא ניתן לשמור את השינוי. יש לבדוק את הרשאת אנשי הקשר.</string>
+    <string name="hc_failed_try_again">הפעולה נכשלה, נסו שוב</string>
+    <string name="hc_install">התקנה</string>
+    <string name="hc_menu">תפריט</string>
+    <string name="hc_open">פתיחה</string>
+    <string name="hc_play_from_the_web">ניגון מהאינטרנט</string>
+    <string name="hc_sleep_timer">טיימר שינה</string>
+    <string name="hc_video_services">שירותי וידאו</string>
+    <string name="network_widget_cellular">נתונים סלולריים</string>
+    <string name="network_widget_connected">מחובר</string>
+    <string name="network_widget_disconnected">אין חיבור</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="preference_dock_background_opacity">אטימות הרקע</string>
+    <string name="preference_drawer_background">רקע מגירת היישומים</string>
+    <string name="preference_drawer_background_summary">הצגת רקע מאחורי מגירת היישומים</string>
+</resources>

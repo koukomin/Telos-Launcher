@@ -60,6 +60,18 @@ internal object VpnNotifications {
         return PendingIntent.getService(context, 1, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
+    /** No Koin, settings, logs or package-manager work on the foreground-service deadline. */
+    fun starting(context: Context): Notification {
+        ensureChannels(context)
+        return NotificationCompat.Builder(context, CHANNEL_SERVICE)
+            .setSmallIcon(R.drawable.ic_network_notification)
+            .setContentTitle(context.getString(I18nR.string.net_notif_title))
+            .setContentText(context.getString(I18nR.string.net_dns_engine_starting))
+            .setOngoing(true).setOnlyAlertOnce(true)
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
+            .build()
+    }
+
     /** The foreground notification. [blocked] is only shown with [NotificationDetail.WithCounters]. */
     fun service(context: Context, settings: NetworkSettingsValues, blocked: Long): Notification {
         ensureChannels(context)

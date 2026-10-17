@@ -109,6 +109,8 @@ import de.mm20.launcher2.ui.launcher.scaffold.animation.RubberbandScaffoldAnimat
 import de.mm20.launcher2.ui.launcher.scaffold.animation.ScaffoldAnimationController
 import de.mm20.launcher2.ui.launcher.scaffold.animation.ZoomInScaffoldAnimationController
 import de.mm20.launcher2.ui.launcher.scaffold.components.ScaffoldComponent
+import de.mm20.launcher2.ui.launcher.scaffold.components.WidgetsComponent
+import de.mm20.launcher2.ui.launcher.scaffold.components.ClockAndWidgetsHomeComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.SearchComponent
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
@@ -1230,11 +1232,16 @@ internal fun LauncherScaffold(
         val drawerUi: de.mm20.launcher2.preferences.ui.UiSettings = org.koin.compose.koinInject()
         val drawerBlur by drawerUi.drawerBackgroundBlur.collectAsState(32)
         val customDrawer by drawerUi.drawerBackgroundEnabled.collectAsState(true)
+        val glassWidgets by drawerUi.widgetsGlassBackground.collectAsState(true)
         val activeComponent = if (state.currentProgress >= 0.5f) state.currentComponent else config.homeComponent
-        val targetBlur = if (activeComponent is SearchComponent && customDrawer) drawerBlur.dp else config.wallpaperBlurRadius
+        val targetBlur = when {
+            activeComponent is SearchComponent && customDrawer -> drawerBlur.dp
+            glassWidgets && (activeComponent is WidgetsComponent || activeComponent is ClockAndWidgetsHomeComponent) -> 32.dp
+            else -> config.wallpaperBlurRadius
+        }
         if (targetBlur > 0.dp) {
             val wallpaperBlur by animateIntAsState(
-                if (activeComponent?.drawBackground == true) targetBlur.toPixels().toInt() else 0
+                if (activeComponent?.drawBackground == true || (glassWidgets && activeComponent is ClockAndWidgetsHomeComponent)) targetBlur.toPixels().toInt() else 0
             )
             WallpaperBlur { wallpaperBlur }
         }
@@ -1431,7 +1438,7 @@ internal fun LauncherScaffold(
                         .homePageAnimation(
                             state,
                             if (config.homeComponent.drawBackground) {
-                                config.backgroundColor.copy(alpha = MaterialTheme.transparency.background)
+                                config.backgroundColor.copy(alpha = if (glassWidgets && (config.homeComponent is WidgetsComponent || config.homeComponent is ClockAndWidgetsHomeComponent)) 0.18f else MaterialTheme.transparency.background)
                             } else {
                                 Color.Transparent
                             }
@@ -1604,6 +1611,7 @@ private fun SecondaryPage(
     val component = state.currentComponent
     val drawerSettings: de.mm20.launcher2.preferences.ui.UiSettings = org.koin.compose.koinInject()
     val customDrawer by drawerSettings.drawerBackgroundEnabled.collectAsState(true)
+    val glassWidgets by drawerSettings.widgetsGlassBackground.collectAsState(true)
 
     if (component != null) {
 
@@ -1611,7 +1619,7 @@ private fun SecondaryPage(
             .fillMaxSize()
             .secondaryPageAnimation(
                 state,
-                if (component is SearchComponent && customDrawer) Color.Transparent else config.backgroundColor.copy(alpha = MaterialTheme.transparency.background),
+                if (component is SearchComponent && customDrawer) Color.Transparent else config.backgroundColor.copy(alpha = if (glassWidgets && (component is WidgetsComponent || component is ClockAndWidgetsHomeComponent)) 0.18f else MaterialTheme.transparency.background),
             )
         val composable = composables[component]
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Раней актыўны VPN аднаўляецца, калі Android дазваляе. Ручное спыненне захоўваецца.</string>
+    <string name="netfw_u_unmetered">Блакаваць у нетарыфікаваных сетках</string>
+    <string name="netfw_vpn_bypass">Абыход VPN</string>
+    <string name="hc_allow">Дазволіць</string>
+    <string name="hc_new_message">Новае паведамленне</string>
+    <string name="hc_notes">Нататкі</string>
+    <string name="hc_save">Захаваць</string>
+    <string name="hc_set">Задаць</string>
+    <string name="hc_settings">Налады</string>
+    <string name="preference_freeze_usage_access">Доступ да даных выкарыстання</string>
+    <string name="preference_freeze_usage_access_summary_not_granted">Не дазволены. Без яго праграма можа аўтаматычна замарожвацца нават падчас выкарыстання. Націсніце, каб дазволіць.</string>
+</resources>

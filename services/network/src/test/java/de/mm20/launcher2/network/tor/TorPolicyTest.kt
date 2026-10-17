@@ -4,6 +4,13 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class TorPolicyTest {
+    @Test fun bootstrapControlRepliesExposeActualProgress() {
+        assertEquals(100, TorPolicy.bootstrapProgress("NOTICE BOOTSTRAP PROGRESS=100 TAG=done SUMMARY=Done"))
+        assertEquals(45, TorPolicy.bootstrapProgress("NOTICE BOOTSTRAP PROGRESS=45 TAG=loading"))
+        assertEquals(0, TorPolicy.bootstrapProgress(null))
+        assertEquals(0, TorPolicy.bootstrapProgress("PROGRESS=1000"))
+    }
+
     @Test fun onionNeverUsesPublicDnsEvenWhenDisabled() {
         assertTrue(TorPolicy.required(-1, "site.ONION.", emptyList(), emptySet()))
         assertFalse(TorPolicy.isOnion("onion.example.org"))

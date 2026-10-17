@@ -119,6 +119,13 @@ fun DuplicateContactsScreen() {
                     Text(stringResource(R.string.hc_group_number_phone, index + 1, group.first().phoneNumbers.firstOrNull().orEmpty()))
                     group.forEach { contact ->
                         Text("${contact.displayName} · ${contact.phoneNumbers.joinToString()}")
+                        contact.accounts.forEach { account ->
+                            Text(
+                                "${account.name ?: stringResource(R.string.contacts_account_device)}${account.type?.let { " · $it" }.orEmpty()}",
+                                style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
+                                color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         OutlinedButton(onClick = {

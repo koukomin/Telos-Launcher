@@ -58,6 +58,9 @@ data object NetworkUniversalRulesRoute : NavKey
 @Serializable
 data object NetworkCustomRulesRoute : NavKey
 
+@Serializable
+data class NetworkAppRulesRoute(val appId: Int) : NavKey
+
 /** Rules that apply to all apps (Wi-Fi, mobile data, local network, new apps, device state...). */
 @Composable
 fun NetworkUniversalRulesScreen() {
@@ -167,7 +170,7 @@ fun NetworkUniversalRulesScreen() {
 
 /** IP / CIDR / port rules and domain rules, system-wide or for one app, Block or Trust. */
 @Composable
-fun NetworkCustomRulesScreen() {
+fun NetworkCustomRulesScreen(appId: Int? = null) {
     val fw: FirewallController = koinInject()
     val directory: AppDirectory = koinInject()
     val scope = rememberCoroutineScope()
@@ -184,8 +187,8 @@ fun NetworkCustomRulesScreen() {
 
     fun actionText(a: RuleAction) = context.getString(if (a == RuleAction.Block) R.string.netfw_c_action_block else R.string.netfw_c_action_trust)
 
-    val shownDomains = domainRules.filter { cq.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(cq, it.domain, scopeText(it.scope)) }
-    val shownIps = ipRules.filter { cq.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(cq, it.address, it.port.takeIf { p -> p != 0 }?.toString(), it.protocol?.name, scopeText(it.scope)) }
+    val shownDomains = domainRules.filter { (appId == null || it.scope == RuleScope.App(appId)) && (cq.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(cq, it.domain, scopeText(it.scope))) }
+    val shownIps = ipRules.filter { (appId == null || it.scope == RuleScope.App(appId)) && (cq.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(cq, it.address, it.port.takeIf { p -> p != 0 }?.toString(), it.protocol?.name, scopeText(it.scope))) }
 
     PreferenceScreen(title = stringResource(R.string.netfw_c_title)) {
         item {
@@ -253,6 +256,7 @@ fun NetworkCustomRulesScreen() {
     dialog?.let { isIp ->
         AddRuleDialog(
             isIp = isIp,
+            initialScope = appId?.let { RuleScope.App(it) } ?: RuleScope.System,
             directory = directory,
             onDismiss = { dialog = null },
             onAdd = { value, port, protocol, ruleScope, action ->

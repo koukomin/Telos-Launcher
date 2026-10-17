@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Terminal</string>
+    <string name="terminal_runtime_summary">Ayrıca yüklenen Termux uygulamasını kullanır. Termux ve tüm eklentilerini aynı kaynaktan yükleyin. Kabuk Telos dışında Termux içinde çalışır.</string>
+    <string name="terminal_open_failed">Termux veya web sitesi açılamadı.</string>
+</resources>

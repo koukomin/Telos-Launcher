@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Kontijiet</string>
+    <string name="contacts_accounts_all">Il-kontijiet kollha</string>
+    <string name="contacts_accounts_selected">Kontijiet magħżula (%1$d)</string>
+    <string name="contacts_account_device">Fuq dan it-tagħmir</string>
+    <string name="contacts_delete_confirm">Tħassar %1$s mill-kontijiet marbuta kollha? Dan ma jistax jitreġġa’ lura.</string>
+</resources>

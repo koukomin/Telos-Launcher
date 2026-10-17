@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Pääte</string>
+    <string name="terminal_runtime_summary">Käyttää erikseen asennettua Termuxia. Asenna Termux ja kaikki lisäosat samasta lähteestä. Komentotulkki toimii Termuxissa Telosin ulkopuolella.</string>
+    <string name="terminal_open_failed">Termuxia tai verkkosivua ei voitu avata.</string>
+</resources>

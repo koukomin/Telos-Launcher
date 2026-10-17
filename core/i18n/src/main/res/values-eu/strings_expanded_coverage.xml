@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_radio2_record">Grabatu</string>
+    <string name="au2_radio2_stop_recording">Gelditu grabazioa</string>
+    <string name="au7_vidfolders_action">Antolatu Filmak eta Serieak karpetetan</string>
+    <string name="au_phonea_action_failed">Ezin izan da aldaketa gorde. Egiaztatu kontaktuetarako baimena.</string>
+    <string name="hc_failed_try_again">Huts egin du, saiatu berriro</string>
+    <string name="hc_install">Instalatu</string>
+    <string name="hc_menu">Menua</string>
+    <string name="hc_open">Ireki</string>
+    <string name="hc_play_from_the_web">Erreproduzitu webetik</string>
+    <string name="hc_sleep_timer">Lo egiteko tenporizadorea</string>
+    <string name="hc_video_services">Bideo-zerbitzuak</string>
+    <string name="network_widget_cellular">Datu mugikorrak</string>
+    <string name="network_widget_connected">Konektatuta</string>
+    <string name="network_widget_disconnected">Konexiorik ez</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="preference_dock_background_opacity">Atzeko planoaren opakutasuna</string>
+    <string name="preference_drawer_background">Aplikazio-tiraderaren atzeko planoa</string>
+    <string name="preference_drawer_background_summary">Erakutsi atzeko plano bat aplikazio-tiraderaren atzean</string>
+</resources>

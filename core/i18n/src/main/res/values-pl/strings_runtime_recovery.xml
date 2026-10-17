@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Przywraca wcześniej aktywny VPN, gdy Android na to pozwala. Ręczne zatrzymanie jest zachowane.</string>
+    <string name="netfw_u_unmetered">Blokuj w sieciach bez limitu danych</string>
+    <string name="netfw_vpn_bypass">Omijaj VPN</string>
+</resources>

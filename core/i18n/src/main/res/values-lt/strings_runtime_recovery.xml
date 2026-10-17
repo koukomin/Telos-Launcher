@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Atkuria anksčiau aktyvų VPN, kai Android leidžia. Rankinis sustabdymas išlieka.</string>
+    <string name="netfw_u_unmetered">Blokuoti neapskaitomuose tinkluose</string>
+    <string name="netfw_vpn_bypass">Apeiti VPN</string>
+</resources>

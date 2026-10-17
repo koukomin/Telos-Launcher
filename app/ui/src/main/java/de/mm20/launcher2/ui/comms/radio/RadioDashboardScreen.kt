@@ -98,30 +98,26 @@ fun RadioDashboardScreen() {
         IconButton(onClick = { showAdd = true }) {
             Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.hc_add_station))
         }
-        IconButton(onClick = {
-            playerViewModel.toggleRecording(context)?.let {
-                Toast.makeText(context, context.getString(it), Toast.LENGTH_SHORT).show()
-            }
-        }) {
-            Icon(
-                painterResource(if (isRecording) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px),
-                contentDescription = stringResource(if (isRecording) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record),
-                tint = if (isRecording) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        IconButton(onClick = { showSleep = true }) {
-            Icon(
-                painterResource(R.drawable.timer_24px),
-                contentDescription = stringResource(R.string.hc_sleep_timer),
-                tint = if (sleepEndsAt > 0) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
         Box {
             IconButton(onClick = { menuOpen = true }) {
                 Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
             }
             DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(if (isRecording) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record)) },
+                    leadingIcon = { Icon(painterResource(R.drawable.radio_button_checked_24px), null,
+                        tint = if (isRecording) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant) },
+                    onClick = {
+                        menuOpen = false
+                        playerViewModel.toggleRecording(context)?.let { Toast.makeText(context, context.getString(it), Toast.LENGTH_SHORT).show() }
+                    },
+                )
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.hc_sleep_timer)) },
+                    leadingIcon = { Icon(painterResource(R.drawable.timer_24px), null,
+                        tint = if (sleepEndsAt > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
+                    onClick = { menuOpen = false; showSleep = true },
+                )
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.au2_radio2_recordings)) },
                     onClick = {
@@ -169,7 +165,7 @@ fun RadioDashboardScreen() {
     }) {
     Column(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.weight(1f).fillMaxWidth()) {
-        TabRow(selectedTabIndex = selectedTabIndex, containerColor = Color.Transparent, divider = {}) {
+        ScrollableTabRow(selectedTabIndex = selectedTabIndex, containerColor = Color.Transparent, edgePadding = 16.dp, divider = {}) {
             tabs.forEachIndexed { index, title ->
                 Tab(
                     selected = selectedTabIndex == index,

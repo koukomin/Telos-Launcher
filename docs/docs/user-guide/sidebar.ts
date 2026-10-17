@@ -102,6 +102,10 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         ],
       },
       {
+        text: 'Terminal',
+        link: '/docs/user-guide/telos/terminal',
+      },
+      {
         text: 'Network',
         collapsed: true,
         link: '/docs/user-guide/telos/network/',

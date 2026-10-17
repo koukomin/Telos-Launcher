@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Memulihkan VPN yang aktif sebelumnya apabila Android membenarkan. Henti manual kekal dihormati.</string>
+    <string name="netfw_u_unmetered">Sekat pada rangkaian tidak bermeter</string>
+    <string name="netfw_vpn_bypass">Pintas VPN</string>
+    <string name="hc_allow">Benarkan</string>
+    <string name="hc_new_message">Mesej baharu</string>
+    <string name="hc_notes">Nota</string>
+    <string name="hc_save">Simpan</string>
+    <string name="hc_set">Tetapkan</string>
+    <string name="hc_settings">Tetapan</string>
+    <string name="preference_freeze_usage_access">Akses penggunaan</string>
+    <string name="preference_freeze_usage_access_summary_not_granted">Belum diberikan. Tanpanya, aplikasi boleh dibekukan secara automatik walaupun sedang digunakan. Ketik untuk memberikan akses.</string>
+</resources>

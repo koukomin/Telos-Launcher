@@ -83,6 +83,12 @@ object TvExtraMerge {
         val streams = ArrayList<TvStream>()
     }
 
+    /** The optional playlists are independent of the availability of the main catalog. */
+    fun mergeAvailable(base: TvIndex?, extras: Extras?, bad: Map<String, Long>, now: Long): TvIndex? {
+        val index = base ?: TvIndex(emptyList())
+        return (if (extras == null) index else merge(index, extras, bad, now)).takeIf { it.size > 0 }
+    }
+
     fun merge(base: TvIndex, extras: Extras, bad: Map<String, Long>, now: Long): TvIndex {
         if (extras.isEmpty) return base
         val greek = base.all.filter { it.country == "GR" }

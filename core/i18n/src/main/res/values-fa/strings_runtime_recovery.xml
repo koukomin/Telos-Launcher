@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">VPN قبلاً فعال در صورت اجازه Android بازیابی می‌شود. توقف دستی حفظ می‌شود.</string>
+    <string name="netfw_u_unmetered">مسدودسازی در شبکه‌های بدون محدودیت</string>
+    <string name="netfw_vpn_bypass">دورزدن VPN</string>
+    <string name="hc_allow">اجازه دادن</string>
+    <string name="hc_new_message">پیام جدید</string>
+    <string name="hc_notes">یادداشت‌ها</string>
+    <string name="hc_save">ذخیره</string>
+    <string name="hc_set">تنظیم</string>
+    <string name="hc_settings">تنظیمات</string>
+    <string name="preference_freeze_usage_access">دسترسی به داده‌های استفاده</string>
+    <string name="preference_freeze_usage_access_summary_not_granted">اعطا نشده است. بدون آن، برنامه ممکن است حتی هنگام استفاده به‌طور خودکار منجمد شود. برای اعطای دسترسی بزنید.</string>
+</resources>

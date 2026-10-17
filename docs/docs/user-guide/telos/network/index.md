@@ -3,8 +3,7 @@
 A firewall and DNS filter for the whole phone, built on the engine of [RethinkDNS](https://github.com/celzero/rethink-app).
 
 ::: warning Early version
-Telos Network was written without a compiler and has **not been run on a device yet**. It is new and may fail. If it does,
-the internet simply works as before (see [Safety](#safety)). You can turn it off at any time.
+Network changes are covered by automated tests and build checks. Android 16 device recovery and Tor still need target-device validation. See [Safety](#safety) for failure behavior and Android lockdown. You can turn it off at any time.
 :::
 
 ::: tip At a glance
@@ -34,10 +33,9 @@ The first time you turn it on, Android asks for your consent to set up a VPN. Wi
 
 ## Safety
 
-- It **never starts by itself**. The only automatic start is after a reboot, and only if you switched on *Start on boot* and gave the VPN
-  permission before.
+- Previously active Network is restored after a process restart or app update when Android permits. The saved DNS, firewall, WireGuard and Tor configuration is reapplied. Manual **Turn off** and VPN revocation cancel restoration. The boot receiver requires *Start on boot* and previously granted VPN permission; opening the launcher also restores saved active intent.
 - If the engine fails to start or stops working, the VPN is shut down and your normal connection is back (the state shows *Stopped*
-  and a notification says so). It does not block the internet when it breaks.
+  and a notification says so). Up to three delayed retries are attempted while active intent remains saved. It does not block the internet between retries unless Android lockdown is enabled.
 - **Turn off** always works, also while it is starting.
 - Telos itself is kept out of the tunnel by default (*Exclude Telos*).
 - Android's own *Always-on VPN* and *Block connections without VPN* are your choice in the Android settings; Telos never switches
@@ -60,3 +58,9 @@ The first time you turn it on, Android asks for your consent to set up a VPN. Wi
 - [Firewall](firewall.md)
 - [Blocklists and exceptions](blocklists-bypass.md)
 - [Logs and settings](logs-settings.md)
+
+## Home widget
+
+Add **Telos Network** from the built-in widget picker. It shows VPN state, the selected DNS server, blocked query/connection counts since logs were cleared, local interface addresses and sampled download/upload rates. Rates use device counters, including possible VPN interface overhead; they are not a tunnel speed test.
+
+WAN lookup runs only when tapped and contacts the displayed `api.ipify.org` endpoint. It shows the route used by Telos itself, which is normally excluded from its own VPN; it must not be interpreted as the exit IP of a selected WireGuard or Tor route.

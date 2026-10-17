@@ -9,8 +9,8 @@ import androidx.media3.session.MediaSessionService
 /**
  * Media notification and lock screen / Bluetooth controls (play, pause, previous, next) for Telos Video.
  * The player belongs to the player screen, which hands it over with [VideoSession.attach]; the service only
- * wraps it in a MediaSession, so closing the screen also ends the notification. Leaving the screen pauses
- * the video (see VideoPlayerScreen); the notification then offers play, which continues with sound only.
+ * wraps it in a MediaSession, so explicitly closing the screen also ends the notification. Stopping the
+ * activity for screen lock keeps playback and notification controls alive.
  */
 open class VideoPlaybackService : MediaSessionService() {
     private var session: MediaSession? = null

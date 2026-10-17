@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Terminál</string>
+    <string name="terminal_runtime_summary">Používá samostatně nainstalovaný Termux. Termux a všechny doplňky instalujte ze stejného zdroje. Shell běží v Termuxu mimo Telos.</string>
+    <string name="terminal_open_failed">Termux nebo web nelze otevřít.</string>
+</resources>

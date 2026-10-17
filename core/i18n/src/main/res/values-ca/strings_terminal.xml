@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Terminal</string>
+    <string name="terminal_runtime_summary">Utilitza el Termux instal·lat per separat. Instal·leu Termux i tots els complements de la mateixa font. L’intèrpret s’executa a Termux, fora de Telos.</string>
+    <string name="terminal_open_failed">No s’ha pogut obrir Termux o el lloc web.</string>
+</resources>

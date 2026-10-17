@@ -8,6 +8,7 @@ import android.os.Looper
 import android.provider.ContactsContract
 import de.mm20.launcher2.comms.PhoneNumbers
 import de.mm20.launcher2.comms.model.DialerContact
+import de.mm20.launcher2.comms.model.ContactAccount
 import de.mm20.launcher2.comms.repository.ContactDirectoryRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -177,6 +178,7 @@ internal class ContactDirectoryRepositoryImpl(
             var company: String? = null,
             var jobTitle: String? = null,
             var birthdayMillis: Long? = null,
+            val accounts: MutableSet<ContactAccount> = linkedSetOf(),
         )
         val byId = LinkedHashMap<Long, Acc>()
 
@@ -190,6 +192,18 @@ internal class ContactDirectoryRepositoryImpl(
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(0)
                 byId[id] = Acc(cursor.getString(1).orEmpty(), cursor.getString(2), starred = cursor.getInt(3) != 0)
+            }
+        }
+
+        // Aggregated contacts may belong to several accounts: retain every membership.
+        context.contentResolver.query(
+            ContactsContract.RawContacts.CONTENT_URI,
+            arrayOf(ContactsContract.RawContacts.CONTACT_ID,
+                ContactsContract.RawContacts.ACCOUNT_NAME, ContactsContract.RawContacts.ACCOUNT_TYPE),
+            "${ContactsContract.RawContacts.DELETED}=0", null, null,
+        )?.use { cursor ->
+            while (cursor.moveToNext()) {
+                byId[cursor.getLong(0)]?.accounts?.add(ContactAccount(cursor.getString(1), cursor.getString(2)))
             }
         }
 
@@ -307,6 +321,7 @@ internal class ContactDirectoryRepositoryImpl(
                 company = data.company,
                 jobTitle = data.jobTitle,
                 birthdayMillis = data.birthdayMillis,
+                accounts = data.accounts.toList(),
             )
         }
     }

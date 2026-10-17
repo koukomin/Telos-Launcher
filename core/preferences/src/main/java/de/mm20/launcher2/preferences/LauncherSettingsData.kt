@@ -285,6 +285,8 @@ data class GridGroup(
     val drawerBackgroundColor: Int? = null,
     val drawerBackgroundOpacity: Float = 0.35f,
     val drawerBackgroundBlur: Int = 32,
+    /** Glass widgets use the wallpaper blur and translucent cards. */
+    val widgetsGlassBackground: Boolean = true,
     @Serializable(with = ColorIntAsHexSerializer::class)
     val folderBackgroundColor: Int? = null,
     val dockPageIndicatorEnabled: Boolean = true,

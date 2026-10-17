@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Terminál</string>
+    <string name="terminal_runtime_summary">A külön telepített Termuxot használja. A Termuxot és minden bővítményét ugyanabból a forrásból telepítse. A parancsértelmező a Termuxban, a Teloson kívül fut.</string>
+    <string name="terminal_open_failed">Nem sikerült megnyitni a Termuxot vagy a weboldalt.</string>
+</resources>

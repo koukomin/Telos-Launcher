@@ -20,9 +20,11 @@ contact database of its own, apart from the notes, hidden numbers and defaults i
 | Swipe left | Calls the contact. Honors **Confirm before calling** |
 | Long-press a row | Sheet with Call, Message, Contact Details, Share and Block number |
 
-The full Android Contacts table is listed, without an account or visible-group filter. Phone and email Data rows are attached across all synced accounts in this device profile, including local/SIM contacts exposed by the provider. Email-only contacts remain visible; their Call button is disabled. Contacts are sorted by name. Telos cannot display contacts that have not synced to Android, or bypass work-profile access restrictions.
+The account chip selects **All accounts** or individual account names/types, including local/device contacts. Selection persists. Android aggregates linked raw contacts: an aggregate appears if any selected account owns it, and its full linked fields remain available. Email-only contacts stay visible with their Call button disabled. Telos cannot display contacts that have not synced to Android or bypass work-profile restrictions.
 
-Η λίστα διαβάζει όλες τις επαφές που έχει συγχρονίσει το Android στο τρέχον προφίλ, από όλους τους λογαριασμούς. Επαφές χωρίς τηλέφωνο παραμένουν στη λίστα με το email τους και χωρίς ενεργό κουμπί κλήσης. Δεν εφαρμόζεται φίλτρο Google λογαριασμού.
+Long-press a contact or open its details to **Edit** in the installed Android contacts editor or **Delete** after explicit confirmation. Deleting an aggregate removes its linked raw contacts across accounts; read-only provider failures are reported. Duplicate-contact groups show each contact’s account memberships; nothing is automatically merged.
+
+Recent calls resolve current names/photos from the contact directory, rather than relying only on the call log’s cached photo.
 
 ::: info The list screen also has a starred filter
 The list screen can show a star filter and a strip of favorites at the top. In Phone these are hidden because
@@ -147,7 +149,7 @@ one fake call can be scheduled at a time, and **Cancel scheduled** removes it. I
 
 ## Limitations
 
-- Only contacts with a phone number are shown. Contacts without number cannot be found here.
+- Account filtering applies to Android aggregate membership; it does not split linked raw contacts into separate editable rows.
 - There is no add-contact form in the list screen. Use the keypad's "Add to contacts" or your contacts app.
 - Contact groups are shown but cannot be edited or used as a filter.
 - vCard sharing sends text, not a `.vcf` file attachment. Photos are not included.

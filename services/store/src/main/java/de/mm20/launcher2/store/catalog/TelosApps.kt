@@ -34,6 +34,13 @@ object TelosApps {
 
     val all: List<TelosApp> = listOf(
         TelosApp(
+            key = "telos_terminal_app://terminal", name = "Terminal",
+            description = "Companion for the separately installed official Termux runtime. Opens its real terminal and links to official setup, packages and compatible add-ons.",
+            features = listOf("Official Termux runtime", "Package and add-on guides"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_terminal_full,
+            route = SettingsDeepLinkContract.ROUTE_TERMINAL,
+        ),
+        TelosApp(
             key = "telos_store_app://store",
             name = "Store",
             description = "Installs and updates apps from GitHub, GitLab, Codeberg, F-Droid, IzzyOnDroid, SourceForge and web pages, checks for updates in the background and manages the Telos apps.",

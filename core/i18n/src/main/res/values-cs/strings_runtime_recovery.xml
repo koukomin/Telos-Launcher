@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Obnoví dříve aktivní VPN, pokud to Android dovolí. Ruční zastavení zůstane zachováno.</string>
+    <string name="netfw_u_unmetered">Blokovat v neměřených sítích</string>
+    <string name="netfw_vpn_bypass">Obejít VPN</string>
+</resources>

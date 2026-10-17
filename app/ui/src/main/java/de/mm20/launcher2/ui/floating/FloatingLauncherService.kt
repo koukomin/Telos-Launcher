@@ -645,7 +645,7 @@ private fun SidebarHandle(
     // system's Back gesture).
     Box(
         modifier = Modifier
-            .size(width = thickness.dp.coerceAtLeast(28.dp), height = (heightDp + 24).dp)
+            .size(width = thickness.dp.coerceAtLeast(24.dp), height = (heightDp + 24).dp)
             // A tap opens the sidebar ...
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -704,7 +704,7 @@ private fun SidebarHandle(
     ) {
         Box(
             Modifier
-                .size(width = if (isDropTarget) 12.dp else 6.dp, height = (if (isDropTarget) heightDp else heightDp * 3 / 4).dp)
+                .size(width = if (isDropTarget) 10.dp else 4.dp, height = (if (isDropTarget) heightDp else heightDp * 3 / 4).dp)
                 .clip(RoundedCornerShape(50))
                 .background(if (isDropTarget) color.copy(alpha = (color.alpha + 0.35f).coerceAtMost(1f)) else color)
         )

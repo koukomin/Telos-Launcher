@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Konten</string>
+    <string name="contacts_accounts_all">Alle Konten</string>
+    <string name="contacts_accounts_selected">Ausgewählte Konten (%1$d)</string>
+    <string name="contacts_account_device">Auf diesem Gerät</string>
+    <string name="contacts_delete_confirm">%1$s aus allen verknüpften Konten löschen? Dies kann nicht rückgängig gemacht werden.</string>
+</resources>

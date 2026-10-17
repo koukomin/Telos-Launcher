@@ -14,6 +14,17 @@ class TvGreekChannelsTest {
     private fun entry(name: String, url: String, tvgId: String = "", group: String = "") =
         TvM3uEntry(name, url, "", group, tvgId = tvgId)
 
+    @Test fun greekPlaylistsSurviveUnavailableMainCatalog() {
+        val extras = TvExtraMerge.Extras(listOf(TvExtraMerge.Source("Greek playlist", listOf(
+            TvM3uEntry("SKAI HD", "https://stream.example/skai.m3u8", "", "ΠΑΝΕΛΛΑΔΙΚΑ", tvgName = "skai"),
+        ))))
+        val index = TvExtraMerge.mergeAvailable(null, extras, emptyMap(), 0L)!!
+        assertEquals(1, index.byCountry(listOf("GR")).size)
+        assertEquals(1, index.search("Σκάι").size)
+        assertEquals(1, index.search("skai").size)
+        assertEquals(null, TvExtraMerge.mergeAvailable(null, null, emptyMap(), 0L))
+    }
+
     @Test fun activationOnFreshInstall() {
         val el = Locale("el", "GR")
         assertTrue(TvSettings.greeceActive(emptyList(), "", el))

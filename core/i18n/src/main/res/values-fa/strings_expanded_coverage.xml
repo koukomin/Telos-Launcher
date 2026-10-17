@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_radio2_record">ضبط</string>
+    <string name="au2_radio2_stop_recording">توقف ضبط</string>
+    <string name="au7_vidfolders_action">مرتب‌سازی در پوشه‌های فیلم‌ها و سریال‌ها</string>
+    <string name="au_phonea_action_failed">ذخیرهٔ تغییر ممکن نشد. مجوز دسترسی به مخاطبان را بررسی کنید.</string>
+    <string name="hc_failed_try_again">ناموفق بود، دوباره تلاش کنید</string>
+    <string name="hc_install">نصب</string>
+    <string name="hc_menu">منو</string>
+    <string name="hc_open">باز کردن</string>
+    <string name="hc_play_from_the_web">پخش از وب</string>
+    <string name="hc_sleep_timer">زمان‌سنج خواب</string>
+    <string name="hc_video_services">سرویس‌های ویدیو</string>
+    <string name="network_widget_cellular">دادهٔ همراه</string>
+    <string name="network_widget_connected">متصل</string>
+    <string name="network_widget_disconnected">بدون اتصال</string>
+    <string name="network_widget_ethernet">اترنت</string>
+    <string name="network_widget_wifi">وای‌فای</string>
+    <string name="preference_dock_background_opacity">میزان کدری پس‌زمینه</string>
+    <string name="preference_drawer_background">پس‌زمینهٔ کشوی برنامه‌ها</string>
+    <string name="preference_drawer_background_summary">نمایش پس‌زمینه در پشت کشوی برنامه‌ها</string>
+</resources>

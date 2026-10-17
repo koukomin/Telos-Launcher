@@ -166,7 +166,7 @@ fun GridItem(
     val shutterSettings = koinInject<ShutterSettings>()
     val shuttersEnabled by shutterSettings.enabled.collectAsStateWithLifecycle(false)
     val shutterKeyFlow = remember(item.key) {
-        if (item is Application) shutterSettings.appFor(item.componentName.packageName)
+        if (item is Application) shutterSettings.appFor(ShutterSettings.hostKey(item.key, item.componentName.packageName))
         else flowOf(null)
     }
     val shutterKey by shutterKeyFlow.collectAsStateWithLifecycle(null)
@@ -375,7 +375,7 @@ fun GridItem(
 
     if (showShutter && item is Application) {
         ShutterGate(
-            packageName = item.componentName.packageName,
+            packageName = ShutterSettings.hostKey(item.key, item.componentName.packageName),
             shutterKey = shutterKey,
             onDismiss = { showShutter = false },
         )

@@ -289,6 +289,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     val hiddenNumbers by viewModel.hiddenNumbers.collectAsStateWithLifecycle()
     val protectedNumbers by viewModel.protectedCallNumbers.collectAsStateWithLifecycle()
     var confirmDelete by remember { mutableStateOf(false) }
+    var deleteContact by remember { mutableStateOf<de.mm20.launcher2.comms.model.DialerContact?>(null) }
     var editingNote by remember { mutableStateOf(false) }
     var starOverride by remember { mutableStateOf<Boolean?>(null) }
     var showReminder by remember { mutableStateOf(false) }
@@ -343,6 +344,14 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     )
                 }
                 Spacer(Modifier.weight(1f))
+                if (contact != null && contact.id >= 0) {
+                    IconButton(onClick = { ContactActions.edit(context, contact.id) }) {
+                        Icon(painterResource(R.drawable.edit_24px), contentDescription = stringResource(R.string.net_dns_action_edit))
+                    }
+                    IconButton(onClick = { deleteContact = contact }) {
+                        Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+                    }
+                }
                 val starred = starOverride ?: (contact?.starred == true)
                 IconButton(
                     onClick = {
@@ -858,6 +867,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
         )
     }
 
+    deleteContact?.let { DeleteContactDialog(it) { deleteContact = null } }
     if (editingNote && contact != null && primary.isNotEmpty()) {
         var draft by remember(primary) { mutableStateOf(notes[primary].orEmpty()) }
         AlertDialog(

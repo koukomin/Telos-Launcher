@@ -53,7 +53,7 @@ The TV space plays live channels from the open [iptv-org](https://github.com/ipt
 - **Catalog:** channel list, logos and stream addresses are downloaded from `iptv-org.github.io` when you open TV (cached on the device, checked for changes, refreshed in the background when older than 24 hours; **Refresh** forces it). Adult channels, closed channels and blocklisted ones are left out.
 - **Country and language:** your home country and the app language are preselected; **Countries** lets you pick several (flags, channel counts, search) and filter by language. Category chips filter the list; search is Greek and Greeklish aware.
 - **Favorites, recents, your channels:** the star on a card adds a favorite (shelf at the top, **Move up/down** in the long-press menu), recents are kept, and **Add channel** creates your own (name, http or https stream address, optional logo and group). **Import M3U playlist** (up to 2 MB and 5000 entries) adds many at once. **Export / Import TV channels** saves a JSON backup file.
-- **Player:** tap a card for the full player; tap the picture for the controls, swipe up or down to change channel, the top-left back button stops playback, while minimize (or Android system Back) keeps it playing in the mini player.
+- **Player:** tap a card for the full player; tap the picture for the controls, swipe left or right to change channel, the top-left back button stops playback, while minimize (or Android system Back) keeps it playing in the mini player.
 - **Self-healing streams:** if a stream fails or is not ready within 8 seconds, Telos tries the next stream of the same channel; if all fail it checks online whether the stream list was updated and retries with the new addresses before showing an error ("Looking for another stream…" is shown meanwhile).
 - **Search:** Settings > Search > **TV channels** (off by default) shows favorite, custom and recent channels; TV and Radio results carry a type chip.
 - **Extra Greek sources (optional):** when Greece is among the selected countries, two public playlists ([Free-TV/IPTV](https://github.com/Free-TV/IPTV) Greece and [greektvm3u](https://github.com/filipposfilippides/greektvm3u)) add more streams to the same channels (tried after the iptv-org streams when one fails) and a few extra channels, marked **Extra**. They and the **Programme guide** have switches in the Countries sheet (on by default, only shown with Greece selected). Everything is loaded on your device only while TV is open, from `raw.githubusercontent.com`, `ext.greektv.app` and `epgshare01.online`; nothing is bundled (the playlists have no license file), and if a source does not work nothing is shown for it.
@@ -155,3 +155,13 @@ Choose YouTube Music under Listen or YouTube under Video. Search or paste a vide
 ### Shared trash
 
 Files, Viewer and Media share a delete/trash choice and restore UI. Local files use an atomic same-volume move with durable metadata, a default 30-day retention configurable to 1–365 days for future deletions, and daily expiry cleanup. Restore never overwrites an existing file. Android-managed media trash uses the system’s fixed 30-day retention and permission dialog. Unsupported storages offer explicitly confirmed permanent deletion. The private trash is removed on app uninstall or app-data deletion.
+
+## Screen-off playback
+
+TV, YouTube, music and the video player keep their media service running when the screen turns off. TV disables the video track while background audio continues, including with the older background-playback preference off; explicit pause/stop still works. Network playback has a wake lock while playing. Torrent startup uses non-null libtorrent flags and waits for asynchronous torrent registration. Screen-off behavior and battery restrictions still require testing on the target device.
+
+## Compact navigation and TV controls
+
+The source title and contextual actions share one toolbar. Open the source menu to change between Music, Radio, YouTube Music, Video, YouTube, TV and Stremio; reorder controls remain available there. Recording, sleep and file actions use labeled menus. Category tabs scroll at large font sizes; search fields grow with text.
+
+TV changes channel with horizontal swipes (left: next; right: previous). Opening controls refreshes now/next, and tapping either programme opens its details. Greek playlists can populate the catalog even when the main catalog is unavailable. Enable the optional Greek playlists if needed; stream availability and geographical restrictions still depend on the broadcaster.

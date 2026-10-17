@@ -1,0 +1,21 @@
+<resources>
+    <string name="au2_radio2_record">บันทึก</string>
+    <string name="au2_radio2_stop_recording">หยุดบันทึก</string>
+    <string name="au7_vidfolders_action">จัดระเบียบลงในโฟลเดอร์ภาพยนตร์และซีรีส์</string>
+    <string name="au_phonea_action_failed">บันทึกการเปลี่ยนแปลงไม่ได้ โปรดตรวจสอบสิทธิ์เข้าถึงรายชื่อติดต่อ</string>
+    <string name="hc_failed_try_again">ล้มเหลว ลองอีกครั้ง</string>
+    <string name="hc_install">ติดตั้ง</string>
+    <string name="hc_menu">เมนู</string>
+    <string name="hc_open">เปิด</string>
+    <string name="hc_play_from_the_web">เล่นจากเว็บ</string>
+    <string name="hc_sleep_timer">ตัวตั้งเวลาปิด</string>
+    <string name="hc_video_services">บริการวิดีโอ</string>
+    <string name="network_widget_cellular">ข้อมูลมือถือ</string>
+    <string name="network_widget_connected">เชื่อมต่อแล้ว</string>
+    <string name="network_widget_disconnected">ไม่มีการเชื่อมต่อ</string>
+    <string name="network_widget_ethernet">อีเทอร์เน็ต</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="preference_dock_background_opacity">ความทึบของพื้นหลัง</string>
+    <string name="preference_drawer_background">พื้นหลังลิ้นชักแอป</string>
+    <string name="preference_drawer_background_summary">แสดงพื้นหลังด้านหลังลิ้นชักแอป</string>
+</resources>

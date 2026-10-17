@@ -27,12 +27,14 @@ fun ShutterGate(
 ) {
     val shutterSettings = koinInject<ShutterSettings>()
     val searchableRepository = koinInject<SavableSearchableRepository>()
+    val apps = koinInject<de.mm20.launcher2.applications.AppRepository>()
     val context = LocalContext.current
     val launcher: SearchableItemVM = listItemViewModel(key = "shutter-launch-$packageName")
 
     if (shutterKey != null) {
         LaunchedEffect(shutterKey) {
             val target = searchableRepository.getByKeys(listOf(shutterKey)).firstOrNull()?.firstOrNull()
+                ?: apps.findMany().firstOrNull()?.firstOrNull { it.key == shutterKey }
             if (target != null) {
                 launcher.launchTarget(context, target)
             } else {
@@ -53,6 +55,7 @@ fun ShutterGate(
                 value = null,
                 onValueChanged = { picked ->
                     if (picked != null) {
+                        searchableRepository.insert(picked)
                         shutterSettings.setApp(packageName, picked.key)
                         launcher.launchTarget(context, picked)
                     }

@@ -17,6 +17,7 @@ import de.mm20.launcher2.comms.privacy.HiddenContacts
 import de.mm20.launcher2.comms.privacy.PrivacySession
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -29,7 +30,9 @@ class RecentsViewModel : ViewModel(), KoinComponent {
     private val commsSettings: de.mm20.launcher2.preferences.comms.CommsSettings by inject()
     private val permissionsManager: PermissionsManager by inject()
 
-    val recents: StateFlow<List<CallLogEntry>> = combine(
+    private val contactDirectory: de.mm20.launcher2.comms.repository.ContactDirectoryRepository by inject()
+
+    private val visibleRecents = combine(
         callLogRepository.observeRecents(),
         commsSettings.hiddenNumbers,
         commsSettings.hideFromRecents,
@@ -43,7 +46,22 @@ class RecentsViewModel : ViewModel(), KoinComponent {
                 if (remote != null) call.copy(displayName = remote) else call
             } else call
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    }
+
+    val recents: StateFlow<List<CallLogEntry>> = combine(
+        visibleRecents, contactDirectory.observeContacts(),
+    ) { calls, contacts ->
+        calls.map { call ->
+            val contact = contacts.firstOrNull { person ->
+                person.phoneNumbers.any { de.mm20.launcher2.comms.PhoneNumbers.match(it, call.phoneNumber) }
+            }
+            if (contact == null) call else call.copy(
+                displayName = contact.displayName.takeIf { it.isNotBlank() } ?: call.displayName,
+                photoUri = contact.photoUri ?: call.photoUri,
+            )
+        }
+    }.flowOn(kotlinx.coroutines.Dispatchers.Default)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val hasCallLogPermission: StateFlow<Boolean> = permissionsManager.hasPermission(PermissionGroup.CallLog)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)

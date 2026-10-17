@@ -54,8 +54,8 @@ private data class Routes(val has4: Boolean, val has6: Boolean, val mtu: Int)
  * and keeps both in step with the networks of the device.
  *
  * Lifecycle and safety:
- *  - Only [NetworkEngine.start], the boot receiver, or the system's always-on setting start it.
- *    It returns START_NOT_STICKY, so Android never restarts it behind the user's back.
+ *  - User start, restoration of persisted active intent, or Android always-on start it.
+ *    Sticky restoration respects explicit Stop; foreground promotion precedes controller work.
  *  - [shutdown] is the single way out. It closes the interface first, so that traffic flows
  *    normally again, whatever else fails afterwards. If the Go engine hangs while closing, the
  *    process is killed as a last resort, because a dead process cannot keep a VPN up.
@@ -99,36 +99,31 @@ class TelosVpnService : VpnService(), KoinComponent {
     override fun onCreate() {
         super.onCreate()
         current = this
-        VpnNotifications.ensureChannels(this)
-    }
-
-    override fun onBind(intent: Intent?): IBinder? {
-        if (intent?.action == SERVICE_INTERFACE) {
-            // The user selected Telos Network as always-on VPN in the Android settings. That is an
-            // explicit user action, so honour it.
-            try {
-                ContextCompat.startForegroundService(this, Intent(this, TelosVpnService::class.java).setAction(ACTION_START))
-            } catch (e: Exception) {
-                // not allowed right now; the user can start it from the app
-            }
-        }
-        return super.onBind(intent)
+        // Promote immediately, including starts made by Android, before resolving controllers.
+        if (!enterForeground(bootstrap = true)) stopSelf()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // Always-on VPN uses SERVICE_INTERFACE; sticky process restoration uses a null intent.
         when (intent?.action) {
             ACTION_STOP -> {
                 settings.update { it.copy(engineWanted = false) }
                 settings.flush()
                 requestStop(StopReason.User, null)
+                return START_NOT_STICKY
             }
-            ACTION_START -> begin()
-            else -> {
-                // null or unknown intents (a restart by the system) must never switch the VPN on
-                if (synchronized(lock) { phase == Phase.Idle }) stopSelf()
+            ACTION_START -> {
+                if (settings.current.engineWanted) begin() else requestStop(StopReason.User, null)
             }
+            SERVICE_INTERFACE -> {
+                settings.update { it.copy(engineWanted = true) }
+                settings.flush()
+                begin()
+            }
+            else -> if (VpnRecoveryPolicy.shouldStart(intent?.action, settings.current.engineWanted)) begin()
+                else requestStop(StopReason.User, null)
         }
-        return START_NOT_STICKY
+        return if (settings.current.engineWanted) START_STICKY else START_NOT_STICKY
     }
 
     private fun begin() {
@@ -144,10 +139,10 @@ class TelosVpnService : VpnService(), KoinComponent {
         scope.launch(ops) { startTunnel() }
     }
 
-    private fun enterForeground(): Boolean {
-        val notification = VpnNotifications.service(this, settings.current, logs.stats.value.connectionsBlocked)
+    private fun enterForeground(bootstrap: Boolean = false): Boolean {
+        val notification = if (bootstrap) VpnNotifications.starting(this) else VpnNotifications.service(this, settings.current, logs.stats.value.connectionsBlocked)
         val types = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            listOf(ServiceInfo.FOREGROUND_SERVICE_TYPE_SYSTEM_EXEMPTED, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+            listOf(ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE, ServiceInfo.FOREGROUND_SERVICE_TYPE_SYSTEM_EXEMPTED)
         } else {
             listOf(0)
         }
@@ -502,7 +497,6 @@ class TelosVpnService : VpnService(), KoinComponent {
         }
         closePfd()
 
-        engine.onServiceStopped(reason, detail)
         if (reason != StopReason.User && settings.current.notifyOnFailure) {
             VpnNotifications.alert(this, engine.alertTextFor(reason))
         }
@@ -513,6 +507,7 @@ class TelosVpnService : VpnService(), KoinComponent {
         }
         synchronized(lock) { phase = Phase.Idle }
         stopSelf()
+        engine.onServiceStopped(reason, detail)
     }
 
     private fun closePfd() {

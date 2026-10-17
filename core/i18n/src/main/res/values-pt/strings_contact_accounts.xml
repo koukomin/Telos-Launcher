@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Contas</string>
+    <string name="contacts_accounts_all">Todas as contas</string>
+    <string name="contacts_accounts_selected">Contas selecionadas (%1$d)</string>
+    <string name="contacts_account_device">Neste dispositivo</string>
+    <string name="contacts_delete_confirm">Eliminar %1$s de todas as contas associadas? Não é possível anular.</string>
+</resources>

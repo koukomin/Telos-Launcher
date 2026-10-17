@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Android की अनुमति होने पर पहले सक्रिय VPN बहाल होता है। खुद बंद करने पर बंद ही रहता है।</string>
+    <string name="netfw_u_unmetered">असीमित नेटवर्क पर रोकें</string>
+    <string name="netfw_vpn_bypass">VPN बायपास</string>
+</resources>

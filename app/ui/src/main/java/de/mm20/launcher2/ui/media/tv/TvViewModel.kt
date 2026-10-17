@@ -148,7 +148,12 @@ class TvViewModel : ViewModel(), KoinComponent {
         if (_load.value == TvLoad.Loading || _load.value == TvLoad.Ready) return
         _load.value = TvLoad.Loading
         viewModelScope.launch {
-            val idx = runCatching { catalog.open() }.getOrNull()
+            var idx = runCatching { catalog.open() }.getOrNull()
+            if (idx == null) {
+                // Do not discard the Greek playlists just because the main catalog is unavailable.
+                runCatching { extraSources.load() }
+                idx = catalog.index.value
+            }
             if (idx == null) {
                 _load.value = TvLoad.Failed
             } else {
@@ -168,6 +173,7 @@ class TvViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch {
             runCatching { catalog.refresh() }
             runCatching { extraSources.load(force = true) }
+            refreshEpg()
             if (_load.value != TvLoad.Ready && catalog.index.value != null) _load.value = TvLoad.Ready
         }
     }

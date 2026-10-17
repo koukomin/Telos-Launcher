@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Lehen aktibo zegoen VPNa berrezartzen du Androidek baimentzen duenean. Eskuz geldituz gero, itzalita jarraitzen du.</string>
+    <string name="netfw_u_unmetered">Blokeatu neurtu gabeko sareetan</string>
+    <string name="netfw_vpn_bypass">Saihestu VPNa</string>
+    <string name="hc_allow">Baimendu</string>
+    <string name="hc_new_message">Mezu berria</string>
+    <string name="hc_notes">Oharrak</string>
+    <string name="hc_save">Gorde</string>
+    <string name="hc_set">Ezarri</string>
+    <string name="hc_settings">Ezarpenak</string>
+    <string name="preference_freeze_usage_access">Erabilera-datuetarako sarbidea</string>
+    <string name="preference_freeze_usage_access_summary_not_granted">Baimenik gabe. Hori gabe, aplikazioa automatikoki izoztu daiteke erabiltzen ari zaren bitartean ere. Sakatu baimena emateko.</string>
+</resources>

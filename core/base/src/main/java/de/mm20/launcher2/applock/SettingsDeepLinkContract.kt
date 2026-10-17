@@ -41,6 +41,7 @@ object SettingsDeepLinkContract {
     const val ROUTE_NOTES = "settings/notes"
     const val ROUTE_CALENDAR = "settings/calendar"
     const val ROUTE_DOWNLOADS = "settings/downloads"
+    const val ROUTE_TERMINAL = "settings/terminal"
     const val ROUTE_NETWORK = "settings/network"
     /** Links (string array) to offer in the add sheet of Telos Downloads, from a share or an Open with */
     const val EXTRA_DOWNLOAD_URLS = "de.mm20.launcher2.settings.DOWNLOAD_URLS"
@@ -51,6 +52,7 @@ object SettingsDeepLinkContract {
         ROUTE_PHOTOS, ROUTE_VIEWER -> "viewer"
         ROUTE_FILES -> "files"
         ROUTE_STORE -> "store"
+        ROUTE_TERMINAL -> "terminal"
         ROUTE_NETWORK -> "network"
         ROUTE_CALCULATOR -> "calculator"
         ROUTE_VOICE_RECORDER -> "voice_recorder"

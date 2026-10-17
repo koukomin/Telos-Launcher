@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">บัญชี</string>
+    <string name="contacts_accounts_all">ทุกบัญชี</string>
+    <string name="contacts_accounts_selected">บัญชีที่เลือก (%1$d)</string>
+    <string name="contacts_account_device">ในอุปกรณ์นี้</string>
+    <string name="contacts_delete_confirm">ลบ %1$s จากบัญชีที่เชื่อมโยงทั้งหมดหรือไม่? ย้อนกลับไม่ได้</string>
+</resources>

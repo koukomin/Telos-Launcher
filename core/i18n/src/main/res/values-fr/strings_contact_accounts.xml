@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Comptes</string>
+    <string name="contacts_accounts_all">Tous les comptes</string>
+    <string name="contacts_accounts_selected">Comptes sélectionnés (%1$d)</string>
+    <string name="contacts_account_device">Sur cet appareil</string>
+    <string name="contacts_delete_confirm">Supprimer %1$s de tous les comptes associés ? Cette action est irréversible.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">터미널</string>
+    <string name="terminal_runtime_summary">별도로 설치된 Termux를 사용합니다. Termux와 모든 추가 기능을 같은 출처에서 설치하세요. 셸은 Telos 외부의 Termux에서 실행됩니다.</string>
+    <string name="terminal_open_failed">Termux 또는 웹사이트를 열 수 없습니다.</string>
+</resources>

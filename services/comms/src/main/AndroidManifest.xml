@@ -31,6 +31,8 @@
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <!-- === TELOS_PENDING_REVIEW_END: sms_and_radio_engine === -->
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application>
         <service android:name=".youtube.YouTubePlayerService" android:exported="true" android:foregroundServiceType="mediaPlayback">
             <intent-filter><action android:name="androidx.media3.session.MediaSessionService" /></intent-filter>

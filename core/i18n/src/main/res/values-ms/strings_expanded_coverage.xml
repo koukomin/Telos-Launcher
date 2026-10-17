@@ -1,0 +1,24 @@
+<resources>
+    <string name="au2_radio2_record">Rakam</string>
+    <string name="au2_radio2_stop_recording">Hentikan rakaman</string>
+    <string name="au7_vidfolders_action">Susun ke dalam folder Filem dan Siri</string>
+    <string name="au_phonea_action_failed">Tidak dapat menyimpan perubahan. Semak kebenaran kenalan.</string>
+    <string name="hc_failed_try_again">Gagal, cuba lagi</string>
+    <string name="hc_install">Pasang</string>
+    <string name="hc_menu">Menu</string>
+    <string name="hc_open">Buka</string>
+    <string name="hc_play_from_the_web">Main dari web</string>
+    <string name="hc_sleep_timer">Pemasa tidur</string>
+    <string name="hc_video_services">Perkhidmatan video</string>
+    <string name="network_widget_cellular">Data mudah alih</string>
+    <string name="network_widget_connected">Disambungkan</string>
+    <string name="network_widget_disconnected">Tiada sambungan</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="preference_blur_wallpaper">Kaburkan kertas dinding</string>
+    <string name="preference_blur_wallpaper_summary">Gunakan kesan kabur pada kertas dinding</string>
+    <string name="preference_category_widgets">Widget</string>
+    <string name="preference_dock_background_opacity">Kelegapan latar belakang</string>
+    <string name="preference_drawer_background">Latar belakang laci aplikasi</string>
+    <string name="preference_drawer_background_summary">Paparkan latar belakang di belakang laci aplikasi</string>
+</resources>

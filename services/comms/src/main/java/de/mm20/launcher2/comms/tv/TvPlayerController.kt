@@ -148,7 +148,7 @@ class TvPlayerController(
     }
 
     private val activityCallbacks = object : Application.ActivityLifecycleCallbacks {
-        private fun isHost(a: Activity) = a.javaClass.name == SettingsDeepLinkContract.ACTIVITY_CLASS_NAME
+        private fun isHost(a: Activity) = a.packageName == app.packageName
         override fun onActivityStarted(activity: Activity) {
             if (!isHost(activity)) return
             hostActivities.add(activity)
@@ -185,13 +185,16 @@ class TvPlayerController(
 
     private fun onLeftApp() {
         if (exo == null) return
-        if (TvBackgroundPolicy.pauseWhenLeaving(settings.keepPlayingInBackground.value)) pause() else applyVideoDisabled()
+        val screenOff = !(app.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive ||
+            (app.getSystemService(Context.KEYGUARD_SERVICE) as android.app.KeyguardManager).isKeyguardLocked
+        if (TvBackgroundPolicy.pauseWhenLeaving(settings.keepPlayingInBackground.value, screenOff)) pause() else applyVideoDisabled()
     }
 
     /** Video track off while in the background with background playback on (saves data), on again otherwise */
     private fun applyVideoDisabled() {
         val p = exo ?: return
-        val off = TvBackgroundPolicy.videoDisabled(settings.keepPlayingInBackground.value, inBackground)
+        val off = TvBackgroundPolicy.videoDisabled(settings.keepPlayingInBackground.value, inBackground,
+            !(app.getSystemService(Context.POWER_SERVICE) as android.os.PowerManager).isInteractive)
         val params = p.trackSelectionParameters
         if (params.disabledTrackTypes.contains(C.TRACK_TYPE_VIDEO) == off) return
         p.trackSelectionParameters = params.buildUpon().setTrackTypeDisabled(C.TRACK_TYPE_VIDEO, off).build()
@@ -214,11 +217,12 @@ class TvPlayerController(
         if (screenReceiver == null) {
             val r = object : BroadcastReceiver() {
                 override fun onReceive(context: Context?, intent: Intent?) {
-                    if (exo != null && TvBackgroundPolicy.pauseWhenLeaving(settings.keepPlayingInBackground.value)) pause()
+                    inBackground = intent?.action == Intent.ACTION_SCREEN_OFF || hostActivities.isEmpty()
+                    applyVideoDisabled()
                 }
             }
             val ok = runCatching {
-                ContextCompat.registerReceiver(app, r, IntentFilter(Intent.ACTION_SCREEN_OFF), ContextCompat.RECEIVER_NOT_EXPORTED)
+                ContextCompat.registerReceiver(app, r, IntentFilter().apply { addAction(Intent.ACTION_SCREEN_OFF); addAction(Intent.ACTION_SCREEN_ON) }, ContextCompat.RECEIVER_NOT_EXPORTED)
             }.isSuccess
             if (ok) screenReceiver = r
         }

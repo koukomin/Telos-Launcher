@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">帐号</string>
+    <string name="contacts_accounts_all">所有帐号</string>
+    <string name="contacts_accounts_selected">所选帐号（%1$d）</string>
+    <string name="contacts_account_device">此设备上</string>
+    <string name="contacts_delete_confirm">要从所有关联帐号中删除 %1$s 吗？此操作无法撤消。</string>
+</resources>

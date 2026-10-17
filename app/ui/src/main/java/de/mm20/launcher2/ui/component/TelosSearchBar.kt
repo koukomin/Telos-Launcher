@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -158,7 +158,7 @@ private fun SearchPill(
     }
 
     Surface(
-        modifier = modifier.height(height),
+        modifier = modifier.heightIn(min = height),
         shape = CircleShape,
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -166,7 +166,7 @@ private fun SearchPill(
         border = BorderStroke(2.dp, ringColor),
     ) {
         Row(
-            Modifier.padding(start = 4.dp, end = 4.dp),
+            Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(Modifier.size(40.dp), contentAlignment = Alignment.Center) {

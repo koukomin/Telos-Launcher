@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">حساب‌ها</string>
+    <string name="contacts_accounts_all">همه حساب‌ها</string>
+    <string name="contacts_accounts_selected">حساب‌های انتخابی (%1$d)</string>
+    <string name="contacts_account_device">در این دستگاه</string>
+    <string name="contacts_delete_confirm">%1$s از همه حساب‌های پیوندشده حذف شود؟ قابل بازگشت نیست.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Jirrestawra l-VPN li kien attiv meta Android jippermetti. Waqfien manwali jinżamm.</string>
+    <string name="netfw_u_unmetered">Imblokka fuq netwerks mhux imkejla</string>
+    <string name="netfw_vpn_bypass">Aqbeż il-VPN</string>
+</resources>

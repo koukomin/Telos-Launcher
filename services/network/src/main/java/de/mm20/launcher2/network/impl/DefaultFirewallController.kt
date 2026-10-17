@@ -257,6 +257,7 @@ internal class DefaultFirewallController(
             val env = flow.environment
             if (app.blockWifi && env.network == ConnectionType.Wifi) return FlowDecision.block(DecisionReason.ConnectionTypeRule)
             if (app.blockMobile && env.network == ConnectionType.Mobile) return FlowDecision.block(DecisionReason.ConnectionTypeRule)
+            if (app.blocksMetering(env.metered)) return FlowDecision.block(DecisionReason.ConnectionTypeRule)
             if (app.blockRoaming && env.roaming) return FlowDecision.block(DecisionReason.ConnectionTypeRule)
             if (app.blockVpn && env.network == ConnectionType.Vpn) return FlowDecision.block(DecisionReason.ConnectionTypeRule)
             if (app.blockLan && flow.destIsLan) return FlowDecision.block(DecisionReason.ConnectionTypeRule)

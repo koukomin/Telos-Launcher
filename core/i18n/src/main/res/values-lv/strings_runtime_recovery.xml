@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Atjauno iepriekš aktīvo VPN, kad Android to atļauj. Manuāla apturēšana tiek saglabāta.</string>
+    <string name="netfw_u_unmetered">Bloķēt neierobežotos tīklos</string>
+    <string name="netfw_vpn_bypass">Apiet VPN</string>
+</resources>

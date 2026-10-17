@@ -11,7 +11,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.gestures.detectVerticalDragGestures
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -76,7 +76,7 @@ import kotlinx.coroutines.delay
 
 /**
  * Full screen TV player in a dialog window (so it covers the hub) with the system bars hidden and the
- * screen kept on. Tap shows or hides the controls, a vertical swipe zaps to the next / previous
+ * screen kept on. Tap shows or hides the controls, a horizontal swipe zaps to the next / previous
  * channel of the list. Back minimizes: the channel keeps playing in the mini player.
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -98,8 +98,8 @@ fun TvPlayerDialog(
     val waitingForNetwork by controller.waitingForNetwork.collectAsStateWithLifecycle()
     val streamIndex by controller.streamIndex.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val epgKey = rememberTvEpgKey(viewModel, refresh = false)
-    var epgSheet by remember { mutableStateOf(false) }
+    val epgKey = rememberTvEpgKey(viewModel, refresh = true)
+    var epgSheet by remember(channel?.id) { mutableStateOf<TvProgramme?>(null) }
 
     Dialog(
         onDismissRequest = onMinimize,
@@ -129,7 +129,7 @@ fun TvPlayerDialog(
         var adjustingLevels by remember { mutableStateOf(false) }
         // controls fade out after a while when the picture plays
         LaunchedEffect(controls, playing, channel?.id, epgSheet, adjustingLevels) {
-            if (controls && playing && !epgSheet && !adjustingLevels) {
+            if (controls && playing && epgSheet == null && !adjustingLevels) {
                 delay(4000)
                 controls = false
             }
@@ -158,23 +158,23 @@ fun TvPlayerDialog(
                 TvStatic(Modifier.fillMaxSize(), reduceAnimations = reduceAnimations)
             }
 
-            // gestures: tap toggles the controls, swipe up / down zaps
+            // gestures: tap toggles the controls, swipe left / right zaps
             Box(
                 Modifier
                     .fillMaxSize()
                     .pointerInput(Unit) { detectTapGestures(onTap = { controls = !controls }) }
                     .pointerInput(Unit) {
                         var total = 0f
-                        detectVerticalDragGestures(
+                        detectHorizontalDragGestures(
                             onDragStart = { total = 0f },
                             onDragEnd = {
-                                if (total < -ZAP_DISTANCE) {
+                                if (total < -ZAP_DISTANCE.dp.toPx()) {
                                     if (controller.next()) controls = true
-                                } else if (total > ZAP_DISTANCE) {
+                                } else if (total > ZAP_DISTANCE.dp.toPx()) {
                                     if (controller.previous()) controls = true
                                 }
                             },
-                            onVerticalDrag = { _, dy -> total += dy },
+                            onHorizontalDrag = { change, dx -> change.consume(); total += dx },
                         )
                     },
             )
@@ -274,7 +274,7 @@ fun TvPlayerDialog(
                                 )
                             }
                         }
-                        val programmes = if (error == null) remember(epgKey, current.id) { viewModel.nowNext(current.id) } else null
+                        val programmes = if (error == null) remember(epgKey, current.id, controls) { viewModel.nowNext(current.id) } else null
                         val nowProg = programmes?.current
                         val nextProg = programmes?.next
                         if (nowProg != null || nextProg != null) {
@@ -297,9 +297,9 @@ fun TvPlayerDialog(
                                         ),
                                         color = Color.White,
                                         style = MaterialTheme.typography.bodyMedium,
-                                        maxLines = 1,
+                                        maxLines = 2,
                                         overflow = TextOverflow.Ellipsis,
-                                        modifier = Modifier.fillMaxWidth().clickable { epgSheet = true },
+                                        modifier = Modifier.fillMaxWidth().clickable { epgSheet = nowProg },
                                     )
                                     val span = (nowProg.stop - nowProg.start).coerceAtLeast(1L)
                                     val done = ((System.currentTimeMillis() - nowProg.start).toFloat() / span).coerceIn(0f, 1f)
@@ -317,14 +317,15 @@ fun TvPlayerDialog(
                                             timeFormat.format(java.util.Date(nextProg.start)),
                                         ),
                                         color = Color(0xCCFFFFFF),
-                                        style = MaterialTheme.typography.labelMedium,
-                                        maxLines = 1,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        modifier = Modifier.fillMaxWidth().clickable { epgSheet = nextProg },
+                                        maxLines = 2,
                                         overflow = TextOverflow.Ellipsis,
                                     )
                                 }
                             }
-                            if (epgSheet && nowProg != null) {
-                                EpgSheet(nowProg, timeFormat, onDismiss = { epgSheet = false })
+                            epgSheet?.let { programme ->
+                                EpgSheet(programme, timeFormat, onDismiss = { epgSheet = null })
                             }
                         }
                         Row(
@@ -427,4 +428,4 @@ private fun RoundControl(icon: Int, description: String, size: androidx.compose.
     }
 }
 
-private const val ZAP_DISTANCE = 140f
+private const val ZAP_DISTANCE = 56

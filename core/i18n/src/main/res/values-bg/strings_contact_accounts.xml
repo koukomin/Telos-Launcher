@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Акаунти</string>
+    <string name="contacts_accounts_all">Всички акаунти</string>
+    <string name="contacts_accounts_selected">Избрани акаунти (%1$d)</string>
+    <string name="contacts_account_device">На това устройство</string>
+    <string name="contacts_delete_confirm">Да се изтрие ли %1$s от всички свързани акаунти? Това е необратимо.</string>
+</resources>

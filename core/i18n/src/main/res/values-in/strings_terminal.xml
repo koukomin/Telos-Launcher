@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Terminal</string>
+    <string name="terminal_runtime_summary">Menggunakan Termux yang diinstal terpisah. Instal Termux dan semua add-on dari sumber yang sama. Shell berjalan di Termux, di luar Telos.</string>
+    <string name="terminal_open_failed">Tidak dapat membuka Termux atau situs web.</string>
+</resources>

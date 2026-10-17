@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Terminal</string>
+    <string name="terminal_runtime_summary">Kasutab eraldi paigaldatud Termuxi. Paigalda Termux ja kõik lisad samast allikast. Käsukest töötab Termuxis väljaspool Telost.</string>
+    <string name="terminal_open_failed">Termuxi või veebilehte ei saanud avada.</string>
+</resources>

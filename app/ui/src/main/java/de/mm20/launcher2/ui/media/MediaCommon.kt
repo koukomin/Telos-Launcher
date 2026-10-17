@@ -30,6 +30,11 @@ import de.mm20.launcher2.ui.locals.LocalBackStack
  */
 val LocalInMediaHub = androidx.compose.runtime.staticCompositionLocalOf { false }
 
+/** The hub composes each screen's actions in its own toolbar, without registering mutable UI state. */
+val LocalMediaHubToolbar = androidx.compose.runtime.staticCompositionLocalOf<
+    (@Composable (@Composable RowScope.() -> Unit) -> Unit)?
+> { null }
+
 /**
  * Frame for the Telos media screens (music, video, photos, radio): a top bar with back button and
  * a surface that sets the text color, and keeps the content clear of the status and navigation bars.
@@ -48,10 +53,11 @@ fun MediaFrame(
     if (askNotifications) RequestNotificationPermission()
     if (LocalInMediaHub.current) {
         androidx.compose.foundation.layout.Column(Modifier.fillMaxSize()) {
-            androidx.compose.foundation.layout.Row(
+            val toolbar = LocalMediaHubToolbar.current
+            if (toolbar != null) toolbar(actions)
+            else androidx.compose.foundation.layout.Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = androidx.compose.foundation.layout.Arrangement.End,
-                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
                 content = actions,
             )
             Box(Modifier.weight(1f).fillMaxWidth()) { content() }
