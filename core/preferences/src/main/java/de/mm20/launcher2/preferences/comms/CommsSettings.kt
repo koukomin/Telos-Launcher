@@ -350,6 +350,12 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(smsE2eEnabled = enabled)) }
     }
 
+    val smsBlockRegex
+        get() = dataStore.data.map { it.comms.smsBlockRegex }
+    fun setSmsBlockRegex(value: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(smsBlockRegex = value)) }
+    }
+
     val hiddenNumbers
         get() = dataStore.data.map { it.comms.hiddenNumbers }
     fun setHiddenNumber(number: String, hidden: Boolean) {

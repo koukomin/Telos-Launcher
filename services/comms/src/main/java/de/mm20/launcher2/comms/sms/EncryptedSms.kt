@@ -33,8 +33,33 @@ object EncryptedSms {
     fun isPayload(body: String) = body.startsWith(PREFIX_MSG)
     fun isTelosE2e(body: String) = isHandshake(body) || isPayload(body)
 
+    @Volatile private var unlocked = true
+
+    fun pinSet(context: Context) = prefs(context).contains("pin_hash")
+    fun isLocked(context: Context) = pinSet(context) && !unlocked
+    fun setPin(context: Context, pin: String) {
+        prefs(context).edit().putString("pin_hash", sha(pin)).apply()
+        unlocked = true
+    }
+    fun unlock(context: Context, pin: String): Boolean {
+        val ok = prefs(context).getString("pin_hash", null) == sha(pin)
+        unlocked = ok
+        return ok
+    }
+    fun exportKeys(context: Context): String = prefs(context).all.entries
+        .filter { it.key != "pin_hash" }
+        .joinToString("\n") { "${it.key}=${it.value}" }
+    fun importKeys(context: Context, dump: String) {
+        val ed = prefs(context).edit()
+        dump.lineSequence().forEach { line ->
+            val i = line.indexOf('=')
+            if (i > 0) ed.putString(line.substring(0, i), line.substring(i + 1))
+        }
+        ed.apply()
+    }
+
     fun hasSession(context: Context, address: String): Boolean =
-        peerPublic(context, digits(address)) != null
+        !isLocked(context) && peerPublic(context, digits(address)) != null
 
     fun safetyNumber(context: Context, address: String): String? {
         val peer = peerPublic(context, digits(address)) ?: return null
@@ -61,6 +86,7 @@ object EncryptedSms {
     }
 
     fun encrypt(context: Context, address: String, plain: String): String? {
+        if (isLocked(context)) return null
         val secret = sharedSecret(context, digits(address)) ?: return null
         val iv = ByteArray(12).also { SecureRandom().nextBytes(it) }
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
@@ -156,4 +182,5 @@ object EncryptedSms {
     private fun digits(address: String) = address.filter { it.isDigit() }
     private fun b64(data: ByteArray) = Base64.encodeToString(data, Base64.NO_WRAP)
     private fun ByteArray.concatToString() = joinToString("") { "%02x".format(it) }
+    private fun sha(pin: String) = MessageDigest.getInstance("SHA-256").digest(pin.toByteArray()).joinToString("") { "%02x".format(it) }
 }

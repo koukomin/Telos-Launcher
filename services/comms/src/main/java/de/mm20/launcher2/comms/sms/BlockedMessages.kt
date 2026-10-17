@@ -64,6 +64,13 @@ object BlockedMessages {
     ): Boolean {
         val blocked = runCatching { spam.isNumberBlocked(address) }.getOrDefault(false)
         if (!blocked) return false
+        keep(context, address, body, date, parts)
+        return true
+    }
+
+    fun keep(
+        context: Context, address: String, body: String, date: Long, parts: List<MmsPart>? = null,
+    ) {
         val id = System.nanoTime()
         val attachments = parts.orEmpty().filter { !it.contentType.startsWith("text/") && !it.contentType.contains("smil") }
             .mapIndexedNotNull { i, part ->
@@ -79,7 +86,6 @@ object BlockedMessages {
             (all - kept.toSet()).forEach { dropFiles(it) }
             persist(context, kept)
         }
-        return true
     }
 
     private fun dropFiles(m: BlockedMessage) {

@@ -3,13 +3,10 @@ package de.mm20.launcher2.comms.sms
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.speech.tts.TextToSpeech
 import android.app.NotificationManager
 import de.mm20.launcher2.base.containedScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.Locale
-
 class SmsNotifActionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val address = intent.getStringExtra("address").orEmpty()
@@ -37,17 +34,7 @@ class SmsNotifActionReceiver : BroadcastReceiver() {
                 }
                 context.getSystemService(NotificationManager::class.java)?.cancel(address.hashCode())
             }
-            SPEAK -> {
-                val text = intent.getStringExtra("text").orEmpty()
-                if (text.isBlank()) return
-                var tts: TextToSpeech? = null
-                tts = TextToSpeech(context.applicationContext) { status ->
-                    if (status == TextToSpeech.SUCCESS) {
-                        tts?.language = Locale.getDefault()
-                        tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "sms")
-                    }
-                }
-            }
+            SPEAK -> SmsTts.speak(context, intent.getStringExtra("text").orEmpty())
         }
     }
 

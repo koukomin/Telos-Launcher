@@ -32,4 +32,10 @@
     <string name="comms_e2e_start">Verschlüsselte Sitzung starten</string>
     <string name="comms_e2e_session_started">Verschlüsselte SMS-Sitzung gestartet</string>
     <string name="comms_e2e_undecryptable">Verschlüsselte Nachricht (Entschlüsselung fehlgeschlagen)</string>
+    <string name="comms_block_regex">Block messages matching regex</string>
+    <string name="comms_e2e_pin">E2E PIN</string>
+    <string name="comms_e2e_set_pin">Set PIN</string>
+    <string name="comms_e2e_unlock">Unlock</string>
+    <string name="comms_e2e_export_keys">Export E2E keys</string>
+    <string name="comms_e2e_import_keys">Import E2E keys</string>
 </resources>

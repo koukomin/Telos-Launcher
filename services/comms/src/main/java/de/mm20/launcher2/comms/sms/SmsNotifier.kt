@@ -79,6 +79,7 @@ object SmsNotifier {
                 .setContentIntent(open)
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
+                .setFullScreenIntent(open, true)
                 .addAction(
                     Notification.Action.Builder(null, SmsText.get(context, "hc_send", "Reply"), reply)
                         .addRemoteInput(remote)

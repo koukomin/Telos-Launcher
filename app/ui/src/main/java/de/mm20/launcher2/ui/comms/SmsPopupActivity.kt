@@ -27,6 +27,15 @@ import kotlinx.coroutines.launch
 class SmsPopupActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+            setTurnScreenOn(true)
+        }
+        window.addFlags(
+            android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
+                android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,
+        )
         val address = intent.getStringExtra("address").orEmpty()
         val title = intent.getStringExtra("title").orEmpty()
         val text = intent.getStringExtra("text").orEmpty()

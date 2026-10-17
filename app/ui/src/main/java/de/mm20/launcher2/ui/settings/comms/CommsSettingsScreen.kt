@@ -2,6 +2,7 @@
 package de.mm20.launcher2.ui.settings.comms
 
 import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
@@ -602,12 +603,51 @@ fun CommsSettingsScreen() {
                     onValueChanged = { viewModel.setSmsPopupReply(it) },
                 )
                 val e2e by viewModel.smsE2eEnabled.collectAsStateWithLifecycle()
+                val blockRegex by viewModel.smsBlockRegex.collectAsStateWithLifecycle()
+                var regexDraft by remember { mutableStateOf(blockRegex) }
+                LaunchedEffect(blockRegex) { regexDraft = blockRegex }
+                OutlinedTextField(
+                    value = regexDraft,
+                    onValueChange = { regexDraft = it; viewModel.setSmsBlockRegex(it) },
+                    label = { Text(stringResource(R.string.comms_block_regex)) },
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                )
                 SwitchPreference(
                     title = stringResource(R.string.comms_e2e_enable),
                     summary = stringResource(R.string.comms_e2e_enable_summary),
                     value = e2e,
                     onValueChanged = { viewModel.setSmsE2eEnabled(it) },
                 )
+                var e2ePin by remember { mutableStateOf("") }
+                OutlinedTextField(
+                    value = e2ePin,
+                    onValueChange = { e2ePin = it },
+                    label = { Text(stringResource(R.string.comms_e2e_pin)) },
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                    singleLine = true,
+                )
+                Row(Modifier.padding(horizontal = 16.dp)) {
+                    TextButton(onClick = {
+                        if (e2ePin.isNotBlank()) de.mm20.launcher2.comms.sms.EncryptedSms.setPin(context, e2ePin)
+                    }) { Text(stringResource(R.string.comms_e2e_set_pin)) }
+                    TextButton(onClick = {
+                        de.mm20.launcher2.comms.sms.EncryptedSms.unlock(context, e2ePin)
+                    }) { Text(stringResource(R.string.comms_e2e_unlock)) }
+                }
+                val e2eExport = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) { uri ->
+                    if (uri == null) return@rememberLauncherForActivityResult
+                    val dump = de.mm20.launcher2.comms.sms.EncryptedSms.exportKeys(context)
+                    val enc = de.mm20.launcher2.comms.backup.CommsBackupManager.encrypt(dump, e2ePin.ifBlank { "telos" })
+                    runCatching { context.contentResolver.openOutputStream(uri)?.use { it.write(enc.toByteArray()) } }
+                }
+                val e2eImport = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+                    if (uri == null) return@rememberLauncherForActivityResult
+                    val text = runCatching { context.contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() } }.getOrNull() ?: return@rememberLauncherForActivityResult
+                    val plain = runCatching { de.mm20.launcher2.comms.backup.CommsBackupManager.decrypt(text, e2ePin.ifBlank { "telos" }) }.getOrNull() ?: return@rememberLauncherForActivityResult
+                    de.mm20.launcher2.comms.sms.EncryptedSms.importKeys(context, plain)
+                }
+                Preference(title = stringResource(R.string.comms_e2e_export_keys), onClick = { e2eExport.launch("telos-e2e.txt") })
+                Preference(title = stringResource(R.string.comms_e2e_import_keys), onClick = { e2eImport.launch(arrayOf("text/plain", "*/*")) })
                 ListPreference(
                     title = stringResource(R.string.comms_sms_auto_delete),
                     value = autoDays,

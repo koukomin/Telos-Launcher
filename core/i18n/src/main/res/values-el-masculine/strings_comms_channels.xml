@@ -32,4 +32,10 @@
     <string name="comms_e2e_start">Έναρξη κρυπτογραφημένης συνεδρίας</string>
     <string name="comms_e2e_session_started">Η κρυπτογραφημένη συνεδρία SMS ξεκίνησε</string>
     <string name="comms_e2e_undecryptable">Κρυπτογραφημένο μήνυμα (αδυναμία αποκρυπτογράφησης)</string>
+    <string name="comms_block_regex">Αποκλεισμός μηνυμάτων με regex</string>
+    <string name="comms_e2e_pin">PIN κρυπτογράφησης</string>
+    <string name="comms_e2e_set_pin">Ορισμός PIN</string>
+    <string name="comms_e2e_unlock">Ξεκλείδωμα</string>
+    <string name="comms_e2e_export_keys">Εξαγωγή κλειδιών E2E</string>
+    <string name="comms_e2e_import_keys">Εισαγωγή κλειδιών E2E</string>
 </resources>

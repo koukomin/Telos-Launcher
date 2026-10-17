@@ -40,6 +40,14 @@ class SmsDeliverReceiver : BroadcastReceiver(), KoinComponent {
                     BlockedMessages.interceptIfBlocked(context, spam, address, body, date)
                     return@launch
                 }
+                val pattern = snap?.smsBlockRegex.orEmpty()
+                if (pattern.isNotBlank()) {
+                    val matches = runCatching { Regex(pattern, RegexOption.IGNORE_CASE).containsMatchIn("$address\n$body") }.getOrDefault(false)
+                    if (matches) {
+                        BlockedMessages.keep(context, address, body, date)
+                        return@launch
+                    }
+                }
                 var stored = body
                 if (snap?.smsE2eEnabled == true && EncryptedSms.isTelosE2e(body)) {
                     if (EncryptedSms.isHandshake(body)) {

@@ -1343,6 +1343,7 @@ data class CommsGroup(
     val blockAlphanumeric: Boolean = false,
     val smsPopupReply: Boolean = false,
     val smsE2eEnabled: Boolean = false,
+    val smsBlockRegex: String = "",
     val hiddenNumbers: Map<String, String> = emptyMap(),
     val hideFromContacts: Boolean = true,
     val hideFromRecents: Boolean = true,
