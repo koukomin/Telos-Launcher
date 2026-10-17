@@ -224,14 +224,15 @@ fun TerminalScreen() {
                                         Build.SUPPORTED_ABIS.contains("x86_64") -> "x86_64"
                                         else -> "aarch64"
                                     }
-                                    val url = URL("https://github.com/termux/termux-packages/releases/download/bootstrap-2023.01.30/$abi-bootstrap.zip")
+                                    val url = URL("https://github.com/termux/termux-packages/releases/download/bootstrap-2024.01.27/$abi-bootstrap.zip")
                                     val zipFile = File(context.cacheDir, "bootstrap.zip")
                                     
-                                    val connection = url.openConnection()
+                                    val connection = url.openConnection() as java.net.HttpURLConnection
+                                    connection.instanceFollowRedirects = true
                                     val fileSize = connection.contentLength.toFloat()
                                     var downloaded = 0L
                                     
-                                    connection.getInputStream().use { input ->
+                                    connection.inputStream.use { input ->
                                         FileOutputStream(zipFile).use { output ->
                                             val buffer = ByteArray(8192)
                                             var bytesRead: Int
@@ -260,14 +261,12 @@ fun TerminalScreen() {
                                                 FileOutputStream(newFile).use { fos ->
                                                     val bytes = ByteArray(8192)
                                                     var len: Int
-                                                    while (zis.read(bytes).also { len = bytes.size } > 0) {
-                                                        // read correctly
-                                                        val readCount = zis.read(bytes, 0, len)
-                                                        if (readCount <= 0) break
-                                                        fos.write(bytes, 0, readCount)
+                                                    while (zis.read(bytes).also { len = it } > 0) {
+                                                        fos.write(bytes, 0, len)
                                                     }
                                                 }
                                             }
+                                            zis.closeEntry()
                                             ze = zis.nextEntry
                                         }
                                     }
