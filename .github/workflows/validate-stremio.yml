@@ -1,0 +1,87 @@
+name: Validate Stremio Fork
+on:
+  pull_request:
+    paths:
+      - 'tools/validation/**'
+      - 'services/widgets/**'
+      - 'data/widgets/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/launcher/widgets/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/**'
+      - 'services/network/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/network/**'
+      - 'settings.gradle.kts'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/media/**'
+      - 'services/comms/src/**'
+      - 'services/store/src/**'
+      - 'data/store/**'
+      - 'data/comms/**'
+      - 'gradle/libs.versions.toml'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/files/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/trash/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/comms/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/store/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/**'
+      - 'app/ui/src/main/AndroidManifest.xml'
+      - 'core/base/src/**'
+      - 'core/preferences/src/**'
+      - 'services/freeze/**'
+      - 'services/music/**'
+      - 'services/wallpapers/**'
+      - 'services/icons/**'
+      - 'data/applications/**'
+      - 'services/badges/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/ShapedLauncherIcon.kt'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/floating/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/**'
+      - 'core/i18n/src/main/res/**'
+      - '.github/workflows/validate-stremio.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate complete translations and Android placeholders
+        run: python tools/translations/validate.py
+      - name: Verify default SMS role eligibility
+        run: python tools/validation/sms_manifest.py
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: temurin
+      - uses: gradle/actions/setup-gradle@v4
+      - run: chmod +x gradlew
+      - name: Test Stremio protocol and watched state
+        run: ./gradlew :services:comms:testDebugUnitTest --tests 'de.mm20.launcher2.comms.model.*' --tests 'de.mm20.launcher2.comms.network.*' --tests 'de.mm20.launcher2.comms.search.*' --tests 'de.mm20.launcher2.comms.stremio.*' --tests 'de.mm20.launcher2.comms.tv.*' --tests 'de.mm20.launcher2.comms.youtube.*' --tests 'de.mm20.launcher2.comms.files.FilesSharingServerTest' --stacktrace
+      - name: Test home media session discovery and priority
+        run: ./gradlew :services:music:testDebugUnitTest --stacktrace
+      - name: Test Tor routing and Web3 resolution
+        run: ./gradlew :services:network:testDebugUnitTest --stacktrace
+      - name: Test frozen launcher component ordering
+        run: ./gradlew :data:applications:testDebugUnitTest --stacktrace
+      - name: Test persisted frozen-app snapshots
+        run: ./gradlew :core:preferences:testDebugUnitTest --stacktrace
+      - name: Test freeze transitions and partial failures
+        run: ./gradlew :services:freeze:testDebugUnitTest --stacktrace
+      - name: Test GIF wallpaper decoder limits
+        run: ./gradlew :services:wallpapers:testDebugUnitTest --stacktrace
+      - name: Test virtual app task identities
+        run: ./gradlew :core:base:testDebugUnitTest --tests 'de.mm20.launcher2.webapp.EmbeddedBrowserPolicyTest' --tests 'de.mm20.launcher2.applock.VirtualAppTaskTest' --tests 'de.mm20.launcher2.search.TelosAppKeywordsTest' --tests 'de.mm20.launcher2.helper.BatchNamesTest' --tests 'de.mm20.launcher2.helper.StorageAnalysisTest' --tests 'de.mm20.launcher2.helper.FileTrashTest' --tests 'de.mm20.launcher2.helper.FileSearchIndexTest' --tests 'de.mm20.launcher2.helper.FileTreeOpsTest' --tests 'de.mm20.launcher2.helper.ResumableFileTransferTest' --tests 'de.mm20.launcher2.helper.PasswordFileEncryptionTest' --tests 'de.mm20.launcher2.helper.SplitZipArchiveTest' --tests 'de.mm20.launcher2.helper.ExclusiveFilePublicationTest' --stacktrace
+      - name: Test Downloader queue and transfer policies
+        run: ./gradlew :services:downloads:testDebugUnitTest --stacktrace
+      - name: Test Store download and update policies
+        run: ./gradlew :services:store:testDebugUnitTest --stacktrace
+      - name: Test UI settings, archives and contact recovery
+        run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests 'de.mm20.launcher2.ui.files.FilesSettingsTransferTest' --tests 'de.mm20.launcher2.ui.files.ArchiveWriterTest' --tests 'de.mm20.launcher2.ui.comms.ContactBlockStatusTest' --stacktrace
+      - name: Test streaming APK downloads with a constrained heap
+        run: ./gradlew :data:store:testDebugUnitTest --stacktrace
+      - name: Build debug APK
+        run: ./gradlew :app:app:assembleDefaultDebug --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: telos-stremio-debug
+          path: app/app/build/outputs/apk/default/debug/*.apk
