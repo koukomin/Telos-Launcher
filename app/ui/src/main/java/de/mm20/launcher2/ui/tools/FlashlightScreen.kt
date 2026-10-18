@@ -2,11 +2,10 @@ package de.mm20.launcher2.ui.tools
 
 import android.app.Activity
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
-import android.media.AudioFormat
 import android.media.AudioManager
-import android.media.AudioTrack
 import android.media.ToneGenerator
 import android.os.Build
 import android.view.WindowManager
@@ -25,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.coroutines.*
 import kotlinx.serialization.Serializable
 
@@ -75,7 +76,10 @@ private val MORSE_MAP = mapOf(
 fun FlashlightScreen() {
     val context = LocalContext.current
     val activity = context as? Activity
+    val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
+    val config = LocalConfiguration.current
+    val isLandscape = config.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
     val cameraManager = remember { context.getSystemService(Context.CAMERA_SERVICE) as CameraManager }
     val cameraId = remember {
@@ -91,6 +95,8 @@ fun FlashlightScreen() {
 
     var isTorchOn by remember { mutableStateOf(false) }
     var targetMode by remember { mutableStateOf(FlashlightTarget.Flash) }
+    var allowLandscape by remember { mutableStateOf(false) }
+
     var screenBrightness by remember { mutableFloatStateOf(1.0f) }
     var selectedScreenColor by remember { mutableStateOf(Color.White) }
     var isScreenFlashOn by remember { mutableStateOf(false) }
@@ -114,7 +120,14 @@ fun FlashlightScreen() {
         try { ToneGenerator(AudioManager.STREAM_MUSIC, 100) } catch (_: Exception) { null }
     }
 
-    // Check Hardware Torch Strength (Dimming) API 33+
+    // Lock Orientation to Portrait by Default
+    DisposableEffect(allowLandscape) {
+        val orig = activity?.requestedOrientation ?: ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        activity?.requestedOrientation = if (allowLandscape) ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED else ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        onDispose { activity?.requestedOrientation = orig }
+    }
+
+    // Hardware Torch Strength (Dimming) API 33+
     LaunchedEffect(cameraId) {
         if (cameraId != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             try {
@@ -145,6 +158,28 @@ fun FlashlightScreen() {
         }
     }
 
+    // Auto-switch Light Target Sources
+    fun switchLightTarget(newTarget: FlashlightTarget) {
+        targetMode = newTarget
+        if (isTorchOn) {
+            // Turn off camera flash if not needed
+            if (newTarget != FlashlightTarget.Flash && newTarget != FlashlightTarget.Both) {
+                setHardwareTorch(false)
+            } else {
+                setHardwareTorch(true, (torchStrength * maxStrength).toInt())
+            }
+
+            // Turn off screen light if not needed
+            if (newTarget != FlashlightTarget.Screen && newTarget != FlashlightTarget.Both) {
+                applyScreenBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
+                isScreenFlashOn = false
+            } else {
+                applyScreenBrightness(screenBrightness)
+                isScreenFlashOn = true
+            }
+        }
+    }
+
     DisposableEffect(Unit) {
         onDispose {
             strobeJob?.cancel()
@@ -164,6 +199,7 @@ fun FlashlightScreen() {
                 .background(selectedScreenColor)
                 .clickable {
                     isScreenFlashOn = false
+                    isTorchOn = false
                     applyScreenBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
                 },
             contentAlignment = Alignment.Center
@@ -177,6 +213,21 @@ fun FlashlightScreen() {
         topBar = {
             TopAppBar(
                 title = { Text("Φακός & Σειρήνα / Μορς", color = Color.White) },
+                navigationIcon = {
+                    IconButton(onClick = { backStack.removeLastOrNull() }) {
+                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back", tint = Color.White)
+                    }
+                },
+                actions = {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text("Landscape", color = Color.Gray, fontSize = 12.sp)
+                        Switch(
+                            checked = allowLandscape,
+                            onCheckedChange = { allowLandscape = it },
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        )
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Black)
             )
         },
@@ -190,7 +241,7 @@ fun FlashlightScreen() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Main Torch / Screen Flashlight Toggle Button
+            // Main Toggle Button
             item {
                 Spacer(Modifier.height(8.dp))
                 IconButton(
@@ -237,12 +288,12 @@ fun FlashlightScreen() {
                 )
             }
 
-            // Light Target Selector
+            // Light Target Selector with Auto-Switching
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("Light Source", style = MaterialTheme.typography.titleMedium, color = Color.White)
@@ -251,7 +302,7 @@ fun FlashlightScreen() {
                             FlashlightTarget.entries.forEach { target ->
                                 FilterChip(
                                     selected = targetMode == target,
-                                    onClick = { targetMode = target },
+                                    onClick = { switchLightTarget(target) },
                                     label = { Text(target.label, fontSize = 12.sp) },
                                     modifier = Modifier.weight(1f)
                                 )
@@ -266,13 +317,12 @@ fun FlashlightScreen() {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("Screen Light Color & Brightness", style = MaterialTheme.typography.titleMedium, color = Color.White)
                         Spacer(Modifier.height(12.dp))
 
-                        // Color Row
                         LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                             items(SCREEN_COLORS) { (name, color) ->
                                 Box(
@@ -300,31 +350,6 @@ fun FlashlightScreen() {
                                 applyScreenBrightness(it)
                             }
                         )
-                    }
-                }
-            }
-
-            // Hardware Dimming Slider (if supported by Camera2)
-            if (maxStrength > 1) {
-                item {
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(16.dp),
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
-                    ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Camera Hardware Dimming", style = MaterialTheme.typography.titleMedium, color = Color.White)
-                            Spacer(Modifier.height(8.dp))
-                            Slider(
-                                value = torchStrength,
-                                onValueChange = { str ->
-                                    torchStrength = str
-                                    if (isTorchOn) {
-                                        setHardwareTorch(true, (str * maxStrength).toInt())
-                                    }
-                                }
-                            )
-                        }
                     }
                 }
             }
@@ -380,7 +405,7 @@ fun FlashlightScreen() {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("Strobe Light (Blink Frequency)", style = MaterialTheme.typography.titleMedium, color = Color.White)
@@ -418,36 +443,12 @@ fun FlashlightScreen() {
                 }
             }
 
-            // Output Mode Selector
+            // Morse Code Section
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Morse Signal Output Mode", style = MaterialTheme.typography.titleMedium, color = Color.White)
-                        Spacer(Modifier.height(8.dp))
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                            FlashlightOutputMode.entries.forEach { mode ->
-                                FilterChip(
-                                    selected = outputMode == mode,
-                                    onClick = { outputMode = mode },
-                                    label = { Text(mode.label, fontSize = 12.sp) },
-                                    modifier = Modifier.weight(1f)
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Morse Code & SOS Section
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("Text-to-Morse & SOS Signals", style = MaterialTheme.typography.titleMedium, color = Color.White)

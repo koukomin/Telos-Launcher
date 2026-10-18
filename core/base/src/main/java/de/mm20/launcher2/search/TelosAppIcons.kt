@@ -18,7 +18,6 @@ object TelosAppIcons {
         "telos_files_app" -> R.drawable.ic_app_files_full
         "telos_calculator_app" -> R.drawable.ic_app_calculator_full
         "telos_voice_recorder_app" -> R.drawable.ic_app_voice_recorder_full
-        "telos_camera_app" -> R.drawable.ic_app_camera_full
         "telos_screen_recorder_app" -> R.drawable.ic_app_screen_recorder_full
         "telos_screenshot_app" -> R.drawable.ic_app_screenshot_full
         "telos_notes_app" -> R.drawable.ic_app_notes_full
@@ -30,6 +29,10 @@ object TelosAppIcons {
         "telos_store_app" -> R.drawable.ic_app_store_full
         "telos_system_app" -> R.drawable.ic_app_network_full
         "telos_trash_app" -> R.drawable.ic_app_files_full
+        "telos_clock_app" -> R.drawable.schedule_24px
+        "telos_akou_app" -> R.drawable.ic_app_youtube_music_full
+        "telos_magnifier_app" -> R.drawable.search_24px
+        "telos_flashlight_app" -> R.drawable.light_mode_24px
         else -> null
     }
 }
