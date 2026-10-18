@@ -66,7 +66,7 @@ class StoreUpdaterImpl(
         if (background && updates.isNotEmpty() && installer.canInstallSilently()) {
             for (item in updates.toList()) {
                 val itemOptions = options.item(item.id)
-                if (!de.mm20.launcher2.store.updater.StoreUpdatePolicy.automatic(itemOptions, global.autoInstall)) continue
+                if (!de.mm20.launcher2.store.updater.StoreUpdatePolicy.automatic(itemOptions, global.autoInstall, context)) continue
                 if (handler.install(item) is StoreAction.Installed) {
                     installed += item
                     updates.remove(item)
