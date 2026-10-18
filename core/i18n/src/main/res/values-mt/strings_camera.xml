@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Kamera</string>
+    <string name="camera_need_permission">Hemm bżonn permess tal-kamera</string>
+    <string name="camera_mode_photo">Ritratt</string>
+    <string name="camera_mode_video">Vidjo</string>
+    <string name="camera_mode_portrait">Ritratt</string>
+    <string name="camera_mode_night">Lejl</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">Diskret</string>
+    <string name="camera_flip">Ibdel il-kamera</string>
+    <string name="camera_format">Format</string>
+    <string name="camera_raw">Issejvja DNG RAW</string>
+    <string name="camera_exif">Żomm EXIF</string>
+    <string name="camera_silent">Obturatur sieket</string>
+    <string name="camera_hide_folder">Album moħbi (.nomedia)</string>
+    <string name="camera_grid">Grilja</string>
+    <string name="camera_burst">Burst ×%1$d</string>
+    <string name="camera_webcam_start">Ibda webcam IP</string>
+    <string name="camera_webcam_stop">Waqqaf webcam</string>
+    <string name="camera_usb_hint">Webcam USB teħtieġ gadget OEM. MJPEG IP jaħdem fuq kwalunkwe LAN.</string>
+    <string name="camera_discreet">Qbid diskret</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

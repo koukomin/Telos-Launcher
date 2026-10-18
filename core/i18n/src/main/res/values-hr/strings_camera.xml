@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Kamera</string>
+    <string name="camera_need_permission">Potrebna je dozvola kamere</string>
+    <string name="camera_mode_photo">Foto</string>
+    <string name="camera_mode_video">Video</string>
+    <string name="camera_mode_portrait">Portret</string>
+    <string name="camera_mode_night">Noć</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">Diskretno</string>
+    <string name="camera_flip">Promijeni kameru</string>
+    <string name="camera_format">Format</string>
+    <string name="camera_raw">Spremi DNG RAW</string>
+    <string name="camera_exif">Zadrži EXIF</string>
+    <string name="camera_silent">Tihi zatvarač</string>
+    <string name="camera_hide_folder">Skriveni album (.nomedia)</string>
+    <string name="camera_grid">Mreža</string>
+    <string name="camera_burst">Serija ×%1$d</string>
+    <string name="camera_webcam_start">Pokreni IP webkameru</string>
+    <string name="camera_webcam_stop">Zaustavi webkameru</string>
+    <string name="camera_usb_hint">USB webkamera treba OEM gadget. IP MJPEG radi na svakom LAN-u.</string>
+    <string name="camera_discreet">Diskretno snimanje</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">檢視器設定</string>
+    <string name="viewer_thumbs_video">影片縮圖</string>
+    <string name="viewer_thumbs_video_summary">在相簿中顯示每個影片的一幀。預設開啟。</string>
+    <string name="viewer_thumbs_documents">文件縮圖</string>
+    <string name="viewer_thumbs_documents_summary">在清單中預覽 PDF 與 Office。預設開啟。</string>
+</resources>

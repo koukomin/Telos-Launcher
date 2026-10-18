@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Камера</string>
+    <string name="camera_need_permission">Нужно разрешение камеры</string>
+    <string name="camera_mode_photo">Фото</string>
+    <string name="camera_mode_video">Видео</string>
+    <string name="camera_mode_portrait">Портрет</string>
+    <string name="camera_mode_night">Ночь</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Панорама</string>
+    <string name="camera_mode_discreet">Скрытый</string>
+    <string name="camera_flip">Сменить камеру</string>
+    <string name="camera_format">Формат</string>
+    <string name="camera_raw">Сохранять DNG RAW</string>
+    <string name="camera_exif">Оставлять EXIF</string>
+    <string name="camera_silent">Бесшумный затвор</string>
+    <string name="camera_hide_folder">Скрытый альбом (.nomedia)</string>
+    <string name="camera_grid">Сетка</string>
+    <string name="camera_burst">Серия ×%1$d</string>
+    <string name="camera_webcam_start">Запустить IP-вебкамеру</string>
+    <string name="camera_webcam_stop">Остановить вебкамеру</string>
+    <string name="camera_usb_hint">USB-вебкамера требует OEM gadget. IP MJPEG работает в любой LAN.</string>
+    <string name="camera_discreet">Скрытая съёмка</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

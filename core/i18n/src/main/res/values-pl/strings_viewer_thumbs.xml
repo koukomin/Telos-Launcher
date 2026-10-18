@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Ustawienia przeglądarki</string>
+    <string name="viewer_thumbs_video">Miniatury wideo</string>
+    <string name="viewer_thumbs_video_summary">Klatka z każdego filmu w galerii. Domyślnie wyłączone.</string>
+    <string name="viewer_thumbs_documents">Miniatury dokumentów</string>
+    <string name="viewer_thumbs_documents_summary">Podgląd PDF i Office na liście. Domyślnie wyłączone.</string>
+</resources>

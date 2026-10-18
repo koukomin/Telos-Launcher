@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Kamera</string>
+    <string name="camera_need_permission">Kameraengedély szükséges</string>
+    <string name="camera_mode_photo">Fotó</string>
+    <string name="camera_mode_video">Videó</string>
+    <string name="camera_mode_portrait">Portré</string>
+    <string name="camera_mode_night">Éjszaka</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">Diszkrét</string>
+    <string name="camera_flip">Kamera váltása</string>
+    <string name="camera_format">Formátum</string>
+    <string name="camera_raw">DNG RAW mentése</string>
+    <string name="camera_exif">EXIF megtartása</string>
+    <string name="camera_silent">Csendes zár</string>
+    <string name="camera_hide_folder">Rejtett album (.nomedia)</string>
+    <string name="camera_grid">Rács</string>
+    <string name="camera_burst">Sorozat ×%1$d</string>
+    <string name="camera_webcam_start">IP webkamera indítása</string>
+    <string name="camera_webcam_stop">Webkamera leállítása</string>
+    <string name="camera_usb_hint">Az USB webkamera OEM gadgetet igényel. Az IP MJPEG bármely LAN-on működik.</string>
+    <string name="camera_discreet">Diszkrét felvétel</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

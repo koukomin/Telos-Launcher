@@ -136,7 +136,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
             }
             .filter { c == null || it.options.category == c }
             .filter { q.isBlank() || TelosSearch.matches(q, it.item.displayName, it.item.packageName, sourceText(it.item.source), it.options.note, it.options.category) }
-            .sortedWith(compareByDescending<StoreRow> { it.updateAvailable }.thenBy { it.item.displayName.lowercase() })
+            .sortedWith(storeUpdateOrder(context.packageName))
             .toList()
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -291,7 +291,12 @@ class StoreViewModel : ViewModel(), KoinComponent {
     private val activeInstalls = mutableSetOf<String>()
 
     fun updateAll() {
-        requestUpdates(rows.value.filter { it.updateAvailable && !it.options.trackOnly }.map { it.item })
+        requestUpdates(
+            rows.value
+                .filter { it.updateAvailable && !it.options.trackOnly }
+                .sortedWith(storeUpdateOrder(context.packageName))
+                .map { it.item },
+        )
     }
 
     private fun requestUpdates(targets: List<StoreItem>) {
@@ -495,9 +500,15 @@ class StoreViewModel : ViewModel(), KoinComponent {
 
     val visiblePlayApps: StateFlow<List<PlayStoreApp>> =
         combine(_playApps, playQuery, playFilterUpdates) { list, q, updatesOnly ->
+            val pkg = context.packageName
             list.asSequence()
                 .filter { !updatesOnly || it.updateAvailable == true }
                 .filter { q.isBlank() || TelosSearch.matches(q, it.label, it.packageName, it.versionName) }
+                .sortedWith(
+                    compareByDescending<PlayStoreApp> { it.updateAvailable == true && it.packageName == pkg }
+                        .thenByDescending { it.updateAvailable == true }
+                        .thenBy { it.label.lowercase() },
+                )
                 .toList()
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -581,3 +592,16 @@ class StoreViewModel : ViewModel(), KoinComponent {
         _installStates.value = _installStates.value + (id to state)
     }
 }
+
+internal fun StoreRow.isTelosLauncher(launcherPackage: String): Boolean {
+    if (item.id == "telos-self") return true
+    if (item.packageName == launcherPackage) return true
+    val github = item.source as? AppSource.GitHub ?: return false
+    return github.owner.equals("koukomin", ignoreCase = true) &&
+        github.repo.equals("Telos-Launcher", ignoreCase = true)
+}
+
+internal fun storeUpdateOrder(launcherPackage: String): Comparator<StoreRow> =
+    compareByDescending<StoreRow> { it.updateAvailable && it.isTelosLauncher(launcherPackage) }
+        .thenByDescending { it.updateAvailable }
+        .thenBy { it.item.displayName.lowercase() }

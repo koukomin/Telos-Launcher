@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">ভিউয়ার সেটিংস</string>
+    <string name="viewer_thumbs_video">ভিডিও থাম্বনেইল</string>
+    <string name="viewer_thumbs_video_summary">গ্যালারিতে প্রতিটি ভিডিওর একটি ফ্রেম। ডিফল্ট চালু।</string>
+    <string name="viewer_thumbs_documents">নথির থাম্বনেইল</string>
+    <string name="viewer_thumbs_documents_summary">তালিকায় PDF ও Office প্রিভিউ। ডিফল্ট চালু।</string>
+</resources>

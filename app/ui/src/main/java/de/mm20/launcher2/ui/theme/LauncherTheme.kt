@@ -101,7 +101,7 @@ fun LauncherTheme(
     val shapes = shapesOf(themeShapes!!)
     val typography = typographyOf(themeTypography!!)
 
-    val transparencyScheme = transparencySchemeOf(themeTransparencies!!)
+    val transparencyScheme = transparencySchemeOf(themeTransparencies!!, darkTheme)
 
 
     val baseDensity = LocalDensity.current

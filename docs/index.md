@@ -48,6 +48,10 @@ features:
     title: Voice Recorder
     details: Voice recordings with a list, search, pause and the call recordings of Telos Phone.
     link: /docs/user-guide/telos/voice-recorder/
+  - icon: 📷
+    title: Camera
+    details: Hasselblad-style camera, RAW, discreet capture and an IP webcam for OBS.
+    link: /docs/user-guide/telos/camera/
   - icon: 📝
     title: Notes
     details: Notes with labels, sync with a Markdown folder or Nextcloud, import from Google Keep and Evernote.

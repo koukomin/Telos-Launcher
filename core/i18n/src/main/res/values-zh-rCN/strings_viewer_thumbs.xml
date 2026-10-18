@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">查看器设置</string>
+    <string name="viewer_thumbs_video">视频缩略图</string>
+    <string name="viewer_thumbs_video_summary">在图库中显示每个视频的一帧。默认开启。</string>
+    <string name="viewer_thumbs_documents">文档缩略图</string>
+    <string name="viewer_thumbs_documents_summary">在列表中预览 PDF 和 Office。默认开启。</string>
+</resources>

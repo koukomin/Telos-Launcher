@@ -44,8 +44,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
@@ -167,7 +171,7 @@ fun CallScreen(onFinished: () -> Unit) {
         else -> ""
     }
 
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background))) {
+    Box(Modifier.fillMaxSize()) {
         if (!state.photoUri.isNullOrBlank()) {
             AsyncImage(
                 model = state.photoUri,
@@ -189,16 +193,20 @@ fun CallScreen(onFinished: () -> Unit) {
                 rejectSms = rejectSms,
                 answerStyle = answerStyle,
             )
-        } else Column(
+        } else {
+        val landscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+        val compact = landscape || LocalDensity.current.fontScale > 1.15f
+        Column(
         modifier = Modifier
             .fillMaxSize()
             .systemBarsPadding()
-            .padding(24.dp),
+            .padding(if (compact) 12.dp else 24.dp)
+            .then(if (compact) Modifier.verticalScroll(rememberScrollState()) else Modifier),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-            Spacer(Modifier.height(48.dp))
-            CommsAvatar(name = displayName, photoUri = state.photoUri, size = 100.dp)
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(if (compact) 8.dp else 48.dp))
+            CommsAvatar(name = displayName, photoUri = state.photoUri, size = if (compact) 72.dp else 100.dp)
+            Spacer(Modifier.height(if (compact) 8.dp else 20.dp))
         Text(
             text = displayName,
             style = MaterialTheme.typography.headlineSmall.copy(fontSize = 26.sp),
@@ -219,7 +227,7 @@ fun CallScreen(onFinished: () -> Unit) {
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
         )
 
-        Spacer(Modifier.weight(1f))
+        if (!compact) Spacer(Modifier.weight(1f)) else Spacer(Modifier.height(12.dp))
 
         if (showKeypad && !state.incoming) {
             InCallKeypad(onDigit = { TelosCallSession.playDtmf(it) })
@@ -406,6 +414,7 @@ fun CallScreen(onFinished: () -> Unit) {
                 Icon(painterResource(R.drawable.rd_ic_call_end), contentDescription = stringResource(R.string.comms_hangup))
             }
             Spacer(Modifier.height(24.dp))
+        }
         }
     }
 }

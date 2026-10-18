@@ -18,6 +18,7 @@ object TelosAppIcons {
         "telos_files_app" -> R.drawable.ic_app_files_full
         "telos_calculator_app" -> R.drawable.ic_app_calculator_full
         "telos_voice_recorder_app" -> R.drawable.ic_app_voice_recorder_full
+        "telos_camera_app" -> R.drawable.ic_app_camera_full
         "telos_screen_recorder_app" -> R.drawable.ic_app_screen_recorder_full
         "telos_screenshot_app" -> R.drawable.ic_app_screenshot_full
         "telos_notes_app" -> R.drawable.ic_app_notes_full

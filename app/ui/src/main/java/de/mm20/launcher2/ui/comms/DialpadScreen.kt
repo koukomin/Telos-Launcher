@@ -26,6 +26,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FloatingActionButton
@@ -45,6 +47,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -123,11 +126,17 @@ fun DialpadScreen(initialNumber: String = "") {
         val ok = de.mm20.launcher2.comms.AuthManager().authenticateNative(activity, vaultTitle)
         if (ok) viewModel.onVaultAuthSuccess() else viewModel.onVaultAuthHandled()
     }
-    val keySize = when {
-        LocalConfiguration.current.screenHeightDp < 480 -> 46.dp
-        LocalConfiguration.current.screenHeightDp < 700 -> 60.dp
-        else -> 78.dp
-    }
+    val landscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+    val fontScale = LocalDensity.current.fontScale.coerceIn(1f, 1.4f)
+    val keySize = (
+        when {
+            landscape -> 48.dp
+            LocalConfiguration.current.screenHeightDp < 480 -> 46.dp
+            LocalConfiguration.current.screenHeightDp < 700 -> 60.dp
+            else -> 78.dp
+        }
+    ) * fontScale
+    val compact = landscape || fontScale > 1.15f
 
     val toneGenerator = remember {
         runCatching { ToneGenerator(AudioManager.STREAM_DTMF, 80) }.getOrNull()
@@ -177,10 +186,14 @@ fun DialpadScreen(initialNumber: String = "") {
         }
     }
 
-    Column(Modifier.fillMaxSize()) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .then(if (compact) Modifier.verticalScroll(rememberScrollState()) else Modifier),
+    ) {
         Text(
             text = input.ifEmpty { " " },
-            style = MaterialTheme.typography.headlineMedium.copy(fontSize = 36.sp),
+            style = MaterialTheme.typography.headlineMedium.copy(fontSize = if (compact) 28.sp else 36.sp),
             fontWeight = FontWeight.Normal,
             color = MaterialTheme.colorScheme.onSurface,
             maxLines = 1,
@@ -221,7 +234,7 @@ fun DialpadScreen(initialNumber: String = "") {
                     .padding(horizontal = 12.dp, vertical = 8.dp),
             )
         }
-        Box(Modifier.weight(1f).fillMaxWidth()) {
+        Box(if (compact) Modifier.fillMaxWidth().heightIn(min = 96.dp, max = 200.dp) else Modifier.weight(1f).fillMaxWidth()) {
             if (input.isBlank()) {
                 if (recents.isEmpty()) {
                     EmptyCommsTab(

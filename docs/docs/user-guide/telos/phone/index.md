@@ -37,6 +37,7 @@ This is the feature reference of Telos Phone. It is split into pages:
 - The **three-dot menu** and the drawer open **Settings**.
 - On the Recents tab the search field has a **filter** button that shows or hides the filter chips.
 - Back from the Keypad or Messages returns to Recents.
+- On phones the keypad stays in portrait. **Phone settings > Allow dialer rotation** lets it follow landscape. Tablets always rotate. Other Telos apps follow the device orientation and reflow for landscape and large fonts.
 
 ### Keypad
 

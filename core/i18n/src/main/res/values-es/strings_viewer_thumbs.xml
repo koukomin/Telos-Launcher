@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Ajustes del visor</string>
+    <string name="viewer_thumbs_video">Miniaturas de vídeo</string>
+    <string name="viewer_thumbs_video_summary">Muestra un fotograma de cada vídeo en la galería. Desactivado por defecto.</string>
+    <string name="viewer_thumbs_documents">Miniaturas de documentos</string>
+    <string name="viewer_thumbs_documents_summary">Muestra una vista previa de PDF y Office en la lista. Desactivado por defecto.</string>
+</resources>

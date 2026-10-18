@@ -606,18 +606,44 @@ private fun AppsTab(
             )
         } else {
             PullToRefreshBox(isRefreshing = checking, onRefresh = onRefresh, modifier = Modifier.weight(1f)) {
+            val updates = rows.filter { it.updateAvailable }
+            val rest = rows.filter { !it.updateAvailable }
             LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
-                items(rows, key = { it.item.id }) { row ->
-                    StoreItemRow(
-                        row = row,
-                        installState = installStates[row.item.id] ?: StoreInstallUiState.Idle,
-                        onClick = {
-                            val url = row.item.source.projectPageUrl()
-                            runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))) }
-                        },
-                        onDetailsClick = { onOpen(row) },
-                        onActionClick = { onAction(row) },
-                    )
+                if (updates.isNotEmpty()) {
+                    item(key = "hdr-updates") {
+                        StoreSectionHeader(stringResource(R.string.store_section_updates, updates.size))
+                    }
+                    items(updates, key = { it.item.id }) { row ->
+                        StoreItemRow(
+                            row = row,
+                            installState = installStates[row.item.id] ?: StoreInstallUiState.Idle,
+                            onClick = {
+                                val url = row.item.source.projectPageUrl()
+                                runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))) }
+                            },
+                            onDetailsClick = { onOpen(row) },
+                            onActionClick = { onAction(row) },
+                        )
+                    }
+                }
+                if (rest.isNotEmpty()) {
+                    if (updates.isNotEmpty()) {
+                        item(key = "hdr-rest") {
+                            StoreSectionHeader(stringResource(R.string.store_section_uptodate, rest.size))
+                        }
+                    }
+                    items(rest, key = { it.item.id }) { row ->
+                        StoreItemRow(
+                            row = row,
+                            installState = installStates[row.item.id] ?: StoreInstallUiState.Idle,
+                            onClick = {
+                                val url = row.item.source.projectPageUrl()
+                                runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))) }
+                            },
+                            onDetailsClick = { onOpen(row) },
+                            onActionClick = { onAction(row) },
+                        )
+                    }
                 }
             }
             }

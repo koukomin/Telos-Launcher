@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Viewer-instellingen</string>
+    <string name="viewer_thumbs_video">Videominiaturen</string>
+    <string name="viewer_thumbs_video_summary">Toont een frame van elke video in de galerij. Standaard uit.</string>
+    <string name="viewer_thumbs_documents">Documentminiaturen</string>
+    <string name="viewer_thumbs_documents_summary">Voorbeeld van PDF- en Office-bestanden in de lijst. Standaard uit.</string>
+</resources>

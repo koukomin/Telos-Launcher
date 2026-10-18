@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.component.preferences
 import androidx.activity.compose.LocalActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
@@ -35,6 +36,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.rememberVirtualAppBlur
 import de.mm20.launcher2.ui.component.virtualAppElevated
 import de.mm20.launcher2.ui.component.virtualAppGlass
+import de.mm20.launcher2.ui.component.virtualAppSurface
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import dev.chrisbanes.haze.hazeSource
 import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropColumn
@@ -100,6 +102,7 @@ fun PreferenceScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .hazeSource(blur.haze)
+                .background(virtualAppSurface())
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             state = lazyColumnState,
             content = content,
@@ -144,6 +147,7 @@ fun DragAndDropPreferenceScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .hazeSource(blur.haze)
+                .background(virtualAppSurface())
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             state = lazyColumnState,
             content = content,

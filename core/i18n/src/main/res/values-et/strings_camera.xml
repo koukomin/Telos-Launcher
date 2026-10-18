@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Kaamera</string>
+    <string name="camera_need_permission">Kaamera luba on vajalik</string>
+    <string name="camera_mode_photo">Foto</string>
+    <string name="camera_mode_video">Video</string>
+    <string name="camera_mode_portrait">Portree</string>
+    <string name="camera_mode_night">Öö</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">Diskreetne</string>
+    <string name="camera_flip">Vaheta kaamerat</string>
+    <string name="camera_format">Vorming</string>
+    <string name="camera_raw">Salvesta DNG RAW</string>
+    <string name="camera_exif">Säilita EXIF</string>
+    <string name="camera_silent">Vaikne katik</string>
+    <string name="camera_hide_folder">Peidetud album (.nomedia)</string>
+    <string name="camera_grid">Ruudustik</string>
+    <string name="camera_burst">Seeria ×%1$d</string>
+    <string name="camera_webcam_start">Käivita IP-veebikaamera</string>
+    <string name="camera_webcam_stop">Peata veebikaamera</string>
+    <string name="camera_usb_hint">USB-veebikaamera vajab OEM gadgetit. IP MJPEG töötab igas LAN-is.</string>
+    <string name="camera_discreet">Diskreetne jäädvustus</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

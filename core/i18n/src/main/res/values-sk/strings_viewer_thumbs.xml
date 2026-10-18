@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Nastavenia prehliadača</string>
+    <string name="viewer_thumbs_video">Miniatúry videí</string>
+    <string name="viewer_thumbs_video_summary">Snímka z každého videa v galérii. Predvolene vypnuté.</string>
+    <string name="viewer_thumbs_documents">Miniatúry dokumentov</string>
+    <string name="viewer_thumbs_documents_summary">Náhľad PDF a Office v zozname. Predvolene vypnuté.</string>
+</resources>

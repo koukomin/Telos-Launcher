@@ -129,10 +129,10 @@ fun CalculatorScreen() {
         page = if (page == Page.UnitDetail) Page.Units else Page.Calculator
     }
 
+    de.mm20.launcher2.ui.component.VirtualAppWindow {
     Box(
         Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
             .systemBarsPadding(),
     ) {
         when (page) {
@@ -141,6 +141,7 @@ fun CalculatorScreen() {
             Page.UnitDetail -> UnitDetailPage(vm, category, onBack = { page = Page.Units })
             Page.Vat -> VatPage(vm, onBack = { page = Page.Calculator }, onUseInCalculator = { vm.replaceExpression(it); page = Page.Calculator })
         }
+    }
     }
 }
 

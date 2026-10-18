@@ -13,6 +13,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import de.mm20.launcher2.comms.gestures.CallGestureTracker
 import de.mm20.launcher2.comms.telephony.CallNotification
+import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.comms.telephony.TelosCallSession
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.base.BaseActivity
@@ -36,6 +37,7 @@ class CallActivity : BaseActivity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         de.mm20.launcher2.search.VirtualAppAppearance.applyRecents(this, "telos_phone_app")
+        applyVirtualAppOrientation(SettingsDeepLinkContract.ROUTE_COMMS, null, allowDialerLandscape = false)
         window.addFlags(
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
@@ -50,6 +52,11 @@ class CallActivity : BaseActivity(), SensorEventListener {
         // applied, so that the secure flag is already set when the first frame shows.
         lifecycleScope.launch {
             val snap = commsSettings.snapshot.first()
+            applyVirtualAppOrientation(
+                SettingsDeepLinkContract.ROUTE_COMMS,
+                null,
+                snap.allowDialerLandscape,
+            )
             if (snap.secureCallScreen) window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
             pocketMode = snap.pocketMode
             proximitySpeaker = snap.proximitySpeaker

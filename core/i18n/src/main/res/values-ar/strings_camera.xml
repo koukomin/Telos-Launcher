@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">الكاميرا</string>
+    <string name="camera_need_permission">يلزم إذن الكاميرا</string>
+    <string name="camera_mode_photo">صورة</string>
+    <string name="camera_mode_video">فيديو</string>
+    <string name="camera_mode_portrait">بورتريه</string>
+    <string name="camera_mode_night">ليل</string>
+    <string name="camera_mode_pro">احترافي</string>
+    <string name="camera_mode_pano">بانوراما</string>
+    <string name="camera_mode_discreet">خفي</string>
+    <string name="camera_flip">تبديل الكاميرا</string>
+    <string name="camera_format">التنسيق</string>
+    <string name="camera_raw">حفظ DNG RAW</string>
+    <string name="camera_exif">الإبقاء على EXIF</string>
+    <string name="camera_silent">غالق صامت</string>
+    <string name="camera_hide_folder">ألبوم مخفي (.nomedia)</string>
+    <string name="camera_grid">شبكة</string>
+    <string name="camera_burst">تتابع ×%1$d</string>
+    <string name="camera_webcam_start">بدء كاميرا الويب عبر IP</string>
+    <string name="camera_webcam_stop">إيقاف كاميرا الويب</string>
+    <string name="camera_usb_hint">كاميرا USB تحتاج gadget من الشركة. MJPEG عبر IP يعمل على أي شبكة محلية.</string>
+    <string name="camera_discreet">التقاط خفي</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

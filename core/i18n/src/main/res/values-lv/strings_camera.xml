@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Kamera</string>
+    <string name="camera_need_permission">Nepieciešama kameras atļauja</string>
+    <string name="camera_mode_photo">Foto</string>
+    <string name="camera_mode_video">Video</string>
+    <string name="camera_mode_portrait">Portrets</string>
+    <string name="camera_mode_night">Nakts</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">Diskrēti</string>
+    <string name="camera_flip">Mainīt kameru</string>
+    <string name="camera_format">Formāts</string>
+    <string name="camera_raw">Saglabāt DNG RAW</string>
+    <string name="camera_exif">Paturēt EXIF</string>
+    <string name="camera_silent">Klusa slēdzis</string>
+    <string name="camera_hide_folder">Slēpts albums (.nomedia)</string>
+    <string name="camera_grid">Režģis</string>
+    <string name="camera_burst">Sērija ×%1$d</string>
+    <string name="camera_webcam_start">Sākt IP tīmekļa kameru</string>
+    <string name="camera_webcam_stop">Apturēt tīmekļa kameru</string>
+    <string name="camera_usb_hint">USB tīmekļa kamera prasa OEM gadget. IP MJPEG darbojas jebkurā LAN.</string>
+    <string name="camera_discreet">Diskrēta uzņemšana</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

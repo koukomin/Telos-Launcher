@@ -2,6 +2,8 @@
 
 Telos YouTube and YouTube Music both offer **Account in browser**. The panel opens the official YouTube websites in the same Custom Tabs browser. Sign in, switch accounts and sign out on those websites. Telos does not read the browser cookies, passwords or account identity and does not display a connected badge after opening the browser.
 
+YouTube Music on the phone can keep **local favorites and playlists**, and start an **artist radio** (related mix) or a **genre radio**. Those lists stay on the device. They are not your Google YouTube Music library.
+
 This is a browser account option, **not native account synchronization**. Native Telos search and background playback remain account-free. Subscriptions, personal playlists and recommendations from your Google account are not imported into Telos. Browser playback has the behavior of the official website and browser; it does not inherit the native Telos player's background-playback service.
 
 If there is no installed browser that supports Custom Tabs, the panel explains that a compatible browser is needed. Links are explicitly sent to that browser instead of being redirected to the installed YouTube app.

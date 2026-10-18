@@ -88,6 +88,12 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
         commsSettings.setHideDialpadLetters(enabled)
     }
 
+    val allowDialerLandscape = commsSettings.allowDialerLandscape
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setAllowDialerLandscape(enabled: Boolean) {
+        commsSettings.setAllowDialerLandscape(enabled)
+    }
+
     val blockHiddenNumbers = commsSettings.blockHiddenNumbers
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setBlockHiddenNumbers(enabled: Boolean) {

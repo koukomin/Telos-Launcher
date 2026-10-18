@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">कैमरा</string>
+    <string name="camera_need_permission">कैमरा अनुमति आवश्यक है</string>
+    <string name="camera_mode_photo">फ़ोटो</string>
+    <string name="camera_mode_video">वीडियो</string>
+    <string name="camera_mode_portrait">पोर्ट्रेट</string>
+    <string name="camera_mode_night">रात</string>
+    <string name="camera_mode_pro">प्रो</string>
+    <string name="camera_mode_pano">पैनो</string>
+    <string name="camera_mode_discreet">गुप्त</string>
+    <string name="camera_flip">कैमरा बदलें</string>
+    <string name="camera_format">फ़ॉर्मैट</string>
+    <string name="camera_raw">DNG RAW सहेजें</string>
+    <string name="camera_exif">EXIF रखें</string>
+    <string name="camera_silent">मूक शटर</string>
+    <string name="camera_hide_folder">छिपा एल्बम (.nomedia)</string>
+    <string name="camera_grid">ग्रिड</string>
+    <string name="camera_burst">बर्स्ट ×%1$d</string>
+    <string name="camera_webcam_start">IP वेबकैम शुरू करें</string>
+    <string name="camera_webcam_stop">वेबकैम रोकें</string>
+    <string name="camera_usb_hint">USB वेबकैम को OEM gadget चाहिए। IP MJPEG किसी भी LAN पर चलता है।</string>
+    <string name="camera_discreet">गुप्त कैप्चर</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

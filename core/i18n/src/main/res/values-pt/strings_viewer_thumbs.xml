@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Definições do visualizador</string>
+    <string name="viewer_thumbs_video">Miniaturas de vídeo</string>
+    <string name="viewer_thumbs_video_summary">Mostra um fotograma de cada vídeo na galeria. Desligado por predefinição.</string>
+    <string name="viewer_thumbs_documents">Miniaturas de documentos</string>
+    <string name="viewer_thumbs_documents_summary">Pré-visualização de PDF e Office na lista. Desligado por predefinição.</string>
+</resources>

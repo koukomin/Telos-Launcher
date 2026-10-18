@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Fotoaparát</string>
+    <string name="camera_need_permission">Vyžaduje sa povolenie fotoaparátu</string>
+    <string name="camera_mode_photo">Foto</string>
+    <string name="camera_mode_video">Video</string>
+    <string name="camera_mode_portrait">Portrét</string>
+    <string name="camera_mode_night">Noc</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">Diskrétny</string>
+    <string name="camera_flip">Prepnúť fotoaparát</string>
+    <string name="camera_format">Formát</string>
+    <string name="camera_raw">Uložiť DNG RAW</string>
+    <string name="camera_exif">Ponechať EXIF</string>
+    <string name="camera_silent">Tichá uzávierka</string>
+    <string name="camera_hide_folder">Skrytý album (.nomedia)</string>
+    <string name="camera_grid">Mriežka</string>
+    <string name="camera_burst">Séria ×%1$d</string>
+    <string name="camera_webcam_start">Spustiť IP webkameru</string>
+    <string name="camera_webcam_stop">Zastaviť webkameru</string>
+    <string name="camera_usb_hint">USB webkamera potrebuje OEM gadget. IP MJPEG funguje v každej LAN.</string>
+    <string name="camera_discreet">Diskrétny záber</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

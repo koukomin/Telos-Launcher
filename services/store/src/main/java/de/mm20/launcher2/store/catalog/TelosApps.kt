@@ -215,6 +215,21 @@ object TelosApps {
             route = SettingsDeepLinkContract.ROUTE_SYSTEM,
         ),
         TelosApp(
+            key = "telos_camera_app://camera",
+            name = "Camera",
+            description = "Hasselblad-inspired camera: photo, video, portrait, night, pro, discreet capture, RAW DNG, and an IP webcam for OBS.",
+            features = listOf(
+                "Photo, video, portrait, night, pro and panorama assist",
+                "JPEG, PNG, WebP, optional DNG",
+                "Burst, timer, tap to focus, pinch zoom, histogram, grid",
+                "EXIF on by default, optional hidden folder",
+                "IP webcam (MJPEG on the LAN)",
+                "Discreet black-screen capture with face and motion auto-shot",
+            ),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_camera_full,
+            route = SettingsDeepLinkContract.ROUTE_CAMERA,
+        ),
+        TelosApp(
             key = "telos_voice_recorder_app://voice_recorder",
             name = "Voice Recorder",
             description = "A voice recorder with a list of recordings, search, pause and a recording service that keeps going with the screen off.",

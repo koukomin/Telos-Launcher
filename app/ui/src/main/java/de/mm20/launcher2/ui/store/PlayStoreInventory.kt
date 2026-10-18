@@ -37,7 +37,7 @@ object PlayStoreInventory {
         val flags = PackageManager.MATCH_UNINSTALLED_PACKAGES or PackageManager.MATCH_DISABLED_COMPONENTS
         val apps = pm.getInstalledApplications(flags)
         return apps.mapNotNull { info ->
-            if (info.packageName == PLAY_PACKAGE || info.packageName == context.packageName) return@mapNotNull null
+            if (info.packageName == PLAY_PACKAGE) return@mapNotNull null
             val installer = runCatching {
                 PackageManagerCompat.getInstallSource(pm, info.packageName)
             }.getOrNull()

@@ -108,6 +108,7 @@ installed from outside a store. Telos shows a hint after the first attempt, and
 | Manage files, photos, music and video | [Files](./telos/files/), [Photos](./telos/photos/), [Music](./telos/music/), [Video](./telos/video/) |
 | Calculate, add or remove VAT, convert units | [Calculator](./telos/calculator/) |
 | Take and edit screenshots, record the screen or your voice | [Screenshot](./telos/screenshot/), [Screen Recorder](./telos/screen-recorder/), [Voice Recorder](./telos/voice-recorder/) |
+| Take photos and use the phone as a webcam | [Camera](./telos/camera/) |
 | Get a quick-access sidebar over other apps | [Floating launcher](./telos/launcher/desktop-and-overlays#floating-launcher) |
 | Protect your data | [Privacy and protection](./telos/launcher/privacy-protection) |
 | Change something and cannot find it | [Where to find a setting](./telos/launcher/#where-to-find-a-setting) |

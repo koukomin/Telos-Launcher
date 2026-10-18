@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Ceamara</string>
+    <string name="camera_need_permission">Tá cead ceamara ag teastáil</string>
+    <string name="camera_mode_photo">Grianghraf</string>
+    <string name="camera_mode_video">Físeán</string>
+    <string name="camera_mode_portrait">Portráid</string>
+    <string name="camera_mode_night">Oíche</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">discréideach</string>
+    <string name="camera_flip">Athraigh an ceamara</string>
+    <string name="camera_format">Formáid</string>
+    <string name="camera_raw">Sábháil DNG RAW</string>
+    <string name="camera_exif">Coinnigh EXIF</string>
+    <string name="camera_silent">Comhla chiúin</string>
+    <string name="camera_hide_folder">Albam folaithe (.nomedia)</string>
+    <string name="camera_grid">Eangach</string>
+    <string name="camera_burst">Sraith ×%1$d</string>
+    <string name="camera_webcam_start">Tosaigh webcam IP</string>
+    <string name="camera_webcam_stop">Stop webcam</string>
+    <string name="camera_usb_hint">Teastaíonn gadget OEM ón webcam USB. Oibríonn MJPEG IP ar aon LAN.</string>
+    <string name="camera_discreet">Gabháil discréideach</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

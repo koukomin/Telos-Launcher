@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Налаштування переглядача</string>
+    <string name="viewer_thumbs_video">Мініатюри відео</string>
+    <string name="viewer_thumbs_video_summary">Кадр з кожного відео в галереї. Типово увімкнено.</string>
+    <string name="viewer_thumbs_documents">Мініатюри документів</string>
+    <string name="viewer_thumbs_documents_summary">Перегляд PDF і Office у списку. Типово увімкнено.</string>
+</resources>

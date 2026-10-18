@@ -156,7 +156,8 @@ fun ScreenRecorderScreen() {
         if (state.error) ScreenRecorderState.set(ScreenRecState())
     }
 
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)).systemBarsPadding()) {
+    de.mm20.launcher2.ui.component.VirtualAppWindow {
+    Box(Modifier.fillMaxSize().systemBarsPadding()) {
         Column(Modifier.fillMaxSize()) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                 Spacer(Modifier.weight(1f))
@@ -237,6 +238,7 @@ fun ScreenRecorderScreen() {
     deleting?.let { rec ->
         de.mm20.launcher2.ui.trash.UriDeleteDialog(rec.uri,
             onDeleted = { reload++ }, onDismiss = { deleting = null })
+    }
     }
 
 }

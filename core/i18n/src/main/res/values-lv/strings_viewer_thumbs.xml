@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Skatītāja iestatījumi</string>
+    <string name="viewer_thumbs_video">Video sīktēli</string>
+    <string name="viewer_thumbs_video_summary">Kadrs no katra video galerijā. Pēc noklusējuma ieslēgts.</string>
+    <string name="viewer_thumbs_documents">Dokumentu sīktēli</string>
+    <string name="viewer_thumbs_documents_summary">PDF un Office priekšskatījums sarakstā. Pēc noklusējuma ieslēgts.</string>
+</resources>

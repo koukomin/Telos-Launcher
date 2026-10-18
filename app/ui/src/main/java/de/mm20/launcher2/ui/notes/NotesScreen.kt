@@ -98,7 +98,8 @@ fun NotesScreen() {
         }
     }
 
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)).systemBarsPadding()) {
+    de.mm20.launcher2.ui.component.VirtualAppWindow {
+    Box(Modifier.fillMaxSize().systemBarsPadding()) {
         val e = editing
         if (e != null) {
             NoteEditor(e, labels, onChange = { editing = it }, onClose = { vm.save(e); editing = null },
@@ -188,6 +189,7 @@ fun NotesScreen() {
             }
         }
         if (showSync) SyncDialog(vm) { showSync = false }
+    }
     }
 }
 

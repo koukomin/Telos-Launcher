@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">カメラ</string>
+    <string name="camera_need_permission">カメラの許可が必要です</string>
+    <string name="camera_mode_photo">写真</string>
+    <string name="camera_mode_video">動画</string>
+    <string name="camera_mode_portrait">ポートレート</string>
+    <string name="camera_mode_night">夜景</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">パノラマ</string>
+    <string name="camera_mode_discreet">シークレット</string>
+    <string name="camera_flip">カメラ切替</string>
+    <string name="camera_format">形式</string>
+    <string name="camera_raw">DNG RAW を保存</string>
+    <string name="camera_exif">EXIF を残す</string>
+    <string name="camera_silent">サイレントシャッター</string>
+    <string name="camera_hide_folder">非表示アルバム (.nomedia)</string>
+    <string name="camera_grid">グリッド</string>
+    <string name="camera_burst">連写 ×%1$d</string>
+    <string name="camera_webcam_start">IP ウェブカメラを開始</string>
+    <string name="camera_webcam_stop">ウェブカメラを停止</string>
+    <string name="camera_usb_hint">USB ウェブカメラは OEM gadget が必要です。IP MJPEG はどの LAN でも使えます。</string>
+    <string name="camera_discreet">シークレット撮影</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

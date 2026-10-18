@@ -3,9 +3,25 @@
     <string name="telos_youtube_browser_account">Λογαριασμός στον browser</string>
     <string name="telos_youtube_browser_account_info">Άνοιξε το YouTube ή το YouTube Music και συνδέσου στην επίσημη ιστοσελίδα. Ανοίγουν στον ίδιο browser, ώστε να χρησιμοποιείς τον ίδιο λογαριασμό Google. Άλλαξε λογαριασμό ή αποσυνδέσου από την ιστοσελίδα.</string>
     <string name="telos_youtube_browser_native_limit">Η σύνδεση ισχύει για τις ιστοσελίδες στον browser. Η αναπαραγωγή του Telos συνεχίζει χωρίς λογαριασμό· οι συνδρομές, οι λίστες αναπαραγωγής και οι προτάσεις σου δεν συγχρονίζονται στο Telos.</string>
+    <string name="telos_youtube_account_microg">Το microG είναι για εφαρμογές Play Services. Το Telos YouTube δεν το χρησιμοποιεί. Σύνδεση γίνεται στον browser με τα κουμπιά παρακάτω. Εγγενής λογαριασμός Google στο Telos δεν υπάρχει ακόμα.</string>
     <string name="telos_youtube_browser_unavailable">Δεν υπάρχει συμβατός browser. Εγκατάστησε ή ενεργοποίησε έναν browser που υποστηρίζει Custom Tabs.</string>
     <string name="telos_youtube_browser_music">Άνοιγμα YouTube Music</string>
     <string name="telos_youtube_browser_video">Άνοιγμα YouTube</string>
     <string name="telos_youtube_browser_close">Κλείσιμο</string>
     <string name="telos_youtube_player_error">Η αναπαραγωγή σταμάτησε. Δοκίμασε να ανοίξεις ξανά το στοιχείο ή διάλεξε άλλο βίντεο.</string>
+    <string name="telos_youtube_tab_search">Αναζήτηση</string>
+    <string name="telos_youtube_tab_favorites">Αγαπημένα</string>
+    <string name="telos_youtube_tab_playlists">Λίστες</string>
+    <string name="telos_youtube_favorite">Αγαπημένο</string>
+    <string name="telos_youtube_add_playlist">Προσθήκη σε λίστα</string>
+    <string name="telos_youtube_new_playlist">Νέα λίστα</string>
+    <string name="telos_youtube_playlist_name">Όνομα λίστας</string>
+    <string name="telos_youtube_artist_radio">Radio καλλιτέχνη</string>
+    <string name="telos_youtube_genre_radio">Radio είδους</string>
+    <string name="telos_youtube_radio_failed">Δεν ξεκίνησε το mix. Δοκίμασε άλλο τραγούδι ή είδος.</string>
+    <string name="telos_youtube_play_playlist">Αναπαραγωγή λίστας</string>
+    <string name="telos_youtube_delete_playlist">Διαγραφή λίστας</string>
+    <string name="telos_youtube_empty_favorites">Δεν υπάρχουν αγαπημένα. Βάλε αστέρι σε ένα τραγούδι στην αναζήτηση.</string>
+    <string name="telos_youtube_empty_playlists">Δεν υπάρχουν λίστες. Φτιάξε μία από ένα τραγούδι.</string>
+    <string name="telos_youtube_library_local">Τα αγαπημένα και οι λίστες μένουν στο τηλέφωνο. Δεν είναι ο λογαριασμός YouTube Music.</string>
 </resources>

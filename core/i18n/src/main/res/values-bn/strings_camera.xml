@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">ক্যামেরা</string>
+    <string name="camera_need_permission">ক্যামেরার অনুমতি দরকার</string>
+    <string name="camera_mode_photo">ছবি</string>
+    <string name="camera_mode_video">ভিডিও</string>
+    <string name="camera_mode_portrait">পোর্ট্রেট</string>
+    <string name="camera_mode_night">রাত</string>
+    <string name="camera_mode_pro">প্রো</string>
+    <string name="camera_mode_pano">প্যানো</string>
+    <string name="camera_mode_discreet">গোপন</string>
+    <string name="camera_flip">ক্যামেরা বদলান</string>
+    <string name="camera_format">ফরম্যাট</string>
+    <string name="camera_raw">DNG RAW সংরক্ষণ</string>
+    <string name="camera_exif">EXIF রাখুন</string>
+    <string name="camera_silent">নীরব শাটার</string>
+    <string name="camera_hide_folder">লুকানো অ্যালবাম (.nomedia)</string>
+    <string name="camera_grid">গ্রিড</string>
+    <string name="camera_burst">বার্স্ট ×%1$d</string>
+    <string name="camera_webcam_start">IP ওয়েবক্যাম শুরু</string>
+    <string name="camera_webcam_stop">ওয়েবক্যাম থামান</string>
+    <string name="camera_usb_hint">USB ওয়েবক্যামের OEM gadget লাগে। IP MJPEG যেকোনো LAN-এ চলে।</string>
+    <string name="camera_discreet">গোপন ক্যাপচার</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

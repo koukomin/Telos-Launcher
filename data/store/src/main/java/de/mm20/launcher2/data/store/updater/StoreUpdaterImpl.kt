@@ -163,7 +163,11 @@ class StoreUpdaterImpl(
         // the icon of the (first) app next to the text
         val largeIcon = (if (fresh.isNotEmpty()) fresh else installed).firstOrNull()?.let { appIcon(it.packageName) }
         val notification = NotificationCompat.Builder(context, CHANNEL)
-            .setSmallIcon(android.R.drawable.stat_sys_download_done)
+            .setSmallIcon(
+                de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_store_app")
+                    ?: de.mm20.launcher2.base.R.drawable.ic_app_store_full,
+            )
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_store_app") }
             .setLargeIcon(largeIcon)
             .setContentTitle(title)
             .setContentText(text)

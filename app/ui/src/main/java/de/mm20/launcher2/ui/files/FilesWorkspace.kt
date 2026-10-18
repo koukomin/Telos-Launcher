@@ -1,21 +1,30 @@
 package de.mm20.launcher2.ui.files
 
 import android.app.Application
-import androidx.compose.foundation.border
+import androidx.compose.foundation.background
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draganddrop.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ui.component.virtualAppElevated
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
@@ -170,28 +179,15 @@ private fun FilesScreenBody() {
             else -> false
         }
     }) {
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            workspace.tabs.forEachIndexed { index, tab ->
-                val selected = tab.id == if (workspace.activeRight && workspace.dual) workspace.right else workspace.left
-                FilterChip(selected = selected, onClick = { workspace.select(tab.id) }, label = {
-                    Text(tab.browser.path?.let { nameOf(it) } ?: stringResource(R.string.telos_files_tab, index + 1), maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.widthIn(max = 140.dp))
-                })
-                if (workspace.tabs.size > 1) IconButton(onClick = { workspace.close(tab.id) }) {
-                    Icon(androidx.compose.ui.res.painterResource(de.mm20.launcher2.base.R.drawable.close_24px), contentDescription = stringResource(R.string.telos_files_close_tab, index + 1))
-                }
-            }
-            FilesSettingsTransferButton(workspace)
-            TextButton(onClick = workspace::addTab, enabled = workspace.tabs.size < FilesSettingsTransfer.MaxTabs) { Text(stringResource(R.string.telos_files_new_tab)) }
-            FilterChip(selected = workspace.dual, onClick = workspace::togglePanels, label = { Text(stringResource(R.string.telos_files_two_panels)) })
-        }
+        FilesWorkspaceChrome(workspace)
         BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
             val first = workspace.tabs.first { it.id == workspace.left }
             val second = workspace.tabs.firstOrNull { it.id == workspace.right }
-            if (!workspace.dual || second == null) FilesPane(first, true, {}, Modifier.fillMaxSize(), outlined = false)
-            else if (maxWidth >= 640.dp) Row(Modifier.fillMaxSize()) {
+            if (!workspace.dual || second == null) FilesPane(first, true, {}, Modifier.fillMaxSize())
+            else if (maxWidth >= 640.dp) Row(Modifier.fillMaxSize().padding(6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 FilesPane(first, !workspace.activeRight, { workspace.activeRight = false; workspace.persist() }, Modifier.weight(1f).fillMaxHeight())
                 FilesPane(second, workspace.activeRight, { workspace.activeRight = true; workspace.persist() }, Modifier.weight(1f).fillMaxHeight())
-            } else Column(Modifier.fillMaxSize()) {
+            } else Column(Modifier.fillMaxSize().padding(6.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 FilesPane(first, !workspace.activeRight, { workspace.activeRight = false; workspace.persist() }, Modifier.weight(1f).fillMaxWidth())
                 FilesPane(second, workspace.activeRight, { workspace.activeRight = true; workspace.persist() }, Modifier.weight(1f).fillMaxWidth())
             }
@@ -200,8 +196,111 @@ private fun FilesScreenBody() {
     }
 }
 
+private typealias WsIcons = de.mm20.launcher2.base.R.drawable
+
 @Composable
-private fun FilesPane(tab: FilesTab, active: Boolean, onActivate: () -> Unit, modifier: Modifier, outlined: Boolean = true) {
+private fun FilesWorkspaceChrome(workspace: FilesWorkspaceViewModel) {
+    val scheme = MaterialTheme.colorScheme
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+            .clip(RoundedCornerShape(28.dp))
+            .background(virtualAppElevated())
+            .padding(6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Row(
+            Modifier.weight(1f).horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            workspace.tabs.forEachIndexed { index, tab ->
+                val selected = tab.id == if (workspace.activeRight && workspace.dual) workspace.right else workspace.left
+                Row(
+                    Modifier
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(if (selected) scheme.primary.copy(alpha = 0.92f) else Color.Transparent)
+                        .clickable { workspace.select(tab.id) }
+                        .padding(start = 14.dp, end = if (workspace.tabs.size > 1) 4.dp else 14.dp, top = 8.dp, bottom = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        tab.browser.path?.let { nameOf(it) } ?: stringResource(R.string.telos_files_tab, index + 1),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.widthIn(max = 128.dp),
+                        color = if (selected) scheme.onPrimary else scheme.onSurface,
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
+                    )
+                    if (workspace.tabs.size > 1) {
+                        Icon(
+                            painterResource(WsIcons.close_24px),
+                            contentDescription = stringResource(R.string.telos_files_close_tab, index + 1),
+                            tint = if (selected) scheme.onPrimary else scheme.onSurfaceVariant,
+                            modifier = Modifier
+                                .padding(start = 2.dp)
+                                .size(28.dp)
+                                .clip(CircleShape)
+                                .clickable { workspace.close(tab.id) }
+                                .padding(5.dp),
+                        )
+                    }
+                }
+            }
+        }
+        ChromeIcon(
+            icon = WsIcons.add_24px,
+            label = stringResource(R.string.telos_files_new_tab),
+            enabled = workspace.tabs.size < FilesSettingsTransfer.MaxTabs,
+            selected = false,
+            onClick = workspace::addTab,
+        )
+        ChromeIcon(
+            icon = WsIcons.dashboard_2_24px,
+            label = stringResource(R.string.telos_files_two_panels),
+            enabled = true,
+            selected = workspace.dual,
+            onClick = workspace::togglePanels,
+        )
+        FilesSettingsTransferButton(workspace)
+    }
+}
+
+@Composable
+internal fun ChromeIcon(
+    icon: Int,
+    label: String,
+    enabled: Boolean,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    val scheme = MaterialTheme.colorScheme
+    Box(
+        Modifier
+            .size(40.dp)
+            .clip(CircleShape)
+            .background(if (selected) scheme.primary.copy(alpha = 0.92f) else scheme.onSurface.copy(alpha = 0.08f))
+            .clickable(enabled = enabled, onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            painterResource(icon),
+            contentDescription = label,
+            tint = when {
+                !enabled -> scheme.onSurface.copy(alpha = 0.38f)
+                selected -> scheme.onPrimary
+                else -> scheme.onSurface
+            },
+            modifier = Modifier.size(20.dp),
+        )
+    }
+}
+
+@Composable
+private fun FilesPane(tab: FilesTab, active: Boolean, onActivate: () -> Unit, modifier: Modifier) {
     val scope = LocalFilesDragScope.current
     val activate by rememberUpdatedState(onActivate)
     var receiving by remember { mutableStateOf(false) }
@@ -221,14 +320,26 @@ private fun FilesPane(tab: FilesTab, active: Boolean, onActivate: () -> Unit, mo
             activate(); scope?.dropped?.invoke(tab.browser, data); return true
         }
     } }
-    Box(modifier.border(if (receiving) 3.dp else if (!outlined) 0.dp else if (active) 2.dp else 1.dp, if (active || receiving) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant)
-        .dragAndDropTarget(::accepts, target)
-        .pointerInput(onActivate) {
-            awaitPointerEventScope {
-                while (true) {
-                    val event = awaitPointerEvent(PointerEventPass.Initial)
-                    if (event.changes.any { it.pressed }) onActivate()
+    Box(
+        modifier
+            .clip(RoundedCornerShape(24.dp))
+            .dragAndDropTarget(::accepts, target)
+            .pointerInput(onActivate) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val event = awaitPointerEvent(PointerEventPass.Initial)
+                        if (event.changes.any { it.pressed }) onActivate()
+                    }
                 }
-            }
-        }) { FilesBrowser(tab.browser, handlesBack = active) }
+            },
+    ) {
+        FilesBrowser(tab.browser, handlesBack = active)
+        if (receiving) {
+            Box(
+                Modifier
+                    .matchParentSize()
+                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)),
+            )
+        }
+    }
 }

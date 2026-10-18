@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
@@ -20,21 +21,25 @@ fun WeatherIcon(
     modifier: Modifier = Modifier,
     night: Boolean = false,
     colors: WeatherIconColors = WeatherIconDefaults.colors(),
+    size: Dp = 24.dp,
 ) {
+    val scale = size.value / 24f
     Box(
         modifier = modifier
-            .size(24.dp),
+            .size(size),
         contentAlignment = Alignment.Center
     ) {
-        SunMoon(icon, night, colors)
-        Precipitation(icon, colors)
-        LightningBolts(icon, colors)
-        Cloud1(icon, colors)
-        Cloud2(icon, colors)
-        Cloud3(icon, colors)
-        HotCold(icon, colors)
-        Wind(icon, colors)
-        Fog(icon, colors)
+        Box(Modifier.scale(scale), contentAlignment = Alignment.Center) {
+            SunMoon(icon, night, colors)
+            Precipitation(icon, colors)
+            LightningBolts(icon, colors)
+            Cloud1(icon, colors)
+            Cloud2(icon, colors)
+            Cloud3(icon, colors)
+            HotCold(icon, colors)
+            Wind(icon, colors)
+            Fog(icon, colors)
+        }
     }
 }
 

@@ -19,6 +19,10 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -100,8 +104,12 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.collectAsState
 import de.mm20.launcher2.preferences.ui.PerformanceSettings
 import org.koin.compose.koinInject
+import de.mm20.launcher2.ui.component.rememberVirtualAppBlur
+import de.mm20.launcher2.ui.component.virtualAppElevated
+import de.mm20.launcher2.ui.component.virtualAppGlass
+import de.mm20.launcher2.ui.component.virtualAppSurface
 import de.mm20.launcher2.ui.locals.LocalBackStack
-import de.mm20.launcher2.ui.theme.transparency.transparency
+import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import de.mm20.launcher2.ui.files.remote.ConnectionsRoute
@@ -153,6 +161,8 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
 
     val drawer = rememberDrawerState(DrawerValue.Closed)
     val snackbar = remember { SnackbarHostState() }
+    val blur = rememberVirtualAppBlur()
+    val bar = virtualAppElevated()
     LaunchedEffect(vm.message) { vm.message?.let { snackbar.showSnackbar(it); vm.message = null } }
 
     var searching by remember { mutableStateOf(false) }
@@ -228,7 +238,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     }
 
     ModalNavigationDrawer(
-        modifier = Modifier.focusRequester(keyboardFocus).onPreviewKeyEvent { event ->
+        modifier = Modifier.navigationBarsPadding().focusRequester(keyboardFocus).onPreviewKeyEvent { event ->
             if (!handlesBack || event.type != KeyEventType.KeyDown) false else when {
                 event.isCtrlPressed && event.key == Key.F && vm.path != null -> { searching = true; true }
                 event.key == Key.Escape && searching -> { searching = false; vm.clearSearch(); true }
@@ -263,10 +273,11 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
         },
     ) {
         Scaffold(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background),
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.onSurface,
             snackbarHost = { SnackbarHost(snackbar) },
             topBar = {
-                Column {
+                Column(Modifier.virtualAppGlass(blur, bar)) {
                     when {
                         selecting -> SelectionBar(
                             count = vm.selection.size,
@@ -398,7 +409,10 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                     }
                                 }
                             },
-                            colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = Color.Transparent,
+                                scrolledContainerColor = Color.Transparent,
+                            ),
                         )
                     }
                     if (vm.path != null && !selecting) Breadcrumbs(vm) { vm.open(it) }
@@ -408,7 +422,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
             },
             floatingActionButton = {
                 if (vm.path != null && !selecting && vm.error == null) {
-                    Box {
+                    Box(Modifier.windowInsetsPadding(WindowInsets.navigationBars).padding(bottom = 12.dp)) {
                         FloatingActionButton(onClick = { addMenu = true }) { Icon(painterResource(Icons.add_24px), contentDescription = stringResource(R.string.hc_new)) }
                         DropdownMenu(expanded = addMenu, onDismissRequest = { addMenu = false }) {
                             DropdownMenuItem(text = { Text(stringResource(R.string.hc_new_folder)) }, onClick = { addMenu = false; dialog = FilesDialog.NewFolder })
@@ -418,7 +432,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                 }
             },
             bottomBar = {
-                Column {
+                Column(Modifier.windowInsetsPadding(WindowInsets.navigationBars)) {
                     vm.task?.let { TaskBar(it) }
                     if (localTransfers.any { it.status in setOf(FilesTransferQueue.Status.RUNNING, FilesTransferQueue.Status.QUEUED, FilesTransferQueue.Status.PAUSED) })
                         TextButton(onClick = { showTransfers = true }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.telos_files_transfers_title)) }
@@ -430,7 +444,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                 }
             },
         ) { padding ->
-            Box(Modifier.fillMaxSize().padding(padding)) {
+            Box(Modifier.fillMaxSize().padding(padding).hazeSource(blur.haze).background(virtualAppSurface())) {
                 val current = vm.path
                 when {
                     current == null -> HomePage(vm)
@@ -818,7 +832,10 @@ private fun SelectionBar(
                 }
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Transparent,
+            scrolledContainerColor = Color.Transparent,
+        ),
     )
 }
 
@@ -835,7 +852,10 @@ private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> U
         },
         navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) } },
         actions = { IconButton(onClick = onFilters) { Icon(painterResource(Icons.tune_24px), contentDescription = stringResource(R.string.telos_files_search_filters)) } },
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Transparent,
+            scrolledContainerColor = Color.Transparent,
+        ),
     )
 }
 
@@ -923,7 +943,7 @@ private fun RootBanner() {
 @Composable
 private fun AccessGate(onAllow: () -> Unit) {
     val backStack = LocalBackStack.current
-    Scaffold(containerColor = MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)) { padding ->
+    Scaffold(containerColor = Color.Transparent, contentColor = MaterialTheme.colorScheme.onSurface) { padding ->
         Column(
             Modifier.fillMaxSize().padding(padding).padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
@@ -1067,7 +1087,12 @@ private fun SectionTitle(text: String) {
 private fun StorageCard(v: StorageVolume, onClick: () -> Unit) {
     val used = (v.total - v.free).coerceAtLeast(0)
     val fraction = if (v.total > 0) used.toFloat() / v.total else 0f
-    Card(onClick = onClick, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)) {
+    Card(
+        onClick = onClick,
+        shape = RoundedCornerShape(22.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        colors = CardDefaults.cardColors(containerColor = virtualAppElevated()),
+    ) {
         Column(Modifier.fillMaxWidth().padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.size(44.dp).clip(RoundedCornerShape(14.dp)).background(MaterialTheme.colorScheme.primaryContainer), contentAlignment = Alignment.Center) {
@@ -1179,7 +1204,7 @@ private fun FileRow(e: FsEntry, selected: Boolean, rootMode: Boolean, onClick: (
 private fun GridCell(e: FsEntry, selected: Boolean, onClick: () -> Unit, onLongClick: () -> Unit) {
     Column(
         Modifier.clip(RoundedCornerShape(16.dp))
-            .background(if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerLow)
+            .background(if (selected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.55f) else virtualAppElevated())
             .combinedClickable(onClick = onClick, onLongClick = onLongClick).padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

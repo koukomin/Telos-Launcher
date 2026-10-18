@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Vaataja seaded</string>
+    <string name="viewer_thumbs_video">Video pisipildid</string>
+    <string name="viewer_thumbs_video_summary">Kaader igast videost galeriis. Vaikimisi sees.</string>
+    <string name="viewer_thumbs_documents">Dokumendi pisipildid</string>
+    <string name="viewer_thumbs_documents_summary">PDF ja Office eelvaade loendis. Vaikimisi sees.</string>
+</resources>

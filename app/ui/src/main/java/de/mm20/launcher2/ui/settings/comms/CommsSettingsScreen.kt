@@ -63,6 +63,7 @@ fun CommsSettingsScreen() {
     val enableSpamBlocking by viewModel.enableSpamBlocking.collectAsStateWithLifecycle()
     val showRecentsFavorites by viewModel.showRecentsFavorites.collectAsStateWithLifecycle()
     val hideLetters by viewModel.hideDialpadLetters.collectAsStateWithLifecycle()
+    val allowDialerLandscape by viewModel.allowDialerLandscape.collectAsStateWithLifecycle()
     val blockHidden by viewModel.blockHiddenNumbers.collectAsStateWithLifecycle()
     val blockUnknown by viewModel.blockUnknownNumbers.collectAsStateWithLifecycle()
     val blockInternational by viewModel.blockInternational.collectAsStateWithLifecycle()
@@ -299,6 +300,12 @@ fun CommsSettingsScreen() {
                     summary = stringResource(R.string.hc_show_only_digits_on_the_keypad),
                     value = hideLetters,
                     onValueChanged = { viewModel.setHideDialpadLetters(it) }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.comms_dialer_rotate),
+                    summary = stringResource(R.string.comms_dialer_rotate_sum),
+                    value = allowDialerLandscape,
+                    onValueChanged = { viewModel.setAllowDialerLandscape(it) }
                 )
                 SwitchPreference(
                     title = stringResource(R.string.hc_vibrate_on_answer),

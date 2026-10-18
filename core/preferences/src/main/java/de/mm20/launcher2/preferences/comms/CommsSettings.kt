@@ -85,6 +85,12 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(hideDialpadLetters = enabled)) }
     }
 
+    val allowDialerLandscape
+        get() = dataStore.data.map { it.comms.allowDialerLandscape }
+    fun setAllowDialerLandscape(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(allowDialerLandscape = enabled)) }
+    }
+
     val callerNotes
         get() = dataStore.data.map { it.comms.callerNotes }
     fun setCallerNote(number: String, note: String?) {

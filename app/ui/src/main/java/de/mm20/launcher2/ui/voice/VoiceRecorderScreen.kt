@@ -265,7 +265,8 @@ fun VoiceRecorderScreen() {
         }
     }
 
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)).systemBarsPadding()) {
+    de.mm20.launcher2.ui.component.VirtualAppWindow {
+    Box(Modifier.fillMaxSize().systemBarsPadding()) {
         if (recorder.status != VoiceStatus.Idle) {
             RecordingPage(
                 state = recorder,
@@ -420,6 +421,7 @@ fun VoiceRecorderScreen() {
             onDeleted = { player.stop(); reload++ }, onDismiss = { deleting = null })
     }
 
+    }
 }
 
 @Composable

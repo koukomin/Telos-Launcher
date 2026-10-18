@@ -180,6 +180,8 @@
     <string name="hc_hidden_contacts">Hidden contacts</string>
     <string name="hc_hidden_contacts_pin">Hidden contacts PIN</string>
     <string name="hc_hide_dialpad_letters">Hide dialpad letters</string>
+    <string name="comms_dialer_rotate">Allow dialer rotation</string>
+    <string name="comms_dialer_rotate_sum">On phones the keypad stays in portrait. Turn this on to use landscape too.</string>
     <string name="hc_hide_from_contacts_tab">Hide from contacts tab</string>
     <string name="hc_hide_from_recents">Hide from recents</string>
     <string name="hc_hide_this_menu_after_pin_is_set">Hide this menu after PIN is set</string>

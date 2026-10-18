@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="camera_title">Kamera</string>
+    <string name="camera_need_permission">Kamera izni gerekli</string>
+    <string name="camera_mode_photo">Fotoğraf</string>
+    <string name="camera_mode_video">Video</string>
+    <string name="camera_mode_portrait">Portre</string>
+    <string name="camera_mode_night">Gece</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">Gizli</string>
+    <string name="camera_flip">Kamerayı değiştir</string>
+    <string name="camera_format">Biçim</string>
+    <string name="camera_raw">DNG RAW kaydet</string>
+    <string name="camera_exif">EXIF tut</string>
+    <string name="camera_silent">Sessiz deklanşör</string>
+    <string name="camera_hide_folder">Gizli albüm (.nomedia)</string>
+    <string name="camera_grid">Izgara</string>
+    <string name="camera_burst">Seri ×%1$d</string>
+    <string name="camera_webcam_start">IP webcam başlat</string>
+    <string name="camera_webcam_stop">Webcam durdur</string>
+    <string name="camera_usb_hint">USB webcam OEM gadget ister. IP MJPEG her LAN\'de çalışır.</string>
+    <string name="camera_discreet">Gizli çekim</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

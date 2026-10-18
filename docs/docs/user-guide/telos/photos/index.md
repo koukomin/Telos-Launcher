@@ -37,6 +37,9 @@ and removes it from the "Open with" and share menus.
 Open **Telos Viewer** and tap **Allow** ("Allow access to your photos"). Pictures and documents that another app
 sends to Telos Viewer open directly, without browsing the gallery and without the permission.
 
+Video frames and document previews (PDF, Office) in the lists are **on** by default. You can turn them off in Viewer settings
+(the gear on the Photos / Documents tab bar). Image thumbnails in the gallery stay on.
+
 ## How it is reached
 
 | From | What opens |

@@ -32,6 +32,30 @@ data class WeatherIconColors(
 
 object WeatherIconDefaults {
 
+    /** Saturated, readable weather colors for the home clock (not tone-mapped to the surface). */
+    @Composable
+    fun vividColors(): WeatherIconColors {
+        return remember {
+            WeatherIconColors(
+                sun = Color(0xFFFFC107),
+                moon = Color(0xFFE8EEF7),
+                cloud1 = Color(0xFF90A4AE),
+                cloud2 = Color(0xFFB0BEC5),
+                cloud3 = Color(0xFFCFD8DC),
+                cloud4 = Color(0xFFECEFF1),
+                cloud5 = Color(0xFFFAFBFC),
+                rain = Color(0xFF2196F3),
+                snow = Color(0xFFF5F9FF),
+                hail = Color(0xFFE3F2FD),
+                fog = Color(0xFF90A4AE),
+                wind = Color(0xFF78909C),
+                lightningBolt = Color(0xFFFFEB3B),
+                hot = Color(0xFFFF5722),
+                cold = Color(0xFF03A9F4),
+            )
+        }
+    }
+
     @Composable
     fun colors(
         background: Color = MaterialTheme.colorScheme.surface

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Fremvisereindstillinger</string>
+    <string name="viewer_thumbs_video">Videominiaturer</string>
+    <string name="viewer_thumbs_video_summary">Et billede fra hver video i galleriet. Slået til som standard.</string>
+    <string name="viewer_thumbs_documents">Dokumentminiaturer</string>
+    <string name="viewer_thumbs_documents_summary">Forhåndsvisning af PDF og Office på listen. Slået til som standard.</string>
+</resources>

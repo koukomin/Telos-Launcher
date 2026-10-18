@@ -31,6 +31,7 @@ object VirtualAppAppearance {
         "telos_files_app" -> R.drawable.ic_app_files_fg
         "telos_calculator_app" -> R.drawable.ic_app_calculator_fg
         "telos_voice_recorder_app" -> R.drawable.ic_app_voice_recorder_fg
+        "telos_camera_app" -> R.drawable.ic_app_camera_fg
         "telos_screen_recorder_app" -> R.drawable.ic_app_screen_recorder_fg
         "telos_screenshot_app" -> R.drawable.ic_app_screenshot_fg
         "telos_notes_app" -> R.drawable.ic_app_notes_fg

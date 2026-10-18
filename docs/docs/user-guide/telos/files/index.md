@@ -33,6 +33,8 @@ For how the code is organised see the developer page [Telos Files internals](../
 
 ## How to open it
 
+The file list sits on the wallpaper blur without a square frame. Tabs, new tab, two panes and settings sit in a floating pill. On a light wallpaper with a dark theme, the glass is thickened so white labels stay readable. The add button and the list stay above the system navigation bar.
+
 Telos Files is a [virtual app](../#how-the-built-in-apps-work). Tap its icon in the app grid or find it in search.
 You can switch it on and off in [Telos Store](../store/). It registers no file type of its own with Android, but
 it opens pictures, videos and documents in the other Telos apps.

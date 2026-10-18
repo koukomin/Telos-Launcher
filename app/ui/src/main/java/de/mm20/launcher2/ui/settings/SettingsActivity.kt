@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -45,6 +46,7 @@ import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
+import de.mm20.launcher2.ui.comms.applyVirtualAppOrientation
 import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.settings.about.AboutSettingsRoute
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
@@ -236,6 +238,11 @@ open class SettingsActivity : BaseActivity() {
         window.setBackgroundDrawable(ColorDrawable(AndroidColor.TRANSPARENT))
 
         applyTaskLabel(intent)
+        applyVirtualAppOrientation(
+            intent.getStringExtra(EXTRA_ROUTE),
+            intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB),
+            allowDialerLandscape = false,
+        )
         val newRoute = getStartRoute(intent)
         // Only apply the deep link on a fresh start; after rotation the restored back stack must be kept.
         initialRoute = if (savedInstanceState == null) newRoute else null
@@ -354,6 +361,9 @@ open class SettingsActivity : BaseActivity() {
             }
             entry<de.mm20.launcher2.ui.trash.TrashUnlockRoute> {
                 de.mm20.launcher2.ui.trash.TrashUnlockScreen()
+            }
+            entry<de.mm20.launcher2.ui.media.akou.AkouRoute> {
+                de.mm20.launcher2.ui.media.akou.AkouScreen()
             }
             entry<de.mm20.launcher2.ui.tools.MagnifierRoute> {
                 de.mm20.launcher2.ui.tools.MagnifierScreen()
@@ -648,6 +658,15 @@ open class SettingsActivity : BaseActivity() {
             ) {
                 ProvideCompositionLocals {
                     LauncherTheme {
+                        val commsSettings: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
+                        val allowDialerLandscape by commsSettings.allowDialerLandscape.collectAsState(false)
+                        LaunchedEffect(intent, allowDialerLandscape) {
+                            applyVirtualAppOrientation(
+                                intent.getStringExtra(EXTRA_ROUTE),
+                                intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB),
+                                allowDialerLandscape,
+                            )
+                        }
                         val isDarkTheme = LocalDarkTheme.current
                         val lifecycleOwner = LocalLifecycleOwner.current
                         val activity = LocalActivity.current
@@ -663,11 +682,7 @@ open class SettingsActivity : BaseActivity() {
                         OverlayHost(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(
-                                    MaterialTheme.colorScheme.surface.copy(
-                                        alpha = MaterialTheme.transparency.background
-                                    )
-                                )
+                                .background(de.mm20.launcher2.ui.component.virtualAppSurface())
                         ) {
                             // a Telos app opened directly is the only entry: going back from it closes the activity
                             // (an empty back stack must never reach NavDisplay)
@@ -725,23 +740,17 @@ open class SettingsActivity : BaseActivity() {
             SettingsDeepLinkContract.ROUTE_TRASH -> "telos_trash_app"
             ROUTE_CALCULATOR -> "telos_calculator_app"
             ROUTE_VOICE_RECORDER -> "telos_voice_recorder_app"
+            SettingsDeepLinkContract.ROUTE_CAMERA -> "telos_camera_app"
             ROUTE_SCREEN_RECORDER -> "telos_screen_recorder_app"
             ROUTE_SCREENSHOT -> "telos_screenshot_app"
             ROUTE_NOTES -> "telos_notes_app"
+            SettingsDeepLinkContract.ROUTE_ERMIS -> "telos_ermis_app"
             ROUTE_CALENDAR -> "telos_calendar_app"
             ROUTE_DOWNLOADS -> "telos_downloads_app"
             ROUTE_STORE -> "telos_store_app"
             else -> return
         }
-        val label = de.mm20.launcher2.search.TelosAppLabels.forDomain(this, domain)
-        runCatching {
-            val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(domain) ?: 0
-            @Suppress("DEPRECATION")
-            setTaskDescription(
-                if (res != 0) android.app.ActivityManager.TaskDescription(label, res)
-                else android.app.ActivityManager.TaskDescription(label)
-            )
-        }
+        de.mm20.launcher2.search.VirtualAppAppearance.applyRecents(this, domain)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -749,6 +758,11 @@ open class SettingsActivity : BaseActivity() {
         if (redirectVirtualApp(intent)) return
         setIntent(intent)
         applyTaskLabel(intent)
+        applyVirtualAppOrientation(
+            intent.getStringExtra(EXTRA_ROUTE),
+            intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB),
+            allowDialerLandscape = false,
+        )
         val newRoute = getStartRoute(intent)
         initialRoute = newRoute
     }
@@ -816,6 +830,7 @@ open class SettingsActivity : BaseActivity() {
             SettingsDeepLinkContract.ROUTE_VIEWER -> de.mm20.launcher2.ui.media.docs.ViewerRoute
             ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
             SettingsDeepLinkContract.ROUTE_TERMINAL -> de.mm20.launcher2.ui.terminal.TerminalRoute
+            "settings/akou" -> de.mm20.launcher2.ui.media.akou.AkouRoute
             "settings/magnifier" -> de.mm20.launcher2.ui.tools.MagnifierRoute
             "settings/flashlight" -> de.mm20.launcher2.ui.tools.FlashlightRoute
             ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute

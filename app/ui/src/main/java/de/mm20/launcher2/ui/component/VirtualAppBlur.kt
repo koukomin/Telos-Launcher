@@ -1,8 +1,12 @@
 package de.mm20.launcher2.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -14,6 +18,7 @@ import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 import org.koin.compose.koinInject
 
@@ -33,6 +38,8 @@ fun rememberVirtualAppBlur(): VirtualAppBlur {
     }
 }
 
+val LocalVirtualAppBlur = staticCompositionLocalOf<VirtualAppBlur?> { null }
+
 @Composable
 fun virtualAppSurface(): Color {
     val t = MaterialTheme.transparency
@@ -43,6 +50,17 @@ fun virtualAppSurface(): Color {
 fun virtualAppElevated(): Color {
     val t = MaterialTheme.transparency
     return MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
+}
+
+/** Glass window for virtual apps that do not set up haze themselves (Calculator, Notes, …). */
+@Composable
+fun VirtualAppWindow(content: @Composable () -> Unit) {
+    val blur = rememberVirtualAppBlur()
+    CompositionLocalProvider(LocalVirtualAppBlur provides blur) {
+        Box(Modifier.fillMaxSize().hazeSource(blur.haze).background(virtualAppSurface())) {
+            content()
+        }
+    }
 }
 
 fun Modifier.virtualAppGlass(blur: VirtualAppBlur, color: Color): Modifier {

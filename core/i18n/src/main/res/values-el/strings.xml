@@ -1431,6 +1431,16 @@
     <string name="shortcut_label_unavailable">Μη διαθέσιμο</string>
     <string name="system_widget_ram">RAM</string>
     <string name="system_widget_storage">Αποθηκευτικός χώρος</string>
+    <string name="system_widget_free">%1$s ελεύθερα</string>
+    <string name="system_widget_lan_ip">LAN %1$s</string>
+    <string name="system_widget_public_ip">Διαδίκτυο %1$s</string>
+    <string name="system_widget_vpn_ip">VPN %1$s</string>
+    <string name="system_widget_no_task_killer">Δεν βρέθηκε task killer ή booster. Άνοιγμα Συστήματος.</string>
+    <string name="viewer_settings">Ρυθμίσεις προβολής</string>
+    <string name="viewer_thumbs_video">Μικρογραφίες βίντεο</string>
+    <string name="viewer_thumbs_video_summary">Εμφάνιση καρέ από κάθε βίντεο στη συλλογή. Ενεργό από προεπιλογή.</string>
+    <string name="viewer_thumbs_documents">Μικρογραφίες εγγράφων</string>
+    <string name="viewer_thumbs_documents_summary">Προεπισκόπηση PDF και αρχείων Office στη λίστα εγγράφων. Ενεργό από προεπιλογή.</string>
     <string name="floating_launcher_edit">Επεξεργασία</string>
     <string name="floating_launcher_recent_files">Πρόσφατα αρχεία</string>
     <string name="floating_launcher_recent_files_empty">Δεν υπάρχουν πρόσφατα αρχεία. Το Telos χρειάζεται πρόσβαση στα αρχεία γι\' αυτό· μπορείτε να την επιτρέψετε όταν ανοίξετε το Telos Files.</string>
@@ -1486,4 +1496,4 @@
     <string name="telos_trash_unlock">Ξεκλείδωμα κάδου</string>
     <string name="telos_os_trash_unavailable">Δεν βρέθηκε κάδος του συστήματος σε αυτή τη συσκευή</string>
     <string name="telos_media_compact_list">Συμπαγής λίστα</string>
-</resources>
+<string name="telos_akou_app_label">Άκου</string><string name="telos_magnifier_app_label">Μεγεθυντικός Φακός</string><string name="telos_flashlight_app_label">Φακός</string></resources>

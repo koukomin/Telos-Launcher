@@ -204,6 +204,11 @@
     <string name="system_widget_ram">RAM</string>
     <string name="system_widget_storage">Storage</string>
     <string name="system_widget_used_of_total">%1$s of %2$s used</string>
+    <string name="system_widget_free">%1$s free</string>
+    <string name="system_widget_lan_ip">LAN %1$s</string>
+    <string name="system_widget_public_ip">Online %1$s</string>
+    <string name="system_widget_vpn_ip">VPN %1$s</string>
+    <string name="system_widget_no_task_killer">No task killer or booster app found. Opening System.</string>
     <string name="widget_name_reminders">Reminders</string>
     <string name="widget_name_freeze">Freeze</string>
     <string name="widget_plugin_empty">No data</string>
@@ -286,7 +291,7 @@
     <string name="desktop_mode_freeform_unsupported">Floating windows not available</string>
     <string name="desktop_mode_freeform_unsupported_summary">This device does not support launching apps on a secondary display, so freeform windowing cannot work either</string>
     <string name="desktop_mode_freeform_enabled">Enable floating windows (via Shizuku)</string>
-    <string name="desktop_mode_freeform_enabled_summary">Off by default. Requires Shizuku to switch the device into freeform windowing mode</string>
+    <string name="desktop_mode_freeform_enabled_summary">On by default. Requires Shizuku to switch the device into freeform windowing mode</string>
     <string name="desktop_mode_freeform_enabled_summary_pending">Waiting for Shizuku permission</string>
     <string name="desktop_mode_freeform_enabled_summary_active">Freeform windowing is active system-wide</string>
     <string name="desktop_mode_freeform_warning">This changes how every app on this device is windowed, not just this launcher, for as long as it stays on. Turn it back off here at any time to restore normal fullscreen behavior - no computer or ADB needed.</string>
@@ -1370,7 +1375,7 @@
     <string name="preference_wallpaper_pause_thermal">Pause video on overheating</string>
     <string name="preference_wallpaper_pause_thermal_summary">Freeze on the current frame while the device is thermal throttling</string>
     <string name="preference_wallpaper_pause_desktop_mode">Pause video in desktop mode</string>
-    <string name="preference_wallpaper_pause_desktop_mode_summary">Pause the video wallpaper on this screen while desktop mode is showing on an external display. Off by default, since the phone screen keeps showing it otherwise.</string>
+    <string name="preference_wallpaper_pause_desktop_mode_summary">Pause the video wallpaper on this screen while desktop mode is showing on an external display. On by default, since the phone screen keeps showing it otherwise.</string>
     <string name="preference_wallpaper_scaling_mode">Scaling mode</string>
     <string name="preference_wallpaper_scaling_mode_fit">Fit</string>
     <string name="preference_wallpaper_scaling_mode_fill">Fill</string>
@@ -1417,7 +1422,7 @@
     <string name="preference_screen_web_apps_panel">Web Apps Panel</string>
     <string name="preference_screen_web_apps_panel_summary">A dedicated home screen panel for web app shortcuts, reached by swiping</string>
     <string name="preference_web_apps_panel">Enable Web Apps Panel</string>
-    <string name="preference_web_apps_panel_summary">Reach it by swiping from the main home screen. Off by default.</string>
+    <string name="preference_web_apps_panel_summary">Reach it by swiping from the main home screen. On by default.</string>
     <string name="web_apps_panel_direction">Swipe direction</string>
     <string name="web_apps_panel_direction_left">Swipe left</string>
     <string name="web_apps_panel_direction_right">Swipe right</string>
@@ -1867,6 +1872,11 @@
     <string name="viewer_preview_cdr">CDR preview (embedded bitmap, not the drawing)</string>
     <string name="viewer_preview_ai">AI preview (embedded bitmap; PDF-based AI opens as PDF)</string>
     <string name="viewer_preview_none">No preview in this file</string>
+    <string name="viewer_settings">Viewer settings</string>
+    <string name="viewer_thumbs_video">Video thumbnails</string>
+    <string name="viewer_thumbs_video_summary">Show a frame from each video in the gallery. On by default.</string>
+    <string name="viewer_thumbs_documents">Document thumbnails</string>
+    <string name="viewer_thumbs_documents_summary">Show a preview of PDFs and Office files in the document list. On by default.</string>
     <string name="comms_calling">Calling…</string>
     <string name="comms_on_hold">On hold</string>
     <string name="comms_mute">Mute</string>
@@ -1894,4 +1904,4 @@
     <string name="telos_trash_unlock">Unlock trash</string>
     <string name="telos_os_trash_unavailable">No system recycle bin was found on this device</string>
     <string name="telos_media_compact_list">Compact list</string>
-</resources>
+<string name="telos_akou_app_label">Άκου</string><string name="telos_magnifier_app_label">Magnifier</string><string name="telos_flashlight_app_label">Flashlight</string></resources>

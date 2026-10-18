@@ -48,7 +48,7 @@ val dataCommsModule = module {
         VirtualPhoneApp.Domain, VirtualMessagesApp.Domain, VirtualRadioApp.Domain,
         VirtualMusicApp.Domain, VirtualVideoApp.Domain, VirtualYouTubeApp.Domain, VirtualYouTubeMusicApp.Domain,
         VirtualFilesApp.Domain, VirtualCalculatorApp.Domain, VirtualVoiceRecorderApp.Domain,
-        VirtualScreenRecorderApp.Domain, VirtualScreenshotApp.Domain, VirtualNotesApp.Domain,
+        VirtualCameraApp.Domain, VirtualScreenRecorderApp.Domain, VirtualScreenshotApp.Domain, VirtualNotesApp.Domain,
         VirtualCalendarApp.Domain, VirtualDownloadsApp.Domain, VirtualMediaApp.Domain,
         VirtualNetworkApp.Domain, VirtualSystemApp.Domain, VirtualViewerApp.Domain,  VirtualTerminalApp.Domain, VirtualTrashApp.Domain,
     ).forEach { domain ->

@@ -14,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
@@ -104,6 +105,7 @@ fun CommsDashboardScreen(
         de.mm20.launcher2.comms.intent.MessengerApps.listLaunchers(context)
     }
 
+    de.mm20.launcher2.ui.component.VirtualAppWindow {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -201,7 +203,7 @@ fun CommsDashboardScreen(
         }
     ) {
         Scaffold(
-            containerColor = MaterialTheme.colorScheme.background.copy(alpha = MaterialTheme.transparency.background),
+            containerColor = Color.Transparent,
             topBar = {
                 Column(Modifier.statusBarsPadding()) {
                     if (inSubScreen) Row(
@@ -354,5 +356,6 @@ fun CommsDashboardScreen(
                 TextButton(onClick = { showClearHistoryDialog = false }) { Text("Cancel") }
             }
         )
+    }
     }
 }

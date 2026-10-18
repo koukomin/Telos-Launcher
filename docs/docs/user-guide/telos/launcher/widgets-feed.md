@@ -51,7 +51,7 @@ Android widgets have extra options: **Borderless**, **Background card** and **Us
 | Media | Playing media with controls | Notification access | Interactive progress bar |
 | Note | A free text note | Nothing | Link to an existing or new file |
 | Battery | Charge level and charging state | Nothing | None |
-| System | RAM, storage, active HWUI renderer (Vulkan/OpenGL), VPN and device traffic. Off in the picker until you enable it in Telos System. Vulkan/OpenGL chips switch the renderer only when Settings → Advanced → Switch from System widget is on | Enable in Telos System; Shizuku, root or ADB to change the renderer | None |
+| System | RAM used of total (tap opens a task killer/booster or Telos System), storage used of total and free space (tap opens disk cleanup), solid Vulkan/OpenGL buttons, LAN IP, public online IP, VPN IP, VPN state and device traffic. Off in the picker until you enable it in Telos System. Vulkan/OpenGL buttons switch the renderer only when Settings → Advanced → Switch from System widget is on | Enable in Telos System; Shizuku, root or ADB to change the renderer | None |
 | Freeze | The [Smart Freeze](../freeze/) candidates, with a **Freeze now** button | Freeze set up | None |
 | Android widgets | Any app widget installed on the phone | The app | Per widget |
 | Plugin widgets | Rows of title, subtitle and value from a plugin | A widget plugin | None |

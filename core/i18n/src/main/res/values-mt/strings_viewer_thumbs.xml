@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Settings tal-viewer</string>
+    <string name="viewer_thumbs_video">Thumbnails tal-vidjo</string>
+    <string name="viewer_thumbs_video_summary">Frame minn kull vidjo fil-gallerija. Mixgħul b\'default.</string>
+    <string name="viewer_thumbs_documents">Thumbnails tad-dokumenti</string>
+    <string name="viewer_thumbs_documents_summary">Preview ta\' PDF u Office fil-lista. Mixgħul b\'default.</string>
+</resources>

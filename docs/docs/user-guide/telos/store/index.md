@@ -25,6 +25,9 @@ sources.
 Telos Store is also where the built-in [Telos apps](../#how-the-built-in-apps-work) are switched on and off. It is
 itself a Telos app, but it **cannot be removed**, otherwise there would be no way back.
 
+Available updates sit at the top of the Apps list (and of the Play tab). If a new Telos launcher
+build is among them, it is the first row.
+
 ## How to open it
 
 | From | What opens |

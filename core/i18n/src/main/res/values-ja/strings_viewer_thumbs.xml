@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">ビューア設定</string>
+    <string name="viewer_thumbs_video">動画サムネイル</string>
+    <string name="viewer_thumbs_video_summary">ギャラリーで各動画の1フレームを表示。既定はオン。</string>
+    <string name="viewer_thumbs_documents">文書サムネイル</string>
+    <string name="viewer_thumbs_documents_summary">リストで PDF と Office をプレビュー。既定はオン。</string>
+</resources>

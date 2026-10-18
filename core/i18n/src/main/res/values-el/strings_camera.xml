@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Κάμερα</string>
+    <string name="camera_need_permission">Απαιτείται άδεια κάμερας</string>
+    <string name="camera_mode_photo">Φωτογραφία</string>
+    <string name="camera_mode_video">Βίντεο</string>
+    <string name="camera_mode_portrait">Πορτρέτο</string>
+    <string name="camera_mode_night">Νύχτα</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Πανόραμα</string>
+    <string name="camera_mode_discreet">Διακριτική</string>
+    <string name="camera_flip">Αλλαγή κάμερας</string>
+    <string name="camera_format">Μορφή αρχείου</string>
+    <string name="camera_raw">Αποθήκευση DNG RAW</string>
+    <string name="camera_exif">Διατήρηση EXIF</string>
+    <string name="camera_silent">Σιωπηλό κλείστρο</string>
+    <string name="camera_hide_folder">Κρυφό άλμπουμ (.nomedia)</string>
+    <string name="camera_grid">Πλέγμα</string>
+    <string name="camera_burst">Σειρά ×%1$d</string>
+    <string name="camera_webcam_start">Έναρξη IP webcam</string>
+    <string name="camera_webcam_stop">Διακοπή webcam</string>
+    <string name="camera_usb_hint">Η USB webcam χρειάζεται υποστήριξη gadget από τον κατασκευαστή (ColorOS USB webcam). Το IP MJPEG δουλεύει σε οποιοδήποτε LAN.</string>
+    <string name="camera_discreet">Διακριτική λήψη</string>
+    <string name="camera_geotag">GPS στις φωτογραφίες</string>
+    <string name="camera_pano_done">Ραφή πανόραμα (%1$d)</string>
+    <string name="camera_pano_hint">Πάτα το κλείστρο για κάθε κομμάτι, μετά Ραφή</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">Κλείδωμα έκθεσης</string>
+    <string name="camera_wb">Ισορροπία λευκού %1$s</string>
+</resources>

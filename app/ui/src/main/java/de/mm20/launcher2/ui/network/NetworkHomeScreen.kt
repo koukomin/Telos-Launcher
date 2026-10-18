@@ -126,6 +126,7 @@ fun NetworkHomeScreen() {
         label = "ring",
     )
 
+    de.mm20.launcher2.ui.component.VirtualAppWindow {
     Box(Modifier.fillMaxSize()) {
         Box(
             Modifier
@@ -289,6 +290,7 @@ fun NetworkHomeScreen() {
                 }
             }
         }
+    }
     }
 }
 

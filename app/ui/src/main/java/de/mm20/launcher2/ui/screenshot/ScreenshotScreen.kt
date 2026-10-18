@@ -101,7 +101,8 @@ fun ScreenshotScreen() {
         (context as? Activity)?.moveTaskToBack(true)
     }
 
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)).systemBarsPadding()) {
+    de.mm20.launcher2.ui.component.VirtualAppWindow {
+    Box(Modifier.fillMaxSize().systemBarsPadding()) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             contentPadding = PaddingValues(12.dp),
@@ -180,6 +181,7 @@ fun ScreenshotScreen() {
                 )
             }
         }
+    }
     }
 }
 

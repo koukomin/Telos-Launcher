@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Impostazioni visore</string>
+    <string name="viewer_thumbs_video">Miniature video</string>
+    <string name="viewer_thumbs_video_summary">Mostra un fotogramma di ogni video in galleria. Disattivo di default.</string>
+    <string name="viewer_thumbs_documents">Miniature documenti</string>
+    <string name="viewer_thumbs_documents_summary">Anteprima di PDF e file Office nell\'elenco. Disattivo di default.</string>
+</resources>

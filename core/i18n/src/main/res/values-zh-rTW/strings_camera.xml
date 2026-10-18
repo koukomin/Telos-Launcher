@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">相機</string>
+    <string name="camera_need_permission">需要相機權限</string>
+    <string name="camera_mode_photo">照片</string>
+    <string name="camera_mode_video">影片</string>
+    <string name="camera_mode_portrait">人像</string>
+    <string name="camera_mode_night">夜景</string>
+    <string name="camera_mode_pro">專業</string>
+    <string name="camera_mode_pano">全景</string>
+    <string name="camera_mode_discreet">隱蔽</string>
+    <string name="camera_flip">切換相機</string>
+    <string name="camera_format">格式</string>
+    <string name="camera_raw">儲存 DNG RAW</string>
+    <string name="camera_exif">保留 EXIF</string>
+    <string name="camera_silent">靜音快門</string>
+    <string name="camera_hide_folder">隱藏相簿 (.nomedia)</string>
+    <string name="camera_grid">網格</string>
+    <string name="camera_burst">連拍 ×%1$d</string>
+    <string name="camera_webcam_start">啟動 IP 網路攝影機</string>
+    <string name="camera_webcam_stop">停止網路攝影機</string>
+    <string name="camera_usb_hint">USB 網路攝影機需要 OEM gadget。IP MJPEG 可在任何區網使用。</string>
+    <string name="camera_discreet">隱蔽拍攝</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

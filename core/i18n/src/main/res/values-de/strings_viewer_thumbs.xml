@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Viewer-Einstellungen</string>
+    <string name="viewer_thumbs_video">Video-Miniaturansichten</string>
+    <string name="viewer_thumbs_video_summary">Zeigt ein Bild aus jedem Video in der Galerie. Standardmäßig aus.</string>
+    <string name="viewer_thumbs_documents">Dokument-Miniaturansichten</string>
+    <string name="viewer_thumbs_documents_summary">Vorschau von PDF- und Office-Dateien in der Dokumentliste. Standardmäßig aus.</string>
+</resources>

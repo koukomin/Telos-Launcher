@@ -1410,6 +1410,8 @@ data class CommsGroup(
     val networkBackend: String = "auto",
     val screenOffLte: Boolean = false,
     val batterySaverLte: Boolean = false,
+    /** Phones: the dialer stays in portrait unless this is on. Tablets always rotate. */
+    val allowDialerLandscape: Boolean = false,
     /** default | vulkan | opengl — system HWUI renderer (debug.hwui.renderer) */
     val hwuiRenderer: String = "default",
     val hwuiRestoreOnBoot: Boolean = true,

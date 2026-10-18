@@ -34,3 +34,4 @@ Additionally, these conditional components are available:
 - **Media**: show media controls, only when there are active media sessions
 - **Alarm**: show the remaining time to the next alarm, only if there is an alarm scheduled to ring within the next 12 hours
 - **Battery**: shows the current battery level and remaining charging time, only if battery is charging or battery level is less than 15%
+- **Weather**: large current temperature and a vivid animated condition icon. Tap opens the device weather app. Needs location permission and a weather provider.

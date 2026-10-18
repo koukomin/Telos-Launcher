@@ -180,6 +180,8 @@
     <string name="hc_hidden_contacts">Κρυφές επαφές</string>
     <string name="hc_hidden_contacts_pin">PIN κρυφών επαφών</string>
     <string name="hc_hide_dialpad_letters">Απόκρυψη γραμμάτων πληκτρολογίου κλήσης</string>
+    <string name="comms_dialer_rotate">Περιστροφή dialer</string>
+    <string name="comms_dialer_rotate_sum">Στα κινητά το πληκτρολόγιο μένει σε πορτρέτο. Άνοιξέ το για landscape.</string>
     <string name="hc_hide_from_contacts_tab">Απόκρυψη από την καρτέλα επαφών</string>
     <string name="hc_hide_from_recents">Απόκρυψη από τις πρόσφατες</string>
     <string name="hc_hide_this_menu_after_pin_is_set">Απόκρυψη αυτού του μενού μετά τον ορισμό PIN</string>

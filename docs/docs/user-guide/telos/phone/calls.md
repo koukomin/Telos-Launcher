@@ -47,6 +47,7 @@ and `#` is *not* sent to the network, it unlocks hidden contacts, see
 | T9 Language Alphabet | T9 Search Settings | Latin (English) | Latin, Greek or Cyrillic key labels and matching |
 | Dialpad Sounds | Sounds & Vibrations | off | DTMF tone for each key while typing (150 ms) |
 | Dialpad Vibration | Sounds & Vibrations | on | Haptic tick for each key |
+| Allow dialer rotation | Sounds & Vibrations | off | On phones the keypad stays in portrait until this is on |
 | Hide dialpad letters | Sounds & Vibrations | off | Shows only digits on the keys |
 | Remember dialpad digits | Calling | on | Keeps the typed number when you reopen the keypad. A number starting with `#` is never saved |
 | Open dialpad on launch | Calling | off | Phone starts on the keypad |

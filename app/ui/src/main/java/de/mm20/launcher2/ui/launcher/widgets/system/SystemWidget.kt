@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.widgets.system
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.TrafficStats
@@ -31,7 +32,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -79,6 +81,10 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
+import java.net.HttpURLConnection
+import java.net.Inet4Address
+import java.net.NetworkInterface
+import java.net.URL
 import java.text.NumberFormat
 
 private data class SystemStats(
@@ -86,6 +92,8 @@ private data class SystemStats(
     val ramTotal: Long = 0L,
     val storageUsed: Long = 0L,
     val storageTotal: Long = 0L,
+    val lanIp: String? = null,
+    val vpnIp: String? = null,
 )
 
 @Composable
@@ -107,6 +115,7 @@ fun SystemWidget(widget: SystemWidget) {
     var tx by remember { mutableStateOf<Long?>(null) }
     var transport by remember { mutableIntStateOf(R.string.network_widget_disconnected) }
     var liveRenderer by remember { mutableStateOf(HwuiRenderer.MODE_DEFAULT) }
+    var publicIp by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
     val number = remember { NumberFormat.getIntegerInstance() }
 
@@ -115,8 +124,13 @@ fun SystemWidget(widget: SystemWidget) {
             var previousRx = TrafficStats.getTotalRxBytes()
             var previousTx = TrafficStats.getTotalTxBytes()
             var previousTime = SystemClock.elapsedRealtime()
+            var publicAge = 0
             while (isActive) {
                 stats = withContext(Dispatchers.IO) { readSystemStats(context) }
+                if (publicAge == 0) {
+                    publicIp = withContext(Dispatchers.IO) { fetchPublicIp() }
+                }
+                publicAge = (publicAge + 1) % 15
                 liveRenderer = HwuiRenderer.current()
                 val manager = context.getSystemService<ConnectivityManager>()
                 val capabilities = manager?.getNetworkCapabilities(manager.activeNetwork)
@@ -191,13 +205,18 @@ fun SystemWidget(widget: SystemWidget) {
             }
         }
 
+        val vulkanOn = liveRenderer == HwuiRenderer.MODE_VULKAN || savedRenderer == HwuiRenderer.MODE_VULKAN
+        val glOn = liveRenderer == HwuiRenderer.MODE_OPENGL || savedRenderer == HwuiRenderer.MODE_OPENGL
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            FilterChip(
-                selected = liveRenderer == HwuiRenderer.MODE_VULKAN || savedRenderer == HwuiRenderer.MODE_VULKAN,
+            GraphicsButton(
+                label = stringResource(R.string.hc_graphics_vulkan),
+                selected = vulkanOn,
+                selectedColor = Color(0xFF00E5A8),
+                enabled = allowSwitch,
                 onClick = {
                     if (!allowSwitch) {
                         Toast.makeText(context, R.string.hc_graphics_widget_locked, Toast.LENGTH_SHORT).show()
-                        return@FilterChip
+                        return@GraphicsButton
                     }
                     scope.launch {
                         comms.setHwuiRenderer(HwuiRenderer.MODE_VULKAN)
@@ -210,15 +229,16 @@ fun SystemWidget(widget: SystemWidget) {
                         ).show()
                     }
                 },
-                enabled = allowSwitch,
-                label = { Text(stringResource(R.string.hc_graphics_vulkan)) },
             )
-            FilterChip(
-                selected = liveRenderer == HwuiRenderer.MODE_OPENGL || savedRenderer == HwuiRenderer.MODE_OPENGL,
+            GraphicsButton(
+                label = stringResource(R.string.hc_graphics_opengl),
+                selected = glOn,
+                selectedColor = scheme.primary,
+                enabled = allowSwitch,
                 onClick = {
                     if (!allowSwitch) {
                         Toast.makeText(context, R.string.hc_graphics_widget_locked, Toast.LENGTH_SHORT).show()
-                        return@FilterChip
+                        return@GraphicsButton
                     }
                     scope.launch {
                         comms.setHwuiRenderer(HwuiRenderer.MODE_OPENGL)
@@ -231,23 +251,42 @@ fun SystemWidget(widget: SystemWidget) {
                         ).show()
                     }
                 },
-                enabled = allowSwitch,
-                label = { Text(stringResource(R.string.hc_graphics_opengl)) },
             )
         }
 
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             TechStat(
-                Modifier.weight(1f),
+                Modifier
+                    .weight(1f)
+                    .clickable { openTaskKiller(context) },
                 stringResource(R.string.system_widget_ram),
                 if (stats.ramTotal == 0L) 0f else stats.ramUsed.toFloat() / stats.ramTotal,
-                Formatter.formatShortFileSize(context, stats.ramUsed),
+                stringResource(
+                    R.string.system_widget_used_of_total,
+                    Formatter.formatShortFileSize(context, stats.ramUsed),
+                    Formatter.formatShortFileSize(context, stats.ramTotal),
+                ),
             )
+            val free = (stats.storageTotal - stats.storageUsed).coerceAtLeast(0L)
             TechStat(
-                Modifier.weight(1f),
+                Modifier
+                    .weight(1f)
+                    .clickable {
+                        context.tryStartActivity(
+                            Intent(context, SettingsActivity::class.java)
+                                .putExtra(SettingsActivity.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_TRASH),
+                        )
+                    },
                 stringResource(R.string.system_widget_storage),
                 if (stats.storageTotal == 0L) 0f else stats.storageUsed.toFloat() / stats.storageTotal,
-                Formatter.formatShortFileSize(context, stats.storageUsed),
+                stringResource(
+                    R.string.system_widget_used_of_total,
+                    Formatter.formatShortFileSize(context, stats.storageUsed),
+                    Formatter.formatShortFileSize(context, stats.storageTotal),
+                ) + " · " + stringResource(
+                    R.string.system_widget_free,
+                    Formatter.formatShortFileSize(context, free),
+                ),
             )
         }
 
@@ -283,12 +322,50 @@ fun SystemWidget(widget: SystemWidget) {
             }
             Text(stringResource(transport), style = MaterialTheme.typography.labelMedium)
             Text("↓ ${formatRate(rx)}    ↑ ${formatRate(tx)}", style = MaterialTheme.typography.titleMedium)
+            stats.lanIp?.let {
+                Text(stringResource(R.string.system_widget_lan_ip, it), style = MaterialTheme.typography.labelMedium)
+            }
+            Text(
+                stringResource(R.string.system_widget_public_ip, publicIp ?: "—"),
+                style = MaterialTheme.typography.labelMedium,
+            )
+            if (vpnOn || stats.vpnIp != null) {
+                Text(
+                    stringResource(R.string.system_widget_vpn_ip, stats.vpnIp ?: publicIp ?: "—"),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = Color(0xFF00E5A8),
+                )
+            }
             Text(
                 "${stringResource(R.string.net_hub_stat_dns)} ${server.name}  ·  ${number.format(statsLog.dnsBlocked)} DNS  ·  ${number.format(statsLog.connectionsBlocked)} conn",
                 style = MaterialTheme.typography.labelSmall,
                 color = scheme.onSurfaceVariant,
             )
         }
+    }
+}
+
+@Composable
+private fun GraphicsButton(
+    label: String,
+    selected: Boolean,
+    selectedColor: Color,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
+    val scheme = MaterialTheme.colorScheme
+    Button(
+        onClick = onClick,
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if (selected) selectedColor else scheme.surfaceContainerHighest,
+            contentColor = if (selected) Color.Black else scheme.onSurface,
+            disabledContainerColor = scheme.surfaceContainerHighest,
+            disabledContentColor = scheme.onSurface.copy(alpha = 0.38f),
+        ),
+        elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp),
+    ) {
+        Text(label)
     }
 }
 
@@ -313,11 +390,75 @@ private fun readSystemStats(context: Context): SystemStats {
     val memoryInfo = ActivityManager.MemoryInfo()
     context.getSystemService<ActivityManager>()?.getMemoryInfo(memoryInfo)
     val statFs = StatFs(Environment.getDataDirectory().path)
+    val (lan, vpn) = readLocalIps()
     return SystemStats(
         ramUsed = memoryInfo.totalMem - memoryInfo.availMem,
         ramTotal = memoryInfo.totalMem,
         storageUsed = statFs.totalBytes - statFs.availableBytes,
         storageTotal = statFs.totalBytes,
+        lanIp = lan,
+        vpnIp = vpn,
+    )
+}
+
+private fun readLocalIps(): Pair<String?, String?> {
+    var lan: String? = null
+    var vpn: String? = null
+    runCatching {
+        NetworkInterface.getNetworkInterfaces()?.toList().orEmpty().forEach { ni ->
+            if (!ni.isUp || ni.isLoopback) return@forEach
+            val name = ni.displayName.lowercase()
+            val isVpn = name.startsWith("tun") || name.startsWith("wg") || name.startsWith("ppp") ||
+                name.contains("ipsec") || name.contains("vpn")
+            ni.inetAddresses.toList().forEach { addr ->
+                if (addr.isLoopbackAddress || addr !is Inet4Address) return@forEach
+                val host = addr.hostAddress ?: return@forEach
+                if (isVpn) {
+                    if (vpn == null) vpn = host
+                } else if (lan == null) {
+                    lan = host
+                }
+            }
+        }
+    }
+    return lan to vpn
+}
+
+private fun fetchPublicIp(): String? = runCatching {
+    val conn = URL("https://api.ipify.org").openConnection() as HttpURLConnection
+    conn.connectTimeout = 2500
+    conn.readTimeout = 2500
+    conn.useCaches = false
+    conn.inputStream.bufferedReader().use { it.readText().trim() }.takeIf { it.isNotEmpty() }
+}.getOrNull()
+
+private val killerHints = listOf(
+    "task killer", "taskkiller", "ram booster", "phone booster", "optimizer",
+    "phone master", "advanced task", "memory booster", "boost+",
+)
+
+private fun openTaskKiller(context: Context) {
+    val pm = context.packageManager
+    val launch = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+    val match = pm.queryIntentActivities(launch, PackageManager.MATCH_DEFAULT_ONLY).firstOrNull { ri ->
+        val pkg = ri.activityInfo.packageName
+        if (pkg == context.packageName) return@firstOrNull false
+        val label = ri.loadLabel(pm).toString().lowercase()
+        val p = pkg.lowercase()
+        killerHints.any { it in label || it.replace(" ", "") in p }
+    }
+    if (match != null) {
+        context.tryStartActivity(
+            Intent(Intent.ACTION_MAIN)
+                .setClassName(match.activityInfo.packageName, match.activityInfo.name)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+        )
+        return
+    }
+    Toast.makeText(context, R.string.system_widget_no_task_killer, Toast.LENGTH_SHORT).show()
+    context.tryStartActivity(
+        Intent(context, SettingsActivity::class.java)
+            .putExtra(SettingsActivity.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_SYSTEM),
     )
 }
 

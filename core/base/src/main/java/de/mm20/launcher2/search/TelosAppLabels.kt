@@ -21,6 +21,7 @@ object TelosAppLabels {
         "telos_files_app" -> R.string.pdft_files
         "telos_calculator_app" -> R.string.calculator_title
         "telos_voice_recorder_app" -> R.string.voice_title
+        "telos_camera_app" -> R.string.camera_title
         "telos_screen_recorder_app" -> R.string.screenrec_title
         "telos_screenshot_app" -> R.string.screenshot_title
         "telos_notes_app" -> R.string.notes_title

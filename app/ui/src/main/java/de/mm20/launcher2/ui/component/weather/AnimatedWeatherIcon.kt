@@ -40,6 +40,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 import kotlin.math.PI
@@ -52,24 +53,27 @@ fun AnimatedWeatherIcon(
     icon: WeatherIcon,
     night: Boolean = false,
     colors: WeatherIconColors = WeatherIconDefaults.colors(),
+    size: Dp = 64.dp,
 ) {
-
+    val scale = size.value / 64f
     Box(
         modifier = modifier
-            .size(64.dp)
+            .size(size)
             .clipToBounds(),
         contentAlignment = Alignment.Center
     ) {
-        SunMoon(icon, night, colors)
-        Precipitation(icon, colors)
-        LightningBolt(icon, colors)
-        Cloud1(icon, colors)
-        Cloud2(icon, colors)
-        Cloud3(icon, colors)
-        Fog(icon, colors)
-        Hot(icon, colors)
-        Cold(icon, colors)
-        Wind1(icon, colors)
+        Box(Modifier.size(64.dp).scale(scale), contentAlignment = Alignment.Center) {
+            SunMoon(icon, night, colors)
+            Precipitation(icon, colors)
+            LightningBolt(icon, colors)
+            Cloud1(icon, colors)
+            Cloud2(icon, colors)
+            Cloud3(icon, colors)
+            Fog(icon, colors)
+            Hot(icon, colors)
+            Cold(icon, colors)
+            Wind1(icon, colors)
+        }
     }
 }
 

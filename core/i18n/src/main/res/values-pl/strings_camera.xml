@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Aparat</string>
+    <string name="camera_need_permission">Wymagane uprawnienie aparatu</string>
+    <string name="camera_mode_photo">Zdjęcie</string>
+    <string name="camera_mode_video">Wideo</string>
+    <string name="camera_mode_portrait">Portret</string>
+    <string name="camera_mode_night">Noc</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">Dyskretny</string>
+    <string name="camera_flip">Zmień aparat</string>
+    <string name="camera_format">Format</string>
+    <string name="camera_raw">Zapisz DNG RAW</string>
+    <string name="camera_exif">Zachowaj EXIF</string>
+    <string name="camera_silent">Cicha migawka</string>
+    <string name="camera_hide_folder">Ukryty album (.nomedia)</string>
+    <string name="camera_grid">Siatka</string>
+    <string name="camera_burst">Seria ×%1$d</string>
+    <string name="camera_webcam_start">Uruchom kamerę IP</string>
+    <string name="camera_webcam_stop">Zatrzymaj kamerę</string>
+    <string name="camera_usb_hint">Kamera USB wymaga gadgetu OEM. MJPEG IP działa w każdej sieci LAN.</string>
+    <string name="camera_discreet">Dyskretne zdjęcie</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

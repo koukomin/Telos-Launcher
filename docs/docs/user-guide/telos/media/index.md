@@ -8,7 +8,7 @@ Three destinations sit in the bottom bar: **Listen** (Music and YouTube Music), 
 
 ## Shared mini player
 
-YouTube and YouTube Music use a shared native background player. Their optional [browser account panel](youtube-account.md) opens both websites in the same browser; it does not import that account into the native player.
+YouTube and YouTube Music use a shared native background player. Open the person / Account control to sign in on the official websites in the browser ([browser account panel](youtube-account.md)). That does not import the account into the native player. microG is not used here. Video and series posters load from TVMaze or iTunes when no TMDB key is set. The hub shows one mini player. System Back leaves the current Media page (album, series, now playing) before closing the app.
 
 A single mini player sits above the bottom bar on every space except Video and Stremio Fork (those
 use the full-screen player). It shows the title and artist (music), the station (radio) or the

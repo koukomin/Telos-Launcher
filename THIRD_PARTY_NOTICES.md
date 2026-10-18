@@ -38,6 +38,12 @@ based on" table in `readme.md`.
 | [Dhizuku-API](https://github.com/iamr0s/Dhizuku-API) | MIT | Copyright (c) 2023 R0S. Device-owner delegation for freeze |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Copyright 2025 Kyant. Bundles TagLib (LGPL-2.1 / MPL-1.1 upstream) |
 | [PaperKnife+](https://github.com/potatameister/PaperKnifePlus) | GPL-3.0-or-later | Copyright (C) potatameister and PaperKnife+ contributors. PDF tools of Telos Viewer (feature set, tool logic) adapted from it |
+| [Open Camera](https://opencamera.org.uk/) | GPL-3.0 | Feature ideas only for Telos Camera; no source copied |
+| [Libre Camera](https://github.com/iakdis/librecamera) | GPL-3.0 | Feature ideas only; no source copied |
+| [CamX](https://github.com/uncannyRishabh/camx) | Apache-2.0 | Feature ideas only; no source copied |
+| [Photon Camera](https://github.com/bjzhou/PhotonCamera) | GPL-3.0 | Feature ideas only; LUT/AI stack not implemented; no source copied |
+| [Open Camera OMT](https://github.com/ysdede/opencamera-omt) | GPL-3.0 | Idea only for LAN streaming; Telos uses its own MJPEG server |
+| [Spy Camera OS](https://github.com/wolkenschieber/spy-camera-os) | CC-BY-NC-3.0 | Feature ideas only for discreet capture; no source copied |
 | [PdfBox-Android](https://github.com/TomRoush/PdfBox-Android) | Apache-2.0 | Copyright the Apache PDFBox authors and Tom Roush; used unchanged as a Maven dependency |
 | [baresip](https://github.com/baresip/baresip), [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | Planned, not yet included |
 

@@ -1458,4 +1458,27 @@
     <string name="dl_m_auto_update_sum">Raz dziennie pobiera najnowsze yt-dlp przez Wi-Fi, aby pobieranie działało mimo zmian na stronach</string>
     <string name="telos_files_peek_select">Zaznacz</string>
     <string name="telos_files_smb_nearby">Komputery w tej sieci</string>
+    <string name="system_widget_free">%1$s wolne</string>
+    <string name="system_widget_lan_ip">LAN %1$s</string>
+    <string name="system_widget_public_ip">Online %1$s</string>
+    <string name="system_widget_vpn_ip">VPN %1$s</string>
+    <string name="system_widget_no_task_killer">Brak task killera lub boostera. Otwieranie Systemu.</string>
+    <string name="telos_youtube_account_microg">microG is for Play Services apps. Telos YouTube does not use it. Sign in in the browser with the buttons below. A native Google account in Telos is not available yet.</string>
+    <string name="comms_dialer_rotate">Allow dialer rotation</string>
+    <string name="comms_dialer_rotate_sum">On phones the keypad stays in portrait. Turn this on to use landscape too.</string>
+    <string name="telos_youtube_tab_search">Search</string>
+    <string name="telos_youtube_tab_favorites">Favorites</string>
+    <string name="telos_youtube_tab_playlists">Playlists</string>
+    <string name="telos_youtube_favorite">Favorite</string>
+    <string name="telos_youtube_add_playlist">Add to playlist</string>
+    <string name="telos_youtube_new_playlist">New playlist</string>
+    <string name="telos_youtube_playlist_name">Playlist name</string>
+    <string name="telos_youtube_artist_radio">Artist radio</string>
+    <string name="telos_youtube_genre_radio">Genre radio</string>
+    <string name="telos_youtube_radio_failed">Could not start the radio mix. Try another song or genre.</string>
+    <string name="telos_youtube_play_playlist">Play playlist</string>
+    <string name="telos_youtube_delete_playlist">Delete playlist</string>
+    <string name="telos_youtube_empty_favorites">No favorites yet. Star a song in search.</string>
+    <string name="telos_youtube_empty_playlists">No playlists yet. Create one from a song.</string>
+    <string name="telos_youtube_library_local">Favorites and playlists stay on this phone. They are not your YouTube Music account.</string>
 </resources>

@@ -36,6 +36,9 @@ object TelosAppKeywords {
         "telos_system_app" to listOf("system", "cpu", "ram", "wifi", "ip", "processes", "σύστημα", "επεξεργαστής"),
         "telos_trash_app" to listOf("trash", "bin", "recycle", "κάδος", "ανακύκλωση"),
         "telos_voice_recorder_app" to listOf("recorder", "recording", "dictaphone", "audio", "καταγραφή ήχου", "εγγραφή φωνής"),
+        "telos_camera_app" to listOf(
+            "camera", "photo", "webcam", "hasselblad", "raw", "dng", "pro", "κάμερα", "φωτογραφία", "κάμερα web",
+        ),
         "telos_screen_recorder_app" to listOf("recorder", "recording", "screencast", "εγγραφή οθόνης"),
         "telos_screenshot_app" to listOf("screen capture", "screengrab", "στιγμιότυπο", "αποτύπωση οθόνης"),
     )
@@ -55,6 +58,7 @@ object TelosAppKeywords {
         "telos_files_app" to "files",
         "telos_calculator_app" to "calculator",
         "telos_voice_recorder_app" to "Voice recorder",
+        "telos_camera_app" to "Camera",
         "telos_screen_recorder_app" to "Screen recorder",
         "telos_screenshot_app" to "screenshot",
         "telos_notes_app" to "notes",

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Kamera</string>
+    <string name="camera_need_permission">Reikalingas kameros leidimas</string>
+    <string name="camera_mode_photo">Nuotrauka</string>
+    <string name="camera_mode_video">Vaizdo įrašas</string>
+    <string name="camera_mode_portrait">Portretas</string>
+    <string name="camera_mode_night">Naktis</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">Diskretiškai</string>
+    <string name="camera_flip">Keisti kamerą</string>
+    <string name="camera_format">Formatas</string>
+    <string name="camera_raw">Išsaugoti DNG RAW</string>
+    <string name="camera_exif">Palikti EXIF</string>
+    <string name="camera_silent">Tylus užraktas</string>
+    <string name="camera_hide_folder">Paslėptas albumas (.nomedia)</string>
+    <string name="camera_grid">Tinklelis</string>
+    <string name="camera_burst">Serija ×%1$d</string>
+    <string name="camera_webcam_start">Paleisti IP internetinę kamerą</string>
+    <string name="camera_webcam_stop">Stabdyti internetinę kamerą</string>
+    <string name="camera_usb_hint">USB kamera reikia OEM gadget. IP MJPEG veikia bet kuriame LAN.</string>
+    <string name="camera_discreet">Diskretus fotografavimas</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

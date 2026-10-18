@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.files
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
@@ -49,11 +50,19 @@ internal fun FilesSettingsTransferButton(workspace: FilesWorkspaceViewModel) {
             }
         }
     }
-    TextButton(onClick = { menu = true }, enabled = !busy) { Text(stringResource(R.string.telos_files_settings_transfer)) }
+    Box {
+    ChromeIcon(
+        icon = de.mm20.launcher2.base.R.drawable.settings_24px,
+        label = stringResource(R.string.telos_files_settings_transfer),
+        enabled = !busy,
+        selected = menu,
+        onClick = { menu = true },
+    )
     DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
         if (!importAllowed) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_settings_busy)) }, enabled = false, onClick = {})
         DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_settings_export)) }, onClick = { menu = false; export.launch("telos-files-settings.json") })
         DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_settings_import)) }, enabled = importAllowed, onClick = { menu = false; import.launch(arrayOf("application/json", "text/plain")) })
+    }
     }
     pending?.let { settings ->
         AlertDialog(onDismissRequest = { pending = null }, title = { Text(stringResource(R.string.telos_files_settings_import)) },

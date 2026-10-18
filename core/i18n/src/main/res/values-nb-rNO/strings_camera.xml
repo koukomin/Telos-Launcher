@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Kamera</string>
+    <string name="camera_need_permission">Kameratillatelse kreves</string>
+    <string name="camera_mode_photo">Foto</string>
+    <string name="camera_mode_video">Video</string>
+    <string name="camera_mode_portrait">Portrett</string>
+    <string name="camera_mode_night">Natt</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">Diskret</string>
+    <string name="camera_flip">Bytt kamera</string>
+    <string name="camera_format">Format</string>
+    <string name="camera_raw">Lagre DNG RAW</string>
+    <string name="camera_exif">Behold EXIF</string>
+    <string name="camera_silent">Lydløs lukker</string>
+    <string name="camera_hide_folder">Skjult album (.nomedia)</string>
+    <string name="camera_grid">Rutenett</string>
+    <string name="camera_burst">Serie ×%1$d</string>
+    <string name="camera_webcam_start">Start IP-webkamera</string>
+    <string name="camera_webcam_stop">Stopp webkamera</string>
+    <string name="camera_usb_hint">USB-webkamera trenger OEM-gadget. IP-MJPEG virker på ethvert LAN.</string>
+    <string name="camera_discreet">Diskret opptak</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

@@ -143,7 +143,8 @@ fun SystemDashboardScreen() {
         }
     }
 
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(scheme.primary.copy(alpha = 0.22f * MaterialTheme.transparency.surface), scheme.surface.copy(alpha = MaterialTheme.transparency.background))))) {
+    de.mm20.launcher2.ui.component.VirtualAppWindow {
+    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(scheme.primary.copy(alpha = 0.22f * MaterialTheme.transparency.surface), Color.Transparent)))) {
         Canvas(Modifier.fillMaxSize()) {
             val r = size.minDimension * (0.18f + 0.04f * sin(t * Math.PI * 2).toFloat())
             val c = Offset(size.width * 0.82f, size.height * 0.12f)
@@ -281,6 +282,7 @@ fun SystemDashboardScreen() {
                 }
             }
         }
+    }
     }
 }
 

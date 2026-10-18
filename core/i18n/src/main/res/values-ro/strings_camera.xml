@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">Cameră</string>
+    <string name="camera_need_permission">Este nevoie de permisiunea camerei</string>
+    <string name="camera_mode_photo">Foto</string>
+    <string name="camera_mode_video">Video</string>
+    <string name="camera_mode_portrait">Portret</string>
+    <string name="camera_mode_night">Noapte</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">Pano</string>
+    <string name="camera_mode_discreet">Discret</string>
+    <string name="camera_flip">Schimbă camera</string>
+    <string name="camera_format">Format</string>
+    <string name="camera_raw">Salvează DNG RAW</string>
+    <string name="camera_exif">Păstrează EXIF</string>
+    <string name="camera_silent">Obturator silențios</string>
+    <string name="camera_hide_folder">Album ascuns (.nomedia)</string>
+    <string name="camera_grid">Grilă</string>
+    <string name="camera_burst">Rafală ×%1$d</string>
+    <string name="camera_webcam_start">Pornește webcam IP</string>
+    <string name="camera_webcam_stop">Oprește webcam</string>
+    <string name="camera_usb_hint">Webcam USB necesită gadget OEM. MJPEG IP funcționează pe orice LAN.</string>
+    <string name="camera_discreet">Captură discretă</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>

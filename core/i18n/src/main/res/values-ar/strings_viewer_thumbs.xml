@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">إعدادات العارض</string>
+    <string name="viewer_thumbs_video">صور مصغرة للفيديو</string>
+    <string name="viewer_thumbs_video_summary">إطار من كل فيديو في المعرض. مفعّل افتراضياً.</string>
+    <string name="viewer_thumbs_documents">صور مصغرة للمستندات</string>
+    <string name="viewer_thumbs_documents_summary">معاينة PDF وOffice في القائمة. مفعّل افتراضياً.</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_settings">Žiūryklės nuostatos</string>
+    <string name="viewer_thumbs_video">Vaizdo miniatiūros</string>
+    <string name="viewer_thumbs_video_summary">Kadras iš kiekvieno vaizdo galerijoje. Pagal numatymą įjungta.</string>
+    <string name="viewer_thumbs_documents">Dokumentų miniatiūros</string>
+    <string name="viewer_thumbs_documents_summary">PDF ir Office peržiūra sąraše. Pagal numatymą įjungta.</string>
+</resources>

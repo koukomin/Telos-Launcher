@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_title">카메라</string>
+    <string name="camera_need_permission">카메라 권한이 필요합니다</string>
+    <string name="camera_mode_photo">사진</string>
+    <string name="camera_mode_video">동영상</string>
+    <string name="camera_mode_portrait">인물</string>
+    <string name="camera_mode_night">야간</string>
+    <string name="camera_mode_pro">Pro</string>
+    <string name="camera_mode_pano">파노라마</string>
+    <string name="camera_mode_discreet">은밀</string>
+    <string name="camera_flip">카메라 전환</string>
+    <string name="camera_format">형식</string>
+    <string name="camera_raw">DNG RAW 저장</string>
+    <string name="camera_exif">EXIF 유지</string>
+    <string name="camera_silent">무음 셔터</string>
+    <string name="camera_hide_folder">숨긴 앨범 (.nomedia)</string>
+    <string name="camera_grid">격자</string>
+    <string name="camera_burst">연사 ×%1$d</string>
+    <string name="camera_webcam_start">IP 웹캠 시작</string>
+    <string name="camera_webcam_stop">웹캠 중지</string>
+    <string name="camera_usb_hint">USB 웹캠은 OEM gadget이 필요합니다. IP MJPEG은 모든 LAN에서 됩니다.</string>
+    <string name="camera_discreet">은밀 촬영</string>
+    <string name="camera_geotag">GPS on photos</string>
+    <string name="camera_pano_done">Stitch panorama (%1$d)</string>
+    <string name="camera_pano_hint">Tap shutter for each slice, then Stitch</string>
+    <string name="camera_hdr">HDR</string>
+    <string name="camera_ae_lock">AE lock</string>
+    <string name="camera_wb">White balance %1$s</string>
+</resources>
