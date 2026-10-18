@@ -365,6 +365,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.media.akou.AkouRoute> {
                 de.mm20.launcher2.ui.media.akou.AkouScreen()
             }
+            entry<de.mm20.launcher2.ui.clock.ClockRoute> {
+                de.mm20.launcher2.ui.clock.ClockScreen()
+            }
             entry<de.mm20.launcher2.ui.tools.MagnifierRoute> {
                 de.mm20.launcher2.ui.tools.MagnifierScreen()
             }
@@ -831,6 +834,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
             SettingsDeepLinkContract.ROUTE_TERMINAL -> de.mm20.launcher2.ui.terminal.TerminalRoute
             "settings/akou" -> de.mm20.launcher2.ui.media.akou.AkouRoute
+            "settings/clock" -> de.mm20.launcher2.ui.clock.ClockRoute
             "settings/magnifier" -> de.mm20.launcher2.ui.tools.MagnifierRoute
             "settings/flashlight" -> de.mm20.launcher2.ui.tools.FlashlightRoute
             ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute

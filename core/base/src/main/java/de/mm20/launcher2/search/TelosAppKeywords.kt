@@ -14,8 +14,12 @@ object TelosAppKeywords {
         "telos_phone_app" to listOf("dialer", "calls", "call", "contacts", "τηλέφωνο", "κλήσεις", "επαφές"),
         "telos_messages_app" to listOf("sms", "mms", "text", "chat", "μηνύματα"),
         "telos_media_app" to listOf(
-            "media", "hub", "music", "radio", "video", "player", "audio", "movies", "films", "songs", "stations", "mousiki", "tainies", "radiofono", "vinteo", "stremio", "addons", "series",
-            "μέσα", "πολυμέσα", "μουσική", "ραδιόφωνο", "βίντεο", "ταινίες",
+            "media", "hub", "music", "radio", "video", "player", "audio", "movies", "films", "songs", "stations", "mousiki", "tainies", "radiofono", "vinteo", "stremio", "stremio fork", "addons", "series", "tv", "tileorasi", "tileorash",
+            "μέσα", "πολυμέσα", "μουσική", "ραδιόφωνο", "βίντεο", "ταινίες", "τηλεόραση", "τηλεοραση", "κανάλια", "καναλια"
+        ),
+        "telos_tv_app" to listOf(
+            "tv", "television", "tileorasi", "tileorash", "iptv", "live tv", "kanalia", "stream",
+            "τηλεόραση", "τηλεοραση", "κανάλια", "καναλια", "live"
         ),
         "telos_radio_app" to listOf("fm", "stations", "ραδιόφωνο", "ραδιοφωνικοί σταθμοί"),
         "telos_music_app" to listOf("songs", "player", "audio", "tracks", "μουσική", "τραγούδια"),
@@ -36,16 +40,14 @@ object TelosAppKeywords {
         "telos_system_app" to listOf("system", "cpu", "ram", "wifi", "ip", "processes", "σύστημα", "επεξεργαστής"),
         "telos_trash_app" to listOf("trash", "bin", "recycle", "κάδος", "ανακύκλωση"),
         "telos_voice_recorder_app" to listOf("recorder", "recording", "dictaphone", "audio", "καταγραφή ήχου", "εγγραφή φωνής"),
-        "telos_camera_app" to listOf(
-            "camera", "photo", "webcam", "hasselblad", "raw", "dng", "pro", "κάμερα", "φωτογραφία", "κάμερα web",
-        ),
-        "telos_screen_recorder_app" to listOf("recorder", "recording", "screencast", "εγγραφή οθόνης"),
-        "telos_screenshot_app" to listOf("screen capture", "screengrab", "στιγμιότυπο", "αποτύπωση οθόνης"),
+        "telos_akou_app" to listOf("akou", "shazam", "identify", "song finder", "music recognition", "άκου", "αναγνώριση μουσικής"),
+        "telos_magnifier_app" to listOf("magnifier", "zoom", "zoom in", "μεγεθυντικός", "φακός"),
+        "telos_flashlight_app" to listOf("flashlight", "torch", "siren", "morse", "φακός", "σειρήνα", "μορς"),
+        "telos_clock_app" to listOf("clock", "alarm", "timer", "stopwatch", "night clock", "ρολόι", "ξυπνητήρι", "χρονόμετρο", "αντίστροφη μέτρηση"),
     )
 
     private val englishNames = mapOf(
         "telos_terminal_app" to "terminal",
-        "telos_ironewolf_app" to "Ironewolf",
         "telos_phone_app" to "phone",
         "telos_messages_app" to "messages",
         "telos_radio_app" to "radio",
@@ -53,12 +55,12 @@ object TelosAppKeywords {
         "telos_youtube_app" to "YouTube",
         "telos_youtube_music_app" to "YouTube Music",
         "telos_video_app" to "video",
+        "telos_tv_app" to "TV",
         "telos_photos_app" to "photos",
         "telos_viewer_app" to "viewer",
         "telos_files_app" to "files",
         "telos_calculator_app" to "calculator",
         "telos_voice_recorder_app" to "Voice recorder",
-        "telos_camera_app" to "Camera",
         "telos_screen_recorder_app" to "Screen recorder",
         "telos_screenshot_app" to "screenshot",
         "telos_notes_app" to "notes",
@@ -70,15 +72,16 @@ object TelosAppKeywords {
         "telos_store_app" to "store",
         "telos_system_app" to "system",
         "telos_trash_app" to "trash",
+        "telos_akou_app" to "Akou",
+        "telos_magnifier_app" to "Magnifier",
+        "telos_flashlight_app" to "Flashlight",
+        "telos_clock_app" to "Clock",
     )
 
     fun forDomain(domain: String): List<String> {
         val name = englishNames[domain] ?: return byDomain[domain].orEmpty()
-        val browserAliases = if (domain == "telos_ironewolf_app")
-            listOf("ironfox", "firefox", "browser", "περιηγητής", "φυλλομετρητής") else emptyList()
-        return (browserAliases + listOf("telos", "τέλος", "τελος", name, "telos $name") + byDomain[domain].orEmpty()).distinct()
+        return (listOf("telos", "τέλος", "τελος", name, "telos $name") + byDomain[domain].orEmpty()).distinct()
     }
-
 
     /** [key] is a virtual app key such as `telos_photos_app://photos`. */
     fun forKey(key: String): List<String> = forDomain(key.substringBefore("://"))
