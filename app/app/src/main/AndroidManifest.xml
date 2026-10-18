@@ -135,6 +135,13 @@
             </intent-filter>
         </receiver>
         <!-- === TELOS_PENDING_REVIEW_END: sandbox_provisioning === -->
+            <receiver
+            android:name="de.mm20.launcher2.PackageReplacedReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
