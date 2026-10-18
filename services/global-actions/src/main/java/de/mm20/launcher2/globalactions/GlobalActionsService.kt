@@ -127,6 +127,21 @@ class GlobalActionsService(private val context: Context) {
         LauncherAccessibilityService.getInstance()?.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS)
     }
 
+    fun openTelosRecents() {
+        LauncherAccessibilityService.getInstance()?.openTelosRecents()
+            ?: runCatching {
+                context.startActivity(
+                    android.content.Intent().apply {
+                        setClassName(
+                            context.packageName,
+                            "de.mm20.launcher2.ui.launcher.TelosRecentsActivity",
+                        )
+                        addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                )
+            }
+    }
+
     private fun expandNotificationPanel() {
         val statusBarService = context.getSystemService("statusbar")
         val statusBarManager = Class.forName("android.app.StatusBarManager")

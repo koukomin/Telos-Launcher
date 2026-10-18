@@ -4,8 +4,20 @@
 
     <queries>
         <package android:name="com.termux" />
+        <package android:name="ai.x.grok" />
+        <package android:name="com.x.android" />
+        <package android:name="com.anthropic.claude" />
+        <package android:name="com.openai.chatgpt" />
+        <package android:name="com.google.android.apps.bard" />
+        <package android:name="com.microsoft.copilot" />
         <intent>
             <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+        <intent>
+            <action android:name="android.speech.action.RECOGNIZE_SPEECH" />
+        </intent>
+        <intent>
+            <action android:name="com.termux.RUN_COMMAND" />
         </intent>
     </queries>
 
@@ -299,6 +311,18 @@
                 <data android:mimeType="application/vnd.google-apps.presentation" />
                 <data android:mimeType="application/vnd.google-apps.drawing" />
                 <data android:mimeType="application/vnd.google-apps.form" />
+                <data android:mimeType="application/vnd.comicbook+zip" />
+                <data android:mimeType="application/vnd.comicbook-rar" />
+                <data android:mimeType="application/x-cbz" />
+                <data android:mimeType="application/x-cbr" />
+                <data android:mimeType="application/x-cbt" />
+                <data android:mimeType="application/x-cb7" />
+                <data android:mimeType="image/svg+xml" />
+                <data android:mimeType="image/vnd.adobe.photoshop" />
+                <data android:mimeType="application/illustrator" />
+                <data android:mimeType="application/postscript" />
+                <data android:mimeType="application/x-coreldraw" />
+                <data android:mimeType="image/x-coreldraw" />
             </intent-filter>
         </activity>
 
@@ -604,6 +628,13 @@
             android:excludeFromRecents="true"
             android:theme="@style/LauncherTheme"
             android:enableOnBackInvokedCallback="true" />
+
+        <activity
+            android:name=".launcher.TelosRecentsActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:theme="@style/LauncherTheme"
+            android:taskAffinity="" />
 
         <activity
             android:name=".desktopmode.DesktopModeActivity"

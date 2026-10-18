@@ -12,6 +12,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -176,11 +177,45 @@ fun TvPlayerDialog(
                             },
                             onHorizontalDrag = { change, dx -> change.consume(); total += dx },
                         )
+                    }
+                    .pointerInput(window) {
+                        val audio = context.getSystemService(android.content.Context.AUDIO_SERVICE) as android.media.AudioManager
+                        var left = true
+                        detectVerticalDragGestures(
+                            onDragStart = { offset ->
+                                left = offset.x < size.width / 2f
+                                adjustingLevels = true
+                            },
+                            onDragEnd = { adjustingLevels = false },
+                            onVerticalDrag = { change, dy ->
+                                change.consume()
+                                if (left) {
+                                    val w = window ?: return@detectVerticalDragGestures
+                                    val attrs = w.attributes
+                                    val current = if (attrs.screenBrightness < 0) 0.5f else attrs.screenBrightness
+                                    attrs.screenBrightness = (current - dy / size.height).coerceIn(0.02f, 1f)
+                                    w.attributes = attrs
+                                } else {
+                                    val max = audio.getStreamMaxVolume(android.media.AudioManager.STREAM_MUSIC)
+                                    if (max > 0) {
+                                        val now = audio.getStreamVolume(android.media.AudioManager.STREAM_MUSIC)
+                                        val step = (-dy / size.height * max * 1.5f).toInt()
+                                        if (step != 0) {
+                                            audio.setStreamVolume(
+                                                android.media.AudioManager.STREAM_MUSIC,
+                                                (now + step).coerceIn(0, max),
+                                                0,
+                                            )
+                                        }
+                                    }
+                                }
+                            },
+                        )
                     },
             )
 
             de.mm20.launcher2.ui.media.video.PlayerLevelControls(
-                visible = controls || error != null,
+                visible = controls || error != null || adjustingLevels,
                 window = window,
                 onAdjusting = { adjustingLevels = it },
             )

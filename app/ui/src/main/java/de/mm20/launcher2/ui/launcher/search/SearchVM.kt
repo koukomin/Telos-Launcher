@@ -19,7 +19,9 @@ import de.mm20.launcher2.preferences.search.FileSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
+import de.mm20.launcher2.preferences.ui.AgentSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
+import de.mm20.launcher2.ui.agents.AgentLauncher
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.AppShortcut
@@ -79,6 +81,18 @@ class SearchVM : ViewModel(), KoinComponent {
     private val searchFilterSettings: SearchFilterSettings by inject()
     private val freezeSettings: de.mm20.launcher2.preferences.freeze.FreezeSettings by inject()
     private val fossUpdateRepository: de.mm20.launcher2.appmanagement.FossUpdateRepository by inject()
+    private val agentSettings: AgentSettings by inject()
+
+    val searchBarVoice = agentSettings.searchBarVoice
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    val agentsEnabled = agentSettings.enabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val agentId = agentSettings.agentId
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "grok")
+    val agentTransport = agentSettings.transport
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "auto")
+    val agentsSendSentences = agentSettings.sendSentences
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
 
     val pendingUpdates = fossUpdateRepository.pendingUpdates
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
@@ -170,8 +184,6 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val allAppsEnabled = searchUiSettings.allApps
 
-    val showAppRecommendations = searchUiSettings.showAppRecommendations
-
     val showFilters = mutableStateOf(false)
 
     private val defaultFilters = searchFilterSettings.defaultFilter.stateIn(
@@ -210,6 +222,13 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun launchBestMatchOrAction(context: Context) {
+        val query = searchQuery.value.trim()
+        if (agentsEnabled.value && agentsSendSentences.value &&
+            query.split(Regex("\\s+")).filter { it.isNotBlank() }.size >= 3
+        ) {
+            AgentLauncher.send(context, query, agentId.value, agentTransport.value)
+            return
+        }
         val bestMatch = bestMatch.value
         if (bestMatch is SavableSearchable) {
             bestMatch.launch(context, null)

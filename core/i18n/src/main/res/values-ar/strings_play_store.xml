@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">تظهر هنا التطبيقات المثبّتة من متجر Play، بما فيها المجمَّدة.</string>
     <string name="store_play_hint">يُلغى تجميد التطبيقات ويُفتح متجر Play. يعيد Telos تجميدها فور تثبيت Play للنسخة الجديدة (ساعة احتياطية فقط). اختياري: مع VPN Telos Network لا إنترنت حتى تفتحها.</string>
     <string name="store_play_open_my_apps">فتح تحديثات متجر Play</string>
+    <string name="store_play_unfreeze_update">إلغاء التجميد والتحديث من متجر Play</string>
+    <string name="store_play_frozen_count">مجمّدة (%1$d)</string>
     <string name="store_play_block_network">حظر الشبكة حتى الفتح</string>
     <string name="store_play_block_network_summary">عند تشغيل VPN Telos Network لا تملك التطبيقات المُلغى تجميدها لمتجر Play إنترنت حتى تفتحها مجددًا.</string>
     <string name="play_update_pause_channel">تحديثات متجر Play</string>
     <string name="play_update_pause_title">انتظار تحديثات متجر Play</string>
     <string name="play_update_pause_text">ستُجمَّد %2$d تطبيق(ات) أُلغي تجميدها فور تثبيت Play لنسخة جديدة (احتياط %1$d ساعة).</string>
+
+    <string name="store_checking_updates">جارٍ التحقق من التحديثات…</string>
+    <string name="store_last_check">آخر فحص: %1$s</string>
+    <string name="store_section_updates">تحديثات (%1$d)</string>
+    <string name="store_section_frozen">مجمّدة (%1$d)</string>
+    <string name="store_section_uptodate">محدّثة (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

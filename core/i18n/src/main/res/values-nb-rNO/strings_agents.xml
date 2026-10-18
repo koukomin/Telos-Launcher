@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agenter</string>
+    <string name="preference_screen_agents_summary">Send et søk til Grok, Claude, ChatGPT og andre. Av som standard</string>
+    <string name="preference_agents_enabled">Aktiver agenter i søk</string>
+    <string name="preference_agents_enabled_summary">Viser en Spør-brikke. Telos lagrer ingen API-nøkkel; agentens app eller nettsted bruker kontoen du allerede er logget inn med</string>
+    <string name="preference_agents_provider">Agent</string>
+    <string name="preference_agents_transport">Hvordan sende</string>
+    <string name="preference_agents_transport_summary">Auto åpner agentappen hvis den er installert, ellers nettstedet. Termux kjører CLI i den offisielle Termux-appen</string>
+    <string name="preference_agents_send_sentences">Send setninger med Enter</string>
+    <string name="preference_agents_send_sentences_summary">Et søk på tre eller flere ord sendes til agenten i stedet for å åpne den øverste appen</string>
+    <string name="preference_search_bar_voice">Taleinndata på søkefeltet</string>
+    <string name="preference_search_bar_voice_summary">Mikrofonen bruker talegjenkjenning på enheten når telefonen støtter det</string>
+    <string name="search_bar_voice">Talesøk</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">App, deretter nettsted</string>
+    <string name="agent_transport_app">Agentapp</string>
+    <string name="agent_transport_web">Nettsted</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Spør %1$s</string>
+    <string name="agent_launch_failed">Kunne ikke åpne agenten</string>
+    <string name="preference_keyboard_shortcuts">Snarveier på fysisk tastatur</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Mellomrom eller Super+A åpner søk, Super+Enter Terminal, Super+1 startskjermen</string>
+    <string name="preference_category_telos_navigation">Telos-navigasjon</string>
+    <string name="preference_telos_navigation">Kantbevegelser (tilbake, hjem, nylige)</string>
+    <string name="preference_telos_navigation_summary">Tynne striper langs kantene. Sveip fra siden for Tilbake, opp fra bunnen for Hjem, hold for Nylige. Trenger tilgjengelighetstjenesten. Av som standard</string>
+    <string name="preference_telos_recents">Telos nylige</string>
+    <string name="preference_telos_recents_summary">En Telos-liste i stedet for systemets nylige. Av som standard</string>
+    <string name="telos_recents_title">Nylige apper</string>
+    <string name="telos_recents_clear">Tøm alle</string>
+</resources>

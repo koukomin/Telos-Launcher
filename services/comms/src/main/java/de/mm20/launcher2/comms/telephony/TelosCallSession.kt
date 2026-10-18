@@ -50,6 +50,9 @@ object TelosCallSession {
                         answeredThisCall = true
                         AutoRedial.onConnected()
                         if (pendingOutgoing.remove(call)) inCallService?.let { CallHaptics.onAnswered(it) }
+                        inCallService?.let { svc ->
+                            CallRecordingHook.onActive(svc.applicationContext, call)
+                        }
                     }
                     Call.STATE_DISCONNECTED -> {
                         recordEnd(call)

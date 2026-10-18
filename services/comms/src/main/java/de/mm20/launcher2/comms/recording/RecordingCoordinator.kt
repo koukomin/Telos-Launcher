@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Process
 import android.util.Log
+import de.mm20.launcher2.comms.telephony.TelosCallSession
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -65,7 +66,13 @@ object RecordingCoordinator : KoinComponent {
             val ok = when (backend) {
                 "shizuku" -> tryShizuku(context, phoneNumber, quality)
                 "root" -> tryRoot(context, phoneNumber, quality)
-                else -> CallAudioRecorder.start(context, phoneNumber, quality, privilegedCapture = false)
+                else -> CallAudioRecorder.start(
+                    context,
+                    phoneNumber,
+                    quality,
+                    privilegedCapture = false,
+                    bluetooth = TelosCallSession.ui.value.bluetooth,
+                )
             }
             if (ok) {
                 _backend.value = backend
@@ -90,7 +97,11 @@ object RecordingCoordinator : KoinComponent {
     ): Boolean {
         if (!shizukuReady()) return false
         grantCaptureViaShizuku(context.packageName)
-        return CallAudioRecorder.start(context, phoneNumber, quality, privilegedCapture = true)
+        return CallAudioRecorder.start(
+            context, phoneNumber, quality,
+            privilegedCapture = true,
+            bluetooth = TelosCallSession.ui.value.bluetooth,
+        )
     }
 
     private suspend fun tryRoot(
@@ -100,7 +111,11 @@ object RecordingCoordinator : KoinComponent {
     ): Boolean {
         if (!rootReady()) return false
         grantCaptureViaRoot(context.packageName)
-        return CallAudioRecorder.start(context, phoneNumber, quality, privilegedCapture = true)
+        return CallAudioRecorder.start(
+            context, phoneNumber, quality,
+            privilegedCapture = true,
+            bluetooth = TelosCallSession.ui.value.bluetooth,
+        )
     }
 
     private fun shizukuReady(): Boolean {
@@ -121,7 +136,9 @@ object RecordingCoordinator : KoinComponent {
         val cmd =
             "appops set --uid $uid $packageName CAPTURE_AUDIO_OUTPUT allow; " +
                 "appops set $packageName CAPTURE_AUDIO_OUTPUT allow; " +
-                "appops set $packageName RECORD_AUDIO allow"
+                "appops set $packageName RECORD_AUDIO allow; " +
+                "pm grant $packageName android.permission.CAPTURE_AUDIO_OUTPUT; " +
+                "cmd appops set $packageName CAPTURE_AUDIO_OUTPUT allow"
         runShizuku(arrayOf("sh", "-c", cmd))
     }
 
@@ -129,7 +146,9 @@ object RecordingCoordinator : KoinComponent {
         val uid = Process.myUid()
         val cmd =
             "appops set --uid $uid $packageName CAPTURE_AUDIO_OUTPUT allow; " +
-                "appops set $packageName CAPTURE_AUDIO_OUTPUT allow"
+                "appops set $packageName CAPTURE_AUDIO_OUTPUT allow; " +
+                "pm grant $packageName android.permission.CAPTURE_AUDIO_OUTPUT; " +
+                "cmd appops set $packageName CAPTURE_AUDIO_OUTPUT allow"
         runShell(arrayOf("su", "-c", cmd), asRootBinary = true)
     }
 

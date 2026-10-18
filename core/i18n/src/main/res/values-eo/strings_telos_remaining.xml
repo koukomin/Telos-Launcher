@@ -132,6 +132,8 @@
     <string name="telos_files_transfers_title">Dosiertransigoj</string>
     <string name="telos_files_two_panels">Du paneloj</string>
     <string name="telos_media_listen">Aŭskulti</string>
+    <string name="telos_media_watch">Spekti</string>
+    <string name="telos_media_live">Live</string>
     <string name="telos_media_store_description">Aŭskultu lokan muzikon, radion kaj YouTube Music, spektu lokajn videojn aŭ YouTube, kaj esploru televidon kaj Stremio Fork.</string>
     <string name="telos_store_auto_enable">Ebligi kaj ĝisdatigi</string>
     <string name="telos_store_auto_explanation">Ĉu ebligi aŭtomatajn ĝisdatigojn por la elektitaj aplikaĵoj? Estontaj ĝisdatigoj instaliĝos aŭtomate kiam Shizuku aŭ radikrajtoj permesas seninteragan instaladon. Alie vi ricevos ĝisdatigan sciigon. Vi povas ŝanĝi tion en la agordoj de ĉiu aplikaĵo.</string>

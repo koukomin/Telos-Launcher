@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">에이전트</string>
+    <string name="preference_screen_agents_summary">검색을 Grok, Claude, ChatGPT 등으로 보냅니다. 기본값 꺼짐</string>
+    <string name="preference_agents_enabled">검색에서 에이전트 사용</string>
+    <string name="preference_agents_enabled_summary">검색에 묻기 칩을 표시합니다. Telos는 API 키를 저장하지 않으며, 에이전트 앱이나 사이트가 이미 로그인한 계정을 사용합니다</string>
+    <string name="preference_agents_provider">에이전트</string>
+    <string name="preference_agents_transport">보내는 방법</string>
+    <string name="preference_agents_transport_summary">자동은 설치된 경우 앱을, 아니면 웹사이트를 엽니다. Termux는 공식 Termux 앱에서 CLI를 실행합니다</string>
+    <string name="preference_agents_send_sentences">Enter로 문장 보내기</string>
+    <string name="preference_agents_send_sentences_summary">단어 세 개 이상의 질의는 첫 앱을 여는 대신 에이전트로 보내집니다</string>
+    <string name="preference_search_bar_voice">검색창 음성 입력</string>
+    <string name="preference_search_bar_voice_summary">휴대폰이 지원하면 마이크는 기기 음성 인식을 사용합니다</string>
+    <string name="search_bar_voice">음성 검색</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">앱, 그다음 웹사이트</string>
+    <string name="agent_transport_app">에이전트 앱</string>
+    <string name="agent_transport_web">웹사이트</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">%1$s에게 묻기</string>
+    <string name="agent_launch_failed">에이전트를 열 수 없습니다</string>
+    <string name="preference_keyboard_shortcuts">하드웨어 키보드 단축키</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Space 또는 Super+A는 검색, Super+Enter는 터미널, Super+1은 홈</string>
+    <string name="preference_category_telos_navigation">Telos 탐색</string>
+    <string name="preference_telos_navigation">가장자리 제스처(뒤로, 홈, 최근)</string>
+    <string name="preference_telos_navigation_summary">화면 가장자리에 얇은 띠. 옆에서 뒤로, 아래에서 홈, 길게 눌러 최근. 접근성 서비스가 필요합니다. 기본값 꺼짐</string>
+    <string name="preference_telos_recents">Telos 최근</string>
+    <string name="preference_telos_recents_summary">시스템 최근 대신 Telos 목록. 기본값 꺼짐</string>
+    <string name="telos_recents_title">최근 앱</string>
+    <string name="telos_recents_clear">모두 지우기</string>
+</resources>

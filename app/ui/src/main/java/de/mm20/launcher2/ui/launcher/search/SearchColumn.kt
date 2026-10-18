@@ -22,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,8 +56,7 @@ import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavoritesVM
 import de.mm20.launcher2.ui.launcher.search.files.FileResults
 import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
 import de.mm20.launcher2.ui.launcher.search.location.LocationResults
-import de.mm20.launcher2.ui.launcher.search.recommendations.AppRecommendations
-import de.mm20.launcher2.ui.launcher.search.recommendations.RecommendationResults
+
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutResults
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterResults
 import de.mm20.launcher2.ui.launcher.search.webappshortcut.WebAppShortcutResults
@@ -123,8 +121,6 @@ fun SearchColumn(
 
     val query by viewModel.searchQuery
     val isSearchEmpty by viewModel.isSearchEmpty
-    val showAppRecommendations by viewModel.showAppRecommendations.collectAsState(false)
-
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
     val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)
     val missingContactsPermission by viewModel.missingContactsPermission.collectAsState(false)
@@ -154,8 +150,6 @@ fun SearchColumn(
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
-    var recommendedTabSelected by rememberSaveable { mutableStateOf(false) }
-
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
     var selectedAppProfileIndex by viewModel.selectedAppProfileIndex
@@ -174,15 +168,6 @@ fun SearchColumn(
     var selectedWebsiteIndex: Int by remember(query) { mutableIntStateOf(-1) }
 
     val showFilters by viewModel.showFilters
-
-    val recommendationDayOfYear = remember { java.time.LocalDate.now().dayOfYear }
-    val recommendation = if (!showAppRecommendations) {
-        null
-    } else if (isSearchEmpty) {
-        AppRecommendations.forDrawer(recommendationDayOfYear)
-    } else {
-        AppRecommendations.matchQuery(query)
-    }
 
     AnimatedContent(
         showFilters,
@@ -233,23 +218,6 @@ fun SearchColumn(
                         },
                         compactTags = compactTags,
                         editButton = favoritesEditButton,
-                        showRecommendedChip = showAppRecommendations,
-                        recommendedTabSelected = recommendedTabSelected && showAppRecommendations,
-                        onSelectRecommendedTab = { recommendedTabSelected = !recommendedTabSelected },
-                        onHideRecommendedTab = {
-                            recommendedTabSelected = false
-                            context.startActivity(
-                                android.content.Intent(
-                                    context,
-                                    de.mm20.launcher2.ui.settings.SettingsActivity::class.java
-                                ).apply {
-                                    putExtra(
-                                        de.mm20.launcher2.ui.settings.SettingsActivity.EXTRA_ROUTE,
-                                        de.mm20.launcher2.ui.settings.SettingsActivity.ROUTE_APP_RECOMMENDATIONS
-                                    )
-                                }
-                            )
-                        },
                     )
                 } else {
                     // Empty item to maintain scroll position
@@ -532,10 +500,6 @@ fun SearchColumn(
                     )
                 }
 
-                RecommendationResults(
-                    recommendation = recommendation,
-                    reverse = reverse,
-                )
             }
         }
 

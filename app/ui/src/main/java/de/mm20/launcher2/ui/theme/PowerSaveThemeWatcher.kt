@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.AmoledPresetId
 import de.mm20.launcher2.themes.CyberpunkPresetId
+import de.mm20.launcher2.themes.isAmoledFamily
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -50,7 +51,7 @@ class PowerSaveThemeWatcher(
         }
         val saver = context.getSystemService(PowerManager::class.java)?.isPowerSaveMode == true
         val current = ui.uiColorsId
-        val alreadyDark = current == AmoledPresetId || current == CyberpunkPresetId
+        val alreadyDark = isAmoledFamily(current) || current == CyberpunkPresetId
         if (saver) {
             if (ui.uiAmoledPowerSaveEngaged || alreadyDark) return
             uiSettings.replacePowerSaveTheme(true, current, AmoledPresetId)

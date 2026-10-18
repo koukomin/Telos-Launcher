@@ -60,6 +60,7 @@ class AutoFreezeController internal constructor(
     private val firewall: FirewallController,
     private val apps: AppDirectory,
     private val networkEngine: NetworkEngine,
+    private val usageStatsProvider: AppUsageStatsProvider,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var idleJob: Job? = null
@@ -183,6 +184,9 @@ class AutoFreezeController internal constructor(
 
     private fun onScreenOff() {
         idleJob?.cancel()
+        exclusionChecker.pinnedScreenOffPackage =
+            usageStatsProvider.currentForegroundPackage()
+                ?: usageStatsProvider.lastForegroundPackage()
         scope.launch {
             if (!settings.autoFreezeEnabled.first()) return@launch
             if (profileManager.resolvedSettings.first().freezeOnScreenOff) {
@@ -203,6 +207,7 @@ class AutoFreezeController internal constructor(
     private fun onScreenOn() {
         idleJob?.cancel()
         idleJob = null
+        exclusionChecker.pinnedScreenOffPackage = null
         refreshNotificationLater()
     }
 

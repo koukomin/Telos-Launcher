@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Apper fra Play Butikk vises her, også frosne.</string>
     <string name="store_play_hint">Frosne apper tines, og Play Butikk åpnes. Telos fryser dem igjen så snart Play installerer den nye versjonen (én time bare som reserve). Valgfritt: med Telos Network-VPN ingen internett før du åpner dem.</string>
     <string name="store_play_open_my_apps">Åpne Play Butikk-oppdateringer</string>
+    <string name="store_play_unfreeze_update">Tine og oppdater i Play Store</string>
+    <string name="store_play_frozen_count">Frosne (%1$d)</string>
     <string name="store_play_block_network">Blokker nettverk til åpning</string>
     <string name="store_play_block_network_summary">Når Telos Network-VPN er på, har tinte Play-apper ingen internett før du åpner dem igjen.</string>
     <string name="play_update_pause_channel">Play Butikk-oppdateringer</string>
     <string name="play_update_pause_title">Venter på Play Butikk-oppdateringer</string>
     <string name="play_update_pause_text">%2$d tinte apper fryses igjen så snart Play installerer en ny versjon (reserve %1$d time).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

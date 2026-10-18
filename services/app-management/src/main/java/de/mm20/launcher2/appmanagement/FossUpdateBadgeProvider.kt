@@ -14,6 +14,13 @@ class FossUpdateBadgeProvider(
 ) : BadgeProvider {
     override fun getBadge(searchable: Searchable): Flow<Badge?> {
         if (searchable !is Application) return kotlinx.coroutines.flow.flowOf(null)
+        if (searchable.key.startsWith("telos_store_app")) {
+            return repository.pendingUpdates.map { set ->
+                val token = set.firstOrNull { it.startsWith("store-update:") }
+                val n = token?.substringAfter("store-update:")?.toIntOrNull() ?: 0
+                if (n > 0) Badge(number = n, icon = BadgeIcon(R.drawable.autorenew_24px)) else null
+            }
+        }
         val packageName = searchable.componentName.packageName
         return repository.pendingUpdates.map {
             if (it.contains(packageName)) {

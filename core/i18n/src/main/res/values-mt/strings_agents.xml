@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Aġenti</string>
+    <string name="preference_screen_agents_summary">Ibgħat tfittxija lil Grok, Claude, ChatGPT u oħrajn. Mitfi b’mod awtomatiku</string>
+    <string name="preference_agents_enabled">Attiva l-aġenti fit-tfittxija</string>
+    <string name="preference_agents_enabled_summary">Juri ċippa Staqsi. Telos ma jaħżinx ċavetta API; l-app jew is-sit tal-aġent juża l-kont li diġà dħalt fih</string>
+    <string name="preference_agents_provider">Aġent</string>
+    <string name="preference_agents_transport">Kif tibgħat</string>
+    <string name="preference_agents_transport_summary">Awto tiftaħ l-app tal-aġent jekk tkun installata, inkella s-sit. Termux tmexxi l-CLI fl-app uffiċjali Termux</string>
+    <string name="preference_agents_send_sentences">Ibgħat sentenzi b’Enter</string>
+    <string name="preference_agents_send_sentences_summary">Mistoqsija ta’ tliet kelmiet jew aktar tmur għand l-aġent minflok tiftaħ l-ewwel app</string>
+    <string name="preference_search_bar_voice">Input bil-vuċi fuq il-bar tat-tfittxija</string>
+    <string name="preference_search_bar_voice_summary">Il-mikrofonu juża rikonoxximent tad-diskors fuq l-apparat meta t-telefon jappoġġjah</string>
+    <string name="search_bar_voice">Tfittxija bil-vuċi</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">App, imbagħad sit</string>
+    <string name="agent_transport_app">App tal-aġent</string>
+    <string name="agent_transport_web">Sit web</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Staqsi lil %1$s</string>
+    <string name="agent_launch_failed">Ma setax jinfetaħ l-aġent</string>
+    <string name="preference_keyboard_shortcuts">Shortcuts tat-tastiera fiżika</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Spazju jew Super+A tiftaħ it-tfittxija, Super+Enter it-Terminal, Super+1 l-ewwel skrin</string>
+    <string name="preference_category_telos_navigation">Navigazzjoni Telos</string>
+    <string name="preference_telos_navigation">Ġesti mit-tarf (lura, dar, riċenti)</string>
+    <string name="preference_telos_navigation_summary">Strixxi irqaq fit-truf. Mill-ġenb Lura, minn isfel id-Dar, żomm għal Riċenti. Jeħtieġ is-servizz ta’ aċċessibbiltà. Mitfi b’mod awtomatiku</string>
+    <string name="preference_telos_recents">Riċenti Telos</string>
+    <string name="preference_telos_recents_summary">Lista Telos minflok ir-Riċenti tas-sistema. Mitfi b’mod awtomatiku</string>
+    <string name="telos_recents_title">Apps riċenti</string>
+    <string name="telos_recents_clear">Ħassar kollox</string>
+</resources>

@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Перадачы файлаў</string>
     <string name="telos_files_two_panels">Дзве панэлі</string>
     <string name="telos_media_listen">Слухаць</string>
+    <string name="telos_media_watch">Глядзець</string>
+    <string name="telos_media_live">Нажыва</string>
     <string name="telos_media_store_description">Слухайце лакальную музыку, радыё і YouTube Music, глядзіце лакальныя відэа або YouTube і адкрывайце для сябе TV і Stremio Fork.</string>
     <string name="telos_store_auto_enable">Уключыць і абнавіць</string>
     <string name="telos_store_auto_explanation">Уключыць аўтаматычныя абнаўленні для выбраных праграм? Будучыя абнаўленні ўсталёўваюцца аўтаматычна, калі Shizuku або root дазваляюць усталёўку без пацверджання. Інакш вы атрымаеце апавяшчэнне пра абнаўленне. Вы можаце змяніць гэта для кожнай праграмы ў яе наладах.</string>

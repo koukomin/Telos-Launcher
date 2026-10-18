@@ -52,7 +52,7 @@ itself a Telos app, but it **cannot be removed**, otherwise there would be no wa
 | Title "Store" | The screen name |
 | **Check for updates** (refresh icon) | Asks every source now |
 | **More** menu | **Add installed apps**, **Import (Obtainium file)**, **Export (Obtainium file)**, **Store settings** |
-| Tabs **Apps**, **Telos apps**, **Recommended** and **Play Store** | Your tracked apps, the built-in Telos apps, suggested free apps, and (when Play Store is installed) every Play-installed app including frozen ones |
+| Tabs **Apps**, **Telos apps**, **Recommended** and **Play Store** | Your tracked apps, the built-in Telos apps, suggested free apps, and (when Play Store is installed) every Play-installed app including frozen ones. Opening Store with Play installed lands on **Play Store**, filters to updates, and starts a scan |
 | Search field "Search apps" | Matches the name, the package name and the category |
 | Filter chips | **All**, **Updates (N)**, **Installed**, **Not installed**, **Track only**, and one chip per category |
 | **Update all (N)** | Installs every available update, except for apps set to Track only |
@@ -65,7 +65,7 @@ An empty list says "No apps yet" and a filter without results says "No apps matc
 
 ### Play Store
 
-The **Play Store** tab appears only when `com.android.vending` is installed. It lists Play-installed apps, frozen included. **Check for updates** compares installed version names with the public listing page. **Update** unfreezes the app if needed and opens its Play page. If Play Store itself is frozen, Telos unfreezes it for that session and freezes it again when the updates finish (only when you had frozen it). Telos watches the installed version code and freezes freeze-candidates again as soon as Play installs a newer build (one hour is only a fallback). **Update all** opens Play's updates screen the same way. Store settings **Block network until opened** (on by default): when Telos Network VPN is running, those thawed apps have no internet until you launch them. Network block applies only to the thawed apps, not to the whole device.
+The **Play Store** tab appears only when `com.android.vending` is installed. Opening Telos Store then goes to this tab, starts a scan, and shows the updates filter. It lists Play-installed apps, frozen included. The button **Unfreeze and update in Play Store** thaws frozen Play apps (and Play Store if it was frozen), optionally blocks their network while Telos Network VPN is on, and opens Play Store on the updates list. **Check for updates** compares installed version names with the public listing page. **Update** on a row does the same thaw for that app and opens its Play page. Telos watches the installed version code and freezes freeze-candidates again as soon as Play installs a newer build (one hour is only a fallback). Store settings **Block network until opened** (on by default): when Telos Network VPN is running, those thawed apps have no internet until you launch them. Network block applies only to the thawed apps, not to the whole device. The Store uses the Telos glass/blur theme (wallpaper shows through when transparency and drawer blur are on). Pull down to refresh. Play apps are grouped into **Updates**, **Frozen** and **Up to date**. Swipe a Play row right to thaw and open the Play listing, left to open Play. The Store icon shows a badge with the number of available updates. A **Last check** line stays under the tabs.
 
 ### Recommended
 

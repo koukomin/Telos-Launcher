@@ -5,9 +5,9 @@
 A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document viewer in one app.
 
 ::: tip At a glance
-Gallery by date and by folder, full screen viewer with pinch zoom, EXIF viewer and editor, removal of location,
-sharing without metadata, a non-destructive editor, and a viewer and editor for PDF, text, Office, OpenDocument, RTF and EPUB
-files, with 20 PDF tools.
+Gallery by date and by folder, full screen viewer with pinch zoom and glass chrome, EXIF viewer and editor, removal of location,
+sharing without metadata, a non-destructive editor, PDF with text highlight, comics (CBZ/CBR/CBT/CB7), SVG/PSD/AI/CDR previews,
+and a viewer and editor for text, Office, OpenDocument, RTF and EPUB, with 20 PDF tools.
 :::
 
 ::: info This section
@@ -49,13 +49,27 @@ sends to Telos Viewer open directly, without browsing the gallery and without th
 
 It is listed as **Telos Viewer** in the menus of other apps, for pictures and for the document types.
 
+## Formats
+
+| Kind | Extensions |
+| --- | --- |
+| Pictures | `jpg jpeg png gif webp bmp heic heif hif avif svg ico tif tiff jxl` |
+| Camera RAW | `dng raw arw cr2 cr3 nef nrw orf raf rw2 pef sr2` (preview from the embedded JPEG when Android cannot decode the RAW) |
+| Graphics | `psd` thumbnail, `ai` as PDF or embedded bitmap, `cdr` embedded PNG/JPEG when present |
+| Comics | `cbz cbr cbt cb7` |
+| PDF | `pdf` with highlight, search, night pages and PDF tools |
+| Office / OpenDocument | `docx xlsx pptx odt ods odp` (edit), `doc xls ppt` (read, convert), `rtf epub` |
+| Text | `txt md markdown csv tsv log json xml html` and the code extensions on [Document viewer](./documents) |
+
+The same picture and document list drives Telos Files thumbnails through one catalog. HEVC/H.265 video (`.hevc` `.h265` `.hvc`) is played in Telos Media, not in the still viewer.
+
 ## The gallery
 
 The screen has two tabs.
 
 | Tab | Details |
 | --- | --- |
-| **Photos** | All pictures, newest first, in a grid of 4 columns with square thumbnails. A heading starts every day: "Today", "Yesterday", a weekday and date such as `Tue, 3 Mar`, or a full date for other years |
+| **Photos** | Pictures and videos, newest first. Month headings, a stories strip (Recents, Screenshots, Favorites), pinch on the grid for 3–5 columns. Long-press to multi-select and share. Glass bars follow the launcher blur theme |
 | **Albums** | One album per folder (for example Camera or Screenshots), as 2 columns of cards with the picture count. Albums are sorted by how many pictures they hold. Pictures without a folder name go to "Other" |
 
 - The list comes from the system media library, ordered by the time Android added the picture. The heading date is
@@ -96,8 +110,12 @@ Telos Viewer has **no settings page of its own**. Its behavior depends on the sy
 | --- | --- | --- |
 | Photos by date | Photos tab | |
 | Albums by folder | Albums tab | |
-| Full screen viewer, swipe, pinch zoom | Viewer | Zoom 1x to 8x |
-| Share, Edit, Details, Delete | Viewer bottom bar | Delete needs Android 11 and a system picture |
+| Full screen viewer, swipe, pinch zoom, swipe down to close | Viewer | Zoom 1x to 8x; glass chrome |
+| Videos and motion clips in the same pager | Viewer | Looping playback |
+| Share, Edit, Details, Favorite | Viewer pill bar | Delete and wallpaper in the overflow menu |
+| PDF night pages, drag-to-text highlights, EPUB type size | Document viewer | Marks stay on the device |
+| Comics CBZ/CBR/CBT/CB7 | Document viewer | CBR not in F-Droid |
+| SVG, PSD, AI, CDR preview | Document viewer | Flattened preview, not an editor |
 | EXIF viewer and editor | Details | Mostly JPEG |
 | Remove location, remove all metadata | Details | Changes the original file |
 | Share without metadata | Details | Makes a JPEG copy |
@@ -115,7 +133,7 @@ Telos Viewer has **no settings page of its own**. Its behavior depends on the sy
 | Pictures in the gallery | Pictures Android has indexed and the image library can decode (JPEG, PNG, WebP and others) |
 | EXIF editing | Formats that Android's EXIF interface can write, mainly JPEG. Others show an error |
 | Editor output | JPEG |
-| Documents | PDF, plain text and code, `.docx`, `.xlsx`, `.pptx`, `.odt`, `.ods`, `.odp`, RTF, EPUB |
+| Documents | PDF, plain text and code, `.docx`, `.xlsx`, `.pptx`, `.odt`, `.ods`, `.odp`, RTF, EPUB, comics CBZ/CBR/CBT/CB7, SVG, PSD/AI/CDR preview |
 | Read-only | `.doc`, `.xls`, `.ppt` (can be converted to `.docx`, `.xlsx`, `.pptx`) |
 | Not supported | Encrypted or password-protected Office files |
 

@@ -22,6 +22,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -31,7 +32,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.rememberVirtualAppBlur
+import de.mm20.launcher2.ui.component.virtualAppElevated
+import de.mm20.launcher2.ui.component.virtualAppGlass
 import de.mm20.launcher2.ui.theme.transparency.transparency
+import dev.chrisbanes.haze.hazeSource
 import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropColumn
 import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropListState
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
@@ -76,21 +81,25 @@ fun PreferenceScreen(
 ) {
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val blur = rememberVirtualAppBlur()
+    val bar = virtualAppElevated()
 
     Scaffold(
         topBar = {
             PreferenceScreenTopBar(
+                modifier = Modifier.virtualAppGlass(blur, bar),
                 title = title,
                 actions = topBarActions,
                 helpUrl = helpUrl,
                 scrollBehavior = scrollBehavior,
             )
         },
-        containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.elevatedSurface)
+        containerColor = Color.Transparent
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .hazeSource(blur.haze)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             state = lazyColumnState,
             content = content,
@@ -116,21 +125,25 @@ fun DragAndDropPreferenceScreen(
     content: LazyListScope.() -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val blur = rememberVirtualAppBlur()
+    val bar = virtualAppElevated()
 
     Scaffold(
         topBar = {
             PreferenceScreenTopBar(
+                modifier = Modifier.virtualAppGlass(blur, bar),
                 title = title,
                 actions = topBarActions,
                 helpUrl = helpUrl,
                 scrollBehavior = scrollBehavior,
             )
         },
-        containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.elevatedSurface)
+        containerColor = Color.Transparent
     ) {
         LazyDragAndDropColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .hazeSource(blur.haze)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             state = lazyColumnState,
             content = content,
@@ -148,6 +161,7 @@ fun DragAndDropPreferenceScreen(
 
 @Composable
 private fun PreferenceScreenTopBar(
+    modifier: Modifier = Modifier,
     title: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
     helpUrl: String? = null,
@@ -159,10 +173,11 @@ private fun PreferenceScreenTopBar(
     val activity = LocalActivity.current
 
     CenterAlignedTopAppBar(
+        modifier = modifier,
         title = title,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
-            scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            containerColor = Color.Transparent,
+            scrolledContainerColor = Color.Transparent,
         ),
         navigationIcon = {
             IconButton(onClick = {

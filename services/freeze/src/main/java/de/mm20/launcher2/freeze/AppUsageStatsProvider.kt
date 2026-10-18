@@ -43,6 +43,28 @@ class AppUsageStatsProvider internal constructor(
     }
 
     /**
+     * Last app that moved to the foreground, even after [MOVE_TO_BACKGROUND] (screen off).
+     * [currentForegroundPackage] is null once the screen is off; this still names the window
+     * that was in front so auto-freeze can leave it alone.
+     */
+    fun lastForegroundPackage(): String? {
+        if (!hasPermission()) return null
+        val usageStatsManager = context.getSystemService<UsageStatsManager>() ?: return null
+        val end = System.currentTimeMillis()
+        val begin = end - FOREGROUND_LOOKBACK_MS
+        val events = usageStatsManager.queryEvents(begin, end) ?: return null
+        var last: String? = null
+        val event = UsageEvents.Event()
+        while (events.hasNextEvent()) {
+            events.getNextEvent(event)
+            if (event.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
+                last = event.packageName
+            }
+        }
+        return last
+    }
+
+    /**
      * Total foreground time per package over the last [sinceMillisAgo] (default: 24h), in
      * milliseconds. One batched query, not one per package - `queryUsageStats` can return
      * multiple bucketed entries per package, so they're summed.

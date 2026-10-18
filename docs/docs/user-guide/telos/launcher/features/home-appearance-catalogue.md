@@ -287,6 +287,12 @@ Each preset is a bundle of optional colors and an optional layout.
 | Preset | Colors | Layout (grid, icon size, labels, shape, dock, search bar, animation speed) |
 | --- | --- | --- |
 | AMOLED Black | yes | none |
+| AMOLED Red | yes (YouTube red, black, white type) | none |
+| AMOLED Green | yes (terminal green, black, white type) | none |
+| AMOLED Yellow | yes (black, white type) | none |
+| AMOLED Light Blue | yes (black, white type) | none |
+| AMOLED Magenta | yes (black, white type) | none |
+| AMOLED Orange | yes (black, white type) | none |
 | Cyberpunk | yes | none |
 | Colorful Grid | yes | 5 columns, 48 dp, labels, Pebble, dock, solid fixed search bar at the bottom, speed 1.15 |
 | Classic Grid | none | 4 columns, 52 dp, labels, Rounded square, dock, solid fixed bar at the bottom, speed 1.0 |

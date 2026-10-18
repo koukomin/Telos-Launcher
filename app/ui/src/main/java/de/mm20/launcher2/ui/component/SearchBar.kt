@@ -64,6 +64,7 @@ fun SearchBar(
     darkColors: Boolean = false,
     readOnly: Boolean = false,
     menu: @Composable RowScope.() -> Unit = {},
+    trailing: @Composable RowScope.() -> Unit = {},
     actions: @Composable ColumnScope.() -> Unit = {},
     onKeyboardActionGo: (KeyboardActionScope.() -> Unit)? = null
 ) {
@@ -201,6 +202,7 @@ fun SearchBar(
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        trailing()
                         menu()
                     }
                 }

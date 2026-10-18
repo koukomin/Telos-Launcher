@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">এজেন্ট</string>
+    <string name="preference_screen_agents_summary">Grok, Claude, ChatGPT এবং অন্যদের কাছে অনুসন্ধান পাঠান। ডিফল্টে বন্ধ</string>
+    <string name="preference_agents_enabled">অনুসন্ধানে এজেন্ট চালু করুন</string>
+    <string name="preference_agents_enabled_summary">অনুসন্ধানে জিজ্ঞাসা চিপ দেখায়। Telos API কী রাখে না; এজেন্ট অ্যাপ বা ওয়েবসাইট আপনার লগইন করা অ্যাকাউন্ট ব্যবহার করে</string>
+    <string name="preference_agents_provider">এজেন্ট</string>
+    <string name="preference_agents_transport">কীভাবে পাঠাবেন</string>
+    <string name="preference_agents_transport_summary">স্বয়ংক্রিয় ইনস্টল থাকলে এজেন্ট অ্যাপ খোলে, নাহলে ওয়েবসাইট। Termux অফিসিয়াল Termux অ্যাপে CLI চালায়</string>
+    <string name="preference_agents_send_sentences">Enter দিয়ে বাক্য পাঠান</string>
+    <string name="preference_agents_send_sentences_summary">তিন বা তার বেশি শব্দের প্রশ্ন প্রথম অ্যাপ খোলার বদলে এজেন্টকে যায়</string>
+    <string name="preference_search_bar_voice">সার্চ বারে ভয়েস ইনপুট</string>
+    <string name="preference_search_bar_voice_summary">ফোন সমর্থন করলে মাইক্রোফোন ডিভাইসের স্পিচ রিকগনিশন ব্যবহার করে</string>
+    <string name="search_bar_voice">ভয়েস সার্চ</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">অ্যাপ, তারপর ওয়েবসাইট</string>
+    <string name="agent_transport_app">এজেন্ট অ্যাপ</string>
+    <string name="agent_transport_web">ওয়েবসাইট</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">%1$s-কে জিজ্ঞাসা করুন</string>
+    <string name="agent_launch_failed">এজেন্ট খোলা যায়নি</string>
+    <string name="preference_keyboard_shortcuts">হার্ডওয়্যার কীবোর্ড শর্টকাট</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Space বা Super+A অনুসন্ধান, Super+Enter টার্মিনাল, Super+1 হোম খোলে</string>
+    <string name="preference_category_telos_navigation">Telos নেভিগেশন</string>
+    <string name="preference_telos_navigation">প্রান্তের অঙ্গভঙ্গি (পিছনে, হোম, সাম্প্রতিক)</string>
+    <string name="preference_telos_navigation_summary">পর্দার কিনারে পাতলা স্ট্রিপ। পাশ থেকে পিছনে, নিচ থেকে হোম, চেপে ধরে সাম্প্রতিক। অ্যাক্সেসিবিলিটি সার্ভিস লাগে। ডিফল্টে বন্ধ</string>
+    <string name="preference_telos_recents">Telos সাম্প্রতিক</string>
+    <string name="preference_telos_recents_summary">সিস্টেম সাম্প্রতিকের বদলে Telos তালিকা। ডিফল্টে বন্ধ</string>
+    <string name="telos_recents_title">সাম্প্রতিক অ্যাপ</string>
+    <string name="telos_recents_clear">সব মুছুন</string>
+</resources>

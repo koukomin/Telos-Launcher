@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">एजेंट</string>
+    <string name="preference_screen_agents_summary">खोज Grok, Claude, ChatGPT और अन्य को भेजें। डिफ़ॉल्ट रूप से बंद</string>
+    <string name="preference_agents_enabled">खोज में एजेंट चालू करें</string>
+    <string name="preference_agents_enabled_summary">खोज में पूछें चिप दिखाता है। Telos API कुंजी नहीं रखता; एजेंट ऐप या साइट उसी खाते का उपयोग करती है जिसमें आप पहले से साइन इन हैं</string>
+    <string name="preference_agents_provider">एजेंट</string>
+    <string name="preference_agents_transport">कैसे भेजें</string>
+    <string name="preference_agents_transport_summary">ऑटो इंस्टॉल होने पर एजेंट ऐप खोलता है, नहीं तो वेबसाइट। Termux आधिकारिक Termux ऐप में CLI चलाता है</string>
+    <string name="preference_agents_send_sentences">Enter से वाक्य भेजें</string>
+    <string name="preference_agents_send_sentences_summary">तीन या अधिक शब्दों वाला प्रश्न पहली ऐप खोलने की जगह एजेंट को जाता है</string>
+    <string name="preference_search_bar_voice">खोज बार पर आवाज़ इनपुट</string>
+    <string name="preference_search_bar_voice_summary">फ़ोन समर्थन करे तो माइक्रोफ़ोन डिवाइस पर वाक् पहचान उपयोग करता है</string>
+    <string name="search_bar_voice">आवाज़ से खोज</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">ऐप, फिर वेबसाइट</string>
+    <string name="agent_transport_app">एजेंट ऐप</string>
+    <string name="agent_transport_web">वेबसाइट</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">%1$s से पूछें</string>
+    <string name="agent_launch_failed">एजेंट नहीं खुल सका</string>
+    <string name="preference_keyboard_shortcuts">हार्डवेयर कीबोर्ड शॉर्टकट</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Space या Super+A खोज, Super+Enter टर्मिनल, Super+1 होम खोलता है</string>
+    <string name="preference_category_telos_navigation">Telos नेविगेशन</string>
+    <string name="preference_telos_navigation">किनारे के जेस्चर (पीछे, होम, हाल ही में)</string>
+    <string name="preference_telos_navigation_summary">किनारों पर पतली पट्टियाँ। बगल से पीछे, नीचे से होम, दबाकर हाल ही में। एक्सेसिबिलिटी सेवा चाहिए। डिफ़ॉल्ट रूप से बंद</string>
+    <string name="preference_telos_recents">Telos हाल ही में</string>
+    <string name="preference_telos_recents_summary">सिस्टम के बजाय Telos सूची। डिफ़ॉल्ट रूप से बंद</string>
+    <string name="telos_recents_title">हाल की ऐप्स</string>
+    <string name="telos_recents_clear">सभी साफ़ करें</string>
+</resources>

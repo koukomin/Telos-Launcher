@@ -54,7 +54,7 @@ The pages above explain how the launcher works. These three list every feature a
 | --- | --- |
 | Home screen | Dock with custom slots and multiple docks, shutters, video wallpapers, up to four widget pages, folder covers, independent grids for home, search and dock |
 | Widgets | Reminders, Freeze, Battery, Network, System and At a Glance widgets, widget stacks, linked notes |
-| Search | Search results for web apps, the Telos apps and frozen apps, a text-matching ranking with usage weights, optional app recommendations |
+| Search | Search results for web apps, the Telos apps and frozen apps, a text-matching ranking with usage weights, optional agents |
 | Overlays | Floating launcher, Dynamic Island, desktop mode, web apps panel, assistant mode |
 | Automation | Context profiles |
 | Protection | Settings lock, launcher lock, App Lock with intruder photos, crash guard, exception containment |

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">เอเจนต์</string>
+    <string name="preference_screen_agents_summary">ส่งการค้นหาไปยัง Grok, Claude, ChatGPT และอื่น ๆ ปิดเป็นค่าเริ่มต้น</string>
+    <string name="preference_agents_enabled">เปิดเอเจนต์ในการค้นหา</string>
+    <string name="preference_agents_enabled_summary">แสดงชิปถามในการค้นหา Telos ไม่เก็บคีย์ API แอปหรือเว็บของเอเจนต์ใช้บัญชีที่คุณลงชื่อเข้าใช้แล้ว</string>
+    <string name="preference_agents_provider">เอเจนต์</string>
+    <string name="preference_agents_transport">วิธีส่ง</string>
+    <string name="preference_agents_transport_summary">อัตโนมัติเปิดแอปเอเจนต์ถ้าติดตั้ง ไม่งั้นเปิดเว็บไซต์ Termux รัน CLI ในแอป Termux ทางการ</string>
+    <string name="preference_agents_send_sentences">ส่งประโยคด้วย Enter</string>
+    <string name="preference_agents_send_sentences_summary">คำค้นสามคำขึ้นไปถูกส่งไปเอเจนต์แทนการเปิดแอปแรก</string>
+    <string name="preference_search_bar_voice">ป้อนด้วยเสียงบนแถบค้นหา</string>
+    <string name="preference_search_bar_voice_summary">ไมโครโฟนใช้การรู้จำเสียงบนเครื่องเมื่อโทรศัพท์รองรับ</string>
+    <string name="search_bar_voice">ค้นหาด้วยเสียง</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">แอป แล้วเว็บไซต์</string>
+    <string name="agent_transport_app">แอปเอเจนต์</string>
+    <string name="agent_transport_web">เว็บไซต์</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">ถาม %1$s</string>
+    <string name="agent_launch_failed">เปิดเอเจนต์ไม่ได้</string>
+    <string name="preference_keyboard_shortcuts">ทางลัดแป้นพิมพ์ฮาร์ดแวร์</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Space หรือ Super+A เปิดค้นหา Super+Enter เทอร์มินัล Super+1 หน้าแรก</string>
+    <string name="preference_category_telos_navigation">การนำทาง Telos</string>
+    <string name="preference_telos_navigation">ท่าทางขอบจอ (ย้อนกลับ หน้าแรก ล่าสุด)</string>
+    <string name="preference_telos_navigation_summary">แถบบางที่ขอบ ปัดจากข้างเพื่อย้อนกลับ จากล่างขึ้นบนหน้าแรก กดค้างล่าสุด ต้องใช้บริการการช่วยเหลือพิเศษ ปิดเป็นค่าเริ่มต้น</string>
+    <string name="preference_telos_recents">ล่าสุด Telos</string>
+    <string name="preference_telos_recents_summary">รายการ Telos แทนล่าสุดของระบบ ปิดเป็นค่าเริ่มต้น</string>
+    <string name="telos_recents_title">แอปล่าสุด</string>
+    <string name="telos_recents_clear">ล้างทั้งหมด</string>
+</resources>

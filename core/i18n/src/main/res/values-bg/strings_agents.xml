@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Агенти</string>
+    <string name="preference_screen_agents_summary">Изпраща заявка към Grok, Claude, ChatGPT и други. Изключено по подразбиране</string>
+    <string name="preference_agents_enabled">Включи агенти в търсенето</string>
+    <string name="preference_agents_enabled_summary">Показва чип Попитай в търсенето. Telos не пази API ключ; приложението или сайтът на агента ползва профила, в който вече сте влезли</string>
+    <string name="preference_agents_provider">Агент</string>
+    <string name="preference_agents_transport">Как да се изпрати</string>
+    <string name="preference_agents_transport_summary">Авто отваря приложението на агента, ако е инсталирано, иначе сайта. Termux пуска CLI в официалното приложение Termux</string>
+    <string name="preference_agents_send_sentences">Изпращай изречения с Enter</string>
+    <string name="preference_agents_send_sentences_summary">Заявка от три или повече думи отива при агента вместо да отвори първото приложение</string>
+    <string name="preference_search_bar_voice">Гласово въвеждане в лентата за търсене</string>
+    <string name="preference_search_bar_voice_summary">Микрофонът използва разпознаване на реч на устройството, когато телефонът го поддържа</string>
+    <string name="search_bar_voice">Гласово търсене</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Приложение, после сайт</string>
+    <string name="agent_transport_app">Приложение на агента</string>
+    <string name="agent_transport_web">Уебсайт</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Попитай %1$s</string>
+    <string name="agent_launch_failed">Агентът не можа да се отвори</string>
+    <string name="preference_keyboard_shortcuts">Клавишни комбинации</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Интервал или Super+A отваря търсенето, Super+Enter Терминала, Super+1 началния екран</string>
+    <string name="preference_category_telos_navigation">Навигация Telos</string>
+    <string name="preference_telos_navigation">Жестове от ръба (назад, начало, скорошни)</string>
+    <string name="preference_telos_navigation_summary">Тънки ленти по ръбовете. Отстрани за Назад, отдолу нагоре за Начало, задръжте за Скорошни. Нужна е услугата за достъпност. Изключено по подразбиране</string>
+    <string name="preference_telos_recents">Скорошни Telos</string>
+    <string name="preference_telos_recents_summary">Списък Telos със скорошни приложения вместо системните. Изключено по подразбиране</string>
+    <string name="telos_recents_title">Скорошни приложения</string>
+    <string name="telos_recents_clear">Изчисти всички</string>
+</resources>

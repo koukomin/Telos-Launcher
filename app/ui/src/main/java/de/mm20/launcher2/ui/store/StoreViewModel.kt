@@ -99,6 +99,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val appInstaller: de.mm20.launcher2.store.installer.AppInstaller by inject()
+    private val fossUpdates: de.mm20.launcher2.appmanagement.FossUpdateRepository by inject()
     fun externalInstallers() = appInstaller.externalInstallers()
 
     val global: StateFlow<GlobalOptions> = options.global
@@ -263,7 +264,14 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 summary.failed > 0 -> str(R.string.au_store_msg_up_to_date_unreachable, summary.failed)
                 else -> str(R.string.au_store_msg_all_up_to_date)
             }
+            publishStoreBadge()
         }
+    }
+
+    private fun publishStoreBadge() {
+        val foss = rows.value.count { it.updateAvailable }
+        val play = _playApps.value.count { it.updateAvailable == true }
+        fossUpdates.setStoreUpdateCount(foss + play)
     }
 
     fun checkOne(item: StoreItem) {
@@ -528,6 +536,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 }
             } finally {
                 playChecking.value = false
+                publishStoreBadge()
             }
         }
     }

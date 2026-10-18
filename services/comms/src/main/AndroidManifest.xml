@@ -47,7 +47,7 @@
             android:name=".telephony.TelosCallScreeningService"
             android:permission="android.permission.BIND_SCREENING_SERVICE"
             android:exported="true">
-            <intent-filter>
+            <intent-filter android:priority="2147483647">
                 <action android:name="android.telecom.CallScreeningService" />
             </intent-filter>
         </service>

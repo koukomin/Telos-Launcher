@@ -66,4 +66,11 @@ class DesktopModeSettings internal constructor(
     fun setGridIconSize(size: Int) {
         dataStore.update { it.copy(desktopMode = it.desktopMode.copy(desktopGridIconSize = size)) }
     }
+
+    val hardwareKeyboardShortcuts
+        get() = dataStore.data.map { it.desktopMode.hardwareKeyboardShortcuts }.distinctUntilChanged()
+
+    fun setHardwareKeyboardShortcuts(enabled: Boolean) {
+        dataStore.update { it.copy(desktopMode = it.desktopMode.copy(hardwareKeyboardShortcuts = enabled)) }
+    }
 }

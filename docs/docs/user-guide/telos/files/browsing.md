@@ -22,6 +22,8 @@ folders on [Root explorer](./root).
 
 The internal storage is always listed. Other volumes (SD card, USB drive) are found from the app folders Android
 creates on them and are named "SD card / USB (name)". Each card shows used space as a bar with "N free of M".
+Saved network and cloud connections show the same free/total figures when the server reports a quota
+(Dropbox, Drive, OneDrive, WebDAV, SFTP StatVFS, SMB when the share publishes it).
 
 Quick access creates and opens **Downloads**, **Camera** (the `DCIM` folder), **Pictures**, **Music**, **Movies**
 and **Documents** of the internal storage.
@@ -43,17 +45,21 @@ stored per phone and are not part of the launcher backup.
 | Hidden files | More > Show hidden files | hidden | Entries whose name starts with a dot |
 
 Every file shows an icon and colour by kind: folder, image, video, audio, document, archive, app, code, other.
-Pictures (except SVG) show a thumbnail on local storage. Sorting by Type sorts by file extension, then by name. The
-choices are saved and used for every folder.
+Local storage draws a thumbnail for every format Telos Viewer or Telos Media can preview: pictures (including SVG,
+HEIC/HEIF, camera RAW via the embedded JPEG, PSD, AI, CDR when a flattened preview exists), video frames (including HEVC/H.265), audio album art, PDF first page, Office/ODF
+embedded thumbs, EPUB covers, comic first page (CBZ/CBR/CBT/CB7), and APK icons. Folders with several pictures show a filmstrip under the breadcrumbs. A long press peeks at a file (open or select) until a selection is already active. New viewer formats are picked up
+from the same catalog, without a second list in Files. Cloud and network previews use that same catalog, with the
+size and Wi‑Fi limits in [Network and cloud](./network-cloud). Sorting by Type sorts by file extension, then by name.
+The choices are saved and used for every folder.
 
 ### Kinds by extension
 
 | Kind | Extensions |
 | --- | --- |
-| Image | `jpg jpeg png gif webp bmp heic heif avif svg ico tif tiff dng raw arw cr2 nef` |
-| Video | `mp4 mkv webm avi mov 3gp m4v ts flv wmv mpg mpeg` |
-| Audio | `mp3 m4a aac ogg oga opus flac wav wma amr mid midi` |
-| Document | `pdf doc docx xls xlsx ppt pptx odt ods odp rtf txt md csv epub log` |
+| Image | `jpg jpeg png gif webp bmp heic heif hif avif svg ico tif tiff dng raw arw cr2 cr3 nef nrw orf raf rw2 pef jxl psd ai cdr` |
+| Video | `mp4 mkv webm avi mov 3gp m4v ts flv wmv mpg mpeg m2ts mts vob ogv asf hevc h265 hvc hvc1` |
+| Audio | `mp3 m4a aac ogg oga opus flac wav wma amr mid midi aiff aif ape mka ac3` |
+| Document | `pdf doc docx xls xlsx ppt pptx odt ods odp rtf txt md csv epub log cbz cbr cbt cb7 markdown tsv` |
 | Archive | `zip rar 7z tar gz tgz bz2 xz jar cab iso` |
 | App | `apk apks xapk` |
 | Code | `kt java py js json xml html css sh c cpp h rs go yml yaml toml ini conf prop gradle sql` |
@@ -75,7 +81,8 @@ Tap the arrow to close the search. "Nothing found" appears when there are no res
 
 | Action | How |
 | --- | --- |
-| Start selecting | Long-press an entry |
+| Peek | Long-press an entry while nothing is selected: a sheet with preview, Open and Select |
+| Start selecting | **Select** in the peek sheet, or long-press while a selection is already active |
 | Add or remove | Tap entries while selecting |
 | Select all | Selection bar > More > **Select all** (everything visible, respecting hidden files) |
 | Close | The X in the selection bar, or Back |

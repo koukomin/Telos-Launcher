@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_swipe_up_actions">向上滑动以提醒并发送短信</string>
+</resources>

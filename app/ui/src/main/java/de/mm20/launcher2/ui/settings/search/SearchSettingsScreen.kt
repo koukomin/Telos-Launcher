@@ -35,7 +35,6 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
-import de.mm20.launcher2.ui.launcher.search.recommendations.RecommendationInfoSheet
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.settings.apps.AppSearchSettingsRoute
 import de.mm20.launcher2.ui.settings.calendarsearch.CalendarProviderSettingsRoute
@@ -48,6 +47,7 @@ import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsRoute
 import de.mm20.launcher2.ui.settings.locations.LocationsSettingsRoute
 import de.mm20.launcher2.ui.settings.protection.SettingsLockVM
 import de.mm20.launcher2.ui.settings.protection.authenticateSettings
+import de.mm20.launcher2.ui.settings.agents.AgentsSettingsRoute
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsRoute
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsRoute
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsRoute
@@ -71,7 +71,6 @@ fun SearchSettingsScreen() {
     val backStack = LocalBackStack.current
 
     var showFilterEditor by remember { mutableStateOf(false) }
-    var showRecommendationInfo by remember { mutableStateOf(false) }
     var onUnlockAction by remember { mutableStateOf<(() -> Unit)?>(null) }
     var showSetPinDialog by remember { mutableStateOf(false) }
 
@@ -111,7 +110,6 @@ fun SearchSettingsScreen() {
     val autoFocus by viewModel.autoFocus.collectAsStateWithLifecycle(null)
     val launchOnEnter by viewModel.launchOnEnter.collectAsStateWithLifecycle(null)
     val privateKeyboard by viewModel.privateKeyboard.collectAsStateWithLifecycle(null)
-    val showAppRecommendations by viewModel.showAppRecommendations.collectAsStateWithLifecycle(null)
     val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
     val filterBar by viewModel.filterBar.collectAsStateWithLifecycle(null)
 
@@ -358,6 +356,14 @@ fun SearchSettingsScreen() {
                         backStack.add(SearchActionsSettingsRoute)
                     }
                 )
+                Preference(
+                    title = stringResource(R.string.preference_screen_agents),
+                    summary = stringResource(R.string.preference_screen_agents_summary),
+                    icon = R.drawable.search_24px,
+                    onClick = {
+                        backStack.add(AgentsSettingsRoute)
+                    }
+                )
             }
         }
         item {
@@ -595,26 +601,6 @@ fun SearchSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                SwitchPreference(
-                    title = stringResource(R.string.preference_show_app_recommendations),
-                    iconPadding = true,
-                    summary = stringResource(R.string.preference_show_app_recommendations_summary),
-                    value = showAppRecommendations == true,
-                    onValueChanged = {
-                        viewModel.setShowAppRecommendations(it)
-                    }
-                )
-                Preference(
-                    title = stringResource(R.string.recommendation_why_am_i_seeing_this),
-                    iconPadding = true,
-                    onClick = {
-                        showRecommendationInfo = true
-                    }
-                )
-            }
-        }
-        item {
-            PreferenceCategory {
                 ListPreference(
                     title = stringResource(R.string.preference_layout_search_results),
                     items = listOf(
@@ -658,8 +644,4 @@ fun SearchSettingsScreen() {
         }
     }
 
-    RecommendationInfoSheet(
-        expanded = showRecommendationInfo,
-        onDismissRequest = { showRecommendationInfo = false },
-    )
 }

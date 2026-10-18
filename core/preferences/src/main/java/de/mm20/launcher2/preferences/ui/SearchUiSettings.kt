@@ -90,15 +90,6 @@ class SearchUiSettings internal constructor(
         }
     }
 
-    val showAppRecommendations
-        get() = launcherDataStore.data.map { it.searchBar.showAppRecommendations }.distinctUntilChanged()
-
-    fun setShowAppRecommendations(show: Boolean) {
-        launcherDataStore.update {
-            it.copy(searchBar = it.searchBar.copy(showAppRecommendations = show))
-        }
-    }
-
     val reversedResults
         get() = launcherDataStore.data.map { it.searchResults.searchResultsReversed }.distinctUntilChanged()
 

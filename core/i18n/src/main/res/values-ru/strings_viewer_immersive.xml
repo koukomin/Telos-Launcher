@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">Сделать обоями</string>
+    <string name="viewer_favorite">Избранное</string>
+    <string name="viewer_story_recents">Недавние</string>
+    <string name="viewer_story_screenshots">Снимки</string>
+    <string name="viewer_story_favorites">Избранное</string>
+    <string name="viewer_pdf_night">Ночные страницы</string>
+    <string name="viewer_pdf_highlight">Режим выделения</string>
+    <string name="viewer_epub_larger">Крупнее текст</string>
+    <string name="viewer_epub_smaller">Мельче текст</string>
+    <string name="viewer_epub_serif">С засечками / без</string>
+    <string name="viewer_epub_night">Ночная тема</string>
+
+    <string name="au20_viewer_cat_comics">Комиксы</string>
+    <string name="au20_viewer_cat_graphics">Графика</string>
+    <string name="viewer_highlight_all">Выделить всё</string>
+    <string name="viewer_highlight_added">%1$d выделений</string>
+    <string name="viewer_comic_empty">В этом комиксе нет страниц</string>
+    <string name="viewer_cbr_fdroid">CBR (RAR) нет в сборке F-Droid. Используйте CBZ или Play/GitHub.</string>
+    <string name="viewer_cbr_encrypted">Этот CBR зашифрован</string>
+    <string name="viewer_preview_svg">Просмотр SVG</string>
+    <string name="viewer_preview_psd">Просмотр PSD (миниатюра, не слои)</string>
+    <string name="viewer_preview_cdr">Просмотр CDR (встроенный рисунок)</string>
+    <string name="viewer_preview_ai">Просмотр AI (рисунок; PDF-AI открывается как PDF)</string>
+    <string name="viewer_preview_none">Нет предпросмотра</string>
+</resources>

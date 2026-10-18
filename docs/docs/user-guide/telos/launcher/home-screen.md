@@ -77,6 +77,17 @@ Tapping the search bar always opens search.
 - **Feed** is only offered in debug and nightly builds, see [Widgets and feed](./widgets-feed#feed).
 - If a gesture cannot run, a dialog explains why instead of failing silently.
 
+### Telos navigation and recents
+
+<Badge type="info" text="off by default" />
+
+Settings > Gestures > **Telos navigation**. Both options need the accessibility service.
+
+| Setting | What it does |
+| --- | --- |
+| Edge gestures | Thin strips on the screen edges. Swipe in from a side for Back, swipe up from the bottom for Home, tap and hold the bottom strip for Recents |
+| Telos recents | A Telos list of recent apps instead of the system Recents screen |
+
 ::: tip Home screen menu
 The default long press opens a small menu with **Change wallpaper** and **Add widget**, as on most
 launchers. Add widget only appears when the home screen shows widgets (see "Widgets on home screen").

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">Définir comme fond d\'écran</string>
+    <string name="viewer_favorite">Favori</string>
+    <string name="viewer_story_recents">Récents</string>
+    <string name="viewer_story_screenshots">Captures</string>
+    <string name="viewer_story_favorites">Favoris</string>
+    <string name="viewer_pdf_night">Pages nuit</string>
+    <string name="viewer_pdf_highlight">Mode surlignage</string>
+    <string name="viewer_epub_larger">Texte plus grand</string>
+    <string name="viewer_epub_smaller">Texte plus petit</string>
+    <string name="viewer_epub_serif">Serif / sans</string>
+    <string name="viewer_epub_night">Thème nuit</string>
+
+    <string name="au20_viewer_cat_comics">Bandes dessinées</string>
+    <string name="au20_viewer_cat_graphics">Graphismes</string>
+    <string name="viewer_highlight_all">Tout surligner</string>
+    <string name="viewer_highlight_added">%1$d surlignages</string>
+    <string name="viewer_comic_empty">Aucune page dans cette BD</string>
+    <string name="viewer_cbr_fdroid">CBR (RAR) n\'est pas dans la version F-Droid. Utilisez CBZ ou Play/GitHub.</string>
+    <string name="viewer_cbr_encrypted">Ce CBR est chiffré</string>
+    <string name="viewer_preview_svg">Aperçu SVG</string>
+    <string name="viewer_preview_psd">Aperçu PSD (vignette, pas les calques)</string>
+    <string name="viewer_preview_cdr">Aperçu CDR (image intégrée, pas le dessin)</string>
+    <string name="viewer_preview_ai">Aperçu AI (image intégrée ; un AI PDF s\'ouvre en PDF)</string>
+    <string name="viewer_preview_none">Aucun aperçu dans ce fichier</string>
+</resources>

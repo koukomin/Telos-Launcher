@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agendid</string>
+    <string name="preference_screen_agents_summary">Saada otsing Grokile, Claude’ile, ChatGPT-le ja teistele. Vaikimisi väljas</string>
+    <string name="preference_agents_enabled">Luba agendid otsingus</string>
+    <string name="preference_agents_enabled_summary">Näitab otsingus Küsi-nuppu. Telos ei salvesta API võtit; agendi rakendus või sait kasutab kontot, kuhu oled juba sisse loginud</string>
+    <string name="preference_agents_provider">Agent</string>
+    <string name="preference_agents_transport">Kuidas saata</string>
+    <string name="preference_agents_transport_summary">Auto avab agendi rakenduse, kui see on paigaldatud, muidu veebisaidi. Termux käivitab CLI ametlikus Termuxi rakenduses</string>
+    <string name="preference_agents_send_sentences">Saada laused Enteriga</string>
+    <string name="preference_agents_send_sentences_summary">Kolme või enama sõnaga päring saadetakse agendile esimese rakenduse avamise asemel</string>
+    <string name="preference_search_bar_voice">Hääl sisestus otsinguribal</string>
+    <string name="preference_search_bar_voice_summary">Mikrofon kasutab seadme kõnetuvastust, kui telefon seda toetab</string>
+    <string name="search_bar_voice">Häälotsing</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Rakendus, siis veebisait</string>
+    <string name="agent_transport_app">Agendi rakendus</string>
+    <string name="agent_transport_web">Veebisait</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Küsi %1$s-lt</string>
+    <string name="agent_launch_failed">Agenti ei saanud avada</string>
+    <string name="preference_keyboard_shortcuts">Riistvaraklaviatuuri otseteed</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Tühik või Super+A avab otsingu, Super+Enter Terminali, Super+1 avakuva</string>
+    <string name="preference_category_telos_navigation">Telose navigeerimine</string>
+    <string name="preference_telos_navigation">Servažestid (tagasi, kodu, hiljutised)</string>
+    <string name="preference_telos_navigation_summary">Õhukesed ribad servadel. Küljelt Tagasi, alt üles Kodu, hoia all Hiljutised. Vajab hõlbustusteenust. Vaikimisi väljas</string>
+    <string name="preference_telos_recents">Telose hiljutised</string>
+    <string name="preference_telos_recents_summary">Telose hiljutiste rakenduste loend süsteemi asemel. Vaikimisi väljas</string>
+    <string name="telos_recents_title">Hiljutised rakendused</string>
+    <string name="telos_recents_clear">Tühjenda kõik</string>
+</resources>

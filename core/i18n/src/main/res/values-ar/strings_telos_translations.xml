@@ -1118,4 +1118,6 @@
     </plurals>
     <string name="dl_m_auto_update">تحديث yt-dlp تلقائيًا</string>
     <string name="dl_m_auto_update_sum">ينزّل أحدث إصدار من yt-dlp مرة واحدة يوميًا عبر Wi-Fi لتستمر التنزيلات بالعمل عند تغيّر المواقع</string>
+    <string name="telos_files_peek_select">تحديد</string>
+    <string name="telos_files_smb_nearby">أجهزة على هذه الشبكة</string>
 </resources>

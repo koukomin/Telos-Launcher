@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Prijenosi datoteka</string>
     <string name="telos_files_two_panels">Dvije ploče</string>
     <string name="telos_media_listen">Slušaj</string>
+    <string name="telos_media_watch">Gledaj</string>
+    <string name="telos_media_live">Uživo</string>
     <string name="telos_media_store_description">Slušajte lokalnu glazbu, radio i YouTube Music, gledajte lokalne videozapise ili YouTube te istražite TV i Stremio Fork.</string>
     <string name="telos_store_auto_enable">Omogući i ažuriraj</string>
     <string name="telos_store_auto_explanation">Omogućiti automatska ažuriranja za odabrane aplikacije? Buduća ažuriranja instaliraju se automatski kada Shizuku ili root dopušta instalaciju bez potvrde. U suprotnom ćete primiti obavijest o ažuriranju. To možete promijeniti u postavkama svake aplikacije.</string>

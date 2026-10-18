@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Програми з Play Store показано тут, зокрема заморожені.</string>
     <string name="store_play_hint">Заморожені програми розморожуються, відкривається Play Store. Telos заморозить їх знову, щойно Play встановить нову версію (година лише запас). За бажанням: з VPN Telos Network немає інтернету, доки ви їх не відкриєте.</string>
     <string name="store_play_open_my_apps">Відкрити оновлення Play Store</string>
+    <string name="store_play_unfreeze_update">Розморозити й оновити в Play Store</string>
+    <string name="store_play_frozen_count">Заморожені (%1$d)</string>
     <string name="store_play_block_network">Блокувати мережу до відкриття</string>
     <string name="store_play_block_network_summary">Коли VPN Telos Network увімкнено, розморожені для Play програми без інтернету, доки ви їх знову не відкриєте.</string>
     <string name="play_update_pause_channel">Оновлення Play Store</string>
     <string name="play_update_pause_title">Очікування оновлень Play Store</string>
     <string name="play_update_pause_text">%2$d розморожених програм заморозять знову, щойно Play встановить нову версію (запас %1$d год).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

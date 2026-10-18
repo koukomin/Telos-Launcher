@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">Als Hintergrund festlegen</string>
+    <string name="viewer_favorite">Favorit</string>
+    <string name="viewer_story_recents">Zuletzt</string>
+    <string name="viewer_story_screenshots">Screenshots</string>
+    <string name="viewer_story_favorites">Favoriten</string>
+    <string name="viewer_pdf_night">Nachtseiten</string>
+    <string name="viewer_pdf_highlight">Markierungsmodus</string>
+    <string name="viewer_epub_larger">Größerer Text</string>
+    <string name="viewer_epub_smaller">Kleinerer Text</string>
+    <string name="viewer_epub_serif">Serif / serifenlos</string>
+    <string name="viewer_epub_night">Nachtmodus</string>
+
+    <string name="au20_viewer_cat_comics">Comics</string>
+    <string name="au20_viewer_cat_graphics">Grafik</string>
+    <string name="viewer_highlight_all">Alle markieren</string>
+    <string name="viewer_highlight_added">%1$d Markierungen</string>
+    <string name="viewer_comic_empty">Keine Seiten in diesem Comic</string>
+    <string name="viewer_cbr_fdroid">CBR (RAR) gibt es nicht im F-Droid-Build. CBZ oder Play/GitHub-Build nutzen.</string>
+    <string name="viewer_cbr_encrypted">Dieses CBR ist verschlüsselt</string>
+    <string name="viewer_preview_svg">SVG-Vorschau</string>
+    <string name="viewer_preview_psd">PSD-Vorschau (Miniatur, keine Ebenen)</string>
+    <string name="viewer_preview_cdr">CDR-Vorschau (eingebettetes Bild, nicht die Zeichnung)</string>
+    <string name="viewer_preview_ai">AI-Vorschau (eingebettetes Bild; PDF-AI öffnet als PDF)</string>
+    <string name="viewer_preview_none">Keine Vorschau in dieser Datei</string>
+</resources>

@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Prenosi datotek</string>
     <string name="telos_files_two_panels">Dva podokna</string>
     <string name="telos_media_listen">Poslušaj</string>
+    <string name="telos_media_watch">Glej</string>
+    <string name="telos_media_live">V živo</string>
     <string name="telos_media_store_description">Poslušajte lokalno glasbo, radio in YouTube Music, glejte lokalne videoposnetke ali YouTube ter raziskujte TV in Stremio Fork.</string>
     <string name="telos_store_auto_enable">Omogoči in posodobi</string>
     <string name="telos_store_auto_explanation">Omogočim samodejne posodobitve izbranih aplikacij? Prihodnje posodobitve se namestijo samodejno, če Shizuku ali korenski dostop omogoča tiho namestitev. Sicer boste prejeli obvestilo o posodobitvi. To lahko spremenite za vsako aplikacijo v njenih nastavitvah.</string>

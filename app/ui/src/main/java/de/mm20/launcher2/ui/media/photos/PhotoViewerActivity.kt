@@ -12,9 +12,20 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.ui.viewinterop.AndroidView
+import de.mm20.launcher2.ui.component.rememberVirtualAppBlur
+import de.mm20.launcher2.ui.theme.transparency.transparency
+import dev.chrisbanes.haze.hazeSource
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.calculateCentroid
@@ -85,9 +96,16 @@ class PhotoViewerActivity : BaseActivity() {
 }
 
 @Composable
-private fun ZoomableImage(uri: Uri, onTap: () -> Unit) {
+private fun ZoomableImage(
+    uri: Uri,
+    onTap: () -> Unit,
+    onScale: (Float) -> Unit = {},
+    swipeDownEnabled: Boolean = true,
+    onSwipeDown: () -> Unit = {},
+) {
     var scale by remember { mutableFloatStateOf(1f) }
     var offset by remember { mutableStateOf(androidx.compose.ui.geometry.Offset.Zero) }
+    var dismissY by remember { mutableFloatStateOf(0f) }
     AsyncImage(
         model = uri,
         contentDescription = null,
@@ -138,7 +156,61 @@ private fun ZoomableImage(uri: Uri, onTap: () -> Unit) {
                     } while (event.changes.any { it.pressed })
                 }
             }
-            .graphicsLayer(scaleX = scale, scaleY = scale, translationX = offset.x, translationY = offset.y),
+            .pointerInput(scale, swipeDownEnabled) {
+                if (!swipeDownEnabled || scale > 1.02f) return@pointerInput
+                detectDragGestures(
+                    onDragEnd = {
+                        if (dismissY > size.height * 0.18f) onSwipeDown()
+                        dismissY = 0f
+                    },
+                    onDragCancel = { dismissY = 0f },
+                    onDrag = { change, drag ->
+                        if (drag.y > 0 && kotlin.math.abs(drag.y) > kotlin.math.abs(drag.x)) {
+                            dismissY += drag.y
+                            change.consume()
+                        }
+                    },
+                )
+            }
+            .graphicsLayer(
+                scaleX = scale,
+                scaleY = scale,
+                translationX = offset.x,
+                translationY = offset.y + dismissY,
+                alpha = (1f - dismissY / 1200f).coerceIn(0.4f, 1f),
+            ),
+    )
+    LaunchedEffect(scale) { onScale(scale) }
+}
+
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
+@Composable
+private fun PagerVideo(uri: Uri, onTap: () -> Unit) {
+    val context = LocalContext.current
+    val player = remember {
+        ExoPlayer.Builder(context).build().apply {
+            repeatMode = Player.REPEAT_MODE_ONE
+            playWhenReady = true
+        }
+    }
+    DisposableEffect(uri) {
+        player.setMediaItem(MediaItem.fromUri(uri))
+        player.prepare()
+        player.play()
+        onDispose { }
+    }
+    DisposableEffect(Unit) {
+        onDispose { player.release() }
+    }
+    AndroidView(
+        factory = { ctx ->
+            PlayerView(ctx).apply {
+                this.player = player
+                useController = true
+                setOnClickListener { onTap() }
+            }
+        },
+        modifier = Modifier.fillMaxSize(),
     )
 }
 
@@ -149,18 +221,22 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     var chrome by remember { mutableStateOf(true) }
     var showInfo by remember { mutableStateOf(false) }
     var confirmDelete by remember { mutableStateOf(false) }
+    var more by remember { mutableStateOf(false) }
+    var starred by remember { mutableStateOf(false) }
     val current = uris[pager.currentPage]
+    val mime = remember(current) { context.contentResolver.getType(current).orEmpty() }
+    val isVideo = mime.startsWith("video/")
+    val blur = rememberVirtualAppBlur()
+    val onWhite = Color.White
+
+    LaunchedEffect(current) { starred = ViewerLibrary.isFavorite(context, current) }
 
     if (confirmDelete) de.mm20.launcher2.ui.trash.UriDeleteDialog(current, onClose, { confirmDelete = false })
 
-    // Action that needs write access; runs after the user granted it (API 30+) or immediately.
     var pendingWrite by remember { mutableStateOf<(() -> Unit)?>(null) }
     val writeLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
         if (it.resultCode == Activity.RESULT_OK) pendingWrite?.invoke()
         pendingWrite = null
-    }
-    val deleteLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) onClose()
     }
     fun withWriteAccess(action: () -> Unit) {
         if (Build.VERSION.SDK_INT >= 30 && current.authority == MediaStore.AUTHORITY) {
@@ -171,10 +247,11 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     }
 
     fun share(uri: Uri) {
+        val type = context.contentResolver.getType(uri) ?: "image/*"
         context.startActivity(
             Intent.createChooser(
                 Intent(Intent.ACTION_SEND).apply {
-                    type = "image/*"
+                    this.type = type
                     putExtra(Intent.EXTRA_STREAM, uri)
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }, null
@@ -182,40 +259,76 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
         )
     }
 
-    Box(Modifier.fillMaxSize().background(Color.Black)) {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 1f - MaterialTheme.transparency.background * 0.15f))
+            .hazeSource(blur.haze),
+    ) {
         HorizontalPager(state = pager, modifier = Modifier.fillMaxSize()) { page ->
-            ZoomableImage(uris[page]) { chrome = !chrome }
+            val uri = uris[page]
+            val pageMime = remember(uri) { context.contentResolver.getType(uri).orEmpty() }
+            if (pageMime.startsWith("video/")) {
+                PagerVideo(uri) { chrome = !chrome }
+            } else {
+                ZoomableImage(
+                    uri = uri,
+                    onTap = { chrome = !chrome },
+                    onSwipeDown = onClose,
+                )
+            }
         }
         if (chrome) {
-            Row(
-                Modifier.fillMaxWidth().background(Color(0x66000000)).statusBarsPadding().padding(4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
+            ViewerTopChrome(blur) {
                 IconButton(onClick = onClose) {
-                    Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back), tint = Color.White)
+                    Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back), tint = onWhite)
                 }
                 Spacer(Modifier.weight(1f))
                 Text(
                     "${pager.currentPage + 1} / ${uris.size}",
-                    color = Color.White,
+                    color = onWhite,
                     style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.padding(end = 16.dp),
+                    modifier = Modifier.padding(end = 8.dp),
                 )
+                Box {
+                    IconButton(onClick = { more = true }) {
+                        Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.hc_more), tint = onWhite)
+                    }
+                    DropdownMenu(expanded = more, onDismissRequest = { more = false }) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.viewer_set_wallpaper)) },
+                            onClick = {
+                                more = false
+                                runCatching {
+                                    context.startActivity(
+                                        Intent(Intent.ACTION_ATTACH_DATA).setDataAndType(current, mime.ifBlank { "image/*" })
+                                            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
+                                    )
+                                }
+                            },
+                        )
+                        if (Build.VERSION.SDK_INT >= 30 && current.authority == MediaStore.AUTHORITY) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.hc_delete)) },
+                                onClick = { more = false; confirmDelete = true },
+                            )
+                        }
+                    }
+                }
             }
-            Row(
-                Modifier.align(Alignment.BottomCenter).fillMaxWidth().background(Color(0x99000000))
-                    .navigationBarsPadding().padding(vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-            ) {
+            ViewerPillBar(blur, Modifier.align(Alignment.BottomCenter)) {
                 ViewerAction(R.drawable.share_24px, stringResource(R.string.hc_share)) { share(current) }
-                ViewerAction(R.drawable.tune_24px, stringResource(R.string.hc_edit)) {
-                    context.startActivity(Intent(context, PhotoEditorActivity::class.java).setData(current))
+                if (!isVideo) {
+                    ViewerAction(R.drawable.tune_24px, stringResource(R.string.hc_edit)) {
+                        context.startActivity(Intent(context, PhotoEditorActivity::class.java).setData(current))
+                    }
                 }
                 ViewerAction(R.drawable.info_24px, stringResource(R.string.hc_details)) { showInfo = true }
-                if (Build.VERSION.SDK_INT >= 30 && current.authority == MediaStore.AUTHORITY) {
-                    ViewerAction(R.drawable.delete_24px, stringResource(R.string.hc_delete)) {
-                        confirmDelete = true
-                    }
+                ViewerAction(
+                    if (starred) R.drawable.star_20px_filled else R.drawable.star_20px,
+                    stringResource(R.string.viewer_favorite),
+                ) {
+                    starred = ViewerLibrary.toggleFavorite(context, current)
                 }
             }
         }

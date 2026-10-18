@@ -87,6 +87,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.comms.recording.RecordingQuality
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -264,7 +265,7 @@ fun VoiceRecorderScreen() {
         }
     }
 
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).systemBarsPadding()) {
+    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)).systemBarsPadding()) {
         if (recorder.status != VoiceStatus.Idle) {
             RecordingPage(
                 state = recorder,

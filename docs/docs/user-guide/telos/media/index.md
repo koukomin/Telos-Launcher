@@ -4,18 +4,16 @@ Telos Media combines local music, radio, YouTube Music, local video, YouTube, TV
 
 ## Switching spaces
 
-A pill at the top has four groups: **Listen** (Music, Radio and YouTube Music), **Video** (local Video and YouTube), **TV** and **Stremio Fork**. Icons stay in the pill; the selected space has a large title directly underneath. Tap a group and select its source; long press a segment and drag it sideways to change the order (it is remembered); the last space you used is remembered
-(it is part of the launcher settings backup). The three older apps still exist and open Telos Media on their space, so existing
-shortcuts and search results keep working. A space whose app is hidden in the Store disappears from the pill.
+Three destinations sit in the bottom bar: **Listen** (Music and YouTube Music), **Watch** (local Video, YouTube and Stremio Fork) and **Live** (Radio and TV). Chips under the top bar pick the source inside a destination. The last space you used is remembered (it is part of the launcher settings backup). The three older apps still exist and open Telos Media on their space, so existing shortcuts and search results keep working. A space whose app is hidden in the Store disappears from the chips.
 
 ## Shared mini player
 
 YouTube and YouTube Music use a shared native background player. Their optional [browser account panel](youtube-account.md) opens both websites in the same browser; it does not import that account into the native player.
 
-Music and Radio each keep their own mini player on their page, without a second Hub bar below it.
-When browsing other sections, the shared mini player keeps playback reachable. It shows the title
-and artist (music) or station (radio), artwork and playback controls. Tapping it opens the matching
-section/player. It is hidden in Video and Stremio Fork, which use their own video player.
+A single mini player sits above the bottom bar on every space except Video and Stremio Fork (those
+use the full-screen player). It shows the title and artist (music), the station (radio) or the
+channel (TV), artwork and playback controls. Tapping it opens the matching player. Vertical swipe
+on the video and TV players: left half brightness, right half volume, with on-screen level bars.
 
 The home-screen music area also recognizes built-in Telos playback, using the same notification
 access and display settings as external players. Explicit player exclusions still apply. Playing
@@ -27,7 +25,10 @@ correct section. Each built-in media service has its own notification ID.
 Music, Radio, YouTube, YouTube Music, local Video, TV and Stremio streams use **Media3 / ExoPlayer**
 inside Telos. Official **NextLib** (`io.github.anilbeesetti:nextlib-media3ext` on Maven Central) adds
 FFmpeg software decoders (AC3, E-AC3, DTS, TrueHD and more) when the phone has no hardware decoder.
-There is no separate player APK. Photos and documents stay in [Telos Viewer](../photos/).
+There is no separate player APK. Photos and documents stay in [Telos Viewer](../photos/). Video formats include
+`mp4 mkv webm avi mov 3gp m4v ts flv wmv mpg mpeg m2ts mts vob ogv asf hevc h265 hvc hvc1`. Audio formats include
+`mp3 m4a aac ogg oga opus flac wav wma amr mid midi aiff aif ape mka ac3`. Extra codecs (AC3, DTS, TrueHD, HEVC
+when the SoC has no hardware decoder) come from NextLib.
 
 ## What is kept when you switch
 
@@ -74,9 +75,9 @@ The TV space plays live channels from the open [iptv-org](https://github.com/ipt
 - **Keep playing in the background:** in the TV overflow menu, **Playback** has the switch (off by default). Off: leaving the app or turning the screen off pauses the channel and you resume it yourself (the notification stays with a play button). On: the channel keeps playing with the screen off or after leaving the app, with a notification (logo, name, "Live TV", play/pause, stop), lock-screen and Bluetooth controls, and the video switched off in the background to save data; it stops after 5 minutes without playback. Android 13 and newer asks for the notification permission. The switch is part of the TV backup.
 - **Reconnecting:** when the connection to a stream is lost, Telos Radio, web videos and TV keep trying until it is back (offline they just wait, online they retry after 1, 2, 4, 8 and then every 15 seconds), unless you press stop or pause. For TV, nothing is marked as broken and the offline static is not shown while the device is offline; the failover to other streams applies only while online.
 
-## Telos Media pill
+## Telos Media destinations
 
-All five spaces are offered as icons in the pill, with the selected space named in a large heading directly below it; hiding the older Telos Music or Radio icons in the Store only removes those icons.
+Listen, Watch and Live are the three tabs. Source chips choose Music, YouTube Music, Video, YouTube, Stremio Fork, Radio or TV. Hiding the older Telos Music or Radio icons in the Store only removes those chips.
 
 ## Notification controls
 

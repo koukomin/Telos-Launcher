@@ -9,6 +9,8 @@
     <string name="au20_viewer_cat_sheets">Υπολογιστικά φύλλα</string>
     <string name="au20_viewer_cat_slides">Παρουσιάσεις</string>
     <string name="au20_viewer_cat_ebooks">Ηλεκτρονικά βιβλία</string>
+    <string name="au20_viewer_cat_comics">Κόμικς</string>
+    <string name="au20_viewer_cat_graphics">Γραφικά</string>
     <string name="au20_viewer_cat_other">Άλλα</string>
     <string name="au20_viewer_recent">Πρόσφατα</string>
     <string name="au20_viewer_clear_recent">Απαλοιφή</string>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">智慧體</string>
+    <string name="preference_screen_agents_summary">將搜尋傳送至 Grok、Claude、ChatGPT 等。預設關閉</string>
+    <string name="preference_agents_enabled">在搜尋中啟用智慧體</string>
+    <string name="preference_agents_enabled_summary">在搜尋中顯示「詢問」晶片。Telos 不儲存 API 金鑰；智慧體應用程式或網站使用你已登入的帳戶</string>
+    <string name="preference_agents_provider">智慧體</string>
+    <string name="preference_agents_transport">傳送方式</string>
+    <string name="preference_agents_transport_summary">自動在已安裝時開啟智慧體應用程式，否則開啟網站。Termux 在官方 Termux 應用程式中執行 CLI</string>
+    <string name="preference_agents_send_sentences">用 Enter 傳送句子</string>
+    <string name="preference_agents_send_sentences_summary">三個或更多字詞的查詢會傳給智慧體，而不是開啟第一個應用程式</string>
+    <string name="preference_search_bar_voice">搜尋列語音輸入</string>
+    <string name="preference_search_bar_voice_summary">手機支援時，麥克風使用裝置上的語音辨識</string>
+    <string name="search_bar_voice">語音搜尋</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">應用程式，然後網站</string>
+    <string name="agent_transport_app">智慧體應用程式</string>
+    <string name="agent_transport_web">網站</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">詢問 %1$s</string>
+    <string name="agent_launch_failed">無法開啟智慧體</string>
+    <string name="preference_keyboard_shortcuts">實體鍵盤快速鍵</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+空白鍵或 Super+A 開啟搜尋，Super+Enter 開啟終端機，Super+1 回到主畫面</string>
+    <string name="preference_category_telos_navigation">Telos 導覽</string>
+    <string name="preference_telos_navigation">邊緣手勢（返回、主畫面、最近）</string>
+    <string name="preference_telos_navigation_summary">在螢幕邊緣繪製細條。從側邊滑動返回，從底部上滑回主畫面，長按開啟最近。需要無障礙服務。預設關閉</string>
+    <string name="preference_telos_recents">Telos 最近</string>
+    <string name="preference_telos_recents_summary">用 Telos 清單代替系統最近應用程式。預設關閉</string>
+    <string name="telos_recents_title">最近的應用程式</string>
+    <string name="telos_recents_clear">全部清除</string>
+</resources>

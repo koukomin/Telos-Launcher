@@ -16,14 +16,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.preferences.ui.AgentSettings
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.agents.AgentCatalog
+import de.mm20.launcher2.ui.agents.AgentLauncher
+import org.koin.compose.koinInject
 import de.mm20.launcher2.ui.component.SearchActionIcon
 import de.mm20.launcher2.ui.modifier.consumeAllScrolling
 import de.mm20.launcher2.ui.settings.SettingsActivity
@@ -34,9 +40,16 @@ fun ColumnScope.SearchBarActions(
     actions: List<SearchAction>,
     highlightedAction: SearchAction?,
     reverse: Boolean = false,
+    searchQuery: String = "",
 ) {
     val context = LocalContext.current
-    AnimatedVisibility(actions.isNotEmpty()) {
+    val agentSettings: AgentSettings = koinInject()
+    val agentsEnabled by agentSettings.enabled.collectAsState(false)
+    val agentId by agentSettings.agentId.collectAsState("grok")
+    val transport by agentSettings.transport.collectAsState("auto")
+    val agent = AgentCatalog.byId(agentId)
+    val showAgent = agentsEnabled && searchQuery.isNotBlank()
+    AnimatedVisibility(actions.isNotEmpty() || showAgent) {
         LazyRow(
             modifier = Modifier
                 .consumeAllScrolling()
@@ -45,6 +58,17 @@ fun ColumnScope.SearchBarActions(
             verticalAlignment = Alignment.CenterVertically,
             contentPadding = PaddingValues(start = 8.dp, end = 4.dp)
         ) {
+            if (showAgent) {
+                item(key = "agent") {
+                    AssistChip(
+                        modifier = Modifier.padding(4.dp),
+                        onClick = {
+                            AgentLauncher.send(context, searchQuery, agentId, transport)
+                        },
+                        label = { Text(stringResource(R.string.agent_ask, stringResource(agent.labelRes))) },
+                    )
+                }
+            }
             items(actions) {
                 AssistChip(
                     modifier = Modifier.padding(4.dp),

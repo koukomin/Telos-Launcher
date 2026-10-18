@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">Establecer como fondo</string>
+    <string name="viewer_favorite">Favorito</string>
+    <string name="viewer_story_recents">Recientes</string>
+    <string name="viewer_story_screenshots">Capturas</string>
+    <string name="viewer_story_favorites">Favoritos</string>
+    <string name="viewer_pdf_night">Páginas nocturnas</string>
+    <string name="viewer_pdf_highlight">Modo resaltado</string>
+    <string name="viewer_epub_larger">Texto más grande</string>
+    <string name="viewer_epub_smaller">Texto más pequeño</string>
+    <string name="viewer_epub_serif">Serif / sans</string>
+    <string name="viewer_epub_night">Tema nocturno</string>
+
+    <string name="au20_viewer_cat_comics">Cómics</string>
+    <string name="au20_viewer_cat_graphics">Gráficos</string>
+    <string name="viewer_highlight_all">Resaltar todo</string>
+    <string name="viewer_highlight_added">%1$d resaltados</string>
+    <string name="viewer_comic_empty">Este cómic no tiene páginas</string>
+    <string name="viewer_cbr_fdroid">CBR (RAR) no está en la versión F-Droid. Use CBZ o la versión de Play/GitHub.</string>
+    <string name="viewer_cbr_encrypted">Este CBR está cifrado</string>
+    <string name="viewer_preview_svg">Vista previa SVG</string>
+    <string name="viewer_preview_psd">Vista previa PSD (miniatura, sin capas)</string>
+    <string name="viewer_preview_cdr">Vista previa CDR (imagen incrustada, no el dibujo)</string>
+    <string name="viewer_preview_ai">Vista previa AI (imagen incrustada; AI en PDF se abre como PDF)</string>
+    <string name="viewer_preview_none">No hay vista previa</string>
+</resources>

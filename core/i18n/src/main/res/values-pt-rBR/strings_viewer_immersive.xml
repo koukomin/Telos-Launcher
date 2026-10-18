@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">Definir como papel de parede</string>
+    <string name="viewer_favorite">Favorito</string>
+    <string name="viewer_story_recents">Recentes</string>
+    <string name="viewer_story_screenshots">Capturas</string>
+    <string name="viewer_story_favorites">Favoritos</string>
+    <string name="viewer_pdf_night">Páginas noturnas</string>
+    <string name="viewer_pdf_highlight">Modo de destaque</string>
+    <string name="viewer_epub_larger">Texto maior</string>
+    <string name="viewer_epub_smaller">Texto menor</string>
+    <string name="viewer_epub_serif">Serif / sans</string>
+    <string name="viewer_epub_night">Tema noturno</string>
+
+    <string name="au20_viewer_cat_comics">Quadrinhos</string>
+    <string name="au20_viewer_cat_graphics">Gráficos</string>
+    <string name="viewer_highlight_all">Realçar tudo</string>
+    <string name="viewer_highlight_added">%1$d realces</string>
+    <string name="viewer_comic_empty">Nenhuma página neste gibi</string>
+    <string name="viewer_cbr_fdroid">CBR (RAR) não está na versão F-Droid. Use CBZ ou Play/GitHub.</string>
+    <string name="viewer_cbr_encrypted">Este CBR está criptografado</string>
+    <string name="viewer_preview_svg">Prévia SVG</string>
+    <string name="viewer_preview_psd">Prévia PSD (miniatura)</string>
+    <string name="viewer_preview_cdr">Prévia CDR (bitmap)</string>
+    <string name="viewer_preview_ai">Prévia AI (bitmap; AI PDF abre como PDF)</string>
+    <string name="viewer_preview_none">Sem prévia</string>
+</resources>

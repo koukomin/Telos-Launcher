@@ -22,7 +22,8 @@ the first one that matches blocks the call.
 | Rule | Setting | Blocks |
 | --- | --- | --- |
 | Hidden numbers | Block hidden numbers | Private, restricted or unknown caller ID (an empty number) |
-| Offline spam list | Offline spam list | Numbers on the Telos block list |
+| Offline spam list | Offline spam list | Numbers on the Telos block list, prefixes ending with `*` (for example `800*`) and regex rules `re:pattern` |
+| Outgoing | Block outgoing to listed numbers (on by default) | The same list also hangs up when *you* call a blocked number |
 | Unknown callers | Block unknown callers | Numbers that are not in your Android contacts |
 | International | Block international | Numbers whose country calling code differs from your **Home country**, except emergency numbers. Numbers without `+` or `00` count as domestic |
 
@@ -46,9 +47,9 @@ called international. Emergency numbers are never blocked.
 | **Telos block list** | The "Offline spam list" rule | **Block number** in a contact's long-press sheet or on the contact page | Contact page: **Unblock number**. The list is part of the encrypted backup. It is shared with [Telos Messages](../messages/sms-mms#blocking-numbers), where a blocked sender's SMS and MMS are silenced and kept |
 | **Android's blocked numbers** | The system, before and independent of Telos | Android's own screens | **Call Options > Blocked Numbers** opens the Android screen |
 
-The Telos list is stored in an encrypted database (SQLCipher, key wrapped by the Android Keystore). The match is
-an **exact comparison of the number text** the carrier presents, so `+49 30 123` and `030123` are different
-entries. Block the number in the form shown in your call log.
+Screening uses Android's highest intent priority and also runs in the in-call service, so a call that slips past screening is still rejected. Root Call Blocker is proprietary; Telos implements the same user-facing rules itself (GPL-3.0), with or without root.
+
+The Telos list is stored in an encrypted database (SQLCipher, key wrapped by the Android Keystore). Exact numbers match every notation (`+49` / `0049`). Prefix rules end with `*` (for example `800*`) and regex rules start with `re:`. Block the number in the form shown in your call log.
 
 ## Hidden contacts
 

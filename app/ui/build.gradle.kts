@@ -143,6 +143,7 @@ dependencies {
     // Telos PDF tools (adapted from PaperKnife+): PDF editing
     implementation(libs.pdfbox.android)
     implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
     implementation(libs.zxing.core)
 
     implementation(libs.smartspacer) {

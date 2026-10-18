@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Πράκτορες</string>
+    <string name="preference_screen_agents_summary">Στείλε ένα ερώτημα αναζήτησης στον Grok, τον Claude, το ChatGPT και άλλους. Ανενεργό από προεπιλογή</string>
+    <string name="preference_agents_enabled">Ενεργοποίηση πρακτόρων στην αναζήτηση</string>
+    <string name="preference_agents_enabled_summary">Εμφανίζει ένα κουμπί «Ρώτα» στην αναζήτηση. Το Telos δεν αποθηκεύει κλειδί API· χρησιμοποιείται ο λογαριασμός με τον οποίο έχεις ήδη συνδεθεί στην εφαρμογή ή στον ιστότοπο του πράκτορα</string>
+    <string name="preference_agents_provider">Πράκτορας</string>
+    <string name="preference_agents_transport">Πώς να σταλεί</string>
+    <string name="preference_agents_transport_summary">Αυτόματα ανοίγει την εφαρμογή του πράκτορα αν είναι εγκατεστημένη, αλλιώς τον ιστότοπο. Το Termux τρέχει το αντίστοιχο CLI στην επίσημη εφαρμογή Termux</string>
+    <string name="preference_agents_send_sentences">Αποστολή προτάσεων με Enter</string>
+    <string name="preference_agents_send_sentences_summary">Ένα ερώτημα με τρεις ή περισσότερες λέξεις στέλνεται στον πράκτορα αντί να ανοίξει την πρώτη εφαρμογή</string>
+    <string name="preference_search_bar_voice">Φωνητική εισαγωγή στη γραμμή αναζήτησης</string>
+    <string name="preference_search_bar_voice_summary">Το μικρόφωνο χρησιμοποιεί αναγνώριση ομιλίας στη συσκευή όταν το υποστηρίζει το τηλέφωνο</string>
+    <string name="search_bar_voice">Φωνητική αναζήτηση</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Εφαρμογή, μετά ιστότοπος</string>
+    <string name="agent_transport_app">Εφαρμογή πράκτορα</string>
+    <string name="agent_transport_web">Ιστότοπος</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Ρώτα %1$s</string>
+    <string name="agent_launch_failed">Δεν ήταν δυνατό το άνοιγμα του πράκτορα</string>
+    <string name="preference_keyboard_shortcuts">Συντομεύσεις φυσικού πληκτρολογίου</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Space ή Super+A ανοίγει την αναζήτηση, Super+Enter το Τερματικό, Super+1 την αρχική</string>
+    <string name="preference_category_telos_navigation">Πλοήγηση Telos</string>
+    <string name="preference_telos_navigation">Χειρονομίες άκρων (πίσω, αρχική, πρόσφατα)</string>
+    <string name="preference_telos_navigation_summary">Σχεδιάζει λεπτές λωρίδες στις άκρες της οθόνης. Σύρε από το πλάι για Πίσω, πάνω από κάτω για Αρχική, κράτα κάτω για Πρόσφατα. Χρειάζεται την υπηρεσία προσβασιμότητας. Ανενεργό από προεπιλογή</string>
+    <string name="preference_telos_recents">Πρόσφατα Telos</string>
+    <string name="preference_telos_recents_summary">Δείχνει λίστα πρόσφατων εφαρμογών του Telos αντί για τα πρόσφατα του συστήματος. Ανενεργό από προεπιλογή</string>
+    <string name="telos_recents_title">Πρόσφατες εφαρμογές</string>
+    <string name="telos_recents_clear">Καθαρισμός όλων</string>
+</resources>

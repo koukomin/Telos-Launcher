@@ -20,6 +20,8 @@ class ArchiveFormatsTest {
         assertEquals(ArchiveKind.Ar, ArchiveFormats.kindOf("pkg.deb"))
         assertEquals(ArchiveKind.Cpio, ArchiveFormats.kindOf("a.cpio"))
         assertEquals(ArchiveKind.Arj, ArchiveFormats.kindOf("a.arj"))
+        assertEquals(ArchiveKind.Iso, ArchiveFormats.kindOf("disc.ISO"))
+        assertEquals(ArchiveKind.Iso, ArchiveFormats.kindOf("cd.img"))
     }
 
     @Test fun rar() {
@@ -42,10 +44,10 @@ class ArchiveFormatsTest {
 
     @Test fun notOpened() {
         assertNull(ArchiveFormats.kindOf("a.ace"))
-        assertNull(ArchiveFormats.kindOf("a.iso"))
+        assertEquals(ArchiveKind.Iso, ArchiveFormats.kindOf("a.iso"))
         assertNull(ArchiveFormats.kindOf("photo.jpg"))
         assertNull(ArchiveFormats.kindOf(".zip"))
-        assertTrue(ArchiveFormats.isKnownUnsupported("a.iso"))
+        assertFalse(ArchiveFormats.isKnownUnsupported("a.iso"))
         assertFalse(ArchiveFormats.isKnownUnsupported("a.RAR"))
         assertTrue(ArchiveFormats.isKnownUnsupported("a.ace"))
         assertFalse(ArchiveFormats.isKnownUnsupported("a.zip"))

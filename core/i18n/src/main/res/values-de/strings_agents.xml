@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agenten</string>
+    <string name="preference_screen_agents_summary">Eine Suchanfrage an Grok, Claude, ChatGPT und andere senden. Standardmäßig aus</string>
+    <string name="preference_agents_enabled">Agenten in der Suche aktivieren</string>
+    <string name="preference_agents_enabled_summary">Zeigt einen Fragen-Chip in der Suche. Telos speichert keinen API-Schlüssel; die Agent-App oder Website nutzt das Konto, mit dem du bereits angemeldet bist</string>
+    <string name="preference_agents_provider">Agent</string>
+    <string name="preference_agents_transport">Sendeart</string>
+    <string name="preference_agents_transport_summary">Auto öffnet die Agent-App falls installiert, sonst die Website. Termux führt die passende CLI in der offiziellen Termux-App aus</string>
+    <string name="preference_agents_send_sentences">Sätze mit Enter senden</string>
+    <string name="preference_agents_send_sentences_summary">Eine Anfrage mit drei oder mehr Wörtern geht an den Agenten statt die erste App zu öffnen</string>
+    <string name="preference_search_bar_voice">Spracheingabe in der Suchleiste</string>
+    <string name="preference_search_bar_voice_summary">Die Mikrofontaste nutzt die Spracherkennung auf dem Gerät, wenn das Telefon sie unterstützt</string>
+    <string name="search_bar_voice">Sprachsuche</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">App, dann Website</string>
+    <string name="agent_transport_app">Agent-App</string>
+    <string name="agent_transport_web">Website</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">%1$s fragen</string>
+    <string name="agent_launch_failed">Agent konnte nicht geöffnet werden</string>
+    <string name="preference_keyboard_shortcuts">Tastaturkürzel</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Leertaste oder Super+A öffnet die Suche, Super+Enter das Terminal, Super+1 den Startbildschirm</string>
+    <string name="preference_category_telos_navigation">Telos-Navigation</string>
+    <string name="preference_telos_navigation">Randgesten (Zurück, Start, Zuletzt verwendet)</string>
+    <string name="preference_telos_navigation_summary">Zeichnet dünne Streifen an den Bildschirmrändern. Von der Seite wischen für Zurück, von unten nach oben für Start, unten gedrückt halten für Zuletzt verwendet. Braucht den Bedienungshilfendienst. Standardmäßig aus</string>
+    <string name="preference_telos_recents">Telos-Verlauf</string>
+    <string name="preference_telos_recents_summary">Zeigt eine Telos-Liste zuletzt verwendeter Apps statt der System-Ansicht. Standardmäßig aus</string>
+    <string name="telos_recents_title">Zuletzt verwendete Apps</string>
+    <string name="telos_recents_clear">Alle löschen</string>
+</resources>

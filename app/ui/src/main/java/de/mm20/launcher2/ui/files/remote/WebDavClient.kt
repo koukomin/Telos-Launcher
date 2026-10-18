@@ -133,4 +133,20 @@ class WebDavClient(
     }
 
     override fun close() { http.dispatcher.executorService.shutdown(); http.connectionPool.evictAll() }
+
+    override fun space(): RemoteSpace? = runCatching {
+        val body = """<?xml version="1.0"?><d:propfind xmlns:d="DAV:"><d:prop><d:quota-available-bytes/><d:quota-used-bytes/></d:prop></d:propfind>"""
+        val req = request(url("/").trimEnd('/') + "/", "PROPFIND", body.toRequestBody("application/xml".toMediaType()), mapOf("Depth" to "0"))
+        http.newCall(req).execute().use { response ->
+            if (!response.isSuccessful) return null
+            val text = response.body?.string().orEmpty()
+            fun tag(name: String): Long? {
+                val m = Regex("<[^>]*$name[^>]*>([^<]+)</").find(text) ?: return null
+                return m.groupValues[1].trim().toLongOrNull()
+            }
+            val used = tag("quota-used-bytes") ?: 0L
+            val avail = tag("quota-available-bytes") ?: return null
+            RemoteSpace(used + avail, avail)
+        }
+    }.getOrNull()
 }

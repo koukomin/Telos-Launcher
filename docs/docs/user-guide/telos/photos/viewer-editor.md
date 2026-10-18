@@ -10,11 +10,12 @@ Open a picture from the gallery, from Telos Files, or from another app's "Open w
 
 | Gesture or control | Effect |
 | --- | --- |
-| Swipe left or right | Next or previous picture. The counter shows `3 / 120` |
+| Swipe left or right | Next or previous item. The counter shows `3 / 120` |
 | Pinch | Zoom from 1x up to 8x |
 | Double tap | Zooms to 2.5x, or back to fit when already zoomed |
 | Drag while zoomed | Pans the picture, limited to its edges |
-| Tap once | Hides or shows the on-screen controls |
+| Swipe down (not zoomed) | Closes the viewer |
+| Tap once | Hides or shows the glass chrome (blur follows the launcher theme) |
 | Back arrow (top left) | Closes the viewer |
 
 A picture sent by another app opens alone, without the other pictures of the gallery. Opened from Telos Files, the
@@ -24,10 +25,11 @@ viewer pages through the pictures of that folder.
 
 | Button | Action |
 | --- | --- |
-| Share | Sends the picture, unchanged, to another app through Android's share sheet |
-| Edit | Opens the [editor](#the-editor) for this picture |
+| Share | Sends the picture or video, unchanged, to another app through Android's share sheet |
+| Edit | Opens the [editor](#the-editor) for a still picture |
 | Details | Shows and edits [metadata](#metadata-exif) |
-| Delete | Asks Android to delete the picture. You confirm in a system dialog. Shown only on Android 11 and later for pictures from the media library |
+| Favorite | Stars the item in the Recents / Favorites strip of the gallery |
+| Overflow | Set as wallpaper, and Delete (Android 11+, media library) |
 
 After a confirmed delete the viewer closes. The system delete request removes the picture for good.
 

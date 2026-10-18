@@ -51,6 +51,9 @@ the options are disabled.
 - **Taskbar.** A start button, a dot under apps that are running, and a system tray.
 - **Start menu.** Lists your apps ("No apps found" if none match).
 - **System tray.** Volume, network, battery and notifications (with the count), plus a clock.
+- **Hardware keyboard** (on by default, Settings > Home screen > Desktop mode): Super+Enter opens
+  Terminal. On the phone, Super+Space or Super+A opens search, Super+Enter opens Terminal, Super+1
+  goes home.
 
 Telos does not draw other apps' windows itself. It launches them on the external display and the Android
 window manager shows them, fullscreen or freeform.

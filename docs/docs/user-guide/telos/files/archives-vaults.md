@@ -9,7 +9,8 @@ optional password) or unpack archives next to themselves. Password-protected zip
 
 | Group | Extensions | Notes |
 | --- | --- | --- |
-| zip family | `zip jar apk` | Read through a random-access index. Password-protected zips (ZipCrypto and AES-128/192/256) work |
+| zip family | `zip jar apk` | Random-access index. Password-protected zips (ZipCrypto and AES) work. Unencrypted zip can be edited in place (new file, folder, delete, rename, save) |
+| ISO 9660 | `iso img` | Disc images open as a folder (Joliet names when present). Read only |
 | 7-Zip | `7z` | Entries are read in order. Password-protected 7z (AES-256), also with encrypted file names, work |
 | tar family | `tar tar.gz tgz taz tar.bz2 tbz tbz2 tar.xz txz tar.lzma tlz tar.Z` | Entries are read in order, the compression is handled for you |
 | RAR | `rar` | Entries are read in order (RAR 3, 4 and RAR5, also solid). **Standard version only**, see the RAR section below. Encrypted RAR is not supported |
@@ -17,7 +18,7 @@ optional password) or unpack archives next to themselves. Password-protected zip
 | single compressed files | `gz bz2 xz lzma Z` | Shown as a folder with the one unpacked file in it |
 | zip-based documents | `epub docx xlsx pptx odt ods` | Offered like archives. See the note on documents below |
 
-`ace`, `iso`, `cab`, `lzh`, `lha`, `rpm`, `wim`, `chm`, `squashfs`, `dmg`, `vhd`, `msi` and `zst` are shown with
+`ace`, `cab`, `lzh`, `lha`, `rpm`, `wim`, `chm`, `squashfs`, `dmg`, `vhd`, `msi` and `zst` are shown with
 an archive icon but are **not** opened inside Telos. Use **Open with...** for them. See the limits below for why.
 
 ### Open an archive
@@ -34,7 +35,7 @@ Inside an archive:
 | --- | --- |
 | Open a file | The file is extracted into the cache and opened with the right app, like a remote file |
 | Copy | Select entries, **Copy**, open a local folder and paste. The data is streamed out of the archive |
-| Cut, rename, delete, new folder, new file, compress | Not possible. Archives are read only |
+| Cut, rename, delete, new folder, new file | Unencrypted zip: saved into the archive. ISO, RAR, 7z, tar and single compressed files stay read only |
 | Properties | Size and date of the entry |
 | Search | Not supported inside an archive |
 

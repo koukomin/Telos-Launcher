@@ -101,6 +101,7 @@ import androidx.compose.runtime.collectAsState
 import de.mm20.launcher2.preferences.ui.PerformanceSettings
 import org.koin.compose.koinInject
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import de.mm20.launcher2.ui.files.remote.ConnectionsRoute
@@ -182,6 +183,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     var analysisPath by remember { mutableStateOf<String?>(null) }
     analysisPath?.let { StorageAnalysisDialog(it, vm::open, { analysisPath = null }) }
     var viewMenu by remember { mutableStateOf(false) }
+    var peekEntry by remember { mutableStateOf<FsEntry?>(null) }
     val keyboardFocus = remember { FocusRequester() }
     LaunchedEffect(handlesBack) { if (handlesBack) keyboardFocus.requestFocus() }
     val performanceSettings: PerformanceSettings = koinInject()
@@ -261,7 +263,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
         },
     ) {
         Scaffold(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background),
             snackbarHost = { SnackbarHost(snackbar) },
             topBar = {
                 Column {
@@ -435,6 +437,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                     vm.error != null -> ErrorPage(vm.error!!, rootMode = vm.rootMode, onRoot = { dialog = FilesDialog.EnableRoot })
                     else -> Column(Modifier.fillMaxSize()) {
                         if (FileActions.isSystemPath(current, vm.rootMode)) RootBanner()
+                        FolderFilmstrip(shown) { onOpenEntry(it) }
                         if (shown.isEmpty() && !vm.loading) {
                             if (vm.query.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(vm.query.trim(), Modifier.fillMaxSize())
                             else EmptyPage(stringResource(R.string.hf_files_folder_empty))
@@ -453,7 +456,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                         gridItems(unique, key = { it.path }) { e ->
                                             FileTile(
                                                 e, e.path in vm.selection, selecting, large, reduceAnimations,
-                                                onClick = { onOpenEntry(e) }, onLongClick = { vm.toggleSelected(e) },
+                                                onClick = { onOpenEntry(e) }, onLongClick = { if (selecting) vm.toggleSelected(e) else peekEntry = e },
                                                 modifier = (if (reduceAnimations) Modifier else Modifier.animateItem()).then(fileDragSource(e, vm)),
                                             )
                                         }
@@ -461,7 +464,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                 } else {
                                     LazyColumn(state = listState, contentPadding = PaddingValues(bottom = 96.dp)) {
                                         items(unique, key = { it.path }) { e ->
-                                            FileRow(e, e.path in vm.selection, vm.rootMode, { onOpenEntry(e) }, { vm.toggleSelected(e) }, fileDragSource(e, vm))
+                                            FileRow(e, e.path in vm.selection, vm.rootMode, { onOpenEntry(e) }, { if (selecting) vm.toggleSelected(e) else peekEntry = e }, fileDragSource(e, vm))
                                         }
                                     }
                                 }
@@ -475,6 +478,9 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
 
     FilesDialogs(vm, dialog) { dialog = null }
     vm.archivePrompt?.let { ArchivePasswordDialog(vm, it) }
+    peekEntry?.let { e ->
+        FilePeekSheet(e, onDismiss = { peekEntry = null }, onOpen = { onOpenEntry(e) }, onSelect = { vm.toggleSelected(e) })
+    }
 }
 
 // ---------------------------------------------------------------- dialogs
@@ -917,7 +923,7 @@ private fun RootBanner() {
 @Composable
 private fun AccessGate(onAllow: () -> Unit) {
     val backStack = LocalBackStack.current
-    Scaffold(containerColor = MaterialTheme.colorScheme.surface) { padding ->
+    Scaffold(containerColor = MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)) { padding ->
         Column(
             Modifier.fillMaxSize().padding(padding).padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
@@ -1019,9 +1025,14 @@ private fun HomePage(vm: FilesViewModel) {
                     Box(Modifier.size(44.dp).clip(RoundedCornerShape(14.dp)).background(MaterialTheme.colorScheme.tertiaryContainer), contentAlignment = Alignment.Center) {
                         Icon(painterResource(if (c.type.cloud) Icons.cloud_20px else Icons.storage_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onTertiaryContainer)
                     }
-                    Column(Modifier.padding(start = 12.dp)) {
+                    Column(Modifier.padding(start = 12.dp).weight(1f)) {
                         Text(c.name, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        Text(c.type.label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        val space = vm.remoteSpaces[c.id]
+                        Text(
+                            if (space != null && space.total > 0) stringResource(R.string.au_files_free_of, formatSize(space.free), formatSize(space.total))
+                            else c.type.label,
+                            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
                     }
                 }
             }
@@ -1087,7 +1098,12 @@ private fun StorageDrawer(vm: FilesViewModel, onGo: (String?) -> Unit, onRoot: (
         }
         Text(stringResource(R.string.hc_network_and_cloud), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
         vm.connections.forEach { c ->
-            DrawerItem(if (c.type.cloud) Icons.cloud_20px else Icons.storage_24px, c.name, c.type.label, vm.path?.startsWith("rem://" + c.id) == true) { onGo(RemotePath.build(c.id, "/")) }
+            DrawerItem(
+                if (c.type.cloud) Icons.cloud_20px else Icons.storage_24px,
+                c.name,
+                vm.remoteSpaces[c.id]?.let { if (it.total > 0) stringResource(R.string.au_files_free_of, formatSize(it.free), formatSize(it.total)) else c.type.label } ?: c.type.label,
+                vm.path?.startsWith("rem://" + c.id) == true,
+            ) { onGo(RemotePath.build(c.id, "/")) }
         }
         DrawerItem(Icons.add_24px, stringResource(R.string.hf_files_add_or_manage), null, false, onManage)
         Text(stringResource(R.string.hc_tools), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))

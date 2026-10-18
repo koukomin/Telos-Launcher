@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Über den Play Store installierte Apps erscheinen hier, auch eingefrorene.</string>
     <string name="store_play_hint">Eingefrorene Apps werden aufgetaut und der Play Store öffnet sich. Telos friert Freeze-Kandidaten wieder ein, sobald Play die neue Version installiert (eine Stunde nur als Fallback). Optional: bei laufendem Telos-Network-VPN haben diese Apps kein Internet, bis du sie öffnest.</string>
     <string name="store_play_open_my_apps">Play-Store-Updates öffnen</string>
+    <string name="store_play_unfreeze_update">Auftauen und im Play Store aktualisieren</string>
+    <string name="store_play_frozen_count">Eingefroren (%1$d)</string>
     <string name="store_play_block_network">Netzwerk sperren bis zum Öffnen</string>
     <string name="store_play_block_network_summary">Wenn das Telos-Network-VPN an ist, haben aufgetaute Play-Update-Apps kein Internet, bis du sie wieder startest.</string>
     <string name="play_update_pause_channel">Play-Store-Updates</string>
     <string name="play_update_pause_title">Warten auf Play-Store-Updates</string>
     <string name="play_update_pause_text">%2$d aufgetaute App(s) werden wieder eingefroren, sobald Play eine neue Version installiert (Fallback %1$d Stunde).</string>
+
+    <string name="store_checking_updates">Suche nach Updates…</string>
+    <string name="store_last_check">Letzte Prüfung: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Eingefroren (%1$d)</string>
+    <string name="store_section_uptodate">Aktuell (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

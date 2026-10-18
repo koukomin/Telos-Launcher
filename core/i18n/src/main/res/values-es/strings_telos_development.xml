@@ -43,6 +43,8 @@
     <string name="telos_files_duplicates_count">%1$d grupos de archivos idénticos</string>
     <string name="telos_files_duplicates_hint">Los archivos se comparan byte a byte. Toca una ruta para abrir su carpeta. No se elimina nada automáticamente. Se muestran hasta 50 grupos.</string>
     <string name="telos_media_listen">Escuchar</string>
+    <string name="telos_media_watch">Ver</string>
+    <string name="telos_media_live">En vivo</string>
     <string name="telos_youtube_search">Buscar en YouTube o pegar un enlace de vídeo</string>
     <string name="telos_youtube_search_failed">No se pudo buscar en YouTube. Comprueba tu conexión e inténtalo de nuevo.</string>
     <string name="telos_youtube_play_failed">No se pudo reproducir esta transmisión. Inténtalo de nuevo o elige otro vídeo.</string>

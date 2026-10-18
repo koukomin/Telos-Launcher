@@ -132,6 +132,8 @@
     <string name="telos_files_transfers_title">Transfer berkas</string>
     <string name="telos_files_two_panels">Dua panel</string>
     <string name="telos_media_listen">Dengarkan</string>
+    <string name="telos_media_watch">Tonton</string>
+    <string name="telos_media_live">Langsung</string>
     <string name="telos_media_store_description">Dengarkan musik lokal, radio, dan YouTube Music, tonton video lokal atau YouTube, serta jelajahi TV dan Stremio Fork.</string>
     <string name="telos_store_auto_enable">Aktifkan dan perbarui</string>
     <string name="telos_store_auto_explanation">Aktifkan pembaruan otomatis untuk aplikasi yang dipilih? Pembaruan berikutnya diinstal otomatis jika Shizuku atau root mengizinkan instalasi senyap. Jika tidak, Anda akan menerima notifikasi pembaruan. Ini dapat diubah dalam pengaturan setiap aplikasi.</string>

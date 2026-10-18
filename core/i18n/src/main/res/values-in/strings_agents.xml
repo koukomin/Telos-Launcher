@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agen</string>
+    <string name="preference_screen_agents_summary">Kirim pencarian ke Grok, Claude, ChatGPT, dan lainnya. Nonaktif secara default</string>
+    <string name="preference_agents_enabled">Aktifkan agen di pencarian</string>
+    <string name="preference_agents_enabled_summary">Menampilkan chip Tanyakan. Telos tidak menyimpan kunci API; aplikasi atau situs agen memakai akun yang sudah Anda masuki</string>
+    <string name="preference_agents_provider">Agen</string>
+    <string name="preference_agents_transport">Cara mengirim</string>
+    <string name="preference_agents_transport_summary">Otomatis membuka aplikasi agen jika terpasang, jika tidak situsnya. Termux menjalankan CLI di aplikasi Termux resmi</string>
+    <string name="preference_agents_send_sentences">Kirim kalimat dengan Enter</string>
+    <string name="preference_agents_send_sentences_summary">Kueri tiga kata atau lebih dikirim ke agen, bukan membuka aplikasi teratas</string>
+    <string name="preference_search_bar_voice">Masukan suara di bilah pencarian</string>
+    <string name="preference_search_bar_voice_summary">Mikrofon memakai pengenalan ucapan di perangkat jika ponsel mendukungnya</string>
+    <string name="search_bar_voice">Pencarian suara</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Aplikasi, lalu situs</string>
+    <string name="agent_transport_app">Aplikasi agen</string>
+    <string name="agent_transport_web">Situs web</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Tanyakan %1$s</string>
+    <string name="agent_launch_failed">Tidak dapat membuka agen</string>
+    <string name="preference_keyboard_shortcuts">Pintasan papan ketik perangkat keras</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Spasi atau Super+A membuka pencarian, Super+Enter Terminal, Super+1 beranda</string>
+    <string name="preference_category_telos_navigation">Navigasi Telos</string>
+    <string name="preference_telos_navigation">Gestur tepi (kembali, beranda, terbaru)</string>
+    <string name="preference_telos_navigation_summary">Garis tipis di tepi layar. Geser dari sisi untuk Kembali, dari bawah untuk Beranda, tahan untuk Terbaru. Butuh layanan aksesibilitas. Nonaktif secara default</string>
+    <string name="preference_telos_recents">Terbaru Telos</string>
+    <string name="preference_telos_recents_summary">Daftar Telos, bukan Terbaru sistem. Nonaktif secara default</string>
+    <string name="telos_recents_title">Aplikasi terbaru</string>
+    <string name="telos_recents_clear">Hapus semua</string>
+</resources>

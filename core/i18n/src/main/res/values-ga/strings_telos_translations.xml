@@ -2795,4 +2795,6 @@
     <string name="hf_folder_rename">Athainmnigh an fillteán</string>
     <string name="hf_available_updates">Nuashonruithe atá ar fáil</string>
     <string name="hf_add_folder">Cuir fillteán leis</string>
+    <string name="telos_files_peek_select">Roghnaigh</string>
+    <string name="telos_files_smb_nearby">Ríomhairí ar an líonra seo</string>
 </resources>

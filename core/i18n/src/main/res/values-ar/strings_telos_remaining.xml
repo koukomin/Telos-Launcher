@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">نقل الملفات</string>
     <string name="telos_files_two_panels">لوحتان</string>
     <string name="telos_media_listen">استماع</string>
+    <string name="telos_media_watch">مشاهدة</string>
+    <string name="telos_media_live">مباشر</string>
     <string name="telos_media_store_description">استمع إلى الموسيقى المحلية والراديو وYouTube Music، وشاهد الفيديوهات المحلية أو YouTube، واستكشف TV وStremio Fork.</string>
     <string name="telos_store_auto_enable">تفعيل وتحديث</string>
     <string name="telos_store_auto_explanation">تفعيل التحديثات التلقائية للتطبيقات المحدّدة؟ تُثبّت التحديثات المستقبلية تلقائيًا عندما يسمح Shizuku أو root بالتثبيت دون تأكيد. وإلا ستتلقى إشعارًا بالتحديث. يمكنك تغيير ذلك لكل تطبيق في إعداداته.</string>

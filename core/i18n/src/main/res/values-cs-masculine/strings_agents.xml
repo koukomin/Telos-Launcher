@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agenti</string>
+    <string name="preference_screen_agents_summary">Odešle dotaz do Grok, Claude, ChatGPT a dalších. Ve výchozím stavu vypnuto</string>
+    <string name="preference_agents_enabled">Povolit agenty ve vyhledávání</string>
+    <string name="preference_agents_enabled_summary">Zobrazí čip Zeptat se. Telos neukládá API klíč; aplikace nebo web agenta použije účet, do kterého jste už přihlášeni</string>
+    <string name="preference_agents_provider">Agent</string>
+    <string name="preference_agents_transport">Jak odeslat</string>
+    <string name="preference_agents_transport_summary">Auto otevře aplikaci agenta, pokud je nainstalovaná, jinak web. Termux spustí CLI v oficiální aplikaci Termux</string>
+    <string name="preference_agents_send_sentences">Odesílat věty klávesou Enter</string>
+    <string name="preference_agents_send_sentences_summary">Dotaz o třech a více slovech se pošle agentovi místo otevření první aplikace</string>
+    <string name="preference_search_bar_voice">Hlasové zadání ve vyhledávací liště</string>
+    <string name="preference_search_bar_voice_summary">Mikrofon použije rozpoznávání řeči v zařízení, pokud to telefon umí</string>
+    <string name="search_bar_voice">Hlasové vyhledávání</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Aplikace, pak web</string>
+    <string name="agent_transport_app">Aplikace agenta</string>
+    <string name="agent_transport_web">Web</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Zeptat se %1$s</string>
+    <string name="agent_launch_failed">Agenta se nepodařilo otevřít</string>
+    <string name="preference_keyboard_shortcuts">Klávesové zkratky</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Mezerník nebo Super+A otevře hledání, Super+Enter Terminál, Super+1 plochu</string>
+    <string name="preference_category_telos_navigation">Navigace Telos</string>
+    <string name="preference_telos_navigation">Gesta z okrajů (zpět, domů, nedávné)</string>
+    <string name="preference_telos_navigation_summary">Tenké pruhy na okrajích. Ze strany Zpět, zdola nahoru Domů, podržení Nedávné. Potřebuje službu usnadnění. Ve výchozím stavu vypnuto</string>
+    <string name="preference_telos_recents">Nedávné Telos</string>
+    <string name="preference_telos_recents_summary">Seznam nedávných aplikací Telos místo systémových. Ve výchozím stavu vypnuto</string>
+    <string name="telos_recents_title">Nedávné aplikace</string>
+    <string name="telos_recents_clear">Vymazat vše</string>
+</resources>

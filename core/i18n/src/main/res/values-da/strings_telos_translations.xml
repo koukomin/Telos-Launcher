@@ -1308,4 +1308,6 @@
     </plurals>
     <string name="dl_m_auto_update">Opdater yt-dlp automatisk</string>
     <string name="dl_m_auto_update_sum">Henter den nyeste yt-dlp én gang om dagen via Wi-Fi, så downloads bliver ved med at virke, når websteder ændrer sig</string>
+    <string name="telos_files_peek_select">Vælg</string>
+    <string name="telos_files_smb_nearby">Computere på dette netværk</string>
 </resources>

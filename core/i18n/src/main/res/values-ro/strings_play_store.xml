@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Aplicațiile din Play Store apar aici, inclusiv cele înghețate.</string>
     <string name="store_play_hint">Aplicațiile înghețate sunt dezghețate și se deschide Play Store. Telos le îngheață din nou de îndată ce Play instalează versiunea nouă (o oră doar ca rezervă). Opțional: cu VPN Telos Network, fără internet până le deschizi.</string>
     <string name="store_play_open_my_apps">Deschide actualizările Play Store</string>
+    <string name="store_play_unfreeze_update">Dezgheață și actualizează în Play Store</string>
+    <string name="store_play_frozen_count">Înghețate (%1$d)</string>
     <string name="store_play_block_network">Blochează rețeaua până la deschidere</string>
     <string name="store_play_block_network_summary">Când VPN-ul Telos Network e pornit, aplicațiile dezghețate pentru Play nu au internet până le deschizi din nou.</string>
     <string name="play_update_pause_channel">Actualizări Play Store</string>
     <string name="play_update_pause_title">Se așteaptă actualizările Play Store</string>
     <string name="play_update_pause_text">%2$d aplicații dezghețate vor fi înghețate din nou imediat ce Play instalează o versiune nouă (rezervă %1$d oră).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

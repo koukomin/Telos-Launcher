@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agenci</string>
+    <string name="preference_screen_agents_summary">Wyślij zapytanie do Grok, Claude, ChatGPT i innych. Domyślnie wyłączone</string>
+    <string name="preference_agents_enabled">Włącz agentów w wyszukiwaniu</string>
+    <string name="preference_agents_enabled_summary">Pokazuje chip Zapytaj. Telos nie przechowuje klucza API; aplikacja lub witryna agenta używa konta, na które już jesteś zalogowany</string>
+    <string name="preference_agents_provider">Agent</string>
+    <string name="preference_agents_transport">Sposób wysyłki</string>
+    <string name="preference_agents_transport_summary">Auto otwiera aplikację agenta, jeśli jest zainstalowana, w przeciwnym razie stronę. Termux uruchamia CLI w oficjalnej aplikacji Termux</string>
+    <string name="preference_agents_send_sentences">Wysyłaj zdania klawiszem Enter</string>
+    <string name="preference_agents_send_sentences_summary">Zapytanie z trzech lub więcej słów trafia do agenta zamiast otwierać pierwszą aplikację</string>
+    <string name="preference_search_bar_voice">Wprowadzanie głosowe na pasku wyszukiwania</string>
+    <string name="preference_search_bar_voice_summary">Mikrofon używa rozpoznawania mowy na urządzeniu, gdy telefon je obsługuje</string>
+    <string name="search_bar_voice">Wyszukiwanie głosowe</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Aplikacja, potem strona</string>
+    <string name="agent_transport_app">Aplikacja agenta</string>
+    <string name="agent_transport_web">Strona</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Zapytaj %1$s</string>
+    <string name="agent_launch_failed">Nie można otworzyć agenta</string>
+    <string name="preference_keyboard_shortcuts">Skróty klawiatury sprzętowej</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Spacja lub Super+A otwiera wyszukiwanie, Super+Enter Terminal, Super+1 ekran główny</string>
+    <string name="preference_category_telos_navigation">Nawigacja Telos</string>
+    <string name="preference_telos_navigation">Gesty krawędzi (wstecz, start, ostatnie)</string>
+    <string name="preference_telos_navigation_summary">Rysuje cienkie paski na krawędziach. Przesuń z boku, by wrócić, od dołu w górę na start, przytrzymaj na dole dla ostatnich. Wymaga usługi ułatwień. Domyślnie wyłączone</string>
+    <string name="preference_telos_recents">Ostatnie Telos</string>
+    <string name="preference_telos_recents_summary">Lista ostatnich aplikacji Telos zamiast systemowych. Domyślnie wyłączone</string>
+    <string name="telos_recents_title">Ostatnie aplikacje</string>
+    <string name="telos_recents_clear">Wyczyść wszystko</string>
+</resources>

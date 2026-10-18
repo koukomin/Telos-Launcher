@@ -13,8 +13,20 @@ class SpamRepositoryImpl(private val context: Context) : SpamRepository {
     override suspend fun isNumberBlocked(number: String): Boolean {
         val dao = dao()
         if (dao.getBlockedNumber(number) != null) return true
-        // the number may be stored in another notation (+49 / 0049 / national)
-        return dao.getAllNumbers().any { PhoneNumbers.match(it, number) }
+        val digits = number.filter { it.isDigit() || it == '+' }
+        val all = dao.getAllNumbers()
+        if (all.any { PhoneNumbers.match(it, number) }) return true
+        for (rule in all) {
+            val trimmed = rule.trim()
+            if (trimmed.startsWith("re:") && trimmed.length > 3) {
+                val ok = runCatching { Regex(trimmed.removePrefix("re:")).containsMatchIn(number) }.getOrDefault(false)
+                if (ok) return true
+            } else if (trimmed.endsWith("*") && trimmed.length > 1) {
+                val prefix = trimmed.dropLast(1).filter { it.isDigit() || it == '+' }
+                if (prefix.isNotEmpty() && digits.startsWith(prefix)) return true
+            }
+        }
+        return false
     }
 
     override suspend fun setBlocked(number: String, blocked: Boolean) {

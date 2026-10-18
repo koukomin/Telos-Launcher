@@ -71,6 +71,7 @@ import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.comms.ContactQrImage
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -142,7 +143,7 @@ fun SystemDashboardScreen() {
         }
     }
 
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(scheme.primary.copy(alpha = 0.22f), scheme.surface)))) {
+    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(scheme.primary.copy(alpha = 0.22f * MaterialTheme.transparency.surface), scheme.surface.copy(alpha = MaterialTheme.transparency.background))))) {
         Canvas(Modifier.fillMaxSize()) {
             val r = size.minDimension * (0.18f + 0.04f * sin(t * Math.PI * 2).toFloat())
             val c = Offset(size.width * 0.82f, size.height * 0.12f)

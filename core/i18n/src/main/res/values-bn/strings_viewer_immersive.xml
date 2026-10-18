@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">ওয়ালপেপার হিসেবে সেট করুন</string>
+    <string name="viewer_favorite">প্রিয়</string>
+    <string name="viewer_story_recents">সাম্প্রতিক</string>
+    <string name="viewer_story_screenshots">স্ক্রিনশট</string>
+    <string name="viewer_story_favorites">প্রিয়</string>
+    <string name="viewer_pdf_night">রাতের পৃষ্ঠা</string>
+    <string name="viewer_pdf_highlight">হাইলাইট মোড</string>
+    <string name="viewer_epub_larger">বড় লেখা</string>
+    <string name="viewer_epub_smaller">ছোট লেখা</string>
+    <string name="viewer_epub_serif">সেরিফ / সান্স</string>
+    <string name="viewer_epub_night">রাতের থিম</string>
+
+    <string name="au20_viewer_cat_comics">Comics</string>
+    <string name="au20_viewer_cat_graphics">Graphics</string>
+    <string name="viewer_highlight_all">Highlight all</string>
+    <string name="viewer_highlight_added">%1$d highlights</string>
+    <string name="viewer_comic_empty">No pages in this comic</string>
+    <string name="viewer_cbr_fdroid">CBR (RAR) comics are not in the F-Droid build. Use CBZ, or the Play/GitHub build.</string>
+    <string name="viewer_cbr_encrypted">This CBR is encrypted and cannot be opened</string>
+    <string name="viewer_preview_svg">SVG preview</string>
+    <string name="viewer_preview_psd">PSD preview (embedded thumbnail, not layers)</string>
+    <string name="viewer_preview_cdr">CDR preview (embedded bitmap, not the drawing)</string>
+    <string name="viewer_preview_ai">AI preview (embedded bitmap; PDF-based AI opens as PDF)</string>
+    <string name="viewer_preview_none">No preview in this file</string>
+</resources>

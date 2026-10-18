@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Failiülekanded</string>
     <string name="telos_files_two_panels">Kaks paneeli</string>
     <string name="telos_media_listen">Kuula</string>
+    <string name="telos_media_watch">Vaata</string>
+    <string name="telos_media_live">Otse</string>
     <string name="telos_media_store_description">Kuula kohalikku muusikat, raadiot ja YouTube Musicut, vaata kohalikke või YouTube’i videoid ning tutvu TV ja Stremio Forkiga.</string>
     <string name="telos_store_auto_enable">Luba ja uuenda</string>
     <string name="telos_store_auto_explanation">Kas lubada valitud rakenduste automaatsed uuendused? Tulevased uuendused installitakse automaatselt, kui Shizuku või root lubab kasutaja sekkumiseta installimist. Muidu saad uuendusteavituse. Seda saab muuta iga rakenduse seadetes.</string>

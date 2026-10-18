@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">انتقال فایل‌ها</string>
     <string name="telos_files_two_panels">دو پنل</string>
     <string name="telos_media_listen">گوش دادن</string>
+    <string name="telos_media_watch">تماشا</string>
+    <string name="telos_media_live">زنده</string>
     <string name="telos_media_store_description">به موسیقی محلی، رادیو و YouTube Music گوش دهید، ویدئوهای محلی یا YouTube را ببینید و TV و Stremio Fork را کاوش کنید.</string>
     <string name="telos_store_auto_enable">فعال‌سازی و به‌روزرسانی</string>
     <string name="telos_store_auto_explanation">به‌روزرسانی خودکار برای برنامه‌های انتخاب‌شده فعال شود؟ وقتی Shizuku یا ریشه نصب بدون تأیید را مجاز کند، به‌روزرسانی‌های آینده خودکار نصب می‌شوند. در غیر این صورت اعلان به‌روزرسانی دریافت می‌کنید. می‌توانید این گزینه را در تنظیمات هر برنامه تغییر دهید.</string>

@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">파일 전송</string>
     <string name="telos_files_two_panels">두 패널</string>
     <string name="telos_media_listen">듣기</string>
+    <string name="telos_media_watch">시청</string>
+    <string name="telos_media_live">라이브</string>
     <string name="telos_media_store_description">로컬 음악, 라디오 및 YouTube Music을 듣고, 로컬 동영상이나 YouTube를 시청하며, TV와 Stremio Fork를 탐색하세요.</string>
     <string name="telos_store_auto_enable">활성화하고 업데이트</string>
     <string name="telos_store_auto_explanation">선택한 앱의 자동 업데이트를 활성화할까요? Shizuku 또는 루트가 무인 설치를 허용하면 이후 업데이트가 자동으로 설치됩니다. 그렇지 않으면 업데이트 알림을 받습니다. 각 앱의 설정에서 이를 변경할 수 있습니다.</string>

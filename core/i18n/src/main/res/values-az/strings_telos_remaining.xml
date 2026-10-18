@@ -132,6 +132,8 @@
     <string name="telos_files_transfers_title">Fayl ötürmələri</string>
     <string name="telos_files_two_panels">İki panel</string>
     <string name="telos_media_listen">Dinlə</string>
+    <string name="telos_media_watch">Bax</string>
+    <string name="telos_media_live">Canlı</string>
     <string name="telos_media_store_description">Yerli musiqi, radio və YouTube Music dinləyin, yerli videoları və ya YouTube-u izləyin, TV və Stremio Fork-u kəşf edin.</string>
     <string name="telos_store_auto_enable">Aktiv et və yenilə</string>
     <string name="telos_store_auto_explanation">Seçilmiş tətbiqlər üçün avtomatik yeniləmələr aktiv edilsin? Shizuku və ya root təsdiqsiz quraşdırmaya icazə verirsə, gələcək yeniləmələr avtomatik quraşdırılır. Əks halda yeniləmə bildirişi alacaqsınız. Bunu hər tətbiqin parametrlərində dəyişə bilərsiniz.</string>

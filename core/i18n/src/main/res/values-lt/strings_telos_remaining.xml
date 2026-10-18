@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Failų perkėlimai</string>
     <string name="telos_files_two_panels">Du skydeliai</string>
     <string name="telos_media_listen">Klausytis</string>
+    <string name="telos_media_watch">Žiūrėti</string>
+    <string name="telos_media_live">Tiesiogiai</string>
     <string name="telos_media_store_description">Klausykitės vietinės muzikos, radijo ir YouTube Music, žiūrėkite vietinius vaizdo įrašus ar YouTube ir tyrinėkite TV bei Stremio Fork.</string>
     <string name="telos_store_auto_enable">Įjungti ir atnaujinti</string>
     <string name="telos_store_auto_explanation">Įjungti automatinius pasirinktų programėlių atnaujinimus? Būsimi atnaujinimai įdiegiami automatiškai, kai Shizuku arba root leidžia tylų diegimą. Kitu atveju gausite pranešimą apie atnaujinimą. Tai galite pakeisti kiekvienos programėlės nuostatose.</string>

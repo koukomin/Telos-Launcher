@@ -265,7 +265,6 @@ category chips first, then a divider, then the two switches.
 | Open keyboard | Settings > Search | On | Show the keyboard when opening the drawer |
 | Launch on enter | Settings > Search | On | The Go key launches the best match or quick action |
 | Private keyboard | Settings > Search | Off | Asks the keyboard not to learn from what you type |
-| Show app recommendations <Badge type="warning" text="experimental" /> | Settings > Search | On | Editorial app suggestion in the drawer and in matching searches |
 | Arrangement of search results | Settings > Search | Top-down | Top-down or bottom-up |
 | Lock sensitive settings | Settings > Search > Protection | Off | Require authentication for hidden items and excluded folders |
 | Use separate lock | Settings > Search > Protection | Off | A custom PIN instead of the device credential |
@@ -470,7 +469,6 @@ connected to anything you can switch on.
 | Item | State |
 | --- | --- |
 | Search in an app (quick action) | <Badge type="warning" text="experimental" /> Marked experimental in the user guide. Depends on the target app |
-| App recommendations | <Badge type="warning" text="experimental" /> Fixed editorial list, affiliate-style card, off with one switch |
 | "Advanced search" texts (learning ranking, fuzzy initials such as "PS" for Play Store, quick settings search, contact quick actions, user shortcuts, search frozen apps) | <Badge type="danger" text="not available" /> Only text exists. No setting or code uses it. Do not expect these features |
 | Wikipedia switch | Settings > Integrations > Wikipedia. When off, Wikipedia is not searched. The **Online results** and *Wikipedia* filters also apply |
 | Google Drive file source | <Badge type="danger" text="not available" /> A stored switch exists, but no screen offers it and there is no Drive code |

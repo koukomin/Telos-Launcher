@@ -138,6 +138,13 @@ class DropboxClient(tokens: AccessTokens, private val cacheDir: File) : CloudCli
             }).close()
         }
     }
+
+    override fun space(): RemoteSpace? = runCatching {
+        val o = rpc("users/get_space_usage", JSONObject())
+        val used = o.optLong("used", -1)
+        val allocated = o.optJSONObject("allocation")?.optLong("allocated", -1) ?: -1
+        if (allocated <= 0) null else RemoteSpace(allocated, (allocated - used).coerceAtLeast(0))
+    }.getOrNull()
 }
 
 /** OneDrive through the Microsoft Graph. Paths are used as they are. */
@@ -209,6 +216,14 @@ class OneDriveClient(tokens: AccessTokens, private val cacheDir: File) : CloudCl
             }
         }
     }
+
+    override fun space(): RemoteSpace? = runCatching {
+        val o = json(authorised("$graph?\$select=quota"))
+        val q = o.optJSONObject("quota") ?: return null
+        val total = q.optLong("total", -1)
+        val remaining = q.optLong("remaining", -1)
+        if (total <= 0) null else RemoteSpace(total, remaining.coerceAtLeast(0))
+    }.getOrNull()
 }
 
 /**
@@ -338,4 +353,12 @@ class GoogleDriveClient(tokens: AccessTokens, private val cacheDir: File) : Clou
         }
         ids.clear()
     }
+
+    override fun space(): RemoteSpace? = runCatching {
+        val o = json(authorised("https://www.googleapis.com/drive/v3/about?fields=storageQuota"))
+        val q = o.optJSONObject("storageQuota") ?: return null
+        val total = q.optString("limit").toLongOrNull() ?: return null
+        val used = q.optString("usage").toLongOrNull() ?: 0L
+        RemoteSpace(total, (total - used).coerceAtLeast(0))
+    }.getOrNull()
 }

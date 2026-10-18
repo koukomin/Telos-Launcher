@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Aplikácie z Play Store sú tu, vrátane zmrazených.</string>
     <string name="store_play_hint">Zmrazené aplikácie sa rozmrazia a otvorí sa Play Store. Telos ich znova zmrazí, hneď ako Play nainštaluje novú verziu (hodina len ako záloha). Voliteľne: s VPN Telos Network bez internetu, kým ich neotvoríš.</string>
     <string name="store_play_open_my_apps">Otvoriť aktualizácie Play Store</string>
+    <string name="store_play_unfreeze_update">Rozmraziť a aktualizovať v Play Store</string>
+    <string name="store_play_frozen_count">Zmrazené (%1$d)</string>
     <string name="store_play_block_network">Blokovať sieť do otvorenia</string>
     <string name="store_play_block_network_summary">Keď beží VPN Telos Network, rozmrazené aplikácie Play nemajú internet, kým ich znova nespustíš.</string>
     <string name="play_update_pause_channel">Aktualizácie Play Store</string>
     <string name="play_update_pause_title">Čakanie na aktualizácie Play Store</string>
     <string name="play_update_pause_text">%2$d rozmrazených aplikácií sa znova zmrazí, hneď ako Play nainštaluje novú verziu (záloha %1$d hodina).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

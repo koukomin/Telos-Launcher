@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Le app installate dal Play Store compaiono qui, anche quelle congelate.</string>
     <string name="store_play_hint">Le app congelate vengono scongelate e si apre Play Store. Telos le ricongela appena Play installa la nuova versione (un’ora solo come riserva). Opzionale: con VPN Telos Network non hanno internet finché non le apri.</string>
     <string name="store_play_open_my_apps">Apri aggiornamenti Play Store</string>
+    <string name="store_play_unfreeze_update">Scongelare e aggiornare nel Play Store</string>
+    <string name="store_play_frozen_count">Congelate (%1$d)</string>
     <string name="store_play_block_network">Blocca rete fino all’apertura</string>
     <string name="store_play_block_network_summary">Quando la VPN Telos Network è attiva, le app scongelate per Play non hanno internet finché non le apri di nuovo.</string>
     <string name="play_update_pause_channel">Aggiornamenti Play Store</string>
     <string name="play_update_pause_title">In attesa degli aggiornamenti Play Store</string>
     <string name="play_update_pause_text">%2$d app scongelate verranno ricongelate appena Play installa una nuova versione (riserva %1$d ora).</string>
+
+    <string name="store_checking_updates">Controllo aggiornamenti…</string>
+    <string name="store_last_check">Ultimo controllo: %1$s</string>
+    <string name="store_section_updates">Aggiornamenti (%1$d)</string>
+    <string name="store_section_frozen">Congelate (%1$d)</string>
+    <string name="store_section_uptodate">Aggiornate (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

@@ -15,8 +15,15 @@ import android.util.LruCache
 import android.util.Size
 import androidx.compose.ui.graphics.Color
 import androidx.exifinterface.media.ExifInterface
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import de.mm20.launcher2.ui.files.remote.RemotePath
 import de.mm20.launcher2.ui.files.vault.VaultPath
+import de.mm20.launcher2.ui.media.PreviewCatalog
+import de.mm20.launcher2.ui.media.docs.ComicArchive
+import de.mm20.launcher2.ui.media.docs.GraphicPreviews
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
@@ -50,9 +57,20 @@ internal object FileThumbs {
     /** PdfRenderer is not thread safe: only one PDF is rendered at a time */
     private val pdfLock = Any()
 
-    private val photoExts = setOf("jpg", "jpeg", "png", "webp")
-    private val odfExts = setOf("odt", "ods", "odp")
-    private val ooxmlExts = setOf("docx", "xlsx", "pptx")
+    private val photoExts get() = PreviewCatalog.rasterExts()
+
+    private fun diskDir(context: Context) = File(context.cacheDir, "file-thumbs").also { it.mkdirs() }
+    private fun diskName(key: String) = key.hashCode().toUInt().toString(16) + ".jpg"
+    private fun diskGet(context: Context, key: String): Bitmap? {
+        val f = File(diskDir(context), diskName(key))
+        if (!f.isFile) return null
+        return runCatching { BitmapFactory.decodeFile(f.path) }.getOrNull()
+    }
+    private fun diskPut(context: Context, key: String, bmp: Bitmap) {
+        val dir = diskDir(context)
+        if (dir.listFiles()?.size ?: 0 > 800) dir.listFiles()?.sortedBy { it.lastModified() }?.take(200)?.forEach { it.delete() }
+        runCatching { File(dir, diskName(key)).outputStream().use { bmp.compress(Bitmap.CompressFormat.JPEG, 82, it) } }
+    }
 
     fun keyOf(e: FsEntry, req: Int) = "${e.path}|${e.modified}|${e.size}|$req"
 
@@ -74,7 +92,9 @@ internal object FileThumbs {
         if (key in failed) return null
         val app = context.applicationContext
         val bitmap = gate.withPermit {
-            withContext(Dispatchers.IO) { runCatching { decode(app, e, req.coerceIn(32, MAX_PX)) }.getOrNull() }
+            withContext(Dispatchers.IO) {
+                diskGet(app, key) ?: runCatching { decode(app, e, req.coerceIn(32, MAX_PX)) }.getOrNull()?.also { diskPut(app, key, it) }
+            }
         }
         if (bitmap != null) {
             cache.put(key, bitmap)
@@ -89,17 +109,25 @@ internal object FileThumbs {
         val file = File(e.path)
         if (e.isDir) return folder(file, req)
         if (!file.isFile || !file.canRead()) return null
-        val ext = e.extension
-        return when {
-            e.kind == FileKind.Image && ext != "svg" -> if (file.length() > MAX_WHOLE_FILE) null else image(file, req)
-            e.kind == FileKind.Video -> video(file, req)
-            e.kind == FileKind.Audio -> audio(file, req)
-            ext == "pdf" -> if (file.length() > MAX_WHOLE_FILE) null else pdf(file, req)
-            ext in odfExts -> zipThumb(file, req, listOf("Thumbnails/thumbnail.png"))
-            ext in ooxmlExts -> zipThumb(file, req, listOf("docProps/thumbnail.jpeg", "docProps/thumbnail.png", "docProps/thumbnail.jpg"))
-            ext == "epub" -> epub(file, req)
-            ext == "apk" -> if (file.length() > MAX_WHOLE_FILE) null else apk(context, file, req)
-            else -> null
+        if (file.length() > MAX_WHOLE_FILE && e.kind != FileKind.Video && e.kind != FileKind.Audio) return null
+        return when (PreviewCatalog.decoder(e.name)) {
+            PreviewCatalog.Decoder.Raster -> image(file, req)
+            PreviewCatalog.Decoder.Svg -> svg(context, file, req)
+            PreviewCatalog.Decoder.Video -> video(file, req)
+            PreviewCatalog.Decoder.Audio -> audio(file, req)
+            PreviewCatalog.Decoder.Pdf -> {
+                if (e.extension == "ai" && !GraphicPreviews.isAiPdf(file)) {
+                    GraphicPreviews.embeddedRaster(file)?.let { squareFit(it, req) }
+                } else pdf(file, req)
+            }
+            PreviewCatalog.Decoder.Odf -> zipThumb(file, req, listOf("Thumbnails/thumbnail.png"))
+            PreviewCatalog.Decoder.Ooxml -> zipThumb(file, req, listOf("docProps/thumbnail.jpeg", "docProps/thumbnail.png", "docProps/thumbnail.jpg"))
+            PreviewCatalog.Decoder.Epub -> epub(file, req)
+            PreviewCatalog.Decoder.Comic -> comic(file, e.name, req)
+            PreviewCatalog.Decoder.Psd -> GraphicPreviews.psdThumbnail(file)?.let { squareFit(it, req) }
+            PreviewCatalog.Decoder.EmbeddedRaster -> GraphicPreviews.embeddedRaster(file)?.let { squareFit(it, req) }
+            PreviewCatalog.Decoder.Apk -> apk(context, file, req)
+            null -> null
         }
     }
 
@@ -144,10 +172,37 @@ internal object FileThumbs {
 
     // ---------------------------------------------------------------- decoders
 
+    private fun svg(context: Context, file: File, req: Int): Bitmap? = runCatching {
+        val loader = ImageLoader.Builder(context).components { add(SvgDecoder.Factory()) }.build()
+        val result = kotlinx.coroutines.runBlocking {
+            loader.execute(
+                ImageRequest.Builder(context).data(file).size(req).allowHardware(false).build(),
+            )
+        }
+        val drawable = (result as? SuccessResult)?.drawable ?: return@runCatching null
+        val bmp = Bitmap.createBitmap(req, req, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bmp)
+        drawable.setBounds(0, 0, req, req)
+        drawable.draw(canvas)
+        squareFit(bmp, req)
+    }.getOrNull()
+
+    private fun comic(file: File, name: String, req: Int): Bitmap? {
+        val bytes = ComicArchive.firstImageBytes(file, name, MAX_ENTRY_BYTES) ?: return null
+        return decodeBytes(bytes, req)
+    }
+
     private fun image(file: File, req: Int): Bitmap? {
+        val ext = file.extension.lowercase()
+        if (RawHeic.isRaw(ext) || RawHeic.isHeic(ext)) {
+            RawHeic.decodeStill(file, req)?.let { return squareFit(it, req) }
+        }
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
         BitmapFactory.decodeFile(file.path, bounds)
-        if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return null
+        if (bounds.outWidth <= 0 || bounds.outHeight <= 0) {
+            RawHeic.embeddedJpeg(file)?.let { return decodeBytes(it, req) }
+            return null
+        }
         val opts = BitmapFactory.Options().apply { inSampleSize = sampleFor(bounds.outWidth, bounds.outHeight, req) }
         var bmp = BitmapFactory.decodeFile(file.path, opts) ?: return null
         if (file.extension.lowercase() in setOf("jpg", "jpeg")) {
@@ -309,6 +364,8 @@ internal fun thumbColor(e: FsEntry): Color {
         "xls", "xlsx", "ods", "csv", "tsv", "gsheet" -> Color(0xFF2E7D32)
         "ppt", "pptx", "odp", "gslides" -> Color(0xFFC2410C)
         "epub" -> Color(0xFF6A1B9A)
+        "cbz", "cbr", "cbt", "cb7" -> Color(0xFFEF6C00)
+        "psd", "ai", "cdr", "svg" -> Color(0xFF7B1FA2)
         else -> when (e.kind) {
             FileKind.Archive -> Color(0xFF6D4C41)
             FileKind.Audio -> Color(0xFFD81B60)

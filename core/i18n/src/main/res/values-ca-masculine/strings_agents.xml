@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agents</string>
+    <string name="preference_screen_agents_summary">Envia una cerca a Grok, Claude, ChatGPT i d’altres. Desactivat per defecte</string>
+    <string name="preference_agents_enabled">Activa els agents a la cerca</string>
+    <string name="preference_agents_enabled_summary">Mostra un xip Pregunta a la cerca. Telos no desa cap clau API; l’app o el lloc de l’agent usa el compte on ja has iniciat sessió</string>
+    <string name="preference_agents_provider">Agent</string>
+    <string name="preference_agents_transport">Com enviar</string>
+    <string name="preference_agents_transport_summary">Auto obre l’app de l’agent si està instal·lada; si no, el lloc web. Termux executa la CLI a l’app oficial Termux</string>
+    <string name="preference_agents_send_sentences">Envia frases amb Retorn</string>
+    <string name="preference_agents_send_sentences_summary">Una consulta de tres o més paraules s’envia a l’agent en lloc d’obrir la primera app</string>
+    <string name="preference_search_bar_voice">Entrada de veu a la barra de cerca</string>
+    <string name="preference_search_bar_voice_summary">El micròfon usa el reconeixement de veu del dispositiu quan el telèfon ho admet</string>
+    <string name="search_bar_voice">Cerca per veu</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">App, després web</string>
+    <string name="agent_transport_app">App de l’agent</string>
+    <string name="agent_transport_web">Lloc web</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Pregunta a %1$s</string>
+    <string name="agent_launch_failed">No s’ha pogut obrir l’agent</string>
+    <string name="preference_keyboard_shortcuts">Dreceres de teclat físic</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Espai o Super+A obre la cerca, Super+Retorn el Terminal, Super+1 l’inici</string>
+    <string name="preference_category_telos_navigation">Navegació Telos</string>
+    <string name="preference_telos_navigation">Gestos de vora (enrere, inici, recents)</string>
+    <string name="preference_telos_navigation_summary">Dibuixa franges primes a les vores. Llisca des del costat per Enrere, des de baix per Inici, mantén premut per Recents. Cal el servei d’accessibilitat. Desactivat per defecte</string>
+    <string name="preference_telos_recents">Recents Telos</string>
+    <string name="preference_telos_recents_summary">Mostra una llista Telos d’apps recents en lloc dels Recents del sistema. Desactivat per defecte</string>
+    <string name="telos_recents_title">Apps recents</string>
+    <string name="telos_recents_clear">Esborra-ho tot</string>
+</resources>

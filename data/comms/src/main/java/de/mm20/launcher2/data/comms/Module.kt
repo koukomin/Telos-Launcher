@@ -50,7 +50,7 @@ val dataCommsModule = module {
         VirtualFilesApp.Domain, VirtualCalculatorApp.Domain, VirtualVoiceRecorderApp.Domain,
         VirtualScreenRecorderApp.Domain, VirtualScreenshotApp.Domain, VirtualNotesApp.Domain,
         VirtualCalendarApp.Domain, VirtualDownloadsApp.Domain, VirtualMediaApp.Domain,
-        VirtualNetworkApp.Domain, VirtualSystemApp.Domain, VirtualViewerApp.Domain, VirtualIronewolfApp.Domain, VirtualTerminalApp.Domain, VirtualTrashApp.Domain,
+        VirtualNetworkApp.Domain, VirtualSystemApp.Domain, VirtualViewerApp.Domain,  VirtualTerminalApp.Domain, VirtualTrashApp.Domain,
     ).forEach { domain ->
         factory<SearchableDeserializer>(org.koin.core.qualifier.named(domain)) {
             VirtualAppDeserializer(domain) { getAll<VirtualAppProvider>() }

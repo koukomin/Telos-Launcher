@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Filoverføringer</string>
     <string name="telos_files_two_panels">To paneler</string>
     <string name="telos_media_listen">Lytt</string>
+    <string name="telos_media_watch">Se</string>
+    <string name="telos_media_live">Direkte</string>
     <string name="telos_media_store_description">Lytt til lokal musikk, radio og YouTube Music, se lokale videoer eller YouTube, og utforsk TV og Stremio Fork.</string>
     <string name="telos_store_auto_enable">Aktiver og oppdater</string>
     <string name="telos_store_auto_explanation">Aktivere automatiske oppdateringer for de valgte appene? Fremtidige oppdateringer installeres automatisk når Shizuku eller root tillater stille installasjon. Ellers får du et oppdateringsvarsel. Du kan endre dette for hver app i innstillingene dens.</string>

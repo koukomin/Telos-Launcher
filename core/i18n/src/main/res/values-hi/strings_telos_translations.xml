@@ -2327,4 +2327,6 @@
     </plurals>
     <string name="dl_m_auto_update">yt-dlp अपने आप अपडेट करें</string>
     <string name="dl_m_auto_update_sum">साइटें बदलने पर भी डाउनलोड चलते रहें, इसके लिए दिन में एक बार Wi-Fi पर नवीनतम yt-dlp लाता है</string>
+    <string name="telos_files_peek_select">चुनें</string>
+    <string name="telos_files_smb_nearby">इस नेटवर्क के कंप्यूटर</string>
 </resources>

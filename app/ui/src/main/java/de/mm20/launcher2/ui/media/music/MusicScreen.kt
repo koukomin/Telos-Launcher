@@ -260,6 +260,7 @@ fun MusicScreen(
         }
 
         nowPlaying?.let { np ->
+            if (de.mm20.launcher2.ui.media.LocalInMediaHub.current) return@let
             val isPlaying by viewModel.isPlaying.collectAsStateWithLifecycle()
             ArtTintedMiniPlayer(
                 title = np.title,
@@ -354,13 +355,13 @@ private fun TrackRow(
                 onLongClick = { haptic.performHapticFeedback(HapticFeedbackType.LongPress); menu = true },
                 onClick = { onPlay(index) },
             )
-            .padding(start = 8.dp, top = 8.dp, bottom = 8.dp),
+            .padding(start = 8.dp, top = 4.dp, bottom = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(contentAlignment = Alignment.Center) {
-            Cover(track, Modifier.size(56.dp).clip(RoundedCornerShape(14.dp)))
+            Cover(track, Modifier.size(40.dp).clip(RoundedCornerShape(8.dp)))
             if (active) {
-                Box(Modifier.size(56.dp).clip(RoundedCornerShape(14.dp)).background(Color.Black.copy(alpha = 0.45f)), contentAlignment = Alignment.Center) {
+                Box(Modifier.size(40.dp).clip(RoundedCornerShape(8.dp)).background(Color.Black.copy(alpha = 0.45f)), contentAlignment = Alignment.Center) {
                     EqualizerGlyph(Color.White, animate = isPlaying && !reduce)
                 }
             }
@@ -368,7 +369,7 @@ private fun TrackRow(
         Column(Modifier.weight(1f).padding(horizontal = 14.dp)) {
             Text(
                 track.title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleSmall,
                 fontWeight = if (active) FontWeight.SemiBold else FontWeight.Normal,
                 color = if (active) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,

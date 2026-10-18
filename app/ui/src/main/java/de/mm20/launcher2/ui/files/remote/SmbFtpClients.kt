@@ -25,21 +25,24 @@ class SmbRemoteClient(private val connection: RemoteConnection) : RemoteClient {
     private var smb: Connection? = null
     private var session: Session? = null
     private var share: DiskShare? = null
+    private var boundShare: String? = null
 
     @Synchronized
     private fun share(): DiskShare {
         share?.let { if (smb?.isConnected == true) return it }
         close()
-        if (connection.path.isBlank()) throw IOException("Enter the name of the shared folder")
+        val (host, urlShare) = SmbLan.parseHost(connection.host)
+        val shareName = connection.path.ifBlank { urlShare }.trim('/', '\\')
+        if (shareName.isBlank()) throw IOException("Enter the name of the shared folder, or leave it empty to list shares")
         try {
             val c = SMBClient()
-            val conn = c.connect(connection.host, if (connection.port > 0) connection.port else 445)
+            val conn = c.connect(host, if (connection.port > 0) connection.port else 445)
             val user = connection.user.substringAfter('\\')
             val domain = if (connection.user.contains('\\')) connection.user.substringBefore('\\') else ""
             val context = if (user.isEmpty()) AuthenticationContext.guest() else AuthenticationContext(user, connection.password.toCharArray(), domain)
             val s = conn.authenticate(context)
-            val sh = s.connectShare(connection.path.trim('/', '\\')) as DiskShare
-            client = c; smb = conn; session = s; share = sh
+            val sh = s.connectShare(shareName) as DiskShare
+            client = c; smb = conn; session = s; share = sh; boundShare = shareName
             return sh
         } catch (e: Exception) {
             close()
@@ -49,12 +52,68 @@ class SmbRemoteClient(private val connection: RemoteConnection) : RemoteClient {
 
     private fun p(path: String) = path.trim('/').replace('/', '\\')
 
-    override fun list(path: String): List<RemoteEntry> = share().list(p(path))
+    private fun listShares(): List<RemoteEntry> {
+        val (host, _) = SmbLan.parseHost(connection.host)
+        val c = SMBClient()
+        val conn = c.connect(host, if (connection.port > 0) connection.port else 445)
+        val user = connection.user.substringAfter('\\')
+        val domain = if (connection.user.contains('\\')) connection.user.substringBefore('\\') else ""
+        val context = if (user.isEmpty()) AuthenticationContext.guest() else AuthenticationContext(user, connection.password.toCharArray(), domain)
+        val s = conn.authenticate(context)
+        val names = LinkedHashSet<String>()
+        runCatching {
+            val ipc = s.connectShare("IPC$")
+            ipc.close()
+        }
+        listOf("share", "public", "Users", "homes", "media", "photos", "backup", "data", "files", "Documents", "Music", "Video", "IPC$").forEach { n ->
+            runCatching {
+                val sh = s.connectShare(n)
+                if (sh is DiskShare) names += n
+                runCatching { sh.close() }
+            }
+        }
+        runCatching { s.close() }; runCatching { conn.close() }; runCatching { c.close() }
+        if (names.isEmpty()) throw IOException("Enter the name of the shared folder")
+        return names.filter { it != "IPC$" }.map { RemoteEntry(it, "/$it", true, -1, 0) }
+    }
+
+    override fun list(path: String): List<RemoteEntry> {
+        val (_, urlShare) = SmbLan.parseHost(connection.host)
+        if (connection.path.isBlank() && urlShare.isBlank()) {
+            if (path.trim('/').isEmpty()) return listShares()
+            val shareName = path.trim('/').substringBefore('/')
+            val rest = path.trim('/').substringAfter('/', "")
+            val sh = connectShare(shareName)
+            return sh.list(p(rest))
+                .filter { it.fileName != "." && it.fileName != ".." }
+                .map {
+                    val dir = it.fileAttributes and FileAttributes.FILE_ATTRIBUTE_DIRECTORY.value != 0L
+                    RemoteEntry(it.fileName, ("/" + path.trim('/') + "/" + it.fileName).replace("//", "/"), dir, it.endOfFile, it.lastWriteTime.toEpochMillis())
+                }
+        }
+        return share().list(p(path))
         .filter { it.fileName != "." && it.fileName != ".." }
         .map {
             val dir = it.fileAttributes and FileAttributes.FILE_ATTRIBUTE_DIRECTORY.value != 0L
             RemoteEntry(it.fileName, ("/" + p(path).replace('\\', '/') + "/" + it.fileName).replace("//", "/"), dir, it.endOfFile, it.lastWriteTime.toEpochMillis())
         }
+    }
+
+    @Synchronized
+    private fun connectShare(name: String): DiskShare {
+        share?.let { if (smb?.isConnected == true && boundShare == name) return it }
+        close()
+        val (host, _) = SmbLan.parseHost(connection.host)
+        val c = SMBClient()
+        val conn = c.connect(host, if (connection.port > 0) connection.port else 445)
+        val user = connection.user.substringAfter('\\')
+        val domain = if (connection.user.contains('\\')) connection.user.substringBefore('\\') else ""
+        val context = if (user.isEmpty()) AuthenticationContext.guest() else AuthenticationContext(user, connection.password.toCharArray(), domain)
+        val s = conn.authenticate(context)
+        val sh = s.connectShare(name) as DiskShare
+        client = c; smb = conn; session = s; share = sh; boundShare = name
+        return sh
+    }
 
     override fun mkdir(path: String) = runCatching { share().mkdir(p(path)); true }.getOrDefault(false)
 
@@ -97,8 +156,17 @@ class SmbRemoteClient(private val connection: RemoteConnection) : RemoteClient {
         runCatching { session?.close() }
         runCatching { smb?.close() }
         runCatching { client?.close() }
-        share = null; session = null; smb = null; client = null
+        share = null; session = null; smb = null; client = null; boundShare = null
     }
+
+    override fun space(): RemoteSpace? = runCatching {
+        val s = share()
+        val method = s.javaClass.methods.firstOrNull { it.name.equals("getShareInformation", true) } ?: return null
+        val info = method.invoke(s) ?: return null
+        val total = info.javaClass.methods.firstOrNull { it.name.contains("Total", true) && it.parameterCount == 0 }?.invoke(info) as? Number
+        val free = info.javaClass.methods.firstOrNull { it.name.contains("Free", true) && it.parameterCount == 0 }?.invoke(info) as? Number
+        if (total == null || free == null) null else RemoteSpace(total.toLong(), free.toLong())
+    }.getOrNull()
 }
 
 /** FTP, and FTPS (FTP over TLS) when the connection asks for TLS. */

@@ -23,6 +23,7 @@ import de.mm20.launcher2.ui.files.remote.ConnectionStore
 import de.mm20.launcher2.ui.files.remote.RemoteConnection
 import de.mm20.launcher2.ui.files.remote.RemotePath
 import de.mm20.launcher2.ui.files.remote.RemoteRegistry
+import de.mm20.launcher2.ui.files.remote.RemoteSpace
 import java.io.File
 
 /** A storage volume: the phone's own storage, an SD card, a USB drive. */
@@ -114,6 +115,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         private set
     var volumes by mutableStateOf<List<StorageVolume>>(emptyList())
         private set
+    var remoteSpaces by mutableStateOf<Map<String, RemoteSpace>>(emptyMap())
+        private set
 
     private fun fsFor(p: String): Fs = when {
         RemotePath.isRemote(p) -> RemoteRegistry.fs(context, RemotePath.idOf(p))
@@ -129,7 +132,10 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     var connections by mutableStateOf<List<RemoteConnection>>(emptyList())
         private set
 
-    fun reloadConnections() { connections = ConnectionStore(context).all().sortedBy { it.name.lowercase() } }
+    fun reloadConnections() {
+        connections = ConnectionStore(context).all().sortedBy { it.name.lowercase() }
+        refreshRemoteSpaces()
+    }
 
     fun connectionName(p: String): String? =
         if (RemotePath.isRemote(p)) connections.firstOrNull { it.id == RemotePath.idOf(p) }?.name else null
@@ -167,6 +173,20 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 if (volume.exists()) add(s(R.string.au_files_sd_usb, volume.name), volume, true)
             }
             withContext(Dispatchers.Main) { volumes = found }
+        }
+        refreshRemoteSpaces()
+    }
+
+    fun refreshRemoteSpaces() {
+        val ids = connections.map { it.id }
+        viewModelScope.launch(Dispatchers.IO) {
+            val map = HashMap<String, RemoteSpace>()
+            ids.forEach { id ->
+                runCatching {
+                    RemoteRegistry.client(context, id).space()?.let { map[id] = it }
+                }
+            }
+            withContext(Dispatchers.Main) { remoteSpaces = map }
         }
     }
 

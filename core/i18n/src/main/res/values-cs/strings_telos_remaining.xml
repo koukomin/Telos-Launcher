@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Přenosy souborů</string>
     <string name="telos_files_two_panels">Dva panely</string>
     <string name="telos_media_listen">Poslech</string>
+    <string name="telos_media_watch">Sledovat</string>
+    <string name="telos_media_live">Živě</string>
     <string name="telos_media_store_description">Poslouchejte místní hudbu, rádio a YouTube Music, sledujte místní videa nebo YouTube a objevujte TV a Stremio Fork.</string>
     <string name="telos_store_auto_enable">Povolit a aktualizovat</string>
     <string name="telos_store_auto_explanation">Povolit automatické aktualizace vybraných aplikací? Budoucí aktualizace se nainstalují automaticky, pokud Shizuku nebo root umožní tichou instalaci. Jinak dostanete oznámení o aktualizaci. Toto nastavení můžete změnit pro každou aplikaci zvlášť.</string>

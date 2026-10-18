@@ -22,6 +22,12 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.isMetaPressed
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -55,6 +61,8 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
     val desktopManager = koinInject<DesktopModeManager>()
     val pinnedApps by viewModel.pinnedApps.collectAsStateWithLifecycle()
     val freeformActive by desktopManager.freeformActiveInSystem.collectAsStateWithLifecycle(false)
+    val desktopModeSettings = koinInject<de.mm20.launcher2.preferences.ui.DesktopModeSettings>()
+    val keyboardShortcuts by desktopModeSettings.hardwareKeyboardShortcuts.collectAsStateWithLifecycle(true)
 
     var showContextMenu by remember { mutableStateOf(false) }
     var contextMenuOffset by remember { mutableStateOf(IntOffset.Zero) }
@@ -73,6 +81,29 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()
+            .then(
+                if (!keyboardShortcuts) Modifier
+                else Modifier.onPreviewKeyEvent { event ->
+                    if (event.type != KeyEventType.KeyDown || !event.isMetaPressed) false
+                    else when (event.key) {
+                        Key.Enter -> {
+                            context.startActivity(Intent().apply {
+                                setClassName(
+                                    context.packageName,
+                                    de.mm20.launcher2.applock.SettingsDeepLinkContract.ACTIVITY_CLASS_NAME,
+                                )
+                                putExtra(
+                                    de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_ROUTE,
+                                    de.mm20.launcher2.applock.SettingsDeepLinkContract.ROUTE_TERMINAL,
+                                )
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            })
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            )
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = { offset ->

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">סוכנים</string>
+    <string name="preference_screen_agents_summary">שליחת חיפוש אל Grok, Claude, ChatGPT ואחרים. כבוי כברירת מחדל</string>
+    <string name="preference_agents_enabled">הפעלת סוכנים בחיפוש</string>
+    <string name="preference_agents_enabled_summary">מציג שבב שאל. Telos לא שומר מפתח API; אפליקציית הסוכן או האתר משתמשים בחשבון שכבר התחברת אליו</string>
+    <string name="preference_agents_provider">סוכן</string>
+    <string name="preference_agents_transport">אופן השליחה</string>
+    <string name="preference_agents_transport_summary">אוטומטי פותח את אפליקציית הסוכן אם היא מותקנת, אחרת את האתר. Termux מריץ CLI באפליקציית Termux הרשמית</string>
+    <string name="preference_agents_send_sentences">שליחת משפטים עם Enter</string>
+    <string name="preference_agents_send_sentences_summary">שאילתה של שלוש מילים או יותר נשלחת לסוכן במקום לפתוח את האפליקציה הראשונה</string>
+    <string name="preference_search_bar_voice">קלט קולי בשורת החיפוש</string>
+    <string name="preference_search_bar_voice_summary">המיקרופון משתמש בזיהוי דיבור במכשיר כשהטלפון תומך בזה</string>
+    <string name="search_bar_voice">חיפוש קולי</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">אפליקציה ואז אתר</string>
+    <string name="agent_transport_app">אפליקציית הסוכן</string>
+    <string name="agent_transport_web">אתר</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">שאל את %1$s</string>
+    <string name="agent_launch_failed">לא ניתן לפתוח את הסוכן</string>
+    <string name="preference_keyboard_shortcuts">קיצורי מקלדת חומרה</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+רווח או Super+A פותח חיפוש, Super+Enter את המסוף, Super+1 את מסך הבית</string>
+    <string name="preference_category_telos_navigation">ניווט Telos</string>
+    <string name="preference_telos_navigation">מחוות קצה (חזרה, בית, אחרונים)</string>
+    <string name="preference_telos_navigation_summary">רצועות דקות בקצוות. החלקה מהצד לחזרה, מלמטה לבית, לחיצה ארוכה לאחרונים. דורש שירות נגישות. כבוי כברירת מחדל</string>
+    <string name="preference_telos_recents">אחרונים של Telos</string>
+    <string name="preference_telos_recents_summary">רשימת Telos במקום האחרונים של המערכת. כבוי כברירת מחדל</string>
+    <string name="telos_recents_title">אפליקציות אחרונות</string>
+    <string name="telos_recents_clear">נקה הכול</string>
+</resources>

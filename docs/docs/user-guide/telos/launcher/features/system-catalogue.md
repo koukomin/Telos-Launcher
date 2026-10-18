@@ -403,7 +403,7 @@ launcher shows guidance about this only after you have tried to grant the permis
 | App list icon | `MAIN` and `LAUNCHER` | Same activity, opens the launcher |
 | Digital assistant | Activity with the `ASSIST` action | Starts the launcher in assistant mode when set as the default assistant |
 | Settings | Activity with `APPLICATION_PREFERENCES` | The system's "app settings" button opens Settings |
-| Settings deep links | `https://kvaesitso.mm20.de/in-app?route=...` or an `EXTRA_ROUTE` extra | Opens a settings page directly. Known routes include weather and media integration, search actions, hidden items, floating launcher, wallpaper, web apps, app recommendations, intruder photos, store and crash report |
+| Settings deep links | `https://kvaesitso.mm20.de/in-app?route=...` or an `EXTRA_ROUTE` extra | Opens a settings page directly. Known routes include weather and media integration, search actions, hidden items, floating launcher, wallpaper, web apps, intruder photos, store and crash report |
 | Pin shortcut | Activity for `CONFIRM_PIN_SHORTCUT` | Other apps can pin a shortcut to the launcher |
 | Theme import | `VIEW` with MIME `application/vnd.de.mm20.launcher2.theme` | Opens a theme file in the launcher |
 | `obtainium://` links | `VIEW` for the scheme | Opens the Telos Store with the link |

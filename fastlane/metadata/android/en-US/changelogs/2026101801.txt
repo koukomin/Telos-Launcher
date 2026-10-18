@@ -1,0 +1,11 @@
+Telos 1.41.13
+
+Files: free/total space on internal, SD/USB and remote volumes; ISO 9660/Joliet browse; write back into unencrypted zip; RAW/HEIC thumbs and HEVC video; SMB by hostname, IP or smb:// with nearby mDNS and share listing; long-press peek, picture filmstrip, disk-cached previews; tabs, two panes, transfer queue and batch rename.
+
+Viewer: immersive photo viewer with glass chrome; PDF highlight; comics (CBZ/CBR/CBT/CB7); SVG/PSD/AI/CDR previews; formats shared with Files thumbnails.
+
+Phone: full-bleed incoming photo, swipe-up Remind/SMS; call recording (VOICE_CALL, silence retry, Shizuku/root); call blocker.
+
+Media: Listen/Watch/Live; brightness/volume swipes; TV/radio live; blur theme.
+
+Store: glass cards, Play tab, large-font labels. AMOLED accent palettes. Magnifier and flashlight virtual apps.

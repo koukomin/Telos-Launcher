@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Transferuri de fișiere</string>
     <string name="telos_files_two_panels">Două panouri</string>
     <string name="telos_media_listen">Ascultă</string>
+    <string name="telos_media_watch">Privește</string>
+    <string name="telos_media_live">Live</string>
     <string name="telos_media_store_description">Ascultă muzică locală, radio și YouTube Music, urmărește videoclipuri locale sau YouTube și explorează TV și Stremio Fork.</string>
     <string name="telos_store_auto_enable">Activează și actualizează</string>
     <string name="telos_store_auto_explanation">Activezi actualizările automate pentru aplicațiile selectate? Actualizările viitoare se instalează automat când Shizuku sau root permite instalarea silențioasă. În caz contrar, vei primi o notificare de actualizare. Poți schimba această opțiune în setările fiecărei aplicații.</string>

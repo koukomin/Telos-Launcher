@@ -1573,4 +1573,6 @@
     </plurals>
     <string name="dl_m_auto_update">Actualizează yt-dlp automat</string>
     <string name="dl_m_auto_update_sum">Descarcă o dată pe zi cel mai nou yt-dlp prin Wi-Fi, ca descărcările să funcționeze când site-urile se schimbă</string>
+    <string name="telos_files_peek_select">Selectează</string>
+    <string name="telos_files_smb_nearby">Calculatoare din această rețea</string>
 </resources>

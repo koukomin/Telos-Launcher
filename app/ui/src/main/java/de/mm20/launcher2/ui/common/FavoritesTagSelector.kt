@@ -47,9 +47,6 @@ fun FavoritesTagSelector(
     expanded: Boolean,
     onExpand: (Boolean) -> Unit,
     showFavorites: Boolean,
-    showRecommendedChip: Boolean = false,
-    recommendedSelected: Boolean = false,
-    onSelectRecommended: () -> Unit = {},
 ) {
     val sheetManager = LocalBottomSheetManager.current
 
@@ -102,38 +99,10 @@ fun FavoritesTagSelector(
                             }
                         )
                     }
-                    if (showRecommendedChip) {
-                        FilterChip(
-                            modifier = Modifier
-                                .padding(start = if (!showFavorites) 16.dp else 8.dp),
-                            selected = recommendedSelected,
-                            onClick = onSelectRecommended,
-                            leadingIcon = if (compact) null else {
-                                {
-                                    Icon(
-                                        painter = painterResource(R.drawable.shopping_bag_24px),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                    )
-                                }
-                            },
-                            label = {
-                                if (compact) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.shopping_bag_24px),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                    )
-                                } else {
-                                    Text(stringResource(R.string.recommendation_tab_label))
-                                }
-                            }
-                        )
-                    }
                     for ((i, tag) in tags.withIndex()) {
                         TagChip(
                             modifier = Modifier
-                                .padding(start = if (!showFavorites && !showRecommendedChip && i == 0) 16.dp else 8.dp),
+                                .padding(start = if (!showFavorites && i == 0) 16.dp else 8.dp),
                             tag = tag,
                             selected = selectedTag == tag.tag,
                             onClick = {
@@ -209,34 +178,7 @@ fun FavoritesTagSelector(
                             }
                         }
                     )
-                    if (showRecommendedChip) {
-                        FilterChip(
-                            modifier = Modifier
-                                .padding(end = 8.dp),
-                            selected = recommendedSelected,
-                            onClick = onSelectRecommended,
-                            leadingIcon = if (compact) null else {
-                                {
-                                    Icon(
-                                        painter = painterResource(R.drawable.shopping_bag_24px),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                    )
-                                }
-                            },
-                            label = {
-                                if (compact) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.shopping_bag_24px),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize),
-                                    )
-                                } else {
-                                    Text(stringResource(R.string.recommendation_tab_label))
-                                }
-                            }
-                        )
-                    }
+
                     for (tag in tags) {
                         TagChip(
                             modifier = Modifier

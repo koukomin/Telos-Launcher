@@ -48,7 +48,11 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Tab
 import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -122,9 +126,10 @@ fun StoreDashboardScreen(initialLink: String = "") {
     val playChecking by viewModel.playChecking.collectAsStateWithLifecycle()
     val playQuery by viewModel.playQuery.collectAsStateWithLifecycle()
     val playFilterUpdates by viewModel.playFilterUpdates.collectAsStateWithLifecycle()
+    val global by viewModel.global.collectAsStateWithLifecycle()
     val playTabIndex = if (playStoreInstalled) 3 else -1
 
-    var tab by rememberSaveable { mutableIntStateOf(0) }
+    var tab by rememberSaveable { mutableIntStateOf(if (playStoreInstalled) 3 else 0) }
     var showAdd by remember { mutableStateOf(false) }
     var addPrefill by remember { mutableStateOf("") }
     var showSettings by remember { mutableStateOf(false) }
@@ -135,7 +140,11 @@ fun StoreDashboardScreen(initialLink: String = "") {
     var linkHandled by rememberSaveable(initialLink) { mutableStateOf(false) }
     LaunchedEffect(Unit) { viewModel.checkAll() }
     LaunchedEffect(playStoreInstalled) {
-        if (playStoreInstalled) viewModel.refreshPlayApps()
+        if (playStoreInstalled) {
+            viewModel.playFilterUpdates.value = true
+            viewModel.refreshPlayApps()
+            viewModel.checkPlayUpdates()
+        }
     }
     LaunchedEffect(initialLink) {
         if (linkHandled) return@LaunchedEffect
@@ -206,15 +215,25 @@ fun StoreDashboardScreen(initialLink: String = "") {
         Box(Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize()) {
                 // === TELOS_PENDING_REVIEW_START: store_micro_progress ===
-                if (checking) {
+                if (checking || playChecking) {
                     androidx.compose.material3.LinearProgressIndicator(
                         modifier = Modifier.fillMaxWidth().height(2.dp)
                     )
                     Text(
-                        text = "Checking for updates...",
+                        text = stringResource(R.string.store_checking_updates),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp)
+                    )
+                } else if (global.lastCheckMillis > 0L) {
+                    Text(
+                        text = stringResource(
+                            R.string.store_last_check,
+                            android.text.format.DateUtils.getRelativeTimeSpanString(global.lastCheckMillis),
+                        ),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
                     )
                 }
                 // === TELOS_PENDING_REVIEW_END: store_micro_progress ===
@@ -242,6 +261,8 @@ fun StoreDashboardScreen(initialLink: String = "") {
                         onOpen = { backStack.add(AppDetailsRoute(itemId = it.item.id)) },
                         onAction = { viewModel.onAppActionClicked(it.item) },
                         onUpdateAll = { viewModel.updateAll() },
+                        checking = checking,
+                        onRefresh = { viewModel.checkAll() },
                     )
                 } else if (tab == 2) {
                     RecommendedTab(
@@ -271,6 +292,7 @@ fun StoreDashboardScreen(initialLink: String = "") {
                         apps = playApps,
                         totalCount = allPlayApps.size,
                         updateCount = allPlayApps.count { it.updateAvailable == true },
+                        frozenCount = allPlayApps.count { it.frozen },
                         query = playQuery,
                         filterUpdates = playFilterUpdates,
                         checking = playChecking,
@@ -290,6 +312,13 @@ fun StoreDashboardScreen(initialLink: String = "") {
                 ) {
                     Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.hc_add_app))
                 }
+            } else if (playStoreInstalled && tab == playTabIndex) {
+                FloatingActionButton(
+                    onClick = { viewModel.updateAllPlayApps() },
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(24.dp),
+                ) {
+                    Icon(painterResource(R.drawable.download_24px), contentDescription = stringResource(R.string.store_play_unfreeze_update))
+                }
             }
         }
     }
@@ -307,6 +336,7 @@ private fun PlayStoreTab(
     apps: List<PlayStoreApp>,
     totalCount: Int,
     updateCount: Int,
+    frozenCount: Int,
     query: String,
     filterUpdates: Boolean,
     checking: Boolean,
@@ -319,8 +349,16 @@ private fun PlayStoreTab(
 ) {
     Column(Modifier.fillMaxSize()) {
         de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(R.string.hf_store_search))
+        Button(
+            onClick = onUpdateAll,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+        ) {
+            Icon(painterResource(R.drawable.download_24px), contentDescription = null, modifier = Modifier.size(18.dp))
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.store_play_unfreeze_update))
+        }
         Row(
-            Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -329,6 +367,14 @@ private fun PlayStoreTab(
                 onClick = { onFilterUpdates(!filterUpdates) },
                 label = { Text(stringResource(R.string.hf_store_filter_updates, updateCount)) },
             )
+            if (frozenCount > 0) {
+                FilterChip(
+                    selected = false,
+                    onClick = {},
+                    enabled = false,
+                    label = { Text(stringResource(R.string.store_play_frozen_count, frozenCount)) },
+                )
+            }
             if (updateCount > 0) {
                 FilledTonalButton(onClick = onUpdateAll) {
                     Text(stringResource(R.string.hc_update_all_count, updateCount))
@@ -341,23 +387,87 @@ private fun PlayStoreTab(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
         )
-        if (checking) {
-            androidx.compose.material3.LinearProgressIndicator(Modifier.fillMaxWidth().height(2.dp))
-        }
-        if (apps.isEmpty() && query.isNotBlank()) {
-            de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
-        } else if (apps.isEmpty()) {
-            EmptyMessage(
-                stringResource(R.string.store_play_empty),
-                stringResource(R.string.store_play_empty_hint),
-            )
-        } else {
-            LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
-                items(apps, key = { it.packageName }) { app ->
-                    PlayStoreAppRow(app = app, onOpen = { onOpen(app) }, onUpdate = { onUpdate(app) })
+        PullToRefreshBox(isRefreshing = checking, onRefresh = onCheck, modifier = Modifier.weight(1f)) {
+            if (apps.isEmpty() && query.isNotBlank()) {
+                de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
+            } else if (apps.isEmpty()) {
+                EmptyMessage(
+                    stringResource(R.string.store_play_empty),
+                    stringResource(R.string.store_play_empty_hint),
+                )
+            } else {
+                val updates = apps.filter { it.updateAvailable == true }
+                val frozen = apps.filter { it.frozen && it.updateAvailable != true }
+                val rest = apps.filter { !it.frozen && it.updateAvailable != true }
+                LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
+                    if (updates.isNotEmpty()) {
+                        item { StoreSectionHeader(stringResource(R.string.store_section_updates, updates.size)) }
+                        items(updates, key = { "u-${it.packageName}" }) { app ->
+                            SwipePlayRow(app, onOpen, onUpdate)
+                        }
+                    }
+                    if (frozen.isNotEmpty()) {
+                        item { StoreSectionHeader(stringResource(R.string.store_section_frozen, frozen.size)) }
+                        items(frozen, key = { "f-${it.packageName}" }) { app ->
+                            SwipePlayRow(app, onOpen, onUpdate)
+                        }
+                    }
+                    if (rest.isNotEmpty()) {
+                        item { StoreSectionHeader(stringResource(R.string.store_section_uptodate, rest.size)) }
+                        items(rest, key = { "r-${it.packageName}" }) { app ->
+                            SwipePlayRow(app, onOpen, onUpdate)
+                        }
+                    }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun StoreSectionHeader(title: String) {
+    Text(
+        title,
+        style = MaterialTheme.typography.titleSmall,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+    )
+}
+
+@Composable
+private fun SwipePlayRow(app: PlayStoreApp, onOpen: (PlayStoreApp) -> Unit, onUpdate: (PlayStoreApp) -> Unit) {
+    val current by androidx.compose.runtime.rememberUpdatedState(app)
+    val state = rememberSwipeToDismissBoxState(
+        confirmValueChange = { value ->
+            when (value) {
+                SwipeToDismissBoxValue.StartToEnd -> onUpdate(current)
+                SwipeToDismissBoxValue.EndToStart -> onOpen(current)
+                else -> {}
+            }
+            false
+        },
+    )
+    SwipeToDismissBox(
+        state = state,
+        backgroundContent = {
+            val toEnd = state.dismissDirection == SwipeToDismissBoxValue.StartToEnd
+            Box(
+                Modifier.fillMaxSize().padding(horizontal = 12.dp, vertical = 4.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .then(
+                        Modifier.padding(horizontal = 20.dp)
+                    ),
+                contentAlignment = if (toEnd) Alignment.CenterStart else Alignment.CenterEnd,
+            ) {
+                Text(
+                    if (toEnd) stringResource(R.string.store_play_update) else stringResource(R.string.store_play_open_my_apps),
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.labelLarge,
+                )
+            }
+        },
+    ) {
+        PlayStoreAppRow(app = app, onOpen = { onOpen(app) }, onUpdate = { onUpdate(app) })
     }
 }
 
@@ -438,6 +548,8 @@ private fun AppsTab(
     onOpen: (StoreRow) -> Unit,
     onAction: (StoreRow) -> Unit,
     onUpdateAll: () -> Unit,
+    checking: Boolean = false,
+    onRefresh: () -> Unit = {},
 ) {
     val context = LocalContext.current
     Column(Modifier.fillMaxSize()) {
@@ -493,6 +605,7 @@ private fun AppsTab(
                 if (totalCount == 0) stringResource(R.string.hf_store_empty_hint) else stringResource(R.string.hf_store_change_filter),
             )
         } else {
+            PullToRefreshBox(isRefreshing = checking, onRefresh = onRefresh, modifier = Modifier.weight(1f)) {
             LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
                 items(rows, key = { it.item.id }) { row ->
                     StoreItemRow(
@@ -506,6 +619,7 @@ private fun AppsTab(
                         onActionClick = { onAction(row) },
                     )
                 }
+            }
             }
         }
     }

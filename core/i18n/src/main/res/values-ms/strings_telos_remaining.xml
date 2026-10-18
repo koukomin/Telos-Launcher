@@ -132,6 +132,8 @@
     <string name="telos_files_transfers_title">Pemindahan fail</string>
     <string name="telos_files_two_panels">Dua panel</string>
     <string name="telos_media_listen">Dengar</string>
+    <string name="telos_media_watch">Tonton</string>
+    <string name="telos_media_live">Langsung</string>
     <string name="telos_media_store_description">Dengar muzik setempat, radio dan YouTube Music, tonton video setempat atau YouTube, serta terokai TV dan Stremio Fork.</string>
     <string name="telos_store_auto_enable">Dayakan dan kemas kini</string>
     <string name="telos_store_auto_explanation">Dayakan kemas kini automatik untuk aplikasi yang dipilih? Kemas kini seterusnya dipasang secara automatik apabila Shizuku atau root membenarkan pemasangan senyap. Jika tidak, anda akan menerima pemberitahuan kemas kini. Anda boleh mengubahnya dalam tetapan setiap aplikasi.</string>

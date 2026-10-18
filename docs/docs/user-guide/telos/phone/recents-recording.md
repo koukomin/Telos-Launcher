@@ -99,9 +99,7 @@ Recording stops when the call ends. Turning on **Auto-record calls** asks for th
 | Root (fallback to microphone) <Badge type="info" text="untested" /> | Root, then microphone | Call audio source through root |
 | Microphone only | Microphone | Only what the microphone hears |
 
-With Shizuku or root, Telos grants itself the `CAPTURE_AUDIO_OUTPUT` appop with a shell command and then tries the
-call sources *voice call*, *downlink* and *uplink*, falling back to the microphone sources (voice
-communication, microphone, voice recognition, default). If a privileged start fails, the next option is used.
+Telos always tries the telephony mix first (`VOICE_CALL`, downlink, uplink), including without root when Telos is the default dialer (the path Skvalex uses on unrooted phones). Shizuku or root also grants `CAPTURE_AUDIO_OUTPUT`. If the file stays silent for a few seconds, Telos switches source. Recording starts when the call becomes **active**, from the in-call service, even if the UI is not on screen. Bluetooth uses the communication mic path.
 
 | Backend | Both sides? |
 | --- | --- |

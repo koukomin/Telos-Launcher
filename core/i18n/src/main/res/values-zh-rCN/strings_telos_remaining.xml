@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">文件传输</string>
     <string name="telos_files_two_panels">双面板</string>
     <string name="telos_media_listen">聆听</string>
+    <string name="telos_media_watch">观看</string>
+    <string name="telos_media_live">直播</string>
     <string name="telos_media_store_description">聆听本地音乐、广播和 YouTube Music，观看本地视频或 YouTube，并探索电视及 Stremio Fork。</string>
     <string name="telos_store_auto_enable">启用并更新</string>
     <string name="telos_store_auto_explanation">为所选应用启用自动更新？当 Shizuku 或 root 允许静默安装时，后续更新将自动安装。否则您会收到更新通知。可在每个应用的设置中更改此选项。</string>

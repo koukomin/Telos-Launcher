@@ -17,7 +17,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./phone/"><b>📞 Phone</b><span>Dialer, recents, contacts, dual SIM, call recording, screening, SIP</span></a>
 <a href="./messages/"><b>💬 Messages</b><span>SMS and MMS conversations, default SMS app, scheduled messages</span></a>
 <a href="./ermis/"><b>✉️ Ermis</b><span>Gmail-style email, IMAP/SMTP, notes on Gmail messages</span></a>
-<a href="./files/"><b>📁 Files</b><span>File manager with network and cloud storages, archives, Cryptomator</span></a>
+<a href="./files/"><b>📁 Files</b><span>Local, USB, network and cloud, space meters, ISO and zip, RAW/HEIC thumbs</span></a>
 <a href="./screenshot/"><b>📸 Screenshot</b><span>Full, partial and scrolling screenshots with an editor</span></a>
 <a href="./screen-recorder/"><b>🎥 Screen Recorder</b><span>Screen to video with microphone, pause and countdown</span></a>
 <a href="./voice-recorder/"><b>🎙️ Voice Recorder</b><span>Recordings with search, pause and call recordings</span></a>
@@ -25,7 +25,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./calendar/"><b>📅 Calendar</b><span>Month and agenda on your calendars, local calendar, Google and CalDAV through the system</span></a>
 <a href="./downloads/"><b>⬇️ Downloads</b><span>Download manager: several connections, resume, queue, folder of your choice</span></a>
 <a href="./calculator/"><b>🧮 Calculator</b><span>Scientific calculator, VAT, unit and currency converter, history</span></a>
-<a href="./photos/"><b>🖼️ Viewer</b><span>Gallery, EXIF tools, photo editor, document viewer and editor, PDF tools</span></a>
+<a href="./photos/"><b>🖼️ Viewer</b><span>Gallery, immersive photos, PDF highlight, comics, SVG/PSD/AI/CDR, Office</span></a>
 <a href="./music/"><b>🎵 Music</b><span>Local library, lyrics, scrobbling, tag editor, NextLib decoders</span></a>
 <a href="./video/"><b>🎬 Video</b><span>Library, player, NextLib decoders, streams, torrents, subtitles, Trakt</span></a>
 <a href="./radio/"><b>📻 Radio</b><span>Internet radio with station search, sleep timer, NextLib decoders</span></a>
@@ -48,7 +48,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Phone | Calls, recents, contacts, call recording, call screening, SIP | [Phone](./phone/) |
 | Telos Messages | Text and picture messages | [Messages](./messages/) |
 | Ermis | Gmail-style email with IMAP/SMTP and notes on Gmail messages | [Ermis](./ermis/) |
-| Telos Files | Browse and manage files, also on network and cloud storages | [Files](./files/) |
+| Telos Files | Local, USB and remote space, ISO/zip folders, RAW/HEIC thumbs, SMB by name or IP | [Files](./files/) |
 | Telos Screenshot | Full, partial and scrolling screenshots, editor | [Screenshot](./screenshot/) |
 | Telos Screen Recorder | Records the screen to a video | [Screen Recorder](./screen-recorder/) |
 | Telos Voice Recorder | Voice recordings with a list and search | [Voice Recorder](./voice-recorder/) |
@@ -56,7 +56,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Calendar | Calendar with local and synced calendars | [Calendar](./calendar/) |
 | Telos Downloads | Download manager for links with resume and a queue | [Downloads](./downloads/) |
 | Telos Calculator | Standard and scientific calculator, VAT, converters | [Calculator](./calculator/) |
-| Telos Viewer | Two tabs: Photos (gallery, EXIF tools, photo editor) and Documents (library, PDF, Office and text viewer) | [Viewer](./photos/) |
+| Telos Viewer | Photos, immersive viewer, PDF highlight, comics, SVG/PSD/AI/CDR, Office edit | [Viewer](./photos/) |
 | Telos Media | Music, radio and video in one app | [Media](./media/) |
 | Telos Music | Player for the music on the phone | [Music](./music/) |
 | Telos Video | Video library and player, streams and torrents | [Video](./video/) |

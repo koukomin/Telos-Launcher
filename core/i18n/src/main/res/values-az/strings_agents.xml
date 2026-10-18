@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agentlər</string>
+    <string name="preference_screen_agents_summary">Axtarış sorğusunu Grok, Claude, ChatGPT və başqalarına göndər. Defolt olaraq söndürülüb</string>
+    <string name="preference_agents_enabled">Axtarışda agentləri yandır</string>
+    <string name="preference_agents_enabled_summary">Axtarışda Soruş düyməsi göstərir. Telos API açarı saxlamır; agent tətbiqi və ya saytı artıq daxil olduğunuz hesabı istifadə edir</string>
+    <string name="preference_agents_provider">Agent</string>
+    <string name="preference_agents_transport">Necə göndərilsin</string>
+    <string name="preference_agents_transport_summary">Avto quraşdırılıbsa agent tətbiqini, əks halda saytı açır. Termux rəsmi Termux tətbiqində CLI işlədir</string>
+    <string name="preference_agents_send_sentences">Cümlələri Enter ilə göndər</string>
+    <string name="preference_agents_send_sentences_summary">Üç və ya daha çox sözdən ibarət sorğu ilk tətbiqi açmaq əvəzinə agentə göndərilir</string>
+    <string name="preference_search_bar_voice">Axtarış panelində səs girişi</string>
+    <string name="preference_search_bar_voice_summary">Mikrofon düyməsi telefon dəstəkləyəndə cihazdakı nitq tanımasını istifadə edir</string>
+    <string name="search_bar_voice">Səsli axtarış</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Tətbiq, sonra sayt</string>
+    <string name="agent_transport_app">Agent tətbiqi</string>
+    <string name="agent_transport_web">Vebsayt</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">%1$s-ə soruş</string>
+    <string name="agent_launch_failed">Agenti açmaq mümkün olmadı</string>
+    <string name="preference_keyboard_shortcuts">Fiziki klaviatura qısayolları</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Boşluq və ya Super+A axtarışı, Super+Enter Terminalı, Super+1 ev ekranını açır</string>
+    <string name="preference_category_telos_navigation">Telos naviqasiyası</string>
+    <string name="preference_telos_navigation">Kənar jestləri (geri, ev, sonuncular)</string>
+    <string name="preference_telos_navigation_summary">Ekranın kənarlarında nazik zolaqlar. Yan tərəfdən sürüşdürmə Geri, aşağıdan yuxarı Ev, basıb saxlama Sonuncular. Əlçatanlıq xidməti lazımdır. Defolt olaraq sönülü</string>
+    <string name="preference_telos_recents">Telos sonuncuları</string>
+    <string name="preference_telos_recents_summary">Sistem sonuncuları əvəzinə Telos siyahısı. Defolt olaraq sönülü</string>
+    <string name="telos_recents_title">Son tətbiqlər</string>
+    <string name="telos_recents_clear">Hamısını sil</string>
+</resources>

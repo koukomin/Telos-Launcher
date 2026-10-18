@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.koin.android)
+    implementation(libs.kotlinx.coroutines.android)
 
     implementation(project(":core:preferences"))
     implementation(project(":core:base"))

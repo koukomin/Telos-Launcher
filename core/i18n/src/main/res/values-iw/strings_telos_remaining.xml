@@ -132,6 +132,8 @@
     <string name="telos_files_transfers_title">העברות קבצים</string>
     <string name="telos_files_two_panels">שני חלונות</string>
     <string name="telos_media_listen">האזנה</string>
+    <string name="telos_media_watch">צפייה</string>
+    <string name="telos_media_live">שידור חי</string>
     <string name="telos_media_store_description">אפשר להאזין למוזיקה מקומית, לרדיו ול־YouTube Music, לצפות בסרטונים מקומיים או ב־YouTube ולגלות TV ו־Stremio Fork.</string>
     <string name="telos_store_auto_enable">הפעלה ועדכון</string>
     <string name="telos_store_auto_explanation">להפעיל עדכונים אוטומטיים לאפליקציות שנבחרו? עדכונים עתידיים יותקנו אוטומטית כש־Shizuku או root מאפשרים התקנה שקטה. אחרת תתקבל הודעת עדכון. אפשר לשנות זאת בהגדרות של כל אפליקציה.</string>

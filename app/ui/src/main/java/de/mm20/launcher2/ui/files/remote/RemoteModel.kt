@@ -18,7 +18,7 @@ enum class RemoteType(val label: String, val defaultPort: Int, val cloud: Boolea
     Owncloud("ownCloud", 443, false, "Server address, for example cloud.example.com"),
     WebDav("WebDAV", 443, false, "Server address of any WebDAV server (also Synology, Box, Yandex, ...)"),
     Sftp("SFTP / SSHFS (SSH)", 22, false, "Server address of an SSH server. SSHFS is SFTP too, so any SSHFS server works. Log in with a password or a private key."),
-    Smb("Windows / Samba share (SMB)", 445, false, "Computer name or address, and the name of the shared folder"),
+    Smb("Windows / Samba share (SMB)", 445, false, "Computer name, .local name, IP address, or smb://host/share. Leave the share blank to list shared folders."),
     Ftp("FTP / FTPS", 21, false, "Server address of an FTP server"),
     System("Cloud app on this phone", 0, false, "Google Drive, OneDrive, Dropbox, Nextcloud and other cloud apps that are installed and signed in on this phone. Pick a folder of the app. It uses the account of the phone, so no client ID or secret is needed."),
     Dropbox("Dropbox", 0, true, "Needs your own Dropbox app key"),
@@ -98,6 +98,9 @@ class ConnectionStore(context: Context) {
 
 class RemoteEntry(val name: String, val path: String, val isDir: Boolean, val size: Long, val modified: Long, val permissions: String = "", val isLink: Boolean = false)
 
+/** Total and free bytes on a remote volume. -1 when the server does not say. */
+data class RemoteSpace(val total: Long, val free: Long)
+
 /** What a protocol (SFTP, SMB, a cloud API, ...) has to offer. Paths look like "/folder/file.txt". */
 interface RemoteClient : Closeable {
     fun list(path: String): List<RemoteEntry>
@@ -109,6 +112,8 @@ interface RemoteClient : Closeable {
     fun openWrite(path: String): OutputStream
     /** Copies on the server, or false when that is not possible (the data then goes through the phone) */
     fun copy(from: String, to: String): Boolean = false
+    /** Disk quota when the server reports it. */
+    fun space(): RemoteSpace? = null
 }
 
 /** The address of something on a remote storage: rem://<connection id>/<path> */

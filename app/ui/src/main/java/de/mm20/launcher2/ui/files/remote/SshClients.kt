@@ -122,4 +122,18 @@ class SftpRemoteClient(private val connection: RemoteConnection, private val onF
         sftp = null
         ssh = null
     }
+
+    override fun space(): RemoteSpace? = runCatching {
+        val c = client()
+        val vfs = c.javaClass.methods.firstOrNull { it.name.equals("statVFS", true) && it.parameterCount == 1 }
+            ?.invoke(c, "/") ?: return null
+        fun num(name: String): Long? {
+            val m = vfs.javaClass.methods.firstOrNull { it.name.equals(name, true) && it.parameterCount == 0 } ?: return null
+            return (m.invoke(vfs) as? Number)?.toLong()
+        }
+        val frsize = num("frsize") ?: num("getFrsize") ?: 0L
+        val blocks = num("blocks") ?: num("getBlocks") ?: 0L
+        val bfree = num("bavail") ?: num("getAvailBlocks") ?: num("bfree") ?: 0L
+        if (frsize <= 0 || blocks <= 0) null else RemoteSpace(frsize * blocks, frsize * bfree)
+    }.getOrNull()
 }

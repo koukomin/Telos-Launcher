@@ -37,6 +37,7 @@ import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchEmptyState
 import de.mm20.launcher2.ui.component.TelosSearchTopBar
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import java.text.DateFormat
@@ -97,7 +98,7 @@ fun NotesScreen() {
         }
     }
 
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).systemBarsPadding()) {
+    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)).systemBarsPadding()) {
         val e = editing
         if (e != null) {
             NoteEditor(e, labels, onChange = { editing = it }, onClose = { vm.save(e); editing = null },

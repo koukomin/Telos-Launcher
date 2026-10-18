@@ -1065,4 +1065,6 @@
     </plurals>
     <string name="dl_m_auto_update">Atualizar o yt-dlp automaticamente</string>
     <string name="dl_m_auto_update_sum">Baixa o yt-dlp mais recente uma vez por dia no Wi-Fi, para que os downloads continuem funcionando quando os sites mudam</string>
+    <string name="telos_files_peek_select">Selecionar</string>
+    <string name="telos_files_smb_nearby">Computadores nesta rede</string>
 </resources>

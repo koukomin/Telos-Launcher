@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Taispeántar aipeanna Play Store anseo, aipeanna reoite san áireamh.</string>
     <string name="store_play_hint">Díreoitear aipeanna reoite agus osclaítear Play Store. Reonn Telos arís iad a luaithe a shuiteálann Play an leagan nua (uair amháin mar chúltaca). Roghnach: le VPN Telos Network níl idirlíon acu go n-osclaíonn tú iad.</string>
     <string name="store_play_open_my_apps">Oscail nuashonruithe Play Store</string>
+    <string name="store_play_unfreeze_update">Díreoigh agus nuashonraigh sa Play Store</string>
+    <string name="store_play_frozen_count">Reoite (%1$d)</string>
     <string name="store_play_block_network">Cuir an líonra faoi ghlas go n-osclaítear</string>
     <string name="store_play_block_network_summary">Nuair atá VPN Telos Network ar siúl, níl idirlíon ag aipeanna díreoite Play go n-osclaíonn tú arís iad.</string>
     <string name="play_update_pause_channel">Nuashonruithe Play Store</string>
     <string name="play_update_pause_title">Ag fanacht le nuashonruithe Play Store</string>
     <string name="play_update_pause_text">Reofar %2$d aip dhíreoite arís a luaithe a shuiteálann Play leagan nua (cúltaca %1$d uair).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

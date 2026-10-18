@@ -30,6 +30,8 @@ internal class FreezeExclusionChecker(
     private val settings: FreezeSettings,
     private val profileManager: FreezeProfileManager,
 ) {
+    @Volatile
+    var pinnedScreenOffPackage: String? = null
 
     suspend fun isExcluded(packageName: String): Boolean {
         if (settings.neverFreezeApps.first().contains(packageName)) return true // per-app override
@@ -50,6 +52,8 @@ internal class FreezeExclusionChecker(
         ) return true
 
         if (settings.excludeForeground.first() && isForeground(packageName)) return true // optional rule 1
+        // Screen-off clears usage "foreground"; still skip the window that was in front.
+        if (pinnedScreenOffPackage == packageName) return true
 
         if (settings.excludeMusic.first() && isMusicActive()) return true
         if (settings.excludeNetwork.first() && isNetworkActive(packageName)) return true
@@ -89,7 +93,9 @@ internal class FreezeExclusionChecker(
      * would silently do nothing at all for users who never grant that permission.
      */
     private fun isForeground(packageName: String): Boolean {
-        return usageStatsProvider.currentForegroundPackage() == packageName
+        val current = usageStatsProvider.currentForegroundPackage()
+        if (current == packageName) return true
+        return current == null && usageStatsProvider.lastForegroundPackage() == packageName
     }
 
     /** Rule 5 (partial): device-wide, not per-package. */

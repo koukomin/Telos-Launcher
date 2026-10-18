@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agentoj</string>
+    <string name="preference_screen_agents_summary">Sendu serĉon al Grok, Claude, ChatGPT kaj aliaj. Defaŭlte malŝaltita</string>
+    <string name="preference_agents_enabled">Ŝalti agentojn en serĉo</string>
+    <string name="preference_agents_enabled_summary">Montras demandan peceton. Telos ne konservas API-ŝlosilon; la agento-aplikaĵo aŭ retejo uzas la konton, en kiu vi jam ensalutis</string>
+    <string name="preference_agents_provider">Agento</string>
+    <string name="preference_agents_transport">Kiel sendi</string>
+    <string name="preference_agents_transport_summary">Aŭtomate malfermas la agentan aplikaĵon se instalita, alie la retejon. Termux rulas CLI en la oficiala Termux-aplikaĵo</string>
+    <string name="preference_agents_send_sentences">Sendi frazojn per Enter</string>
+    <string name="preference_agents_send_sentences_summary">Demando de tri aŭ pli da vortoj iras al la agento anstataŭ malfermi la unuan aplikaĵon</string>
+    <string name="preference_search_bar_voice">Voĉa enigo en la serĉbreto</string>
+    <string name="preference_search_bar_voice_summary">La mikrofono uzas parolrekonon en la aparato kiam la telefono subtenas ĝin</string>
+    <string name="search_bar_voice">Voĉa serĉo</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Aplikaĵo, poste retejo</string>
+    <string name="agent_transport_app">Agenta aplikaĵo</string>
+    <string name="agent_transport_web">Retejo</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Demandu %1$s</string>
+    <string name="agent_launch_failed">Ne eblis malfermi la agenton</string>
+    <string name="preference_keyboard_shortcuts">Fulmoklavoj de aparata klavaro</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Spaco aŭ Super+A malfermas serĉon, Super+Enter Terminalon, Super+1 hejmekranon</string>
+    <string name="preference_category_telos_navigation">Telos-navigado</string>
+    <string name="preference_telos_navigation">Randaj gestoj (reen, hejmo, lastaj)</string>
+    <string name="preference_telos_navigation_summary">Maldikaj strioj ĉe la randoj. Deflanke Reen, de malsupre Hejmo, tenu por Lastaj. Bezonas alireblecan servon. Defaŭlte malŝaltita</string>
+    <string name="preference_telos_recents">Telos lastaj</string>
+    <string name="preference_telos_recents_summary">Telos-listo anstataŭ la sistemaj lastaj. Defaŭlte malŝaltita</string>
+    <string name="telos_recents_title">Lastaj aplikaĵoj</string>
+    <string name="telos_recents_clear">Viŝi ĉion</string>
+</resources>

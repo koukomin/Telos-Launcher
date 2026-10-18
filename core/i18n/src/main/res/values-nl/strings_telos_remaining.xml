@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Bestandsoverdrachten</string>
     <string name="telos_files_two_panels">Twee panelen</string>
     <string name="telos_media_listen">Luisteren</string>
+    <string name="telos_media_watch">Kijken</string>
+    <string name="telos_media_live">Live</string>
     <string name="telos_media_store_description">Luister naar lokale muziek, radio en YouTube Music, bekijk lokale video\'s of YouTube en ontdek TV en Stremio Fork.</string>
     <string name="telos_store_auto_enable">Inschakelen en bijwerken</string>
     <string name="telos_store_auto_explanation">Automatische updates inschakelen voor de geselecteerde apps? Toekomstige updates worden automatisch geïnstalleerd als Shizuku of root stille installatie toestaat. Anders ontvang je een updatemelding. Je kunt dit voor elke app wijzigen in de instellingen.</string>

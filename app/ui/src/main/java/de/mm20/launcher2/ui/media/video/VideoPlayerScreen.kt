@@ -523,6 +523,9 @@ private fun PlayerContent(
 
     var playerView by remember { mutableStateOf<PlayerView?>(null) }
     var gestureHint by remember { mutableStateOf<String?>(null) }
+    var levelsActive by remember { mutableStateOf(false) }
+    var gestureBrightness by remember { mutableStateOf<Float?>(null) }
+    var gestureVolume by remember { mutableStateOf<Float?>(null) }
     var speed by remember { mutableStateOf(1f) }
     var sleepMinutes by remember { mutableStateOf(0) }
     var showMenu by remember { mutableStateOf(false) }
@@ -566,7 +569,15 @@ private fun PlayerContent(
                     this.player = player
                     playerView = this
                     resizeMode = VideoPrefs.resizeMode(ctx)
-                    attachGestures(this, player, ctx as? android.app.Activity, { speed }, { gestureHint = it })
+                    attachGestures(this, player, ctx as? android.app.Activity, { speed }, { gestureHint = it }) { b, v, active ->
+                        levelsActive = active
+                        if (b != null) gestureBrightness = b
+                        if (v != null) gestureVolume = v
+                        if (!active) {
+                            gestureBrightness = null
+                            gestureVolume = null
+                        }
+                    }
                     setShowSubtitleButton(true)
                     setShowNextButton(true)
                     setShowPreviousButton(true)
@@ -599,8 +610,10 @@ private fun PlayerContent(
             },
         )
         PlayerLevelControls(
-            visible = controlsVisible && !inPictureInPicture,
+            visible = (controlsVisible || levelsActive) && !inPictureInPicture,
             window = context.findActivity()?.window,
+            brightnessOverride = gestureBrightness,
+            volumeOverride = gestureVolume,
             onAdjusting = { adjusting ->
                 playerView?.let { view ->
                     view.controllerShowTimeoutMs = if (adjusting) 0 else 3000

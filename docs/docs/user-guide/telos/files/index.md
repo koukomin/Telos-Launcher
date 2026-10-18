@@ -6,6 +6,7 @@ Solid Explorer and MiXplorer (no code was copied).
 ::: info At a glance
 <Badge type="tip" text="local storage" /> <Badge type="tip" text="WebDAV, Nextcloud, ownCloud" />
 <Badge type="tip" text="SFTP, SMB, FTP" /> <Badge type="tip" text="Dropbox, Google Drive, OneDrive" />
+<Badge type="tip" text="ISO and zip folders" /> <Badge type="tip" text="RAW HEIC HEVC thumbs" />
 <Badge type="warning" text="Cryptomator (read only, experimental)" /> <Badge type="warning" text="root explorer (optional, untested)" />
 :::
 
@@ -61,13 +62,13 @@ legacy storage permission prompt on Android 10 and older).
 | Storage | One card per volume: **Internal storage**, and SD cards or USB drives, with a usage bar and "N free of M" |
 | Quick access | Downloads, Camera, Pictures, Music, Movies and Documents of the internal storage (created if missing) |
 | Favorites | Folders you added to favorites, each with a remove button |
-| Network and cloud | Your saved [connections](./network-cloud) |
+| Network and cloud | Your saved [connections](./network-cloud), with free/total space when the server reports a quota |
 | Tools | **Root file system**, enabled only while the [root explorer](./root) is on |
 
 ### Storage drawer
 
 The drawer (storage icon at the top left) lists Home, every volume with its free space, Favorites, Network and
-cloud connections (with **Add or manage...**), and Tools with the root explorer switch.
+cloud connections (free/total when known, plus **Add or manage...**), and Tools with the root explorer switch.
 
 ### Folder view
 

@@ -63,8 +63,8 @@
 | AES-256 ZIP | Ναι | Encryption αναφέρεται ξεχωριστά | Υπάρχει |
 | Encrypted ZIP/7z ανάγνωση | Ναι | — | Υπάρχει· password μόνο στη μνήμη |
 | RAR/RAR5 | Ανάγνωση | Ναι | Ανάγνωση στο default flavor· όχι encrypted ή split RAR |
-| Split ZIP/7z και τροποποίηση archive | Ναι | — | Προστέθηκαν split ZIP δημιουργία/ανάγνωση· όχι split 7z ή τροποποίηση archive |
-| CAB/ISO/WIM/DMG/virtual disks και λοιπά 7-Zip formats | Πολλά formats | — | Αναγνωρίζονται ορισμένες επεκτάσεις, αλλά δεν σημαίνει ότι διαβάζονται |
+| Split ZIP/7z και τροποποίηση archive | Ναι | — | Split ZIP δημιουργία/ανάγνωση. Unencrypted zip γράφεται μέσα (νέο αρχείο, φάκελος, διαγραφή, μετονομασία). 7z/tar/ISO/RAR μένουν ανάγνωση |
+| CAB/ISO/WIM/DMG/virtual disks και λοιπά 7-Zip formats | Πολλά formats | — | ISO 9660/Joliet (`iso`, `img`) ανοίγει ως φάκελος, ανάγνωση. Τα υπόλοιπα μόνο εικονίδιο archive |
 | Standalone encryption/password/fingerprint | Aescrypt/containers | AES-256/fingerprint | Προστέθηκε chunked AES-256-GCM encrypted-file workflow με κωδικό· όχι fingerprint/container υποστήριξη |
 | gocryptfs/EncFS containers | Ναι | — | Δεν υπάρχουν |
 | Cryptomator | — | — | Υπάρχει read-only, experimental, τοπικό vault |
@@ -73,7 +73,9 @@
 | APK signer | v1/v2/v3 | — | Δεν υπάρχει μέσα στο Files |
 | Εικόνες/ήχος/video/PDF/EPUB/text | Ναι | Built-in media/text | Ανοίγουν στους Telos Viewer/Media· μέρος του ενιαίου οικοσυστήματος |
 | HTML/MHT/CHM/MAFF και font viewer | Ναι | — | Δεν υπάρχει πλήρης αντίστοιχη κάλυψη |
-| RAW/TIFF και ειδικοί codecs | Ναι/add-ons | — | Εξαρτάται από Viewer/Android decoders· όχι πλήρες πακέτο MiX add-ons |
+| RAW/TIFF και ειδικοί codecs | Ναι/add-ons | — | HEIC/HEIF, camera RAW (embedded JPEG), HEVC/H.265 video thumbs στο ίδιο catalog με τον Viewer |
+| FUSE mounts (ISO, archives) | Ναι | — | Χωρίς kernel FUSE: ISO και archives ως εικονικοί φάκελοι. Εγγραφή μόνο σε unencrypted zip |
+| SMB browse με όνομα/IP | Ναι | Ναι | Hostname, `.local`, IP, `smb://host/share`, mDNS κοντινών υπολογιστών, λίστα shares |
 
 ## Σειρά υλοποίησης των υπολοίπων
 

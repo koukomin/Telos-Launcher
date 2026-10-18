@@ -132,6 +132,8 @@
     <string name="telos_files_transfers_title">Transferentias de files</string>
     <string name="telos_files_two_panels">Duo pannellos</string>
     <string name="telos_media_listen">Ascoltar</string>
+    <string name="telos_media_watch">Reguardar</string>
+    <string name="telos_media_live">In directo</string>
     <string name="telos_media_store_description">Ascolta musica local, radio e YouTube Music, vide videos local o de YouTube, e explora TV e Stremio Fork.</string>
     <string name="telos_store_auto_enable">Activar e actualisar</string>
     <string name="telos_store_auto_explanation">Activar actualisationes automatic pro le applicationes seligite? Actualisationes futur se installa automaticamente quando Shizuku o root permitte installation silente. Alteremente tu recipera un notification de actualisation. Tu pote cambiar isto in le parametros de cata application.</string>

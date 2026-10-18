@@ -30,6 +30,7 @@ Presets are bundles shipped with the app. A bundle can set colors, a layout, or 
 | --- | --- |
 | Telos | Glass transparencies, transparent search bar, drawer blur, glass widgets (listed first) |
 | AMOLED Black | Colors |
+| AMOLED Red, Green, Yellow, Light Blue, Magenta, Orange | Colors: pure black, that accent, white type |
 | Cyberpunk | Colors |
 | Colorful Grid | Colors and layout |
 | Classic Grid | Layout |
@@ -48,7 +49,7 @@ menu to edit, duplicate or delete it.
 
 | Area | Built-in schemes | Custom |
 | --- | --- | --- |
-| Color scheme | Default (Material You on Android 12+), High contrast, Black and white | Key colors, then generated tones. Palette, custom or "from primary color" |
+| Color scheme | Default (Material You on Android 12+), High contrast, Black and white, AMOLED Black, AMOLED Red / Green / Yellow / Light Blue / Magenta / Orange, Cyberpunk | Key colors, then generated tones. Palette, custom or "from primary color" |
 | Shapes | Default, Cut, Extra round, Rectangular | Base shape plus per-size overrides (extra small to extra extra large) |
 | Typography | Google Sans, Google Sans (Rounded), System default, Serif, Monospace | Add or remove font styles and choose a device or generic font for each |
 | Transparency | Default, Semi-transparent | Opacity of the Background, Surface and Elevated surface layers |

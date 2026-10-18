@@ -17,7 +17,8 @@ button to add one.
    connect: reason".
 4. Tap **Save**. **Delete** (in an existing connection) removes it and forgets its secrets.
 
-Saved connections appear on the Files home page and in the drawer, sorted by name. A saved connection is opened as
+Saved connections appear on the Files home page and in the drawer, sorted by name, with free/total space when the
+server reports a quota. A saved connection is opened as
 `rem://` followed by its id. Names are free text; the default is the type name.
 
 ## Protocols at a glance
@@ -46,7 +47,7 @@ Saved connections appear on the Files home page and in the drawer, sorted by nam
 | Password | all but cloud | Stored encrypted. With an SFTP key it is the key's passphrase |
 | Folder on the server (optional) | WebDAV, Nextcloud, ownCloud | A sub folder to start in |
 | Start folder (optional) | SFTP, FTP | Folder opened first |
-| Shared folder name | SMB | **Required.** The share, for example `media`. Without it "Enter the name of the shared folder" |
+| Shared folder name | SMB | Optional. Leave empty to list shares. You can also put `smb://host/share` in the server field. |
 | Use https | WebDAV, Nextcloud, ownCloud | Off means plain `http`, not encrypted |
 | Encrypt with TLS (FTPS) | FTP | Explicit TLS with a protected data channel. Off means plain FTP |
 | Private key | SFTP | Paste the key file text. Optional |
@@ -84,7 +85,8 @@ instead of your main password, especially with two-factor authentication.
 ### SMB / CIFS
 
 - Windows shares and NAS devices. Guest access when the user name is empty.
-- A share name is mandatory; use the form `DOMAIN\user` for domain accounts.
+- Host can be a DNS name, a `.local` name, an IP address, or `smb://host/share`. Nearby computers advertised with mDNS (`_smb._tcp`) are listed in the connection form.
+- Leave the share name empty to list shared folders (common names are probed). Use `DOMAIN\user` for domain accounts.
 - Only the SMB2 and SMB3 family is supported by the library; very old SMB1 servers do not work.
 
 ### FTP / FTPS
@@ -251,7 +253,7 @@ In the picture view (grid), tiles of cloud and network storages show the coloure
 | "Could not connect: ..." | Check server, port and that the phone can reach it. Test with a browser or another client |
 | "Access denied. Check the user name and password." | Wrong credentials, or an app password is needed |
 | SFTP says the host key changed | The server was reinstalled, or someone is intercepting. Delete the connection and add it again only if you trust the change |
-| "Enter the name of the shared folder" | SMB needs the share name in **Shared folder name** |
+| "Enter the name of the shared folder" | Type a share, use `smb://host/share`, or leave the share blank so Telos can list them |
 | "Not signed in. Open the connection and sign in." | The refresh token is gone. Sign in again and Save |
 | "Sign-in failed" or "Signing in took too long" | Redirect address mismatch, or you took more than three minutes |
 | "The service did not give a refresh token" | Remove the app's earlier grant in the provider's account settings and sign in again |

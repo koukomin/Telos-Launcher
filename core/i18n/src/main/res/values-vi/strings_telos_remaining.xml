@@ -132,6 +132,8 @@
     <string name="telos_files_transfers_title">Truyền tệp</string>
     <string name="telos_files_two_panels">Hai bảng</string>
     <string name="telos_media_listen">Nghe</string>
+    <string name="telos_media_watch">Watch</string>
+    <string name="telos_media_live">Live</string>
     <string name="telos_media_store_description">Nghe nhạc cục bộ, radio và YouTube Music, xem video cục bộ hoặc YouTube, và khám phá TV cùng Stremio Fork.</string>
     <string name="telos_store_auto_enable">Bật và cập nhật</string>
     <string name="telos_store_auto_explanation">Bật cập nhật tự động cho các ứng dụng đã chọn? Các bản cập nhật sau này được cài tự động khi Shizuku hoặc root cho phép cài đặt im lặng. Nếu không, bạn sẽ nhận thông báo cập nhật. Bạn có thể đổi tùy chọn này trong cài đặt từng ứng dụng.</string>

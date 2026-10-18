@@ -46,6 +46,7 @@ fun DesktopModeSettingsScreen() {
     val wallpaperMode by viewModel.wallpaperMode.collectAsStateWithLifecycle(DesktopWallpaperMode.SolidColor)
     val wallpaperImageUri by viewModel.wallpaperImageUri.collectAsStateWithLifecycle(null)
     val gridIconSize by viewModel.gridIconSize.collectAsStateWithLifecycle(48)
+    val keyboardShortcuts by viewModel.hardwareKeyboardShortcuts.collectAsStateWithLifecycle(true)
 
     val context = LocalContext.current
     val imagePicker = rememberLauncherForActivityResult(
@@ -125,6 +126,12 @@ fun DesktopModeSettingsScreen() {
                         min = 32,
                         max = 80,
                         onValueChanged = { viewModel.setGridIconSize(it) },
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_keyboard_shortcuts),
+                        summary = stringResource(R.string.preference_keyboard_shortcuts_summary),
+                        value = keyboardShortcuts,
+                        onValueChanged = { viewModel.setHardwareKeyboardShortcuts(it) },
                     )
                 }
             }

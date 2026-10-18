@@ -51,6 +51,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.share.ShareActions
+import de.mm20.launcher2.ui.component.virtualAppGlass
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -73,6 +75,8 @@ internal enum class DocCategory(val labelRes: Int, val exts: Set<String>) {
     Sheets(R.string.au20_viewer_cat_sheets, setOf("xls", "xlsx", "ods", "csv", "tsv", "gsheet")),
     Slides(R.string.au20_viewer_cat_slides, setOf("ppt", "pptx", "odp", "gslides")),
     Ebooks(R.string.au20_viewer_cat_ebooks, setOf("epub")),
+    Comics(R.string.au20_viewer_cat_comics, setOf("cbz", "cbr", "cbt", "cb7")),
+    Graphics(R.string.au20_viewer_cat_graphics, setOf("svg", "psd", "ai", "cdr")),
     Other(
         R.string.au20_viewer_cat_other,
         setOf("json", "xml", "html", "htm", "log", "yml", "yaml", "ini", "conf", "srt", "vtt", "gpx", "kml", "tex", "gdraw", "gform", "gsite"),
@@ -336,8 +340,14 @@ fun ViewerScreen() {
         tab = t
         runCatching { context.getSharedPreferences("telos_viewer", Context.MODE_PRIVATE).edit().putInt("tab", t).apply() }
     }
-    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).statusBarsPadding()) {
-        androidx.compose.material3.TabRow(selectedTabIndex = tab, containerColor = Color.Transparent) {
+    val blur = de.mm20.launcher2.ui.component.rememberVirtualAppBlur()
+    val bar = de.mm20.launcher2.ui.component.virtualAppElevated()
+    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)).statusBarsPadding()) {
+        androidx.compose.material3.TabRow(
+            selectedTabIndex = tab,
+            containerColor = Color.Transparent,
+            modifier = Modifier.virtualAppGlass(blur, bar),
+        ) {
             androidx.compose.material3.Tab(selected = tab == 0, onClick = { select(0) }, text = { Text(stringResource(R.string.hc_photos)) })
             androidx.compose.material3.Tab(selected = tab == 1, onClick = { select(1) }, text = { Text(stringResource(R.string.au20_viewer_cat_documents)) })
         }

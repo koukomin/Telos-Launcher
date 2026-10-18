@@ -1156,4 +1156,6 @@
     </plurals>
     <string name="dl_m_auto_update">yt-dlp automatisch aktualisieren</string>
     <string name="dl_m_auto_update_sum">Lädt einmal täglich per WLAN das neueste yt-dlp, damit Downloads auch nach Änderungen der Seiten funktionieren</string>
+    <string name="telos_files_peek_select">Auswählen</string>
+    <string name="telos_files_smb_nearby">Computer in diesem Netzwerk</string>
 </resources>

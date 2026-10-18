@@ -28,6 +28,7 @@ import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.ui.settings.comms.CommsSettingsRoute
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -200,7 +201,7 @@ fun CommsDashboardScreen(
         }
     ) {
         Scaffold(
-            containerColor = MaterialTheme.colorScheme.background,
+            containerColor = MaterialTheme.colorScheme.background.copy(alpha = MaterialTheme.transparency.background),
             topBar = {
                 Column(Modifier.statusBarsPadding()) {
                     if (inSubScreen) Row(

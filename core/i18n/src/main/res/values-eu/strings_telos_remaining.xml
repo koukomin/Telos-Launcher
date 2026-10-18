@@ -132,6 +132,8 @@
     <string name="telos_files_transfers_title">Fitxategi-transferentziak</string>
     <string name="telos_files_two_panels">Bi panel</string>
     <string name="telos_media_listen">Entzun</string>
+    <string name="telos_media_watch">Ikusi</string>
+    <string name="telos_media_live">Zuzenekoa</string>
     <string name="telos_media_store_description">Entzun tokiko musika, irratia eta YouTube Music, ikusi tokiko bideoak edo YouTube, eta arakatu telebista eta Stremio Fork.</string>
     <string name="telos_store_auto_enable">Gaitu eta eguneratu</string>
     <string name="telos_store_auto_explanation">Hautatutako aplikazioetarako eguneratze automatikoak gaitu? Etorkizuneko eguneratzeak automatikoki instalatuko dira Shizuku-k edo root-ek instalazio isila baimentzen dutenean. Bestela, eguneratze-jakinarazpen bat jasoko duzu. Aplikazio bakoitzaren ezarpenetan alda dezakezu.</string>

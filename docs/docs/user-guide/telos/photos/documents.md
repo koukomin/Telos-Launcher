@@ -21,7 +21,10 @@ when the sender gives a generic type.
 
 | Format | How it is shown |
 | --- | --- |
-| PDF | Page by page, pinch to zoom (1x to 4x), page counter, **Search in PDF**, **Go to page**, **PDF tools**. Password-protected PDFs ask for the password in the PDF tools |
+| PDF | Continuous vertical pages, pinch to zoom (1x to 4x), page counter, **Search in PDF**, **Go to page**, **Night pages**, **Highlight mode** (drag over text; snaps to glyphs and stores the words; **Highlight all** from search), **PDF tools**. Marks stay on the device, they are not written into the PDF. Password-protected PDFs ask for the password in the PDF tools |
+| Comics (CBZ, CBR, CBT, CB7) | Page pager of the images in the archive. CBR uses the same RAR reader as Telos Files (not in the F-Droid build) |
+| SVG | Vector preview |
+| PSD, AI, CDR | Flattened preview only: PSD thumbnail, AI as PDF when the file is PDF-based otherwise an embedded bitmap, CDR an embedded PNG/JPEG if present. Layers and vectors are not editable |
 | Plain text and code | Monospace, selectable. **Edit** and **Save** write back to the file |
 | Word (`.docx`) | Headings, paragraphs, lists, tables and pictures. Editable |
 | Excel (`.xlsx`) | One table per sheet, with formulas. Editable |
@@ -29,7 +32,7 @@ when the sender gives a generic type.
 | OpenDocument (`.odt`, `.ods`, `.odp`) | Like the matching Office format. Editable |
 | Old Office (`.doc`, `.xls`, `.ppt`) | Read-only, with **Convert to ... and edit** |
 | RTF | Extracted text |
-| EPUB | Extracted readable text |
+| EPUB | Readable text with larger/smaller type, serif or sans, and a night theme (remembered on the device) |
 
 Recognised text and code extensions: `txt md markdown csv tsv log json xml html htm yml yaml ini conf prop
 properties kt java py js css sh c cpp h rs go toml sql gradle srt vtt ass gpx kml tex bat`.

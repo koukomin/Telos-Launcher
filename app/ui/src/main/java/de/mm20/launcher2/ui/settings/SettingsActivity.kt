@@ -1,7 +1,10 @@
 package de.mm20.launcher2.ui.settings
 
 import android.content.Intent
+import android.graphics.Color as AndroidColor
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.WindowManager
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.LocalActivity
@@ -207,6 +210,7 @@ import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsRoute
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
 import de.mm20.launcher2.ui.theme.LauncherTheme
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 
 open class SettingsActivity : BaseActivity() {
@@ -228,6 +232,8 @@ open class SettingsActivity : BaseActivity() {
             return
         }
         WindowCompat.enableEdgeToEdge(window)
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER)
+        window.setBackgroundDrawable(ColorDrawable(AndroidColor.TRANSPARENT))
 
         applyTaskLabel(intent)
         val newRoute = getStartRoute(intent)
@@ -444,6 +450,9 @@ open class SettingsActivity : BaseActivity() {
             entry<SearchSettingsRoute> {
                 SearchSettingsScreen()
             }
+            entry<de.mm20.launcher2.ui.settings.agents.AgentsSettingsRoute> {
+                de.mm20.launcher2.ui.settings.agents.AgentsSettingsScreen()
+            }
             entry<GesturesSettingsRoute> {
                 GestureSettingsScreen()
             }
@@ -654,7 +663,11 @@ open class SettingsActivity : BaseActivity() {
                         OverlayHost(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(MaterialTheme.colorScheme.surfaceContainer)
+                                .background(
+                                    MaterialTheme.colorScheme.surface.copy(
+                                        alpha = MaterialTheme.transparency.background
+                                    )
+                                )
                         ) {
                             // a Telos app opened directly is the only entry: going back from it closes the activity
                             // (an empty back stack must never reach NavDisplay)
@@ -778,7 +791,6 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_FLOATING_LAUNCHER -> FloatingLauncherSettingsRoute
             ROUTE_WALLPAPER -> WallpaperSettingsRoute
             ROUTE_WEB_APPS -> WebAppsSettingsRoute
-            ROUTE_APP_RECOMMENDATIONS -> SearchSettingsRoute
             ROUTE_INTRUDER_PHOTOS -> IntruderPhotosRoute
             ROUTE_STORE -> StoreDashboardRoute(addUrl = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_STORE_URL).orEmpty())
             // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
@@ -835,7 +847,6 @@ open class SettingsActivity : BaseActivity() {
         const val ROUTE_FLOATING_LAUNCHER = "settings/floatinglauncher"
         const val ROUTE_WALLPAPER = "settings/wallpaper"
         const val ROUTE_WEB_APPS = "settings/webapps"
-        const val ROUTE_APP_RECOMMENDATIONS = "settings/search/recommendations"
         // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
         const val ROUTE_DESKTOP_MODE = "settings/desktopmode"
         // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===

@@ -20,6 +20,9 @@ class TelosInCallService : InCallService(), KoinComponent {
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
         TelosCallSession.inCallService = this
+        popupScope.launch {
+            CallBlockEngine.rejectIfNeeded(applicationContext, call)
+        }
         TelosCallSession.onCallAdded(call)
         CallNotification.show(this, TelosCallSession.ui.value)
         startCallUi()

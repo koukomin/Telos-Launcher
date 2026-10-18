@@ -39,6 +39,9 @@ class DesktopModeSettingsScreenVM(
     val gridIconSize = settings.gridIconSize
     fun setGridIconSize(size: Int) = settings.setGridIconSize(size)
 
+    val hardwareKeyboardShortcuts = settings.hardwareKeyboardShortcuts
+    fun setHardwareKeyboardShortcuts(enabled: Boolean) = settings.setHardwareKeyboardShortcuts(enabled)
+
     fun setWallpaperImage(uri: Uri, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
             val path = wallpapersService.setDesktopWallpaper(uri)

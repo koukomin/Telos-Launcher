@@ -2566,4 +2566,6 @@
     </plurals>
     <string name="dl_m_auto_update">Aktualizovať yt-dlp automaticky</string>
     <string name="dl_m_auto_update_sum">Raz denne cez Wi-Fi stiahne najnovšie yt-dlp, aby sťahovanie fungovalo aj po zmenách webov</string>
+    <string name="telos_files_peek_select">Vybrať</string>
+    <string name="telos_files_smb_nearby">Počítače v tejto sieti</string>
 </resources>

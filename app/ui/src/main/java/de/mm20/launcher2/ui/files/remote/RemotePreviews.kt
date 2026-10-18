@@ -37,10 +37,8 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.security.MessageDigest
 
-private val previewExts = setOf(
-    "jpg", "jpeg", "png", "webp", "gif", "heic",
-    "pdf", "odt", "ods", "odp", "docx", "xlsx", "pptx", "epub",
-)
+private val previewExts: Set<String>
+    get() = de.mm20.launcher2.ui.media.PreviewCatalog.remoteExts()
 
 /**
  * Whether a file of a cloud or network storage may be downloaded to draw its preview.

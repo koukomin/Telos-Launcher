@@ -5,7 +5,7 @@ import org.junit.Test
 
 class EmbeddedBrowserPolicyTest {
     @Test fun bundledEngineIsTheDefault() {
-        assertEquals(EmbeddedBrowserPolicy.Ironewolf,
+        assertEquals(EmbeddedBrowserPolicy.WebView,
             EmbeddedBrowserPolicy.select(EmbeddedBrowserPolicy.Default, true))
     }
 
@@ -20,7 +20,7 @@ class EmbeddedBrowserPolicyTest {
     }
 
     @Test fun unknownPersistedValuesUseTheAvailableDefault() {
-        assertEquals(EmbeddedBrowserPolicy.Ironewolf,
+        assertEquals(EmbeddedBrowserPolicy.WebView,
             EmbeddedBrowserPolicy.select("old-value", true))
         assertEquals(EmbeddedBrowserPolicy.WebView,
             EmbeddedBrowserPolicy.select("old-value", false))

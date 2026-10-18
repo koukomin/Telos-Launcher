@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">ファイル転送</string>
     <string name="telos_files_two_panels">2つのパネル</string>
     <string name="telos_media_listen">聴く</string>
+    <string name="telos_media_watch">視聴</string>
+    <string name="telos_media_live">ライブ</string>
     <string name="telos_media_store_description">ローカルの音楽、ラジオ、YouTube Musicを聴いたり、ローカル動画やYouTubeを観たり、TVやStremio Forkを楽しめます。</string>
     <string name="telos_store_auto_enable">有効にして更新</string>
     <string name="telos_store_auto_explanation">選択したアプリの自動更新を有効にしますか？Shizukuまたはrootでサイレントインストールが可能な場合、今後の更新は自動でインストールされます。それ以外の場合は更新通知が届きます。この設定は各アプリの設定で変更できます。</string>

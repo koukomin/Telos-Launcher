@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">تعيين كخلفية</string>
+    <string name="viewer_favorite">مفضلة</string>
+    <string name="viewer_story_recents">الأخيرة</string>
+    <string name="viewer_story_screenshots">لقطات الشاشة</string>
+    <string name="viewer_story_favorites">المفضلة</string>
+    <string name="viewer_pdf_night">صفحات ليلية</string>
+    <string name="viewer_pdf_highlight">وضع التظليل</string>
+    <string name="viewer_epub_larger">نص أكبر</string>
+    <string name="viewer_epub_smaller">نص أصغر</string>
+    <string name="viewer_epub_serif">serif / sans</string>
+    <string name="viewer_epub_night">سمة ليلية</string>
+
+    <string name="au20_viewer_cat_comics">قصص مصورة</string>
+    <string name="au20_viewer_cat_graphics">رسوم</string>
+    <string name="viewer_highlight_all">تمييز الكل</string>
+    <string name="viewer_highlight_added">%1$d تمييزات</string>
+    <string name="viewer_comic_empty">لا صفحات في هذا الملف</string>
+    <string name="viewer_cbr_fdroid">CBR (RAR) غير متوفر في إصدار F-Droid. استخدم CBZ أو Play/GitHub.</string>
+    <string name="viewer_cbr_encrypted">هذا CBR مشفّر</string>
+    <string name="viewer_preview_svg">معاينة SVG</string>
+    <string name="viewer_preview_psd">معاينة PSD (مصغّر)</string>
+    <string name="viewer_preview_cdr">معاينة CDR (صورة مضمّنة)</string>
+    <string name="viewer_preview_ai">معاينة AI (صورة مضمّنة؛ يفتح AI بصيغة PDF كـ PDF)</string>
+    <string name="viewer_preview_none">لا معاينة</string>
+</resources>

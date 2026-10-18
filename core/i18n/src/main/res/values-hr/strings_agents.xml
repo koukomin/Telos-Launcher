@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agenti</string>
+    <string name="preference_screen_agents_summary">Pošalji pretragu Groku, Claudeu, ChatGPT-u i drugima. Isključeno prema zadanim postavkama</string>
+    <string name="preference_agents_enabled">Uključi agente u pretraživanju</string>
+    <string name="preference_agents_enabled_summary">Prikazuje čip Pitaj. Telos ne sprema API ključ; aplikacija ili web mjesto agenta koristi račun u koji ste već prijavljeni</string>
+    <string name="preference_agents_provider">Agent</string>
+    <string name="preference_agents_transport">Kako poslati</string>
+    <string name="preference_agents_transport_summary">Auto otvara aplikaciju agenta ako je instalirana, inače web. Termux pokreće CLI u službenoj Termux aplikaciji</string>
+    <string name="preference_agents_send_sentences">Šalji rečenice s Enterom</string>
+    <string name="preference_agents_send_sentences_summary">Upit od tri ili više riječi šalje se agentu umjesto otvaranja prve aplikacije</string>
+    <string name="preference_search_bar_voice">Glasovni unos na traci pretraživanja</string>
+    <string name="preference_search_bar_voice_summary">Mikrofon koristi prepoznavanje govora na uređaju kada telefon to podržava</string>
+    <string name="search_bar_voice">Glasovno pretraživanje</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Aplikacija, zatim web</string>
+    <string name="agent_transport_app">Aplikacija agenta</string>
+    <string name="agent_transport_web">Web mjesto</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Pitaj %1$s</string>
+    <string name="agent_launch_failed">Nije moguće otvoriti agenta</string>
+    <string name="preference_keyboard_shortcuts">Prečaci hardverske tipkovnice</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Razmaknica ili Super+A otvara pretragu, Super+Enter Terminal, Super+1 početni zaslon</string>
+    <string name="preference_category_telos_navigation">Telos navigacija</string>
+    <string name="preference_telos_navigation">Geste s rubova (natrag, početna, nedavno)</string>
+    <string name="preference_telos_navigation_summary">Tanke trake na rubovima. Sa strane Natrag, odozdo gore Početna, drži za Nedavno. Potrebna je usluga pristupačnosti. Isključeno prema zadanim postavkama</string>
+    <string name="preference_telos_recents">Telos nedavno</string>
+    <string name="preference_telos_recents_summary">Telos popis umjesto sistemskih nedavnih. Isključeno prema zadanim postavkama</string>
+    <string name="telos_recents_title">Nedavne aplikacije</string>
+    <string name="telos_recents_clear">Obriši sve</string>
+</resources>

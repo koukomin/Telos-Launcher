@@ -1774,4 +1774,6 @@
     </plurals>
     <string name="dl_m_auto_update">Uppdatera yt-dlp automatiskt</string>
     <string name="dl_m_auto_update_sum">Hämtar senaste yt-dlp en gång per dag via Wi-Fi så att nedladdningar fortsätter fungera när webbplatser ändras</string>
+    <string name="telos_files_peek_select">Välj</string>
+    <string name="telos_files_smb_nearby">Datorer på det här nätverket</string>
 </resources>

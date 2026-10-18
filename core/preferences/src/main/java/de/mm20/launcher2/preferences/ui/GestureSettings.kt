@@ -137,4 +137,18 @@ class GestureSettings internal constructor(
             it.copy(gestures = it.gestures.copy(gesturesTwoFingerSwipeDown = action))
         }
     }
+
+    val telosNavigation
+        get() = dataStore.data.map { it.gestures.telosNavigation }.distinctUntilChanged()
+
+    fun setTelosNavigation(enabled: Boolean) {
+        dataStore.update { it.copy(gestures = it.gestures.copy(telosNavigation = enabled)) }
+    }
+
+    val telosRecents
+        get() = dataStore.data.map { it.gestures.telosRecents }.distinctUntilChanged()
+
+    fun setTelosRecents(enabled: Boolean) {
+        dataStore.update { it.copy(gestures = it.gestures.copy(telosRecents = enabled)) }
+    }
 }

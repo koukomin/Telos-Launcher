@@ -41,7 +41,9 @@ class TelosCallScreeningService : CallScreeningService(), KoinComponent {
         val presentation = callDetails.handlePresentation
         scope.launch {
             // a failing lookup must never leave the call without an answer
-            val block = runCatching { shouldBlock(phoneNumber, presentation) }.getOrDefault(false)
+            val block = runCatching {
+                CallBlockEngine.shouldBlock(phoneNumber, presentation, incoming = true)
+            }.getOrDefault(false)
             if (block) {
                 Log.i("TelosCallScreening", "Silently rejecting a call")
                 val response = CallResponse.Builder()

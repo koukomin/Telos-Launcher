@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">Duvar kâğıdı yap</string>
+    <string name="viewer_favorite">Favori</string>
+    <string name="viewer_story_recents">Son</string>
+    <string name="viewer_story_screenshots">Ekran görüntüleri</string>
+    <string name="viewer_story_favorites">Favoriler</string>
+    <string name="viewer_pdf_night">Gece sayfaları</string>
+    <string name="viewer_pdf_highlight">Vurgulama kipi</string>
+    <string name="viewer_epub_larger">Daha büyük yazı</string>
+    <string name="viewer_epub_smaller">Daha küçük yazı</string>
+    <string name="viewer_epub_serif">Serif / sans</string>
+    <string name="viewer_epub_night">Gece teması</string>
+
+    <string name="au20_viewer_cat_comics">Çizgi roman</string>
+    <string name="au20_viewer_cat_graphics">Grafikler</string>
+    <string name="viewer_highlight_all">Tümünü vurgula</string>
+    <string name="viewer_highlight_added">%1$d vurgu</string>
+    <string name="viewer_comic_empty">Bu çizgi romanda sayfa yok</string>
+    <string name="viewer_cbr_fdroid">CBR (RAR) F-Droid sürümünde yok. CBZ veya Play/GitHub kullanın.</string>
+    <string name="viewer_cbr_encrypted">Bu CBR şifreli</string>
+    <string name="viewer_preview_svg">SVG önizleme</string>
+    <string name="viewer_preview_psd">PSD önizleme (küçük resim)</string>
+    <string name="viewer_preview_cdr">CDR önizleme (gömülü görüntü)</string>
+    <string name="viewer_preview_ai">AI önizleme (gömülü görüntü; PDF AI, PDF olarak açılır)</string>
+    <string name="viewer_preview_none">Önizleme yok</string>
+</resources>

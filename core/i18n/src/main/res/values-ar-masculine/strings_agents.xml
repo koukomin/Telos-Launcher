@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">الوكلاء</string>
+    <string name="preference_screen_agents_summary">أرسل استعلام بحث إلى Grok وClaude وChatGPT وغيرهم. معطّل افتراضيًا</string>
+    <string name="preference_agents_enabled">تفعيل الوكلاء في البحث</string>
+    <string name="preference_agents_enabled_summary">يظهر زر اسأل في البحث. لا يخزّن Telos مفتاح API؛ يستخدم تطبيق الوكيل أو موقعه الحساب الذي سجلت الدخول إليه</string>
+    <string name="preference_agents_provider">الوكيل</string>
+    <string name="preference_agents_transport">طريقة الإرسال</string>
+    <string name="preference_agents_transport_summary">تلقائي يفتح تطبيق الوكيل إن كان مثبتًا، وإلا الموقع. Termux يشغّل واجهة الأوامر في تطبيق Termux الرسمي</string>
+    <string name="preference_agents_send_sentences">إرسال الجمل بمفتاح الإدخال</string>
+    <string name="preference_agents_send_sentences_summary">يُرسل استعلام من ثلاث كلمات أو أكثر إلى الوكيل بدل فتح أول تطبيق</string>
+    <string name="preference_search_bar_voice">إدخال صوتي في شريط البحث</string>
+    <string name="preference_search_bar_voice_summary">يستخدم زر الميكروفون التعرف على الكلام على الجهاز عندما يدعمه الهاتف</string>
+    <string name="search_bar_voice">بحث صوتي</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">التطبيق ثم الموقع</string>
+    <string name="agent_transport_app">تطبيق الوكيل</string>
+    <string name="agent_transport_web">الموقع</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">اسأل %1$s</string>
+    <string name="agent_launch_failed">تعذر فتح الوكيل</string>
+    <string name="preference_keyboard_shortcuts">اختصارات لوحة المفاتيح</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+مسافة أو Super+A يفتح البحث، Super+Enter الطرفية، Super+1 الشاشة الرئيسية</string>
+    <string name="preference_category_telos_navigation">تنقل Telos</string>
+    <string name="preference_telos_navigation">إيماءات الحافة (رجوع، رئيسية، الأخيرة)</string>
+    <string name="preference_telos_navigation_summary">يرسم شرائط رفيعة على حواف الشاشة. اسحب من الجانب للرجوع، من الأسفل للرئيسية، اضغط مطولًا للأخيرة. يحتاج خدمة إمكانية الوصول. معطّل افتراضيًا</string>
+    <string name="preference_telos_recents">الأخيرة في Telos</string>
+    <string name="preference_telos_recents_summary">يعرض قائمة Telos للتطبيقات الأخيرة بدل أخيرة النظام. معطّل افتراضيًا</string>
+    <string name="telos_recents_title">التطبيقات الأخيرة</string>
+    <string name="telos_recents_clear">مسح الكل</string>
+</resources>

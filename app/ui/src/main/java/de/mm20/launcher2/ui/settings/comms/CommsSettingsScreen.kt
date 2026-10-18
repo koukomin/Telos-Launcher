@@ -66,6 +66,7 @@ fun CommsSettingsScreen() {
     val blockHidden by viewModel.blockHiddenNumbers.collectAsStateWithLifecycle()
     val blockUnknown by viewModel.blockUnknownNumbers.collectAsStateWithLifecycle()
     val blockInternational by viewModel.blockInternational.collectAsStateWithLifecycle()
+    val blockOutgoing by viewModel.blockOutgoingCalls.collectAsStateWithLifecycle()
     val clirEnabled by viewModel.clirEnabled.collectAsStateWithLifecycle()
     val autoRecord by viewModel.autoRecordCalls.collectAsStateWithLifecycle()
     val lockCallRecordings by viewModel.lockCallRecordings.collectAsStateWithLifecycle()
@@ -801,6 +802,12 @@ fun CommsSettingsScreen() {
                     summary = stringResource(R.string.hc_reject_numbers_that_are_not_in_your_cont),
                     value = blockUnknown,
                     onValueChanged = { viewModel.setBlockUnknownNumbers(it) }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.call_block_outgoing),
+                    summary = stringResource(R.string.call_block_outgoing_sum),
+                    value = blockOutgoing,
+                    onValueChanged = { viewModel.setBlockOutgoingCalls(it) }
                 )
                 SwitchPreference(
                     title = stringResource(R.string.hc_block_international),

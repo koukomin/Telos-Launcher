@@ -1456,4 +1456,6 @@
     </plurals>
     <string name="dl_m_auto_update">Aktualizuj yt-dlp automatycznie</string>
     <string name="dl_m_auto_update_sum">Raz dziennie pobiera najnowsze yt-dlp przez Wi-Fi, aby pobieranie działało mimo zmian na stronach</string>
+    <string name="telos_files_peek_select">Zaznacz</string>
+    <string name="telos_files_smb_nearby">Komputery w tej sieci</string>
 </resources>

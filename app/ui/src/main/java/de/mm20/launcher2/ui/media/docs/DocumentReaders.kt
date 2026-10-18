@@ -18,6 +18,8 @@ sealed interface DocBlock {
 
 object DocumentTypes {
     private val pdf = setOf("pdf")
+    private val comic = setOf("cbz", "cbr", "cbt", "cb7")
+    private val graphic = setOf("svg", "psd", "ai", "cdr")
     private val office = setOf("docx", "xlsx", "pptx", "odt", "ods", "odp", "rtf", "epub", "doc", "xls", "ppt")
     private val editableOffice = setOf("docx", "xlsx", "pptx", "odt", "ods", "odp")
     private val legacyOffice = setOf("doc", "xls", "ppt")
@@ -25,13 +27,15 @@ object DocumentTypes {
 
     fun ext(name: String) = name.substringAfterLast('.', "").lowercase()
     fun isPdf(name: String) = ext(name) in pdf
+    fun isComic(name: String) = ext(name) in comic
+    fun isGraphic(name: String) = ext(name) in graphic
     fun isOffice(name: String) = ext(name) in office
     /** formats that have an Office document model (preview and editing), RTF and EPUB are plain views */
     fun isOfficeModel(name: String) = ext(name) in editableOffice || ext(name) in legacyOffice
     fun isLegacyOffice(name: String) = ext(name) in legacyOffice
     fun isText(name: String) = ext(name) in text
     fun isGoogleShortcut(name: String) = GoogleShortcuts.isShortcut(name)
-    fun supports(name: String) = isPdf(name) || isOffice(name) || isText(name) || isGoogleShortcut(name)
+    fun supports(name: String) = isPdf(name) || isOffice(name) || isText(name) || isGoogleShortcut(name) || isComic(name) || isGraphic(name)
 }
 
 /** Thrown for password protected documents. */

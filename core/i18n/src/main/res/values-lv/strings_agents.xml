@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Aģenti</string>
+    <string name="preference_screen_agents_summary">Nosūtīt meklēšanu uz Grok, Claude, ChatGPT un citiem. Pēc noklusējuma izslēgts</string>
+    <string name="preference_agents_enabled">Iespējot aģentus meklēšanā</string>
+    <string name="preference_agents_enabled_summary">Rāda mikroshēmu Jautāt. Telos nesaglabā API atslēgu; aģenta lietotne vai vietne izmanto kontu, kurā jau esat pieteicies</string>
+    <string name="preference_agents_provider">Aģents</string>
+    <string name="preference_agents_transport">Kā sūtīt</string>
+    <string name="preference_agents_transport_summary">Auto atver aģenta lietotni, ja tā ir instalēta, citādi vietni. Termux palaiž CLI oficiālajā Termux lietotnē</string>
+    <string name="preference_agents_send_sentences">Sūtīt teikumus ar Enter</string>
+    <string name="preference_agents_send_sentences_summary">Vaicājums ar trim vai vairāk vārdiem tiek sūtīts aģentam, nevis atver pirmo lietotni</string>
+    <string name="preference_search_bar_voice">Balss ievade meklēšanas joslā</string>
+    <string name="preference_search_bar_voice_summary">Mikrofons izmanto runas atpazīšanu ierīcē, ja tālrunis to atbalsta</string>
+    <string name="search_bar_voice">Meklēšana ar balsi</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Lietotne, tad vietne</string>
+    <string name="agent_transport_app">Aģenta lietotne</string>
+    <string name="agent_transport_web">Tīmekļa vietne</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Jautāt %1$s</string>
+    <string name="agent_launch_failed">Neizdevās atvērt aģentu</string>
+    <string name="preference_keyboard_shortcuts">Aparatūras tastatūras īsinājumtaustiņi</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Atstarpe vai Super+A atver meklēšanu, Super+Enter termināli, Super+1 sākuma ekrānu</string>
+    <string name="preference_category_telos_navigation">Telos navigācija</string>
+    <string name="preference_telos_navigation">Malas žesti (atpakaļ, sākums, nesenie)</string>
+    <string name="preference_telos_navigation_summary">Plānas joslas malās. No sāniem Atpakaļ, no apakšas Sākums, turiet Nesenie. Nepieciešams piekļūstamības pakalpojums. Pēc noklusējuma izslēgts</string>
+    <string name="preference_telos_recents">Telos nesenie</string>
+    <string name="preference_telos_recents_summary">Telos saraksts sistēmas vietā. Pēc noklusējuma izslēgts</string>
+    <string name="telos_recents_title">Nesenās lietotnes</string>
+    <string name="telos_recents_clear">Notīrīt visu</string>
+</resources>

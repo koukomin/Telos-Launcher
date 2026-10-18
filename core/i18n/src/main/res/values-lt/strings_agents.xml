@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agentai</string>
+    <string name="preference_screen_agents_summary">Siųsti paiešką į Grok, Claude, ChatGPT ir kitus. Pagal numatymą išjungta</string>
+    <string name="preference_agents_enabled">Įjungti agentus paieškoje</string>
+    <string name="preference_agents_enabled_summary">Rodo lustą Klausti. Telos nesaugo API rakto; agento programa ar svetainė naudoja paskyrą, į kurią jau esate prisijungę</string>
+    <string name="preference_agents_provider">Agentas</string>
+    <string name="preference_agents_transport">Kaip siųsti</string>
+    <string name="preference_agents_transport_summary">Auto atidaro agento programą, jei įdiegta, kitaip svetainę. Termux paleidžia CLI oficialioje Termux programoje</string>
+    <string name="preference_agents_send_sentences">Siųsti sakinius su Enter</string>
+    <string name="preference_agents_send_sentences_summary">Užklausa iš trijų ar daugiau žodžių siunčiama agentui, o ne atidaroma pirmoji programa</string>
+    <string name="preference_search_bar_voice">Balso įvestis paieškos juostoje</string>
+    <string name="preference_search_bar_voice_summary">Mikrofonas naudoja kalbos atpažinimą įrenginyje, jei telefonas tai palaiko</string>
+    <string name="search_bar_voice">Paieška balsu</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Programa, tada svetainė</string>
+    <string name="agent_transport_app">Agento programa</string>
+    <string name="agent_transport_web">Svetainė</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Klausti %1$s</string>
+    <string name="agent_launch_failed">Nepavyko atidaryti agento</string>
+    <string name="preference_keyboard_shortcuts">Aparatinės klaviatūros spartieji klavišai</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Tarpas arba Super+A atidaro paiešką, Super+Enter terminalą, Super+1 pradžios ekraną</string>
+    <string name="preference_category_telos_navigation">Telos naršymas</string>
+    <string name="preference_telos_navigation">Krašto gestai (atgal, pradžia, paskutinės)</string>
+    <string name="preference_telos_navigation_summary">Plonos juostos kraštuose. Iš šono Atgal, iš apačios Pradžia, palaikykite Paskutinės. Reikia pritaikymo neįgaliesiems tarnybos. Pagal numatymą išjungta</string>
+    <string name="preference_telos_recents">Telos paskutinės</string>
+    <string name="preference_telos_recents_summary">Telos sąrašas vietoj sistemos. Pagal numatymą išjungta</string>
+    <string name="telos_recents_title">Paskutinės programos</string>
+    <string name="telos_recents_clear">Išvalyti viską</string>
+</resources>

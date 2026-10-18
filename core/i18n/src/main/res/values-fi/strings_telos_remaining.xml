@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Tiedostonsiirrot</string>
     <string name="telos_files_two_panels">Kaksi paneelia</string>
     <string name="telos_media_listen">Kuuntele</string>
+    <string name="telos_media_watch">Katso</string>
+    <string name="telos_media_live">Suora</string>
     <string name="telos_media_store_description">Kuuntele paikallista musiikkia, radiota ja YouTube Musicia, katsele paikallisia tai YouTube-videoita sekä tutustu TV:hen ja Stremio Forkiin.</string>
     <string name="telos_store_auto_enable">Ota käyttöön ja päivitä</string>
     <string name="telos_store_auto_explanation">Otetaanko automaattiset päivitykset käyttöön valituille sovelluksille? Tulevat päivitykset asentuvat automaattisesti, kun Shizuku tai root sallii hiljaisen asennuksen. Muussa tapauksessa saat päivitysilmoituksen. Voit muuttaa tätä kunkin sovelluksen asetuksissa.</string>

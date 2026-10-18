@@ -132,6 +132,14 @@ internal class GestureSettingsScreenVM : ViewModel(), KoinComponent {
         gestureSettings.setTwoFingerSwipeDown(action)
     }
 
+    val telosNavigation = gestureSettings.telosNavigation
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setTelosNavigation(enabled: Boolean) = gestureSettings.setTelosNavigation(enabled)
+
+    val telosRecents = gestureSettings.telosRecents
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setTelosRecents(enabled: Boolean) = gestureSettings.setTelosRecents(enabled)
+
     private fun saveShortcut(searchable: SavableSearchable?) {
         searchable?.let { searchableRepository.insert(it) }
     }

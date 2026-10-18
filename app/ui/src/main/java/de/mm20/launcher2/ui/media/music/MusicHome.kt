@@ -118,8 +118,8 @@ internal fun MusicHome(
     val haptic = LocalHapticFeedback.current
 
     LazyColumn(
-        contentPadding = PaddingValues(bottom = 112.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
+        contentPadding = PaddingValues(bottom = 96.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp),
         modifier = Modifier.fillMaxSize(),
     ) {
         if (genres.isNotEmpty()) item(key = "genres") {
@@ -138,24 +138,18 @@ internal fun MusicHome(
             }
         }
         if (quickSongs.isNotEmpty()) item(key = "picks") {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 ShelfTitle(stringResource(R.string.au10_music_quick_picks))
-                // pages of four songs, swiped sideways (as in YouTube Music)
-                LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    items(quickSongs.chunked(4).size, key = { "picks_$it" }) { page ->
-                        Column(Modifier.width(300.dp)) {
-                            quickSongs.chunked(4)[page].forEachIndexed { j, t ->
-                                val index = page * 4 + j
-                                Row(
-                                    Modifier.fillMaxWidth().pressScale(reduceAnimations, onClick = { onPlay(quickSongs, index) }).padding(vertical = 6.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    ArtOrNote(t.albumArtUri.toString(), Modifier.size(52.dp).clip(RoundedCornerShape(6.dp)))
-                                    Column(Modifier.padding(start = 12.dp)) {
-                                        Text(t.title, style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                                        Text(t.artist.ifBlank { unknownArtist }, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                                    }
-                                }
+                Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    quickSongs.forEachIndexed { index, t ->
+                        Row(
+                            Modifier.fillMaxWidth().pressScale(reduceAnimations, onClick = { onPlay(quickSongs, index) }).padding(vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            ArtOrNote(t.albumArtUri.toString(), Modifier.size(40.dp).clip(RoundedCornerShape(6.dp)))
+                            Column(Modifier.padding(start = 10.dp).weight(1f)) {
+                                Text(t.title, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                Text(t.artist.ifBlank { unknownArtist }, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                             }
                         }
                     }
@@ -223,7 +217,7 @@ internal fun MusicHome(
                             contentAlignment = Alignment.BottomStart,
                         ) {
                             Column {
-                                Text(d.title, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.ExtraBold, color = scheme.onPrimaryContainer)
+                                Text(d.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = scheme.onPrimaryContainer)
                                 Text(d.subtitle, style = MaterialTheme.typography.labelMedium, color = scheme.onPrimaryContainer.copy(alpha = 0.75f))
                             }
                         }
@@ -236,10 +230,10 @@ internal fun MusicHome(
 
 @Composable
 private fun ArtCard(url: String?, title: String, subtitle: String, reduce: Boolean, onClick: () -> Unit, onLongClick: (() -> Unit)? = null) {
-    Column(Modifier.width(148.dp).pressScale(reduce, onClick, onLongClick)) {
-        ArtOrNote(url, Modifier.size(148.dp).clip(RoundedCornerShape(8.dp)))
-        Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 8.dp))
-        Text(subtitle, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+    Column(Modifier.width(112.dp).pressScale(reduce, onClick, onLongClick)) {
+        ArtOrNote(url, Modifier.size(112.dp).clip(RoundedCornerShape(8.dp)))
+        Text(title, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
+        Text(subtitle, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }
 
@@ -250,14 +244,14 @@ private fun GenrePill(label: String, selected: Boolean, reduce: Boolean, onClick
     val bg by animateColorAsState(if (selected) scheme.onSurface else scheme.surfaceContainerHigh, spec, label = "pillBg")
     val fg by animateColorAsState(if (selected) scheme.surface else scheme.onSurface, spec, label = "pillFg")
     Box(
-        Modifier.height(40.dp).clip(CircleShape).background(bg).pressScale(reduce, onClick).padding(horizontal = 18.dp),
+        Modifier.height(32.dp).clip(CircleShape).background(bg).pressScale(reduce, onClick).padding(horizontal = 12.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Text(label, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Medium, color = fg, maxLines = 1)
+        Text(label, style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Medium, color = fg, maxLines = 1)
     }
 }
 
 @Composable
 private fun ShelfTitle(text: String) {
-    Text(text, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 20.dp))
+    Text(text, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 16.dp))
 }

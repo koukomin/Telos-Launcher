@@ -13,6 +13,8 @@
     <string name="telos_files_rename_regex">Regular expression</string>
     <string name="telos_files_rename_invalid">Invalid name pattern or sequence number</string>
     <string name="telos_files_rename_collision">Names conflict with each other or with existing files. No files were renamed.</string>
+    <string name="telos_files_peek_select">Select</string>
+    <string name="telos_files_smb_nearby">Computers on this network</string>
     <string name="telos_files_renamed">%1$d files renamed</string>
     <string name="telos_files_rename_rolled_back">The rename was interrupted. Original names were restored.</string>
     <string name="telos_files_rename_partial">Some files could not be restored. Check the folder for files with a .telos-rename or .telos-rollback prefix.</string>

@@ -132,6 +132,8 @@
     <string name="telos_files_transfers_title">Transferències de fitxers</string>
     <string name="telos_files_two_panels">Dos panells</string>
     <string name="telos_media_listen">Escolta</string>
+    <string name="telos_media_watch">Mira</string>
+    <string name="telos_media_live">En directe</string>
     <string name="telos_media_store_description">Escolta música local, ràdio i YouTube Music, mira vídeos locals o de YouTube i explora TV i Stremio Fork.</string>
     <string name="telos_store_auto_enable">Activa i actualitza</string>
     <string name="telos_store_auto_explanation">Vols activar les actualitzacions automàtiques de les aplicacions seleccionades? Les actualitzacions futures s\'instal·laran automàticament quan Shizuku o root permetin la instal·lació silenciosa. Altrament, rebràs una notificació d\'actualització. Pots canviar-ho als ajustos de cada aplicació.</string>

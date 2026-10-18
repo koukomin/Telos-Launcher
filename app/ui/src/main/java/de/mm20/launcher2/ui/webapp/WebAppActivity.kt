@@ -70,8 +70,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
-import de.mm20.launcher2.webapp.EmbeddedBrowserPolicy
-import de.mm20.launcher2.webapp.IronewolfRuntime
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings
@@ -111,16 +109,6 @@ class WebAppActivity : BaseActivity() {
         // All embedded launches (including the app-lock gate) enter this dispatcher. Do not
         // register the renderer until its same-APK host implements the complete v1 contract.
         lifecycleScope.launch {
-            val settings: WebAppBrowsingSettings = org.koin.java.KoinJavaComponent.getKoin().get()
-            val selected = EmbeddedBrowserPolicy.select(settings.engine.first(), IronewolfRuntime.isBundled(this@WebAppActivity))
-            if (selected == EmbeddedBrowserPolicy.Ironewolf) {
-                if (!IronewolfRuntime.launch(this@WebAppActivity, url, label, customCss, shortcutKey)) {
-                    // Do not silently downgrade an explicitly selected bundled engine on failure.
-                    Toast.makeText(this@WebAppActivity, R.string.au3_sysb_no_browser, Toast.LENGTH_LONG).show()
-                }
-                finish()
-                return@launch
-            }
             showWebView(url, label, customCss, shortcutKey)
         }
     }

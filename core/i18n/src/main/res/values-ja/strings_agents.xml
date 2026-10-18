@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">エージェント</string>
+    <string name="preference_screen_agents_summary">検索を Grok、Claude、ChatGPT などに送ります。既定ではオフ</string>
+    <string name="preference_agents_enabled">検索でエージェントを有効にする</string>
+    <string name="preference_agents_enabled_summary">検索に「尋ねる」チップを表示します。Telos は API キーを保存しません。エージェントのアプリまたはサイトは、すでにサインインしているアカウントを使います</string>
+    <string name="preference_agents_provider">エージェント</string>
+    <string name="preference_agents_transport">送信方法</string>
+    <string name="preference_agents_transport_summary">自動はインストール済みならアプリ、なければウェブサイトを開きます。Termux は公式 Termux アプリで CLI を実行します</string>
+    <string name="preference_agents_send_sentences">Enter で文を送信</string>
+    <string name="preference_agents_send_sentences_summary">3語以上のクエリは先頭のアプリを開かずエージェントへ送られます</string>
+    <string name="preference_search_bar_voice">検索バーの音声入力</string>
+    <string name="preference_search_bar_voice_summary">端末が対応していればマイクは端末上の音声認識を使います</string>
+    <string name="search_bar_voice">音声検索</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">アプリ、次にウェブサイト</string>
+    <string name="agent_transport_app">エージェントアプリ</string>
+    <string name="agent_transport_web">ウェブサイト</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">%1$s に尋ねる</string>
+    <string name="agent_launch_failed">エージェントを開けませんでした</string>
+    <string name="preference_keyboard_shortcuts">ハードウェアキーボードのショートカット</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Space または Super+A で検索、Super+Enter でターミナル、Super+1 でホーム</string>
+    <string name="preference_category_telos_navigation">Telos ナビゲーション</string>
+    <string name="preference_telos_navigation">端のジェスチャー（戻る、ホーム、最近）</string>
+    <string name="preference_telos_navigation_summary">画面端に細い帯を描きます。横から戻る、下からホーム、長押しで最近。ユーザー補助サービスが必要です。既定ではオフ</string>
+    <string name="preference_telos_recents">Telos の最近</string>
+    <string name="preference_telos_recents_summary">システムの最近の代わりに Telos の一覧。既定ではオフ</string>
+    <string name="telos_recents_title">最近のアプリ</string>
+    <string name="telos_recents_clear">すべて消去</string>
+</resources>

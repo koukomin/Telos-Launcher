@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Failu pārsūtīšanas</string>
     <string name="telos_files_two_panels">Divi paneļi</string>
     <string name="telos_media_listen">Klausīties</string>
+    <string name="telos_media_watch">Skatīties</string>
+    <string name="telos_media_live">Tiešraide</string>
     <string name="telos_media_store_description">Klausieties vietējo mūziku, radio un YouTube Music, skatieties vietējos videoklipus vai YouTube un izpētiet TV un Stremio Fork.</string>
     <string name="telos_store_auto_enable">Iespējot un atjaunināt</string>
     <string name="telos_store_auto_explanation">Iespējot atlasīto lietotņu automātiskos atjauninājumus? Turpmākie atjauninājumi tiek instalēti automātiski, ja Shizuku vai root atļauj kluso instalēšanu. Citādi saņemsiet paziņojumu par atjauninājumu. To varat mainīt katras lietotnes iestatījumos.</string>

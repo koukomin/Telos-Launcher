@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Apps uit de Play Store staan hier, ook bevroren apps.</string>
     <string name="store_play_hint">Bevroren apps worden ontdooid en Play Store opent. Telos bevriest ze weer zodra Play de nieuwe versie installeert (één uur alleen als fallback). Optioneel: met Telos Network-VPN geen internet tot je ze opent.</string>
     <string name="store_play_open_my_apps">Play Store-updates openen</string>
+    <string name="store_play_unfreeze_update">Ontdooien en bijwerken in Play Store</string>
+    <string name="store_play_frozen_count">Bevroren (%1$d)</string>
     <string name="store_play_block_network">Netwerk blokkeren tot openen</string>
     <string name="store_play_block_network_summary">Als Telos Network-VPN aan staat, hebben ontdooide Play-apps geen internet tot je ze weer opent.</string>
     <string name="play_update_pause_channel">Play Store-updates</string>
     <string name="play_update_pause_title">Wachten op Play Store-updates</string>
     <string name="play_update_pause_text">%2$d ontdooide app(s) worden weer bevroren zodra Play een nieuwe versie installeert (fallback %1$d uur).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

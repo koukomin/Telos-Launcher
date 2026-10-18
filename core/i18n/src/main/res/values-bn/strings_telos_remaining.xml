@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">ফাইল স্থানান্তর</string>
     <string name="telos_files_two_panels">দুটি প্যানেল</string>
     <string name="telos_media_listen">শুনুন</string>
+    <string name="telos_media_watch">দেখুন</string>
+    <string name="telos_media_live">লাইভ</string>
     <string name="telos_media_store_description">স্থানীয় গান, রেডিও ও YouTube Music শুনুন, স্থানীয় ভিডিও বা YouTube দেখুন এবং TV ও Stremio Fork ঘুরে দেখুন।</string>
     <string name="telos_store_auto_enable">সক্রিয় করে আপডেট করুন</string>
     <string name="telos_store_auto_explanation">নির্বাচিত অ্যাপের স্বয়ংক্রিয় আপডেট সক্রিয় করবেন? Shizuku বা রুট নীরব ইনস্টলেশনের অনুমতি দিলে ভবিষ্যৎ আপডেট স্বয়ংক্রিয়ভাবে ইনস্টল হবে। অন্যথায় আপডেটের বিজ্ঞপ্তি পাবেন। প্রতিটি অ্যাপের সেটিংসে এটি বদলাতে পারবেন।</string>

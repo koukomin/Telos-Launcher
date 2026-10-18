@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Aplikacije iz Play Store so tukaj, tudi zamrznjene.</string>
     <string name="store_play_hint">Zamrznjene aplikacije se odmrznijo in odpre se Play Store. Telos jih znova zamrzne, ko Play namesti novo različico (ena ura le kot rezerva). Izbirno: z VPN Telos Network ni interneta, dokler jih ne odpreš.</string>
     <string name="store_play_open_my_apps">Odpri posodobitve Play Store</string>
+    <string name="store_play_unfreeze_update">Odmrzni in posodobi v Play Store</string>
+    <string name="store_play_frozen_count">Zamrznjene (%1$d)</string>
     <string name="store_play_block_network">Blokiraj omrežje do odprtja</string>
     <string name="store_play_block_network_summary">Ko je VPN Telos Network vklopljen, odmrznjene aplikacije Play nimajo interneta, dokler jih znova ne odpreš.</string>
     <string name="play_update_pause_channel">Posodobitve Play Store</string>
     <string name="play_update_pause_title">Čakanje na posodobitve Play Store</string>
     <string name="play_update_pause_text">%2$d odmrznjenih aplikacij se znova zamrzne, ko Play namesti novo različico (rezerva %1$d ura).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

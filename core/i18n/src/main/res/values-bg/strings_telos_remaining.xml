@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Файлови прехвърляния</string>
     <string name="telos_files_two_panels">Два панела</string>
     <string name="telos_media_listen">Слушане</string>
+    <string name="telos_media_watch">Гледай</string>
+    <string name="telos_media_live">На живо</string>
     <string name="telos_media_store_description">Слушайте локална музика, радио и YouTube Music, гледайте локални видеа или YouTube и разглеждайте TV и Stremio Fork.</string>
     <string name="telos_store_auto_enable">Включване и обновяване</string>
     <string name="telos_store_auto_explanation">Да се включат ли автоматични обновявания за избраните приложения? Бъдещите обновявания се инсталират автоматично, когато Shizuku или root позволяват безшумна инсталация. Иначе ще получавате известие за обновяване. Можете да промените това за всяко приложение в настройките му.</string>

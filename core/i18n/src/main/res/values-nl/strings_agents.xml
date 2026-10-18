@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agenten</string>
+    <string name="preference_screen_agents_summary">Stuur een zoekopdracht naar Grok, Claude, ChatGPT en anderen. Standaard uit</string>
+    <string name="preference_agents_enabled">Agenten in zoeken inschakelen</string>
+    <string name="preference_agents_enabled_summary">Toont een Vraag-chip in zoeken. Telos slaat geen API-sleutel op; de agent-app of website gebruikt het account waarmee je al bent ingelogd</string>
+    <string name="preference_agents_provider">Agent</string>
+    <string name="preference_agents_transport">Hoe verzenden</string>
+    <string name="preference_agents_transport_summary">Auto opent de agent-app indien geïnstalleerd, anders de website. Termux voert de CLI uit in de officiële Termux-app</string>
+    <string name="preference_agents_send_sentences">Zinnen verzenden met Enter</string>
+    <string name="preference_agents_send_sentences_summary">Een zoekopdracht van drie of meer woorden gaat naar de agent in plaats van de eerste app te openen</string>
+    <string name="preference_search_bar_voice">Spraakinvoer op de zoekbalk</string>
+    <string name="preference_search_bar_voice_summary">De microfoon gebruikt spraakherkenning op het apparaat als de telefoon dat ondersteunt</string>
+    <string name="search_bar_voice">Zoeken met stem</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">App, daarna website</string>
+    <string name="agent_transport_app">Agent-app</string>
+    <string name="agent_transport_web">Website</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Vraag %1$s</string>
+    <string name="agent_launch_failed">Kan de agent niet openen</string>
+    <string name="preference_keyboard_shortcuts">Sneltoetsen van fysiek toetsenbord</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Spatie of Super+A opent zoeken, Super+Enter Terminal, Super+1 het startscherm</string>
+    <string name="preference_category_telos_navigation">Telos-navigatie</string>
+    <string name="preference_telos_navigation">Randgebaren (terug, home, recent)</string>
+    <string name="preference_telos_navigation_summary">Tekent dunne stroken aan de randen. Veeg vanaf de zijkant voor Terug, omhoog vanaf de onderkant voor Home, houd onderaan vast voor Recent. Vereist de toegankelijkheidsservice. Standaard uit</string>
+    <string name="preference_telos_recents">Telos recent</string>
+    <string name="preference_telos_recents_summary">Toont een Telos-lijst van recente apps in plaats van systeem-Recent. Standaard uit</string>
+    <string name="telos_recents_title">Recente apps</string>
+    <string name="telos_recents_clear">Alles wissen</string>
+</resources>

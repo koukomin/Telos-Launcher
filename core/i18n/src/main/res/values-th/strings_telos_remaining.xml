@@ -132,6 +132,8 @@
     <string name="telos_files_transfers_title">การถ่ายโอนไฟล์</string>
     <string name="telos_files_two_panels">สองแผง</string>
     <string name="telos_media_listen">ฟัง</string>
+    <string name="telos_media_watch">ดู</string>
+    <string name="telos_media_live">สด</string>
     <string name="telos_media_store_description">ฟังเพลงในเครื่อง วิทยุ และ YouTube Music ดูวิดีโอในเครื่องหรือ YouTube และสำรวจทีวีและ Stremio Fork</string>
     <string name="telos_store_auto_enable">เปิดใช้และอัปเดต</string>
     <string name="telos_store_auto_explanation">เปิดใช้อัปเดตอัตโนมัติสำหรับแอปที่เลือกหรือไม่? การอัปเดตในอนาคตจะติดตั้งอัตโนมัติเมื่อ Shizuku หรือ root อนุญาตการติดตั้งแบบไม่แจ้งเตือน มิฉะนั้นคุณจะได้รับการแจ้งเตือนอัปเดต คุณเปลี่ยนได้ในหน้าตั้งค่าของแต่ละแอป</string>

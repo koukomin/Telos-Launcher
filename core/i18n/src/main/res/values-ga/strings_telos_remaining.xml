@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Aistrithe comhad</string>
     <string name="telos_files_two_panels">Dhá phainéal</string>
     <string name="telos_media_listen">Éist</string>
+    <string name="telos_media_watch">Féach</string>
+    <string name="telos_media_live">Beo</string>
     <string name="telos_media_store_description">Éist le ceol áitiúil, raidió agus YouTube Music, féach ar fhíseáin áitiúla nó YouTube, agus taiscéal TV agus Stremio Fork.</string>
     <string name="telos_store_auto_enable">Cumasaigh agus nuashonraigh</string>
     <string name="telos_store_auto_explanation">An bhfuil fonn ort nuashonruithe uathoibríocha a chumasú do na haipeanna roghnaithe? Suiteálfar nuashonruithe amach anseo go huathoibríoch nuair a cheadaíonn Shizuku nó rochtain fréimhe suiteáil chiúin. Seachas sin gheobhaidh tú fógra nuashonraithe. Is féidir é seo a athrú i socruithe gach aip.</string>

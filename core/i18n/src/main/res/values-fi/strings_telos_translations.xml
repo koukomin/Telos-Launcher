@@ -1524,4 +1524,6 @@
     </plurals>
     <string name="dl_m_auto_update">Päivitä yt-dlp automaattisesti</string>
     <string name="dl_m_auto_update_sum">Hakee uusimman yt-dlp:n kerran päivässä Wi-Fi-yhteydellä, jotta lataukset toimivat sivustojen muuttuessa</string>
+    <string name="telos_files_peek_select">Valitse</string>
+    <string name="telos_files_smb_nearby">Tietokoneet tässä verkossa</string>
 </resources>

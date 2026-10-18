@@ -73,6 +73,7 @@ data class LauncherSettingsData internal constructor(
     val webAppBrowsing: WebAppBrowsingGroup = WebAppBrowsingGroup(),
     val contextProfiles: ContextProfilesGroup = ContextProfilesGroup(),
     val desktopMode: DesktopModeGroup = DesktopModeGroup(),
+    val agents: AgentsGroup = AgentsGroup(),
     // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
     val comms: CommsGroup = CommsGroup(),
     // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
@@ -315,9 +316,6 @@ data class SearchBarGroup(
     /** Applies IME_FLAG_NO_PERSONALIZED_LEARNING to text fields across the launcher (search,
      * web app shortcut editing, etc.) so the keyboard doesn't learn from or store typed text. */
     val privateKeyboard: Boolean = false,
-    /** Shows a single editorial "recommended app" card in the drawer and in keyword-matched
-     * search results. See AppRecommendations - no affiliate relationship, editorial picks only. */
-    val showAppRecommendations: Boolean = false,
     val searchLaunchOnEnter: Boolean = true,
     val searchBarBottom: Boolean = true,
     val searchBarFixed: Boolean = false,
@@ -398,6 +396,10 @@ data class GesturesGroup(
     val gesturesPinchOut: GestureAction = GestureAction.NoAction,
     val gesturesTwoFingerSwipeUp: GestureAction = GestureAction.NoAction,
     val gesturesTwoFingerSwipeDown: GestureAction = GestureAction.NoAction,
+    /** Off by default. Edge-swipe back/home/recents drawn by the accessibility service. */
+    val telosNavigation: Boolean = false,
+    /** Off by default. Telos recents list instead of the system Recents. */
+    val telosRecents: Boolean = false,
 )
 
 @Serializable
@@ -766,6 +768,20 @@ data class DesktopModeGroup(
     /** Independent of the phone's own gridIconSize - external displays are bigger and viewed
      * from farther away, so the same icon size wouldn't make sense on both. */
     val desktopGridIconSize: Int = 48,
+    /** Super+Space search, Super+Enter Terminal, Super+1 home. Also used on the phone with a hardware keyboard. */
+    val hardwareKeyboardShortcuts: Boolean = true,
+)
+
+@Serializable
+data class AgentsGroup(
+    /** Coding / chat agents in search. Off until the user turns them on. */
+    val agentsEnabled: Boolean = false,
+    val agentId: String = "grok",
+    /** auto: installed app, then website. web, app, or termux. */
+    val agentTransport: String = "auto",
+    /** If true, Enter sends a sentence (3+ words) to the agent instead of launching the top app. */
+    val agentsSendSentences: Boolean = true,
+    val searchBarVoice: Boolean = true,
 )
 
 @Serializable
@@ -1285,6 +1301,8 @@ data class CommsGroup(
     val blockHiddenNumbers: Boolean = false,
     val blockUnknownNumbers: Boolean = false,
     val blockInternational: Boolean = false,
+    /** Also reject outgoing calls to numbers on the block list / prefix / regex rules. */
+    val blockOutgoingCalls: Boolean = true,
     /** ISO 3166 region of the home country; empty = SIM, then network, then locale country */
     val homeCountry: String = "",
     val clirEnabled: Boolean = false,

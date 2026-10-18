@@ -112,6 +112,12 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
         commsSettings.setBlockInternational(enabled)
     }
 
+    val blockOutgoingCalls = commsSettings.blockOutgoingCalls
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    fun setBlockOutgoingCalls(enabled: Boolean) {
+        commsSettings.setBlockOutgoingCalls(enabled)
+    }
+
     val clirEnabled = commsSettings.clirEnabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setClirEnabled(enabled: Boolean) {

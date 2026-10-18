@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">배경화면으로 설정</string>
+    <string name="viewer_favorite">즐겨찾기</string>
+    <string name="viewer_story_recents">최근</string>
+    <string name="viewer_story_screenshots">스크린샷</string>
+    <string name="viewer_story_favorites">즐겨찾기</string>
+    <string name="viewer_pdf_night">야간 페이지</string>
+    <string name="viewer_pdf_highlight">강조 모드</string>
+    <string name="viewer_epub_larger">더 큰 글자</string>
+    <string name="viewer_epub_smaller">더 작은 글자</string>
+    <string name="viewer_epub_serif">세리프 / 산세리프</string>
+    <string name="viewer_epub_night">야간 테마</string>
+
+    <string name="au20_viewer_cat_comics">만화</string>
+    <string name="au20_viewer_cat_graphics">그래픽</string>
+    <string name="viewer_highlight_all">모두 강조</string>
+    <string name="viewer_highlight_added">강조 %1$d개</string>
+    <string name="viewer_comic_empty">이 만화에 페이지가 없습니다</string>
+    <string name="viewer_cbr_fdroid">CBR(RAR)은 F-Droid 빌드에 없습니다. CBZ 또는 Play/GitHub를 사용하세요.</string>
+    <string name="viewer_cbr_encrypted">이 CBR은 암호화되어 있습니다</string>
+    <string name="viewer_preview_svg">SVG 미리보기</string>
+    <string name="viewer_preview_psd">PSD 미리보기(썸네일)</string>
+    <string name="viewer_preview_cdr">CDR 미리보기(비트맵)</string>
+    <string name="viewer_preview_ai">AI 미리보기(비트맵, PDF AI는 PDF로 열림)</string>
+    <string name="viewer_preview_none">미리보기 없음</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">Nastaviť ako tapetu</string>
+    <string name="viewer_favorite">Obľúbené</string>
+    <string name="viewer_story_recents">Nedávne</string>
+    <string name="viewer_story_screenshots">Snímky</string>
+    <string name="viewer_story_favorites">Obľúbené</string>
+    <string name="viewer_pdf_night">Nočné stránky</string>
+    <string name="viewer_pdf_highlight">Režim zvýraznenia</string>
+    <string name="viewer_epub_larger">Väčší text</string>
+    <string name="viewer_epub_smaller">Menší text</string>
+    <string name="viewer_epub_serif">Serif / sans</string>
+    <string name="viewer_epub_night">Nočný motív</string>
+
+    <string name="au20_viewer_cat_comics">Comics</string>
+    <string name="au20_viewer_cat_graphics">Graphics</string>
+    <string name="viewer_highlight_all">Highlight all</string>
+    <string name="viewer_highlight_added">%1$d highlights</string>
+    <string name="viewer_comic_empty">No pages in this comic</string>
+    <string name="viewer_cbr_fdroid">CBR (RAR) comics are not in the F-Droid build. Use CBZ, or the Play/GitHub build.</string>
+    <string name="viewer_cbr_encrypted">This CBR is encrypted and cannot be opened</string>
+    <string name="viewer_preview_svg">SVG preview</string>
+    <string name="viewer_preview_psd">PSD preview (embedded thumbnail, not layers)</string>
+    <string name="viewer_preview_cdr">CDR preview (embedded bitmap, not the drawing)</string>
+    <string name="viewer_preview_ai">AI preview (embedded bitmap; PDF-based AI opens as PDF)</string>
+    <string name="viewer_preview_none">No preview in this file</string>
+</resources>

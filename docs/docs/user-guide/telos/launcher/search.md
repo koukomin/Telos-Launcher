@@ -28,6 +28,7 @@ All search settings live in **Settings > Search**. Some sources open their own s
 | Calculator | The result of an expression | Nothing | No | On |
 | Unit converter | Units and currencies | Nothing (currencies download rates) | Rates only | On |
 | Quick actions | Call, message, web search and more for what you typed | Depends on the action | No | On |
+| Agents | Optional **Ask** chip that sends the query to Grok, Claude, ChatGPT, Gemini or Copilot | Agent app, website, or Termux CLI | Yes, to that agent | Off |
 | Tags and custom names | Items you tagged or renamed | Nothing | No | Always |
 
 Sources that are marked "Online" never run on a normal search. See [Online results](#online-results).
@@ -81,7 +82,6 @@ the app grid and your web apps. Once you type, these groups can appear, in this 
 | 8 | Places | Map preview, opening hours, distance |
 | 9 | Wikipedia, then websites | Only with online results |
 | 10 | Files, documents, images, video, music | Type groups replace the plain file list, see [Filters](#filters) |
-| 11 | Recommended app | See [App recommendations](#app-recommendations) |
 
 Each group shows **five** items and a "show all" button. The button expands that group, and when only
 one category is enabled in the filter, that group starts expanded. Quick actions are not part of the
@@ -224,27 +224,38 @@ Quick actions. A text classifier decides which built-in actions fit what you typ
 **Launch on enter** picks the best match in this order: apps, shortcuts, events, reminders, places,
 contacts, articles, websites, files (and types), then quick actions.
 
+## Agents
+
+<Badge type="info" text="off by default" />
+
+Settings > Search > **Agents**. When enabled, every non-empty search shows an **Ask** chip for the
+chosen agent (Grok, Claude, ChatGPT, Gemini or Copilot).
+
+Telos does not log you into Grok (or any other agent) and does not store an API key. The prompt is
+handed to the agent you already use:
+
+| How to send | What happens |
+| --- | --- |
+| App, then website (default) | Opens the agent app if it is installed, otherwise its website with your query |
+| Agent app | Only the installed app |
+| Website | The agent site in the browser, using the account you are signed in with there |
+| Termux CLI | Sends the prompt to the matching command (`grok`, `claude`, `codex`, …) in the official [Termux](../terminal) app. You install and sign in to that CLI in Termux yourself |
+
+**Send sentences with Enter** (on when agents are on): a query of three or more words is sent to the
+agent instead of launching the top app.
+
+## Voice input
+
+The search bar has a microphone button (Settings > Search > Agents > **Voice input**, on by default).
+It uses Android speech recognition on the device when the phone supports it. The recognised text is
+placed in the search field.
+
 ## Excluded results
 
 Long-press an item and hide it, or manage the list in Settings > Search > **Excluded search results**.
 Each item can be shown in the *app grid and search results*, in *search results* only, or *never*.
 **Show reveal button** adds a button to the search view that shows excluded results. If
 [Lock sensitive settings](./privacy-protection#settings-lock) is on, this page asks for authentication.
-
-## App recommendations
-
-<Badge type="warning" text="experimental" />
-
-Telos can show one editorial app suggestion (VPN, mail, password manager, cloud storage, productivity
-or browser) in the drawer and in results that match a category word such as "vpn". The card is labeled
-"Affiliate - Supports Telos" and links to a store page. The list is fixed in the app, not personalized
-and not downloaded. Turn it off in Settings > Search > **Show app recommendations**, or use "Hide this
-tab" on the card.
-
-::: warning Honest note
-The code states that no affiliate agreement exists yet. The label is shown in advance. Switch the
-feature off if you do not want any promotion in your launcher.
-:::
 
 ## Limitations
 

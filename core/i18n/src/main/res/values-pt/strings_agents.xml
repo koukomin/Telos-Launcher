@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agentes</string>
+    <string name="preference_screen_agents_summary">Enviar uma pesquisa para o Grok, Claude, ChatGPT e outros. Desativado por predefinição</string>
+    <string name="preference_agents_enabled">Ativar agentes na pesquisa</string>
+    <string name="preference_agents_enabled_summary">Mostra um chip Perguntar na pesquisa. O Telos não guarda chaves de API; a app ou o site do agente usa a conta em que já iniciou sessão</string>
+    <string name="preference_agents_provider">Agente</string>
+    <string name="preference_agents_transport">Como enviar</string>
+    <string name="preference_agents_transport_summary">Auto abre a app do agente se estiver instalada; senão, o site. O Termux executa a CLI na app oficial Termux</string>
+    <string name="preference_agents_send_sentences">Enviar frases com Enter</string>
+    <string name="preference_agents_send_sentences_summary">Uma consulta com três ou mais palavras é enviada ao agente em vez de abrir a primeira app</string>
+    <string name="preference_search_bar_voice">Entrada de voz na barra de pesquisa</string>
+    <string name="preference_search_bar_voice_summary">O microfone usa o reconhecimento de voz no dispositivo quando o telefone o suporta</string>
+    <string name="search_bar_voice">Pesquisa por voz</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">App, depois site</string>
+    <string name="agent_transport_app">App do agente</string>
+    <string name="agent_transport_web">Site</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Perguntar a %1$s</string>
+    <string name="agent_launch_failed">Não foi possível abrir o agente</string>
+    <string name="preference_keyboard_shortcuts">Atalhos de teclado físico</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Espaço ou Super+A abre a pesquisa, Super+Enter o Terminal, Super+1 o ecrã inicial</string>
+    <string name="preference_category_telos_navigation">Navegação Telos</string>
+    <string name="preference_telos_navigation">Gestos nas extremidades (voltar, início, recentes)</string>
+    <string name="preference_telos_navigation_summary">Desenha faixas finas nas extremidades. Deslize de um lado para Voltar, de baixo para cima para Início, mantenha premido em baixo para Recentes. Precisa do serviço de acessibilidade. Desativado por predefinição</string>
+    <string name="preference_telos_recents">Recentes Telos</string>
+    <string name="preference_telos_recents_summary">Mostra uma lista Telos de apps recentes em vez dos Recentes do sistema. Desativado por predefinição</string>
+    <string name="telos_recents_title">Apps recentes</string>
+    <string name="telos_recents_clear">Limpar tudo</string>
+</resources>

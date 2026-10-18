@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Transferências de ficheiros</string>
     <string name="telos_files_two_panels">Dois painéis</string>
     <string name="telos_media_listen">Ouvir</string>
+    <string name="telos_media_watch">Ver</string>
+    <string name="telos_media_live">Em direto</string>
     <string name="telos_media_store_description">Ouça música local, rádio e YouTube Music, veja vídeos locais ou do YouTube e explore a TV e o Stremio Fork.</string>
     <string name="telos_store_auto_enable">Ativar e atualizar</string>
     <string name="telos_store_auto_explanation">Ativar atualizações automáticas para as aplicações selecionadas? As próximas atualizações são instaladas automaticamente quando o Shizuku ou o root permitem a instalação silenciosa. Caso contrário, receberá uma notificação de atualização. Pode alterar esta opção nas definições de cada aplicação.</string>

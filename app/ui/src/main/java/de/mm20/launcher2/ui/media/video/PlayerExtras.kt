@@ -49,6 +49,7 @@ internal fun attachGestures(
     activity: Activity?,
     userSpeed: () -> Float,
     onHint: (String?) -> Unit,
+    onLevels: (brightness: Float?, volume: Float?, active: Boolean) -> Unit = { _, _, _ -> },
 ) {
     val context = view.context
     val audio = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -94,6 +95,7 @@ internal fun attachGestures(
                     val current = if (attrs.screenBrightness < 0) 0.5f else attrs.screenBrightness
                     attrs.screenBrightness = (current + distanceY / view.height).coerceIn(0.02f, 1f)
                     window.attributes = attrs
+                    onLevels(attrs.screenBrightness, null, true)
                     onHint(context.getString(R.string.au_video_brightness, (attrs.screenBrightness * 100).toInt()))
                 }
                 3 -> {
@@ -105,6 +107,8 @@ internal fun attachGestures(
                         val now = audio.getStreamVolume(AudioManager.STREAM_MUSIC)
                         audio.setStreamVolume(AudioManager.STREAM_MUSIC, (now + step).coerceIn(0, max), 0)
                     }
+                    val vol = if (max > 0) audio.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat() / max else 0f
+                    onLevels(null, vol, true)
                     onHint(context.getString(R.string.au_video_volume, if (max > 0) audio.getStreamVolume(AudioManager.STREAM_MUSIC) * 100 / max else 0))
                 }
             }
@@ -134,6 +138,7 @@ internal fun attachGestures(
             if (mode == 1) player.seekTo(seekTarget)
             if (longPressed) player.setPlaybackSpeed(userSpeed())
             val wasGesture = consumed
+            if (mode == 2 || mode == 3) onLevels(null, null, false)
             mode = 0
             longPressed = false
             onHint(null)

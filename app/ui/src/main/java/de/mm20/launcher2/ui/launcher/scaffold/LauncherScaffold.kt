@@ -77,6 +77,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.isMetaPressed
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -1056,6 +1062,8 @@ internal fun LauncherScaffold(
     val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
 
     val hazeState = rememberHazeState(blurEnabled = isAtLeastApiLevel(33))
+    val desktopModeSettings = koinInject<de.mm20.launcher2.preferences.ui.DesktopModeSettings>()
+    val keyboardShortcuts by desktopModeSettings.hardwareKeyboardShortcuts.collectAsState(true)
 
     CompositionLocalProvider(LocalLauncherHazeState provides hazeState) {
     BoxWithConstraints(
@@ -1328,6 +1336,39 @@ internal fun LauncherScaffold(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .then(
+                    if (!keyboardShortcuts) Modifier
+                    else Modifier.onPreviewKeyEvent { event ->
+                        if (event.type != KeyEventType.KeyDown || !event.isMetaPressed) {
+                            return@onPreviewKeyEvent false
+                        }
+                        when (event.key) {
+                            Key.Spacebar, Key.A -> {
+                                scope.launch { state.onSearchBarTap() }
+                                true
+                            }
+                            Key.Enter -> {
+                                activity.startActivity(android.content.Intent().apply {
+                                    setClassName(
+                                        activity.packageName,
+                                        de.mm20.launcher2.applock.SettingsDeepLinkContract.ACTIVITY_CLASS_NAME,
+                                    )
+                                    putExtra(
+                                        de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_ROUTE,
+                                        de.mm20.launcher2.applock.SettingsDeepLinkContract.ROUTE_TERMINAL,
+                                    )
+                                    addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                                })
+                                true
+                            }
+                            Key.One -> {
+                                scope.launch { state.navigateBack() }
+                                true
+                            }
+                            else -> false
+                        }
+                    }
+                )
                 .hazeSource(hazeState)
                 .nestedScroll(nestedScrollConnection)
                 .multiFingerGestures(

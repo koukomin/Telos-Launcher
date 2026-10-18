@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">A Play Áruházból telepített alkalmazások itt jelennek meg, a fagyasztottak is.</string>
     <string name="store_play_hint">A fagyasztott alkalmazások felolvadnak, és megnyílik a Play Áruház. A Telos újra fagyaszt, amint a Play telepíti az új verziót (egy óra csak tartalék). Opcionális: Telos Network VPN mellett nincs internet, amíg meg nem nyitod őket.</string>
     <string name="store_play_open_my_apps">Play Áruház-frissítések megnyitása</string>
+    <string name="store_play_unfreeze_update">Kiolvasztás és frissítés a Play Áruházban</string>
+    <string name="store_play_frozen_count">Fagyasztott (%1$d)</string>
     <string name="store_play_block_network">Hálózat tiltása megnyitásig</string>
     <string name="store_play_block_network_summary">Ha a Telos Network VPN be van kapcsolva, a Play miatt felolvasztott alkalmazásoknak nincs internetük, amíg újra meg nem nyitod őket.</string>
     <string name="play_update_pause_channel">Play Áruház-frissítések</string>
     <string name="play_update_pause_title">Play Áruház-frissítésekre várakozás</string>
     <string name="play_update_pause_text">%2$d felolvasztott alkalmazás újra fagyasztásra kerül, amint a Play új verziót telepít (tartalék %1$d óra).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

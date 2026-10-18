@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.material3.Badge
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
@@ -54,6 +57,17 @@ fun LauncherSearchBar(
     val focusRequester = remember { FocusRequester() }
 
     val searchVM: SearchVM = viewModel()
+    val voiceEnabled by searchVM.searchBarVoice.collectAsState(true)
+    val speechLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val spoken = result.data
+            ?.getStringArrayListExtra(android.speech.RecognizerIntent.EXTRA_RESULTS)
+            ?.firstOrNull()
+        if (!spoken.isNullOrBlank()) {
+            searchVM.search(spoken)
+        }
+    }
     val hiddenItemsButtonEnabled by searchVM.hiddenResultsButton.collectAsState(false)
     val hiddenItems = searchVM.hiddenResults
 
@@ -140,13 +154,36 @@ fun LauncherSearchBar(
                 SearchBarActions(
                     actions = actions,
                     reverse = bottomSearchBar,
-                    highlightedAction = highlightedAction
+                    highlightedAction = highlightedAction,
+                    searchQuery = value,
                 )
             },
             focusRequester = focusRequester,
             onFocus = { onFocusChange(true) },
             onUnfocus = { onFocusChange(false) },
-            onKeyboardActionGo = onKeyboardActionGo
+            onKeyboardActionGo = onKeyboardActionGo,
+            trailing = {
+                if (voiceEnabled) {
+                    IconButton(
+                        onClick = {
+                            val intent = android.content.Intent(
+                                android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH
+                            ).apply {
+                                putExtra(
+                                    android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                                    android.speech.RecognizerIntent.LANGUAGE_MODEL_FREE_FORM,
+                                )
+                            }
+                            runCatching { speechLauncher.launch(intent) }
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.mic_24px),
+                            contentDescription = stringResource(R.string.search_bar_voice),
+                        )
+                    }
+                }
+            },
         )
     }
 }

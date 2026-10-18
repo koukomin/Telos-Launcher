@@ -1745,4 +1745,6 @@
     </plurals>
     <string name="dl_m_auto_update">yt-dlp を自動更新</string>
     <string name="dl_m_auto_update_sum">サイトが変わってもダウンロードが動作し続けるよう、Wi-Fi 接続時に 1 日 1 回最新の yt-dlp を取得します</string>
+    <string name="telos_files_peek_select">選択</string>
+    <string name="telos_files_smb_nearby">このネットワーク上のパソコン</string>
 </resources>

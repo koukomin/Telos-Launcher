@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Fájlátvitelek</string>
     <string name="telos_files_two_panels">Két panel</string>
     <string name="telos_media_listen">Hallgatás</string>
+    <string name="telos_media_watch">Nézés</string>
+    <string name="telos_media_live">Élő</string>
     <string name="telos_media_store_description">Hallgass helyi zenét, rádiót és YouTube Musicot, nézz helyi videókat vagy YouTube-ot, és fedezd fel a TV-t és a Stremio Forkot.</string>
     <string name="telos_store_auto_enable">Engedélyezés és frissítés</string>
     <string name="telos_store_auto_explanation">Engedélyezed a kiválasztott alkalmazások automatikus frissítését? A későbbi frissítések automatikusan települnek, ha a Shizuku vagy a root lehetővé teszi a jóváhagyás nélküli telepítést. Ellenkező esetben frissítési értesítést kapsz. Ezt az egyes alkalmazások beállításaiban módosíthatod.</string>

@@ -42,6 +42,7 @@ import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.ktx.toPixels
 import kotlinx.serialization.Serializable
 
@@ -81,7 +82,32 @@ fun GestureSettingsScreen() {
 
 
     val context = LocalContext.current
+    val telosNavigation by viewModel.telosNavigation.collectAsStateWithLifecycle(false)
+    val telosRecents by viewModel.telosRecents.collectAsStateWithLifecycle(false)
     PreferenceScreen(title = stringResource(R.string.preference_screen_gestures)) {
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_telos_navigation)) {
+                GuardedPreference(
+                    locked = hasPermission == false,
+                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
+                ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_telos_navigation),
+                        summary = stringResource(R.string.preference_telos_navigation_summary),
+                        value = telosNavigation,
+                        onValueChanged = viewModel::setTelosNavigation,
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_telos_recents),
+                        summary = stringResource(R.string.preference_telos_recents_summary),
+                        value = telosRecents,
+                        onValueChanged = viewModel::setTelosRecents,
+                    )
+                }
+            }
+        }
         item {
             PreferenceCategory {
                 val swipeDown by viewModel.swipeDown.collectAsStateWithLifecycle(null)

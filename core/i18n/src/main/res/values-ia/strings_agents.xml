@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agentes</string>
+    <string name="preference_screen_agents_summary">Invia un recerca a Grok, Claude, ChatGPT e alteres. Disactivate per predefinition</string>
+    <string name="preference_agents_enabled">Activar agentes in le recerca</string>
+    <string name="preference_agents_enabled_summary">Monstra un chip Questionar. Telos non immagazina un clave API; le app o sito del agente usa le conto ubi tu es jam authenticate</string>
+    <string name="preference_agents_provider">Agente</string>
+    <string name="preference_agents_transport">Como inviar</string>
+    <string name="preference_agents_transport_summary">Auto aperi le app del agente si installate, alteremente le sito. Termux executa le CLI in le app official Termux</string>
+    <string name="preference_agents_send_sentences">Inviar phrases con Enter</string>
+    <string name="preference_agents_send_sentences_summary">Un consulta de tres o plus parolas es inviate al agente in vice de aperir le prime app</string>
+    <string name="preference_search_bar_voice">Entrata vocal sur le barra de recerca</string>
+    <string name="preference_search_bar_voice_summary">Le microphono usa le recognition de parlar sur le dispositivo quando le telephono lo supporta</string>
+    <string name="search_bar_voice">Recerca vocal</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">App, pois sito</string>
+    <string name="agent_transport_app">App del agente</string>
+    <string name="agent_transport_web">Sito web</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Questionar %1$s</string>
+    <string name="agent_launch_failed">Impossibile aperir le agente</string>
+    <string name="preference_keyboard_shortcuts">Vias breve de claviero physic</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Spatio o Super+A aperi recerca, Super+Enter Terminal, Super+1 schermo initial</string>
+    <string name="preference_category_telos_navigation">Navigation Telos</string>
+    <string name="preference_telos_navigation">Gestos de bordo (retro, initio, recente)</string>
+    <string name="preference_telos_navigation_summary">Bandas tenue al bordos. Ab un latere Retro, ab basso Initio, tener pro Recente. Require le servicio de accessibilitate. Disactivate per predefinition</string>
+    <string name="preference_telos_recents">Recente Telos</string>
+    <string name="preference_telos_recents_summary">Lista Telos in vice del Recente de systema. Disactivate per predefinition</string>
+    <string name="telos_recents_title">Apps recente</string>
+    <string name="telos_recents_clear">Rader toto</string>
+</resources>

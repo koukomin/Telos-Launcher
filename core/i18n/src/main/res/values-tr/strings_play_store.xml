@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Play Store’dan yüklenen uygulamalar, dondurulmuş olanlar dahil, burada görünür.</string>
     <string name="store_play_hint">Dondurulmuş uygulamalar çözülür ve Play Store açılır. Play yeni sürümü yükler yüklemez Telos yeniden dondurur (bir saat yalnızca yedek). İsteğe bağlı: Telos Network VPN açıkken siz açana kadar internet yok.</string>
     <string name="store_play_open_my_apps">Play Store güncellemelerini aç</string>
+    <string name="store_play_unfreeze_update">Çöz ve Play Store’da güncelle</string>
+    <string name="store_play_frozen_count">Dondurulmuş (%1$d)</string>
     <string name="store_play_block_network">Açılana kadar ağı engelle</string>
     <string name="store_play_block_network_summary">Telos Network VPN açıkken Play için çözülen uygulamaların siz yeniden açana kadar interneti olmaz.</string>
     <string name="play_update_pause_channel">Play Store güncellemeleri</string>
     <string name="play_update_pause_title">Play Store güncellemeleri bekleniyor</string>
     <string name="play_update_pause_text">Play yeni sürümü yükler yüklemez %2$d çözülmüş uygulama yeniden dondurulur (yedek %1$d saat).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

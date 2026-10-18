@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -48,32 +49,48 @@ object CallAudioRecorder {
     private var timerJob: Job? = null
     private val scope = containedScope(Dispatchers.Main)
     private val stopping = AtomicBoolean(false)
+    private val silenceRetries = java.util.concurrent.atomic.AtomicInteger(0)
 
     fun start(
         context: Context,
         phoneNumber: String,
         quality: RecordingQuality = RecordingQuality.BALANCED,
         privilegedCapture: Boolean = false,
+        bluetooth: Boolean = false,
     ): Boolean {
         synchronized(this) {
             if (_isRecording.value) return true
             stopping.set(false)
+            if (silenceRetries.get() > 2) silenceRetries.set(0)
+            val am = context.getSystemService(android.media.AudioManager::class.java)
+            runCatching {
+                am?.mode = android.media.AudioManager.MODE_IN_COMMUNICATION
+                if (!bluetooth) am?.mode = android.media.AudioManager.MODE_IN_CALL
+            }
             val dir = recordingsDir(context)
             val digits = phoneNumber.filter { it.isDigit() }.ifEmpty { "Unknown" }
             val stamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
             val file = File(dir, "REC_${digits}_$stamp.m4a")
-            val unprivileged = listOf(
-                MediaRecorder.AudioSource.VOICE_COMMUNICATION to quality.sampleRate,
-                MediaRecorder.AudioSource.MIC to quality.sampleRate,
-                MediaRecorder.AudioSource.VOICE_RECOGNITION to quality.sampleRate,
-                MediaRecorder.AudioSource.DEFAULT to 16_000,
-            )
-            val privileged = listOf(
+            // Default dialer can often open VOICE_CALL without CAPTURE_AUDIO_OUTPUT (Skvalex unrooted path).
+            val callSources = listOf(
                 MediaRecorder.AudioSource.VOICE_CALL to quality.sampleRate,
                 MediaRecorder.AudioSource.VOICE_DOWNLINK to quality.sampleRate,
                 MediaRecorder.AudioSource.VOICE_UPLINK to quality.sampleRate,
             )
-            val sources = if (privilegedCapture) privileged + unprivileged else unprivileged
+            val micSources = buildList {
+                if (bluetooth) {
+                    add(MediaRecorder.AudioSource.VOICE_COMMUNICATION to quality.sampleRate)
+                    add(MediaRecorder.AudioSource.MIC to quality.sampleRate)
+                } else {
+                    add(MediaRecorder.AudioSource.VOICE_RECOGNITION to quality.sampleRate)
+                    add(MediaRecorder.AudioSource.UNPROCESSED to quality.sampleRate)
+                    add(MediaRecorder.AudioSource.MIC to quality.sampleRate)
+                    add(MediaRecorder.AudioSource.VOICE_COMMUNICATION to quality.sampleRate)
+                    add(MediaRecorder.AudioSource.CAMCORDER to quality.sampleRate)
+                    add(MediaRecorder.AudioSource.DEFAULT to 16_000)
+                }
+            }
+            val sources = if (privilegedCapture) callSources + micSources else callSources + micSources
             var recorder: MediaRecorder? = null
             for ((src, rate) in sources) {
                 var rec: MediaRecorder? = null
@@ -95,7 +112,6 @@ object CallAudioRecorder {
                     recorder = rec
                     break
                 } catch (_: Exception) {
-                    // the failed recorder must be released, or every failed source leaks one
                     try {
                         rec?.release()
                     } catch (_: Exception) {
@@ -112,9 +128,24 @@ object CallAudioRecorder {
             _isRecording.value = true
             _duration.value = 0
             timerJob = scope.launch {
+                var silentTicks = 0
                 while (isActive) {
                     delay(1000)
                     _duration.value += 1
+                    val amp = runCatching { mediaRecorder?.maxAmplitude ?: 0 }.getOrDefault(0)
+                    if (amp < 40) silentTicks++ else silentTicks = 0
+                    if (silentTicks >= 3 && _duration.value in 2..10 && silenceRetries.incrementAndGet() <= 2) {
+                        val number = phoneNumber
+                        val q = quality
+                        val priv = privilegedCapture
+                        val bt = bluetooth
+                        launch {
+                            val leftover = stop()
+                            leftover?.delete()
+                            start(context, number, q, priv, bt)
+                        }
+                        break
+                    }
                 }
             }
             return true

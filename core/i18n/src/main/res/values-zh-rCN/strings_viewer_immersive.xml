@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">设为壁纸</string>
+    <string name="viewer_favorite">收藏</string>
+    <string name="viewer_story_recents">最近</string>
+    <string name="viewer_story_screenshots">截图</string>
+    <string name="viewer_story_favorites">收藏</string>
+    <string name="viewer_pdf_night">夜间页面</string>
+    <string name="viewer_pdf_highlight">高亮模式</string>
+    <string name="viewer_epub_larger">更大文字</string>
+    <string name="viewer_epub_smaller">更小文字</string>
+    <string name="viewer_epub_serif">衬线 / 无衬线</string>
+    <string name="viewer_epub_night">夜间主题</string>
+
+    <string name="au20_viewer_cat_comics">漫画</string>
+    <string name="au20_viewer_cat_graphics">图形</string>
+    <string name="viewer_highlight_all">全部高亮</string>
+    <string name="viewer_highlight_added">%1$d 处高亮</string>
+    <string name="viewer_comic_empty">此漫画没有页面</string>
+    <string name="viewer_cbr_fdroid">F-Droid 版本不含 CBR（RAR）。请用 CBZ 或 Play/GitHub 版。</string>
+    <string name="viewer_cbr_encrypted">此 CBR 已加密</string>
+    <string name="viewer_preview_svg">SVG 预览</string>
+    <string name="viewer_preview_psd">PSD 预览（缩略图，不含图层）</string>
+    <string name="viewer_preview_cdr">CDR 预览（内嵌位图）</string>
+    <string name="viewer_preview_ai">AI 预览（内嵌位图；PDF 格式的 AI 按 PDF 打开）</string>
+    <string name="viewer_preview_none">没有预览</string>
+</resources>

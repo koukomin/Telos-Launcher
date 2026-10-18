@@ -9,9 +9,19 @@
     <string name="store_play_empty_hint">Apps installed from the Play Store appear here, including frozen apps.</string>
     <string name="store_play_hint">Frozen apps are thawed and Play Store opens. Telos freezes each freeze-candidate again as soon as Play installs the new version (one hour is only a fallback). Optional: while Telos Network VPN is on, those apps have no internet until you open them.</string>
     <string name="store_play_open_my_apps">Open Play Store updates</string>
+    <string name="store_play_unfreeze_update">Unfreeze and update in Play Store</string>
+    <string name="store_play_frozen_count">Frozen (%1$d)</string>
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
     <string name="store_play_block_network">Block network until opened</string>
     <string name="store_play_block_network_summary">When Telos Network VPN is on, thawed Play-update apps cannot use the internet until you launch them again.</string>
     <string name="play_update_pause_channel">Play Store updates</string>
     <string name="play_update_pause_title">Waiting for Play Store updates</string>
     <string name="play_update_pause_text">%2$d thawed app(s) will freeze again as soon as Play installs a new version (fallback %1$d hour).</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern). Works with or without root; as default dialer Telos screens first.</string>
 </resources>

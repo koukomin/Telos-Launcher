@@ -1046,4 +1046,6 @@
     </plurals>
     <string name="dl_m_auto_update">yt-dlp automatikus frissítése</string>
     <string name="dl_m_auto_update_sum">Naponta egyszer Wi-Fi-n letölti a legújabb yt-dlp-t, hogy a letöltések az oldalak változásakor is működjenek</string>
+    <string name="telos_files_peek_select">Kijelölés</string>
+    <string name="telos_files_smb_nearby">Számítógépek ezen a hálózaton</string>
 </resources>

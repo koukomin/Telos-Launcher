@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">壁紙に設定</string>
+    <string name="viewer_favorite">お気に入り</string>
+    <string name="viewer_story_recents">最近</string>
+    <string name="viewer_story_screenshots">スクリーンショット</string>
+    <string name="viewer_story_favorites">お気に入り</string>
+    <string name="viewer_pdf_night">夜間表示</string>
+    <string name="viewer_pdf_highlight">ハイライトモード</string>
+    <string name="viewer_epub_larger">文字を大きく</string>
+    <string name="viewer_epub_smaller">文字を小さく</string>
+    <string name="viewer_epub_serif">明朝 / ゴシック</string>
+    <string name="viewer_epub_night">夜間テーマ</string>
+
+    <string name="au20_viewer_cat_comics">コミック</string>
+    <string name="au20_viewer_cat_graphics">グラフィック</string>
+    <string name="viewer_highlight_all">すべてハイライト</string>
+    <string name="viewer_highlight_added">%1$d 件のハイライト</string>
+    <string name="viewer_comic_empty">このコミックにページがありません</string>
+    <string name="viewer_cbr_fdroid">CBR（RAR）はF-Droid版にありません。CBZかPlay/GitHub版を使ってください。</string>
+    <string name="viewer_cbr_encrypted">このCBRは暗号化されています</string>
+    <string name="viewer_preview_svg">SVGプレビュー</string>
+    <string name="viewer_preview_psd">PSDプレビュー（サムネイル）</string>
+    <string name="viewer_preview_cdr">CDRプレビュー（埋め込み画像）</string>
+    <string name="viewer_preview_ai">AIプレビュー（埋め込み画像。PDFのAIはPDFとして開きます）</string>
+    <string name="viewer_preview_none">プレビューがありません</string>
+</resources>

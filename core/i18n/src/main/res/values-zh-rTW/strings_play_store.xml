@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">從 Play 商店安裝的應用程式會顯示在此，包含已凍結的。</string>
     <string name="store_play_hint">已凍結的應用程式會解凍並開啟 Play 商店。Play 一裝上新版本，Telos 就立刻再凍結（一小時只是後備）。選用：Telos Network VPN 開啟時，在你打開它們之前沒有網路。</string>
     <string name="store_play_open_my_apps">開啟 Play 商店更新</string>
+    <string name="store_play_unfreeze_update">解凍並在 Play 商店更新</string>
+    <string name="store_play_frozen_count">已凍結 (%1$d)</string>
     <string name="store_play_block_network">開啟前封鎖網路</string>
     <string name="store_play_block_network_summary">Telos Network VPN 開啟時，為 Play 解凍的應用程式在你再次啟動前不能上網。</string>
     <string name="play_update_pause_channel">Play 商店更新</string>
     <string name="play_update_pause_title">正在等待 Play 商店更新</string>
     <string name="play_update_pause_text">Play 安裝新版本後會立即重新凍結 %2$d 個已解凍應用程式（後備 %1$d 小時）。</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

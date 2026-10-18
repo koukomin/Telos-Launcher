@@ -1177,8 +1177,6 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualNetworkApp(context),
         VirtualSystemApp(context),
         VirtualTerminalApp(context),
-    ) + listOfNotNull(VirtualIronewolfApp(context).takeIf {
-        de.mm20.launcher2.webapp.IronewolfRuntime.isBundled(context)
-    })
+    )
 }
 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===

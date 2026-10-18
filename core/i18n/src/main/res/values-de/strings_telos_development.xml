@@ -43,6 +43,8 @@
     <string name="telos_files_duplicates_count">%1$d Gruppen identischer Dateien</string>
     <string name="telos_files_duplicates_hint">Dateien werden Byte für Byte verglichen. Tippen Sie auf einen Pfad, um seinen Ordner zu öffnen. Es wird nichts automatisch gelöscht. Bis zu 50 Gruppen werden angezeigt.</string>
     <string name="telos_media_listen">Hören</string>
+    <string name="telos_media_watch">Ansehen</string>
+    <string name="telos_media_live">Live</string>
     <string name="telos_youtube_search">YouTube durchsuchen oder Videolink einfügen</string>
     <string name="telos_youtube_search_failed">YouTube konnte nicht durchsucht werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.</string>
     <string name="telos_youtube_play_failed">Dieser Stream konnte nicht abgespielt werden. Versuchen Sie es erneut oder wählen Sie ein anderes Video.</string>

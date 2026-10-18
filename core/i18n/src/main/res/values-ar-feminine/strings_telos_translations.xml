@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_peek_select">تحديد</string>
+    <string name="telos_files_smb_nearby">أجهزة على هذه الشبكة</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="viewer_set_wallpaper">वॉलपेपर के रूप में सेट करें</string>
+    <string name="viewer_favorite">पसंदीदा</string>
+    <string name="viewer_story_recents">हालिया</string>
+    <string name="viewer_story_screenshots">स्क्रीनशॉट</string>
+    <string name="viewer_story_favorites">पसंदीदा</string>
+    <string name="viewer_pdf_night">रात्रि पृष्ठ</string>
+    <string name="viewer_pdf_highlight">हाइलाइट मोड</string>
+    <string name="viewer_epub_larger">बड़ा पाठ</string>
+    <string name="viewer_epub_smaller">छोटा पाठ</string>
+    <string name="viewer_epub_serif">सेरिफ़ / सैंस</string>
+    <string name="viewer_epub_night">रात्रि थीम</string>
+
+    <string name="au20_viewer_cat_comics">कॉमिक्स</string>
+    <string name="au20_viewer_cat_graphics">ग्राफ़िक्स</string>
+    <string name="viewer_highlight_all">सभी हाइलाइट करें</string>
+    <string name="viewer_highlight_added">%1$d हाइलाइट</string>
+    <string name="viewer_comic_empty">इस कॉमिक में पेज नहीं हैं</string>
+    <string name="viewer_cbr_fdroid">CBR (RAR) F-Droid बिल्ड में नहीं है। CBZ या Play/GitHub उपयोग करें।</string>
+    <string name="viewer_cbr_encrypted">यह CBR एन्क्रिप्टेड है</string>
+    <string name="viewer_preview_svg">SVG पूर्वावलोकन</string>
+    <string name="viewer_preview_psd">PSD पूर्वावलोकन (थंबनेल)</string>
+    <string name="viewer_preview_cdr">CDR पूर्वावलोकन (एम्बेडेड बिटमैप)</string>
+    <string name="viewer_preview_ai">AI पूर्वावलोकन (एम्बेडेड बिटमैप; PDF AI PDF की तरह खुलता है)</string>
+    <string name="viewer_preview_none">कोई पूर्वावलोकन नहीं</string>
+</resources>

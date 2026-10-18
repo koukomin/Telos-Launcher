@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.media
 
 import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,14 +17,21 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.rememberVirtualAppBlur
+import de.mm20.launcher2.ui.component.virtualAppElevated
+import de.mm20.launcher2.ui.component.virtualAppGlass
+import de.mm20.launcher2.ui.component.virtualAppSurface
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.theme.transparency.transparency
+import dev.chrisbanes.haze.hazeSource
 
 /**
  * True inside Telos Media (the hub): the hub shows the top bar (space pill and back button) and
@@ -65,11 +73,15 @@ fun MediaFrame(
         }
         return
     }
+    val blur = rememberVirtualAppBlur()
+    val bar = virtualAppElevated()
     Scaffold(
-        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.surface),
+        containerColor = Color.Transparent,
         contentColor = MaterialTheme.colorScheme.onSurface,
         topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier.virtualAppGlass(blur, bar),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
                 title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 navigationIcon = {
                     IconButton(onClick = { backStack.removeLastOrNull() }) {
@@ -80,7 +92,9 @@ fun MediaFrame(
             )
         },
     ) { padding ->
-        Box(Modifier.fillMaxSize().padding(padding)) { content() }
+        Box(Modifier.fillMaxSize().padding(padding).hazeSource(blur.haze).background(virtualAppSurface())) {
+            content()
+        }
     }
 }
 

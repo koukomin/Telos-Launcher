@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agentit</string>
+    <string name="preference_screen_agents_summary">Lähetä haku Grokille, Claudelle, ChatGPT:lle ja muille. Oletuksena pois</string>
+    <string name="preference_agents_enabled">Ota agentit käyttöön haussa</string>
+    <string name="preference_agents_enabled_summary">Näyttää Kysy-sirun. Telos ei tallenna API-avainta; agentin sovellus tai sivusto käyttää tiliä, johon olet jo kirjautunut</string>
+    <string name="preference_agents_provider">Agentti</string>
+    <string name="preference_agents_transport">Lähetystapa</string>
+    <string name="preference_agents_transport_summary">Auto avaa agentin sovelluksen, jos se on asennettu, muuten sivuston. Termux ajaa CLI:n virallisessa Termux-sovelluksessa</string>
+    <string name="preference_agents_send_sentences">Lähetä lauseet Enterillä</string>
+    <string name="preference_agents_send_sentences_summary">Kolmen tai useamman sanan kysely menee agentille ensimmäisen sovelluksen avaamisen sijaan</string>
+    <string name="preference_search_bar_voice">Äänisyöte hakupalkissa</string>
+    <string name="preference_search_bar_voice_summary">Mikrofoni käyttää laitteen puheentunnistusta, jos puhelin tukee sitä</string>
+    <string name="search_bar_voice">Äänihaku</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Sovellus, sitten sivusto</string>
+    <string name="agent_transport_app">Agenttisovellus</string>
+    <string name="agent_transport_web">Sivusto</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Kysy %1$s:ltä</string>
+    <string name="agent_launch_failed">Agenttia ei voitu avata</string>
+    <string name="preference_keyboard_shortcuts">Laitteistonäppäimistön pikavalinnat</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Välilyönti tai Super+A avaa haun, Super+Enter Päätteen, Super+1 aloitusnäytön</string>
+    <string name="preference_category_telos_navigation">Telos-navigointi</string>
+    <string name="preference_telos_navigation">Reunaeleet (takaisin, koti, viimeisimmät)</string>
+    <string name="preference_telos_navigation_summary">Ohuet kaistat reunoilla. Sivulta Takaisin, alhaalta ylös Koti, paina pohjassa Viimeisimmät. Tarvitsee esteettömyyspalvelun. Oletuksena pois</string>
+    <string name="preference_telos_recents">Teloksen viimeisimmät</string>
+    <string name="preference_telos_recents_summary">Teloksen lista järjestelmän sijaan. Oletuksena pois</string>
+    <string name="telos_recents_title">Viimeisimmät sovellukset</string>
+    <string name="telos_recents_clear">Tyhjennä kaikki</string>
+</resources>

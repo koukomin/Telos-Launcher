@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Iš „Play Store“ įdiegtos programos rodomos čia, įskaitant užšaldytas.</string>
     <string name="store_play_hint">Užšaldytos programos atšildomos ir atidaroma „Play Store“. Telos jas vėl užšaldo, kai tik „Play“ įdiegia naują versiją (valanda tik atsargai). Pasirinktinai: su Telos Network VPN nėra interneto, kol jų neatidarysite.</string>
     <string name="store_play_open_my_apps">Atidaryti „Play Store“ naujinimus</string>
+    <string name="store_play_unfreeze_update">Atšildyti ir atnaujinti „Play Store“</string>
+    <string name="store_play_frozen_count">Užšaldytos (%1$d)</string>
     <string name="store_play_block_network">Blokuoti tinklą iki atidarymo</string>
     <string name="store_play_block_network_summary">Kai Telos Network VPN įjungtas, atšildytos „Play“ programos neturi interneto, kol jų vėl neatidarysite.</string>
     <string name="play_update_pause_channel">„Play Store“ naujinimai</string>
     <string name="play_update_pause_title">Laukiama „Play Store“ naujinimų</string>
     <string name="play_update_pause_text">%2$d atšildytos programos vėl bus užšaldytos, kai tik „Play“ įdiegs naują versiją (atsarga %1$d val.).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

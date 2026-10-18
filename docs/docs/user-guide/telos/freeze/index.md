@@ -22,7 +22,7 @@ installs a new version. If Play Store itself is frozen, Telos unfreezes it for t
 the updates finish. With Telos Network VPN on and the Store setting enabled, that app has no internet until you
 open it. Opening a frozen app can also unfreeze companions (Google for Gemini, microG for ReVanced/Morphe YouTube,
 Play Store for Play-licensed apps, a game booster for games you list). Those stay unfrozen until the master app is
-frozen again. Auto-freeze skips the foreground app (on by default), music, and apps with network traffic.
+frozen again. Auto-freeze skips the foreground app (on by default), the app that was in front when the screen turned off, music, and apps with network traffic.
 :::
 
 ## What it is

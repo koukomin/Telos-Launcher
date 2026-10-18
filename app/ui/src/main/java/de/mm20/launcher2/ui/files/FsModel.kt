@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.files
 
 import androidx.compose.ui.graphics.Color
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.media.docs.DocumentTypes
 import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
@@ -19,16 +20,20 @@ enum class FileKind(val labelRes: Int, val color: Color, val icon: Int) {
     Other(R.string.au_files_kind_file, Color(0xFF90A4AE), de.mm20.launcher2.base.R.drawable.description_24px);
 
     companion object {
-        private val images = setOf("jpg", "jpeg", "png", "gif", "webp", "bmp", "heic", "heif", "avif", "svg", "ico", "tif", "tiff", "dng", "raw", "arw", "cr2", "nef")
-        private val videos = setOf("mp4", "mkv", "webm", "avi", "mov", "3gp", "m4v", "ts", "flv", "wmv", "mpg", "mpeg")
-        private val audios = setOf("mp3", "m4a", "aac", "ogg", "oga", "opus", "flac", "wav", "wma", "amr", "mid", "midi")
-        private val documents = setOf("pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "odt", "ods", "odp", "rtf", "txt", "md", "csv", "epub", "log", "gdoc", "gsheet", "gslides", "gdraw", "gform", "gsite")
+        private val images = setOf("jpg", "jpeg", "png", "gif", "webp", "bmp", "heic", "heif", "hif", "avif", "svg", "ico", "tif", "tiff", "dng", "raw", "arw", "cr2", "cr3", "nef", "nrw", "orf", "raf", "rw2", "pef", "sr2", "jxl", "psd", "ai", "cdr")
+        private val videos = setOf("mp4", "mkv", "webm", "avi", "mov", "3gp", "m4v", "ts", "flv", "wmv", "mpg", "mpeg", "m2ts", "mts", "vob", "ogv", "asf", "hevc", "h265", "hvc", "hvc1")
+        private val audios = setOf("mp3", "m4a", "aac", "ogg", "oga", "opus", "flac", "wav", "wma", "amr", "mid", "midi", "aiff", "aif", "ape", "mka", "ac3")
+        private val documents = setOf("pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "odt", "ods", "odp", "rtf", "txt", "md", "csv", "epub", "log", "gdoc", "gsheet", "gslides", "gdraw", "gform", "gsite", "cbz", "cbr", "cbt", "cb7", "markdown", "tsv")
         private val archives = setOf("zip", "rar", "7z", "tar", "gz", "tgz", "bz2", "xz", "jar", "cab", "iso", "lzma", "z", "taz", "tbz", "tbz2", "txz", "tlz", "cpio", "ar", "deb", "arj", "ace", "lzh", "lha", "rpm", "wim", "chm", "squashfs", "dmg", "vhd", "msi", "zst")
         private val code = setOf("kt", "java", "py", "js", "ts", "json", "xml", "html", "css", "sh", "c", "cpp", "h", "rs", "go", "yml", "yaml", "toml", "ini", "conf", "prop", "gradle", "sql")
 
         fun of(name: String, isDir: Boolean): FileKind {
             if (isDir) return Folder
-            return when (name.substringAfterLast('.', "").lowercase(Locale.ROOT)) {
+            val ext = name.substringAfterLast('.', "").lowercase(Locale.ROOT)
+            // Viewer formats win: a new DocumentTypes entry shows up here without a second list
+            if (DocumentTypes.isGraphic(name)) return Image
+            if (DocumentTypes.isComic(name) || DocumentTypes.isPdf(name) || DocumentTypes.isOffice(name)) return Document
+            return when (ext) {
                 in images -> Image
                 in videos -> Video
                 in audios -> Audio
@@ -36,7 +41,7 @@ enum class FileKind(val labelRes: Int, val color: Color, val icon: Int) {
                 in archives -> Archive
                 in code -> Code
                 in documents -> Document
-                else -> Other
+                else -> if (DocumentTypes.isText(name)) Document else Other
             }
         }
     }

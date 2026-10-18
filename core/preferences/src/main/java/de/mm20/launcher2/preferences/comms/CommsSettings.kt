@@ -123,6 +123,12 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(blockInternational = enabled)) }
     }
 
+    val blockOutgoingCalls
+        get() = dataStore.data.map { it.comms.blockOutgoingCalls }
+    fun setBlockOutgoingCalls(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(blockOutgoingCalls = enabled)) }
+    }
+
     val homeCountry
         get() = dataStore.data.map { it.comms.homeCountry }
     fun setHomeCountry(region: String) {

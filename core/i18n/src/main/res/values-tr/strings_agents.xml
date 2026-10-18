@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Ajanlar</string>
+    <string name="preference_screen_agents_summary">Bir arama sorgusunu Grok, Claude, ChatGPT ve diğerlerine gönderin. Varsayılan olarak kapalı</string>
+    <string name="preference_agents_enabled">Aramada ajanları etkinleştir</string>
+    <string name="preference_agents_enabled_summary">Aramada bir Sor çipi gösterir. Telos API anahtarı saklamaz; ajan uygulaması veya sitesi zaten giriş yaptığınız hesabı kullanır</string>
+    <string name="preference_agents_provider">Ajan</string>
+    <string name="preference_agents_transport">Nasıl gönderilsin</string>
+    <string name="preference_agents_transport_summary">Otomatik, yüklüyse ajan uygulamasını, değilse siteyi açar. Termux resmi Termux uygulamasında CLI çalıştırır</string>
+    <string name="preference_agents_send_sentences">Cümleleri Enter ile gönder</string>
+    <string name="preference_agents_send_sentences_summary">Üç veya daha fazla kelimelik sorgu üst uygulamayı açmak yerine ajana gider</string>
+    <string name="preference_search_bar_voice">Arama çubuğunda sesli giriş</string>
+    <string name="preference_search_bar_voice_summary">Mikrofon, telefon destekliyorsa cihazdaki konuşma tanımayı kullanır</string>
+    <string name="search_bar_voice">Sesli arama</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Uygulama, sonra site</string>
+    <string name="agent_transport_app">Ajan uygulaması</string>
+    <string name="agent_transport_web">Web sitesi</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">%1$s’e sor</string>
+    <string name="agent_launch_failed">Ajan açılamadı</string>
+    <string name="preference_keyboard_shortcuts">Donanım klavye kısayolları</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Boşluk veya Super+A aramayı, Super+Enter Terminal’i, Super+1 ana ekranı açar</string>
+    <string name="preference_category_telos_navigation">Telos gezinme</string>
+    <string name="preference_telos_navigation">Kenar hareketleri (geri, ana ekran, son uygulamalar)</string>
+    <string name="preference_telos_navigation_summary">Kenarlarda ince şeritler çizer. Yanlardan kaydırınca Geri, alttan yukarı Ana ekran, alt şeridi basılı tutunca Son uygulamalar. Erişilebilirlik hizmeti gerekir. Varsayılan olarak kapalı</string>
+    <string name="preference_telos_recents">Telos son uygulamalar</string>
+    <string name="preference_telos_recents_summary">Sistem son uygulamaları yerine Telos listesi. Varsayılan olarak kapalı</string>
+    <string name="telos_recents_title">Son uygulamalar</string>
+    <string name="telos_recents_clear">Tümünü temizle</string>
+</resources>

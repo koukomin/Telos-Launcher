@@ -1051,4 +1051,6 @@
     </plurals>
     <string name="dl_m_auto_update">自動更新 yt-dlp</string>
     <string name="dl_m_auto_update_sum">每天透過 Wi-Fi 取得一次最新的 yt-dlp，讓網站變更後下載仍可正常運作</string>
+    <string name="telos_files_peek_select">選擇</string>
+    <string name="telos_files_smb_nearby">此網路上的電腦</string>
 </resources>

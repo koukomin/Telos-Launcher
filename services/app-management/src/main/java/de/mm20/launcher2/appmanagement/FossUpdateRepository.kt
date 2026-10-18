@@ -18,4 +18,11 @@ class FossUpdateRepository internal constructor(
     fun clearAll() {
         dataStore.update { it.copy(pendingUpdates = emptySet()) }
     }
+
+    fun setStoreUpdateCount(n: Int) {
+        dataStore.update { data ->
+            val rest = data.pendingUpdates.filterNot { it.startsWith("store-update:") }.toSet()
+            data.copy(pendingUpdates = if (n > 0) rest + "store-update:$n" else rest)
+        }
+    }
 }

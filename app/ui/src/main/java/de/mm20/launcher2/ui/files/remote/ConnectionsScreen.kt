@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -155,7 +156,18 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                     Text(if (c.host.isBlank()) stringResource(R.string.hf_remote_no_folder) else Uri.decode(c.host).substringAfter("tree/"), style = MaterialTheme.typography.bodySmall, maxLines = 2)
                     OutlinedButton(onClick = { picker.launch(null) }) { Text(if (c.host.isBlank()) stringResource(R.string.hf_remote_choose_folder) else stringResource(R.string.hf_remote_choose_other_folder)) }
                 } else if (!type.cloud) {
-                    Field(stringResource(R.string.hc_server), c.host, "cloud.example.com") { c = c.copy(host = it, fingerprint = if (it == c.host) c.fingerprint else "") }
+                    Field(stringResource(R.string.hc_server), c.host, if (type == RemoteType.Smb) "nas.local or 192.168.1.10 or smb://nas/share" else "cloud.example.com") { c = c.copy(host = it, fingerprint = if (it == c.host) c.fingerprint else "") }
+                    if (type == RemoteType.Smb) {
+                        val hosts by remember { SmbLan.discover(context) }.collectAsState(emptyList())
+                        if (hosts.isNotEmpty()) {
+                            Text(stringResource(R.string.telos_files_smb_nearby), style = MaterialTheme.typography.labelMedium)
+                            hosts.take(12).forEach { h ->
+                                TextButton(onClick = { c = c.copy(host = h.host, port = h.port, name = c.name.ifBlank { h.name }) }) {
+                                    Text("${h.name}  (${h.host})")
+                                }
+                            }
+                        }
+                    }
                     Field(stringResource(R.string.hf_remote_port), if (c.port > 0) c.port.toString() else "", type.defaultPort.toString()) { c = c.copy(port = it.filter(Char::isDigit).toIntOrNull() ?: 0) }
                     Field(stringResource(R.string.hc_user_name), c.user) { c = c.copy(user = it) }
                     Field(if (type == RemoteType.Sftp && c.privateKey.isNotBlank()) stringResource(R.string.hf_remote_key_password) else stringResource(R.string.hc_password), c.password, password = true) { c = c.copy(password = it) }

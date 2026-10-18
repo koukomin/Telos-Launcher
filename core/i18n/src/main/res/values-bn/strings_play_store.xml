@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">Play Store থেকে ইনস্টল করা অ্যাপ এখানে দেখায়, হিমায়িতসহ।</string>
     <string name="store_play_hint">হিমায়িত অ্যাপ গলানো হয় এবং Play Store খোলে। Play নতুন ভার্সন ইনস্টল করলেই Telos আবার ফ্রিজ করে (এক ঘণ্টা শুধু ব্যাকআপ)। ঐচ্ছিক: Telos Network VPN চালু থাকলে খোলা পর্যন্ত ইন্টারনেট নেই।</string>
     <string name="store_play_open_my_apps">Play Store আপডেট খুলুন</string>
+    <string name="store_play_unfreeze_update">আনফ্রিজ করে Play Store-এ আপডেট করুন</string>
+    <string name="store_play_frozen_count">ফ্রিজ (%1$d)</string>
     <string name="store_play_block_network">খোলার আগে নেটওয়ার্ক ব্লক</string>
     <string name="store_play_block_network_summary">Telos Network VPN চালু থাকলে Play-এর জন্য গলানো অ্যাপে আবার খোলা পর্যন্ত ইন্টারনেট থাকে না।</string>
     <string name="play_update_pause_channel">Play Store আপডেট</string>
     <string name="play_update_pause_title">Play Store আপডেটের অপেক্ষা</string>
     <string name="play_update_pause_text">Play নতুন ভার্সন ইনস্টল করলেই %2$d গলানো অ্যাপ আবার ফ্রিজ হবে (ব্যাকআপ %1$d ঘণ্টা)।</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

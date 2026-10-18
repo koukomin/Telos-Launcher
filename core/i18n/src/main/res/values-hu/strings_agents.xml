@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Ügynökök</string>
+    <string name="preference_screen_agents_summary">Keresés küldése a Grok, Claude, ChatGPT és mások felé. Alapból ki</string>
+    <string name="preference_agents_enabled">Ügynökök bekapcsolása a keresésben</string>
+    <string name="preference_agents_enabled_summary">Kérdezés chipet mutat. A Telos nem tárol API-kulcsot; az ügynök appja vagy webhelye a már bejelentkezett fiókot használja</string>
+    <string name="preference_agents_provider">Ügynök</string>
+    <string name="preference_agents_transport">Küldés módja</string>
+    <string name="preference_agents_transport_summary">Az Auto megnyitja az ügynök appját, ha telepítve van, különben a webhelyet. A Termux a hivatalos Termux appban futtatja a CLI-t</string>
+    <string name="preference_agents_send_sentences">Mondatok küldése Enterrel</string>
+    <string name="preference_agents_send_sentences_summary">Három vagy több szavas lekérdezés az ügynökhöz megy az első app megnyitása helyett</string>
+    <string name="preference_search_bar_voice">Hangbevitel a keresősávon</string>
+    <string name="preference_search_bar_voice_summary">A mikrofon a készülék beszédfelismerését használja, ha a telefon támogatja</string>
+    <string name="search_bar_voice">Hangalapú keresés</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">App, majd webhely</string>
+    <string name="agent_transport_app">Ügynök app</string>
+    <string name="agent_transport_web">Webhely</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Kérdezd a(z) %1$s</string>
+    <string name="agent_launch_failed">Az ügynököt nem sikerült megnyitni</string>
+    <string name="preference_keyboard_shortcuts">Hardveres billentyűparancsok</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Szóköz vagy Super+A keresés, Super+Enter Terminál, Super+1 kezdőképernyő</string>
+    <string name="preference_category_telos_navigation">Telos navigáció</string>
+    <string name="preference_telos_navigation">Szélgesztusok (vissza, kezdőlap, legutóbbiak)</string>
+    <string name="preference_telos_navigation_summary">Vékony sávok a széleken. Oldalról Vissza, alulról felfelé Kezdőlap, hosszan Legutóbbiak. Kisegítő szolgáltatás kell. Alapból ki</string>
+    <string name="preference_telos_recents">Telos legutóbbiak</string>
+    <string name="preference_telos_recents_summary">Telos lista a rendszer legutóbbiak helyett. Alapból ki</string>
+    <string name="telos_recents_title">Legutóbbi alkalmazások</string>
+    <string name="telos_recents_clear">Összes törlése</string>
+</resources>

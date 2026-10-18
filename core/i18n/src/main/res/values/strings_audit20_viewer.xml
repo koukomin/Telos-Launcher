@@ -9,6 +9,8 @@
     <string name="au20_viewer_cat_sheets">Spreadsheets</string>
     <string name="au20_viewer_cat_slides">Presentations</string>
     <string name="au20_viewer_cat_ebooks">E-books</string>
+    <string name="au20_viewer_cat_comics">Comics</string>
+    <string name="au20_viewer_cat_graphics">Graphics</string>
     <string name="au20_viewer_cat_other">Other</string>
     <string name="au20_viewer_recent">Recent</string>
     <string name="au20_viewer_clear_recent">Clear</string>

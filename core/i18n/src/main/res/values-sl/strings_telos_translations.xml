@@ -2566,4 +2566,6 @@
     </plurals>
     <string name="dl_m_auto_update">Samodejno posodobi yt-dlp</string>
     <string name="dl_m_auto_update_sum">Enkrat na dan prek Wi-Fi prenese najnovejši yt-dlp, da prenosi delujejo tudi ob spremembah strani</string>
+    <string name="telos_files_peek_select">Izberi</string>
+    <string name="telos_files_smb_nearby">Računalniki v tem omrežju</string>
 </resources>

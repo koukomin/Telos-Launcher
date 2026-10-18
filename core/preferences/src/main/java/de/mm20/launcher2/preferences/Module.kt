@@ -21,6 +21,7 @@ import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.preferences.ui.BadgeSettings
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.preferences.ui.ContextProfileSettings
+import de.mm20.launcher2.preferences.ui.AgentSettings
 import de.mm20.launcher2.preferences.ui.DesktopModeSettings
 import de.mm20.launcher2.preferences.ui.DynamicIslandSettings
 import de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings
@@ -76,6 +77,7 @@ val preferencesModule = module {
     factory { FloatingLauncherSettings(get()) }
     factory { ContextProfileSettings(get()) }
     factory { DesktopModeSettings(get()) }
+    factory { AgentSettings(get()) }
     factory { DynamicIslandSettings(get()) }
     factory { WebAppsPanelSettings(get()) }
     factory { WebAppBrowsingSettings(get()) }

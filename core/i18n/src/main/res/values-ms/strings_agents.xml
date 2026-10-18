@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Ejen</string>
+    <string name="preference_screen_agents_summary">Hantar carian ke Grok, Claude, ChatGPT dan lain-lain. Dimatikan secara lalai</string>
+    <string name="preference_agents_enabled">Dayakan ejen dalam carian</string>
+    <string name="preference_agents_enabled_summary">Menunjukkan cip Tanya. Telos tidak menyimpan kunci API; apl atau tapak ejen menggunakan akaun yang sudah anda log masuk</string>
+    <string name="preference_agents_provider">Ejen</string>
+    <string name="preference_agents_transport">Cara hantar</string>
+    <string name="preference_agents_transport_summary">Auto membuka apl ejen jika dipasang, jika tidak tapak web. Termux menjalankan CLI dalam apl rasmi Termux</string>
+    <string name="preference_agents_send_sentences">Hantar ayat dengan Enter</string>
+    <string name="preference_agents_send_sentences_summary">Pertanyaan tiga perkataan atau lebih dihantar kepada ejen, bukan membuka apl teratas</string>
+    <string name="preference_search_bar_voice">Input suara pada bar carian</string>
+    <string name="preference_search_bar_voice_summary">Mikrofon menggunakan pengecaman pertuturan pada peranti apabila telefon menyokongnya</string>
+    <string name="search_bar_voice">Carian suara</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Apl, kemudian tapak web</string>
+    <string name="agent_transport_app">Apl ejen</string>
+    <string name="agent_transport_web">Tapak web</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Tanya %1$s</string>
+    <string name="agent_launch_failed">Tidak dapat membuka ejen</string>
+    <string name="preference_keyboard_shortcuts">Pintasan papan kekunci perkakasan</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Space atau Super+A membuka carian, Super+Enter Terminal, Super+1 skrin utama</string>
+    <string name="preference_category_telos_navigation">Navigasi Telos</string>
+    <string name="preference_telos_navigation">Gerak tepi (kembali, utama, terbaru)</string>
+    <string name="preference_telos_navigation_summary">Jalur nipis di tepi. Leret dari sisi untuk Kembali, dari bawah untuk Utama, tekan lama untuk Terbaru. Perlukan perkhidmatan kebolehaksesan. Dimatikan secara lalai</string>
+    <string name="preference_telos_recents">Terbaru Telos</string>
+    <string name="preference_telos_recents_summary">Senarai Telos menggantikan Terbaru sistem. Dimatikan secara lalai</string>
+    <string name="telos_recents_title">Apl terbaru</string>
+    <string name="telos_recents_clear">Kosongkan semua</string>
+</resources>

@@ -2,6 +2,8 @@
     <string name="telos_youtube_label">YouTube</string>
     <string name="telos_youtube_music_label">YouTube Music</string>
     <string name="telos_media_listen">Listen</string>
+    <string name="telos_media_watch">Watch</string>
+    <string name="telos_media_live">Live</string>
     <string name="telos_youtube_search">Search YouTube or paste a video link</string>
     <string name="telos_youtube_search_failed">Could not search YouTube. Check your connection and try again.</string>
     <string name="telos_youtube_play_failed">This stream could not be played. Try again or choose another video.</string>

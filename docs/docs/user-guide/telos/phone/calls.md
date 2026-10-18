@@ -73,11 +73,12 @@ Shown for SIM calls when Telos is the default dialer. It appears over the lock s
 
 ### Incoming call
 
-- A blurred copy of the contact photo is the background; the name or number and "Incoming call" are shown.
+- The contact photo fills the screen (crop). Name, number and "Incoming call" sit on a dark gradient over the photo.
+  Without a photo, a large avatar is shown on the same layout.
 - **Answer style** decides how you answer: two buttons (Answer, Reject) or a swipe (left to reject, right to
   answer).
-- **Remind me** offers a callback notification in 5, 15, 30 or 60 minutes.
-- **Reject + SMS** (a link above the buttons, shown while a template is set) declines the call and sends the template
+- Swipe up (or tap the handle) for **Remind me** and **Reject + SMS**. Remind offers a callback notification in
+  5, 15, 30 or 60 minutes. Reject + SMS (shown while a template is set) declines the call and sends the template
   text to the caller. See [Messages](../messages/sms-mms#quick-replies).
 - The call also shows as a heads-up notification with a full-screen intent.
 

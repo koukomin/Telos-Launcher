@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agenteak</string>
+    <string name="preference_screen_agents_summary">Bidali bilaketa Grok, Claude, ChatGPT eta besteei. Desaktibatuta lehenetsita</string>
+    <string name="preference_agents_enabled">Gaitu agenteak bilaketan</string>
+    <string name="preference_agents_enabled_summary">Galdetu txipa erakusten du. Telosek ez du API gakorik gordetzen; agenteen appak edo guneak saioa hasita duzun kontua erabiltzen du</string>
+    <string name="preference_agents_provider">Agentea</string>
+    <string name="preference_agents_transport">Nola bidali</string>
+    <string name="preference_agents_transport_summary">Auto agenteen app-a irekitzen du instalatuta badago, bestela webgunea. Termux-ek CLI exekutatzen du Termux ofizialean</string>
+    <string name="preference_agents_send_sentences">Bidali esaldiak Enterrekin</string>
+    <string name="preference_agents_send_sentences_summary">Hiru hitz edo gehiagoko kontsulta agentera doa lehen app-a ireki beharrean</string>
+    <string name="preference_search_bar_voice">Ahots sarrera bilaketa-barran</string>
+    <string name="preference_search_bar_voice_summary">Mikrofonoak gailuko hizketa-ezagutza erabiltzen du telefonoak onartzen duenean</string>
+    <string name="search_bar_voice">Ahots bidezko bilaketa</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Appa, gero webgunea</string>
+    <string name="agent_transport_app">Agenteen app-a</string>
+    <string name="agent_transport_web">Webgunea</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Galdetu %1$s-ri</string>
+    <string name="agent_launch_failed">Ezin izan da agentea ireki</string>
+    <string name="preference_keyboard_shortcuts">Teklatu fisikoko lasterbideak</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Zuriunea edo Super+A bilaketa, Super+Enter Terminala, Super+1 hasiera</string>
+    <string name="preference_category_telos_navigation">Telos nabigazioa</string>
+    <string name="preference_telos_navigation">Ertzeko keinuak (atzera, hasiera, azkenak)</string>
+    <string name="preference_telos_navigation_summary">Marra meheak ertzetan. Alboko irristatzea Atzera, behetik gora Hasiera, luze sakatu Azkenak. Erabilerraztasun zerbitzua behar da. Desaktibatuta lehenetsita</string>
+    <string name="preference_telos_recents">Telos azkenak</string>
+    <string name="preference_telos_recents_summary">Telos zerrenda sistemako azkenen ordez. Desaktibatuta lehenetsita</string>
+    <string name="telos_recents_title">Azken appak</string>
+    <string name="telos_recents_clear">Garbitu dena</string>
+</resources>

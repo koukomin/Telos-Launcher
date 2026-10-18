@@ -1789,4 +1789,6 @@
     </plurals>
     <string name="dl_m_auto_update">Uuenda yt-dlp automaatselt</string>
     <string name="dl_m_auto_update_sum">Laadib kord päevas Wi-Fi kaudu alla uusima yt-dlp, et allalaadimised toimiksid ka siis, kui saidid muutuvad</string>
+    <string name="telos_files_peek_select">Vali</string>
+    <string name="telos_files_smb_nearby">Arvutid selles võrgus</string>
 </resources>

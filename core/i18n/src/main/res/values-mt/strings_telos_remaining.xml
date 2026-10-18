@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Trasferimenti ta’ fajls</string>
     <string name="telos_files_two_panels">Żewġ pannelli</string>
     <string name="telos_media_listen">Isma’</string>
+    <string name="telos_media_watch">Ara</string>
+    <string name="telos_media_live">Live</string>
     <string name="telos_media_store_description">Isma’ mużika lokali, radju u YouTube Music, ara vidjows lokali jew YouTube, u esplora TV u Stremio Fork.</string>
     <string name="telos_store_auto_enable">Attiva u aġġorna</string>
     <string name="telos_store_auto_explanation">Tattiva aġġornamenti awtomatiċi għall-apps magħżula? Aġġornamenti futuri jiġu installati awtomatikament meta Shizuku jew root jippermettu installazzjoni siekta. Inkella tirċievi notifika ta’ aġġornament. Tista’ tibdel dan fis-settings ta’ kull app.</string>

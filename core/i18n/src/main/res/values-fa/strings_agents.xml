@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">عامل‌ها</string>
+    <string name="preference_screen_agents_summary">پرس‌وجوی جستجو را به Grok، Claude، ChatGPT و دیگران بفرست. به‌طور پیش‌فرض خاموش</string>
+    <string name="preference_agents_enabled">فعال‌سازی عامل‌ها در جستجو</string>
+    <string name="preference_agents_enabled_summary">تراشه بپرس را نشان می‌دهد. Telos کلید API ذخیره نمی‌کند؛ برنامه یا وب‌سایت عامل از حسابی که قبلاً وارد شده‌اید استفاده می‌کند</string>
+    <string name="preference_agents_provider">عامل</string>
+    <string name="preference_agents_transport">نحوه ارسال</string>
+    <string name="preference_agents_transport_summary">خودکار برنامه عامل را در صورت نصب باز می‌کند، وگرنه وب‌سایت. Termux فرمان را در برنامه رسمی Termux اجرا می‌کند</string>
+    <string name="preference_agents_send_sentences">ارسال جمله‌ها با Enter</string>
+    <string name="preference_agents_send_sentences_summary">پرس‌وجوی سه کلمه یا بیشتر به‌جای باز کردن اولین برنامه به عامل فرستاده می‌شود</string>
+    <string name="preference_search_bar_voice">ورودی صوتی در نوار جستجو</string>
+    <string name="preference_search_bar_voice_summary">دکمه میکروفون از تشخیص گفتار روی دستگاه استفاده می‌کند وقتی گوشی پشتیبانی کند</string>
+    <string name="search_bar_voice">جستجوی صوتی</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">برنامه، سپس وب‌سایت</string>
+    <string name="agent_transport_app">برنامه عامل</string>
+    <string name="agent_transport_web">وب‌سایت</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">از %1$s بپرس</string>
+    <string name="agent_launch_failed">باز کردن عامل ممکن نشد</string>
+    <string name="preference_keyboard_shortcuts">میانبرهای صفحه‌کلید سخت‌افزاری</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+فاصله یا Super+A جستجو، Super+Enter پایانه، Super+1 خانه</string>
+    <string name="preference_category_telos_navigation">ناوبری Telos</string>
+    <string name="preference_telos_navigation">ژست‌های لبه (بازگشت، خانه، اخیر)</string>
+    <string name="preference_telos_navigation_summary">نوارهای باریک روی لبه‌ها. از کنار برای بازگشت، از پایین برای خانه، نگه‌داشتن برای اخیر. به سرویس دسترس‌پذیری نیاز دارد. به‌طور پیش‌فرض خاموش</string>
+    <string name="preference_telos_recents">اخیر Telos</string>
+    <string name="preference_telos_recents_summary">فهرست Telos به‌جای اخیر سیستم. به‌طور پیش‌فرض خاموش</string>
+    <string name="telos_recents_title">برنامه‌های اخیر</string>
+    <string name="telos_recents_clear">پاک کردن همه</string>
+</resources>

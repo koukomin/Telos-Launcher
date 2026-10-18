@@ -20,8 +20,10 @@ import org.apache.commons.compress.compressors.CompressorStreamFactory
 import java.io.BufferedInputStream
 import java.io.Closeable
 import java.io.File
+import java.io.FilterOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.io.OutputStream
 import java.util.concurrent.ConcurrentHashMap
 
 /** The address of something inside an archive file: arc://<archive path, encoded>!/<path inside> */
@@ -87,10 +89,12 @@ private class CryptZip(archive: File, password: CharArray, private val clean: (S
     override fun close() { runCatching { zip.close() } }
 }
 
-/** An archive file shown as a read-only folder: zip, jar, apk, 7z, rar (default flavor only, no encryption), tar and compressed tar, cpio, ar/deb, arj and single compressed files. */
+/** An archive or disc image shown as a folder. Zip can be edited and saved; ISO is read-only. */
 class ArchiveFs(private val archive: File) : Fs {
     override val isRoot = false
     override val isRemote = true // copied by streaming, never as plain files
+    private val iso: Iso9660? by lazy { if (kind == ArchiveKind.Iso) Iso9660(archive) else null }
+    private val zipWritable: Boolean get() = kind == ArchiveKind.Zip && !splitZip
 
     private val items: List<ArchiveItem> by lazy { index() }
     private val splitZip: Boolean by lazy {
@@ -207,6 +211,7 @@ class ArchiveFs(private val archive: File) : Fs {
                 }
             }
             k.isSingleFile -> add(singleName(), false, -1, archive.lastModified())
+            k == ArchiveKind.Iso -> iso?.items?.forEach { add(it.path, it.isDir, it.size, it.modified) }
             else -> sequentialStream().use { s ->
                 var e: ArchiveEntry? = s.nextEntry
                 while (e != null) { add(e.name, e.isDirectory, e.size, e.lastModifiedDate?.time ?: 0); e = s.nextEntry }
@@ -224,15 +229,79 @@ class ArchiveFs(private val archive: File) : Fs {
         }
     }
 
-    override fun mkdir(parent: String, name: String) = false
-    override fun createFile(parent: String, name: String) = false
-    override fun rename(path: String, newName: String) = false
-    override fun delete(path: String) = false
+    override fun mkdir(parent: String, name: String): Boolean {
+        if (!zipWritable || !isPlainName(name)) return false
+        val inner = (inner(parent).trim('/') + "/" + name).trim('/') + "/"
+        return zipMutate { z ->
+            val params = net.lingala.zip4j.model.ZipParameters()
+            params.fileNameInZip = inner
+            z.addStream(java.io.ByteArrayInputStream(ByteArray(0)), params)
+            true
+        }
+    }
+    override fun createFile(parent: String, name: String): Boolean {
+        if (!zipWritable || !isPlainName(name)) return false
+        return zipPut((inner(parent).trim('/') + "/" + name).trim('/'), ByteArray(0))
+    }
+    override fun rename(path: String, newName: String): Boolean {
+        if (!zipWritable || !isPlainName(newName)) return false
+        val from = inner(path)
+        val to = from.substringBeforeLast('/', "").let { p -> if (p.isEmpty()) newName else "$p/$newName" }
+        return zipMutate { z -> z.renameFile(from, to); true }
+    }
+    override fun delete(path: String): Boolean {
+        if (!zipWritable) return false
+        val inner = inner(path)
+        return zipMutate { z ->
+            z.removeFile(inner)
+            z.fileHeaders.filter { it.fileName.startsWith("$inner/") }.forEach { z.removeFile(it) }
+            true
+        }
+    }
     override fun copy(src: String, dstDir: String, newName: String) = false
-    override fun move(src: String, dstDir: String, newName: String) = false
+    override fun move(src: String, dstDir: String, newName: String): Boolean {
+        if (!zipWritable || !isPlainName(newName)) return false
+        val from = inner(src)
+        val to = (inner(dstDir).trim('/') + "/" + newName).trim('/')
+        return zipMutate { z -> z.renameFile(from, to); true }
+    }
     override fun chmod(path: String, mode: String) = false
+
+    private fun zipMutate(block: (net.lingala.zip4j.ZipFile) -> Boolean): Boolean {
+        return runCatching {
+            net.lingala.zip4j.ZipFile(archive).use { z -> block(z) }
+        }.getOrDefault(false).also { if (it) forget(archive.path) }
+    }
+
+    private fun zipPut(inner: String, bytes: ByteArray): Boolean {
+        val tmp = File.createTempFile("arcw", ".bin")
+        return try {
+            tmp.writeBytes(bytes)
+            zipMutate { z ->
+                runCatching { z.removeFile(inner) }
+                val params = net.lingala.zip4j.model.ZipParameters()
+                params.fileNameInZip = inner
+                z.addFile(tmp, params)
+                true
+            }
+        } finally { tmp.delete() }
+    }
     override fun exists(path: String) = inner(path).isEmpty() || items.any { it.path == inner(path) }
     override fun totalSize(path: String): Long = items.filter { !it.isDir && (inner(path).isEmpty() || it.path == inner(path) || it.path.startsWith(inner(path) + "/")) }.sumOf { it.size.coerceAtLeast(0L) }
+    override fun openWrite(path: String): OutputStream {
+        if (!zipWritable) throw UnsupportedOperationException("This archive cannot be written")
+        val inner = inner(path)
+        val tmp = File.createTempFile("arcw", ".bin")
+        return object : FilterOutputStream(tmp.outputStream()) {
+            override fun write(b: ByteArray, off: Int, len: Int) { out.write(b, off, len) }
+            override fun close() {
+                try {
+                    super.close()
+                    zipPut(inner, tmp.readBytes())
+                } finally { tmp.delete() }
+            }
+        }
+    }
 
     /**
      * Unpacks everything into [target] in one pass. Reading file by file through [openRead] would
@@ -326,6 +395,14 @@ class ArchiveFs(private val archive: File) : Fs {
                     progress(dest.length())
                 }
             }
+            k == ArchiveKind.Iso -> {
+                val image = iso ?: throw IOException("Not an ISO image")
+                image.items.forEach { item ->
+                    if (cancel.cancelled) throw IOException("Cancelled")
+                    val dest = destination(item.path) ?: return@forEach
+                    if (item.isDir) dest.mkdirs() else image.open(item.path).use { input -> write(dest) { input.read(it) } }
+                }
+            }
             k.isSingleFile -> {
                 val dest = destination(singleName())
                 if (dest != null) singleStream().use { input -> write(dest) { input.read(it) } }
@@ -384,6 +461,7 @@ class ArchiveFs(private val archive: File) : Fs {
                 return GuardedStream(raw, map7z(encrypted, pw))
             }
             k == ArchiveKind.Rar -> return openRar(wanted)
+            k == ArchiveKind.Iso -> return iso?.open(wanted) ?: throw IOException("Not an ISO image")
             k.isSingleFile -> {
                 if (wanted != singleName()) throw IOException("Not found in the archive")
                 return singleStream()

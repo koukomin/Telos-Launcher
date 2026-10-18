@@ -71,6 +71,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -98,8 +100,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.comms.CommsSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.theme.transparency.transparency
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 import de.mm20.launcher2.ui.comms.RadioViewModel
 import de.mm20.launcher2.ui.comms.radio.RadioDashboardScreen
 import de.mm20.launcher2.ui.locals.LocalBackStack
@@ -133,22 +142,19 @@ private enum class MediaSpace(
 }
 
 private val MediaSpace.group: String get() = when (this) {
-    MediaSpace.Music, MediaSpace.Radio, MediaSpace.YouTubeMusic -> "audio"
-    MediaSpace.Video, MediaSpace.YouTube -> "video"
-    MediaSpace.Tv -> "tv"
-    MediaSpace.Stremio -> "stremio"
+    MediaSpace.Music, MediaSpace.YouTubeMusic -> "listen"
+    MediaSpace.Video, MediaSpace.YouTube, MediaSpace.Stremio -> "watch"
+    MediaSpace.Radio, MediaSpace.Tv -> "live"
 }
 private val MediaSpace.groupLabel: Int get() = when (group) {
-    "audio" -> R.string.telos_media_listen
-    "video" -> R.string.au9_mediahub_space_video
-    "tv" -> R.string.au12_tvui_space_tv
-    else -> R.string.au22_stremio_label
+    "listen" -> R.string.telos_media_listen
+    "watch" -> R.string.telos_media_watch
+    else -> R.string.telos_media_live
 }
 private val MediaSpace.groupIcon: Int get() = when (group) {
-    "audio" -> R.drawable.headphones_24px
-    "video" -> R.drawable.video_library_24px
-    "tv" -> R.drawable.tv_24px
-    else -> R.drawable.theaters_24px
+    "listen" -> R.drawable.headphones_24px
+    "watch" -> R.drawable.video_library_24px
+    else -> R.drawable.tv_24px
 }
 
 /**
@@ -219,20 +225,30 @@ fun MediaHubScreen(initialSpace: String = "") {
         animationSpec = if (reduceAnimations) snap() else tween(500),
         label = "mediaHubAccent",
     )
+    val uiSettings: UiSettings = koinInject()
+    val blurRadius by uiSettings.drawerBackgroundBlur.collectAsState(32)
+    val t = MaterialTheme.transparency
+    val hazeState = rememberHazeState(blurEnabled = isAtLeastApiLevel(33) && blurRadius > 0)
 
     Surface(
-        color = scheme.surface,
+        color = Color.Transparent,
         contentColor = scheme.onSurface,
         modifier = Modifier.fillMaxSize(),
     ) {
         Column(
             Modifier
                 .fillMaxSize()
-                .background(Brush.verticalGradient(listOf(accent.copy(alpha = 0.14f), scheme.surface)))
+                .background(
+                    Brush.verticalGradient(
+                        listOf(
+                            accent.copy(alpha = 0.10f * t.surface),
+                            scheme.surface.copy(alpha = t.background),
+                        )
+                    )
+                )
                 .statusBarsPadding()
-                .navigationBarsPadding()
         ) {
-            Box(Modifier.weight(1f).fillMaxWidth()) {
+            Box(Modifier.weight(1f).fillMaxWidth().hazeSource(hazeState)) {
                 AnimatedContent(
                     targetState = current,
                     transitionSpec = {
@@ -262,6 +278,8 @@ fun MediaHubScreen(initialSpace: String = "") {
                                         reduceAnimations = reduceAnimations,
                                         onBack = { backStack.removeLastOrNull() },
                                         actions = actions,
+                                        haze = hazeState,
+                                        blurRadius = blurRadius,
                                     )
                                 },
                             ) {
@@ -287,24 +305,27 @@ fun MediaHubScreen(initialSpace: String = "") {
                 space = if (music) MediaSpace.YouTubeMusic.id else MediaSpace.YouTube.id
             }
             if (current != null) {
-                HubBottomBar(
-                    current = current,
-                    groupSpaces = groupSpaces,
-                    available = available,
-                    onSelect = { space = it.id },
-                )
-            }
-            if (current != null) {
                 HubMiniPlayer(
                     space = current,
                     musicVm = musicVm,
                     radioVm = radioVm,
                     tvVm = tvVm,
                     reduceAnimations = reduceAnimations,
+                    haze = hazeState,
+                    blurRadius = blurRadius,
                     onOpen = { target ->
                         if (target == MediaSpace.Music) openMusicPlayer = true
                         if (target == MediaSpace.Tv) tvVm.openPlayer()
                         space = target.id
+                    },
+                )
+                HubBottomBar(
+                    current = current,
+                    groupSpaces = groupSpaces,
+                    haze = hazeState,
+                    blurRadius = blurRadius,
+                    onSelect = { dest ->
+                        space = (groupSelections[dest.group] ?: dest).id
                     },
                 )
             }
@@ -312,7 +333,7 @@ fun MediaHubScreen(initialSpace: String = "") {
     }
 }
 
-/** One toolbar: source navigation and contextual controls share space instead of stacking headers. */
+/** Back, compact destination title, source chips, then the open screen's actions. */
 @Composable
 private fun HubToolbar(
     current: MediaSpace,
@@ -323,47 +344,57 @@ private fun HubToolbar(
     reduceAnimations: Boolean,
     onBack: () -> Unit,
     actions: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit,
+    haze: HazeState,
+    blurRadius: Int,
 ) {
-    var expanded by remember { mutableStateOf(false) }
-    Row(
-        Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 2.dp),
-        verticalAlignment = Alignment.CenterVertically,
+    val sources = available.filter { it.group == current.group }
+    val t = MaterialTheme.transparency
+    val glass = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .hubGlass(haze, blurRadius, glass)
     ) {
-        IconButton(onClick = onBack) {
-            Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
-        }
-        Box(Modifier.weight(1f)) {
-            Surface(onClick = { expanded = true }, shape = RoundedCornerShape(16.dp), color = Color.Transparent) {
-                Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Text(stringResource(current.label), style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f))
-                    Icon(painterResource(R.drawable.unfold_more_24px), null, modifier = Modifier.size(18.dp))
-                }
+        Row(
+            Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onBack) {
+                Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
             }
-            androidx.compose.material3.DropdownMenu(expanded, { expanded = false }) {
-                val settings: CommsSettings = koinInject()
-                val compact by settings.mediaHubCompactList.collectAsState(true)
-                androidx.compose.material3.DropdownMenuItem(
-                    text = { Text(stringResource(R.string.telos_media_compact_list)) },
-                    trailingIcon = {
-                        androidx.compose.material3.Switch(checked = compact, onCheckedChange = { settings.setMediaHubCompactList(it) })
-                    },
-                    onClick = { settings.setMediaHubCompactList(!compact) },
-                )
-                SpacePill(groupSpaces, groupSpaces.first { it.group == current.group },
-                    onSelect = { onSelect(it); expanded = false }, onReorder = onReorder,
-                    reduceAnimations = reduceAnimations, modifier = Modifier.width(280.dp).padding(8.dp))
-                available.forEach { source ->
-                    androidx.compose.material3.DropdownMenuItem(
-                        text = { Text(stringResource(source.label), fontWeight = if (source == current) FontWeight.Bold else FontWeight.Normal) },
-                        leadingIcon = { Icon(painterResource(source.icon), null, modifier = Modifier.size(24.dp)) },
-                        onClick = { onSelect(source); expanded = false },
+            Text(
+                stringResource(current.groupLabel),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f),
+            )
+            actions()
+        }
+        if (sources.size > 1) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState())
+                    .padding(start = 16.dp, end = 16.dp, bottom = 6.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                sources.forEach { source ->
+                    FilterChip(
+                        selected = source == current,
+                        onClick = { onSelect(source) },
+                        label = {
+                            Text(stringResource(source.label), style = MaterialTheme.typography.labelSmall, maxLines = 1)
+                        },
+                        leadingIcon = {
+                            Icon(painterResource(source.icon), null, modifier = Modifier.size(16.dp))
+                        },
                     )
                 }
             }
         }
-        actions()
     }
 }
 
@@ -487,52 +518,34 @@ private fun SpacePill(
 private fun HubBottomBar(
     current: MediaSpace,
     groupSpaces: List<MediaSpace>,
-    available: List<MediaSpace>,
+    haze: HazeState,
+    blurRadius: Int,
     onSelect: (MediaSpace) -> Unit,
 ) {
-    val scheme = MaterialTheme.colorScheme
-    val extras = when (current.group) {
-        "audio" -> available.filter { it.group == "audio" }
-        "video" -> available.filter { it.group == "video" }
-        else -> groupSpaces
-    }
-    val items = (groupSpaces + extras.filter { it !in groupSpaces }).distinct()
-    Surface(
-        color = scheme.surface.copy(alpha = 0.55f),
+    val dests = listOf("listen", "watch", "live").mapNotNull { id ->
+        groupSpaces.firstOrNull { it.group == id }
+            ?: MediaSpace.entries.firstOrNull { it.group == id }
+    }.distinctBy { it.group }
+    val t = MaterialTheme.transparency
+    val glass = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
+    NavigationBar(
+        modifier = Modifier.hubGlass(haze, blurRadius, glass),
+        containerColor = Color.Transparent,
         tonalElevation = 0.dp,
-        modifier = Modifier.fillMaxWidth(),
     ) {
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 6.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            items.forEach { space ->
-                val selected = space == current
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .clickable { onSelect(space) }
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
-                ) {
-                    Icon(
-                        painterResource(space.icon),
-                        contentDescription = stringResource(space.label),
-                        tint = if (selected) scheme.primary else scheme.onSurfaceVariant,
-                        modifier = Modifier.size(22.dp),
-                    )
-                    Text(
-                        stringResource(space.label),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = if (selected) scheme.primary else scheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
-            }
+        dests.forEach { dest ->
+            val selected = dest.group == current.group
+            NavigationBarItem(
+                selected = selected,
+                onClick = { onSelect(dest) },
+                icon = {
+                    Icon(painterResource(dest.groupIcon), contentDescription = null, modifier = Modifier.size(22.dp))
+                },
+                label = {
+                    Text(stringResource(dest.groupLabel), style = MaterialTheme.typography.labelSmall, maxLines = 1)
+                },
+                alwaysShowLabel = true,
+            )
         }
     }
 }
@@ -548,6 +561,8 @@ private fun HubMiniPlayer(
     radioVm: RadioViewModel,
     tvVm: TvViewModel,
     reduceAnimations: Boolean,
+    haze: HazeState,
+    blurRadius: Int,
     onOpen: (MediaSpace) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -590,8 +605,7 @@ private fun HubMiniPlayer(
     val display = shown ?: last
 
     AnimatedVisibility(
-        // Music and Radio own their richer bar on their own page; keep the hub bar elsewhere.
-        visible = shown != null && !(shown == space && (space == MediaSpace.Music || space == MediaSpace.Radio)),
+        visible = shown != null,
         enter = if (reduceAnimations) EnterTransition.None else slideInVertically(spring(0.8f, 400f)) { it } + fadeIn(),
         exit = if (reduceAnimations) ExitTransition.None else slideOutVertically(spring(0.8f, 400f)) { it } + fadeOut(),
         modifier = modifier,
@@ -620,15 +634,17 @@ private fun HubMiniPlayer(
         val haptic = LocalHapticFeedback.current
         val duration = musicNow?.durationMs ?: 0L
 
+        val glass = scheme.surfaceContainerHigh.copy(alpha = MaterialTheme.transparency.elevatedSurface)
         Surface(
             shape = cardShape,
-            color = scheme.surfaceContainerHigh.copy(alpha = 0.92f),
-            tonalElevation = 3.dp,
-            shadowElevation = 6.dp,
+            color = Color.Transparent,
+            tonalElevation = 0.dp,
+            shadowElevation = 0.dp,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 8.dp)
+                .padding(horizontal = 8.dp, vertical = 4.dp)
                 .clip(cardShape)
+                .hubGlass(haze, blurRadius, glass)
                 .clickable(onClickLabel = stringResource(R.string.au9_mediahub_open_player)) { onOpen(display) },
         ) {
             Box(
@@ -641,7 +657,7 @@ private fun HubMiniPlayer(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Box(
-                    Modifier.size(56.dp).clip(RoundedCornerShape(6.dp)).background(scheme.secondaryContainer),
+                    Modifier.size(48.dp).clip(RoundedCornerShape(6.dp)).background(scheme.secondaryContainer),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -724,5 +740,16 @@ private fun HubMiniPlayer(
             }
             }
         }
+    }
+}
+
+private fun Modifier.hubGlass(haze: HazeState, blur: Int, color: Color): Modifier {
+    return if (blur > 0) {
+        hazeEffect(haze) {
+            blurRadius = blur.dp
+            backgroundColor = color
+        }.background(color)
+    } else {
+        background(color)
     }
 }

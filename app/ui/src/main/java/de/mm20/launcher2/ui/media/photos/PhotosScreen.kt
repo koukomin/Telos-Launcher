@@ -11,8 +11,20 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.input.pointer.pointerInput
+import de.mm20.launcher2.ui.component.rememberVirtualAppBlur
+import de.mm20.launcher2.ui.component.virtualAppElevated
+import de.mm20.launcher2.ui.component.virtualAppGlass
+import de.mm20.launcher2.ui.component.virtualAppSurface
+import dev.chrisbanes.haze.hazeSource
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -48,7 +60,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object PhotosRoute : NavKey
 
-data class PhotoItem(val uri: Uri, val name: String, val folder: String, val taken: Long)
+data class PhotoItem(
+    val uri: Uri,
+    val name: String,
+    val folder: String,
+    val taken: Long,
+    val mime: String = "image/*",
+) {
+    val isVideo: Boolean get() = mime.startsWith("video/")
+}
 
 class PhotosViewModel : ViewModel() {
     private val _items = MutableStateFlow<List<PhotoItem>>(emptyList())
@@ -63,24 +83,40 @@ class PhotosViewModel : ViewModel() {
     private fun query(context: Context): List<PhotoItem> {
         val out = ArrayList<PhotoItem>()
         val projection = arrayOf(
-            MediaStore.Images.Media._ID,
-            MediaStore.Images.Media.DISPLAY_NAME,
-            MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
-            MediaStore.Images.Media.DATE_TAKEN,
-            MediaStore.Images.Media.DATE_ADDED,
+            MediaStore.Files.FileColumns._ID,
+            MediaStore.Files.FileColumns.DISPLAY_NAME,
+            MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME,
+            MediaStore.Files.FileColumns.DATE_TAKEN,
+            MediaStore.Files.FileColumns.DATE_ADDED,
+            MediaStore.Files.FileColumns.MIME_TYPE,
+            MediaStore.Files.FileColumns.MEDIA_TYPE,
+        )
+        val sel = "${MediaStore.Files.FileColumns.MEDIA_TYPE}=? OR ${MediaStore.Files.FileColumns.MEDIA_TYPE}=?"
+        val args = arrayOf(
+            MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE.toString(),
+            MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO.toString(),
         )
         runCatching {
             context.contentResolver.query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null, null,
-                "${MediaStore.Images.Media.DATE_ADDED} DESC"
+                MediaStore.Files.getContentUri("external"),
+                projection,
+                sel,
+                args,
+                "${MediaStore.Files.FileColumns.DATE_ADDED} DESC",
             )?.use { c ->
                 while (c.moveToNext()) {
+                    val mime = c.getString(5).orEmpty()
+                    val mediaType = c.getInt(6)
+                    val base = if (mediaType == MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+                        MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                    else MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                     val taken = c.getLong(3).takeIf { it > 0 } ?: (c.getLong(4) * 1000)
                     out += PhotoItem(
-                        uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, c.getLong(0)),
+                        uri = ContentUris.withAppendedId(base, c.getLong(0)),
                         name = c.getString(1).orEmpty(),
                         folder = c.getString(2).orEmpty(),
                         taken = taken,
+                        mime = mime.ifBlank { if (mediaType == MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO) "video/*" else "image/*" },
                     )
                 }
             }
@@ -115,6 +151,9 @@ private fun dayLabel(context: Context, millis: Long): String {
     }
 }
 
+private fun monthLabel(millis: Long): String =
+    java.text.SimpleDateFormat("MMMM yyyy", java.util.Locale.getDefault()).format(java.util.Date(millis))
+
 @Composable
 private fun Thumb(item: PhotoItem, modifier: Modifier) {
     val context = LocalContext.current
@@ -126,6 +165,7 @@ private fun Thumb(item: PhotoItem, modifier: Modifier) {
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 /** The photo library. With [embedded] it sits inside Telos Viewer, which draws the status bar space and the tabs. */
 fun PhotosScreen(embedded: Boolean = false) {
@@ -136,18 +176,26 @@ fun PhotosScreen(embedded: Boolean = false) {
 
     val permission = if (Build.VERSION.SDK_INT >= 33) Manifest.permission.READ_MEDIA_IMAGES
     else Manifest.permission.READ_EXTERNAL_STORAGE
+    val videoPermission = if (Build.VERSION.SDK_INT >= 33) Manifest.permission.READ_MEDIA_VIDEO else permission
     var hasPermission by remember {
         mutableStateOf(ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED)
     }
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
-        hasPermission = it
-        if (it) viewModel.load(context)
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { granted ->
+        hasPermission = granted.values.any { it }
+        if (hasPermission) viewModel.load(context)
     }
     LaunchedEffect(Unit) { if (hasPermission) viewModel.load(context) }
 
     var tab by rememberSaveable { mutableIntStateOf(0) }
     var album by remember { mutableStateOf<Album?>(null) }
-    androidx.activity.compose.BackHandler(enabled = album != null) { album = null }
+    var columns by rememberSaveable { mutableIntStateOf(4) }
+    var selected by remember { mutableStateOf<Set<Uri>>(emptySet()) }
+    val selecting = selected.isNotEmpty()
+    androidx.activity.compose.BackHandler(enabled = album != null || selecting) {
+        if (selecting) selected = emptySet() else album = null
+    }
+    val blur = rememberVirtualAppBlur()
+    val bar = virtualAppElevated()
 
     var query by remember { mutableStateOf("") }
     val filteredItems = remember(items, query) {
@@ -166,14 +214,46 @@ fun PhotosScreen(embedded: Boolean = false) {
         val a = album
         if (a != null) { val keep = filteredItems.toSet(); a.items.filter { it in keep } } else filteredItems
     }
-    val byDay = remember(shown) { shown.groupBy { dayLabel(context, it.taken) } }
+    val byMonth = remember(shown) { shown.groupBy { monthLabel(it.taken) } }
+    val favUris = remember(shown) { ViewerLibrary.favorites(context) }
+    val stories = remember(shown, favUris) {
+        listOfNotNull(
+            shown.take(12).takeIf { it.isNotEmpty() }?.let { Album(context.getString(R.string.viewer_story_recents), it) },
+            shown.filter { it.folder.contains("screenshot", true) }.takeIf { it.isNotEmpty() }
+                ?.let { Album(context.getString(R.string.viewer_story_screenshots), it) },
+            shown.filter { it.uri.toString() in favUris }.takeIf { it.isNotEmpty() }
+                ?.let { Album(context.getString(R.string.viewer_story_favorites), it) },
+        )
+    }
 
     androidx.compose.material3.Scaffold(
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = virtualAppSurface(),
         contentColor = MaterialTheme.colorScheme.onSurface,
         bottomBar = {
-            if (album == null) {
-                NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainer) {
+            if (selecting) {
+                NavigationBar(modifier = Modifier.virtualAppGlass(blur, bar), containerColor = androidx.compose.ui.graphics.Color.Transparent) {
+                    NavigationBarItem(
+                        selected = false,
+                        onClick = {
+                            val send = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                                type = "*/*"
+                                putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(selected.toList()))
+                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            }
+                            context.startActivity(Intent.createChooser(send, null))
+                        },
+                        icon = { Icon(painterResource(R.drawable.share_24px), contentDescription = null) },
+                        label = { Text(stringResource(R.string.hc_share)) },
+                    )
+                    NavigationBarItem(
+                        selected = false,
+                        onClick = { selected = emptySet() },
+                        icon = { Icon(painterResource(R.drawable.close_24px), contentDescription = null) },
+                        label = { Text(stringResource(R.string.hc_cancel)) },
+                    )
+                }
+            } else if (album == null) {
+                NavigationBar(modifier = Modifier.virtualAppGlass(blur, bar), containerColor = androidx.compose.ui.graphics.Color.Transparent) {
                     NavigationBarItem(
                         selected = tab == 0, onClick = { tab = 0 },
                         icon = { Icon(painterResource(R.drawable.photo_24px), contentDescription = null) },
@@ -188,7 +268,7 @@ fun PhotosScreen(embedded: Boolean = false) {
             }
         },
     ) { padding ->
-        Column(Modifier.fillMaxSize().padding(padding)) {
+        Column(Modifier.fillMaxSize().padding(padding).hazeSource(blur.haze)) {
             Row(
                 Modifier.fillMaxWidth().then(if (embedded) Modifier else Modifier.statusBarsPadding()).padding(start = 20.dp, end = 12.dp, top = if (embedded) 4.dp else 12.dp, bottom = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -224,7 +304,10 @@ fun PhotosScreen(embedded: Boolean = false) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(stringResource(R.string.hc_allow_access_to_your_photos), style = MaterialTheme.typography.titleMedium)
-                    Button(onClick = { launcher.launch(permission) }, modifier = Modifier.padding(top = 16.dp)) { Text(stringResource(R.string.hc_allow)) }
+                    Button(
+                        onClick = { launcher.launch(arrayOf(permission, videoPermission).distinct().toTypedArray()) },
+                        modifier = Modifier.padding(top = 16.dp),
+                    ) { Text(stringResource(R.string.hc_allow)) }
                 }
             } else if (tab == 1 && album == null) {
                 LazyVerticalGrid(
@@ -252,26 +335,80 @@ fun PhotosScreen(embedded: Boolean = false) {
                     }
                 }
             } else {
+                if (album == null && stories.isNotEmpty() && tab == 0) {
+                    LazyRow(
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        items(stories, key = { it.name }) { s ->
+                            Column(Modifier.width(88.dp).clickable { album = s }) {
+                                Thumb(
+                                    s.items.first(),
+                                    Modifier.size(88.dp).clip(RoundedCornerShape(20.dp)),
+                                )
+                                Text(
+                                    s.name,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    maxLines = 1,
+                                    modifier = Modifier.padding(top = 4.dp),
+                                )
+                            }
+                        }
+                    }
+                }
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(4),
+                    columns = GridCells.Fixed(columns),
                     horizontalArrangement = Arrangement.spacedBy(2.dp),
                     verticalArrangement = Arrangement.spacedBy(2.dp),
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().pointerInput(columns) {
+                        detectTransformGestures { _, _, zoom, _ ->
+                            if (zoom > 1.08f) columns = (columns - 1).coerceIn(3, 5)
+                            else if (zoom < 0.92f) columns = (columns + 1).coerceIn(3, 5)
+                        }
+                    },
                 ) {
-                    byDay.forEach { (day, list) ->
+                    byMonth.forEach { (month, list) ->
                         item(span = { GridItemSpan(maxLineSpan) }) {
                             Text(
-                                day,
+                                month,
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.SemiBold,
                                 modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 6.dp),
                             )
                         }
                         items(list.size) { i ->
-                            Thumb(
-                                list[i],
-                                Modifier.aspectRatio(1f).clickable { openViewer(context, shown, shown.indexOf(list[i])) },
-                            )
+                            val item = list[i]
+                            val on = item.uri in selected
+                            Box {
+                                Thumb(
+                                    item,
+                                    Modifier.aspectRatio(1f).combinedClickable(
+                                        onLongClick = {
+                                            selected = if (on) selected - item.uri else selected + item.uri
+                                        },
+                                        onClick = {
+                                            if (selecting) {
+                                                selected = if (on) selected - item.uri else selected + item.uri
+                                            } else openViewer(context, shown, shown.indexOf(item))
+                                        },
+                                    ),
+                                )
+                                if (item.isVideo) {
+                                    Icon(
+                                        painterResource(R.drawable.play_arrow_24px),
+                                        contentDescription = null,
+                                        tint = androidx.compose.ui.graphics.Color.White,
+                                        modifier = Modifier.align(Alignment.BottomStart).padding(6.dp),
+                                    )
+                                }
+                                if (on) {
+                                    Box(
+                                        Modifier.matchParentSize().background(
+                                            MaterialTheme.colorScheme.primary.copy(alpha = 0.35f),
+                                        ),
+                                    )
+                                }
+                            }
                         }
                     }
                 }

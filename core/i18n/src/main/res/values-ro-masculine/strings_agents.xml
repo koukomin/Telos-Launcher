@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Agenți</string>
+    <string name="preference_screen_agents_summary">Trimite o căutare către Grok, Claude, ChatGPT și alții. Dezactivat implicit</string>
+    <string name="preference_agents_enabled">Activează agenții în căutare</string>
+    <string name="preference_agents_enabled_summary">Afișează un cip Întreabă. Telos nu stochează chei API; aplicația sau site-ul agentului folosește contul în care ești deja autentificat</string>
+    <string name="preference_agents_provider">Agent</string>
+    <string name="preference_agents_transport">Cum se trimite</string>
+    <string name="preference_agents_transport_summary">Auto deschide aplicația agentului dacă e instalată, altfel site-ul. Termux rulează CLI în aplicația oficială Termux</string>
+    <string name="preference_agents_send_sentences">Trimite propozițiile cu Enter</string>
+    <string name="preference_agents_send_sentences_summary">O interogare de trei sau mai multe cuvinte este trimisă agentului în loc să deschidă prima aplicație</string>
+    <string name="preference_search_bar_voice">Introducere vocală pe bara de căutare</string>
+    <string name="preference_search_bar_voice_summary">Microfonul folosește recunoașterea vorbirii pe dispozitiv când telefonul o suportă</string>
+    <string name="search_bar_voice">Căutare vocală</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Aplicație, apoi site</string>
+    <string name="agent_transport_app">Aplicația agentului</string>
+    <string name="agent_transport_web">Site web</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Întreabă pe %1$s</string>
+    <string name="agent_launch_failed">Nu s-a putut deschide agentul</string>
+    <string name="preference_keyboard_shortcuts">Scurtături de tastatură fizică</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Spațiu sau Super+A deschide căutarea, Super+Enter Terminalul, Super+1 ecranul principal</string>
+    <string name="preference_category_telos_navigation">Navigare Telos</string>
+    <string name="preference_telos_navigation">Gesturi de pe margine (înapoi, acasă, recente)</string>
+    <string name="preference_telos_navigation_summary">Benzi subțiri pe margini. Din lateral Înapoi, de jos Acasă, ține apăsat Recente. Necesită serviciul de accesibilitate. Dezactivat implicit</string>
+    <string name="preference_telos_recents">Recente Telos</string>
+    <string name="preference_telos_recents_summary">Listă Telos în locul Recentelor de sistem. Dezactivat implicit</string>
+    <string name="telos_recents_title">Aplicații recente</string>
+    <string name="telos_recents_clear">Șterge tot</string>
+</resources>

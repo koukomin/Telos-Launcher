@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Tác nhân</string>
+    <string name="preference_screen_agents_summary">Gửi tìm kiếm tới Grok, Claude, ChatGPT và các dịch vụ khác. Tắt theo mặc định</string>
+    <string name="preference_agents_enabled">Bật tác nhân trong tìm kiếm</string>
+    <string name="preference_agents_enabled_summary">Hiện chip Hỏi. Telos không lưu khóa API; ứng dụng hoặc trang của tác nhân dùng tài khoản bạn đã đăng nhập</string>
+    <string name="preference_agents_provider">Tác nhân</string>
+    <string name="preference_agents_transport">Cách gửi</string>
+    <string name="preference_agents_transport_summary">Tự động mở ứng dụng tác nhân nếu đã cài, không thì trang web. Termux chạy CLI trong ứng dụng Termux chính thức</string>
+    <string name="preference_agents_send_sentences">Gửi câu bằng Enter</string>
+    <string name="preference_agents_send_sentences_summary">Truy vấn từ ba từ trở lên được gửi tới tác nhân thay vì mở ứng dụng đầu tiên</string>
+    <string name="preference_search_bar_voice">Nhập giọng nói trên thanh tìm kiếm</string>
+    <string name="preference_search_bar_voice_summary">Micro dùng nhận dạng giọng nói trên máy khi điện thoại hỗ trợ</string>
+    <string name="search_bar_voice">Tìm kiếm bằng giọng nói</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Ứng dụng, rồi trang web</string>
+    <string name="agent_transport_app">Ứng dụng tác nhân</string>
+    <string name="agent_transport_web">Trang web</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Hỏi %1$s</string>
+    <string name="agent_launch_failed">Không mở được tác nhân</string>
+    <string name="preference_keyboard_shortcuts">Phím tắt bàn phím phần cứng</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Space hoặc Super+A mở tìm kiếm, Super+Enter Terminal, Super+1 màn hình chính</string>
+    <string name="preference_category_telos_navigation">Điều hướng Telos</string>
+    <string name="preference_telos_navigation">Cử chỉ mép (quay lại, trang chủ, gần đây)</string>
+    <string name="preference_telos_navigation_summary">Dải mỏng ở mép màn hình. Vuốt từ cạnh để Quay lại, từ dưới lên Trang chủ, giữ để Gần đây. Cần dịch vụ trợ năng. Tắt theo mặc định</string>
+    <string name="preference_telos_recents">Gần đây Telos</string>
+    <string name="preference_telos_recents_summary">Danh sách Telos thay cho Gần đây của hệ thống. Tắt theo mặc định</string>
+    <string name="telos_recents_title">Ứng dụng gần đây</string>
+    <string name="telos_recents_clear">Xóa tất cả</string>
+</resources>

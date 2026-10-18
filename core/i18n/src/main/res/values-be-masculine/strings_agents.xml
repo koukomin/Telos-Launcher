@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Агенты</string>
+    <string name="preference_screen_agents_summary">Адпраўляе пошукавы запыт у Grok, Claude, ChatGPT і іншыя. Па змаўчанні выключана</string>
+    <string name="preference_agents_enabled">Уключыць агентаў у пошуку</string>
+    <string name="preference_agents_enabled_summary">Паказвае кнопку «Спытаць» у пошуку. Telos не захоўвае ключ API; праграма ці сайт агента выкарыстоўвае ўліковы запіс, у які вы ўжо ўвайшлі</string>
+    <string name="preference_agents_provider">Агент</string>
+    <string name="preference_agents_transport">Як адпраўляць</string>
+    <string name="preference_agents_transport_summary">Аўта адкрывае праграму агента, калі яна ўсталявана, інакш сайт. Termux запускае CLI ў афіцыйнай праграме Termux</string>
+    <string name="preference_agents_send_sentences">Адпраўляць сказы клавішай Enter</string>
+    <string name="preference_agents_send_sentences_summary">Запыт з трох і больш слоў ідзе агенту замест адкрыцця першай праграмы</string>
+    <string name="preference_search_bar_voice">Галасавы ўвод у радку пошуку</string>
+    <string name="preference_search_bar_voice_summary">Мікрафон выкарыстоўвае распазнаванне маўлення на прыладзе, калі тэлефон гэта падтрымлівае</string>
+    <string name="search_bar_voice">Галасавы пошук</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Праграма, потым сайт</string>
+    <string name="agent_transport_app">Праграма агента</string>
+    <string name="agent_transport_web">Сайт</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Спытаць %1$s</string>
+    <string name="agent_launch_failed">Не ўдалося адкрыць агента</string>
+    <string name="preference_keyboard_shortcuts">Спалучэнні клавіш</string>
+    <string name="preference_keyboard_shortcuts_summary">Super+Прабел або Super+A адкрывае пошук, Super+Enter — Тэрмінал, Super+1 — галоўны экран</string>
+    <string name="preference_category_telos_navigation">Навігацыя Telos</string>
+    <string name="preference_telos_navigation">Жэсты з краёў (назад, дадому, нядаўнія)</string>
+    <string name="preference_telos_navigation_summary">Тонкія палоскі па краях. Збоку — Назад, знізу ўверх — Дадому, утрыманне — Нядаўнія. Патрэбна служба спецыяльных магчымасцей. Па змаўчанні выключана</string>
+    <string name="preference_telos_recents">Нядаўнія Telos</string>
+    <string name="preference_telos_recents_summary">Спіс нядаўніх праграм Telos замест сістэмных. Па змаўчанні выключана</string>
+    <string name="telos_recents_title">Нядаўнія праграмы</string>
+    <string name="telos_recents_clear">Ачысціць усё</string>
+</resources>

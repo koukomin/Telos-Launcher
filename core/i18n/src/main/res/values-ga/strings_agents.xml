@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preference_screen_agents">Gníomhairí</string>
+    <string name="preference_screen_agents_summary">Seol cuardach chuig Grok, Claude, ChatGPT agus eile. Múchta de réir réamhshocraithe</string>
+    <string name="preference_agents_enabled">Cumasaigh gníomhairí sa chuardach</string>
+    <string name="preference_agents_enabled_summary">Taispeánann sliseog Fiafraigh. Ní stórálann Telos eochair API; úsáideann aip nó suíomh an ghníomhaire an cuntas a bhfuil tú logáilte isteach ann cheana</string>
+    <string name="preference_agents_provider">Gníomhaire</string>
+    <string name="preference_agents_transport">Conas a sheoladh</string>
+    <string name="preference_agents_transport_summary">Osclaíonn Auto aip an ghníomhaire má tá sí suiteáilte, nó an suíomh. Ritheann Termux an CLI in aip oifigiúil Termux</string>
+    <string name="preference_agents_send_sentences">Seol abairtí le Enter</string>
+    <string name="preference_agents_send_sentences_summary">Téann ceist de thrí fhocal nó níos mó chuig an ngníomhaire in ionad an chéad aip a oscailt</string>
+    <string name="preference_search_bar_voice">Ionchur gutha ar an mbarra cuardaigh</string>
+    <string name="preference_search_bar_voice_summary">Úsáideann an micreafón aithint cainte ar an ngléas nuair a thacaíonn an fón leis</string>
+    <string name="search_bar_voice">Cuardach gutha</string>
+    <string name="agent_grok">Grok</string>
+    <string name="agent_claude">Claude</string>
+    <string name="agent_chatgpt">ChatGPT</string>
+    <string name="agent_gemini">Gemini</string>
+    <string name="agent_copilot">Copilot</string>
+    <string name="agent_transport_auto">Aip, ansin suíomh</string>
+    <string name="agent_transport_app">Aip an ghníomhaire</string>
+    <string name="agent_transport_web">Suíomh Gréasáin</string>
+    <string name="agent_transport_termux">Termux CLI</string>
+    <string name="agent_ask">Fiafraigh de %1$s</string>
+    <string name="agent_launch_failed">Níorbh fhéidir an gníomhaire a oscailt</string>
+    <string name="preference_keyboard_shortcuts">Aicearraí méarchláir crua-earraí</string>
+    <string name="preference_keyboard_shortcuts_summary">Osclaíonn Super+Spás nó Super+A an cuardach, Super+Enter an Teirminéal, Super+1 an baile</string>
+    <string name="preference_category_telos_navigation">Nascleanúint Telos</string>
+    <string name="preference_telos_navigation">Gothaí imeall (siar, baile, le déanaí)</string>
+    <string name="preference_telos_navigation_summary">Stiallacha tanaí ar na himill. Sleamhnaigh ón taobh le haghaidh Siar, aníos ón mbun don Bhaile, coinnigh síos do Le déanaí. Teastaíonn an tseirbhís inrochtaineachta. Múchta de réir réamhshocraithe</string>
+    <string name="preference_telos_recents">Le déanaí Telos</string>
+    <string name="preference_telos_recents_summary">Liosta Telos in ionad Liosta an chórais. Múchta de réir réamhshocraithe</string>
+    <string name="telos_recents_title">Aipeanna le déanaí</string>
+    <string name="telos_recents_clear">Glan gach rud</string>
+</resources>

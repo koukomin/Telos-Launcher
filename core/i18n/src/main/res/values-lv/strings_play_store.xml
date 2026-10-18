@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">No Play Store instalētās lietotnes, arī sasaldētās, ir šeit.</string>
     <string name="store_play_hint">Sasaldētās lietotnes tiek atkausētas un atveras Play Store. Telos tās atkal sasaldē, tiklīdz Play instalē jauno versiju (stunda tikai kā rezerve). Pēc izvēles: ar Telos Network VPN nav interneta, līdz tās atver.</string>
     <string name="store_play_open_my_apps">Atvērt Play Store atjauninājumus</string>
+    <string name="store_play_unfreeze_update">Atkausēt un atjaunināt Play Store</string>
+    <string name="store_play_frozen_count">Sasaldētas (%1$d)</string>
     <string name="store_play_block_network">Bloķēt tīklu līdz atvēršanai</string>
     <string name="store_play_block_network_summary">Kad Telos Network VPN ir ieslēgts, atkausētajām Play lietotnēm nav interneta, līdz tās atverat no jauna.</string>
     <string name="play_update_pause_channel">Play Store atjauninājumi</string>
     <string name="play_update_pause_title">Gaida Play Store atjauninājumus</string>
     <string name="play_update_pause_text">%2$d atkausētās lietotnes tiks sasaldētas atkal, tiklīdz Play instalēs jaunu versiju (rezerve %1$d stunda).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

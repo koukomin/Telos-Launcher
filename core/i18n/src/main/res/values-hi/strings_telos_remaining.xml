@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">फ़ाइल ट्रांसफ़र</string>
     <string name="telos_files_two_panels">दो पैनल</string>
     <string name="telos_media_listen">सुनें</string>
+    <string name="telos_media_watch">देखें</string>
+    <string name="telos_media_live">लाइव</string>
     <string name="telos_media_store_description">स्थानीय संगीत, रेडियो और YouTube Music सुनें, स्थानीय वीडियो या YouTube देखें और TV तथा Stremio Fork का अन्वेषण करें।</string>
     <string name="telos_store_auto_enable">सक्षम करें और अपडेट करें</string>
     <string name="telos_store_auto_explanation">चुने हुए ऐप के लिए स्वचालित अपडेट सक्षम करें? जब Shizuku या root बिना हस्तक्षेप के इंस्टॉल करने की अनुमति देता है, तो आने वाले अपडेट अपने आप इंस्टॉल होते हैं। अन्यथा आपको अपडेट की सूचना मिलेगी। इसे हर ऐप की सेटिंग में बदल सकते हैं।</string>

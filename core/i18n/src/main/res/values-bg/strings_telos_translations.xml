@@ -2392,4 +2392,6 @@
     </plurals>
     <string name="dl_m_auto_update">Автоматично обновяване на yt-dlp</string>
     <string name="dl_m_auto_update_sum">Веднъж дневно изтегля най-новия yt-dlp през Wi-Fi, за да работят изтеглянията при промени в сайтовете</string>
+    <string name="telos_files_peek_select">Избор</string>
+    <string name="telos_files_smb_nearby">Компютри в тази мрежа</string>
 </resources>

@@ -34,7 +34,7 @@ features:
     link: /docs/user-guide/telos/messages/
   - icon: 📁
     title: Files
-    details: Browse local storage, cloud and network shares, and keep private files in a vault.
+    details: Local, USB and remote space, ISO and zip folders, RAW/HEIC previews, SMB by name or IP.
     link: /docs/user-guide/telos/files/
   - icon: 📸
     title: Screenshot
@@ -65,8 +65,8 @@ features:
     details: Standard and scientific calculator with VAT, unit and currency conversion and a history.
     link: /docs/user-guide/telos/calculator/
   - icon: 🖼️
-    title: Photos
-    details: A gallery with viewer, editor and document handling.
+    title: Viewer
+    details: Photos, PDF highlight, comics, SVG/PSD/AI/CDR previews, Office documents.
     link: /docs/user-guide/telos/photos/
   - icon: 🎵
     title: Music

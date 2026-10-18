@@ -98,6 +98,8 @@
     <string name="telos_files_transfers_title">Передача файлов</string>
     <string name="telos_files_two_panels">Две панели</string>
     <string name="telos_media_listen">Слушать</string>
+    <string name="telos_media_watch">Смотреть</string>
+    <string name="telos_media_live">Эфир</string>
     <string name="telos_media_store_description">Слушайте локальную музыку, радио и YouTube Music, смотрите локальные видео или YouTube, а также исследуйте ТВ и Stremio Fork.</string>
     <string name="telos_store_auto_enable">Включить и обновить</string>
     <string name="telos_store_auto_explanation">Включить автоматические обновления выбранных приложений? Будущие обновления устанавливаются автоматически, если Shizuku или root разрешают установку без подтверждения. Иначе вы получите уведомление об обновлении. Это можно изменить в настройках каждого приложения.</string>

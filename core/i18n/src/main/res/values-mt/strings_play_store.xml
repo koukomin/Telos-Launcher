@@ -9,9 +9,20 @@
     <string name="store_play_empty_hint">L-apps mill-Play Store jidhru hawn, inklużi dawk iffriżati.</string>
     <string name="store_play_hint">L-apps iffriżati jinħallu u jiftaħ il-Play Store. Telos jerġa’ jiffriżahom hekk kif Play jinstalla l-verżjoni l-ġdida (siegħa biss bħala riżerva). Mhux obbligatorju: bil-VPN Telos Network m’għandhomx internet sakemm tiftaħhom.</string>
     <string name="store_play_open_my_apps">Iftaħ l-aġġornamenti tal-Play Store</string>
+    <string name="store_play_unfreeze_update">Ħoll u aġġorna fil-Play Store</string>
+    <string name="store_play_frozen_count">Iffriżati (%1$d)</string>
     <string name="store_play_block_network">Imblokka n-netwerk sakemm tiftaħ</string>
     <string name="store_play_block_network_summary">Meta l-VPN Telos Network ikun mixgħul, l-apps imdewba tal-Play m’għandhomx internet sakemm terġa’ tiftaħhom.</string>
     <string name="play_update_pause_channel">Aġġornamenti tal-Play Store</string>
     <string name="play_update_pause_title">Stennija għall-aġġornamenti tal-Play Store</string>
     <string name="play_update_pause_text">%2$d app imdewba jerġgħu jiġu ffriżati hekk kif Play jinstalla verżjoni ġdida (riżerva %1$d siegħa).</string>
+
+    <string name="store_checking_updates">Checking for updates…</string>
+    <string name="store_last_check">Last check: %1$s</string>
+    <string name="store_section_updates">Updates (%1$d)</string>
+    <string name="store_section_frozen">Frozen (%1$d)</string>
+    <string name="store_section_uptodate">Up to date (%1$d)</string>
+
+    <string name="call_block_outgoing">Block outgoing to listed numbers</string>
+    <string name="call_block_outgoing_sum">Hang up immediately when you call a blocked number, prefix (800*) or regex (re:pattern).</string>
 </resources>

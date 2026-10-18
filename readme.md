@@ -12,7 +12,7 @@ Telos is a personal fork of [Kvaesitso](https://github.com/MM2-0/Kvaesitso). It 
 [![Platform: Android](https://img.shields.io/badge/platform-Android-3DDC84.svg)](https://github.com/koukomin/Telos-Launcher/releases)
 [![Latest dev build](https://img.shields.io/badge/latest-dev%20build-orange.svg)](https://github.com/koukomin/Telos-Launcher/releases)
 
-[**Documentation**](https://koukomin.github.io/Telos-Launcher/) &nbsp;|&nbsp; [**Download**](https://github.com/koukomin/Telos-Launcher/releases) &nbsp;|&nbsp; [**The launcher**](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/) &nbsp;|&nbsp; [**Built-in apps**](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/)
+[**Documentation**](https://koukomin.github.io/Telos-Launcher/) &nbsp;|&nbsp; [**Download**](https://github.com/koukomin/Telos-Launcher/releases) &nbsp;|&nbsp; [**The launcher**](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/) &nbsp;|&nbsp; [**Built-in apps**](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/) &nbsp;|&nbsp; [**Changelog**](CHANGELOG.md)
 
 The documentation site is published via GitHub Pages at <https://koukomin.github.io/Telos-Launcher/>.
 
@@ -71,9 +71,9 @@ from Telos Store.
 | Part | What it is | Docs |
 | --- | --- | --- |
 | **The launcher** | Unified search, home screen, widgets, favorites and tags, themes, plugins, desktop mode, overlays, protection | [Launcher](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/) |
-| **Telos Phone** | Dialer, recents, contacts, dual SIM, call recording, call screening, SIP | [Phone](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/phone/) |
+| **Telos Phone** | Dialer, recents, contacts, dual SIM, call recording (VOICE_CALL first, silence retry, Shizuku/root CAPTURE_AUDIO_OUTPUT), call screening (prefix/regex/outgoing, max priority), SIP | [Phone](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/phone/) |
 | **Telos Messages** | SMS and MMS conversations, default SMS app, scheduled messages | [Messages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/messages/) |
-| **Telos Files** | File manager with network and cloud storages (optional size-limited previews, off by default), archives, Cryptomator vaults | [Files](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/) |
+| **Telos Files** | File manager: local/USB/remote space, ISO and zip folders, RAW/HEIC/HEVC previews, SMB by name or IP, archives, Cryptomator vaults | [Files](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/) |
 | **Telos Screenshot** | Full, partial and scrolling screenshots with an editor | [Screenshot](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screenshot/) |
 | **Telos Screen Recorder** | Screen to video with microphone, pause and countdown | [Screen Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screen-recorder/) |
 | **Telos Notes** | Notes with labels, sync with a Markdown folder or Nextcloud Notes, Keep and Evernote import | [Notes](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/) |
@@ -84,12 +84,12 @@ from Telos Store.
 | **Telos Network** | VPN based firewall and DNS filter on the Rethink engine: DNS servers, firewall per app and connection type, blocklists with exceptions, WireGuard per app, logs. Off until you turn it on, early version | [Network](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/network/) |
 | **Telos Voice Recorder** | Voice recordings with search, pause and call recordings | [Voice Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/) |
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
-| **Telos Viewer** | Two tabs: **Photos** (gallery, EXIF tools, photo editor) and **Documents** (library with categories, search and recents, viewer and editor for PDF, Office, OpenDocument, text and EPUB, PDF tools) | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
-| **Telos Media** | Music, Radio, YouTube Music, local Video, YouTube, TV and **Stremio Fork** in one app: a compact source toolbar and selection menu (the last source is remembered), a single mini player on each Music/Radio page with a shared player on other sections, home-screen media metadata and controls for built-in playback as well as external players, the older apps open inside it, **TV** with live channels from iptv-org (country, language and category filters, favorites, recents, your own channels and M3U import, automatic failover to another or updated stream, optional extra Greek playlists and a Greek programme guide with now/next, favorites-first home with Browse and localized categories, optional background playback with a notification, automatic reconnecting when the connection is lost, and animated TV static for channels that are offline; **Stremio Fork**: Telos' own client for Stremio add-ons, written from the public add-on protocol, with add-on management and a directory of add-ons, catalogs, search, detail pages with episodes, a stream list (web, torrent with the file an add-on names, YouTube), subtitles from add-ons, a library and continue watching, Stremio account sign-in shown on entry, a separate account panel with sign-out, account sync (unofficial) for add-ons, library and continue watching, watched marks on movies and episodes from Stremio and the connected Trakt account, no add-ons or content included and not affiliated with Stremio), music and radio pause while a video plays, Share from long-press menus (songs, albums, videos, radio stations with a Telos import link, contacts, notes, files, documents, installed APKs) | [Media](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/media/) |
+| **Telos Viewer** | Two tabs: **Photos** (gallery, immersive viewer, EXIF, editor) and **Documents** (PDF highlight, comics, SVG/PSD/AI/CDR, Office/OpenDocument/text/EPUB, PDF tools) | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
+| **Telos Media** | Music, Radio, YouTube Music, local Video, YouTube, TV and **Stremio Fork** in one app: **Listen / Watch / Live** tabs with source chips (the last source is remembered), one mini player above the bar, brightness/volume bars on video and TV, home-screen media metadata and controls for built-in playback as well as external players, the older apps open inside it, **TV** with live channels from iptv-org (country, language and category filters, favorites, recents, your own channels and M3U import, automatic failover to another or updated stream, optional extra Greek playlists and a Greek programme guide with now/next, favorites-first home with Browse and localized categories, optional background playback with a notification, automatic reconnecting when the connection is lost, and animated TV static for channels that are offline; **Stremio Fork**: Telos' own client for Stremio add-ons, written from the public add-on protocol, with add-on management and a directory of add-ons, catalogs, search, detail pages with episodes, a stream list (web, torrent with the file an add-on names, YouTube), subtitles from add-ons, a library and continue watching, Stremio account sign-in shown on entry, a separate account panel with sign-out, account sync (unofficial) for add-ons, library and continue watching, watched marks on movies and episodes from Stremio and the connected Trakt account, no add-ons or content included and not affiliated with Stremio), music and radio pause while a video plays, Share from long-press menus (songs, albums, videos, radio stations with a Telos import link, contacts, notes, files, documents, installed APKs) | [Media](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/media/) |
 | **Telos Music** | Local library with a Home tab (genre chips, quick picks, shelves), artwork-tinted Now Playing, sharing, lyrics, scrobbling, tag editor; Media3 plus official NextLib FFmpeg decoders | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
 | **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt; Media3 plus official NextLib FFmpeg decoders (AC3, DTS, TrueHD) inside Telos | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
 | **Telos Radio** | Internet radio with station search, sleep timer and stream recording; Media3 plus official NextLib FFmpeg decoders | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
-| **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps, and lists Play Store apps when Play is installed | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
+| **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps, and lists Play Store apps when Play is installed. Opening Store with Play installed goes to Play updates, scans, and **Unfreeze and update in Play Store** thaws frozen apps, can block their network, and opens Play on the updates list | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
 | **Smart Freeze** | Freeze or hide apps through Shizuku, root, device owner or Island (a launcher feature in Settings, not a Telos app) | [Smart Freeze](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/) |
 
 Telos Phone now reads the full Android contact list across synced accounts, including email-only contacts, rather than seeding its directory only from phone-number rows.
@@ -162,8 +162,8 @@ The launcher is built around one idea: **search is the main way to reach things*
 | --- | --- |
 | Home screen | Dock with custom slots and multiple docks, shutters, video wallpapers, up to four widget pages, folder covers, independent grids for home, search and dock |
 | Widgets | Reminders, Freeze, Battery, Network, System and At a Glance widgets, widget stacks, linked notes |
-| Search | Results for web apps, the Telos apps and frozen apps, a text-matching ranking with usage weights, optional app recommendations |
-| Overlays | Floating launcher, Dynamic Island, desktop mode, web apps panel, assistant mode |
+| Search | Results for web apps, the Telos apps and frozen apps, a text-matching ranking with usage weights, optional agents (Grok, Claude, ChatGPT and others, off by default), voice input on the search bar |
+| Overlays | Floating launcher, Dynamic Island, desktop mode, web apps panel, assistant mode, optional Telos edge gestures and recents |
 | Automation | Context profiles |
 | Protection | Settings lock, launcher lock, App Lock with intruder photos, crash guard, exception containment |
 | Customization | Presets, font scale, extra icon shapes, more badge options, German and Greek translations |
@@ -297,7 +297,6 @@ If you switch online results on in the default filter, every query is sent to ex
 - **Hidden results:** per item **Show in** is app grid and search, search only, or never. Manage under Settings > Search > Excluded search results, optional reveal button (apps only, empty query only). Wikipedia, website and calculator results cannot be hidden.
 - **Permissions per source:** a missing permission never crashes search; the group shows **Grant** and **Turn off**.
 - **Plugin results:** contacts, files, places and calendar plugins; off until switched on, ranked, hidden, tagged and pinned like built-in results, marked by plugin badges.
-- **App recommendations** (experimental): one fixed editorial suggestion labeled "Affiliate - Supports Telos". The code states no affiliate agreement exists yet; switch it off in Settings > Search.
 
 </details>
 
@@ -355,6 +354,8 @@ A clock, a search bar, an optional dock and, if you want them, widgets. Settings
 - **Actions:** open any built-in Telos app (Phone, Messages, Notes, Calendar, ...) directly from a gesture, or show most of them as a page inside the launcher (all except the Store), do nothing, search / app drawer, widget pages 1 to 4, Feed (non-release builds), Web Apps Panel, home screen menu, notifications, quick settings, turn off screen, power menu, recent apps, launch an app, shortcut or any searchable item, launcher settings, plugin actions.
 - Turn off screen (Android 9+), power menu and recent apps need the launcher's accessibility service; a banner and a "gesture failed" sheet guide you.
 - Only swipes, double tap and long press can be overridden by a context profile. Tapping the search bar always opens search.
+- Optional **Telos navigation** (off): edge strips for Back, Home and Recents, and a Telos recents list. Needs the accessibility service.
+- Optional **agents** in search (off): an Ask chip for Grok, Claude, ChatGPT, Gemini or Copilot. Voice input on the search bar is on by default. Hardware keyboard: Super+Space search, Super+Enter Terminal, Super+1 home.
 
 </details>
 
@@ -414,7 +415,7 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 - **Fonts (typography):** Default, System, Monospace, Serif, Rounded, or custom with a brand and a plain font and a style per text role.
 - **Shapes:** Default, Extra round, Cut, Rectangular, or custom. **Transparency:** Default, Semi-transparent, or custom opacity of background, surface and elevated surface.
 - **Blur and surfaces:** wallpaper blur (radius 4 to 64), drawer background plate (default 35 percent), dock plate, folder background color.
-- **Presets** (applied at once, no confirmation, no undo): **Telos** (glass transparencies, transparent search bar, drawer blur and glass widgets), AMOLED Black and Cyberpunk (colors), Colorful Grid (colors and layout), Classic Grid, Clean Grid, Pixel-style (layout). A layout preset overwrites grid, icon shape, dock and search bar settings. Fresh installs already use the Telos glass values.
+- **Presets** (applied at once, no confirmation, no undo): **Telos** (glass transparencies, transparent search bar, drawer blur and glass widgets), AMOLED Black, AMOLED Red / Green / Yellow / Light Blue / Magenta / Orange (pure black, accent, white type) and Cyberpunk (colors), Colorful Grid (colors and layout), Classic Grid, Clean Grid, Pixel-style (layout). A layout preset overwrites grid, icon shape, dock and search bar settings. Fresh installs already use the Telos glass values. Virtual apps (Store, Media, Notes, Calendar, Files, Network, Comms, and the rest) follow the same transparency and drawer blur.
 - **Grid:** 3 to 12 columns (5 default), icon size 32 to 64 dp, labels (size 8 to 24, one or two lines, shadow, color), apps as a list, separate overrides for home and search grids, folders and folder covers.
 - **Icons:** shapes (Platform default, Circle, Square, Rounded square, Squircle, Reuleaux triangle, Hexagon, Pentagon, Teardrop, Pebble), enforce shape, themed icons, enforce themed icons, one **icon pack** (appfilter and grayscale-map formats, live calendar and clock icons), icon cache size 50 to 500.
 - **Badges:** notification badges (dot or count, color), cloud, suspended or frozen apps, shortcut and plugin badges; work profile, hidden item and Store update badges are always on. Frozen apps follow the selected grayscale or snowflake style consistently in grids, lists, folders and the sidebar.
@@ -483,7 +484,7 @@ Backup and restore ask first **what** to include: **Launcher** (settings and the
 ### Profiles
 
 - **Personal, Work, Private and Dual/clone** profiles are recognized (private space on Android 15+; OEM Dual Apps such as Xiaomi user 999 as Clone). The Samsung Secure Folder is hidden. Apps get tabs per profile in the empty-search grid (clone copies stay on the main tab), work apps a briefcase badge, private apps a lock badge, dual apps a person badge.
-- Opening a frozen app can **unfreeze companions** with it (Gemini → Google, ReVanced/Morphe YouTube → microG, Play-licensed apps → Play Store, games you tie to a game booster). Those companions stay unfrozen until the master app is frozen again, including Freeze all and screen-off. Foreground, music and network-active apps are skipped by auto-freeze (foreground skip is on by default).
+- Opening a frozen app can **unfreeze companions** with it (Gemini → Google, ReVanced/Morphe YouTube → microG, Play-licensed apps → Play Store, games you tie to a game booster). Those companions stay unfrozen until the master app is frozen again, including Freeze all and screen-off. Foreground, the app that was in front when the screen turned off, music and network-active apps are skipped by auto-freeze (foreground skip is on by default).
 - **Sandbox** (experimental, pending review): **Initialize Telos Sandbox** starts managed profile provisioning with Telos as profile owner; **Clone to Sandbox** copies an app into the work profile. OEM dual apps (Viber, WhatsApp, …) also appear in the app drawer and in the Phone sidebar.
 - **Context profiles** (experimental) are a different feature: named bundles of overrides (gestures, freeze profile, widget page, Do Not Disturb, brightness, launch an app) triggered manually, by time, WiFi name, Bluetooth device, Battery Saver or charging, checked only while the launcher is open. Details below.
 
@@ -626,7 +627,7 @@ A complete phone app inside the launcher. Its layout follows [Right Dialer](http
 
 **In-call experience**
 
-- Incoming call screen with blurred contact photo and two answer styles (buttons or swipe), shown over the lock screen
+- Incoming call screen with a full-bleed contact photo, swipe-up Remind / Reject+SMS, and two answer styles (buttons or swipe), shown over the lock screen
 - Quick reject with SMS, "remind me" callback reminders (5, 15, 30 or 60 minutes)
 - In-call controls: mute, speaker, Bluetooth routing, hold, keypad, merge, swap, add call, record, caller notes with a floating note window
 - Missed-call popup, optional popup after every call, Dynamic Island call state, secure call screen (no screenshots)
@@ -734,7 +735,9 @@ File scans, duplicate checks and resumable transfers reuse bounded scratch buffe
 - Independent folder tabs and an adaptive two-panel workspace, with shared copy/cut/paste, internal drag-and-drop with a copy/move choice, and Telos styling. Hardware shortcuts cover tabs, search, selection, copy/cut/paste, refresh, hidden files, rename and confirmed deletion.
 - Advanced local search: extension/type, size and modified-date filters, optional subfolders, a one-minute metadata cache capped at 50,000 entries and 16 MiB, and clear partial-results reporting. Network, archive and vault filters apply to the current folder.
 - Shared trash across Files, Viewer, Media, radio/voice/call/screen recordings, completed Downloads and screenshot notification actions: choose trash or permanent deletion, restore without overwriting, default 30-day retention configurable from 1–365 days for local files. Android-managed media trash keeps its system 30-day policy.
-- View, sorting and hidden-file preferences are remembered per folder.
+- View, sorting and hidden-file preferences are remembered per folder. Long-press peeks at a file; picture folders show a filmstrip. Thumbnails are cached on disk. Home and the drawer show free/total space for the phone, SD/USB and remote volumes that report a quota.
+- Camera RAW (embedded JPEG) and HEIC/HEIF stills, plus HEVC/H.265 video, use the same preview catalog as the Viewer.
+- SMB connections accept a computer name, `.local` name, IP or `smb://host/share`, list nearby mDNS servers, and can list shares when the share name is left empty.
 - Export/import Files display settings, per-folder options, toolbar shortcuts, bookmarks and up to 16 workspace tabs as validated JSON (512 KiB maximum). Connection credentials and transfer journals are excluded.
 - Customize up to two optional toolbar shortcuts. Read-only collections show recent files, bookmarks and local file types with bounded scans and partial-results reporting.
 - Optional **Require lock to open Files** in the More menu (off by default): the system lock or the launcher PIN before the file list.
@@ -753,7 +756,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 - Home page with storage overview (free space, SD cards and USB drives), quick access to Downloads, Camera, Pictures, Music, Movies and Documents, favorites, and saved connections
 - Breadcrumb path bar, storage drawer, list and adaptive grid view with picture thumbnails and type colors, sorting by name, date, size or type, folders first, hidden files toggle
 - Search in the current folder (recursive on local storage, up to 300 results)
-- **Grid views with large previews** (images, video frames, PDF first pages, thumbnails inside ODF and Office files, EPUB covers, APK icons, audio covers, folder collages), remembered; documents open immediately in Telos Viewer; Google Drive shortcut files (`gdoc`, `gsheet`, `gslides`) open in the Google app or the browser
+- **Grid views with large previews** from one catalog shared with Telos Viewer and Media: images (SVG, HEIC, PSD/AI/CDR when a preview exists), video frames, audio covers, PDF first pages, Office/ODF thumbs, EPUB covers, comic first pages (CBZ/CBR/CBT/CB7), APK icons, folder collages; remembered. New viewer formats get Files thumbnails without a second list. Documents open immediately in Telos Viewer; Google Drive shortcut files (`gdoc`, `gsheet`, `gslides`) open in the Google app or the browser
 - Files open in the right app: pictures and PDF, text, code and RTF in Telos Viewer, videos in Telos Video, everything else through Android's chooser
 
 **File operations**
@@ -778,13 +781,13 @@ A file manager for your phone, network storages and cloud storages. The layout f
 <details>
 <summary><b>Archives, Cryptomator vaults and the root explorer</b></summary>
 
-- **Archives:** zip, jar, apk, 7z, tar (also tar.gz, tar.bz2, tar.xz, tar.lzma), cpio, ar/deb, arj, rar (RAR 3, 4 and 5, not encrypted or split, standard version only) and single gz, bz2, xz, lzma and Z files open like folders (read only). **Extract here** unpacks next to the archive, **Compress...** packs local files into zip, 7z or tar.gz. Epub and Office files are zip-based and offer the same dialog. Password-protected zip (ZipCrypto and AES) and 7z archives ask for the password in a dialog; it is kept in memory only while you are inside the archive, and new zips can be protected with AES-256. `ace`, `iso`, `cab` and the other formats only 7-Zip reads are not opened inside Telos (ACE is not readable by any free library), and only local archives can be opened.
+- **Archives:** zip, jar, apk, 7z, tar (also tar.gz, tar.bz2, tar.xz, tar.lzma), cpio, ar/deb, arj, rar (RAR 3, 4 and 5, not encrypted or split, standard version only), ISO 9660/Joliet disc images (`iso`, `img`) and single gz, bz2, xz, lzma and Z files open like folders. Unencrypted zip can be edited and saved inside the archive (new file, folder, delete, rename). ISO, RAR, 7z and tar stay read only. **Extract here** unpacks next to the archive, **Compress...** packs local files into zip, 7z or tar.gz. Password-protected zip (ZipCrypto and AES) and 7z archives ask for the password in a dialog. `ace`, `cab` and the other formats only 7-Zip reads are not opened inside Telos (ACE is not readable by any free library), and only local archives can be opened.
 - **Cryptomator vaults** (experimental, read only): vault formats 7 and 8 in a local folder can be unlocked and read. Files opened from a vault are decrypted into a temporary cache, which **Lock vault** removes. The password is not stored. gocryptfs, EncFS and VeraCrypt are not supported.
 - **Root explorer** (optional, untested): a superuser mode for system folders. Off until you switch it on and tick "I understand the risks". Shows permissions, owners and links, a warning banner in system folders, extra confirmation for deleting system files, changing permissions in octal, and making `/system` writable or read-only. Writing into root paths from remote storages or archives is not supported.
 
 </details>
 
-**Status and limitations:** Local files, network and cloud storages and archives are stable. Cryptomator support is experimental and read only, and the root explorer is untested. iCloud, Mega, gocryptfs, EncFS and VeraCrypt are not supported. There is no trash and no undo, no writing into archives or vaults, checksums and zip creation work on local files only, and Telos Files has no settings screen of its own.
+**Status and limitations:** Local files, network and cloud storages and archives are stable. Cryptomator support is experimental and read only, and the root explorer is untested. iCloud, Mega, gocryptfs, EncFS and VeraCrypt are not supported. Shared Trash covers local Files/Viewer/Media; there is no undo for a permanent delete. Unencrypted zip archives can be written; ISO/RAR/7z/tar and vaults stay read only. Checksums and zip creation work on local files only, and Telos Files has no settings screen of its own.
 
 ### Telos Calculator
 
@@ -905,8 +908,9 @@ A voice recorder with a list, search and a service that keeps recording with the
 
 **Gallery and viewer**
 
-- Photos tab by date (4 columns, newest first) and Albums tab by folder (sorted by picture count)
-- Full screen viewer with swipe, pinch zoom from 1x to 8x, double tap to 2.5x, pan, and share, edit, details and delete (Android 11+, media library pictures)
+- Photos tab by month with 3–5 pinch-zoom columns, stories (Recents, Screenshots, Favorites), videos in the same grid, and Albums by folder
+- Long-press multi-select and share; glass chrome follows the launcher blur theme
+- Full screen viewer with swipe, pinch zoom from 1x to 8x, double tap to 2.5x, pan, swipe down to close, looping video, favorite, wallpaper, share, edit, details and delete (Android 11+, media library)
 - Opens images from other apps ("Open with" and share) and pages through a folder when opened from Telos Files
 
 **EXIF tools**
@@ -921,7 +925,7 @@ A voice recorder with a list, search and a service that keeps recording with the
 
 **Document viewer and editing**
 
-- PDF page by page with zoom, **Search in PDF** (Greek, accents and Greeklish) and **Go to page**; plain text and code (up to 2 MB, saved back to the file); Word (.docx), Excel (.xlsx), PowerPoint (.pptx) and OpenDocument (.odt, .ods, .odp) shown with their structure and **editable** (text, bold and italic, paragraphs, table cells and rows, cell values and formulas, text boxes, deleting slides); RTF and EPUB
+- PDF continuous vertical pages with zoom, **Search in PDF** (Greek, accents and Greeklish), **Go to page**, **Night pages** and on-device **highlights** (drag over glyphs, or Highlight all from search); comics **CBZ/CBR/CBT/CB7**; SVG preview; flattened previews of **PSD**, **AI** and **CDR**; plain text and code (up to 2 MB, saved back to the file); Word (.docx), Excel (.xlsx), PowerPoint (.pptx) and OpenDocument (.odt, .ods, .odp) shown with their structure and **editable** (text, bold and italic, paragraphs, table cells and rows, cell values and formulas, text boxes, deleting slides); RTF; EPUB with type size, serif/sans and night theme
 - Saving writes a finished file into the cache first, so a failed save never cuts the original; **Save as a copy** and **Undo last save**
 - Old `.doc`, `.xls` and `.ppt` open read-only (own OLE2 reader); **Convert to .docx/.xlsx/.pptx and edit** makes a new file
 - Reads documents handed to it from Telos Files or other apps' "Open with", with an **Open with** button
@@ -1117,7 +1121,7 @@ Some features are new and not tested on every device. This is what the project's
 | State | Features |
 | --- | --- |
 | **Untested on real devices** | MMS (Messages), SIP / VoIP, root features (the root call recording backend, root explorer, cellular network mode with Shizuku or root, root, device owner and Dhizuku freeze backends), desktop window snapping |
-| **Experimental** | Cryptomator vaults (read only), Clone to Sandbox, overlays (floating launcher, Dynamic Island, desktop mode), App Lock, video wallpapers, app recommendations, the separate video process, SIP |
+| **Experimental** | Cryptomator vaults (read only), Clone to Sandbox, overlays (floating launcher, Dynamic Island, desktop mode), App Lock, video wallpapers, the separate video process, SIP |
 | **Not supported** | iCloud, Mega, gocryptfs, EncFS, VeraCrypt |
 | **Limited by design** | Office documents are shown as extracted text only (no layout, formulas or images; old `.doc`, `.xls`, `.ppt` not opened) |
 | **Debug and nightly builds only** | Feed and the Smartspacer integration |

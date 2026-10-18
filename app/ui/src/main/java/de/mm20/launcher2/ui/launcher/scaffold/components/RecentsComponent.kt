@@ -29,8 +29,11 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -38,6 +41,7 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
     private val globalActionService: GlobalActionsService by inject()
+    private val gestureSettings: GestureSettings by inject()
 
     override val showSearchBar: Boolean = false
 
@@ -68,6 +72,11 @@ internal object RecentsComponent : ScaffoldComponent(), KoinComponent {
 
     override fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
+        val useTelos = kotlinx.coroutines.runBlocking { gestureSettings.telosRecents.first() }
+        if (useTelos) {
+            globalActionService.openTelosRecents()
+            return
+        }
         if (permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
             globalActionService.openRecents()
         }

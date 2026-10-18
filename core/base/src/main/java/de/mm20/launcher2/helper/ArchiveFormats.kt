@@ -2,7 +2,7 @@ package de.mm20.launcher2.helper
 
 /** How Telos Files reads an archive (or a single compressed file) as a virtual folder. */
 enum class ArchiveKind {
-    Zip, SevenZ, Tar, TarGz, TarBz2, TarXz, TarLzma, TarZ, Cpio, Ar, Arj, Rar, Gz, Bz2, Xz, Lzma, Z;
+    Zip, SevenZ, Tar, TarGz, TarBz2, TarXz, TarLzma, TarZ, Cpio, Ar, Arj, Rar, Gz, Bz2, Xz, Lzma, Z, Iso;
 
     /** A plain compressed file (not an archive): shown as a folder holding one file */
     val isSingleFile: Boolean get() = this == Gz || this == Bz2 || this == Xz || this == Lzma || this == Z
@@ -28,11 +28,12 @@ object ArchiveFormats {
         ".ar" to ArchiveKind.Ar, ".a" to ArchiveKind.Ar, ".deb" to ArchiveKind.Ar,
         ".arj" to ArchiveKind.Arj,
         ".rar" to ArchiveKind.Rar,
+        ".iso" to ArchiveKind.Iso, ".img" to ArchiveKind.Iso,
         ".gz" to ArchiveKind.Gz, ".bz2" to ArchiveKind.Bz2, ".xz" to ArchiveKind.Xz, ".lzma" to ArchiveKind.Lzma, ".z" to ArchiveKind.Z,
     )
 
     /** Formats that other tools read, but Telos does not: they stay "Open with...". ACE is not possible in any free library. */
-    private val unsupported = setOf("iso", "cab", "ace", "lzh", "lha", "rpm", "wim", "chm", "squashfs", "dmg", "vhd", "msi", "zst", "br")
+    private val unsupported = setOf("cab", "ace", "lzh", "lha", "rpm", "wim", "chm", "squashfs", "dmg", "vhd", "msi", "zst", "br")
 
     private val rarPart = Regex("\\.part0*\\d+$", RegexOption.IGNORE_CASE)
 
