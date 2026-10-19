@@ -84,3 +84,29 @@ Use `tools/i18n/` (see its README): `extract.py` for missing keys, `build.py` to
 - Add necessary UI translations for every change, for all supported languages, with Greek as the priority alongside English.
 - Update README, docs and Pages source content when the behavior changes.
 - Push development changes to the working PR branch. Do not merge or create a release without the user explicitly asking.
+
+## Mandatory Telos UI and icon design contract (all coding agents)
+
+These instructions are binding for any AI coding assistant or contributor working in this repository. Read `AGENTS.md` and `docs/ICON_DESIGN.md` before editing any Telos virtual app, Dialer, launcher icon, UI resource or icon pipeline. Treat these as acceptance criteria, not suggestions. Do not claim implementation from documentation alone.
+
+### Dialer: large contact photograph
+
+- Incoming, outgoing and in-call screens must show a prominently large contact photograph, inspired by the visual prominence in Google Phone, without copying proprietary assets.
+- Use a responsive edge-to-edge photo region where appropriate, preserving clear caller identity, number, call status, controls, accessibility and safe areas. Account for compact screens, tablets, landscape, large font sizes, cutouts and gesture/navigation insets.
+- Support contact photo fallback to a polished initials/avatar design; never stretch low-resolution images or obscure critical actions.
+- Keep the existing call-state logic, telecom permissions, accessibility labels and functional call controls intact. Add UI previews and tests for photo/no-photo, light/dark, incoming/outgoing/active and large text.
+
+### Flat adaptive icon system
+
+- The default launcher icon is the quality baseline. All Telos virtual-app icons must form a cohesive **Telos Flat Adaptive** family.
+- Follow the detailed mandatory specification in `docs/ICON_DESIGN.md`. Do not use glossy, skeuomorphic, faux-3D, complex-gradient, shadow-heavy or inconsistent icons.
+- Implement foreground/background layers with Android adaptive icon masks, keeping recognizable content within the safe zone across circle, square, squircle, rounded-square and OEM masks. Never bake the final mask shape into the artwork.
+- Use a shared vector-based geometry and color-token system; icons must be crisp at small sizes, distinguishable from official third-party brand icons, and coherent in light/dark/monochrome modes.
+- Verify all Telos virtual apps, app drawer, dock, search results, sidebar and system surfaces use the correct icons. Where the user chooses an icon pack or custom icon, honor that selection in launcher-controlled surfaces unless a documented exception applies.
+- Before completion, produce a contact sheet showing every affected icon under multiple masks and on light/dark backgrounds; validate visually and update documentation, localization and tests where applicable.
+
+### Delivery gates
+
+- Implement and verify behavior in code, not only in screenshots or prose. Do not mark tasks complete without a passing build and relevant tests or an explicit explanation of what could not be tested.
+- Preserve existing launcher functionality and avoid unrelated UI changes.
+- Submit changes in a PR; do not merge or release unless explicitly instructed.
