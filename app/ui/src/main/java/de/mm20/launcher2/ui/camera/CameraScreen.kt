@@ -91,6 +91,7 @@ fun CameraScreen() {
     val slices = remember { mutableStateListOf<android.net.Uri>() }
     var captureJob by remember { mutableStateOf<Job?>(null) }
     var webcamUrl by remember { mutableStateOf<String?>(null) }
+    var webcamStarting by remember { mutableStateOf(false) }
     var message by remember { mutableStateOf<String?>(null) }
     val preview = remember { PreviewView(context).apply { implementationMode = PreviewView.ImplementationMode.COMPATIBLE } }
     val camera = remember(owner) { NativeCamera(context, owner) }
@@ -130,6 +131,9 @@ fun CameraScreen() {
     }
     fun capture() {
         if (busy || !ready || !owner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) return
+        if (Build.VERSION.SDK_INT <= 28 && !hidden && !raw && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermission(); return
+        }
         if (mode == NativeCamera.MODE_VIDEO) {
             if (recording) { camera.recording?.stop(); return }
             if (audio && ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -246,10 +250,27 @@ fun CameraScreen() {
             }
             if (mode == NativeCamera.MODE_PHOTO) {
                 val rawSupported = camera.rawAvailable
-                if (rawSupported) Toggle(R.string.camera_raw, raw) { raw = it; if (it) panorama = false }
+                if (rawSupported && !hidden) Toggle(R.string.camera_raw, raw) { raw = it; if (it) panorama = false }
                 Toggle(R.string.camera_mode_pano, panorama) { panorama = it; if (it) { raw = false; hidden = false } else slices.clear() }
             }
-            if (webcamUrl == null) Button(onClick = { runCatching { webcam?.close(); CameraWebcam(context) { preview.bitmap }.also { webcam = it }.start() }.onSuccess { webcamUrl = it }.onFailure { error(it.message.orEmpty()) } }, enabled = ready && !recording && !busy) { Text(stringResource(R.string.camera_webcam_start)) }
+            if (webcamUrl == null) Button(onClick = {
+                webcamStarting = true
+                webcam?.close()
+                val server = CameraWebcam(context) { preview.bitmap }
+                webcam = server
+                scope.launch {
+                    try {
+                        val url = withContext(Dispatchers.IO) { server.start() }
+                        if (owner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) webcamUrl = url
+                        else { server.close(); webcam = null }
+                    } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                        server.close(); throw cancelled
+                    } catch (failure: Exception) {
+                        server.close(); webcam = null
+                        if (owner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) error(failure.message.orEmpty())
+                    } finally { webcamStarting = false }
+                }
+            }, enabled = ready && !recording && !busy && !webcamStarting) { Text(stringResource(R.string.camera_webcam_start)) }
             else {
                 Text(webcamUrl.orEmpty(), modifier = Modifier.fillMaxWidth())
                 Button(onClick = { webcam?.close(); webcam = null; webcamUrl = null }) { Text(stringResource(R.string.camera_webcam_stop)) }

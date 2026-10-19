@@ -30,7 +30,7 @@ internal class CameraWebcam(private val context: Context, private val frame: () 
     @Volatile private var server: ServerSocket? = null
     @Volatile private var closed = false
 
-    fun start(): String {
+    @Synchronized fun start(): String {
         check(!closed && server == null)
         val manager = context.getSystemService(ConnectivityManager::class.java)
         val address = manager.allNetworks.firstNotNullOfOrNull { network ->
@@ -106,7 +106,7 @@ internal class CameraWebcam(private val context: Context, private val frame: () 
         }
     }
 
-    override fun close() {
+    @Synchronized override fun close() {
         closed = true
         runCatching { server?.close() }; server = null
         clients.forEach { runCatching { it.close() } }
