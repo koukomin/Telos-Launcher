@@ -61,8 +61,11 @@ android {
 }
 
 dependencies {
+    implementation("com.sun.mail:android-mail:1.6.7")
+    implementation("com.sun.mail:android-activation:1.6.7")
     implementation("com.github.TeamNewPipe:NewPipeExtractor:v0.26.5")
     implementation(libs.okhttp)
+    implementation(libs.jsoup)
     // Torrent streaming (MIT): Java API and the native libraries for 64 and 32 bit ARM
     implementation(libs.libtorrent4j)
     // only the native library of the CPU type that is built (see -Ptelos.abi in app/app/build.gradle.kts)

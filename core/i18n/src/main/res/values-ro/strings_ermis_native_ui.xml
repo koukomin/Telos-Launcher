@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Conturi de e-mail</string>
+    <string name="ermis_all_accounts">Toate conturile</string>
+    <string name="ermis_native_intro">E-mailul tău în Telos. Conectează un cont IMAP/SMTP cu TLS și parolă sau parolă de aplicație.</string>
+    <string name="ermis_empty">Nu există mesaje. Sincronizează conturile sau schimbă căutarea.</string>
+    <string name="ermis_operation_failed">Operațiunea de e-mail a eșuat</string>
+    <string name="ermis_tls_help">Ambele servere trebuie să accepte TLS verificat. Gmail poate folosi o parolă de aplicație sau acces Google/microG când este acceptat.</string>
+    <string name="ermis_username">Nume de utilizator pe server</string>
+    <string name="ermis_username_help">Lasă gol pentru a folosi adresa de e-mail.</string>
+    <string name="ermis_imap_host">Server IMAP</string>
+    <string name="ermis_imap_port">Port IMAP TLS</string>
+    <string name="ermis_smtp_host">Server SMTP</string>
+    <string name="ermis_smtp_port">Port SMTP</string>
+    <string name="ermis_starttls">Solicită STARTTLS pentru SMTP</string>
+    <string name="ermis_saf_help">Selectorul afișează și servicii cloud compatibile cu Documente Android. Pentru fișiere mari, adaugă un link de partajare în mesaj.</string>
+    <string name="ermis_reply">Răspunde</string>
+    <string name="ermis_google_sign_in">Conectare Google / microG</string>
+    <string name="ermis_google_help">Folosește contul Android selectat numai dacă autentificatorul permite accesul la poștă. Altfel, folosește o parolă de aplicație.</string>
+    <string name="ermis_google_unavailable">Furnizorul contului nu a permis accesul la poștă. Folosește o parolă de aplicație.</string>
+    <string name="ermis_conversation_count">%1$d mesaje în această conversație</string>
+</resources>

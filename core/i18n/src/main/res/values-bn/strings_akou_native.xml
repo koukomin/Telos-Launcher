@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">API কী ছাড়াই ১০ সেকেন্ড রেকর্ড করে ডিভাইসে ফিঙ্গারপ্রিন্ট তৈরি করে। Shazam-এ শুধু ফিঙ্গারপ্রিন্ট পাঠানো হয়, মূল অডিও কখনো নয়।</string>
+    <string name="akou_get_token">AudD API টোকেন নিন</string>
+    <string name="akou_api_token">AudD API টোকেন</string>
+    <string name="akou_start">রেকর্ড করে শনাক্ত করুন</string>
+    <string name="akou_recording">১০ সেকেন্ড রেকর্ড হচ্ছে…</string>
+    <string name="akou_identifying">ফিঙ্গারপ্রিন্ট মেলানো হচ্ছে…</string>
+    <string name="akou_no_match">কোনো মিল পাওয়া যায়নি। সঙ্গীতের কাছে আবার চেষ্টা করুন।</string>
+    <string name="akou_matched">গান শনাক্ত হয়েছে</string>
+    <string name="akou_failed">শনাক্ত করা যায়নি। মাইক্রোফোন ও সংযোগ পরীক্ষা করে গানের কাছে আবার চেষ্টা করুন।</string>
+    <string name="akou_microphone_denied">নমুনা রেকর্ড করতে মাইক্রোফোনের অনুমতি প্রয়োজন।</string>
+    <string name="akou_history">শনাক্তকরণের ইতিহাস</string>
+    <string name="akou_youtube_music">YouTube Music-এ খুঁজুন</string>
+</resources>

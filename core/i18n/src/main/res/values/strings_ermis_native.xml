@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis mail</string>
+    <string name="ermis_new_mail_count">%1$d new messages</string>
+    <string name="ermis_error_cache">Mail cache could not be unlocked.</string>
+    <string name="ermis_error_auth">Authentication failed. Check your sign-in method and account credentials.</string>
+    <string name="ermis_error_tls">The server certificate could not be verified.</string>
+    <string name="ermis_error_generic">Mail operation failed. Check your connection and server settings.</string>
+    <string name="ermis_error_sent_copy">Message sent, but a copy could not be saved in Sent. Do not resend.</string>
+</resources>

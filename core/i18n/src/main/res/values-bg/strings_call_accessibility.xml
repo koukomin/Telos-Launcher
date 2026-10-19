@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Снимка на цял екран</string>
+    <string name="call_photo_background_summary">Показване на снимката на контакта като фон при входящо повикване.</string>
+</resources>

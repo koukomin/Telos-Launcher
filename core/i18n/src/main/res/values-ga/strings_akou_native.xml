@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Gan eochair API: taifeadann sé 10 soicind agus ríomhann sé an lorg ar an ngléas. Ní sheoltar ach an lorg chuig Shazam, ní an fhuaim.</string>
+    <string name="akou_get_token">Faigh comhartha API AudD</string>
+    <string name="akou_api_token">Comhartha API AudD</string>
+    <string name="akou_start">Taifead agus aithin</string>
+    <string name="akou_recording">10 soicind á dtaifeadadh…</string>
+    <string name="akou_identifying">An lorg á mheaitseáil…</string>
+    <string name="akou_no_match">Níor aimsíodh meaitseáil. Bain triail eile as gar don cheol.</string>
+    <string name="akou_matched">Amhrán aitheanta</string>
+    <string name="akou_failed">Theip ar an aithint. Seiceáil an micreafón agus an nasc agus bain triail eile níos gaire don cheol.</string>
+    <string name="akou_microphone_denied">Tá cead micreafóin de dhíth chun sampla a thaifeadadh.</string>
+    <string name="akou_history">Stair aitheanta</string>
+    <string name="akou_youtube_music">Aimsigh in YouTube Music</string>
+</resources>

@@ -316,6 +316,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.downloads.DownloadsSettingsRoute> {
                 de.mm20.launcher2.ui.downloads.DownloadsSettingsScreen()
             }
+            entry<de.mm20.launcher2.ui.ermis.ErmisRoute> {
+                de.mm20.launcher2.ui.ermis.ErmisScreen()
+            }
             entry<de.mm20.launcher2.ui.terminal.TerminalRoute> {
                 de.mm20.launcher2.ui.terminal.TerminalScreen()
             }
@@ -405,6 +408,7 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.comms.radio.RadioDashboardRoute> {
                 de.mm20.launcher2.ui.comms.radio.RadioDashboardScreen()
             }
+        entry<de.mm20.launcher2.ui.settings.comms.CallerPrivacyRoute> { de.mm20.launcher2.ui.settings.comms.CallerPrivacyScreen() }
             entry<CommsSettingsRoute> {
                 CommsSettingsScreen()
             }
@@ -839,6 +843,7 @@ open class SettingsActivity : BaseActivity() {
             "settings/akou" -> de.mm20.launcher2.ui.media.akou.AkouRoute
             "settings/clock" -> de.mm20.launcher2.ui.clock.ClockRoute
             SettingsDeepLinkContract.ROUTE_CAMERA -> de.mm20.launcher2.ui.camera.CameraRoute
+            SettingsDeepLinkContract.ROUTE_ERMIS -> de.mm20.launcher2.ui.ermis.ErmisRoute
             "settings/magnifier" -> de.mm20.launcher2.ui.tools.MagnifierRoute
             "settings/flashlight" -> de.mm20.launcher2.ui.tools.FlashlightRoute
             ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute

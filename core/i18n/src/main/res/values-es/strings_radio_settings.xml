@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Colores del fondo de pantalla</string>
+    <string name="radio_translucent">Apariencia translúcida</string>
+    <string name="radio_controls_scroll">Desplazar los controles de reproducción con las emisoras</string>
+    <string name="radio_tap_plays">Toca una emisora para reproducirla</string>
+    <string name="radio_large_buffer">Búfer de reproducción más grande</string>
+    <string name="radio_edit_metadata">Permitir editar la información de las emisoras</string>
+    <string name="radio_edit_streams">Permitir editar las direcciones de las transmisiones</string>
+    <string name="radio_auto_images">Actualizar automáticamente las imágenes de las emisoras</string>
+    <string name="radio_update_images">Actualizar ahora las imágenes de las emisoras</string>
+    <string name="radio_backup_images">Copia de seguridad ZIP con las imágenes de las emisoras</string>
+    <string name="radio_restore_replace_summary">¿Reemplazar la colección actual de emisoras con esta copia de seguridad? Se eliminará tu colección actual.</string>
+    <string name="radio_station_image_url">Dirección de la imagen de la emisora</string>
+</resources>

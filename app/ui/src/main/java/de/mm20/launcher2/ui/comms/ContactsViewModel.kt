@@ -62,8 +62,8 @@ class ContactsViewModel : ViewModel(), KoinComponent {
         de.mm20.launcher2.ui.common.share.ShareActions.shareContactVcard(context, contact.displayName, contact.phoneNumbers, contact.emails)
     }
 
-    fun block(number: String) {
+    fun block(context: Context, number: String) {
         if (number.isEmpty()) return
-        viewModelScope.launch { spam.setBlocked(number, true) }
+        viewModelScope.launch { updateBlockedWithFeedback(context, spam, number, true) }
     }
 }

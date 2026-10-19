@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Fotografia apelantului pe tot ecranul</string>
+    <string name="call_photo_background_summary">Afișează fotografia contactului ca fundal al apelului primit.</string>
+</resources>

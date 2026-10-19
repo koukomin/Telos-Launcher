@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_more">Pliaj opcioj</string>
+    <string name="au3_appearance_typo_label">Etikedo</string>
+    <string name="au_radio_import_failed">Ne eblis legi tiun dosieron</string>
+    <string name="file_search_type_images">Bildoj</string>
+    <string name="file_search_type_videos">Videoj</string>
+    <string name="hc_add">Aldoni</string>
+    <string name="hc_add_to_favorites">Aldoni al ŝatatoj</string>
+    <string name="hc_back_up_collection">Sekurkopii la kolekton</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">Bloki numerojn, kiujn vi aldonis al la bloklisto de Telos</string>
+    <string name="hc_done">Preta</string>
+    <string name="hc_edit">Redakti</string>
+    <string name="hc_export_playlist_m3u">Eksporti ludliston (M3U)</string>
+    <string name="hc_favorites">Ŝatatoj</string>
+    <string name="hc_import_playlist_m3u_pls">Importi ludliston (M3U / PLS)</string>
+    <string name="hc_offline_spam_list">Senreta spamlisto</string>
+    <string name="hc_phone_number">Telefonnumero</string>
+    <string name="hc_rename_station">Alinomi stacion</string>
+    <string name="hc_restore_backup">Restaŭri sekurkopion</string>
+    <string name="hc_stream_or_playlist_address">Adreso de fluo aŭ ludlisto</string>
+    <string name="hf_files_remove_favorite">Forigi el ŝatatoj</string>
+    <string name="preference_screen_clockwidget">Horloĝo</string>
+    <string name="preference_theme">Etoso</string>
+    <string name="preference_theme_dark">Malhela</string>
+    <string name="preference_theme_light">Hela</string>
+    <string name="preference_theme_system">Sekvi la sistemon</string>
+    <string name="telos_youtube_add_playlist">Aldoni al ludlisto</string>
+    <string name="telos_youtube_artist_radio">Radio de la artisto</string>
+    <string name="telos_youtube_library_local">Ŝatatoj kaj ludlistoj restas en ĉi tiu telefono. Ili ne estas parto de via konto de YouTube Music.</string>
+    <string name="telos_youtube_playlist_name">Nomo de la ludlisto</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Bez API atslēgas: ieraksta 10 sekundes un aprēķina nospiedumu ierīcē. Shazam tiek nosūtīts tikai nospiedums, nekad audio.</string>
+    <string name="akou_get_token">Iegūt AudD API pilnvaru</string>
+    <string name="akou_api_token">AudD API pilnvara</string>
+    <string name="akou_start">Ierakstīt un atpazīt</string>
+    <string name="akou_recording">Ieraksta 10 sekundes…</string>
+    <string name="akou_identifying">Meklē nospieduma atbilstību…</string>
+    <string name="akou_no_match">Atbilstība nav atrasta. Mēģiniet vēlreiz tuvāk mūzikai.</string>
+    <string name="akou_matched">Dziesma atpazīta</string>
+    <string name="akou_failed">Atpazīšana neizdevās. Pārbaudiet mikrofonu un savienojumu un mēģiniet tuvāk mūzikai.</string>
+    <string name="akou_microphone_denied">Parauga ierakstīšanai vajadzīga mikrofona atļauja.</string>
+    <string name="akou_history">Atpazīšanas vēsture</string>
+    <string name="akou_youtube_music">Meklēt pakalpojumā YouTube Music</string>
+</resources>

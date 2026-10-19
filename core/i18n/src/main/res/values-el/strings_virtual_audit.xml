@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Μη διαθέσιμο σε αυτή τη συσκευή</string>
+    <string name="virtual_magnifier_permission">Απαιτείται πρόσβαση στην κάμερα για τον μεγεθυντικό φακό</string>
+    <string name="virtual_magnifier_resume">Συνέχιση προεπισκόπησης</string>
+    <string name="virtual_magnifier_freeze">Πάγωμα καρέ</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">계정 추가</string>
+    <string name="ermis_attach">이 휴대전화에서 첨부</string>
+    <string name="ermis_body">메시지</string>
+    <string name="ermis_compose">작성</string>
+    <string name="ermis_connect">연결</string>
+    <string name="ermis_email">이메일</string>
+    <string name="ermis_inbox">받은편지함</string>
+    <string name="ermis_no_subject">(제목 없음)</string>
+    <string name="ermis_note">메모</string>
+    <string name="ermis_note_save">메모 저장</string>
+    <string name="ermis_password">비밀번호</string>
+    <string name="ermis_remove">삭제</string>
+    <string name="ermis_search">메일 검색</string>
+    <string name="ermis_send">보내기</string>
+    <string name="ermis_starred">별표 표시</string>
+    <string name="ermis_subject">제목</string>
+    <string name="ermis_sync">동기화</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">받는 사람</string>
+</resources>

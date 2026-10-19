@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">खाता जोड़ें</string>
+    <string name="ermis_attach">इस फ़ोन से संलग्न करें</string>
+    <string name="ermis_body">संदेश</string>
+    <string name="ermis_compose">लिखें</string>
+    <string name="ermis_connect">कनेक्ट करें</string>
+    <string name="ermis_email">ईमेल</string>
+    <string name="ermis_inbox">इनबॉक्स</string>
+    <string name="ermis_no_subject">(कोई विषय नहीं)</string>
+    <string name="ermis_note">नोट</string>
+    <string name="ermis_note_save">नोट सहेजें</string>
+    <string name="ermis_password">पासवर्ड</string>
+    <string name="ermis_remove">हटाएँ</string>
+    <string name="ermis_search">मेल खोजें</string>
+    <string name="ermis_send">भेजें</string>
+    <string name="ermis_starred">तारांकित</string>
+    <string name="ermis_subject">विषय</string>
+    <string name="ermis_sync">सिंक करें</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">प्रति</string>
+</resources>

@@ -18,6 +18,11 @@
         tools:ignore="ProtectedPermissions" />
 
     <application>
+        <activity android:name="de.mm20.launcher2.network.vpn.VpnPauseActivity"
+            android:exported="false" android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" />
+        <receiver android:name="de.mm20.launcher2.network.vpn.VpnResumeReceiver" android:exported="false" />
+        <receiver android:name="de.mm20.launcher2.network.vpn.VpnNotificationReceiver" android:exported="false" />
         <!--
             The VPN restores persisted active intent after service/process restarts and app updates.
             Reboot restoration is gated by "start on boot". Android may also start an always-on VPN.

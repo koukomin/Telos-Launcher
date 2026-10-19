@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Háttérkép színei</string>
+    <string name="radio_translucent">Áttetsző megjelenés</string>
+    <string name="radio_controls_scroll">Lejátszásvezérlők görgetése az állomásokkal</string>
+    <string name="radio_tap_plays">Állomás indítása koppintással</string>
+    <string name="radio_large_buffer">Nagyobb lejátszási puffer</string>
+    <string name="radio_edit_metadata">Állomásadatok szerkesztésének engedélyezése</string>
+    <string name="radio_edit_streams">Adáscímek szerkesztésének engedélyezése</string>
+    <string name="radio_auto_images">Állomásképek automatikus frissítése</string>
+    <string name="radio_update_images">Állomásképek frissítése most</string>
+    <string name="radio_backup_images">ZIP biztonsági mentés az állomások képeivel</string>
+    <string name="radio_restore_replace_summary">Lecseréli a jelenlegi állomásgyűjteményt erre a biztonsági mentésre? A jelenlegi gyűjtemény törlődik.</string>
+    <string name="radio_station_image_url">Állomáskép címe</string>
+</resources>

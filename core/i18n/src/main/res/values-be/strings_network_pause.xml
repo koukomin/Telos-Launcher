@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Аўтаматычнае аднаўленне. Без дазволу дакладных будзільнікаў Android можа яго затрымаць.</string>
+    <string name="au_radio_pause">Прыпыніць</string>
+    <string name="voice_resume">Аднавіць</string>
+    <string name="dl_t_minutes">%1$d хв</string>
+    <string name="dl_t_hours">%1$d гадз</string>
+    <string name="work_profile_status_paused">Прыпынена</string>
+</resources>

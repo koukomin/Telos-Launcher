@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Be API rakto: įrašo 10 sekundžių ir apskaičiuoja atspaudą įrenginyje. Shazam siunčiamas tik atspaudas, niekada garsas.</string>
+    <string name="akou_get_token">Gauti AudD API prieigos raktą</string>
+    <string name="akou_api_token">AudD API prieigos raktas</string>
+    <string name="akou_start">Įrašyti ir atpažinti</string>
+    <string name="akou_recording">Įrašoma 10 sekundžių…</string>
+    <string name="akou_identifying">Ieškoma atspaudo atitikties…</string>
+    <string name="akou_no_match">Atitikmens nerasta. Bandykite dar kartą arčiau muzikos.</string>
+    <string name="akou_matched">Daina atpažinta</string>
+    <string name="akou_failed">Atpažinti nepavyko. Patikrinkite mikrofoną ir ryšį ir bandykite arčiau muzikos.</string>
+    <string name="akou_microphone_denied">Pavyzdžiui įrašyti reikalingas mikrofono leidimas.</string>
+    <string name="akou_history">Atpažinimo istorija</string>
+    <string name="akou_youtube_music">Ieškoti per YouTube Music</string>
+</resources>

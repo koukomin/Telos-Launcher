@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis-mail</string>
+    <string name="ermis_new_mail_count">%1$d nye beskeder</string>
+    <string name="ermis_error_cache">Mailcachen kunne ikke låses op.</string>
+    <string name="ermis_error_auth">Godkendelse mislykkedes. Kontrollér loginmetode og kontooplysninger.</string>
+    <string name="ermis_error_tls">Servercertifikatet kunne ikke bekræftes.</string>
+    <string name="ermis_error_generic">Handlingen mislykkedes. Kontrollér forbindelse og serverindstillinger.</string>
+    <string name="ermis_error_sent_copy">Beskeden er sendt, men kopien blev ikke gemt i Sendt. Send ikke igen.</string>
+</resources>

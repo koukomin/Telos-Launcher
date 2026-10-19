@@ -20,7 +20,8 @@ internal object TorPolicy {
 
     fun isVirtual(ip: String): Boolean = IpUtil.parse(ip)?.let { address -> ranges.any { it.contains(address) } } == true
 
-    fun required(uid: Int, domain: String?, ips: List<String>, appIds: Set<Int>): Boolean =
+    fun required(uid: Int, domain: String?, ips: List<String>, appIds: Set<Int>, systemDefault: Boolean = false): Boolean =
+        systemDefault ||
         isOnion(domain) || ips.any(::isVirtual) ||
             (appIds.isNotEmpty() && (uid < 0 || uid % 100000 in appIds))
 

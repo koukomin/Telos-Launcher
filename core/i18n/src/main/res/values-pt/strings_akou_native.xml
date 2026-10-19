@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Sem chave API: grava 10 segundos e calcula a impressão no dispositivo. Apenas a impressão é enviada ao Shazam, nunca o áudio.</string>
+    <string name="akou_get_token">Obter um token API AudD</string>
+    <string name="akou_api_token">Token API AudD</string>
+    <string name="akou_start">Gravar e reconhecer</string>
+    <string name="akou_recording">A gravar 10 segundos…</string>
+    <string name="akou_identifying">A procurar a impressão…</string>
+    <string name="akou_no_match">Nenhum resultado. Tente novamente perto da música.</string>
+    <string name="akou_matched">Música reconhecida</string>
+    <string name="akou_failed">Falha no reconhecimento. Verifique o microfone e a ligação e tente novamente perto da música.</string>
+    <string name="akou_microphone_denied">É necessária permissão do microfone para gravar uma amostra.</string>
+    <string name="akou_history">Histórico de reconhecimentos</string>
+    <string name="akou_youtube_music">Procurar no YouTube Music</string>
+</resources>

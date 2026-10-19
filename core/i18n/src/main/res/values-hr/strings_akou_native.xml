@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Bez API ključa: snima 10 sekundi i izračunava otisak na uređaju. Shazamu se šalje samo otisak, nikad zvuk.</string>
+    <string name="akou_get_token">Nabavi AudD API token</string>
+    <string name="akou_api_token">AudD API token</string>
+    <string name="akou_start">Snimi i prepoznaj</string>
+    <string name="akou_recording">Snimanje 10 sekundi…</string>
+    <string name="akou_identifying">Traženje podudaranja otiska…</string>
+    <string name="akou_no_match">Nema podudaranja. Pokušajte ponovno bliže glazbi.</string>
+    <string name="akou_matched">Pjesma prepoznata</string>
+    <string name="akou_failed">Prepoznavanje nije uspjelo. Provjerite mikrofon i vezu pa pokušajte bliže glazbi.</string>
+    <string name="akou_microphone_denied">Za snimanje uzorka potrebno je dopuštenje za mikrofon.</string>
+    <string name="akou_history">Povijest prepoznavanja</string>
+    <string name="akou_youtube_music">Pronađi na YouTube Musicu</string>
+</resources>

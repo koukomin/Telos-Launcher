@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">世界</string>
+    <string name="clock_alarm">アラーム</string>
+    <string name="clock_timer">タイマー</string>
+    <string name="clock_stopwatch">ストップウォッチ</string>
+    <string name="clock_local">現地時刻</string>
+    <string name="clock_city_search">都市または国を検索</string>
+    <string name="clock_night">夜時計</string>
+    <string name="clock_night_exit">タップして閉じる</string>
+    <string name="clock_audio_file">音声ファイル</string>
+    <string name="clock_default_sound">アラーム音</string>
+    <string name="clock_stream_url">ラジオ配信URL</string>
+    <string name="clock_sound_fallback">1回限りのアラーム。メディアの再生に失敗した場合は標準の音が鳴ります。</string>
+    <string name="clock_exact">アラームとリマインダーを許可</string>
+    <string name="clock_dismiss">閉じる</string>
+    <string name="clock_minutes">分</string>
+    <string name="clock_start">開始</string>
+    <string name="clock_reset">リセット</string>
+    <string name="clock_lap">ラップ</string>
+</resources>

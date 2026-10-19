@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Bu cihazda mövcud deyil</string>
+    <string name="virtual_magnifier_permission">Böyüdücü üçün kameraya giriş lazımdır</string>
+    <string name="virtual_magnifier_resume">Önizləməni davam etdir</string>
+    <string name="virtual_magnifier_freeze">Kadrı dondur</string>
+</resources>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">العالم</string>
+    <string name="clock_alarm">المنبه</string>
+    <string name="clock_timer">المؤقت</string>
+    <string name="clock_stopwatch">ساعة الإيقاف</string>
+    <string name="clock_local">الوقت المحلي</string>
+    <string name="clock_city_search">ابحث عن مدينة أو دولة</string>
+    <string name="clock_night">ساعة ليلية</string>
+    <string name="clock_night_exit">انقر للإغلاق</string>
+    <string name="clock_audio_file">ملف صوتي</string>
+    <string name="clock_default_sound">صوت المنبه</string>
+    <string name="clock_stream_url">رابط بث الراديو</string>
+    <string name="clock_sound_fallback">منبه لمرة واحدة. عند فشل الوسائط يعمل صوت المنبه الافتراضي.</string>
+    <string name="clock_exact">السماح بالمنبهات والتذكيرات</string>
+    <string name="clock_dismiss">إغلاق</string>
+    <string name="clock_minutes">دقائق</string>
+    <string name="clock_start">بدء</string>
+    <string name="clock_reset">إعادة ضبط</string>
+    <string name="clock_lap">لفة</string>
+</resources>

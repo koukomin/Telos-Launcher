@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">غير متاح على هذا الجهاز</string>
+    <string name="virtual_magnifier_permission">يلزم الوصول إلى الكاميرا لاستخدام المكبر</string>
+    <string name="virtual_magnifier_resume">استئناف المعاينة</string>
+    <string name="virtual_magnifier_freeze">تجميد الإطار</string>
+</resources>

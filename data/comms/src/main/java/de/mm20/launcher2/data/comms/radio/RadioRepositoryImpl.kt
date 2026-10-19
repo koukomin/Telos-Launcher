@@ -61,6 +61,9 @@ class RadioRepositoryImpl(
         return apiClient.searchStations(query)
     }
 
+    override suspend fun importStations(stations: List<RadioStation>, replace: Boolean): Int =
+        dao.importStations(stations.map { it.toEntity(System.currentTimeMillis()) }, replace)
+
     override suspend fun saveStation(station: RadioStation) {
         val existing = dao.getStation(station.id)
         dao.insert(station.toEntity(existing?.addedAt ?: System.currentTimeMillis(), existing?.lastPlayedAt ?: station.lastPlayedAt))

@@ -200,6 +200,8 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
     fun setSim1Color(color: String) = commsSettings.setSim1Color(color)
     val sim2Color = commsSettings.sim2Color.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "blue")
     fun setSim2Color(color: String) = commsSettings.setSim2Color(color)
+    val fullScreenCallerPhoto = commsSettings.fullScreenCallerPhoto.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setFullScreenCallerPhoto(enabled: Boolean) = commsSettings.setFullScreenCallerPhoto(enabled)
     val simNames = commsSettings.simNames.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
     fun setSimName(subscriptionId: String, name: String?) {
         commsSettings.setSimName(subscriptionId, name)

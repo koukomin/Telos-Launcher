@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.map
 data class NetworkSettingsValues(
     /** Tor mode changes interface routing; edit only while the VPN is stopped. */
     val torEnabled: Boolean = false,
+    /** Route every captured app through Tor, failing closed until ready. */
+    val torSystemDefault: Boolean = false,
     val torAutoStart: Boolean = false,
     val torWasActive: Boolean = false,
     /** Android app IDs, including every package sharing that ID. Telos itself is excluded. */
@@ -27,6 +29,10 @@ data class NetworkSettingsValues(
      * Not meant to be edited by the UI.
      */
     val engineWanted: Boolean = false,
+    /** Wall-clock deadline; zero means not paused. Stop/revocation cancel it. */
+    val pauseUntilMs: Long = 0,
+    /** Android boot counter when active intent was most recently set. */
+    val intentBootCount: Int = -1,
     /** Which IP families are routed into the tunnel. */
     val ipMode: IpMode = IpMode.V46,
     /** Let apps bind sockets to other networks and bypass the VPN (`VpnService.Builder.allowBypass`). */

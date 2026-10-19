@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_files_cannot_open_file">Немагчыма адкрыць гэты файл</string>
+    <string name="hc_open_with_2">Адкрыць праз…</string>
+    <string name="hc_root_explorer">Праваднік з root-доступам</string>
+    <string name="hf_files_careful">Асцярожна</string>
+    <string name="hf_files_needs_root">Патрабуецца тэлефон з root-доступам</string>
+    <string name="hf_files_root_explorer_on">Праваднік з root-доступам: уключаны</string>
+    <string name="hf_files_root_menu">Праваднік з root-доступам…</string>
+    <string name="hf_files_root_off">Выключыць праваднік з root-доступам</string>
+    <string name="hf_files_system_readonly">Зрабіць /system толькі для чытання</string>
+    <string name="hf_files_system_writable">Дазволіць запіс у /system</string>
+    <string name="hf_files_tap_to_turn_off">Націсніце, каб выключыць</string>
+</resources>

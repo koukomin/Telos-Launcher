@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_more">Aukera gehiago</string>
+    <string name="au3_appearance_typo_label">Etiketa</string>
+    <string name="au_radio_import_failed">Ezin izan da fitxategi hori irakurri</string>
+    <string name="file_search_type_images">Irudiak</string>
+    <string name="file_search_type_videos">Bideoak</string>
+    <string name="hc_add">Gehitu</string>
+    <string name="hc_add_to_favorites">Gehitu gogokoetara</string>
+    <string name="hc_back_up_collection">Egin bildumaren babeskopia</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">Blokeatu Telosen blokeo-zerrendara gehitu dituzun zenbakiak</string>
+    <string name="hc_done">Eginda</string>
+    <string name="hc_edit">Editatu</string>
+    <string name="hc_export_playlist_m3u">Esportatu erreprodukzio-zerrenda (M3U)</string>
+    <string name="hc_favorites">Gogokoak</string>
+    <string name="hc_import_playlist_m3u_pls">Inportatu erreprodukzio-zerrenda (M3U / PLS)</string>
+    <string name="hc_offline_spam_list">Lineaz kanpoko spam-zerrenda</string>
+    <string name="hc_phone_number">Telefono-zenbakia</string>
+    <string name="hc_rename_station">Aldatu irratiaren izena</string>
+    <string name="hc_restore_backup">Leheneratu babeskopia</string>
+    <string name="hc_stream_or_playlist_address">Igorpenaren edo erreprodukzio-zerrendaren helbidea</string>
+    <string name="hf_files_remove_favorite">Kendu gogokoetatik</string>
+    <string name="preference_screen_clockwidget">Erlojua</string>
+    <string name="preference_theme">Gaia</string>
+    <string name="preference_theme_dark">Iluna</string>
+    <string name="preference_theme_light">Argia</string>
+    <string name="preference_theme_system">Jarraitu sistemari</string>
+    <string name="telos_youtube_add_playlist">Gehitu erreprodukzio-zerrendara</string>
+    <string name="telos_youtube_artist_radio">Artistaren irratia</string>
+    <string name="telos_youtube_library_local">Gogokoak eta erreprodukzio-zerrendak telefono honetan gordetzen dira. Ez dira zure YouTube Music kontukoak.</string>
+    <string name="telos_youtube_playlist_name">Erreprodukzio-zerrendaren izena</string>
+</resources>

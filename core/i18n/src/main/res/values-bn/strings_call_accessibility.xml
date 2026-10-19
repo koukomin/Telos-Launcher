@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">পূর্ণ পর্দায় কলারের ছবি</string>
+    <string name="call_photo_background_summary">ইনকামিং কলের পটভূমিতে পরিচিতির ছবি দেখান।</string>
+</resources>

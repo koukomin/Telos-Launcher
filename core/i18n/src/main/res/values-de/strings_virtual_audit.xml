@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Auf diesem Gerät nicht verfügbar</string>
+    <string name="virtual_magnifier_permission">Für die Lupe ist Kamerazugriff erforderlich</string>
+    <string name="virtual_magnifier_resume">Vorschau fortsetzen</string>
+    <string name="virtual_magnifier_freeze">Bild einfrieren</string>
+</resources>

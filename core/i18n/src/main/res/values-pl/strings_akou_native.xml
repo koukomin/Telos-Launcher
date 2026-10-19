@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Bez klucza API: nagranie 10 sekund i obliczenie odcisku na urządzeniu. Do Shazam wysyłany jest tylko odcisk, nigdy dźwięk.</string>
+    <string name="akou_get_token">Uzyskaj token API AudD</string>
+    <string name="akou_api_token">Token API AudD</string>
+    <string name="akou_start">Nagraj i rozpoznaj</string>
+    <string name="akou_recording">Nagrywanie 10 sekund…</string>
+    <string name="akou_identifying">Dopasowywanie odcisku…</string>
+    <string name="akou_no_match">Nie znaleziono dopasowania. Spróbuj ponownie bliżej muzyki.</string>
+    <string name="akou_matched">Rozpoznano utwór</string>
+    <string name="akou_failed">Rozpoznawanie nie powiodło się. Sprawdź mikrofon i połączenie, a następnie spróbuj bliżej muzyki.</string>
+    <string name="akou_microphone_denied">Do nagrania próbki wymagane jest uprawnienie mikrofonu.</string>
+    <string name="akou_history">Historia rozpoznawania</string>
+    <string name="akou_youtube_music">Znajdź w YouTube Music</string>
+</resources>

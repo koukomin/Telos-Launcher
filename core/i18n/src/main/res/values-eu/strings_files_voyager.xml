@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Sortu gako-parea</string>
+    <string name="telos_files_ssh_copy_public_key">Kopiatu gako publikoa</string>
+    <string name="telos_files_ssh_public_key_hint">Gehitu gako publikoa zerbitzariko ~/.ssh/authorized_keys fitxategian. Gako pribatua telefono honetan geratzen da, zifratuta.</string>
+    <string name="telos_files_duplicates_exclude">Saltatu karpetak</string>
+    <string name="telos_files_duplicates_exclude_hint">Karpeta-izenak edo bideak, komaz bereizita, adibidez: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Shizuku sarbidea</string>
+    <string name="telos_files_shizuku_summary">Ireki Android/data, Android/obb eta aplikazioak irakurri ezin dituen beste karpeta batzuk Shizuku bidez (root gabe)</string>
+    <string name="telos_files_shizuku_denied">Shizuku ez dago abian edo ez dio baimenik eman Telos-i</string>
+    <string name="telos_files_search_everywhere">Bilatu biltegiratze osoan</string>
+    <string name="telos_files_search_everywhere_summary">Barne-biltegian, SD txarteletan eta USB unitateetan bilatzen du, ez karpeta honetan soilik</string>
+</resources>

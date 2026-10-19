@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Dünya</string>
+    <string name="clock_alarm">Alarm</string>
+    <string name="clock_timer">Zamanlayıcı</string>
+    <string name="clock_stopwatch">Kronometre</string>
+    <string name="clock_local">Yerel saat</string>
+    <string name="clock_city_search">Şehir veya ülke ara</string>
+    <string name="clock_night">Gece saati</string>
+    <string name="clock_night_exit">Kapatmak için dokunun</string>
+    <string name="clock_audio_file">Ses dosyası</string>
+    <string name="clock_default_sound">Alarm sesi</string>
+    <string name="clock_stream_url">Radyo akış adresi</string>
+    <string name="clock_sound_fallback">Tek seferlik alarm. Medya başarısız olursa varsayılan ses çalar.</string>
+    <string name="clock_exact">Alarmlara ve hatırlatıcılara izin ver</string>
+    <string name="clock_dismiss">Kapat</string>
+    <string name="clock_minutes">Dakika</string>
+    <string name="clock_start">Başlat</string>
+    <string name="clock_reset">Sıfırla</string>
+    <string name="clock_lap">Tur</string>
+</resources>

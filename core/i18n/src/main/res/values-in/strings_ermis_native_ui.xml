@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Akun email</string>
+    <string name="ermis_all_accounts">Semua akun</string>
+    <string name="ermis_native_intro">Email Anda di dalam Telos. Hubungkan akun IMAP/SMTP dengan TLS dan sandi atau sandi aplikasi.</string>
+    <string name="ermis_empty">Tidak ada pesan. Sinkronkan akun atau ubah pencarian.</string>
+    <string name="ermis_operation_failed">Operasi email gagal</string>
+    <string name="ermis_tls_help">Kedua server harus mendukung TLS terverifikasi. Gmail dapat memakai sandi aplikasi atau akses Google/microG bila didukung.</string>
+    <string name="ermis_username">Nama pengguna server</string>
+    <string name="ermis_username_help">Kosongkan untuk memakai alamat email Anda.</string>
+    <string name="ermis_imap_host">Server IMAP</string>
+    <string name="ermis_imap_port">Port IMAP TLS</string>
+    <string name="ermis_smtp_host">Server SMTP</string>
+    <string name="ermis_smtp_port">Port SMTP</string>
+    <string name="ermis_starttls">Wajibkan STARTTLS untuk SMTP</string>
+    <string name="ermis_saf_help">Pemilih file juga menampilkan penyedia cloud yang mendukung Dokumen Android. Tambahkan tautan berbagi ke pesan untuk file besar.</string>
+    <string name="ermis_reply">Balas</string>
+    <string name="ermis_google_sign_in">Masuk Google / microG</string>
+    <string name="ermis_google_help">Memakai akun Android terpilih hanya jika autentikatornya mengizinkan akses surat. Jika tidak, gunakan sandi aplikasi.</string>
+    <string name="ermis_google_unavailable">Penyedia akun tidak mengizinkan akses surat. Gunakan sandi aplikasi.</string>
+    <string name="ermis_conversation_count">%1$d pesan dalam percakapan ini</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Courrier Ermis</string>
+    <string name="ermis_new_mail_count">%1$d nouveaux messages</string>
+    <string name="ermis_error_cache">Impossible de déverrouiller le cache du courrier.</string>
+    <string name="ermis_error_auth">Échec de l’authentification. Vérifiez la méthode de connexion et les identifiants.</string>
+    <string name="ermis_error_tls">Impossible de vérifier le certificat du serveur.</string>
+    <string name="ermis_error_generic">Échec de l’opération. Vérifiez la connexion et les paramètres du serveur.</string>
+    <string name="ermis_error_sent_copy">Message envoyé, mais copie non enregistrée dans Envoyés. Ne renvoyez pas le message.</string>
+</resources>

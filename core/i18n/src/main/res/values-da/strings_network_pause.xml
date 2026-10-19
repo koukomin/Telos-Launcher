@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Genoptages automatisk. Android kan forsinke det uden adgang til præcise alarmer.</string>
+</resources>

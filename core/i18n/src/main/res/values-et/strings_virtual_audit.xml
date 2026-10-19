@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Pole selles seadmes saadaval</string>
+    <string name="virtual_magnifier_permission">Luup vajab juurdepääsu kaamerale</string>
+    <string name="virtual_magnifier_resume">Jätka eelvaadet</string>
+    <string name="virtual_magnifier_freeze">Külmuta kaader</string>
+</resources>

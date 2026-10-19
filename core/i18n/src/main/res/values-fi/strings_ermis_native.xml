@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis-sähköposti</string>
+    <string name="ermis_new_mail_count">%1$d uutta viestiä</string>
+    <string name="ermis_error_cache">Postivälimuistin lukitusta ei voitu avata.</string>
+    <string name="ermis_error_auth">Todennus epäonnistui. Tarkista kirjautumistapa ja tilin tunnistetiedot.</string>
+    <string name="ermis_error_tls">Palvelimen varmennetta ei voitu vahvistaa.</string>
+    <string name="ermis_error_generic">Toiminto epäonnistui. Tarkista yhteys ja palvelinasetukset.</string>
+    <string name="ermis_error_sent_copy">Viesti lähetettiin, mutta kopiota ei tallennettu Lähetetyt-kansioon. Älä lähetä uudelleen.</string>
+</resources>

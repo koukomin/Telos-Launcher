@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Ei käytettävissä tässä laitteessa</string>
+    <string name="virtual_magnifier_permission">Suurennuslasi tarvitsee kameran käyttöoikeuden</string>
+    <string name="virtual_magnifier_resume">Jatka esikatselua</string>
+    <string name="virtual_magnifier_freeze">Pysäytä kuva</string>
+</resources>

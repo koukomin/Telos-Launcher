@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">세계</string>
+    <string name="clock_alarm">알람</string>
+    <string name="clock_timer">타이머</string>
+    <string name="clock_stopwatch">스톱워치</string>
+    <string name="clock_local">현지 시간</string>
+    <string name="clock_city_search">도시 또는 국가 검색</string>
+    <string name="clock_night">야간 시계</string>
+    <string name="clock_night_exit">탭하여 닫기</string>
+    <string name="clock_audio_file">오디오 파일</string>
+    <string name="clock_default_sound">알람 소리</string>
+    <string name="clock_stream_url">라디오 스트림 URL</string>
+    <string name="clock_sound_fallback">한 번 울리는 알람입니다. 미디어 재생 실패 시 기본 알람 소리가 재생됩니다.</string>
+    <string name="clock_exact">알람 및 리마인더 허용</string>
+    <string name="clock_dismiss">닫기</string>
+    <string name="clock_minutes">분</string>
+    <string name="clock_start">시작</string>
+    <string name="clock_reset">초기화</string>
+    <string name="clock_lap">랩</string>
+</resources>

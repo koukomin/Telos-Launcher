@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Skambintojų atpažinimas ir blokavimas</string>
+    <string name="caller_system_list">„Android“ užblokuoti numeriai</string>
+    <string name="caller_online_lookup">Skambintojų atpažinimas internetu</string>
+    <string name="caller_online_disclosure">Siunčia nežinomus įeinančius numerius į white-pages.gr, kad gautų bendruomenės pasiūlytą vardą ir įvertinimus. Pagal numatymą išjungta; niekada neblokuoja automatiškai.</string>
+    <string name="caller_likely_spam">Tikėtinas šlamštas · white-pages.gr</string>
+    <string name="caller_block_partial">Asmeninis sąrašas atnaujintas. Nepavyko atnaujinti „Android“ užblokuotų numerių; nustatykite „Telos“ kaip numatytąją telefono arba SMS programą ir bandykite dar kartą.</string>
+    <string name="caller_suggested_name">Siūlomas vardas: %1$s</string>
+</resources>

@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Check changed UI-string coverage and Android resource syntax."""
 import re
+import os
 import xml.etree.ElementTree as ET
 from prepare import RES, inventory, records
 
 TOKEN = re.compile(r'%(?:\d+\$)?[-#+ 0,(]*\d*(?:\.\d+)?[a-zA-Z%]|\{(?:name|ext|n(?::\d+)?)\}')
 
 def main():
-    data = inventory('71262e1e52c1bbb34da722d0ff5e213da665916f')
+    data = inventory(os.environ.get('TELOS_TRANSLATION_BASE', '71262e1e52c1bbb34da722d0ff5e213da665916f'))
     missing = {locale: list(rows) for locale, rows in data['locales'].items() if rows}
     if missing:
         raise SystemExit('Missing or stale translations: ' + repr(missing))

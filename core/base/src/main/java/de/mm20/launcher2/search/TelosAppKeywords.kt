@@ -7,6 +7,7 @@ package de.mm20.launcher2.search
 object TelosAppKeywords {
 
     private val byDomain: Map<String, List<String>> = mapOf(
+        "telos_ironewolf_app" to listOf("ironewolf", "ironfox", "firefox", "browser", "περιηγητής"),
         "telos_terminal_app" to listOf("termux", "shell", "bash", "linux", "τερματικό", "terminal"),
         "telos_youtube_app" to listOf("youtube", "yt", "video", "γιουτουμπ", "γιουτούμπ", "βίντεο"),
         "telos_youtube_music_app" to listOf("youtube", "youtube music", "yt music", "γιουτουμπ", "γιουτούμπ", "μουσική", "τραγούδια"),
@@ -43,7 +44,7 @@ object TelosAppKeywords {
         "telos_akou_app" to listOf("akou", "shazam", "identify", "song finder", "music recognition", "άκου", "αναγνώριση μουσικής"),
         "telos_magnifier_app" to listOf("magnifier", "zoom", "zoom in", "μεγεθυντικός", "φακός"),
         "telos_flashlight_app" to listOf("flashlight", "torch", "siren", "morse", "φακός", "σειρήνα", "μορς"),
-        "telos_clock_app" to listOf("clock", "alarm", "timer", "stopwatch", "night clock", "ρολόι", "ξυπνητήρι", "χρονόμετρο", "αντίστροφη μέτρηση"),
+        "telos_clock_app" to listOf("clock", "alarm", "time", "world clock", "timer", "stopwatch", "night clock", "ρολόι", "ρολοι", "ξυπνητήρι", "ώρα", "roloi", "xypnitiri", "ora", "χρονόμετρο", "αντίστροφη μέτρηση"),
     )
 
     private val englishNames = mapOf(
@@ -79,7 +80,10 @@ object TelosAppKeywords {
     )
 
     fun forDomain(domain: String): List<String> {
-        val name = englishNames[domain] ?: return byDomain[domain].orEmpty()
+        val name = englishNames[domain] ?: domain.takeIf {
+            it.startsWith("telos_") && it.endsWith("_app")
+        }?.removePrefix("telos_")?.removeSuffix("_app")?.replace('_', ' ')
+            ?: return byDomain[domain].orEmpty()
         return (listOf("telos", "τέλος", "τελος", name, "telos $name") + byDomain[domain].orEmpty()).distinct()
     }
 

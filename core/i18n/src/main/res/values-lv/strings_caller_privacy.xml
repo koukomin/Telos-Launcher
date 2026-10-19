@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Zvanītāju identificēšana un bloķēšana</string>
+    <string name="caller_system_list">Android bloķētie numuri</string>
+    <string name="caller_online_lookup">Zvanītāju identificēšana tiešsaistē</string>
+    <string name="caller_online_disclosure">Nosūta nezināmus ienākošos numurus uz white-pages.gr, lai iegūtu kopienas ieteiktu vārdu un vērtējumus. Pēc noklusējuma izslēgts; nekad nebloķē automātiski.</string>
+    <string name="caller_likely_spam">Iespējams surogātzvans · white-pages.gr</string>
+    <string name="caller_block_partial">Personīgais saraksts atjaunināts. Android bloķētos numurus nevarēja atjaunināt; iestatiet Telos kā noklusējuma tālruņa vai SMS lietotni un mēģiniet vēlreiz.</string>
+    <string name="caller_suggested_name">Ieteiktais vārds: %1$s</string>
+</resources>

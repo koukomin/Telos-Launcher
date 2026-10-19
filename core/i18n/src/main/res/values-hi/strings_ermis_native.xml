@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis मेल</string>
+    <string name="ermis_new_mail_count">%1$d नए संदेश</string>
+    <string name="ermis_error_cache">मेल कैश अनलॉक नहीं हो सका।</string>
+    <string name="ermis_error_auth">प्रमाणीकरण विफल। साइन-इन का तरीका और खाते की जानकारी जाँचें।</string>
+    <string name="ermis_error_tls">सर्वर प्रमाणपत्र सत्यापित नहीं हो सका।</string>
+    <string name="ermis_error_generic">कार्रवाई विफल। कनेक्शन और सर्वर सेटिंग जाँचें।</string>
+    <string name="ermis_error_sent_copy">संदेश भेजा गया लेकिन भेजे गए फ़ोल्डर में प्रति नहीं सहेजी जा सकी। दोबारा न भेजें।</string>
+</resources>

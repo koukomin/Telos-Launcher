@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Bakgrundsbildens färger</string>
+    <string name="radio_translucent">Genomskinligt utseende</string>
+    <string name="radio_controls_scroll">Rulla uppspelningskontroller med stationer</string>
+    <string name="radio_tap_plays">Tryck på en station för att spela</string>
+    <string name="radio_large_buffer">Större uppspelningsbuffert</string>
+    <string name="radio_edit_metadata">Tillåt redigering av stationsinformation</string>
+    <string name="radio_edit_streams">Tillåt redigering av strömadresser</string>
+    <string name="radio_auto_images">Uppdatera stationsbilder automatiskt</string>
+    <string name="radio_update_images">Uppdatera stationsbilder nu</string>
+    <string name="radio_backup_images">ZIP-säkerhetskopia med stationsbilder</string>
+    <string name="radio_restore_replace_summary">Ersätt den nuvarande stationssamlingen med denna säkerhetskopia? Den nuvarande samlingen tas bort.</string>
+    <string name="radio_station_image_url">Adress till stationsbild</string>
+</resources>

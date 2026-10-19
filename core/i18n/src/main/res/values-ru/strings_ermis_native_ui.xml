@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Почтовые аккаунты</string>
+    <string name="ermis_all_accounts">Все аккаунты</string>
+    <string name="ermis_native_intro">Ваша почта в Telos. Подключите аккаунт IMAP/SMTP через TLS с паролем или паролем приложения.</string>
+    <string name="ermis_empty">Сообщений нет. Синхронизируйте аккаунты или измените поиск.</string>
+    <string name="ermis_operation_failed">Операция с почтой не удалась</string>
+    <string name="ermis_tls_help">Оба сервера должны поддерживать проверенный TLS. Gmail может использовать пароль приложения или доступ Google/microG, если поддерживается.</string>
+    <string name="ermis_username">Имя пользователя сервера</string>
+    <string name="ermis_username_help">Оставьте пустым для использования адреса почты.</string>
+    <string name="ermis_imap_host">Сервер IMAP</string>
+    <string name="ermis_imap_port">Порт IMAP TLS</string>
+    <string name="ermis_smtp_host">Сервер SMTP</string>
+    <string name="ermis_smtp_port">Порт SMTP</string>
+    <string name="ermis_starttls">Требовать STARTTLS для SMTP</string>
+    <string name="ermis_saf_help">Выбор файлов также показывает облачные сервисы с поддержкой Документов Android. Для больших файлов вставьте ссылку в сообщение.</string>
+    <string name="ermis_reply">Ответить</string>
+    <string name="ermis_google_sign_in">Вход через Google / microG</string>
+    <string name="ermis_google_help">Выбранный аккаунт Android используется, только если служба аутентификации разрешает доступ к почте. Иначе используйте пароль приложения.</string>
+    <string name="ermis_google_unavailable">Поставщик аккаунта не разрешил доступ к почте. Используйте пароль приложения.</string>
+    <string name="ermis_conversation_count">%1$d сообщений в этой переписке</string>
+</resources>

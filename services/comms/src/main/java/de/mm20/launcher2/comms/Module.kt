@@ -9,8 +9,10 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val commsModule = module {
+    single { de.mm20.launcher2.comms.callerid.CallerLookup(get()) }
     single { de.mm20.launcher2.comms.files.TelosTrash(androidContext()) }
     single { de.mm20.launcher2.comms.youtube.YouTubeRepository() }
+    single { de.mm20.launcher2.comms.youtube.YouTubeLibrary(androidContext()) }
     single(createdAtStart = true) { de.mm20.launcher2.comms.remote.RemotePhonebook.also { it.init(androidContext()) } }
     single(createdAtStart = true) { de.mm20.launcher2.comms.sip.SipController(androidContext(), get()) }
     single { T9SearchEngine() }

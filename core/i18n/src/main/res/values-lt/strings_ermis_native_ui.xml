@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Pašto paskyros</string>
+    <string name="ermis_all_accounts">Visos paskyros</string>
+    <string name="ermis_native_intro">Jūsų paštas „Telos“. Prijunkite IMAP/SMTP paskyrą naudodami TLS ir slaptažodį arba programos slaptažodį.</string>
+    <string name="ermis_empty">Pranešimų nėra. Sinchronizuokite paskyras arba pakeiskite paiešką.</string>
+    <string name="ermis_operation_failed">Pašto operacija nepavyko</string>
+    <string name="ermis_tls_help">Abu serveriai turi palaikyti patvirtintą TLS. Gmail gali naudoti programos slaptažodį arba palaikomą Google/microG prieigą.</string>
+    <string name="ermis_username">Serverio naudotojo vardas</string>
+    <string name="ermis_username_help">Palikite tuščią, kad būtų naudojamas el. pašto adresas.</string>
+    <string name="ermis_imap_host">IMAP serveris</string>
+    <string name="ermis_imap_port">IMAP TLS prievadas</string>
+    <string name="ermis_smtp_host">SMTP serveris</string>
+    <string name="ermis_smtp_port">SMTP prievadas</string>
+    <string name="ermis_starttls">Reikalauti STARTTLS SMTP ryšiui</string>
+    <string name="ermis_saf_help">Failų parinkiklis rodo ir debesijos paslaugas, palaikančias „Android“ dokumentus. Dideliems failams į pranešimą įdėkite bendrinimo nuorodą.</string>
+    <string name="ermis_reply">Atsakyti</string>
+    <string name="ermis_google_sign_in">Prisijungimas per Google / microG</string>
+    <string name="ermis_google_help">Pasirinkta Android paskyra naudojama tik jei jos tapatybės tikrintojas leidžia pasiekti paštą. Kitu atveju naudokite programos slaptažodį.</string>
+    <string name="ermis_google_unavailable">Paskyros teikėjas neleido pasiekti pašto. Naudokite programos slaptažodį.</string>
+    <string name="ermis_conversation_count">%1$d laiškų šiame pokalbyje</string>
+</resources>

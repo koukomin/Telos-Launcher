@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Inte tillgängligt på den här enheten</string>
+    <string name="virtual_magnifier_permission">Förstoringsglaset kräver kameraåtkomst</string>
+    <string name="virtual_magnifier_resume">Återuppta förhandsvisning</string>
+    <string name="virtual_magnifier_freeze">Frys bild</string>
+</resources>

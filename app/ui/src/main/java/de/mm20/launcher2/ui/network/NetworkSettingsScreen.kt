@@ -38,6 +38,7 @@ data object NetworkSettingsRoute : NavKey
 @Composable
 fun NetworkSettingsScreen() {
     val context = LocalContext.current
+    val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
     val settings: NetworkSettings = koinInject()
     val engine: NetworkEngine = koinInject()
     val s by settings.values.collectAsState()
@@ -67,6 +68,9 @@ fun NetworkSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.net_settings_cat_network)) {
+                Preference(title = "Tor", summary = stringResource(R.string.nt_onion),
+                    icon = IconsNetworkSettingsScreen.visibility_off_24px,
+                    onClick = { backStack.add(NetworkPrivacyRoute) })
                 ListPreference(
                     title = stringResource(R.string.net_settings_ip_mode),
                     icon = IconsNetworkSettingsScreen.language_24px,

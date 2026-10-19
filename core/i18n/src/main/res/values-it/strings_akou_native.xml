@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Senza chiave API: registra 10 secondi e calcola l’impronta sul dispositivo. Solo l’impronta viene inviata a Shazam, mai l’audio.</string>
+    <string name="akou_get_token">Ottieni un token API AudD</string>
+    <string name="akou_api_token">Token API AudD</string>
+    <string name="akou_start">Registra e riconosci</string>
+    <string name="akou_recording">Registrazione di 10 secondi…</string>
+    <string name="akou_identifying">Ricerca dell’impronta…</string>
+    <string name="akou_no_match">Nessuna corrispondenza. Riprova vicino alla musica.</string>
+    <string name="akou_matched">Brano riconosciuto</string>
+    <string name="akou_failed">Riconoscimento non riuscito. Controlla microfono e connessione e riprova vicino alla musica.</string>
+    <string name="akou_microphone_denied">È necessaria l’autorizzazione del microfono per registrare un campione.</string>
+    <string name="akou_history">Cronologia dei riconoscimenti</string>
+    <string name="akou_youtube_music">Cerca in YouTube Music</string>
+</resources>

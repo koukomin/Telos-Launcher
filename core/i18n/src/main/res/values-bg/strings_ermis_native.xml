@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Поща Ermis</string>
+    <string name="ermis_new_mail_count">%1$d нови съобщения</string>
+    <string name="ermis_error_cache">Кешът на пощата не може да се отключи.</string>
+    <string name="ermis_error_auth">Неуспешно удостоверяване. Проверете метода за вход и данните за акаунта.</string>
+    <string name="ermis_error_tls">Сертификатът на сървъра не може да се провери.</string>
+    <string name="ermis_error_generic">Операцията е неуспешна. Проверете връзката и настройките на сървъра.</string>
+    <string name="ermis_error_sent_copy">Съобщението е изпратено, но копие не е запазено в Изпратени. Не изпращайте отново.</string>
+</resources>

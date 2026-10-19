@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Non disponibile su questo dispositivo</string>
+    <string name="virtual_magnifier_permission">La lente richiede l’accesso alla fotocamera</string>
+    <string name="virtual_magnifier_resume">Riprendi anteprima</string>
+    <string name="virtual_magnifier_freeze">Blocca immagine</string>
+</resources>

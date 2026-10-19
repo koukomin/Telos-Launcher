@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Konto hinzufügen</string>
+    <string name="ermis_attach">Von diesem Telefon anhängen</string>
+    <string name="ermis_body">Nachricht</string>
+    <string name="ermis_compose">Verfassen</string>
+    <string name="ermis_connect">Verbinden</string>
+    <string name="ermis_email">E-Mail</string>
+    <string name="ermis_inbox">Posteingang</string>
+    <string name="ermis_no_subject">(kein Betreff)</string>
+    <string name="ermis_note">Notiz</string>
+    <string name="ermis_note_save">Notiz speichern</string>
+    <string name="ermis_password">Passwort</string>
+    <string name="ermis_remove">Entfernen</string>
+    <string name="ermis_search">E-Mails durchsuchen</string>
+    <string name="ermis_send">Senden</string>
+    <string name="ermis_starred">Markiert</string>
+    <string name="ermis_subject">Betreff</string>
+    <string name="ermis_sync">Synchronisieren</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">An</string>
+</resources>

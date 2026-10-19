@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">इस डिवाइस पर उपलब्ध नहीं</string>
+    <string name="virtual_magnifier_permission">आवर्धक के लिए कैमरे की अनुमति आवश्यक है</string>
+    <string name="virtual_magnifier_resume">पूर्वावलोकन फिर शुरू करें</string>
+    <string name="virtual_magnifier_freeze">फ़्रेम रोकें</string>
+</resources>

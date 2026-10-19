@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Bu cihazda kullanılamıyor</string>
+    <string name="virtual_magnifier_permission">Büyüteç için kamera erişimi gereklidir</string>
+    <string name="virtual_magnifier_resume">Önizlemeye devam et</string>
+    <string name="virtual_magnifier_freeze">Kareyi dondur</string>
+</resources>

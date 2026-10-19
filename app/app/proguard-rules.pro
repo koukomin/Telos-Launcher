@@ -50,3 +50,10 @@
 
 # TvPlayerController compares this activity class name with SettingsDeepLinkContract.
 -keepnames class de.mm20.launcher2.ui.settings.SettingsActivity
+
+# JavaMail resolves these enabled transports through META-INF/javamail.providers.
+-keep class com.sun.mail.imap.IMAPSSLStore { public <init>(javax.mail.Session, javax.mail.URLName); }
+-keep class com.sun.mail.smtp.SMTPTransport { public <init>(javax.mail.Session, javax.mail.URLName); }
+-keep class com.sun.mail.smtp.SMTPSSLTransport { public <init>(javax.mail.Session, javax.mail.URLName); }
+# Activation loads these MIME content handlers from the library mailcap resource.
+-keep class com.sun.mail.handlers.** implements javax.activation.DataContentHandler { public <init>(); public *; }

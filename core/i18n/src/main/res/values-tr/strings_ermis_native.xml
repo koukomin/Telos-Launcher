@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis posta</string>
+    <string name="ermis_new_mail_count">%1$d yeni ileti</string>
+    <string name="ermis_error_cache">Posta önbelleğinin kilidi açılamadı.</string>
+    <string name="ermis_error_auth">Kimlik doğrulama başarısız. Giriş yöntemini ve hesap bilgilerini kontrol edin.</string>
+    <string name="ermis_error_tls">Sunucu sertifikası doğrulanamadı.</string>
+    <string name="ermis_error_generic">İşlem başarısız. Bağlantıyı ve sunucu ayarlarını kontrol edin.</string>
+    <string name="ermis_error_sent_copy">İleti gönderildi ancak Gönderilenler içine kopyası kaydedilemedi. Yeniden göndermeyin.</string>
+</resources>

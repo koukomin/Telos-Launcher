@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Baggrundens farver</string>
+    <string name="radio_translucent">Gennemsigtigt udseende</string>
+    <string name="radio_controls_scroll">Rul afspilningsknapper sammen med stationerne</string>
+    <string name="radio_tap_plays">Tryk på en station for at afspille</string>
+    <string name="radio_large_buffer">Større afspilningsbuffer</string>
+    <string name="radio_edit_metadata">Tillad redigering af stationsoplysninger</string>
+    <string name="radio_edit_streams">Tillad redigering af streamadresser</string>
+    <string name="radio_auto_images">Opdater stationsbilleder automatisk</string>
+    <string name="radio_update_images">Opdater stationsbilleder nu</string>
+    <string name="radio_backup_images">ZIP-sikkerhedskopi med stationsbilleder</string>
+    <string name="radio_restore_replace_summary">Erstat den aktuelle stationssamling med denne sikkerhedskopi? Din aktuelle samling bliver fjernet.</string>
+    <string name="radio_station_image_url">Adresse til stationsbillede</string>
+</resources>

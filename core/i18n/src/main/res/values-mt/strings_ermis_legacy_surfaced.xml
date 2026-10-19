@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Żid kont</string>
+    <string name="ermis_attach">Ehmeż minn dan it-telefon</string>
+    <string name="ermis_body">Messaġġ</string>
+    <string name="ermis_compose">Ikteb</string>
+    <string name="ermis_connect">Qabbad</string>
+    <string name="ermis_email">Posta elettronika</string>
+    <string name="ermis_inbox">Posta dieħla</string>
+    <string name="ermis_no_subject">(bla suġġett)</string>
+    <string name="ermis_note">Nota</string>
+    <string name="ermis_note_save">Issejvja n-nota</string>
+    <string name="ermis_password">Password</string>
+    <string name="ermis_remove">Neħħi</string>
+    <string name="ermis_search">Fittex fil-posta</string>
+    <string name="ermis_send">Ibgħat</string>
+    <string name="ermis_starred">Immarkati bi stilla</string>
+    <string name="ermis_subject">Suġġett</string>
+    <string name="ermis_sync">Issinkronizza</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Lil</string>
+</resources>

@@ -2,7 +2,6 @@ package de.mm20.launcher2.data.comms
 
 import de.mm20.launcher2.comms.repository.CallLogRepository
 import de.mm20.launcher2.comms.repository.ContactDirectoryRepository
-import de.mm20.launcher2.comms.repository.MessageRepository
 import de.mm20.launcher2.comms.repository.RadioRepository
 import de.mm20.launcher2.search.VirtualAppProvider
 import de.mm20.launcher2.search.VirtualAppDeserializer
@@ -19,7 +18,6 @@ import org.koin.dsl.module
 val dataCommsModule = module {
     single<ContactDirectoryRepository> { ContactDirectoryRepositoryImpl(androidContext(), get()) }
     single<CallLogRepository> { CallLogRepositoryImpl(androidContext(), get()) }
-    single<MessageRepository> { MessageRepositoryImpl() }
     single<de.mm20.launcher2.comms.repository.SpamRepository> { SpamRepositoryImpl(androidContext()) }
 
     single {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Sähköpostitilit</string>
+    <string name="ermis_all_accounts">Kaikki tilit</string>
+    <string name="ermis_native_intro">Sähköpostisi Telosissa. Yhdistä IMAP/SMTP-tili TLS:llä ja salasanalla tai sovellussalasanalla.</string>
+    <string name="ermis_empty">Ei viestejä. Synkronoi tilit tai muuta hakua.</string>
+    <string name="ermis_operation_failed">Sähköpostitoiminto epäonnistui</string>
+    <string name="ermis_tls_help">Molempien palvelimien on tuettava varmennettua TLS:ää. Gmail voi käyttää sovellussalasanaa tai tuettua Google/microG-yhteyttä.</string>
+    <string name="ermis_username">Palvelimen käyttäjätunnus</string>
+    <string name="ermis_username_help">Jätä tyhjäksi käyttääksesi sähköpostiosoitettasi.</string>
+    <string name="ermis_imap_host">IMAP-palvelin</string>
+    <string name="ermis_imap_port">IMAP TLS -portti</string>
+    <string name="ermis_smtp_host">SMTP-palvelin</string>
+    <string name="ermis_smtp_port">SMTP-portti</string>
+    <string name="ermis_starttls">Vaadi STARTTLS SMTP:lle</string>
+    <string name="ermis_saf_help">Tiedostovalitsin näyttää myös Androidin Asiakirjoja tukevat pilvipalvelut. Lisää suurille tiedostoille jakolinkki viestiin.</string>
+    <string name="ermis_reply">Vastaa</string>
+    <string name="ermis_google_sign_in">Google / microG -kirjautuminen</string>
+    <string name="ermis_google_help">Käyttää valittua Android-tiliä vain, jos sen todennuspalvelu antaa pääsyn postiin. Käytä muuten sovellussalasanaa.</string>
+    <string name="ermis_google_unavailable">Tilin tarjoaja ei antanut pääsyä postiin. Käytä sovellussalasanaa.</string>
+    <string name="ermis_conversation_count">%1$d viestiä tässä keskustelussa</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Λογαριασμοί email</string>
+    <string name="ermis_all_accounts">Όλοι οι λογαριασμοί</string>
+    <string name="ermis_native_intro">Τα email σας μέσα στο Telos. Συνδέστε λογαριασμό IMAP/SMTP με TLS και κωδικό ή κωδικό εφαρμογής.</string>
+    <string name="ermis_empty">Δεν υπάρχουν μηνύματα εδώ. Συγχρονίστε τους λογαριασμούς ή αλλάξτε την αναζήτηση.</string>
+    <string name="ermis_operation_failed">Η ενέργεια email απέτυχε</string>
+    <string name="ermis_tls_help">Και οι δύο διακομιστές πρέπει να υποστηρίζουν επαληθευμένο TLS. Το Gmail μπορεί να χρησιμοποιεί κωδικό εφαρμογής ή προαιρετικά πρόσβαση λογαριασμού Google/microG, όταν υποστηρίζεται.</string>
+    <string name="ermis_username">Όνομα χρήστη διακομιστή</string>
+    <string name="ermis_username_help">Αφήστε κενό για χρήση της διεύθυνσης email.</string>
+    <string name="ermis_imap_host">Διακομιστής IMAP</string>
+    <string name="ermis_imap_port">Θύρα IMAP TLS</string>
+    <string name="ermis_smtp_host">Διακομιστής SMTP</string>
+    <string name="ermis_smtp_port">Θύρα SMTP</string>
+    <string name="ermis_starttls">Απαίτηση STARTTLS για SMTP</string>
+    <string name="ermis_saf_help">Η επιλογή αρχείων εμφανίζει και παρόχους cloud που υποστηρίζουν τα Έγγραφα Android. Για μεγάλα αρχεία προσθέστε σύνδεσμο κοινής χρήσης στο μήνυμα.</string>
+    <string name="ermis_reply">Απάντηση</string>
+    <string name="ermis_google_sign_in">Σύνδεση Google / microG</string>
+    <string name="ermis_google_help">Χρησιμοποιεί τον επιλεγμένο λογαριασμό Android μόνο αν ο πάροχός του επιτρέπει πρόσβαση στην αλληλογραφία. Διαφορετικά, χρησιμοποιήστε κωδικό εφαρμογής.</string>
+    <string name="ermis_google_unavailable">Ο πάροχος λογαριασμού δεν έδωσε πρόσβαση στην αλληλογραφία. Χρησιμοποιήστε κωδικό εφαρμογής.</string>
+    <string name="ermis_conversation_count">%1$d μηνύματα σε αυτή τη συνομιλία</string>
+</resources>

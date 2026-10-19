@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Koloroj de la ekranfono</string>
+    <string name="radio_translucent">Travidebla aspekto</string>
+    <string name="radio_controls_scroll">Rulumi la ludregilojn kune kun la stacioj</string>
+    <string name="radio_tap_plays">Tuŝu stacion por ludi</string>
+    <string name="radio_large_buffer">Pli granda ludbufro</string>
+    <string name="radio_edit_metadata">Permesi redaktadon de staciaj informoj</string>
+    <string name="radio_edit_streams">Permesi redaktadon de fluadresoj</string>
+    <string name="radio_auto_images">Aŭtomate ĝisdatigi staciajn bildojn</string>
+    <string name="radio_update_images">Ĝisdatigi staciajn bildojn nun</string>
+    <string name="radio_backup_images">ZIP-sekurkopio kun staciaj bildoj</string>
+    <string name="radio_restore_replace_summary">Ĉu anstataŭigi la nunan stacikolekton per ĉi tiu sekurkopio? Via nuna kolekto estos forigita.</string>
+    <string name="radio_station_image_url">Adreso de la stacia bildo</string>
+</resources>

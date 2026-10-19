@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Niedostępne na tym urządzeniu</string>
+    <string name="virtual_magnifier_permission">Lupa wymaga dostępu do aparatu</string>
+    <string name="virtual_magnifier_resume">Wznów podgląd</string>
+    <string name="virtual_magnifier_freeze">Zatrzymaj kadr</string>
+</resources>

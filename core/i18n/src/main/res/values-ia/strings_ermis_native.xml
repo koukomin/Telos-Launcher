@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Posta Ermis</string>
+    <string name="ermis_new_mail_count">%1$d nove messages</string>
+    <string name="ermis_error_cache">Le cache de posta non poteva esser disblocate.</string>
+    <string name="ermis_error_auth">Authentication fallite. Verifica le methodo de connexion e le credentiales.</string>
+    <string name="ermis_error_tls">Le certificato del servitor non poteva esser verificate.</string>
+    <string name="ermis_error_generic">Operation fallite. Verifica le connexion e le parametros del servitor.</string>
+    <string name="ermis_error_sent_copy">Message inviate, ma le copia non esseva salvate in Inviate. Non reinvia.</string>
+</resources>

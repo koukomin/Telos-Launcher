@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Колеры шпалер</string>
+    <string name="radio_translucent">Напаўпразрысты выгляд</string>
+    <string name="radio_controls_scroll">Пракручваць элементы кіравання разам са станцыямі</string>
+    <string name="radio_tap_plays">Націсніце на станцыю для прайгравання</string>
+    <string name="radio_large_buffer">Большы буфер прайгравання</string>
+    <string name="radio_edit_metadata">Дазволіць рэдагаванне інфармацыі пра станцыю</string>
+    <string name="radio_edit_streams">Дазволіць рэдагаванне адрасоў трансляцый</string>
+    <string name="radio_auto_images">Абнаўляць выявы станцый аўтаматычна</string>
+    <string name="radio_update_images">Абнавіць выявы станцый зараз</string>
+    <string name="radio_backup_images">Рэзервовая копія ZIP з выявамі станцый</string>
+    <string name="radio_restore_replace_summary">Замяніць бягучую калекцыю станцый гэтай рэзервовай копіяй? Ваша бягучая калекцыя будзе выдалена.</string>
+    <string name="radio_station_image_url">Адрас выявы станцыі</string>
+</resources>

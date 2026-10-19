@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Запазено в Pictures/Telos</string>
+    <string name="camera_native_failed">Грешка на камерата: %1$s</string>
+    <string name="camera_native_capture">Заснемане</string>
+    <string name="camera_native_record">Запис на видео</string>
+    <string name="camera_native_stop">Спиране на записа</string>
+    <string name="camera_native_timer">Таймер</string>
+    <string name="camera_native_settings">Настройки за заснемане</string>
+    <string name="camera_native_exposure">Компенсация на експонацията</string>
+    <string name="camera_native_iso">ISO чувствителност</string>
+    <string name="camera_native_shutter">Време на затвора (ms)</string>
+    <string name="camera_native_auto">Автоматична експонация</string>
+    <string name="camera_native_histogram">Хистограма</string>
+    <string name="camera_native_audio">Запис на звук от микрофона</string>
+    <string name="camera_native_discreet_hint">Прегледът е скрит. Заснемането продължава да изисква изрично действие; системните индикатори на камерата остават видими.</string>
+    <string name="camera_native_capabilities">Наличните режими зависят от тази камера. Снимките се обработват на устройството; не е включен собственически механизъм.</string>
+    <string name="camera_native_formats">JPEG запазва метаданните на камерата, когато е включено. PNG/WebP премахват метаданните.</string>
+    <string name="camera_native_gallery">Отваряне на галерията</string>
+    <string name="camera_native_flash">Светкавица</string>
+    <string name="camera_native_panorama_hint" formatted="false">Ръчна панорама: заснемете 2–8 изображения отляво надясно с 20 % припокриване и равен хоризонт. Шевовете се преливат без автоматично подравняване.</string>
+    <string name="camera_native_webcam_lan">Всеки в локалната мрежа с този URL с токен може да гледа камерата. Споделянето спира, когато този екран напусне предния план.</string>
+    <string name="camera_native_hidden_saved">Запазено частно в Pictures/TelosHidden. Скритият албум не е в галерията и се изтрива при деинсталиране на Telos.</string>
+    <string name="camera_native_geo_hint">Само JPEG EXIF. Добавя налично местоположение, старо до 10 минути, с точност до 500 m.</string>
+    <string name="camera_native_face_trigger">Снимай при открито лице</string>
+    <string name="camera_native_motion_trigger">Снимай при открито движение</string>
+    <string name="camera_native_trigger_hint">Само на преден план. Най-много веднъж на 5 секунди. Движението се определя от промени в прегледа и може да реагира на осветлението.</string>
+</resources>

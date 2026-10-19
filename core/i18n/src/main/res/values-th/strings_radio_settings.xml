@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">สีจากวอลเปเปอร์</string>
+    <string name="radio_translucent">ลักษณะโปร่งแสง</string>
+    <string name="radio_controls_scroll">เลื่อนตัวควบคุมการเล่นไปพร้อมกับสถานี</string>
+    <string name="radio_tap_plays">แตะสถานีเพื่อเล่น</string>
+    <string name="radio_large_buffer">บัฟเฟอร์การเล่นขนาดใหญ่ขึ้น</string>
+    <string name="radio_edit_metadata">อนุญาตให้แก้ไขข้อมูลสถานี</string>
+    <string name="radio_edit_streams">อนุญาตให้แก้ไขที่อยู่สตรีม</string>
+    <string name="radio_auto_images">อัปเดตรูปภาพสถานีอัตโนมัติ</string>
+    <string name="radio_update_images">อัปเดตรูปภาพสถานีตอนนี้</string>
+    <string name="radio_backup_images">สำรองข้อมูล ZIP รวมรูปภาพสถานี</string>
+    <string name="radio_restore_replace_summary">แทนที่รายการสถานีปัจจุบันด้วยข้อมูลสำรองนี้หรือไม่? รายการปัจจุบันจะถูกลบ</string>
+    <string name="radio_station_image_url">ที่อยู่รูปภาพสถานี</string>
+</resources>

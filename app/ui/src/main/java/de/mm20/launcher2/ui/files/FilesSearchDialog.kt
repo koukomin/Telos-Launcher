@@ -57,6 +57,6 @@ internal fun FilesSearchDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
             TextButton(onClick = { extensions = ""; minimum = ""; maximum = ""; after = ""; before = ""; kind = null; recursive = true; everywhere = false }) { Text(stringResource(R.string.telos_files_search_reset)) }
         }
     }, confirmButton = { TextButton(enabled = valid, onClick = {
-        vm.searchEverywhere = everywhere; vm.setSearchOptions(FileSearchFilter(extensionSet, min, max, start, end), kind, recursive); onDismiss()
+        vm.updateSearchEverywhere(everywhere); vm.setSearchOptions(FileSearchFilter(extensionSet, min, max, start, end), kind, recursive); onDismiss()
     }) { Text(stringResource(R.string.hc_apply)) } }, dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } })
 }

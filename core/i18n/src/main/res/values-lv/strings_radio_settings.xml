@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Fona attēla krāsas</string>
+    <string name="radio_translucent">Caurspīdīgs izskats</string>
+    <string name="radio_controls_scroll">Ritināt atskaņošanas vadīklas kopā ar stacijām</string>
+    <string name="radio_tap_plays">Pieskarties stacijai, lai atskaņotu</string>
+    <string name="radio_large_buffer">Lielāks atskaņošanas buferis</string>
+    <string name="radio_edit_metadata">Atļaut rediģēt staciju informāciju</string>
+    <string name="radio_edit_streams">Atļaut rediģēt straumju adreses</string>
+    <string name="radio_auto_images">Automātiski atjaunināt staciju attēlus</string>
+    <string name="radio_update_images">Atjaunināt staciju attēlus tagad</string>
+    <string name="radio_backup_images">ZIP dublējums ar staciju attēliem</string>
+    <string name="radio_restore_replace_summary">Aizstāt pašreizējo staciju kolekciju ar šo dublējumu? Pašreizējā kolekcija tiks noņemta.</string>
+    <string name="radio_station_image_url">Stacijas attēla adrese</string>
+</resources>

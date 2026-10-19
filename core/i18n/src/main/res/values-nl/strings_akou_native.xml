@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Zonder API-sleutel: neem 10 seconden op en bereken de vingerafdruk op dit apparaat. Alleen de vingerafdruk gaat naar Shazam, nooit de audio.</string>
+    <string name="akou_get_token">AudD-API-token aanvragen</string>
+    <string name="akou_api_token">AudD-API-token</string>
+    <string name="akou_start">Opnemen en herkennen</string>
+    <string name="akou_recording">10 seconden opnemen…</string>
+    <string name="akou_identifying">Vingerafdruk vergelijken…</string>
+    <string name="akou_no_match">Geen overeenkomst. Probeer het dichter bij de muziek opnieuw.</string>
+    <string name="akou_matched">Nummer herkend</string>
+    <string name="akou_failed">Herkenning mislukt. Controleer microfoon en verbinding en probeer het dichter bij de muziek opnieuw.</string>
+    <string name="akou_microphone_denied">Microfoontoestemming is nodig om een fragment op te nemen.</string>
+    <string name="akou_history">Herkenningsgeschiedenis</string>
+    <string name="akou_youtube_music">Zoeken in YouTube Music</string>
+</resources>

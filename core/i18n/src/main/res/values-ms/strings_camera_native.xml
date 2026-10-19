@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Disimpan dalam Pictures/Telos</string>
+    <string name="camera_native_failed">Ralat kamera: %1$s</string>
+    <string name="camera_native_capture">Tangkap</string>
+    <string name="camera_native_record">Rakam video</string>
+    <string name="camera_native_stop">Hentikan rakaman</string>
+    <string name="camera_native_timer">Pemasa</string>
+    <string name="camera_native_settings">Tetapan tangkapan</string>
+    <string name="camera_native_exposure">Pampasan dedahan</string>
+    <string name="camera_native_iso">Kepekaan ISO</string>
+    <string name="camera_native_shutter">Tempoh pengatup (ms)</string>
+    <string name="camera_native_auto">Dedahan automatik</string>
+    <string name="camera_native_histogram">Histogram</string>
+    <string name="camera_native_audio">Rakam audio mikrofon</string>
+    <string name="camera_native_discreet_hint">Pratonton disembunyikan. Tangkapan masih memerlukan tindakan jelas; penunjuk kamera sistem kekal kelihatan.</string>
+    <string name="camera_native_capabilities">Mod tersedia bergantung pada kamera ini. Foto diproses pada peranti; tiada enjin proprietari disertakan.</string>
+    <string name="camera_native_formats">JPEG mengekalkan metadata kamera apabila didayakan. PNG/WebP membuang metadata.</string>
+    <string name="camera_native_gallery">Buka galeri</string>
+    <string name="camera_native_flash">Denyar</string>
+    <string name="camera_native_panorama_hint" formatted="false">Panorama manual: tangkap 2–8 imej dari kiri ke kanan dengan tindihan 20 %, pastikan ufuk rata. Sambungan diadun tanpa penjajaran automatik.</string>
+    <string name="camera_native_webcam_lan">Sesiapa di rangkaian tempatan dengan URL token ini boleh melihat kamera. Perkongsian berhenti apabila skrin ini meninggalkan latar depan.</string>
+    <string name="camera_native_hidden_saved">Disimpan secara peribadi dalam Pictures/TelosHidden. Album tersembunyi tidak muncul dalam galeri dan dipadam apabila Telos dinyahpasang.</string>
+    <string name="camera_native_geo_hint">JPEG EXIF sahaja. Menambah lokasi tersedia, berusia paling lama 10 minit dengan ketepatan dalam 500 m.</string>
+    <string name="camera_native_face_trigger">Tangkap apabila wajah dikesan</string>
+    <string name="camera_native_motion_trigger">Tangkap apabila gerakan dikesan</string>
+    <string name="camera_native_trigger_hint">Di latar depan sahaja. Maksimum sekali setiap 5 saat. Gerakan menggunakan perubahan pratonton dan boleh bertindak balas terhadap perubahan cahaya.</string>
+</resources>

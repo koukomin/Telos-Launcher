@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Bez kľúča API: nahrá 10 sekúnd a vypočíta odtlačok v zariadení. Do Shazamu sa posiela iba odtlačok, nikdy zvuk.</string>
+    <string name="akou_get_token">Získať API token AudD</string>
+    <string name="akou_api_token">API token AudD</string>
+    <string name="akou_start">Nahrať a rozpoznať</string>
+    <string name="akou_recording">Nahrávanie 10 sekúnd…</string>
+    <string name="akou_identifying">Hľadanie zhody odtlačku…</string>
+    <string name="akou_no_match">Zhoda sa nenašla. Skúste to znova bližšie k hudbe.</string>
+    <string name="akou_matched">Skladba rozpoznaná</string>
+    <string name="akou_failed">Rozpoznanie zlyhalo. Skontrolujte mikrofón a pripojenie a skúste to bližšie k hudbe.</string>
+    <string name="akou_microphone_denied">Na nahratie vzorky je potrebné povolenie mikrofónu.</string>
+    <string name="akou_history">História rozpoznávania</string>
+    <string name="akou_youtube_music">Nájsť v YouTube Music</string>
+</resources>

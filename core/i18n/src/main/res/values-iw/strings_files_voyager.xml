@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">יצירת זוג מפתחות</string>
+    <string name="telos_files_ssh_copy_public_key">העתקת המפתח הציבורי</string>
+    <string name="telos_files_ssh_public_key_hint">יש להוסיף את המפתח הציבורי אל ~/.ssh/authorized_keys בשרת. המפתח הפרטי נשאר מוצפן בטלפון זה.</string>
+    <string name="telos_files_duplicates_exclude">דילוג על תיקיות</string>
+    <string name="telos_files_duplicates_exclude_hint">שמות או נתיבי תיקיות, מופרדים בפסיקים, למשל: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">גישת Shizuku</string>
+    <string name="telos_files_shizuku_summary">פתיחת Android/data, Android/obb ותיקיות אחרות שהאפליקציה אינה יכולה לקרוא, דרך Shizuku (ללא רוט)</string>
+    <string name="telos_files_shizuku_denied">Shizuku אינו פועל או שלא אישר את Telos</string>
+    <string name="telos_files_search_everywhere">חיפוש בכל האחסון</string>
+    <string name="telos_files_search_everywhere_summary">חיפוש באחסון הפנימי, בכרטיסי SD ובכונני USB, ולא רק בתיקייה זו</string>
+</resources>

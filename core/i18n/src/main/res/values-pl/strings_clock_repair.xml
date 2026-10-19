@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Świat</string>
+    <string name="clock_alarm">Budzik</string>
+    <string name="clock_timer">Minutnik</string>
+    <string name="clock_stopwatch">Stoper</string>
+    <string name="clock_local">Czas lokalny</string>
+    <string name="clock_city_search">Szukaj miasta lub kraju</string>
+    <string name="clock_night">Zegar nocny</string>
+    <string name="clock_night_exit">Dotknij, aby zamknąć</string>
+    <string name="clock_audio_file">Plik dźwiękowy</string>
+    <string name="clock_default_sound">Dźwięk budzika</string>
+    <string name="clock_stream_url">Adres strumienia radia</string>
+    <string name="clock_sound_fallback">Budzik jednorazowy. Przy błędzie mediów zabrzmi dźwięk domyślny.</string>
+    <string name="clock_exact">Zezwól na alarmy i przypomnienia</string>
+    <string name="clock_dismiss">Zamknij</string>
+    <string name="clock_minutes">Minuty</string>
+    <string name="clock_start">Start</string>
+    <string name="clock_reset">Wyzeruj</string>
+    <string name="clock_lap">Okrążenie</string>
+</resources>

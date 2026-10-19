@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Wallpaper colors</string>
+    <string name="radio_translucent">Translucent appearance</string>
+    <string name="radio_controls_scroll">Scroll playback controls with stations</string>
+    <string name="radio_tap_plays">Tap a station to play</string>
+    <string name="radio_large_buffer">Larger playback buffer</string>
+    <string name="radio_edit_metadata">Allow editing station information</string>
+    <string name="radio_edit_streams">Allow editing stream addresses</string>
+    <string name="radio_auto_images">Update station images automatically</string>
+    <string name="radio_update_images">Update station images now</string>
+    <string name="radio_backup_images">ZIP backup including station images</string>
+    <string name="radio_restore_replace_summary">Replace the current station collection with this backup? Your current collection will be removed.</string>
+    <string name="radio_station_image_url">Station image address</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">เมล Ermis</string>
+    <string name="ermis_new_mail_count">%1$d ข้อความใหม่</string>
+    <string name="ermis_error_cache">ปลดล็อกแคชเมลไม่ได้</string>
+    <string name="ermis_error_auth">การยืนยันตัวตนล้มเหลว ตรวจสอบวิธีลงชื่อเข้าใช้และข้อมูลบัญชี</string>
+    <string name="ermis_error_tls">ตรวจสอบใบรับรองเซิร์ฟเวอร์ไม่ได้</string>
+    <string name="ermis_error_generic">ดำเนินการไม่สำเร็จ ตรวจสอบการเชื่อมต่อและการตั้งค่าเซิร์ฟเวอร์</string>
+    <string name="ermis_error_sent_copy">ส่งข้อความแล้วแต่บันทึกสำเนาในจดหมายที่ส่งไม่ได้ อย่าส่งซ้ำ</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">API कुंजी के बिना: 10 सेकंड रिकॉर्ड करके डिवाइस पर फ़िंगरप्रिंट बनाता है। Shazam को केवल फ़िंगरप्रिंट भेजा जाता है, मूल ऑडियो कभी नहीं।</string>
+    <string name="akou_get_token">AudD API टोकन प्राप्त करें</string>
+    <string name="akou_api_token">AudD API टोकन</string>
+    <string name="akou_start">रिकॉर्ड करें और पहचानें</string>
+    <string name="akou_recording">10 सेकंड रिकॉर्ड हो रहे हैं…</string>
+    <string name="akou_identifying">फ़िंगरप्रिंट का मिलान हो रहा है…</string>
+    <string name="akou_no_match">कोई मेल नहीं मिला। संगीत के पास फिर कोशिश करें।</string>
+    <string name="akou_matched">गाना पहचाना गया</string>
+    <string name="akou_failed">पहचान विफल हुई। माइक्रोफ़ोन और कनेक्शन जाँचें और संगीत के पास फिर कोशिश करें।</string>
+    <string name="akou_microphone_denied">नमूना रिकॉर्ड करने के लिए माइक्रोफ़ोन की अनुमति ज़रूरी है।</string>
+    <string name="akou_history">पहचान का इतिहास</string>
+    <string name="akou_youtube_music">YouTube Music में खोजें</string>
+</resources>

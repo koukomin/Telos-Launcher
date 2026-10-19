@@ -3,6 +3,9 @@ package de.mm20.launcher2.network
 import android.content.Context
 import android.content.Intent
 import android.net.VpnService
+import android.provider.Settings
+import de.mm20.launcher2.network.vpn.VpnPausePolicy
+import de.mm20.launcher2.network.vpn.VpnPauseScheduler
 import androidx.core.content.ContextCompat
 import com.celzero.firestack.intra.Tunnel
 import de.mm20.launcher2.i18n.R as I18nR
@@ -92,7 +95,8 @@ class NetworkEngine internal constructor(
             _state.value = NetState.NeedsPermission(permissionIntent)
             return
         }
-        settings.update { it.copy(engineWanted = true) }
+        VpnPauseScheduler.cancel(context)
+        settings.update { it.copy(engineWanted = true, pauseUntilMs = 0, intentBootCount = bootCount()) }
         settings.flush()
         _state.value = NetState.Starting
         watchdog?.cancel()
@@ -118,8 +122,28 @@ class NetworkEngine internal constructor(
     /** Restore prior user intent without ever opening consent from a background context. */
     @Synchronized
     fun restoreIfWanted() {
-        if (!settings.current.engineWanted) return
-        if (runCatching { VpnService.prepare(context) == null }.getOrDefault(false)) start()
+        val s = settings.current
+        if (VpnPausePolicy.rebootCancels(s.intentBootCount, bootCount(), s.startOnBoot)) {
+            settings.update { it.copy(engineWanted = false, pauseUntilMs = 0) }
+            settings.flush()
+            VpnPauseScheduler.cancel(context)
+            refreshStatusNotification()
+            return
+        }
+        if (!s.engineWanted) { refreshStatusNotification(); return }
+        if (runCatching { VpnService.prepare(context) != null }.getOrDefault(true)) {
+            settings.update { it.copy(engineWanted = false, pauseUntilMs = 0) }
+            settings.flush()
+            VpnPauseScheduler.cancel(context)
+            refreshStatusNotification()
+            return
+        }
+        if (VpnPausePolicy.pending(s.engineWanted, s.pauseUntilMs, System.currentTimeMillis())) {
+            VpnPauseScheduler.schedule(context, s.pauseUntilMs)
+            refreshStatusNotification()
+            return
+        }
+        start()
     }
 
     /** Turns the VPN off. Safe to call in any state. The internet works normally again right after. */
@@ -127,7 +151,8 @@ class NetworkEngine internal constructor(
     fun stop() {
         recovery?.cancel()
         recoveryAttempts = 0
-        settings.update { it.copy(engineWanted = false) }
+        VpnPauseScheduler.cancel(context)
+        settings.update { it.copy(engineWanted = false, pauseUntilMs = 0) }
         settings.flush()
         val service = TelosVpnService.current
         if (service != null) {
@@ -136,7 +161,26 @@ class NetworkEngine internal constructor(
             watchdog?.cancel()
             _tunnel.value = null
             _state.value = NetState.Off
+            refreshStatusNotification()
         }
+    }
+
+    /** Temporarily disconnect while retaining explicitly requested active intent. */
+    @Synchronized
+    fun pause(durationMs: Long) {
+        if (_state.value !is NetState.On || durationMs !in VpnPausePolicy.durationsMs) return
+        val deadline = System.currentTimeMillis() + durationMs
+        recovery?.cancel()
+        settings.update { it.copy(engineWanted = true, pauseUntilMs = deadline, intentBootCount = bootCount()) }
+        settings.flush()
+        VpnPauseScheduler.schedule(context, deadline)
+        TelosVpnService.current?.requestStop(StopReason.User, null)
+    }
+
+    private fun bootCount(): Int = runCatching { Settings.Global.getInt(context.contentResolver, Settings.Global.BOOT_COUNT) }.getOrDefault(-1)
+
+    private fun refreshStatusNotification() {
+        if (_state.value !is NetState.On && _state.value !is NetState.Starting) VpnNotifications.inactive(context, settings.current)
     }
 
     /** Stops the VPN and starts it again, for example to apply changes that need a new interface. */
@@ -196,9 +240,10 @@ class NetworkEngine internal constructor(
                     StopReason.User -> _state.value = NetState.Off
                     StopReason.Failure, StopReason.Revoked -> {
                         if (reason == StopReason.Revoked) {
-                            settings.update { it.copy(engineWanted = false) }
+                            settings.update { it.copy(engineWanted = false, pauseUntilMs = 0) }
                             settings.flush()
                             recovery?.cancel()
+                            VpnPauseScheduler.cancel(context)
                         }
                         _state.value = NetState.Error(messageFor(reason, detail))
                         if (reason == StopReason.Failure && settings.current.engineWanted && recoveryAttempts < de.mm20.launcher2.network.vpn.VpnRecoveryPolicy.MAX_RETRIES) {
@@ -211,6 +256,7 @@ class NetworkEngine internal constructor(
                         }
                     }
                 }
+                refreshStatusNotification()
             }
         }
     }

@@ -4,6 +4,17 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class TorPolicyTest {
+    @Test fun globalTorCapturesUnassignedAppsAndUnknownOwners() {
+        assertTrue(TorPolicy.required(10124, "example.org", emptyList(), emptySet(), true))
+        // Inbound connections have no DNS name: global Tor must still reject direct ingress.
+        assertTrue(TorPolicy.required(10124, null, emptyList(), emptySet(), true))
+        assertTrue(TorPolicy.required(-1, "example.org", emptyList(), emptySet(), true))
+        assertFalse(TorPolicy.required(10124, "example.org", emptyList(), emptySet(), false))
+        assertFalse(TorPolicy.mayConnect(true, false, 6))
+        // Malformed/imported settings may retain global intent with Tor disabled: still drop.
+        assertFalse(TorPolicy.mayConnect(false, true, 6))
+        assertFalse(TorPolicy.mayConnect(true, true, 17))
+    }
     @Test fun bootstrapControlRepliesExposeActualProgress() {
         assertEquals(100, TorPolicy.bootstrapProgress("NOTICE BOOTSTRAP PROGRESS=100 TAG=done SUMMARY=Done"))
         assertEquals(45, TorPolicy.bootstrapProgress("NOTICE BOOTSTRAP PROGRESS=45 TAG=loading"))

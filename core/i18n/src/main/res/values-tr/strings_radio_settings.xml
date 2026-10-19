@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Duvar kâğıdı renkleri</string>
+    <string name="radio_translucent">Yarı saydam görünüm</string>
+    <string name="radio_controls_scroll">Oynatma denetimlerini istasyonlarla kaydır</string>
+    <string name="radio_tap_plays">Oynatmak için istasyona dokun</string>
+    <string name="radio_large_buffer">Daha büyük oynatma arabelleği</string>
+    <string name="radio_edit_metadata">İstasyon bilgilerini düzenlemeye izin ver</string>
+    <string name="radio_edit_streams">Akış adreslerini düzenlemeye izin ver</string>
+    <string name="radio_auto_images">İstasyon resimlerini otomatik güncelle</string>
+    <string name="radio_update_images">İstasyon resimlerini şimdi güncelle</string>
+    <string name="radio_backup_images">İstasyon resimlerini içeren ZIP yedeği</string>
+    <string name="radio_restore_replace_summary">Mevcut istasyon koleksiyonu bu yedekle değiştirilsin mi? Mevcut koleksiyon kaldırılacak.</string>
+    <string name="radio_station_image_url">İstasyon resmi adresi</string>
+</resources>

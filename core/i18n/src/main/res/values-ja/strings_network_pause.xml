@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">自動的に再開します。正確なアラームの権限がない場合、Android によって遅れることがあります。</string>
+</resources>

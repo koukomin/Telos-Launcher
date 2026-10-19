@@ -29,7 +29,7 @@ import java.io.File
 /** A storage volume: the phone's own storage, an SD card, a USB drive. */
 data class StorageVolume(val name: String, val path: String, val total: Long, val free: Long, val removable: Boolean)
 
-data class ClipboardState(val paths: List<String>, val cut: Boolean, val rootMode: Boolean)
+data class ClipboardState(val paths: List<String>, val cut: Boolean, val rootMode: Boolean, val shizukuMode: Boolean = false)
 
 class FilesClipboard { var value by mutableStateOf<ClipboardState?>(null) }
 
@@ -435,6 +435,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+    fun updateSearchEverywhere(enabled: Boolean) { searchEverywhere = enabled }
+
     fun setSearchOptions(filter: de.mm20.launcher2.helper.FileSearchFilter, kind: FileKind?, recursive: Boolean) {
         searchFilter = filter; searchKind = kind; recursiveSearch = recursive; search(query)
     }
@@ -453,6 +455,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     /** Asks for the superuser. Returns through [onResult] on the main thread. */
     fun enableRoot(onResult: (Boolean) -> Unit) {
+        shizukuRequest?.cancel()
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { RootShell.available(force = true) }
             rootMode = ok; shizukuMode = false
@@ -462,15 +465,19 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun disableRoot() { rootMode = false; shizukuMode = false; rootMounted = null; path?.let { load(it) } }
+    fun disableRoot() { shizukuRequest?.cancel(); rootMode = false; shizukuMode = false; rootMounted = null; path?.let { load(it) } }
 
     /** Root mode that runs through Shizuku instead of the superuser */
     var shizukuMode by mutableStateOf(false)
         private set
 
+    private var shizukuRequest: Job? = null
+
     fun enableShizuku() {
-        viewModelScope.launch {
-            val ok = withContext(Dispatchers.IO) { RootShell.available(force = true, shizuku = true) }
+        if (shizukuRequest?.isActive == true) return
+        shizukuRequest = viewModelScope.launch {
+            val permitted = ShizukuShell.requestAccess()
+            val ok = permitted && withContext(Dispatchers.IO) { RootShell.available(force = true, shizuku = true) }
             rootMode = ok; shizukuMode = ok
             if (!ok) message = s(R.string.telos_files_shizuku_denied)
             path?.let { load(it) }
@@ -478,6 +485,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun remount(mountPoint: String, writable: Boolean) {
+        if (!rootMode || shizukuMode) return
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { root.remount(mountPoint, writable) }
             rootMounted = if (ok) writable else rootMounted
@@ -635,7 +643,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun copyToClipboard(cut: Boolean) {
-        clipboard = ClipboardState(selectedEntries().map { it.path }, cut, rootMode)
+        clipboard = ClipboardState(selectedEntries().map { it.path }, cut, rootMode, shizukuMode)
         selection = emptySet()
         message = if (cut) s(R.string.au_files_cut_hint) else s(R.string.au_files_copied_hint)
     }
@@ -646,15 +654,15 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val clip = clipboard?.takeIf { it.paths.isNotEmpty() } ?: return
         paste(clip)
     }
-    internal fun transferDragged(paths: List<String>, sourceRoot: Boolean, move: Boolean, destination: String? = path) {
+    internal fun transferDragged(paths: List<String>, sourceRoot: Boolean, move: Boolean, destination: String? = path, sourceShizuku: Boolean = false) {
         if (task != null || paths.isEmpty() || path == null || ArchivePath.isArchive(path!!) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(path!!)) return
-        paste(ClipboardState(paths, move, sourceRoot), clearCopiedClipboard = false, destination = destination)
+        paste(ClipboardState(paths, move, sourceRoot, sourceShizuku), clearCopiedClipboard = false, destination = destination)
     }
     private fun paste(clip: ClipboardState, clearCopiedClipboard: Boolean = true, destination: String? = path) {
         val dir = destination ?: return
         val dstFs = fsFor(dir)
         val first = clip.paths.first()
-        val srcFs = if (RemotePath.isRemote(first) || ArchivePath.isArchive(first) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(first)) fsFor(first) else if (clip.rootMode) root else local
+        val srcFs = if (RemotePath.isRemote(first) || ArchivePath.isArchive(first) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(first)) fsFor(first) else if (clip.rootMode) (if (clip.shizukuMode) shizukuRoot else suRoot) else local
         val bothLocal = dstFs is LocalFs && srcFs is LocalFs
         if (bothLocal) {
             runCatching { transferQueue.enqueue(clip.paths, dir, clip.cut) }
@@ -776,13 +784,15 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val local = files.filter { !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) }
         val remote = files.filter { RemotePath.isRemote(it.path) || ArchivePath.isArchive(it.path) }
         if (remote.isEmpty()) {
-            FileActions.share(context, local, rootMode)
+            val root = rootMode; val adb = shizukuMode
+            viewModelScope.launch { FileActions.share(context, local, root, adb) }
             return
         }
         val folder = File(File(context.cacheDir, "share_dl"), System.nanoTime().toString())
         fun step(i: Int, done: List<FsEntry>) {
             if (i >= remote.size) {
-                FileActions.share(context, local + done, rootMode)
+                val root = rootMode; val adb = shizukuMode
+                viewModelScope.launch { FileActions.share(context, local + done, root, adb) }
                 return
             }
             download(remote[i]) { f ->

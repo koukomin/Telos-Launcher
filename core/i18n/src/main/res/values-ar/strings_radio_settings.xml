@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">ألوان الخلفية</string>
+    <string name="radio_translucent">مظهر شبه شفاف</string>
+    <string name="radio_controls_scroll">تمرير عناصر التحكم بالتشغيل مع المحطات</string>
+    <string name="radio_tap_plays">انقر على محطة لتشغيلها</string>
+    <string name="radio_large_buffer">ذاكرة تخزين مؤقت أكبر للتشغيل</string>
+    <string name="radio_edit_metadata">السماح بتعديل معلومات المحطة</string>
+    <string name="radio_edit_streams">السماح بتعديل عناوين البث</string>
+    <string name="radio_auto_images">تحديث صور المحطات تلقائيًا</string>
+    <string name="radio_update_images">تحديث صور المحطات الآن</string>
+    <string name="radio_backup_images">نسخة احتياطية ZIP تتضمن صور المحطات</string>
+    <string name="radio_restore_replace_summary">هل تريد استبدال مجموعة المحطات الحالية بهذه النسخة الاحتياطية؟ ستتم إزالة مجموعتك الحالية.</string>
+    <string name="radio_station_image_url">عنوان صورة المحطة</string>
+</resources>

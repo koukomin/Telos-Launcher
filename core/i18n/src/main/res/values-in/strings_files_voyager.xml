@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Buat pasangan kunci</string>
+    <string name="telos_files_ssh_copy_public_key">Salin kunci publik</string>
+    <string name="telos_files_ssh_public_key_hint">Tambahkan kunci publik ke ~/.ssh/authorized_keys di server. Kunci privat tetap terenkripsi di ponsel ini.</string>
+    <string name="telos_files_duplicates_exclude">Lewati folder</string>
+    <string name="telos_files_duplicates_exclude_hint">Nama atau jalur folder dipisahkan koma, misalnya: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Akses Shizuku</string>
+    <string name="telos_files_shizuku_summary">Buka Android/data, Android/obb dan folder lain yang tidak dapat dibaca aplikasi melalui Shizuku (tanpa root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku tidak berjalan atau tidak mengizinkan Telos</string>
+    <string name="telos_files_search_everywhere">Cari di seluruh penyimpanan</string>
+    <string name="telos_files_search_everywhere_summary">Mencari di penyimpanan internal, kartu SD, dan drive USB, bukan hanya folder ini</string>
+</resources>

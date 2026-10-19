@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_more">Daha çox seçim</string>
+    <string name="au3_appearance_typo_label">Etiket</string>
+    <string name="au_radio_import_failed">Faylı oxumaq mümkün olmadı</string>
+    <string name="file_search_type_images">Şəkillər</string>
+    <string name="file_search_type_videos">Videolar</string>
+    <string name="hc_add">Əlavə et</string>
+    <string name="hc_add_to_favorites">Sevimlilərə əlavə et</string>
+    <string name="hc_back_up_collection">Kolleksiyanın ehtiyat nüsxəsini çıxar</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">Telos blok siyahısına əlavə etdiyiniz nömrələri blokla</string>
+    <string name="hc_done">Hazırdır</string>
+    <string name="hc_edit">Redaktə et</string>
+    <string name="hc_export_playlist_m3u">Pleylisti ixrac et (M3U)</string>
+    <string name="hc_favorites">Sevimlilər</string>
+    <string name="hc_import_playlist_m3u_pls">Pleylisti idxal et (M3U / PLS)</string>
+    <string name="hc_offline_spam_list">Oflayn spam siyahısı</string>
+    <string name="hc_phone_number">Telefon nömrəsi</string>
+    <string name="hc_rename_station">Stansiyanın adını dəyiş</string>
+    <string name="hc_restore_backup">Ehtiyat nüsxəsini bərpa et</string>
+    <string name="hc_stream_or_playlist_address">Yayım və ya pleylist ünvanı</string>
+    <string name="hf_files_remove_favorite">Sevimlilərdən sil</string>
+    <string name="preference_screen_clockwidget">Saat</string>
+    <string name="preference_theme">Mövzu</string>
+    <string name="preference_theme_dark">Tünd</string>
+    <string name="preference_theme_light">Açıq</string>
+    <string name="preference_theme_system">Sistemə uyğun</string>
+    <string name="telos_youtube_add_playlist">Pleylistə əlavə et</string>
+    <string name="telos_youtube_artist_radio">İfaçının radiosu</string>
+    <string name="telos_youtube_library_local">Sevimlilər və pleylistlər bu telefonda saxlanılır. Onlar YouTube Music hesabınıza aid deyil.</string>
+    <string name="telos_youtube_playlist_name">Pleylistin adı</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Genera un parell de claus</string>
+    <string name="telos_files_ssh_copy_public_key">Copia la clau pública</string>
+    <string name="telos_files_ssh_public_key_hint">Afegiu la clau pública a ~/.ssh/authorized_keys del servidor. La clau privada roman xifrada en aquest telèfon.</string>
+    <string name="telos_files_duplicates_exclude">Omet carpetes</string>
+    <string name="telos_files_duplicates_exclude_hint">Noms o camins de carpetes separats per comes, per exemple: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Accés Shizuku</string>
+    <string name="telos_files_shizuku_summary">Obre Android/data, Android/obb i altres carpetes que l’aplicació no pot llegir, mitjançant Shizuku (sense arrel)</string>
+    <string name="telos_files_shizuku_denied">Shizuku no està en execució o no ha autoritzat Telos</string>
+    <string name="telos_files_search_everywhere">Cerca a tot l’emmagatzematge</string>
+    <string name="telos_files_search_everywhere_summary">Cerca a l’emmagatzematge intern, targetes SD i unitats USB, no només en aquesta carpeta</string>
+</resources>

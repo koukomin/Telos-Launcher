@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Indisponível neste dispositivo</string>
+    <string name="virtual_magnifier_permission">É necessário acesso à câmara para a lupa</string>
+    <string name="virtual_magnifier_resume">Retomar pré-visualização</string>
+    <string name="virtual_magnifier_freeze">Congelar imagem</string>
+</resources>

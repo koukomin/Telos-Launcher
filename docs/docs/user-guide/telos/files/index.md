@@ -212,3 +212,7 @@ The same deletion choice also covers radio/voice/call/screen recordings, complet
 ### Advanced search and input
 
 Local search supports type/extension, size and inclusive modified-date filters, optional subfolders, and a one-minute metadata cache bounded to 50,000 records and approximately 16 MiB. Results are capped at 300 and partial scans are labeled. Symlinks are not followed. Refresh invalidates the cache. Network, archive and vault filtering remains current-folder-only. Hardware shortcuts cover tabs, search, selection, copy/cut/paste, refresh, hidden files, folder creation, rename and confirmed deletion; search text-editing shortcuts are preserved. Internal panel drag-and-drop asks for copy or move. Permanent deletion unlinks symlinks without visiting targets, while streaming copy refuses symbolic links and existing destination files.
+
+### Shizuku access
+
+Shizuku access waits for the Android permission result before opening accessible folders. It uses the rights of the running Shizuku service, normally ADB shell; this is not superuser access and Android or the device vendor may still restrict folders. System partition remount controls are available only in superuser mode. Copy and drag operations retain the source access backend even when the destination tab uses another mode.

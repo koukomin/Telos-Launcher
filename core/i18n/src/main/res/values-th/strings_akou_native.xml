@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">ไม่ต้องใช้คีย์ API: บันทึกเสียง 10 วินาทีและคำนวณลายนิ้วมือบนอุปกรณ์ ส่งเฉพาะลายนิ้วมือไปยัง Shazam ไม่ส่งเสียงต้นฉบับ</string>
+    <string name="akou_get_token">รับโทเค็น API ของ AudD</string>
+    <string name="akou_api_token">โทเค็น API ของ AudD</string>
+    <string name="akou_start">บันทึกเสียงและระบุเพลง</string>
+    <string name="akou_recording">กำลังบันทึกเสียง 10 วินาที…</string>
+    <string name="akou_identifying">กำลังจับคู่ลายนิ้วมือเสียง…</string>
+    <string name="akou_no_match">ไม่พบเพลงที่ตรงกัน ลองอีกครั้งใกล้แหล่งเสียงเพลง</string>
+    <string name="akou_matched">ระบุเพลงแล้ว</string>
+    <string name="akou_failed">การระบุเพลงล้มเหลว ตรวจสอบไมโครโฟนและการเชื่อมต่อ แล้วลองอีกครั้งใกล้เสียงเพลง</string>
+    <string name="akou_microphone_denied">ต้องอนุญาตไมโครโฟนเพื่อบันทึกตัวอย่างเสียงสำหรับระบุเพลง</string>
+    <string name="akou_history">ประวัติการระบุเพลง</string>
+    <string name="akou_youtube_music">ค้นหาใน YouTube Music</string>
+</resources>

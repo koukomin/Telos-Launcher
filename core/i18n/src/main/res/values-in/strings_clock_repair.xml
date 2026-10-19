@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Dunia</string>
+    <string name="clock_alarm">Alarm</string>
+    <string name="clock_timer">Timer</string>
+    <string name="clock_stopwatch">Stopwatch</string>
+    <string name="clock_local">Waktu setempat</string>
+    <string name="clock_city_search">Cari kota atau negara</string>
+    <string name="clock_night">Jam malam</string>
+    <string name="clock_night_exit">Ketuk untuk menutup</string>
+    <string name="clock_audio_file">File audio</string>
+    <string name="clock_default_sound">Suara alarm</string>
+    <string name="clock_stream_url">URL siaran radio</string>
+    <string name="clock_sound_fallback">Alarm sekali. Jika media gagal, suara alarm bawaan diputar.</string>
+    <string name="clock_exact">Izinkan alarm dan pengingat</string>
+    <string name="clock_dismiss">Tutup</string>
+    <string name="clock_minutes">Menit</string>
+    <string name="clock_start">Mulai</string>
+    <string name="clock_reset">Reset</string>
+    <string name="clock_lap">Putaran</string>
+</resources>

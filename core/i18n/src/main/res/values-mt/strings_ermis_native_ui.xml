@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Kontijiet tal-posta</string>
+    <string name="ermis_all_accounts">Il-kontijiet kollha</string>
+    <string name="ermis_native_intro">Il-posta tiegħek f’Telos. Qabbad kont IMAP/SMTP b’TLS u password jew password tal-app.</string>
+    <string name="ermis_empty">M’hemmx messaġġi. Issinkronizza l-kontijiet jew ibdel it-tfittxija.</string>
+    <string name="ermis_operation_failed">L-operazzjoni tal-posta falliet</string>
+    <string name="ermis_tls_help">Iż-żewġ servers iridu jappoġġjaw TLS ivverifikat. Gmail jista’ juża password tal-app jew aċċess Google/microG meta appoġġjat.</string>
+    <string name="ermis_username">Isem tal-utent tas-server</string>
+    <string name="ermis_username_help">Ħalli vojt biex tuża l-indirizz tal-email.</string>
+    <string name="ermis_imap_host">Server IMAP</string>
+    <string name="ermis_imap_port">Port IMAP TLS</string>
+    <string name="ermis_smtp_host">Server SMTP</string>
+    <string name="ermis_smtp_port">Port SMTP</string>
+    <string name="ermis_starttls">Jeħtieġ STARTTLS għal SMTP</string>
+    <string name="ermis_saf_help">L-għażla tal-fajls turi wkoll servizzi cloud li jappoġġjaw Dokumenti Android. Għal fajls kbar żid ħolqa ta’ qsim fil-messaġġ.</string>
+    <string name="ermis_reply">Wieġeb</string>
+    <string name="ermis_google_sign_in">Dħul Google / microG</string>
+    <string name="ermis_google_help">Juża l-kont Android magħżul biss jekk l-awtentikatur tiegħu jagħti aċċess għall-posta. Inkella uża password tal-app.</string>
+    <string name="ermis_google_unavailable">Il-fornitur tal-kont ma tax aċċess għall-posta. Uża password tal-app.</string>
+    <string name="ermis_conversation_count">%1$d messaġġi f’din il-konversazzjoni</string>
+</resources>

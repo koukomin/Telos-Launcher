@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">بلا مفتاح API: تسجيل 10 ثوانٍ وحساب البصمة على الجهاز. تُرسل البصمة فقط إلى Shazam، ولا يُرفع الصوت الأصلي أبدًا.</string>
+    <string name="akou_get_token">احصل على رمز API من AudD</string>
+    <string name="akou_api_token">رمز API لـ AudD</string>
+    <string name="akou_start">تسجيل وتعرّف</string>
+    <string name="akou_recording">جارٍ تسجيل 10 ثوانٍ…</string>
+    <string name="akou_identifying">جارٍ مطابقة البصمة…</string>
+    <string name="akou_no_match">لم يتم العثور على تطابق. حاول مجددًا بالقرب من الموسيقى.</string>
+    <string name="akou_matched">تم التعرّف على الأغنية</string>
+    <string name="akou_failed">فشل التعرف. تحقق من الميكروفون والاتصال وحاول مجددًا بالقرب من الموسيقى.</string>
+    <string name="akou_microphone_denied">يلزم إذن الميكروفون لتسجيل عيّنة للتعرّف.</string>
+    <string name="akou_history">سجل التعرّف</string>
+    <string name="akou_youtube_music">البحث في YouTube Music</string>
+</resources>

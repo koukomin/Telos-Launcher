@@ -44,8 +44,8 @@ object TelosApps {
         TelosApp(
             key = "telos_akou_app://akou",
             name = "Akou",
-            description = "Music recognition app: identifies playing songs and opens them in YouTube Music.",
-            features = listOf("Audio recognition", "Shazam/Audile engine", "YouTube Music integration", "History"),
+            description = "Music recognition using a real microphone sample and your own AudD API token, with local history and YouTube Music search.",
+            features = listOf("AudD recognition (own API token required)", "10-second microphone sample", "Local recognition history", "YouTube Music search"),
             iconRes = de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_full,
             route = "settings/akou",
         ),

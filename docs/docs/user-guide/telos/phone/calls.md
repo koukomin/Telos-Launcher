@@ -203,3 +203,7 @@ again after a reboot.
 | Voicemail key does nothing | Slot 1 has a speed dial, or no voicemail number is set by your carrier |
 | Volume Do Not Disturb does nothing | Enable the accessibility service and Do Not Disturb access, and check "only on lock screen" |
 | Reminders come late | Allow "Alarms & reminders". Call reminders use inexact alarms and can drift a few minutes |
+
+## Identity and accessible controls
+
+Saved-contact identity is resolved locally for both call UI and notifications. The incoming notification provides answer/reject actions, and an ongoing call provides hang-up. The full call screen keeps hang-up outside the scrolling control area. An optional incoming-call setting uses the contact photo as a full-screen background with a readability scrim. Sidebar app icons follow launcher icon customization; Messages uses the current default SMS app icon.

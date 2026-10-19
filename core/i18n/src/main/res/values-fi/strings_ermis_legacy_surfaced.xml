@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Lisää tili</string>
+    <string name="ermis_attach">Liitä tästä puhelimesta</string>
+    <string name="ermis_body">Viesti</string>
+    <string name="ermis_compose">Kirjoita</string>
+    <string name="ermis_connect">Yhdistä</string>
+    <string name="ermis_email">Sähköposti</string>
+    <string name="ermis_inbox">Saapuneet</string>
+    <string name="ermis_no_subject">(ei aihetta)</string>
+    <string name="ermis_note">Muistiinpano</string>
+    <string name="ermis_note_save">Tallenna muistiinpano</string>
+    <string name="ermis_password">Salasana</string>
+    <string name="ermis_remove">Poista</string>
+    <string name="ermis_search">Hae sähköpostia</string>
+    <string name="ermis_send">Lähetä</string>
+    <string name="ermis_starred">Tähdellä merkityt</string>
+    <string name="ermis_subject">Aihe</string>
+    <string name="ermis_sync">Synkronoi</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Vastaanottaja</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">此裝置不支援</string>
+    <string name="virtual_magnifier_permission">放大鏡需要相機存取權限</string>
+    <string name="virtual_magnifier_resume">繼續預覽</string>
+    <string name="virtual_magnifier_freeze">凍結畫面</string>
+</resources>

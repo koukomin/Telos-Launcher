@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Lägg till konto</string>
+    <string name="ermis_attach">Bifoga från den här telefonen</string>
+    <string name="ermis_body">Meddelande</string>
+    <string name="ermis_compose">Skriv</string>
+    <string name="ermis_connect">Anslut</string>
+    <string name="ermis_email">E-post</string>
+    <string name="ermis_inbox">Inkorg</string>
+    <string name="ermis_no_subject">(inget ämne)</string>
+    <string name="ermis_note">Anteckning</string>
+    <string name="ermis_note_save">Spara anteckning</string>
+    <string name="ermis_password">Lösenord</string>
+    <string name="ermis_remove">Ta bort</string>
+    <string name="ermis_search">Sök i e-post</string>
+    <string name="ermis_send">Skicka</string>
+    <string name="ermis_starred">Stjärnmärkta</string>
+    <string name="ermis_subject">Ämne</string>
+    <string name="ermis_sync">Synkronisera</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Till</string>
+</resources>

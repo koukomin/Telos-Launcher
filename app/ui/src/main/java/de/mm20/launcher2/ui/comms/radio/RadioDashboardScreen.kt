@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
@@ -41,6 +43,17 @@ data object RadioDashboardRoute : NavKey
 
 @Composable
 fun RadioDashboardScreen() {
+    val context = LocalContext.current
+    val settings = remember(context.applicationContext) { de.mm20.launcher2.comms.radio.RadioSettings(context.applicationContext) }
+    val values by settings.values.collectAsStateWithLifecycle()
+    RadioAppearance(values) { RadioDashboardContent(settings, values) }
+}
+
+@Composable
+private fun RadioDashboardContent(
+    settings: de.mm20.launcher2.comms.radio.RadioSettings,
+    values: de.mm20.launcher2.comms.radio.RadioSettings.Values,
+) {
     val viewModel: RadioDashboardScreenVM = viewModel()
     val playerViewModel: RadioViewModel = viewModel()
     val context = LocalContext.current
@@ -66,6 +79,8 @@ fun RadioDashboardScreen() {
         stringResource(R.string.au_radio_tab_history),
     )
 
+    var showSettings by rememberSaveable { mutableStateOf(false) }
+    var pendingRestore by remember { mutableStateOf<android.net.Uri?>(null) }
     var menuOpen by remember { mutableStateOf(false) }
     var showAdd by remember { mutableStateOf(false) }
     var showSleep by remember { mutableStateOf(false) }
@@ -88,10 +103,27 @@ fun RadioDashboardScreen() {
         ActivityResultContracts.CreateDocument("audio/x-mpegurl")
     ) { uri -> if (uri != null) viewModel.exportM3u(context, uri) }
     val backupLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument("application/json")
+        ActivityResultContracts.CreateDocument("application/zip")
     ) { uri -> if (uri != null) viewModel.exportBackup(context, uri) }
     val restoreLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-        if (uri != null) viewModel.restoreBackup(context, uri)
+        if (uri != null) pendingRestore = uri
+    }
+
+    if (showSettings) {
+        RadioSettingsScreen(settings, values, onBack = { showSettings = false },
+            onUpdateImages = { viewModel.refreshStationImages(context) },
+            onImport = { importLauncher.launch(arrayOf("*/*")) },
+            onExport = { exportM3uLauncher.launch("telos-radio.m3u") },
+            onBackup = { backupLauncher.launch("telos-radio-backup.zip") },
+            onRestore = { restoreLauncher.launch(arrayOf("*/*")) })
+        return
+    }
+    pendingRestore?.let { uri ->
+        AlertDialog(onDismissRequest = { pendingRestore = null },
+            title = { Text(stringResource(R.string.hc_restore_backup)) },
+            text = { Text(stringResource(R.string.radio_restore_replace_summary)) },
+            confirmButton = { TextButton(onClick = { viewModel.restoreBackup(context, uri, replace = true); pendingRestore = null }) { Text(stringResource(R.string.hc_restore_backup)) } },
+            dismissButton = { TextButton(onClick = { pendingRestore = null }) { Text(stringResource(R.string.hc_cancel)) } })
     }
 
     de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.hc_radio), askNotifications = true, guardKey = "telos_radio_app://radio", actions = {
@@ -103,6 +135,9 @@ fun RadioDashboardScreen() {
                 Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
             }
             DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                DropdownMenuItem(text = { Text(stringResource(R.string.hc_settings)) },
+                    leadingIcon = { Icon(painterResource(R.drawable.settings_24px), null) },
+                    onClick = { menuOpen = false; showSettings = true })
                 DropdownMenuItem(
                     text = { Text(stringResource(if (isRecording) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record)) },
                     leadingIcon = { Icon(painterResource(R.drawable.radio_button_checked_24px), null,
@@ -150,7 +185,7 @@ fun RadioDashboardScreen() {
                     text = { Text(stringResource(R.string.hc_back_up_collection)) },
                     onClick = {
                         menuOpen = false
-                        backupLauncher.launch("telos-radio-backup.json")
+                        backupLauncher.launch("telos-radio-backup.zip")
                     },
                 )
                 DropdownMenuItem(
@@ -197,6 +232,7 @@ fun RadioDashboardScreen() {
                     modifier = Modifier.fillMaxSize(),
                     header = {
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            if (values.controlsScroll) RadioNowPlayingBar(favorites, onOpen = { showNowPlaying = true })
                             if (shownFavorites.isEmpty() && favorites.isNotEmpty() && collectionQuery.isNotBlank()) {
                                 de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery)
                             }
@@ -237,13 +273,14 @@ fun RadioDashboardScreen() {
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         modifier = Modifier.fillMaxSize()
                     ) {
+                        if (values.controlsScroll) item { RadioNowPlayingBar(favorites, onOpen = { showNowPlaying = true }) }
                         items(searchResults.distinctBy { it.id }, key = { it.id }) { station ->
                             val isFavorite = favorites.any { it.id == station.id }
                             StationRow(
                                 station = station,
                                 isFavorite = isFavorite,
                                 onFavoriteClick = { viewModel.toggleFavorite(station) },
-                                onClick = { playerViewModel.toggleStation(station) },
+                                onClick = { if (values.tapPlays) playerViewModel.toggleStation(station) else editTarget = station },
                                 player = playerViewModel,
                                 onLongClick = { editTarget = station },
                             )
@@ -258,6 +295,7 @@ fun RadioDashboardScreen() {
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
+                    if (values.controlsScroll) item { RadioNowPlayingBar(favorites, onOpen = { showNowPlaying = true }) }
                     if (history.isEmpty()) {
                         item {
                             Text(
@@ -294,8 +332,10 @@ fun RadioDashboardScreen() {
             }
         }
     }
-    if (!de.mm20.launcher2.ui.media.LocalInMediaHub.current) de.mm20.launcher2.ui.comms.RadioMiniPlayer()
-    else RadioNowPlayingBar(favorites, onOpen = { showNowPlaying = true })
+    if (!values.controlsScroll) {
+        if (!de.mm20.launcher2.ui.media.LocalInMediaHub.current) de.mm20.launcher2.ui.comms.RadioMiniPlayer()
+        else RadioNowPlayingBar(favorites, onOpen = { showNowPlaying = true })
+    }
     }
     }
 
@@ -373,6 +413,8 @@ fun RadioDashboardScreen() {
     editTarget?.let { station ->
         var renaming by remember(station.id) { mutableStateOf(false) }
         var newName by remember(station.id) { mutableStateOf(station.name) }
+        var newUrl by remember(station.id) { mutableStateOf(station.streamUrl) }
+        var newImage by remember(station.id) { mutableStateOf(station.faviconUrl) }
         if (!renaming) {
             val saved = favorites.any { it.id == station.id }
             AlertDialog(
@@ -386,7 +428,7 @@ fun RadioDashboardScreen() {
                             editTarget = null
                         }) { Text(stringResource(R.string.au10_radio_share)) }
                         if (saved) {
-                            TextButton(onClick = { renaming = true }) { Text(stringResource(R.string.hc_rename)) }
+                            TextButton(onClick = { renaming = true }) { Text(stringResource(if (values.editMetadata || values.editStreamUrls) R.string.hc_edit else R.string.hc_rename)) }
                             TextButton(onClick = {
                                 viewModel.deleteStation(station.id)
                                 editTarget = null
@@ -405,18 +447,26 @@ fun RadioDashboardScreen() {
         } else {
             AlertDialog(
                 onDismissRequest = { editTarget = null },
-                title = { Text(stringResource(R.string.hc_rename_station)) },
+                title = { Text(stringResource(if (values.editMetadata || values.editStreamUrls) R.string.hc_edit else R.string.hc_rename_station)) },
                 text = {
+                    Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(
                         value = newName,
                         onValueChange = { newName = it },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
+                    if (values.editMetadata) OutlinedTextField(value = newImage, onValueChange = { newImage = it },
+                        label = { Text(stringResource(R.string.radio_station_image_url)) }, modifier = Modifier.fillMaxWidth())
+                    if (values.editStreamUrls) OutlinedTextField(value = newUrl, onValueChange = { newUrl = it },
+                        label = { Text(stringResource(R.string.hc_stream_or_playlist_address)) }, modifier = Modifier.fillMaxWidth())
+                    }
                 },
                 confirmButton = {
                     TextButton(onClick = {
-                        viewModel.renameStation(station.id, newName)
+                        viewModel.updateStation(station.copy(name = newName.trim().ifBlank { station.name }, nameManuallySet = true,
+                            faviconUrl = if (values.editMetadata) newImage.trim() else station.faviconUrl,
+                            streamUrl = if (values.editStreamUrls) newUrl.trim().ifBlank { station.streamUrl } else station.streamUrl))
                         editTarget = null
                     }) { Text(stringResource(R.string.hc_save)) }
                 },

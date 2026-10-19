@@ -179,3 +179,9 @@ snapshot, unlike the launcher-wide settings backup, which leaves out passwords, 
 | Hidden contacts reappear | Android ended the launcher process, which locks them again |
 | "Could not read backup" or a failed restore | Wrong password, or the file is not a Telos Phone backup |
 | SIP password empty after restoring | Passwords are device bound. Enter it again |
+
+## Optional online suggestions
+
+Unknown Greek callers can optionally be checked against an exact-number white-pages.gr page. This sends the number to that service. Saved and hidden contacts are excluded. A suggested name or community spam warning identifies its source; online reports do not automatically block a call. A manual exact-number Google search is also available.
+
+Personal and Android system blocklists are enabled by default. Blocking attempts both writes independently and reports partial failures, including missing system permissions. A denied system lookup does not skip the other screening rules.

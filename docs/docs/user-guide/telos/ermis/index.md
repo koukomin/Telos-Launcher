@@ -1,39 +1,19 @@
 # Ermis
 
-Ermis is the built-in email client. The layout follows the Gmail app: rounded search bar with menu and profile letter, Primary/Starred inbox rows with coloured avatars and stars, an extended Compose button, a conversation screen, and a compose sheet with To / Subject lines. The feature set follows [FairEmail](https://github.com/M66B/FairEmail) (GPL-3.0): IMAP and SMTP accounts, conversation grouping, send, and per-message notes. FairEmail source is not copied. Screens use the Telos blur theme.
+Ermis is a native Telos mail client, with an inbox inspired by Gmail and an IMAP/SMTP workflow inspired by FairEmail. It does not open a webmail provider to read or send mail.
 
-Ermis is a [virtual app](../#how-the-built-in-apps-work). Switch it on in [Telos Store](../store/).
+## Connect an account
 
-## Accounts
+Open **Mail accounts → Add account**. Enter your email address, password (or provider app password), IMAP server and SMTP server. The username defaults to your email address. IMAP uses verified TLS, normally port 993. SMTP supports implicit TLS (normally 465), or required STARTTLS (normally 587). Both servers are verified before the account is saved. Invalid certificates and plaintext connections are not accepted.
 
-If **microG** or Play services is installed and a Google account is signed in, Ermis can use that account with IMAP/SMTP **XOAUTH2** (no app password). Otherwise add a Gmail address with an [app password](https://support.google.com/accounts/answer/185833), or any IMAP/SMTP provider with TLS (IMAP 993, SMTP 587 STARTTLS or 465). Passwords are encrypted in the Android Keystore. Google may still ask you to grant mail access the first time.
+Gmail supports an app password and an optional **Google / microG sign-in** button. This opens Android's account chooser and requests the selected authenticator's mail-access token with user consent. It works only when that installed authenticator grants the requested mail scope to Telos; it is not a bundled Google OAuth client or a guarantee that Google will approve access. If the provider refuses or requests unsupported configuration, use an app password. OAuth accounts use XOAUTH2, and background checks request refreshed tokens from the authenticator; tokens are not saved in the mail vault. Credentials are encrypted with an Android Keystore key. Removing an account removes its local credentials and mail cache, not its messages on the server.
 
-## Notifications
+## Read and send
 
-Ermis checks IMAP for unseen mail about every 15 minutes while the launcher can run workers. New mail shows a notification that opens Ermis.
+Use **All accounts** or an account chip to filter the inbox. Search matches cached sender, subject and preview text. Starred mail has a separate filter. **Sync** checks the server; periodic checks run through Android WorkManager and can be delayed by battery restrictions. Notifications require Android notification permission.
 
-## Attachments and cloud
+Open a message to read its text, reply, save a note or save an attachment using the Android document picker. HTML is converted to readable text; scripts and remote tracking images are not loaded. MIME depth, part count and body sizes are bounded. Opening a message also enforces a cumulative 24 MB raw multipart parsing budget across nested parts, so unusually large or deeply nested messages may be refused before their attachments can be listed. Saving an attachment uses the same selected MIME structure that produced the attachment list. The current inbox keeps a bounded recent-message cache; this is not a complete offline archive or a server-side search client. Notes are stored locally; Gmail accounts also synchronize note sidecars in the Ermis-Notes folder, keyed by Message-ID. Conversation grouping uses Message-ID, In-Reply-To and References within each account, rather than grouping unrelated mail with the same subject. Open a conversation and use its sender chips to move between cached replies. Folder management is not implemented.
 
-Compose can attach files from this phone **or from the same cloud and network storages as Telos Files** (Nextcloud, WebDAV, Drive, Dropbox, OneDrive, SFTP, SMB, FTP, and a cloud app folder). Those connections are the ones saved in Settings > Integrations > Cloud and network storage.
+**Compose** selects the sending account and accepts recipients, a subject, message and file attachments. The file picker can access document providers, including compatible cloud storage providers. Telos Files private connections are not automatically document providers. For large files, upload separately and paste the sharing link; Ermis does not silently upload attachments to a third party. A send action is explicit and reports server failures; a failed request is never automatically resent. Each outgoing message is limited to 20 MB of attachments in total and 15 MB per file. SMTP success is reported separately from a failed Sent-folder copy, so the user is not told to resend an already sent message.
 
-## Large files
-
-If an attachment is 15 MB or larger, Ermis offers to send a link instead of the file: upload to [transfer.sh](https://transfer.sh) and paste the URL, or open [WeTransfer](https://wetransfer.com) or [transfer.it](https://transfer.it). You can still keep it as a normal attachment.
-
-## Inbox
-
-Rows show sender, subject, snippet and date. Search filters from, subject and body. Sync loads the latest INBOX messages. Open a row to read the body.
-
-## Notes on Gmail mail
-
-Each message has a **Note** field. Notes are stored on the phone, keyed by Message-ID.
-
-For Gmail accounts, saving a note also APPENDS it to the IMAP folder `Ermis-Notes` with header `X-Ermis-For`. Sync reads that folder back so notes survive a reinstall of Telos on the same account. This is the same idea as Simple Gmail Notes (sidecar notes on a mail), not Google Keep.
-
-## What it does not do yet
-
-OpenPGP, S/MIME, push IDLE in the background, HTML compose, attachments, filters, and a full FairEmail settings tree. Gmail OAuth through a Google Cloud client ID is not used; microG/Play account tokens are.
-
-## Licence
-
-FairEmail and NetGuard are products of FairCode B.V., GPL-3. See [THIRD_PARTY_NOTICES.md](https://github.com/koukomin/Telos-Launcher/blob/main/THIRD_PARTY_NOTICES.md).
+The inbox and dialogs wrap text and scroll with larger fonts. They use the shared Telos glass theme.

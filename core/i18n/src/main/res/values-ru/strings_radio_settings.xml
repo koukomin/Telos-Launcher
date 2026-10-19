@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Цвета обоев</string>
+    <string name="radio_translucent">Полупрозрачный вид</string>
+    <string name="radio_controls_scroll">Прокручивать управление воспроизведением вместе со станциями</string>
+    <string name="radio_tap_plays">Нажатие на станцию запускает воспроизведение</string>
+    <string name="radio_large_buffer">Увеличенный буфер воспроизведения</string>
+    <string name="radio_edit_metadata">Разрешить изменение информации о станциях</string>
+    <string name="radio_edit_streams">Разрешить изменение адресов потоков</string>
+    <string name="radio_auto_images">Автоматически обновлять изображения станций</string>
+    <string name="radio_update_images">Обновить изображения станций сейчас</string>
+    <string name="radio_backup_images">Резервная копия ZIP с изображениями станций</string>
+    <string name="radio_restore_replace_summary">Заменить текущую коллекцию станций этой копией? Текущая коллекция будет удалена.</string>
+    <string name="radio_station_image_url">Адрес изображения станции</string>
+</resources>

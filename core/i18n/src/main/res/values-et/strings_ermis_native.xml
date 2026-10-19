@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermise e-post</string>
+    <string name="ermis_new_mail_count">%1$d uut kirja</string>
+    <string name="ermis_error_cache">E-posti vahemälu ei saanud avada.</string>
+    <string name="ermis_error_auth">Autentimine ebaõnnestus. Kontrolli sisselogimisviisi ja konto andmeid.</string>
+    <string name="ermis_error_tls">Serveri sertifikaati ei saanud kinnitada.</string>
+    <string name="ermis_error_generic">Toiming ebaõnnestus. Kontrolli ühendust ja serveri sätteid.</string>
+    <string name="ermis_error_sent_copy">Kiri saadeti, kuid koopiat ei salvestatud saadetud kirjadesse. Ära saada uuesti.</string>
+</resources>

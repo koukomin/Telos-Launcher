@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Återupptas automatiskt. Android kan fördröja det utan åtkomst till exakta alarm.</string>
+</resources>

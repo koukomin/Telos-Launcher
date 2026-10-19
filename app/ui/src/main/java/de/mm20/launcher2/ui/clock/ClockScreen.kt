@@ -1,262 +1,148 @@
 package de.mm20.launcher2.ui.clock
 
 import android.app.Activity
-import android.content.Context
-import android.media.AudioAttributes
-import android.media.MediaPlayer
+import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.SystemClock
+import android.provider.Settings
 import android.view.WindowManager
-import android.widget.Toast
-import androidx.compose.animation.AnimatedVisibility
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.comms.clock.ClockAlarm
+import de.mm20.launcher2.comms.clock.ClockAlarms
+import de.mm20.launcher2.comms.clock.WorldClockSearch
+import de.mm20.launcher2.comms.clock.WorldClockCity
+import de.mm20.launcher2.comms.repository.RadioRepository
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.Serializable
+import org.koin.compose.koinInject
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Serializable
 data object ClockRoute : NavKey
-
-enum class AlarmSoundType(val label: String) {
-    Ringtone("Default Ringtone"),
-    Mp3("Custom MP3 File"),
-    Radio("Online Radio Station"),
-    Tv("Live TV Channel"),
-    YouTube("YouTube / YT Music")
-}
-
-data class TelosAlarm(
-    val id: String = System.currentTimeMillis().toString(),
-    var hour: Int = 7,
-    var minute: Int = 0,
-    var enabled: Boolean = true,
-    var label: String = "Alarm",
-    var soundType: AlarmSoundType = AlarmSoundType.Ringtone,
-    var soundUri: String = ""
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClockScreen() {
     val context = LocalContext.current
-    val backStack = LocalBackStack.current
-    val scope = rememberCoroutineScope()
     val activity = context as? Activity
-
+    val backStack = LocalBackStack.current
     var selectedTab by remember { mutableIntStateOf(0) }
-    var isNightModeOpen by remember { mutableStateOf(false) }
-
-    if (isNightModeOpen) {
+    var night by remember { mutableStateOf(false) }
+    var now by remember { mutableStateOf(ZonedDateTime.now()) }
+    LaunchedEffect(Unit) { while (isActive) { now = ZonedDateTime.now(); delay(1000) } }
+    if (night) {
         DisposableEffect(Unit) {
+            val previous = activity?.window?.attributes?.screenBrightness
             activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-            activity?.window?.attributes = activity?.window?.attributes?.apply { screenBrightness = 0.1f }
+            activity?.window?.attributes = activity?.window?.attributes?.apply { screenBrightness = .1f }
             onDispose {
                 activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-                activity?.window?.attributes = activity?.window?.attributes?.apply { screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE }
+                activity?.window?.attributes = activity?.window?.attributes?.apply { screenBrightness = previous ?: WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE }
             }
         }
-
-        var currentTimeText by remember { mutableStateOf("") }
-        var currentDateText by remember { mutableStateOf("") }
-
-        LaunchedEffect(Unit) {
-            val timeFmt = DateTimeFormatter.ofPattern("HH:mm:ss")
-            val dateFmt = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")
-            while (isActive) {
-                val now = ZonedDateTime.now()
-                currentTimeText = now.format(timeFmt)
-                currentDateText = now.format(dateFmt)
-                delay(1000L)
-            }
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black)
-                .clickable { isNightModeOpen = false },
-            contentAlignment = Alignment.Center
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = currentTimeText,
-                    fontSize = 64.sp,
-                    fontFamily = FontFamily.Monospace,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Red.copy(alpha = 0.85f),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Spacer(Modifier.height(8.dp))
-                Text(text = currentDateText, fontSize = 18.sp, color = Color.Gray)
-                Spacer(Modifier.height(24.dp))
-                Text("Tap anywhere to exit Night Clock", fontSize = 12.sp, color = Color.DarkGray)
-            }
+        Column(Modifier.fillMaxSize().background(Color.Black).clickable { night = false }
+            .verticalScroll(rememberScrollState()).padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center) {
+            ClockDigits(now.format(DateTimeFormatter.ofPattern("HH:mm:ss")), Color.Red)
+            Text(now.format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")), color = Color.Gray)
+            Text(stringResource(R.string.clock_night_exit), color = Color.Gray)
         }
         return
     }
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Ρολόι & Ξυπνητήρι", fontWeight = FontWeight.Bold) },
-                navigationIcon = {
-                    IconButton(onClick = { backStack.removeLastOrNull() }) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { isNightModeOpen = true }) {
-                        Icon(painterResource(de.mm20.launcher2.base.R.drawable.light_mode_24px), contentDescription = "Night Clock")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
-            )
-        },
-        containerColor = MaterialTheme.colorScheme.surface
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            PrimaryTabRow(
-                selectedTabIndex = selectedTab,
-                containerColor = Color.Transparent
-            ) {
-                Tab(selected = selectedTab == 0, onClick = { selectedTab = 0 }, text = { Text("Κόσμος", fontSize = 12.sp) })
-                Tab(selected = selectedTab == 1, onClick = { selectedTab = 1 }, text = { Text("Ξυπνητήρι", fontSize = 12.sp) })
-                Tab(selected = selectedTab == 2, onClick = { selectedTab = 2 }, text = { Text("Αντίστροφη", fontSize = 12.sp) })
-                Tab(selected = selectedTab == 3, onClick = { selectedTab = 3 }, text = { Text("Χρονόμετρο", fontSize = 12.sp) })
+    Scaffold(containerColor = Color.Transparent, topBar = {
+        TopAppBar(title = { Text(stringResource(R.string.preference_screen_clockwidget)) }, navigationIcon = {
+            IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back)) }
+        }, actions = { IconButton(onClick = { night = true }) {
+            Icon(painterResource(de.mm20.launcher2.base.R.drawable.light_mode_24px), stringResource(R.string.clock_night))
+        } }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent))
+    }) { padding ->
+        Column(Modifier.fillMaxSize().padding(padding)) {
+            val titles = listOf(R.string.clock_world, R.string.clock_alarm, R.string.clock_timer, R.string.clock_stopwatch)
+            Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                titles.forEachIndexed { index, title -> FilterChip(selectedTab == index, { selectedTab = index }, { Text(stringResource(title)) }) }
             }
-
-            Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-                when (selectedTab) {
-                    0 -> WorldClockTab()
-                    1 -> AlarmTab()
-                    2 -> TimerTab()
-                    3 -> StopwatchTab()
-                }
+            Box(Modifier.fillMaxSize().padding(16.dp)) {
+                when (selectedTab) { 0 -> WorldClockTab(); 1 -> AlarmTab(); 2 -> TimerTab(); else -> StopwatchTab() }
             }
         }
     }
 }
 
 @Composable
+private fun ClockDigits(text: String, color: Color = MaterialTheme.colorScheme.primary) {
+    val scale = LocalDensity.current.fontScale
+    BoxWithConstraints(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+        Text(text, fontSize = (maxWidth.value / (text.length * .65f) / scale).coerceAtMost(48f).sp,
+            fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, color = color, maxLines = 1)
+    }
+}
+
+@Composable
 private fun WorldClockTab() {
-    var currentTime by remember { mutableStateOf(Instant.now()) }
-    var searchQuery by remember { mutableStateOf("") }
-
-    val allZoneIds = remember { ZoneId.getAvailableZoneIds().sorted() }
-
-    val filteredZoneIds = remember(searchQuery, allZoneIds) {
-        if (searchQuery.isBlank()) {
-            listOf("Europe/Athens", "Europe/London", "America/New_York", "Asia/Tokyo")
-        } else {
-            allZoneIds.filter { it.contains(searchQuery, ignoreCase = true) }.take(30)
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        while (isActive) {
-            currentTime = Instant.now()
-            delay(1000L)
-        }
-    }
-
-    val localTime = ZonedDateTime.ofInstant(currentTime, ZoneId.systemDefault())
-
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier.fillMaxSize()
-    ) {
-        // Main Single-Line Responsive Clock
+    var now by remember { mutableStateOf(Instant.now()) }
+    var query by remember { mutableStateOf("") }
+    val configuration = LocalConfiguration.current
+    val locale = configuration.locales[0] ?: Locale.getDefault()
+    val resources = LocalContext.current.resources
+    val packagedLocales = remember(resources) { resources.assets.locales.toList() }
+    var cities by remember(locale) { mutableStateOf(emptyList<WorldClockCity>()) }
+    LaunchedEffect(locale, packagedLocales) { cities = withContext(Dispatchers.Default) { WorldClockSearch.index(locale, packagedLocales) } }
+    val results = remember(query, cities) { WorldClockSearch.search(cities, query) }
+    LaunchedEffect(Unit) { while (isActive) { now = Instant.now(); delay(1000) } }
+    LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
-            ) {
-                Column(
-                    modifier = Modifier.padding(20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text("Τοπική Ώρα", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        text = localTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
-                        fontSize = 44.sp,
-                        fontFamily = FontFamily.Monospace,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
+            Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(stringResource(R.string.clock_local), style = MaterialTheme.typography.titleMedium)
+                ClockDigits(ZonedDateTime.ofInstant(now, ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm:ss")))
+            } }
         }
-
-        // Search Bar for World Cities / Timezones
-        item {
-            OutlinedTextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                label = { Text("Αναζήτηση Πόλης / Ζώνης Ώρας") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-
-        items(filteredZoneIds) { zoneIdStr ->
-            val zoneTime = ZonedDateTime.ofInstant(currentTime, ZoneId.of(zoneIdStr))
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.85f))
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(zoneIdStr.substringAfterLast('/'), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                        Text(zoneIdStr, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
-                    Text(
-                        text = zoneTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-                        fontSize = 24.sp,
-                        fontFamily = FontFamily.Monospace,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            }
+        item { OutlinedTextField(query, { query = it }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.clock_city_search)) }, singleLine = true) }
+        items(results, key = { it.zoneId }) { city ->
+            Card(Modifier.fillMaxWidth()) { Column(Modifier.fillMaxWidth().padding(16.dp)) {
+                Text(city.city, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text(listOf(city.country, city.zoneId).filter { it.isNotBlank() }.joinToString(" · "), style = MaterialTheme.typography.bodySmall)
+                Text(ZonedDateTime.ofInstant(now, ZoneId.of(city.zoneId)).format(DateTimeFormatter.ofPattern("HH:mm · EEE, d MMM", locale)), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.primary)
+            } }
         }
     }
 }
@@ -264,130 +150,118 @@ private fun WorldClockTab() {
 @Composable
 private fun AlarmTab() {
     val context = LocalContext.current
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val appContext = context.applicationContext
     val scope = rememberCoroutineScope()
-    val alarms = remember { mutableStateListOf(TelosAlarm(hour = 7, minute = 30), TelosAlarm(hour = 8, minute = 0, enabled = false)) }
-    var editingAlarm by remember { mutableStateOf<TelosAlarm?>(null) }
-
-    fun triggerAlarmSound(alarm: TelosAlarm) {
-        scope.launch(Dispatchers.IO) {
+    val operations = remember { Mutex() }
+    var alarms by remember { mutableStateOf(emptyList<ClockAlarm>()) }
+    var exact by remember { mutableStateOf(false) }
+    var loading by remember { mutableStateOf(true) }
+    var failed by remember { mutableStateOf(false) }
+    var editing by remember { mutableStateOf<ClockAlarm?>(null) }
+    fun refresh() { scope.launch {
+        operations.withLock {
+            loading = true
             try {
-                if (alarm.soundUri.isNotBlank() && alarm.soundType != AlarmSoundType.Ringtone) {
-                    val mp = MediaPlayer().apply {
-                        setAudioAttributes(
-                            AudioAttributes.Builder()
-                                .setUsage(AudioAttributes.USAGE_ALARM)
-                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                .build()
-                        )
-                        setDataSource(context, Uri.parse(alarm.soundUri))
-                        prepare()
-                        start()
-                    }
-                } else {
-                    playDefaultRingtone(context)
+                val result = withContext(Dispatchers.IO) {
+                    val allowed = ClockAlarms.canSchedule(appContext)
+                    val loaded = if (allowed) ClockAlarms.update(appContext) { it } else ClockAlarms.load(appContext)
+                    loaded to allowed
                 }
-            } catch (_: Exception) {
-                // FALLBACK to default system alarm ringtone sound!
-                playDefaultRingtone(context)
-            }
+                alarms = result.first; exact = result.second; failed = false
+            } catch (e: CancellationException) { throw e } catch (_: Exception) { failed = true }
+            finally { loading = false }
         }
+    } }
+    fun save(transform: (List<ClockAlarm>) -> List<ClockAlarm>) { scope.launch {
+        operations.withLock {
+            loading = true
+            try {
+                alarms = withContext(Dispatchers.IO) { ClockAlarms.update(appContext, transform) }
+                failed = false
+            } catch (e: CancellationException) { throw e } catch (_: Exception) { failed = true }
+            finally { loading = false }
+        }
+    } }
+    DisposableEffect(lifecycle) {
+        val observer = LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_RESUME) refresh() }
+        lifecycle.addObserver(observer)
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) refresh()
+        onDispose { lifecycle.removeObserver(observer) }
     }
-
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier.fillMaxSize()
-    ) {
-        items(alarms) { alarm ->
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(modifier = Modifier.weight(1f).clickable { editingAlarm = alarm }) {
-                        Text(
-                            text = "%02d:%02d".format(alarm.hour, alarm.minute),
-                            fontSize = 36.sp,
-                            fontFamily = FontFamily.Monospace,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "${alarm.label} • ${alarm.soundType.label}",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+    LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        if (loading) item { LinearProgressIndicator(Modifier.fillMaxWidth()) }
+        if (failed) item { TextButton(onClick = { refresh() }, enabled = !loading) { Text(stringResource(R.string.hc_failed_try_again)) } }
+        if (!exact && !loading) item { OutlinedButton(onClick = {
+            if (android.os.Build.VERSION.SDK_INT >= 31) context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:${context.packageName}")))
+        }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.clock_exact)) } }
+        items(alarms, key = { it.id }) { alarm ->
+            Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp)) {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.weight(1f).clickable { editing = alarm }) {
+                        Text("%02d:%02d".format(alarm.hour, alarm.minute), style = MaterialTheme.typography.headlineMedium, fontFamily = FontFamily.Monospace)
+                        Text(alarm.label.ifBlank { context.getString(R.string.clock_alarm) })
+                        Text(alarm.soundName.ifBlank { context.getString(R.string.clock_default_sound) }, style = MaterialTheme.typography.bodySmall)
                     }
-                    Switch(checked = alarm.enabled, onCheckedChange = { alarm.enabled = it })
+                    Switch(alarm.enabled, { enabled -> save { current -> current.map { if (it.id == alarm.id) it.copy(enabled = enabled) else it } } }, enabled = exact && !loading)
                 }
-            }
+                TextButton(onClick = { save { current -> current.filterNot { it.id == alarm.id } } }, enabled = !loading) { Text(stringResource(R.string.hc_delete)) }
+            } }
         }
-
-        item {
-            Button(
-                onClick = {
-                    val newAlarm = TelosAlarm(hour = 8, minute = 0)
-                    alarms.add(newAlarm)
-                    editingAlarm = newAlarm
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("+ Προσθήκη Αφύπνισης")
-            }
-        }
+        item { Button(onClick = { editing = ClockAlarm(enabled = exact) }, Modifier.fillMaxWidth(), enabled = !loading) { Text(stringResource(R.string.hc_add)) } }
     }
-
-    editingAlarm?.let { alarm ->
-        AlertDialog(
-            onDismissRequest = { editingAlarm = null },
-            title = { Text("Ρύθμιση Αφύπνισης") },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    OutlinedTextField(
-                        value = alarm.label,
-                        onValueChange = { alarm.label = it },
-                        label = { Text("Ετικέτα") },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    Text("Πηγή Ήχου / Media:", fontWeight = FontWeight.Bold)
-
-                    AlarmSoundType.entries.forEach { soundType ->
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth().clickable { alarm.soundType = soundType }
-                        ) {
-                            RadioButton(selected = alarm.soundType == soundType, onClick = { alarm.soundType = soundType })
-                            Text(soundType.label, style = MaterialTheme.typography.bodyMedium)
-                        }
-                    }
-
-                    Text(
-                        text = "Αν το stream (Radio/TV/YT) αποτύχει λόγω δικτύου, θα αναπαραχθεί αυτόματα ο προεπιλεγμένος ήχος ξυπνητηριού της συσκευής.",
-                        fontSize = 11.sp,
-                        color = Color.Gray
-                    )
-                }
-            },
-            confirmButton = {
-                Button(onClick = { editingAlarm = null }) { Text("Αποθήκευση") }
-            }
-        )
-    }
+    editing?.let { alarm -> AlarmEditor(alarm, onDismiss = { editing = null }, onSave = { updated ->
+        save { current -> current.filterNot { it.id == updated.id } + updated }; editing = null
+    }) }
 }
 
-private fun playDefaultRingtone(context: Context) {
-    runCatching {
-        val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-            ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
-        val ringtone = RingtoneManager.getRingtone(context, uri)
-        ringtone.play()
+@Composable
+private fun AlarmEditor(initial: ClockAlarm, onDismiss: () -> Unit, onSave: (ClockAlarm) -> Unit) {
+    val context = LocalContext.current
+    val repository: RadioRepository = koinInject()
+    val stations by repository.observeFavorites().collectAsState(emptyList())
+    var alarm by remember(initial.id) { mutableStateOf(initial) }
+    var hour by remember { mutableStateOf(initial.hour.toString()) }
+    var minute by remember { mutableStateOf(initial.minute.toString()) }
+    var radio by remember { mutableStateOf(false) }
+    var stream by remember { mutableStateOf(initial.soundUri.takeIf { it.startsWith("http") }.orEmpty()) }
+    val filePicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) {
+            runCatching { context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+            alarm = alarm.copy(soundUri = uri.toString(), soundName = context.getString(R.string.clock_audio_file))
+        }
+    }
+    val ringtonePicker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            @Suppress("DEPRECATION") val uri = result.data?.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
+            if (uri != null) alarm = alarm.copy(soundUri = uri.toString(), soundName = runCatching { RingtoneManager.getRingtone(context, uri).getTitle(context) }.getOrDefault(context.getString(R.string.clock_default_sound)))
+        }
+    }
+    Dialog(onDismissRequest = onDismiss) {
+        Surface(shape = RoundedCornerShape(24.dp)) {
+            Column(Modifier.heightIn(max = (LocalConfiguration.current.screenHeightDp * .85f).dp).verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(stringResource(R.string.clock_alarm), style = MaterialTheme.typography.titleLarge)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedTextField(hour, { hour = it.filter(Char::isDigit).take(2) }, Modifier.weight(1f), label = { Text("HH") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true)
+                    OutlinedTextField(minute, { minute = it.filter(Char::isDigit).take(2) }, Modifier.weight(1f), label = { Text("mm") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true)
+                }
+                OutlinedTextField(alarm.label, { alarm = alarm.copy(label = it) }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.au3_appearance_typo_label)) })
+                Text(alarm.soundName.ifBlank { context.getString(R.string.clock_default_sound) })
+                OutlinedButton(onClick = { ringtonePicker.launch(Intent(RingtoneManager.ACTION_RINGTONE_PICKER).putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM).putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false)) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.clock_default_sound)) }
+                OutlinedButton(onClick = { filePicker.launch(arrayOf("audio/*")) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.clock_audio_file)) }
+                OutlinedButton(onClick = { radio = !radio }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.hc_radio)) }
+                if (radio) {
+                    stations.forEach { station -> TextButton(onClick = { alarm = alarm.copy(soundUri = station.streamUrl, soundName = station.name); radio = false }, Modifier.fillMaxWidth()) { Text(station.name) } }
+                    OutlinedTextField(stream, { stream = it }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.clock_stream_url)) }, singleLine = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri))
+                    TextButton(onClick = { alarm = alarm.copy(soundUri = stream.trim(), soundName = context.getString(R.string.hc_radio)); radio = false }, enabled = Uri.parse(stream).scheme in listOf("http", "https")) { Text(stringResource(R.string.hc_save)) }
+                }
+                Text(stringResource(R.string.clock_sound_fallback), style = MaterialTheme.typography.bodySmall)
+                Button(onClick = { onSave(alarm.copy(hour = hour.toInt(), minute = minute.toInt(), enabled = alarm.enabled && ClockAlarms.canSchedule(context))) }, enabled = hour.toIntOrNull() in 0..23 && minute.toIntOrNull() in 0..59, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.hc_save)) }
+                TextButton(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.hc_cancel)) }
+            }
+        }
     }
 }
-
 @Composable
 private fun TimerTab() {
     var minutesInput by remember { mutableStateOf("5") }
@@ -406,7 +280,7 @@ private fun TimerTab() {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -415,15 +289,7 @@ private fun TimerTab() {
         val secs = totalSec % 60
         val tenths = (remainingMs % 1000) / 100
 
-        Text(
-            text = "%02d:%02d.%d".format(mins, secs, tenths),
-            fontSize = 56.sp,
-            fontFamily = FontFamily.Monospace,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
+        ClockDigits("%02d:%02d.%d".format(mins, secs, tenths))
 
         Spacer(Modifier.height(24.dp))
 
@@ -436,7 +302,7 @@ private fun TimerTab() {
                     totalSeconds = m * 60
                     remainingMs = totalSeconds * 1000L
                 },
-                label = { Text("Λεπτά (Custom Preset)") },
+                label = { Text(stringResource(R.string.clock_minutes)) },
                 singleLine = true,
                 modifier = Modifier.width(200.dp)
             )
@@ -454,7 +320,7 @@ private fun TimerTab() {
                     }
                 }
             ) {
-                Text(if (isRunning) "Παύση" else "Έναρξη")
+                Text(if (isRunning) stringResource(R.string.au_music_pause) else stringResource(R.string.clock_start))
             }
 
             Button(
@@ -464,7 +330,7 @@ private fun TimerTab() {
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
-                Text("Επαναφορά", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_reset), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }
@@ -494,25 +360,17 @@ private fun StopwatchTab() {
         val seconds = (elapsedMs / 1000) % 60
         val millis = (elapsedMs % 1000) / 10
 
-        Text(
-            text = "%02d:%02d.%02d".format(minutes, seconds, millis),
-            fontSize = 56.sp,
-            fontFamily = FontFamily.Monospace,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
+        ClockDigits("%02d:%02d.%02d".format(minutes, seconds, millis))
 
         Spacer(Modifier.height(24.dp))
 
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Button(onClick = { isRunning = !isRunning }) {
-                Text(if (isRunning) "Παύση" else "Έναρξη")
+                Text(if (isRunning) stringResource(R.string.au_music_pause) else stringResource(R.string.clock_start))
             }
 
             Button(onClick = { if (isRunning) laps.add(0, elapsedMs) }, enabled = isRunning) {
-                Text("Γύρος")
+                Text(stringResource(R.string.clock_lap))
             }
 
             Button(
@@ -523,7 +381,7 @@ private fun StopwatchTab() {
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
-                Text("Επαναφορά", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_reset), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
 
@@ -531,7 +389,7 @@ private fun StopwatchTab() {
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().weight(1f)
         ) {
             items(laps) { lapMs ->
                 val m = (lapMs / 1000) / 60
@@ -543,7 +401,7 @@ private fun StopwatchTab() {
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
                 ) {
                     Row(modifier = Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text("Γύρος", fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.clock_lap), fontWeight = FontWeight.Bold)
                         Text("%02d:%02d.%02d".format(m, s, ms), fontFamily = FontFamily.Monospace)
                     }
                 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Thư Ermis</string>
+    <string name="ermis_new_mail_count">%1$d thư mới</string>
+    <string name="ermis_error_cache">Không thể mở khóa bộ nhớ đệm thư.</string>
+    <string name="ermis_error_auth">Xác thực thất bại. Kiểm tra cách đăng nhập và thông tin tài khoản.</string>
+    <string name="ermis_error_tls">Không thể xác minh chứng chỉ máy chủ.</string>
+    <string name="ermis_error_generic">Thao tác thất bại. Kiểm tra kết nối và cài đặt máy chủ.</string>
+    <string name="ermis_error_sent_copy">Đã gửi thư nhưng không lưu được bản sao vào thư đã gửi. Đừng gửi lại.</string>
+</resources>

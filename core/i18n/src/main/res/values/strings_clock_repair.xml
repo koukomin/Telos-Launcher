@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">World</string>
+    <string name="clock_alarm">Alarm</string>
+    <string name="clock_timer">Timer</string>
+    <string name="clock_stopwatch">Stopwatch</string>
+    <string name="clock_local">Local time</string>
+    <string name="clock_city_search">Search city or country</string>
+    <string name="clock_night">Night clock</string>
+    <string name="clock_night_exit">Tap to close</string>
+    <string name="clock_audio_file">Audio file</string>
+    <string name="clock_default_sound">Alarm sound</string>
+    <string name="clock_stream_url">Radio stream URL</string>
+    <string name="clock_sound_fallback">One-shot alarm. If media fails, the default alarm sound plays.</string>
+    <string name="clock_exact">Allow alarms &amp; reminders</string>
+    <string name="clock_dismiss">Dismiss</string>
+    <string name="clock_minutes">Minutes</string>
+    <string name="clock_start">Start</string>
+    <string name="clock_reset">Reset</string>
+    <string name="clock_lap">Lap</string>
+</resources>

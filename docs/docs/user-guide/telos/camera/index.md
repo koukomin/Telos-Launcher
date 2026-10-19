@@ -1,55 +1,30 @@
 # Telos Camera
 
-A virtual camera app with a OnePlus 9 / Hasselblad-style viewfinder: photo, video, portrait, night, pro,
-discreet capture, optional DNG, and an IP webcam for OBS or a browser.
+Camera opens a native Telos viewfinder. Photos and videos are captured inside Telos using CameraX; there is no external camera handoff. The dark, responsive control layout places the mode strip, zoom and capture action next to the preview in landscape and beneath it in portrait.
 
-::: tip At a glance
-Gold Hasselblad wordmark, a mode rail (Night / Video / Photo / Portrait / Pro / Pano / Discreet),
-zoom pills, a large shutter, tap to focus, pinch zoom, histogram and grid. Photos land in `DCIM/TelosCamera`.
-:::
+## Capture
 
-## What it is
+- Photo: JPEG, PNG or WebP. JPEG can retain camera EXIF metadata; re-encoded PNG/WebP remove metadata. Captures are saved in Pictures/Telos. Still capture targets approximately 5 MP to keep conversion memory bounded; the hardware chooses its nearest supported resolution. PNG/WebP conversion also samples oversized OEM images before decoding to remain within 5 MP.
+- Video: native FHD recording with a supported-quality fallback, optional microphone audio and torch where available. Videos are saved in Movies/Telos. Leaving the foreground stops recording.
+- Focus: tap the preview. Zoom: pinch or use the zoom slider. Switch between front and rear cameras with the camera selector.
+- Settings: flash, a 3/5/10-second timer, composition grid, live luminance histogram and exposure compensation. The histogram is available in the standard photo mode when the camera supports the additional analysis stream.
+- Manual sensor exposure: ISO and shutter duration controls appear only when the selected camera advertises manual-sensor support. The camera's own supported ranges constrain both controls.
+- Portrait and night: shown only when the device supplies the corresponding CameraX OEM extension. Telos does not emulate a proprietary computational photography engine.
 
-Telos Camera is a [virtual app](../#how-the-built-in-apps-work). It uses Camera2 (the same stack as
-[CamX](https://github.com/uncannyRishabh/camx) and [Open Camera](https://opencamera.org.uk/)).
-Switching it off in [Telos Store](../store/) hides its icon.
+## RAW and panorama
 
-## Modes
+On cameras advertising RAW capability, the RAW option captures DNG and JPEG through a separate one-shot Camera2 session, then restores the viewfinder. RAW uses that session's automatic exposure, rather than the CameraX manual settings. Hardware-dependent RAW behavior requires device testing.
 
-| Mode | What it does |
-| --- | --- |
-| Photo | JPEG / PNG / WebP stills, optional DNG RAW |
-| Video | H.264 1080p30 with microphone |
-| Portrait | Camera2 portrait scene mode when the hardware has it |
-| Night | Camera2 night scene mode |
-| Pro | EV compensation, live ISO and shutter readout, histogram |
-| Pano | Capture several slices with the shutter, then Stitch to a wide JPEG |
-| Discreet | Black viewfinder, tap to shoot, optional face and motion auto-shot, silent shutter, hidden `.nomedia` album |
+The panorama option assembles 2–8 manually aligned left-to-right captures with 20% overlap. Keep the horizon level and overlap consistently. The bounded local stitcher streams source files, downsamples each to at most 1024 pixels on its longest edge, limits the combined image to 8 MP, and blends seams; it does not perform computer-vision alignment or spherical correction. Original slices remain saved.
 
-## Webcam
+## Discreet preview and LAN webcam
 
-**IP webcam** serves MJPEG on the LAN (default port 8088). Open the URL in a browser or as an OBS
-browser source. This covers the same job as [Open Camera OMT](https://github.com/ysdede/opencamera-omt)
-without bundling the OMT native libraries.
+Discreet preview blacks out the viewfinder while retaining explicit capture controls. Android's privacy indicators remain visible. Camera use stops with the screen's lifecycle; Telos does not silently record in the background.
 
-**USB webcam:** Android has no public API to become a USB UVC gadget. That path exists only when the
-OEM kernel exposes it (ColorOS USB webcam on devices such as the OnePlus 15). Telos cannot invent
-that gadget. Use IP MJPEG on every device.
+Start IP webcam explicitly in settings to obtain a token-bearing local-network URL. Anyone on that local network with the URL can view its MJPEG feed. Stop it with the matching control. Sharing also stops when Camera leaves the foreground. This is a bounded-resolution LAN feed, not an Internet relay or USB gadget implementation.
 
-## Privacy
+Optional geotagging adds an available recent location fix to JPEG EXIF only (up to 10 minutes old, accuracy within 500 m). It requests location permission when selected. PNG/WebP and EXIF stripping remove location metadata.
 
-EXIF is kept by default. Turn **Keep EXIF** off in the camera sheet to strip it. GPS tagging stays off until you turn it on.
-There is no auto-email, no cloud, and no hidden app icon for spying on other people. Discreet mode
-is for the phone owner (candid shots, a black screen while you still hear the shutter off).
+Hidden album saves still images under Telos’s app-specific external Pictures/TelosHidden directory with a .nomedia marker. The gallery does not index it; app uninstallation removes it. RAW and video continue to use their normal destinations. Panorama originals remain in the normal gallery.
 
-## Honest limits
-
-- No Photon Camera LUT engine, Depth Anything bokeh, multi-frame stack or vendor motion photos.
-- No Open Camera auto-level crop or focus bracketing. Panorama is a simple side-by-side stitch, not OpenCV blending.
-- Face auto-shot uses Camera2 face statistics, not a separate ML model.
-- Background capture with the screen off needs the camera foreground service notification.
-
-## Based on
-
-Feature ideas from Open Camera, Libre Camera, CamX, Photon Camera, Open Camera OMT and Spy Camera OS.
-No source was copied from those projects.
+Foreground automatic capture can be enabled explicitly for camera-reported face detection (only if supported) or preview luminance changes. Both have a five-second cooldown and stop outside the foreground. Motion detection can react to lighting changes. Android device policy can also impose shutter behavior. No option claims to bypass those restrictions.

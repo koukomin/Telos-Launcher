@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Konta pocztowe</string>
+    <string name="ermis_all_accounts">Wszystkie konta</string>
+    <string name="ermis_native_intro">Twoja poczta w Telos. Połącz konto IMAP/SMTP przez TLS za pomocą hasła lub hasła aplikacji.</string>
+    <string name="ermis_empty">Brak wiadomości. Zsynchronizuj konta lub zmień wyszukiwanie.</string>
+    <string name="ermis_operation_failed">Operacja pocztowa nie powiodła się</string>
+    <string name="ermis_tls_help">Oba serwery muszą obsługiwać zweryfikowany TLS. Gmail może używać hasła aplikacji lub obsługiwanego dostępu Google/microG.</string>
+    <string name="ermis_username">Nazwa użytkownika serwera</string>
+    <string name="ermis_username_help">Pozostaw puste, aby użyć adresu e-mail.</string>
+    <string name="ermis_imap_host">Serwer IMAP</string>
+    <string name="ermis_imap_port">Port IMAP TLS</string>
+    <string name="ermis_smtp_host">Serwer SMTP</string>
+    <string name="ermis_smtp_port">Port SMTP</string>
+    <string name="ermis_starttls">Wymagaj STARTTLS dla SMTP</string>
+    <string name="ermis_saf_help">Selektor plików pokazuje też usługi chmurowe obsługujące Dokumenty Android. Dla dużych plików dodaj do wiadomości link udostępniania.</string>
+    <string name="ermis_reply">Odpowiedz</string>
+    <string name="ermis_google_sign_in">Logowanie Google / microG</string>
+    <string name="ermis_google_help">Używa wybranego konta Android tylko wtedy, gdy jego usługa uwierzytelniania przyzna dostęp do poczty. W przeciwnym razie użyj hasła aplikacji.</string>
+    <string name="ermis_google_unavailable">Dostawca konta nie przyznał dostępu do poczty. Użyj hasła aplikacji.</string>
+    <string name="ermis_conversation_count">%1$d wiadomości w tej rozmowie</string>
+</resources>

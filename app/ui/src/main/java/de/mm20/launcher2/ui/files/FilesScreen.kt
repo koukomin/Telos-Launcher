@@ -227,9 +227,9 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
             ArchivePath.canOpen(entry.name) && !de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(entry.name) && !RemotePath.isRemote(entry.path) && !ArchivePath.isArchive(entry.path) -> dialog = FilesDialog.Archive(entry)
             RemotePath.isRemote(entry.path) && (entry.kind == FileKind.Video || entry.kind == FileKind.Audio) -> FileActions.playRemoteVideo(context, entry, vm.entries)
             (RemotePath.isRemote(entry.path) || ArchivePath.isArchive(entry.path) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(entry.path)) -> vm.download(entry) { file ->
-                FileActions.open(context, FsEntry(file.path, file.name, false, file.length(), file.lastModified()), emptyList(), false)
+                scope.launch { FileActions.open(context, FsEntry(file.path, file.name, false, file.length(), file.lastModified()), emptyList(), false) }
             }
-            else -> FileActions.open(context, entry, vm.entries, vm.rootMode)
+            else -> { val root = vm.rootMode; val adb = vm.shizukuMode; scope.launch { FileActions.open(context, entry, vm.entries, root, adb) }; Unit }
         }
     }
 
@@ -404,7 +404,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                             )
                                         }
                                         DropdownMenuItem(
-                                            text = { Text(if (vm.rootMode) stringResource(R.string.hf_files_root_off) else stringResource(R.string.hf_files_root_menu)) },
+                                            text = { Text(if (vm.shizukuMode) stringResource(R.string.telos_files_shizuku) else if (vm.rootMode) stringResource(R.string.hf_files_root_off) else stringResource(R.string.hf_files_root_menu)) },
                                             onClick = { menuOpen = false; if (vm.rootMode) vm.disableRoot() else dialog = FilesDialog.EnableRoot },
                                         )
                                         if (!vm.rootMode) DropdownMenuItem(
@@ -522,6 +522,7 @@ private sealed interface FilesDialog {
 @Composable
 private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: () -> Unit) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     when (dialog) {
         null -> {}
         FilesDialog.NewFolder -> NameDialog(stringResource(R.string.hc_new_folder), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFolder(it); onDismiss() }
@@ -554,7 +555,7 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
             dismissButton = {
                 Row {
                     TextButton(onClick = { vm.extract(dialog.entry); onDismiss() }) { Text(stringResource(R.string.hc_extract_here)) }
-                    TextButton(onClick = { FileActions.openWith(context, dialog.entry, vm.rootMode); onDismiss() }) { Text(stringResource(R.string.hc_open_with_2)) }
+                    TextButton(onClick = { scope.launch { FileActions.openWith(context, dialog.entry, vm.rootMode, vm.shizukuMode); onDismiss() } }) { Text(stringResource(R.string.hc_open_with_2)) }
                 }
             },
         )
@@ -786,7 +787,7 @@ private fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () -
         confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } },
         dismissButton = {
             if (!entry.isDir) Row {
-                TextButton(onClick = { FileActions.openWith(context, entry, vm.rootMode) }) { Text(stringResource(R.string.hc_open_with_2)) }
+                TextButton(onClick = { scope.launch { FileActions.openWith(context, entry, vm.rootMode, vm.shizukuMode) } }) { Text(stringResource(R.string.hc_open_with_2)) }
                 TextButton(onClick = { vm.shareEntries(listOf(entry)) }) { Text(stringResource(R.string.hc_share)) }
             }
         },
@@ -1137,11 +1138,11 @@ private fun StorageDrawer(vm: FilesViewModel, onGo: (String?) -> Unit, onRoot: (
         }
         DrawerItem(Icons.add_24px, stringResource(R.string.hf_files_add_or_manage), null, false, onManage)
         Text(stringResource(R.string.hc_tools), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
-        DrawerItem(Icons.terminal_24px, if (vm.rootMode) stringResource(R.string.hf_files_root_explorer_on) else stringResource(R.string.hc_root_explorer), if (vm.rootMode) stringResource(R.string.hf_files_tap_to_turn_off) else stringResource(R.string.hf_files_needs_root), vm.rootMode, onRoot)
+        DrawerItem(Icons.terminal_24px, if (vm.shizukuMode) stringResource(R.string.telos_files_shizuku) else if (vm.rootMode) stringResource(R.string.hf_files_root_explorer_on) else stringResource(R.string.hc_root_explorer), if (vm.rootMode) stringResource(R.string.hf_files_tap_to_turn_off) else stringResource(R.string.hf_files_needs_root), vm.rootMode, onRoot)
         if (vm.rootMode) {
             DrawerItem(Icons.folder_24px, stringResource(R.string.hf_files_root_fs), stringResource(R.string.hf_files_system_files), vm.path == "/") { onGo("/") }
-            DrawerItem(Icons.lock_24px, stringResource(R.string.hf_files_system_writable), stringResource(R.string.hf_files_careful), false) { vm.remount("/system", true) }
-            DrawerItem(Icons.lock_open_20px, stringResource(R.string.hf_files_system_readonly), null, false) { vm.remount("/system", false) }
+            if (!vm.shizukuMode) DrawerItem(Icons.lock_24px, stringResource(R.string.hf_files_system_writable), stringResource(R.string.hf_files_careful), false) { vm.remount("/system", true) }
+            if (!vm.shizukuMode) DrawerItem(Icons.lock_open_20px, stringResource(R.string.hf_files_system_readonly), null, false) { vm.remount("/system", false) }
         }
     }
 }

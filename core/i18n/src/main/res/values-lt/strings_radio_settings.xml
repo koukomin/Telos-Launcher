@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Ekrano fono spalvos</string>
+    <string name="radio_translucent">Pusiau permatoma išvaizda</string>
+    <string name="radio_controls_scroll">Slinkti atkūrimo valdiklius kartu su stotimis</string>
+    <string name="radio_tap_plays">Palieskite stotį, kad paleistumėte</string>
+    <string name="radio_large_buffer">Didesnis atkūrimo buferis</string>
+    <string name="radio_edit_metadata">Leisti redaguoti stočių informaciją</string>
+    <string name="radio_edit_streams">Leisti redaguoti srautų adresus</string>
+    <string name="radio_auto_images">Automatiškai atnaujinti stočių vaizdus</string>
+    <string name="radio_update_images">Atnaujinti stočių vaizdus dabar</string>
+    <string name="radio_backup_images">ZIP atsarginė kopija su stočių vaizdais</string>
+    <string name="radio_restore_replace_summary">Pakeisti dabartinį stočių rinkinį šia atsargine kopija? Dabartinis rinkinys bus pašalintas.</string>
+    <string name="radio_station_image_url">Stoties vaizdo adresas</string>
+</resources>

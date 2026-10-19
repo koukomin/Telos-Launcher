@@ -17,4 +17,5 @@
     <exclude domain="file" path="album_art" />
     <exclude domain="file" path="blocklists" />
     <exclude domain="file" path="remote_phonebook.json" />
+    <exclude domain="sharedpref" path="akou_recognition.xml" />
 </full-backup-content>

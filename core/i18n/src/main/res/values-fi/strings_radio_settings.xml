@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Taustakuvan värit</string>
+    <string name="radio_translucent">Läpikuultava ulkoasu</string>
+    <string name="radio_controls_scroll">Vieritä toiston ohjaimia asemien mukana</string>
+    <string name="radio_tap_plays">Toista napauttamalla asemaa</string>
+    <string name="radio_large_buffer">Suurempi toistopuskuri</string>
+    <string name="radio_edit_metadata">Salli asematietojen muokkaaminen</string>
+    <string name="radio_edit_streams">Salli suoratoisto-osoitteiden muokkaaminen</string>
+    <string name="radio_auto_images">Päivitä asemakuvat automaattisesti</string>
+    <string name="radio_update_images">Päivitä asemakuvat nyt</string>
+    <string name="radio_backup_images">ZIP-varmuuskopio asemakuvineen</string>
+    <string name="radio_restore_replace_summary">Korvataanko nykyinen asemakokoelma tällä varmuuskopiolla? Nykyinen kokoelmasi poistetaan.</string>
+    <string name="radio_station_image_url">Aseman kuvan osoite</string>
+</resources>

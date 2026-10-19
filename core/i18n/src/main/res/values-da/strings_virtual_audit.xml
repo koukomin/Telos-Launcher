@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Ikke tilgængelig på denne enhed</string>
+    <string name="virtual_magnifier_permission">Luppen kræver adgang til kameraet</string>
+    <string name="virtual_magnifier_resume">Genoptag forhåndsvisning</string>
+    <string name="virtual_magnifier_freeze">Frys billede</string>
+</resources>

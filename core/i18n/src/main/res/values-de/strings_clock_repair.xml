@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Welt</string>
+    <string name="clock_alarm">Wecker</string>
+    <string name="clock_timer">Timer</string>
+    <string name="clock_stopwatch">Stoppuhr</string>
+    <string name="clock_local">Ortszeit</string>
+    <string name="clock_city_search">Stadt oder Land suchen</string>
+    <string name="clock_night">Nachtuhr</string>
+    <string name="clock_night_exit">Zum Schließen tippen</string>
+    <string name="clock_audio_file">Audiodatei</string>
+    <string name="clock_default_sound">Weckton</string>
+    <string name="clock_stream_url">Radio-Stream-URL</string>
+    <string name="clock_sound_fallback">Einmaliger Wecker. Bei Medienfehlern erklingt der Standardweckton.</string>
+    <string name="clock_exact">Wecker und Erinnerungen erlauben</string>
+    <string name="clock_dismiss">Schließen</string>
+    <string name="clock_minutes">Minuten</string>
+    <string name="clock_start">Start</string>
+    <string name="clock_reset">Zurücksetzen</string>
+    <string name="clock_lap">Runde</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Achtergrondkleuren</string>
+    <string name="radio_translucent">Doorschijnend uiterlijk</string>
+    <string name="radio_controls_scroll">Afspeelbediening met zenders laten meescrollen</string>
+    <string name="radio_tap_plays">Tik op een zender om af te spelen</string>
+    <string name="radio_large_buffer">Grotere afspeelbuffer</string>
+    <string name="radio_edit_metadata">Bewerken van zenderinformatie toestaan</string>
+    <string name="radio_edit_streams">Bewerken van streamadressen toestaan</string>
+    <string name="radio_auto_images">Zenderafbeeldingen automatisch bijwerken</string>
+    <string name="radio_update_images">Zenderafbeeldingen nu bijwerken</string>
+    <string name="radio_backup_images">ZIP-back-up met zenderafbeeldingen</string>
+    <string name="radio_restore_replace_summary">De huidige zenderverzameling vervangen door deze back-up? De huidige verzameling wordt verwijderd.</string>
+    <string name="radio_station_image_url">Adres van zenderafbeelding</string>
+</resources>

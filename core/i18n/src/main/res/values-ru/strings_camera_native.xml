@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Сохранено в Pictures/Telos</string>
+    <string name="camera_native_failed">Ошибка камеры: %1$s</string>
+    <string name="camera_native_capture">Снять</string>
+    <string name="camera_native_record">Записать видео</string>
+    <string name="camera_native_stop">Остановить запись</string>
+    <string name="camera_native_timer">Таймер</string>
+    <string name="camera_native_settings">Настройки съёмки</string>
+    <string name="camera_native_exposure">Компенсация экспозиции</string>
+    <string name="camera_native_iso">Чувствительность ISO</string>
+    <string name="camera_native_shutter">Выдержка (мс)</string>
+    <string name="camera_native_auto">Автоматическая экспозиция</string>
+    <string name="camera_native_histogram">Гистограмма</string>
+    <string name="camera_native_audio">Записывать звук микрофона</string>
+    <string name="camera_native_discreet_hint">Предпросмотр скрыт. Съёмка по-прежнему требует явного действия; системные индикаторы камеры остаются видимыми.</string>
+    <string name="camera_native_capabilities">Доступные режимы зависят от этой камеры. Фотографии обрабатываются на устройстве; проприетарный движок не включён.</string>
+    <string name="camera_native_formats">JPEG сохраняет метаданные камеры, если это включено. PNG/WebP удаляют метаданные.</string>
+    <string name="camera_native_gallery">Открыть галерею</string>
+    <string name="camera_native_flash">Вспышка</string>
+    <string name="camera_native_panorama_hint" formatted="false">Ручная панорама: снимите 2–8 кадров слева направо с перекрытием 20 %, удерживая горизонт ровно. Швы сглаживаются без автоматического выравнивания.</string>
+    <string name="camera_native_webcam_lan">Любой в локальной сети с этим URL с токеном может смотреть камеру. Трансляция прекращается, когда этот экран уходит с переднего плана.</string>
+    <string name="camera_native_hidden_saved">Сохранено приватно в Pictures/TelosHidden. Скрытый альбом не показывается в галерее и удаляется при удалении Telos.</string>
+    <string name="camera_native_geo_hint">Только JPEG EXIF. Добавляет доступное местоположение не старше 10 минут с точностью до 500 м.</string>
+    <string name="camera_native_face_trigger">Снимать при обнаружении лица</string>
+    <string name="camera_native_motion_trigger">Снимать при обнаружении движения</string>
+    <string name="camera_native_trigger_hint">Только на переднем плане. Не чаще раза в 5 секунд. Движение определяется по изменениям предпросмотра и может реагировать на освещение.</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">شناسایی و مسدودسازی تماس‌گیرنده</string>
+    <string name="caller_system_list">شماره‌های مسدودشدهٔ Android</string>
+    <string name="caller_online_lookup">شناسایی آنلاین تماس‌گیرنده</string>
+    <string name="caller_online_disclosure">شماره‌های ورودی ناشناس را برای دریافت نام و امتیازهای پیشنهادی کاربران به white-pages.gr می‌فرستد. به‌طور پیش‌فرض خاموش است؛ هرگز خودکار مسدود نمی‌کند.</string>
+    <string name="caller_likely_spam">احتمالاً هرزنامه · white-pages.gr</string>
+    <string name="caller_block_partial">فهرست شخصی به‌روز شد. شماره‌های مسدودشدهٔ Android به‌روز نشدند؛ Telos را برنامهٔ پیش‌فرض تلفن یا پیامک قرار دهید و دوباره تلاش کنید.</string>
+    <string name="caller_suggested_name">نام پیشنهادی: %1$s</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">來電識別與封鎖</string>
+    <string name="caller_system_list">Android 已封鎖號碼</string>
+    <string name="caller_online_lookup">線上來電識別</string>
+    <string name="caller_online_disclosure">將未知來電號碼傳送至 white-pages.gr，以取得社群提供的名稱和評分。預設關閉；絕不會自動封鎖。</string>
+    <string name="caller_likely_spam">疑似垃圾來電 · white-pages.gr</string>
+    <string name="caller_block_partial">個人清單已更新。無法更新 Android 已封鎖號碼；請將 Telos 設為預設電話或簡訊應用程式後重試。</string>
+    <string name="caller_suggested_name">建議名稱：%1$s</string>
+</resources>

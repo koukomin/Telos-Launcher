@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Aŭtomata rekomenco. Android povas prokrasti ĝin sen permeso por precizaj alarmoj.</string>
+    <string name="au_radio_pause">Paŭzi</string>
+    <string name="voice_resume">Daŭrigi</string>
+    <string name="dl_t_minutes">%1$d min</string>
+    <string name="dl_t_hours">%1$d h</string>
+    <string name="work_profile_status_paused">Paŭzita</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis pasts</string>
+    <string name="ermis_new_mail_count">%1$d jauni ziņojumi</string>
+    <string name="ermis_error_cache">Neizdevās atbloķēt pasta kešatmiņu.</string>
+    <string name="ermis_error_auth">Autentifikācija neizdevās. Pārbaudiet pieteikšanās veidu un konta datus.</string>
+    <string name="ermis_error_tls">Neizdevās pārbaudīt servera sertifikātu.</string>
+    <string name="ermis_error_generic">Darbība neizdevās. Pārbaudiet savienojumu un servera iestatījumus.</string>
+    <string name="ermis_error_sent_copy">Ziņojums nosūtīts, bet kopija nav saglabāta nosūtītajos. Nesūtiet vēlreiz.</string>
+</resources>

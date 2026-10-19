@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Dilanjutkan otomatis. Android dapat menundanya tanpa akses alarm tepat waktu.</string>
+    <string name="au_radio_pause">Jeda</string>
+    <string name="voice_resume">Lanjutkan</string>
+    <string name="dl_t_minutes">%1$d mnt</string>
+    <string name="dl_t_hours">%1$d j</string>
+    <string name="work_profile_status_paused">Dijeda</string>
+</resources>

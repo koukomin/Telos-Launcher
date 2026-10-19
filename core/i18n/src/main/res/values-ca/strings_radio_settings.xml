@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Colors del fons de pantalla</string>
+    <string name="radio_translucent">Aparença translúcida</string>
+    <string name="radio_controls_scroll">Desplaça els controls de reproducció amb les emissores</string>
+    <string name="radio_tap_plays">Toca una emissora per reproduir-la</string>
+    <string name="radio_large_buffer">Memòria intermèdia de reproducció més gran</string>
+    <string name="radio_edit_metadata">Permet editar la informació de les emissores</string>
+    <string name="radio_edit_streams">Permet editar les adreces dels fluxos</string>
+    <string name="radio_auto_images">Actualitza automàticament les imatges de les emissores</string>
+    <string name="radio_update_images">Actualitza ara les imatges de les emissores</string>
+    <string name="radio_backup_images">Còpia de seguretat ZIP amb les imatges de les emissores</string>
+    <string name="radio_restore_replace_summary">Vols substituir la col·lecció actual d’emissores per aquesta còpia de seguretat? La col·lecció actual se suprimirà.</string>
+    <string name="radio_station_image_url">Adreça de la imatge de l’emissora</string>
+</resources>

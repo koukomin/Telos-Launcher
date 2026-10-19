@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Foto de quem liga em tela cheia</string>
+    <string name="call_photo_background_summary">Mostrar a foto do contato como plano de fundo da chamada recebida.</string>
+</resources>

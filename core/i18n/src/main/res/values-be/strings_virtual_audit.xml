@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Недаступна на гэтай прыладзе</string>
+    <string name="virtual_magnifier_permission">Лупе патрэбны доступ да камеры</string>
+    <string name="virtual_magnifier_resume">Працягнуць прагляд</string>
+    <string name="virtual_magnifier_freeze">Замарозіць кадр</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">إضافة حساب</string>
+    <string name="ermis_attach">إرفاق من هذا الهاتف</string>
+    <string name="ermis_body">الرسالة</string>
+    <string name="ermis_compose">إنشاء رسالة</string>
+    <string name="ermis_connect">اتصال</string>
+    <string name="ermis_email">البريد الإلكتروني</string>
+    <string name="ermis_inbox">البريد الوارد</string>
+    <string name="ermis_no_subject">(بلا موضوع)</string>
+    <string name="ermis_note">ملاحظة</string>
+    <string name="ermis_note_save">حفظ الملاحظة</string>
+    <string name="ermis_password">كلمة المرور</string>
+    <string name="ermis_remove">إزالة</string>
+    <string name="ermis_search">البحث في البريد</string>
+    <string name="ermis_send">إرسال</string>
+    <string name="ermis_starred">المميزة بنجمة</string>
+    <string name="ermis_subject">الموضوع</string>
+    <string name="ermis_sync">مزامنة</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">إلى</string>
+</resources>

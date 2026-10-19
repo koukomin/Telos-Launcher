@@ -225,3 +225,9 @@ add a second bar for the same radio session; its shared bar remains available in
 The launcher’s home music area can show Telos Radio’s station/track metadata and transport controls
 using the same notification access as external players. Tapping the session opens Radio. Explicit
 player exclusions and the home-screen music-display settings continue to apply.
+
+## Import, backup and playback preferences
+
+Import supports Transistor ZIP/JSON station collections and M3U/PLS lists. Archives are bounded and unsafe paths are rejected. Backups include available station images; restoring a backup asks before replacing the current collection. M3U export shares stream entries with other players.
+
+Radio settings include app theme, dynamic colors, translucent controls, tap-to-play behavior, refreshing images, larger playback buffer and separate station/stream editing switches. Radio remembers its own last station without starting network playback until Play is pressed.

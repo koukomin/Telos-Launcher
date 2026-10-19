@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Identificazione e blocco chiamanti</string>
+    <string name="caller_system_list">Numeri bloccati di Android</string>
+    <string name="caller_online_lookup">Identificazione chiamanti online</string>
+    <string name="caller_online_disclosure">Invia i numeri in entrata sconosciuti a white-pages.gr per ottenere un nome e valutazioni suggeriti dalla comunità. Disattivato per impostazione predefinita; non blocca mai automaticamente.</string>
+    <string name="caller_likely_spam">Probabile spam · white-pages.gr</string>
+    <string name="caller_block_partial">Elenco personale aggiornato. Impossibile aggiornare i numeri bloccati di Android; imposta Telos come app predefinita per telefono o SMS e riprova.</string>
+    <string name="caller_suggested_name">Nome suggerito: %1$s</string>
+</resources>

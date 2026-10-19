@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Retpoŝtaj kontoj</string>
+    <string name="ermis_all_accounts">Ĉiuj kontoj</string>
+    <string name="ermis_native_intro">Via retpoŝto en Telos. Konektu IMAP/SMTP-konton per TLS kaj pasvorto aŭ aplikaĵa pasvorto.</string>
+    <string name="ermis_empty">Neniuj mesaĝoj ĉi tie. Sinkronigu kontojn aŭ ŝanĝu la serĉon.</string>
+    <string name="ermis_operation_failed">Retpoŝta ago malsukcesis</string>
+    <string name="ermis_tls_help">Ambaŭ serviloj devas subteni kontrolitan TLS. Gmail povas uzi aplikaĵan pasvorton aŭ subtenatan Google/microG-aliron.</string>
+    <string name="ermis_username">Servila uzantnomo</string>
+    <string name="ermis_username_help">Lasu malplena por uzi vian retpoŝtadreson.</string>
+    <string name="ermis_imap_host">IMAP-servilo</string>
+    <string name="ermis_imap_port">IMAP-TLS-pordo</string>
+    <string name="ermis_smtp_host">SMTP-servilo</string>
+    <string name="ermis_smtp_port">SMTP-pordo</string>
+    <string name="ermis_starttls">Postuli STARTTLS por SMTP</string>
+    <string name="ermis_saf_help">La dosierelektilo ankaŭ montras nubajn servojn kongruajn kun Android-Dokumentoj. Por grandaj dosieroj aldonu kundividan ligilon al la mesaĝo.</string>
+    <string name="ermis_reply">Respondi</string>
+    <string name="ermis_google_sign_in">Google / microG-ensaluto</string>
+    <string name="ermis_google_help">Uzas la elektitan Android-konton nur se ĝia aŭtentikigilo permesas poŝtan aliron. Alie uzu aplikaĵan pasvorton.</string>
+    <string name="ermis_google_unavailable">La konta provizanto ne permesis poŝtan aliron. Uzu aplikaĵan pasvorton.</string>
+    <string name="ermis_conversation_count">%1$d mesaĝoj en ĉi tiu konversacio</string>
+</resources>

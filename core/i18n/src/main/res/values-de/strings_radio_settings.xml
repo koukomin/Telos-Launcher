@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Hintergrundfarben</string>
+    <string name="radio_translucent">Durchscheinendes Erscheinungsbild</string>
+    <string name="radio_controls_scroll">Wiedergabesteuerung mit den Sendern scrollen</string>
+    <string name="radio_tap_plays">Sender zum Abspielen antippen</string>
+    <string name="radio_large_buffer">Größerer Wiedergabepuffer</string>
+    <string name="radio_edit_metadata">Bearbeiten von Senderinformationen erlauben</string>
+    <string name="radio_edit_streams">Bearbeiten von Stream-Adressen erlauben</string>
+    <string name="radio_auto_images">Senderbilder automatisch aktualisieren</string>
+    <string name="radio_update_images">Senderbilder jetzt aktualisieren</string>
+    <string name="radio_backup_images">ZIP-Sicherung einschließlich Senderbildern</string>
+    <string name="radio_restore_replace_summary">Die aktuelle Sendersammlung durch diese Sicherung ersetzen? Deine aktuelle Sammlung wird entfernt.</string>
+    <string name="radio_station_image_url">Adresse des Senderbilds</string>
+</resources>

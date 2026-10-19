@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Account di posta</string>
+    <string name="ermis_all_accounts">Tutti gli account</string>
+    <string name="ermis_native_intro">La tua posta in Telos. Collega un account IMAP/SMTP con TLS e password o password per le app.</string>
+    <string name="ermis_empty">Nessun messaggio. Sincronizza gli account o modifica la ricerca.</string>
+    <string name="ermis_operation_failed">Operazione di posta non riuscita</string>
+    <string name="ermis_tls_help">Entrambi i server devono supportare TLS verificato. Gmail può usare una password per le app o accesso Google/microG se supportato.</string>
+    <string name="ermis_username">Nome utente del server</string>
+    <string name="ermis_username_help">Lascia vuoto per usare il tuo indirizzo email.</string>
+    <string name="ermis_imap_host">Server IMAP</string>
+    <string name="ermis_imap_port">Porta IMAP TLS</string>
+    <string name="ermis_smtp_host">Server SMTP</string>
+    <string name="ermis_smtp_port">Porta SMTP</string>
+    <string name="ermis_starttls">Richiedi STARTTLS per SMTP</string>
+    <string name="ermis_saf_help">Il selettore mostra anche i servizi cloud compatibili con Documenti Android. Per i file grandi inserisci un link di condivisione nel messaggio.</string>
+    <string name="ermis_reply">Rispondi</string>
+    <string name="ermis_google_sign_in">Accesso Google / microG</string>
+    <string name="ermis_google_help">Usa l’account Android selezionato solo se l’autenticatore consente l’accesso alla posta. Altrimenti usa una password per le app.</string>
+    <string name="ermis_google_unavailable">Il fornitore dell’account non ha concesso l’accesso alla posta. Usa una password per le app.</string>
+    <string name="ermis_conversation_count">%1$d messaggi in questa conversazione</string>
+</resources>

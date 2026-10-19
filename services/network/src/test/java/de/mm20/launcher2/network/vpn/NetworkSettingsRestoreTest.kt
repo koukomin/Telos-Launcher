@@ -21,6 +21,12 @@ class NetworkSettingsRestoreTest {
         assertEquals(setOf(10042), settings.torAppIds)
         assertEquals(settings, Json.decodeFromString(NetworkSettingsValues.serializer(), Json.encodeToString(NetworkSettingsValues.serializer(), settings)))
     }
+    @Test fun pauseDeadlineSurvivesProcessDeathWithAllSavedConfiguration() {
+        val saved = NetworkSettingsValues(engineWanted = true, pauseUntilMs = 123456789L, intentBootCount = 15, torEnabled = true)
+        val restored = Json.decodeFromString(NetworkSettingsValues.serializer(), Json.encodeToString(NetworkSettingsValues.serializer(), saved))
+        assertEquals(saved, restored)
+        assertEquals(0L, NetworkSettingsValues().pauseUntilMs)
+    }
     @Test fun oldRulesAndNewNotesSurviveRoundTrip() {
         val old = Json.decodeFromString(AppRule.serializer(), """{"appId":42,"blockWifi":true}""")
         assertFalse(old.blockMetered)

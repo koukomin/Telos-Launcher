@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">חשבונות דואר</string>
+    <string name="ermis_all_accounts">כל החשבונות</string>
+    <string name="ermis_native_intro">הדואר שלך בתוך Telos. אפשר לחבר חשבון IMAP/SMTP עם TLS וסיסמה או סיסמת אפליקציה.</string>
+    <string name="ermis_empty">אין הודעות. יש לסנכרן חשבונות או לשנות את החיפוש.</string>
+    <string name="ermis_operation_failed">פעולת הדואר נכשלה</string>
+    <string name="ermis_tls_help">שני השרתים חייבים לתמוך ב־TLS מאומת. Gmail יכול להשתמש בסיסמת אפליקציה או בגישת Google/microG כאשר היא נתמכת.</string>
+    <string name="ermis_username">שם משתמש בשרת</string>
+    <string name="ermis_username_help">אפשר להשאיר ריק כדי להשתמש בכתובת הדואר.</string>
+    <string name="ermis_imap_host">שרת IMAP</string>
+    <string name="ermis_imap_port">יציאת IMAP TLS</string>
+    <string name="ermis_smtp_host">שרת SMTP</string>
+    <string name="ermis_smtp_port">יציאת SMTP</string>
+    <string name="ermis_starttls">דרישת STARTTLS עבור SMTP</string>
+    <string name="ermis_saf_help">בורר הקבצים מציג גם ספקי ענן שתומכים במסמכי Android. לקבצים גדולים יש להוסיף קישור שיתוף להודעה.</string>
+    <string name="ermis_reply">השב</string>
+    <string name="ermis_google_sign_in">כניסה באמצעות Google / microG</string>
+    <string name="ermis_google_help">החשבון הנבחר ב־Android ישמש רק אם המאמת שלו מעניק גישה לדואר. אחרת יש להשתמש בסיסמת אפליקציה.</string>
+    <string name="ermis_google_unavailable">ספק החשבון לא העניק גישה לדואר. יש להשתמש בסיסמת אפליקציה.</string>
+    <string name="ermis_conversation_count">%1$d הודעות בשיחה זו</string>
+</resources>

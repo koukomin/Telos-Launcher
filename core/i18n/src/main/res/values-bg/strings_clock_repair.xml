@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Свят</string>
+    <string name="clock_alarm">Аларма</string>
+    <string name="clock_timer">Таймер</string>
+    <string name="clock_stopwatch">Хронометър</string>
+    <string name="clock_local">Местно време</string>
+    <string name="clock_city_search">Търсене на град или държава</string>
+    <string name="clock_night">Нощен часовник</string>
+    <string name="clock_night_exit">Докоснете за затваряне</string>
+    <string name="clock_audio_file">Аудиофайл</string>
+    <string name="clock_default_sound">Звук на алармата</string>
+    <string name="clock_stream_url">Адрес на радиопотока</string>
+    <string name="clock_sound_fallback">Еднократна аларма. При проблем с медията звучи стандартният сигнал.</string>
+    <string name="clock_exact">Разрешаване на аларми и напомняния</string>
+    <string name="clock_dismiss">Затваряне</string>
+    <string name="clock_minutes">Минути</string>
+    <string name="clock_start">Старт</string>
+    <string name="clock_reset">Нулиране</string>
+    <string name="clock_lap">Обиколка</string>
+</resources>

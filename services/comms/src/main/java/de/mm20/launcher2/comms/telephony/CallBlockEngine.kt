@@ -35,7 +35,10 @@ object CallBlockEngine : KoinComponent {
         if (hidden && commsSettings.blockHiddenNumbers.first()) return true
         if (!incoming && !commsSettings.blockOutgoingCalls.first()) return false
         if (commsSettings.enableSpamBlocking.first() && number.isNotBlank() &&
-            spamRepository.isNumberBlocked(number)
+            spamRepository.isPersonallyBlocked(number)
+        ) return true
+        if (commsSettings.systemSpamBlocking.first() && number.isNotBlank() &&
+            spamRepository.isSystemBlocked(number)
         ) return true
         if (incoming && commsSettings.blockUnknownNumbers.first() &&
             number.isNotBlank() && !contacts.containsNumber(number)

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_files_cannot_open_file">לא ניתן לפתוח קובץ זה</string>
+    <string name="hc_open_with_2">פתיחה באמצעות…</string>
+    <string name="hc_root_explorer">סייר רוט</string>
+    <string name="hf_files_careful">זהירות</string>
+    <string name="hf_files_needs_root">נדרש טלפון עם הרשאות רוט</string>
+    <string name="hf_files_root_explorer_on">סייר רוט: פעיל</string>
+    <string name="hf_files_root_menu">סייר רוט…</string>
+    <string name="hf_files_root_off">כיבוי סייר רוט</string>
+    <string name="hf_files_system_readonly">הגדרת /system לקריאה בלבד</string>
+    <string name="hf_files_system_writable">התרת כתיבה אל /system</string>
+    <string name="hf_files_tap_to_turn_off">יש להקיש כדי לכבות</string>
+</resources>

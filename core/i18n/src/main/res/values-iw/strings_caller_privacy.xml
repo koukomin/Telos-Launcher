@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">זיהוי וחסימת מתקשרים</string>
+    <string name="caller_system_list">מספרים חסומים ב-Android</string>
+    <string name="caller_online_lookup">זיהוי מתקשרים מקוון</string>
+    <string name="caller_online_disclosure">שולח מספרים נכנסים לא מוכרים אל white-pages.gr כדי לקבל שם ודירוגים שהציעה הקהילה. כבוי כברירת מחדל; לעולם אינו חוסם אוטומטית.</string>
+    <string name="caller_likely_spam">כנראה ספאם · white-pages.gr</string>
+    <string name="caller_block_partial">הרשימה האישית עודכנה. לא ניתן לעדכן את המספרים החסומים ב-Android; יש להגדיר את Telos כאפליקציית הטלפון או ה-SMS המוגדרת כברירת מחדל ולנסות שוב.</string>
+    <string name="caller_suggested_name">שם מוצע: %1$s</string>
+</resources>

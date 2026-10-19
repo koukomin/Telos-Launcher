@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Issejvjat f’Pictures/Telos</string>
+    <string name="camera_native_failed">Żball tal-kamera: %1$s</string>
+    <string name="camera_native_capture">Aqbad</string>
+    <string name="camera_native_record">Irrekordja vidjo</string>
+    <string name="camera_native_stop">Waqqaf ir-reġistrazzjoni</string>
+    <string name="camera_native_timer">Tajmer</string>
+    <string name="camera_native_settings">Settings tal-qbid</string>
+    <string name="camera_native_exposure">Kumpens tal-espożizzjoni</string>
+    <string name="camera_native_iso">Sensittività ISO</string>
+    <string name="camera_native_shutter">Tul tax-shutter (ms)</string>
+    <string name="camera_native_auto">Espożizzjoni awtomatika</string>
+    <string name="camera_native_histogram">Istogramma</string>
+    <string name="camera_native_audio">Irrekordja l-awdjo tal-mikrofonu</string>
+    <string name="camera_native_discreet_hint">Il-previżjoni moħbija. Il-qbid xorta jeħtieġ azzjoni espliċita; l-indikaturi tal-kamera tas-sistema jibqgħu viżibbli.</string>
+    <string name="camera_native_capabilities">Il-modi disponibbli jiddependu minn din il-kamera. Ir-ritratti jiġu pproċessati fuq l-apparat; l-ebda magna proprjetarja mhi inkluża.</string>
+    <string name="camera_native_formats">JPEG iżomm il-metadata tal-kamera meta attivat. PNG/WebP ineħħu l-metadata.</string>
+    <string name="camera_native_gallery">Iftaħ il-gallerija</string>
+    <string name="camera_native_flash">Flash</string>
+    <string name="camera_native_panorama_hint" formatted="false">Panorama manwali: aqbad 2–8 immaġnijiet mix-xellug għal-lemin b’20 % sovrapożizzjoni, u żomm l-orizzont livell. Il-ġonot jitħalltu mingħajr allinjament awtomatiku.</string>
+    <string name="camera_native_webcam_lan">Kull min għandu dan il-URL b’token fuq in-netwerk lokali tiegħek jista’ jara l-kamera. Il-qsim jieqaf meta dan l-iskrin jitlaq mit-tagħrif miksub.</string>
+    <string name="camera_native_hidden_saved">Issejvjat privatament f’Pictures/TelosHidden. L-album moħbi ma jidhirx fil-gallerija u jitħassar meta jitneħħa Telos.</string>
+    <string name="camera_native_geo_hint">JPEG EXIF biss. Iżid post disponibbli, sa 10 minuti antik bi preċiżjoni sa 500 m.</string>
+    <string name="camera_native_face_trigger">Aqbad meta jinstab wiċċ</string>
+    <string name="camera_native_motion_trigger">Aqbad meta jinstab moviment</string>
+    <string name="camera_native_trigger_hint">Fil-faċċata biss. Mhux aktar minn darba kull 5 sekondi. Il-moviment juża bidliet fil-previżjoni u jista’ jirreaġixxi għad-dawl.</string>
+</resources>

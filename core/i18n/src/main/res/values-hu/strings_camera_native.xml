@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Mentve ide: Pictures/Telos</string>
+    <string name="camera_native_failed">Kamerahiba: %1$s</string>
+    <string name="camera_native_capture">Fényképezés</string>
+    <string name="camera_native_record">Videó rögzítése</string>
+    <string name="camera_native_stop">Felvétel leállítása</string>
+    <string name="camera_native_timer">Időzítő</string>
+    <string name="camera_native_settings">Rögzítési beállítások</string>
+    <string name="camera_native_exposure">Expozíciókompenzáció</string>
+    <string name="camera_native_iso">ISO-érzékenység</string>
+    <string name="camera_native_shutter">Záridő (ms)</string>
+    <string name="camera_native_auto">Automatikus expozíció</string>
+    <string name="camera_native_histogram">Hisztogram</string>
+    <string name="camera_native_audio">Mikrofon hangjának rögzítése</string>
+    <string name="camera_native_discreet_hint">Előnézet elrejtve. A rögzítés továbbra is tudatos műveletet igényel; a rendszer kamerajelzői láthatók maradnak.</string>
+    <string name="camera_native_capabilities">Az elérhető módok ettől a kamerától függenek. A fotók feldolgozása az eszközön történik; saját tulajdonú motor nincs mellékelve.</string>
+    <string name="camera_native_formats">A JPEG megőrzi a kamera metaadatait, ha engedélyezve van. A PNG/WebP eltávolítja a metaadatokat.</string>
+    <string name="camera_native_gallery">Galéria megnyitása</string>
+    <string name="camera_native_flash">Vaku</string>
+    <string name="camera_native_panorama_hint" formatted="false">Kézi panoráma: készítsen 2–8 képet balról jobbra 20 % átfedéssel, vízszintes horizonttal. Az illesztések automatikus igazítás nélkül összemosódnak.</string>
+    <string name="camera_native_webcam_lan">A helyi hálózaton bárki láthatja a kamerát ezzel a tokenes URL-lel. A megosztás leáll, amikor ez a képernyő elhagyja az előteret.</string>
+    <string name="camera_native_hidden_saved">Privát mentés a Pictures/TelosHidden mappába. A rejtett album nem jelenik meg a galériában, és a Telos eltávolításakor törlődik.</string>
+    <string name="camera_native_geo_hint">Csak JPEG EXIF. Ha elérhető, legfeljebb 10 perces, 500 m-en belüli pontosságú helyet ad hozzá.</string>
+    <string name="camera_native_face_trigger">Felvétel arc észlelésekor</string>
+    <string name="camera_native_motion_trigger">Felvétel mozgás észlelésekor</string>
+    <string name="camera_native_trigger_hint">Csak előtérben. Legfeljebb 5 másodpercenként. A mozgás az előnézet változásain alapul, és a fényváltozásokra is reagálhat.</string>
+</resources>

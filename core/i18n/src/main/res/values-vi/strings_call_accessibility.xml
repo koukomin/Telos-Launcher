@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Ảnh người gọi toàn màn hình</string>
+    <string name="call_photo_background_summary">Hiển thị ảnh liên hệ làm nền cuộc gọi đến.</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Poçt hesabları</string>
+    <string name="ermis_all_accounts">Bütün hesablar</string>
+    <string name="ermis_native_intro">Poçtunuz Telos daxilində. TLS və parol və ya tətbiq parolu ilə IMAP/SMTP hesabı qoşun.</string>
+    <string name="ermis_empty">Burada məktub yoxdur. Hesabları sinxronlaşdırın və ya axtarışı dəyişin.</string>
+    <string name="ermis_operation_failed">Poçt əməliyyatı uğursuz oldu</string>
+    <string name="ermis_tls_help">Hər iki server yoxlanmış TLS dəstəkləməlidir. Gmail tətbiq parolu və ya dəstəklənən Google/microG girişindən istifadə edə bilər.</string>
+    <string name="ermis_username">Server istifadəçi adı</string>
+    <string name="ermis_username_help">E-poçt ünvanınız üçün boş saxlayın.</string>
+    <string name="ermis_imap_host">IMAP serveri</string>
+    <string name="ermis_imap_port">IMAP TLS portu</string>
+    <string name="ermis_smtp_host">SMTP serveri</string>
+    <string name="ermis_smtp_port">SMTP portu</string>
+    <string name="ermis_starttls">SMTP üçün STARTTLS tələb et</string>
+    <string name="ermis_saf_help">Fayl seçicisi Android Sənədlərini dəstəkləyən bulud xidmətlərini də göstərir. Böyük fayllar üçün məktuba paylaşma keçidi əlavə edin.</string>
+    <string name="ermis_reply">Cavab ver</string>
+    <string name="ermis_google_sign_in">Google / microG girişi</string>
+    <string name="ermis_google_help">Seçilmiş Android hesabını yalnız doğrulayıcısı poçta girişə icazə verdikdə istifadə edir. Əks halda tətbiq parolu istifadə edin.</string>
+    <string name="ermis_google_unavailable">Hesab təminatçısı poçta girişə icazə vermədi. Tətbiq parolu istifadə edin.</string>
+    <string name="ermis_conversation_count">Bu söhbətdə %1$d mesaj</string>
+</resources>

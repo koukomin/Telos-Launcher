@@ -428,16 +428,18 @@ internal class AppRepositoryImpl(
                     // Also search virtual apps
                     val foldedQuery = de.mm20.launcher2.search.GreekFold.fold(query)
                     virtualApps.forEach { vApp ->
+                        // Central aliases also cover providers introduced without their own keywords.
+                        val aliases = (vApp.keywords + de.mm20.launcher2.search.TelosAppKeywords.forKey(vApp.key)).distinct()
                         val score = ResultScore.from(
                             query = normalizedQuery,
                             primaryFields = listOf(stringNormalizer.normalize(vApp.label)) +
-                                vApp.keywords.map { stringNormalizer.normalize(it) }
+                                aliases.map { stringNormalizer.normalize(it) }
                         )
                         if (score.score >= 0.8f) {
                             appResults.add(vApp)
                         } else if (foldedQuery.length >= 2 && (
                                 de.mm20.launcher2.search.GreekFold.matches(vApp.label, foldedQuery) ||
-                                    vApp.keywords.any { de.mm20.launcher2.search.GreekFold.matches(it, foldedQuery) })
+                                    aliases.any { de.mm20.launcher2.search.GreekFold.matches(it, foldedQuery) })
                         ) {
                             // Greek / accent-less / Greeklish spelling ("Τηλέφωνο", "tilefono", "klhseis")
                             appResults.add(vApp)

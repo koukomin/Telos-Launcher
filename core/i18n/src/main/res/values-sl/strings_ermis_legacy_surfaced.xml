@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Dodaj račun</string>
+    <string name="ermis_attach">Priloži iz tega telefona</string>
+    <string name="ermis_body">Sporočilo</string>
+    <string name="ermis_compose">Napiši</string>
+    <string name="ermis_connect">Poveži</string>
+    <string name="ermis_email">E-pošta</string>
+    <string name="ermis_inbox">Prejeto</string>
+    <string name="ermis_no_subject">(brez zadeve)</string>
+    <string name="ermis_note">Opomba</string>
+    <string name="ermis_note_save">Shrani opombo</string>
+    <string name="ermis_password">Geslo</string>
+    <string name="ermis_remove">Odstrani</string>
+    <string name="ermis_search">Išči pošto</string>
+    <string name="ermis_send">Pošlji</string>
+    <string name="ermis_starred">Z zvezdico</string>
+    <string name="ermis_subject">Zadeva</string>
+    <string name="ermis_sync">Sinhroniziraj</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Za</string>
+</resources>

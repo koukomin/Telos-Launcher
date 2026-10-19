@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Цветове от тапета</string>
+    <string name="radio_translucent">Полупрозрачен облик</string>
+    <string name="radio_controls_scroll">Превъртане на контролите за възпроизвеждане със станциите</string>
+    <string name="radio_tap_plays">Докоснете станция за възпроизвеждане</string>
+    <string name="radio_large_buffer">По-голям буфер за възпроизвеждане</string>
+    <string name="radio_edit_metadata">Разрешаване на редактирането на информация за станции</string>
+    <string name="radio_edit_streams">Разрешаване на редактирането на адреси на потоци</string>
+    <string name="radio_auto_images">Автоматично обновяване на изображенията на станциите</string>
+    <string name="radio_update_images">Обновяване на изображенията на станциите сега</string>
+    <string name="radio_backup_images">ZIP архив, включващ изображенията на станциите</string>
+    <string name="radio_restore_replace_summary">Да се замени ли текущата колекция от станции с този архив? Текущата ви колекция ще бъде премахната.</string>
+    <string name="radio_station_image_url">Адрес на изображението на станцията</string>
+</resources>

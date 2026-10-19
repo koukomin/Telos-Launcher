@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Χρώματα ταπετσαρίας</string>
+    <string name="radio_translucent">Ημιδιαφανής εμφάνιση</string>
+    <string name="radio_controls_scroll">Κύλιση χειριστηρίων μαζί με τους σταθμούς</string>
+    <string name="radio_tap_plays">Αναπαραγωγή με πάτημα στον σταθμό</string>
+    <string name="radio_large_buffer">Μεγαλύτερη προσωρινή μνήμη αναπαραγωγής</string>
+    <string name="radio_edit_metadata">Επεξεργασία πληροφοριών σταθμού</string>
+    <string name="radio_edit_streams">Επεξεργασία διευθύνσεων ροής</string>
+    <string name="radio_auto_images">Αυτόματη ενημέρωση εικόνων σταθμών</string>
+    <string name="radio_update_images">Ενημέρωση εικόνων σταθμών τώρα</string>
+    <string name="radio_backup_images">Αντίγραφο ZIP με τις εικόνες των σταθμών</string>
+    <string name="radio_restore_replace_summary">Να αντικατασταθεί η τρέχουσα συλλογή σταθμών με αυτό το αντίγραφο; Η τρέχουσα συλλογή θα αφαιρεθεί.</string>
+    <string name="radio_station_image_url">Διεύθυνση εικόνας σταθμού</string>
+</resources>

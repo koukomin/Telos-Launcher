@@ -55,7 +55,7 @@ fun NetworkPrivacyScreen() {
                     title = stringResource(R.string.nt_onion),
                     value = config.torEnabled, enabled = state !is NetState.Starting,
                     onValueChanged = {
-                        settings.update { s -> s.copy(torEnabled = it, torWasActive = if (it) s.torWasActive else false) }; settings.flush()
+                        settings.update { s -> s.copy(torEnabled = it, torSystemDefault = if (it) s.torSystemDefault else false, torWasActive = if (it) s.torWasActive else false) }; settings.flush()
                         if (state is NetState.On) engine.restart()
                     },
                 )

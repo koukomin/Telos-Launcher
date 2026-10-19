@@ -124,7 +124,12 @@ fun LauncherTheme(
                 // on a plain background (not in a Surface or Scaffold) are black on the dark theme.
                 CompositionLocalProvider(
                     LocalContentColor provides MaterialTheme.colorScheme.onSurface,
-                    content = content,
+                    content = {
+                        val context = androidx.compose.ui.platform.LocalContext.current
+                        if (context is de.mm20.launcher2.ui.settings.TelosAppActivity) {
+                            de.mm20.launcher2.ui.component.VirtualAppTheme(content = content)
+                        } else content()
+                    },
                 )
             }
         )

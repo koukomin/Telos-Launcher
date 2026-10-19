@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Tanpa kunci API: merakam 10 saat dan mengira cap jari pada peranti. Hanya cap jari dihantar ke Shazam, bukan audio asal.</string>
+    <string name="akou_get_token">Dapatkan token API AudD</string>
+    <string name="akou_api_token">Token API AudD</string>
+    <string name="akou_start">Rakam dan kenal pasti</string>
+    <string name="akou_recording">Merakam 10 saat…</string>
+    <string name="akou_identifying">Memadankan cap jari…</string>
+    <string name="akou_no_match">Tiada padanan ditemui. Cuba lagi dekat dengan muzik.</string>
+    <string name="akou_matched">Lagu dikenal pasti</string>
+    <string name="akou_failed">Pengecaman gagal. Semak mikrofon dan sambungan, kemudian cuba lagi berhampiran muzik.</string>
+    <string name="akou_microphone_denied">Kebenaran mikrofon diperlukan untuk merakam sampel pengecaman.</string>
+    <string name="akou_history">Sejarah pengecaman</string>
+    <string name="akou_youtube_music">Cari dalam YouTube Music</string>
+</resources>

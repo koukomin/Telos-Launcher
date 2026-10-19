@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Saglabāts mapē Pictures/Telos</string>
+    <string name="camera_native_failed">Kameras kļūda: %1$s</string>
+    <string name="camera_native_capture">Uzņemt</string>
+    <string name="camera_native_record">Ierakstīt video</string>
+    <string name="camera_native_stop">Apturēt ierakstu</string>
+    <string name="camera_native_timer">Taimeris</string>
+    <string name="camera_native_settings">Uzņemšanas iestatījumi</string>
+    <string name="camera_native_exposure">Ekspozīcijas kompensācija</string>
+    <string name="camera_native_iso">ISO jutība</string>
+    <string name="camera_native_shutter">Ekspozīcijas laiks (ms)</string>
+    <string name="camera_native_auto">Automātiska ekspozīcija</string>
+    <string name="camera_native_histogram">Histogramma</string>
+    <string name="camera_native_audio">Ierakstīt mikrofona skaņu</string>
+    <string name="camera_native_discreet_hint">Priekšskatījums paslēpts. Uzņemšanai joprojām nepieciešama apzināta darbība; sistēmas kameras indikatori paliek redzami.</string>
+    <string name="camera_native_capabilities">Pieejamie režīmi ir atkarīgi no šīs kameras. Fotoattēli tiek apstrādāti ierīcē; patentēts dzinējs nav iekļauts.</string>
+    <string name="camera_native_formats">JPEG saglabā kameras metadatus, ja tas ir iespējots. PNG/WebP noņem metadatus.</string>
+    <string name="camera_native_gallery">Atvērt galeriju</string>
+    <string name="camera_native_flash">Zibspuldze</string>
+    <string name="camera_native_panorama_hint" formatted="false">Manuāla panorāma: uzņemiet 2–8 attēlus no kreisās uz labo ar 20 % pārklājumu, turot horizontu līmenī. Savienojumi tiek sapludināti bez automātiskas izlīdzināšanas.</string>
+    <string name="camera_native_webcam_lan">Ikviens ar šo marķiera URL jūsu lokālajā tīklā var skatīt kameru. Kopīgošana beidzas, kad šis ekrāns vairs nav priekšplānā.</string>
+    <string name="camera_native_hidden_saved">Privāti saglabāts mapē Pictures/TelosHidden. Slēptais albums netiek rādīts galerijā un tiek dzēsts, atinstalējot Telos.</string>
+    <string name="camera_native_geo_hint">Tikai JPEG EXIF. Pievieno pieejamu atrašanās vietu, kas nav vecāka par 10 minūtēm, ar precizitāti līdz 500 m.</string>
+    <string name="camera_native_face_trigger">Uzņemt, konstatējot seju</string>
+    <string name="camera_native_motion_trigger">Uzņemt, konstatējot kustību</string>
+    <string name="camera_native_trigger_hint">Tikai priekšplānā. Ne biežāk kā reizi 5 sekundēs. Kustība tiek noteikta pēc priekšskatījuma izmaiņām un var reaģēt uz apgaismojumu.</string>
+</resources>

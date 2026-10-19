@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis levelezés</string>
+    <string name="ermis_new_mail_count">%1$d új üzenet</string>
+    <string name="ermis_error_cache">A levelezési gyorsítótár nem oldható fel.</string>
+    <string name="ermis_error_auth">Sikertelen hitelesítés. Ellenőrizze a bejelentkezési módot és a fiók adatait.</string>
+    <string name="ermis_error_tls">A kiszolgáló tanúsítványa nem ellenőrizhető.</string>
+    <string name="ermis_error_generic">Sikertelen művelet. Ellenőrizze a kapcsolatot és a kiszolgáló beállításait.</string>
+    <string name="ermis_error_sent_copy">Az üzenet elküldve, de a másolat nem menthető az Elküldött mappába. Ne küldje újra.</string>
+</resources>

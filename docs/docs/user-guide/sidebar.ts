@@ -110,6 +110,10 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         ],
       },
       {
+        text: 'Clock',
+        link: '/docs/user-guide/telos/clock',
+      },
+      {
         text: 'Terminal',
         link: '/docs/user-guide/telos/terminal',
       },

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Sen API-ŝlosilo: registras 10 sekundojn kaj kalkulas la fingrospuron en la aparato. Nur la fingrospuro estas sendata al Shazam, neniam la sono.</string>
+    <string name="akou_get_token">Akiri API-ĵetonon de AudD</string>
+    <string name="akou_api_token">API-ĵetono de AudD</string>
+    <string name="akou_start">Registri kaj rekoni</string>
+    <string name="akou_recording">Registrante 10 sekundojn…</string>
+    <string name="akou_identifying">Kongruigas la fingrospuron…</string>
+    <string name="akou_no_match">Neniu kongruo trovita. Provu denove pli proksime al la muziko.</string>
+    <string name="akou_matched">Kanto rekonita</string>
+    <string name="akou_failed">Rekono malsukcesis. Kontrolu mikrofonon kaj konekton kaj reprovu proksime al la muziko.</string>
+    <string name="akou_microphone_denied">Mikrofona permeso necesas por registri specimenon.</string>
+    <string name="akou_history">Historio de rekonoj</string>
+    <string name="akou_youtube_music">Serĉi en YouTube Music</string>
+</resources>

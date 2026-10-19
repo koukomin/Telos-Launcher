@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Dunia</string>
+    <string name="clock_alarm">Penggera</string>
+    <string name="clock_timer">Pemasa</string>
+    <string name="clock_stopwatch">Jam randik</string>
+    <string name="clock_local">Waktu tempatan</string>
+    <string name="clock_city_search">Cari bandar atau negara</string>
+    <string name="clock_night">Jam malam</string>
+    <string name="clock_night_exit">Ketik untuk tutup</string>
+    <string name="clock_audio_file">Fail audio</string>
+    <string name="clock_default_sound">Bunyi penggera</string>
+    <string name="clock_stream_url">URL strim radio</string>
+    <string name="clock_sound_fallback">Penggera sekali. Jika media gagal, bunyi penggera lalai dimainkan.</string>
+    <string name="clock_exact">Benarkan penggera dan peringatan</string>
+    <string name="clock_dismiss">Tutup</string>
+    <string name="clock_minutes">Minit</string>
+    <string name="clock_start">Mula</string>
+    <string name="clock_reset">Tetap semula</string>
+    <string name="clock_lap">Pusingan</string>
+</resources>

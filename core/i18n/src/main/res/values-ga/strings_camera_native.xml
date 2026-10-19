@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Sábháilte in Pictures/Telos</string>
+    <string name="camera_native_failed">Earráid cheamara: %1$s</string>
+    <string name="camera_native_capture">Gabh</string>
+    <string name="camera_native_record">Taifead físeán</string>
+    <string name="camera_native_stop">Stop an taifeadadh</string>
+    <string name="camera_native_timer">Amadóir</string>
+    <string name="camera_native_settings">Socruithe gabhála</string>
+    <string name="camera_native_exposure">Cúiteamh nochta</string>
+    <string name="camera_native_iso">Íogaireacht ISO</string>
+    <string name="camera_native_shutter">Fad comhla (ms)</string>
+    <string name="camera_native_auto">Nochtadh uathoibríoch</string>
+    <string name="camera_native_histogram">Histeagram</string>
+    <string name="camera_native_audio">Taifead fuaim an mhicreafóin</string>
+    <string name="camera_native_discreet_hint">Réamhamharc folaithe. Teastaíonn gníomh sainráite fós don ghabháil; fanann táscairí ceamara an chórais le feiceáil.</string>
+    <string name="camera_native_capabilities">Braitheann na módanna atá ar fáil ar an gceamara seo. Próiseáiltear grianghraif ar an ngléas; níl inneall dílseánaigh san áireamh.</string>
+    <string name="camera_native_formats">Coinníonn JPEG meiteashonraí an cheamara nuair a chumasaítear é. Baineann PNG/WebP meiteashonraí.</string>
+    <string name="camera_native_gallery">Oscail an gailearaí</string>
+    <string name="camera_native_flash">Splanc</string>
+    <string name="camera_native_panorama_hint" formatted="false">Lánléargas láimhe: gabh 2–8 íomhá ó chlé go deas le forluí 20 %, agus coinnigh an léaslíne cothrom. Cumaisctear na hailt gan ailíniú uathoibríoch.</string>
+    <string name="camera_native_webcam_lan">Is féidir le haon duine ar do líonra áitiúil leis an URL comhartha seo an ceamara a fheiceáil. Stopann an comhroinnt nuair a fhágann an scáileán seo an tulra.</string>
+    <string name="camera_native_hidden_saved">Sábháilte go príobháideach in Pictures/TelosHidden. Ní thaispeántar an t-albam folaithe sa ghailearaí agus scriostar é nuair a dhíshuiteáiltear Telos.</string>
+    <string name="camera_native_geo_hint">JPEG EXIF amháin. Cuireann sé suíomh ar fáil, nach bhfuil níos sine ná 10 nóiméad agus cruinneas laistigh de 500 m, má tá sé ar fáil.</string>
+    <string name="camera_native_face_trigger">Gabh nuair a aimsítear aghaidh</string>
+    <string name="camera_native_motion_trigger">Gabh nuair a aimsítear gluaiseacht</string>
+    <string name="camera_native_trigger_hint">Sa tulra amháin. Uair amháin gach 5 shoicind ar a mhéad. Úsáidtear athruithe sa réamhamharc agus d’fhéadfadh athruithe solais é a spreagadh.</string>
+</resources>

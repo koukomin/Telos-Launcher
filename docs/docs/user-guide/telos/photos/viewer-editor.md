@@ -135,3 +135,7 @@ There are no preferences; behavior follows the system permissions.
 | Delete button missing | The picture is not from the media library, or Android is older than 11 |
 | The saved edit is not in the gallery | Wait for the media scanner, then open the Albums tab and look for **Telos** |
 | The copy is smaller than the original | Clean copies are scaled to at most about 4096 pixels on the longer side |
+
+## File previews
+
+Viewer uses bounded previews for images, videos and PDF pages, plus available embedded office previews and text snippets. Unsupported or unreadable formats keep a file-type fallback. Reused rows clear the previous file's preview before loading a new URI.

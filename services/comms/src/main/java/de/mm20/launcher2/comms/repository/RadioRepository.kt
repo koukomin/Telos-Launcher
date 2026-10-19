@@ -10,6 +10,8 @@ interface RadioRepository {
     suspend fun toggleFavorite(station: RadioStation)
     suspend fun searchStations(query: String): List<RadioStation>
 
+    /** Merge imported stations, or atomically replace the collection after explicit UI confirmation. */
+    suspend fun importStations(stations: List<RadioStation>, replace: Boolean = false): Int
     suspend fun saveStation(station: RadioStation)
     suspend fun renameStation(id: String, name: String)
     suspend fun deleteStation(id: String)

@@ -184,6 +184,7 @@ class RadioViewModel : ViewModel(), KoinComponent {
         if (controller.isPlaying || RadioPlayerService.reconnecting.value) {
             controller.pause()
         } else {
+            if (controller.playbackState == Player.STATE_IDLE) controller.prepare()
             controller.play()
         }
     }

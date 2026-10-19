@@ -64,3 +64,9 @@ The first time you turn it on, Android asks for your consent to set up a VPN. Wi
 Add **Telos Network** from the built-in widget picker. It shows VPN state, the selected DNS server, blocked query/connection counts since logs were cleared, local interface addresses and sampled download/upload rates. Rates use device counters, including possible VPN interface overhead; they are not a tunnel speed test.
 
 WAN lookup runs only when tapped and contacts the displayed `api.ipify.org` endpoint. It shows the route used by Telos itself, which is normally excluded from its own VPN; it must not be interpreted as the exit IP of a selected WireGuard or Tor route.
+
+## Routing and notification controls
+
+Tor is available from the Network home and settings. The shared system route chooser, also available in the System widget, selects Direct, an imported WireGuard profile, or Tor. Direct disables the selected proxy route while the local Network firewall may remain active. Tor starts internally and TCP/DNS traffic fails closed while it connects; unsupported UDP is blocked. The System widget uses the same process reader as the System app, subject to Android process visibility limits.
+
+The VPN notification exposes status and controls. Pause offers 5 minutes, 30 minutes, one hour or two hours, plus Stop. Resume restores the wanted configuration. Android exact-alarm/background-service restrictions may delay automatic resume; Resume remains available manually. System always-on VPN lockdown can block connectivity while paused. Stopping explicitly cancels pending resume.

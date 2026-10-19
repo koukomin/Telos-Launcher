@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">郵件帳戶</string>
+    <string name="ermis_all_accounts">所有帳戶</string>
+    <string name="ermis_native_intro">在 Telos 內管理郵件。使用 TLS 和密碼或應用程式密碼連接 IMAP/SMTP 帳戶。</string>
+    <string name="ermis_empty">沒有郵件。請同步帳戶或變更搜尋。</string>
+    <string name="ermis_operation_failed">郵件操作失敗</string>
+    <string name="ermis_tls_help">兩台伺服器均須支援經過驗證的 TLS。Gmail 可使用應用程式密碼，或在支援時使用 Google/microG 帳戶存取。</string>
+    <string name="ermis_username">伺服器使用者名稱</string>
+    <string name="ermis_username_help">留空以使用您的電子郵件地址。</string>
+    <string name="ermis_imap_host">IMAP 伺服器</string>
+    <string name="ermis_imap_port">IMAP TLS 連接埠</string>
+    <string name="ermis_smtp_host">SMTP 伺服器</string>
+    <string name="ermis_smtp_port">SMTP 連接埠</string>
+    <string name="ermis_starttls">SMTP 必須使用 STARTTLS</string>
+    <string name="ermis_saf_help">檔案選擇器也會顯示支援 Android 文件的雲端服務。大型檔案請在郵件中加入分享連結。</string>
+    <string name="ermis_reply">回覆</string>
+    <string name="ermis_google_sign_in">Google / microG 登入</string>
+    <string name="ermis_google_help">僅在驗證服務授予郵件存取權時，才使用所選 Android 帳戶。否則請使用應用程式密碼。</string>
+    <string name="ermis_google_unavailable">帳戶供應商未授予郵件存取權。請改用應用程式密碼。</string>
+    <string name="ermis_conversation_count">此對話中有 %1$d 封郵件</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Пошта Ermis</string>
+    <string name="ermis_new_mail_count">%1$d новых паведамленняў</string>
+    <string name="ermis_error_cache">Не ўдалося разблакаваць кэш пошты.</string>
+    <string name="ermis_error_auth">Памылка аўтэнтыфікацыі. Праверце спосаб уваходу і ўліковыя даныя.</string>
+    <string name="ermis_error_tls">Не ўдалося праверыць сертыфікат сервера.</string>
+    <string name="ermis_error_generic">Памылка аперацыі. Праверце злучэнне і налады сервера.</string>
+    <string name="ermis_error_sent_copy">Ліст адпраўлены, але копія не захавана ў Адпраўленых. Не адпраўляйце паўторна.</string>
+</resources>

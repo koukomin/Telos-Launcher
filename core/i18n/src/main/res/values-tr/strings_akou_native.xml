@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">API anahtarı gerekmez: 10 saniye kaydedilir ve parmak izi cihazda hesaplanır. Shazam’a yalnızca parmak izi gönderilir, ses asla gönderilmez.</string>
+    <string name="akou_get_token">AudD API belirteci alın</string>
+    <string name="akou_api_token">AudD API belirteci</string>
+    <string name="akou_start">Kaydet ve tanı</string>
+    <string name="akou_recording">10 saniye kaydediliyor…</string>
+    <string name="akou_identifying">Parmak izi eşleştiriliyor…</string>
+    <string name="akou_no_match">Eşleşme bulunamadı. Müziğe daha yakınken tekrar deneyin.</string>
+    <string name="akou_matched">Şarkı tanındı</string>
+    <string name="akou_failed">Tanıma başarısız. Mikrofonu ve bağlantıyı kontrol edip müziğe yakınken tekrar deneyin.</string>
+    <string name="akou_microphone_denied">Örnek kaydetmek için mikrofon izni gerekir.</string>
+    <string name="akou_history">Tanıma geçmişi</string>
+    <string name="akou_youtube_music">YouTube Music’te bul</string>
+</resources>

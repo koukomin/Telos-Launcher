@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Horma-paperaren koloreak</string>
+    <string name="radio_translucent">Itxura zeharrargitsua</string>
+    <string name="radio_controls_scroll">Korritu erreprodukzio-kontrolak irratiekin batera</string>
+    <string name="radio_tap_plays">Ukitu irrati bat erreproduzitzeko</string>
+    <string name="radio_large_buffer">Erreprodukzio-buffer handiagoa</string>
+    <string name="radio_edit_metadata">Baimendu irratien informazioa editatzea</string>
+    <string name="radio_edit_streams">Baimendu igorpenen helbideak editatzea</string>
+    <string name="radio_auto_images">Eguneratu irratien irudiak automatikoki</string>
+    <string name="radio_update_images">Eguneratu irratien irudiak orain</string>
+    <string name="radio_backup_images">ZIP babeskopia irratien irudiekin</string>
+    <string name="radio_restore_replace_summary">Uneko irrati-bilduma babeskopia honekin ordeztu? Uneko bilduma kenduko da.</string>
+    <string name="radio_station_image_url">Irratiaren irudiaren helbidea</string>
+</resources>

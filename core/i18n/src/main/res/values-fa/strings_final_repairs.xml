@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_more">گزینه‌های بیشتر</string>
+    <string name="au3_appearance_typo_label">برچسب</string>
+    <string name="au_radio_import_failed">خواندن این پرونده ممکن نشد</string>
+    <string name="file_search_type_images">تصاویر</string>
+    <string name="file_search_type_videos">ویدیوها</string>
+    <string name="hc_add">افزودن</string>
+    <string name="hc_add_to_favorites">افزودن به علاقه‌مندی‌ها</string>
+    <string name="hc_back_up_collection">پشتیبان‌گیری از مجموعه</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">شماره‌هایی را که به فهرست مسدودشده‌های Telos افزوده‌اید مسدود کنید</string>
+    <string name="hc_done">انجام شد</string>
+    <string name="hc_edit">ویرایش</string>
+    <string name="hc_export_playlist_m3u">صدور فهرست پخش (M3U)</string>
+    <string name="hc_favorites">علاقه‌مندی‌ها</string>
+    <string name="hc_import_playlist_m3u_pls">ورود فهرست پخش (M3U / PLS)</string>
+    <string name="hc_offline_spam_list">فهرست آفلاین تماس‌های مزاحم</string>
+    <string name="hc_phone_number">شماره تلفن</string>
+    <string name="hc_rename_station">تغییر نام ایستگاه</string>
+    <string name="hc_restore_backup">بازیابی پشتیبان</string>
+    <string name="hc_stream_or_playlist_address">نشانی پخش زنده یا فهرست پخش</string>
+    <string name="hf_files_remove_favorite">حذف از علاقه‌مندی‌ها</string>
+    <string name="preference_screen_clockwidget">ساعت</string>
+    <string name="preference_theme">پوسته</string>
+    <string name="preference_theme_dark">تیره</string>
+    <string name="preference_theme_light">روشن</string>
+    <string name="preference_theme_system">پیروی از سیستم</string>
+    <string name="telos_youtube_add_playlist">افزودن به فهرست پخش</string>
+    <string name="telos_youtube_artist_radio">رادیوی هنرمند</string>
+    <string name="telos_youtube_library_local">علاقه‌مندی‌ها و فهرست‌های پخش در این گوشی می‌مانند و متعلق به حساب YouTube Music شما نیستند.</string>
+    <string name="telos_youtube_playlist_name">نام فهرست پخش</string>
+</resources>

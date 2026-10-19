@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Фото абонента на весь екран</string>
+    <string name="call_photo_background_summary">Показувати фото контакту як тло вхідного виклику.</string>
+</resources>

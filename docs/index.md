@@ -50,7 +50,7 @@ features:
     link: /docs/user-guide/telos/voice-recorder/
   - icon: 📷
     title: Camera
-    details: Hasselblad-style camera, RAW, discreet capture and an IP webcam for OBS.
+    details: Telos camera, RAW, discreet capture and an IP webcam for OBS.
     link: /docs/user-guide/telos/camera/
   - icon: 📝
     title: Notes

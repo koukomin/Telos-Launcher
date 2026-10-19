@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Shranjeno v Pictures/Telos</string>
+    <string name="camera_native_failed">Napaka kamere: %1$s</string>
+    <string name="camera_native_capture">Zajemi</string>
+    <string name="camera_native_record">Snemaj video</string>
+    <string name="camera_native_stop">Ustavi snemanje</string>
+    <string name="camera_native_timer">Časovnik</string>
+    <string name="camera_native_settings">Nastavitve zajema</string>
+    <string name="camera_native_exposure">Kompenzacija osvetlitve</string>
+    <string name="camera_native_iso">Občutljivost ISO</string>
+    <string name="camera_native_shutter">Čas zaklopa (ms)</string>
+    <string name="camera_native_auto">Samodejna osvetlitev</string>
+    <string name="camera_native_histogram">Histogram</string>
+    <string name="camera_native_audio">Snemaj zvok mikrofona</string>
+    <string name="camera_native_discreet_hint">Predogled je skrit. Zajem še vedno zahteva izrecno dejanje; sistemski kazalniki kamere ostanejo vidni.</string>
+    <string name="camera_native_capabilities">Razpoložljivi načini so odvisni od te kamere. Fotografije se obdelajo v napravi; lastniški pogon ni vključen.</string>
+    <string name="camera_native_formats">JPEG ohrani metapodatke kamere, ko je omogočeno. PNG/WebP odstranita metapodatke.</string>
+    <string name="camera_native_gallery">Odpri galerijo</string>
+    <string name="camera_native_flash">Bliskavica</string>
+    <string name="camera_native_panorama_hint" formatted="false">Ročna panorama: zajemite 2–8 slik od leve proti desni z 20 % prekrivanjem in ravnim obzorjem. Stiki se zlijejo brez samodejne poravnave.</string>
+    <string name="camera_native_webcam_lan">Vsakdo v lokalnem omrežju s tem URL-jem z žetonom lahko vidi kamero. Deljenje se konča, ko ta zaslon zapusti ospredje.</string>
+    <string name="camera_native_hidden_saved">Zasebno shranjeno v Pictures/TelosHidden. Skriti album ni v galeriji in se odstrani ob odstranitvi Telosa.</string>
+    <string name="camera_native_geo_hint">Samo JPEG EXIF. Doda razpoložljivo lokacijo, staro največ 10 minut, z natančnostjo do 500 m.</string>
+    <string name="camera_native_face_trigger">Zajemi ob zaznavi obraza</string>
+    <string name="camera_native_motion_trigger">Zajemi ob zaznavi gibanja</string>
+    <string name="camera_native_trigger_hint">Samo v ospredju. Največ enkrat na 5 sekund. Gibanje se zaznava iz sprememb predogleda in se lahko odzove na spremembe svetlobe.</string>
+</resources>

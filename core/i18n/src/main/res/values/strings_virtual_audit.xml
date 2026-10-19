@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Unavailable on this device</string>
+    <string name="virtual_magnifier_permission">Camera access is required for the magnifier</string>
+    <string name="virtual_magnifier_resume">Resume preview</string>
+    <string name="virtual_magnifier_freeze">Freeze frame</string>
+</resources>

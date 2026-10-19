@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Lume</string>
+    <string name="clock_alarm">Alarmă</string>
+    <string name="clock_timer">Temporizator</string>
+    <string name="clock_stopwatch">Cronometru</string>
+    <string name="clock_local">Ora locală</string>
+    <string name="clock_city_search">Caută oraș sau țară</string>
+    <string name="clock_night">Ceas de noapte</string>
+    <string name="clock_night_exit">Atinge pentru a închide</string>
+    <string name="clock_audio_file">Fișier audio</string>
+    <string name="clock_default_sound">Sunetul alarmei</string>
+    <string name="clock_stream_url">URL flux radio</string>
+    <string name="clock_sound_fallback">Alarmă unică. Dacă redarea eșuează, sună alarma implicită.</string>
+    <string name="clock_exact">Permite alarme și mementouri</string>
+    <string name="clock_dismiss">Închide</string>
+    <string name="clock_minutes">Minute</string>
+    <string name="clock_start">Pornește</string>
+    <string name="clock_reset">Resetează</string>
+    <string name="clock_lap">Tură</string>
+</resources>

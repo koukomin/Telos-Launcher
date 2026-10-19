@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Pasaule</string>
+    <string name="clock_alarm">Modinātājs</string>
+    <string name="clock_timer">Taimeris</string>
+    <string name="clock_stopwatch">Hronometrs</string>
+    <string name="clock_local">Vietējais laiks</string>
+    <string name="clock_city_search">Meklēt pilsētu vai valsti</string>
+    <string name="clock_night">Nakts pulkstenis</string>
+    <string name="clock_night_exit">Pieskarieties, lai aizvērtu</string>
+    <string name="clock_audio_file">Audiofails</string>
+    <string name="clock_default_sound">Modinātāja skaņa</string>
+    <string name="clock_stream_url">Radio straumes URL</string>
+    <string name="clock_sound_fallback">Vienreizējs modinātājs. Ja multivide nedarbojas, skan noklusējuma signāls.</string>
+    <string name="clock_exact">Atļaut modinātājus un atgādinājumus</string>
+    <string name="clock_dismiss">Aizvērt</string>
+    <string name="clock_minutes">Minūtes</string>
+    <string name="clock_start">Sākt</string>
+    <string name="clock_reset">Atiestatīt</string>
+    <string name="clock_lap">Aplis</string>
+</resources>

@@ -105,30 +105,6 @@ fun CallScreen(onFinished: () -> Unit) {
     var showNotes by remember { mutableStateOf(false) }
     var elapsed by remember { mutableLongStateOf(0L) }
 
-    LaunchedEffect(state.number) {
-        if (state.number.isEmpty()) return@LaunchedEffect
-        val photo = withContext(Dispatchers.IO) {
-            try {
-                val uri = android.net.Uri.withAppendedPath(
-                    ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
-                    android.net.Uri.encode(state.number),
-                )
-                context.contentResolver.query(
-                    uri,
-                    arrayOf(ContactsContract.PhoneLookup.PHOTO_URI),
-                    null,
-                    null,
-                    null,
-                )?.use { c ->
-                    if (c.moveToFirst()) c.getString(0) else null
-                }
-            } catch (_: Exception) {
-                null
-            }
-        }
-        TelosCallSession.setPhoto(photo)
-    }
-
     LaunchedEffect(state.active, autoRecord, qualityKey) {
         val hasMic = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
             PackageManager.PERMISSION_GRANTED
@@ -154,6 +130,7 @@ fun CallScreen(onFinished: () -> Unit) {
         }
     }
 
+    val fullScreenPhoto by commsSettings.fullScreenCallerPhoto.collectAsStateWithLifecycle(false)
     val answerStyle by commsSettings.answerStyle.collectAsStateWithLifecycle("buttons")
     val hiddenMap by commsSettings.hiddenNumbers.collectAsStateWithLifecycle(emptyMap())
     val maskHidden by commsSettings.maskHiddenIncoming.collectAsStateWithLifecycle(true)
@@ -162,6 +139,7 @@ fun CallScreen(onFinished: () -> Unit) {
     val privateLabel = stringResource(R.string.au_phoneb_private_caller)
     val unknownLabel = stringResource(R.string.widget_name_unknown)
     val displayName = if (hiddenIncoming) privateLabel
+    else if (state.callerNameSuggested && state.name != null) stringResource(R.string.caller_suggested_name, state.name!!)
     else state.name ?: state.number.ifEmpty { unknownLabel }
     val status = when {
         state.incoming -> stringResource(R.string.comms_incoming_call)
@@ -171,12 +149,13 @@ fun CallScreen(onFinished: () -> Unit) {
         else -> ""
     }
 
-    Box(Modifier.fillMaxSize()) {
-        if (!state.photoUri.isNullOrBlank()) {
+    val photo = state.photoUri.takeUnless { hiddenIncoming }
+    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
+        if (!photo.isNullOrBlank()) {
             AsyncImage(
-                model = state.photoUri,
+                model = photo,
                 contentDescription = null,
-                modifier = if (state.incoming) {
+                modifier = if (state.incoming && fullScreenPhoto) {
                     Modifier.fillMaxSize()
                 } else {
                     Modifier.fillMaxSize().blur(32.dp).alpha(0.35f)
@@ -189,7 +168,8 @@ fun CallScreen(onFinished: () -> Unit) {
                 displayName = displayName,
                 number = if (!hiddenIncoming && !state.name.isNullOrBlank() && state.number.isNotBlank()) state.number else null,
                 status = status,
-                photoUri = state.photoUri,
+                photoUri = photo.takeIf { fullScreenPhoto },
+                likelySpam = state.likelySpam && !hiddenIncoming,
                 rejectSms = rejectSms,
                 answerStyle = answerStyle,
             )
@@ -201,9 +181,10 @@ fun CallScreen(onFinished: () -> Unit) {
             .fillMaxSize()
             .systemBarsPadding()
             .padding(if (compact) 12.dp else 24.dp)
-            .then(if (compact) Modifier.verticalScroll(rememberScrollState()) else Modifier),
+            ,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(Modifier.height(if (compact) 8.dp else 48.dp))
             CommsAvatar(name = displayName, photoUri = state.photoUri, size = if (compact) 72.dp else 100.dp)
             Spacer(Modifier.height(if (compact) 8.dp else 20.dp))
@@ -227,7 +208,7 @@ fun CallScreen(onFinished: () -> Unit) {
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
         )
 
-        if (!compact) Spacer(Modifier.weight(1f)) else Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(12.dp))
 
         if (showKeypad && !state.incoming) {
             InCallKeypad(onDigit = { TelosCallSession.playDtmf(it) })
@@ -402,6 +383,7 @@ fun CallScreen(onFinished: () -> Unit) {
             )
         }
 
+        } // scroll content; disconnect remains visible
             FloatingActionButton(
                 onClick = { TelosCallSession.hangup() },
                 containerColor = RdRedCall,
@@ -425,6 +407,7 @@ private fun IncomingCallLayout(
     number: String?,
     status: String,
     photoUri: String?,
+    likelySpam: Boolean,
     rejectSms: String,
     answerStyle: String,
 ) {
@@ -460,11 +443,11 @@ private fun IncomingCallLayout(
             modifier = Modifier
                 .fillMaxSize()
                 .systemBarsPadding()
-                .navigationBarsPadding()
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(Modifier.height(48.dp))
+            Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
+            Spacer(Modifier.height(12.dp))
             Text(
                 text = displayName,
                 style = MaterialTheme.typography.displaySmall,
@@ -476,8 +459,9 @@ private fun IncomingCallLayout(
                 Text(text = number, style = MaterialTheme.typography.bodyLarge, color = onWhiteMuted)
             }
             Spacer(Modifier.height(8.dp))
+            if (likelySpam) Text(stringResource(R.string.caller_likely_spam), color = MaterialTheme.colorScheme.errorContainer)
             Text(text = status, style = MaterialTheme.typography.titleMedium, color = onWhiteMuted)
-            Spacer(Modifier.weight(1f))
+            Spacer(Modifier.height(12.dp))
 
             val sheetHeight = with(density) { (peekPx + sheetExtraPx).toDp() }
             val expanded = sheetExtraPx > extraMaxPx * 0.4f
@@ -570,7 +554,8 @@ private fun IncomingCallLayout(
                 )
             }
 
-            Spacer(Modifier.height(12.dp))
+            }
+            Spacer(Modifier.height(8.dp))
             if (answerStyle == "swipe") {
                 SwipeAnswer(
                     onAnswer = { TelosCallSession.answer() },

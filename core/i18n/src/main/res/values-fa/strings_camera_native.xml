@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">در Pictures/Telos ذخیره شد</string>
+    <string name="camera_native_failed">خطای دوربین: %1$s</string>
+    <string name="camera_native_capture">گرفتن عکس</string>
+    <string name="camera_native_record">ضبط ویدیو</string>
+    <string name="camera_native_stop">توقف ضبط</string>
+    <string name="camera_native_timer">زمان‌سنج</string>
+    <string name="camera_native_settings">تنظیمات ثبت</string>
+    <string name="camera_native_exposure">جبران نوردهی</string>
+    <string name="camera_native_iso">حساسیت ISO</string>
+    <string name="camera_native_shutter">مدت شاتر (میلی‌ثانیه)</string>
+    <string name="camera_native_auto">نوردهی خودکار</string>
+    <string name="camera_native_histogram">هیستوگرام</string>
+    <string name="camera_native_audio">ضبط صدای میکروفون</string>
+    <string name="camera_native_discreet_hint">پیش‌نمایش پنهان است. ثبت همچنان به اقدام صریح نیاز دارد؛ نشانگرهای دوربین سیستم قابل مشاهده می‌مانند.</string>
+    <string name="camera_native_capabilities">حالت‌های موجود به این دوربین بستگی دارند. عکس‌ها روی دستگاه پردازش می‌شوند؛ هیچ موتور اختصاصی ارائه نمی‌شود.</string>
+    <string name="camera_native_formats">JPEG در صورت فعال بودن فرادادهٔ دوربین را حفظ می‌کند. PNG/WebP فراداده را حذف می‌کنند.</string>
+    <string name="camera_native_gallery">باز کردن گالری</string>
+    <string name="camera_native_flash">فلاش</string>
+    <string name="camera_native_panorama_hint" formatted="false">پانورامای دستی: ۲ تا ۸ تصویر از چپ به راست با ۲۰٪ هم‌پوشانی و افق تراز بگیرید. درزها بدون تراز خودکار ترکیب می‌شوند.</string>
+    <string name="camera_native_webcam_lan">هرکس در شبکهٔ محلی شما این نشانی دارای توکن را داشته باشد می‌تواند دوربین را ببیند. اشتراک‌گذاری با خروج این صفحه از پیش‌زمینه متوقف می‌شود.</string>
+    <string name="camera_native_hidden_saved">به‌صورت خصوصی در Pictures/TelosHidden ذخیره شد. آلبوم پنهان در گالری دیده نمی‌شود و با حذف Telos پاک می‌شود.</string>
+    <string name="camera_native_geo_hint">فقط EXIF در JPEG. در صورت وجود، مکان حداکثر ۱۰ دقیقه پیش با دقت در محدودهٔ ۵۰۰ متر را اضافه می‌کند.</string>
+    <string name="camera_native_face_trigger">ثبت هنگام تشخیص چهره</string>
+    <string name="camera_native_motion_trigger">ثبت هنگام تشخیص حرکت</string>
+    <string name="camera_native_trigger_hint">فقط در پیش‌زمینه. حداکثر هر ۵ ثانیه یک عکس. حرکت از تغییرات پیش‌نمایش تشخیص داده می‌شود و ممکن است به تغییر نور واکنش دهد.</string>
+</resources>

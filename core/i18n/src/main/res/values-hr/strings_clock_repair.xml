@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Svijet</string>
+    <string name="clock_alarm">Alarm</string>
+    <string name="clock_timer">Odbrojavanje</string>
+    <string name="clock_stopwatch">Štoperica</string>
+    <string name="clock_local">Lokalno vrijeme</string>
+    <string name="clock_city_search">Traži grad ili državu</string>
+    <string name="clock_night">Noćni sat</string>
+    <string name="clock_night_exit">Dodirnite za zatvaranje</string>
+    <string name="clock_audio_file">Audiodatoteka</string>
+    <string name="clock_default_sound">Zvuk alarma</string>
+    <string name="clock_stream_url">URL radijskog prijenosa</string>
+    <string name="clock_sound_fallback">Jednokratni alarm. Ako medij zakaže, oglasit će se zadani zvuk.</string>
+    <string name="clock_exact">Dopusti alarme i podsjetnike</string>
+    <string name="clock_dismiss">Zatvori</string>
+    <string name="clock_minutes">Minute</string>
+    <string name="clock_start">Pokreni</string>
+    <string name="clock_reset">Poništi</string>
+    <string name="clock_lap">Krug</string>
+</resources>

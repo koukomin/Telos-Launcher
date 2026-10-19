@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">ایجاد جفت کلید</string>
+    <string name="telos_files_ssh_copy_public_key">کپی کلید عمومی</string>
+    <string name="telos_files_ssh_public_key_hint">کلید عمومی را به ~/.ssh/authorized_keys در سرور اضافه کنید. کلید خصوصی به‌صورت رمزگذاری‌شده در این گوشی می‌ماند.</string>
+    <string name="telos_files_duplicates_exclude">رد کردن پوشه‌ها</string>
+    <string name="telos_files_duplicates_exclude_hint">نام یا مسیر پوشه‌ها با ویرگول جدا شود، مانند: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">دسترسی Shizuku</string>
+    <string name="telos_files_shizuku_summary">باز کردن Android/data، Android/obb و پوشه‌های دیگری که برنامه نمی‌تواند بخواند، از طریق Shizuku (بدون روت)</string>
+    <string name="telos_files_shizuku_denied">Shizuku اجرا نمی‌شود یا به Telos اجازه نداده است</string>
+    <string name="telos_files_search_everywhere">جستجو در تمام فضای ذخیره‌سازی</string>
+    <string name="telos_files_search_everywhere_summary">در حافظهٔ داخلی، کارت‌های SD و درایوهای USB جستجو می‌کند، نه فقط این پوشه</string>
+</resources>

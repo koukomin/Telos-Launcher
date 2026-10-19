@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Tạo cặp khóa</string>
+    <string name="telos_files_ssh_copy_public_key">Sao chép khóa công khai</string>
+    <string name="telos_files_ssh_public_key_hint">Thêm khóa công khai vào ~/.ssh/authorized_keys trên máy chủ. Khóa riêng được giữ mã hóa trên điện thoại này.</string>
+    <string name="telos_files_duplicates_exclude">Bỏ qua thư mục</string>
+    <string name="telos_files_duplicates_exclude_hint">Tên hoặc đường dẫn thư mục, cách nhau bằng dấu phẩy, ví dụ: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Truy cập Shizuku</string>
+    <string name="telos_files_shizuku_summary">Mở Android/data, Android/obb và các thư mục ứng dụng không đọc được qua Shizuku (không cần root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku chưa chạy hoặc chưa cho phép Telos</string>
+    <string name="telos_files_search_everywhere">Tìm trên toàn bộ bộ nhớ</string>
+    <string name="telos_files_search_everywhere_summary">Tìm trong bộ nhớ trong, thẻ SD và ổ USB, không chỉ thư mục này</string>
+</resources>

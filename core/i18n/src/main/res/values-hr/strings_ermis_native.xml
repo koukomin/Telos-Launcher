@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Pošta Ermis</string>
+    <string name="ermis_new_mail_count">%1$d novih poruka</string>
+    <string name="ermis_error_cache">Predmemorija pošte nije se mogla otključati.</string>
+    <string name="ermis_error_auth">Autentifikacija nije uspjela. Provjerite način prijave i podatke računa.</string>
+    <string name="ermis_error_tls">Certifikat poslužitelja nije se mogao provjeriti.</string>
+    <string name="ermis_error_generic">Radnja nije uspjela. Provjerite vezu i postavke poslužitelja.</string>
+    <string name="ermis_error_sent_copy">Poruka je poslana, ali kopija nije spremljena u Poslano. Ne šaljite ponovno.</string>
+</resources>

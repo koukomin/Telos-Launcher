@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Αλληλογραφία Ερμής</string>
+    <string name="ermis_new_mail_count">%1$d νέα μηνύματα</string>
+    <string name="ermis_error_cache">Δεν ήταν δυνατό να ξεκλειδωθεί η προσωρινή μνήμη αλληλογραφίας.</string>
+    <string name="ermis_error_auth">Η σύνδεση απέτυχε. Ελέγξτε τη μέθοδο σύνδεσης και τα στοιχεία λογαριασμού.</string>
+    <string name="ermis_error_tls">Δεν ήταν δυνατή η επαλήθευση του πιστοποιητικού του διακομιστή.</string>
+    <string name="ermis_error_generic">Η ενέργεια απέτυχε. Ελέγξτε τη σύνδεση και τις ρυθμίσεις διακομιστή.</string>
+    <string name="ermis_error_sent_copy">Το μήνυμα στάλθηκε, αλλά δεν αποθηκεύτηκε αντίγραφο στα απεσταλμένα. Μην το ξαναστείλετε.</string>
+</resources>

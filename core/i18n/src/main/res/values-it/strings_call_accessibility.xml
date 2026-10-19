@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Foto del chiamante a schermo intero</string>
+    <string name="call_photo_background_summary">Mostra la foto del contatto come sfondo della chiamata in arrivo.</string>
+</resources>

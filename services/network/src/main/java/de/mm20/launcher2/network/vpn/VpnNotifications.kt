@@ -55,9 +55,33 @@ internal object VpnNotifications {
     }
 
     /** The "Turn off" action: a PendingIntent that tells the service to stop. */
-    private fun stopAction(context: Context): PendingIntent {
-        val intent = Intent(context, TelosVpnService::class.java).setAction(TelosVpnService.ACTION_STOP)
-        return PendingIntent.getService(context, 1, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+    private fun stopAction(context: Context): PendingIntent = PendingIntent.getBroadcast(
+        context, 1, Intent(context, VpnNotificationReceiver::class.java).setAction(VpnNotificationReceiver.ACTION_STOP),
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+    )
+
+    private fun pauseAction(context: Context, resume: Boolean = false): PendingIntent = PendingIntent.getActivity(
+        context, if (resume) 7105 else 7104,
+        Intent(context, VpnPauseActivity::class.java).apply { if (resume) action = VpnPauseActivity.ACTION_RESUME },
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+    )
+
+    /** Regular status notification when there is no foreground service. */
+    fun inactive(context: Context, settings: NetworkSettingsValues) {
+        ensureChannels(context)
+        val paused = settings.engineWanted && settings.pauseUntilMs > System.currentTimeMillis()
+        val status = context.getString(if (paused) I18nR.string.work_profile_status_paused else I18nR.string.net_hub_state_off)
+        val text = if (paused) status + " · " + android.text.format.DateFormat.getTimeFormat(context).format(java.util.Date(settings.pauseUntilMs)) else status
+        val builder = NotificationCompat.Builder(context, CHANNEL_SERVICE)
+            .setSmallIcon(R.drawable.ic_network_notification)
+            .setContentTitle(context.getString(I18nR.string.net_hub_title))
+            .setContentText("VPN · $text")
+            .setContentIntent(openApp(context))
+            .setOnlyAlertOnce(true).setOngoing(true).setShowWhen(false)
+            .setVisibility(if (settings.notificationHideOnLockScreen) NotificationCompat.VISIBILITY_PRIVATE else NotificationCompat.VISIBILITY_PUBLIC)
+            .addAction(0, context.getString(if (paused) I18nR.string.voice_resume else I18nR.string.net_hub_turn_on), pauseAction(context, resume = true))
+        if (paused) builder.addAction(0, context.getString(I18nR.string.net_notif_stop), stopAction(context))
+        try { manager(context).notify(ID_SERVICE, builder.build()) } catch (_: SecurityException) { }
     }
 
     /** No Koin, settings, logs or package-manager work on the foreground-service deadline. */
@@ -85,6 +109,7 @@ internal object VpnNotifications {
             .setContentTitle(context.getString(I18nR.string.net_notif_title))
             .setContentText(text)
             .setContentIntent(openApp(context))
+            .addAction(0, context.getString(I18nR.string.au_radio_pause), pauseAction(context))
             .addAction(0, context.getString(I18nR.string.net_notif_stop), stopAction(context))
             .setOngoing(true)
             .setOnlyAlertOnce(true)

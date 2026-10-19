@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">In Pictures/Telos gespeichert</string>
+    <string name="camera_native_failed">Kamerafehler: %1$s</string>
+    <string name="camera_native_capture">Aufnehmen</string>
+    <string name="camera_native_record">Video aufnehmen</string>
+    <string name="camera_native_stop">Aufnahme beenden</string>
+    <string name="camera_native_timer">Timer</string>
+    <string name="camera_native_settings">Aufnahmeeinstellungen</string>
+    <string name="camera_native_exposure">Belichtungskorrektur</string>
+    <string name="camera_native_iso">ISO-Empfindlichkeit</string>
+    <string name="camera_native_shutter">Belichtungszeit (ms)</string>
+    <string name="camera_native_auto">Automatische Belichtung</string>
+    <string name="camera_native_histogram">Histogramm</string>
+    <string name="camera_native_audio">Mikrofonton aufnehmen</string>
+    <string name="camera_native_discreet_hint">Vorschau ausgeblendet. Aufnahmen erfolgen ausdrücklich; die Kameraanzeigen des Systems bleiben sichtbar.</string>
+    <string name="camera_native_capabilities">Die verfügbaren Modi hängen von dieser Kamera ab. Fotos werden auf dem Gerät verarbeitet; eine proprietäre Engine ist nicht enthalten.</string>
+    <string name="camera_native_formats">JPEG behält Kamerametadaten bei, wenn aktiviert. PNG/WebP entfernen Metadaten.</string>
+    <string name="camera_native_gallery">Galerie öffnen</string>
+    <string name="camera_native_flash">Blitz</string>
+    <string name="camera_native_panorama_hint" formatted="false">Manuelles Panorama: 2–8 Teilbilder von links nach rechts mit 20 % Überlappung und waagerechtem Horizont aufnehmen. Die Übergänge werden ohne automatische Ausrichtung überblendet.</string>
+    <string name="camera_native_webcam_lan">Jeder mit dieser Token-URL in Ihrem lokalen Netzwerk kann die Kamera sehen. Die Freigabe endet, wenn dieser Bildschirm den Vordergrund verlässt.</string>
+    <string name="camera_native_hidden_saved">Privat in Pictures/TelosHidden gespeichert. Das verborgene Album erscheint nicht in der Galerie und wird bei der Deinstallation von Telos gelöscht.</string>
+    <string name="camera_native_geo_hint">Nur JPEG-EXIF. Fügt, sofern verfügbar, einen höchstens 10 Minuten alten Standort mit einer Genauigkeit von 500 m oder besser hinzu.</string>
+    <string name="camera_native_face_trigger">Bei erkanntem Gesicht aufnehmen</string>
+    <string name="camera_native_motion_trigger">Bei erkannter Bewegung aufnehmen</string>
+    <string name="camera_native_trigger_hint">Nur im Vordergrund. Höchstens alle 5 Sekunden. Bewegung wird anhand von Vorschauänderungen erkannt und kann auf Lichtänderungen reagieren.</string>
+</resources>

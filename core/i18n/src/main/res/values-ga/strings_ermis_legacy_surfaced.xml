@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Cuir cuntas leis</string>
+    <string name="ermis_attach">Ceangail ón bhfón seo</string>
+    <string name="ermis_body">Teachtaireacht</string>
+    <string name="ermis_compose">Cum</string>
+    <string name="ermis_connect">Ceangail</string>
+    <string name="ermis_email">Ríomhphost</string>
+    <string name="ermis_inbox">Bosca isteach</string>
+    <string name="ermis_no_subject">(gan ábhar)</string>
+    <string name="ermis_note">Nóta</string>
+    <string name="ermis_note_save">Sábháil nóta</string>
+    <string name="ermis_password">Pasfhocal</string>
+    <string name="ermis_remove">Bain</string>
+    <string name="ermis_search">Cuardaigh ríomhphost</string>
+    <string name="ermis_send">Seol</string>
+    <string name="ermis_starred">Le réalta</string>
+    <string name="ermis_subject">Ábhar</string>
+    <string name="ermis_sync">Sioncronaigh</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Chuig</string>
+</resources>

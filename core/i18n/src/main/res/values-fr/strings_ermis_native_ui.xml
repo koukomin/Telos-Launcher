@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Comptes de messagerie</string>
+    <string name="ermis_all_accounts">Tous les comptes</string>
+    <string name="ermis_native_intro">Votre messagerie dans Telos. Connectez un compte IMAP/SMTP avec TLS et un mot de passe ou mot de passe d’application.</string>
+    <string name="ermis_empty">Aucun message. Synchronisez vos comptes ou modifiez la recherche.</string>
+    <string name="ermis_operation_failed">Échec de l’opération de messagerie</string>
+    <string name="ermis_tls_help">Les deux serveurs doivent prendre en charge un TLS vérifié. Gmail peut utiliser un mot de passe d’application ou un accès Google/microG si pris en charge.</string>
+    <string name="ermis_username">Identifiant du serveur</string>
+    <string name="ermis_username_help">Laissez vide pour utiliser votre adresse e-mail.</string>
+    <string name="ermis_imap_host">Serveur IMAP</string>
+    <string name="ermis_imap_port">Port IMAP TLS</string>
+    <string name="ermis_smtp_host">Serveur SMTP</string>
+    <string name="ermis_smtp_port">Port SMTP</string>
+    <string name="ermis_starttls">Exiger STARTTLS pour SMTP</string>
+    <string name="ermis_saf_help">Le sélecteur affiche aussi les services cloud compatibles avec Documents Android. Pour les gros fichiers, ajoutez un lien de partage au message.</string>
+    <string name="ermis_reply">Répondre</string>
+    <string name="ermis_google_sign_in">Connexion Google / microG</string>
+    <string name="ermis_google_help">Utilise le compte Android sélectionné uniquement si son service d’authentification autorise l’accès au courrier. Sinon, utilisez un mot de passe d’application.</string>
+    <string name="ermis_google_unavailable">Le fournisseur du compte n’a pas autorisé l’accès au courrier. Utilisez un mot de passe d’application.</string>
+    <string name="ermis_conversation_count">%1$d messages dans cette conversation</string>
+</resources>

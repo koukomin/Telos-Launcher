@@ -173,3 +173,9 @@ TV, YouTube, music and the video player keep their media service running when th
 The source title and contextual actions share one toolbar. Open the source menu to change between Music, Radio, YouTube Music, Video, YouTube, TV and Stremio; reorder controls remain available there. Recording, sleep and file actions use labeled menus. Category tabs scroll at large font sizes; search fields grow with text.
 
 TV changes channel with horizontal swipes (left: next; right: previous). Opening controls refreshes now/next, and tapping either programme opens its details. Greek playlists can populate the catalog even when the main catalog is unavailable. Enable the optional Greek playlists if needed; stream availability and geographical restrictions still depend on the broadcaster.
+
+## Source-specific playback and compact controls
+
+Music, YouTube Music and Radio retain separate last-played items. Opening one source never substitutes the last MP3 from another source. YouTube Music supports local favorites and named playlists. Artist-radio actions use related recommendations from a seed track; these are not an official account-synchronized artist station. The playback queue belongs to the playback service and survives closing the hub.
+
+Scrollable headers and content reduce controls competing with media at large font sizes. Virtual-app pages share wallpaper-aware surfaces and keep player contrast controls where needed.

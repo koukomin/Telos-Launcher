@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Retoma automática. O Android pode atrasá-la sem acesso a alarmes exatos.</string>
+</resources>

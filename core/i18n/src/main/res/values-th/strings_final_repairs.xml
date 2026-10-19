@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_more">ตัวเลือกเพิ่มเติม</string>
+    <string name="au3_appearance_typo_label">ป้ายกำกับ</string>
+    <string name="au_radio_import_failed">ไม่สามารถอ่านไฟล์นั้นได้</string>
+    <string name="file_search_type_images">รูปภาพ</string>
+    <string name="file_search_type_videos">วิดีโอ</string>
+    <string name="hc_add">เพิ่ม</string>
+    <string name="hc_add_to_favorites">เพิ่มในรายการโปรด</string>
+    <string name="hc_back_up_collection">สำรองคอลเล็กชัน</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">บล็อกหมายเลขที่คุณเพิ่มในรายการบล็อกของ Telos</string>
+    <string name="hc_done">เสร็จสิ้น</string>
+    <string name="hc_edit">แก้ไข</string>
+    <string name="hc_export_playlist_m3u">ส่งออกเพลย์ลิสต์ (M3U)</string>
+    <string name="hc_favorites">รายการโปรด</string>
+    <string name="hc_import_playlist_m3u_pls">นำเข้าเพลย์ลิสต์ (M3U / PLS)</string>
+    <string name="hc_offline_spam_list">รายการสแปมออฟไลน์</string>
+    <string name="hc_phone_number">หมายเลขโทรศัพท์</string>
+    <string name="hc_rename_station">เปลี่ยนชื่อสถานี</string>
+    <string name="hc_restore_backup">กู้คืนข้อมูลสำรอง</string>
+    <string name="hc_stream_or_playlist_address">ที่อยู่สตรีมหรือเพลย์ลิสต์</string>
+    <string name="hf_files_remove_favorite">นำออกจากรายการโปรด</string>
+    <string name="preference_screen_clockwidget">นาฬิกา</string>
+    <string name="preference_theme">ธีม</string>
+    <string name="preference_theme_dark">มืด</string>
+    <string name="preference_theme_light">สว่าง</string>
+    <string name="preference_theme_system">ตามระบบ</string>
+    <string name="telos_youtube_add_playlist">เพิ่มในเพลย์ลิสต์</string>
+    <string name="telos_youtube_artist_radio">วิทยุศิลปิน</string>
+    <string name="telos_youtube_library_local">รายการโปรดและเพลย์ลิสต์จะเก็บไว้ในโทรศัพท์เครื่องนี้ ไม่ใช่บัญชี YouTube Music ของคุณ</string>
+    <string name="telos_youtube_playlist_name">ชื่อเพลย์ลิสต์</string>
+</resources>

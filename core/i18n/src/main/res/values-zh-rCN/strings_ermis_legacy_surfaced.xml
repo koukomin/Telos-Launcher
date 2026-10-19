@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">添加账号</string>
+    <string name="ermis_attach">从此手机添加附件</string>
+    <string name="ermis_body">正文</string>
+    <string name="ermis_compose">写邮件</string>
+    <string name="ermis_connect">连接</string>
+    <string name="ermis_email">电子邮件</string>
+    <string name="ermis_inbox">收件箱</string>
+    <string name="ermis_no_subject">（无主题）</string>
+    <string name="ermis_note">备注</string>
+    <string name="ermis_note_save">保存备注</string>
+    <string name="ermis_password">密码</string>
+    <string name="ermis_remove">移除</string>
+    <string name="ermis_search">搜索邮件</string>
+    <string name="ermis_send">发送</string>
+    <string name="ermis_starred">已加星标</string>
+    <string name="ermis_subject">主题</string>
+    <string name="ermis_sync">同步</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">收件人</string>
+</resources>

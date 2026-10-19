@@ -154,7 +154,7 @@ internal class FlowBridge(
 
             val appId = info.appId
             val torConfig = settings.current
-            val needsTor = de.mm20.launcher2.network.tor.TorPolicy.required(owner, domain, ips + dstIp, torConfig.torAppIds)
+            val needsTor = de.mm20.launcher2.network.tor.TorPolicy.required(owner, domain, ips + dstIp, torConfig.torAppIds, torConfig.torSystemDefault)
             if (appId == ownAppId) {
                 // Telos itself is never filtered; normally it is not even routed through the tunnel
                 return mark(if (needsTor) Backend.Block else Backend.Exit, cid, owner)
@@ -223,7 +223,7 @@ internal class FlowBridge(
                 environment = environment(),
             )
             val torConfig = settings.current
-            if (torConfig.torAppIds.isNotEmpty() && (owner < 0 || owner % FlowInfo.PER_USER_RANGE in torConfig.torAppIds)) {
+            if (de.mm20.launcher2.network.tor.TorPolicy.required(owner, null, emptyList(), torConfig.torAppIds, torConfig.torSystemDefault)) {
                 return mark(Backend.Block, cid, owner)
             }
             val decision = try {
@@ -254,7 +254,7 @@ internal class FlowBridge(
         }
     }
 
-    private fun torRestrictions() = settings.current.let { it.torEnabled || it.torAppIds.isNotEmpty() }
+    private fun torRestrictions() = settings.current.let { it.torEnabled || it.torSystemDefault || it.torAppIds.isNotEmpty() }
 
     private fun safeRoute(info: FlowInfo): WgRoute = try {
         wireguard.routeFor(info)
@@ -329,7 +329,7 @@ internal class FlowBridge(
             }
             val config = settings.current
             val onion = de.mm20.launcher2.network.tor.TorPolicy.isOnion(domain)
-            val needsTor = de.mm20.launcher2.network.tor.TorPolicy.required(owner, domain, emptyList(), config.torAppIds)
+            val needsTor = de.mm20.launcher2.network.tor.TorPolicy.required(owner, domain, emptyList(), config.torAppIds, config.torSystemDefault)
             if (onion && verdict != DnsVerdict.Block) tor.requestForOnion()
             val transport = if (verdict == DnsVerdict.Block || (needsTor && (!config.torEnabled || !tor.ready))) {
                 Backend.BlockAll

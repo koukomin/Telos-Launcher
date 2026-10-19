@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Thế giới</string>
+    <string name="clock_alarm">Báo thức</string>
+    <string name="clock_timer">Hẹn giờ</string>
+    <string name="clock_stopwatch">Bấm giờ</string>
+    <string name="clock_local">Giờ địa phương</string>
+    <string name="clock_city_search">Tìm thành phố hoặc quốc gia</string>
+    <string name="clock_night">Đồng hồ đêm</string>
+    <string name="clock_night_exit">Chạm để đóng</string>
+    <string name="clock_audio_file">Tệp âm thanh</string>
+    <string name="clock_default_sound">Âm báo thức</string>
+    <string name="clock_stream_url">URL luồng radio</string>
+    <string name="clock_sound_fallback">Báo thức một lần. Nếu phương tiện lỗi, âm mặc định sẽ phát.</string>
+    <string name="clock_exact">Cho phép báo thức và lời nhắc</string>
+    <string name="clock_dismiss">Đóng</string>
+    <string name="clock_minutes">Phút</string>
+    <string name="clock_start">Bắt đầu</string>
+    <string name="clock_reset">Đặt lại</string>
+    <string name="clock_lap">Vòng</string>
+</resources>

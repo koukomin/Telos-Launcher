@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Pridėti paskyrą</string>
+    <string name="ermis_attach">Prisegti iš šio telefono</string>
+    <string name="ermis_body">Laiškas</string>
+    <string name="ermis_compose">Rašyti</string>
+    <string name="ermis_connect">Prisijungti</string>
+    <string name="ermis_email">El. paštas</string>
+    <string name="ermis_inbox">Gautieji</string>
+    <string name="ermis_no_subject">(be temos)</string>
+    <string name="ermis_note">Pastaba</string>
+    <string name="ermis_note_save">Išsaugoti pastabą</string>
+    <string name="ermis_password">Slaptažodis</string>
+    <string name="ermis_remove">Pašalinti</string>
+    <string name="ermis_search">Ieškoti laiškų</string>
+    <string name="ermis_send">Siųsti</string>
+    <string name="ermis_starred">Pažymėti žvaigždute</string>
+    <string name="ermis_subject">Tema</string>
+    <string name="ermis_sync">Sinchronizuoti</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Kam</string>
+</resources>

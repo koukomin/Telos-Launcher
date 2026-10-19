@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Maailm</string>
+    <string name="clock_alarm">Äratus</string>
+    <string name="clock_timer">Taimer</string>
+    <string name="clock_stopwatch">Stopper</string>
+    <string name="clock_local">Kohalik aeg</string>
+    <string name="clock_city_search">Otsi linna või riiki</string>
+    <string name="clock_night">Öökell</string>
+    <string name="clock_night_exit">Sulgemiseks puuduta</string>
+    <string name="clock_audio_file">Helifail</string>
+    <string name="clock_default_sound">Äratuse heli</string>
+    <string name="clock_stream_url">Raadiovoo URL</string>
+    <string name="clock_sound_fallback">Ühekordne äratus. Meediatõrke korral kõlab vaikeäratus.</string>
+    <string name="clock_exact">Luba äratused ja meeldetuletused</string>
+    <string name="clock_dismiss">Sulge</string>
+    <string name="clock_minutes">Minutid</string>
+    <string name="clock_start">Käivita</string>
+    <string name="clock_reset">Lähtesta</string>
+    <string name="clock_lap">Ring</string>
+</resources>

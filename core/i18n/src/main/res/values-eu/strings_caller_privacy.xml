@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Deitzaileen identifikazioa eta blokeoa</string>
+    <string name="caller_system_list">Androiden blokeatutako zenbakiak</string>
+    <string name="caller_online_lookup">Deitzaileen lineako identifikazioa</string>
+    <string name="caller_online_disclosure">Sarrerako zenbaki ezezagunak white-pages.gr webgunera bidaltzen ditu komunitateak proposatutako izena eta balorazioak lortzeko. Lehenespenez desaktibatuta; ez du inoiz automatikoki blokeatzen.</string>
+    <string name="caller_likely_spam">Ziurrenik spama · white-pages.gr</string>
+    <string name="caller_block_partial">Zerrenda pertsonala eguneratu da. Ezin izan dira Androiden blokeatutako zenbakiak eguneratu; ezarri Telos telefono edo SMS aplikazio lehenetsi gisa eta saiatu berriro.</string>
+    <string name="caller_suggested_name">Proposatutako izena: %1$s</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Паштовыя ўліковыя запісы</string>
+    <string name="ermis_all_accounts">Усе ўліковыя запісы</string>
+    <string name="ermis_native_intro">Ваша пошта ў Telos. Падключыце IMAP/SMTP з TLS і паролем або паролем праграмы.</string>
+    <string name="ermis_empty">Паведамленняў няма. Сінхранізуйце ўліковыя запісы або змяніце пошук.</string>
+    <string name="ermis_operation_failed">Паштовая аперацыя не ўдалася</string>
+    <string name="ermis_tls_help">Абодва серверы павінны падтрымліваць правераны TLS. Gmail можа выкарыстоўваць пароль праграмы ці доступ Google/microG, калі падтрымліваецца.</string>
+    <string name="ermis_username">Імя карыстальніка сервера</string>
+    <string name="ermis_username_help">Пакіньце пустым для выкарыстання адраса пошты.</string>
+    <string name="ermis_imap_host">Сервер IMAP</string>
+    <string name="ermis_imap_port">Порт IMAP TLS</string>
+    <string name="ermis_smtp_host">Сервер SMTP</string>
+    <string name="ermis_smtp_port">Порт SMTP</string>
+    <string name="ermis_starttls">Патрабаваць STARTTLS для SMTP</string>
+    <string name="ermis_saf_help">Выбар файлаў таксама паказвае воблачныя сэрвісы з падтрымкай Дакументаў Android. Для вялікіх файлаў дадайце спасылку ў паведамленне.</string>
+    <string name="ermis_reply">Адказаць</string>
+    <string name="ermis_google_sign_in">Уваход праз Google / microG</string>
+    <string name="ermis_google_help">Выбраны ўліковы запіс Android выкарыстоўваецца, толькі калі яго аўтэнтыфікатар дазваляе доступ да пошты. Інакш скарыстайце пароль праграмы.</string>
+    <string name="ermis_google_unavailable">Пастаўшчык уліковага запісу не дазволіў доступ да пошты. Скарыстайце пароль праграмы.</string>
+    <string name="ermis_conversation_count">%1$d паведамленняў у гэтай размове</string>
+</resources>

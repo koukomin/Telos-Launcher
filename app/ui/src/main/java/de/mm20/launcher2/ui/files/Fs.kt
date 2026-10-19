@@ -198,7 +198,12 @@ class RootFs(private val shizuku: Boolean = false) : Fs {
         // the superuser's cat streams the file without copying it first
         val process = RootShell.start("cat ${RootShell.q(path)}", shizuku)
         return object : java.io.FilterInputStream(process.inputStream) {
-            override fun close() { super.close(); process.destroy() }
+            override fun close() {
+                try {
+                    super.close()
+                    if (!process.waitFor(5, TimeUnit.SECONDS) || process.exitValue() != 0) throw IOException("Could not read the file with the selected access backend")
+                } finally { process.destroy() }
+            }
         }
     }
 
@@ -353,13 +358,35 @@ object FsOps {
 internal object ShizukuShell {
     private const val REQUEST = 4711
 
-    /** True when Shizuku runs and allows Telos. Asks for the permission (the answer arrives later) when it is missing. */
+    /** Only checks access; permission requests must run on the main thread and await the callback. */
     fun ready(): Boolean = runCatching {
         if (!rikka.shizuku.Shizuku.pingBinder() || rikka.shizuku.Shizuku.isPreV11()) return false
         if (rikka.shizuku.Shizuku.checkSelfPermission() == android.content.pm.PackageManager.PERMISSION_GRANTED) return true
-        if (!rikka.shizuku.Shizuku.shouldShowRequestPermissionRationale()) rikka.shizuku.Shizuku.requestPermission(REQUEST)
         false
     }.getOrDefault(false)
+
+    suspend fun requestAccess(): Boolean {
+        if (ready()) return true
+        if (!runCatching { rikka.shizuku.Shizuku.pingBinder() && !rikka.shizuku.Shizuku.isPreV11() }.getOrDefault(false)) return false
+        return kotlinx.coroutines.withTimeoutOrNull(60_000) {
+            kotlinx.coroutines.suspendCancellableCoroutine<Boolean> { continuation ->
+                val listener = object : rikka.shizuku.Shizuku.OnRequestPermissionResultListener {
+                    override fun onRequestPermissionResult(requestCode: Int, grantResult: Int) {
+                        if (requestCode != REQUEST) return
+                        rikka.shizuku.Shizuku.removeRequestPermissionResultListener(this)
+                        if (continuation.isActive) continuation.resumeWith(Result.success(grantResult == android.content.pm.PackageManager.PERMISSION_GRANTED))
+                    }
+                }
+                rikka.shizuku.Shizuku.addRequestPermissionResultListener(listener)
+                continuation.invokeOnCancellation { rikka.shizuku.Shizuku.removeRequestPermissionResultListener(listener) }
+                try { rikka.shizuku.Shizuku.requestPermission(REQUEST) }
+                catch (_: Exception) {
+                    rikka.shizuku.Shizuku.removeRequestPermissionResultListener(listener)
+                    if (continuation.isActive) continuation.resumeWith(Result.success(false))
+                }
+            }
+        } ?: false
+    }
 
     fun start(command: String): Process {
         val method = rikka.shizuku.Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)

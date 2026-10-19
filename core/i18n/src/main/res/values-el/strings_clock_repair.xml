@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Κόσμος</string>
+    <string name="clock_alarm">Ξυπνητήρι</string>
+    <string name="clock_timer">Αντίστροφη μέτρηση</string>
+    <string name="clock_stopwatch">Χρονόμετρο</string>
+    <string name="clock_local">Τοπική ώρα</string>
+    <string name="clock_city_search">Αναζήτηση πόλης ή χώρας</string>
+    <string name="clock_night">Νυχτερινό ρολόι</string>
+    <string name="clock_night_exit">Πατήστε για κλείσιμο</string>
+    <string name="clock_audio_file">Αρχείο ήχου</string>
+    <string name="clock_default_sound">Ήχος αφύπνισης</string>
+    <string name="clock_stream_url">Διεύθυνση ροής ραδιοφώνου</string>
+    <string name="clock_sound_fallback">Εφάπαξ αφύπνιση. Αν αποτύχει το μέσο, ακούγεται ο προεπιλεγμένος ήχος.</string>
+    <string name="clock_exact">Να επιτρέπονται αφυπνίσεις και υπενθυμίσεις</string>
+    <string name="clock_dismiss">Κλείσιμο</string>
+    <string name="clock_minutes">Λεπτά</string>
+    <string name="clock_start">Έναρξη</string>
+    <string name="clock_reset">Επαναφορά</string>
+    <string name="clock_lap">Γύρος</string>
+</resources>

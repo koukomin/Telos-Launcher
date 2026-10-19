@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Identificació i bloqueig de trucades</string>
+    <string name="caller_system_list">Números bloquejats d’Android</string>
+    <string name="caller_online_lookup">Identificació de trucades en línia</string>
+    <string name="caller_online_disclosure">Envia els números entrants desconeguts a white-pages.gr per obtenir un nom i valoracions suggerits per la comunitat. Desactivat per defecte; mai no bloqueja automàticament.</string>
+    <string name="caller_likely_spam">Possible brossa · white-pages.gr</string>
+    <string name="caller_block_partial">S’ha actualitzat la llista personal. No s’han pogut actualitzar els números bloquejats d’Android; establiu Telos com a aplicació predeterminada de telèfon o SMS i torneu-ho a provar.</string>
+    <string name="caller_suggested_name">Nom suggerit: %1$s</string>
+</resources>

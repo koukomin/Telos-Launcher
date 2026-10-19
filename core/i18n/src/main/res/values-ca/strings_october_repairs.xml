@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_more">Més opcions</string>
+    <string name="au3_appearance_typo_label">Etiqueta</string>
+    <string name="au_radio_import_failed">No s’ha pogut llegir aquest fitxer</string>
+    <string name="file_search_type_images">Imatges</string>
+    <string name="file_search_type_videos">Vídeos</string>
+    <string name="hc_add">Afegeix</string>
+    <string name="hc_add_to_favorites">Afegeix als preferits</string>
+    <string name="hc_back_up_collection">Fes una còpia de seguretat de la col·lecció</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">Bloqueja els números que has afegit a la llista de bloqueig de Telos</string>
+    <string name="hc_done">Fet</string>
+    <string name="hc_edit">Edita</string>
+    <string name="hc_export_playlist_m3u">Exporta la llista de reproducció (M3U)</string>
+    <string name="hc_favorites">Preferits</string>
+    <string name="hc_import_playlist_m3u_pls">Importa una llista de reproducció (M3U / PLS)</string>
+    <string name="hc_offline_spam_list">Llista de correu brossa fora de línia</string>
+    <string name="hc_phone_number">Número de telèfon</string>
+    <string name="hc_rename_station">Canvia el nom de l’emissora</string>
+    <string name="hc_restore_backup">Restaura una còpia de seguretat</string>
+    <string name="hc_stream_or_playlist_address">Adreça del flux o de la llista de reproducció</string>
+    <string name="hf_files_remove_favorite">Suprimeix dels preferits</string>
+    <string name="preference_screen_clockwidget">Rellotge</string>
+    <string name="preference_theme">Tema</string>
+    <string name="preference_theme_dark">Fosc</string>
+    <string name="preference_theme_light">Clar</string>
+    <string name="preference_theme_system">Segueix el sistema</string>
+    <string name="telos_youtube_add_playlist">Afegeix a la llista de reproducció</string>
+    <string name="telos_youtube_artist_radio">Ràdio de l’artista</string>
+    <string name="telos_youtube_library_local">Els preferits i les llistes de reproducció es desen en aquest telèfon. No formen part del teu compte de YouTube Music.</string>
+    <string name="telos_youtube_playlist_name">Nom de la llista de reproducció</string>
+</resources>

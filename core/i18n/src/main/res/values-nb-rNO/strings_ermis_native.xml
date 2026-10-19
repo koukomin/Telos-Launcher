@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis e-post</string>
+    <string name="ermis_new_mail_count">%1$d nye meldinger</string>
+    <string name="ermis_error_cache">E-postbufferen kunne ikke låses opp.</string>
+    <string name="ermis_error_auth">Godkjenning mislyktes. Kontroller påloggingsmetode og kontoinformasjon.</string>
+    <string name="ermis_error_tls">Serversertifikatet kunne ikke bekreftes.</string>
+    <string name="ermis_error_generic">Handlingen mislyktes. Kontroller tilkobling og serverinnstillinger.</string>
+    <string name="ermis_error_sent_copy">Meldingen er sendt, men kopien ble ikke lagret i Sendt. Ikke send på nytt.</string>
+</resources>

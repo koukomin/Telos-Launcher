@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">ללא מפתח API: הקלטה של 10 שניות וחישוב טביעת אצבע במכשיר. רק טביעת האצבע נשלחת ל־Shazam, לעולם לא השמע המקורי.</string>
+    <string name="akou_get_token">קבלת אסימון API של AudD</string>
+    <string name="akou_api_token">אסימון API של AudD</string>
+    <string name="akou_start">הקלטה וזיהוי</string>
+    <string name="akou_recording">מקליט 10 שניות…</string>
+    <string name="akou_identifying">מתבצעת התאמת טביעת אצבע…</string>
+    <string name="akou_no_match">לא נמצאה התאמה. כדאי לנסות שוב קרוב למוזיקה.</string>
+    <string name="akou_matched">השיר זוהה</string>
+    <string name="akou_failed">הזיהוי נכשל. בדקו את המיקרופון והחיבור ונסו שוב קרוב למוזיקה.</string>
+    <string name="akou_microphone_denied">נדרשת הרשאת מיקרופון כדי להקליט דגימה לזיהוי.</string>
+    <string name="akou_history">היסטוריית זיהויים</string>
+    <string name="akou_youtube_music">חיפוש ב־YouTube Music</string>
+</resources>

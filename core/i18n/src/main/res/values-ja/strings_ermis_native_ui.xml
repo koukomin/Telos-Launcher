@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">メールアカウント</string>
+    <string name="ermis_all_accounts">すべてのアカウント</string>
+    <string name="ermis_native_intro">Telos 内でメールを管理できます。TLS とパスワードまたはアプリパスワードで IMAP/SMTP アカウントを接続してください。</string>
+    <string name="ermis_empty">メッセージはありません。同期するか検索条件を変更してください。</string>
+    <string name="ermis_operation_failed">メール操作に失敗しました</string>
+    <string name="ermis_tls_help">両サーバーで検証済み TLS が必要です。Gmail はアプリパスワード、または対応している場合に Google/microG アクセスを使用できます。</string>
+    <string name="ermis_username">サーバーのユーザー名</string>
+    <string name="ermis_username_help">空欄にするとメールアドレスを使用します。</string>
+    <string name="ermis_imap_host">IMAP サーバー</string>
+    <string name="ermis_imap_port">IMAP TLS ポート</string>
+    <string name="ermis_smtp_host">SMTP サーバー</string>
+    <string name="ermis_smtp_port">SMTP ポート</string>
+    <string name="ermis_starttls">SMTP で STARTTLS を必須にする</string>
+    <string name="ermis_saf_help">ファイル選択には Android ドキュメント対応のクラウドサービスも表示されます。大きなファイルは共有リンクを本文に追加してください。</string>
+    <string name="ermis_reply">返信</string>
+    <string name="ermis_google_sign_in">Google / microG ログイン</string>
+    <string name="ermis_google_help">認証サービスがメールへのアクセスを許可した場合のみ、選択した Android アカウントを使います。それ以外はアプリパスワードを使ってください。</string>
+    <string name="ermis_google_unavailable">アカウント提供元がメールへのアクセスを許可しませんでした。アプリパスワードを使ってください。</string>
+    <string name="ermis_conversation_count">このスレッドのメール数：%1$d 件</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Innringers bilde i fullskjerm</string>
+    <string name="call_photo_background_summary">Vis kontaktens bilde som bakgrunn for innkommende anrop.</string>
+</resources>

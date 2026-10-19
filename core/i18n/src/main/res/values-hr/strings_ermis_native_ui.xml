@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Računi e-pošte</string>
+    <string name="ermis_all_accounts">Svi računi</string>
+    <string name="ermis_native_intro">Vaša pošta u Telosu. Povežite IMAP/SMTP račun putem TLS-a lozinkom ili lozinkom aplikacije.</string>
+    <string name="ermis_empty">Nema poruka. Sinkronizirajte račune ili promijenite pretraživanje.</string>
+    <string name="ermis_operation_failed">Radnja e-pošte nije uspjela</string>
+    <string name="ermis_tls_help">Oba poslužitelja moraju podržavati provjereni TLS. Gmail može koristiti lozinku aplikacije ili podržan pristup Google/microG.</string>
+    <string name="ermis_username">Korisničko ime poslužitelja</string>
+    <string name="ermis_username_help">Ostavite prazno za uporabu adrese e-pošte.</string>
+    <string name="ermis_imap_host">IMAP poslužitelj</string>
+    <string name="ermis_imap_port">IMAP TLS priključak</string>
+    <string name="ermis_smtp_host">SMTP poslužitelj</string>
+    <string name="ermis_smtp_port">SMTP priključak</string>
+    <string name="ermis_starttls">Zahtijevaj STARTTLS za SMTP</string>
+    <string name="ermis_saf_help">Odabir datoteka prikazuje i usluge u oblaku koje podržavaju Android Dokumente. Za velike datoteke dodajte poveznicu za dijeljenje.</string>
+    <string name="ermis_reply">Odgovori</string>
+    <string name="ermis_google_sign_in">Prijava Google / microG</string>
+    <string name="ermis_google_help">Odabrani Android račun koristi se samo ako njegov autentifikator dopusti pristup pošti. Inače koristite lozinku aplikacije.</string>
+    <string name="ermis_google_unavailable">Pružatelj računa nije dopustio pristup pošti. Koristite lozinku aplikacije.</string>
+    <string name="ermis_conversation_count">%1$d poruka u ovom razgovoru</string>
+</resources>

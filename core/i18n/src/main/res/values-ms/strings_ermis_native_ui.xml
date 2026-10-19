@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Akaun mel</string>
+    <string name="ermis_all_accounts">Semua akaun</string>
+    <string name="ermis_native_intro">Mel anda dalam Telos. Sambungkan akaun IMAP/SMTP menggunakan TLS dan kata laluan atau kata laluan apl.</string>
+    <string name="ermis_empty">Tiada mesej. Segerakkan akaun atau ubah carian.</string>
+    <string name="ermis_operation_failed">Operasi mel gagal</string>
+    <string name="ermis_tls_help">Kedua-dua pelayan mesti menyokong TLS yang disahkan. Gmail boleh menggunakan kata laluan apl atau akses Google/microG apabila disokong.</string>
+    <string name="ermis_username">Nama pengguna pelayan</string>
+    <string name="ermis_username_help">Biarkan kosong untuk menggunakan alamat e-mel.</string>
+    <string name="ermis_imap_host">Pelayan IMAP</string>
+    <string name="ermis_imap_port">Port IMAP TLS</string>
+    <string name="ermis_smtp_host">Pelayan SMTP</string>
+    <string name="ermis_smtp_port">Port SMTP</string>
+    <string name="ermis_starttls">Wajibkan STARTTLS untuk SMTP</string>
+    <string name="ermis_saf_help">Pemilih fail juga memaparkan penyedia awan yang menyokong Dokumen Android. Tambahkan pautan perkongsian pada mesej untuk fail besar.</string>
+    <string name="ermis_reply">Balas</string>
+    <string name="ermis_google_sign_in">Log masuk Google / microG</string>
+    <string name="ermis_google_help">Menggunakan akaun Android dipilih hanya jika pengesahnya memberi akses mel. Jika tidak, gunakan kata laluan apl.</string>
+    <string name="ermis_google_unavailable">Penyedia akaun tidak memberi akses mel. Gunakan kata laluan apl.</string>
+    <string name="ermis_conversation_count">%1$d mesej dalam perbualan ini</string>
+</resources>

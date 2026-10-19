@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">رنگ‌های تصویر زمینه</string>
+    <string name="radio_translucent">ظاهر نیمه‌شفاف</string>
+    <string name="radio_controls_scroll">پیمایش کنترل‌های پخش همراه با ایستگاه‌ها</string>
+    <string name="radio_tap_plays">برای پخش، روی ایستگاه بزنید</string>
+    <string name="radio_large_buffer">بافر پخش بزرگ‌تر</string>
+    <string name="radio_edit_metadata">اجازهٔ ویرایش اطلاعات ایستگاه</string>
+    <string name="radio_edit_streams">اجازهٔ ویرایش نشانی‌های پخش</string>
+    <string name="radio_auto_images">به‌روزرسانی خودکار تصاویر ایستگاه‌ها</string>
+    <string name="radio_update_images">به‌روزرسانی تصاویر ایستگاه‌ها اکنون</string>
+    <string name="radio_backup_images">پشتیبان ZIP شامل تصاویر ایستگاه‌ها</string>
+    <string name="radio_restore_replace_summary">مجموعهٔ فعلی ایستگاه‌ها با این پشتیبان جایگزین شود؟ مجموعهٔ فعلی شما حذف خواهد شد.</string>
+    <string name="radio_station_image_url">نشانی تصویر ایستگاه</string>
+</resources>

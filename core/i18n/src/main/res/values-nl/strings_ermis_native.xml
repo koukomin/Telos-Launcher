@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis-mail</string>
+    <string name="ermis_new_mail_count">%1$d nieuwe berichten</string>
+    <string name="ermis_error_cache">De mailcache kon niet worden ontgrendeld.</string>
+    <string name="ermis_error_auth">Authenticatie mislukt. Controleer aanmeldmethode en accountgegevens.</string>
+    <string name="ermis_error_tls">Het servercertificaat kon niet worden geverifieerd.</string>
+    <string name="ermis_error_generic">Actie mislukt. Controleer verbinding en serverinstellingen.</string>
+    <string name="ermis_error_sent_copy">Bericht verzonden, maar geen kopie opgeslagen in Verzonden. Verstuur niet opnieuw.</string>
+</resources>
