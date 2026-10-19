@@ -21,6 +21,8 @@ internal fun StorageAnalysisDialog(path: String, onOpenFolder: (String) -> Unit,
     var busy by remember { mutableStateOf(true) }
     var failed by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+    val prefs = androidx.compose.ui.platform.LocalContext.current.getSharedPreferences("telos_files_analysis", android.content.Context.MODE_PRIVATE)
+    var excluded by remember { mutableStateOf(prefs.getString("duplicateExclusions", "").orEmpty()) }
     LaunchedEffect(path) {
         try {
             scan = withContext(Dispatchers.IO) { val job = currentCoroutineContext(); StorageAnalysis.scan(File(path)) { job.ensureActive() } }
@@ -49,11 +51,16 @@ internal fun StorageAnalysisDialog(path: String, onOpenFolder: (String) -> Unit,
                             Text("${formatSize(record.size)} · ${record.file.parent}", style = MaterialTheme.typography.bodySmall)
                         }
                     }
+                    OutlinedTextField(excluded, { excluded = it.take(2048); duplicates = null }, label = { Text(stringResource(R.string.telos_files_duplicates_exclude)) },
+                        supportingText = { Text(stringResource(R.string.telos_files_duplicates_exclude_hint)) }, enabled = !busy, modifier = Modifier.fillMaxWidth())
                     OutlinedButton(enabled = !busy && duplicates == null, onClick = {
+                        prefs.edit().putString("duplicateExclusions", excluded).apply()
+                        val skip = duplicateExclusions(excluded)
                         scope.launch {
                             busy = true
                             try {
-                                duplicates = withContext(Dispatchers.IO) { val job = currentCoroutineContext(); StorageAnalysis.duplicates(result.files) { job.ensureActive() } }
+                                val candidates = result.files.filterNot { record -> isExcluded(record.file, path, skip) }
+                                duplicates = withContext(Dispatchers.IO) { val job = currentCoroutineContext(); StorageAnalysis.duplicates(candidates) { job.ensureActive() } }
                             } catch (e: CancellationException) { throw e }
                               catch (_: Exception) { failed = true }
                             finally { busy = false }
@@ -72,4 +79,17 @@ internal fun StorageAnalysisDialog(path: String, onOpenFolder: (String) -> Unit,
                 }
             }
         }, confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } })
+}
+
+/** Folder names ("Android", ".thumbnails") or paths below the analysed folder ("DCIM/Camera"), one per comma or line */
+internal fun duplicateExclusions(text: String): List<String> =
+    text.split(',', '\n').map { it.trim().trim('/') }.filter { it.isNotEmpty() }.take(64)
+
+internal fun isExcluded(file: File, root: String, exclusions: List<String>): Boolean {
+    if (exclusions.isEmpty()) return false
+    val relative = file.path.removePrefix(root.trimEnd('/')).trim('/')
+    val folders = relative.split('/').dropLast(1)
+    return exclusions.any { rule ->
+        if ('/' in rule) relative.startsWith("$rule/", ignoreCase = true) else folders.any { it.equals(rule, ignoreCase = true) }
+    }
 }

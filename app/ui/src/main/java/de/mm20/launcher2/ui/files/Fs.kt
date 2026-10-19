@@ -116,7 +116,7 @@ object RootShell {
     fun q(path: String) = "'" + path.replace("'", "'\\''") + "'"
 
     fun run(command: String, timeoutSeconds: Long = 60): ShellResult = runCatching {
-        val process = ProcessBuilder("su", "-c", command).start()
+        val process = start(command)
         var out = ""
         var err = ""
         val outThread = Thread { out = process.inputStream.bufferedReader().readText() }.also { it.start() }
@@ -130,9 +130,17 @@ object RootShell {
     /** Whether the superuser grants access. Asking makes the root manager show its dialog. */
     fun available(force: Boolean = false): Boolean {
         if (!force) checked?.let { return it }
+        if (shizuku) return (ShizukuShell.ready() && run("id", 20).ok).also { checked = it }
         val result = run("id", 20)
         return (result.ok && result.out.contains("uid=0")).also { checked = it }
     }
+
+    /** Commands go to Shizuku's shell (adb rights: Android/data, Android/obb, ...) instead of `su` */
+    @Volatile var shizuku = false
+        set(value) { if (field != value) checked = null; field = value }
+
+    fun start(command: String): Process =
+        if (shizuku) ShizukuShell.start(command) else ProcessBuilder("su", "-c", command).start()
 }
 
 class RootFs : Fs {
@@ -184,7 +192,7 @@ class RootFs : Fs {
 
     override fun openRead(path: String): java.io.InputStream {
         // the superuser's cat streams the file without copying it first
-        val process = ProcessBuilder("su", "-c", "cat ${RootShell.q(path)}").start()
+        val process = RootShell.start("cat ${RootShell.q(path)}")
         return object : java.io.FilterInputStream(process.inputStream) {
             override fun close() { super.close(); process.destroy() }
         }
@@ -336,3 +344,23 @@ object FsOps {
         return digest.digest().joinToString("") { "%02x".format(it) }
     }
 }
+
+/** Runs shell commands through Shizuku, which works with adb rights and needs no root */
+internal object ShizukuShell {
+    private const val REQUEST = 4711
+
+    /** True when Shizuku runs and allows Telos. Asks for the permission (the answer arrives later) when it is missing. */
+    fun ready(): Boolean = runCatching {
+        if (!rikka.shizuku.Shizuku.pingBinder() || rikka.shizuku.Shizuku.isPreV11()) return false
+        if (rikka.shizuku.Shizuku.checkSelfPermission() == android.content.pm.PackageManager.PERMISSION_GRANTED) return true
+        if (!rikka.shizuku.Shizuku.shouldShowRequestPermissionRationale()) rikka.shizuku.Shizuku.requestPermission(REQUEST)
+        false
+    }.getOrDefault(false)
+
+    fun start(command: String): Process {
+        val method = rikka.shizuku.Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
+        method.isAccessible = true
+        return method.invoke(null, arrayOf("sh", "-c", command), null, null) as Process
+    }
+}
+

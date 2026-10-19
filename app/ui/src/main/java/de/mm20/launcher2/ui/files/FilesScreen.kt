@@ -406,6 +406,10 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                             text = { Text(if (vm.rootMode) stringResource(R.string.hf_files_root_off) else stringResource(R.string.hf_files_root_menu)) },
                                             onClick = { menuOpen = false; if (vm.rootMode) vm.disableRoot() else dialog = FilesDialog.EnableRoot },
                                         )
+                                        if (!vm.rootMode) DropdownMenuItem(
+                                            text = { Text(stringResource(R.string.telos_files_shizuku)) },
+                                            onClick = { menuOpen = false; vm.enableShizuku() },
+                                        )
                                     }
                                 }
                             },

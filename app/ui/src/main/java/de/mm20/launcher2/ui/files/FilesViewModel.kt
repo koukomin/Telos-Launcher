@@ -94,6 +94,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     var searchKind by mutableStateOf<FileKind?>(null)
         private set
     var recursiveSearch by mutableStateOf(true)
+    /** Search every storage volume (internal, SD, USB) instead of the current folder */
+    var searchEverywhere by mutableStateOf(false)
         private set
     var searchLimited by mutableStateOf(false)
         private set
@@ -372,20 +374,33 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         query = text; searchJob?.cancel()
         val revision = ++searchRevision
         val dir = path; searchLimited = false
-        if (dir == null || text.isBlank() && searchFilter == de.mm20.launcher2.helper.FileSearchFilter() && searchKind == null) { searchResults = null; return }
+        val everywhere = searchEverywhere && !rootMode && volumes.isNotEmpty() &&
+            (dir == null || !(RemotePath.isRemote(dir) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir)))
+        if ((dir == null && !everywhere) || text.isBlank() && searchFilter == de.mm20.launcher2.helper.FileSearchFilter() && searchKind == null) { searchResults = null; return }
         val filter = searchFilter; val kind = searchKind
         val matcher = TelosSearch.compile(text)
         fun matches(entry: FsEntry, hidden: Boolean = entry.hidden): Boolean =
             (text.isBlank() || matcher.matches(entry.name)) && (kind == null || entry.kind == kind) &&
                 (showHidden || !hidden) && filter.matches(de.mm20.launcher2.helper.IndexedFile(entry.path, entry.name, entry.isDir, entry.size, entry.modified, hidden, entry.isLink))
-        if ((RemotePath.isRemote(dir) && !recursiveSearch) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir)) {
+        if (dir != null && !everywhere && ((RemotePath.isRemote(dir) && !recursiveSearch) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir))) {
             searchResults = entries.filter { matches(it) }; return
         }
         searchJob = viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {
                     val job = coroutineContext
-                    if (RemotePath.isRemote(dir)) {
+                    if (everywhere) {
+                        var limited = false
+                        val files = volumes.asSequence().flatMap { volume ->
+                            val snapshot = de.mm20.launcher2.helper.FileSearchIndex.read(File(volume.path)) { job.ensureActive() }
+                            if (snapshot.limited || snapshot.unreadable > 0) limited = true
+                            snapshot.files.asSequence().map { file ->
+                                job.ensureActive()
+                                FsEntry(file.path, file.name, file.directory, file.size, file.modified, isLink = file.symbolicLink) to file.hidden
+                            }
+                        }.filter { (entry, hidden) -> matches(entry, hidden) }.take(301).map { it.first }.toList()
+                        files.take(300) to (limited || files.size > 300)
+                    } else if (RemotePath.isRemote(dir!!)) {
                         val scan = FilesRemoteSearch.scan(fsFor(dir), dir, showHidden, { matches(it) })
                         scan.entries to scan.partial
                     } else if (rootMode) {
@@ -430,15 +445,28 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     /** Asks for the superuser. Returns through [onResult] on the main thread. */
     fun enableRoot(onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val ok = withContext(Dispatchers.IO) { RootShell.available(force = true) }
-            rootMode = ok
+            val ok = withContext(Dispatchers.IO) { RootShell.shizuku = false; RootShell.available(force = true) }
+            rootMode = ok; shizukuMode = false
             if (!ok) message = s(R.string.au_files_root_denied)
             onResult(ok)
             path?.let { load(it) }
         }
     }
 
-    fun disableRoot() { rootMode = false; rootMounted = null; path?.let { load(it) } }
+    fun disableRoot() { rootMode = false; shizukuMode = false; RootShell.shizuku = false; rootMounted = null; path?.let { load(it) } }
+
+    /** Root mode that runs through Shizuku instead of the superuser */
+    var shizukuMode by mutableStateOf(false)
+        private set
+
+    fun enableShizuku() {
+        viewModelScope.launch {
+            val ok = withContext(Dispatchers.IO) { RootShell.shizuku = true; RootShell.available(force = true).also { if (!it) RootShell.shizuku = false } }
+            rootMode = ok; shizukuMode = ok
+            if (!ok) message = s(R.string.telos_files_shizuku_denied)
+            path?.let { load(it) }
+        }
+    }
 
     fun remount(mountPoint: String, writable: Boolean) {
         viewModelScope.launch {
