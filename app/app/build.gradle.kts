@@ -9,8 +9,9 @@ plugins {
 // see services/downloads/build.gradle.kts: the yt-dlp runtime is only built in with -Ptelos.media=true
 val mediaRuntime = (findProperty("telos.media") as String?)?.toBoolean() == true
 
-// Measurement only: production builds retain stable class/member names by default.
-val obfuscationExperiment = providers.gradleProperty("telos.obfuscationExperiment")
+// R8 renames classes and members in release and nightly builds. -Ptelos.keepNames=true keeps the original
+// names (stable-names.pro), e.g. to compare APK sizes or to debug a keep rule.
+val keepNames = providers.gradleProperty("telos.keepNames")
     .map { it.toBooleanStrict() }.getOrElse(false)
 
 // One APK per CPU type: -Ptelos.abi=arm64-v8a or -Ptelos.abi=armeabi-v7a puts only the native libraries of that
@@ -85,7 +86,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            if (!obfuscationExperiment) proguardFile("stable-names.pro")
+            if (keepNames) proguardFile("stable-names.pro")
         }
         debug {
             applicationIdSuffix = ".debug"
@@ -104,7 +105,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            if (!obfuscationExperiment) proguardFile("stable-names.pro")
+            if (keepNames) proguardFile("stable-names.pro")
         }
 
         flavorDimensions += "variant"

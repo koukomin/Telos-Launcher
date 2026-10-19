@@ -3,6 +3,10 @@
 -keep class org.libtorrent4j.** { *; }
 -keepclasseswithmembernames class * { native <methods>; }
 -dontwarn org.libtorrent4j.**
+# baresip.c binds JNI functions to these classes and calls BaresipService.uaEvent, messageEvent,
+# messageResponse, started and stopped by name
+-keep class com.tutpro.baresip.Api { *; }
+-keep class com.tutpro.baresip.BaresipService { *; }
 
 # SPDX-FileCopyrightText: 2025 Flow
 # SPDX-License-Identifier: GPL-3.0-or-later
