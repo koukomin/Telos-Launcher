@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">키 쌍 생성</string>
+    <string name="telos_files_ssh_copy_public_key">공개 키 복사</string>
+    <string name="telos_files_ssh_public_key_hint">공개 키를 서버의 ~/.ssh/authorized_keys에 추가하세요. 개인 키는 이 휴대폰에 암호화되어 보관됩니다.</string>
+    <string name="telos_files_duplicates_exclude">건너뛸 폴더</string>
+    <string name="telos_files_duplicates_exclude_hint">쉼표로 구분한 폴더 이름 또는 경로, 예: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Shizuku 접근</string>
+    <string name="telos_files_shizuku_summary">앱이 읽을 수 없는 Android/data, Android/obb 등의 폴더를 Shizuku로 엽니다(루트 불필요)</string>
+    <string name="telos_files_shizuku_denied">Shizuku가 실행 중이 아니거나 Telos를 허용하지 않았습니다</string>
+    <string name="telos_files_search_everywhere">모든 저장소 검색</string>
+    <string name="telos_files_search_everywhere_summary">이 폴더뿐 아니라 내부 저장소, SD 카드, USB 드라이브를 검색합니다</string>
+</resources>

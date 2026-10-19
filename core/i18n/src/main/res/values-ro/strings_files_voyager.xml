@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Generează o pereche de chei</string>
+    <string name="telos_files_ssh_copy_public_key">Copiază cheia publică</string>
+    <string name="telos_files_ssh_public_key_hint">Adaugă cheia publică în ~/.ssh/authorized_keys pe server. Cheia privată rămâne criptată pe acest telefon.</string>
+    <string name="telos_files_duplicates_exclude">Omite dosare</string>
+    <string name="telos_files_duplicates_exclude_hint">Nume sau căi de dosare, separate prin virgulă, de exemplu: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Acces prin Shizuku</string>
+    <string name="telos_files_shizuku_summary">Deschide Android/data, Android/obb și alte dosare pe care aplicația nu le poate citi, prin Shizuku (fără root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku nu rulează sau nu a permis Telos</string>
+    <string name="telos_files_search_everywhere">Caută în toată stocarea</string>
+    <string name="telos_files_search_everywhere_summary">Caută în memoria internă, pe cardurile SD și unitățile USB, nu doar în acest dosar</string>
+</resources>

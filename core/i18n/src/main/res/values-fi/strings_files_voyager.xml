@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Luo avainpari</string>
+    <string name="telos_files_ssh_copy_public_key">Kopioi julkinen avain</string>
+    <string name="telos_files_ssh_public_key_hint">Lisää julkinen avain palvelimen tiedostoon ~/.ssh/authorized_keys. Yksityinen avain pysyy salattuna tässä puhelimessa.</string>
+    <string name="telos_files_duplicates_exclude">Ohita kansiot</string>
+    <string name="telos_files_duplicates_exclude_hint">Kansioiden nimet tai polut pilkuilla erotettuina, esimerkiksi: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Shizuku-käyttö</string>
+    <string name="telos_files_shizuku_summary">Avaa Android/data, Android/obb ja muut kansiot, joita sovellus ei voi lukea, Shizukun kautta (ilman rootia)</string>
+    <string name="telos_files_shizuku_denied">Shizuku ei ole käynnissä tai ei sallinut Telosta</string>
+    <string name="telos_files_search_everywhere">Hae koko tallennustilasta</string>
+    <string name="telos_files_search_everywhere_summary">Hakee sisäisestä tallennustilasta, SD-korteilta ja USB-asemilta, ei vain tästä kansiosta</string>
+</resources>

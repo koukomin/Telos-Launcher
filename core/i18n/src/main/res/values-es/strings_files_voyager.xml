@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Generar par de claves</string>
+    <string name="telos_files_ssh_copy_public_key">Copiar clave pública</string>
+    <string name="telos_files_ssh_public_key_hint">Añade la clave pública a ~/.ssh/authorized_keys en el servidor. La clave privada se queda cifrada en este teléfono.</string>
+    <string name="telos_files_duplicates_exclude">Omitir carpetas</string>
+    <string name="telos_files_duplicates_exclude_hint">Nombres o rutas de carpetas, separados por comas, por ejemplo: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Acceso con Shizuku</string>
+    <string name="telos_files_shizuku_summary">Abre Android/data, Android/obb y otras carpetas que la app no puede leer, mediante Shizuku (sin root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku no se está ejecutando o no ha permitido a Telos</string>
+    <string name="telos_files_search_everywhere">Buscar en todo el almacenamiento</string>
+    <string name="telos_files_search_everywhere_summary">Busca en el almacenamiento interno, tarjetas SD y unidades USB, no solo en esta carpeta</string>
+</resources>

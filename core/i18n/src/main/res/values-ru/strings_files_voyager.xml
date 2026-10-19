@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Создать пару ключей</string>
+    <string name="telos_files_ssh_copy_public_key">Копировать открытый ключ</string>
+    <string name="telos_files_ssh_public_key_hint">Добавьте открытый ключ в ~/.ssh/authorized_keys на сервере. Закрытый ключ остаётся зашифрованным на этом телефоне.</string>
+    <string name="telos_files_duplicates_exclude">Пропускать папки</string>
+    <string name="telos_files_duplicates_exclude_hint">Имена или пути папок через запятую, например: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Доступ через Shizuku</string>
+    <string name="telos_files_shizuku_summary">Открывать Android/data, Android/obb и другие папки, недоступные приложению, через Shizuku (без root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku не запущен или не разрешил доступ Telos</string>
+    <string name="telos_files_search_everywhere">Искать во всех хранилищах</string>
+    <string name="telos_files_search_everywhere_summary">Ищет во внутренней памяти, на SD-картах и USB-накопителях, а не только в этой папке</string>
+</resources>

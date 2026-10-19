@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Skapa nyckelpar</string>
+    <string name="telos_files_ssh_copy_public_key">Kopiera offentlig nyckel</string>
+    <string name="telos_files_ssh_public_key_hint">Lägg till den offentliga nyckeln i ~/.ssh/authorized_keys på servern. Den privata nyckeln stannar krypterad på den här telefonen.</string>
+    <string name="telos_files_duplicates_exclude">Hoppa över mappar</string>
+    <string name="telos_files_duplicates_exclude_hint">Mappnamn eller sökvägar åtskilda med kommatecken, till exempel: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Åtkomst via Shizuku</string>
+    <string name="telos_files_shizuku_summary">Öppna Android/data, Android/obb och andra mappar som appen inte kan läsa, via Shizuku (utan root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku körs inte eller har inte tillåtit Telos</string>
+    <string name="telos_files_search_everywhere">Sök i all lagring</string>
+    <string name="telos_files_search_everywhere_summary">Söker i internminnet, på SD-kort och USB-enheter, inte bara i den här mappen</string>
+</resources>
