@@ -19,6 +19,7 @@ dependencyResolutionManagement {
 
 include(":app:app")
 include(":app:ui")
+include(":app:network")
 
 include(":core:base")
 include(":core:crashreporter")

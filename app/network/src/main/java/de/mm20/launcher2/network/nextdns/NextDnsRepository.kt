@@ -1,7 +1,8 @@
 package de.mm20.launcher2.network.nextdns
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
@@ -9,11 +10,22 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import retrofit2.create
 
 class NextDnsRepository(private val context: Context) {
-    private val prefs: SharedPreferences = context.getSharedPreferences("nextdns_prefs", Context.MODE_PRIVATE)
+    private val prefsName = "nextdns_prefs_encrypted"
+
+    private val prefs by lazy {
+        val masterKey = MasterKey.Builder(context)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+        EncryptedSharedPreferences.create(
+            context,
+            prefsName,
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
+        )
+    }
 
     fun saveToken(token: String) {
         prefs.edit().putString(KEY_TOKEN, token).apply()
@@ -32,7 +44,7 @@ class NextDnsRepository(private val context: Context) {
             .addConverterFactory(json.asConverterFactory(contentType))
             .client(client)
             .build()
-        retrofit.create()
+        retrofit.create(NextDnsApi::class.java)
     }
 
     suspend fun fetchLogs(limit: Int = 100, cursor: String? = null): Result<NextDnsLogResponse> = withContext(Dispatchers.IO) {
