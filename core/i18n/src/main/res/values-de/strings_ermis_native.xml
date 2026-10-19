@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis-Mail</string>
+    <string name="ermis_new_mail_count">%1$d neue Nachrichten</string>
+    <string name="ermis_error_cache">Der Mail-Cache konnte nicht entsperrt werden.</string>
+    <string name="ermis_error_auth">Authentifizierung fehlgeschlagen. Anmeldemethode und Zugangsdaten prüfen.</string>
+    <string name="ermis_error_tls">Das Serverzertifikat konnte nicht überprüft werden.</string>
+    <string name="ermis_error_generic">Aktion fehlgeschlagen. Verbindung und Servereinstellungen prüfen.</string>
+    <string name="ermis_error_sent_copy">Nachricht gesendet, aber keine Kopie unter Gesendet gespeichert. Nicht erneut senden.</string>
+</resources>

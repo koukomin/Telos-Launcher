@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Αποθηκεύτηκε στο Pictures/Telos</string>
+    <string name="camera_native_failed">Σφάλμα κάμερας: %1$s</string>
+    <string name="camera_native_capture">Λήψη</string>
+    <string name="camera_native_record">Εγγραφή βίντεο</string>
+    <string name="camera_native_stop">Διακοπή εγγραφής</string>
+    <string name="camera_native_timer">Χρονοδιακόπτης</string>
+    <string name="camera_native_settings">Ρυθμίσεις λήψης</string>
+    <string name="camera_native_exposure">Αντιστάθμιση έκθεσης</string>
+    <string name="camera_native_iso">Ευαισθησία ISO</string>
+    <string name="camera_native_shutter">Διάρκεια κλείστρου (ms)</string>
+    <string name="camera_native_auto">Αυτόματη έκθεση</string>
+    <string name="camera_native_histogram">Ιστόγραμμα</string>
+    <string name="camera_native_audio">Εγγραφή ήχου μικροφώνου</string>
+    <string name="camera_native_discreet_hint">Κρυφή προεπισκόπηση. Η λήψη γίνεται με πάτημα και οι ενδείξεις κάμερας του συστήματος παραμένουν ορατές.</string>
+    <string name="camera_native_capabilities">Οι διαθέσιμες λειτουργίες εξαρτώνται από την κάμερα. Οι φωτογραφίες επεξεργάζονται στη συσκευή, χωρίς ιδιόκτητη μηχανή.</string>
+    <string name="camera_native_formats">Το JPEG κρατά τα μεταδεδομένα όταν είναι ενεργά. PNG/WebP αφαιρούν τα μεταδεδομένα.</string>
+    <string name="camera_native_gallery">Άνοιγμα συλλογής</string>
+    <string name="camera_native_flash">Φλας</string>
+    <string name="camera_native_panorama_hint">Χειροκίνητο πανόραμα: τραβήξτε 2–8 λήψεις από αριστερά προς τα δεξιά με επικάλυψη 20%, κρατώντας ίσιο τον ορίζοντα. Γίνεται ανάμειξη ενώσεων χωρίς αυτόματη ευθυγράμμιση.</string>
+    <string name="camera_native_webcam_lan">Όποιος έχει αυτό το URL με το διακριτικό στο τοπικό δίκτυο μπορεί να δει την κάμερα. Η μετάδοση σταματά όταν η οθόνη φύγει από το προσκήνιο.</string>
+    <string name="camera_native_hidden_saved">Αποθηκεύτηκε ιδιωτικά στο Pictures/TelosHidden. Το κρυφό άλμπουμ δεν εμφανίζεται στη συλλογή και διαγράφεται με την απεγκατάσταση του Telos.</string>
+    <string name="camera_native_geo_hint">Μόνο για JPEG EXIF. Προσθέτει διαθέσιμη πρόσφατη θέση, έως 10 λεπτών και ακρίβειας έως 500 μέτρων.</string>
+    <string name="camera_native_face_trigger">Λήψη όταν ανιχνεύεται πρόσωπο</string>
+    <string name="camera_native_motion_trigger">Λήψη όταν ανιχνεύεται κίνηση</string>
+    <string name="camera_native_trigger_hint">Μόνο στο προσκήνιο. Έως μία λήψη κάθε 5 δευτερόλεπτα. Η ανίχνευση κίνησης βασίζεται σε αλλαγές της προεπισκόπησης και μπορεί να αντιδράσει σε αλλαγές φωτισμού.</string>
+</resources>

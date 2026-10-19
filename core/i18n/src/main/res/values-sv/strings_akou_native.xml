@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Utan API-nyckel: spelar in 10 sekunder och beräknar fingeravtrycket på enheten. Endast fingeravtrycket skickas till Shazam, aldrig ljudet.</string>
+    <string name="akou_get_token">Hämta en AudD-API-token</string>
+    <string name="akou_api_token">AudD-API-token</string>
+    <string name="akou_start">Spela in och identifiera</string>
+    <string name="akou_recording">Spelar in 10 sekunder…</string>
+    <string name="akou_identifying">Matchar fingeravtryck…</string>
+    <string name="akou_no_match">Ingen träff. Försök igen närmare musiken.</string>
+    <string name="akou_matched">Låten identifierad</string>
+    <string name="akou_failed">Identifieringen misslyckades. Kontrollera mikrofon och anslutning och försök närmare musiken.</string>
+    <string name="akou_microphone_denied">Mikrofonbehörighet krävs för att spela in ett prov.</string>
+    <string name="akou_history">Identifieringshistorik</string>
+    <string name="akou_youtube_music">Sök i YouTube Music</string>
+</resources>

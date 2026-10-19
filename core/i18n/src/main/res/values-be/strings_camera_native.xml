@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Захавана ў Pictures/Telos</string>
+    <string name="camera_native_failed">Памылка камеры: %1$s</string>
+    <string name="camera_native_capture">Зняць</string>
+    <string name="camera_native_record">Запісаць відэа</string>
+    <string name="camera_native_stop">Спыніць запіс</string>
+    <string name="camera_native_timer">Таймер</string>
+    <string name="camera_native_settings">Налады здымкі</string>
+    <string name="camera_native_exposure">Кампенсацыя экспазіцыі</string>
+    <string name="camera_native_iso">Адчувальнасць ISO</string>
+    <string name="camera_native_shutter">Вытрымка (мс)</string>
+    <string name="camera_native_auto">Аўтаматычная экспазіцыя</string>
+    <string name="camera_native_histogram">Гістаграма</string>
+    <string name="camera_native_audio">Запісваць гук мікрафона</string>
+    <string name="camera_native_discreet_hint">Папярэдні прагляд схаваны. Здымка па-ранейшаму патрабуе відавочнага дзеяння; сістэмныя індыкатары камеры застаюцца бачнымі.</string>
+    <string name="camera_native_capabilities">Даступныя рэжымы залежаць ад гэтай камеры. Фота апрацоўваюцца на прыладзе; прапрыетарны рухавік не ўключаны.</string>
+    <string name="camera_native_formats">JPEG захоўвае метаданыя камеры, калі гэта ўключана. PNG/WebP выдаляюць метаданыя.</string>
+    <string name="camera_native_gallery">Адкрыць галерэю</string>
+    <string name="camera_native_flash">Успышка</string>
+    <string name="camera_native_panorama_hint">Ручная панарама: зрабіце 2–8 кадраў злева направа з перакрыццем 20 %, трымаючы гарызонт роўна. Швы згладжваюцца без аўтаматычнага выраўноўвання.</string>
+    <string name="camera_native_webcam_lan">Любы ў лакальнай сетцы з гэтым URL з токенам можа глядзець камеру. Трансляцыя спыняецца, калі гэты экран пакідае пярэдні план.</string>
+    <string name="camera_native_hidden_saved">Захавана прыватна ў Pictures/TelosHidden. Схаваны альбом не паказваецца ў галерэі і выдаляецца пры выдаленні Telos.</string>
+    <string name="camera_native_geo_hint">Толькі JPEG EXIF. Дадае даступнае месцазнаходжанне не старэйшае за 10 хвілін з дакладнасцю да 500 м.</string>
+    <string name="camera_native_face_trigger">Здымаць пры выяўленні твару</string>
+    <string name="camera_native_motion_trigger">Здымаць пры выяўленні руху</string>
+    <string name="camera_native_trigger_hint">Толькі на пярэднім плане. Не часцей разу за 5 секунд. Рух вызначаецца па зменах перадпрагляду і можа рэагаваць на асвятленне.</string>
+</resources>

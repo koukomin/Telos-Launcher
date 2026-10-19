@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Salvestatud kausta Pictures/Telos</string>
+    <string name="camera_native_failed">Kaamera viga: %1$s</string>
+    <string name="camera_native_capture">Pildista</string>
+    <string name="camera_native_record">Salvesta video</string>
+    <string name="camera_native_stop">Peata salvestamine</string>
+    <string name="camera_native_timer">Taimer</string>
+    <string name="camera_native_settings">Jäädvustamise seaded</string>
+    <string name="camera_native_exposure">Särituse kompensatsioon</string>
+    <string name="camera_native_iso">ISO-tundlikkus</string>
+    <string name="camera_native_shutter">Säriaeg (ms)</string>
+    <string name="camera_native_auto">Automaatne säritus</string>
+    <string name="camera_native_histogram">Histogramm</string>
+    <string name="camera_native_audio">Salvesta mikrofoni heli</string>
+    <string name="camera_native_discreet_hint">Eelvaade peidetud. Jäädvustamine nõuab endiselt teadlikku toimingut; süsteemi kaameranäidikud jäävad nähtavaks.</string>
+    <string name="camera_native_capabilities">Saadaolevad režiimid sõltuvad sellest kaamerast. Fotosid töödeldakse seadmes; patenteeritud mootorit pole kaasas.</string>
+    <string name="camera_native_formats">JPEG säilitab kaamera metaandmed, kui see on lubatud. PNG/WebP eemaldavad metaandmed.</string>
+    <string name="camera_native_gallery">Ava galerii</string>
+    <string name="camera_native_flash">Välk</string>
+    <string name="camera_native_panorama_hint">Käsitsi panoraam: tee vasakult paremale 2–8 pilti 20 % kattuvusega, hoides horisondi sirgena. Liitekohad hajutatakse automaatse joondamiseta.</string>
+    <string name="camera_native_webcam_lan">Kõik, kellel on see tokeniga URL sinu kohalikus võrgus, saavad kaamerat vaadata. Jagamine lõpeb, kui see kuva lahkub esiplaanilt.</string>
+    <string name="camera_native_hidden_saved">Salvestatud privaatselt kausta Pictures/TelosHidden. Peidetud albumit ei kuvata galeriis ja see eemaldatakse Telosi desinstallimisel.</string>
+    <string name="camera_native_geo_hint">Ainult JPEG EXIF. Lisab võimaluse korral kuni 10 minutit vana asukoha, mille täpsus on 500 m või parem.</string>
+    <string name="camera_native_face_trigger">Pildista näo tuvastamisel</string>
+    <string name="camera_native_motion_trigger">Pildista liikumise tuvastamisel</string>
+    <string name="camera_native_trigger_hint">Ainult esiplaanil. Kõige rohkem kord 5 sekundi jooksul. Liikumine põhineb eelvaate muutustel ja võib reageerida valguse muutustele.</string>
+</resources>

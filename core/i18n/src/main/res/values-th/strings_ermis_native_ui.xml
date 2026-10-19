@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ermis_accounts">บัญชีอีเมล</string>
+    <string name="ermis_all_accounts">ทุกบัญชี</string>
+    <string name="ermis_native_intro">อีเมลของคุณใน Telos เชื่อมต่อบัญชี IMAP/SMTP ด้วย TLS และรหัสผ่านหรือรหัสผ่านแอป</string>
+    <string name="ermis_empty">ไม่มีข้อความ ซิงค์บัญชีหรือเปลี่ยนการค้นหา</string>
+    <string name="ermis_operation_failed">การดำเนินการอีเมลล้มเหลว</string>
+    <string name="ermis_tls_help">เซิร์ฟเวอร์ทั้งสองต้องรองรับ TLS ที่ตรวจสอบแล้ว Gmail ต้องใช้รหัสผ่านแอป รุ่นนี้ยังลงชื่อเข้าใช้ด้วย Google ไม่ได้</string>
+    <string name="ermis_username">ชื่อผู้ใช้เซิร์ฟเวอร์</string>
+    <string name="ermis_username_help">เว้นว่างเพื่อใช้ที่อยู่อีเมลของคุณ</string>
+    <string name="ermis_imap_host">เซิร์ฟเวอร์ IMAP</string>
+    <string name="ermis_imap_port">พอร์ต IMAP TLS</string>
+    <string name="ermis_smtp_host">เซิร์ฟเวอร์ SMTP</string>
+    <string name="ermis_smtp_port">พอร์ต SMTP</string>
+    <string name="ermis_starttls">บังคับใช้ STARTTLS สำหรับ SMTP</string>
+    <string name="ermis_saf_help">ตัวเลือกไฟล์ยังแสดงบริการคลาวด์ที่รองรับเอกสาร Android สำหรับไฟล์ใหญ่ให้เพิ่มลิงก์แชร์ในข้อความ</string>
+    <string name="ermis_reply">ตอบกลับ</string>
+</resources>

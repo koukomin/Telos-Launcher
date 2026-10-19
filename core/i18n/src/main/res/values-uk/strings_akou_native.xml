@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Без ключа API: запис 10 секунд і створення відбитка на пристрої. До Shazam надсилається лише відбиток, а не звук.</string>
+    <string name="akou_get_token">Отримати API-токен AudD</string>
+    <string name="akou_api_token">API-токен AudD</string>
+    <string name="akou_start">Записати та розпізнати</string>
+    <string name="akou_recording">Записування 10 секунд…</string>
+    <string name="akou_identifying">Пошук збігу відбитка…</string>
+    <string name="akou_no_match">Збігів немає. Спробуйте ще раз ближче до музики.</string>
+    <string name="akou_matched">Пісню розпізнано</string>
+    <string name="akou_failed">Помилка розпізнавання. Перевірте мікрофон і з’єднання та повторіть спробу ближче до музики.</string>
+    <string name="akou_microphone_denied">Для запису зразка потрібен дозвіл на використання мікрофона.</string>
+    <string name="akou_history">Історія розпізнавання</string>
+    <string name="akou_youtube_music">Знайти в YouTube Music</string>
+</resources>

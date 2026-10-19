@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Không khả dụng trên thiết bị này</string>
+    <string name="virtual_magnifier_permission">Kính lúp cần quyền truy cập máy ảnh</string>
+    <string name="virtual_magnifier_resume">Tiếp tục xem trước</string>
+    <string name="virtual_magnifier_freeze">Đóng băng khung hình</string>
+</resources>

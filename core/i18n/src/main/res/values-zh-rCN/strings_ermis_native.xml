@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis 邮件</string>
+    <string name="ermis_new_mail_count">%1$d 封新邮件</string>
+    <string name="ermis_error_cache">无法解锁邮件缓存。</string>
+    <string name="ermis_error_auth">验证失败。请检查登录方式及账户凭据。</string>
+    <string name="ermis_error_tls">无法验证服务器证书。</string>
+    <string name="ermis_error_generic">操作失败。请检查连接及服务器设置。</string>
+    <string name="ermis_error_sent_copy">邮件已发送，但无法将副本保存至已发送文件夹。请勿重新发送。</string>
+</resources>

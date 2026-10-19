@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">アカウントを追加</string>
+    <string name="ermis_attach">この端末から添付</string>
+    <string name="ermis_body">本文</string>
+    <string name="ermis_compose">作成</string>
+    <string name="ermis_connect">接続</string>
+    <string name="ermis_email">メールアドレス</string>
+    <string name="ermis_inbox">受信トレイ</string>
+    <string name="ermis_no_subject">（件名なし）</string>
+    <string name="ermis_note">メモ</string>
+    <string name="ermis_note_save">メモを保存</string>
+    <string name="ermis_password">パスワード</string>
+    <string name="ermis_remove">削除</string>
+    <string name="ermis_search">メールを検索</string>
+    <string name="ermis_send">送信</string>
+    <string name="ermis_starred">スター付き</string>
+    <string name="ermis_subject">件名</string>
+    <string name="ermis_sync">同期</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">宛先</string>
+</resources>

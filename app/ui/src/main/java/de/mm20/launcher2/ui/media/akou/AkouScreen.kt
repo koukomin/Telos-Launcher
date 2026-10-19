@@ -1,25 +1,76 @@
 package de.mm20.launcher2.ui.media.akou
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.comms.akou.AkouHistory
+import de.mm20.launcher2.comms.akou.AkouRecognition
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import de.mm20.launcher2.comms.akou.RecognizedSong
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 @Serializable
 data object AkouRoute : NavKey
 
-/** Recognition remains unavailable until a real recorder and fingerprint provider are connected. */
+/** Explicit foreground listening; only a fingerprint is sent for matching. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AkouScreen() {
+    val context = LocalContext.current
     val backStack = LocalBackStack.current
+    val history = remember { AkouHistory(context.applicationContext) }
+    var entries by remember { mutableStateOf<List<RecognizedSong>>(emptyList()) }
+    LaunchedEffect(history) { entries = withContext(Dispatchers.IO) { history.read() } }
+    var phase by remember { mutableIntStateOf(0) }
+    var status by remember { mutableIntStateOf(0) }
+    var job by remember { mutableStateOf<Job?>(null) }
+    val scope = rememberCoroutineScope()
+    fun start() {
+        if (phase != 0) return
+        job = scope.launch {
+            status = 0
+            phase = 1
+            var recording: ShortArray? = null
+            try {
+                recording = AkouRecognition.record()
+                phase = 2
+                val result = AkouRecognition.recognize(recording)
+                if (result == null) status = R.string.akou_no_match
+                else { entries = withContext(Dispatchers.IO) { history.add(result) }; status = R.string.akou_matched }
+            } catch (e: CancellationException) { throw e }
+            catch (_: SecurityException) { status = R.string.akou_microphone_denied }
+            catch (_: Exception) { status = R.string.akou_failed }
+            finally { recording?.fill(0); phase = 0 }
+        }
+    }
+    val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) start() else status = R.string.akou_microphone_denied
+    }
+    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { job?.cancel() }
+    DisposableEffect(Unit) { onDispose { job?.cancel() } }
     Scaffold(containerColor = MaterialTheme.colorScheme.surface, topBar = {
         TopAppBar(title = { Text("Άκου") }, navigationIcon = {
             IconButton(onClick = { backStack.removeLastOrNull() }) {
@@ -27,6 +78,42 @@ fun AkouScreen() {
             }
         })
     }) { padding ->
-        Text(stringResource(R.string.akou_not_implemented), Modifier.fillMaxWidth().padding(padding).padding(24.dp))
+        LazyColumn(Modifier.fillMaxSize().padding(padding), contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            item {
+                Text(stringResource(R.string.akou_provider_disclosure), style = MaterialTheme.typography.bodyMedium)
+                Spacer(Modifier.height(12.dp))
+                Button( modifier = Modifier.fillMaxWidth(), onClick = {
+                    if (phase != 0) job?.cancel()
+                    else if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) start()
+                    else permission.launch(Manifest.permission.RECORD_AUDIO)
+                }) {
+                    Text(stringResource(if (phase == 0) R.string.akou_start else R.string.hc_cancel))
+                }
+                if (phase != 0) {
+                    LinearProgressIndicator(Modifier.fillMaxWidth())
+                    Text(stringResource(if (phase == 1) R.string.akou_recording else R.string.akou_identifying))
+                }
+                if (status != 0) Text(stringResource(status))
+            }
+            item {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(stringResource(R.string.akou_history), style = MaterialTheme.typography.titleMedium)
+                    TextButton(enabled = entries.isNotEmpty(), onClick = { scope.launch { withContext(Dispatchers.IO) { history.clear() }; entries = emptyList() } }) { Text(stringResource(R.string.hc_delete)) }
+                }
+            }
+            items(entries, key = { "${it.recognizedAt}:${it.title}:${it.artist}" }) { song ->
+                Surface(shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surfaceContainerLow) {
+                    Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text(song.title, style = MaterialTheme.typography.titleMedium)
+                        Text(song.artist, style = MaterialTheme.typography.bodyMedium)
+                        if (song.album.isNotBlank()) Text(song.album, style = MaterialTheme.typography.bodySmall)
+                        TextButton(onClick = {
+                            val uri = Uri.parse("https://music.youtube.com/search?q=" + Uri.encode("${song.artist} ${song.title}"))
+                            runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, uri)) }
+                        }) { Text(stringResource(R.string.akou_youtube_music)) }
+                    }
+                }
+            }
+        }
     }
 }

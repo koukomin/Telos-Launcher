@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Добавяне на профил</string>
+    <string name="ermis_attach">Прикачване от този телефон</string>
+    <string name="ermis_body">Съобщение</string>
+    <string name="ermis_compose">Ново писмо</string>
+    <string name="ermis_connect">Свързване</string>
+    <string name="ermis_email">Имейл</string>
+    <string name="ermis_inbox">Входящи</string>
+    <string name="ermis_no_subject">(без тема)</string>
+    <string name="ermis_note">Бележка</string>
+    <string name="ermis_note_save">Запазване на бележката</string>
+    <string name="ermis_password">Парола</string>
+    <string name="ermis_remove">Премахване</string>
+    <string name="ermis_search">Търсене в пощата</string>
+    <string name="ermis_send">Изпращане</string>
+    <string name="ermis_starred">Със звезда</string>
+    <string name="ermis_subject">Тема</string>
+    <string name="ermis_sync">Синхронизиране</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">До</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Brez ključa API: posname 10 sekund in izračuna odtis v napravi. Shazamu se pošlje samo odtis, nikoli zvok.</string>
+    <string name="akou_get_token">Pridobi žeton API AudD</string>
+    <string name="akou_api_token">Žeton API AudD</string>
+    <string name="akou_start">Posnemi in prepoznaj</string>
+    <string name="akou_recording">Snemanje 10 sekund…</string>
+    <string name="akou_identifying">Iskanje ujemanja odtisa…</string>
+    <string name="akou_no_match">Ni zadetka. Poskusite znova bližje glasbi.</string>
+    <string name="akou_matched">Skladba prepoznana</string>
+    <string name="akou_failed">Prepoznavanje ni uspelo. Preverite mikrofon in povezavo ter poskusite bližje glasbi.</string>
+    <string name="akou_microphone_denied">Za snemanje vzorca je potrebno dovoljenje za mikrofon.</string>
+    <string name="akou_history">Zgodovina prepoznavanja</string>
+    <string name="akou_youtube_music">Poišči v YouTube Music</string>
+</resources>

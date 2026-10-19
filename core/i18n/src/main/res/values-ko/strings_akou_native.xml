@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">API 키 없이 10초간 녹음하고 기기에서 오디오 지문을 계산합니다. Shazam에는 지문만 전송하며 원본 소리는 보내지 않습니다.</string>
+    <string name="akou_get_token">AudD API 토큰 받기</string>
+    <string name="akou_api_token">AudD API 토큰</string>
+    <string name="akou_start">녹음하고 인식</string>
+    <string name="akou_recording">10초간 녹음 중…</string>
+    <string name="akou_identifying">오디오 지문 일치 검색 중…</string>
+    <string name="akou_no_match">일치하는 노래가 없습니다. 음악 가까이에서 다시 시도하세요.</string>
+    <string name="akou_matched">노래가 인식되었습니다</string>
+    <string name="akou_failed">인식에 실패했습니다. 마이크와 연결을 확인하고 음악 가까이에서 다시 시도하세요.</string>
+    <string name="akou_microphone_denied">인식용 샘플을 녹음하려면 마이크 권한이 필요합니다.</string>
+    <string name="akou_history">인식 기록</string>
+    <string name="akou_youtube_music">YouTube Music에서 찾기</string>
+</resources>

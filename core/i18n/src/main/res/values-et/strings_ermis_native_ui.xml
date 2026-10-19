@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ermis_accounts">Meilikontod</string>
+    <string name="ermis_all_accounts">Kõik kontod</string>
+    <string name="ermis_native_intro">Sinu meil Teloses. Ühenda IMAP/SMTP-konto TLS-i ja parooli või rakenduseparooliga.</string>
+    <string name="ermis_empty">Sõnumeid pole. Sünkrooni kontod või muuda otsingut.</string>
+    <string name="ermis_operation_failed">Meilitoiming ebaõnnestus</string>
+    <string name="ermis_tls_help">Mõlemad serverid peavad toetama kontrollitud TLS-i. Gmail vajab rakenduseparooli. Google’i sisselogimine pole selles versioonis saadaval.</string>
+    <string name="ermis_username">Serveri kasutajanimi</string>
+    <string name="ermis_username_help">Meiliaadressi kasutamiseks jäta tühjaks.</string>
+    <string name="ermis_imap_host">IMAP-server</string>
+    <string name="ermis_imap_port">IMAP TLS-port</string>
+    <string name="ermis_smtp_host">SMTP-server</string>
+    <string name="ermis_smtp_port">SMTP-port</string>
+    <string name="ermis_starttls">Nõua SMTP jaoks STARTTLS-i</string>
+    <string name="ermis_saf_help">Failivalija näitab ka Androidi Dokumente toetavaid pilveteenuseid. Suurte failide puhul lisa sõnumisse jagamislink.</string>
+    <string name="ermis_reply">Vasta</string>
+</resources>

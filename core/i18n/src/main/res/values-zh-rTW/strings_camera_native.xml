@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">已儲存至 Pictures/Telos</string>
+    <string name="camera_native_failed">相機錯誤：%1$s</string>
+    <string name="camera_native_capture">拍攝</string>
+    <string name="camera_native_record">錄製影片</string>
+    <string name="camera_native_stop">停止錄製</string>
+    <string name="camera_native_timer">計時器</string>
+    <string name="camera_native_settings">拍攝設定</string>
+    <string name="camera_native_exposure">曝光補償</string>
+    <string name="camera_native_iso">ISO 感光度</string>
+    <string name="camera_native_shutter">快門時間（毫秒）</string>
+    <string name="camera_native_auto">自動曝光</string>
+    <string name="camera_native_histogram">直方圖</string>
+    <string name="camera_native_audio">錄製麥克風音訊</string>
+    <string name="camera_native_discreet_hint">預覽已隱藏。拍攝仍需明確操作；系統相機指示器保持可見。</string>
+    <string name="camera_native_capabilities">可用模式取決於此相機。照片在裝置上處理；不包含專有引擎。</string>
+    <string name="camera_native_formats">啟用時，JPEG 保留相機中繼資料。PNG/WebP 會移除中繼資料。</string>
+    <string name="camera_native_gallery">開啟圖庫</string>
+    <string name="camera_native_flash">閃光燈</string>
+    <string name="camera_native_panorama_hint">手動全景：保持地平線水平，從左到右拍攝 2–8 張重疊 20 % 的影像。接縫會融合，但不會自動對齊。</string>
+    <string name="camera_native_webcam_lan">區域網路中任何持有此權杖 URL 的人都可以查看相機。此畫面離開前景時共享停止。</string>
+    <string name="camera_native_hidden_saved">已私密儲存至 Pictures/TelosHidden。隱藏相簿不會顯示於圖庫中，解除安裝 Telos 時會被刪除。</string>
+    <string name="camera_native_geo_hint">僅限 JPEG EXIF。若可用，將加入不超過 10 分鐘且精確度在 500 公尺以內的近期位置。</string>
+    <string name="camera_native_face_trigger">偵測到人臉時拍攝</string>
+    <string name="camera_native_motion_trigger">偵測到動作時拍攝</string>
+    <string name="camera_native_trigger_hint">僅限前景。最多每 5 秒拍攝一次。動作偵測依據預覽的變化，也可能對光線變化作出反應。</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ermis_accounts">حسابات البريد</string>
+    <string name="ermis_all_accounts">جميع الحسابات</string>
+    <string name="ermis_native_intro">بريدك داخل Telos. اربط حساب IMAP/SMTP باستخدام TLS وكلمة مرور أو كلمة مرور تطبيق.</string>
+    <string name="ermis_empty">لا توجد رسائل هنا. زامن الحسابات أو غيّر البحث.</string>
+    <string name="ermis_operation_failed">فشلت عملية البريد</string>
+    <string name="ermis_tls_help">يجب أن يدعم الخادمان TLS موثّقاً. يتطلب Gmail كلمة مرور تطبيق. تسجيل الدخول بحساب Google غير متاح في هذا الإصدار.</string>
+    <string name="ermis_username">اسم مستخدم الخادم</string>
+    <string name="ermis_username_help">اتركه فارغاً لاستخدام عنوان بريدك.</string>
+    <string name="ermis_imap_host">خادم IMAP</string>
+    <string name="ermis_imap_port">منفذ IMAP TLS</string>
+    <string name="ermis_smtp_host">خادم SMTP</string>
+    <string name="ermis_smtp_port">منفذ SMTP</string>
+    <string name="ermis_starttls">اشتراط STARTTLS لخادم SMTP</string>
+    <string name="ermis_saf_help">يعرض منتقي الملفات أيضاً موفّري السحابة المتوافقين مع مستندات Android. أضف رابط مشاركة للملفات الكبيرة.</string>
+    <string name="ermis_reply">رد</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Mingħajr ċavetta API: jirrekordja 10 sekondi u jikkalkula l-marka fuq l-apparat. Il-marka biss tintbagħat lil Shazam, qatt l-awdjo.</string>
+    <string name="akou_get_token">Ikseb token API ta’ AudD</string>
+    <string name="akou_api_token">Token API ta’ AudD</string>
+    <string name="akou_start">Irrekordja u agħraf</string>
+    <string name="akou_recording">Qed jiġu rrekordjati 10 sekondi…</string>
+    <string name="akou_identifying">Qed titqabbel il-marka…</string>
+    <string name="akou_no_match">Ma nstabx qbil. Erġa’ pprova qrib il-mużika.</string>
+    <string name="akou_matched">Kanzunetta magħrufa</string>
+    <string name="akou_failed">L-għarfien falla. Iċċekkja l-mikrofonu u l-konnessjoni u erġa’ pprova qrib il-mużika.</string>
+    <string name="akou_microphone_denied">Huwa meħtieġ il-permess tal-mikrofonu biex tirrekordja kampjun.</string>
+    <string name="akou_history">Storja tal-għarfien</string>
+    <string name="akou_youtube_music">Fittex f’YouTube Music</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Pievienot kontu</string>
+    <string name="ermis_attach">Pievienot no šī tālruņa</string>
+    <string name="ermis_body">Ziņojums</string>
+    <string name="ermis_compose">Rakstīt</string>
+    <string name="ermis_connect">Savienot</string>
+    <string name="ermis_email">E-pasts</string>
+    <string name="ermis_inbox">Iesūtne</string>
+    <string name="ermis_no_subject">(bez temata)</string>
+    <string name="ermis_note">Piezīme</string>
+    <string name="ermis_note_save">Saglabāt piezīmi</string>
+    <string name="ermis_password">Parole</string>
+    <string name="ermis_remove">Noņemt</string>
+    <string name="ermis_search">Meklēt pastā</string>
+    <string name="ermis_send">Sūtīt</string>
+    <string name="ermis_starred">Ar zvaigznīti</string>
+    <string name="ermis_subject">Temats</string>
+    <string name="ermis_sync">Sinhronizēt</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Kam</string>
+</resources>

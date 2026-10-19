@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">API-kulcs nélkül: 10 másodperc rögzítése és ujjlenyomat számítása az eszközön. Csak az ujjlenyomat kerül a Shazamhoz, a hang soha.</string>
+    <string name="akou_get_token">AudD API-token beszerzése</string>
+    <string name="akou_api_token">AudD API-token</string>
+    <string name="akou_start">Felvétel és felismerés</string>
+    <string name="akou_recording">10 másodperc rögzítése…</string>
+    <string name="akou_identifying">Ujjlenyomat egyeztetése…</string>
+    <string name="akou_no_match">Nincs találat. Próbálja újra a zenéhez közelebb.</string>
+    <string name="akou_matched">Zeneszám felismerve</string>
+    <string name="akou_failed">A felismerés sikertelen. Ellenőrizze a mikrofont és a kapcsolatot, majd próbálja közelebb a zenéhez.</string>
+    <string name="akou_microphone_denied">A minta rögzítéséhez mikrofonengedély szükséges.</string>
+    <string name="akou_history">Felismerési előzmények</string>
+    <string name="akou_youtube_music">Keresés a YouTube Musicban</string>
+</resources>

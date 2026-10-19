@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">無需 API 金鑰：錄製 10 秒，在裝置上計算指紋。只向 Shazam 傳送指紋，絕不上傳原始音訊。</string>
+    <string name="akou_get_token">取得 AudD API 權杖</string>
+    <string name="akou_api_token">AudD API 權杖</string>
+    <string name="akou_start">錄音並辨識</string>
+    <string name="akou_recording">正在錄製 10 秒音訊…</string>
+    <string name="akou_identifying">正在比對音訊指紋…</string>
+    <string name="akou_no_match">找不到符合的歌曲。請靠近音樂再試一次。</string>
+    <string name="akou_matched">已辨識歌曲</string>
+    <string name="akou_failed">辨識失敗。請檢查麥克風和網路連線，並靠近音樂重試。</string>
+    <string name="akou_microphone_denied">錄製辨識樣本需要麥克風權限。</string>
+    <string name="akou_history">辨識紀錄</string>
+    <string name="akou_youtube_music">在 YouTube Music 中尋找</string>
+</resources>

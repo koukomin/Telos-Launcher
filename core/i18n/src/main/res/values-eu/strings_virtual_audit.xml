@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Ez dago erabilgarri gailu honetan</string>
+    <string name="virtual_magnifier_permission">Lupak kamerarako sarbidea behar du</string>
+    <string name="virtual_magnifier_resume">Jarraitu aurrebista</string>
+    <string name="virtual_magnifier_freeze">Izoztu fotograma</string>
+</resources>

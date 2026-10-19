@@ -91,6 +91,8 @@ dependencies {
     implementation("androidx.camera:camera-camera2:1.3.2")
     implementation("androidx.camera:camera-lifecycle:1.3.2")
     implementation("androidx.camera:camera-view:1.3.2")
+    implementation("androidx.camera:camera-video:1.3.2")
+    implementation("androidx.camera:camera-extensions:1.3.2")
 
     implementation(libs.bundles.kotlin)
 
@@ -159,6 +161,7 @@ dependencies {
     implementation(project(":libs:material-color-utilities"))
 
     implementation(project(":core:base"))
+    implementation(libs.shizuku.api)
     implementation(project(":core:i18n"))
     implementation(project(":core:compat"))
     implementation(project(":core:ktx"))

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Poŝto Ermis</string>
+    <string name="ermis_new_mail_count">%1$d novaj mesaĝoj</string>
+    <string name="ermis_error_cache">La poŝta kaŝmemoro ne povis esti malŝlosita.</string>
+    <string name="ermis_error_auth">Aŭtentikigo malsukcesis. Kontrolu la ensalutan metodon kaj kontajn akreditaĵojn.</string>
+    <string name="ermis_error_tls">La servila atestilo ne povis esti kontrolita.</string>
+    <string name="ermis_error_generic">La ago malsukcesis. Kontrolu la konekton kaj servilajn agordojn.</string>
+    <string name="ermis_error_sent_copy">Mesaĝo sendita, sed kopio ne konservita en Senditaj. Ne resendu.</string>
+</resources>

@@ -24,7 +24,7 @@ internal fun FilesSearchDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
     fun dateText(value: Long?) = value?.let { java.time.Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate().toString() }.orEmpty()
     var after by remember { mutableStateOf(dateText(vm.searchFilter.modifiedAfter)) }
     var before by remember { mutableStateOf(dateText(vm.searchFilter.modifiedBefore)) }
-    var kind by remember { mutableStateOf(vm.searchKind) }; var recursive by remember { mutableStateOf(vm.recursiveSearch) }
+    var kind by remember { mutableStateOf(vm.searchKind) }; var recursive by remember { mutableStateOf(vm.recursiveSearch) }; var everywhere by remember { mutableStateOf(vm.searchEverywhere) }
     fun bytes(text: String): Long? = text.takeIf { it.isNotBlank() }?.toLongOrNull()?.takeIf { it >= 0 && it <= Long.MAX_VALUE / 1024 }?.times(1024)
     fun date(text: String, end: Boolean): Long? = runCatching {
         if (text.isBlank()) null else LocalDate.parse(text).let { if (end) it.plusDays(1) else it }
@@ -50,9 +50,13 @@ internal fun FilesSearchDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
             Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(recursive, { recursive = it }); Text(stringResource(if (vm.path?.let { de.mm20.launcher2.ui.files.remote.RemotePath.isRemote(it) } == true) R.string.telos_files_remote_search_recursive else R.string.telos_files_search_recursive)) }
             Text(stringResource(if (vm.path?.let { de.mm20.launcher2.ui.files.remote.RemotePath.isRemote(it) } == true) R.string.telos_files_remote_search_scope else R.string.telos_files_search_scope), style = MaterialTheme.typography.bodySmall)
             if (!valid) Text(stringResource(R.string.telos_files_search_invalid), color = MaterialTheme.colorScheme.error)
-            TextButton(onClick = { extensions = ""; minimum = ""; maximum = ""; after = ""; before = ""; kind = null; recursive = true }) { Text(stringResource(R.string.telos_files_search_reset)) }
+            if (vm.volumes.isNotEmpty() && !vm.rootMode) Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(everywhere, { everywhere = it })
+                Column { Text(stringResource(R.string.telos_files_search_everywhere)); Text(stringResource(R.string.telos_files_search_everywhere_summary), style = MaterialTheme.typography.bodySmall) }
+            }
+            TextButton(onClick = { extensions = ""; minimum = ""; maximum = ""; after = ""; before = ""; kind = null; recursive = true; everywhere = false }) { Text(stringResource(R.string.telos_files_search_reset)) }
         }
     }, confirmButton = { TextButton(enabled = valid, onClick = {
-        vm.setSearchOptions(FileSearchFilter(extensionSet, min, max, start, end), kind, recursive); onDismiss()
+        vm.updateSearchEverywhere(everywhere); vm.setSearchOptions(FileSearchFilter(extensionSet, min, max, start, end), kind, recursive); onDismiss()
     }) { Text(stringResource(R.string.hc_apply)) } }, dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } })
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Poczta Ermis</string>
+    <string name="ermis_new_mail_count">%1$d nowych wiadomości</string>
+    <string name="ermis_error_cache">Nie udało się odblokować pamięci podręcznej poczty.</string>
+    <string name="ermis_error_auth">Uwierzytelnianie nie powiodło się. Sprawdź metodę logowania i dane konta.</string>
+    <string name="ermis_error_tls">Nie udało się zweryfikować certyfikatu serwera.</string>
+    <string name="ermis_error_generic">Operacja nie powiodła się. Sprawdź połączenie i ustawienia serwera.</string>
+    <string name="ermis_error_sent_copy">Wiadomość wysłana, ale kopia nie została zapisana w Wysłanych. Nie wysyłaj ponownie.</string>
+</resources>

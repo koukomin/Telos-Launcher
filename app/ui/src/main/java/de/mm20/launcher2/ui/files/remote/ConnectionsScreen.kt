@@ -192,6 +192,24 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                     }
                     if (type == RemoteType.Sftp) {
                         Field(stringResource(R.string.hf_remote_private_key), c.privateKey, minLines = 3) { c = c.copy(privateKey = it) }
+                        val publicKey = remember(c.privateKey, c.user, c.host) { SshKeys.publicLine(c.privateKey, "${c.user.ifBlank { "telos" }}@telos") }
+                        val clipboard = androidx.compose.ui.platform.LocalClipboardManager.current
+                        val keyScope = rememberCoroutineScope()
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            TextButton(onClick = {
+                                busy = true
+                                keyScope.launch {
+                                    try {
+                                        val pem = withContext(Dispatchers.Default) { SshKeys.generatePrivatePem() }
+                                        c = c.copy(privateKey = pem, password = "")
+                                    } finally { busy = false }
+                                }
+                            }, enabled = !busy) { Text(stringResource(R.string.telos_files_ssh_generate_key)) }
+                            if (publicKey != null) TextButton(onClick = { clipboard.setText(androidx.compose.ui.text.AnnotatedString(publicKey)) }) {
+                                Text(stringResource(R.string.telos_files_ssh_copy_public_key))
+                            }
+                        }
+                        if (publicKey != null) Text(stringResource(R.string.telos_files_ssh_public_key_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         if (c.fingerprint.isNotEmpty()) Text(stringResource(R.string.hc_server_key, c.fingerprint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 } else {

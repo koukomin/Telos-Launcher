@@ -2,11 +2,15 @@ package de.mm20.launcher2.comms.telephony
 
 import android.content.Context
 import android.telecom.PhoneAccountHandle
+import de.mm20.launcher2.base.containedScope
 import de.mm20.launcher2.comms.PhoneNumbers
 import de.mm20.launcher2.comms.repository.CallLogRepository
 import de.mm20.launcher2.preferences.comms.CommsSettings
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -14,10 +18,25 @@ object SimRouter : KoinComponent {
     private val commsSettings: CommsSettings by inject()
     private val callLog: CallLogRepository by inject()
 
+    private val scope = containedScope(Dispatchers.Main.immediate)
+
     fun place(context: Context, number: String, handle: PhoneAccountHandle? = null) {
-        val resolved = handle ?: resolve(context, number)
-        if (resolved != null) commsSettings.setLastUsedSim(resolved.id)
-        TelosDialer.placeCall(context, number, resolved)
+        if (handle != null) {
+            placeNow(context, number, handle)
+            return
+        }
+        val app = context.applicationContext
+        scope.launch { placeAwait(app, number) }
+    }
+
+    /** Resolves the SIM off the main thread, then places the call. Call from the main thread. */
+    suspend fun placeAwait(context: Context, number: String) {
+        placeNow(context, number, withContext(Dispatchers.IO) { resolve(context, number) })
+    }
+
+    private fun placeNow(context: Context, number: String, handle: PhoneAccountHandle?) {
+        if (handle != null) commsSettings.setLastUsedSim(handle.id)
+        TelosDialer.placeCall(context, number, handle)
     }
 
     fun defaultNumberFor(contactId: Long, numbers: List<String>): String {
@@ -26,17 +45,17 @@ object SimRouter : KoinComponent {
         return numbers.find { PhoneNumbers.match(it, mapped.orEmpty()) } ?: numbers.first()
     }
 
-    fun resolve(context: Context, number: String): PhoneAccountHandle? {
+    suspend fun resolve(context: Context, number: String): PhoneAccountHandle? {
         val sims = TelosDialer.callCapableSims(context)
         if (sims.size < 2) return sims.firstOrNull()?.handle
-        val snap = runBlocking { commsSettings.snapshot.first() }
+        val snap = commsSettings.snapshot.first()
         val bound = snap.numberDefaultSim.entries.firstOrNull { PhoneNumbers.match(it.key, number) }?.value
         match(sims, bound)?.let { return it }
         return when (snap.defaultSim) {
             "ask" -> null
             "last" -> match(sims, snap.lastUsedSim) ?: sims.first().handle
             "log" -> {
-                val recents = runBlocking { callLog.observeRecents().first() }
+                val recents = callLog.observeRecents().first()
                 val account = recents.firstOrNull { PhoneNumbers.match(it.phoneNumber, number) }?.simAccountId
                 match(sims, account) ?: match(sims, snap.lastUsedSim)
             }

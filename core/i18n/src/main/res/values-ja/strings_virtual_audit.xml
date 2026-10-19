@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">この端末では利用できません</string>
+    <string name="virtual_magnifier_permission">拡大鏡にはカメラへのアクセスが必要です</string>
+    <string name="virtual_magnifier_resume">プレビューを再開</string>
+    <string name="virtual_magnifier_freeze">フレームを固定</string>
+</resources>

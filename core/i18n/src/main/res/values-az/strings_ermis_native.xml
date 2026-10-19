@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis poçtu</string>
+    <string name="ermis_new_mail_count">%1$d yeni mesaj</string>
+    <string name="ermis_error_cache">Poçt keşinin kilidi açıla bilmədi.</string>
+    <string name="ermis_error_auth">Doğrulama uğursuz oldu. Giriş üsulunu və hesab məlumatlarını yoxlayın.</string>
+    <string name="ermis_error_tls">Server sertifikatı yoxlanıla bilmədi.</string>
+    <string name="ermis_error_generic">Əməliyyat uğursuz oldu. Bağlantı və server ayarlarını yoxlayın.</string>
+    <string name="ermis_error_sent_copy">Mesaj göndərildi, amma surəti Göndərilənlərdə saxlanılmadı. Yenidən göndərməyin.</string>
+</resources>

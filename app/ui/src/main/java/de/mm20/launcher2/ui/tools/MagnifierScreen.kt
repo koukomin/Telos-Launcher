@@ -31,6 +31,10 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -57,15 +61,15 @@ enum class MagnifierFilter(val label: String, val matrix: FloatArray?) {
         0f, 0f, 0f, 1f, 0f
     )),
     YellowOnBlack("Yellow/Black", floatArrayOf(
-        0f, 0f, 0f, 0f, 255f,
-        0f, 0f, 0f, 0f, 255f,
+        0.2126f, 0.7152f, 0.0722f, 0f, 0f,
+        0.2126f, 0.7152f, 0.0722f, 0f, 0f,
         0f, 0f, 0f, 0f, 0f,
         0f, 0f, 0f, 1f, 0f
     )),
     BlueOnYellow("Blue/Yellow", floatArrayOf(
-        0f, 0f, 0f, 0f, 255f,
-        0f, 0f, 0f, 0f, 255f,
-        0f, 0f, 0f, 0f, 255f,
+        0.2126f, 0.7152f, 0.0722f, 0f, 0f,
+        0.2126f, 0.7152f, 0.0722f, 0f, 0f,
+        -0.2126f, -0.7152f, -0.0722f, 0f, 255f,
         0f, 0f, 0f, 1f, 0f
     ))
 }
@@ -84,7 +88,7 @@ fun MagnifierScreen() {
     ) { granted ->
         hasPermission = granted
         if (!granted) {
-            Toast.makeText(context, "Camera permission required for Magnifier", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.virtual_magnifier_permission), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -100,31 +104,54 @@ fun MagnifierScreen() {
             contentAlignment = Alignment.Center
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Camera Permission Required", color = Color.White, style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(R.string.virtual_magnifier_permission), color = Color.White, style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(16.dp))
                 Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
-                    Text("Grant Permission")
+                    Text(stringResource(R.string.hc_allow))
                 }
             }
         }
         return
     }
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+    var cameraActive by remember { mutableStateOf(lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) }
+    var zoomRange by remember { mutableStateOf(1f..1f) }
+    var sensorRect by remember { mutableStateOf<Rect?>(null) }
+    var hasFlash by remember { mutableStateOf(false) }
     var zoomLevel by remember { mutableStateOf(1f) }
     var torchOn by remember { mutableStateOf(false) }
     var currentFilter by remember { mutableStateOf(MagnifierFilter.Normal) }
     var isFrozen by remember { mutableStateOf(false) }
 
     var cameraDevice by remember { mutableStateOf<CameraDevice?>(null) }
+    var previewSurface by remember { mutableStateOf<Surface?>(null) }
     var captureSession by remember { mutableStateOf<CameraCaptureSession?>(null) }
     var previewRequestBuilder by remember { mutableStateOf<CaptureRequest.Builder?>(null) }
 
-    DisposableEffect(Unit) {
+    fun closeCamera() {
+        runCatching { captureSession?.close() }
+        runCatching { cameraDevice?.close() }
+        captureSession = null
+        cameraDevice = null
+        previewRequestBuilder = null
+        previewSurface?.release()
+        previewSurface = null
+        torchOn = false
+        isFrozen = false
+    }
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) cameraActive = true
+            if (event == Lifecycle.Event.ON_PAUSE) {
+                cameraActive = false
+                closeCamera()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
-            try {
-                captureSession?.close()
-                cameraDevice?.close()
-            } catch (_: Exception) {}
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            closeCamera()
         }
     }
 
@@ -136,13 +163,12 @@ fun MagnifierScreen() {
             .navigationBarsPadding()
     ) {
         // Camera Preview
-        AndroidView(
+        if (cameraActive) AndroidView(
             modifier = Modifier
                 .fillMaxSize()
                 .graphicsLayer {
-                    currentFilter.matrix?.let {
-                        val cm = androidx.compose.ui.graphics.ColorMatrix(it)
-                        colorFilter = ColorFilter.colorMatrix(cm)
+                    colorFilter = currentFilter.matrix?.let {
+                        ColorFilter.colorMatrix(androidx.compose.ui.graphics.ColorMatrix(it))
                     }
                 },
             factory = { ctx ->
@@ -160,10 +186,24 @@ fun MagnifierScreen() {
                                     chars.get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_BACK
                                 } ?: cameraManager.cameraIdList.first()
 
+                                val characteristics = cameraManager.getCameraCharacteristics(cameraId)
+                                hasFlash = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+                                sensorRect = characteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE)
+                                val ratioRange = if (Build.VERSION.SDK_INT >= 30) characteristics.get(CameraCharacteristics.CONTROL_ZOOM_RATIO_RANGE) else null
+                                val maximum = ratioRange?.upper ?: characteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1f
+                                zoomRange = 1f..maximum.coerceAtLeast(1f)
+                                zoomLevel = zoomLevel.coerceIn(zoomRange)
+                                val outputSize = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+                                    ?.getOutputSizes(SurfaceTexture::class.java)?.minByOrNull {
+                                        kotlin.math.abs(it.width.toLong() * it.height - width.toLong() * height)
+                                    }
+                                outputSize?.let { surfaceTexture.setDefaultBufferSize(it.width, it.height) }
                                 cameraManager.openCamera(cameraId, object : CameraDevice.StateCallback() {
                                     override fun onOpened(camera: CameraDevice) {
+                                        if (!cameraActive) { camera.close(); return }
                                         cameraDevice = camera
                                         val surface = Surface(surfaceTexture)
+                                        previewSurface = surface
                                         val builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
                                         builder.addTarget(surface)
                                         builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
@@ -171,12 +211,13 @@ fun MagnifierScreen() {
 
                                         camera.createCaptureSession(listOf(surface), object : CameraCaptureSession.StateCallback() {
                                             override fun onConfigured(session: CameraCaptureSession) {
+                                                if (!cameraActive || cameraDevice !== camera) { session.close(); surface.release(); return }
                                                 captureSession = session
                                                 try {
                                                     session.setRepeatingRequest(builder.build(), null, null)
                                                 } catch (_: Exception) {}
                                             }
-                                            override fun onConfigureFailed(session: CameraCaptureSession) {}
+                                            override fun onConfigureFailed(session: CameraCaptureSession) { session.close(); surface.release() }
                                         }, null)
                                     }
 
@@ -195,10 +236,7 @@ fun MagnifierScreen() {
 
                         override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {}
                         override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
-                            try {
-                                captureSession?.close()
-                                cameraDevice?.close()
-                            } catch (_: Exception) {}
+                            closeCamera()
                             return true
                         }
                         override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
@@ -227,17 +265,24 @@ fun MagnifierScreen() {
                 Slider(
                     value = zoomLevel,
                     onValueChange = { level ->
-                        zoomLevel = level
                         val builder = previewRequestBuilder ?: return@Slider
                         val session = captureSession ?: return@Slider
                         try {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                                 builder.set(CaptureRequest.CONTROL_ZOOM_RATIO, level)
+                            } else sensorRect?.let { sensor ->
+                                val width = (sensor.width() / level).toInt().coerceAtLeast(1)
+                                val height = (sensor.height() / level).toInt().coerceAtLeast(1)
+                                val left = sensor.centerX() - width / 2
+                                val top = sensor.centerY() - height / 2
+                                builder.set(CaptureRequest.SCALER_CROP_REGION, Rect(left, top, left + width, top + height))
                             }
                             session.setRepeatingRequest(builder.build(), null, null)
+                            zoomLevel = level
                         } catch (_: Exception) {}
                     },
-                    valueRange = 1f..10f,
+                    enabled = zoomRange.endInclusive > 1f && !isFrozen && captureSession != null,
+                    valueRange = 1f..zoomRange.endInclusive.coerceAtLeast(1.001f),
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(Modifier.width(8.dp))
@@ -273,17 +318,18 @@ fun MagnifierScreen() {
             ) {
                 IconButton(
                     onClick = {
-                        torchOn = !torchOn
                         val builder = previewRequestBuilder ?: return@IconButton
                         val session = captureSession ?: return@IconButton
                         try {
                             builder.set(
                                 CaptureRequest.FLASH_MODE,
-                                if (torchOn) CaptureRequest.FLASH_MODE_TORCH else CaptureRequest.FLASH_MODE_OFF
+                                if (!torchOn) CaptureRequest.FLASH_MODE_TORCH else CaptureRequest.FLASH_MODE_OFF
                             )
                             session.setRepeatingRequest(builder.build(), null, null)
+                            torchOn = !torchOn
                         } catch (_: Exception) {}
                     },
+                    enabled = hasFlash && !isFrozen && captureSession != null,
                     modifier = Modifier
                         .size(56.dp)
                         .clip(CircleShape)
@@ -298,22 +344,23 @@ fun MagnifierScreen() {
 
                 Button(
                     onClick = {
-                        isFrozen = !isFrozen
                         val session = captureSession ?: return@Button
                         try {
-                            if (isFrozen) session.stopRepeating()
+                            if (!isFrozen) session.stopRepeating()
                             else {
                                 val builder = previewRequestBuilder ?: return@Button
                                 session.setRepeatingRequest(builder.build(), null, null)
                             }
+                            isFrozen = !isFrozen
                         } catch (_: Exception) {}
                     },
+                    enabled = captureSession != null,
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (isFrozen) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary
                     )
                 ) {
-                    Text(if (isFrozen) "Unfreeze" else "Freeze Frame")
+                    Text(stringResource(if (isFrozen) R.string.virtual_magnifier_resume else R.string.virtual_magnifier_freeze))
                 }
             }
         }

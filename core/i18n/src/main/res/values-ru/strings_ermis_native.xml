@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Почта Ermis</string>
+    <string name="ermis_new_mail_count">%1$d новых сообщений</string>
+    <string name="ermis_error_cache">Не удалось разблокировать кеш почты.</string>
+    <string name="ermis_error_auth">Ошибка аутентификации. Проверьте способ входа и учётные данные.</string>
+    <string name="ermis_error_tls">Не удалось проверить сертификат сервера.</string>
+    <string name="ermis_error_generic">Ошибка операции. Проверьте соединение и настройки сервера.</string>
+    <string name="ermis_error_sent_copy">Письмо отправлено, но копия не сохранена в Отправленных. Не отправляйте повторно.</string>
+</resources>

@@ -311,3 +311,19 @@ The upstream license and bundled-component notices are reproduced verbatim in
 `core/base/src/main/res/raw/license_tor_android.txt` and displayed in the app license screen.
 The upstream notice also describes components used by Orbot; this integration does not bundle
 Orbot, Privoxy or obfs4. No upstream Tor source files are modified or copied into Telos.
+
+## Native Ermis mail transport
+
+[Jakarta Mail for Android 1.6.7](https://github.com/eclipse-ee4j/mail) (`com.sun.mail:android-mail`) and [Jakarta Activation for Android 1.6.7](https://github.com/eclipse-ee4j/jaf) (`com.sun.mail:android-activation`) provide the native IMAP/SMTP and MIME transports. Copyright Oracle and contributors; distributed under EPL-2.0 with the secondary GNU GPL version 2 with Classpath Exception option described in the upstream artifact license. Their license notices apply to these libraries, not to the independently written Ermis UI. FairEmail remains a feature reference; its source is not bundled.
+
+## Akou music fingerprinting: Audile / SongRec / InterTune
+
+Akou uses on-device Shazam-compatible fingerprinting, adapted from InterTune's pure Kotlin port:
+
+- InterTune, Copyright (C) 2026 InterTune, GPL-3.0. Source: https://github.com/ItzSkyeYT/InterTune/tree/a99111df5205de3c2af49d158958c8cf82543ac2/fingerprint
+- SongRec by marin-m, GPL-3.0, reference tag 0.7.3, commit `5afbf7361fcd72a3edaaeed24dc0ea150fd79385`: https://github.com/marin-m/SongRec
+- Audile by Aleksey Saenko, GPL-3.0, `songrecfp` and Shazam request interoperability reference, inspected commit `e7435eeeab7af75891146c0282b776d56b40f342`: https://github.com/AudileTeam/Audile
+
+Original copyright/SPDX notices remain in `services/comms/.../akou/fingerprint/`. Changes: package relocation; Telos foreground PCM capture, bounded cancellable HTTP transport, result/history integration. No proprietary Shazam application code or API key is included. The third-party matching endpoint is unofficial and availability is outside Telos's control.
+
+Test-only audio excerpt: “Sneaky Snitch” by Kevin MacLeod, https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sneaky%20Snitch.mp3, Creative Commons Attribution 4.0, https://creativecommons.org/licenses/by/4.0/. Converted to 10-second mono 16 kHz PCM excerpt as documented in `services/comms/src/test/resources/ASSET_LICENSE.md`; not packaged in the application.

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Uloženo do Pictures/Telos</string>
+    <string name="camera_native_failed">Chyba fotoaparátu: %1$s</string>
+    <string name="camera_native_capture">Vyfotit</string>
+    <string name="camera_native_record">Nahrát video</string>
+    <string name="camera_native_stop">Zastavit nahrávání</string>
+    <string name="camera_native_timer">Časovač</string>
+    <string name="camera_native_settings">Nastavení snímání</string>
+    <string name="camera_native_exposure">Kompenzace expozice</string>
+    <string name="camera_native_iso">Citlivost ISO</string>
+    <string name="camera_native_shutter">Doba závěrky (ms)</string>
+    <string name="camera_native_auto">Automatická expozice</string>
+    <string name="camera_native_histogram">Histogram</string>
+    <string name="camera_native_audio">Nahrávat zvuk mikrofonu</string>
+    <string name="camera_native_discreet_hint">Náhled skrytý. Snímání nadále vyžaduje výslovnou akci; systémové indikátory fotoaparátu zůstávají viditelné.</string>
+    <string name="camera_native_capabilities">Dostupné režimy závisí na tomto fotoaparátu. Fotografie se zpracovávají v zařízení; proprietární engine není součástí.</string>
+    <string name="camera_native_formats">JPEG zachová metadata fotoaparátu, pokud je to povoleno. PNG/WebP metadata odstraní.</string>
+    <string name="camera_native_gallery">Otevřít galerii</string>
+    <string name="camera_native_flash">Blesk</string>
+    <string name="camera_native_panorama_hint">Ruční panorama: pořiďte 2–8 snímků zleva doprava s 20% překrytím a vodorovným horizontem. Spoje se prolnou bez automatického zarovnání.</string>
+    <string name="camera_native_webcam_lan">Kdokoli v místní síti s touto URL s tokenem může sledovat kameru. Sdílení skončí, když tato obrazovka opustí popředí.</string>
+    <string name="camera_native_hidden_saved">Uloženo soukromě do Pictures/TelosHidden. Skryté album není v galerii a odstraní se při odinstalování Telos.</string>
+    <string name="camera_native_geo_hint">Pouze JPEG EXIF. Přidá dostupnou polohu starou nejvýše 10 minut s přesností do 500 m.</string>
+    <string name="camera_native_face_trigger">Snímat při detekci obličeje</string>
+    <string name="camera_native_motion_trigger">Snímat při detekci pohybu</string>
+    <string name="camera_native_trigger_hint">Pouze v popředí. Nejvýše jednou za 5 sekund. Pohyb vychází ze změn náhledu a může reagovat na změny osvětlení.</string>
+</resources>

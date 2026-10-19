@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Konservita en Pictures/Telos</string>
+    <string name="camera_native_failed">Fotila eraro: %1$s</string>
+    <string name="camera_native_capture">Kapti</string>
+    <string name="camera_native_record">Registri filmeton</string>
+    <string name="camera_native_stop">Ĉesigi registradon</string>
+    <string name="camera_native_timer">Temporizilo</string>
+    <string name="camera_native_settings">Kaptaj agordoj</string>
+    <string name="camera_native_exposure">Ekspona kompenso</string>
+    <string name="camera_native_iso">ISO-sentemo</string>
+    <string name="camera_native_shutter">Obturila daŭro (ms)</string>
+    <string name="camera_native_auto">Aŭtomata ekspono</string>
+    <string name="camera_native_histogram">Histogramo</string>
+    <string name="camera_native_audio">Registri mikrofonan sonon</string>
+    <string name="camera_native_discreet_hint">Antaŭvido kaŝita. Kapto ankoraŭ postulas eksplicitan agon; la sistemaj fotilaj indikiloj restas videblaj.</string>
+    <string name="camera_native_capabilities">Disponeblaj reĝimoj dependas de ĉi tiu fotilo. Fotoj estas prilaborataj en la aparato; neniu proprieta motoro estas inkluzivita.</string>
+    <string name="camera_native_formats">JPEG konservas fotilajn metadatumojn kiam ebligite. PNG/WebP forigas metadatumojn.</string>
+    <string name="camera_native_gallery">Malfermi galerion</string>
+    <string name="camera_native_flash">Fulmo</string>
+    <string name="camera_native_panorama_hint">Mana panoramo: kaptu 2–8 bildojn de maldekstre dekstren kun 20 % interkovro, tenante la horizonton ebena. Juntoj estas miksitaj sen aŭtomata vicigo.</string>
+    <string name="camera_native_webcam_lan">Ĉiu en via loka reto kun ĉi tiu ĵetona URL povas vidi la fotilon. Kunhavigo ĉesas kiam ĉi tiu ekrano forlasas la malfonon.</string>
+    <string name="camera_native_hidden_saved">Konservita private en Pictures/TelosHidden. La kaŝita albumo ne aperas en la galerio kaj estas forigita kiam Telos estas malinstalita.</string>
+    <string name="camera_native_geo_hint">Nur JPEG EXIF. Aldonas disponeblan lokon, maksimume 10 minutojn malnovan kun precizeco ene de 500 m.</string>
+    <string name="camera_native_face_trigger">Kapti kiam vizaĝo estas detektita</string>
+    <string name="camera_native_motion_trigger">Kapti kiam movo estas detektita</string>
+    <string name="camera_native_trigger_hint">Nur en la malfono. Maksimume unufoje ĉiun 5 sekundojn. Movo uzas ŝanĝojn de la antaŭvido kaj povas reagi al lumŝanĝoj.</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Pictures/Telos-এ সংরক্ষিত</string>
+    <string name="camera_native_failed">ক্যামেরা ত্রুটি: %1$s</string>
+    <string name="camera_native_capture">ছবি তুলুন</string>
+    <string name="camera_native_record">ভিডিও রেকর্ড করুন</string>
+    <string name="camera_native_stop">রেকর্ডিং বন্ধ করুন</string>
+    <string name="camera_native_timer">টাইমার</string>
+    <string name="camera_native_settings">ধারণের সেটিংস</string>
+    <string name="camera_native_exposure">এক্সপোজার ক্ষতিপূরণ</string>
+    <string name="camera_native_iso">ISO সংবেদনশীলতা</string>
+    <string name="camera_native_shutter">শাটারের সময় (মিলিসেকেন্ড)</string>
+    <string name="camera_native_auto">স্বয়ংক্রিয় এক্সপোজার</string>
+    <string name="camera_native_histogram">হিস্টোগ্রাম</string>
+    <string name="camera_native_audio">মাইক্রোফোনের অডিও রেকর্ড করুন</string>
+    <string name="camera_native_discreet_hint">প্রিভিউ লুকানো। ধারণের জন্য এখনও স্পষ্ট পদক্ষেপ প্রয়োজন; সিস্টেমের ক্যামেরা সূচক দৃশ্যমান থাকে।</string>
+    <string name="camera_native_capabilities">উপলব্ধ মোড এই ক্যামেরার উপর নির্ভর করে। ছবি ডিভাইসেই প্রক্রিয়া করা হয়; কোনো মালিকানাধীন ইঞ্জিন অন্তর্ভুক্ত নেই।</string>
+    <string name="camera_native_formats">সক্রিয় থাকলে JPEG ক্যামেরার মেটাডেটা রাখে। PNG/WebP মেটাডেটা মুছে দেয়।</string>
+    <string name="camera_native_gallery">গ্যালারি খুলুন</string>
+    <string name="camera_native_flash">ফ্ল্যাশ</string>
+    <string name="camera_native_panorama_hint">ম্যানুয়াল প্যানোরামা: দিগন্ত সমান রেখে বাম থেকে ডানে ২০ % ওভারল্যাপসহ ২–৮টি ছবি তুলুন। স্বয়ংক্রিয় সারিবদ্ধতা ছাড়াই জোড়গুলো মেশানো হয়।</string>
+    <string name="camera_native_webcam_lan">আপনার স্থানীয় নেটওয়ার্কে এই টোকেন URL থাকা যে কেউ ক্যামেরা দেখতে পারেন। এই স্ক্রিন সামনের অবস্থান ছাড়লে শেয়ার বন্ধ হয়।</string>
+    <string name="camera_native_hidden_saved">Pictures/TelosHidden-এ ব্যক্তিগতভাবে সংরক্ষিত। লুকানো অ্যালবাম গ্যালারিতে দেখায় না এবং Telos আনইনস্টল করলে মুছে যায়।</string>
+    <string name="camera_native_geo_hint">শুধু JPEG EXIF। পাওয়া গেলে সর্বোচ্চ ১০ মিনিট পুরোনো এবং ৫০০ মিটারের মধ্যে নির্ভুল অবস্থান যোগ করে।</string>
+    <string name="camera_native_face_trigger">মুখ শনাক্ত হলে ছবি তুলুন</string>
+    <string name="camera_native_motion_trigger">নড়াচড়া শনাক্ত হলে ছবি তুলুন</string>
+    <string name="camera_native_trigger_hint">শুধু অগ্রভাগে। সর্বোচ্চ প্রতি ৫ সেকেন্ডে একবার। প্রিভিউয়ের পরিবর্তন থেকে নড়াচড়া শনাক্ত হয়, তাই আলোর পরিবর্তনেও সাড়া দিতে পারে।</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">產生金鑰對</string>
+    <string name="telos_files_ssh_copy_public_key">複製公開金鑰</string>
+    <string name="telos_files_ssh_public_key_hint">將公開金鑰加入伺服器上的 ~/.ssh/authorized_keys。私密金鑰會加密保存在這支手機上。</string>
+    <string name="telos_files_duplicates_exclude">略過資料夾</string>
+    <string name="telos_files_duplicates_exclude_hint">資料夾名稱或路徑，以逗號分隔，例如：Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Shizuku 存取</string>
+    <string name="telos_files_shizuku_summary">透過 Shizuku（不需 root）開啟 Android/data、Android/obb 及應用程式無法讀取的其他資料夾</string>
+    <string name="telos_files_shizuku_denied">Shizuku 未執行或未授權 Telos</string>
+    <string name="telos_files_search_everywhere">搜尋所有儲存空間</string>
+    <string name="telos_files_search_everywhere_summary">搜尋內部儲存空間、SD 卡和 USB 隨身碟，而不只是這個資料夾</string>
+</resources>

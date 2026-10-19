@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Fără cheie API: înregistrează 10 secunde și calculează amprenta pe dispozitiv. La Shazam se trimite doar amprenta, niciodată sunetul.</string>
+    <string name="akou_get_token">Obține un token API AudD</string>
+    <string name="akou_api_token">Token API AudD</string>
+    <string name="akou_start">Înregistrează și recunoaște</string>
+    <string name="akou_recording">Se înregistrează 10 secunde…</string>
+    <string name="akou_identifying">Se caută amprenta…</string>
+    <string name="akou_no_match">Nicio potrivire. Încearcă din nou mai aproape de muzică.</string>
+    <string name="akou_matched">Melodie recunoscută</string>
+    <string name="akou_failed">Recunoașterea a eșuat. Verificați microfonul și conexiunea și încercați din nou lângă muzică.</string>
+    <string name="akou_microphone_denied">Este necesară permisiunea pentru microfon ca să înregistrezi o mostră.</string>
+    <string name="akou_history">Istoricul recunoașterilor</string>
+    <string name="akou_youtube_music">Caută în YouTube Music</string>
+</resources>

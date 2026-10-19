@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Pictures/Telos में सहेजा गया</string>
+    <string name="camera_native_failed">कैमरा त्रुटि: %1$s</string>
+    <string name="camera_native_capture">फ़ोटो लें</string>
+    <string name="camera_native_record">वीडियो रिकॉर्ड करें</string>
+    <string name="camera_native_stop">रिकॉर्डिंग रोकें</string>
+    <string name="camera_native_timer">टाइमर</string>
+    <string name="camera_native_settings">कैप्चर सेटिंग</string>
+    <string name="camera_native_exposure">एक्सपोज़र क्षतिपूर्ति</string>
+    <string name="camera_native_iso">ISO संवेदनशीलता</string>
+    <string name="camera_native_shutter">शटर अवधि (मिलीसेकंड)</string>
+    <string name="camera_native_auto">स्वचालित एक्सपोज़र</string>
+    <string name="camera_native_histogram">हिस्टोग्राम</string>
+    <string name="camera_native_audio">माइक्रोफ़ोन ऑडियो रिकॉर्ड करें</string>
+    <string name="camera_native_discreet_hint">पूर्वावलोकन छिपा है। कैप्चर के लिए अब भी स्पष्ट कार्रवाई आवश्यक है; सिस्टम के कैमरा संकेतक दिखाई देते हैं।</string>
+    <string name="camera_native_capabilities">उपलब्ध मोड इस कैमरे पर निर्भर हैं। फ़ोटो डिवाइस पर संसाधित होती हैं; कोई मालिकाना इंजन शामिल नहीं है।</string>
+    <string name="camera_native_formats">सक्षम होने पर JPEG कैमरा मेटाडेटा रखता है। PNG/WebP मेटाडेटा हटाते हैं।</string>
+    <string name="camera_native_gallery">गैलरी खोलें</string>
+    <string name="camera_native_flash">फ़्लैश</string>
+    <string name="camera_native_panorama_hint">मैनुअल पैनोरमा: क्षितिज सीधा रखते हुए बाएँ से दाएँ 20 % ओवरलैप के साथ 2–8 तस्वीरें लें। बिना स्वचालित संरेखण के जोड़ मिलाए जाते हैं।</string>
+    <string name="camera_native_webcam_lan">आपके स्थानीय नेटवर्क पर इस टोकन URL वाला कोई भी व्यक्ति कैमरा देख सकता है। यह स्क्रीन अग्रभूमि से हटने पर साझाकरण बंद होता है।</string>
+    <string name="camera_native_hidden_saved">Pictures/TelosHidden में निजी रूप से सहेजा गया। छिपा एल्बम गैलरी में नहीं दिखता और Telos अनइंस्टॉल करने पर हटा दिया जाता है।</string>
+    <string name="camera_native_geo_hint">केवल JPEG EXIF। उपलब्ध होने पर अधिकतम 10 मिनट पुराना और 500 मीटर के भीतर सटीक स्थान जोड़ता है।</string>
+    <string name="camera_native_face_trigger">चेहरा मिलने पर तस्वीर लें</string>
+    <string name="camera_native_motion_trigger">हलचल मिलने पर तस्वीर लें</string>
+    <string name="camera_native_trigger_hint">केवल अग्रभूमि में। अधिकतम हर 5 सेकंड में एक तस्वीर। हलचल का पता पूर्वावलोकन के बदलावों से चलता है और रोशनी बदलने पर भी प्रतिक्रिया हो सकती है।</string>
+</resources>

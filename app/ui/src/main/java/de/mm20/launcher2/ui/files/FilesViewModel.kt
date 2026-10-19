@@ -29,7 +29,7 @@ import java.io.File
 /** A storage volume: the phone's own storage, an SD card, a USB drive. */
 data class StorageVolume(val name: String, val path: String, val total: Long, val free: Long, val removable: Boolean)
 
-data class ClipboardState(val paths: List<String>, val cut: Boolean, val rootMode: Boolean)
+data class ClipboardState(val paths: List<String>, val cut: Boolean, val rootMode: Boolean, val shizukuMode: Boolean = false)
 
 class FilesClipboard { var value by mutableStateOf<ClipboardState?>(null) }
 
@@ -50,7 +50,9 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     }
     private val prefs = context.getSharedPreferences("telos_files", Context.MODE_PRIVATE)
     private val local = LocalFs()
-    private val root = RootFs()
+    private val suRoot = RootFs()
+    private val shizukuRoot = RootFs(shizuku = true)
+    private val root: RootFs get() = if (shizukuMode) shizukuRoot else suRoot
 
     /** Where the user is. null is the home page with the storages and the shortcuts. */
     var path by mutableStateOf<String?>(null)
@@ -94,6 +96,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     var searchKind by mutableStateOf<FileKind?>(null)
         private set
     var recursiveSearch by mutableStateOf(true)
+    /** Search every storage volume (internal, SD, USB) instead of the current folder */
+    var searchEverywhere by mutableStateOf(false)
         private set
     var searchLimited by mutableStateOf(false)
         private set
@@ -372,24 +376,44 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         query = text; searchJob?.cancel()
         val revision = ++searchRevision
         val dir = path; searchLimited = false
-        if (dir == null || text.isBlank() && searchFilter == de.mm20.launcher2.helper.FileSearchFilter() && searchKind == null) { searchResults = null; return }
+        val everywhere = searchEverywhere && !rootMode && volumes.isNotEmpty() &&
+            (dir == null || !(RemotePath.isRemote(dir) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir)))
+        if ((dir == null && !everywhere) || text.isBlank() && searchFilter == de.mm20.launcher2.helper.FileSearchFilter() && searchKind == null) { searchResults = null; return }
         val filter = searchFilter; val kind = searchKind
         val matcher = TelosSearch.compile(text)
         fun matches(entry: FsEntry, hidden: Boolean = entry.hidden): Boolean =
             (text.isBlank() || matcher.matches(entry.name)) && (kind == null || entry.kind == kind) &&
                 (showHidden || !hidden) && filter.matches(de.mm20.launcher2.helper.IndexedFile(entry.path, entry.name, entry.isDir, entry.size, entry.modified, hidden, entry.isLink))
-        if ((RemotePath.isRemote(dir) && !recursiveSearch) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir)) {
+        if (dir != null && !everywhere && ((RemotePath.isRemote(dir) && !recursiveSearch) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir))) {
             searchResults = entries.filter { matches(it) }; return
         }
         searchJob = viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {
                     val job = coroutineContext
-                    if (RemotePath.isRemote(dir)) {
+                    if (everywhere) {
+                        var limited = false
+                        // every volume is scanned and gets a fair share of the 300 results
+                        val perVolume = volumes.map { volume ->
+                            val snapshot = de.mm20.launcher2.helper.FileSearchIndex.read(File(volume.path)) { job.ensureActive() }
+                            if (snapshot.limited || snapshot.unreadable > 0) limited = true
+                            snapshot.files.asSequence().map { file ->
+                                job.ensureActive()
+                                FsEntry(file.path, file.name, file.directory, file.size, file.modified, isLink = file.symbolicLink) to file.hidden
+                            }.filter { (entry, hidden) -> matches(entry, hidden) }.take(301).map { it.first }.toList()
+                        }
+                        val files = ArrayList<FsEntry>(300)
+                        var round = 0
+                        while (files.size < 300 && perVolume.any { round < it.size }) {
+                            perVolume.forEach { list -> if (round < list.size && files.size < 300) files += list[round] }
+                            round++
+                        }
+                        files to (limited || perVolume.sumOf { it.size } > 300)
+                    } else if (RemotePath.isRemote(dir!!)) {
                         val scan = FilesRemoteSearch.scan(fsFor(dir), dir, showHidden, { matches(it) })
                         scan.entries to scan.partial
                     } else if (rootMode) {
-                        val files = RootShell.run("find ${RootShell.q(dir)} -mindepth 1 2>/dev/null | head -20000").out.lines()
+                        val files = RootShell.run("find ${RootShell.q(dir)} -mindepth 1 2>/dev/null | head -20000", shizuku = shizukuMode).out.lines()
                             .filter { it.isNotBlank() && (text.isBlank() || matcher.matches(nameOf(it))) }.take(300)
                             .map { FsEntry(it, nameOf(it), File(it).isDirectory, -1, 0) }.filter { matches(it) }
                         files to (files.size >= 300)
@@ -411,6 +435,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+    fun updateSearchEverywhere(enabled: Boolean) { searchEverywhere = enabled }
+
     fun setSearchOptions(filter: de.mm20.launcher2.helper.FileSearchFilter, kind: FileKind?, recursive: Boolean) {
         searchFilter = filter; searchKind = kind; recursiveSearch = recursive; search(query)
     }
@@ -429,18 +455,37 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     /** Asks for the superuser. Returns through [onResult] on the main thread. */
     fun enableRoot(onResult: (Boolean) -> Unit) {
+        shizukuRequest?.cancel()
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { RootShell.available(force = true) }
-            rootMode = ok
+            rootMode = ok; shizukuMode = false
             if (!ok) message = s(R.string.au_files_root_denied)
             onResult(ok)
             path?.let { load(it) }
         }
     }
 
-    fun disableRoot() { rootMode = false; rootMounted = null; path?.let { load(it) } }
+    fun disableRoot() { shizukuRequest?.cancel(); rootMode = false; shizukuMode = false; rootMounted = null; path?.let { load(it) } }
+
+    /** Root mode that runs through Shizuku instead of the superuser */
+    var shizukuMode by mutableStateOf(false)
+        private set
+
+    private var shizukuRequest: Job? = null
+
+    fun enableShizuku() {
+        if (shizukuRequest?.isActive == true) return
+        shizukuRequest = viewModelScope.launch {
+            val permitted = ShizukuShell.requestAccess()
+            val ok = permitted && withContext(Dispatchers.IO) { RootShell.available(force = true, shizuku = true) }
+            rootMode = ok; shizukuMode = ok
+            if (!ok) message = s(R.string.telos_files_shizuku_denied)
+            path?.let { load(it) }
+        }
+    }
 
     fun remount(mountPoint: String, writable: Boolean) {
+        if (!rootMode || shizukuMode) return
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { root.remount(mountPoint, writable) }
             rootMounted = if (ok) writable else rootMounted
@@ -598,7 +643,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun copyToClipboard(cut: Boolean) {
-        clipboard = ClipboardState(selectedEntries().map { it.path }, cut, rootMode)
+        clipboard = ClipboardState(selectedEntries().map { it.path }, cut, rootMode, shizukuMode)
         selection = emptySet()
         message = if (cut) s(R.string.au_files_cut_hint) else s(R.string.au_files_copied_hint)
     }
@@ -609,15 +654,15 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val clip = clipboard?.takeIf { it.paths.isNotEmpty() } ?: return
         paste(clip)
     }
-    internal fun transferDragged(paths: List<String>, sourceRoot: Boolean, move: Boolean, destination: String? = path) {
+    internal fun transferDragged(paths: List<String>, sourceRoot: Boolean, move: Boolean, destination: String? = path, sourceShizuku: Boolean = false) {
         if (task != null || paths.isEmpty() || path == null || ArchivePath.isArchive(path!!) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(path!!)) return
-        paste(ClipboardState(paths, move, sourceRoot), clearCopiedClipboard = false, destination = destination)
+        paste(ClipboardState(paths, move, sourceRoot, sourceShizuku), clearCopiedClipboard = false, destination = destination)
     }
     private fun paste(clip: ClipboardState, clearCopiedClipboard: Boolean = true, destination: String? = path) {
         val dir = destination ?: return
         val dstFs = fsFor(dir)
         val first = clip.paths.first()
-        val srcFs = if (RemotePath.isRemote(first) || ArchivePath.isArchive(first) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(first)) fsFor(first) else if (clip.rootMode) root else local
+        val srcFs = if (RemotePath.isRemote(first) || ArchivePath.isArchive(first) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(first)) fsFor(first) else if (clip.rootMode) (if (clip.shizukuMode) shizukuRoot else suRoot) else local
         val bothLocal = dstFs is LocalFs && srcFs is LocalFs
         if (bothLocal) {
             runCatching { transferQueue.enqueue(clip.paths, dir, clip.cut) }
@@ -739,13 +784,15 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val local = files.filter { !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) }
         val remote = files.filter { RemotePath.isRemote(it.path) || ArchivePath.isArchive(it.path) }
         if (remote.isEmpty()) {
-            FileActions.share(context, local, rootMode)
+            val root = rootMode; val adb = shizukuMode
+            viewModelScope.launch { FileActions.share(context, local, root, adb) }
             return
         }
         val folder = File(File(context.cacheDir, "share_dl"), System.nanoTime().toString())
         fun step(i: Int, done: List<FsEntry>) {
             if (i >= remote.size) {
-                FileActions.share(context, local + done, rootMode)
+                val root = rootMode; val adb = shizukuMode
+                viewModelScope.launch { FileActions.share(context, local + done, root, adb) }
                 return
             }
             download(remote[i]) { f ->

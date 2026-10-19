@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Sin clave API: registra 10 secundas e calcula le impression sur le apparato. Solmente le impression es inviate a Shazam, nunquam le audio.</string>
+    <string name="akou_get_token">Obtener un token API de AudD</string>
+    <string name="akou_api_token">Token API de AudD</string>
+    <string name="akou_start">Registrar e recognoscer</string>
+    <string name="akou_recording">Registration de 10 secundas…</string>
+    <string name="akou_identifying">Cerca del impression…</string>
+    <string name="akou_no_match">Nulle correspondentia trovate. Retenta plus presso al musica.</string>
+    <string name="akou_matched">Cantion recognoscite</string>
+    <string name="akou_failed">Recognition fallite. Verifica le microphono e le connexion e reproba presso le musica.</string>
+    <string name="akou_microphone_denied">Permission del microphono es necessari pro registrar un monstra.</string>
+    <string name="akou_history">Historia de recognitiones</string>
+    <string name="akou_youtube_music">Cercar in YouTube Music</string>
+</resources>

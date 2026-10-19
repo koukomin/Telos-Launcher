@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">דואר Ermis</string>
+    <string name="ermis_new_mail_count">%1$d הודעות חדשות</string>
+    <string name="ermis_error_cache">לא ניתן לפתוח את מטמון הדואר.</string>
+    <string name="ermis_error_auth">האימות נכשל. יש לבדוק את שיטת הכניסה ופרטי החשבון.</string>
+    <string name="ermis_error_tls">לא ניתן לאמת את אישור השרת.</string>
+    <string name="ermis_error_generic">הפעולה נכשלה. יש לבדוק את החיבור והגדרות השרת.</string>
+    <string name="ermis_error_sent_copy">ההודעה נשלחה, אך לא נשמר עותק בדואר שנשלח. אין לשלוח שוב.</string>
+</resources>

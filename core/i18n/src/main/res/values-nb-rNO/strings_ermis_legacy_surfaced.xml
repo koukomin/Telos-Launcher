@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Legg til konto</string>
+    <string name="ermis_attach">Legg ved fra denne telefonen</string>
+    <string name="ermis_body">Melding</string>
+    <string name="ermis_compose">Skriv</string>
+    <string name="ermis_connect">Koble til</string>
+    <string name="ermis_email">E-post</string>
+    <string name="ermis_inbox">Innboks</string>
+    <string name="ermis_no_subject">(uten emne)</string>
+    <string name="ermis_note">Notat</string>
+    <string name="ermis_note_save">Lagre notat</string>
+    <string name="ermis_password">Passord</string>
+    <string name="ermis_remove">Fjern</string>
+    <string name="ermis_search">Søk i e-post</string>
+    <string name="ermis_send">Send</string>
+    <string name="ermis_starred">Stjernemerket</string>
+    <string name="ermis_subject">Emne</string>
+    <string name="ermis_sync">Synkroniser</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Til</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Correio Ermis</string>
+    <string name="ermis_new_mail_count">%1$d novas mensagens</string>
+    <string name="ermis_error_cache">Não foi possível desbloquear a cache do correio.</string>
+    <string name="ermis_error_auth">A autenticação falhou. Verifique o método de acesso e as credenciais.</string>
+    <string name="ermis_error_tls">Não foi possível verificar o certificado do servidor.</string>
+    <string name="ermis_error_generic">A operação falhou. Verifique a ligação e as definições do servidor.</string>
+    <string name="ermis_error_sent_copy">Mensagem enviada, mas não foi guardada uma cópia em Enviados. Não reenvie.</string>
+</resources>

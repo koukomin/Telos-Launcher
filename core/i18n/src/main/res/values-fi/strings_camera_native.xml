@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Tallennettu kansioon Pictures/Telos</string>
+    <string name="camera_native_failed">Kameravirhe: %1$s</string>
+    <string name="camera_native_capture">Ota kuva</string>
+    <string name="camera_native_record">Tallenna video</string>
+    <string name="camera_native_stop">Lopeta tallennus</string>
+    <string name="camera_native_timer">Ajastin</string>
+    <string name="camera_native_settings">Kuvausasetukset</string>
+    <string name="camera_native_exposure">Valotuksen korjaus</string>
+    <string name="camera_native_iso">ISO-herkkyys</string>
+    <string name="camera_native_shutter">Suljinaika (ms)</string>
+    <string name="camera_native_auto">Automaattivalotus</string>
+    <string name="camera_native_histogram">Histogrammi</string>
+    <string name="camera_native_audio">Tallenna mikrofonin ääni</string>
+    <string name="camera_native_discreet_hint">Esikatselu piilotettu. Kuvaaminen vaatii edelleen käyttäjän toiminnon; järjestelmän kamerailmaisimet pysyvät näkyvissä.</string>
+    <string name="camera_native_capabilities">Käytettävissä olevat tilat riippuvat kamerasta. Kuvat käsitellään laitteessa; mukana ei ole suljettua käsittelymoottoria.</string>
+    <string name="camera_native_formats">JPEG säilyttää kameran metatiedot, kun asetus on käytössä. PNG/WebP poistavat metatiedot.</string>
+    <string name="camera_native_gallery">Avaa galleria</string>
+    <string name="camera_native_flash">Salama</string>
+    <string name="camera_native_panorama_hint">Manuaalinen panoraama: ota 2–8 kuvaa vasemmalta oikealle 20 % päällekkäisyydellä ja pidä horisontti suorassa. Saumat häivytetään ilman automaattista kohdistusta.</string>
+    <string name="camera_native_webcam_lan">Kuka tahansa paikallisverkossa tämän tunniste-URL:n saanut voi katsella kameraa. Jakaminen päättyy, kun tämä näkymä poistuu etualalta.</string>
+    <string name="camera_native_hidden_saved">Tallennettu yksityisesti kansioon Pictures/TelosHidden. Piilotettu albumi ei näy galleriassa ja poistetaan Telosin asennuksen poistamisen yhteydessä.</string>
+    <string name="camera_native_geo_hint">Vain JPEG-EXIF. Lisää saatavilla olevan, enintään 10 minuuttia vanhan sijainnin, jonka tarkkuus on 500 m tai parempi.</string>
+    <string name="camera_native_face_trigger">Ota kuva, kun kasvot havaitaan</string>
+    <string name="camera_native_motion_trigger">Ota kuva, kun liike havaitaan</string>
+    <string name="camera_native_trigger_hint">Vain etualalla. Enintään kerran 5 sekunnissa. Liike perustuu esikatselun muutoksiin ja voi reagoida valaistukseen.</string>
+</resources>

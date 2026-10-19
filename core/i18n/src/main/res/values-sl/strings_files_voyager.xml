@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Ustvari par ključev</string>
+    <string name="telos_files_ssh_copy_public_key">Kopiraj javni ključ</string>
+    <string name="telos_files_ssh_public_key_hint">Javni ključ dodajte v ~/.ssh/authorized_keys na strežniku. Zasebni ključ ostane šifriran v tem telefonu.</string>
+    <string name="telos_files_duplicates_exclude">Preskoči mape</string>
+    <string name="telos_files_duplicates_exclude_hint">Imena ali poti map, ločene z vejicami, na primer: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Dostop prek Shizuku</string>
+    <string name="telos_files_shizuku_summary">Odpri Android/data, Android/obb in druge mape, ki jih aplikacija ne more brati, prek Shizuku (brez korena)</string>
+    <string name="telos_files_shizuku_denied">Shizuku ne teče ali ni dovolil Telosu</string>
+    <string name="telos_files_search_everywhere">Išči po vsej shrambi</string>
+    <string name="telos_files_search_everywhere_summary">Išče v notranji shrambi, na karticah SD in pogonih USB, ne le v tej mapi</string>
+</resources>

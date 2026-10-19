@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis paštas</string>
+    <string name="ermis_new_mail_count">%1$d naujų laiškų</string>
+    <string name="ermis_error_cache">Nepavyko atrakinti pašto podėlio.</string>
+    <string name="ermis_error_auth">Autentifikavimas nepavyko. Patikrinkite prisijungimo būdą ir paskyros duomenis.</string>
+    <string name="ermis_error_tls">Nepavyko patvirtinti serverio sertifikato.</string>
+    <string name="ermis_error_generic">Veiksmas nepavyko. Patikrinkite ryšį ir serverio nuostatas.</string>
+    <string name="ermis_error_sent_copy">Laiškas išsiųstas, bet kopija neišsaugota išsiųstuose. Nesiųskite dar kartą.</string>
+</resources>

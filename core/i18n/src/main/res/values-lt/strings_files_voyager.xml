@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Sukurti raktų porą</string>
+    <string name="telos_files_ssh_copy_public_key">Kopijuoti viešąjį raktą</string>
+    <string name="telos_files_ssh_public_key_hint">Įtraukite viešąjį raktą į serverio failą ~/.ssh/authorized_keys. Privatus raktas lieka užšifruotas šiame telefone.</string>
+    <string name="telos_files_duplicates_exclude">Praleisti aplankus</string>
+    <string name="telos_files_duplicates_exclude_hint">Aplankų pavadinimai arba keliai, atskirti kableliais, pavyzdžiui: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Prieiga per Shizuku</string>
+    <string name="telos_files_shizuku_summary">Atidaryti Android/data, Android/obb ir kitus aplankus, kurių programa negali skaityti, per Shizuku (be root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku neveikia arba neleido Telos</string>
+    <string name="telos_files_search_everywhere">Ieškoti visoje saugykloje</string>
+    <string name="telos_files_search_everywhere_summary">Ieško vidinėje atmintyje, SD kortelėse ir USB diskuose, ne tik šiame aplanke</string>
+</resources>

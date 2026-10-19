@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Προσθήκη λογαριασμού</string>
+    <string name="ermis_attach">Επισύναψη από αυτό το τηλέφωνο</string>
+    <string name="ermis_body">Μήνυμα</string>
+    <string name="ermis_compose">Σύνταξη</string>
+    <string name="ermis_connect">Σύνδεση</string>
+    <string name="ermis_email">Email</string>
+    <string name="ermis_inbox">Εισερχόμενα</string>
+    <string name="ermis_no_subject">(χωρίς θέμα)</string>
+    <string name="ermis_note">Σημείωση</string>
+    <string name="ermis_note_save">Αποθήκευση σημείωσης</string>
+    <string name="ermis_password">Κωδικός πρόσβασης</string>
+    <string name="ermis_remove">Αφαίρεση</string>
+    <string name="ermis_search">Αναζήτηση αλληλογραφίας</string>
+    <string name="ermis_send">Αποστολή</string>
+    <string name="ermis_starred">Με αστέρι</string>
+    <string name="ermis_subject">Θέμα</string>
+    <string name="ermis_sync">Συγχρονισμός</string>
+    <string name="ermis_title">Ερμής</string>
+    <string name="ermis_to">Προς</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">บันทึกใน Pictures/Telos แล้ว</string>
+    <string name="camera_native_failed">ข้อผิดพลาดของกล้อง: %1$s</string>
+    <string name="camera_native_capture">ถ่ายภาพ</string>
+    <string name="camera_native_record">บันทึกวิดีโอ</string>
+    <string name="camera_native_stop">หยุดบันทึก</string>
+    <string name="camera_native_timer">ตั้งเวลา</string>
+    <string name="camera_native_settings">การตั้งค่าการถ่าย</string>
+    <string name="camera_native_exposure">ชดเชยแสง</string>
+    <string name="camera_native_iso">ความไวแสง ISO</string>
+    <string name="camera_native_shutter">ระยะเวลาชัตเตอร์ (มิลลิวินาที)</string>
+    <string name="camera_native_auto">ค่าแสงอัตโนมัติ</string>
+    <string name="camera_native_histogram">ฮิสโตแกรม</string>
+    <string name="camera_native_audio">บันทึกเสียงไมโครโฟน</string>
+    <string name="camera_native_discreet_hint">ซ่อนภาพตัวอย่างแล้ว การถ่ายยังต้องสั่งอย่างชัดเจน ไฟแสดงการใช้กล้องของระบบยังคงปรากฏ</string>
+    <string name="camera_native_capabilities">โหมดที่ใช้ได้ขึ้นอยู่กับกล้องนี้ ภาพถ่ายจะประมวลผลบนอุปกรณ์ ไม่ได้รวมเอนจินที่เป็นกรรมสิทธิ์</string>
+    <string name="camera_native_formats">JPEG จะเก็บข้อมูลเมตาของกล้องเมื่อเปิดใช้ PNG/WebP จะลบข้อมูลเมตา</string>
+    <string name="camera_native_gallery">เปิดแกลเลอรี</string>
+    <string name="camera_native_flash">แฟลช</string>
+    <string name="camera_native_panorama_hint">พาโนรามาด้วยตนเอง: ถ่าย 2–8 ภาพจากซ้ายไปขวาให้ซ้อนทับ 20 % และรักษาขอบฟ้าให้ตรง จะผสานรอยต่อโดยไม่จัดแนวอัตโนมัติ</string>
+    <string name="camera_native_webcam_lan">ทุกคนในเครือข่ายภายในที่มี URL โทเค็นนี้สามารถดูกล้องได้ การแชร์จะหยุดเมื่อหน้าจอนี้ออกจากเบื้องหน้า</string>
+    <string name="camera_native_hidden_saved">บันทึกเป็นส่วนตัวใน Pictures/TelosHidden อัลบั้มที่ซ่อนจะไม่แสดงในแกลเลอรีและจะถูกลบเมื่อถอนการติดตั้ง Telos</string>
+    <string name="camera_native_geo_hint">เฉพาะ JPEG EXIF เพิ่มตำแหน่งล่าสุดอายุไม่เกิน 10 นาทีและความแม่นยำภายใน 500 เมตรเมื่อมีข้อมูล</string>
+    <string name="camera_native_face_trigger">ถ่ายเมื่อพบใบหน้า</string>
+    <string name="camera_native_motion_trigger">ถ่ายเมื่อตรวจพบการเคลื่อนไหว</string>
+    <string name="camera_native_trigger_hint">ทำงานเฉพาะเบื้องหน้า ถ่ายได้สูงสุดทุก 5 วินาที การตรวจจับใช้ความเปลี่ยนแปลงในภาพตัวอย่างและอาจตอบสนองต่อแสงที่เปลี่ยนไป</string>
+</resources>

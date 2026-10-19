@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Lisa konto</string>
+    <string name="ermis_attach">Manusta sellest telefonist</string>
+    <string name="ermis_body">Sõnum</string>
+    <string name="ermis_compose">Koosta</string>
+    <string name="ermis_connect">Ühenda</string>
+    <string name="ermis_email">E-post</string>
+    <string name="ermis_inbox">Postkast</string>
+    <string name="ermis_no_subject">(teema puudub)</string>
+    <string name="ermis_note">Märkus</string>
+    <string name="ermis_note_save">Salvesta märkus</string>
+    <string name="ermis_password">Parool</string>
+    <string name="ermis_remove">Eemalda</string>
+    <string name="ermis_search">Otsi kirju</string>
+    <string name="ermis_send">Saada</string>
+    <string name="ermis_starred">Tärniga</string>
+    <string name="ermis_subject">Teema</string>
+    <string name="ermis_sync">Sünkrooni</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Saaja</string>
+</resources>

@@ -9,8 +9,9 @@ plugins {
 // see services/downloads/build.gradle.kts: the yt-dlp runtime is only built in with -Ptelos.media=true
 val mediaRuntime = (findProperty("telos.media") as String?)?.toBoolean() == true
 
-// Measurement only: production builds retain stable class/member names by default.
-val obfuscationExperiment = providers.gradleProperty("telos.obfuscationExperiment")
+// R8 renames classes and members in release and nightly builds. -Ptelos.keepNames=true keeps the original
+// names (stable-names.pro), e.g. to compare APK sizes or to debug a keep rule.
+val keepNames = providers.gradleProperty("telos.keepNames")
     .map { it.toBooleanStrict() }.getOrElse(false)
 
 // One APK per CPU type: -Ptelos.abi=arm64-v8a or -Ptelos.abi=armeabi-v7a puts only the native libraries of that
@@ -21,10 +22,21 @@ val telosAbis = ((findProperty("telos.abi") as String?)?.takeIf { it.isNotBlank(
 android {
     androidResources {
         generateLocaleConfig = true
+        // Only the languages Telos is translated into (core/i18n). Library translations for other
+        // languages would be dead weight in resources.arsc, which is stored uncompressed.
+        localeFilters += listOf(
+            "en", "ar", "az", "be", "bg", "bn", "ca", "cs", "da", "de", "el", "eo", "es", "et", "eu",
+            "fa", "fi", "fr", "ga", "he", "iw", "hi", "hr", "hu", "ia", "in", "id", "it", "ja", "ko",
+            "lt", "lv", "ms", "mt", "nb", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sv", "th", "tr",
+            "uk", "vi", "zh",
+            "en-rGB", "en-rUS", "nb-rNO", "pt-rBR", "zh-rCN", "zh-rTW",
+        )
     }
 
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
+        // Picnic (legacy post-quantum signatures) lookup tables: nothing in Telos uses Picnic
+        resources.excludes.add("org/bouncycastle/pqc/legacy/picnic/**")
         resources.excludes.add("META-INF/INDEX.LIST")
         resources.excludes.add("META-INF/LICENSE")
         resources.excludes.add("META-INF/LICENSE.txt")
@@ -85,7 +97,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            if (!obfuscationExperiment) proguardFile("stable-names.pro")
+            if (keepNames) proguardFile("stable-names.pro")
         }
         debug {
             applicationIdSuffix = ".debug"
@@ -104,7 +116,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            if (!obfuscationExperiment) proguardFile("stable-names.pro")
+            if (keepNames) proguardFile("stable-names.pro")
         }
 
         flavorDimensions += "variant"

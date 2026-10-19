@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Не е налично на това устройство</string>
+    <string name="virtual_magnifier_permission">Лупата изисква достъп до камерата</string>
+    <string name="virtual_magnifier_resume">Продължаване на прегледа</string>
+    <string name="virtual_magnifier_freeze">Замразяване на кадъра</string>
+</resources>

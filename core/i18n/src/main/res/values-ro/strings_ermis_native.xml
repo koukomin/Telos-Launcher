@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Poștă Ermis</string>
+    <string name="ermis_new_mail_count">%1$d mesaje noi</string>
+    <string name="ermis_error_cache">Memoria cache a poștei nu a putut fi deblocată.</string>
+    <string name="ermis_error_auth">Autentificarea a eșuat. Verifică metoda de conectare și datele contului.</string>
+    <string name="ermis_error_tls">Certificatul serverului nu a putut fi verificat.</string>
+    <string name="ermis_error_generic">Operația a eșuat. Verifică conexiunea și setările serverului.</string>
+    <string name="ermis_error_sent_copy">Mesaj trimis, dar copia nu a fost salvată în Trimise. Nu retrimite.</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Gemt i Pictures/Telos</string>
+    <string name="camera_native_failed">Kamerafejl: %1$s</string>
+    <string name="camera_native_capture">Tag billede</string>
+    <string name="camera_native_record">Optag video</string>
+    <string name="camera_native_stop">Stop optagelse</string>
+    <string name="camera_native_timer">Timer</string>
+    <string name="camera_native_settings">Optagelsesindstillinger</string>
+    <string name="camera_native_exposure">Eksponeringskompensation</string>
+    <string name="camera_native_iso">ISO-følsomhed</string>
+    <string name="camera_native_shutter">Lukkertid (ms)</string>
+    <string name="camera_native_auto">Automatisk eksponering</string>
+    <string name="camera_native_histogram">Histogram</string>
+    <string name="camera_native_audio">Optag mikrofonlyd</string>
+    <string name="camera_native_discreet_hint">Forhåndsvisning skjult. Optagelse kræver stadig en bevidst handling; systemets kameraindikatorer forbliver synlige.</string>
+    <string name="camera_native_capabilities">Tilgængelige tilstande afhænger af dette kamera. Fotos behandles på enheden; ingen proprietær motor er inkluderet.</string>
+    <string name="camera_native_formats">JPEG bevarer kamerametadata, når det er aktiveret. PNG/WebP fjerner metadata.</string>
+    <string name="camera_native_gallery">Åbn galleri</string>
+    <string name="camera_native_flash">Blitz</string>
+    <string name="camera_native_panorama_hint">Manuelt panorama: tag 2–8 billeder fra venstre mod højre med 20 % overlap og vandret horisont. Samlinger udjævnes uden automatisk justering.</string>
+    <string name="camera_native_webcam_lan">Alle med denne token-URL på dit lokale netværk kan se kameraet. Deling stopper, når denne skærm forlader forgrunden.</string>
+    <string name="camera_native_hidden_saved">Gemt privat i Pictures/TelosHidden. Det skjulte album udelades fra galleriet og fjernes, når Telos afinstalleres.</string>
+    <string name="camera_native_geo_hint">Kun JPEG-EXIF. Tilføjer en position, højst 10 minutter gammel og med nøjagtighed inden for 500 m, når tilgængelig.</string>
+    <string name="camera_native_face_trigger">Tag billede, når et ansigt registreres</string>
+    <string name="camera_native_motion_trigger">Tag billede, når bevægelse registreres</string>
+    <string name="camera_native_trigger_hint">Kun i forgrunden. Højst hvert 5. sekund. Bevægelse bygger på ændringer i forhåndsvisningen og kan reagere på lysændringer.</string>
+</resources>

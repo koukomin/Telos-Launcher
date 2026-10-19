@@ -101,14 +101,17 @@ These are visible in the build files. The final size depends on the build, and n
 | R8 minification and resource shrinking in release and nightly builds | Removes unused code and resources. Debug builds skip it |
 | R8 full mode, with optimization enabled | Inlining, dead code removal and constant propagation (an old setting that disabled optimization was removed) |
 | `Log.v` and `Log.d` calls stripped in release builds | Less code and no logging cost |
-| Obfuscation is **off** | Larger than an obfuscated build, but stack traces stay readable for bug reports |
+| R8 obfuscation is **on** in release and nightly builds | Shorter class and member names, so smaller DEX. Stack traces need the build's `mapping.txt` (kept as a CI artifact) and `retrace` to be read. `-Ptelos.keepNames=true` turns renaming off |
 | One APK, two flavors (`default` and `fdroid`) | No separate APK per feature |
 | Bouncy Castle pinned to one version | Avoids duplicated classes from different libraries |
+| Bouncy Castle keep rule limited to its security providers | R8 removes the Bouncy Castle classes that neither Telos nor the providers use |
+| Picnic lookup tables left out of the APK | About 1 MB of Bouncy Castle data files for a signature scheme Telos does not use |
+| Only the translated languages are packaged (`localeFilters`) | Library translations for languages Telos does not support are dropped from `resources.arsc`, which is stored uncompressed |
 | Minimum Android 8.0 (API 26) | One APK for every supported release |
 
 ::: tip Keep rules in mind
-Libraries that use reflection (Shizuku, the SSH, SMB and FTP clients used by Telos Files) have keep rules,
-which limits how much R8 can remove.
+Libraries that use reflection or JNI (Shizuku, the SSH, SMB and FTP clients used by Telos Files, libtorrent4j,
+firestack, Tor, baresip) have keep rules, which limits how much R8 can remove or rename.
 :::
 
 ## Low-end device checklist

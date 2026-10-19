@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Išsaugota Pictures/Telos</string>
+    <string name="camera_native_failed">Kameros klaida: %1$s</string>
+    <string name="camera_native_capture">Fotografuoti</string>
+    <string name="camera_native_record">Įrašyti vaizdo įrašą</string>
+    <string name="camera_native_stop">Stabdyti įrašymą</string>
+    <string name="camera_native_timer">Laikmatis</string>
+    <string name="camera_native_settings">Fotografavimo nustatymai</string>
+    <string name="camera_native_exposure">Ekspozicijos kompensavimas</string>
+    <string name="camera_native_iso">ISO jautrumas</string>
+    <string name="camera_native_shutter">Išlaikymas (ms)</string>
+    <string name="camera_native_auto">Automatinė ekspozicija</string>
+    <string name="camera_native_histogram">Histograma</string>
+    <string name="camera_native_audio">Įrašyti mikrofono garsą</string>
+    <string name="camera_native_discreet_hint">Peržiūra paslėpta. Fotografavimui vis tiek reikia aiškaus veiksmo; sistemos kameros indikatoriai lieka matomi.</string>
+    <string name="camera_native_capabilities">Galimi režimai priklauso nuo šios kameros. Nuotraukos apdorojamos įrenginyje; patentuotas variklis neįtrauktas.</string>
+    <string name="camera_native_formats">JPEG išsaugo kameros metaduomenis, kai įjungta. PNG/WebP pašalina metaduomenis.</string>
+    <string name="camera_native_gallery">Atidaryti galeriją</string>
+    <string name="camera_native_flash">Blykstė</string>
+    <string name="camera_native_panorama_hint">Rankinė panorama: iš kairės į dešinę užfiksuokite 2–8 vaizdus su 20 % persidengimu, laikydami horizontą tiesiai. Siūlės suliejamos be automatinio lygiavimo.</string>
+    <string name="camera_native_webcam_lan">Kiekvienas jūsų vietiniame tinkle, turintis šį URL su žetonu, gali matyti kamerą. Bendrinimas baigiasi, kai šis ekranas palieka priekinį planą.</string>
+    <string name="camera_native_hidden_saved">Išsaugota privačiai Pictures/TelosHidden. Paslėptas albumas nerodomas galerijoje ir pašalinamas išdiegus Telos.</string>
+    <string name="camera_native_geo_hint">Tik JPEG EXIF. Jei galima, prideda ne senesnę kaip 10 minučių vietą, kurios tikslumas yra iki 500 m.</string>
+    <string name="camera_native_face_trigger">Fotografuoti aptikus veidą</string>
+    <string name="camera_native_motion_trigger">Fotografuoti aptikus judesį</string>
+    <string name="camera_native_trigger_hint">Tik pirmame plane. Ne dažniau kaip kas 5 sekundes. Judesys nustatomas pagal peržiūros pokyčius ir gali reaguoti į apšvietimą.</string>
+</resources>

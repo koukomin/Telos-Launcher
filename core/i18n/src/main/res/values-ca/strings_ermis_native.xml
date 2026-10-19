@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Correu Ermis</string>
+    <string name="ermis_new_mail_count">%1$d missatges nous</string>
+    <string name="ermis_error_cache">No s’ha pogut desbloquejar la memòria cau del correu.</string>
+    <string name="ermis_error_auth">L’autenticació ha fallat. Comproveu el mètode d’accés i les credencials.</string>
+    <string name="ermis_error_tls">No s’ha pogut verificar el certificat del servidor.</string>
+    <string name="ermis_error_generic">L’operació ha fallat. Comproveu la connexió i els ajusts del servidor.</string>
+    <string name="ermis_error_sent_copy">Missatge enviat, però no s’ha desat la còpia a Enviats. No el torneu a enviar.</string>
+</resources>

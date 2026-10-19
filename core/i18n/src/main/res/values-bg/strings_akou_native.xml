@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Без API ключ: записва 10 секунди и изчислява отпечатъка на устройството. До Shazam се изпраща само отпечатъкът, никога звукът.</string>
+    <string name="akou_get_token">Получаване на API токен за AudD</string>
+    <string name="akou_api_token">API токен за AudD</string>
+    <string name="akou_start">Запис и разпознаване</string>
+    <string name="akou_recording">Записване на 10 секунди…</string>
+    <string name="akou_identifying">Търсене на съвпадение…</string>
+    <string name="akou_no_match">Няма съвпадение. Опитайте отново по-близо до музиката.</string>
+    <string name="akou_matched">Песента е разпозната</string>
+    <string name="akou_failed">Разпознаването е неуспешно. Проверете микрофона и връзката и опитайте по-близо до музиката.</string>
+    <string name="akou_microphone_denied">За запис на откъс е необходимо разрешение за микрофона.</string>
+    <string name="akou_history">История на разпознаването</string>
+    <string name="akou_youtube_music">Търсене в YouTube Music</string>
+</resources>

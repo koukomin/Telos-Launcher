@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">V tej napravi ni na voljo</string>
+    <string name="virtual_magnifier_permission">Lupa potrebuje dostop do kamere</string>
+    <string name="virtual_magnifier_resume">Nadaljuj predogled</string>
+    <string name="virtual_magnifier_freeze">Zamrzni sliko</string>
+</resources>

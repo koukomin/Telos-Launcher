@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Недоступно на цьому пристрої</string>
+    <string name="virtual_magnifier_permission">Лупа потребує доступу до камери</string>
+    <string name="virtual_magnifier_resume">Відновити перегляд</string>
+    <string name="virtual_magnifier_freeze">Завмерти кадр</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">بدون کلید API: ده ثانیه ضبط و اثر انگشت روی دستگاه محاسبه می‌شود. فقط اثر انگشت به Shazam فرستاده می‌شود، نه صدای اصلی.</string>
+    <string name="akou_get_token">دریافت توکن API از AudD</string>
+    <string name="akou_api_token">توکن API ‏AudD</string>
+    <string name="akou_start">ضبط و شناسایی</string>
+    <string name="akou_recording">در حال ضبط ۱۰ ثانیه…</string>
+    <string name="akou_identifying">در حال تطبیق اثر انگشت…</string>
+    <string name="akou_no_match">تطبیقی پیدا نشد. نزدیک موسیقی دوباره امتحان کنید.</string>
+    <string name="akou_matched">آهنگ شناسایی شد</string>
+    <string name="akou_failed">شناسایی ناموفق بود. میکروفون و اتصال را بررسی کنید و نزدیک موسیقی دوباره تلاش کنید.</string>
+    <string name="akou_microphone_denied">برای ضبط نمونهٔ شناسایی، مجوز میکروفون لازم است.</string>
+    <string name="akou_history">تاریخچهٔ شناسایی</string>
+    <string name="akou_youtube_music">جستجو در YouTube Music</string>
+</resources>

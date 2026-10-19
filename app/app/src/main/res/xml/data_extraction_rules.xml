@@ -18,6 +18,7 @@
         <exclude domain="file" path="album_art" />
         <exclude domain="file" path="blocklists" />
         <exclude domain="file" path="remote_phonebook.json" />
+        <exclude domain="sharedpref" path="akou_recognition.xml" />
     </cloud-backup>
     <device-transfer>
         <exclude domain="sharedpref" path="telos_vault_prefs.xml" />
@@ -28,5 +29,6 @@
         <exclude domain="sharedpref" path="telos_notes_sync.xml" />
         <exclude domain="file" path="sip" />
         <exclude domain="file" path="downloads" />
+        <exclude domain="sharedpref" path="akou_recognition.xml" />
     </device-transfer>
 </data-extraction-rules>

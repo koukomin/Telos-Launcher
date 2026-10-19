@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Opgeslagen in Pictures/Telos</string>
+    <string name="camera_native_failed">Camerafout: %1$s</string>
+    <string name="camera_native_capture">Vastleggen</string>
+    <string name="camera_native_record">Video opnemen</string>
+    <string name="camera_native_stop">Opname stoppen</string>
+    <string name="camera_native_timer">Timer</string>
+    <string name="camera_native_settings">Opname-instellingen</string>
+    <string name="camera_native_exposure">Belichtingscompensatie</string>
+    <string name="camera_native_iso">ISO-gevoeligheid</string>
+    <string name="camera_native_shutter">Sluitertijd (ms)</string>
+    <string name="camera_native_auto">Automatische belichting</string>
+    <string name="camera_native_histogram">Histogram</string>
+    <string name="camera_native_audio">Microfoongeluid opnemen</string>
+    <string name="camera_native_discreet_hint">Voorbeeld verborgen. Opnamen blijven een bewuste handeling; de camera-indicatoren van het systeem blijven zichtbaar.</string>
+    <string name="camera_native_capabilities">Beschikbare modi hangen af van deze camera. Foto’s worden op het apparaat verwerkt; er is geen eigen engine inbegrepen.</string>
+    <string name="camera_native_formats">JPEG behoudt camerametadata indien ingeschakeld. PNG/WebP verwijderen metadata.</string>
+    <string name="camera_native_gallery">Galerij openen</string>
+    <string name="camera_native_flash">Flits</string>
+    <string name="camera_native_panorama_hint">Handmatig panorama: maak 2–8 beelden van links naar rechts met 20 % overlap en een rechte horizon. Overgangen worden vervaagd zonder automatische uitlijning.</string>
+    <string name="camera_native_webcam_lan">Iedereen met deze token-URL op uw lokale netwerk kan de camera bekijken. Delen stopt wanneer dit scherm niet meer op de voorgrond staat.</string>
+    <string name="camera_native_hidden_saved">Privé opgeslagen in Pictures/TelosHidden. Het verborgen album staat niet in de galerij en wordt verwijderd wanneer Telos wordt verwijderd.</string>
+    <string name="camera_native_geo_hint">Alleen JPEG-EXIF. Voegt indien beschikbaar een locatie toe van maximaal 10 minuten oud met een nauwkeurigheid van 500 m of beter.</string>
+    <string name="camera_native_face_trigger">Opnemen bij gezichtsdetectie</string>
+    <string name="camera_native_motion_trigger">Opnemen bij bewegingsdetectie</string>
+    <string name="camera_native_trigger_hint">Alleen op de voorgrond. Hoogstens eens per 5 seconden. Beweging gebruikt wijzigingen in het voorbeeld en kan op lichtveranderingen reageren.</string>
+</resources>

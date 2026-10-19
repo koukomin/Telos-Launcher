@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Salvat în Pictures/Telos</string>
+    <string name="camera_native_failed">Eroare cameră: %1$s</string>
+    <string name="camera_native_capture">Fotografiază</string>
+    <string name="camera_native_record">Înregistrează video</string>
+    <string name="camera_native_stop">Oprește înregistrarea</string>
+    <string name="camera_native_timer">Temporizator</string>
+    <string name="camera_native_settings">Setări de captură</string>
+    <string name="camera_native_exposure">Compensarea expunerii</string>
+    <string name="camera_native_iso">Sensibilitate ISO</string>
+    <string name="camera_native_shutter">Durata obturatorului (ms)</string>
+    <string name="camera_native_auto">Expunere automată</string>
+    <string name="camera_native_histogram">Histogramă</string>
+    <string name="camera_native_audio">Înregistrează sunetul microfonului</string>
+    <string name="camera_native_discreet_hint">Previzualizare ascunsă. Captura necesită în continuare o acțiune explicită; indicatoarele camerei din sistem rămân vizibile.</string>
+    <string name="camera_native_capabilities">Modurile disponibile depind de această cameră. Fotografiile sunt procesate pe dispozitiv; nu este inclus un motor proprietar.</string>
+    <string name="camera_native_formats">JPEG păstrează metadatele camerei dacă opțiunea este activată. PNG/WebP elimină metadatele.</string>
+    <string name="camera_native_gallery">Deschide galeria</string>
+    <string name="camera_native_flash">Bliț</string>
+    <string name="camera_native_panorama_hint">Panoramă manuală: capturați 2–8 imagini de la stânga la dreapta cu suprapunere de 20 %, menținând orizontul drept. Îmbinările sunt estompate fără aliniere automată.</string>
+    <string name="camera_native_webcam_lan">Oricine din rețeaua locală cu acest URL cu token poate vedea camera. Partajarea se oprește când acest ecran părăsește prim-planul.</string>
+    <string name="camera_native_hidden_saved">Salvat privat în Pictures/TelosHidden. Albumul ascuns nu apare în galerie și este șters la dezinstalarea Telos.</string>
+    <string name="camera_native_geo_hint">Doar EXIF JPEG. Adaugă o locație disponibilă, veche de cel mult 10 minute, cu precizie de până la 500 m.</string>
+    <string name="camera_native_face_trigger">Capturează la detectarea unei fețe</string>
+    <string name="camera_native_motion_trigger">Capturează la detectarea mișcării</string>
+    <string name="camera_native_trigger_hint">Doar în prim-plan. Cel mult o dată la 5 secunde. Mișcarea folosește schimbările previzualizării și poate reacționa la lumină.</string>
+</resources>

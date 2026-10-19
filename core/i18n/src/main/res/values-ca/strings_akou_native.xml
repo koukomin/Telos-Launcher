@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Sense clau API: grava 10 segons i calcula l’empremta al dispositiu. Només s’envia l’empremta a Shazam, mai l’àudio.</string>
+    <string name="akou_get_token">Obtén un testimoni API d’AudD</string>
+    <string name="akou_api_token">Testimoni API d’AudD</string>
+    <string name="akou_start">Grava i reconeix</string>
+    <string name="akou_recording">S’estan gravant 10 segons…</string>
+    <string name="akou_identifying">Cercant la coincidència de l’empremta…</string>
+    <string name="akou_no_match">No s’ha trobat cap coincidència. Torna-ho a provar a prop de la música.</string>
+    <string name="akou_matched">Cançó reconeguda</string>
+    <string name="akou_failed">Ha fallat el reconeixement. Comproveu el micròfon i la connexió i torneu-ho a provar a prop de la música.</string>
+    <string name="akou_microphone_denied">Cal permís del micròfon per gravar una mostra.</string>
+    <string name="akou_history">Historial de reconeixements</string>
+    <string name="akou_youtube_music">Cerca a YouTube Music</string>
+</resources>

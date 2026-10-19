@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Ohne API-Schlüssel: 10 Sekunden aufnehmen, Fingerabdruck lokal berechnen. Nur der Fingerabdruck wird an Shazam gesendet, niemals die Aufnahme.</string>
+    <string name="akou_get_token">AudD-API-Token erhalten</string>
+    <string name="akou_api_token">AudD-API-Token</string>
+    <string name="akou_start">Aufnehmen und erkennen</string>
+    <string name="akou_recording">10 Sekunden werden aufgenommen…</string>
+    <string name="akou_identifying">Fingerabdruck wird abgeglichen…</string>
+    <string name="akou_no_match">Kein Treffer. Versuche es näher an der Musik erneut.</string>
+    <string name="akou_matched">Titel erkannt</string>
+    <string name="akou_failed">Erkennung fehlgeschlagen. Mikrofon und Verbindung prüfen und näher an der Musik erneut versuchen.</string>
+    <string name="akou_microphone_denied">Für die Aufnahme ist die Mikrofonberechtigung erforderlich.</string>
+    <string name="akou_history">Erkennungsverlauf</string>
+    <string name="akou_youtube_music">In YouTube Music suchen</string>
+</resources>

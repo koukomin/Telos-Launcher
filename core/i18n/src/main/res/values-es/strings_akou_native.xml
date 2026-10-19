@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Sin clave API: graba 10 segundos y calcula la huella en el dispositivo. Solo se envía la huella a Shazam, nunca el audio.</string>
+    <string name="akou_get_token">Obtener un token API de AudD</string>
+    <string name="akou_api_token">Token API de AudD</string>
+    <string name="akou_start">Grabar y reconocer</string>
+    <string name="akou_recording">Grabando 10 segundos…</string>
+    <string name="akou_identifying">Buscando coincidencia de la huella…</string>
+    <string name="akou_no_match">No se encontró ninguna coincidencia. Inténtalo cerca de la música.</string>
+    <string name="akou_matched">Canción reconocida</string>
+    <string name="akou_failed">Error de reconocimiento. Comprueba el micrófono y la conexión y vuelve a intentarlo cerca de la música.</string>
+    <string name="akou_microphone_denied">Se necesita permiso del micrófono para grabar una muestra.</string>
+    <string name="akou_history">Historial de reconocimientos</string>
+    <string name="akou_youtube_music">Buscar en YouTube Music</string>
+</resources>

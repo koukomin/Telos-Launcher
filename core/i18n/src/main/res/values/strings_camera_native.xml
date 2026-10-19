@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Saved to Pictures/Telos</string>
+    <string name="camera_native_failed">Camera error: %1$s</string>
+    <string name="camera_native_capture">Capture</string>
+    <string name="camera_native_record">Record video</string>
+    <string name="camera_native_stop">Stop recording</string>
+    <string name="camera_native_timer">Timer</string>
+    <string name="camera_native_settings">Capture settings</string>
+    <string name="camera_native_exposure">Exposure compensation</string>
+    <string name="camera_native_iso">ISO sensitivity</string>
+    <string name="camera_native_shutter">Shutter duration (ms)</string>
+    <string name="camera_native_auto">Automatic exposure</string>
+    <string name="camera_native_histogram">Histogram</string>
+    <string name="camera_native_audio">Record microphone audio</string>
+    <string name="camera_native_discreet_hint">Preview hidden. Capture remains explicit; system camera indicators stay visible.</string>
+    <string name="camera_native_capabilities">Available modes depend on this camera. Photos use on-device processing; no proprietary engine is included.</string>
+    <string name="camera_native_formats">JPEG retains camera metadata when enabled. PNG/WebP strip metadata.</string>
+    <string name="camera_native_gallery">Open gallery</string>
+    <string name="camera_native_flash">Flash</string>
+    <string name="camera_native_panorama_hint">Manual panorama: capture 2–8 left-to-right slices with 20% overlap, keeping the horizon level. Stitching blends seams without automatic alignment.</string>
+    <string name="camera_native_webcam_lan">Anyone with this token URL on your local network can view the camera. Sharing stops when this screen leaves the foreground.</string>
+    <string name="camera_native_hidden_saved">Saved privately in Pictures/TelosHidden. Hidden album is excluded from the gallery and removed when Telos is uninstalled.</string>
+    <string name="camera_native_geo_hint">JPEG EXIF only. Adds a recent location fix, at most 10 minutes old with accuracy within 500 m, when available.</string>
+    <string name="camera_native_face_trigger">Capture when a face is detected</string>
+    <string name="camera_native_motion_trigger">Capture when motion is detected</string>
+    <string name="camera_native_trigger_hint">Foreground only. Captures at most once every 5 seconds. Motion uses changes in the preview and can react to lighting changes.</string>
+</resources>

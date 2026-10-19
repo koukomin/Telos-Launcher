@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">API açarı olmadan 10 saniyə yazılır və barmaq izi cihazda hesablanır. Shazam-a yalnız barmaq izi göndərilir, səs heç vaxt yüklənmir.</string>
+    <string name="akou_get_token">AudD API tokeni əldə edin</string>
+    <string name="akou_api_token">AudD API tokeni</string>
+    <string name="akou_start">Yaz və tanı</string>
+    <string name="akou_recording">10 saniyə yazılır…</string>
+    <string name="akou_identifying">Barmaq izi uyğunlaşdırılır…</string>
+    <string name="akou_no_match">Uyğunluq tapılmadı. Musiqiyə daha yaxın yerdə yenidən sınayın.</string>
+    <string name="akou_matched">Mahnı tanındı</string>
+    <string name="akou_failed">Tanıma alınmadı. Mikrofonu və bağlantını yoxlayıb musiqiyə yaxın yenidən cəhd edin.</string>
+    <string name="akou_microphone_denied">Nümunə yazmaq üçün mikrofon icazəsi lazımdır.</string>
+    <string name="akou_history">Tanıma tarixçəsi</string>
+    <string name="akou_youtube_music">YouTube Music-də tap</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ermis_accounts">Poštové účty</string>
+    <string name="ermis_all_accounts">Všetky účty</string>
+    <string name="ermis_native_intro">Vaša pošta v Telose. Pripojte účet IMAP/SMTP cez TLS pomocou hesla alebo hesla aplikácie.</string>
+    <string name="ermis_empty">Žiadne správy. Synchronizujte účty alebo zmeňte hľadanie.</string>
+    <string name="ermis_operation_failed">Poštová operácia zlyhala</string>
+    <string name="ermis_tls_help">Oba servery musia podporovať overené TLS. Gmail vyžaduje heslo aplikácie. Prihlásenie Google nie je v tejto verzii dostupné.</string>
+    <string name="ermis_username">Používateľské meno servera</string>
+    <string name="ermis_username_help">Pre použitie e-mailovej adresy ponechajte prázdne.</string>
+    <string name="ermis_imap_host">Server IMAP</string>
+    <string name="ermis_imap_port">Port IMAP TLS</string>
+    <string name="ermis_smtp_host">Server SMTP</string>
+    <string name="ermis_smtp_port">Port SMTP</string>
+    <string name="ermis_starttls">Vyžadovať STARTTLS pre SMTP</string>
+    <string name="ermis_saf_help">Výber súborov zobrazuje aj cloudové služby s podporou Dokumentov Android. Pre veľké súbory vložte odkaz na zdieľanie do správy.</string>
+    <string name="ermis_reply">Odpovedať</string>
+</resources>

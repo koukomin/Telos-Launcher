@@ -159,9 +159,9 @@ private fun FilesScreenBody() {
     dropped?.let { (target, data, destination) ->
         AlertDialog(onDismissRequest = { dropped = null }, title = { Text(stringResource(R.string.telos_files_drop_title, data.paths.size)) },
             text = { Text(nameOf(destination)) },
-            confirmButton = { TextButton(onClick = { target.transferDragged(data.paths, data.root, false, destination); dropped = null }) { Text(stringResource(R.string.hf_files_paste_here)) } },
+            confirmButton = { TextButton(onClick = { target.transferDragged(data.paths, data.root, false, destination, data.shizuku); dropped = null }) { Text(stringResource(R.string.hf_files_paste_here)) } },
             dismissButton = { Row {
-                TextButton(onClick = { target.transferDragged(data.paths, data.root, true, destination); dropped = null }) { Text(stringResource(R.string.hf_files_move_here)) }
+                TextButton(onClick = { target.transferDragged(data.paths, data.root, true, destination, data.shizuku); dropped = null }) { Text(stringResource(R.string.hf_files_move_here)) }
                 TextButton(onClick = { dropped = null }) { Text(stringResource(R.string.hc_cancel)) }
             } })
     }

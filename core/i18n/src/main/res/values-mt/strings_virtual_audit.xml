@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Mhux disponibbli fuq dan l-apparat</string>
+    <string name="virtual_magnifier_permission">Il-lenti teħtieġ aċċess għall-kamera</string>
+    <string name="virtual_magnifier_resume">Kompli l-previżjoni</string>
+    <string name="virtual_magnifier_freeze">Iffriża l-qafas</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis メール</string>
+    <string name="ermis_new_mail_count">%1$d 件の新着メール</string>
+    <string name="ermis_error_cache">メールキャッシュのロックを解除できませんでした。</string>
+    <string name="ermis_error_auth">認証に失敗しました。ログイン方法とアカウント情報を確認してください。</string>
+    <string name="ermis_error_tls">サーバー証明書を検証できませんでした。</string>
+    <string name="ermis_error_generic">操作に失敗しました。接続とサーバー設定を確認してください。</string>
+    <string name="ermis_error_sent_copy">メールは送信されましたが、送信済みにコピーを保存できませんでした。再送信しないでください。</string>
+</resources>

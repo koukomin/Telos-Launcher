@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">API gakorik gabe: 10 segundo grabatu eta hatz-marka gailuan kalkulatzen du. Hatz-marka soilik bidaltzen da Shazam-era, inoiz ez audioa.</string>
+    <string name="akou_get_token">Lortu AudD API tokena</string>
+    <string name="akou_api_token">AudD API tokena</string>
+    <string name="akou_start">Grabatu eta ezagutu</string>
+    <string name="akou_recording">10 segundo grabatzen…</string>
+    <string name="akou_identifying">Hatz-markaren bat-etortzea bilatzen…</string>
+    <string name="akou_no_match">Ez da bat-etortzerik aurkitu. Saiatu berriro musikatik gertuago.</string>
+    <string name="akou_matched">Abestia ezagutu da</string>
+    <string name="akou_failed">Ezagutzak huts egin du. Egiaztatu mikrofonoa eta konexioa, eta saiatu musikatik gertuago.</string>
+    <string name="akou_microphone_denied">Lagina grabatzeko mikrofonoaren baimena behar da.</string>
+    <string name="akou_history">Ezagutzeen historia</string>
+    <string name="akou_youtube_music">Bilatu YouTube Music-en</string>
+</resources>

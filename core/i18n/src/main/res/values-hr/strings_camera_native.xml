@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Spremljeno u Pictures/Telos</string>
+    <string name="camera_native_failed">Pogreška kamere: %1$s</string>
+    <string name="camera_native_capture">Snimi</string>
+    <string name="camera_native_record">Snimi video</string>
+    <string name="camera_native_stop">Zaustavi snimanje</string>
+    <string name="camera_native_timer">Odbrojavanje</string>
+    <string name="camera_native_settings">Postavke snimanja</string>
+    <string name="camera_native_exposure">Kompenzacija ekspozicije</string>
+    <string name="camera_native_iso">ISO osjetljivost</string>
+    <string name="camera_native_shutter">Vrijeme zatvarača (ms)</string>
+    <string name="camera_native_auto">Automatska ekspozicija</string>
+    <string name="camera_native_histogram">Histogram</string>
+    <string name="camera_native_audio">Snimi zvuk mikrofona</string>
+    <string name="camera_native_discreet_hint">Pregled je skriven. Snimanje i dalje zahtijeva izričitu radnju; pokazatelji kamere sustava ostaju vidljivi.</string>
+    <string name="camera_native_capabilities">Dostupni načini ovise o ovoj kameri. Fotografije se obrađuju na uređaju; vlasnički mehanizam nije uključen.</string>
+    <string name="camera_native_formats">JPEG zadržava metapodatke kamere kada je omogućeno. PNG/WebP uklanjaju metapodatke.</string>
+    <string name="camera_native_gallery">Otvori galeriju</string>
+    <string name="camera_native_flash">Bljeskalica</string>
+    <string name="camera_native_panorama_hint">Ručna panorama: snimite 2–8 slika slijeva nadesno s 20 % preklapanja i ravnim horizontom. Spojevi se stapaju bez automatskog poravnanja.</string>
+    <string name="camera_native_webcam_lan">Svatko u lokalnoj mreži s ovim URL-om s tokenom može gledati kameru. Dijeljenje prestaje kada ovaj zaslon napusti prvi plan.</string>
+    <string name="camera_native_hidden_saved">Spremljeno privatno u Pictures/TelosHidden. Skriveni album nije u galeriji i uklanja se pri deinstalaciji Telosa.</string>
+    <string name="camera_native_geo_hint">Samo JPEG EXIF. Dodaje dostupnu lokaciju staru najviše 10 minuta s preciznošću do 500 m.</string>
+    <string name="camera_native_face_trigger">Snimi kad se otkrije lice</string>
+    <string name="camera_native_motion_trigger">Snimi kad se otkrije pokret</string>
+    <string name="camera_native_trigger_hint">Samo u prvom planu. Najviše jednom svakih 5 sekundi. Pokret se određuje iz promjena pregleda i može reagirati na osvjetljenje.</string>
+</resources>

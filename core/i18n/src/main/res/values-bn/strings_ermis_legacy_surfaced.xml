@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">অ্যাকাউন্ট যোগ করুন</string>
+    <string name="ermis_attach">এই ফোন থেকে সংযুক্ত করুন</string>
+    <string name="ermis_body">বার্তা</string>
+    <string name="ermis_compose">লিখুন</string>
+    <string name="ermis_connect">সংযোগ করুন</string>
+    <string name="ermis_email">ইমেইল</string>
+    <string name="ermis_inbox">ইনবক্স</string>
+    <string name="ermis_no_subject">(বিষয় নেই)</string>
+    <string name="ermis_note">নোট</string>
+    <string name="ermis_note_save">নোট সংরক্ষণ করুন</string>
+    <string name="ermis_password">পাসওয়ার্ড</string>
+    <string name="ermis_remove">সরান</string>
+    <string name="ermis_search">মেইল খুঁজুন</string>
+    <string name="ermis_send">পাঠান</string>
+    <string name="ermis_starred">তারকাচিহ্নিত</string>
+    <string name="ermis_subject">বিষয়</string>
+    <string name="ermis_sync">সিঙ্ক করুন</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">প্রাপক</string>
+</resources>

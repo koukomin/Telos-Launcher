@@ -24,28 +24,31 @@ internal object FileActions {
      * An address another app can read for [path]. A file the provider does not cover (or that only
      * the superuser can read) is copied into the cache first.
      */
-    fun uriFor(context: Context, path: String, rootMode: Boolean): Uri? = runCatching {
+    suspend fun uriFor(context: Context, path: String, rootMode: Boolean, shizukuMode: Boolean = false): Uri? = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { runCatching {
         var file = File(path)
         val covered = path.startsWith("/storage/") || path.startsWith(context.cacheDir.path) ||
             path.startsWith(context.filesDir.path) || path.startsWith(android.os.Environment.getExternalStorageDirectory().path)
         if (!covered || !file.canRead()) {
             val dir = File(context.cacheDir, "files_open").apply { mkdirs() }
             val copy = File(dir, file.name)
-            if (rootMode) {
+            if (rootMode && shizukuMode) {
+                // ADB cannot write into the app cache; copy through the pipe as the app.
+                RootFs(shizuku = true).openRead(path).use { input -> copy.outputStream().use { output -> input.copyTo(output) } }
+            } else if (rootMode) {
                 // chmod so that the app can read what the superuser copied
                 val r = RootShell.run("cp -f ${RootShell.q(path)} ${RootShell.q(copy.path)} && chmod 644 ${RootShell.q(copy.path)}")
-                if (!r.ok) return null
+                if (!r.ok) return@withContext null
             } else {
                 file.copyTo(copy, overwrite = true)
             }
             file = copy
         }
         FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
-    }.getOrNull()
+    }.getOrElse { if (it is kotlinx.coroutines.CancellationException) throw it else null } }
 
-    /** Plays a video on a network storage straight from there, the videos next to it form the playlist */
+    /** Plays a video or song on a network storage straight from there (no download), the ones next to it form the playlist */
     fun playRemoteVideo(context: Context, entry: FsEntry, siblings: List<FsEntry>) {
-        val allVideos = siblings.filter { it.kind == FileKind.Video && !it.isDir && RemotePath.isRemote(it.path) }
+        val allVideos = siblings.filter { it.kind == entry.kind && !it.isDir && RemotePath.isRemote(it.path) }
         val chosen = allVideos.indexOfFirst { it.path == entry.path }
         if (chosen < 0) return
         val (videos, index) = allVideos.windowAround(chosen)
@@ -57,7 +60,7 @@ internal object FileActions {
         )
     }
 
-    fun open(context: Context, entry: FsEntry, siblings: List<FsEntry>, rootMode: Boolean) {
+    suspend fun open(context: Context, entry: FsEntry, siblings: List<FsEntry>, rootMode: Boolean, shizukuMode: Boolean = false) {
         val toast = { text: String -> Toast.makeText(context, text, Toast.LENGTH_SHORT).show() }
         when (entry.kind) {
             FileKind.Image -> {
@@ -67,7 +70,7 @@ internal object FileActions {
                 // only the pictures around the chosen one go along (Intent size limit), and only those are made readable
                 val (images, index) = allImages.windowAround(chosen)
                 // a picture that cannot be handed out is left out, the chosen one has to stay at its place
-                val readable = images.mapIndexedNotNull { i, e -> uriFor(context, e.path, rootMode)?.toString()?.let { i to it } }
+                val readable = images.mapIndexedNotNull { i, e -> uriFor(context, e.path, rootMode, shizukuMode)?.toString()?.let { i to it } }
                 val uris = readable.map { it.second }
                 val shownIndex = readable.indexOfFirst { it.first == index }
                 if (shownIndex < 0) { toast(context.getString(R.string.au_files_cannot_open_picture)); return }
@@ -82,7 +85,7 @@ internal object FileActions {
                 val chosen = allVideos.indexOfFirst { it.path == entry.path }
                 if (chosen < 0) { toast(context.getString(R.string.au_files_cannot_open_video)); return }
                 val (videos, index) = allVideos.windowAround(chosen)
-                val readable = videos.mapIndexedNotNull { i, e -> uriFor(context, e.path, rootMode)?.toString()?.let { i to it } }
+                val readable = videos.mapIndexedNotNull { i, e -> uriFor(context, e.path, rootMode, shizukuMode)?.toString()?.let { i to it } }
                 val uris = readable.map { it.second }
                 val shownIndex = readable.indexOfFirst { it.first == index }
                 if (shownIndex < 0) { toast(context.getString(R.string.au_files_cannot_open_video)); return }
@@ -94,7 +97,7 @@ internal object FileActions {
                 )
             }
             else -> {
-                val uri = uriFor(context, entry.path, rootMode) ?: run { toast(context.getString(R.string.au_files_cannot_open_file)); return }
+                val uri = uriFor(context, entry.path, rootMode, shizukuMode) ?: run { toast(context.getString(R.string.au_files_cannot_open_file)); return }
                 // documents open in Telos Viewer
                 if (de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(entry.name)) {
                     context.startActivity(
@@ -111,15 +114,15 @@ internal object FileActions {
         }
     }
 
-    fun openWith(context: Context, entry: FsEntry, rootMode: Boolean) {
-        val uri = uriFor(context, entry.path, rootMode) ?: return
+    suspend fun openWith(context: Context, entry: FsEntry, rootMode: Boolean, shizukuMode: Boolean = false) {
+        val uri = uriFor(context, entry.path, rootMode, shizukuMode) ?: return
         val view = Intent(Intent.ACTION_VIEW).setDataAndType(uri, mimeOf(entry.name)).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         runCatching { context.startActivity(Intent.createChooser(view, entry.name).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
     }
 
-    fun share(context: Context, entries: List<FsEntry>, rootMode: Boolean) {
+    suspend fun share(context: Context, entries: List<FsEntry>, rootMode: Boolean, shizukuMode: Boolean = false) {
         val files = entries.filter { !it.isDir }
-        val uris = files.mapNotNull { uriFor(context, it.path, rootMode) }
+        val uris = files.mapNotNull { uriFor(context, it.path, rootMode, shizukuMode) }
         if (uris.isEmpty()) {
             Toast.makeText(context, context.getString(R.string.hc_folders_cannot_be_shared_compress_them_f), Toast.LENGTH_SHORT).show()
             return

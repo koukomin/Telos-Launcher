@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Mel Ermis</string>
+    <string name="ermis_new_mail_count">%1$d mesej baharu</string>
+    <string name="ermis_error_cache">Cache mel tidak dapat dibuka kunci.</string>
+    <string name="ermis_error_auth">Pengesahan gagal. Semak kaedah log masuk dan bukti kelayakan akaun.</string>
+    <string name="ermis_error_tls">Sijil pelayan tidak dapat disahkan.</string>
+    <string name="ermis_error_generic">Operasi gagal. Semak sambungan dan tetapan pelayan.</string>
+    <string name="ermis_error_sent_copy">Mesej dihantar tetapi salinan tidak disimpan dalam Dihantar. Jangan hantar semula.</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Na tomto zařízení není k dispozici</string>
+    <string name="virtual_magnifier_permission">Lupa vyžaduje přístup k fotoaparátu</string>
+    <string name="virtual_magnifier_resume">Obnovit náhled</string>
+    <string name="virtual_magnifier_freeze">Zmrazit snímek</string>
+</resources>

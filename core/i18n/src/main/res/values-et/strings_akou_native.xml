@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">API-võtmeta: salvestab 10 sekundit ja arvutab sõrmejälje seadmes. Shazamile saadetakse ainult sõrmejälg, mitte kunagi heli.</string>
+    <string name="akou_get_token">Hangi AudD API-tõend</string>
+    <string name="akou_api_token">AudD API-tõend</string>
+    <string name="akou_start">Salvesta ja tuvasta</string>
+    <string name="akou_recording">Salvestatakse 10 sekundit…</string>
+    <string name="akou_identifying">Sõrmejälje vaste otsimine…</string>
+    <string name="akou_no_match">Vastet ei leitud. Proovi uuesti muusika lähedal.</string>
+    <string name="akou_matched">Lugu tuvastatud</string>
+    <string name="akou_failed">Tuvastamine ebaõnnestus. Kontrollige mikrofoni ja ühendust ning proovige muusikale lähemal.</string>
+    <string name="akou_microphone_denied">Näidise salvestamiseks on vaja mikrofoni luba.</string>
+    <string name="akou_history">Tuvastuste ajalugu</string>
+    <string name="akou_youtube_music">Otsi YouTube Musicust</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Sans clé API : enregistrement de 10 secondes et empreinte calculée sur cet appareil. Seule l’empreinte est envoyée à Shazam, jamais le son.</string>
+    <string name="akou_get_token">Obtenir un jeton API AudD</string>
+    <string name="akou_api_token">Jeton API AudD</string>
+    <string name="akou_start">Enregistrer et reconnaître</string>
+    <string name="akou_recording">Enregistrement de 10 secondes…</string>
+    <string name="akou_identifying">Recherche de l’empreinte…</string>
+    <string name="akou_no_match">Aucun résultat. Réessayez près de la musique.</string>
+    <string name="akou_matched">Titre reconnu</string>
+    <string name="akou_failed">Échec de la reconnaissance. Vérifiez le microphone et la connexion, puis réessayez près de la musique.</string>
+    <string name="akou_microphone_denied">L’autorisation du microphone est nécessaire pour enregistrer un extrait.</string>
+    <string name="akou_history">Historique des reconnaissances</string>
+    <string name="akou_youtube_music">Rechercher dans YouTube Music</string>
+</resources>

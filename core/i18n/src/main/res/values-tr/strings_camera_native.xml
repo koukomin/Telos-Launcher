@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Pictures/Telos klasörüne kaydedildi</string>
+    <string name="camera_native_failed">Kamera hatası: %1$s</string>
+    <string name="camera_native_capture">Çek</string>
+    <string name="camera_native_record">Video kaydet</string>
+    <string name="camera_native_stop">Kaydı durdur</string>
+    <string name="camera_native_timer">Zamanlayıcı</string>
+    <string name="camera_native_settings">Çekim ayarları</string>
+    <string name="camera_native_exposure">Pozlama telafisi</string>
+    <string name="camera_native_iso">ISO duyarlılığı</string>
+    <string name="camera_native_shutter">Enstantane süresi (ms)</string>
+    <string name="camera_native_auto">Otomatik pozlama</string>
+    <string name="camera_native_histogram">Histogram</string>
+    <string name="camera_native_audio">Mikrofon sesini kaydet</string>
+    <string name="camera_native_discreet_hint">Önizleme gizlendi. Çekim yine açık bir işlem gerektirir; sistem kamera göstergeleri görünür kalır.</string>
+    <string name="camera_native_capabilities">Kullanılabilir modlar bu kameraya bağlıdır. Fotoğraflar cihazda işlenir; özel mülkiyetli bir motor dahil değildir.</string>
+    <string name="camera_native_formats">Etkinleştirildiğinde JPEG kamera meta verilerini korur. PNG/WebP meta verileri kaldırır.</string>
+    <string name="camera_native_gallery">Galeriyi aç</string>
+    <string name="camera_native_flash">Flaş</string>
+    <string name="camera_native_panorama_hint">Elle panorama: ufku düz tutarak soldan sağa %20 örtüşen 2–8 kare çekin. Dikişler otomatik hizalama olmadan harmanlanır.</string>
+    <string name="camera_native_webcam_lan">Yerel ağınızda bu belirteç URL’sine sahip herkes kamerayı görebilir. Bu ekran ön plandan ayrıldığında paylaşım durur.</string>
+    <string name="camera_native_hidden_saved">Pictures/TelosHidden içine özel olarak kaydedildi. Gizli albüm galeride görünmez ve Telos kaldırıldığında silinir.</string>
+    <string name="camera_native_geo_hint">Yalnızca JPEG EXIF. Varsa en fazla 10 dakikalık ve 500 m içinde doğruluğa sahip konum ekler.</string>
+    <string name="camera_native_face_trigger">Yüz algılandığında çek</string>
+    <string name="camera_native_motion_trigger">Hareket algılandığında çek</string>
+    <string name="camera_native_trigger_hint">Yalnızca ön planda. En fazla 5 saniyede bir çeker. Hareket, önizleme değişikliklerine dayanır ve ışık değişimlerinden etkilenebilir.</string>
+</resources>

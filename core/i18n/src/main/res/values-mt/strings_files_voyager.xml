@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Iġġenera par ta’ ċwievet</string>
+    <string name="telos_files_ssh_copy_public_key">Ikkopja ċ-ċavetta pubblika</string>
+    <string name="telos_files_ssh_public_key_hint">Żid iċ-ċavetta pubblika ma’ ~/.ssh/authorized_keys fuq is-server. Iċ-ċavetta privata tibqa’ kriptata fuq dan it-telefon.</string>
+    <string name="telos_files_duplicates_exclude">Aqbeż folders</string>
+    <string name="telos_files_duplicates_exclude_hint">Ismijiet jew mogħdijiet ta’ folders, separati b’virgoli, pereżempju: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Aċċess permezz ta’ Shizuku</string>
+    <string name="telos_files_shizuku_summary">Iftaħ Android/data, Android/obb u folders oħra li l-app ma tistax taqra, permezz ta’ Shizuku (mingħajr root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku mhux qed jaħdem jew ma ppermettiex lil Telos</string>
+    <string name="telos_files_search_everywhere">Fittex fil-ħażna kollha</string>
+    <string name="telos_files_search_everywhere_summary">Ifittex fil-ħażna interna, fil-kards SD u fid-drives USB, mhux biss f’dan il-folder</string>
+</resources>

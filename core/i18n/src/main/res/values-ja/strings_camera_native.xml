@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Pictures/Telos に保存しました</string>
+    <string name="camera_native_failed">カメラエラー: %1$s</string>
+    <string name="camera_native_capture">撮影</string>
+    <string name="camera_native_record">動画を録画</string>
+    <string name="camera_native_stop">録画を停止</string>
+    <string name="camera_native_timer">タイマー</string>
+    <string name="camera_native_settings">撮影設定</string>
+    <string name="camera_native_exposure">露出補正</string>
+    <string name="camera_native_iso">ISO感度</string>
+    <string name="camera_native_shutter">シャッター時間（ミリ秒）</string>
+    <string name="camera_native_auto">自動露出</string>
+    <string name="camera_native_histogram">ヒストグラム</string>
+    <string name="camera_native_audio">マイク音声を録音</string>
+    <string name="camera_native_discreet_hint">プレビューは非表示です。撮影には明示的な操作が必要で、システムのカメラ使用表示は引き続き表示されます。</string>
+    <string name="camera_native_capabilities">利用可能なモードはカメラによって異なります。写真は端末上で処理され、独自の専有エンジンは含まれていません。</string>
+    <string name="camera_native_formats">有効にするとJPEGはカメラのメタデータを保持します。PNG/WebPはメタデータを削除します。</string>
+    <string name="camera_native_gallery">ギャラリーを開く</string>
+    <string name="camera_native_flash">フラッシュ</string>
+    <string name="camera_native_panorama_hint">手動パノラマ：水平を保ち、左から右へ20 %重なるように2～8枚撮影します。自動位置合わせは行わず、継ぎ目をブレンドします。</string>
+    <string name="camera_native_webcam_lan">ローカルネットワークでこのトークン付きURLを知る人は誰でもカメラを視聴できます。この画面が前面から離れると共有が停止します。</string>
+    <string name="camera_native_hidden_saved">Pictures/TelosHiddenに非公開で保存しました。非表示アルバムはギャラリーに表示されず、Telosをアンインストールすると削除されます。</string>
+    <string name="camera_native_geo_hint">JPEG EXIFのみ。取得できる場合、10分以内かつ精度500 m以内の位置情報を追加します。</string>
+    <string name="camera_native_face_trigger">顔を検出したら撮影</string>
+    <string name="camera_native_motion_trigger">動きを検出したら撮影</string>
+    <string name="camera_native_trigger_hint">前面表示中のみ。撮影は5秒に1回までです。プレビューの変化から動きを検出するため、照明の変化にも反応する場合があります。</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Posta Ermis</string>
+    <string name="ermis_new_mail_count">%1$d messaġġi ġodda</string>
+    <string name="ermis_error_cache">Il-cache tal-posta ma setgħetx tinfetaħ.</string>
+    <string name="ermis_error_auth">L-awtentikazzjoni falliet. Iċċekkja l-metodu tad-dħul u d-dettalji tal-kont.</string>
+    <string name="ermis_error_tls">Iċ-ċertifikat tas-server ma setax jiġi vverifikat.</string>
+    <string name="ermis_error_generic">L-operazzjoni falliet. Iċċekkja l-konnessjoni u s-settings tas-server.</string>
+    <string name="ermis_error_sent_copy">Il-messaġġ intbagħat, iżda l-kopja ma ġietx salvata fil-Mibgħuta. Terġax tibagħtu.</string>
+</resources>

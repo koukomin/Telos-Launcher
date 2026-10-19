@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Uden API-nøgle: optager 10 sekunder og beregner fingeraftrykket på enheden. Kun fingeraftrykket sendes til Shazam, aldrig lyden.</string>
+    <string name="akou_get_token">Hent et AudD-API-token</string>
+    <string name="akou_api_token">AudD-API-token</string>
+    <string name="akou_start">Optag og genkend</string>
+    <string name="akou_recording">Optager 10 sekunder…</string>
+    <string name="akou_identifying">Matcher fingeraftryk…</string>
+    <string name="akou_no_match">Intet match fundet. Prøv igen tættere på musikken.</string>
+    <string name="akou_matched">Sang genkendt</string>
+    <string name="akou_failed">Genkendelse mislykkedes. Kontrollér mikrofon og forbindelse, og prøv tættere på musikken.</string>
+    <string name="akou_microphone_denied">Mikrofontilladelse kræves for at optage en prøve.</string>
+    <string name="akou_history">Genkendelseshistorik</string>
+    <string name="akou_youtube_music">Find i YouTube Music</string>
+</resources>

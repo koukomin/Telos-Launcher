@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ermis posta</string>
+    <string name="ermis_new_mail_count">%1$d mezu berri</string>
+    <string name="ermis_error_cache">Ezin izan da postaren cachea desblokeatu.</string>
+    <string name="ermis_error_auth">Autentifikazioak huts egin du. Egiaztatu saioa hasteko modua eta kontuaren datuak.</string>
+    <string name="ermis_error_tls">Ezin izan da zerbitzariaren ziurtagiria egiaztatu.</string>
+    <string name="ermis_error_generic">Eragiketak huts egin du. Egiaztatu konexioa eta zerbitzariaren ezarpenak.</string>
+    <string name="ermis_error_sent_copy">Mezua bidali da, baina kopia ez da Bidaliak karpetan gorde. Ez bidali berriro.</string>
+</resources>

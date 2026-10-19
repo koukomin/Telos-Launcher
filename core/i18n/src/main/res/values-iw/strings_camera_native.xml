@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">נשמר ב־Pictures/Telos</string>
+    <string name="camera_native_failed">שגיאת מצלמה: %1$s</string>
+    <string name="camera_native_capture">צילום</string>
+    <string name="camera_native_record">הקלטת וידאו</string>
+    <string name="camera_native_stop">עצירת ההקלטה</string>
+    <string name="camera_native_timer">טיימר</string>
+    <string name="camera_native_settings">הגדרות צילום</string>
+    <string name="camera_native_exposure">פיצוי חשיפה</string>
+    <string name="camera_native_iso">רגישות ISO</string>
+    <string name="camera_native_shutter">משך תריס (אלפיות שנייה)</string>
+    <string name="camera_native_auto">חשיפה אוטומטית</string>
+    <string name="camera_native_histogram">היסטוגרמה</string>
+    <string name="camera_native_audio">הקלטת שמע מהמיקרופון</string>
+    <string name="camera_native_discreet_hint">התצוגה המקדימה מוסתרת. צילום עדיין דורש פעולה מפורשת; מחווני המצלמה של המערכת נשארים גלויים.</string>
+    <string name="camera_native_capabilities">המצבים הזמינים תלויים במצלמה זו. התמונות מעובדות במכשיר; לא כלול מנוע קנייני.</string>
+    <string name="camera_native_formats">JPEG שומר את נתוני המצלמה כשאפשרות זו מופעלת. PNG/WebP מסירים נתוני מטא.</string>
+    <string name="camera_native_gallery">פתיחת הגלריה</string>
+    <string name="camera_native_flash">מבזק</string>
+    <string name="camera_native_panorama_hint">פנורמה ידנית: צלמו 2–8 תמונות משמאל לימין עם חפיפה של 20 %, תוך שמירה על אופק ישר. התפרים ממוזגים ללא יישור אוטומטי.</string>
+    <string name="camera_native_webcam_lan">כל מי שמחזיק בכתובת URL זו עם האסימון ברשת המקומית יכול לצפות במצלמה. השיתוף נעצר כאשר מסך זה עוזב את החזית.</string>
+    <string name="camera_native_hidden_saved">נשמר באופן פרטי ב־Pictures/TelosHidden. האלבום המוסתר אינו מופיע בגלריה ונמחק בעת הסרת Telos.</string>
+    <string name="camera_native_geo_hint">JPEG EXIF בלבד. מוסיף מיקום זמין בן עד 10 דקות, עם דיוק בטווח 500 מטר.</string>
+    <string name="camera_native_face_trigger">צילום בעת זיהוי פנים</string>
+    <string name="camera_native_motion_trigger">צילום בעת זיהוי תנועה</string>
+    <string name="camera_native_trigger_hint">רק בחזית. צילום לכל היותר פעם ב־5 שניות. התנועה מבוססת על שינויי התצוגה המקדימה ועלולה להגיב לשינויי תאורה.</string>
+</resources>

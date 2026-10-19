@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Ríomhphost Ermis</string>
+    <string name="ermis_new_mail_count">%1$d teachtaireacht nua</string>
+    <string name="ermis_error_cache">Níorbh fhéidir taisce an phoist a dhíghlasáil.</string>
+    <string name="ermis_error_auth">Theip ar fhíordheimhniú. Seiceáil an modh sínithe isteach agus sonraí an chuntais.</string>
+    <string name="ermis_error_tls">Níorbh fhéidir teastas an fhreastalaí a fhíorú.</string>
+    <string name="ermis_error_generic">Theip ar an ngníomh. Seiceáil an nasc agus socruithe an fhreastalaí.</string>
+    <string name="ermis_error_sent_copy">Seoladh an teachtaireacht ach níor sábháladh cóip i Seolta. Ná seol arís í.</string>
+</resources>

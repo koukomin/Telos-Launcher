@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Αναγνώριση μουσικής χωρίς κλειδί API. Κάθε πάτημα καταγράφει 10 δευτερόλεπτα και δημιουργεί αποτύπωμα στη συσκευή με τον ανοικτό αλγόριθμο Audile/SongRec. Μόνο το αποτύπωμα αποστέλλεται στο Shazam· ο ήχος του μικροφώνου δεν ανεβαίνει ποτέ. Χωρίς ακρόαση στο παρασκήνιο. Το ιστορικό παραμένει στη συσκευή.</string>
+    <string name="akou_get_token">Απόκτηση API token AudD</string>
+    <string name="akou_api_token">API token AudD</string>
+    <string name="akou_start">Ηχογράφηση και αναγνώριση</string>
+    <string name="akou_recording">Ηχογράφηση 10 δευτερολέπτων…</string>
+    <string name="akou_identifying">Αντιστοίχιση αποτυπώματος…</string>
+    <string name="akou_no_match">Δεν βρέθηκε αντιστοιχία. Δοκιμάστε ξανά κοντά στη μουσική.</string>
+    <string name="akou_matched">Το τραγούδι αναγνωρίστηκε</string>
+    <string name="akou_failed">Η αναγνώριση απέτυχε. Ελέγξτε το μικρόφωνο και τη σύνδεση και δοκιμάστε ξανά κοντά στη μουσική.</string>
+    <string name="akou_microphone_denied">Απαιτείται άδεια μικροφώνου για την ηχογράφηση δείγματος αναγνώρισης.</string>
+    <string name="akou_history">Ιστορικό αναγνωρίσεων</string>
+    <string name="akou_youtube_music">Εύρεση στο YouTube Music</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ermis_accounts">Cuntais ríomhphoist</string>
+    <string name="ermis_all_accounts">Gach cuntas</string>
+    <string name="ermis_native_intro">Do ríomhphost laistigh de Telos. Ceangail cuntas IMAP/SMTP le TLS agus pasfhocal nó pasfhocal aipe.</string>
+    <string name="ermis_empty">Níl teachtaireachtaí anseo. Sioncronaigh na cuntais nó athraigh an cuardach.</string>
+    <string name="ermis_operation_failed">Theip ar an ngníomh ríomhphoist</string>
+    <string name="ermis_tls_help">Caithfidh an dá fhreastalaí tacú le TLS fíoraithe. Teastaíonn pasfhocal aipe ó Gmail. Níl síniú isteach Google ar fáil sa leagan seo.</string>
+    <string name="ermis_username">Ainm úsáideora an fhreastalaí</string>
+    <string name="ermis_username_help">Fág folamh chun do sheoladh ríomhphoist a úsáid.</string>
+    <string name="ermis_imap_host">Freastalaí IMAP</string>
+    <string name="ermis_imap_port">Port IMAP TLS</string>
+    <string name="ermis_smtp_host">Freastalaí SMTP</string>
+    <string name="ermis_smtp_port">Port SMTP</string>
+    <string name="ermis_starttls">Éiligh STARTTLS le haghaidh SMTP</string>
+    <string name="ermis_saf_help">Taispeánann an roghnóir comhad soláthraithe néil a thacaíonn le Doiciméid Android freisin. Cuir nasc comhroinnte sa teachtaireacht le haghaidh comhaid mhóra.</string>
+    <string name="ermis_reply">Freagair</string>
+</resources>

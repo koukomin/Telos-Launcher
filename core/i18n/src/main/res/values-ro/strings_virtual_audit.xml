@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_telemetry_unavailable">Indisponibil pe acest dispozitiv</string>
+    <string name="virtual_magnifier_permission">Lupa necesită acces la cameră</string>
+    <string name="virtual_magnifier_resume">Reia previzualizarea</string>
+    <string name="virtual_magnifier_freeze">Îngheață cadrul</string>
+</resources>

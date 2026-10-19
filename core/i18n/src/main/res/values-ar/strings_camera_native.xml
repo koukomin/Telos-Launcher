@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">تم الحفظ في Pictures/Telos</string>
+    <string name="camera_native_failed">خطأ الكاميرا: %1$s</string>
+    <string name="camera_native_capture">التقاط</string>
+    <string name="camera_native_record">تسجيل فيديو</string>
+    <string name="camera_native_stop">إيقاف التسجيل</string>
+    <string name="camera_native_timer">المؤقت</string>
+    <string name="camera_native_settings">إعدادات الالتقاط</string>
+    <string name="camera_native_exposure">تعويض التعريض</string>
+    <string name="camera_native_iso">حساسية ISO</string>
+    <string name="camera_native_shutter">مدة الغالق (مللي ثانية)</string>
+    <string name="camera_native_auto">تعريض تلقائي</string>
+    <string name="camera_native_histogram">المدرج التكراري</string>
+    <string name="camera_native_audio">تسجيل صوت الميكروفون</string>
+    <string name="camera_native_discreet_hint">المعاينة مخفية. يظل الالتقاط بحاجة إلى إجراء صريح؛ وتبقى مؤشرات كاميرا النظام ظاهرة.</string>
+    <string name="camera_native_capabilities">تعتمد الأوضاع المتاحة على هذه الكاميرا. تُعالج الصور على الجهاز؛ ولا يتضمن التطبيق محركًا مملوكًا.</string>
+    <string name="camera_native_formats">يحتفظ JPEG ببيانات الكاميرا الوصفية عند التفعيل. يزيل PNG/WebP البيانات الوصفية.</string>
+    <string name="camera_native_gallery">فتح المعرض</string>
+    <string name="camera_native_flash">الفلاش</string>
+    <string name="camera_native_panorama_hint">بانوراما يدوية: التقط 2–8 صور من اليسار إلى اليمين بتداخل 20 % مع إبقاء الأفق مستويًا. تُدمج الحواف دون محاذاة تلقائية.</string>
+    <string name="camera_native_webcam_lan">يمكن لأي شخص لديه رابط الرمز هذا على شبكتك المحلية مشاهدة الكاميرا. تتوقف المشاركة عند مغادرة هذه الشاشة للواجهة.</string>
+    <string name="camera_native_hidden_saved">تم الحفظ بشكل خاص في Pictures/TelosHidden. يُستبعد الألبوم المخفي من المعرض ويُحذف عند إلغاء تثبيت Telos.</string>
+    <string name="camera_native_geo_hint">بيانات EXIF في JPEG فقط. يضيف موقعًا حديثًا لا يتجاوز عمره 10 دقائق وبدقة ضمن 500 متر عند توفره.</string>
+    <string name="camera_native_face_trigger">التقاط عند اكتشاف وجه</string>
+    <string name="camera_native_motion_trigger">التقاط عند اكتشاف حركة</string>
+    <string name="camera_native_trigger_hint">في الواجهة فقط. لقطة واحدة كل 5 ثوانٍ كحد أقصى. تُكتشف الحركة من تغيرات المعاينة وقد تتأثر بتغير الإضاءة.</string>
+</resources>

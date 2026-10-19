@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_native_saved">Sparat i Pictures/Telos</string>
+    <string name="camera_native_failed">Kamerafel: %1$s</string>
+    <string name="camera_native_capture">Ta bild</string>
+    <string name="camera_native_record">Spela in video</string>
+    <string name="camera_native_stop">Stoppa inspelning</string>
+    <string name="camera_native_timer">Timer</string>
+    <string name="camera_native_settings">Inspelningsinställningar</string>
+    <string name="camera_native_exposure">Exponeringskompensation</string>
+    <string name="camera_native_iso">ISO-känslighet</string>
+    <string name="camera_native_shutter">Slutartid (ms)</string>
+    <string name="camera_native_auto">Automatisk exponering</string>
+    <string name="camera_native_histogram">Histogram</string>
+    <string name="camera_native_audio">Spela in mikrofonljud</string>
+    <string name="camera_native_discreet_hint">Förhandsvisning dold. Fotografering kräver fortfarande en uttrycklig åtgärd; systemets kameraindikatorer förblir synliga.</string>
+    <string name="camera_native_capabilities">Tillgängliga lägen beror på denna kamera. Foton bearbetas på enheten; ingen proprietär motor ingår.</string>
+    <string name="camera_native_formats">JPEG behåller kamerametadata när det är aktiverat. PNG/WebP tar bort metadata.</string>
+    <string name="camera_native_gallery">Öppna galleri</string>
+    <string name="camera_native_flash">Blixt</string>
+    <string name="camera_native_panorama_hint">Manuellt panorama: ta 2–8 bilder från vänster till höger med 20 % överlappning och rak horisont. Skarvar tonas utan automatisk justering.</string>
+    <string name="camera_native_webcam_lan">Alla med denna token-URL på ditt lokala nätverk kan se kameran. Delningen stoppas när denna skärm lämnar förgrunden.</string>
+    <string name="camera_native_hidden_saved">Sparat privat i Pictures/TelosHidden. Det dolda albumet visas inte i galleriet och tas bort när Telos avinstalleras.</string>
+    <string name="camera_native_geo_hint">Endast JPEG-EXIF. Lägger till en plats, högst 10 minuter gammal med noggrannhet inom 500 m, när tillgänglig.</string>
+    <string name="camera_native_face_trigger">Ta bild när ett ansikte upptäcks</string>
+    <string name="camera_native_motion_trigger">Ta bild när rörelse upptäcks</string>
+    <string name="camera_native_trigger_hint">Endast i förgrunden. Högst var 5:e sekund. Rörelse bygger på ändringar i förhandsvisningen och kan reagera på ljusförändringar.</string>
+</resources>

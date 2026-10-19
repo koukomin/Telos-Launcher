@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.unit.dp
 
-internal data class FilesInternalDrag(val workspace: String, val paths: List<String>, val root: Boolean)
+internal data class FilesInternalDrag(val workspace: String, val paths: List<String>, val root: Boolean, val shizuku: Boolean = false)
 internal class FilesDragScope(val workspace: String, val dropped: (FilesViewModel, FilesInternalDrag) -> Unit)
 internal val LocalFilesDragScope = staticCompositionLocalOf<FilesDragScope?> { null }
 
@@ -47,7 +47,7 @@ internal fun fileDragSource(entry: FsEntry, vm: FilesViewModel): Modifier {
                             val paths = if (entry.path in vm.selection) vm.selectedEntries().map { it.path } else listOf(entry.path)
                             change.consume()
                             startTransfer(DragAndDropTransferData(clipData = ClipData.newPlainText("telos_internal_files", ""),
-                                localState = FilesInternalDrag(scope.workspace, paths.toList(), vm.rootMode)))
+                                localState = FilesInternalDrag(scope.workspace, paths.toList(), vm.rootMode, vm.shizukuMode)))
                             break
                         }
                     }

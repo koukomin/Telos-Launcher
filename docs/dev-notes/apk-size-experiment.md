@@ -1,12 +1,15 @@
 # APK size measurement
 
-Production release and nightly builds retain the existing stable class/member names by default.
-`app/app/stable-names.pro` contains that policy. This change does not enable production obfuscation.
+Production release and nightly builds use R8 obfuscation (class and member renaming).
+`-Ptelos.keepNames=true` adds `app/app/stable-names.pro` (`-dontobfuscate`) to keep the original names.
+The release and nightly workflows upload each build's `mapping.txt` as an artifact (`mapping-<abi>`,
+`mapping-nightly`); use `retrace mapping.txt stacktrace.txt` from the Android SDK command-line tools
+to read a crash stack trace.
 
 The **Measure APK size experiment** workflow builds two arm64 release APKs from the same source:
 
-- baseline: `-Ptelos.obfuscationExperiment=false` (the default);
-- candidate: `-Ptelos.obfuscationExperiment=true` (omit only the global name-preservation policy).
+- stable-names: `-Ptelos.keepNames=true`;
+- obfuscated: `-Ptelos.keepNames=false` (the production default).
 
 Both builds retain every reflection/native library keep rule, every locale, font, asset and feature.
 SettingsActivity's class name is explicitly retained because the TV controller compares it with a
@@ -20,7 +23,7 @@ compressed and uncompressed byte counts. ZIP/signing/alignment overhead is repor
 Comparisons must use the same ABI, source commit and optional SIP-library availability. Download
 size reductions do not imply equivalent improvements in installed size, RAM or launch latency.
 
-Before considering production obfuscation, compare the APKs and validate a minified build on-device,
+After changing keep rules, compare the APKs and validate a minified build on-device,
 including cold launch, backup/restore, custom themes, virtual-app routing, PDF, remote storage,
 Shizuku/native integrations, media playback and account/session persistence. This experiment does
 not remove or narrow dependency keep rules. It also leaves native libraries uncompressed so Android
@@ -38,6 +41,6 @@ with arm64 native libraries and identical version overrides:
 | Experimental obfuscation | 88,708,474 | 12,828,437 | 28,741,248 |
 
 The download reduction is 131,616 bytes (0.148%). Native libraries remain 54,943,256
-bytes in both APKs. This small download benefit does not justify enabling name obfuscation
-without the device checks listed above; the production default stays unchanged.
+bytes in both APKs. Obfuscation was later enabled for production at the owner's request, with keep rules
+added for the baresip JNI callbacks.
 The runtime allocation improvements do not materially reduce APK download size.

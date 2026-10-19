@@ -61,6 +61,8 @@ android {
 }
 
 dependencies {
+    implementation("com.sun.mail:android-mail:1.6.7")
+    implementation("com.sun.mail:android-activation:1.6.7")
     implementation("com.github.TeamNewPipe:NewPipeExtractor:v0.26.5")
     implementation(libs.okhttp)
     implementation(libs.jsoup)

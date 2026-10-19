@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">نامه‌های Ermis</string>
+    <string name="ermis_new_mail_count">%1$d پیام جدید</string>
+    <string name="ermis_error_cache">حافظهٔ نهان نامه باز نشد.</string>
+    <string name="ermis_error_auth">احراز هویت ناموفق بود. روش ورود و اطلاعات حساب را بررسی کنید.</string>
+    <string name="ermis_error_tls">گواهی سرور قابل تأیید نبود.</string>
+    <string name="ermis_error_generic">عملیات ناموفق بود. اتصال و تنظیمات سرور را بررسی کنید.</string>
+    <string name="ermis_error_sent_copy">پیام ارسال شد ولی نسخه‌ای در ارسال‌شده‌ها ذخیره نشد. دوباره نفرستید.</string>
+</resources>

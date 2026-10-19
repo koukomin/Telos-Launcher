@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Ei API-avainta: tallentaa 10 sekuntia ja laskee sormenjäljen laitteessa. Shazamiin lähetetään vain sormenjälki, ei koskaan ääntä.</string>
+    <string name="akou_get_token">Hanki AudD-API-tunnus</string>
+    <string name="akou_api_token">AudD-API-tunnus</string>
+    <string name="akou_start">Tallenna ja tunnista</string>
+    <string name="akou_recording">Tallennetaan 10 sekuntia…</string>
+    <string name="akou_identifying">Etsitään sormenjäljen vastinetta…</string>
+    <string name="akou_no_match">Ei osumaa. Yritä uudelleen lähempänä musiikkia.</string>
+    <string name="akou_matched">Kappale tunnistettu</string>
+    <string name="akou_failed">Tunnistus epäonnistui. Tarkista mikrofoni ja yhteys ja yritä lähempänä musiikkia.</string>
+    <string name="akou_microphone_denied">Mikrofonin käyttöoikeus tarvitaan näytteen tallentamiseen.</string>
+    <string name="akou_history">Tunnistushistoria</string>
+    <string name="akou_youtube_music">Etsi YouTube Musicista</string>
+</resources>

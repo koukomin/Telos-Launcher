@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ermis_accounts">Contos de posta</string>
+    <string name="ermis_all_accounts">Tote le contos</string>
+    <string name="ermis_native_intro">Tu posta in Telos. Connecte un conto IMAP/SMTP con TLS e contrasigno o contrasigno de application.</string>
+    <string name="ermis_empty">Nulle messages. Synchronisa le contos o cambia le recerca.</string>
+    <string name="ermis_operation_failed">Le operation de posta ha fallite</string>
+    <string name="ermis_tls_help">Ambe servitores debe supportar TLS verificate. Gmail require un contrasigno de application. Le connexion Google non es disponibile in iste version.</string>
+    <string name="ermis_username">Nomine de usator del servitor</string>
+    <string name="ermis_username_help">Lassa vacue pro usar tu adresse de e-posta.</string>
+    <string name="ermis_imap_host">Servitor IMAP</string>
+    <string name="ermis_imap_port">Porto IMAP TLS</string>
+    <string name="ermis_smtp_host">Servitor SMTP</string>
+    <string name="ermis_smtp_port">Porto SMTP</string>
+    <string name="ermis_starttls">Requirer STARTTLS pro SMTP</string>
+    <string name="ermis_saf_help">Le selector de files monstra etiam servicios de nube compatibile con Documentos Android. Pro files grande, adde un ligamine de condivision al message.</string>
+    <string name="ermis_reply">Responder</string>
+</resources>

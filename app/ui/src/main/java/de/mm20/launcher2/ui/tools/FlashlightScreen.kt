@@ -32,6 +32,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.NavKey
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.coroutines.*
@@ -87,14 +90,14 @@ fun FlashlightScreen() {
             cameraManager.cameraIdList.firstOrNull { id ->
                 val chars = cameraManager.getCameraCharacteristics(id)
                 chars.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
-            } ?: cameraManager.cameraIdList.firstOrNull()
+            }
         } catch (_: Exception) {
             null
         }
     }
 
     var isTorchOn by remember { mutableStateOf(false) }
-    var targetMode by remember { mutableStateOf(FlashlightTarget.Flash) }
+    var targetMode by remember { mutableStateOf(if (cameraId == null) FlashlightTarget.Screen else FlashlightTarget.Flash) }
     var allowLandscape by remember { mutableStateOf(false) }
 
     var screenBrightness by remember { mutableFloatStateOf(1.0f) }
@@ -149,12 +152,15 @@ fun FlashlightScreen() {
             } else {
                 cameraManager.setTorchMode(cameraId, false)
             }
-        } catch (_: Exception) {}
+        } catch (_: Exception) {
+            if (targetMode == FlashlightTarget.Flash) isTorchOn = false
+        }
     }
 
+    val originalBrightness = remember(activity) { activity?.window?.attributes?.screenBrightness ?: WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE }
     fun applyScreenBrightness(brightness: Float) {
         activity?.window?.attributes = activity?.window?.attributes?.apply {
-            screenBrightness = brightness.coerceIn(0.01f, 1.0f)
+            screenBrightness = if (brightness == WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE) originalBrightness else brightness.coerceIn(0.01f, 1.0f)
         }
     }
 
@@ -180,8 +186,28 @@ fun FlashlightScreen() {
         }
     }
 
-    DisposableEffect(Unit) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        fun stopOutputs() {
+            strobeJob?.cancel()
+            morseJob?.cancel()
+            sirenJob?.cancel()
+            toneGenerator?.stopTone()
+            setHardwareTorch(false)
+            applyScreenBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
+            isTorchOn = false
+            isScreenFlashOn = false
+            isMorsePlaying = false
+            isSirenPlaying = false
+            strobeFreqHz = 0f
+        }
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) stopOutputs()
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            stopOutputs()
             strobeJob?.cancel()
             morseJob?.cancel()
             sirenJob?.cancel()

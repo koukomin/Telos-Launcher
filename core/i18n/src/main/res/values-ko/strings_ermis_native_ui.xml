@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ermis_accounts">메일 계정</string>
+    <string name="ermis_all_accounts">모든 계정</string>
+    <string name="ermis_native_intro">Telos 안에서 메일을 관리하세요. TLS와 비밀번호 또는 앱 비밀번호로 IMAP/SMTP 계정을 연결하세요.</string>
+    <string name="ermis_empty">메시지가 없습니다. 계정을 동기화하거나 검색을 변경하세요.</string>
+    <string name="ermis_operation_failed">메일 작업 실패</string>
+    <string name="ermis_tls_help">두 서버 모두 인증된 TLS를 지원해야 합니다. Gmail은 앱 비밀번호가 필요합니다. 이 버전에서는 Google 로그인을 사용할 수 없습니다.</string>
+    <string name="ermis_username">서버 사용자 이름</string>
+    <string name="ermis_username_help">비워 두면 이메일 주소를 사용합니다.</string>
+    <string name="ermis_imap_host">IMAP 서버</string>
+    <string name="ermis_imap_port">IMAP TLS 포트</string>
+    <string name="ermis_smtp_host">SMTP 서버</string>
+    <string name="ermis_smtp_port">SMTP 포트</string>
+    <string name="ermis_starttls">SMTP에 STARTTLS 필수</string>
+    <string name="ermis_saf_help">파일 선택기에는 Android 문서를 지원하는 클라우드 제공업체도 표시됩니다. 큰 파일은 메시지에 공유 링크를 추가하세요.</string>
+    <string name="ermis_reply">답장</string>
+</resources>

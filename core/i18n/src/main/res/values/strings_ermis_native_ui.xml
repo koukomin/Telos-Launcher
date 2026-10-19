@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_accounts">Mail accounts</string>
+    <string name="ermis_all_accounts">All accounts</string>
+    <string name="ermis_native_intro">Your mail, inside Telos. Connect an IMAP/SMTP account using TLS and your password or app password.</string>
+    <string name="ermis_empty">No messages here. Sync your accounts or change the search.</string>
+    <string name="ermis_operation_failed">Mail operation failed</string>
+    <string name="ermis_tls_help">Both servers must support verified TLS. Gmail requires an app password. Google sign-in is not available in this version.</string>
+    <string name="ermis_username">Server username</string>
+    <string name="ermis_username_help">Leave empty to use your email address.</string>
+    <string name="ermis_imap_host">IMAP server</string>
+    <string name="ermis_imap_port">IMAP TLS port</string>
+    <string name="ermis_smtp_host">SMTP server</string>
+    <string name="ermis_smtp_port">SMTP port</string>
+    <string name="ermis_starttls">Require STARTTLS for SMTP</string>
+    <string name="ermis_saf_help">The file picker also shows cloud providers that support Android Documents. Add a sharing link to the message for large files.</string>
+    <string name="ermis_reply">Reply</string>
+</resources>

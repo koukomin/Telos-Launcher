@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Fiók hozzáadása</string>
+    <string name="ermis_attach">Csatolás erről a telefonról</string>
+    <string name="ermis_body">Üzenet</string>
+    <string name="ermis_compose">Levélírás</string>
+    <string name="ermis_connect">Csatlakozás</string>
+    <string name="ermis_email">E-mail</string>
+    <string name="ermis_inbox">Beérkező levelek</string>
+    <string name="ermis_no_subject">(nincs tárgy)</string>
+    <string name="ermis_note">Jegyzet</string>
+    <string name="ermis_note_save">Jegyzet mentése</string>
+    <string name="ermis_password">Jelszó</string>
+    <string name="ermis_remove">Eltávolítás</string>
+    <string name="ermis_search">Keresés a levelekben</string>
+    <string name="ermis_send">Küldés</string>
+    <string name="ermis_starred">Csillagozott</string>
+    <string name="ermis_subject">Tárgy</string>
+    <string name="ermis_sync">Szinkronizálás</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Címzett</string>
+</resources>

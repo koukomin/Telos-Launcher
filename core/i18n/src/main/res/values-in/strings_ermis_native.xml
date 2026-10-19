@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_new_mail">Surat Ermis</string>
+    <string name="ermis_new_mail_count">%1$d pesan baru</string>
+    <string name="ermis_error_cache">Cache surat tidak dapat dibuka.</string>
+    <string name="ermis_error_auth">Autentikasi gagal. Periksa metode masuk dan kredensial akun.</string>
+    <string name="ermis_error_tls">Sertifikat server tidak dapat diverifikasi.</string>
+    <string name="ermis_error_generic">Operasi gagal. Periksa koneksi dan pengaturan server.</string>
+    <string name="ermis_error_sent_copy">Pesan terkirim, tetapi salinannya tidak tersimpan di Terkirim. Jangan kirim ulang.</string>
+</resources>

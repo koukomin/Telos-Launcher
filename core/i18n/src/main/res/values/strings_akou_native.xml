@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Recognize music without an API key. Each tap records 10 seconds and computes a fingerprint on this phone using the open source Audile/SongRec algorithm. Only the fingerprint is sent to Shazam; microphone audio is never uploaded. No background listening. Recognition history stays on this phone.</string>
+    <string name="akou_get_token">Get an AudD API token</string>
+    <string name="akou_api_token">AudD API token</string>
+    <string name="akou_start">Record and recognize</string>
+    <string name="akou_recording">Recording 10 seconds…</string>
+    <string name="akou_identifying">Matching the fingerprint…</string>
+    <string name="akou_no_match">No match found. Try again near the music.</string>
+    <string name="akou_matched">Song recognized</string>
+    <string name="akou_failed">Recognition failed. Check your microphone and connection, then try again near the music.</string>
+    <string name="akou_microphone_denied">Microphone permission is required to record a recognition sample.</string>
+    <string name="akou_history">Recognition history</string>
+    <string name="akou_youtube_music">Find in YouTube Music</string>
+</resources>

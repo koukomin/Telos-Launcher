@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Sleutelpaar maken</string>
+    <string name="telos_files_ssh_copy_public_key">Openbare sleutel kopiëren</string>
+    <string name="telos_files_ssh_public_key_hint">Voeg de openbare sleutel toe aan ~/.ssh/authorized_keys op de server. De privésleutel blijft versleuteld op deze telefoon.</string>
+    <string name="telos_files_duplicates_exclude">Mappen overslaan</string>
+    <string name="telos_files_duplicates_exclude_hint">Mapnamen of paden, gescheiden door komma’s, bijvoorbeeld: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Toegang via Shizuku</string>
+    <string name="telos_files_shizuku_summary">Open Android/data, Android/obb en andere mappen die de app niet kan lezen via Shizuku (zonder root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku draait niet of heeft Telos geen toestemming gegeven</string>
+    <string name="telos_files_search_everywhere">Alle opslag doorzoeken</string>
+    <string name="telos_files_search_everywhere_summary">Zoekt in de interne opslag, SD-kaarten en USB-sticks, niet alleen in deze map</string>
+</resources>

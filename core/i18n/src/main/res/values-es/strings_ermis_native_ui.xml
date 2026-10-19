@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ermis_accounts">Cuentas de correo</string>
+    <string name="ermis_all_accounts">Todas las cuentas</string>
+    <string name="ermis_native_intro">Tu correo dentro de Telos. Conecta una cuenta IMAP/SMTP con TLS y tu contraseña o contraseña de aplicación.</string>
+    <string name="ermis_empty">No hay mensajes. Sincroniza las cuentas o cambia la búsqueda.</string>
+    <string name="ermis_operation_failed">Error en la operación de correo</string>
+    <string name="ermis_tls_help">Ambos servidores deben admitir TLS verificado. Gmail requiere una contraseña de aplicación. Esta versión no permite iniciar sesión con Google.</string>
+    <string name="ermis_username">Usuario del servidor</string>
+    <string name="ermis_username_help">Déjalo vacío para usar tu dirección de correo.</string>
+    <string name="ermis_imap_host">Servidor IMAP</string>
+    <string name="ermis_imap_port">Puerto IMAP TLS</string>
+    <string name="ermis_smtp_host">Servidor SMTP</string>
+    <string name="ermis_smtp_port">Puerto SMTP</string>
+    <string name="ermis_starttls">Exigir STARTTLS para SMTP</string>
+    <string name="ermis_saf_help">El selector también muestra proveedores en la nube compatibles con Documentos de Android. Para archivos grandes, añade un enlace al mensaje.</string>
+    <string name="ermis_reply">Responder</string>
+</resources>

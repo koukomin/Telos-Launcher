@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">Không cần khóa API: ghi 10 giây và tính dấu vân tay trên thiết bị. Chỉ dấu vân tay được gửi tới Shazam, không bao giờ gửi âm thanh gốc.</string>
+    <string name="akou_get_token">Lấy mã API AudD</string>
+    <string name="akou_api_token">Mã API AudD</string>
+    <string name="akou_start">Ghi âm và nhận dạng</string>
+    <string name="akou_recording">Đang ghi âm 10 giây…</string>
+    <string name="akou_identifying">Đang đối chiếu dấu vân tay…</string>
+    <string name="akou_no_match">Không tìm thấy kết quả phù hợp. Hãy thử lại gần nguồn nhạc.</string>
+    <string name="akou_matched">Đã nhận dạng bài hát</string>
+    <string name="akou_failed">Nhận dạng thất bại. Kiểm tra micrô và kết nối, rồi thử lại gần nguồn nhạc.</string>
+    <string name="akou_microphone_denied">Cần quyền micrô để ghi âm mẫu nhận dạng.</string>
+    <string name="akou_history">Lịch sử nhận dạng</string>
+    <string name="akou_youtube_music">Tìm trên YouTube Music</string>
+</resources>

@@ -20,7 +20,10 @@
 # Telos Files: SSH, SMB and FTP clients use reflection and optional libraries that Android does not have
 -keep class net.schmizz.** { *; }
 -keep class com.hierynomus.** { *; }
--keep class org.bouncycastle.** { *; }
+# BouncyCastleProvider loads its algorithm classes by name; everything else is reached from code
+-keep class org.bouncycastle.jce.provider.** { *; }
+-keep class org.bouncycastle.jcajce.provider.** { *; }
+-keep class org.bouncycastle.pqc.jcajce.provider.** { *; }
 -dontwarn net.schmizz.**
 -dontwarn com.hierynomus.**
 -dontwarn org.bouncycastle.**
@@ -47,3 +50,10 @@
 
 # TvPlayerController compares this activity class name with SettingsDeepLinkContract.
 -keepnames class de.mm20.launcher2.ui.settings.SettingsActivity
+
+# JavaMail resolves these enabled transports through META-INF/javamail.providers.
+-keep class com.sun.mail.imap.IMAPSSLStore { public <init>(javax.mail.Session, javax.mail.URLName); }
+-keep class com.sun.mail.smtp.SMTPTransport { public <init>(javax.mail.Session, javax.mail.URLName); }
+-keep class com.sun.mail.smtp.SMTPSSLTransport { public <init>(javax.mail.Session, javax.mail.URLName); }
+# Activation loads these MIME content handlers from the library mailcap resource.
+-keep class com.sun.mail.handlers.** implements javax.activation.DataContentHandler { public <init>(); public *; }

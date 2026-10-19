@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="akou_provider_disclosure">API キー不要。10 秒録音し、端末内で音声指紋を計算します。Shazam に送るのは指紋のみで、録音音声は送信しません。</string>
+    <string name="akou_get_token">AudD APIトークンを取得</string>
+    <string name="akou_api_token">AudD APIトークン</string>
+    <string name="akou_start">録音して認識</string>
+    <string name="akou_recording">10秒間録音中…</string>
+    <string name="akou_identifying">音声指紋を照合中…</string>
+    <string name="akou_no_match">一致する楽曲がありません。音楽の近くで再試行してください。</string>
+    <string name="akou_matched">楽曲を認識しました</string>
+    <string name="akou_failed">認識できませんでした。マイクと接続を確認し、音楽の近くで再試行してください。</string>
+    <string name="akou_microphone_denied">認識用の音声を録音するにはマイクの権限が必要です。</string>
+    <string name="akou_history">認識履歴</string>
+    <string name="akou_youtube_music">YouTube Musicで検索</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ermis_accounts">Tài khoản thư</string>
+    <string name="ermis_all_accounts">Tất cả tài khoản</string>
+    <string name="ermis_native_intro">Thư của bạn trong Telos. Kết nối tài khoản IMAP/SMTP bằng TLS và mật khẩu hoặc mật khẩu ứng dụng.</string>
+    <string name="ermis_empty">Không có thư. Đồng bộ tài khoản hoặc đổi tìm kiếm.</string>
+    <string name="ermis_operation_failed">Thao tác thư thất bại</string>
+    <string name="ermis_tls_help">Cả hai máy chủ phải hỗ trợ TLS đã xác minh. Gmail yêu cầu mật khẩu ứng dụng. Phiên bản này chưa hỗ trợ đăng nhập Google.</string>
+    <string name="ermis_username">Tên người dùng máy chủ</string>
+    <string name="ermis_username_help">Để trống để dùng địa chỉ email.</string>
+    <string name="ermis_imap_host">Máy chủ IMAP</string>
+    <string name="ermis_imap_port">Cổng IMAP TLS</string>
+    <string name="ermis_smtp_host">Máy chủ SMTP</string>
+    <string name="ermis_smtp_port">Cổng SMTP</string>
+    <string name="ermis_starttls">Yêu cầu STARTTLS cho SMTP</string>
+    <string name="ermis_saf_help">Trình chọn tệp cũng hiển thị dịch vụ đám mây hỗ trợ Tài liệu Android. Với tệp lớn, hãy thêm liên kết chia sẻ vào thư.</string>
+    <string name="ermis_reply">Trả lời</string>
+</resources>

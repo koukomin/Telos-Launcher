@@ -95,7 +95,7 @@ fun SystemDashboardScreen() {
     val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
     val scheme = MaterialTheme.colorScheme
-    var cpu by remember { mutableStateOf(0f) }
+    var cpu by remember { mutableStateOf<Float?>(null) }
     var ramUsed by remember { mutableStateOf(0L) }
     var ramTotal by remember { mutableStateOf(0L) }
     var ips by remember { mutableStateOf(listOf<String>()) }
@@ -119,17 +119,11 @@ fun SystemDashboardScreen() {
     val t by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(2400, easing = LinearEasing), RepeatMode.Restart), label = "t")
 
     LaunchedEffect(Unit) {
-        var prevIdle = 0L
-        var prevTotal = 0L
+        var previousCpu: Pair<Long, Long>? = null
         while (true) {
-            val (idle, total) = readCpu()
-            if (prevTotal > 0L && total > prevTotal) {
-                val idleDelta = idle - prevIdle
-                val totalDelta = total - prevTotal
-                cpu = (1f - idleDelta.toFloat() / totalDelta.toFloat()).coerceIn(0f, 1f)
-            }
-            prevIdle = idle
-            prevTotal = total
+            val currentCpu = withContext(Dispatchers.IO) { readCpu() }
+            cpu = cpuUsage(previousCpu, currentCpu)
+            previousCpu = currentCpu
             val am = context.getSystemService<ActivityManager>()
             val mi = ActivityManager.MemoryInfo()
             am?.getMemoryInfo(mi)
@@ -137,7 +131,7 @@ fun SystemDashboardScreen() {
             ramTotal = mi.totalMem
             ips = localIps()
             wifiSsid = currentSsid(context)
-            processes = runningProcs(context)
+            processes = withContext(Dispatchers.IO) { runningProcs(context) }
             liveRenderer = HwuiRenderer.current()
             delay(1500)
         }
@@ -220,8 +214,10 @@ fun SystemDashboardScreen() {
                 item {
                     GlassCard {
                         Text(stringResource(R.string.telos_system_cpu), style = MaterialTheme.typography.labelLarge)
-                        LinearProgressIndicator(progress = { cpu }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)))
-                        Text("${(cpu * 100).toInt()}%")
+                        cpu?.let { usage ->
+                            LinearProgressIndicator(progress = { usage }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)))
+                            Text("${(usage * 100).toInt()}%")
+                        } ?: Text(stringResource(R.string.virtual_telemetry_unavailable))
                         Text(stringResource(R.string.telos_system_ram), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
                         val ramF = if (ramTotal == 0L) 0f else ramUsed.toFloat() / ramTotal
                         LinearProgressIndicator(progress = { ramF }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)))
@@ -328,18 +324,34 @@ private fun currentSsid(context: Context): String? {
     return ssid?.takeIf { it.isNotBlank() && it != "<unknown ssid>" }
 }
 
-private fun readCpu(): Pair<Long, Long> {
-    val line = runCatching { File("/proc/stat").bufferedReader().readLine() }.getOrNull() ?: return 0L to 0L
-    val parts = line.split(Regex("\\s+")).drop(1).mapNotNull { it.toLongOrNull() }
-    if (parts.size < 4) return 0L to 0L
-    val idle = parts[3]
-    return idle to parts.sum()
+private fun readCpu(): Pair<Long, Long>? = runCatching {
+    File("/proc/stat").bufferedReader().use { parseCpuStat(it.readLine()) }
+}.getOrNull()
+
+/** /proc/stat includes guest time in user/nice already; summing it twice inflates load. */
+internal fun parseCpuStat(line: String?): Pair<Long, Long>? {
+    val columns = line?.trim()?.split(Regex("\\s+")) ?: return null
+    if (columns.firstOrNull() != "cpu") return null
+    val counters = columns.drop(1).take(8).map { it.toLongOrNull() ?: return null }
+    if (counters.size < 4 || counters.any { it < 0 }) return null
+    return (counters[3] + (counters.getOrNull(4) ?: 0)) to counters.sum()
+}
+
+internal fun cpuUsage(previous: Pair<Long, Long>?, current: Pair<Long, Long>?): Float? {
+    if (previous == null || current == null) return null
+    val total = current.second - previous.second
+    val idle = current.first - previous.first
+    if (total <= 0 || idle < 0 || idle > total) return null
+    return (1f - idle.toFloat() / total).coerceIn(0f, 1f)
 }
 
 internal fun runningProcs(context: Context): List<ProcRow> {
     val am = context.getSystemService<ActivityManager>() ?: return emptyList()
-    return am.runningAppProcesses.orEmpty().map {
-        ProcRow(it.pid, it.processName, null)
+    val processes = runCatching { am.runningAppProcesses }.getOrNull().orEmpty()
+    // Android restricts other UIDs; zero PSS from that restriction is not real zero RAM.
+    val memory = runCatching { am.getProcessMemoryInfo(processes.map { it.pid }.toIntArray()) }.getOrNull()
+    return processes.mapIndexed { index, process ->
+        ProcRow(process.pid, process.processName, memory?.getOrNull(index)?.totalPss?.toLong()?.takeIf { it > 0 })
     }.sortedBy { it.name }
 }
 

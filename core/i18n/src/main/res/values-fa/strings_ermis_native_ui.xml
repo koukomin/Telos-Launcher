@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ermis_accounts">حساب‌های ایمیل</string>
+    <string name="ermis_all_accounts">همهٔ حساب‌ها</string>
+    <string name="ermis_native_intro">ایمیل شما در Telos. حساب IMAP/SMTP را با TLS و رمز عبور یا رمز برنامه متصل کنید.</string>
+    <string name="ermis_empty">پیامی نیست. حساب‌ها را همگام‌سازی کنید یا جستجو را تغییر دهید.</string>
+    <string name="ermis_operation_failed">عملیات ایمیل ناموفق بود</string>
+    <string name="ermis_tls_help">هر دو سرور باید TLS تأییدشده داشته باشند. Gmail به رمز برنامه نیاز دارد. ورود با Google در این نسخه موجود نیست.</string>
+    <string name="ermis_username">نام کاربری سرور</string>
+    <string name="ermis_username_help">برای استفاده از نشانی ایمیل خالی بگذارید.</string>
+    <string name="ermis_imap_host">سرور IMAP</string>
+    <string name="ermis_imap_port">درگاه IMAP TLS</string>
+    <string name="ermis_smtp_host">سرور SMTP</string>
+    <string name="ermis_smtp_port">درگاه SMTP</string>
+    <string name="ermis_starttls">الزام STARTTLS برای SMTP</string>
+    <string name="ermis_saf_help">انتخابگر فایل سرویس‌های ابری پشتیبان اسناد Android را نیز نشان می‌دهد. برای فایل‌های بزرگ پیوند اشتراک‌گذاری را در پیام بگذارید.</string>
+    <string name="ermis_reply">پاسخ</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ermis_accounts">Mailkonti</string>
+    <string name="ermis_all_accounts">Alle konti</string>
+    <string name="ermis_native_intro">Din mail i Telos. Tilslut en IMAP/SMTP-konto med TLS og din adgangskode eller appadgangskode.</string>
+    <string name="ermis_empty">Ingen beskeder her. Synkroniser kontiene, eller ændr søgningen.</string>
+    <string name="ermis_operation_failed">Mailhandlingen mislykkedes</string>
+    <string name="ermis_tls_help">Begge servere skal understøtte verificeret TLS. Gmail kræver en appadgangskode. Google-login er ikke tilgængeligt i denne version.</string>
+    <string name="ermis_username">Serverbrugernavn</string>
+    <string name="ermis_username_help">Lad feltet stå tomt for at bruge din mailadresse.</string>
+    <string name="ermis_imap_host">IMAP-server</string>
+    <string name="ermis_imap_port">IMAP TLS-port</string>
+    <string name="ermis_smtp_host">SMTP-server</string>
+    <string name="ermis_smtp_port">SMTP-port</string>
+    <string name="ermis_starttls">Kræv STARTTLS til SMTP</string>
+    <string name="ermis_saf_help">Filvælgeren viser også skytjenester med understøttelse af Android Dokumenter. Indsæt et delingslink i beskeden ved store filer.</string>
+    <string name="ermis_reply">Svar</string>
+</resources>
