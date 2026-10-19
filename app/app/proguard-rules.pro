@@ -20,7 +20,10 @@
 # Telos Files: SSH, SMB and FTP clients use reflection and optional libraries that Android does not have
 -keep class net.schmizz.** { *; }
 -keep class com.hierynomus.** { *; }
--keep class org.bouncycastle.** { *; }
+# BouncyCastleProvider loads its algorithm classes by name; everything else is reached from code
+-keep class org.bouncycastle.jce.provider.** { *; }
+-keep class org.bouncycastle.jcajce.provider.** { *; }
+-keep class org.bouncycastle.pqc.jcajce.provider.** { *; }
 -dontwarn net.schmizz.**
 -dontwarn com.hierynomus.**
 -dontwarn org.bouncycastle.**

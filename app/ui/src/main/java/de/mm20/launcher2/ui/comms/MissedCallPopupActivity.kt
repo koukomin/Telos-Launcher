@@ -17,6 +17,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.comms.intent.MessengerIntentUtils
 import de.mm20.launcher2.comms.overlay.CallOverlayIntents
@@ -27,6 +28,7 @@ import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.theme.LauncherTheme
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class MissedCallPopupActivity : BaseActivity() {
@@ -69,8 +71,11 @@ class MissedCallPopupActivity : BaseActivity() {
                                     }) { Text(stringResource(R.string.hc_message)) }
                                 }
                                 FilledTonalButton(onClick = {
-                                    if (number.isNotBlank()) SimRouter.place(this@MissedCallPopupActivity, number)
-                                    finish()
+                                    // the popup stays open until the call is placed, so the dial screen may still start
+                                    lifecycleScope.launch {
+                                        if (number.isNotBlank()) SimRouter.placeAwait(this@MissedCallPopupActivity, number)
+                                        finish()
+                                    }
                                 }) { Text(stringResource(R.string.hc_call)) }
                             }
                             if (number.isNotBlank()) {
