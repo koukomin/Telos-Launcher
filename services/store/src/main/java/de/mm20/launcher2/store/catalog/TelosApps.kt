@@ -34,6 +34,46 @@ object TelosApps {
 
     val all: List<TelosApp> = listOf(
         TelosApp(
+            key = "telos_clock_app://clock",
+            name = "Clock",
+            description = "World clock with capital timezones, alarms with stream fallback, countdown timer, stopwatch and bedside night clock.",
+            features = listOf("World clock", "Alarms with stream fallback", "Countdown timer", "Stopwatch", "Night clock"),
+            iconRes = de.mm20.launcher2.base.R.drawable.schedule_24px,
+            route = "settings/clock",
+        ),
+        TelosApp(
+            key = "telos_akou_app://akou",
+            name = "Akou",
+            description = "Music recognition app: identifies playing songs and opens them in YouTube Music.",
+            features = listOf("Audio recognition", "Shazam/Audile engine", "YouTube Music integration", "History"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_full,
+            route = "settings/akou",
+        ),
+        TelosApp(
+            key = "telos_magnifier_app://magnifier",
+            name = "Magnifier",
+            description = "Camera magnifier with high contrast readability filters and freeze frame.",
+            features = listOf("Camera2 zoom", "Inverted, B&W, Yellow/Black, Blue/Yellow filters", "Freeze frame"),
+            iconRes = de.mm20.launcher2.base.R.drawable.search_24px,
+            route = "settings/magnifier",
+        ),
+        TelosApp(
+            key = "telos_flashlight_app://flashlight",
+            name = "Flashlight",
+            description = "Flashlight app with camera LED and screen light, Morse translator and emergency siren.",
+            features = listOf("Camera LED & Screen light", "Hardware dimming", "Morse code generator", "Police siren alarm"),
+            iconRes = de.mm20.launcher2.base.R.drawable.light_mode_24px,
+            route = "settings/flashlight",
+        ),
+        TelosApp(
+            key = "telos_trash_app://trash",
+            name = "Trash",
+            description = "Trash bin for deleted items with security unlock.",
+            features = listOf("App Lock security", "Restore and permanent deletion"),
+            iconRes = de.mm20.launcher2.base.R.drawable.delete_24px,
+            route = SettingsDeepLinkContract.ROUTE_TRASH,
+        ),
+        TelosApp(
             key = "telos_terminal_app://terminal", name = "Terminal",
             description = "Companion for the separately installed official Termux runtime. Opens its real terminal and links to official setup, packages and compatible add-ons.",
             features = listOf("Official Termux runtime", "Package and add-on guides"),
@@ -213,21 +253,6 @@ object TelosApps {
             features = listOf("CPU and RAM meters", "Local IPs", "Saved Wi-Fi list", "Password reveal with lock, root or Shizuku", "QR share"),
             iconRes = de.mm20.launcher2.base.R.drawable.ic_app_network_full,
             route = SettingsDeepLinkContract.ROUTE_SYSTEM,
-        ),
-        TelosApp(
-            key = "telos_camera_app://camera",
-            name = "Camera",
-            description = "Hasselblad-inspired camera: photo, video, portrait, night, pro, discreet capture, RAW DNG, and an IP webcam for OBS.",
-            features = listOf(
-                "Photo, video, portrait, night, pro and panorama assist",
-                "JPEG, PNG, WebP, optional DNG",
-                "Burst, timer, tap to focus, pinch zoom, histogram, grid",
-                "EXIF on by default, optional hidden folder",
-                "IP webcam (MJPEG on the LAN)",
-                "Discreet black-screen capture with face and motion auto-shot",
-            ),
-            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_camera_full,
-            route = SettingsDeepLinkContract.ROUTE_CAMERA,
         ),
         TelosApp(
             key = "telos_voice_recorder_app://voice_recorder",

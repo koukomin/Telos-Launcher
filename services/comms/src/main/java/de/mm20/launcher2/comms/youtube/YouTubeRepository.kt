@@ -19,7 +19,8 @@ data class YouTubeEntry(val url: String, val title: String, val artist: String, 
 data class YouTubePlayback(val entry: YouTubeEntry, val streamUrl: String, val audioUrl: String? = null, val audioOnly: Boolean)
 
 /** Extraction is lazy and always runs away from the main thread. No account is required. */
-class YouTubeRepository {
+
+    class YouTubeRepository {
     private fun initialize() = synchronized(INIT_LOCK) {
         if (!initialized) {
             val locale = Locale.getDefault()
@@ -27,6 +28,15 @@ class YouTubeRepository {
             initialized = true
         }
     }
+    suspend fun artistRadio(entry: YouTubeEntry): List<YouTubeEntry> = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+        val query = "${entry.artist.ifBlank { entry.title }} radio mix"
+        search(query, true)
+    }
+
+    suspend fun genreRadio(genre: String): List<YouTubeEntry> = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+        search("$genre music radio", true)
+    }
+
     suspend fun search(query: String, music: Boolean): List<YouTubeEntry> = withContext(Dispatchers.IO) {
         initialize()
         val link = parseYouTubeLink(query)
