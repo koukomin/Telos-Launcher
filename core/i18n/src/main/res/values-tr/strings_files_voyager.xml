@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Anahtar çifti oluştur</string>
+    <string name="telos_files_ssh_copy_public_key">Açık anahtarı kopyala</string>
+    <string name="telos_files_ssh_public_key_hint">Açık anahtarı sunucudaki ~/.ssh/authorized_keys dosyasına ekleyin. Özel anahtar bu telefonda şifreli kalır.</string>
+    <string name="telos_files_duplicates_exclude">Klasörleri atla</string>
+    <string name="telos_files_duplicates_exclude_hint">Virgülle ayrılmış klasör adları veya yolları, örneğin: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Shizuku erişimi</string>
+    <string name="telos_files_shizuku_summary">Uygulamanın okuyamadığı Android/data, Android/obb ve diğer klasörleri Shizuku ile aç (root gerekmez)</string>
+    <string name="telos_files_shizuku_denied">Shizuku çalışmıyor veya Telos’a izin vermedi</string>
+    <string name="telos_files_search_everywhere">Tüm depolamada ara</string>
+    <string name="telos_files_search_everywhere_summary">Yalnızca bu klasörde değil, dahili depolamada, SD kartlarda ve USB sürücülerde arar</string>
+</resources>

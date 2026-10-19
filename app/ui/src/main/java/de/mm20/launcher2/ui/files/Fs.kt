@@ -112,11 +112,13 @@ class ShellResult(val code: Int, val out: String, val err: String) { val ok get(
 /** Runs commands as the superuser (`su`). Only used after the user switched root access on. */
 object RootShell {
     @Volatile private var checked: Boolean? = null
+    @Volatile private var checkedShizuku: Boolean? = null
 
     fun q(path: String) = "'" + path.replace("'", "'\\''") + "'"
 
-    fun run(command: String, timeoutSeconds: Long = 60): ShellResult = runCatching {
-        val process = ProcessBuilder("su", "-c", command).start()
+    /** [shizuku] runs the command through Shizuku (adb rights: Android/data, Android/obb, ...) instead of `su` */
+    fun run(command: String, timeoutSeconds: Long = 60, shizuku: Boolean = false): ShellResult = runCatching {
+        val process = start(command, shizuku)
         var out = ""
         var err = ""
         val outThread = Thread { out = process.inputStream.bufferedReader().readText() }.also { it.start() }
@@ -128,21 +130,31 @@ object RootShell {
     }.getOrElse { ShellResult(-1, "", it.message.orEmpty()) }
 
     /** Whether the superuser grants access. Asking makes the root manager show its dialog. */
-    fun available(force: Boolean = false): Boolean {
+    fun available(force: Boolean = false, shizuku: Boolean = false): Boolean {
+        if (shizuku) {
+            if (!force) checkedShizuku?.let { return it }
+            return (ShizukuShell.ready() && run("id", 20, shizuku = true).ok).also { checkedShizuku = it }
+        }
         if (!force) checked?.let { return it }
         val result = run("id", 20)
         return (result.ok && result.out.contains("uid=0")).also { checked = it }
     }
+
+    fun start(command: String, shizuku: Boolean = false): Process =
+        if (shizuku) ShizukuShell.start(command) else ProcessBuilder("su", "-c", command).start()
 }
 
-class RootFs : Fs {
+/** Files through the superuser, or through Shizuku when [shizuku] is set */
+class RootFs(private val shizuku: Boolean = false) : Fs {
     override val isRoot = true
+
+    private fun sh(command: String) = RootShell.run(command, shizuku = shizuku)
 
     private val line = Regex("""^([-dlcbps])([rwxsStT-]{9})[.+]?\s+\d+\s+(\S+)\s+(\S+)\s+(?:\d+,\s+)?(\d+)\s+(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})\s+(.*)$""")
     private val date = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
 
     override fun list(path: String): List<FsEntry> {
-        val result = RootShell.run("ls -lA ${RootShell.q(path)}")
+        val result = sh("ls -lA ${RootShell.q(path)}")
         if (!result.ok && result.out.isBlank()) throw IOException(result.err.ifBlank { "Cannot open this folder" })
         val entries = result.out.lineSequence().mapNotNull { text ->
             val m = line.find(text.trimEnd()) ?: return@mapNotNull null
@@ -165,11 +177,11 @@ class RootFs : Fs {
         val links = entries.filter { it.isLink }
         if (links.isEmpty()) return entries
         val check = links.joinToString("; ") { "[ -d ${RootShell.q(it.path)} ] && echo ${RootShell.q(it.path)}" }
-        val dirs = RootShell.run(check).out.lines().toSet()
+        val dirs = sh(check).out.lines().toSet()
         return entries.map { if (it.isLink && it.path in dirs) it.copy(isDir = true) else it }
     }
 
-    private fun ok(command: String) = RootShell.run(command).ok
+    private fun ok(command: String) = sh(command).ok
 
     override fun mkdir(parent: String, name: String) = ok("mkdir -p ${RootShell.q(joinPath(parent, name))}")
     override fun createFile(parent: String, name: String) = ok("touch ${RootShell.q(joinPath(parent, name))}")
@@ -180,11 +192,11 @@ class RootFs : Fs {
     override fun chmod(path: String, mode: String) = mode.all { it in '0'..'7' } && mode.length in 3..4 && ok("chmod $mode ${RootShell.q(path)}")
     override fun exists(path: String) = ok("[ -e ${RootShell.q(path)} ] || [ -L ${RootShell.q(path)} ]")
     override fun totalSize(path: String): Long =
-        RootShell.run("du -sk ${RootShell.q(path)}").out.trim().substringBefore('\t').substringBefore(' ').toLongOrNull()?.times(1024) ?: -1
+        sh("du -sk ${RootShell.q(path)}").out.trim().substringBefore('\t').substringBefore(' ').toLongOrNull()?.times(1024) ?: -1
 
     override fun openRead(path: String): java.io.InputStream {
         // the superuser's cat streams the file without copying it first
-        val process = ProcessBuilder("su", "-c", "cat ${RootShell.q(path)}").start()
+        val process = RootShell.start("cat ${RootShell.q(path)}", shizuku)
         return object : java.io.FilterInputStream(process.inputStream) {
             override fun close() { super.close(); process.destroy() }
         }
@@ -336,3 +348,23 @@ object FsOps {
         return digest.digest().joinToString("") { "%02x".format(it) }
     }
 }
+
+/** Runs shell commands through Shizuku, which works with adb rights and needs no root */
+internal object ShizukuShell {
+    private const val REQUEST = 4711
+
+    /** True when Shizuku runs and allows Telos. Asks for the permission (the answer arrives later) when it is missing. */
+    fun ready(): Boolean = runCatching {
+        if (!rikka.shizuku.Shizuku.pingBinder() || rikka.shizuku.Shizuku.isPreV11()) return false
+        if (rikka.shizuku.Shizuku.checkSelfPermission() == android.content.pm.PackageManager.PERMISSION_GRANTED) return true
+        if (!rikka.shizuku.Shizuku.shouldShowRequestPermissionRationale()) rikka.shizuku.Shizuku.requestPermission(REQUEST)
+        false
+    }.getOrDefault(false)
+
+    fun start(command: String): Process {
+        val method = rikka.shizuku.Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
+        method.isAccessible = true
+        return method.invoke(null, arrayOf("sh", "-c", command), null, null) as Process
+    }
+}
+

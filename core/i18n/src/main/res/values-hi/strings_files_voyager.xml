@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">कुंजी जोड़ी बनाएँ</string>
+    <string name="telos_files_ssh_copy_public_key">सार्वजनिक कुंजी कॉपी करें</string>
+    <string name="telos_files_ssh_public_key_hint">सर्वर पर ~/.ssh/authorized_keys में सार्वजनिक कुंजी जोड़ें। निजी कुंजी इस फ़ोन पर एन्क्रिप्टेड रहती है।</string>
+    <string name="telos_files_duplicates_exclude">फ़ोल्डर छोड़ें</string>
+    <string name="telos_files_duplicates_exclude_hint">फ़ोल्डर के नाम या पथ, अल्पविराम से अलग, जैसे: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Shizuku से पहुँच</string>
+    <string name="telos_files_shizuku_summary">Shizuku के ज़रिए Android/data, Android/obb और अन्य फ़ोल्डर खोलें जिन्हें ऐप नहीं पढ़ सकता (रूट के बिना)</string>
+    <string name="telos_files_shizuku_denied">Shizuku नहीं चल रहा या उसने Telos को अनुमति नहीं दी</string>
+    <string name="telos_files_search_everywhere">सारे स्टोरेज में खोजें</string>
+    <string name="telos_files_search_everywhere_summary">केवल इस फ़ोल्डर में नहीं, आंतरिक स्टोरेज, SD कार्ड और USB ड्राइव में खोजता है</string>
+</resources>

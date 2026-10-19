@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Générer une paire de clés</string>
+    <string name="telos_files_ssh_copy_public_key">Copier la clé publique</string>
+    <string name="telos_files_ssh_public_key_hint">Ajoutez la clé publique à ~/.ssh/authorized_keys sur le serveur. La clé privée reste chiffrée sur ce téléphone.</string>
+    <string name="telos_files_duplicates_exclude">Ignorer des dossiers</string>
+    <string name="telos_files_duplicates_exclude_hint">Noms ou chemins de dossiers, séparés par des virgules, par exemple : Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Accès via Shizuku</string>
+    <string name="telos_files_shizuku_summary">Ouvrir Android/data, Android/obb et d’autres dossiers que l’app ne peut pas lire, via Shizuku (sans root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku ne fonctionne pas ou n’a pas autorisé Telos</string>
+    <string name="telos_files_search_everywhere">Rechercher dans tout le stockage</string>
+    <string name="telos_files_search_everywhere_summary">Cherche dans le stockage interne, les cartes SD et les clés USB, pas seulement dans ce dossier</string>
+</resources>

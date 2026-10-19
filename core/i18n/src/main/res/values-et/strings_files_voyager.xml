@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Loo võtmepaar</string>
+    <string name="telos_files_ssh_copy_public_key">Kopeeri avalik võti</string>
+    <string name="telos_files_ssh_public_key_hint">Lisa avalik võti serveris faili ~/.ssh/authorized_keys. Privaatvõti jääb krüpteerituna sellesse telefoni.</string>
+    <string name="telos_files_duplicates_exclude">Jäta kaustad vahele</string>
+    <string name="telos_files_duplicates_exclude_hint">Kaustade nimed või teed komadega eraldatult, näiteks: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Juurdepääs Shizuku kaudu</string>
+    <string name="telos_files_shizuku_summary">Ava Shizuku kaudu Android/data, Android/obb ja muud kaustad, mida rakendus lugeda ei saa (ilma rootita)</string>
+    <string name="telos_files_shizuku_denied">Shizuku ei tööta või ei lubanud Telost</string>
+    <string name="telos_files_search_everywhere">Otsi kogu mälust</string>
+    <string name="telos_files_search_everywhere_summary">Otsib sisemälust, SD-kaartidelt ja USB-draividelt, mitte ainult sellest kaustast</string>
+</resources>

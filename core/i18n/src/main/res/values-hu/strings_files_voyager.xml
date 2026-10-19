@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Kulcspár létrehozása</string>
+    <string name="telos_files_ssh_copy_public_key">Nyilvános kulcs másolása</string>
+    <string name="telos_files_ssh_public_key_hint">Add hozzá a nyilvános kulcsot a szerveren a ~/.ssh/authorized_keys fájlhoz. A privát kulcs titkosítva ezen a telefonon marad.</string>
+    <string name="telos_files_duplicates_exclude">Mappák kihagyása</string>
+    <string name="telos_files_duplicates_exclude_hint">Mappanevek vagy elérési utak vesszővel elválasztva, például: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Shizuku-hozzáférés</string>
+    <string name="telos_files_shizuku_summary">Az Android/data, Android/obb és más, az alkalmazás számára olvashatatlan mappák megnyitása Shizukun keresztül (root nélkül)</string>
+    <string name="telos_files_shizuku_denied">A Shizuku nem fut, vagy nem engedélyezte a Telost</string>
+    <string name="telos_files_search_everywhere">Keresés a teljes tárhelyen</string>
+    <string name="telos_files_search_everywhere_summary">A belső tárhelyen, SD-kártyákon és USB-meghajtókon keres, nem csak ebben a mappában</string>
+</resources>

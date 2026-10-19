@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">إنشاء زوج مفاتيح</string>
+    <string name="telos_files_ssh_copy_public_key">نسخ المفتاح العام</string>
+    <string name="telos_files_ssh_public_key_hint">أضف المفتاح العام إلى ~/.ssh/authorized_keys على الخادم. يبقى المفتاح الخاص مشفرًا على هذا الهاتف.</string>
+    <string name="telos_files_duplicates_exclude">تخطي المجلدات</string>
+    <string name="telos_files_duplicates_exclude_hint">أسماء أو مسارات المجلدات مفصولة بفواصل، مثل: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">الوصول عبر Shizuku</string>
+    <string name="telos_files_shizuku_summary">فتح Android/data وAndroid/obb ومجلدات أخرى لا يستطيع التطبيق قراءتها عبر Shizuku (بدون روت)</string>
+    <string name="telos_files_shizuku_denied">Shizuku لا يعمل أو لم يسمح لـ Telos</string>
+    <string name="telos_files_search_everywhere">البحث في كل وحدات التخزين</string>
+    <string name="telos_files_search_everywhere_summary">يبحث في التخزين الداخلي وبطاقات SD ومحركات USB، وليس في هذا المجلد فقط</string>
+</resources>

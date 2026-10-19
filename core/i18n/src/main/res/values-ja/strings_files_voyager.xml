@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">鍵ペアを生成</string>
+    <string name="telos_files_ssh_copy_public_key">公開鍵をコピー</string>
+    <string name="telos_files_ssh_public_key_hint">公開鍵をサーバーの ~/.ssh/authorized_keys に追加してください。秘密鍵はこの端末に暗号化して保存されます。</string>
+    <string name="telos_files_duplicates_exclude">スキップするフォルダ</string>
+    <string name="telos_files_duplicates_exclude_hint">フォルダ名またはパスをカンマ区切りで入力（例: Android, .thumbnails, DCIM/Camera）</string>
+    <string name="telos_files_shizuku">Shizuku でアクセス</string>
+    <string name="telos_files_shizuku_summary">アプリが読めない Android/data、Android/obb などのフォルダを Shizuku 経由で開きます（root 不要）</string>
+    <string name="telos_files_shizuku_denied">Shizuku が実行されていないか、Telos を許可していません</string>
+    <string name="telos_files_search_everywhere">すべてのストレージを検索</string>
+    <string name="telos_files_search_everywhere_summary">このフォルダだけでなく、内部ストレージ、SD カード、USB ドライブを検索します</string>
+</resources>

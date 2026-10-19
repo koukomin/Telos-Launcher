@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Izveidot atslēgu pāri</string>
+    <string name="telos_files_ssh_copy_public_key">Kopēt publisko atslēgu</string>
+    <string name="telos_files_ssh_public_key_hint">Pievienojiet publisko atslēgu serverī failā ~/.ssh/authorized_keys. Privātā atslēga paliek šifrēta šajā tālrunī.</string>
+    <string name="telos_files_duplicates_exclude">Izlaist mapes</string>
+    <string name="telos_files_duplicates_exclude_hint">Mapju nosaukumi vai ceļi, atdalīti ar komatiem, piemēram: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Piekļuve caur Shizuku</string>
+    <string name="telos_files_shizuku_summary">Atvērt Android/data, Android/obb un citas mapes, ko lietotne nevar nolasīt, caur Shizuku (bez root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku nedarbojas vai neatļāva Telos</string>
+    <string name="telos_files_search_everywhere">Meklēt visā krātuvē</string>
+    <string name="telos_files_search_everywhere_summary">Meklē iekšējā krātuvē, SD kartēs un USB diskos, ne tikai šajā mapē</string>
+</resources>

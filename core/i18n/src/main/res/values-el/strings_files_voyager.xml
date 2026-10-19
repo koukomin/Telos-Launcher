@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Δημιουργία ζεύγους κλειδιών</string>
+    <string name="telos_files_ssh_copy_public_key">Αντιγραφή δημόσιου κλειδιού</string>
+    <string name="telos_files_ssh_public_key_hint">Πρόσθεσε το δημόσιο κλειδί στο ~/.ssh/authorized_keys του server. Το ιδιωτικό κλειδί μένει κρυπτογραφημένο σε αυτό το κινητό.</string>
+    <string name="telos_files_duplicates_exclude">Παράλειψη φακέλων</string>
+    <string name="telos_files_duplicates_exclude_hint">Ονόματα ή διαδρομές φακέλων, χωρισμένα με κόμμα, π.χ.: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Πρόσβαση μέσω Shizuku</string>
+    <string name="telos_files_shizuku_summary">Άνοιγμα των Android/data, Android/obb και άλλων φακέλων που η εφαρμογή δεν μπορεί να διαβάσει, μέσω Shizuku (χωρίς root)</string>
+    <string name="telos_files_shizuku_denied">Το Shizuku δεν τρέχει ή δεν έδωσε άδεια στο Telos</string>
+    <string name="telos_files_search_everywhere">Αναζήτηση σε όλους τους χώρους</string>
+    <string name="telos_files_search_everywhere_summary">Ψάχνει στον εσωτερικό χώρο, τις κάρτες SD και τα USB, όχι μόνο σε αυτόν τον φάκελο</string>
+</resources>

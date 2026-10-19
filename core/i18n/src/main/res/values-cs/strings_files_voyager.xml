@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Vytvořit pár klíčů</string>
+    <string name="telos_files_ssh_copy_public_key">Kopírovat veřejný klíč</string>
+    <string name="telos_files_ssh_public_key_hint">Přidejte veřejný klíč do ~/.ssh/authorized_keys na serveru. Soukromý klíč zůstane zašifrovaný v tomto telefonu.</string>
+    <string name="telos_files_duplicates_exclude">Přeskočit složky</string>
+    <string name="telos_files_duplicates_exclude_hint">Názvy nebo cesty složek oddělené čárkami, například: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Přístup přes Shizuku</string>
+    <string name="telos_files_shizuku_summary">Otevřít Android/data, Android/obb a další složky, které aplikace nemůže číst, přes Shizuku (bez rootu)</string>
+    <string name="telos_files_shizuku_denied">Shizuku neběží nebo Telos nepovolilo</string>
+    <string name="telos_files_search_everywhere">Hledat v celém úložišti</string>
+    <string name="telos_files_search_everywhere_summary">Hledá ve vnitřním úložišti, na SD kartách a USB discích, nejen v této složce</string>
+</resources>

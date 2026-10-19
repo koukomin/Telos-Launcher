@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Opret nøglepar</string>
+    <string name="telos_files_ssh_copy_public_key">Kopiér offentlig nøgle</string>
+    <string name="telos_files_ssh_public_key_hint">Tilføj den offentlige nøgle til ~/.ssh/authorized_keys på serveren. Den private nøgle forbliver krypteret på denne telefon.</string>
+    <string name="telos_files_duplicates_exclude">Spring mapper over</string>
+    <string name="telos_files_duplicates_exclude_hint">Mappenavne eller stier adskilt af kommaer, for eksempel: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Adgang via Shizuku</string>
+    <string name="telos_files_shizuku_summary">Åbn Android/data, Android/obb og andre mapper, som appen ikke kan læse, via Shizuku (uden root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku kører ikke eller har ikke givet Telos tilladelse</string>
+    <string name="telos_files_search_everywhere">Søg i al lagerplads</string>
+    <string name="telos_files_search_everywhere_summary">Søger i det interne lager, på SD-kort og USB-drev, ikke kun i denne mappe</string>
+</resources>

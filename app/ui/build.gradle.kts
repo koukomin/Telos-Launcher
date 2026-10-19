@@ -159,6 +159,7 @@ dependencies {
     implementation(project(":libs:material-color-utilities"))
 
     implementation(project(":core:base"))
+    implementation(libs.shizuku.api)
     implementation(project(":core:i18n"))
     implementation(project(":core:compat"))
     implementation(project(":core:ktx"))
