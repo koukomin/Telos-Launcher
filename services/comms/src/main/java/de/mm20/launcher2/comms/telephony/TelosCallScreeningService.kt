@@ -42,9 +42,9 @@ class TelosCallScreeningService : CallScreeningService(), KoinComponent {
         scope.launch {
             // a failing lookup must never leave the call without an answer
             val block = kotlinx.coroutines.withTimeoutOrNull(3500) {
-            val block = runCatching {
-                CallBlockEngine.shouldBlock(phoneNumber, presentation, incoming = true)
-            }.getOrDefault(false)
+                runCatching {
+                    CallBlockEngine.shouldBlock(phoneNumber, presentation, incoming = true)
+                }.getOrDefault(false)
             } ?: false
             if (block) {
                 Log.i("TelosCallScreening", "Silently rejecting a call")
