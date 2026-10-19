@@ -2,7 +2,11 @@ package de.mm20.launcher2.comms.ermis
 
 import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
-import javax.mail.Multipart
+import java.io.FilterInputStream
+import java.io.InputStream
+import java.io.IOException
+import javax.activation.DataSource
+import javax.mail.internet.MimeMultipart
 import javax.mail.Part
 import javax.mail.internet.ContentType
 import org.jsoup.Jsoup
@@ -10,7 +14,10 @@ import org.jsoup.Jsoup
 /** Both display and download use this exact traversal, so an attachment index is stable. */
 internal object ErmisMime {
     data class Content(val body: String, val attachments: List<Part>)
-    fun read(message: Part): Content {
+    private const val MAX_RAW_PARSE_BYTES = 24_000_000
+    fun read(message: Part, rawParseLimit: Int = MAX_RAW_PARSE_BYTES): Content {
+        require(rawParseLimit in 1..MAX_RAW_PARSE_BYTES)
+        val budget = RawBudget(rawParseLimit)
         val text = StringBuilder()
         val attachments = mutableListOf<Part>()
         var visited = 0
@@ -39,7 +46,14 @@ internal object ErmisMime {
                 if (text.isNotEmpty() && text.length < 1_000_000) text.append('\n')
                 text.append(plain.take((1_000_000 - text.length).coerceAtLeast(0)))
             } else if (part.isMimeType("multipart/*")) {
-                val multi = part.content as Multipart
+                // Do not use part.content: JavaMail could allocate an arbitrarily large
+                // multipart before we can inspect its count. Bound the parser's source itself.
+                val multi = MimeMultipart(object : DataSource {
+                    override fun getInputStream(): InputStream = budget.wrap(part.inputStream)
+                    override fun getOutputStream(): java.io.OutputStream = throw IOException("Read-only MIME source")
+                    override fun getContentType(): String = part.contentType
+                    override fun getName(): String = "Ermis MIME source"
+                })
                 require(multi.count <= 100) { "MIME part limit" }
                 if (part.isMimeType("multipart/alternative")) {
                     val children = (0 until multi.count).map(multi::getBodyPart)
@@ -52,4 +66,40 @@ internal object ErmisMime {
         walk(message, 0)
         return Content(text.toString(), attachments)
     }
+    /** Shared across all nested multipart parsers, including bytes parsed again in a child. */
+    private class RawBudget(private var remaining: Int) {
+        fun wrap(source: InputStream): InputStream = object : FilterInputStream(source) {
+            private fun charge(count: Int) {
+                if (count > remaining) throw IOException("MIME raw parsing limit")
+                if (count > 0) remaining -= count
+            }
+            override fun read(): Int {
+                if (Thread.currentThread().isInterrupted) throw InterruptedException()
+                val value = `in`.read()
+                if (value >= 0) charge(1)
+                return value
+            }
+            override fun read(buffer: ByteArray, offset: Int, length: Int): Int {
+                if (Thread.currentThread().isInterrupted) throw InterruptedException()
+                val count = `in`.read(buffer, offset, minOf(length, remaining + 1))
+                charge(count)
+                return count
+            }
+            override fun skip(count: Long): Long {
+                val buffer = ByteArray(8192)
+                var skipped = 0L
+                while (skipped < count) {
+                    val read = read(buffer, 0, minOf(buffer.size.toLong(), count - skipped).toInt())
+                    if (read < 0) break
+                    skipped += read
+                }
+                return skipped
+            }
+            // Let JavaMail add its own bounded read-ahead buffer; resets cannot bypass charging.
+            override fun markSupported(): Boolean = false
+            override fun mark(readLimit: Int) = Unit
+            override fun reset(): Unit = throw IOException("Mark not supported")
+        }
+    }
+
 }

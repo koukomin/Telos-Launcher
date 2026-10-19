@@ -7,3 +7,5 @@ A successful match displays the returned title, artist and album when supplied. 
 Quiet recordings, unsupported microphones, missing connectivity, rate limits and unknown songs produce an error or no match, never a sample song. Recognition needs Internet access; the unofficial third-party endpoint can change or become unavailable. There is no continuous background listening.
 
 Fingerprinting is based on Audile and SongRec through InterTune's GPL-3.0 Kotlin port. See `THIRD_PARTY_NOTICES.md` for source revisions and test-audio attribution.
+
+The regression suite compares all 488 peaks of an attributed Audile reference recording: counts, timestamps and frequencies match exactly. Magnitudes allow one integer quantization unit because the Kotlin and Rust FFTs order floating point operations differently (487 of 488 magnitudes match exactly in this fixture). The reference signature container separately round-trips byte for byte.

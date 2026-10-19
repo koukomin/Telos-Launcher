@@ -123,9 +123,11 @@ private fun WorldClockTab() {
     var query by remember { mutableStateOf("") }
     val configuration = LocalConfiguration.current
     val locale = configuration.locales[0] ?: Locale.getDefault()
+    val resources = LocalContext.current.resources
+    val packagedLocales = remember(resources) { resources.assets.locales.toList() }
     var cities by remember(locale) { mutableStateOf(emptyList<WorldClockCity>()) }
-    LaunchedEffect(locale) { cities = withContext(Dispatchers.Default) { WorldClockSearch.index(locale) } }
-    val results = remember(query, cities) { if (query.isBlank()) emptyList() else cities.filter { WorldClockSearch.matches(it, query) } }
+    LaunchedEffect(locale, packagedLocales) { cities = withContext(Dispatchers.Default) { WorldClockSearch.index(locale, packagedLocales) } }
+    val results = remember(query, cities) { WorldClockSearch.search(cities, query) }
     LaunchedEffect(Unit) { while (isActive) { now = Instant.now(); delay(1000) } }
     LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item {

@@ -25,7 +25,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: chmod +x gradlew
       - name: Compile native app screens and run communication tests
-        run: ./gradlew :services:comms:testDebugUnitTest :app:ui:compileDefaultDebugKotlin --stacktrace
+        run: ./gradlew :services:comms:testDebugUnitTest :app:ui:compileDefaultDebugKotlin --continue --stacktrace
       - name: Test camera bounds, telemetry, magnifier and Files exclusions
         run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests '*CameraImageSizingTest' --tests '*CpuTelemetryTest' --tests '*MagnifierFilterTest' --tests '*StorageExclusionsTest' --stacktrace
       - uses: actions/upload-artifact@v4
