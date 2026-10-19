@@ -35,7 +35,7 @@ fun ErmisScreen() {
                 .putExtra(WebAppLaunchContract.EXTRA_URL, url)
                 .putExtra(WebAppLaunchContract.EXTRA_LABEL, label)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-        }.onFailure { Toast.makeText(context, R.string.webapp_error_loading, Toast.LENGTH_LONG).show() }
+        }.onFailure { Toast.makeText(context, R.string.hc_failed_try_again, Toast.LENGTH_LONG).show() }
     }
     PreferenceScreen(title = { Text("Ermis · Webmail") }) {
         for ((label, url) in listOf("Gmail" to "https://mail.google.com/", "Outlook" to "https://outlook.live.com/mail/", "Yahoo Mail" to "https://mail.yahoo.com/", "Proton Mail" to "https://mail.proton.me/")) {

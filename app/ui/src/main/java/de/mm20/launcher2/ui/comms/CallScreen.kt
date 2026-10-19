@@ -105,30 +105,6 @@ fun CallScreen(onFinished: () -> Unit) {
     var showNotes by remember { mutableStateOf(false) }
     var elapsed by remember { mutableLongStateOf(0L) }
 
-    LaunchedEffect(state.number) {
-        if (state.number.isEmpty()) return@LaunchedEffect
-        val photo = withContext(Dispatchers.IO) {
-            try {
-                val uri = android.net.Uri.withAppendedPath(
-                    ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
-                    android.net.Uri.encode(state.number),
-                )
-                context.contentResolver.query(
-                    uri,
-                    arrayOf(ContactsContract.PhoneLookup.PHOTO_URI),
-                    null,
-                    null,
-                    null,
-                )?.use { c ->
-                    if (c.moveToFirst()) c.getString(0) else null
-                }
-            } catch (_: Exception) {
-                null
-            }
-        }
-        TelosCallSession.setPhoto(photo)
-    }
-
     LaunchedEffect(state.active, autoRecord, qualityKey) {
         val hasMic = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
             PackageManager.PERMISSION_GRANTED

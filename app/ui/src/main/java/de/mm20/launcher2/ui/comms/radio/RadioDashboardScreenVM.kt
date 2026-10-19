@@ -11,7 +11,7 @@ import de.mm20.launcher2.comms.model.RadioStation
 import de.mm20.launcher2.comms.radio.StreamResolver
 import de.mm20.launcher2.comms.radio.RadioArchives
 import de.mm20.launcher2.comms.radio.RadioSettings
-import de.mm20.launcher2.comms.media.video.Http
+import de.mm20.launcher2.comms.radio.RadioArtwork
 import kotlinx.coroutines.flow.first
 import java.io.File
 import java.security.MessageDigest
@@ -238,15 +238,7 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
             }
             "content", "android.resource" -> context.contentResolver.openInputStream(uri)
             "http", "https" -> {
-                if (!Http.isPublicWeb(address)) return null
-                val first = Http.open(address, "Telos Radio", "image/*")
-                first.connectTimeout = 6000
-                first.readTimeout = 8000
-                val connection = try { Http.resolve(first) } catch (e: Exception) { first.disconnect(); throw e }
-                try {
-                    if (connection.responseCode !in 200..299 || connection.contentLengthLong > RadioArchives.MAX_IMAGE_BYTES) return null
-                    return@runCatching connection.inputStream.use { readImage(it) }
-                } finally { connection.disconnect() }
+                return@runCatching RadioArtwork.download(address)
             }
             else -> return null
         }
