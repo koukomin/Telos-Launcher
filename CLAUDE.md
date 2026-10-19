@@ -54,6 +54,35 @@ Docs live in `docs/` (a VitePress site, published as GitHub Pages at https://kou
 - For bigger new features, an issue should be opened first to discuss design before implementation.
 - All contributed code must be GPL-3.0-or-later licensed (except contributions to `plugins/sdk` / `core/shared`, which are Apache-2.0).
 
+## Performance, memory and APK size rules
+
+Telos runs as the home screen, so every agent (Devin, Copilot, ChatGPT, Claude) working on this repo follows these rules. Fix real problems; do not refactor working code only to match a checklist.
+
+**Main thread**
+- No disk, network, database, `ContentResolver` or call-log work on the main thread. Use `suspend` functions with `withContext(Dispatchers.IO)` (or `Default` for CPU work), and collect `Flow`s instead of reading them once.
+- No new `runBlocking` in app code. Inside a coroutine, call `first()` directly. Outside one, launch in a scope (`containedScope(...)` from `core:base`, `lifecycleScope`, `viewModelScope`) and come back to `Dispatchers.Main` to touch the UI.
+- `SharedPreferences`: use `apply()`. `commit()` is only for writes that must be on disk before the process can die (crash-recovery state such as `VirtualAppGuard`), and never on the main thread.
+- Do not start heavy work in `Application.onCreate`. Create engines, decoders and services on first use.
+
+**Compose**
+- Wrap derived values in `remember(keys)` or `derivedStateOf`. No sorting, filtering, parsing, `Regex(...)`, `SimpleDateFormat(...)` or object allocation directly in a composable body or in `drawBehind`/`onDraw`.
+- Long or unbounded lists use `LazyColumn`/`LazyRow`/`LazyVerticalGrid` with stable `key`s.
+- Pass lambdas or `State` down instead of rapidly changing values (scroll offsets, animations) so only the reader recomposes.
+
+**Memory**
+- Never keep an `Activity`, `View` or composable-scoped `Context` in a static field, `object`, singleton or long-lived scope. Use `context.applicationContext` there.
+- Close `Cursor`s, streams and `ParcelFileDescriptor`s with `use { }`. Recycle or cache bitmaps through the existing caches (`FileThumbs`, Coil); decode them at the size shown.
+- Compile `Regex` once (top-level or class-level `val`), not per call or per loop iteration.
+- Prefer primitive types (`Int`, `Long`, `IntArray`) in hot loops; avoid boxing collections there.
+
+**APK size**
+- Before adding a dependency, check if an existing one already does the job. Pin shared libraries (Bouncy Castle, OkHttp, Kotlin) to one version.
+- Keep rules must be narrow: keep only what is loaded by reflection or JNI, never `-keep class some.library.** { *; }` for a whole library without a reason written next to it.
+- Large assets (fonts, models, lookup tables) need a reason. Exclude unused library data files in `packaging.resources.excludes`.
+- A new language needs its code added to `localeFilters` in `app/app/build.gradle.kts`, or its translations will not be packaged.
+- Native libraries stay split per ABI (`-Ptelos.abi`). Do not add x86 or universal builds.
+- Release and nightly builds keep R8 minification and resource shrinking on.
+
 ## Keeping README, docs and Pages up to date
 
 `readme.md` is the public face of the project. The VitePress tree in `docs/` is the GitHub Pages site. Whenever you add or change a user-visible feature, or you port, adapt or take design from another project, update **readme, docs and Pages in the same commit**:

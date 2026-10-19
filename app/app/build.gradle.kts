@@ -21,10 +21,20 @@ val telosAbis = ((findProperty("telos.abi") as String?)?.takeIf { it.isNotBlank(
 android {
     androidResources {
         generateLocaleConfig = true
+        // Only the languages Telos is translated into (core/i18n). Library translations for other
+        // languages would be dead weight in resources.arsc, which is stored uncompressed.
+        localeFilters += listOf(
+            "en", "ar", "az", "be", "bg", "bn", "ca", "cs", "da", "de", "el", "eo", "es", "et", "eu",
+            "fa", "fi", "fr", "ga", "he", "iw", "hi", "hr", "hu", "ia", "in", "id", "it", "ja", "ko",
+            "lt", "lv", "ms", "mt", "nb", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sv", "th", "tr",
+            "uk", "vi", "zh",
+        )
     }
 
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
+        // Picnic (legacy post-quantum signatures) lookup tables: nothing in Telos uses Picnic
+        resources.excludes.add("org/bouncycastle/pqc/legacy/picnic/**")
         resources.excludes.add("META-INF/INDEX.LIST")
         resources.excludes.add("META-INF/LICENSE")
         resources.excludes.add("META-INF/LICENSE.txt")

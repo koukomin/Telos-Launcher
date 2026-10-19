@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream
 
 /** Portable appearance and navigation settings only. Connection secrets are never included. */
 internal object FilesSettingsTransfer {
+    private val folderKey = Regex("folder:[0-9a-f]{64}")
     const val MaxTabs = 16
     private const val MaxChars = 524288
     data class Workspace(val paths: List<String?>, val left: Int, val right: Int, val dual: Boolean, val activeRight: Boolean)
@@ -49,7 +50,7 @@ internal object FilesSettingsTransfer {
         val foldersJson = json.getJSONObject("folders")
         require(foldersJson.length() <= 1000)
         val folders = foldersJson.keys().asSequence().associateWith { key ->
-            require(key.matches(Regex("folder:[0-9a-f]{64}")))
+            require(key.matches(folderKey))
             val folder = foldersJson.getJSONObject(key)
             SortKey.valueOf(folder.getString("sort"))
             require(integer(folder, "view") in 0..2)
@@ -72,7 +73,7 @@ internal object FilesSettingsTransfer {
     }
     fun export(prefs: SharedPreferences, workspace: Workspace): String {
         val folders = JSONObject()
-        prefs.all.filterKeys { it.matches(Regex("folder:[0-9a-f]{64}")) }.forEach { (key, value) ->
+        prefs.all.filterKeys { it.matches(folderKey) }.forEach { (key, value) ->
             if (value is String) runCatching { folders.put(key, JSONObject(value)) }
         }
         val text = JSONObject().put("version", 1).put("viewMode", prefs.getInt("viewMode", 0)).put("hidden", prefs.getBoolean("hidden", false))
@@ -87,7 +88,7 @@ internal object FilesSettingsTransfer {
         .put("left", workspace.left).put("right", workspace.right).put("dual", workspace.dual).put("activeRight", workspace.activeRight)
     fun apply(prefs: SharedPreferences, settings: Settings) {
         val edit = prefs.edit()
-        prefs.all.keys.filter { it.matches(Regex("folder:[0-9a-f]{64}")) }.forEach { edit.remove(it) }
+        prefs.all.keys.filter { it.matches(folderKey) }.forEach { edit.remove(it) }
         edit.putInt("viewMode", settings.view).putBoolean("grid", settings.view != 0).putBoolean("hidden", settings.hidden)
             .putString("sortKey", settings.sort).putBoolean("sortAsc", settings.ascending).putBoolean("foldersFirst", settings.foldersFirst)
             .putStringSet("bookmarks", settings.bookmarks).putString("workspace", workspaceJson(settings.workspace).toString())

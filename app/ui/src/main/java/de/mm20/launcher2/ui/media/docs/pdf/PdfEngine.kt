@@ -978,13 +978,14 @@ object PdfEngine {
             val n = doc.numberOfPages
             val stripper = PDFTextStripper()
             stripper.sortByPosition = true
+            val whitespace = Regex("\\s+")
             val result = IntArray(n)
             for (i in 0 until n) {
                 currentCoroutineContext().ensureActive()
                 progress(i, n)
                 stripper.startPage = i + 1
                 stripper.endPage = i + 1
-                result[i] = stripper.getText(doc).replace(Regex("\\s+"), " ").trim().hashCode()
+                result[i] = stripper.getText(doc).replace(whitespace, " ").trim().hashCode()
             }
             result
         }

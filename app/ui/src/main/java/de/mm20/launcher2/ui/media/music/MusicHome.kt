@@ -43,10 +43,12 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.comms.media.MusicTrack
 import de.mm20.launcher2.ui.R
 
+private val numericGenre = Regex("\\(?\\d+\\)?")
+
 /** Genres worth a chip: the most common tags, without legacy numeric ones like "(17)" */
 internal fun genresOf(tracks: List<MusicTrack>): List<String> =
     tracks.map { it.genre.trim() }
-        .filter { it.isNotEmpty() && !it.matches(Regex("\\(?\\d+\\)?")) }
+        .filter { it.isNotEmpty() && !it.matches(numericGenre) }
         .groupingBy { it }.eachCount()
         .entries.sortedByDescending { it.value }.take(20).map { it.key }
 
