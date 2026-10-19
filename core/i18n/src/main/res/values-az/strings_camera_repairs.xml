@@ -2,4 +2,5 @@
     <string name="camera_title">Telos Kamera</string>
     <string name="camera_mode_photo">Foto</string>
     <string name="camera_mode_video">Video</string>
+    <string name="hc_address">Ünvan</string>
 </resources>
