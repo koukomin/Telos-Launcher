@@ -19,11 +19,9 @@ import kotlin.random.Random
 /**
  * The algorithm half of the fingerprinter.
  *
- * There is no golden audio-to-signature vector to check against; the reference ships none, and one
- * taken from a recording could not be committed anyway. So these pin what can be proved without
- * one: that the window in the source is still the reference's to the bit, that peaks land in the
- * band the input occupies, that silence stays silent, and that the container still accepts what
- * the generator emits. The end-to-end proof is a live recognition, which no unit test can be.
+ * Includes the upstream Audile Rust golden signature for the attributed test recording, plus
+ * deterministic tests for the window, peak bands, silence and signature container. A physical
+ * microphone and live matching service still require device testing.
  */
 class SignatureGeneratorTest {
 

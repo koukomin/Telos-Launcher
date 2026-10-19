@@ -47,6 +47,8 @@ import de.mm20.launcher2.comms.repository.RadioRepository
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
 import java.time.Instant
@@ -147,21 +149,48 @@ private fun WorldClockTab() {
 private fun AlarmTab() {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
-    var alarms by remember { mutableStateOf(ClockAlarms.load(context)) }
-    var exact by remember { mutableStateOf(ClockAlarms.canSchedule(context)) }
+    val appContext = context.applicationContext
+    val scope = rememberCoroutineScope()
+    val operations = remember { Mutex() }
+    var alarms by remember { mutableStateOf(emptyList<ClockAlarm>()) }
+    var exact by remember { mutableStateOf(false) }
+    var loading by remember { mutableStateOf(true) }
+    var failed by remember { mutableStateOf(false) }
     var editing by remember { mutableStateOf<ClockAlarm?>(null) }
+    fun refresh() { scope.launch {
+        operations.withLock {
+            loading = true
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    val allowed = ClockAlarms.canSchedule(appContext)
+                    val loaded = if (allowed) ClockAlarms.update(appContext) { it } else ClockAlarms.load(appContext)
+                    loaded to allowed
+                }
+                alarms = result.first; exact = result.second; failed = false
+            } catch (e: CancellationException) { throw e } catch (_: Exception) { failed = true }
+            finally { loading = false }
+        }
+    } }
+    fun save(transform: (List<ClockAlarm>) -> List<ClockAlarm>) { scope.launch {
+        operations.withLock {
+            loading = true
+            try {
+                alarms = withContext(Dispatchers.IO) { ClockAlarms.update(appContext, transform) }
+                failed = false
+            } catch (e: CancellationException) { throw e } catch (_: Exception) { failed = true }
+            finally { loading = false }
+        }
+    } }
     DisposableEffect(lifecycle) {
-        val observer = LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_RESUME) {
-            exact = ClockAlarms.canSchedule(context)
-            alarms = ClockAlarms.load(context)
-            if (exact) ClockAlarms.save(context, alarms)
-        } }
+        val observer = LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_RESUME) refresh() }
         lifecycle.addObserver(observer)
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) refresh()
         onDispose { lifecycle.removeObserver(observer) }
     }
-    fun save(updated: List<ClockAlarm>) { ClockAlarms.save(context, updated); alarms = updated }
     LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        if (!exact) item { OutlinedButton(onClick = {
+        if (loading) item { LinearProgressIndicator(Modifier.fillMaxWidth()) }
+        if (failed) item { TextButton(onClick = { refresh() }, enabled = !loading) { Text(stringResource(R.string.hc_failed_try_again)) } }
+        if (!exact && !loading) item { OutlinedButton(onClick = {
             if (android.os.Build.VERSION.SDK_INT >= 31) context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:${context.packageName}")))
         }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.clock_exact)) } }
         items(alarms, key = { it.id }) { alarm ->
@@ -172,15 +201,15 @@ private fun AlarmTab() {
                         Text(alarm.label.ifBlank { context.getString(R.string.clock_alarm) })
                         Text(alarm.soundName.ifBlank { context.getString(R.string.clock_default_sound) }, style = MaterialTheme.typography.bodySmall)
                     }
-                    Switch(alarm.enabled, { enabled -> save(alarms.map { if (it.id == alarm.id) it.copy(enabled = enabled) else it }) }, enabled = exact)
+                    Switch(alarm.enabled, { enabled -> save { current -> current.map { if (it.id == alarm.id) it.copy(enabled = enabled) else it } } }, enabled = exact && !loading)
                 }
-                TextButton(onClick = { save(alarms.filterNot { it.id == alarm.id }) }) { Text(stringResource(R.string.hc_delete)) }
+                TextButton(onClick = { save { current -> current.filterNot { it.id == alarm.id } } }, enabled = !loading) { Text(stringResource(R.string.hc_delete)) }
             } }
         }
-        item { Button(onClick = { editing = ClockAlarm(enabled = exact) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.hc_add)) } }
+        item { Button(onClick = { editing = ClockAlarm(enabled = exact) }, Modifier.fillMaxWidth(), enabled = !loading) { Text(stringResource(R.string.hc_add)) } }
     }
     editing?.let { alarm -> AlarmEditor(alarm, onDismiss = { editing = null }, onSave = { updated ->
-        save(alarms.filterNot { it.id == updated.id } + updated); editing = null
+        save { current -> current.filterNot { it.id == updated.id } + updated }; editing = null
     }) }
 }
 
