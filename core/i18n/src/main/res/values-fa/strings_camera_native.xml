@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG در صورت فعال بودن فرادادهٔ دوربین را حفظ می‌کند. PNG/WebP فراداده را حذف می‌کنند.</string>
     <string name="camera_native_gallery">باز کردن گالری</string>
     <string name="camera_native_flash">فلاش</string>
-    <string name="camera_native_panorama_hint">پانورامای دستی: ۲ تا ۸ تصویر از چپ به راست با ۲۰٪ هم‌پوشانی و افق تراز بگیرید. درزها بدون تراز خودکار ترکیب می‌شوند.</string>
+    <string name="camera_native_panorama_hint" formatted="false">پانورامای دستی: ۲ تا ۸ تصویر از چپ به راست با ۲۰٪ هم‌پوشانی و افق تراز بگیرید. درزها بدون تراز خودکار ترکیب می‌شوند.</string>
     <string name="camera_native_webcam_lan">هرکس در شبکهٔ محلی شما این نشانی دارای توکن را داشته باشد می‌تواند دوربین را ببیند. اشتراک‌گذاری با خروج این صفحه از پیش‌زمینه متوقف می‌شود.</string>
     <string name="camera_native_hidden_saved">به‌صورت خصوصی در Pictures/TelosHidden ذخیره شد. آلبوم پنهان در گالری دیده نمی‌شود و با حذف Telos پاک می‌شود.</string>
     <string name="camera_native_geo_hint">فقط EXIF در JPEG. در صورت وجود، مکان حداکثر ۱۰ دقیقه پیش با دقت در محدودهٔ ۵۰۰ متر را اضافه می‌کند.</string>

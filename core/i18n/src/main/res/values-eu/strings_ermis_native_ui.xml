@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">Posta-kontuak</string>
     <string name="ermis_all_accounts">Kontu guztiak</string>
     <string name="ermis_native_intro">Zure posta Telos barruan. Konektatu IMAP/SMTP kontua TLS eta pasahitz edo aplikazio-pasahitzarekin.</string>
     <string name="ermis_empty">Ez dago mezurik. Sinkronizatu kontuak edo aldatu bilaketa.</string>
     <string name="ermis_operation_failed">Posta-eragiketak huts egin du</string>
-    <string name="ermis_tls_help">Bi zerbitzariek egiaztatutako TLS onartu behar dute. Gmail-ek aplikazio-pasahitza behar du. Google saio-hasiera ez dago bertsio honetan.</string>
+    <string name="ermis_tls_help">Bi zerbitzariek egiaztatutako TLS onartu behar dute. Gmail-ek aplikazio-pasahitza edo Google/microG sarbidea erabil dezake, onartzen denean.</string>
     <string name="ermis_username">Zerbitzariaren erabiltzaile-izena</string>
     <string name="ermis_username_help">Utzi hutsik helbide elektronikoa erabiltzeko.</string>
     <string name="ermis_imap_host">IMAP zerbitzaria</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">Eskatu STARTTLS SMTPrako</string>
     <string name="ermis_saf_help">Fitxategi-hautatzaileak Android Dokumentuak onartzen dituzten hodei-zerbitzuak ere erakusten ditu. Fitxategi handietarako, gehitu partekatze-esteka mezuan.</string>
     <string name="ermis_reply">Erantzun</string>
+    <string name="ermis_google_sign_in">Google / microG saio-hasiera</string>
+    <string name="ermis_google_help">Hautatutako Android kontua erabiltzen du autentifikatzaileak postarako sarbidea ematen badu soilik. Bestela, erabili aplikazio-pasahitza.</string>
+    <string name="ermis_google_unavailable">Kontuaren hornitzaileak ez du postarako sarbiderik eman. Erabili aplikazio-pasahitza.</string>
+    <string name="ermis_conversation_count">%1$d mezu elkarrizketa honetan</string>
 </resources>

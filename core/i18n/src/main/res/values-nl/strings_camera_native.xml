@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG behoudt camerametadata indien ingeschakeld. PNG/WebP verwijderen metadata.</string>
     <string name="camera_native_gallery">Galerij openen</string>
     <string name="camera_native_flash">Flits</string>
-    <string name="camera_native_panorama_hint">Handmatig panorama: maak 2–8 beelden van links naar rechts met 20 % overlap en een rechte horizon. Overgangen worden vervaagd zonder automatische uitlijning.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Handmatig panorama: maak 2–8 beelden van links naar rechts met 20 % overlap en een rechte horizon. Overgangen worden vervaagd zonder automatische uitlijning.</string>
     <string name="camera_native_webcam_lan">Iedereen met deze token-URL op uw lokale netwerk kan de camera bekijken. Delen stopt wanneer dit scherm niet meer op de voorgrond staat.</string>
     <string name="camera_native_hidden_saved">Privé opgeslagen in Pictures/TelosHidden. Het verborgen album staat niet in de galerij en wordt verwijderd wanneer Telos wordt verwijderd.</string>
     <string name="camera_native_geo_hint">Alleen JPEG-EXIF. Voegt indien beschikbaar een locatie toe van maximaal 10 minuten oud met een nauwkeurigheid van 500 m of beter.</string>

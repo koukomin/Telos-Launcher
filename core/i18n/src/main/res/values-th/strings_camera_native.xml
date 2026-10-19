@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG จะเก็บข้อมูลเมตาของกล้องเมื่อเปิดใช้ PNG/WebP จะลบข้อมูลเมตา</string>
     <string name="camera_native_gallery">เปิดแกลเลอรี</string>
     <string name="camera_native_flash">แฟลช</string>
-    <string name="camera_native_panorama_hint">พาโนรามาด้วยตนเอง: ถ่าย 2–8 ภาพจากซ้ายไปขวาให้ซ้อนทับ 20 % และรักษาขอบฟ้าให้ตรง จะผสานรอยต่อโดยไม่จัดแนวอัตโนมัติ</string>
+    <string name="camera_native_panorama_hint" formatted="false">พาโนรามาด้วยตนเอง: ถ่าย 2–8 ภาพจากซ้ายไปขวาให้ซ้อนทับ 20 % และรักษาขอบฟ้าให้ตรง จะผสานรอยต่อโดยไม่จัดแนวอัตโนมัติ</string>
     <string name="camera_native_webcam_lan">ทุกคนในเครือข่ายภายในที่มี URL โทเค็นนี้สามารถดูกล้องได้ การแชร์จะหยุดเมื่อหน้าจอนี้ออกจากเบื้องหน้า</string>
     <string name="camera_native_hidden_saved">บันทึกเป็นส่วนตัวใน Pictures/TelosHidden อัลบั้มที่ซ่อนจะไม่แสดงในแกลเลอรีและจะถูกลบเมื่อถอนการติดตั้ง Telos</string>
     <string name="camera_native_geo_hint">เฉพาะ JPEG EXIF เพิ่มตำแหน่งล่าสุดอายุไม่เกิน 10 นาทีและความแม่นยำภายใน 500 เมตรเมื่อมีข้อมูล</string>

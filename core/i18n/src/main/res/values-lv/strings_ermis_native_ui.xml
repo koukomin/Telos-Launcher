@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">Pasta konti</string>
     <string name="ermis_all_accounts">Visi konti</string>
     <string name="ermis_native_intro">Jūsu pasts Telos lietotnē. Pievienojiet IMAP/SMTP kontu ar TLS un paroli vai lietotnes paroli.</string>
     <string name="ermis_empty">Ziņojumu nav. Sinhronizējiet kontus vai mainiet meklēšanu.</string>
     <string name="ermis_operation_failed">Pasta darbība neizdevās</string>
-    <string name="ermis_tls_help">Abiem serveriem jāatbalsta pārbaudīts TLS. Gmail nepieciešama lietotnes parole. Google pierakstīšanās šajā versijā nav pieejama.</string>
+    <string name="ermis_tls_help">Abiem serveriem jāatbalsta pārbaudīts TLS. Gmail var izmantot lietotnes paroli vai atbalstītu Google/microG piekļuvi.</string>
     <string name="ermis_username">Servera lietotājvārds</string>
     <string name="ermis_username_help">Atstājiet tukšu, lai izmantotu e-pasta adresi.</string>
     <string name="ermis_imap_host">IMAP serveris</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">Pieprasīt STARTTLS SMTP savienojumam</string>
     <string name="ermis_saf_help">Failu atlasītājs rāda arī mākoņpakalpojumus ar Android Dokumentu atbalstu. Lieliem failiem ziņojumā ievietojiet kopīgošanas saiti.</string>
     <string name="ermis_reply">Atbildēt</string>
+    <string name="ermis_google_sign_in">Google / microG pieteikšanās</string>
+    <string name="ermis_google_help">Izmanto atlasīto Android kontu tikai tad, ja tā autentificētājs atļauj piekļuvi pastam. Citādi izmantojiet lietotnes paroli.</string>
+    <string name="ermis_google_unavailable">Konta nodrošinātājs neatļāva piekļuvi pastam. Izmantojiet lietotnes paroli.</string>
+    <string name="ermis_conversation_count">%1$d ziņojumi šajā sarunā</string>
 </resources>

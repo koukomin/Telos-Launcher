@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">Poštovní účty</string>
     <string name="ermis_all_accounts">Všechny účty</string>
     <string name="ermis_native_intro">Vaše pošta v Telos. Připojte účet IMAP/SMTP přes TLS s heslem nebo heslem aplikace.</string>
     <string name="ermis_empty">Žádné zprávy. Synchronizujte účty nebo změňte hledání.</string>
     <string name="ermis_operation_failed">Poštovní operace selhala</string>
-    <string name="ermis_tls_help">Oba servery musí podporovat ověřené TLS. Gmail vyžaduje heslo aplikace. Přihlášení Google není v této verzi dostupné.</string>
+    <string name="ermis_tls_help">Oba servery musí podporovat ověřené TLS. Gmail může použít heslo aplikace nebo podporovaný přístup Google/microG.</string>
     <string name="ermis_username">Uživatelské jméno serveru</string>
     <string name="ermis_username_help">Pro použití e-mailové adresy ponechte prázdné.</string>
     <string name="ermis_imap_host">Server IMAP</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">Vyžadovat STARTTLS pro SMTP</string>
     <string name="ermis_saf_help">Výběr souborů zobrazuje i cloudové služby podporující Dokumenty Android. U velkých souborů vložte do zprávy odkaz ke sdílení.</string>
     <string name="ermis_reply">Odpovědět</string>
+    <string name="ermis_google_sign_in">Přihlášení Google / microG</string>
+    <string name="ermis_google_help">Vybraný účet Android se použije, pouze pokud jeho ověřovatel povolí přístup k poště. Jinak použijte heslo aplikace.</string>
+    <string name="ermis_google_unavailable">Poskytovatel účtu nepovolil přístup k poště. Použijte heslo aplikace.</string>
+    <string name="ermis_conversation_count">%1$d zpráv v této konverzaci</string>
 </resources>

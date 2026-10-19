@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG zadržava metapodatke kamere kada je omogućeno. PNG/WebP uklanjaju metapodatke.</string>
     <string name="camera_native_gallery">Otvori galeriju</string>
     <string name="camera_native_flash">Bljeskalica</string>
-    <string name="camera_native_panorama_hint">Ručna panorama: snimite 2–8 slika slijeva nadesno s 20 % preklapanja i ravnim horizontom. Spojevi se stapaju bez automatskog poravnanja.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Ručna panorama: snimite 2–8 slika slijeva nadesno s 20 % preklapanja i ravnim horizontom. Spojevi se stapaju bez automatskog poravnanja.</string>
     <string name="camera_native_webcam_lan">Svatko u lokalnoj mreži s ovim URL-om s tokenom može gledati kameru. Dijeljenje prestaje kada ovaj zaslon napusti prvi plan.</string>
     <string name="camera_native_hidden_saved">Spremljeno privatno u Pictures/TelosHidden. Skriveni album nije u galeriji i uklanja se pri deinstalaciji Telosa.</string>
     <string name="camera_native_geo_hint">Samo JPEG EXIF. Dodaje dostupnu lokaciju staru najviše 10 minuta s preciznošću do 500 m.</string>

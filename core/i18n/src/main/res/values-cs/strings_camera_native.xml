@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG zachová metadata fotoaparátu, pokud je to povoleno. PNG/WebP metadata odstraní.</string>
     <string name="camera_native_gallery">Otevřít galerii</string>
     <string name="camera_native_flash">Blesk</string>
-    <string name="camera_native_panorama_hint">Ruční panorama: pořiďte 2–8 snímků zleva doprava s 20% překrytím a vodorovným horizontem. Spoje se prolnou bez automatického zarovnání.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Ruční panorama: pořiďte 2–8 snímků zleva doprava s 20% překrytím a vodorovným horizontem. Spoje se prolnou bez automatického zarovnání.</string>
     <string name="camera_native_webcam_lan">Kdokoli v místní síti s touto URL s tokenem může sledovat kameru. Sdílení skončí, když tato obrazovka opustí popředí.</string>
     <string name="camera_native_hidden_saved">Uloženo soukromě do Pictures/TelosHidden. Skryté album není v galerii a odstraní se při odinstalování Telos.</string>
     <string name="camera_native_geo_hint">Pouze JPEG EXIF. Přidá dostupnou polohu starou nejvýše 10 minut s přesností do 500 m.</string>

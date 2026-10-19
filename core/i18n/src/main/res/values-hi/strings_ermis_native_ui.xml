@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">मेल खाते</string>
     <string name="ermis_all_accounts">सभी खाते</string>
     <string name="ermis_native_intro">आपका मेल Telos में। TLS और पासवर्ड या ऐप पासवर्ड से IMAP/SMTP खाता जोड़ें।</string>
     <string name="ermis_empty">यहाँ कोई संदेश नहीं है। खाते सिंक करें या खोज बदलें।</string>
     <string name="ermis_operation_failed">मेल कार्रवाई विफल</string>
-    <string name="ermis_tls_help">दोनों सर्वर पर सत्यापित TLS आवश्यक है। Gmail के लिए ऐप पासवर्ड चाहिए। इस संस्करण में Google साइन-इन उपलब्ध नहीं है।</string>
+    <string name="ermis_tls_help">दोनों सर्वर पर सत्यापित TLS आवश्यक है। Gmail ऐप पासवर्ड या समर्थित होने पर Google/microG खाते की पहुँच इस्तेमाल कर सकता है।</string>
     <string name="ermis_username">सर्वर उपयोगकर्ता नाम</string>
     <string name="ermis_username_help">ईमेल पते का उपयोग करने के लिए खाली छोड़ें।</string>
     <string name="ermis_imap_host">IMAP सर्वर</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">SMTP के लिए STARTTLS आवश्यक करें</string>
     <string name="ermis_saf_help">फ़ाइल चयनकर्ता Android Documents समर्थित क्लाउड सेवाएँ भी दिखाता है। बड़ी फ़ाइलों के लिए संदेश में साझाकरण लिंक जोड़ें।</string>
     <string name="ermis_reply">जवाब दें</string>
+    <string name="ermis_google_sign_in">Google / microG साइन-इन</string>
+    <string name="ermis_google_help">चुने गए Android खाते का उपयोग तभी होता है जब उसका प्रमाणक मेल तक पहुँच देता है। अन्यथा ऐप पासवर्ड इस्तेमाल करें।</string>
+    <string name="ermis_google_unavailable">खाता प्रदाता ने मेल तक पहुँच नहीं दी। ऐप पासवर्ड इस्तेमाल करें।</string>
+    <string name="ermis_conversation_count">इस बातचीत में %1$d संदेश</string>
 </resources>

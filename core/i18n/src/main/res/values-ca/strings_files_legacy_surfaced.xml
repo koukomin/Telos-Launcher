@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_files_cannot_open_file">No es pot obrir aquest fitxer</string>
+    <string name="hc_open_with_2">Obre amb…</string>
+    <string name="hc_root_explorer">Explorador amb accés d’arrel</string>
+    <string name="hf_files_careful">Atenció</string>
+    <string name="hf_files_needs_root">Cal un telèfon amb accés d’arrel</string>
+    <string name="hf_files_root_explorer_on">Explorador amb accés d’arrel: activat</string>
+    <string name="hf_files_root_menu">Explorador amb accés d’arrel…</string>
+    <string name="hf_files_root_off">Desactiva l’explorador amb accés d’arrel</string>
+    <string name="hf_files_system_readonly">Fes que /system sigui només de lectura</string>
+    <string name="hf_files_system_writable">Permet l’escriptura a /system</string>
+    <string name="hf_files_tap_to_turn_off">Toqueu per desactivar</string>
+</resources>

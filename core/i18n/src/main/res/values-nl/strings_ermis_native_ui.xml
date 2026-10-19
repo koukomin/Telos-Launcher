@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">E-mailaccounts</string>
     <string name="ermis_all_accounts">Alle accounts</string>
     <string name="ermis_native_intro">Je e-mail in Telos. Verbind een IMAP/SMTP-account met TLS en je wachtwoord of app-wachtwoord.</string>
     <string name="ermis_empty">Geen berichten. Synchroniseer je accounts of wijzig de zoekopdracht.</string>
     <string name="ermis_operation_failed">E-mailbewerking mislukt</string>
-    <string name="ermis_tls_help">Beide servers moeten geverifieerde TLS ondersteunen. Gmail vereist een app-wachtwoord. Google-aanmelding is niet beschikbaar in deze versie.</string>
+    <string name="ermis_tls_help">Beide servers moeten geverifieerde TLS ondersteunen. Gmail kan een app-wachtwoord of ondersteunde Google/microG-toegang gebruiken.</string>
     <string name="ermis_username">Servergebruikersnaam</string>
     <string name="ermis_username_help">Laat leeg om je e-mailadres te gebruiken.</string>
     <string name="ermis_imap_host">IMAP-server</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">STARTTLS vereisen voor SMTP</string>
     <string name="ermis_saf_help">De bestandskiezer toont ook cloudaanbieders die Android Documenten ondersteunen. Voeg bij grote bestanden een deellink toe aan je bericht.</string>
     <string name="ermis_reply">Beantwoorden</string>
+    <string name="ermis_google_sign_in">Google / microG-aanmelding</string>
+    <string name="ermis_google_help">Gebruikt het gekozen Android-account alleen als de authenticatiedienst mailtoegang verleent. Gebruik anders een app-wachtwoord.</string>
+    <string name="ermis_google_unavailable">De accountprovider verleende geen mailtoegang. Gebruik een app-wachtwoord.</string>
+    <string name="ermis_conversation_count">%1$d berichten in dit gesprek</string>
 </resources>

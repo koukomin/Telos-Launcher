@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG išsaugo kameros metaduomenis, kai įjungta. PNG/WebP pašalina metaduomenis.</string>
     <string name="camera_native_gallery">Atidaryti galeriją</string>
     <string name="camera_native_flash">Blykstė</string>
-    <string name="camera_native_panorama_hint">Rankinė panorama: iš kairės į dešinę užfiksuokite 2–8 vaizdus su 20 % persidengimu, laikydami horizontą tiesiai. Siūlės suliejamos be automatinio lygiavimo.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Rankinė panorama: iš kairės į dešinę užfiksuokite 2–8 vaizdus su 20 % persidengimu, laikydami horizontą tiesiai. Siūlės suliejamos be automatinio lygiavimo.</string>
     <string name="camera_native_webcam_lan">Kiekvienas jūsų vietiniame tinkle, turintis šį URL su žetonu, gali matyti kamerą. Bendrinimas baigiasi, kai šis ekranas palieka priekinį planą.</string>
     <string name="camera_native_hidden_saved">Išsaugota privačiai Pictures/TelosHidden. Paslėptas albumas nerodomas galerijoje ir pašalinamas išdiegus Telos.</string>
     <string name="camera_native_geo_hint">Tik JPEG EXIF. Jei galima, prideda ne senesnę kaip 10 minučių vietą, kurios tikslumas yra iki 500 m.</string>

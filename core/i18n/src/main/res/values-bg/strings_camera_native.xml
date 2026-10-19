@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG запазва метаданните на камерата, когато е включено. PNG/WebP премахват метаданните.</string>
     <string name="camera_native_gallery">Отваряне на галерията</string>
     <string name="camera_native_flash">Светкавица</string>
-    <string name="camera_native_panorama_hint">Ръчна панорама: заснемете 2–8 изображения отляво надясно с 20 % припокриване и равен хоризонт. Шевовете се преливат без автоматично подравняване.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Ръчна панорама: заснемете 2–8 изображения отляво надясно с 20 % припокриване и равен хоризонт. Шевовете се преливат без автоматично подравняване.</string>
     <string name="camera_native_webcam_lan">Всеки в локалната мрежа с този URL с токен може да гледа камерата. Споделянето спира, когато този екран напусне предния план.</string>
     <string name="camera_native_hidden_saved">Запазено частно в Pictures/TelosHidden. Скритият албум не е в галерията и се изтрива при деинсталиране на Telos.</string>
     <string name="camera_native_geo_hint">Само JPEG EXIF. Добавя налично местоположение, старо до 10 минути, с точност до 500 m.</string>

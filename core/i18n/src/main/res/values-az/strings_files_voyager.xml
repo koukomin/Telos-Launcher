@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Açar cütü yaradın</string>
+    <string name="telos_files_ssh_copy_public_key">Açıq açarı kopyalayın</string>
+    <string name="telos_files_ssh_public_key_hint">Açıq açarı serverdə ~/.ssh/authorized_keys faylına əlavə edin. Şəxsi açar bu telefonda şifrələnmiş qalır.</string>
+    <string name="telos_files_duplicates_exclude">Qovluqları ötür</string>
+    <string name="telos_files_duplicates_exclude_hint">Vergüllə ayrılmış qovluq adları və ya yolları, məsələn: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Shizuku girişi</string>
+    <string name="telos_files_shizuku_summary">Android/data, Android/obb və tətbiqin oxuya bilmədiyi digər qovluqları Shizuku vasitəsilə açın (root olmadan)</string>
+    <string name="telos_files_shizuku_denied">Shizuku işləmir və ya Telos-a icazə verməyib</string>
+    <string name="telos_files_search_everywhere">Bütün yaddaşda axtar</string>
+    <string name="telos_files_search_everywhere_summary">Yalnız bu qovluqda deyil, daxili yaddaşda, SD kartlarda və USB disklərdə axtarır</string>
+</resources>

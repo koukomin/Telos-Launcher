@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">Poštni računi</string>
     <string name="ermis_all_accounts">Vsi računi</string>
     <string name="ermis_native_intro">Vaša pošta v Telosu. Povežite račun IMAP/SMTP prek TLS z geslom ali geslom aplikacije.</string>
     <string name="ermis_empty">Ni sporočil. Sinhronizirajte račune ali spremenite iskanje.</string>
     <string name="ermis_operation_failed">Poštno opravilo ni uspelo</string>
-    <string name="ermis_tls_help">Oba strežnika morata podpirati preverjeni TLS. Gmail zahteva geslo aplikacije. Prijava Google v tej različici ni na voljo.</string>
+    <string name="ermis_tls_help">Oba strežnika morata podpirati preverjeni TLS. Gmail lahko uporablja geslo aplikacije ali podprt dostop Google/microG.</string>
     <string name="ermis_username">Uporabniško ime strežnika</string>
     <string name="ermis_username_help">Pustite prazno za uporabo e-poštnega naslova.</string>
     <string name="ermis_imap_host">Strežnik IMAP</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">Zahtevaj STARTTLS za SMTP</string>
     <string name="ermis_saf_help">Izbirnik datotek prikazuje tudi oblačne ponudnike s podporo za Dokumente Android. Za velike datoteke vstavite povezavo za skupno rabo.</string>
     <string name="ermis_reply">Odgovori</string>
+    <string name="ermis_google_sign_in">Prijava Google / microG</string>
+    <string name="ermis_google_help">Izbrani račun Android se uporabi le, če njegov overitelj dovoli dostop do pošte. Sicer uporabite geslo aplikacije.</string>
+    <string name="ermis_google_unavailable">Ponudnik računa ni dovolil dostopa do pošte. Uporabite geslo aplikacije.</string>
+    <string name="ermis_conversation_count">%1$d sporočil v tem pogovoru</string>
 </resources>

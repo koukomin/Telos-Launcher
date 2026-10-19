@@ -18,7 +18,7 @@
     <string name="camera_native_formats">सक्षम होने पर JPEG कैमरा मेटाडेटा रखता है। PNG/WebP मेटाडेटा हटाते हैं।</string>
     <string name="camera_native_gallery">गैलरी खोलें</string>
     <string name="camera_native_flash">फ़्लैश</string>
-    <string name="camera_native_panorama_hint">मैनुअल पैनोरमा: क्षितिज सीधा रखते हुए बाएँ से दाएँ 20 % ओवरलैप के साथ 2–8 तस्वीरें लें। बिना स्वचालित संरेखण के जोड़ मिलाए जाते हैं।</string>
+    <string name="camera_native_panorama_hint" formatted="false">मैनुअल पैनोरमा: क्षितिज सीधा रखते हुए बाएँ से दाएँ 20 % ओवरलैप के साथ 2–8 तस्वीरें लें। बिना स्वचालित संरेखण के जोड़ मिलाए जाते हैं।</string>
     <string name="camera_native_webcam_lan">आपके स्थानीय नेटवर्क पर इस टोकन URL वाला कोई भी व्यक्ति कैमरा देख सकता है। यह स्क्रीन अग्रभूमि से हटने पर साझाकरण बंद होता है।</string>
     <string name="camera_native_hidden_saved">Pictures/TelosHidden में निजी रूप से सहेजा गया। छिपा एल्बम गैलरी में नहीं दिखता और Telos अनइंस्टॉल करने पर हटा दिया जाता है।</string>
     <string name="camera_native_geo_hint">केवल JPEG EXIF। उपलब्ध होने पर अधिकतम 10 मिनट पुराना और 500 मीटर के भीतर सटीक स्थान जोड़ता है।</string>

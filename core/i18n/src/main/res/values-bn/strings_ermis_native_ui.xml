@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">মেইল অ্যাকাউন্ট</string>
     <string name="ermis_all_accounts">সব অ্যাকাউন্ট</string>
     <string name="ermis_native_intro">Telos-এর মধ্যেই আপনার মেইল। TLS এবং পাসওয়ার্ড বা অ্যাপ পাসওয়ার্ড দিয়ে IMAP/SMTP অ্যাকাউন্ট সংযুক্ত করুন।</string>
     <string name="ermis_empty">এখানে কোনো বার্তা নেই। অ্যাকাউন্ট সিঙ্ক করুন বা অনুসন্ধান বদলান।</string>
     <string name="ermis_operation_failed">মেইল প্রক্রিয়া ব্যর্থ</string>
-    <string name="ermis_tls_help">উভয় সার্ভারে যাচাইকৃত TLS থাকতে হবে। Gmail-এর জন্য অ্যাপ পাসওয়ার্ড প্রয়োজন। এই সংস্করণে Google সাইন-ইন নেই।</string>
+    <string name="ermis_tls_help">উভয় সার্ভারে যাচাইকৃত TLS থাকতে হবে। Gmail অ্যাপ পাসওয়ার্ড বা সমর্থিত হলে Google/microG অ্যাকাউন্ট ব্যবহার করতে পারে।</string>
     <string name="ermis_username">সার্ভারের ব্যবহারকারীর নাম</string>
     <string name="ermis_username_help">ইমেইল ঠিকানা ব্যবহার করতে খালি রাখুন।</string>
     <string name="ermis_imap_host">IMAP সার্ভার</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">SMTP-এর জন্য STARTTLS আবশ্যক</string>
     <string name="ermis_saf_help">ফাইল নির্বাচকে Android Documents সমর্থিত ক্লাউড পরিষেবাও দেখা যায়। বড় ফাইলের জন্য বার্তায় শেয়ার করার লিঙ্ক দিন।</string>
     <string name="ermis_reply">উত্তর</string>
+    <string name="ermis_google_sign_in">Google / microG সাইন-ইন</string>
+    <string name="ermis_google_help">নির্বাচিত Android অ্যাকাউন্টের প্রমাণীকরণ ব্যবস্থা মেইলে প্রবেশাধিকার দিলেই সেটি ব্যবহার করে। অন্যথায় অ্যাপ পাসওয়ার্ড ব্যবহার করুন।</string>
+    <string name="ermis_google_unavailable">অ্যাকাউন্ট প্রদানকারী মেইলে প্রবেশাধিকার দেয়নি। অ্যাপ পাসওয়ার্ড ব্যবহার করুন।</string>
+    <string name="ermis_conversation_count">এই কথোপকথনে %1$dটি বার্তা</string>
 </resources>

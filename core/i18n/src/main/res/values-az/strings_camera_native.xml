@@ -18,7 +18,7 @@
     <string name="camera_native_formats">Aktiv olduqda JPEG kamera metadatasını saxlayır. PNG/WebP metadatanı silir.</string>
     <string name="camera_native_gallery">Qalereyanı aç</string>
     <string name="camera_native_flash">Flaş</string>
-    <string name="camera_native_panorama_hint">Əl panoraması: üfüqü düz saxlayaraq soldan sağa 20 % üst-üstə düşən 2–8 kadr çəkin. Tikişlər avtomatik düzləndirmə olmadan qarışdırılır.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Əl panoraması: üfüqü düz saxlayaraq soldan sağa 20 % üst-üstə düşən 2–8 kadr çəkin. Tikişlər avtomatik düzləndirmə olmadan qarışdırılır.</string>
     <string name="camera_native_webcam_lan">Yerli şəbəkədə bu tokenli URL-yə malik hər kəs kameranı görə bilər. Bu ekran ön plandan çıxanda paylaşım dayanır.</string>
     <string name="camera_native_hidden_saved">Pictures/TelosHidden daxilində özəl saxlanıldı. Gizli albom qalereyada görünmür və Telos silinəndə silinir.</string>
     <string name="camera_native_geo_hint">Yalnız JPEG EXIF. Mövcud olduqda ən çox 10 dəqiqəlik və 500 m dəqiqlik daxilində olan məkanı əlavə edir.</string>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_files_cannot_open_file">Ne eblas malfermi ĉi tiun dosieron</string>
+    <string name="hc_open_with_2">Malfermi per…</string>
+    <string name="hc_root_explorer">Esplorilo kun root-aliro</string>
+    <string name="hf_files_careful">Atentu</string>
+    <string name="hf_files_needs_root">Necesas telefono kun root-aliro</string>
+    <string name="hf_files_root_explorer_on">Esplorilo kun root-aliro: ŝaltita</string>
+    <string name="hf_files_root_menu">Esplorilo kun root-aliro…</string>
+    <string name="hf_files_root_off">Malŝalti la esplorilon kun root-aliro</string>
+    <string name="hf_files_system_readonly">Fari /system nurlegebla</string>
+    <string name="hf_files_system_writable">Fari /system skribebla</string>
+    <string name="hf_files_tap_to_turn_off">Tuŝu por malŝalti</string>
+</resources>

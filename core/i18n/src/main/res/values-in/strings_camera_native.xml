@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG menyimpan metadata kamera jika diaktifkan. PNG/WebP menghapus metadata.</string>
     <string name="camera_native_gallery">Buka galeri</string>
     <string name="camera_native_flash">Lampu kilat</string>
-    <string name="camera_native_panorama_hint">Panorama manual: ambil 2–8 gambar dari kiri ke kanan dengan tumpang tindih 20 %, jaga cakrawala tetap datar. Sambungan dibaurkan tanpa penyelarasan otomatis.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Panorama manual: ambil 2–8 gambar dari kiri ke kanan dengan tumpang tindih 20 %, jaga cakrawala tetap datar. Sambungan dibaurkan tanpa penyelarasan otomatis.</string>
     <string name="camera_native_webcam_lan">Siapa pun di jaringan lokal yang memiliki URL token ini dapat melihat kamera. Berbagi berhenti saat layar ini keluar dari latar depan.</string>
     <string name="camera_native_hidden_saved">Disimpan secara pribadi di Pictures/TelosHidden. Album tersembunyi tidak muncul di galeri dan dihapus saat Telos dicopot.</string>
     <string name="camera_native_geo_hint">Hanya JPEG EXIF. Menambahkan lokasi yang tersedia, paling lama 10 menit dengan akurasi dalam 500 m.</string>

@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG conserva los metadatos de la cámara si se activa. PNG/WebP eliminan los metadatos.</string>
     <string name="camera_native_gallery">Abrir galería</string>
     <string name="camera_native_flash">Flash</string>
-    <string name="camera_native_panorama_hint">Panorama manual: captura de 2 a 8 imágenes de izquierda a derecha con un 20 % de solapamiento y el horizonte nivelado. Se suavizan las uniones sin alineación automática.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Panorama manual: captura de 2 a 8 imágenes de izquierda a derecha con un 20 % de solapamiento y el horizonte nivelado. Se suavizan las uniones sin alineación automática.</string>
     <string name="camera_native_webcam_lan">Cualquier persona con esta URL con token en tu red local puede ver la cámara. La transmisión termina cuando esta pantalla deja de estar en primer plano.</string>
     <string name="camera_native_hidden_saved">Guardado de forma privada en Pictures/TelosHidden. El álbum oculto no aparece en la galería y se elimina al desinstalar Telos.</string>
     <string name="camera_native_geo_hint">Solo EXIF de JPEG. Añade una ubicación de hace menos de 10 minutos y con precisión de 500 m o mejor, si está disponible.</string>

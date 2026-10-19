@@ -18,7 +18,7 @@
     <string name="camera_native_formats">启用时，JPEG 保留相机元数据。PNG/WebP 会移除元数据。</string>
     <string name="camera_native_gallery">打开图库</string>
     <string name="camera_native_flash">闪光灯</string>
-    <string name="camera_native_panorama_hint">手动全景：保持地平线水平，从左到右拍摄 2–8 张重叠 20 % 的图像。接缝会融合，但不会自动对齐。</string>
+    <string name="camera_native_panorama_hint" formatted="false">手动全景：保持地平线水平，从左到右拍摄 2–8 张重叠 20 % 的图像。接缝会融合，但不会自动对齐。</string>
     <string name="camera_native_webcam_lan">本地网络中任何持有此令牌 URL 的人都可以查看相机。此屏幕离开前台时共享停止。</string>
     <string name="camera_native_hidden_saved">已私密保存到 Pictures/TelosHidden。隐藏相册不会显示在图库中，卸载 Telos 时会被删除。</string>
     <string name="camera_native_geo_hint">仅限 JPEG EXIF。若可用，将添加不超过 10 分钟且精度在 500 米以内的近期位置。</string>

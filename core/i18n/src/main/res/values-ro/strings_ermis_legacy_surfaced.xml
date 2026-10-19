@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Adaugă un cont</string>
+    <string name="ermis_attach">Atașează de pe acest telefon</string>
+    <string name="ermis_body">Mesaj</string>
+    <string name="ermis_compose">Compune</string>
+    <string name="ermis_connect">Conectează</string>
+    <string name="ermis_email">E-mail</string>
+    <string name="ermis_inbox">Mesaje primite</string>
+    <string name="ermis_no_subject">(fără subiect)</string>
+    <string name="ermis_note">Notă</string>
+    <string name="ermis_note_save">Salvează nota</string>
+    <string name="ermis_password">Parolă</string>
+    <string name="ermis_remove">Elimină</string>
+    <string name="ermis_search">Caută în e-mailuri</string>
+    <string name="ermis_send">Trimite</string>
+    <string name="ermis_starred">Cu stea</string>
+    <string name="ermis_subject">Subiect</string>
+    <string name="ermis_sync">Sincronizează</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Către</string>
+</resources>

@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">Comptes de correu</string>
     <string name="ermis_all_accounts">Tots els comptes</string>
     <string name="ermis_native_intro">El vostre correu dins de Telos. Connecteu un compte IMAP/SMTP amb TLS i una contrasenya o contrasenya d’aplicació.</string>
     <string name="ermis_empty">No hi ha missatges. Sincronitzeu els comptes o canvieu la cerca.</string>
     <string name="ermis_operation_failed">L’operació de correu ha fallat</string>
-    <string name="ermis_tls_help">Tots dos servidors han d’admetre TLS verificat. Gmail requereix una contrasenya d’aplicació. Aquesta versió no permet iniciar sessió amb Google.</string>
+    <string name="ermis_tls_help">Tots dos servidors han d’admetre TLS verificat. Gmail pot utilitzar una contrasenya d’aplicació o accés Google/microG si s’admet.</string>
     <string name="ermis_username">Usuari del servidor</string>
     <string name="ermis_username_help">Deixeu-ho buit per utilitzar l’adreça electrònica.</string>
     <string name="ermis_imap_host">Servidor IMAP</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">Exigeix STARTTLS per a SMTP</string>
     <string name="ermis_saf_help">El selector també mostra proveïdors al núvol compatibles amb Documents d’Android. Per als fitxers grans, afegiu un enllaç al missatge.</string>
     <string name="ermis_reply">Respon</string>
+    <string name="ermis_google_sign_in">Accés amb Google / microG</string>
+    <string name="ermis_google_help">Utilitza el compte Android seleccionat només si l’autenticador permet accedir al correu. Altrament, feu servir una contrasenya d’aplicació.</string>
+    <string name="ermis_google_unavailable">El proveïdor del compte no ha permès accedir al correu. Feu servir una contrasenya d’aplicació.</string>
+    <string name="ermis_conversation_count">%1$d missatges en aquesta conversa</string>
 </resources>

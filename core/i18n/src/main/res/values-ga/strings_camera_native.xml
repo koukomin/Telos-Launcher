@@ -18,7 +18,7 @@
     <string name="camera_native_formats">Coinníonn JPEG meiteashonraí an cheamara nuair a chumasaítear é. Baineann PNG/WebP meiteashonraí.</string>
     <string name="camera_native_gallery">Oscail an gailearaí</string>
     <string name="camera_native_flash">Splanc</string>
-    <string name="camera_native_panorama_hint">Lánléargas láimhe: gabh 2–8 íomhá ó chlé go deas le forluí 20 %, agus coinnigh an léaslíne cothrom. Cumaisctear na hailt gan ailíniú uathoibríoch.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Lánléargas láimhe: gabh 2–8 íomhá ó chlé go deas le forluí 20 %, agus coinnigh an léaslíne cothrom. Cumaisctear na hailt gan ailíniú uathoibríoch.</string>
     <string name="camera_native_webcam_lan">Is féidir le haon duine ar do líonra áitiúil leis an URL comhartha seo an ceamara a fheiceáil. Stopann an comhroinnt nuair a fhágann an scáileán seo an tulra.</string>
     <string name="camera_native_hidden_saved">Sábháilte go príobháideach in Pictures/TelosHidden. Ní thaispeántar an t-albam folaithe sa ghailearaí agus scriostar é nuair a dhíshuiteáiltear Telos.</string>
     <string name="camera_native_geo_hint">JPEG EXIF amháin. Cuireann sé suíomh ar fáil, nach bhfuil níos sine ná 10 nóiméad agus cruinneas laistigh de 500 m, má tá sé ar fáil.</string>

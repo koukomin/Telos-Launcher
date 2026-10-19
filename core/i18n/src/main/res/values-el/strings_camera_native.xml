@@ -18,7 +18,7 @@
     <string name="camera_native_formats">Το JPEG κρατά τα μεταδεδομένα όταν είναι ενεργά. PNG/WebP αφαιρούν τα μεταδεδομένα.</string>
     <string name="camera_native_gallery">Άνοιγμα συλλογής</string>
     <string name="camera_native_flash">Φλας</string>
-    <string name="camera_native_panorama_hint">Χειροκίνητο πανόραμα: τραβήξτε 2–8 λήψεις από αριστερά προς τα δεξιά με επικάλυψη 20%, κρατώντας ίσιο τον ορίζοντα. Γίνεται ανάμειξη ενώσεων χωρίς αυτόματη ευθυγράμμιση.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Χειροκίνητο πανόραμα: τραβήξτε 2–8 λήψεις από αριστερά προς τα δεξιά με επικάλυψη 20%, κρατώντας ίσιο τον ορίζοντα. Γίνεται ανάμειξη ενώσεων χωρίς αυτόματη ευθυγράμμιση.</string>
     <string name="camera_native_webcam_lan">Όποιος έχει αυτό το URL με το διακριτικό στο τοπικό δίκτυο μπορεί να δει την κάμερα. Η μετάδοση σταματά όταν η οθόνη φύγει από το προσκήνιο.</string>
     <string name="camera_native_hidden_saved">Αποθηκεύτηκε ιδιωτικά στο Pictures/TelosHidden. Το κρυφό άλμπουμ δεν εμφανίζεται στη συλλογή και διαγράφεται με την απεγκατάσταση του Telos.</string>
     <string name="camera_native_geo_hint">Μόνο για JPEG EXIF. Προσθέτει διαθέσιμη πρόσφατη θέση, έως 10 λεπτών και ακρίβειας έως 500 μέτρων.</string>

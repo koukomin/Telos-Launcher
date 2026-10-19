@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">Posta hesapları</string>
     <string name="ermis_all_accounts">Tüm hesaplar</string>
     <string name="ermis_native_intro">Postanız Telos içinde. TLS ve parolanız veya uygulama parolanızla bir IMAP/SMTP hesabı bağlayın.</string>
     <string name="ermis_empty">İleti yok. Hesapları eşitleyin veya aramayı değiştirin.</string>
     <string name="ermis_operation_failed">Posta işlemi başarısız</string>
-    <string name="ermis_tls_help">Her iki sunucu da doğrulanmış TLS desteklemelidir. Gmail uygulama parolası gerektirir. Bu sürümde Google girişi kullanılamaz.</string>
+    <string name="ermis_tls_help">Her iki sunucu da doğrulanmış TLS desteklemelidir. Gmail, uygulama parolası veya desteklendiğinde Google/microG erişimi kullanabilir.</string>
     <string name="ermis_username">Sunucu kullanıcı adı</string>
     <string name="ermis_username_help">E-posta adresinizi kullanmak için boş bırakın.</string>
     <string name="ermis_imap_host">IMAP sunucusu</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">SMTP için STARTTLS gerektir</string>
     <string name="ermis_saf_help">Dosya seçici, Android Belgeler desteği olan bulut sağlayıcılarını da gösterir. Büyük dosyalar için iletiye paylaşım bağlantısı ekleyin.</string>
     <string name="ermis_reply">Yanıtla</string>
+    <string name="ermis_google_sign_in">Google / microG girişi</string>
+    <string name="ermis_google_help">Seçilen Android hesabını yalnızca kimlik doğrulayıcısı posta erişimi verirse kullanır. Aksi halde uygulama parolası kullanın.</string>
+    <string name="ermis_google_unavailable">Hesap sağlayıcısı posta erişimi vermedi. Uygulama parolası kullanın.</string>
+    <string name="ermis_conversation_count">Bu konuşmada %1$d ileti</string>
 </resources>

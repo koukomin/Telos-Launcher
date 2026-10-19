@@ -18,7 +18,7 @@
     <string name="camera_native_formats">A JPEG megőrzi a kamera metaadatait, ha engedélyezve van. A PNG/WebP eltávolítja a metaadatokat.</string>
     <string name="camera_native_gallery">Galéria megnyitása</string>
     <string name="camera_native_flash">Vaku</string>
-    <string name="camera_native_panorama_hint">Kézi panoráma: készítsen 2–8 képet balról jobbra 20 % átfedéssel, vízszintes horizonttal. Az illesztések automatikus igazítás nélkül összemosódnak.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Kézi panoráma: készítsen 2–8 képet balról jobbra 20 % átfedéssel, vízszintes horizonttal. Az illesztések automatikus igazítás nélkül összemosódnak.</string>
     <string name="camera_native_webcam_lan">A helyi hálózaton bárki láthatja a kamerát ezzel a tokenes URL-lel. A megosztás leáll, amikor ez a képernyő elhagyja az előteret.</string>
     <string name="camera_native_hidden_saved">Privát mentés a Pictures/TelosHidden mappába. A rejtett album nem jelenik meg a galériában, és a Telos eltávolításakor törlődik.</string>
     <string name="camera_native_geo_hint">Csak JPEG EXIF. Ha elérhető, legfeljebb 10 perces, 500 m-en belüli pontosságú helyet ad hozzá.</string>

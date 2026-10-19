@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">Levelezési fiókok</string>
     <string name="ermis_all_accounts">Összes fiók</string>
     <string name="ermis_native_intro">Levelei a Telosban. Csatlakoztasson IMAP/SMTP-fiókot TLS-sel és jelszóval vagy alkalmazásjelszóval.</string>
     <string name="ermis_empty">Nincsenek üzenetek. Szinkronizálja fiókjait vagy módosítsa a keresést.</string>
     <string name="ermis_operation_failed">A levelezési művelet sikertelen</string>
-    <string name="ermis_tls_help">Mindkét kiszolgálón ellenőrzött TLS szükséges. A Gmail alkalmazásjelszót igényel. A Google-bejelentkezés ebben a verzióban nem érhető el.</string>
+    <string name="ermis_tls_help">Mindkét kiszolgálón ellenőrzött TLS szükséges. A Gmail alkalmazásjelszót vagy támogatott Google/microG-hozzáférést használhat.</string>
     <string name="ermis_username">Kiszolgáló felhasználóneve</string>
     <string name="ermis_username_help">Hagyja üresen az e-mail-cím használatához.</string>
     <string name="ermis_imap_host">IMAP-kiszolgáló</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">STARTTLS megkövetelése SMTP-hez</string>
     <string name="ermis_saf_help">A fájlválasztó az Android Dokumentumokat támogató felhőszolgáltatókat is mutatja. Nagy fájlokhoz illesszen megosztási hivatkozást az üzenetbe.</string>
     <string name="ermis_reply">Válasz</string>
+    <string name="ermis_google_sign_in">Google / microG-bejelentkezés</string>
+    <string name="ermis_google_help">A kiválasztott Android-fiókot csak akkor használja, ha a hitelesítője hozzáférést ad a levelekhez. Egyébként használjon alkalmazásjelszót.</string>
+    <string name="ermis_google_unavailable">A fiókszolgáltató nem adott hozzáférést a levelekhez. Használjon alkalmazásjelszót.</string>
+    <string name="ermis_conversation_count">%1$d üzenet ebben a beszélgetésben</string>
 </resources>

@@ -18,7 +18,7 @@
     <string name="camera_native_formats">يحتفظ JPEG ببيانات الكاميرا الوصفية عند التفعيل. يزيل PNG/WebP البيانات الوصفية.</string>
     <string name="camera_native_gallery">فتح المعرض</string>
     <string name="camera_native_flash">الفلاش</string>
-    <string name="camera_native_panorama_hint">بانوراما يدوية: التقط 2–8 صور من اليسار إلى اليمين بتداخل 20 % مع إبقاء الأفق مستويًا. تُدمج الحواف دون محاذاة تلقائية.</string>
+    <string name="camera_native_panorama_hint" formatted="false">بانوراما يدوية: التقط 2–8 صور من اليسار إلى اليمين بتداخل 20 % مع إبقاء الأفق مستويًا. تُدمج الحواف دون محاذاة تلقائية.</string>
     <string name="camera_native_webcam_lan">يمكن لأي شخص لديه رابط الرمز هذا على شبكتك المحلية مشاهدة الكاميرا. تتوقف المشاركة عند مغادرة هذه الشاشة للواجهة.</string>
     <string name="camera_native_hidden_saved">تم الحفظ بشكل خاص في Pictures/TelosHidden. يُستبعد الألبوم المخفي من المعرض ويُحذف عند إلغاء تثبيت Telos.</string>
     <string name="camera_native_geo_hint">بيانات EXIF في JPEG فقط. يضيف موقعًا حديثًا لا يتجاوز عمره 10 دقائق وبدقة ضمن 500 متر عند توفره.</string>

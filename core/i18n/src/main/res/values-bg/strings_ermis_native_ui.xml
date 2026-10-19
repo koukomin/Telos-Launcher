@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">Пощенски акаунти</string>
     <string name="ermis_all_accounts">Всички акаунти</string>
     <string name="ermis_native_intro">Вашата поща в Telos. Свържете IMAP/SMTP акаунт с TLS и парола или парола за приложение.</string>
     <string name="ermis_empty">Няма съобщения. Синхронизирайте акаунтите или променете търсенето.</string>
     <string name="ermis_operation_failed">Неуспешна пощенска операция</string>
-    <string name="ermis_tls_help">И двата сървъра трябва да поддържат проверен TLS. Gmail изисква парола за приложение. В тази версия няма вход чрез Google.</string>
+    <string name="ermis_tls_help">И двата сървъра трябва да поддържат проверен TLS. Gmail може да използва парола за приложение или достъп Google/microG, когато се поддържа.</string>
     <string name="ermis_username">Потребителско име за сървъра</string>
     <string name="ermis_username_help">Оставете празно за използване на имейл адреса.</string>
     <string name="ermis_imap_host">IMAP сървър</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">Изискване на STARTTLS за SMTP</string>
     <string name="ermis_saf_help">Изборът на файлове показва и облачни услуги с поддръжка на Документи на Android. За големи файлове добавете връзка за споделяне.</string>
     <string name="ermis_reply">Отговор</string>
+    <string name="ermis_google_sign_in">Вход с Google / microG</string>
+    <string name="ermis_google_help">Използва избрания акаунт Android само ако удостоверителят му разреши достъп до пощата. Иначе използвайте парола за приложение.</string>
+    <string name="ermis_google_unavailable">Доставчикът на акаунта не разреши достъп до пощата. Използвайте парола за приложение.</string>
+    <string name="ermis_conversation_count">%1$d съобщения в този разговор</string>
 </resources>

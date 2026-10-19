@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_files_cannot_open_file">Tidak dapat membuka fail ini</string>
+    <string name="hc_open_with_2">Buka dengan…</string>
+    <string name="hc_root_explorer">Penjelajah root</string>
+    <string name="hf_files_careful">Berhati-hati</string>
+    <string name="hf_files_needs_root">Memerlukan telefon yang diroot</string>
+    <string name="hf_files_root_explorer_on">Penjelajah root: hidup</string>
+    <string name="hf_files_root_menu">Penjelajah root…</string>
+    <string name="hf_files_root_off">Matikan penjelajah root</string>
+    <string name="hf_files_system_readonly">Jadikan /system baca sahaja</string>
+    <string name="hf_files_system_writable">Benarkan penulisan pada /system</string>
+    <string name="hf_files_tap_to_turn_off">Ketik untuk mematikan</string>
+</resources>

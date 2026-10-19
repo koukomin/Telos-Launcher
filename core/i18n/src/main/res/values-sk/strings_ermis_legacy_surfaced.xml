@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Pridať účet</string>
+    <string name="ermis_attach">Priložiť z tohto telefónu</string>
+    <string name="ermis_body">Správa</string>
+    <string name="ermis_compose">Napísať</string>
+    <string name="ermis_connect">Pripojiť</string>
+    <string name="ermis_email">E-mail</string>
+    <string name="ermis_inbox">Doručená pošta</string>
+    <string name="ermis_no_subject">(bez predmetu)</string>
+    <string name="ermis_note">Poznámka</string>
+    <string name="ermis_note_save">Uložiť poznámku</string>
+    <string name="ermis_password">Heslo</string>
+    <string name="ermis_remove">Odstrániť</string>
+    <string name="ermis_search">Hľadať v pošte</string>
+    <string name="ermis_send">Odoslať</string>
+    <string name="ermis_starred">S hviezdičkou</string>
+    <string name="ermis_subject">Predmet</string>
+    <string name="ermis_sync">Synchronizovať</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Komu</string>
+</resources>

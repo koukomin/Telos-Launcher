@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">Generi ŝlosilparon</string>
+    <string name="telos_files_ssh_copy_public_key">Kopii publikan ŝlosilon</string>
+    <string name="telos_files_ssh_public_key_hint">Aldonu la publikan ŝlosilon al ~/.ssh/authorized_keys sur la servilo. La privata ŝlosilo restas ĉifrita en ĉi tiu telefono.</string>
+    <string name="telos_files_duplicates_exclude">Preterlasi dosierujojn</string>
+    <string name="telos_files_duplicates_exclude_hint">Dosierujaj nomoj aŭ vojoj apartigitaj per komoj, ekzemple: Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">Aliro per Shizuku</string>
+    <string name="telos_files_shizuku_summary">Malfermu Android/data, Android/obb kaj aliajn dosierujojn, kiujn la aplikaĵo ne povas legi, per Shizuku (sen root)</string>
+    <string name="telos_files_shizuku_denied">Shizuku ne funkcias aŭ ne permesis Telos</string>
+    <string name="telos_files_search_everywhere">Serĉi en la tuta memoro</string>
+    <string name="telos_files_search_everywhere_summary">Serĉas en interna memoro, SD-kartoj kaj USB-diskoj, ne nur en ĉi tiu dosierujo</string>
+</resources>

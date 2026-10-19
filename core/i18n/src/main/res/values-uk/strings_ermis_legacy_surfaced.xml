@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Додати обліковий запис</string>
+    <string name="ermis_attach">Прикріпити з цього телефона</string>
+    <string name="ermis_body">Повідомлення</string>
+    <string name="ermis_compose">Написати</string>
+    <string name="ermis_connect">Підключити</string>
+    <string name="ermis_email">Електронна пошта</string>
+    <string name="ermis_inbox">Вхідні</string>
+    <string name="ermis_no_subject">(без теми)</string>
+    <string name="ermis_note">Нотатка</string>
+    <string name="ermis_note_save">Зберегти нотатку</string>
+    <string name="ermis_password">Пароль</string>
+    <string name="ermis_remove">Видалити</string>
+    <string name="ermis_search">Пошук пошти</string>
+    <string name="ermis_send">Надіслати</string>
+    <string name="ermis_starred">Із зірочкою</string>
+    <string name="ermis_subject">Тема</string>
+    <string name="ermis_sync">Синхронізувати</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Кому</string>
+</resources>

@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">E-postkontoer</string>
     <string name="ermis_all_accounts">Alle kontoer</string>
     <string name="ermis_native_intro">E-posten din i Telos. Koble til en IMAP/SMTP-konto med TLS og passord eller app-passord.</string>
     <string name="ermis_empty">Ingen meldinger her. Synkroniser kontoene eller endre søket.</string>
     <string name="ermis_operation_failed">E-posthandlingen mislyktes</string>
-    <string name="ermis_tls_help">Begge serverne må støtte verifisert TLS. Gmail krever et app-passord. Google-pålogging er ikke tilgjengelig i denne versjonen.</string>
+    <string name="ermis_tls_help">Begge serverne må støtte bekreftet TLS. Gmail kan bruke app-passord eller Google/microG-tilgang når dette støttes.</string>
     <string name="ermis_username">Serverbrukernavn</string>
     <string name="ermis_username_help">La stå tomt for å bruke e-postadressen din.</string>
     <string name="ermis_imap_host">IMAP-server</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">Krev STARTTLS for SMTP</string>
     <string name="ermis_saf_help">Filvelgeren viser også skytjenester som støtter Android Dokumenter. Legg til en delingslenke i meldingen for store filer.</string>
     <string name="ermis_reply">Svar</string>
+    <string name="ermis_google_sign_in">Google / microG-pålogging</string>
+    <string name="ermis_google_help">Bruker valgt Android-konto bare hvis godkjenningstjenesten gir e-posttilgang. Bruk ellers et app-passord.</string>
+    <string name="ermis_google_unavailable">Kontoleverandøren ga ikke e-posttilgang. Bruk et app-passord i stedet.</string>
+    <string name="ermis_conversation_count">%1$d meldinger i denne samtalen</string>
 </resources>

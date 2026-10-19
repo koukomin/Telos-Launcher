@@ -18,7 +18,7 @@
     <string name="camera_native_formats">Etkinleştirildiğinde JPEG kamera meta verilerini korur. PNG/WebP meta verileri kaldırır.</string>
     <string name="camera_native_gallery">Galeriyi aç</string>
     <string name="camera_native_flash">Flaş</string>
-    <string name="camera_native_panorama_hint">Elle panorama: ufku düz tutarak soldan sağa %20 örtüşen 2–8 kare çekin. Dikişler otomatik hizalama olmadan harmanlanır.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Elle panorama: ufku düz tutarak soldan sağa %20 örtüşen 2–8 kare çekin. Dikişler otomatik hizalama olmadan harmanlanır.</string>
     <string name="camera_native_webcam_lan">Yerel ağınızda bu belirteç URL’sine sahip herkes kamerayı görebilir. Bu ekran ön plandan ayrıldığında paylaşım durur.</string>
     <string name="camera_native_hidden_saved">Pictures/TelosHidden içine özel olarak kaydedildi. Gizli albüm galeride görünmez ve Telos kaldırıldığında silinir.</string>
     <string name="camera_native_geo_hint">Yalnızca JPEG EXIF. Varsa en fazla 10 dakikalık ve 500 m içinde doğruluğa sahip konum ekler.</string>

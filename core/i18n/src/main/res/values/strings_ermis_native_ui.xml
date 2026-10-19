@@ -5,7 +5,7 @@
     <string name="ermis_native_intro">Your mail, inside Telos. Connect an IMAP/SMTP account using TLS and your password or app password.</string>
     <string name="ermis_empty">No messages here. Sync your accounts or change the search.</string>
     <string name="ermis_operation_failed">Mail operation failed</string>
-    <string name="ermis_tls_help">Both servers must support verified TLS. Gmail requires an app password. Google sign-in is not available in this version.</string>
+    <string name="ermis_tls_help">Both servers must support verified TLS. Gmail can use an app password or optional Google/microG account access when supported.</string>
     <string name="ermis_username">Server username</string>
     <string name="ermis_username_help">Leave empty to use your email address.</string>
     <string name="ermis_imap_host">IMAP server</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">Require STARTTLS for SMTP</string>
     <string name="ermis_saf_help">The file picker also shows cloud providers that support Android Documents. Add a sharing link to the message for large files.</string>
     <string name="ermis_reply">Reply</string>
+    <string name="ermis_google_sign_in">Google / microG sign-in</string>
+    <string name="ermis_google_help">Uses the selected Android account only if its authenticator grants mail access. Otherwise use an app password.</string>
+    <string name="ermis_google_unavailable">Mail access was not granted by the account provider. Use an app password instead.</string>
+    <string name="ermis_conversation_count">%1$d messages in this conversation</string>
 </resources>

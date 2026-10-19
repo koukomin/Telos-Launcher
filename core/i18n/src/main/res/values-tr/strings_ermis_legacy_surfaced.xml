@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">Hesap ekle</string>
+    <string name="ermis_attach">Bu telefondan ekle</string>
+    <string name="ermis_body">İleti</string>
+    <string name="ermis_compose">Oluştur</string>
+    <string name="ermis_connect">Bağlan</string>
+    <string name="ermis_email">E-posta</string>
+    <string name="ermis_inbox">Gelen kutusu</string>
+    <string name="ermis_no_subject">(konu yok)</string>
+    <string name="ermis_note">Not</string>
+    <string name="ermis_note_save">Notu kaydet</string>
+    <string name="ermis_password">Parola</string>
+    <string name="ermis_remove">Kaldır</string>
+    <string name="ermis_search">Postalarda ara</string>
+    <string name="ermis_send">Gönder</string>
+    <string name="ermis_starred">Yıldızlı</string>
+    <string name="ermis_subject">Konu</string>
+    <string name="ermis_sync">Eşitle</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">Alıcı</string>
+</resources>

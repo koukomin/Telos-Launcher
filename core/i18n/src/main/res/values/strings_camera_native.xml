@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG retains camera metadata when enabled. PNG/WebP strip metadata.</string>
     <string name="camera_native_gallery">Open gallery</string>
     <string name="camera_native_flash">Flash</string>
-    <string name="camera_native_panorama_hint">Manual panorama: capture 2–8 left-to-right slices with 20% overlap, keeping the horizon level. Stitching blends seams without automatic alignment.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Manual panorama: capture 2–8 left-to-right slices with 20% overlap, keeping the horizon level. Stitching blends seams without automatic alignment.</string>
     <string name="camera_native_webcam_lan">Anyone with this token URL on your local network can view the camera. Sharing stops when this screen leaves the foreground.</string>
     <string name="camera_native_hidden_saved">Saved privately in Pictures/TelosHidden. Hidden album is excluded from the gallery and removed when Telos is uninstalled.</string>
     <string name="camera_native_geo_hint">JPEG EXIF only. Adds a recent location fix, at most 10 minutes old with accuracy within 500 m, when available.</string>

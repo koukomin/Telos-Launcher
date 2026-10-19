@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG giữ siêu dữ liệu máy ảnh khi bật. PNG/WebP xóa siêu dữ liệu.</string>
     <string name="camera_native_gallery">Mở thư viện</string>
     <string name="camera_native_flash">Đèn flash</string>
-    <string name="camera_native_panorama_hint">Ảnh toàn cảnh thủ công: chụp 2–8 ảnh từ trái sang phải với độ chồng 20 %, giữ đường chân trời ngang. Các đường nối được hòa trộn mà không tự căn chỉnh.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Ảnh toàn cảnh thủ công: chụp 2–8 ảnh từ trái sang phải với độ chồng 20 %, giữ đường chân trời ngang. Các đường nối được hòa trộn mà không tự căn chỉnh.</string>
     <string name="camera_native_webcam_lan">Bất kỳ ai trên mạng cục bộ có URL chứa mã này đều có thể xem máy ảnh. Chia sẻ dừng khi màn hình này rời tiền cảnh.</string>
     <string name="camera_native_hidden_saved">Đã lưu riêng tư vào Pictures/TelosHidden. Album ẩn không hiện trong thư viện và bị xóa khi gỡ Telos.</string>
     <string name="camera_native_geo_hint">Chỉ JPEG EXIF. Thêm vị trí có sẵn không quá 10 phút với độ chính xác trong 500 m.</string>

@@ -18,7 +18,7 @@
     <string name="camera_native_formats">有効にするとJPEGはカメラのメタデータを保持します。PNG/WebPはメタデータを削除します。</string>
     <string name="camera_native_gallery">ギャラリーを開く</string>
     <string name="camera_native_flash">フラッシュ</string>
-    <string name="camera_native_panorama_hint">手動パノラマ：水平を保ち、左から右へ20 %重なるように2～8枚撮影します。自動位置合わせは行わず、継ぎ目をブレンドします。</string>
+    <string name="camera_native_panorama_hint" formatted="false">手動パノラマ：水平を保ち、左から右へ20 %重なるように2～8枚撮影します。自動位置合わせは行わず、継ぎ目をブレンドします。</string>
     <string name="camera_native_webcam_lan">ローカルネットワークでこのトークン付きURLを知る人は誰でもカメラを視聴できます。この画面が前面から離れると共有が停止します。</string>
     <string name="camera_native_hidden_saved">Pictures/TelosHiddenに非公開で保存しました。非表示アルバムはギャラリーに表示されず、Telosをアンインストールすると削除されます。</string>
     <string name="camera_native_geo_hint">JPEG EXIFのみ。取得できる場合、10分以内かつ精度500 m以内の位置情報を追加します。</string>

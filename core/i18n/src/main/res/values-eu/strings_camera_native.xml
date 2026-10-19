@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG formatuak kameraren metadatuak gordetzen ditu gaituta dagoenean. PNG/WebP formatuek metadatuak kentzen dituzte.</string>
     <string name="camera_native_gallery">Ireki galeria</string>
     <string name="camera_native_flash">Flasha</string>
-    <string name="camera_native_panorama_hint">Eskuzko panorama: atera 2–8 irudi ezkerretik eskuinera %20ko gainjartzearekin, horizontea zuzen mantenduz. Junturak nahasten dira lerrokatze automatikorik gabe.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Eskuzko panorama: atera 2–8 irudi ezkerretik eskuinera %20ko gainjartzearekin, horizontea zuzen mantenduz. Junturak nahasten dira lerrokatze automatikorik gabe.</string>
     <string name="camera_native_webcam_lan">Tokena duen URL hau zure sare lokalean duen edonork kamera ikus dezake. Partekatzea gelditzen da pantaila hau lehen planotik ateratzen denean.</string>
     <string name="camera_native_hidden_saved">Modu pribatuan gordeta Pictures/TelosHidden karpetan. Ezkutuko albuma ez da galerian agertzen eta Telos desinstalatzean ezabatzen da.</string>
     <string name="camera_native_geo_hint">JPEG EXIF soilik. Gehienez 10 minutuko eta 500 m-ko zehaztasuna duen kokapena gehitzen du, eskuragarri badago.</string>

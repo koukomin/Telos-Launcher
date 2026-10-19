@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ermis_accounts">Contos de posta</string>
     <string name="ermis_all_accounts">Tote le contos</string>
     <string name="ermis_native_intro">Tu posta in Telos. Connecte un conto IMAP/SMTP con TLS e contrasigno o contrasigno de application.</string>
     <string name="ermis_empty">Nulle messages. Synchronisa le contos o cambia le recerca.</string>
     <string name="ermis_operation_failed">Le operation de posta ha fallite</string>
-    <string name="ermis_tls_help">Ambe servitores debe supportar TLS verificate. Gmail require un contrasigno de application. Le connexion Google non es disponibile in iste version.</string>
+    <string name="ermis_tls_help">Ambe servitores debe supportar TLS verificate. Gmail pote usar un contrasigno de application o accesso Google/microG quando supportate.</string>
     <string name="ermis_username">Nomine de usator del servitor</string>
     <string name="ermis_username_help">Lassa vacue pro usar tu adresse de e-posta.</string>
     <string name="ermis_imap_host">Servitor IMAP</string>
@@ -15,4 +15,8 @@
     <string name="ermis_starttls">Requirer STARTTLS pro SMTP</string>
     <string name="ermis_saf_help">Le selector de files monstra etiam servicios de nube compatibile con Documentos Android. Pro files grande, adde un ligamine de condivision al message.</string>
     <string name="ermis_reply">Responder</string>
+    <string name="ermis_google_sign_in">Connexion Google / microG</string>
+    <string name="ermis_google_help">Usa le conto Android seligite solo si su authenticator concede accesso al posta. Alteremente usa un contrasigno de application.</string>
+    <string name="ermis_google_unavailable">Le fornitor del conto non concedeva accesso al posta. Usa un contrasigno de application.</string>
+    <string name="ermis_conversation_count">%1$d messages in iste conversation</string>
 </resources>

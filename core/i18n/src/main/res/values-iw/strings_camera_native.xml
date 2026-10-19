@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG שומר את נתוני המצלמה כשאפשרות זו מופעלת. PNG/WebP מסירים נתוני מטא.</string>
     <string name="camera_native_gallery">פתיחת הגלריה</string>
     <string name="camera_native_flash">מבזק</string>
-    <string name="camera_native_panorama_hint">פנורמה ידנית: צלמו 2–8 תמונות משמאל לימין עם חפיפה של 20 %, תוך שמירה על אופק ישר. התפרים ממוזגים ללא יישור אוטומטי.</string>
+    <string name="camera_native_panorama_hint" formatted="false">פנורמה ידנית: צלמו 2–8 תמונות משמאל לימין עם חפיפה של 20 %, תוך שמירה על אופק ישר. התפרים ממוזגים ללא יישור אוטומטי.</string>
     <string name="camera_native_webcam_lan">כל מי שמחזיק בכתובת URL זו עם האסימון ברשת המקומית יכול לצפות במצלמה. השיתוף נעצר כאשר מסך זה עוזב את החזית.</string>
     <string name="camera_native_hidden_saved">נשמר באופן פרטי ב־Pictures/TelosHidden. האלבום המוסתר אינו מופיע בגלריה ונמחק בעת הסרת Telos.</string>
     <string name="camera_native_geo_hint">JPEG EXIF בלבד. מוסיף מיקום זמין בן עד 10 דקות, עם דיוק בטווח 500 מטר.</string>

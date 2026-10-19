@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG mengekalkan metadata kamera apabila didayakan. PNG/WebP membuang metadata.</string>
     <string name="camera_native_gallery">Buka galeri</string>
     <string name="camera_native_flash">Denyar</string>
-    <string name="camera_native_panorama_hint">Panorama manual: tangkap 2–8 imej dari kiri ke kanan dengan tindihan 20 %, pastikan ufuk rata. Sambungan diadun tanpa penjajaran automatik.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Panorama manual: tangkap 2–8 imej dari kiri ke kanan dengan tindihan 20 %, pastikan ufuk rata. Sambungan diadun tanpa penjajaran automatik.</string>
     <string name="camera_native_webcam_lan">Sesiapa di rangkaian tempatan dengan URL token ini boleh melihat kamera. Perkongsian berhenti apabila skrin ini meninggalkan latar depan.</string>
     <string name="camera_native_hidden_saved">Disimpan secara peribadi dalam Pictures/TelosHidden. Album tersembunyi tidak muncul dalam galeri dan dipadam apabila Telos dinyahpasang.</string>
     <string name="camera_native_geo_hint">JPEG EXIF sahaja. Menambah lokasi tersedia, berusia paling lama 10 minit dengan ketepatan dalam 500 m.</string>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_ssh_generate_key">สร้างคู่กุญแจ</string>
+    <string name="telos_files_ssh_copy_public_key">คัดลอกกุญแจสาธารณะ</string>
+    <string name="telos_files_ssh_public_key_hint">เพิ่มกุญแจสาธารณะใน ~/.ssh/authorized_keys บนเซิร์ฟเวอร์ กุญแจส่วนตัวจะยังเข้ารหัสอยู่ในโทรศัพท์นี้</string>
+    <string name="telos_files_duplicates_exclude">ข้ามโฟลเดอร์</string>
+    <string name="telos_files_duplicates_exclude_hint">ชื่อหรือเส้นทางโฟลเดอร์คั่นด้วยจุลภาค เช่น Android, .thumbnails, DCIM/Camera</string>
+    <string name="telos_files_shizuku">การเข้าถึง Shizuku</string>
+    <string name="telos_files_shizuku_summary">เปิด Android/data, Android/obb และโฟลเดอร์อื่นที่แอปอ่านไม่ได้ผ่าน Shizuku (ไม่ต้องรูท)</string>
+    <string name="telos_files_shizuku_denied">Shizuku ไม่ทำงานหรือไม่อนุญาต Telos</string>
+    <string name="telos_files_search_everywhere">ค้นหาที่เก็บข้อมูลทั้งหมด</string>
+    <string name="telos_files_search_everywhere_summary">ค้นหาในที่เก็บข้อมูลภายใน การ์ด SD และไดรฟ์ USB ไม่ใช่เฉพาะโฟลเดอร์นี้</string>
+</resources>

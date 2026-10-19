@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG păstrează metadatele camerei dacă opțiunea este activată. PNG/WebP elimină metadatele.</string>
     <string name="camera_native_gallery">Deschide galeria</string>
     <string name="camera_native_flash">Bliț</string>
-    <string name="camera_native_panorama_hint">Panoramă manuală: capturați 2–8 imagini de la stânga la dreapta cu suprapunere de 20 %, menținând orizontul drept. Îmbinările sunt estompate fără aliniere automată.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Panoramă manuală: capturați 2–8 imagini de la stânga la dreapta cu suprapunere de 20 %, menținând orizontul drept. Îmbinările sunt estompate fără aliniere automată.</string>
     <string name="camera_native_webcam_lan">Oricine din rețeaua locală cu acest URL cu token poate vedea camera. Partajarea se oprește când acest ecran părăsește prim-planul.</string>
     <string name="camera_native_hidden_saved">Salvat privat în Pictures/TelosHidden. Albumul ascuns nu apare în galerie și este șters la dezinstalarea Telos.</string>
     <string name="camera_native_geo_hint">Doar EXIF JPEG. Adaugă o locație disponibilă, veche de cel mult 10 minute, cu precizie de până la 500 m.</string>

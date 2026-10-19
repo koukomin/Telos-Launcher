@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG saglabā kameras metadatus, ja tas ir iespējots. PNG/WebP noņem metadatus.</string>
     <string name="camera_native_gallery">Atvērt galeriju</string>
     <string name="camera_native_flash">Zibspuldze</string>
-    <string name="camera_native_panorama_hint">Manuāla panorāma: uzņemiet 2–8 attēlus no kreisās uz labo ar 20 % pārklājumu, turot horizontu līmenī. Savienojumi tiek sapludināti bez automātiskas izlīdzināšanas.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Manuāla panorāma: uzņemiet 2–8 attēlus no kreisās uz labo ar 20 % pārklājumu, turot horizontu līmenī. Savienojumi tiek sapludināti bez automātiskas izlīdzināšanas.</string>
     <string name="camera_native_webcam_lan">Ikviens ar šo marķiera URL jūsu lokālajā tīklā var skatīt kameru. Kopīgošana beidzas, kad šis ekrāns vairs nav priekšplānā.</string>
     <string name="camera_native_hidden_saved">Privāti saglabāts mapē Pictures/TelosHidden. Slēptais albums netiek rādīts galerijā un tiek dzēsts, atinstalējot Telos.</string>
     <string name="camera_native_geo_hint">Tikai JPEG EXIF. Pievieno pieejamu atrašanās vietu, kas nav vecāka par 10 minūtēm, ar precizitāti līdz 500 m.</string>

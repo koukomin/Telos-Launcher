@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG bevarer kamerametadata, når det er aktiveret. PNG/WebP fjerner metadata.</string>
     <string name="camera_native_gallery">Åbn galleri</string>
     <string name="camera_native_flash">Blitz</string>
-    <string name="camera_native_panorama_hint">Manuelt panorama: tag 2–8 billeder fra venstre mod højre med 20 % overlap og vandret horisont. Samlinger udjævnes uden automatisk justering.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Manuelt panorama: tag 2–8 billeder fra venstre mod højre med 20 % overlap og vandret horisont. Samlinger udjævnes uden automatisk justering.</string>
     <string name="camera_native_webcam_lan">Alle med denne token-URL på dit lokale netværk kan se kameraet. Deling stopper, når denne skærm forlader forgrunden.</string>
     <string name="camera_native_hidden_saved">Gemt privat i Pictures/TelosHidden. Det skjulte album udelades fra galleriet og fjernes, når Telos afinstalleres.</string>
     <string name="camera_native_geo_hint">Kun JPEG-EXIF. Tilføjer en position, højst 10 minutter gammel og med nøjagtighed inden for 500 m, når tilgængelig.</string>

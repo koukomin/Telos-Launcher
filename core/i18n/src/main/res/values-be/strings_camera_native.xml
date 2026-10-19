@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG захоўвае метаданыя камеры, калі гэта ўключана. PNG/WebP выдаляюць метаданыя.</string>
     <string name="camera_native_gallery">Адкрыць галерэю</string>
     <string name="camera_native_flash">Успышка</string>
-    <string name="camera_native_panorama_hint">Ручная панарама: зрабіце 2–8 кадраў злева направа з перакрыццем 20 %, трымаючы гарызонт роўна. Швы згладжваюцца без аўтаматычнага выраўноўвання.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Ручная панарама: зрабіце 2–8 кадраў злева направа з перакрыццем 20 %, трымаючы гарызонт роўна. Швы згладжваюцца без аўтаматычнага выраўноўвання.</string>
     <string name="camera_native_webcam_lan">Любы ў лакальнай сетцы з гэтым URL з токенам можа глядзець камеру. Трансляцыя спыняецца, калі гэты экран пакідае пярэдні план.</string>
     <string name="camera_native_hidden_saved">Захавана прыватна ў Pictures/TelosHidden. Схаваны альбом не паказваецца ў галерэі і выдаляецца пры выдаленні Telos.</string>
     <string name="camera_native_geo_hint">Толькі JPEG EXIF. Дадае даступнае месцазнаходжанне не старэйшае за 10 хвілін з дакладнасцю да 500 м.</string>

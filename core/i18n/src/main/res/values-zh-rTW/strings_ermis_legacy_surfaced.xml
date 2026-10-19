@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_add_account">新增帳戶</string>
+    <string name="ermis_attach">從此手機加入附件</string>
+    <string name="ermis_body">內文</string>
+    <string name="ermis_compose">撰寫郵件</string>
+    <string name="ermis_connect">連線</string>
+    <string name="ermis_email">電子郵件</string>
+    <string name="ermis_inbox">收件匣</string>
+    <string name="ermis_no_subject">（無主旨）</string>
+    <string name="ermis_note">備註</string>
+    <string name="ermis_note_save">儲存備註</string>
+    <string name="ermis_password">密碼</string>
+    <string name="ermis_remove">移除</string>
+    <string name="ermis_search">搜尋郵件</string>
+    <string name="ermis_send">傳送</string>
+    <string name="ermis_starred">已加星號</string>
+    <string name="ermis_subject">主旨</string>
+    <string name="ermis_sync">同步</string>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_to">收件者</string>
+</resources>

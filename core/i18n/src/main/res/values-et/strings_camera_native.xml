@@ -18,7 +18,7 @@
     <string name="camera_native_formats">JPEG säilitab kaamera metaandmed, kui see on lubatud. PNG/WebP eemaldavad metaandmed.</string>
     <string name="camera_native_gallery">Ava galerii</string>
     <string name="camera_native_flash">Välk</string>
-    <string name="camera_native_panorama_hint">Käsitsi panoraam: tee vasakult paremale 2–8 pilti 20 % kattuvusega, hoides horisondi sirgena. Liitekohad hajutatakse automaatse joondamiseta.</string>
+    <string name="camera_native_panorama_hint" formatted="false">Käsitsi panoraam: tee vasakult paremale 2–8 pilti 20 % kattuvusega, hoides horisondi sirgena. Liitekohad hajutatakse automaatse joondamiseta.</string>
     <string name="camera_native_webcam_lan">Kõik, kellel on see tokeniga URL sinu kohalikus võrgus, saavad kaamerat vaadata. Jagamine lõpeb, kui see kuva lahkub esiplaanilt.</string>
     <string name="camera_native_hidden_saved">Salvestatud privaatselt kausta Pictures/TelosHidden. Peidetud albumit ei kuvata galeriis ja see eemaldatakse Telosi desinstallimisel.</string>
     <string name="camera_native_geo_hint">Ainult JPEG EXIF. Lisab võimaluse korral kuni 10 minutit vana asukoha, mille täpsus on 500 m või parem.</string>
