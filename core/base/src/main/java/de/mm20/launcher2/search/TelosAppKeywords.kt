@@ -7,6 +7,7 @@ package de.mm20.launcher2.search
 object TelosAppKeywords {
 
     private val byDomain: Map<String, List<String>> = mapOf(
+        "telos_ironewolf_app" to listOf("ironewolf", "ironfox", "firefox", "browser", "περιηγητής"),
         "telos_terminal_app" to listOf("termux", "shell", "bash", "linux", "τερματικό", "terminal"),
         "telos_youtube_app" to listOf("youtube", "yt", "video", "γιουτουμπ", "γιουτούμπ", "βίντεο"),
         "telos_youtube_music_app" to listOf("youtube", "youtube music", "yt music", "γιουτουμπ", "γιουτούμπ", "μουσική", "τραγούδια"),
