@@ -39,6 +39,8 @@ android {
             jvmTarget.set(JvmTarget.JVM_1_8)
         }
     }
+    // Mail and Activation carry matching-named notices. Full upstream licenses ship as app assets.
+    packaging.resources.pickFirsts += setOf("META-INF/NOTICE.md", "META-INF/LICENSE.md")
     namespace = "de.mm20.launcher2.data.comms"
 }
 

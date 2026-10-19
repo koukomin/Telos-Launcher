@@ -327,3 +327,5 @@ Akou uses on-device Shazam-compatible fingerprinting, adapted from InterTune's p
 Original copyright/SPDX notices remain in `services/comms/.../akou/fingerprint/`. Changes: package relocation; Telos foreground PCM capture, bounded cancellable HTTP transport, result/history integration. No proprietary Shazam application code or API key is included. The third-party matching endpoint is unofficial and availability is outside Telos's control.
 
 Test-only audio excerpt: “Sneaky Snitch” by Kevin MacLeod, https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sneaky%20Snitch.mp3, Creative Commons Attribution 4.0, https://creativecommons.org/licenses/by/4.0/. Converted to 10-second mono 16 kHz PCM excerpt as documented in `services/comms/src/test/resources/ASSET_LICENSE.md`; not packaged in the application.
+
+The complete Mail/Activation artifact license and notice texts are bundled in `assets/licenses/android-mail-activation-1.6.7-NOTICES.txt` in the APK.
