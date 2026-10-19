@@ -20,7 +20,7 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 
 > **Note:** The Telos apps use flat Material icons: a white glyph on an intense, saturated background of its own
 > (navy for Phone, teal for Messages, amber for Files, slate for Calculator, blue for Screenshot, orange for Screen Recorder, cyan for Voice Recorder, amber for Notes, blue for Calendar, deep purple for Downloads, deep emerald green for Network, purple for Music, red for
-> Video, green for Radio, Hasselblad orange for Camera). Telos Store uses the launcher icon. The name and the final branding are
+> Video, green for Radio, orange for Camera). Telos Store uses the launcher icon. The name and the final branding are
 > still in progress.
 
 ## Contents
