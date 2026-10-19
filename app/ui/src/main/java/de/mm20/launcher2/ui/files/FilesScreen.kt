@@ -225,7 +225,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                 if (de.mm20.launcher2.ui.files.vault.VaultSessions.isUnlocked(entry.path)) vm.open(de.mm20.launcher2.ui.files.vault.VaultPath.build(entry.path, "/")) else dialog = FilesDialog.Unlock(entry)
             entry.isDir -> vm.open(entry.path)
             ArchivePath.canOpen(entry.name) && !de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(entry.name) && !RemotePath.isRemote(entry.path) && !ArchivePath.isArchive(entry.path) -> dialog = FilesDialog.Archive(entry)
-            RemotePath.isRemote(entry.path) && entry.kind == FileKind.Video -> FileActions.playRemoteVideo(context, entry, vm.entries)
+            RemotePath.isRemote(entry.path) && (entry.kind == FileKind.Video || entry.kind == FileKind.Audio) -> FileActions.playRemoteVideo(context, entry, vm.entries)
             (RemotePath.isRemote(entry.path) || ArchivePath.isArchive(entry.path) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(entry.path)) -> vm.download(entry) { file ->
                 FileActions.open(context, FsEntry(file.path, file.name, false, file.length(), file.lastModified()), emptyList(), false)
             }
@@ -251,6 +251,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                 event.isCtrlPressed && event.key == Key.H -> { vm.toggleHidden(); true }
                 event.isCtrlPressed && event.key == Key.N && vm.path != null -> { dialog = FilesDialog.NewFolder; true }
                 event.isAltPressed && event.key == Key.DirectionUp -> vm.up()
+                event.key == Key.Backspace && !selecting -> vm.up()
                 event.key == Key.Escape && selecting -> { vm.clearSelection(); true }
                 event.key == Key.Delete && selecting -> { dialog = FilesDialog.Delete(vm.selectedEntries()); true }
                 event.key == Key.F2 && selecting -> {

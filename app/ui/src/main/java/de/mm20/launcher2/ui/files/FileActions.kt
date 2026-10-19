@@ -43,9 +43,9 @@ internal object FileActions {
         FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
     }.getOrNull()
 
-    /** Plays a video on a network storage straight from there, the videos next to it form the playlist */
+    /** Plays a video or song on a network storage straight from there (no download), the ones next to it form the playlist */
     fun playRemoteVideo(context: Context, entry: FsEntry, siblings: List<FsEntry>) {
-        val allVideos = siblings.filter { it.kind == FileKind.Video && !it.isDir && RemotePath.isRemote(it.path) }
+        val allVideos = siblings.filter { it.kind == entry.kind && !it.isDir && RemotePath.isRemote(it.path) }
         val chosen = allVideos.indexOfFirst { it.path == entry.path }
         if (chosen < 0) return
         val (videos, index) = allVideos.windowAround(chosen)
