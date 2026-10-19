@@ -131,6 +131,7 @@ class CompareResult(val pagesA: Int, val pagesB: Int, val differing: List<Int>)
 
 /** All PDF operations. Everything runs on [Dispatchers.IO], is cancellable between pages and writes into the cache. */
 object PdfEngine {
+    private val whitespace = Regex("\\s+")
     private val ids = AtomicLong(1)
     fun nextId(): Long = ids.getAndIncrement()
 
@@ -978,7 +979,6 @@ object PdfEngine {
             val n = doc.numberOfPages
             val stripper = PDFTextStripper()
             stripper.sortByPosition = true
-            val whitespace = Regex("\\s+")
             val result = IntArray(n)
             for (i in 0 until n) {
                 currentCoroutineContext().ensureActive()

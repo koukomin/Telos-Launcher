@@ -28,6 +28,7 @@ android {
             "fa", "fi", "fr", "ga", "he", "iw", "hi", "hr", "hu", "ia", "in", "id", "it", "ja", "ko",
             "lt", "lv", "ms", "mt", "nb", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sv", "th", "tr",
             "uk", "vi", "zh",
+            "en-rGB", "en-rUS", "nb-rNO", "pt-rBR", "zh-rCN", "zh-rTW",
         )
     }
 

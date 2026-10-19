@@ -21,12 +21,22 @@ object SimRouter : KoinComponent {
     private val scope = containedScope(Dispatchers.Main.immediate)
 
     fun place(context: Context, number: String, handle: PhoneAccountHandle? = null) {
-        val app = context.applicationContext
-        scope.launch {
-            val resolved = handle ?: withContext(Dispatchers.IO) { resolve(app, number) }
-            if (resolved != null) commsSettings.setLastUsedSim(resolved.id)
-            TelosDialer.placeCall(app, number, resolved)
+        if (handle != null) {
+            placeNow(context, number, handle)
+            return
         }
+        val app = context.applicationContext
+        scope.launch { placeAwait(app, number) }
+    }
+
+    /** Resolves the SIM off the main thread, then places the call. Call from the main thread. */
+    suspend fun placeAwait(context: Context, number: String) {
+        placeNow(context, number, withContext(Dispatchers.IO) { resolve(context, number) })
+    }
+
+    private fun placeNow(context: Context, number: String, handle: PhoneAccountHandle?) {
+        if (handle != null) commsSettings.setLastUsedSim(handle.id)
+        TelosDialer.placeCall(context, number, handle)
     }
 
     fun defaultNumberFor(contactId: Long, numbers: List<String>): String {
