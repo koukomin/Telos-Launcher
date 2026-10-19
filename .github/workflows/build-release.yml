@@ -182,6 +182,15 @@ jobs:
           name: telos-${{ matrix.abi }}
           path: ${{ runner.temp }}/out/telos-${{ matrix.abi }}.apk
 
+      # R8 renames classes: crash stack traces of this APK can only be read back with its mapping file
+      # (retrace mapping.txt stacktrace.txt). Not named telos-* so the release job does not publish it.
+      - name: Upload R8 mapping
+        uses: actions/upload-artifact@v4
+        with:
+          name: mapping-${{ matrix.abi }}
+          path: app/app/build/outputs/mapping/defaultRelease/mapping.txt
+          retention-days: 90
+
   # Δημιουργεί ένα GitHub Release (σε push στο main ή σε tag) με τα δύο APK.
   # Ξεχωριστό job ώστε τα δύο builds να μην προσπαθούν να φτιάξουν το ίδιο release.
   release:
