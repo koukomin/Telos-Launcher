@@ -50,7 +50,9 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     }
     private val prefs = context.getSharedPreferences("telos_files", Context.MODE_PRIVATE)
     private val local = LocalFs()
-    private val root = RootFs()
+    private val suRoot = RootFs()
+    private val shizukuRoot = RootFs(shizuku = true)
+    private val root: RootFs get() = if (shizukuMode) shizukuRoot else suRoot
 
     /** Where the user is. null is the home page with the storages and the shortcuts. */
     var path by mutableStateOf<String?>(null)
@@ -391,20 +393,27 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                     val job = coroutineContext
                     if (everywhere) {
                         var limited = false
-                        val files = volumes.asSequence().flatMap { volume ->
+                        // every volume is scanned and gets a fair share of the 300 results
+                        val perVolume = volumes.map { volume ->
                             val snapshot = de.mm20.launcher2.helper.FileSearchIndex.read(File(volume.path)) { job.ensureActive() }
                             if (snapshot.limited || snapshot.unreadable > 0) limited = true
                             snapshot.files.asSequence().map { file ->
                                 job.ensureActive()
                                 FsEntry(file.path, file.name, file.directory, file.size, file.modified, isLink = file.symbolicLink) to file.hidden
-                            }
-                        }.filter { (entry, hidden) -> matches(entry, hidden) }.take(301).map { it.first }.toList()
-                        files.take(300) to (limited || files.size > 300)
+                            }.filter { (entry, hidden) -> matches(entry, hidden) }.take(301).map { it.first }.toList()
+                        }
+                        val files = ArrayList<FsEntry>(300)
+                        var round = 0
+                        while (files.size < 300 && perVolume.any { round < it.size }) {
+                            perVolume.forEach { list -> if (round < list.size && files.size < 300) files += list[round] }
+                            round++
+                        }
+                        files to (limited || perVolume.sumOf { it.size } > 300)
                     } else if (RemotePath.isRemote(dir!!)) {
                         val scan = FilesRemoteSearch.scan(fsFor(dir), dir, showHidden, { matches(it) })
                         scan.entries to scan.partial
                     } else if (rootMode) {
-                        val files = RootShell.run("find ${RootShell.q(dir)} -mindepth 1 2>/dev/null | head -20000").out.lines()
+                        val files = RootShell.run("find ${RootShell.q(dir)} -mindepth 1 2>/dev/null | head -20000", shizuku = shizukuMode).out.lines()
                             .filter { it.isNotBlank() && (text.isBlank() || matcher.matches(nameOf(it))) }.take(300)
                             .map { FsEntry(it, nameOf(it), File(it).isDirectory, -1, 0) }.filter { matches(it) }
                         files to (files.size >= 300)
@@ -445,7 +454,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     /** Asks for the superuser. Returns through [onResult] on the main thread. */
     fun enableRoot(onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val ok = withContext(Dispatchers.IO) { RootShell.shizuku = false; RootShell.available(force = true) }
+            val ok = withContext(Dispatchers.IO) { RootShell.available(force = true) }
             rootMode = ok; shizukuMode = false
             if (!ok) message = s(R.string.au_files_root_denied)
             onResult(ok)
@@ -453,7 +462,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun disableRoot() { rootMode = false; shizukuMode = false; RootShell.shizuku = false; rootMounted = null; path?.let { load(it) } }
+    fun disableRoot() { rootMode = false; shizukuMode = false; rootMounted = null; path?.let { load(it) } }
 
     /** Root mode that runs through Shizuku instead of the superuser */
     var shizukuMode by mutableStateOf(false)
@@ -461,7 +470,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     fun enableShizuku() {
         viewModelScope.launch {
-            val ok = withContext(Dispatchers.IO) { RootShell.shizuku = true; RootShell.available(force = true).also { if (!it) RootShell.shizuku = false } }
+            val ok = withContext(Dispatchers.IO) { RootShell.available(force = true, shizuku = true) }
             rootMode = ok; shizukuMode = ok
             if (!ok) message = s(R.string.telos_files_shizuku_denied)
             path?.let { load(it) }

@@ -197,11 +197,14 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                         val keyScope = rememberCoroutineScope()
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             TextButton(onClick = {
+                                busy = true
                                 keyScope.launch {
-                                    val pem = withContext(Dispatchers.Default) { SshKeys.generatePrivatePem() }
-                                    c = c.copy(privateKey = pem, password = "")
+                                    try {
+                                        val pem = withContext(Dispatchers.Default) { SshKeys.generatePrivatePem() }
+                                        c = c.copy(privateKey = pem, password = "")
+                                    } finally { busy = false }
                                 }
-                            }) { Text(stringResource(R.string.telos_files_ssh_generate_key)) }
+                            }, enabled = !busy) { Text(stringResource(R.string.telos_files_ssh_generate_key)) }
                             if (publicKey != null) TextButton(onClick = { clipboard.setText(androidx.compose.ui.text.AnnotatedString(publicKey)) }) {
                                 Text(stringResource(R.string.telos_files_ssh_copy_public_key))
                             }

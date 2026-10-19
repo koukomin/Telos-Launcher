@@ -59,8 +59,11 @@ internal fun StorageAnalysisDialog(path: String, onOpenFolder: (String) -> Unit,
                         scope.launch {
                             busy = true
                             try {
-                                val candidates = result.files.filterNot { record -> isExcluded(record.file, path, skip) }
-                                duplicates = withContext(Dispatchers.IO) { val job = currentCoroutineContext(); StorageAnalysis.duplicates(candidates) { job.ensureActive() } }
+                                duplicates = withContext(Dispatchers.IO) {
+                                    val job = currentCoroutineContext()
+                                    val candidates = result.files.filterNot { record -> job.ensureActive(); isExcluded(record.file, path, skip) }
+                                    StorageAnalysis.duplicates(candidates) { job.ensureActive() }
+                                }
                             } catch (e: CancellationException) { throw e }
                               catch (_: Exception) { failed = true }
                             finally { busy = false }
