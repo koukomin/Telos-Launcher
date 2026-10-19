@@ -86,7 +86,7 @@ import kotlin.math.sin
 data object SystemDashboardRoute : NavKey
 
 private data class WifiEntry(val ssid: String, val psk: String?)
-internal data class ProcRow(val pid: Int, val name: String, val ramKb: Long)
+internal data class ProcRow(val pid: Int, val name: String, val ramKb: Long?)
 
 @Composable
 fun SystemDashboardScreen() {
@@ -277,7 +277,7 @@ fun SystemDashboardScreen() {
                 items(processes.take(40), key = { it.pid }) { p ->
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                         Text("${p.pid}  ${p.name}", modifier = Modifier.weight(1f), maxLines = 1)
-                        Text(Formatter.formatFileSize(context, p.ramKb * 1024))
+                        Text(p.ramKb?.let { Formatter.formatFileSize(context, it * 1024) } ?: "—")
                     }
                 }
             }
@@ -339,7 +339,7 @@ private fun readCpu(): Pair<Long, Long> {
 internal fun runningProcs(context: Context): List<ProcRow> {
     val am = context.getSystemService<ActivityManager>() ?: return emptyList()
     return am.runningAppProcesses.orEmpty().map {
-        ProcRow(it.pid, it.processName, 0L)
+        ProcRow(it.pid, it.processName, null)
     }.sortedBy { it.name }
 }
 

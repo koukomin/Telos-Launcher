@@ -1280,3 +1280,7 @@ Transfer network rules independently block Wi-Fi, mobile data, roaming and meter
 - Media remembers Music, YouTube Music and Radio separately. Local YouTube favorites/playlists and seed-track related recommendations do not require account synchronization. Radio imports Transistor station archives and supports image backups, restore confirmation and M3U export.
 - Clock has persisted one-shot alarms with audio-file/radio sounds and fallback tone, plus local city/country search using the device language, English and Greek aliases. Exact alarm permission is required for scheduling. Terminal downloads the official Termux APK through Android's installer; it does not embed a renamed runtime.
 - Virtual apps share wallpaper-aware glass surfaces. Scrollable controls, wrapping labels, source-specific mini players and bounded image/video/PDF previews improve large-font and narrow-screen layouts. Unsupported preview formats retain a file-type fallback.
+
+### Implementation audit
+
+Akou's previous recognition screen returned a fabricated sample song without recording audio. That path has been removed; recognition is explicitly unavailable until a real capture/fingerprinting provider is implemented. System per-process memory now shows an unknown value rather than a hardcoded zero. See the [source audit](docs/dev-notes/virtual-app-implementation-audit.md) for the distinction between missing engines, external companions, inactive legacy repositories and real service implementations. Native Ermis and Camera remain release gates.
