@@ -110,3 +110,7 @@ These instructions are binding for any AI coding assistant or contributor workin
 - Implement and verify behavior in code, not only in screenshots or prose. Do not mark tasks complete without a passing build and relevant tests or an explicit explanation of what could not be tested.
 - Preserve existing launcher functionality and avoid unrelated UI changes.
 - Submit changes in a PR; do not merge or release unless explicitly instructed.
+
+## Mandatory UI design for all AI coding agents
+
+Before modifying virtual apps, Dialer, icons or app surfaces, read `docs/ICON_DESIGN.md` and comply with its acceptance criteria. Dialer must show a large contact photo (Google Phone-inspired prominence, no copied proprietary assets) on incoming, outgoing and active calls; provide initials fallback, responsive layout, safe controls, large-text accessibility and tests. Keep user-selected icon packs and custom icons on launcher-controlled surfaces. Update translations, README and docs with implemented changes. Never claim completion without build and visual QA.
