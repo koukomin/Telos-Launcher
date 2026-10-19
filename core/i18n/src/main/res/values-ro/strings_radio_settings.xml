@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Culorile imaginii de fundal</string>
+    <string name="radio_translucent">Aspect translucid</string>
+    <string name="radio_controls_scroll">Derulează comenzile de redare cu posturile</string>
+    <string name="radio_tap_plays">Atinge un post pentru redare</string>
+    <string name="radio_large_buffer">Memorie tampon mai mare pentru redare</string>
+    <string name="radio_edit_metadata">Permite editarea informațiilor posturilor</string>
+    <string name="radio_edit_streams">Permite editarea adreselor fluxurilor</string>
+    <string name="radio_auto_images">Actualizează automat imaginile posturilor</string>
+    <string name="radio_update_images">Actualizează acum imaginile posturilor</string>
+    <string name="radio_backup_images">Copie ZIP cu imaginile posturilor</string>
+    <string name="radio_restore_replace_summary">Înlocuiești colecția actuală cu această copie? Colecția actuală va fi eliminată.</string>
+    <string name="radio_station_image_url">Adresa imaginii postului</string>
+</resources>

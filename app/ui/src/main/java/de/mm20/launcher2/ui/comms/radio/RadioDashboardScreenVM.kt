@@ -9,6 +9,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.comms.model.RadioStation
 import de.mm20.launcher2.comms.radio.StreamResolver
+import de.mm20.launcher2.comms.radio.RadioArchives
+import de.mm20.launcher2.comms.radio.RadioSettings
+import de.mm20.launcher2.comms.media.video.Http
+import kotlinx.coroutines.flow.first
+import java.io.File
+import java.security.MessageDigest
 import de.mm20.launcher2.comms.repository.RadioRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -97,6 +103,29 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
         viewModelScope.launch { runCatching { repository.renameStation(id, name) } }
     }
 
+    fun updateStation(station: RadioStation) {
+        if (station.name.isBlank() || !RadioArchives.validStream(station.streamUrl) || station.alternateStreams.any { !RadioArchives.validStream(it) }) return
+        viewModelScope.launch { runCatching { repository.saveStation(station) } }
+    }
+
+    fun refreshStationImages(context: Context) {
+        viewModelScope.launch {
+            runCatching {
+                val stations = repository.observeFavorites().first()
+                for (station in stations) {
+                    val match = repository.searchStations(station.name).firstOrNull {
+                        it.streamUrl == station.streamUrl || it.name.equals(station.name, true)
+                    } ?: continue
+                    if (match.faviconUrl.isBlank()) continue
+                    val bytes = withContext(Dispatchers.IO) { loadImage(context, match.faviconUrl) } ?: continue
+                    val image = withContext(Dispatchers.IO) { saveImage(context, bytes) }
+                    repository.saveStation(station.copy(faviconUrl = image))
+                }
+            }.onSuccess { _message.value = RadioText(R.string.hc_done) }
+                .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it else _message.value = RadioText(R.string.au_radio_import_failed) }
+        }
+    }
+
     fun deleteStation(id: String) {
         viewModelScope.launch { runCatching { repository.deleteStation(id) } }
     }
@@ -133,10 +162,10 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
 
     fun importPlaylist(context: Context, uri: Uri) {
         viewModelScope.launch {
-            val count = runCatching {
-                val text = readText(context, uri)
-                repository.importPlaylist(text)
-            }.getOrNull()
+            val count = runCatching { importArchive(context, uri, replace = false) }.getOrElse {
+                if (it is kotlinx.coroutines.CancellationException) throw it
+                null
+            }
             _message.value = if (count == null) RadioText(R.string.au_radio_import_failed) else RadioText(R.string.au_radio_imported, count)
         }
     }
@@ -150,25 +179,94 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
 
     fun exportBackup(context: Context, uri: Uri) {
         viewModelScope.launch {
-            val ok = runCatching { writeText(context, uri, repository.exportBackup()) }.isSuccess
+            val ok = runCatching {
+                val stations = repository.observeFavorites().first()
+                withContext(Dispatchers.IO) {
+                    val output = context.contentResolver.openOutputStream(uri) ?: error("Cannot open backup")
+                    RadioArchives.write(stations, output) { station -> loadImage(context, station.faviconUrl) }
+                }
+            }.getOrElse { if (it is kotlinx.coroutines.CancellationException) throw it; null } != null
             _message.value = if (ok) RadioText(R.string.au_radio_backup_saved) else RadioText(R.string.au_radio_backup_save_failed)
         }
     }
 
-    fun restoreBackup(context: Context, uri: Uri) {
+    /** The UI asks before destructive replacement. Normal playlist import always merges. */
+    fun restoreBackup(context: Context, uri: Uri, replace: Boolean = false) {
         viewModelScope.launch {
-            val count = runCatching { repository.restoreBackup(readText(context, uri)) }.getOrNull()
+            val count = runCatching { importArchive(context, uri, replace) }.getOrElse {
+                if (it is kotlinx.coroutines.CancellationException) throw it
+                null
+            }
             _message.value = if (count == null) RadioText(R.string.au_radio_restore_failed) else RadioText(R.string.au_radio_restored, count)
         }
     }
 
-    fun clearHistory() {
-        viewModelScope.launch { runCatching { repository.clearHistory() } }
+    private suspend fun importArchive(context: Context, uri: Uri, replace: Boolean): Int {
+        val imported = withContext(Dispatchers.IO) {
+            context.contentResolver.openInputStream(uri)?.use { RadioArchives.read(it) } ?: error("Cannot open collection")
+        }
+        require(imported.isNotEmpty()) { "No valid stations" }
+        val stations = withContext(Dispatchers.IO) {
+            imported.map { entry ->
+                var bytes = entry.image
+                if (bytes == null && RadioSettings(context).values.value.updateImages) bytes = loadImage(context, entry.station.faviconUrl)
+                entry.station.copy(faviconUrl = bytes?.let { saveImage(context, it) } ?: entry.station.faviconUrl)
+            }
+        }
+        return repository.importStations(stations, replace)
     }
 
-    private suspend fun readText(context: Context, uri: Uri): String = withContext(Dispatchers.IO) {
-        context.contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }
-            ?: error("cannot open file")
+    private fun saveImage(context: Context, bytes: ByteArray): String {
+        val directory = File(context.applicationContext.filesDir, "radio/images").apply { mkdirs() }
+        val name = MessageDigest.getInstance("SHA-256").digest(bytes).joinToString("") { "%02x".format(it) }
+        val file = File(directory, "$name.img")
+        if (!file.exists()) {
+            val temporary = File.createTempFile("image-", ".tmp", directory)
+            temporary.writeBytes(bytes)
+            if (!temporary.renameTo(file)) { temporary.delete(); error("Cannot save station image") }
+        }
+        return file.toURI().toString()
+    }
+
+    private fun loadImage(context: Context, address: String): ByteArray? = runCatching {
+        val uri = Uri.parse(address)
+        val input = when (uri.scheme) {
+            "file" -> {
+                val file = File(uri.path ?: return null)
+                if (!file.canonicalPath.startsWith(context.applicationContext.filesDir.canonicalPath + File.separator)) return null
+                file.inputStream()
+            }
+            "content", "android.resource" -> context.contentResolver.openInputStream(uri)
+            "http", "https" -> {
+                if (!Http.isPublicWeb(address)) return null
+                val first = Http.open(address, "Telos Radio", "image/*")
+                first.connectTimeout = 6000
+                first.readTimeout = 8000
+                val connection = try { Http.resolve(first) } catch (e: Exception) { first.disconnect(); throw e }
+                try {
+                    if (connection.responseCode !in 200..299 || connection.contentLengthLong > RadioArchives.MAX_IMAGE_BYTES) return null
+                    return@runCatching connection.inputStream.use { readImage(it) }
+                } finally { connection.disconnect() }
+            }
+            else -> return null
+        }
+        input?.use { readImage(it) }
+    }.getOrNull()
+
+    private fun readImage(input: java.io.InputStream): ByteArray {
+        val output = java.io.ByteArrayOutputStream()
+        val buffer = ByteArray(8192)
+        while (true) {
+            val size = input.read(buffer)
+            if (size < 0) break
+            require(output.size() + size <= RadioArchives.MAX_IMAGE_BYTES)
+            output.write(buffer, 0, size)
+        }
+        return output.toByteArray()
+    }
+
+    fun clearHistory() {
+        viewModelScope.launch { runCatching { repository.clearHistory() } }
     }
 
     private suspend fun writeText(context: Context, uri: Uri, text: String) = withContext(Dispatchers.IO) {

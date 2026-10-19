@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Automatyczne wznowienie. Android może je opóźnić bez dostępu do dokładnych alarmów.</string>
+</resources>

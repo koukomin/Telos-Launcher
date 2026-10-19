@@ -9,6 +9,14 @@ import de.mm20.launcher2.comms.recording.RecordingCoordinator
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.base.containedScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -16,6 +24,56 @@ import org.koin.core.component.inject
 
 class TelosInCallService : InCallService(), KoinComponent {
     private val commsSettings: CommsSettings by inject()
+    private val callerLookup: de.mm20.launcher2.comms.callerid.CallerLookup by inject()
+
+    private val callScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
+    override fun onCreate() {
+        super.onCreate()
+        // Resolve in the service so notifications work even when the call activity cannot open.
+        callScope.launch {
+            TelosCallSession.ui.map { setOf(it.number, it.secondNumber).filter(String::isNotBlank).toSet() }
+                .distinctUntilChanged().collectLatest { numbers ->
+                    for (number in numbers) {
+                        val identity = withContext(Dispatchers.IO) { lookupCaller(number) }
+                        TelosCallSession.setIdentity(number, identity)
+                        // A saved number is never sent to the optional community lookup.
+                        val settings = commsSettings.snapshot.first()
+                        val hidden = de.mm20.launcher2.comms.privacy.HiddenContacts.matches(number, settings.hiddenNumbers)
+                        if (shouldLookupCaller(identity, de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(number), hidden)) {
+                            callerLookup.lookup(number)?.let { result ->
+                                TelosCallSession.setIdentity(number, identity.copy(suggestedName = result.suggestedName,
+                                    likelySpam = result.likelySpam))
+                            }
+                        }
+                    }
+                }
+        }
+        callScope.launch {
+            combine(TelosCallSession.ui, commsSettings.snapshot) { state, settings ->
+                val masked = state.incoming && settings.maskHiddenIncoming &&
+                    de.mm20.launcher2.comms.privacy.HiddenContacts.matches(state.number, settings.hiddenNumbers)
+                if (masked) state.copy(name = getString(de.mm20.launcher2.i18n.R.string.au_phoneb_private_caller),
+                    number = "", photoUri = null, callerNameSuggested = false, likelySpam = false) else state
+            }.collect { CallNotification.show(this@TelosInCallService, it) }
+        }
+    }
+
+    private fun lookupCaller(number: String): CallerIdentity = try {
+        val uri = android.net.Uri.withAppendedPath(android.provider.ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+            android.net.Uri.encode(number))
+        contentResolver.query(uri, arrayOf(android.provider.ContactsContract.PhoneLookup.DISPLAY_NAME,
+            android.provider.ContactsContract.PhoneLookup.PHOTO_URI), null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) CallerIdentity(cursor.getString(0), cursor.getString(1), localContactFound = true, localLookupComplete = true) else CallerIdentity(localLookupComplete = true)
+        } ?: CallerIdentity()
+    } catch (_: SecurityException) { CallerIdentity() }
+      catch (_: IllegalArgumentException) { CallerIdentity() }
+      catch (_: android.database.sqlite.SQLiteException) { CallerIdentity() }
+
+    override fun onDestroy() {
+        callScope.cancel()
+        super.onDestroy()
+    }
 
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
@@ -24,7 +82,6 @@ class TelosInCallService : InCallService(), KoinComponent {
             CallBlockEngine.rejectIfNeeded(applicationContext, call)
         }
         TelosCallSession.onCallAdded(call)
-        CallNotification.show(this, TelosCallSession.ui.value)
         startCallUi()
     }
 
@@ -37,7 +94,6 @@ class TelosInCallService : InCallService(), KoinComponent {
             maybeShowPopup()
             TelosCallSession.inCallService = null
         } else {
-            CallNotification.show(this, TelosCallSession.ui.value)
             startCallUi()
         }
     }

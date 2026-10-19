@@ -20,7 +20,7 @@ data class YouTubePlayback(val entry: YouTubeEntry, val streamUrl: String, val a
 
 /** Extraction is lazy and always runs away from the main thread. No account is required. */
 
-    class YouTubeRepository {
+class YouTubeRepository {
     private fun initialize() = synchronized(INIT_LOCK) {
         if (!initialized) {
             val locale = Locale.getDefault()
@@ -28,10 +28,7 @@ data class YouTubePlayback(val entry: YouTubeEntry, val streamUrl: String, val a
             initialized = true
         }
     }
-    suspend fun artistRadio(entry: YouTubeEntry): List<YouTubeEntry> = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-        val query = "${entry.artist.ifBlank { entry.title }} radio mix"
-        search(query, true)
-    }
+    suspend fun artistRadio(entry: YouTubeEntry): List<YouTubeEntry> = related(entry)
 
     suspend fun genreRadio(genre: String): List<YouTubeEntry> = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
         search("$genre music radio", true)
@@ -47,6 +44,14 @@ data class YouTubePlayback(val entry: YouTubeEntry, val streamUrl: String, val a
         SearchInfo.getInfo(service, handler).relatedItems.filterIsInstance<StreamInfoItem>().map {
             YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), it.thumbnails.lastOrNull()?.url, it.duration)
         }
+    }
+    /** Artist radio uses the provider's related tracks for the selected song, not a fabricated search. */
+    suspend fun related(item: YouTubeEntry): List<YouTubeEntry> = withContext(Dispatchers.IO) {
+        initialize()
+        StreamInfo.getInfo(ServiceList.YouTube, item.url).relatedItems
+            .filterIsInstance<StreamInfoItem>().map {
+                YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), it.thumbnails.lastOrNull()?.url, it.duration)
+            }.distinctBy { it.url }
     }
     suspend fun resolve(item: YouTubeEntry, audioOnly: Boolean): YouTubePlayback = withContext(Dispatchers.IO) {
         initialize()

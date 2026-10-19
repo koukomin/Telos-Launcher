@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Couleurs du fond d’écran</string>
+    <string name="radio_translucent">Apparence translucide</string>
+    <string name="radio_controls_scroll">Faire défiler les commandes avec les stations</string>
+    <string name="radio_tap_plays">Toucher une station pour écouter</string>
+    <string name="radio_large_buffer">Mémoire tampon plus grande</string>
+    <string name="radio_edit_metadata">Autoriser la modification des informations des stations</string>
+    <string name="radio_edit_streams">Autoriser la modification des adresses des flux</string>
+    <string name="radio_auto_images">Actualiser automatiquement les images des stations</string>
+    <string name="radio_update_images">Actualiser les images maintenant</string>
+    <string name="radio_backup_images">Sauvegarde ZIP avec les images des stations</string>
+    <string name="radio_restore_replace_summary">Remplacer les stations actuelles par cette sauvegarde ? Votre collection actuelle sera supprimée.</string>
+    <string name="radio_station_image_url">Adresse de l’image de la station</string>
+</resources>

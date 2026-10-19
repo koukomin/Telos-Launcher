@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Wereld</string>
+    <string name="clock_alarm">Alarm</string>
+    <string name="clock_timer">Timer</string>
+    <string name="clock_stopwatch">Stopwatch</string>
+    <string name="clock_local">Lokale tijd</string>
+    <string name="clock_city_search">Zoek stad of land</string>
+    <string name="clock_night">Nachtklok</string>
+    <string name="clock_night_exit">Tik om te sluiten</string>
+    <string name="clock_audio_file">Audiobestand</string>
+    <string name="clock_default_sound">Alarmgeluid</string>
+    <string name="clock_stream_url">URL van radiostream</string>
+    <string name="clock_sound_fallback">Eenmalig alarm. Bij een mediafout klinkt het standaardalarm.</string>
+    <string name="clock_exact">Alarmen en herinneringen toestaan</string>
+    <string name="clock_dismiss">Sluiten</string>
+    <string name="clock_minutes">Minuten</string>
+    <string name="clock_start">Start</string>
+    <string name="clock_reset">Reset</string>
+    <string name="clock_lap">Ronde</string>
+</resources>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Mundua</string>
+    <string name="clock_alarm">Alarma</string>
+    <string name="clock_timer">Tenporizadorea</string>
+    <string name="clock_stopwatch">Kronometroa</string>
+    <string name="clock_local">Tokiko ordua</string>
+    <string name="clock_city_search">Bilatu hiria edo herrialdea</string>
+    <string name="clock_night">Gaueko erlojua</string>
+    <string name="clock_night_exit">Ukitu ixteko</string>
+    <string name="clock_audio_file">Audio-fitxategia</string>
+    <string name="clock_default_sound">Alarmaren soinua</string>
+    <string name="clock_stream_url">Irrati-korrontearen URLa</string>
+    <string name="clock_sound_fallback">Behin bakarreko alarma. Mediak huts eginez gero, alarma lehenetsia joko da.</string>
+    <string name="clock_exact">Baimendu alarmak eta abisuak</string>
+    <string name="clock_dismiss">Itxi</string>
+    <string name="clock_minutes">Minutuak</string>
+    <string name="clock_start">Hasi</string>
+    <string name="clock_reset">Berrezarri</string>
+    <string name="clock_lap">Bira</string>
+</resources>

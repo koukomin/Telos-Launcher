@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Svet</string>
+    <string name="clock_alarm">Budilka</string>
+    <string name="clock_timer">Časovnik</string>
+    <string name="clock_stopwatch">Štoparica</string>
+    <string name="clock_local">Lokalni čas</string>
+    <string name="clock_city_search">Poišči mesto ali državo</string>
+    <string name="clock_night">Nočna ura</string>
+    <string name="clock_night_exit">Tapnite za zapiranje</string>
+    <string name="clock_audio_file">Zvočna datoteka</string>
+    <string name="clock_default_sound">Zvok budilke</string>
+    <string name="clock_stream_url">URL radijskega toka</string>
+    <string name="clock_sound_fallback">Enkratna budilka. Ob napaki medija se predvaja privzeti zvok.</string>
+    <string name="clock_exact">Dovoli budilke in opomnike</string>
+    <string name="clock_dismiss">Zapri</string>
+    <string name="clock_minutes">Minute</string>
+    <string name="clock_start">Začni</string>
+    <string name="clock_reset">Ponastavi</string>
+    <string name="clock_lap">Krog</string>
+</resources>

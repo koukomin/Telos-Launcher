@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_more">אפשרויות נוספות</string>
+    <string name="au3_appearance_typo_label">תווית</string>
+    <string name="au_radio_import_failed">לא ניתן לקרוא את הקובץ הזה</string>
+    <string name="file_search_type_images">תמונות</string>
+    <string name="file_search_type_videos">סרטונים</string>
+    <string name="hc_add">הוספה</string>
+    <string name="hc_add_to_favorites">הוספה למועדפים</string>
+    <string name="hc_back_up_collection">גיבוי האוסף</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">חסימת מספרים שהוספת לרשימת החסימה של Telos</string>
+    <string name="hc_done">סיום</string>
+    <string name="hc_edit">עריכה</string>
+    <string name="hc_export_playlist_m3u">ייצוא רשימת השמעה (M3U)</string>
+    <string name="hc_favorites">מועדפים</string>
+    <string name="hc_import_playlist_m3u_pls">ייבוא רשימת השמעה (M3U / PLS)</string>
+    <string name="hc_offline_spam_list">רשימת ספאם לא מקוונת</string>
+    <string name="hc_phone_number">מספר טלפון</string>
+    <string name="hc_rename_station">שינוי שם התחנה</string>
+    <string name="hc_restore_backup">שחזור גיבוי</string>
+    <string name="hc_stream_or_playlist_address">כתובת שידור או רשימת השמעה</string>
+    <string name="hf_files_remove_favorite">הסרה מהמועדפים</string>
+    <string name="preference_screen_clockwidget">שעון</string>
+    <string name="preference_theme">ערכת נושא</string>
+    <string name="preference_theme_dark">כהה</string>
+    <string name="preference_theme_light">בהירה</string>
+    <string name="preference_theme_system">לפי המערכת</string>
+    <string name="radio_auto_images">עדכון תמונות התחנות באופן אוטומטי</string>
+    <string name="radio_backup_images">גיבוי ZIP הכולל תמונות תחנות</string>
+    <string name="radio_controls_scroll">גלילת פקדי ההשמעה עם התחנות</string>
+    <string name="radio_dynamic_colors">צבעי הטפט</string>
+    <string name="radio_edit_metadata">אפשר עריכת פרטי תחנה</string>
+    <string name="radio_edit_streams">אפשר עריכת כתובות שידור</string>
+    <string name="radio_large_buffer">מאגר השמעה גדול יותר</string>
+    <string name="radio_restore_replace_summary">להחליף את אוסף התחנות הנוכחי בגיבוי הזה? האוסף הנוכחי שלך יימחק.</string>
+    <string name="radio_station_image_url">כתובת תמונת התחנה</string>
+    <string name="radio_tap_plays">הקשה על תחנה להפעלה</string>
+    <string name="radio_translucent">מראה שקוף למחצה</string>
+    <string name="radio_update_images">עדכון תמונות התחנות כעת</string>
+    <string name="telos_youtube_add_playlist">הוספה לרשימת השמעה</string>
+    <string name="telos_youtube_artist_radio">רדיו האמן</string>
+    <string name="telos_youtube_library_local">המועדפים ורשימות ההשמעה נשארים בטלפון הזה. הם אינם חלק מחשבון YouTube Music שלך.</string>
+    <string name="telos_youtube_playlist_name">שם רשימת ההשמעה</string>
+</resources>

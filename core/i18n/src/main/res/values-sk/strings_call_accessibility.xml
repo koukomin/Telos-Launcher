@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Fotografia volajúceho na celej obrazovke</string>
+    <string name="call_photo_background_summary">Zobraziť fotografiu kontaktu ako pozadie prichádzajúceho hovoru.</string>
+</resources>

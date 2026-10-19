@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Arayan kimliği ve engelleme</string>
+    <string name="caller_system_list">Android engellenen numaralar</string>
+    <string name="caller_online_lookup">Çevrimiçi arayan kimliği</string>
+    <string name="caller_online_disclosure">Topluluğun önerdiği adı ve değerlendirmeleri almak için bilinmeyen gelen numaraları white-pages.gr sitesine gönderir. Varsayılan olarak kapalıdır; asla otomatik engellemez.</string>
+    <string name="caller_likely_spam">Olası spam · white-pages.gr</string>
+    <string name="caller_block_partial">Kişisel liste güncellendi. Android engellenen numaralar güncellenemedi; Telos’u varsayılan telefon veya SMS uygulaması yapıp yeniden deneyin.</string>
+    <string name="caller_suggested_name">Önerilen ad: %1$s</string>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_more">Tùy chọn khác</string>
+    <string name="au3_appearance_typo_label">Nhãn</string>
+    <string name="au_radio_import_failed">Không thể đọc tệp đó</string>
+    <string name="file_search_type_images">Hình ảnh</string>
+    <string name="file_search_type_videos">Video</string>
+    <string name="hc_add">Thêm</string>
+    <string name="hc_add_to_favorites">Thêm vào mục yêu thích</string>
+    <string name="hc_back_up_collection">Sao lưu bộ sưu tập</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">Chặn các số bạn đã thêm vào danh sách chặn của Telos</string>
+    <string name="hc_done">Xong</string>
+    <string name="hc_edit">Chỉnh sửa</string>
+    <string name="hc_export_playlist_m3u">Xuất danh sách phát (M3U)</string>
+    <string name="hc_favorites">Yêu thích</string>
+    <string name="hc_import_playlist_m3u_pls">Nhập danh sách phát (M3U / PLS)</string>
+    <string name="hc_offline_spam_list">Danh sách số rác ngoại tuyến</string>
+    <string name="hc_phone_number">Số điện thoại</string>
+    <string name="hc_rename_station">Đổi tên đài</string>
+    <string name="hc_restore_backup">Khôi phục bản sao lưu</string>
+    <string name="hc_stream_or_playlist_address">Địa chỉ luồng hoặc danh sách phát</string>
+    <string name="hf_files_remove_favorite">Xóa khỏi mục yêu thích</string>
+    <string name="preference_screen_clockwidget">Đồng hồ</string>
+    <string name="preference_theme">Giao diện</string>
+    <string name="preference_theme_dark">Tối</string>
+    <string name="preference_theme_light">Sáng</string>
+    <string name="preference_theme_system">Theo hệ thống</string>
+    <string name="telos_youtube_add_playlist">Thêm vào danh sách phát</string>
+    <string name="telos_youtube_artist_radio">Đài phát của nghệ sĩ</string>
+    <string name="telos_youtube_library_local">Mục yêu thích và danh sách phát được lưu trên điện thoại này. Đây không phải tài khoản YouTube Music của bạn.</string>
+    <string name="telos_youtube_playlist_name">Tên danh sách phát</string>
+</resources>

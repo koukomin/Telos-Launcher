@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">全螢幕來電照片</string>
+    <string name="call_photo_background_summary">將聯絡人照片顯示為來電背景。</string>
+</resources>

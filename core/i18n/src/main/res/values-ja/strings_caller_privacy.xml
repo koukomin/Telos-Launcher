@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">発信者の識別とブロック</string>
+    <string name="caller_system_list">Androidのブロック済み番号</string>
+    <string name="caller_online_lookup">オンライン発信者識別</string>
+    <string name="caller_online_disclosure">不明な着信番号をwhite-pages.grに送信し、コミュニティが提案した名前と評価を取得します。初期設定では無効で、自動的にブロックすることはありません。</string>
+    <string name="caller_likely_spam">迷惑電話の可能性 · white-pages.gr</string>
+    <string name="caller_block_partial">個人リストを更新しました。Androidのブロック済み番号は更新できませんでした。Telosを既定の電話またはSMSアプリに設定して再試行してください。</string>
+    <string name="caller_suggested_name">提案された名前: %1$s</string>
+</resources>

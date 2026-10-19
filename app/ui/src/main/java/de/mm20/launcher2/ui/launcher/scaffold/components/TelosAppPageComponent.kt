@@ -81,6 +81,7 @@ internal object TelosPages {
             CommsDashboardScreen(it.initialTab, it.initialNumber, it.initialBody, it.initialAttachments)
         }
         entry<ContactDetailsRoute> { ContactDetailsScreen(it.contactId, it.phoneNumber) }
+        entry<de.mm20.launcher2.ui.settings.comms.CallerPrivacyRoute> { de.mm20.launcher2.ui.settings.comms.CallerPrivacyScreen() }
         entry<CommsSettingsRoute> { CommsSettingsScreen() }
         entry<FakeCallSettingsRoute> { FakeCallSettingsScreen() }
         entry<DuplicateContactsRoute> { DuplicateContactsScreen() }
@@ -220,19 +221,21 @@ internal class TelosAppPageComponent private constructor(
         }
 
         CompositionLocalProvider(LocalBackStack provides backStack) {
-            Box(
-                modifier = modifier
-                    .background(MaterialTheme.colorScheme.surfaceContainer)
-                    // The apps add the system bars themselves. Applied first, so that the
-                    // navigation bar is not added a second time while the keyboard is open.
-                    .imePadding()
-            ) {
-                if (!isEmpty) {
-                    NavDisplay(
-                        backStack = backStack,
-                        onBack = { backStack.removeLastOrNull() },
-                        entryProvider = TelosPages.entries,
-                    )
+            de.mm20.launcher2.ui.component.VirtualAppTheme {
+                Box(
+                    modifier = modifier
+                        .background(MaterialTheme.colorScheme.surfaceContainer)
+                        // The apps add the system bars themselves. Applied first, so that the
+                        // navigation bar is not added a second time while the keyboard is open.
+                        .imePadding()
+                ) {
+                    if (!isEmpty) {
+                        NavDisplay(
+                            backStack = backStack,
+                            onBack = { backStack.removeLastOrNull() },
+                            entryProvider = TelosPages.entries,
+                        )
+                    }
                 }
             }
         }

@@ -86,7 +86,7 @@ import kotlin.math.sin
 data object SystemDashboardRoute : NavKey
 
 private data class WifiEntry(val ssid: String, val psk: String?)
-private data class ProcRow(val pid: Int, val name: String, val ramKb: Long)
+internal data class ProcRow(val pid: Int, val name: String, val ramKb: Long)
 
 @Composable
 fun SystemDashboardScreen() {
@@ -336,7 +336,7 @@ private fun readCpu(): Pair<Long, Long> {
     return idle to parts.sum()
 }
 
-private fun runningProcs(context: Context): List<ProcRow> {
+internal fun runningProcs(context: Context): List<ProcRow> {
     val am = context.getSystemService<ActivityManager>() ?: return emptyList()
     return am.runningAppProcesses.orEmpty().map {
         ProcRow(it.pid, it.processName, 0L)

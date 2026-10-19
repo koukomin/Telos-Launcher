@@ -16,6 +16,7 @@ object TelosCallSession {
     var inCallService: InCallService? = null
 
     private val calls = mutableListOf<Call>()
+    private val identities = mutableMapOf<String, CallerIdentity>()
     private val callbacks = mutableMapOf<Call, Call.Callback>()
     // when each call became active, kept over hold/unhold so that the call timer does not restart
     private val connectedAt = mutableMapOf<Call, Long>()
@@ -91,7 +92,8 @@ object TelosCallSession {
     private fun recordEnd(ended: Call) {
         val number = ended.details?.handle?.schemeSpecificPart.orEmpty()
         lastEndedNumber = number
-        lastEndedName = ended.details?.callerDisplayName?.ifBlank { null }
+        lastEndedName = callerName(identities[number]?.name, ended.details?.callerDisplayName,
+            de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(number))
         lastEndedRingMs = if (ringingStartedAt > 0) System.currentTimeMillis() - ringingStartedAt else 0L
         lastEndedWasMissed = !answeredThisCall && ringingStartedAt > 0
         ringingStartedAt = 0L
@@ -116,9 +118,12 @@ object TelosCallSession {
         )
     }
 
-    fun setPhoto(uri: String?) {
-        if (_ui.value.photoUri == uri) return
-        _ui.value = _ui.value.copy(photoUri = uri)
+    fun setIdentity(number: String, identity: CallerIdentity) {
+        // A lookup can finish after Telecom has replaced/removed the call.
+        if (calls.none { it.details?.handle?.schemeSpecificPart == number }) return
+        if (identities[number] == identity) return
+        identities[number] = identity
+        publish()
     }
 
     fun cycleAudioRoute() {
@@ -219,21 +224,20 @@ object TelosCallSession {
         call = pickPrimary()
         val current = call
         if (current == null) {
+            identities.clear()
             _ui.value = InCallUiState()
             return
         }
         val other = otherCall(current)
         val state = stateOf(current)
         val number = current.details.handle?.schemeSpecificPart.orEmpty()
-        val resolvedContact = de.mm20.launcher2.comms.remote.DeviceContactsResolver.lookup(inCallService, number)
-        val name = current.details.callerDisplayName?.ifBlank { null }
-            ?: de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(number)
-            ?: resolvedContact.first
-        val photoUri = resolvedContact.second
+        val name = callerName(identities[number]?.name, current.details.callerDisplayName,
+            de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(number))
         if (state == Call.STATE_ACTIVE) connectedAt.getOrPut(current) { System.currentTimeMillis() }
         val connectedAtMs = connectedAt[current]
         _ui.value = InCallUiState(
             hasCall = true,
+            actionToken = System.identityHashCode(current).toLong(),
             incoming = state == Call.STATE_RINGING,
             connecting = state == Call.STATE_DIALING || state == Call.STATE_CONNECTING,
             active = state == Call.STATE_ACTIVE,
@@ -242,12 +246,16 @@ object TelosCallSession {
             speaker = _ui.value.speaker,
             bluetooth = _ui.value.bluetooth,
             number = number,
-            name = name,
-            photoUri = photoUri ?: _ui.value.photoUri,
+            name = name ?: identities[number]?.suggestedName,
+            callerNameSuggested = name == null && !identities[number]?.suggestedName.isNullOrBlank(),
+            likelySpam = identities[number]?.likelySpam == true,
+            photoUri = identities[number]?.photoUri,
             connectedAtEpochMs = connectedAtMs,
             secondNumber = other?.details?.handle?.schemeSpecificPart.orEmpty(),
-            secondName = other?.details?.callerDisplayName?.ifBlank { null }
-                ?: other?.details?.handle?.schemeSpecificPart?.let { de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(it) },
+            secondName = other?.details?.handle?.schemeSpecificPart?.let { second ->
+                callerName(identities[second]?.name, other.details?.callerDisplayName,
+                    de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(second))
+            },
             canMerge = current.conferenceableCalls.isNotEmpty() ||
                 (current.details.callCapabilities and Call.Details.CAPABILITY_MERGE_CONFERENCE) != 0,
             canSwap = other != null,

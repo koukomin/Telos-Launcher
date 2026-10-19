@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Verden</string>
+    <string name="clock_alarm">Alarm</string>
+    <string name="clock_timer">Tidtaker</string>
+    <string name="clock_stopwatch">Stoppeklokke</string>
+    <string name="clock_local">Lokal tid</string>
+    <string name="clock_city_search">Søk etter by eller land</string>
+    <string name="clock_night">Nattklokke</string>
+    <string name="clock_night_exit">Trykk for å lukke</string>
+    <string name="clock_audio_file">Lydfil</string>
+    <string name="clock_default_sound">Alarmlyd</string>
+    <string name="clock_stream_url">Radiostrømmens URL</string>
+    <string name="clock_sound_fallback">Engangsalarm. Hvis mediet svikter, spilles standard alarmlyd.</string>
+    <string name="clock_exact">Tillat alarmer og påminnelser</string>
+    <string name="clock_dismiss">Lukk</string>
+    <string name="clock_minutes">Minutter</string>
+    <string name="clock_start">Start</string>
+    <string name="clock_reset">Nullstill</string>
+    <string name="clock_lap">Runde</string>
+</resources>

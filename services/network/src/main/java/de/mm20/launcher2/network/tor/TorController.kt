@@ -83,7 +83,7 @@ class TorController internal constructor(private val context: Context, private v
                 val config = settings.current
                 if (!config.torEnabled) {
                     unavailable()
-                } else if (requested || !config.torAutoStart || config.torAppIds.isNotEmpty()) {
+                } else if (requested || config.torSystemDefault || !config.torAutoStart || config.torAppIds.isNotEmpty()) {
                     if (!bound && android.os.SystemClock.elapsedRealtime() >= nextStartAt) startService()
                     val tor = service
                     val port = tor?.socksPort ?: 0

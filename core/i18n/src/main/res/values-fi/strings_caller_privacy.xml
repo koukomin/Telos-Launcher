@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Soittajan tunnistus ja esto</string>
+    <string name="caller_system_list">Androidin estetyt numerot</string>
+    <string name="caller_online_lookup">Soittajan tunnistus verkossa</string>
+    <string name="caller_online_disclosure">Lähettää tuntemattomat saapuvat numerot white-pages.gr-palveluun yhteisön ehdottaman nimen ja arvioiden hakemiseksi. Oletuksena pois käytöstä; ei koskaan estä automaattisesti.</string>
+    <string name="caller_likely_spam">Todennäköisesti roskapostia · white-pages.gr</string>
+    <string name="caller_block_partial">Oma luettelo päivitetty. Androidin estettyjä numeroita ei voitu päivittää; aseta Telos oletuspuhelin- tai tekstiviestisovellukseksi ja yritä uudelleen.</string>
+    <string name="caller_suggested_name">Ehdotettu nimi: %1$s</string>
+</resources>

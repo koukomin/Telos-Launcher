@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">壁纸配色</string>
+    <string name="radio_translucent">半透明外观</string>
+    <string name="radio_controls_scroll">播放控件随电台滚动</string>
+    <string name="radio_tap_plays">点按电台即可播放</string>
+    <string name="radio_large_buffer">更大的播放缓冲区</string>
+    <string name="radio_edit_metadata">允许编辑电台信息</string>
+    <string name="radio_edit_streams">允许编辑流地址</string>
+    <string name="radio_auto_images">自动更新电台图片</string>
+    <string name="radio_update_images">立即更新电台图片</string>
+    <string name="radio_backup_images">包含电台图片的 ZIP 备份</string>
+    <string name="radio_restore_replace_summary">用此备份替换当前电台收藏？当前收藏将被移除。</string>
+    <string name="radio_station_image_url">电台图片地址</string>
+</resources>

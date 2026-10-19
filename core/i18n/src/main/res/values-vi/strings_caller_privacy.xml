@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Nhận dạng và chặn người gọi</string>
+    <string name="caller_system_list">Số bị chặn của Android</string>
+    <string name="caller_online_lookup">Nhận dạng người gọi trực tuyến</string>
+    <string name="caller_online_disclosure">Gửi số gọi đến không xác định tới white-pages.gr để lấy tên và đánh giá do cộng đồng đề xuất. Mặc định tắt; không bao giờ tự động chặn.</string>
+    <string name="caller_likely_spam">Có thể là spam · white-pages.gr</string>
+    <string name="caller_block_partial">Đã cập nhật danh sách cá nhân. Không thể cập nhật số bị chặn của Android; hãy đặt Telos làm ứng dụng điện thoại hoặc SMS mặc định rồi thử lại.</string>
+    <string name="caller_suggested_name">Tên được đề xuất: %1$s</string>
+</resources>

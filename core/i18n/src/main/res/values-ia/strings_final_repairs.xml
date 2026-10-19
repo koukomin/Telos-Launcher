@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_more">Plus de optiones</string>
+    <string name="au3_appearance_typo_label">Etiquetta</string>
+    <string name="au_radio_import_failed">Impossibile leger iste file</string>
+    <string name="file_search_type_images">Imagines</string>
+    <string name="file_search_type_videos">Videos</string>
+    <string name="hc_add">Adder</string>
+    <string name="hc_add_to_favorites">Adder al favoritos</string>
+    <string name="hc_back_up_collection">Salvar un copia del collection</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">Blocar numeros que tu ha addite al lista de blocage de Telos</string>
+    <string name="hc_done">Finite</string>
+    <string name="hc_edit">Modificar</string>
+    <string name="hc_export_playlist_m3u">Exportar lista de reproduction (M3U)</string>
+    <string name="hc_favorites">Favoritos</string>
+    <string name="hc_import_playlist_m3u_pls">Importar lista de reproduction (M3U / PLS)</string>
+    <string name="hc_offline_spam_list">Lista de spam sin connexion</string>
+    <string name="hc_phone_number">Numero de telephono</string>
+    <string name="hc_rename_station">Renominar station</string>
+    <string name="hc_restore_backup">Restaurar copia de securitate</string>
+    <string name="hc_stream_or_playlist_address">Adresse del fluxo o lista de reproduction</string>
+    <string name="hf_files_remove_favorite">Remover del favoritos</string>
+    <string name="preference_screen_clockwidget">Horologio</string>
+    <string name="preference_theme">Thema</string>
+    <string name="preference_theme_dark">Obscur</string>
+    <string name="preference_theme_light">Clar</string>
+    <string name="preference_theme_system">Sequer le systema</string>
+    <string name="radio_auto_images">Actualisar automaticamente imagines de stationes</string>
+    <string name="radio_backup_images">Copia ZIP includente imagines de stationes</string>
+    <string name="radio_controls_scroll">Rolar le commandos de reproduction con le stationes</string>
+    <string name="radio_dynamic_colors">Colores del imagine de fundo</string>
+    <string name="radio_edit_metadata">Permitter modificar informationes del station</string>
+    <string name="radio_edit_streams">Permitter modificar adresses de fluxos</string>
+    <string name="radio_large_buffer">Buffer de reproduction plus grande</string>
+    <string name="radio_restore_replace_summary">Reimplaciar le collection actual de stationes per iste copia? Tu collection actual essera removite.</string>
+    <string name="radio_station_image_url">Adresse del imagine del station</string>
+    <string name="radio_tap_plays">Toccar un station pro reproducer</string>
+    <string name="radio_translucent">Apparentia translucide</string>
+    <string name="radio_update_images">Actualisar imagines de stationes ora</string>
+    <string name="telos_youtube_add_playlist">Adder al lista de reproduction</string>
+    <string name="telos_youtube_artist_radio">Radio del artista</string>
+    <string name="telos_youtube_library_local">Favoritos e listas de reproduction remane sur iste telephono. Illos non es tu conto YouTube Music.</string>
+    <string name="telos_youtube_playlist_name">Nomine del lista de reproduction</string>
+</resources>

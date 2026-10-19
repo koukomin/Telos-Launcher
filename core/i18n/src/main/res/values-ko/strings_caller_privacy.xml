@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">발신자 식별 및 차단</string>
+    <string name="caller_system_list">Android 차단 번호</string>
+    <string name="caller_online_lookup">온라인 발신자 식별</string>
+    <string name="caller_online_disclosure">알 수 없는 수신 번호를 white-pages.gr로 보내 커뮤니티에서 제안한 이름과 평가를 가져옵니다. 기본적으로 꺼져 있으며 자동으로 차단하지 않습니다.</string>
+    <string name="caller_likely_spam">스팸 의심 · white-pages.gr</string>
+    <string name="caller_block_partial">개인 목록이 업데이트되었습니다. Android 차단 번호를 업데이트하지 못했습니다. Telos를 기본 전화 또는 SMS 앱으로 설정한 후 다시 시도하세요.</string>
+    <string name="caller_suggested_name">제안된 이름: %1$s</string>
+</resources>

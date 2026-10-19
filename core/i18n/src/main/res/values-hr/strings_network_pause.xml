@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Automatski nastavak. Android ga može odgoditi bez pristupa točnim alarmima.</string>
+</resources>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Monde</string>
+    <string name="clock_alarm">Alarme</string>
+    <string name="clock_timer">Minuteur</string>
+    <string name="clock_stopwatch">Chronomètre</string>
+    <string name="clock_local">Heure locale</string>
+    <string name="clock_city_search">Rechercher une ville ou un pays</string>
+    <string name="clock_night">Horloge de nuit</string>
+    <string name="clock_night_exit">Toucher pour fermer</string>
+    <string name="clock_audio_file">Fichier audio</string>
+    <string name="clock_default_sound">Son de l’alarme</string>
+    <string name="clock_stream_url">URL du flux radio</string>
+    <string name="clock_sound_fallback">Alarme unique. En cas d’échec du média, le son par défaut retentit.</string>
+    <string name="clock_exact">Autoriser les alarmes et rappels</string>
+    <string name="clock_dismiss">Fermer</string>
+    <string name="clock_minutes">Minutes</string>
+    <string name="clock_start">Démarrer</string>
+    <string name="clock_reset">Réinitialiser</string>
+    <string name="clock_lap">Tour</string>
+</resources>

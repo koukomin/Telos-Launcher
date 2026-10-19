@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">世界</string>
+    <string name="clock_alarm">闹钟</string>
+    <string name="clock_timer">计时器</string>
+    <string name="clock_stopwatch">秒表</string>
+    <string name="clock_local">本地时间</string>
+    <string name="clock_city_search">搜索城市或国家</string>
+    <string name="clock_night">夜间时钟</string>
+    <string name="clock_night_exit">点按关闭</string>
+    <string name="clock_audio_file">音频文件</string>
+    <string name="clock_default_sound">闹钟铃声</string>
+    <string name="clock_stream_url">电台串流网址</string>
+    <string name="clock_sound_fallback">一次性闹钟。媒体播放失败时将播放默认铃声。</string>
+    <string name="clock_exact">允许闹钟和提醒</string>
+    <string name="clock_dismiss">关闭</string>
+    <string name="clock_minutes">分钟</string>
+    <string name="clock_start">开始</string>
+    <string name="clock_reset">重置</string>
+    <string name="clock_lap">计圈</string>
+</resources>

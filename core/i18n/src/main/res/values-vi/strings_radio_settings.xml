@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Màu hình nền</string>
+    <string name="radio_translucent">Giao diện trong mờ</string>
+    <string name="radio_controls_scroll">Cuộn điều khiển phát cùng các đài</string>
+    <string name="radio_tap_plays">Chạm vào đài để phát</string>
+    <string name="radio_large_buffer">Bộ đệm phát lớn hơn</string>
+    <string name="radio_edit_metadata">Cho phép chỉnh sửa thông tin đài</string>
+    <string name="radio_edit_streams">Cho phép chỉnh sửa địa chỉ luồng</string>
+    <string name="radio_auto_images">Tự động cập nhật ảnh đài</string>
+    <string name="radio_update_images">Cập nhật ảnh đài ngay</string>
+    <string name="radio_backup_images">Bản sao lưu ZIP gồm ảnh đài</string>
+    <string name="radio_restore_replace_summary">Thay bộ sưu tập đài hiện tại bằng bản sao lưu này? Bộ sưu tập hiện tại sẽ bị xóa.</string>
+    <string name="radio_station_image_url">Địa chỉ ảnh đài</string>
+</resources>

@@ -129,7 +129,7 @@ fun StoreDashboardScreen(initialLink: String = "") {
     val global by viewModel.global.collectAsStateWithLifecycle()
     val playTabIndex = if (playStoreInstalled) 3 else -1
 
-    var tab by rememberSaveable { mutableIntStateOf(if (playStoreInstalled) 3 else 0) }
+    var tab by rememberSaveable { mutableIntStateOf(0) }
     var showAdd by remember { mutableStateOf(false) }
     var addPrefill by remember { mutableStateOf("") }
     var showSettings by remember { mutableStateOf(false) }

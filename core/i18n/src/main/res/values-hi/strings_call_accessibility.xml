@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">कॉलर की फ़ोटो पूरे स्क्रीन पर</string>
+    <string name="call_photo_background_summary">आने वाले कॉल की पृष्ठभूमि में संपर्क की फ़ोटो दिखाएँ।</string>
+</resources>

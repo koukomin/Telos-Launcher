@@ -224,6 +224,9 @@ fun NetworkHomeScreen() {
                         }
                     }
                 }
+                item(span = { GridItemSpan(2) }) { NetworkRouteChooser() }
+                item { HubTile(title = "Tor", value = stringResource(R.string.nt_onion),
+                    icon = Icons.visibility_off_24px, card = card, onClick = { backStack.add(NetworkPrivacyRoute) }) }
                 item {
                     HubTile(
                         title = stringResource(R.string.net_hub_dns),

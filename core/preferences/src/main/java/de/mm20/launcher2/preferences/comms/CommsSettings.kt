@@ -67,6 +67,15 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(clirPrefix = prefix)) }
     }
 
+    val systemSpamBlocking get() = dataStore.data.map { it.comms.systemSpamBlocking }
+    fun setSystemSpamBlocking(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(systemSpamBlocking = enabled)) }
+    }
+    val onlineCallerLookup get() = dataStore.data.map { it.comms.onlineCallerLookup }
+    fun setOnlineCallerLookup(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(onlineCallerLookup = enabled)) }
+    }
+
     val enableSpamBlocking
         get() = dataStore.data.map { it.comms.enableSpamBlocking }
     fun setEnableSpamBlocking(enabled: Boolean) {
@@ -629,6 +638,12 @@ class CommsSettings internal constructor(
         get() = dataStore.data.map { it.comms.answerStyle }
     fun setAnswerStyle(style: String) {
         dataStore.update { it.copy(comms = it.comms.copy(answerStyle = style)) }
+    }
+
+    val fullScreenCallerPhoto
+        get() = dataStore.data.map { it.comms.fullScreenCallerPhoto }
+    fun setFullScreenCallerPhoto(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(fullScreenCallerPhoto = enabled)) }
     }
 
     val secureCallScreen

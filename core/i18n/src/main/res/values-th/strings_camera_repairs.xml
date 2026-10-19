@@ -1,0 +1,5 @@
+<resources>
+    <string name="camera_title">กล้อง Telos</string>
+    <string name="camera_mode_photo">ภาพถ่าย</string>
+    <string name="camera_mode_video">วิดีโอ</string>
+</resources>

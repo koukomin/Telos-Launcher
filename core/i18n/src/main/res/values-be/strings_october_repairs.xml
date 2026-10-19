@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_more">Іншыя параметры</string>
+    <string name="au3_appearance_typo_label">Подпіс</string>
+    <string name="au_radio_import_failed">Не ўдалося прачытаць гэты файл</string>
+    <string name="file_search_type_images">Выявы</string>
+    <string name="file_search_type_videos">Відэа</string>
+    <string name="hc_add">Дадаць</string>
+    <string name="hc_add_to_favorites">Дадаць у абранае</string>
+    <string name="hc_back_up_collection">Стварыць рэзервовую копію калекцыі</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">Блакіраваць нумары, якія вы дадалі ў спіс блакіроўкі Telos</string>
+    <string name="hc_done">Гатова</string>
+    <string name="hc_edit">Рэдагаваць</string>
+    <string name="hc_export_playlist_m3u">Экспартаваць плэйліст (M3U)</string>
+    <string name="hc_favorites">Абранае</string>
+    <string name="hc_import_playlist_m3u_pls">Імпартаваць плэйліст (M3U / PLS)</string>
+    <string name="hc_offline_spam_list">Аўтаномны спіс спаму</string>
+    <string name="hc_phone_number">Нумар тэлефона</string>
+    <string name="hc_rename_station">Перайменаваць станцыю</string>
+    <string name="hc_restore_backup">Аднавіць рэзервовую копію</string>
+    <string name="hc_stream_or_playlist_address">Адрас трансляцыі або плэйліста</string>
+    <string name="hf_files_remove_favorite">Выдаліць з абранага</string>
+    <string name="preference_screen_clockwidget">Гадзіннік</string>
+    <string name="preference_theme">Тэма</string>
+    <string name="preference_theme_dark">Цёмная</string>
+    <string name="preference_theme_light">Светлая</string>
+    <string name="preference_theme_system">Як у сістэме</string>
+    <string name="telos_youtube_add_playlist">Дадаць у плэйліст</string>
+    <string name="telos_youtube_artist_radio">Радыё выканаўцы</string>
+    <string name="telos_youtube_library_local">Абранае і плэйлісты застаюцца на гэтым тэлефоне. Яны не ўваходзяць у ваш уліковы запіс YouTube Music.</string>
+    <string name="telos_youtube_playlist_name">Назва плэйліста</string>
+</resources>

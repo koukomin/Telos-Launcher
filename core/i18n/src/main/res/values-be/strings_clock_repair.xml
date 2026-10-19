@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Свет</string>
+    <string name="clock_alarm">Будзільнік</string>
+    <string name="clock_timer">Таймер</string>
+    <string name="clock_stopwatch">Секундамер</string>
+    <string name="clock_local">Мясцовы час</string>
+    <string name="clock_city_search">Пошук горада ці краіны</string>
+    <string name="clock_night">Начны гадзіннік</string>
+    <string name="clock_night_exit">Націсніце, каб закрыць</string>
+    <string name="clock_audio_file">Аўдыяфайл</string>
+    <string name="clock_default_sound">Гук будзільніка</string>
+    <string name="clock_stream_url">Адрас радыёпатоку</string>
+    <string name="clock_sound_fallback">Аднаразовы будзільнік. Пры збоі медыя гучыць стандартны сігнал.</string>
+    <string name="clock_exact">Дазволіць будзільнікі і напаміны</string>
+    <string name="clock_dismiss">Закрыць</string>
+    <string name="clock_minutes">Хвіліны</string>
+    <string name="clock_start">Пуск</string>
+    <string name="clock_reset">Скід</string>
+    <string name="clock_lap">Круг</string>
+</resources>

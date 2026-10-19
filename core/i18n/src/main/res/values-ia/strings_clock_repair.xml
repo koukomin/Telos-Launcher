@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Mundo</string>
+    <string name="clock_alarm">Alarma</string>
+    <string name="clock_timer">Temporisator</string>
+    <string name="clock_stopwatch">Chronometro</string>
+    <string name="clock_local">Hora local</string>
+    <string name="clock_city_search">Cercar citate o pais</string>
+    <string name="clock_night">Horologio nocturne</string>
+    <string name="clock_night_exit">Tocca pro clauder</string>
+    <string name="clock_audio_file">File audio</string>
+    <string name="clock_default_sound">Sono de alarma</string>
+    <string name="clock_stream_url">URL del fluxo radio</string>
+    <string name="clock_sound_fallback">Alarma unic. Si le medio falle, sona le alarma predefinite.</string>
+    <string name="clock_exact">Permitter alarmas e rememorationes</string>
+    <string name="clock_dismiss">Clauder</string>
+    <string name="clock_minutes">Minutas</string>
+    <string name="clock_start">Initiar</string>
+    <string name="clock_reset">Reinitialisar</string>
+    <string name="clock_lap">Torno</string>
+</resources>

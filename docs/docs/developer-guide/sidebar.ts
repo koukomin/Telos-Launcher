@@ -6,6 +6,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/',
   },
   {
+    text: 'Virtual-app surfaces',
+    link: '/docs/developer-guide/virtual-app-surfaces',
+  },
+  {
     text: 'Setup',
     link: '/docs/developer-guide/setup',
   },

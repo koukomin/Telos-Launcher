@@ -415,7 +415,9 @@ internal fun FavoriteIcon(
     onClick: () -> Unit,
     onRemove: () -> Unit,
 ) {
-    val icon by remember(item.key) { iconService.getIcon(item, 48) }.collectAsState(null)
+    val style = LocalSidebarStyle.current
+    val pixels = with(androidx.compose.ui.platform.LocalDensity.current) { style.iconSize.roundToPx() }
+    val icon by remember(item, pixels) { iconService.getIcon(item, pixels) }.collectAsState(null)
     // Reflects live package-suspended state, so it updates immediately on freeze/unfreeze -
     // same source as the frozen-icon tint elsewhere (search results, favorites).
     val isFrozen by remember(item.key) {
@@ -429,13 +431,12 @@ internal fun FavoriteIcon(
 
     val shuttersEnabled by shutterSettings.enabled.collectAsState(false)
     val shutterKey by remember(item.key) {
-        if (item is Application) shutterSettings.appFor(item.componentName.packageName)
+        if (item is Application) shutterSettings.appFor(ShutterSettings.hostKey(item.key, item.componentName.packageName))
         else flowOf(null)
     }.collectAsState(null)
     var showShutter by remember(item.key) { mutableStateOf(false) }
     val hapticFeedback = LocalHapticFeedback.current
 
-    val style = LocalSidebarStyle.current
     Box(modifier = Modifier.size(sidebarCell())) {
         Column(
             modifier = Modifier

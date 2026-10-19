@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">صورة المتصل بملء الشاشة</string>
+    <string name="call_photo_background_summary">عرض صورة جهة الاتصال كخلفية للمكالمة الواردة.</string>
+</resources>

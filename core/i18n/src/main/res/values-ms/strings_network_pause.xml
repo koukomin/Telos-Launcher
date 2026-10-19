@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Disambung semula secara automatik. Android mungkin melengahkannya tanpa akses penggera tepat.</string>
+    <string name="au_radio_pause">Jeda</string>
+    <string name="voice_resume">Sambung semula</string>
+    <string name="dl_t_minutes">%1$d min</string>
+    <string name="dl_t_hours">%1$d j</string>
+    <string name="work_profile_status_paused">Dijeda</string>
+</resources>

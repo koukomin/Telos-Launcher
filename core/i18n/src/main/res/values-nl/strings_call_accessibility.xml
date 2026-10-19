@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Foto van beller op volledig scherm</string>
+    <string name="call_photo_background_summary">Toon de contactfoto als achtergrond bij inkomende oproepen.</string>
+</resources>

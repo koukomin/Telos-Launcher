@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Tự động kết nối lại. Android có thể trì hoãn nếu không có quyền báo thức chính xác.</string>
+    <string name="au_radio_pause">Tạm dừng</string>
+    <string name="voice_resume">Tiếp tục</string>
+    <string name="dl_t_minutes">%1$d phút</string>
+    <string name="dl_t_hours">%1$d giờ</string>
+    <string name="work_profile_status_paused">Đã tạm dừng</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Identigo kaj blokado de alvokantoj</string>
+    <string name="caller_system_list">Blokitaj numeroj de Android</string>
+    <string name="caller_online_lookup">Reta identigo de alvokantoj</string>
+    <string name="caller_online_disclosure">Sendas nekonatajn envenantajn numerojn al white-pages.gr por ricevi nomon kaj taksojn proponitajn de la komunumo. Malŝaltita defaŭlte; neniam aŭtomate blokas.</string>
+    <string name="caller_likely_spam">Verŝajne spamo · white-pages.gr</string>
+    <string name="caller_block_partial">La persona listo estas ĝisdatigita. Ne eblis ĝisdatigi la blokitajn numerojn de Android; agordu Telos kiel la defaŭltan telefonan aŭ SMS-aplikaĵon kaj reprovu.</string>
+    <string name="caller_suggested_name">Proponita nomo: %1$s</string>
+</resources>

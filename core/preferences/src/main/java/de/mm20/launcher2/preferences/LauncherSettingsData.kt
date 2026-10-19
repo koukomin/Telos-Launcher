@@ -1294,7 +1294,9 @@ data class CommsGroup(
     val vibrateOnAnswer: Boolean = false,
     val vibrateOnHangup: Boolean = false,
     val clirPrefix: String = "",
-    val enableSpamBlocking: Boolean = false,
+    val enableSpamBlocking: Boolean = true,
+    val systemSpamBlocking: Boolean = true,
+    val onlineCallerLookup: Boolean = false,
     val hideDialpadLetters: Boolean = false,
     val callerNotes: Map<String, String> = emptyMap(),
     val numberDefaultSim: Map<String, String> = emptyMap(),
@@ -1326,6 +1328,7 @@ data class CommsGroup(
     val pocketMode: Boolean = false,
     /** buttons | swipe */
     val answerStyle: String = "buttons",
+    val fullScreenCallerPhoto: Boolean = false,
     val sim1Color: String = "green",
     val sim2Color: String = "blue",
     /** Subscription id → user label for the SIM in Phone and Messages. Empty uses Android's SIM name. */

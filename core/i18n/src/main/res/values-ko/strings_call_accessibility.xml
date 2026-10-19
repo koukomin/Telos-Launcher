@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">발신자 사진 전체 화면</string>
+    <string name="call_photo_background_summary">수신 전화 배경에 연락처 사진을 표시합니다.</string>
+</resources>

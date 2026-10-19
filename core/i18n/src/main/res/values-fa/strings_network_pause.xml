@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">ادامهٔ خودکار. Android ممکن است بدون مجوز هشدارهای دقیق آن را به تأخیر بیندازد.</string>
+    <string name="au_radio_pause">مکث</string>
+    <string name="voice_resume">ادامه</string>
+    <string name="dl_t_minutes">%1$d دقیقه</string>
+    <string name="dl_t_hours">%1$d ساعت</string>
+    <string name="work_profile_status_paused">متوقف‌شده</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Kuluri tal-isfond</string>
+    <string name="radio_translucent">Dehra trasluċida</string>
+    <string name="radio_controls_scroll">Skrollja l-kontrolli tad-daqq mal-istazzjonijiet</string>
+    <string name="radio_tap_plays">Tektek stazzjon biex iddoqq</string>
+    <string name="radio_large_buffer">Buffer tad-daqq akbar</string>
+    <string name="radio_edit_metadata">Ħalli l-editjar tal-informazzjoni tal-istazzjonijiet</string>
+    <string name="radio_edit_streams">Ħalli l-editjar tal-indirizzi tal-istreams</string>
+    <string name="radio_auto_images">Aġġorna l-immaġnijiet tal-istazzjonijiet awtomatikament</string>
+    <string name="radio_update_images">Aġġorna l-immaġnijiet tal-istazzjonijiet issa</string>
+    <string name="radio_backup_images">Kopja ZIP bl-immaġnijiet tal-istazzjonijiet</string>
+    <string name="radio_restore_replace_summary">Trid tissostitwixxi l-kollezzjoni attwali b’din il-kopja? Il-kollezzjoni attwali titneħħa.</string>
+    <string name="radio_station_image_url">Indirizz tal-immaġni tal-istazzjon</string>
+</resources>

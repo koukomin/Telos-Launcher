@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Svet</string>
+    <string name="clock_alarm">Budík</string>
+    <string name="clock_timer">Časovač</string>
+    <string name="clock_stopwatch">Stopky</string>
+    <string name="clock_local">Miestny čas</string>
+    <string name="clock_city_search">Hľadať mesto alebo krajinu</string>
+    <string name="clock_night">Nočné hodiny</string>
+    <string name="clock_night_exit">Ťuknutím zavriete</string>
+    <string name="clock_audio_file">Zvukový súbor</string>
+    <string name="clock_default_sound">Zvuk budíka</string>
+    <string name="clock_stream_url">URL rádiového streamu</string>
+    <string name="clock_sound_fallback">Jednorazový budík. Pri chybe médií zaznie predvolený zvuk.</string>
+    <string name="clock_exact">Povoliť budíky a pripomenutia</string>
+    <string name="clock_dismiss">Zavrieť</string>
+    <string name="clock_minutes">Minúty</string>
+    <string name="clock_start">Spustiť</string>
+    <string name="clock_reset">Vynulovať</string>
+    <string name="clock_lap">Kolo</string>
+</resources>

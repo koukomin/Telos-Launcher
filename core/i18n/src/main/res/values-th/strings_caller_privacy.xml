@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">ระบุและบล็อกผู้โทร</string>
+    <string name="caller_system_list">หมายเลขที่บล็อกใน Android</string>
+    <string name="caller_online_lookup">ระบุผู้โทรออนไลน์</string>
+    <string name="caller_online_disclosure">ส่งหมายเลขสายเข้าที่ไม่รู้จักไปยัง white-pages.gr เพื่อรับชื่อและคะแนนที่ชุมชนแนะนำ ปิดไว้โดยค่าเริ่มต้น และจะไม่บล็อกโดยอัตโนมัติ</string>
+    <string name="caller_likely_spam">อาจเป็นสแปม · white-pages.gr</string>
+    <string name="caller_block_partial">อัปเดตรายการส่วนตัวแล้ว แต่ไม่สามารถอัปเดตหมายเลขที่บล็อกใน Android ได้ โปรดตั้ง Telos เป็นแอปโทรศัพท์หรือ SMS เริ่มต้นแล้วลองอีกครั้ง</string>
+    <string name="caller_suggested_name">ชื่อที่แนะนำ: %1$s</string>
+</resources>

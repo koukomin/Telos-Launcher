@@ -43,7 +43,7 @@ val LocalVirtualAppBlur = staticCompositionLocalOf<VirtualAppBlur?> { null }
 @Composable
 fun virtualAppSurface(): Color {
     val t = MaterialTheme.transparency
-    return MaterialTheme.colorScheme.surface.copy(alpha = t.background)
+    return if (LocalVirtualAppBlur.current != null) Color.Transparent else MaterialTheme.colorScheme.surface.copy(alpha = t.background)
 }
 
 @Composable
@@ -71,5 +71,30 @@ fun Modifier.virtualAppGlass(blur: VirtualAppBlur, color: Color): Modifier {
         }.background(color)
     } else {
         background(color)
+    }
+}
+
+/** Shared default for every virtual-app route, including future screens using ordinary Scaffolds. */
+@Composable
+fun VirtualAppTheme(content: @Composable () -> Unit) {
+    val blur = rememberVirtualAppBlur()
+    de.mm20.launcher2.ui.launcher.helper.WallpaperBlur { blur.radius }
+    val base = MaterialTheme.colorScheme
+    val alpha = MaterialTheme.transparency.background.coerceIn(0.35f, 0.92f)
+    val colors = remember(base, alpha) {
+        base.copy(
+            background = Color.Transparent,
+            surface = Color.Transparent,
+            surfaceContainerLowest = base.surfaceContainerLowest.copy(alpha = alpha),
+            surfaceContainerLow = base.surfaceContainerLow.copy(alpha = alpha),
+            surfaceContainer = Color.Transparent,
+            surfaceContainerHigh = base.surfaceContainerHigh.copy(alpha = alpha),
+            surfaceContainerHighest = base.surfaceContainerHighest.copy(alpha = alpha),
+        )
+    }
+    CompositionLocalProvider(LocalVirtualAppBlur provides blur) {
+        MaterialTheme(colorScheme = colors, typography = MaterialTheme.typography, shapes = MaterialTheme.shapes) {
+            Box(Modifier.fillMaxSize().background(base.surface.copy(alpha = alpha))) { content() }
+        }
     }
 }

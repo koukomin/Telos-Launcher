@@ -1,0 +1,5 @@
+<resources>
+    <string name="camera_title">Камера Telos</string>
+    <string name="camera_mode_photo">Фота</string>
+    <string name="camera_mode_video">Відэа</string>
+</resources>

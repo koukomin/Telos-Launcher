@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Автоматично възобновяване. Android може да го забави без достъп до точни аларми.</string>
+</resources>

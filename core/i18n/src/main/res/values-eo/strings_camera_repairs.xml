@@ -1,0 +1,5 @@
+<resources>
+    <string name="camera_title">Telos-fotilo</string>
+    <string name="camera_mode_photo">Foto</string>
+    <string name="camera_mode_video">Video</string>
+</resources>

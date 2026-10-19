@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Определение и блокировка звонящих</string>
+    <string name="caller_system_list">Заблокированные номера Android</string>
+    <string name="caller_online_lookup">Онлайн-определение звонящих</string>
+    <string name="caller_online_disclosure">Отправляет неизвестные входящие номера на white-pages.gr, чтобы получить предложенные сообществом имя и оценки. По умолчанию отключено; никогда не блокирует автоматически.</string>
+    <string name="caller_likely_spam">Вероятно спам · white-pages.gr</string>
+    <string name="caller_block_partial">Личный список обновлён. Не удалось обновить заблокированные номера Android; назначьте Telos приложением телефона или SMS по умолчанию и повторите попытку.</string>
+    <string name="caller_suggested_name">Предлагаемое имя: %1$s</string>
+</resources>

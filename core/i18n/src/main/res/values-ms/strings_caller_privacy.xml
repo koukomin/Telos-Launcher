@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Pengenalpastian dan sekatan pemanggil</string>
+    <string name="caller_system_list">Nombor disekat Android</string>
+    <string name="caller_online_lookup">Pengenalpastian pemanggil dalam talian</string>
+    <string name="caller_online_disclosure">Menghantar nombor masuk yang tidak dikenali ke white-pages.gr untuk mendapatkan nama dan penilaian yang dicadangkan komuniti. Dimatikan secara lalai; tidak pernah menyekat secara automatik.</string>
+    <string name="caller_likely_spam">Kemungkinan spam · white-pages.gr</string>
+    <string name="caller_block_partial">Senarai peribadi dikemas kini. Nombor disekat Android tidak dapat dikemas kini; tetapkan Telos sebagai aplikasi telefon atau SMS lalai dan cuba lagi.</string>
+    <string name="caller_suggested_name">Nama dicadangkan: %1$s</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Reprisa automatic. Android pote retardar lo sin accesso a alarmas exacte.</string>
+    <string name="au_radio_pause">Pausar</string>
+    <string name="voice_resume">Reprender</string>
+    <string name="dl_t_minutes">%1$d min</string>
+    <string name="dl_t_hours">%1$d h</string>
+    <string name="work_profile_status_paused">Pausate</string>
+</resources>

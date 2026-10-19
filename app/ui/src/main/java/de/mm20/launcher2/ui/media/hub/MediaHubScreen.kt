@@ -301,7 +301,7 @@ fun MediaHubScreen(initialSpace: String = "") {
                 }
             }
 
-            de.mm20.launcher2.ui.media.youtube.YouTubeMiniPlayer(youtubeVm) { music ->
+            if (current == MediaSpace.YouTube || current == MediaSpace.YouTubeMusic) de.mm20.launcher2.ui.media.youtube.YouTubeMiniPlayer(youtubeVm, current == MediaSpace.YouTubeMusic) { music ->
                 space = if (music) MediaSpace.YouTubeMusic.id else MediaSpace.YouTube.id
             }
             if (current != null) {
@@ -585,17 +585,10 @@ private fun HubMiniPlayer(
     val hasMusic = musicNow != null
     val hasTv = tvChannel != null
     val shown: MediaSpace? = when {
-        space == MediaSpace.Video || space == MediaSpace.Stremio -> null
-        space == MediaSpace.Tv && tvPlayerOpen -> null
         space == MediaSpace.Music && hasMusic -> MediaSpace.Music
-        space == MediaSpace.Radio && radioVisible -> MediaSpace.Radio
-        space == MediaSpace.Tv && hasTv -> MediaSpace.Tv
-        musicPlaying && hasMusic -> MediaSpace.Music
-        radioPlaying && radioVisible -> MediaSpace.Radio
-        tvPlaying && hasTv -> MediaSpace.Tv
-        hasMusic -> MediaSpace.Music
-        radioVisible -> MediaSpace.Radio
-        hasTv -> MediaSpace.Tv
+        // RadioDashboard owns its station bar (including scrollable controls).
+        space == MediaSpace.Radio -> null
+        space == MediaSpace.Tv && hasTv && !tvPlayerOpen -> MediaSpace.Tv
         else -> null
     }
 

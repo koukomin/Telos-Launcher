@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Helistaja tuvastamine ja blokeerimine</string>
+    <string name="caller_system_list">Androidis blokeeritud numbrid</string>
+    <string name="caller_online_lookup">Helistaja tuvastamine veebis</string>
+    <string name="caller_online_disclosure">Saadab tundmatud sissetulevad numbrid saidile white-pages.gr, et saada kogukonna pakutud nimi ja hinnangud. Vaikimisi välja lülitatud; ei blokeeri kunagi automaatselt.</string>
+    <string name="caller_likely_spam">Tõenäoline rämpskõne · white-pages.gr</string>
+    <string name="caller_block_partial">Isiklik loend on uuendatud. Androidi blokeeritud numbreid ei saanud uuendada; määra Telos telefoni või SMS-i vaikerakenduseks ja proovi uuesti.</string>
+    <string name="caller_suggested_name">Soovitatud nimi: %1$s</string>
+</resources>

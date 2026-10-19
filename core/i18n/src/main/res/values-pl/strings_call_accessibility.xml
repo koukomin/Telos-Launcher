@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Zdjęcie dzwoniącego na pełnym ekranie</string>
+    <string name="call_photo_background_summary">Pokaż zdjęcie kontaktu jako tło połączenia przychodzącego.</string>
+</resources>

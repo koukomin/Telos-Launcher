@@ -107,20 +107,22 @@ class TelosVpnService : VpnService(), KoinComponent {
         // Always-on VPN uses SERVICE_INTERFACE; sticky process restoration uses a null intent.
         when (intent?.action) {
             ACTION_STOP -> {
-                settings.update { it.copy(engineWanted = false) }
-                settings.flush()
-                requestStop(StopReason.User, null)
+                engine.stop()
                 return START_NOT_STICKY
             }
             ACTION_START -> {
-                if (settings.current.engineWanted) begin() else requestStop(StopReason.User, null)
+                if (settings.current.engineWanted && !VpnPausePolicy.pending(true, settings.current.pauseUntilMs, System.currentTimeMillis())) begin() else requestStop(StopReason.User, null)
             }
             SERVICE_INTERFACE -> {
+                if (VpnPausePolicy.pending(settings.current.engineWanted, settings.current.pauseUntilMs, System.currentTimeMillis())) {
+                    requestStop(StopReason.User, null)
+                    return START_NOT_STICKY
+                }
                 settings.update { it.copy(engineWanted = true) }
                 settings.flush()
                 begin()
             }
-            else -> if (VpnRecoveryPolicy.shouldStart(intent?.action, settings.current.engineWanted)) begin()
+            else -> if (VpnRecoveryPolicy.shouldStart(intent?.action, settings.current.engineWanted) && !VpnPausePolicy.pending(settings.current.engineWanted, settings.current.pauseUntilMs, System.currentTimeMillis())) begin()
                 else requestStop(StopReason.User, null)
         }
         return if (settings.current.engineWanted) START_STICKY else START_NOT_STICKY
@@ -294,7 +296,7 @@ class TelosVpnService : VpnService(), KoinComponent {
     /** Builds the interface. Returns null when Android refuses (the VPN permission is gone). */
     private fun establish(r: Routes, snapshot: NetSnapshot): ParcelFileDescriptor? {
         val s = settings.current
-        val torRestricted = s.torEnabled || s.torAppIds.isNotEmpty()
+        val torRestricted = s.torEnabled || s.torSystemDefault || s.torAppIds.isNotEmpty()
         val b = Builder()
             .setSession("Telos Network")
             .setMtu(r.mtu)

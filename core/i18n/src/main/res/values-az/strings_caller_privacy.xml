@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Zəng edənin tanınması və bloklanması</string>
+    <string name="caller_system_list">Android-də bloklanmış nömrələr</string>
+    <string name="caller_online_lookup">Zəng edənin onlayn tanınması</string>
+    <string name="caller_online_disclosure">İcmanın təklif etdiyi adı və qiymətləndirmələri almaq üçün naməlum gələn nömrələri white-pages.gr saytına göndərir. Standart olaraq söndürülüb; heç vaxt avtomatik bloklamır.</string>
+    <string name="caller_likely_spam">Ehtimal olunan spam · white-pages.gr</string>
+    <string name="caller_block_partial">Şəxsi siyahı yeniləndi. Android-in bloklanmış nömrələri yenilənmədi; Telos-u standart telefon və ya SMS tətbiqi edin və yenidən cəhd edin.</string>
+    <string name="caller_suggested_name">Təklif olunan ad: %1$s</string>
+</resources>

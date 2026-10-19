@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">חידוש אוטומטי. Android עשוי לעכב אותו ללא גישה להתראות מדויקות.</string>
+    <string name="au_radio_pause">השהיה</string>
+    <string name="voice_resume">המשך</string>
+    <string name="dl_t_minutes">%1$d דקות</string>
+    <string name="dl_t_hours">%1$d שעות</string>
+    <string name="work_profile_status_paused">מושהה</string>
+</resources>

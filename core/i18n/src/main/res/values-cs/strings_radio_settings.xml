@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Barvy tapety</string>
+    <string name="radio_translucent">Průsvitný vzhled</string>
+    <string name="radio_controls_scroll">Posouvat ovládání přehrávání společně se stanicemi</string>
+    <string name="radio_tap_plays">Klepnutím na stanici spustit přehrávání</string>
+    <string name="radio_large_buffer">Větší vyrovnávací paměť přehrávání</string>
+    <string name="radio_edit_metadata">Povolit úpravu informací o stanicích</string>
+    <string name="radio_edit_streams">Povolit úpravu adres streamů</string>
+    <string name="radio_auto_images">Automaticky aktualizovat obrázky stanic</string>
+    <string name="radio_update_images">Aktualizovat obrázky stanic nyní</string>
+    <string name="radio_backup_images">Záloha ZIP včetně obrázků stanic</string>
+    <string name="radio_restore_replace_summary">Nahradit aktuální sbírku stanic touto zálohou? Vaše aktuální sbírka bude odstraněna.</string>
+    <string name="radio_station_image_url">Adresa obrázku stanice</string>
+</resources>

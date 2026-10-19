@@ -24,6 +24,7 @@ import kotlin.coroutines.resumeWithException
 
 class YouTubeViewModel : ViewModel(), KoinComponent {
     private val repository: YouTubeRepository by inject()
+    val library: YouTubeLibrary by inject()
     val results = MutableStateFlow<Map<Boolean, List<YouTubeEntry>>>(emptyMap())
     val searching = MutableStateFlow(false)
     val resolving = MutableStateFlow(false)
@@ -79,15 +80,18 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
         try { return deferred.await() } finally { connectJob = null }
     }
     fun reconnect(context: Context) { viewModelScope.launch { runCatching { connect(context) } } }
-    fun play(context: Context, entry: YouTubeEntry, music: Boolean) {
+    fun play(context: Context, entry: YouTubeEntry, music: Boolean, tracks: List<YouTubeEntry> = listOf(entry)) {
         playJob?.cancel()
         playJob = viewModelScope.launch {
             resolving.value = true; message.value = null
             try {
                 val playback = repository.resolve(entry, music)
                 val c = connect(context)
+                library.remember(playback.entry, music)
                 val extras = Bundle().apply {
                     putBoolean("audioOnly", playback.audioOnly)
+                    putString(YouTubePlayerService.EXTRA_QUEUE, YouTubeQueue.encode(tracks))
+                    putInt(YouTubePlayerService.EXTRA_QUEUE_INDEX, tracks.indexOfFirst { it.url == entry.url })
                     playback.audioUrl?.let { putString(YouTubePlayerService.EXTRA_AUDIO_URL, it) }
                 }
                 val metadata = MediaMetadata.Builder().setTitle(playback.entry.title).setArtist(playback.entry.artist)
@@ -97,6 +101,19 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
             } catch (e: CancellationException) { throw e }
             catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_play_failed) }
             finally { resolving.value = false }
+        }
+    }
+    fun artistRadio(context: Context, entry: YouTubeEntry) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            searching.value = true; message.value = null
+            try {
+                val tracks = repository.related(entry)
+                results.value = results.value + (true to tracks)
+                if (tracks.isNotEmpty()) play(context, tracks.first(), true, tracks)
+            } catch (e: CancellationException) { throw e }
+            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            finally { searching.value = false }
         }
     }
     fun toggle() { controller.value?.let { if (it.playWhenReady) it.pause() else it.play() } }

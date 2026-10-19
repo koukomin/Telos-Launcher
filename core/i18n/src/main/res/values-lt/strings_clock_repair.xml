@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Pasaulis</string>
+    <string name="clock_alarm">Žadintuvas</string>
+    <string name="clock_timer">Laikmatis</string>
+    <string name="clock_stopwatch">Chronometras</string>
+    <string name="clock_local">Vietos laikas</string>
+    <string name="clock_city_search">Ieškoti miesto arba šalies</string>
+    <string name="clock_night">Naktinis laikrodis</string>
+    <string name="clock_night_exit">Palieskite norėdami uždaryti</string>
+    <string name="clock_audio_file">Garso failas</string>
+    <string name="clock_default_sound">Žadintuvo garsas</string>
+    <string name="clock_stream_url">Radijo srauto URL</string>
+    <string name="clock_sound_fallback">Vienkartinis žadintuvas. Nepavykus medijai, skamba numatytasis garsas.</string>
+    <string name="clock_exact">Leisti žadintuvus ir priminimus</string>
+    <string name="clock_dismiss">Uždaryti</string>
+    <string name="clock_minutes">Minutės</string>
+    <string name="clock_start">Pradėti</string>
+    <string name="clock_reset">Atkurti</string>
+    <string name="clock_lap">Ratas</string>
+</resources>

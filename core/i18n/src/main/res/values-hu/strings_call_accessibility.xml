@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Hívó fényképe teljes képernyőn</string>
+    <string name="call_photo_background_summary">A névjegy fényképének megjelenítése a bejövő hívás háttereként.</string>
+</resources>

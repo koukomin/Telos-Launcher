@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">壁紙の色</string>
+    <string name="radio_translucent">半透明の外観</string>
+    <string name="radio_controls_scroll">再生コントロールを放送局と一緒にスクロール</string>
+    <string name="radio_tap_plays">放送局をタップして再生</string>
+    <string name="radio_large_buffer">再生バッファを大きくする</string>
+    <string name="radio_edit_metadata">放送局情報の編集を許可</string>
+    <string name="radio_edit_streams">ストリームアドレスの編集を許可</string>
+    <string name="radio_auto_images">放送局の画像を自動更新</string>
+    <string name="radio_update_images">放送局の画像を今すぐ更新</string>
+    <string name="radio_backup_images">放送局の画像を含むZIPバックアップ</string>
+    <string name="radio_restore_replace_summary">現在の放送局コレクションをこのバックアップで置き換えますか？現在のコレクションは削除されます。</string>
+    <string name="radio_station_image_url">放送局画像のアドレス</string>
+</resources>

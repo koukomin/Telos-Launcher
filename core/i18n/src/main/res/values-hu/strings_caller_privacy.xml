@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Hívóazonosítás és tiltás</string>
+    <string name="caller_system_list">Android letiltott számok</string>
+    <string name="caller_online_lookup">Online hívóazonosítás</string>
+    <string name="caller_online_disclosure">Az ismeretlen bejövő számokat a white-pages.gr oldalra küldi a közösség által javasolt név és értékelések lekéréséhez. Alapértelmezetten kikapcsolva; soha nem tilt automatikusan.</string>
+    <string name="caller_likely_spam">Valószínűleg kéretlen hívás · white-pages.gr</string>
+    <string name="caller_block_partial">A személyes lista frissítve. Az Android letiltott számai nem frissíthetők; állítsd be a Telost alapértelmezett telefon- vagy SMS-alkalmazásként, és próbáld újra.</string>
+    <string name="caller_suggested_name">Javasolt név: %1$s</string>
+</resources>

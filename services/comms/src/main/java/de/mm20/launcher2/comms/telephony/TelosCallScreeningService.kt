@@ -41,9 +41,11 @@ class TelosCallScreeningService : CallScreeningService(), KoinComponent {
         val presentation = callDetails.handlePresentation
         scope.launch {
             // a failing lookup must never leave the call without an answer
+            val block = kotlinx.coroutines.withTimeoutOrNull(3500) {
             val block = runCatching {
                 CallBlockEngine.shouldBlock(phoneNumber, presentation, incoming = true)
             }.getOrDefault(false)
+            } ?: false
             if (block) {
                 Log.i("TelosCallScreening", "Silently rejecting a call")
                 val response = CallResponse.Builder()
@@ -71,10 +73,10 @@ class TelosCallScreeningService : CallScreeningService(), KoinComponent {
             presentation == android.telecom.TelecomManager.PRESENTATION_UNKNOWN
         if (hidden && commsSettings.blockHiddenNumbers.first()) return true
 
-        if (commsSettings.enableSpamBlocking.first() &&
-            number.isNotBlank() &&
-            spamRepository.isNumberBlocked(number)
-        ) return true
+        if (number.isNotBlank()) {
+            if (commsSettings.enableSpamBlocking.first() && spamRepository.isPersonallyBlocked(number)) return true
+            if (commsSettings.systemSpamBlocking.first() && spamRepository.isSystemBlocked(number)) return true
+        }
 
         if (commsSettings.blockUnknownNumbers.first() &&
             number.isNotBlank() &&

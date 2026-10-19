@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Вызначэнне і блакіроўка абанентаў</string>
+    <string name="caller_system_list">Заблакіраваныя нумары Android</string>
+    <string name="caller_online_lookup">Вызначэнне абанентаў праз інтэрнэт</string>
+    <string name="caller_online_disclosure">Адпраўляе невядомыя ўваходныя нумары на white-pages.gr, каб атрымаць прапанаванае супольнасцю імя і ацэнкі. Першапачаткова выключана; ніколі не блакіруе аўтаматычна.</string>
+    <string name="caller_likely_spam">Верагодны спам · white-pages.gr</string>
+    <string name="caller_block_partial">Асабісты спіс абноўлены. Не ўдалося абнавіць заблакіраваныя нумары Android; зрабіце Telos стандартнай праграмай тэлефона або SMS і паўтарыце спробу.</string>
+    <string name="caller_suggested_name">Прапанаванае імя: %1$s</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Taustapildi värvid</string>
+    <string name="radio_translucent">Poolläbipaistev välimus</string>
+    <string name="radio_controls_scroll">Keri esitusnuppe koos jaamadega</string>
+    <string name="radio_tap_plays">Esitamiseks puuduta jaama</string>
+    <string name="radio_large_buffer">Suurem esituspuhver</string>
+    <string name="radio_edit_metadata">Luba jaama teabe muutmine</string>
+    <string name="radio_edit_streams">Luba voogedastuse aadresside muutmine</string>
+    <string name="radio_auto_images">Uuenda jaamade pilte automaatselt</string>
+    <string name="radio_update_images">Uuenda jaamade pilte kohe</string>
+    <string name="radio_backup_images">ZIP-varukoopia koos jaamade piltidega</string>
+    <string name="radio_restore_replace_summary">Kas asendada praegune jaamakogu selle varukoopiaga? Sinu praegune kogu eemaldatakse.</string>
+    <string name="radio_station_image_url">Jaama pildi aadress</string>
+</resources>

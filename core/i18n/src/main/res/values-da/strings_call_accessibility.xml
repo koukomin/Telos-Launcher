@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Opkalderfoto på fuld skærm</string>
+    <string name="call_photo_background_summary">Vis kontaktens foto som baggrund for indgående opkald.</string>
+</resources>

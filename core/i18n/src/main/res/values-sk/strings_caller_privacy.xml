@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Identifikácia a blokovanie volajúcich</string>
+    <string name="caller_system_list">Blokované čísla Androidu</string>
+    <string name="caller_online_lookup">Online identifikácia volajúcich</string>
+    <string name="caller_online_disclosure">Odosiela neznáme prichádzajúce čísla na white-pages.gr na získanie mena a hodnotení od komunity. Predvolene vypnuté; nikdy automaticky neblokuje.</string>
+    <string name="caller_likely_spam">Pravdepodobný spam · white-pages.gr</string>
+    <string name="caller_block_partial">Osobný zoznam bol aktualizovaný. Blokované čísla Androidu sa nepodarilo aktualizovať; nastavte Telos ako predvolenú aplikáciu pre telefón alebo SMS a skúste to znova.</string>
+    <string name="caller_suggested_name">Navrhované meno: %1$s</string>
+</resources>

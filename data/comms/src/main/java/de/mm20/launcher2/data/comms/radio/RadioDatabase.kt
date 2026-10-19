@@ -50,6 +50,26 @@ interface RadioStationDao {
     @Query("DELETE FROM favorite_stations WHERE id = :id")
     suspend fun deleteById(id: String)
 
+    @Query("DELETE FROM favorite_stations")
+    suspend fun clearStations()
+
+    @Transaction
+    suspend fun importStations(stations: List<RadioStationEntity>, replace: Boolean): Int {
+        require(stations.isNotEmpty()) { "No valid stations" }
+        val current = if (replace) emptyList() else getAll()
+        val urls = current.map { it.streamUrl }.toMutableSet()
+        val ids = current.map { it.id }.toMutableSet()
+        if (replace) clearStations()
+        var added = 0
+        for (station in stations) {
+            if (!urls.add(station.streamUrl)) continue
+            val target = if (!ids.add(station.id)) station.copy(id = "local-${java.util.UUID.randomUUID()}") else station
+            insert(target)
+            added++
+        }
+        return added
+    }
+
     @Query("UPDATE favorite_stations SET name = :name, nameManuallySet = 1 WHERE id = :id")
     suspend fun rename(id: String, name: String)
 

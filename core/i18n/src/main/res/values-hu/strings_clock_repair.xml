@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Világ</string>
+    <string name="clock_alarm">Ébresztő</string>
+    <string name="clock_timer">Időzítő</string>
+    <string name="clock_stopwatch">Stopper</string>
+    <string name="clock_local">Helyi idő</string>
+    <string name="clock_city_search">Város vagy ország keresése</string>
+    <string name="clock_night">Éjszakai óra</string>
+    <string name="clock_night_exit">Koppintson a bezáráshoz</string>
+    <string name="clock_audio_file">Hangfájl</string>
+    <string name="clock_default_sound">Ébresztőhang</string>
+    <string name="clock_stream_url">Rádiófolyam URL-je</string>
+    <string name="clock_sound_fallback">Egyszeri ébresztés. Médiahiba esetén az alapértelmezett hang szól.</string>
+    <string name="clock_exact">Ébresztők és emlékeztetők engedélyezése</string>
+    <string name="clock_dismiss">Bezárás</string>
+    <string name="clock_minutes">Perc</string>
+    <string name="clock_start">Indítás</string>
+    <string name="clock_reset">Alaphelyzet</string>
+    <string name="clock_lap">Kör</string>
+</resources>

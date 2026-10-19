@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Mondo</string>
+    <string name="clock_alarm">Sveglia</string>
+    <string name="clock_timer">Timer</string>
+    <string name="clock_stopwatch">Cronometro</string>
+    <string name="clock_local">Ora locale</string>
+    <string name="clock_city_search">Cerca città o paese</string>
+    <string name="clock_night">Orologio notturno</string>
+    <string name="clock_night_exit">Tocca per chiudere</string>
+    <string name="clock_audio_file">File audio</string>
+    <string name="clock_default_sound">Suono della sveglia</string>
+    <string name="clock_stream_url">URL del flusso radio</string>
+    <string name="clock_sound_fallback">Sveglia singola. Se il contenuto non funziona, suona la sveglia predefinita.</string>
+    <string name="clock_exact">Consenti sveglie e promemoria</string>
+    <string name="clock_dismiss">Chiudi</string>
+    <string name="clock_minutes">Minuti</string>
+    <string name="clock_start">Avvia</string>
+    <string name="clock_reset">Azzera</string>
+    <string name="clock_lap">Giro</string>
+</resources>

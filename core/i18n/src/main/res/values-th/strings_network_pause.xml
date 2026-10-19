@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">เชื่อมต่ออีกครั้งโดยอัตโนมัติ Android อาจทำให้ล่าช้าหากไม่ได้รับสิทธิ์ตั้งปลุกแบบตรงเวลา</string>
+    <string name="au_radio_pause">หยุดชั่วคราว</string>
+    <string name="voice_resume">เล่นต่อ</string>
+    <string name="dl_t_minutes">%1$d นาที</string>
+    <string name="dl_t_hours">%1$d ชม.</string>
+    <string name="work_profile_status_paused">หยุดชั่วคราว</string>
+</resources>

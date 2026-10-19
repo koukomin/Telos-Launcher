@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Tam ekran arayan fotoğrafı</string>
+    <string name="call_photo_background_summary">Kişi fotoğrafını gelen arama arka planı olarak göster.</string>
+</resources>

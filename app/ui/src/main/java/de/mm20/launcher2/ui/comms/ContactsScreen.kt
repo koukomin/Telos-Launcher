@@ -414,7 +414,7 @@ fun ContactsScreen(
                     })
                     if (number.isNotEmpty()) {
                         add(CommsCabAction(R.drawable.delete_24px, blockLabel, destructive = true) {
-                            viewModel.block(number)
+                            viewModel.block(context, number)
                         })
                     }
                 },

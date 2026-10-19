@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Divar kağızının rəngləri</string>
+    <string name="radio_translucent">Yarımşəffaf görünüş</string>
+    <string name="radio_controls_scroll">Oxutma idarələrini stansiyalarla birlikdə sürüşdür</string>
+    <string name="radio_tap_plays">Oxutmaq üçün stansiyaya toxunun</string>
+    <string name="radio_large_buffer">Daha böyük oxutma buferi</string>
+    <string name="radio_edit_metadata">Stansiya məlumatlarının redaktəsinə icazə ver</string>
+    <string name="radio_edit_streams">Yayım ünvanlarının redaktəsinə icazə ver</string>
+    <string name="radio_auto_images">Stansiya şəkillərini avtomatik yenilə</string>
+    <string name="radio_update_images">Stansiya şəkillərini indi yenilə</string>
+    <string name="radio_backup_images">Stansiya şəkilləri daxil olmaqla ZIP ehtiyat nüsxəsi</string>
+    <string name="radio_restore_replace_summary">Cari stansiya kolleksiyası bu ehtiyat nüsxəsi ilə əvəz edilsin? Cari kolleksiyanız silinəcək.</string>
+    <string name="radio_station_image_url">Stansiya şəklinin ünvanı</string>
+</resources>

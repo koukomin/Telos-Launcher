@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">עולם</string>
+    <string name="clock_alarm">שעון מעורר</string>
+    <string name="clock_timer">טיימר</string>
+    <string name="clock_stopwatch">שעון עצר</string>
+    <string name="clock_local">שעה מקומית</string>
+    <string name="clock_city_search">חיפוש עיר או מדינה</string>
+    <string name="clock_night">שעון לילה</string>
+    <string name="clock_night_exit">הקשה לסגירה</string>
+    <string name="clock_audio_file">קובץ שמע</string>
+    <string name="clock_default_sound">צליל התראה</string>
+    <string name="clock_stream_url">כתובת זרם הרדיו</string>
+    <string name="clock_sound_fallback">התראה חד־פעמית. בכשל מדיה יושמע צליל ברירת המחדל.</string>
+    <string name="clock_exact">אפשר התראות ותזכורות</string>
+    <string name="clock_dismiss">סגירה</string>
+    <string name="clock_minutes">דקות</string>
+    <string name="clock_start">התחלה</string>
+    <string name="clock_reset">איפוס</string>
+    <string name="clock_lap">הקפה</string>
+</resources>

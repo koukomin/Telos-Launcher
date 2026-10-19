@@ -70,6 +70,8 @@ data object ViewerRoute : NavKey
 /** Categories of the library (the chips). [exts] are the file extensions that belong to it. */
 internal enum class DocCategory(val labelRes: Int, val exts: Set<String>) {
     All(R.string.au20_viewer_cat_all, emptySet()),
+    Images(R.string.file_search_type_images, setOf("jpg", "jpeg", "png", "webp", "gif", "heic", "avif", "bmp")),
+    Videos(R.string.file_search_type_videos, setOf("mp4", "mkv", "webm", "mov", "3gp", "avi", "m4v")),
     Documents(R.string.au20_viewer_cat_documents, setOf("doc", "docx", "odt", "rtf", "txt", "md", "markdown", "gdoc")),
     Pdf(R.string.au20_viewer_cat_pdf, setOf("pdf")),
     Sheets(R.string.au20_viewer_cat_sheets, setOf("xls", "xlsx", "ods", "csv", "tsv", "gsheet")),
@@ -263,10 +265,16 @@ private fun hasFilesAccess(context: Context): Boolean =
     if (Build.VERSION.SDK_INT >= 30) Environment.isExternalStorageManager()
     else ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
 
-private fun openDocument(context: Context, uri: Uri) {
+private fun openDocument(context: Context, uri: Uri, name: String) {
+    val ext = DocumentTypes.ext(name)
+    val mediaActivity = when (DocCategory.of(ext)) {
+        DocCategory.Images -> de.mm20.launcher2.ui.media.photos.PhotoViewerActivity::class.java
+        DocCategory.Videos -> de.mm20.launcher2.ui.media.video.VideoPlayerActivity::class.java
+        else -> DocumentViewerActivity::class.java
+    }
     runCatching {
         context.startActivity(
-            Intent(context, DocumentViewerActivity::class.java).setData(uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            Intent(context, mediaActivity).setData(uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         )
     }.onFailure { Toast.makeText(context, R.string.au20_viewer_open_failed, Toast.LENGTH_SHORT).show() }
 }
@@ -381,7 +389,7 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
 
     fun open(uri: Uri, name: String, size: Long) {
         vm.addRecent(context, uri, name, size)
-        openDocument(context, uri)
+        openDocument(context, uri, name)
     }
 
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
@@ -683,9 +691,9 @@ private fun DocRow(
             ),
         ) {
             Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-                TypeTile(file.ext, 48.dp)
+                ViewerThumbnail(file.uri, file.name, file.modified, Modifier.size(64.dp).clip(RoundedCornerShape(14.dp))) { TypeTile(file.ext, 64.dp) }
                 Column(Modifier.weight(1f).padding(start = 12.dp)) {
-                    Text(file.name, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(file.name, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
                     if (file.folder.isNotEmpty()) {
                         Text(
                             file.folder,
@@ -732,7 +740,7 @@ private fun RecentCard(
             ),
         ) {
             Column(Modifier.padding(12.dp)) {
-                TypeTile(DocumentTypes.ext(t.name), 44.dp)
+                ViewerThumbnail(t.uri, t.name, t.date, Modifier.fillMaxWidth().height(96.dp).clip(RoundedCornerShape(12.dp))) { TypeTile(DocumentTypes.ext(t.name), 44.dp) }
                 Text(
                     t.name,
                     style = MaterialTheme.typography.titleSmall,

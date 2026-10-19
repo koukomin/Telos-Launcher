@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Bakgrunnsfarger</string>
+    <string name="radio_translucent">Gjennomskinnelig utseende</string>
+    <string name="radio_controls_scroll">Rull avspillingskontrollene med stasjonene</string>
+    <string name="radio_tap_plays">Trykk på en stasjon for å spille av</string>
+    <string name="radio_large_buffer">Større avspillingsbuffer</string>
+    <string name="radio_edit_metadata">Tillat redigering av stasjonsinformasjon</string>
+    <string name="radio_edit_streams">Tillat redigering av strømadresser</string>
+    <string name="radio_auto_images">Oppdater stasjonsbilder automatisk</string>
+    <string name="radio_update_images">Oppdater stasjonsbilder nå</string>
+    <string name="radio_backup_images">ZIP-sikkerhetskopi med stasjonsbilder</string>
+    <string name="radio_restore_replace_summary">Erstatte gjeldende stasjonssamling med denne sikkerhetskopien? Den gjeldende samlingen blir fjernet.</string>
+    <string name="radio_station_image_url">Adresse til stasjonsbilde</string>
+</resources>

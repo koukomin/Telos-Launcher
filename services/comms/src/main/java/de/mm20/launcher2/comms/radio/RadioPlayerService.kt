@@ -69,7 +69,14 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
         // Streams are requested with an app specific user agent. Android's default "Dalvik/..."
         // agent is rejected by some stations (same fix as Transistor 4.3.8, for example Live365).
         val httpFactory = DefaultHttpDataSource.Factory().setUserAgent(USER_AGENT)
+        val loadControl = androidx.media3.exoplayer.DefaultLoadControl.Builder().apply {
+            if (RadioSettings(this@RadioPlayerService).values.value.largeBuffer) {
+                // A larger reserve tolerates brief mobile/Wi-Fi outages, with a longer initial wait.
+                setBufferDurationsMs(60_000, 180_000, 5_000, 10_000)
+            }
+        }.build()
         val exo = ExoPlayer.Builder(this, de.mm20.launcher2.comms.media.MediaDecoderPack.renderersFactory(this))
+            .setLoadControl(loadControl)
             .setMediaSourceFactory(DefaultMediaSourceFactory(DefaultDataSource.Factory(this, httpFactory)))
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true)
@@ -77,6 +84,7 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
         player = exo
+        restoreStation(exo)
 
         // keeps trying to reconnect when the stream is lost, until the user pauses or stops
         val rc = StreamReconnector(this, exo, isLive = { true }).also { it.attach() }
@@ -95,6 +103,7 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
 
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                 lastRecordedTitle = ""
+                saveStation(mediaItem)
             }
 
             override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
@@ -208,6 +217,25 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
     // although the player is idle after the error
     override fun onUpdateNotification(session: MediaSession, startInForegroundRequired: Boolean) {
         super.onUpdateNotification(session, startInForegroundRequired || reconnecting.value)
+    }
+
+    /** Keep the station while paused; never start a stream just because its page is opened. */
+    private fun saveStation(item: MediaItem?) {
+        item ?: return
+        val uri = item.localConfiguration?.uri ?: return
+        getSharedPreferences("radio_last_station", MODE_PRIVATE).edit()
+            .putString("uri", uri.toString()).putString("id", item.mediaId)
+            .putString("name", item.mediaMetadata.title?.toString().orEmpty())
+            .putString("art", item.mediaMetadata.artworkUri?.toString()).apply()
+    }
+    private fun restoreStation(exo: ExoPlayer) {
+        val prefs = getSharedPreferences("radio_last_station", MODE_PRIVATE)
+        val uri = prefs.getString("uri", null) ?: return
+        val item = MediaItem.Builder().setUri(uri).setMediaId(prefs.getString("id", "").orEmpty())
+            .setMediaMetadata(MediaMetadata.Builder().setTitle(prefs.getString("name", ""))
+                .setArtworkUri(prefs.getString("art", null)?.let(Uri::parse)).build()).build()
+        exo.setMediaItem(item)
+        // Unprepared: opening Radio displays its last station without accessing the network.
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {

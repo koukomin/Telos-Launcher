@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Boje pozadine</string>
+    <string name="radio_translucent">Proziran izgled</string>
+    <string name="radio_controls_scroll">Pomiči kontrole reprodukcije s postajama</string>
+    <string name="radio_tap_plays">Dodirni postaju za reprodukciju</string>
+    <string name="radio_large_buffer">Veći međuspremnik reprodukcije</string>
+    <string name="radio_edit_metadata">Dopusti uređivanje podataka o postaji</string>
+    <string name="radio_edit_streams">Dopusti uređivanje adresa prijenosa</string>
+    <string name="radio_auto_images">Automatski ažuriraj slike postaja</string>
+    <string name="radio_update_images">Ažuriraj slike postaja sada</string>
+    <string name="radio_backup_images">ZIP sigurnosna kopija sa slikama postaja</string>
+    <string name="radio_restore_replace_summary">Zamijeniti trenutačnu zbirku postaja ovom sigurnosnom kopijom? Trenutačna zbirka bit će uklonjena.</string>
+    <string name="radio_station_image_url">Adresa slike postaje</string>
+</resources>

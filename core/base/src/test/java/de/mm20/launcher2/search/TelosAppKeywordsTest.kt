@@ -29,6 +29,17 @@ class TelosAppKeywordsTest {
         for (name in listOf("termux", "τερματικό", "shell", "telos terminal"))
             assertTrue(name, name in aliases)
     }
+    @Test fun futureVirtualAppsRetainTheTelosAliasWithoutCatalogRegistration() {
+        val aliases = TelosAppKeywords.forKey("telos_future_feature_app://home")
+        assertTrue("telos" in aliases)
+        assertTrue("future feature" in aliases)
+        assertTrue(TelosAppKeywords.forDomain("third_party_app").isEmpty())
+    }
+    @Test fun clockIsSearchableInGreekAndGreeklish() {
+        val aliases = TelosAppKeywords.forDomain("telos_clock_app")
+        for (name in listOf("clock", "ρολόι", "ρολοι", "roloi", "ξυπνητήρι", "ora"))
+            assertTrue(name, name in aliases)
+    }
     @Test fun aliasesResolveFromStableSavedKeys() {
         assertEquals(TelosAppKeywords.forDomain("telos_files_app"), TelosAppKeywords.forKey("telos_files_app://files"))
         assertTrue(TelosAppKeywords.forDomain("some_other_app").isEmpty())

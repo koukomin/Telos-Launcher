@@ -281,11 +281,9 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch { callLog.deleteForNumbers(numbers) }
     }
 
-    fun setBlocked(number: String, blocked: Boolean) {
+    fun setBlocked(context: Context, number: String, blocked: Boolean) {
         viewModelScope.launch {
-            readContactBlockStatus({ spam.setBlocked(number, blocked); blocked }) {
-                android.util.Log.e("ContactDetails", "Could not update encrypted block status", it)
-            }
+            updateBlockedWithFeedback(context, spam, number, blocked)
             blockedTick.value += 1
         }
     }
@@ -838,7 +836,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     } else CommsDetailCard(
                         onClick = {
                             val next = !blocked
-                            viewModel.setBlocked(primary, next)
+                            viewModel.setBlocked(context, primary, next)
                         },
                     ) {
                         Text(

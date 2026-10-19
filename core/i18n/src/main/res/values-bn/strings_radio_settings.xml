@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">ওয়ালপেপারের রং</string>
+    <string name="radio_translucent">আধা স্বচ্ছ চেহারা</string>
+    <string name="radio_controls_scroll">স্টেশনগুলোর সঙ্গে প্লেব্যাক নিয়ন্ত্রণ স্ক্রল করুন</string>
+    <string name="radio_tap_plays">চালাতে কোনো স্টেশনে ট্যাপ করুন</string>
+    <string name="radio_large_buffer">বড় প্লেব্যাক বাফার</string>
+    <string name="radio_edit_metadata">স্টেশনের তথ্য সম্পাদনার অনুমতি দিন</string>
+    <string name="radio_edit_streams">স্ট্রিমের ঠিকানা সম্পাদনার অনুমতি দিন</string>
+    <string name="radio_auto_images">স্টেশনের ছবি স্বয়ংক্রিয়ভাবে আপডেট করুন</string>
+    <string name="radio_update_images">স্টেশনের ছবি এখনই আপডেট করুন</string>
+    <string name="radio_backup_images">স্টেশনের ছবিসহ ZIP ব্যাকআপ</string>
+    <string name="radio_restore_replace_summary">এই ব্যাকআপ দিয়ে বর্তমান স্টেশন সংগ্রহ প্রতিস্থাপন করবেন? আপনার বর্তমান সংগ্রহ মুছে যাবে।</string>
+    <string name="radio_station_image_url">স্টেশনের ছবির ঠিকানা</string>
+</resources>

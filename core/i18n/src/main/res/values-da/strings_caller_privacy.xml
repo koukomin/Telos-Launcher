@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Identifikation og blokering af opkald</string>
+    <string name="caller_system_list">Blokerede numre i Android</string>
+    <string name="caller_online_lookup">Online identifikation af opkald</string>
+    <string name="caller_online_disclosure">Sender ukendte indgående numre til white-pages.gr for at hente et navn og vurderinger foreslået af fællesskabet. Slået fra som standard; blokerer aldrig automatisk.</string>
+    <string name="caller_likely_spam">Sandsynlig spam · white-pages.gr</string>
+    <string name="caller_block_partial">Den personlige liste er opdateret. Androids blokerede numre kunne ikke opdateres; vælg Telos som standardapp til telefon eller SMS, og prøv igen.</string>
+    <string name="caller_suggested_name">Foreslået navn: %1$s</string>
+</resources>

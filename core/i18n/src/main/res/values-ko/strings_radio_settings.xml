@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">배경화면 색상</string>
+    <string name="radio_translucent">반투명 모양</string>
+    <string name="radio_controls_scroll">방송국과 함께 재생 컨트롤 스크롤</string>
+    <string name="radio_tap_plays">방송국을 눌러 재생</string>
+    <string name="radio_large_buffer">더 큰 재생 버퍼</string>
+    <string name="radio_edit_metadata">방송국 정보 수정 허용</string>
+    <string name="radio_edit_streams">스트림 주소 수정 허용</string>
+    <string name="radio_auto_images">방송국 이미지 자동 업데이트</string>
+    <string name="radio_update_images">지금 방송국 이미지 업데이트</string>
+    <string name="radio_backup_images">방송국 이미지를 포함한 ZIP 백업</string>
+    <string name="radio_restore_replace_summary">현재 방송국 모음을 이 백업으로 교체할까요? 현재 모음은 삭제됩니다.</string>
+    <string name="radio_station_image_url">방송국 이미지 주소</string>
+</resources>

@@ -16,9 +16,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalDensity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import de.mm20.launcher2.applications.AppRepository
+import de.mm20.launcher2.icons.IconService
+import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.graphics.drawable.toBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -161,7 +167,7 @@ fun CommsDashboardScreen(
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(painterResource(R.drawable.sms_24px), contentDescription = null) },
+                    icon = { DefaultSmsLauncherIcon() },
                     label = { Text(stringResource(R.string.hc_messages)) },
                     selected = selectedTab == CommsTab.Messages,
                     onClick = {
@@ -172,18 +178,7 @@ fun CommsDashboardScreen(
                 messengers.forEach { app ->
                     NavigationDrawerItem(
                         icon = {
-                            val bmp = remember(app.component, app.user) {
-                                app.icon?.toBitmap(96, 96)
-                            }
-                            if (bmp != null) {
-                                androidx.compose.foundation.Image(
-                                    bitmap = bmp.asImageBitmap(),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(24.dp).clip(CircleShape),
-                                )
-                            } else {
-                                Icon(painterResource(R.drawable.sms_24px), contentDescription = null)
-                            }
+                            CommsLauncherIcon(app.component.packageName, app.user)
                         },
                         label = {
                             val dual = app.user != android.os.Process.myUserHandle()
@@ -275,7 +270,7 @@ fun CommsDashboardScreen(
                             NavigationBarItem(
                                 selected = selectedTab == tab,
                                 onClick = { selectedTab = tab },
-                                icon = { Icon(painterResource(icon), contentDescription = null) },
+                                icon = { if (tab == CommsTab.Messages) DefaultSmsLauncherIcon() else Icon(painterResource(icon), contentDescription = null) },
                                 label = { Text(stringResource(label)) },
                             )
                         }
@@ -357,4 +352,44 @@ fun CommsDashboardScreen(
         )
     }
     }
+}
+
+/** Use the same live custom-icon/icon-pack pipeline as launcher search and the dock. */
+@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+@Composable
+private fun CommsLauncherIcon(packageName: String?, user: android.os.UserHandle = android.os.Process.myUserHandle()) {
+    val applications: AppRepository = koinInject()
+    val icons: IconService = koinInject()
+    val pixels = with(LocalDensity.current) { 28.dp.roundToPx() }
+    val icon by remember(packageName, user, pixels) {
+        if (packageName == null) flowOf(null)
+        else applications.findOne(packageName, user).flatMapLatest { app ->
+            if (app == null) flowOf(null) else icons.getIcon(app, pixels)
+        }
+    }.collectAsStateWithLifecycle(null)
+    if (icon != null) ShapedLauncherIcon(size = 28.dp, icon = { icon })
+    else Icon(painterResource(R.drawable.sms_24px), contentDescription = null)
+}
+
+@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+@Composable
+private fun DefaultSmsLauncherIcon() {
+    val context = LocalContext.current
+    var packageName by remember { mutableStateOf(android.provider.Telephony.Sms.getDefaultSmsPackage(context)) }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        packageName = android.provider.Telephony.Sms.getDefaultSmsPackage(context)
+    }
+    // Telos hosts several virtual apps in one package; resolve the Messages virtual app explicitly.
+    if (packageName == context.packageName) {
+        val applications: AppRepository = koinInject()
+        val icons: IconService = koinInject()
+        val pixels = with(LocalDensity.current) { 28.dp.roundToPx() }
+        val icon by remember(pixels) {
+            applications.findMany().flatMapLatest { apps ->
+                apps.firstOrNull { it.key.startsWith("telos_messages_app://") }?.let { icons.getIcon(it, pixels) } ?: flowOf(null)
+            }
+        }.collectAsStateWithLifecycle(null)
+        if (icon != null) ShapedLauncherIcon(size = 28.dp, icon = { icon })
+        else Icon(painterResource(R.drawable.sms_24px), contentDescription = null)
+    } else CommsLauncherIcon(packageName)
 }

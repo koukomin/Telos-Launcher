@@ -5,12 +5,13 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import androidx.core.app.Person
 import androidx.core.app.NotificationCompat
 import de.mm20.launcher2.i18n.R as I18nR
 
 object CallNotification {
     private const val CHANNEL_ID = "telos_incall"
-    private const val NOTIFICATION_ID = 7102
+    private const val NOTIFICATION_ID = 7201
 
     fun show(context: Context, state: InCallUiState) {
         if (!state.hasCall) {
@@ -33,7 +34,8 @@ object CallNotification {
             fullScreen,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
-        val title = state.name ?: state.number.ifEmpty { context.getString(I18nR.string.au_phoneb_call_title_fallback) }
+        val caller = state.name?.takeIf { it.isNotBlank() } ?: state.number.ifEmpty { context.getString(I18nR.string.au_phoneb_call_title_fallback) }
+        val title = if (state.callerNameSuggested) context.getString(I18nR.string.caller_suggested_name, caller) else caller
         val text = context.getString(
             when {
                 state.incoming -> I18nR.string.comms_incoming_call
@@ -42,18 +44,28 @@ object CallNotification {
                 else -> I18nR.string.au_phoneb_ongoing_call
             }
         )
-        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+        fun action(action: String): PendingIntent = PendingIntent.getBroadcast(
+            context, action.hashCode(), Intent(context, CallActionReceiver::class.java)
+                .setData(android.net.Uri.parse("telos-call://${state.actionToken}/$action"))
+                .putExtra("call_action", action).putExtra("call_token", state.actionToken),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
+        val person = Person.Builder().setName(title).setImportant(true).build()
+        val style = if (state.incoming) NotificationCompat.CallStyle.forIncomingCall(person, action("reject"), action("answer"))
+            else NotificationCompat.CallStyle.forOngoingCall(person, action("hangup"))
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_phone_app") ?: android.R.drawable.stat_sys_phone_call)
             .setContentTitle(title)
-            .setContentText(text)
+            .setContentText(if (state.likelySpam) context.getString(I18nR.string.caller_likely_spam) + " · " + text else text)
             .setOngoing(true)
             .setCategory(NotificationCompat.CATEGORY_CALL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pending)
-            .setFullScreenIntent(pending, state.incoming)
-            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_phone_app") }
-            .build()
-        manager.notify(NOTIFICATION_ID, notification)
+            .setStyle(style)
+            .setOnlyAlertOnce(true)
+            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+        if (state.incoming) builder.setFullScreenIntent(pending, true)
+        manager.notify(NOTIFICATION_ID, de.mm20.launcher2.search.VirtualAppAppearance.decorate(builder, context, "telos_phone_app").build())
     }
 
     fun cancel(context: Context) {

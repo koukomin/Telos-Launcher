@@ -161,32 +161,7 @@ fun NetworkWireguardScreen() {
             Modifier.fillMaxSize().padding(padding),
             contentPadding = PaddingValues(bottom = 88.dp), // room for the add button
         ) {
-            item {
-                Box {
-                    val current = configs.firstOrNull { it.id == systemDefault }
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.nwg_system_default)) },
-                        supportingContent = {
-                            Column {
-                                Text(current?.name ?: stringResource(R.string.nwg_none), color = MaterialTheme.colorScheme.primary)
-                                Text(stringResource(R.string.nwg_system_default_summary))
-                            }
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                        modifier = Modifier.clickable { defaultMenu = true },
-                    )
-                    DropdownMenu(expanded = defaultMenu, onDismissRequest = { defaultMenu = false }) {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.nwg_none)) }, onClick = {
-                            defaultMenu = false; scope.launch { wg.setSystemDefault(null) }
-                        })
-                        configs.forEach { c ->
-                            DropdownMenuItem(text = { Text(c.name) }, onClick = {
-                                defaultMenu = false; scope.launch { wg.setSystemDefault(c.id) }
-                            })
-                        }
-                    }
-                }
-            }
+            item { de.mm20.launcher2.ui.network.NetworkRouteChooser() }
             item {
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.nwg_apps)) },

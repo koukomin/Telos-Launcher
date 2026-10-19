@@ -442,10 +442,10 @@ private fun ThreadView(
             if (single) TextButton(onClick = {
                 val number = addresses[0]
                 val block = !blocked
-                blocked = block
                 sendScope.launch {
                     withContext(Dispatchers.IO) {
-                        runCatching { spam.setBlocked(number, block) }
+                        updateBlockedWithFeedback(context, spam, number, block)
+                        blocked = spam.isNumberBlocked(number)
                         // unblocking returns what was kept while the number was blocked
                         if (!block) BlockedMessages.restore(context, number)
                     }
@@ -709,7 +709,7 @@ private fun BlockedMessagesView(onBack: () -> Unit) {
                             TextButton(onClick = {
                                 scope.launch {
                                     withContext(Dispatchers.IO) {
-                                        runCatching { spam.setBlocked(n, false) }
+                                        updateBlockedWithFeedback(context, spam, n, false)
                                         BlockedMessages.restore(context, n)
                                     }
                                     version++

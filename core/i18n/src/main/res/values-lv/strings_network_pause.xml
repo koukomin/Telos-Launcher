@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_pause_explanation">Automātiska atsākšana. Android var to aizkavēt bez piekļuves precīziem modinātājiem.</string>
+</resources>

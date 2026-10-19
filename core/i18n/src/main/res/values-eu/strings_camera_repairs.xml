@@ -1,0 +1,5 @@
+<resources>
+    <string name="camera_title">Telos Kamera</string>
+    <string name="camera_mode_photo">Argazkia</string>
+    <string name="camera_mode_video">Bideoa</string>
+</resources>

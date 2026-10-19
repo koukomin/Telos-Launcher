@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">विश्व</string>
+    <string name="clock_alarm">अलार्म</string>
+    <string name="clock_timer">टाइमर</string>
+    <string name="clock_stopwatch">स्टॉपवॉच</string>
+    <string name="clock_local">स्थानीय समय</string>
+    <string name="clock_city_search">शहर या देश खोजें</string>
+    <string name="clock_night">रात की घड़ी</string>
+    <string name="clock_night_exit">बंद करने के लिए टैप करें</string>
+    <string name="clock_audio_file">ऑडियो फ़ाइल</string>
+    <string name="clock_default_sound">अलार्म की ध्वनि</string>
+    <string name="clock_stream_url">रेडियो स्ट्रीम URL</string>
+    <string name="clock_sound_fallback">एक बार का अलार्म। मीडिया विफल होने पर डिफ़ॉल्ट ध्वनि बजेगी।</string>
+    <string name="clock_exact">अलार्म और रिमाइंडर की अनुमति दें</string>
+    <string name="clock_dismiss">बंद करें</string>
+    <string name="clock_minutes">मिनट</string>
+    <string name="clock_start">शुरू करें</string>
+    <string name="clock_reset">रीसेट</string>
+    <string name="clock_lap">लैप</string>
+</resources>

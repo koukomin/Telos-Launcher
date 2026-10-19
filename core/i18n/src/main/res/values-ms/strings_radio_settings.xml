@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="radio_dynamic_colors">Warna kertas dinding</string>
+    <string name="radio_translucent">Rupa lut sinar</string>
+    <string name="radio_controls_scroll">Tatal kawalan main balik bersama stesen</string>
+    <string name="radio_tap_plays">Ketik stesen untuk main</string>
+    <string name="radio_large_buffer">Penimbal main balik lebih besar</string>
+    <string name="radio_edit_metadata">Benarkan penyuntingan maklumat stesen</string>
+    <string name="radio_edit_streams">Benarkan penyuntingan alamat strim</string>
+    <string name="radio_auto_images">Kemas kini imej stesen secara automatik</string>
+    <string name="radio_update_images">Kemas kini imej stesen sekarang</string>
+    <string name="radio_backup_images">Sandaran ZIP termasuk imej stesen</string>
+    <string name="radio_restore_replace_summary">Gantikan koleksi stesen semasa dengan sandaran ini? Koleksi semasa anda akan dipadamkan.</string>
+    <string name="radio_station_image_url">Alamat imej stesen</string>
+</resources>

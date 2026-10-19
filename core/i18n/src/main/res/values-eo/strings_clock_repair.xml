@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Mondo</string>
+    <string name="clock_alarm">Vekhorloĝo</string>
+    <string name="clock_timer">Temporizilo</string>
+    <string name="clock_stopwatch">Kronometro</string>
+    <string name="clock_local">Loka horo</string>
+    <string name="clock_city_search">Serĉi urbon aŭ landon</string>
+    <string name="clock_night">Nokta horloĝo</string>
+    <string name="clock_night_exit">Tuŝu por fermi</string>
+    <string name="clock_audio_file">Sondosiero</string>
+    <string name="clock_default_sound">Veksono</string>
+    <string name="clock_stream_url">Radioflua URL</string>
+    <string name="clock_sound_fallback">Unufoja vekilo. Se la aŭdio malsukcesas, sonas la defaŭlta veksono.</string>
+    <string name="clock_exact">Permesi vekilojn kaj memorigojn</string>
+    <string name="clock_dismiss">Fermi</string>
+    <string name="clock_minutes">Minutoj</string>
+    <string name="clock_start">Komenci</string>
+    <string name="clock_reset">Restarigi</string>
+    <string name="clock_lap">Rondiro</string>
+</resources>

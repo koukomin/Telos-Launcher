@@ -1,0 +1,5 @@
+<resources>
+    <string name="camera_title">Máy ảnh Telos</string>
+    <string name="camera_mode_photo">Ảnh</string>
+    <string name="camera_mode_video">Video</string>
+</resources>

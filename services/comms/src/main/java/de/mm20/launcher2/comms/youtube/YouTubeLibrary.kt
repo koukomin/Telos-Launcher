@@ -1,79 +1,80 @@
 package de.mm20.launcher2.comms.youtube
 
 import android.content.Context
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.UUID
 
-data class YouTubePlaylist(val id: String, val name: String, val songs: List<YouTubeEntry>)
-
-/** Local favorites and playlists for YouTube Music. Not a Google account library. */
+/** Local library contains durable provider URLs; signed stream URLs are resolved again at playback. */
 class YouTubeLibrary(context: Context) {
-    private val prefs = context.applicationContext.getSharedPreferences("telos_youtube_library", Context.MODE_PRIVATE)
-
-    fun favorites(): List<YouTubeEntry> = read().optJSONArray("favorites").toEntries()
-
-    fun isFavorite(url: String): Boolean = favorites().any { it.url == url }
-
-    fun toggleFavorite(entry: YouTubeEntry): Boolean {
-        val cur = favorites().toMutableList()
-        val on = cur.none { it.url == entry.url }
-        if (on) cur.add(0, entry) else cur.removeAll { it.url == entry.url }
-        save(cur, playlists())
-        return on
-    }
-
-    fun playlists(): List<YouTubePlaylist> {
-        val arr = read().optJSONArray("playlists") ?: return emptyList()
-        return (0 until arr.length()).mapNotNull { i ->
-            val o = arr.optJSONObject(i) ?: return@mapNotNull null
-            YouTubePlaylist(o.optString("id"), o.optString("name"), o.optJSONArray("songs").toEntries())
+    private val preferences = context.getSharedPreferences("youtube_library", Context.MODE_PRIVATE)
+    init {
+        // Preserve the library written by the first implementation on main.
+        val legacy = context.getSharedPreferences("telos_youtube_library", Context.MODE_PRIVATE).getString("lib", null)
+        if (!preferences.contains("favorites") && legacy != null) runCatching {
+            val data = JSONObject(legacy)
+            fun converted(array: JSONArray?): JSONArray = JSONArray().apply {
+                if (array != null) for (i in 0 until array.length()) {
+                    val item = array.optJSONObject(i) ?: continue
+                    item.put("thumbnail", item.optString("thumb")); item.put("duration", item.optLong("dur")); put(item)
+                }
+            }
+            val lists = JSONObject()
+            val array = data.optJSONArray("playlists")
+            if (array != null) for (i in 0 until array.length()) {
+                val item = array.optJSONObject(i) ?: continue
+                lists.put(item.optString("name"), converted(item.optJSONArray("songs")))
+            }
+            preferences.edit().putString("favorites", converted(data.optJSONArray("favorites")).toString())
+                .putString("playlists", lists.toString()).apply()
         }
     }
+    val favorites = MutableStateFlow(readEntries("favorites"))
+    val playlists = MutableStateFlow(readPlaylists())
+    val lastMusic = MutableStateFlow(readEntries("last_music").firstOrNull())
+    val lastVideo = MutableStateFlow(readEntries("last_video").firstOrNull())
 
-    fun createPlaylist(name: String, first: YouTubeEntry? = null): YouTubePlaylist {
-        val p = YouTubePlaylist(UUID.randomUUID().toString(), name.trim().ifBlank { "Playlist" }, listOfNotNull(first))
-        save(favorites(), playlists() + p)
-        return p
+    fun remember(entry: YouTubeEntry, music: Boolean) {
+        val target = if (music) lastMusic else lastVideo
+        target.value = entry
+        preferences.edit().putString(if (music) "last_music" else "last_video", encode(listOf(entry)).toString()).apply()
     }
-
-    fun addToPlaylist(id: String, entry: YouTubeEntry) {
-        save(favorites(), playlists().map { p ->
-            if (p.id != id || p.songs.any { it.url == entry.url }) p
-            else p.copy(songs = p.songs + entry)
-        })
+    fun favorite(entry: YouTubeEntry) {
+        val old = favorites.value
+        favorites.value = if (old.any { it.url == entry.url }) old.filterNot { it.url == entry.url } else old + entry
+        preferences.edit().putString("favorites", encode(favorites.value).toString()).apply()
     }
-
-    fun deletePlaylist(id: String) {
-        save(favorites(), playlists().filter { it.id != id })
+    fun add(name: String, entry: YouTubeEntry) {
+        val clean = name.trim().take(120)
+        if (clean.isEmpty()) return
+        val entries = playlists.value[clean].orEmpty()
+        playlists.value = playlists.value + (clean to (entries + entry).distinctBy { it.url })
+        savePlaylists()
     }
-
-    private fun read(): JSONObject = runCatching { JSONObject(prefs.getString("lib", "{}")!!) }.getOrDefault(JSONObject())
-
-    private fun save(fav: List<YouTubeEntry>, lists: List<YouTubePlaylist>) {
-        val f = JSONArray(); fav.forEach { f.put(it.toJson()) }
-        val p = JSONArray()
-        lists.forEach { pl ->
-            val songs = JSONArray(); pl.songs.forEach { songs.put(it.toJson()) }
-            p.put(JSONObject().put("id", pl.id).put("name", pl.name).put("songs", songs))
-        }
-        prefs.edit().putString("lib", JSONObject().put("favorites", f).put("playlists", p).toString()).apply()
+    fun remove(name: String, entry: YouTubeEntry) {
+        playlists.value = playlists.value + (name to playlists.value[name].orEmpty().filterNot { it.url == entry.url })
+        savePlaylists()
     }
-
-    private fun JSONArray?.toEntries(): List<YouTubeEntry> {
-        if (this == null) return emptyList()
-        return (0 until length()).mapNotNull { o ->
-            val j = optJSONObject(o) ?: return@mapNotNull null
-            youtubeEntryFromJson(j)
-        }
+    fun delete(name: String) { playlists.value = playlists.value - name; savePlaylists() }
+    private fun savePlaylists() {
+        val data = JSONObject()
+        playlists.value.forEach { (name, entries) -> data.put(name, encode(entries)) }
+        preferences.edit().putString("playlists", data.toString()).apply()
+    }
+    private fun readEntries(key: String) = runCatching { decode(JSONArray(preferences.getString(key, "[]"))) }.getOrDefault(emptyList())
+    private fun readPlaylists(): Map<String, List<YouTubeEntry>> = runCatching {
+        val data = JSONObject(preferences.getString("playlists", "{}") ?: "{}")
+        data.keys().asSequence().associateWith { decode(data.getJSONArray(it)) }
+    }.getOrDefault(emptyMap())
+    private fun encode(entries: List<YouTubeEntry>) = JSONArray().apply {
+        entries.forEach { entry -> put(JSONObject().apply {
+            put("url", entry.url); put("title", entry.title); put("artist", entry.artist)
+            put("thumbnail", entry.thumbnail); put("duration", entry.durationSeconds)
+        }) }
+    }
+    private fun decode(array: JSONArray): List<YouTubeEntry> = (0 until array.length()).map { i ->
+        val item = array.getJSONObject(i)
+        YouTubeEntry(item.getString("url"), item.getString("title"), item.optString("artist"),
+            item.optString("thumbnail").takeIf { it.isNotBlank() && it != "null" }, item.optLong("duration"))
     }
 }
-
-fun YouTubeEntry.toJson(): JSONObject = JSONObject()
-    .put("url", url).put("title", title).put("artist", artist)
-    .put("thumb", thumbnail.orEmpty()).put("dur", durationSeconds)
-
-fun youtubeEntryFromJson(o: JSONObject): YouTubeEntry = YouTubeEntry(
-    o.optString("url"), o.optString("title"), o.optString("artist"),
-    o.optString("thumb").ifBlank { null }, o.optLong("dur"),
-)

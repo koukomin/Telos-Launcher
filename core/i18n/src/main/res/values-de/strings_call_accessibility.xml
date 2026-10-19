@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Anruferfoto im Vollbild</string>
+    <string name="call_photo_background_summary">Das Kontaktfoto als Hintergrund bei eingehenden Anrufen anzeigen.</string>
+</resources>

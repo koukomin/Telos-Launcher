@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Dinja</string>
+    <string name="clock_alarm">Allarm</string>
+    <string name="clock_timer">Timer</string>
+    <string name="clock_stopwatch">Kronometru</string>
+    <string name="clock_local">Ħin lokali</string>
+    <string name="clock_city_search">Fittex belt jew pajjiż</string>
+    <string name="clock_night">Arloġġ tal-lejl</string>
+    <string name="clock_night_exit">Tektek biex tagħlaq</string>
+    <string name="clock_audio_file">Fajl awdjo</string>
+    <string name="clock_default_sound">Ħoss tal-allarm</string>
+    <string name="clock_stream_url">URL tax-xandira tar-radju</string>
+    <string name="clock_sound_fallback">Allarm ta’ darba. Jekk il-midja tfalli, jindaqq il-ħoss predefinit.</string>
+    <string name="clock_exact">Ħalli allarmi u tfakkiriet</string>
+    <string name="clock_dismiss">Agħlaq</string>
+    <string name="clock_minutes">Minuti</string>
+    <string name="clock_start">Ibda</string>
+    <string name="clock_reset">Irrisettja</string>
+    <string name="clock_lap">Dawra</string>
+</resources>

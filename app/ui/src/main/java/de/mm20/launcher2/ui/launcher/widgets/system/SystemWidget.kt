@@ -27,6 +27,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -110,6 +113,7 @@ fun SystemWidget(widget: SystemWidget) {
     val netState by engine.state.collectAsState()
     val statsLog by logs.stats.collectAsState()
     val server by dns.selected.collectAsState()
+    var processes by remember { mutableStateOf<List<de.mm20.launcher2.ui.system.ProcRow>>(emptyList()) }
     var stats by remember { mutableStateOf(SystemStats()) }
     var rx by remember { mutableStateOf<Long?>(null) }
     var tx by remember { mutableStateOf<Long?>(null) }
@@ -127,6 +131,7 @@ fun SystemWidget(widget: SystemWidget) {
             var publicAge = 0
             while (isActive) {
                 stats = withContext(Dispatchers.IO) { readSystemStats(context) }
+                processes = withContext(Dispatchers.IO) { de.mm20.launcher2.ui.system.runningProcs(context) }
                 if (publicAge == 0) {
                     publicIp = withContext(Dispatchers.IO) { fetchPublicIp() }
                 }
@@ -290,6 +295,17 @@ fun SystemWidget(widget: SystemWidget) {
             )
         }
 
+        de.mm20.launcher2.ui.network.NetworkRouteChooser()
+        Text(stringResource(R.string.telos_system_processes), style = MaterialTheme.typography.titleSmall)
+        Column(Modifier.fillMaxWidth().heightIn(max = 200.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        processes.take(40).forEach { process ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Icon(painterResource(R.drawable.memory_24px), null, Modifier.size(16.dp))
+                Text(process.name, Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
+                Text(process.pid.toString(), style = MaterialTheme.typography.labelSmall)
+            }
+        }
+        }
         Column(
             Modifier
                 .fillMaxWidth()

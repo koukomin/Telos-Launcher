@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Món</string>
+    <string name="clock_alarm">Alarma</string>
+    <string name="clock_timer">Temporitzador</string>
+    <string name="clock_stopwatch">Cronòmetre</string>
+    <string name="clock_local">Hora local</string>
+    <string name="clock_city_search">Cerca una ciutat o país</string>
+    <string name="clock_night">Rellotge nocturn</string>
+    <string name="clock_night_exit">Toca per tancar</string>
+    <string name="clock_audio_file">Fitxer d’àudio</string>
+    <string name="clock_default_sound">So de l’alarma</string>
+    <string name="clock_stream_url">URL del flux de ràdio</string>
+    <string name="clock_sound_fallback">Alarma única. Si falla el contingut, sona l’alarma predeterminada.</string>
+    <string name="clock_exact">Permet alarmes i recordatoris</string>
+    <string name="clock_dismiss">Tanca</string>
+    <string name="clock_minutes">Minuts</string>
+    <string name="clock_start">Inicia</string>
+    <string name="clock_reset">Restableix</string>
+    <string name="clock_lap">Volta</string>
+</resources>

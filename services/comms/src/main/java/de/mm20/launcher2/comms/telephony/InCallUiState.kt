@@ -2,6 +2,7 @@ package de.mm20.launcher2.comms.telephony
 
 data class InCallUiState(
     val hasCall: Boolean = false,
+    val actionToken: Long = 0,
     val incoming: Boolean = false,
     val connecting: Boolean = false,
     val active: Boolean = false,
@@ -12,6 +13,8 @@ data class InCallUiState(
     val number: String = "",
     val name: String? = null,
     val photoUri: String? = null,
+    val callerNameSuggested: Boolean = false,
+    val likelySpam: Boolean = false,
     val connectedAtEpochMs: Long? = null,
     val secondNumber: String = "",
     val secondName: String? = null,

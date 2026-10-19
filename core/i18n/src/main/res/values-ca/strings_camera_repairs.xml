@@ -1,0 +1,5 @@
+<resources>
+    <string name="camera_title">Càmera Telos</string>
+    <string name="camera_mode_photo">Foto</string>
+    <string name="camera_mode_video">Vídeo</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="clock_alarm">Aláram</string>
+    <string name="clock_audio_file">Comhad fuaime</string>
+    <string name="clock_city_search">Cuardaigh cathair nó tír</string>
+    <string name="clock_default_sound">Fuaim aláraim</string>
+    <string name="clock_dismiss">Dún</string>
+    <string name="clock_exact">Ceadaigh aláraim agus meabhrúcháin</string>
+    <string name="clock_lap">Babhta</string>
+    <string name="clock_local">Am áitiúil</string>
+    <string name="clock_minutes">Nóiméid</string>
+    <string name="clock_night">Clog oíche</string>
+    <string name="clock_night_exit">Tapáil le dúnadh</string>
+    <string name="clock_reset">Athshocraigh</string>
+    <string name="clock_sound_fallback">Aláram aonuaire. Mura n-oibríonn an meán, seinnfear an fhuaim aláraim réamhshocraithe.</string>
+    <string name="clock_start">Tosaigh</string>
+    <string name="clock_stopwatch">Stopuaireadóir</string>
+    <string name="clock_stream_url">URL an tsrutha raidió</string>
+    <string name="clock_timer">Amadóir</string>
+    <string name="clock_world">Domhan</string>
+</resources>

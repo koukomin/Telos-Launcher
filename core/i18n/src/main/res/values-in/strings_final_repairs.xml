@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_more">Opsi lainnya</string>
+    <string name="au3_appearance_typo_label">Label</string>
+    <string name="au_radio_import_failed">Tidak dapat membaca berkas itu</string>
+    <string name="file_search_type_images">Gambar</string>
+    <string name="file_search_type_videos">Video</string>
+    <string name="hc_add">Tambah</string>
+    <string name="hc_add_to_favorites">Tambahkan ke favorit</string>
+    <string name="hc_back_up_collection">Cadangkan koleksi</string>
+    <string name="hc_block_numbers_you_have_added_to_the_telo">Blokir nomor yang telah Anda tambahkan ke daftar blokir Telos</string>
+    <string name="hc_done">Selesai</string>
+    <string name="hc_edit">Edit</string>
+    <string name="hc_export_playlist_m3u">Ekspor daftar putar (M3U)</string>
+    <string name="hc_favorites">Favorit</string>
+    <string name="hc_import_playlist_m3u_pls">Impor daftar putar (M3U / PLS)</string>
+    <string name="hc_offline_spam_list">Daftar spam luring</string>
+    <string name="hc_phone_number">Nomor telepon</string>
+    <string name="hc_rename_station">Ganti nama stasiun</string>
+    <string name="hc_restore_backup">Pulihkan cadangan</string>
+    <string name="hc_stream_or_playlist_address">Alamat siaran atau daftar putar</string>
+    <string name="hf_files_remove_favorite">Hapus dari favorit</string>
+    <string name="preference_screen_clockwidget">Jam</string>
+    <string name="preference_theme">Tema</string>
+    <string name="preference_theme_dark">Gelap</string>
+    <string name="preference_theme_light">Terang</string>
+    <string name="preference_theme_system">Ikuti sistem</string>
+    <string name="radio_auto_images">Perbarui gambar stasiun secara otomatis</string>
+    <string name="radio_backup_images">Cadangan ZIP termasuk gambar stasiun</string>
+    <string name="radio_controls_scroll">Gulir kontrol pemutaran bersama stasiun</string>
+    <string name="radio_dynamic_colors">Warna wallpaper</string>
+    <string name="radio_edit_metadata">Izinkan pengeditan informasi stasiun</string>
+    <string name="radio_edit_streams">Izinkan pengeditan alamat siaran</string>
+    <string name="radio_large_buffer">Buffer pemutaran lebih besar</string>
+    <string name="radio_restore_replace_summary">Ganti koleksi stasiun saat ini dengan cadangan ini? Koleksi Anda saat ini akan dihapus.</string>
+    <string name="radio_station_image_url">Alamat gambar stasiun</string>
+    <string name="radio_tap_plays">Ketuk stasiun untuk memutar</string>
+    <string name="radio_translucent">Tampilan transparan</string>
+    <string name="radio_update_images">Perbarui gambar stasiun sekarang</string>
+    <string name="telos_youtube_add_playlist">Tambahkan ke daftar putar</string>
+    <string name="telos_youtube_artist_radio">Radio artis</string>
+    <string name="telos_youtube_library_local">Favorit dan daftar putar disimpan di ponsel ini. Keduanya bukan bagian dari akun YouTube Music Anda.</string>
+    <string name="telos_youtube_playlist_name">Nama daftar putar</string>
+</resources>

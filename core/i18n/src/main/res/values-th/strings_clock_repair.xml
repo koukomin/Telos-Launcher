@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">โลก</string>
+    <string name="clock_alarm">นาฬิกาปลุก</string>
+    <string name="clock_timer">ตัวจับเวลา</string>
+    <string name="clock_stopwatch">นาฬิกาจับเวลา</string>
+    <string name="clock_local">เวลาท้องถิ่น</string>
+    <string name="clock_city_search">ค้นหาเมืองหรือประเทศ</string>
+    <string name="clock_night">นาฬิกากลางคืน</string>
+    <string name="clock_night_exit">แตะเพื่อปิด</string>
+    <string name="clock_audio_file">ไฟล์เสียง</string>
+    <string name="clock_default_sound">เสียงปลุก</string>
+    <string name="clock_stream_url">URL สตรีมวิทยุ</string>
+    <string name="clock_sound_fallback">ปลุกครั้งเดียว หากสื่อเล่นไม่ได้ จะใช้เสียงปลุกเริ่มต้น</string>
+    <string name="clock_exact">อนุญาตการปลุกและการเตือน</string>
+    <string name="clock_dismiss">ปิด</string>
+    <string name="clock_minutes">นาที</string>
+    <string name="clock_start">เริ่ม</string>
+    <string name="clock_reset">รีเซ็ต</string>
+    <string name="clock_lap">รอบ</string>
+</resources>

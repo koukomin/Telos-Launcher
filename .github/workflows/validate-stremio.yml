@@ -45,7 +45,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Validate complete translations and Android placeholders
+      - name: Validate changed translations and Android placeholders
+        env:
+          TELOS_TRANSLATION_BASE: ${{ github.event.pull_request.base.sha || github.sha }}
         run: python tools/translations/validate.py
       - name: Verify default SMS role eligibility
         run: python tools/validation/sms_manifest.py
@@ -56,7 +58,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: chmod +x gradlew
       - name: Test Stremio protocol and watched state
-        run: ./gradlew :services:comms:testDebugUnitTest --tests 'de.mm20.launcher2.comms.model.*' --tests 'de.mm20.launcher2.comms.network.*' --tests 'de.mm20.launcher2.comms.search.*' --tests 'de.mm20.launcher2.comms.stremio.*' --tests 'de.mm20.launcher2.comms.tv.*' --tests 'de.mm20.launcher2.comms.youtube.*' --tests 'de.mm20.launcher2.comms.files.FilesSharingServerTest' --stacktrace
+        run: ./gradlew :services:comms:testDebugUnitTest --stacktrace
       - name: Test home media session discovery and priority
         run: ./gradlew :services:music:testDebugUnitTest --stacktrace
       - name: Test Tor routing and Web3 resolution

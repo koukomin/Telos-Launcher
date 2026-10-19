@@ -1,0 +1,20 @@
+<resources>
+    <string name="clock_world">Maailma</string>
+    <string name="clock_alarm">Herätys</string>
+    <string name="clock_timer">Ajastin</string>
+    <string name="clock_stopwatch">Sekuntikello</string>
+    <string name="clock_local">Paikallinen aika</string>
+    <string name="clock_city_search">Hae kaupunkia tai maata</string>
+    <string name="clock_night">Yökello</string>
+    <string name="clock_night_exit">Sulje napauttamalla</string>
+    <string name="clock_audio_file">Äänitiedosto</string>
+    <string name="clock_default_sound">Herätysääni</string>
+    <string name="clock_stream_url">Radiovirran URL</string>
+    <string name="clock_sound_fallback">Kertaherätys. Jos media ei toimi, oletusherätysääni soi.</string>
+    <string name="clock_exact">Salli herätykset ja muistutukset</string>
+    <string name="clock_dismiss">Sulje</string>
+    <string name="clock_minutes">Minuutit</string>
+    <string name="clock_start">Aloita</string>
+    <string name="clock_reset">Nollaa</string>
+    <string name="clock_lap">Kierros</string>
+</resources>

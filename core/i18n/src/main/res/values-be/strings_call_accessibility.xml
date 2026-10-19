@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">Фота абанента на ўвесь экран</string>
+    <string name="call_photo_background_summary">Паказваць фота кантакту як фон уваходнага выкліку.</string>
+</resources>

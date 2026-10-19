@@ -159,6 +159,7 @@ fun RadioStationCard(
     onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val uiSettings = LocalRadioUiSettings.current
     val reduce by koinInject<PerformanceSettings>().reduceAnimations.collectAsState(false)
     val playingId by player.stationId.collectAsStateWithLifecycle()
     val playWhenReady by player.playWhenReady.collectAsStateWithLifecycle()
@@ -172,7 +173,7 @@ fun RadioStationCard(
     val low = MaterialTheme.colorScheme.surfaceContainerLow
     Column(
         modifier
-            .pressScale(reduce, onClick = { player.toggleStation(station) }, onLongClick = onLongClick)
+            .pressScale(reduce, onClick = { if (uiSettings.tapPlays) player.toggleStation(station) else onLongClick() }, onLongClick = onLongClick)
             .clip(RoundedCornerShape(24.dp))
             .background(Brush.verticalGradient(listOf(tint.compositeOver(low), low)))
             .padding(12.dp),

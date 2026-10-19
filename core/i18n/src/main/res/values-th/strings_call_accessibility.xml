@@ -1,0 +1,4 @@
+<resources>
+    <string name="call_photo_background">รูปผู้โทรเต็มหน้าจอ</string>
+    <string name="call_photo_background_summary">แสดงรูปผู้ติดต่อเป็นพื้นหลังของสายเรียกเข้า</string>
+</resources>

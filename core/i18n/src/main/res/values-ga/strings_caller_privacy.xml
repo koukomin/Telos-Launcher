@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="caller_privacy_title">Aithint agus blocáil glaoiteoirí</string>
+    <string name="caller_system_list">Uimhreacha blocáilte Android</string>
+    <string name="caller_online_lookup">Aithint glaoiteoirí ar líne</string>
+    <string name="caller_online_disclosure">Seolann sé uimhreacha isteach anaithnide chuig white-pages.gr chun ainm agus rátálacha molta ag an bpobal a fháil. Múchta de réir réamhshocraithe; ní bhlocálann sé go huathoibríoch riamh.</string>
+    <string name="caller_likely_spam">Turscar dóchúil · white-pages.gr</string>
+    <string name="caller_block_partial">Nuashonraíodh an liosta pearsanta. Níorbh fhéidir uimhreacha blocáilte Android a nuashonrú; socraigh Telos mar an aip réamhshocraithe teileafóin nó SMS agus bain triail eile as.</string>
+    <string name="caller_suggested_name">Ainm molta: %1$s</string>
+</resources>
