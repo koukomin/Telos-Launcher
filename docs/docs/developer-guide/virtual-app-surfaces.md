@@ -109,3 +109,5 @@ Stremio-marked torrent playback queues only the selected file, avoiding accident
 Optional resolution, maximum advertised size and CAM/screener preferences read source metadata and names. Unknown fields remain visible; manual browsing restores all sources if a filter would hide everything. Automatic continuation does not use that empty-result fallback. No URL, codec, bitrate, torrent piece behavior or video decode path is changed by filtering.
 
 SubtitleSelectionSheet lists individual text tracks with language/label and selected state, supports search and None, and keeps file/online actions below a lazy scrolling list that adapts to landscape height.
+
+Automatic torrent continuation additionally requires a non-negative provider file index; the opened torrent must contain that video index, otherwise it stops instead of selecting the largest file. Episode IDs and intent titles are bounded to 512 characters each to keep the 100-entry continuation queue within a predictable intent payload.

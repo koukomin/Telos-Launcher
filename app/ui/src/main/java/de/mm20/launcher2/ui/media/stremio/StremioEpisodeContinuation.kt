@@ -24,11 +24,13 @@ internal object StremioEpisodeContinuation {
             val addons = StremioAddons(context.applicationContext, client).addons.value
             val streams = client.allStreams(addons.filter { it.name == addonName }, type, nextId)
             val stream = StremioStreamFilter.apply(streams, preferences, fallback = false).firstOrNull {
-                it.kind.name == kind && it.kind in listOf(StreamItem.Kind.Web, StreamItem.Kind.Torrent)
+                it.kind.name == kind && (it.kind == StreamItem.Kind.Web ||
+                    (it.kind == StreamItem.Kind.Torrent && (it.fileIdx ?: -1) >= 0))
             } ?: return@withContext null
             val title = titles.firstOrNull().orEmpty().ifBlank { nextId }
             val intent = Intent(current).apply {
                 data = null
+                putExtra("stremio_auto_continuation", true)
                 removeExtra(VideoPlayerActivity.EXTRA_SOURCE)
                 removeExtra(VideoPlayerActivity.EXTRA_FILE_IDX)
                 removeExtra(VideoPlayerActivity.EXTRA_URIS)
