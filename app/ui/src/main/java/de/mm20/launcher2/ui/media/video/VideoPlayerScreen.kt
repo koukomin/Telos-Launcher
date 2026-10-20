@@ -79,6 +79,12 @@ fun VideoPlayerScreen(
             val config = VideoServices.config()
             runCatching { TorrentStreamer.open(context, torrentSource, config.torrentWifiOnly, context.findActivity(), torrentFileIdx) }
                 .onSuccess { opened ->
+                    if (context.findActivity()?.intent?.getBooleanExtra("stremio_auto_continuation", false) == true &&
+                        opened.videos.none { it.index == torrentFileIdx }) {
+                        error = context.getString(R.string.au_video_torrent_failed)
+                        context.findActivity()?.let { TorrentStreamer.release(it) }
+                        return@onSuccess
+                    }
                     val name = TorrentStreamer.torrentName()
                     val selectedOnly = context.findActivity()?.intent?.getBooleanExtra("stremio_playback", false) == true
                     val videos = if (selectedOnly) listOf(opened.videos[opened.startPosition]) else opened.videos
