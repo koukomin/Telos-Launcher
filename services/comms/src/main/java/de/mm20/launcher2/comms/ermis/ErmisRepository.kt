@@ -165,6 +165,7 @@ class ErmisRepository private constructor(private val context: Context) {
     /** Special-use folders and mailbox hierarchies are deliberately not renamed. */
     suspend fun renameFolder(accountId: String, name: String, targetName: String) = operation {
         val sourceName = ErmisMailboxPolicy.customFolder(name)
+        require(sourceName == name) // Never normalize an existing server path into a different folder.
         val canonical = ErmisMailboxPolicy.customFolder(targetName)
         require(sourceName != canonical)
         val store = store(account(accountId))
@@ -172,16 +173,16 @@ class ErmisRepository private constructor(private val context: Context) {
             val source = store.getFolder(sourceName)
             require(source.exists() && source.type and Folder.HOLDS_MESSAGES != 0)
             require(ErmisMailboxPolicy.role(source.fullName, source.name,
-                (source as? IMAPFolder)?.attributes.orEmpty()) == ErmisFolderRole.OTHER)
+                (source as? IMAPFolder)?.attributes.orEmpty().toList()) == ErmisFolderRole.OTHER)
             require(source.list("*").isEmpty())
             val target = store.getFolder(canonical)
             require(!target.exists())
             check(source.renameTo(target))
             // Retain source UIDs only in forward references, which independently verify UIDVALIDITY.
             // The renamed mailbox must be synchronized before its cached rows can be used again.
-            uidValidity = uidValidity - ErmisMailboxPolicy.validityKey(accountId, sourceName)
+            uidValidity = uidValidity - ErmisMailboxPolicy.validityKey(accountId, sourceName) - ErmisMailboxPolicy.validityKey(accountId, canonical)
             mutable.update { state -> state.copy(
-                messages = state.messages.filterNot { ErmisMailboxPolicy.matches(it, accountId, sourceName) },
+                messages = state.messages.filterNot { ErmisMailboxPolicy.matches(it, accountId, sourceName) || ErmisMailboxPolicy.matches(it, accountId, canonical) },
                 folders = state.folders.filterNot { it.accountId == accountId && it.id == sourceName },
                 drafts = state.drafts.map { draft ->
                     val forward = draft.forwardSource
