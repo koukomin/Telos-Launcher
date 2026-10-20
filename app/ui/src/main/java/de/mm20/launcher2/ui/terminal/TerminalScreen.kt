@@ -31,7 +31,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.zip.ZipInputStream
+import java.io.IOException
 
 @Serializable
 data object TerminalRoute : NavKey
@@ -136,6 +136,8 @@ fun TerminalScreen() {
                             while (input.read(buffer).also { read = it } != -1) {
                                 output.write(buffer, 0, read)
                                 downloaded += read
+                                if (downloaded > 64L * 1024 * 1024) throw IOException("Runtime download size limit exceeded")
+                                ensureActive()
                                 if (totalSize > 0) {
                                     withContext(Dispatchers.Main) {
                                         downloadProgress = (downloaded / totalSize).coerceIn(0f, 1f)
@@ -151,28 +153,10 @@ fun TerminalScreen() {
                     statusText = "Εγκατάσταση & Ρύθμιση..."
                 }
 
-                // Extract Zip Entry
-                termuxDir.mkdirs()
-                ZipInputStream(zipFile.inputStream()).use { zis ->
-                    var entry = zis.nextEntry
-                    while (entry != null) {
-                        val outFile = File(termuxDir, entry.name)
-                        if (entry.isDirectory) {
-                            outFile.mkdirs()
-                        } else {
-                            outFile.parentFile?.mkdirs()
-                            FileOutputStream(outFile).use { fos ->
-                                zis.copyTo(fos)
-                            }
-                            if (entry.name.contains("bin/")) {
-                                outFile.setExecutable(true)
-                            }
-                        }
-                        entry = zis.nextEntry
-                    }
-                }
+                TerminalRuntimeArchive.extract(zipFile.inputStream(), termuxDir, checkActive = { ensureActive() })
 
                 zipFile.delete()
+                check(bashExecutable.isFile && bashExecutable.canExecute())
 
                 withContext(Dispatchers.Main) {
                     isDownloading = false
@@ -180,10 +164,12 @@ fun TerminalScreen() {
                     Toast.makeText(context, "Το Termux Core εγκαταστάθηκε επιτυχώς!", Toast.LENGTH_SHORT).show()
                 }
 
+            } catch (cancelled: CancellationException) {
+                throw cancelled
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     isDownloading = false
-                    statusText = "Σφάλμα λήψης: ${e.message}"
+                    statusText = context.getString(R.string.au_files_download_failed)
                 }
             }
         }

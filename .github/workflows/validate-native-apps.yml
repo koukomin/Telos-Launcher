@@ -29,7 +29,7 @@ jobs:
       - name: Compile native app screens and run communication tests
         run: ./gradlew :services:comms:testDebugUnitTest :services:network:testDebugUnitTest :app:ui:compileDefaultDebugKotlin --continue --stacktrace
       - name: Test camera bounds, telemetry, magnifier and Files exclusions
-        run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests '*CameraImageSizingTest' --tests '*CpuTelemetryTest' --tests '*MagnifierFilterTest' --tests '*StorageExclusionsTest' --stacktrace
+        run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests '*CameraImageSizingTest' --tests '*CpuTelemetryTest' --tests '*MagnifierFilterTest' --tests '*StorageExclusionsTest' --tests '*TerminalRuntimeArchiveTest' --stacktrace
       - uses: actions/upload-artifact@v4
         if: always()
         with:

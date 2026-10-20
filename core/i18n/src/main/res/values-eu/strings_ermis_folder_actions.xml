@@ -3,4 +3,5 @@
     <string name="hc_new_folder">Karpeta berria</string>
     <string name="hf_folder_name">Karpetaren izena</string>
     <string name="hf_folder_rename">Aldatu karpetaren izena</string>
+    <string name="au_files_download_failed">Deskargak huts egin du</string>
 </resources>
