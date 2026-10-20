@@ -71,6 +71,13 @@ internal fun attachGestures(
     val detector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
         override fun onDown(e: MotionEvent): Boolean = true
 
+        override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+            // PlayerView fills the window, including portrait letterbox areas.
+            // PlayerView.performClick owns its controller toggle and accessibility event.
+            view.performClick()
+            return true
+        }
+
         override fun onScroll(e1: MotionEvent?, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
             if (e1 == null || view.width == 0 || view.height == 0) return false
             if (mode == 0) {
@@ -144,7 +151,9 @@ internal fun attachGestures(
             onHint(null)
             consumed = wasGesture
         }
-        consumed
+        // Own the whole surface gesture sequence so PlayerView cannot also
+        // toggle on ACTION_UP before onSingleTapConfirmed handles the tap.
+        true
     }
 }
 

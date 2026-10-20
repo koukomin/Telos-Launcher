@@ -152,3 +152,5 @@ intent/configuration are durable independently of screen navigation. Never claim
 crash/update recovery is device-verified based solely on reading the code.
 
 Virtual-app task redirects must finish and remove a redirect-only Settings root on both onCreate and onNewIntent. Do not retain explicitly finished virtual-app document tasks in Recents. Keep unfinished-task/process recovery separate from explicit close; no lifecycle callback should relaunch a closed app.
+
+Media playback controls must respond to taps across the full player surface, including portrait letterbox regions. Keep system bars synchronized with controls visibility instead of hiding them on each recomposition. Do not pause TV merely on app switching with background playback enabled. Every media session needs its own notification ID, including local and isolated video; preserve stop/pause and user opt-outs after background-policy migration.

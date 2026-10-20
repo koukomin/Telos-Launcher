@@ -117,7 +117,6 @@ fun TvPlayerDialog(
                     }
                 }
                 WindowInsetsControllerCompat(w, w.decorView).apply {
-                    hide(WindowInsetsCompat.Type.systemBars())
                     systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 }
             }
@@ -128,6 +127,14 @@ fun TvPlayerDialog(
 
         var controls by remember { mutableStateOf(true) }
         var adjustingLevels by remember { mutableStateOf(false) }
+        LaunchedEffect(window, controls) {
+            window?.let { w ->
+                WindowInsetsControllerCompat(w, w.decorView).apply {
+                    if (controls) show(WindowInsetsCompat.Type.systemBars())
+                    else hide(WindowInsetsCompat.Type.systemBars())
+                }
+            }
+        }
         // controls fade out after a while when the picture plays
         LaunchedEffect(controls, playing, channel?.id, epgSheet, adjustingLevels) {
             if (controls && playing && epgSheet == null && !adjustingLevels) {

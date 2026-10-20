@@ -1331,3 +1331,6 @@ loss, alongside the existing Files workspace, alarm and Network recovery.
 
 
 Virtual-app task cleanup removes temporary Settings redirect cards and explicitly finished app tasks from Recents, while retaining recovery for unfinished tasks.
+
+
+TV/video controls and system bars respond to taps across portrait letterbox areas. TV upgrades legacy pause-on-leave defaults to background playback, with subsequent opt-outs preserved. Normal and isolated video have separate notification IDs alongside existing Music, Radio, TV and YouTube media notifications.
