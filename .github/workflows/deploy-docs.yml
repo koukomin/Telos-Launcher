@@ -45,10 +45,10 @@ jobs:
         working-directory: .
       - run: mv build/dokka/html docs/public/reference
         working-directory: .
-      - name: Use Node.js 22
+      - name: Use Node.js 24
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
       - run: npm ci
         working-directory: docs
       - run: npm run docs:build
