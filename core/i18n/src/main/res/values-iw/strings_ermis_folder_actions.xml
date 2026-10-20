@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_new_folder">תיקייה חדשה</string>
+    <string name="hf_folder_name">שם התיקייה</string>
+    <string name="hf_folder_rename">שינוי שם תיקייה</string>
+    <string name="au_files_download_failed">ההורדה נכשלה</string>
+</resources>

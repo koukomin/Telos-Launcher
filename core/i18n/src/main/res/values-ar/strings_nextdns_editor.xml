@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">محرر NextDNS</string>
+    <string name="nd_intro">تؤثر التغييرات على كل جهاز يستخدم ملف NextDNS هذا.</string>
+    <string name="nd_key">مفتاح API</string>
+    <string name="nd_profile">معرّف الملف</string>
+    <string name="nd_connect">ربط الملف</string>
+    <string name="nd_disconnect">إزالة المفتاح المحفوظ</string>
+    <string name="nd_logs">سجل DNS</string>
+    <string name="nd_allowlist">قائمة السماح</string>
+    <string name="nd_denylist">قائمة الحظر</string>
+    <string name="nd_allow">السماح بالنطاق</string>
+    <string name="nd_deny">حظر النطاق</string>
+    <string name="nd_domain">النطاق</string>
+    <string name="nd_more">تحميل المزيد</string>
+    <string name="nd_apply">استخدام هذا الملف لـ DNS</string>
+    <string name="nd_applied">تم اختيار الملف لـ Telos Network.</string>
+    <string name="nd_help">استخدم مفتاح API من صفحة حساب NextDNS. ربط المحرر لا يغيّر خادم DNS.</string>
+    <string name="nd_empty">لا توجد إدخالات.</string>
+    <string name="nd_error_auth">رفض NextDNS الوصول. تحقّق من مفتاح API والملف.</string>
+    <string name="nd_error_invalid">تحقّق من معرّف الملف والنطاق.</string>
+    <string name="nd_error_rate">تم بلوغ حد طلبات NextDNS. حاول مجددًا لاحقًا.</string>
+    <string name="nd_error_network">يتعذر الاتصال بـ NextDNS.</string>
+    <string name="nd_error_api">رفض NextDNS العملية أو أعاد استجابة غير مدعومة.</string>
+    <string name="nd_error_unconfigured">اربط ملف NextDNS أولًا.</string>
+    <string name="nd_rule_title">قاعدة نطاق</string>
+</resources>

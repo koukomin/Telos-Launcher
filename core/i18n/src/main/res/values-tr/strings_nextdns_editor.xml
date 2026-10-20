@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS düzenleyici</string>
+    <string name="nd_intro">Değişiklikler bu NextDNS profilini kullanan tüm cihazları etkiler.</string>
+    <string name="nd_key">API anahtarı</string>
+    <string name="nd_profile">Profil kimliği</string>
+    <string name="nd_connect">Profili bağla</string>
+    <string name="nd_disconnect">Kayıtlı anahtarı kaldır</string>
+    <string name="nd_logs">DNS geçmişi</string>
+    <string name="nd_allowlist">İzin listesi</string>
+    <string name="nd_denylist">Engelleme listesi</string>
+    <string name="nd_allow">Alan adına izin ver</string>
+    <string name="nd_deny">Alan adını engelle</string>
+    <string name="nd_domain">Alan adı</string>
+    <string name="nd_more">Daha fazla yükle</string>
+    <string name="nd_apply">Bu profili DNS için kullan</string>
+    <string name="nd_applied">Profil Telos Network için seçildi.</string>
+    <string name="nd_help">NextDNS hesap sayfanızdaki API anahtarını kullanın. Düzenleyiciyi bağlamak DNS sunucunuzu değiştirmez.</string>
+    <string name="nd_empty">Kayıt yok.</string>
+    <string name="nd_error_auth">NextDNS erişimi reddetti. API anahtarını ve profili kontrol edin.</string>
+    <string name="nd_error_invalid">Profil kimliğini ve alan adını kontrol edin.</string>
+    <string name="nd_error_rate">NextDNS istek sınırına ulaşıldı. Daha sonra tekrar deneyin.</string>
+    <string name="nd_error_network">NextDNS hizmetine ulaşılamıyor.</string>
+    <string name="nd_error_api">NextDNS işlemi reddetti veya desteklenmeyen bir yanıt döndürdü.</string>
+    <string name="nd_error_unconfigured">Önce bir NextDNS profili bağlayın.</string>
+    <string name="nd_rule_title">Alan adı kuralı</string>
+</resources>

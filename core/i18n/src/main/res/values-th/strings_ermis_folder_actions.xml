@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_new_folder">โฟลเดอร์ใหม่</string>
+    <string name="hf_folder_name">ชื่อโฟลเดอร์</string>
+    <string name="hf_folder_rename">เปลี่ยนชื่อโฟลเดอร์</string>
+    <string name="au_files_download_failed">ดาวน์โหลดไม่สำเร็จ</string>
+</resources>

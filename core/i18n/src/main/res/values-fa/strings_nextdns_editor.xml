@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">ویرایشگر NextDNS</string>
+    <string name="nd_intro">تغییرات بر همهٔ دستگاه‌هایی که از این نمایهٔ NextDNS استفاده می‌کنند تأثیر می‌گذارد.</string>
+    <string name="nd_key">کلید API</string>
+    <string name="nd_profile">شناسهٔ نمایه</string>
+    <string name="nd_connect">اتصال نمایه</string>
+    <string name="nd_disconnect">حذف کلید ذخیره‌شده</string>
+    <string name="nd_logs">تاریخچهٔ DNS</string>
+    <string name="nd_allowlist">فهرست مجاز</string>
+    <string name="nd_denylist">فهرست مسدود</string>
+    <string name="nd_allow">مجاز کردن دامنه</string>
+    <string name="nd_deny">مسدود کردن دامنه</string>
+    <string name="nd_domain">دامنه</string>
+    <string name="nd_more">بارگیری بیشتر</string>
+    <string name="nd_apply">استفاده از این نمایه برای DNS</string>
+    <string name="nd_applied">نمایه برای Telos Network انتخاب شد.</string>
+    <string name="nd_help">از کلید API صفحهٔ حساب NextDNS خود استفاده کنید. اتصال ویرایشگر، سرور DNS شما را تغییر نمی‌دهد.</string>
+    <string name="nd_empty">موردی وجود ندارد.</string>
+    <string name="nd_error_auth">NextDNS دسترسی را رد کرد. کلید API و نمایه را بررسی کنید.</string>
+    <string name="nd_error_invalid">شناسهٔ نمایه و دامنه را بررسی کنید.</string>
+    <string name="nd_error_rate">به محدودیت درخواست‌های NextDNS رسیده‌اید. بعداً دوباره تلاش کنید.</string>
+    <string name="nd_error_network">اتصال به NextDNS ممکن نیست.</string>
+    <string name="nd_error_api">NextDNS عملیات را رد کرد یا پاسخی پشتیبانی‌نشده برگرداند.</string>
+    <string name="nd_error_unconfigured">ابتدا یک نمایهٔ NextDNS متصل کنید.</string>
+    <string name="nd_rule_title">قانون دامنه</string>
+    <string name="hc_remove">حذف</string>
+    <string name="hc_search">جستجو</string>
+</resources>

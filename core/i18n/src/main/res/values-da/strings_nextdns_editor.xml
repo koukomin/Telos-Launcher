@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS-editor</string>
+    <string name="nd_intro">Ændringer påvirker alle enheder, der bruger denne NextDNS-profil.</string>
+    <string name="nd_key">API-nøgle</string>
+    <string name="nd_profile">Profil-id</string>
+    <string name="nd_connect">Forbind profil</string>
+    <string name="nd_disconnect">Fjern gemt nøgle</string>
+    <string name="nd_logs">DNS-historik</string>
+    <string name="nd_allowlist">Tilladelsesliste</string>
+    <string name="nd_denylist">Blokeringsliste</string>
+    <string name="nd_allow">Tillad domæne</string>
+    <string name="nd_deny">Bloker domæne</string>
+    <string name="nd_domain">Domæne</string>
+    <string name="nd_more">Indlæs flere</string>
+    <string name="nd_apply">Brug denne profil til DNS</string>
+    <string name="nd_applied">Profil valgt til Telos Network.</string>
+    <string name="nd_help">Brug API-nøglen fra din NextDNS-kontoside. Tilslutning af editoren ændrer ikke din DNS-server.</string>
+    <string name="nd_empty">Ingen poster.</string>
+    <string name="nd_error_auth">NextDNS afviste adgang. Kontrollér API-nøglen og profilen.</string>
+    <string name="nd_error_invalid">Kontrollér profil-id og domæne.</string>
+    <string name="nd_error_rate">NextDNS-grænsen for forespørgsler er nået. Prøv igen senere.</string>
+    <string name="nd_error_network">Kan ikke oprette forbindelse til NextDNS.</string>
+    <string name="nd_error_api">NextDNS afviste handlingen eller returnerede et svar, der ikke understøttes.</string>
+    <string name="nd_error_unconfigured">Forbind først en NextDNS-profil.</string>
+    <string name="nd_rule_title">Domæneregel</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Чарнавікі</string>
+    <string name="ermis_cc">Копія</string>
+    <string name="ermis_bcc">Схаваная копія</string>
+    <string name="hc_no_contacts_found">Кантакты не знойдзены</string>
+</resources>

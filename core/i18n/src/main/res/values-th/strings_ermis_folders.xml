@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">โฟลเดอร์</string>
+    <string name="ermis_move">ย้ายไปยังโฟลเดอร์</string>
+    <string name="ermis_archive">เก็บถาวร</string>
+    <string name="ermis_trash">ย้ายไปถังขยะ</string>
+    <string name="ermis_spam">ย้ายไปจดหมายขยะ</string>
+    <string name="ermis_forward">ส่งต่อ</string>
+    <string name="ermis_reply_all">ตอบกลับทั้งหมด</string>
+    <string name="ermis_search_server">ค้นหาอีเมลล่าสุดบนเซิร์ฟเวอร์</string>
+    <string name="ermis_search_server_help">ค้นหาหัวเรื่อง ผู้ส่ง และเนื้อหาในข้อความล่าสุด 5,000 ฉบับบนเซิร์ฟเวอร์ และแสดงผลสูงสุด 100 รายการ</string>
+    <string name="ermis_select_account">เลือกบัญชีเพื่อเรียกดูโฟลเดอร์</string>
+    <string name="ermis_forward_original">แนบข้อความต้นฉบับแล้ว (.eml)</string>
+    <string name="ermis_html_view">ข้อความแบบจัดรูปแบบ</string>
+    <string name="ermis_text_view">ข้อความธรรมดา</string>
+    <string name="ermis_show_folder">แสดงโฟลเดอร์</string>
+    <string name="ermis_server_results">ผลลัพธ์ล่าสุดจากเซิร์ฟเวอร์</string>
+</resources>

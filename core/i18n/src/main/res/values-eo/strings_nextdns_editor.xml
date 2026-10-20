@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Redaktilo de NextDNS</string>
+    <string name="nd_intro">Ŝanĝoj influas ĉiun aparaton uzantan ĉi tiun profilon de NextDNS.</string>
+    <string name="nd_key">API-ŝlosilo</string>
+    <string name="nd_profile">Profilidentigilo</string>
+    <string name="nd_connect">Konekti profilon</string>
+    <string name="nd_disconnect">Forigi konservitan ŝlosilon</string>
+    <string name="nd_logs">Historio de DNS</string>
+    <string name="nd_allowlist">Listo de permesitaj</string>
+    <string name="nd_denylist">Listo de blokitaj</string>
+    <string name="nd_allow">Permesi domajnon</string>
+    <string name="nd_deny">Bloki domajnon</string>
+    <string name="nd_domain">Domajno</string>
+    <string name="nd_more">Ŝargi pli</string>
+    <string name="nd_apply">Uzi ĉi tiun profilon por DNS</string>
+    <string name="nd_applied">Profilo elektita por Telos Network.</string>
+    <string name="nd_help">Uzu la API-ŝlosilon de via kontopaĝo ĉe NextDNS. Konekti la redaktilon ne ŝanĝas vian DNS-servilon.</string>
+    <string name="nd_empty">Neniuj eroj.</string>
+    <string name="nd_error_auth">NextDNS rifuzis aliron. Kontrolu la API-ŝlosilon kaj la profilon.</string>
+    <string name="nd_error_invalid">Kontrolu la profilidentigilon kaj la domajnon.</string>
+    <string name="nd_error_rate">La petolimo de NextDNS estas atingita. Reprovu poste.</string>
+    <string name="nd_error_network">Ne eblas atingi NextDNS.</string>
+    <string name="nd_error_api">NextDNS rifuzis la agon aŭ liveris nesubtenatan respondon.</string>
+    <string name="nd_error_unconfigured">Unue konektu profilon de NextDNS.</string>
+    <string name="nd_rule_title">Domajnregulo</string>
+    <string name="hc_remove">Forigi</string>
+    <string name="hc_search">Serĉi</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Carpetes</string>
+    <string name="ermis_move">Mou a una carpeta</string>
+    <string name="ermis_archive">Arxiva</string>
+    <string name="ermis_trash">Mou a la paperera</string>
+    <string name="ermis_spam">Mou al correu brossa</string>
+    <string name="ermis_forward">Reenvia</string>
+    <string name="ermis_reply_all">Respon a tothom</string>
+    <string name="ermis_search_server">Cerca al correu recent del servidor</string>
+    <string name="ermis_search_server_help">Cerca assumpte, remitent i cos als darrers 5.000 missatges del servidor i mostra fins a 100 coincidències.</string>
+    <string name="ermis_select_account">Selecciona un compte per explorar-ne les carpetes.</string>
+    <string name="ermis_forward_original">Missatge original adjunt (.eml)</string>
+    <string name="ermis_html_view">Missatge amb format</string>
+    <string name="ermis_text_view">Text sense format</string>
+    <string name="ermis_show_folder">Mostra la carpeta</string>
+    <string name="ermis_server_results">Resultats recents del servidor</string>
+</resources>

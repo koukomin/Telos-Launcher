@@ -126,7 +126,7 @@ fun SmartFreezeDashboardScreen() {
                         Column(modifier = Modifier.padding(16.dp)) {
                             Text(stringResource(R.string.hf_freeze_backend_status), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondaryContainer)
                             Text(
-                                text = if (activeBackend != null) stringResource(R.string.hf_freeze_connected_via, activeBackend?.name.orEmpty()) else stringResource(R.string.hf_freeze_disconnect),
+                                text = if (activeBackend != null) stringResource(R.string.hf_freeze_connected_via, activeBackend?.name.orEmpty()) else stringResource(R.string.hf_freeze_disconnected),
                                 modifier = Modifier.padding(vertical = 8.dp),
                                 color = MaterialTheme.colorScheme.onSecondaryContainer
                             )

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Mappar</string>
+    <string name="ermis_move">Flytta till mapp</string>
+    <string name="ermis_archive">Arkivera</string>
+    <string name="ermis_trash">Flytta till papperskorgen</string>
+    <string name="ermis_spam">Flytta till skräppost</string>
+    <string name="ermis_forward">Vidarebefordra</string>
+    <string name="ermis_reply_all">Svara alla</string>
+    <string name="ermis_search_server">Sök i den senaste e-posten på servern</string>
+    <string name="ermis_search_server_help">Söker i ämne, avsändare och text i de senaste 5 000 servermeddelandena och visar högst 100 träffar.</string>
+    <string name="ermis_select_account">Välj ett konto för att bläddra bland dess mappar.</string>
+    <string name="ermis_forward_original">Ursprungligt meddelande bifogat (.eml)</string>
+    <string name="ermis_html_view">Formaterat meddelande</string>
+    <string name="ermis_text_view">Oformaterad text</string>
+    <string name="ermis_show_folder">Visa mapp</string>
+    <string name="ermis_server_results">Senaste serverresultat</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Черновики</string>
+    <string name="ermis_cc">Копия</string>
+    <string name="ermis_bcc">Скрытая копия</string>
+</resources>

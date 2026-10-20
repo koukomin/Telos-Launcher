@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Borradores</string>
+    <string name="ermis_cc">Copia</string>
+    <string name="ermis_bcc">Copia celate</string>
+    <string name="hc_no_contacts_found">Nulle contactos trovate</string>
+</resources>

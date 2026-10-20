@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS redaktorius</string>
+    <string name="nd_intro">Pakeitimai taikomi visiems įrenginiams, naudojantiems šį NextDNS profilį.</string>
+    <string name="nd_key">API raktas</string>
+    <string name="nd_profile">Profilio ID</string>
+    <string name="nd_connect">Prijungti profilį</string>
+    <string name="nd_disconnect">Pašalinti išsaugotą raktą</string>
+    <string name="nd_logs">DNS istorija</string>
+    <string name="nd_allowlist">Leidžiamųjų sąrašas</string>
+    <string name="nd_denylist">Blokuojamųjų sąrašas</string>
+    <string name="nd_allow">Leisti domeną</string>
+    <string name="nd_deny">Blokuoti domeną</string>
+    <string name="nd_domain">Domenas</string>
+    <string name="nd_more">Įkelti daugiau</string>
+    <string name="nd_apply">Naudoti šį profilį DNS</string>
+    <string name="nd_applied">Profilis pasirinktas Telos Network.</string>
+    <string name="nd_help">Naudokite API raktą iš savo NextDNS paskyros puslapio. Redaktoriaus prijungimas nepakeičia DNS serverio.</string>
+    <string name="nd_empty">Įrašų nėra.</string>
+    <string name="nd_error_auth">NextDNS nesuteikė prieigos. Patikrinkite API raktą ir profilį.</string>
+    <string name="nd_error_invalid">Patikrinkite profilio ID ir domeną.</string>
+    <string name="nd_error_rate">Pasiektas NextDNS užklausų limitas. Bandykite vėliau.</string>
+    <string name="nd_error_network">Nepavyksta pasiekti NextDNS.</string>
+    <string name="nd_error_api">NextDNS atmetė veiksmą arba pateikė nepalaikomą atsakymą.</string>
+    <string name="nd_error_unconfigured">Pirmiausia prijunkite NextDNS profilį.</string>
+    <string name="nd_rule_title">Domeno taisyklė</string>
+</resources>

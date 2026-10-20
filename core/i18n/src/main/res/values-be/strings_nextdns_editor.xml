@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Рэдактар NextDNS</string>
+    <string name="nd_intro">Змены ўплываюць на ўсе прылады, якія выкарыстоўваюць гэты профіль NextDNS.</string>
+    <string name="nd_key">Ключ API</string>
+    <string name="nd_profile">Ідэнтыфікатар профілю</string>
+    <string name="nd_connect">Падключыць профіль</string>
+    <string name="nd_disconnect">Выдаліць захаваны ключ</string>
+    <string name="nd_logs">Гісторыя DNS</string>
+    <string name="nd_allowlist">Спіс дазволеных</string>
+    <string name="nd_denylist">Спіс заблакаваных</string>
+    <string name="nd_allow">Дазволіць дамен</string>
+    <string name="nd_deny">Заблакаваць дамен</string>
+    <string name="nd_domain">Дамен</string>
+    <string name="nd_more">Загрузіць яшчэ</string>
+    <string name="nd_apply">Выкарыстоўваць гэты профіль для DNS</string>
+    <string name="nd_applied">Профіль выбраны для Telos Network.</string>
+    <string name="nd_help">Выкарыстоўвайце ключ API са старонкі ўліковага запісу NextDNS. Падключэнне рэдактара не змяняе ваш сервер DNS.</string>
+    <string name="nd_empty">Запісаў няма.</string>
+    <string name="nd_error_auth">NextDNS адмовіў у доступе. Праверце ключ API і профіль.</string>
+    <string name="nd_error_invalid">Праверце ідэнтыфікатар профілю і дамен.</string>
+    <string name="nd_error_rate">Дасягнуты ліміт запытаў NextDNS. Паспрабуйце пазней.</string>
+    <string name="nd_error_network">Не ўдалося злучыцца з NextDNS.</string>
+    <string name="nd_error_api">NextDNS адхіліў аперацыю або вярнуў адказ, які не падтрымліваецца.</string>
+    <string name="nd_error_unconfigured">Спачатку падключыце профіль NextDNS.</string>
+    <string name="nd_rule_title">Правіла дамена</string>
+    <string name="hc_remove">Выдаліць</string>
+    <string name="hc_search">Пошук</string>
+</resources>

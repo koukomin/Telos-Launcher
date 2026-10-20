@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Fillteáin</string>
+    <string name="ermis_move">Bog go fillteán</string>
+    <string name="ermis_archive">Cuir sa chartlann</string>
+    <string name="ermis_trash">Bog go dtí an bruscar</string>
+    <string name="ermis_spam">Bog go turscar</string>
+    <string name="ermis_forward">Cuir ar aghaidh</string>
+    <string name="ermis_reply_all">Freagair cách</string>
+    <string name="ermis_search_server">Cuardaigh ríomhphost le déanaí ar an bhfreastalaí</string>
+    <string name="ermis_search_server_help">Cuardaíonn sé ábhar, seoltóir agus corp na 5,000 teachtaireacht is déanaí ar an bhfreastalaí agus taispeánann sé suas le 100 toradh.</string>
+    <string name="ermis_select_account">Roghnaigh cuntas chun a chuid fillteán a bhrabhsáil.</string>
+    <string name="ermis_forward_original">Bunteachtaireacht ceangailte (.eml)</string>
+    <string name="ermis_html_view">Teachtaireacht fhormáidithe</string>
+    <string name="ermis_text_view">Gnáth-théacs</string>
+    <string name="ermis_show_folder">Taispeáin fillteán</string>
+    <string name="ermis_server_results">Torthaí le déanaí ón bhfreastalaí</string>
+</resources>

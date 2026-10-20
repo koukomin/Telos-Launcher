@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Mustandid</string>
+    <string name="ermis_cc">Koopia</string>
+    <string name="ermis_bcc">Pimekoopia</string>
+</resources>

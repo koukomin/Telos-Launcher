@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS editorea</string>
+    <string name="nd_intro">Aldaketek NextDNS profil hau erabiltzen duten gailu guztiei eragiten diete.</string>
+    <string name="nd_key">API gakoa</string>
+    <string name="nd_profile">Profilaren IDa</string>
+    <string name="nd_connect">Konektatu profila</string>
+    <string name="nd_disconnect">Kendu gordetako gakoa</string>
+    <string name="nd_logs">DNS historia</string>
+    <string name="nd_allowlist">Baimenduen zerrenda</string>
+    <string name="nd_denylist">Blokeatuen zerrenda</string>
+    <string name="nd_allow">Baimendu domeinua</string>
+    <string name="nd_deny">Blokeatu domeinua</string>
+    <string name="nd_domain">Domeinua</string>
+    <string name="nd_more">Kargatu gehiago</string>
+    <string name="nd_apply">Erabili profil hau DNSrako</string>
+    <string name="nd_applied">Profila Telos Network-erako hautatu da.</string>
+    <string name="nd_help">Erabili NextDNS kontuaren orriko API gakoa. Editorea konektatzeak ez du DNS zerbitzaria aldatzen.</string>
+    <string name="nd_empty">Ez dago sarrerarik.</string>
+    <string name="nd_error_auth">NextDNS-k sarbidea ukatu du. Egiaztatu API gakoa eta profila.</string>
+    <string name="nd_error_invalid">Egiaztatu profilaren IDa eta domeinua.</string>
+    <string name="nd_error_rate">NextDNS eskaeren muga iritsi da. Saiatu berriro geroago.</string>
+    <string name="nd_error_network">Ezin da NextDNS-rekin konektatu.</string>
+    <string name="nd_error_api">NextDNS-k eragiketa ukatu du edo onartzen ez den erantzuna itzuli du.</string>
+    <string name="nd_error_unconfigured">Konektatu lehenik NextDNS profil bat.</string>
+    <string name="nd_rule_title">Domeinu-araua</string>
+    <string name="hc_remove">Kendu</string>
+    <string name="hc_search">Bilatu</string>
+</resources>

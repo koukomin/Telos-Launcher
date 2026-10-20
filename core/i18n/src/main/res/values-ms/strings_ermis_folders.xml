@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Folder</string>
+    <string name="ermis_move">Pindahkan ke folder</string>
+    <string name="ermis_archive">Arkibkan</string>
+    <string name="ermis_trash">Pindahkan ke sampah</string>
+    <string name="ermis_spam">Pindahkan ke spam</string>
+    <string name="ermis_forward">Majukan</string>
+    <string name="ermis_reply_all">Balas semua</string>
+    <string name="ermis_search_server">Cari mel terkini pada pelayan</string>
+    <string name="ermis_search_server_help">Mencari subjek, pengirim dan isi dalam 5,000 mesej pelayan terkini dan memaparkan sehingga 100 hasil.</string>
+    <string name="ermis_select_account">Pilih akaun untuk melayari foldernya.</string>
+    <string name="ermis_forward_original">Mesej asal dilampirkan (.eml)</string>
+    <string name="ermis_html_view">Mesej berformat</string>
+    <string name="ermis_text_view">Teks biasa</string>
+    <string name="ermis_show_folder">Tunjukkan folder</string>
+    <string name="ermis_server_results">Hasil pelayan terkini</string>
+</resources>

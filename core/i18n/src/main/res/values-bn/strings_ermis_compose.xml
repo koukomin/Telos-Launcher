@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">খসড়া</string>
+    <string name="ermis_cc">অনুলিপি</string>
+    <string name="ermis_bcc">গোপন অনুলিপি</string>
+</resources>

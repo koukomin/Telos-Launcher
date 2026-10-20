@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_new_folder">Thư mục mới</string>
+    <string name="hf_folder_name">Tên thư mục</string>
+    <string name="hf_folder_rename">Đổi tên thư mục</string>
+    <string name="au_files_download_failed">Tải xuống thất bại</string>
+</resources>

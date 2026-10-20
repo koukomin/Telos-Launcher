@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Mapper</string>
+    <string name="ermis_move">Flytt til mappe</string>
+    <string name="ermis_archive">Arkiver</string>
+    <string name="ermis_trash">Flytt til papirkurven</string>
+    <string name="ermis_spam">Flytt til søppelpost</string>
+    <string name="ermis_forward">Videresend</string>
+    <string name="ermis_reply_all">Svar alle</string>
+    <string name="ermis_search_server">Søk i nylig e-post på serveren</string>
+    <string name="ermis_search_server_help">Søker i emne, avsender og tekst i de siste 5 000 servermeldingene og viser opptil 100 treff.</string>
+    <string name="ermis_select_account">Velg en konto for å bla gjennom mappene.</string>
+    <string name="ermis_forward_original">Opprinnelig melding vedlagt (.eml)</string>
+    <string name="ermis_html_view">Formatert melding</string>
+    <string name="ermis_text_view">Ren tekst</string>
+    <string name="ermis_show_folder">Vis mappe</string>
+    <string name="ermis_server_results">Nylige serverresultater</string>
+</resources>

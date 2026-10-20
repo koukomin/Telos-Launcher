@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Wersje robocze</string>
+    <string name="ermis_cc">DW</string>
+    <string name="ermis_bcc">UDW</string>
+</resources>

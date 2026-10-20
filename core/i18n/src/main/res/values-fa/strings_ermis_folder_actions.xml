@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_new_folder">پوشهٔ جدید</string>
+    <string name="hf_folder_name">نام پوشه</string>
+    <string name="hf_folder_rename">تغییر نام پوشه</string>
+    <string name="au_files_download_failed">بارگیری ناموفق بود</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hf_freeze_active">ทำงานอยู่</string>
+    <string name="hf_freeze_frozen">ถูกแช่แข็ง</string>
+    <string name="hf_freeze_connected_via">เชื่อมต่อผ่าน %1$s</string>
+    <string name="hf_freeze_disconnected">ตัดการเชื่อมต่อแล้ว</string>
+</resources>

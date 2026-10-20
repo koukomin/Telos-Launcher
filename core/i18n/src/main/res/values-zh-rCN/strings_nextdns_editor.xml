@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS 编辑器</string>
+    <string name="nd_intro">更改会影响使用此 NextDNS 配置的所有设备。</string>
+    <string name="nd_key">API 密钥</string>
+    <string name="nd_profile">配置 ID</string>
+    <string name="nd_connect">连接配置</string>
+    <string name="nd_disconnect">移除已保存的密钥</string>
+    <string name="nd_logs">DNS 历史记录</string>
+    <string name="nd_allowlist">允许列表</string>
+    <string name="nd_denylist">拒绝列表</string>
+    <string name="nd_allow">允许域名</string>
+    <string name="nd_deny">阻止域名</string>
+    <string name="nd_domain">域名</string>
+    <string name="nd_more">加载更多</string>
+    <string name="nd_apply">将此配置用于 DNS</string>
+    <string name="nd_applied">已为 Telos Network 选择此配置。</string>
+    <string name="nd_help">请使用 NextDNS 账户页面上的 API 密钥。连接编辑器不会更改 DNS 服务器。</string>
+    <string name="nd_empty">没有条目。</string>
+    <string name="nd_error_auth">NextDNS 拒绝访问。请检查 API 密钥和配置。</string>
+    <string name="nd_error_invalid">请检查配置 ID 和域名。</string>
+    <string name="nd_error_rate">已达到 NextDNS 请求限制。请稍后重试。</string>
+    <string name="nd_error_network">无法连接到 NextDNS。</string>
+    <string name="nd_error_api">NextDNS 拒绝了此操作或返回了不受支持的响应。</string>
+    <string name="nd_error_unconfigured">请先连接 NextDNS 配置。</string>
+    <string name="nd_rule_title">域名规则</string>
+</resources>

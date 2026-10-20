@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Penyunting NextDNS</string>
+    <string name="nd_intro">Perubahan mempengaruhi setiap peranti yang menggunakan profil NextDNS ini.</string>
+    <string name="nd_key">Kunci API</string>
+    <string name="nd_profile">ID profil</string>
+    <string name="nd_connect">Sambungkan profil</string>
+    <string name="nd_disconnect">Buang kunci tersimpan</string>
+    <string name="nd_logs">Sejarah DNS</string>
+    <string name="nd_allowlist">Senarai dibenarkan</string>
+    <string name="nd_denylist">Senarai disekat</string>
+    <string name="nd_allow">Benarkan domain</string>
+    <string name="nd_deny">Sekat domain</string>
+    <string name="nd_domain">Domain</string>
+    <string name="nd_more">Muatkan lagi</string>
+    <string name="nd_apply">Gunakan profil ini untuk DNS</string>
+    <string name="nd_applied">Profil dipilih untuk Telos Network.</string>
+    <string name="nd_help">Gunakan kunci API daripada halaman akaun NextDNS anda. Menyambungkan penyunting tidak mengubah pelayan DNS anda.</string>
+    <string name="nd_empty">Tiada entri.</string>
+    <string name="nd_error_auth">NextDNS menolak akses. Semak kunci API dan profil.</string>
+    <string name="nd_error_invalid">Semak ID profil dan domain.</string>
+    <string name="nd_error_rate">Had permintaan NextDNS telah dicapai. Cuba lagi kemudian.</string>
+    <string name="nd_error_network">Tidak dapat menghubungi NextDNS.</string>
+    <string name="nd_error_api">NextDNS menolak operasi atau mengembalikan respons yang tidak disokong.</string>
+    <string name="nd_error_unconfigured">Sambungkan profil NextDNS dahulu.</string>
+    <string name="nd_rule_title">Peraturan domain</string>
+    <string name="hc_remove">Alih keluar</string>
+    <string name="hc_search">Cari</string>
+</resources>

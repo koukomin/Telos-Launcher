@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">المجلدات</string>
+    <string name="ermis_move">نقل إلى مجلد</string>
+    <string name="ermis_archive">أرشفة</string>
+    <string name="ermis_trash">نقل إلى المهملات</string>
+    <string name="ermis_spam">نقل إلى الرسائل غير المرغوب فيها</string>
+    <string name="ermis_forward">إعادة توجيه</string>
+    <string name="ermis_reply_all">الرد على الجميع</string>
+    <string name="ermis_search_server">البحث في البريد الحديث على الخادم</string>
+    <string name="ermis_search_server_help">يبحث في الموضوع والمرسل ونص أحدث 5,000 رسالة على الخادم ويعرض حتى 100 نتيجة.</string>
+    <string name="ermis_select_account">اختر حسابًا لتصفح مجلداته.</string>
+    <string name="ermis_forward_original">الرسالة الأصلية مرفقة (.eml)</string>
+    <string name="ermis_html_view">رسالة منسقة</string>
+    <string name="ermis_text_view">نص عادي</string>
+    <string name="ermis_show_folder">عرض المجلد</string>
+    <string name="ermis_server_results">نتائج الخادم الحديثة</string>
+</resources>

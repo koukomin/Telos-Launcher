@@ -334,6 +334,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.network.NetworkSettingsRoute> {
                 de.mm20.launcher2.ui.network.NetworkSettingsScreen()
             }
+            entry<de.mm20.launcher2.ui.network.nextdns.NextDnsRoute> {
+                de.mm20.launcher2.ui.network.nextdns.NextDnsScreen()
+            }
             entry<de.mm20.launcher2.ui.network.dns.NetworkDnsRoute> {
                 de.mm20.launcher2.ui.network.dns.NetworkDnsScreen()
             }

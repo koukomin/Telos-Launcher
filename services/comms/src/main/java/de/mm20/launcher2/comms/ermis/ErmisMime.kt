@@ -13,16 +13,18 @@ import org.jsoup.Jsoup
 
 /** Both display and download use this exact traversal, so an attachment index is stable. */
 internal object ErmisMime {
-    data class Content(val body: String, val attachments: List<Part>)
+    data class Content(val body: String, val attachments: List<Part>, val html: String = "")
     private const val MAX_RAW_PARSE_BYTES = 24_000_000
     fun read(message: Part, rawParseLimit: Int = MAX_RAW_PARSE_BYTES): Content {
         require(rawParseLimit in 1..MAX_RAW_PARSE_BYTES)
         val budget = RawBudget(rawParseLimit)
         val text = StringBuilder()
         val attachments = mutableListOf<Part>()
+        val html = StringBuilder()
+        var htmlTooLarge = false
         var visited = 0
         var bodyBytes = 0
-        fun walk(part: Part, depth: Int) {
+        fun walk(part: Part, depth: Int, captureText: Boolean = true) {
             require(depth < 20 && ++visited <= 512) { "MIME complexity limit" }
             if (part.fileName != null || Part.ATTACHMENT.equals(part.disposition, true)) {
                 attachments += part
@@ -42,9 +44,16 @@ internal object ErmisMime {
                 }
                 val charset = runCatching { ContentType(part.contentType).getParameter("charset")?.let(Charset::forName) }.getOrNull() ?: Charsets.UTF_8
                 val body = String(bytes, charset)
-                val plain = if (part.isMimeType("text/html")) Jsoup.parse(body).text() else body
-                if (text.isNotEmpty() && text.length < 1_000_000) text.append('\n')
-                text.append(plain.take((1_000_000 - text.length).coerceAtLeast(0)))
+                val isHtml = part.isMimeType("text/html")
+                if (isHtml && !htmlTooLarge) {
+                    if (html.length + body.length <= ErmisHtml.MAX_HTML) html.append(body)
+                    else { html.setLength(0); htmlTooLarge = true }
+                }
+                if (captureText) {
+                    val plain = if (isHtml) Jsoup.parse(body).text() else body
+                    if (text.isNotEmpty() && text.length < 1_000_000) text.append('\n')
+                    text.append(plain.take((1_000_000 - text.length).coerceAtLeast(0)))
+                }
             } else if (part.isMimeType("multipart/*")) {
                 // Do not use part.content: JavaMail could allocate an arbitrarily large
                 // multipart before we can inspect its count. Bound the parser's source itself.
@@ -59,12 +68,17 @@ internal object ErmisMime {
                     val children = (0 until multi.count).map(multi::getBodyPart)
                     val selected = children.firstOrNull { it.isMimeType("text/plain") }
                         ?: children.firstOrNull { it.isMimeType("text/html") } ?: children.firstOrNull()
-                    selected?.let { walk(it, depth + 1) }
-                } else for (i in 0 until multi.count) walk(multi.getBodyPart(i), depth + 1)
+                    selected?.let { walk(it, depth + 1, captureText) }
+                    // Retain the HTML alternative without duplicating its text in the plain view.
+                    if (selected?.isMimeType("text/plain") == true) {
+                        children.firstOrNull { it.isMimeType("text/html") || it.isMimeType("multipart/related") }
+                            ?.let { walk(it, depth + 1, false) }
+                    }
+                } else for (i in 0 until multi.count) walk(multi.getBodyPart(i), depth + 1, captureText)
             }
         }
         walk(message, 0)
-        return Content(text.toString(), attachments)
+        return Content(text.toString(), attachments, if (htmlTooLarge) "" else ErmisHtml.sanitize(html.toString()))
     }
     /** Shared across all nested multipart parsers, including bytes parsed again in a child. */
     private class RawBudget(private var remaining: Int) {

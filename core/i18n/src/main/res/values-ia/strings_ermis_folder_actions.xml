@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_new_folder">Nove dossier</string>
+    <string name="hf_folder_name">Nomine del dossier</string>
+    <string name="hf_folder_rename">Renominar dossier</string>
+    <string name="au_files_download_failed">Discargamento fallite</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hf_freeze_active">Aktiv</string>
+    <string name="hf_freeze_frozen">Dondurulub</string>
+    <string name="hf_freeze_connected_via">%1$s vasitəsilə qoşulub</string>
+    <string name="hf_freeze_disconnected">Bağlantı kəsilib</string>
+</resources>

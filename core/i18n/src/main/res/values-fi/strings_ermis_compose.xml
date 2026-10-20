@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Luonnokset</string>
+    <string name="ermis_cc">Kopio</string>
+    <string name="ermis_bcc">Piilokopio</string>
+</resources>

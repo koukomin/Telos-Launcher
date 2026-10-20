@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Esborranys</string>
+    <string name="ermis_cc">Còpia</string>
+    <string name="ermis_bcc">Còpia oculta</string>
+    <string name="hc_no_contacts_found">No s’han trobat contactes</string>
+</resources>

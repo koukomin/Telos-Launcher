@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Koncepty</string>
+    <string name="ermis_cc">Kópia</string>
+    <string name="ermis_bcc">Skrytá kópia</string>
+</resources>

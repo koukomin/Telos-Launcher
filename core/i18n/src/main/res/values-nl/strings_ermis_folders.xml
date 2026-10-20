@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Mappen</string>
+    <string name="ermis_move">Naar map verplaatsen</string>
+    <string name="ermis_archive">Archiveren</string>
+    <string name="ermis_trash">Naar prullenbak verplaatsen</string>
+    <string name="ermis_spam">Naar spam verplaatsen</string>
+    <string name="ermis_forward">Doorsturen</string>
+    <string name="ermis_reply_all">Allen beantwoorden</string>
+    <string name="ermis_search_server">Recente mail op de server doorzoeken</string>
+    <string name="ermis_search_server_help">Doorzoekt onderwerp, afzender en berichttekst van de laatste 5.000 serverberichten en toont maximaal 100 resultaten.</string>
+    <string name="ermis_select_account">Selecteer een account om de mappen te bekijken.</string>
+    <string name="ermis_forward_original">Oorspronkelijk bericht bijgevoegd (.eml)</string>
+    <string name="ermis_html_view">Opgemaakt bericht</string>
+    <string name="ermis_text_view">Platte tekst</string>
+    <string name="ermis_show_folder">Map tonen</string>
+    <string name="ermis_server_results">Recente serverresultaten</string>
+</resources>

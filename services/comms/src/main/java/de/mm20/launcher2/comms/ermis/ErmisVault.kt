@@ -31,10 +31,14 @@ internal class ErmisVault(context: Context) {
         }
     }
     fun write(text: String) {
+        // The encrypted payload must fit the same bound enforced on read, including IV and GCM tag.
+        require(text.length <= 39_999_972) { "Mail cache exceeds size limit" }
+        val bytes = text.toByteArray(Charsets.UTF_8)
+        require(bytes.size <= 39_999_972) { "Mail cache exceeds size limit" }
         val cipher = Cipher.getInstance("AES/GCM/NoPadding").apply { init(Cipher.ENCRYPT_MODE, key()) }
         val atomic = android.util.AtomicFile(file)
         val output = atomic.startWrite()
-        try { output.write(cipher.iv); output.write(cipher.doFinal(text.toByteArray(Charsets.UTF_8))); atomic.finishWrite(output) }
+        try { output.write(cipher.iv); output.write(cipher.doFinal(bytes)); atomic.finishWrite(output) }
         catch (e: Exception) { atomic.failWrite(output); throw e }
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Aplankai</string>
+    <string name="ermis_move">Perkelti į aplanką</string>
+    <string name="ermis_archive">Archyvuoti</string>
+    <string name="ermis_trash">Perkelti į šiukšlinę</string>
+    <string name="ermis_spam">Perkelti į šlamštą</string>
+    <string name="ermis_forward">Persiųsti</string>
+    <string name="ermis_reply_all">Atsakyti visiems</string>
+    <string name="ermis_search_server">Ieškoti naujausiuose serverio laiškuose</string>
+    <string name="ermis_search_server_help">Ieško paskutinių 5 000 serverio laiškų temoje, siuntėjo lauke ir tekste bei rodo iki 100 rezultatų.</string>
+    <string name="ermis_select_account">Pasirinkite paskyrą, kurios aplankus norite naršyti.</string>
+    <string name="ermis_forward_original">Pridėtas originalus laiškas (.eml)</string>
+    <string name="ermis_html_view">Suformatuotas laiškas</string>
+    <string name="ermis_text_view">Grynasis tekstas</string>
+    <string name="ermis_show_folder">Rodyti aplanką</string>
+    <string name="ermis_server_results">Naujausi serverio rezultatai</string>
+</resources>

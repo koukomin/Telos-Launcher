@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hf_freeze_active">فعال</string>
+    <string name="hf_freeze_frozen">منجمد</string>
+    <string name="hf_freeze_connected_via">متصل از طریق %1$s</string>
+    <string name="hf_freeze_disconnected">قطع اتصال</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Eagarthóir NextDNS</string>
+    <string name="nd_intro">Bíonn tionchar ag athruithe ar gach gléas a úsáideann an phróifíl NextDNS seo.</string>
+    <string name="nd_key">Eochair API</string>
+    <string name="nd_profile">Aitheantas próifíle</string>
+    <string name="nd_connect">Ceangail próifíl</string>
+    <string name="nd_disconnect">Bain an eochair shábháilte</string>
+    <string name="nd_logs">Stair DNS</string>
+    <string name="nd_allowlist">Liosta ceadaithe</string>
+    <string name="nd_denylist">Liosta blocála</string>
+    <string name="nd_allow">Ceadaigh fearann</string>
+    <string name="nd_deny">Blocáil fearann</string>
+    <string name="nd_domain">Fearann</string>
+    <string name="nd_more">Lódáil tuilleadh</string>
+    <string name="nd_apply">Úsáid an phróifíl seo le haghaidh DNS</string>
+    <string name="nd_applied">Roghnaíodh an phróifíl do Telos Network.</string>
+    <string name="nd_help">Úsáid an eochair API ó leathanach do chuntais NextDNS. Ní athraítear do fhreastalaí DNS nuair a cheanglaítear an t-eagarthóir.</string>
+    <string name="nd_empty">Níl aon iontrálacha ann.</string>
+    <string name="nd_error_auth">Dhiúltaigh NextDNS rochtain. Seiceáil an eochair API agus an phróifíl.</string>
+    <string name="nd_error_invalid">Seiceáil aitheantas na próifíle agus an fearann.</string>
+    <string name="nd_error_rate">Sroicheadh teorainn iarratas NextDNS. Bain triail eile as ar ball.</string>
+    <string name="nd_error_network">Ní féidir ceangal le NextDNS.</string>
+    <string name="nd_error_api">Dhiúltaigh NextDNS don oibríocht nó thug sé freagra nach dtacaítear leis.</string>
+    <string name="nd_error_unconfigured">Ceangail próifíl NextDNS ar dtús.</string>
+    <string name="nd_rule_title">Riail fearainn</string>
+</resources>

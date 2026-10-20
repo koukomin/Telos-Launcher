@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Πρόχειρα</string>
+    <string name="ermis_cc">Κοινοποίηση</string>
+    <string name="ermis_bcc">Κρυφή κοινοποίηση</string>
+</resources>

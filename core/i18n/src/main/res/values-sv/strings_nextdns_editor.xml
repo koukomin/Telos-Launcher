@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS-redigerare</string>
+    <string name="nd_intro">Ändringar påverkar alla enheter som använder den här NextDNS-profilen.</string>
+    <string name="nd_key">API-nyckel</string>
+    <string name="nd_profile">Profil-ID</string>
+    <string name="nd_connect">Anslut profil</string>
+    <string name="nd_disconnect">Ta bort sparad nyckel</string>
+    <string name="nd_logs">DNS-historik</string>
+    <string name="nd_allowlist">Tillåtelselista</string>
+    <string name="nd_denylist">Blockeringslista</string>
+    <string name="nd_allow">Tillåt domän</string>
+    <string name="nd_deny">Blockera domän</string>
+    <string name="nd_domain">Domän</string>
+    <string name="nd_more">Läs in fler</string>
+    <string name="nd_apply">Använd den här profilen för DNS</string>
+    <string name="nd_applied">Profil vald för Telos Network.</string>
+    <string name="nd_help">Använd API-nyckeln från din NextDNS-kontosida. Anslutning av redigeraren ändrar inte din DNS-server.</string>
+    <string name="nd_empty">Inga poster.</string>
+    <string name="nd_error_auth">NextDNS nekade åtkomst. Kontrollera API-nyckeln och profilen.</string>
+    <string name="nd_error_invalid">Kontrollera profil-ID och domän.</string>
+    <string name="nd_error_rate">Gränsen för NextDNS-förfrågningar har nåtts. Försök igen senare.</string>
+    <string name="nd_error_network">Kan inte nå NextDNS.</string>
+    <string name="nd_error_api">NextDNS avvisade åtgärden eller returnerade ett svar som inte stöds.</string>
+    <string name="nd_error_unconfigured">Anslut en NextDNS-profil först.</string>
+    <string name="nd_rule_title">Domänregel</string>
+</resources>

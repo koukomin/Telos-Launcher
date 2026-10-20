@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS redaktoru</string>
+    <string name="nd_intro">Dəyişikliklər bu NextDNS profilindən istifadə edən bütün cihazlara təsir edir.</string>
+    <string name="nd_key">API açarı</string>
+    <string name="nd_profile">Profil ID-si</string>
+    <string name="nd_connect">Profili qoş</string>
+    <string name="nd_disconnect">Saxlanmış açarı sil</string>
+    <string name="nd_logs">DNS tarixçəsi</string>
+    <string name="nd_allowlist">İcazə siyahısı</string>
+    <string name="nd_denylist">Bloklama siyahısı</string>
+    <string name="nd_allow">Domenə icazə ver</string>
+    <string name="nd_deny">Domeni blokla</string>
+    <string name="nd_domain">Domen</string>
+    <string name="nd_more">Daha çox yüklə</string>
+    <string name="nd_apply">DNS üçün bu profildən istifadə et</string>
+    <string name="nd_applied">Telos Network üçün profil seçildi.</string>
+    <string name="nd_help">NextDNS hesab səhifənizdəki API açarından istifadə edin. Redaktora qoşulmaq DNS serverinizi dəyişmir.</string>
+    <string name="nd_empty">Qeyd yoxdur.</string>
+    <string name="nd_error_auth">NextDNS girişi rədd etdi. API açarını və profili yoxlayın.</string>
+    <string name="nd_error_invalid">Profil ID-sini və domeni yoxlayın.</string>
+    <string name="nd_error_rate">NextDNS sorğu limitinə çatıldı. Daha sonra yenidən cəhd edin.</string>
+    <string name="nd_error_network">NextDNS ilə əlaqə yaratmaq mümkün deyil.</string>
+    <string name="nd_error_api">NextDNS əməliyyatı rədd etdi və ya dəstəklənməyən cavab qaytardı.</string>
+    <string name="nd_error_unconfigured">Əvvəlcə NextDNS profilini qoşun.</string>
+    <string name="nd_rule_title">Domen qaydası</string>
+    <string name="hc_remove">Sil</string>
+    <string name="hc_search">Axtarış</string>
+</resources>

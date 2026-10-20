@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Cartelle</string>
+    <string name="ermis_move">Sposta nella cartella</string>
+    <string name="ermis_archive">Archivia</string>
+    <string name="ermis_trash">Sposta nel cestino</string>
+    <string name="ermis_spam">Sposta nello spam</string>
+    <string name="ermis_forward">Inoltra</string>
+    <string name="ermis_reply_all">Rispondi a tutti</string>
+    <string name="ermis_search_server">Cerca nella posta recente sul server</string>
+    <string name="ermis_search_server_help">Cerca oggetto, mittente e testo negli ultimi 5.000 messaggi sul server e mostra fino a 100 risultati.</string>
+    <string name="ermis_select_account">Seleziona un account per esplorarne le cartelle.</string>
+    <string name="ermis_forward_original">Messaggio originale allegato (.eml)</string>
+    <string name="ermis_html_view">Messaggio formattato</string>
+    <string name="ermis_text_view">Testo semplice</string>
+    <string name="ermis_show_folder">Mostra cartella</string>
+    <string name="ermis_server_results">Risultati recenti del server</string>
+</resources>

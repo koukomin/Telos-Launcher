@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Dossiers</string>
+    <string name="ermis_move">Mover a un dossier</string>
+    <string name="ermis_archive">Archivar</string>
+    <string name="ermis_trash">Mover al corbe a papiro</string>
+    <string name="ermis_spam">Mover al posta indesirate</string>
+    <string name="ermis_forward">Reinviar</string>
+    <string name="ermis_reply_all">Responder a totes</string>
+    <string name="ermis_search_server">Cercar in le posta recente del servitor</string>
+    <string name="ermis_search_server_help">Cerca subjecto, expeditor e corpore in le ultime 5.000 messages del servitor e monstra usque a 100 resultatos.</string>
+    <string name="ermis_select_account">Selige un conto pro explorar su dossiers.</string>
+    <string name="ermis_forward_original">Message original attachate (.eml)</string>
+    <string name="ermis_html_view">Message formattate</string>
+    <string name="ermis_text_view">Texto simple</string>
+    <string name="ermis_show_folder">Monstrar dossier</string>
+    <string name="ermis_server_results">Resultatos recente del servitor</string>
+</resources>

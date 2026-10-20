@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_new_folder">Carpeta nova</string>
+    <string name="hf_folder_name">Nom de la carpeta</string>
+    <string name="hf_folder_rename">Canvia el nom de la carpeta</string>
+    <string name="au_files_download_failed">La baixada ha fallat</string>
+</resources>

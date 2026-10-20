@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Editur NextDNS</string>
+    <string name="nd_intro">Il-bidliet jaffettwaw kull apparat li juża dan il-profil NextDNS.</string>
+    <string name="nd_key">Ċavetta API</string>
+    <string name="nd_profile">ID tal-profil</string>
+    <string name="nd_connect">Qabbad il-profil</string>
+    <string name="nd_disconnect">Neħħi ċ-ċavetta ssejvjata</string>
+    <string name="nd_logs">Storja DNS</string>
+    <string name="nd_allowlist">Lista ta’ permessi</string>
+    <string name="nd_denylist">Lista ta’ imblukkar</string>
+    <string name="nd_allow">Ippermetti d-dominju</string>
+    <string name="nd_deny">Imblokka d-dominju</string>
+    <string name="nd_domain">Dominju</string>
+    <string name="nd_more">Tagħbija ta’ aktar</string>
+    <string name="nd_apply">Uża dan il-profil għad-DNS</string>
+    <string name="nd_applied">Il-profil intgħażel għal Telos Network.</string>
+    <string name="nd_help">Uża ċ-ċavetta API mill-paġna tal-kont NextDNS tiegħek. Il-konnessjoni tal-editur ma tbiddilx is-server DNS tiegħek.</string>
+    <string name="nd_empty">Ebda entrata.</string>
+    <string name="nd_error_auth">NextDNS irrifjuta l-aċċess. Iċċekkja ċ-ċavetta API u l-profil.</string>
+    <string name="nd_error_invalid">Iċċekkja l-ID tal-profil u d-dominju.</string>
+    <string name="nd_error_rate">Intlaħaq il-limitu tat-talbiet ta’ NextDNS. Erġa’ pprova aktar tard.</string>
+    <string name="nd_error_network">Ma jistax jintlaħaq NextDNS.</string>
+    <string name="nd_error_api">NextDNS irrifjuta l-operazzjoni jew irritorna tweġiba mhux appoġġjata.</string>
+    <string name="nd_error_unconfigured">L-ewwel qabbad profil NextDNS.</string>
+    <string name="nd_rule_title">Regola tad-dominju</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Pastas</string>
+    <string name="ermis_move">Mover para pasta</string>
+    <string name="ermis_archive">Arquivar</string>
+    <string name="ermis_trash">Mover para a lixeira</string>
+    <string name="ermis_spam">Mover para spam</string>
+    <string name="ermis_forward">Encaminhar</string>
+    <string name="ermis_reply_all">Responder a todos</string>
+    <string name="ermis_search_server">Pesquisar e-mails recentes no servidor</string>
+    <string name="ermis_search_server_help">Pesquisa assunto, remetente e corpo nas últimas 5.000 mensagens do servidor e mostra até 100 resultados.</string>
+    <string name="ermis_select_account">Selecione uma conta para navegar pelas pastas.</string>
+    <string name="ermis_forward_original">Mensagem original anexada (.eml)</string>
+    <string name="ermis_html_view">Mensagem formatada</string>
+    <string name="ermis_text_view">Texto simples</string>
+    <string name="ermis_show_folder">Mostrar pasta</string>
+    <string name="ermis_server_results">Resultados recentes do servidor</string>
+</resources>

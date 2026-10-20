@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS redaktors</string>
+    <string name="nd_intro">Izmaiņas ietekmē visas ierīces, kas izmanto šo NextDNS profilu.</string>
+    <string name="nd_key">API atslēga</string>
+    <string name="nd_profile">Profila ID</string>
+    <string name="nd_connect">Pievienot profilu</string>
+    <string name="nd_disconnect">Noņemt saglabāto atslēgu</string>
+    <string name="nd_logs">DNS vēsture</string>
+    <string name="nd_allowlist">Atļauto saraksts</string>
+    <string name="nd_denylist">Bloķēto saraksts</string>
+    <string name="nd_allow">Atļaut domēnu</string>
+    <string name="nd_deny">Bloķēt domēnu</string>
+    <string name="nd_domain">Domēns</string>
+    <string name="nd_more">Ielādēt vairāk</string>
+    <string name="nd_apply">Izmantot šo profilu DNS</string>
+    <string name="nd_applied">Profils atlasīts lietošanai ar Telos Network.</string>
+    <string name="nd_help">Izmantojiet API atslēgu no savas NextDNS konta lapas. Redaktora pievienošana nemaina DNS serveri.</string>
+    <string name="nd_empty">Nav ierakstu.</string>
+    <string name="nd_error_auth">NextDNS liedza piekļuvi. Pārbaudiet API atslēgu un profilu.</string>
+    <string name="nd_error_invalid">Pārbaudiet profila ID un domēnu.</string>
+    <string name="nd_error_rate">Sasniegts NextDNS pieprasījumu ierobežojums. Mēģiniet vēlāk.</string>
+    <string name="nd_error_network">Nevar sasniegt NextDNS.</string>
+    <string name="nd_error_api">NextDNS noraidīja darbību vai atgrieza neatbalstītu atbildi.</string>
+    <string name="nd_error_unconfigured">Vispirms pievienojiet NextDNS profilu.</string>
+    <string name="nd_rule_title">Domēna noteikums</string>
+</resources>

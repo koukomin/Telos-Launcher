@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">پیش‌نویس‌ها</string>
+    <string name="ermis_cc">رونوشت</string>
+    <string name="ermis_bcc">رونوشت پنهان</string>
+    <string name="hc_no_contacts_found">مخاطبی یافت نشد</string>
+</resources>

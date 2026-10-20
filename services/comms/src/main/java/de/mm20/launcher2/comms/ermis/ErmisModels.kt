@@ -15,12 +15,31 @@ data class ErmisMessage(val accountId: String, val uid: Long, val messageId: Str
     val from: String, val subject: String, val preview: String = "", val body: String = "",
     val date: Long, val read: Boolean = false, val starred: Boolean = false,
     val attachments: List<ErmisAttachment> = emptyList(), val note: String = "",
-    val inReplyTo: String = "", val references: List<String> = emptyList())
+    val inReplyTo: String = "", val references: List<String> = emptyList(),
+    val folder: String = "INBOX", val to: List<String> = emptyList(),
+    val cc: List<String> = emptyList(), val replyTo: String = "", val html: String = "")
 data class ErmisDraft(val accountId: String, val to: String, val subject: String, val body: String,
     val attachments: List<Uri> = emptyList(), val inReplyTo: String? = null,
-    val references: List<String> = emptyList())
+    val references: List<String> = emptyList(), val cc: String = "", val bcc: String = "",
+    val forwardSource: ErmisForwardSource? = null)
+
+@Serializable
+data class ErmisSavedDraft(val id: String, val accountId: String, val to: String,
+    val subject: String, val body: String, val attachmentUris: List<String> = emptyList(),
+    val inReplyTo: String? = null, val references: List<String> = emptyList(),
+    val cc: String = "", val bcc: String = "", val updatedAt: Long = 0L,
+    val forwardSource: ErmisForwardSource? = null) {
+    fun toDraft(): ErmisDraft = ErmisDraft(accountId, to, subject, body, attachmentUris.map(Uri::parse),
+        inReplyTo, references, cc, bcc, forwardSource)
+}
+
+@Serializable
+enum class ErmisFolderRole { INBOX, SENT, DRAFTS, TRASH, SPAM, ARCHIVE, ALL, OTHER }
+@Serializable
+data class ErmisFolder(val accountId: String, val id: String, val name: String, val role: ErmisFolderRole)
+
 data class ErmisState(val accounts: List<ErmisAccount> = emptyList(), val messages: List<ErmisMessage> = emptyList(),
-    val loading: Boolean = false, val error: String? = null)
+    val loading: Boolean = false, val error: String? = null, val drafts: List<ErmisSavedDraft> = emptyList(), val folders: List<ErmisFolder> = emptyList())
 
 object ErmisValidation {
     private val identifier = Regex("[A-Za-z0-9_-]{1,80}")
