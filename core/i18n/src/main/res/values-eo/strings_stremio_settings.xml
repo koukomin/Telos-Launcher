@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">HTTP-kaŝmemoro</string>
+    <string name="settings">Agordoj</string>
+    <string name="dl_category_audio">Sono</string>
+    <string name="hc_subtitles">Subtekstoj</string>
+    <string name="dl_t_select_none">Neniu</string>
+    <string name="au3_appearance_cs_primary">Ĉefa</string>
+    <string name="au3_appearance_cs_secondary">Dua</string>
+</resources>

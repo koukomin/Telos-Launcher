@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">Bộ nhớ đệm HTTP</string>
+    <string name="settings">Cài đặt</string>
+    <string name="dl_category_audio">Âm thanh</string>
+    <string name="hc_subtitles">Phụ đề</string>
+    <string name="dl_t_select_none">Không có</string>
+    <string name="au3_appearance_cs_primary">Chính</string>
+    <string name="au3_appearance_cs_secondary">Phụ</string>
+</resources>

@@ -185,3 +185,6 @@ The TV mini player provides a contrasting play/pause icon reflecting the current
 
 
 Tap anywhere on a TV or video picture, including the blank bands above and below a landscape picture in portrait, to toggle playback controls and Android system bars. TV continues audio playback when switching apps by default; a one-time upgrade enables this for legacy configurations. You can disable it in TV playback settings. Music, Radio, TV, YouTube and Video expose media-session controls in Android notifications; video notifications have separate IDs so they do not replace other players.
+
+
+Stremio Fork → menu → Settings offers primary and secondary audio/subtitle languages, including None, plus a 1/2/5/10/20 GB HTTP playback cache. Primary None disables automatic subtitles; empty audio preferences leave the stream/player default. Secondary languages are fallbacks when available. The cache evicts older HTTP data automatically; settings take effect on the next playback. This is a per-player HTTP cache, not a total limit on temporary torrent files. The same settings sheet exposes shared torrent speed limits, connections, discovery, encryption, seeding and transfer-network rules. It does not claim full settings parity with the official Stremio client.

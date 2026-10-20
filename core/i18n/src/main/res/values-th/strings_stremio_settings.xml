@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">แคช HTTP</string>
+    <string name="settings">การตั้งค่า</string>
+    <string name="dl_category_audio">เสียง</string>
+    <string name="hc_subtitles">คำบรรยาย</string>
+    <string name="dl_t_select_none">ไม่มี</string>
+    <string name="au3_appearance_cs_primary">หลัก</string>
+    <string name="au3_appearance_cs_secondary">รอง</string>
+</resources>

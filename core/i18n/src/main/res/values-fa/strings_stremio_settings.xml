@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">حافظهٔ نهان HTTP</string>
+    <string name="settings">تنظیمات</string>
+    <string name="dl_category_audio">صدا</string>
+    <string name="hc_subtitles">زیرنویس‌ها</string>
+    <string name="dl_t_select_none">هیچ‌کدام</string>
+    <string name="au3_appearance_cs_primary">اصلی</string>
+    <string name="au3_appearance_cs_secondary">ثانویه</string>
+</resources>

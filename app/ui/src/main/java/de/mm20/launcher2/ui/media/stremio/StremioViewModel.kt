@@ -302,6 +302,7 @@ class StremioViewModel : ViewModel(), KoinComponent {
                 (stream.subtitles + fromAddons).distinctBy { it.url }.take(MAX_SUBTITLES)
             }
             fun withSubtitles(intent: Intent): Intent = intent
+                .putExtra("stremio_playback", true)
                 .putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_URLS, ArrayList(subtitles.map { it.url }))
                 .putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_LANGS, ArrayList(subtitles.map { it.lang }))
                 .putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_LABELS, ArrayList(subtitles.map { it.label.orEmpty() }))
