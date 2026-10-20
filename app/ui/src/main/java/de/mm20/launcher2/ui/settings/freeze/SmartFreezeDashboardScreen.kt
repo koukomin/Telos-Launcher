@@ -13,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -46,11 +45,12 @@ fun SmartFreezeDashboardScreen() {
     val freezeManager: FreezeManager = koinInject()
     val appRepository: AppRepository = koinInject()
     val iconService: IconService = koinInject()
-    val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     val apps by appRepository.findMany().collectAsStateWithLifecycle(emptyList())
-    val actualApps = apps.filter { it.componentName.packageName != context.packageName && !it.key.startsWith("telos_") }
+    // Keep all real installed apps, including work-profile and dual/clone app instances,
+    // but exclude launcher-internal virtual apps (telos_* keys).
+    val actualApps = apps.filter { !it.key.startsWith("telos_") }
     val candidates by freezeManager.autoFreezeCandidates.collectAsStateWithLifecycle(emptySet())
     val activeBackend by freezeManager.activeBackend.collectAsStateWithLifecycle()
     val stats by freezeManager.stats.collectAsStateWithLifecycle(emptyMap())
