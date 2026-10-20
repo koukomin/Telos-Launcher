@@ -1,0 +1,6 @@
+<resources>
+    <string name="wallpaper_content_color">متن تصویر زمینه</string>
+    <string name="wallpaper_content_auto">خودکار</string>
+    <string name="wallpaper_content_white">سفید</string>
+    <string name="wallpaper_content_black">سیاه</string>
+</resources>

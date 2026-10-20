@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.component
 
-import androidx.compose.animation.animateColor
+import de.mm20.launcher2.ui.theme.panelContentColor
+import de.mm20.launcher2.ui.theme.rememberWallpaperContentStyle
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
@@ -62,6 +63,7 @@ fun SearchBar(
     onUnfocus: () -> Unit = {},
     reverse: Boolean = false,
     darkColors: Boolean = false,
+    automaticColors: Boolean = false,
     readOnly: Boolean = false,
     menu: @Composable RowScope.() -> Unit = {},
     trailing: @Composable RowScope.() -> Unit = {},
@@ -69,6 +71,7 @@ fun SearchBar(
     onKeyboardActionGo: (KeyboardActionScope.() -> Unit)? = null
 ) {
 
+    val readability = rememberWallpaperContentStyle(forcedDark = if (automaticColors) null else darkColors)
     val transition = updateTransition(level, label = "Searchbar")
     val context = LocalContext.current
     val searchUiSettings: SearchUiSettings = koinInject()
@@ -115,38 +118,36 @@ fun SearchBar(
         }
     }
 
-    val contentColor by transition.animateColor(label = "textColor",
-        transitionSpec = {
-            when {
-                initialState == SearchBarLevel.Resting -> tween(durationMillis = 200)
-                targetState == SearchBarLevel.Resting -> tween(
-                    durationMillis = 200,
-                    delayMillis = 200
-                )
-
-                else -> tween(durationMillis = 500)
-            }
-        }) {
-        when {
-            style != SearchBarStyle.Transparent -> MaterialTheme.colorScheme.onSurface
-            it == SearchBarLevel.Resting -> if (darkColors) Color(0, 0, 0, 180) else Color.White
-            else -> MaterialTheme.colorScheme.onSurface
-        }
-    }
-
     val opacity by transition.animateFloat(label = "opacity") {
         if (style == SearchBarStyle.Hidden && it == SearchBarLevel.Resting) 0f
         else 1f
     }
 
+    // Use wallpaper text only after the actual surface has faded out, not at the target
+    // state change. Otherwise white text can briefly sit on a still-light panel.
+    val overWallpaper = style == SearchBarStyle.Transparent && backgroundOpacity <= 0.01f
+    val panelContent = panelContentColor(
+        MaterialTheme.colorScheme.surface.copy(alpha = backgroundOpacity)
+    )
+    val resolvedContentColor = if (overWallpaper) readability.color else panelContent
+    // Keep a backing while the panel fades in/out; never expose transitional text on raw pixels.
+    val transitionBacking = rememberWallpaperContentStyle(
+        forcedDark = resolvedContentColor == Color.Black
+    )
     LauncherCard(
         modifier = modifier
+            .then(when {
+                overWallpaper -> readability.modifier
+                backgroundOpacity < 0.8f -> transitionBacking.modifier
+                else -> Modifier
+            })
             .alpha(opacity),
         backgroundOpacity = backgroundOpacity,
-        elevation = elevation
+        elevation = elevation,
+        contentColor = resolvedContentColor
     ) {
         CompositionLocalProvider(
-            LocalContentColor provides contentColor
+            LocalContentColor provides resolvedContentColor
         ) {
             Column(
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
@@ -159,7 +160,7 @@ fun SearchBar(
                         modifier = Modifier.padding(12.dp),
                         painter = painterResource(R.drawable.search_24px),
                         contentDescription = null,
-                        tint = contentColor
+                        tint = resolvedContentColor
                     )
                     Box(
                         modifier = Modifier.weight(1f)
@@ -168,7 +169,7 @@ fun SearchBar(
                             Text(
                                 text = stringResource(R.string.search_bar_placeholder),
                                 style = MaterialTheme.typography.titleMedium,
-                                color = contentColor
+                                color = resolvedContentColor
                             )
                         }
                         BasicTextField(
@@ -182,7 +183,7 @@ fun SearchBar(
                                     contentDescription = context.getString(R.string.search_bar_placeholder)
                                 },
                             textStyle = MaterialTheme.typography.titleMedium.copy(
-                                color = contentColor
+                                color = resolvedContentColor
                             ),
                             singleLine = true,
                             value = value,

@@ -1,0 +1,6 @@
+<resources>
+    <string name="wallpaper_content_color">Chữ trên hình nền</string>
+    <string name="wallpaper_content_auto">Tự động</string>
+    <string name="wallpaper_content_white">Trắng</string>
+    <string name="wallpaper_content_black">Đen</string>
+</resources>

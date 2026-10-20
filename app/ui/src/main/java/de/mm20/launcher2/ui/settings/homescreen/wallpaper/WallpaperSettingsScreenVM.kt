@@ -29,6 +29,11 @@ class WallpaperSettingsScreenVM : ViewModel(), KoinComponent {
     var isVideoWallpaperActive by mutableStateOf(false)
         private set
 
+    val textColors = wallpaperSettings.textColors
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), de.mm20.launcher2.preferences.SystemBarColors.Auto)
+
+    fun setTextColors(colors: de.mm20.launcher2.preferences.SystemBarColors) = wallpaperSettings.setTextColors(colors)
+
     val dimWallpaper = wallpaperSettings.dimWallpaper
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 

@@ -1,0 +1,6 @@
+<resources>
+    <string name="wallpaper_content_color">Тэкст на шпалерах</string>
+    <string name="wallpaper_content_auto">Аўтаматычна</string>
+    <string name="wallpaper_content_white">Белы</string>
+    <string name="wallpaper_content_black">Чорны</string>
+</resources>

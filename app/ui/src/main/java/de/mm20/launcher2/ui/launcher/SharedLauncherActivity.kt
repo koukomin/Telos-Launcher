@@ -1,5 +1,10 @@
 package de.mm20.launcher2.ui.launcher
 
+import de.mm20.launcher2.ui.theme.LocalWallpaperTextMode
+import de.mm20.launcher2.ui.theme.LocalWallpaperSamples
+import de.mm20.launcher2.ui.theme.chooseContrast
+import de.mm20.launcher2.ui.theme.wallpaperSamplesAsState
+import de.mm20.launcher2.preferences.ui.WallpaperSettings
 import android.app.WallpaperManager
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -136,12 +141,29 @@ abstract class SharedLauncherActivity(
             val snackbarHostState = remember { SnackbarHostState() }
             val wallpaperColors by wallpaperColorsAsState()
             val dimBackground by viewModel.dimBackground.collectAsState()
+            val readabilitySettings = org.koin.compose.koinInject<WallpaperSettings>()
+            val textMode by remember { readabilitySettings.textColors }.collectAsState(de.mm20.launcher2.preferences.SystemBarColors.Auto)
+            val blurForReadability by viewModel.wallpaperBlur.collectAsState()
+            val samples by wallpaperSamplesAsState(
+                wallpaperColors, !dimBackground && blurForReadability == false
+            )
+            val globalContrast = remember(samples, windowSize, textMode) {
+                val forced = when (textMode) {
+                    SystemBarColors.Dark -> true
+                    SystemBarColors.Light -> false
+                    else -> null
+                }
+                samples?.choice(windowSize.width, windowSize.height, forced)
+                    ?: chooseContrast(forcedDark = forced)
+            }
             CompositionLocalProvider(
                 LocalEnterHomeTransitionManager provides enterHomeTransitionManager,
                 LocalWindowSize provides windowSize,
                 LocalSnackbarHostState provides snackbarHostState,
                 LocalWallpaperColors provides wallpaperColors,
-                LocalPreferDarkContentOverWallpaper provides (!dimBackground && wallpaperColors.supportsDarkText),
+                LocalPreferDarkContentOverWallpaper provides globalContrast.darkText,
+                LocalWallpaperSamples provides samples,
+                LocalWallpaperTextMode provides textMode,
                 LocalBottomSheetManager provides bottomSheetManager,
             ) {
                 LauncherTheme {

@@ -117,6 +117,7 @@ data class UiGroup(
 
 @Serializable
 data class WallpaperGroup(
+    val wallpaperTextColors: SystemBarColors = SystemBarColors.Auto,
     val wallpaperDim: Boolean = false,
     val wallpaperBlur: Boolean = true,
     val wallpaperBlurRadius: Int = 32,
