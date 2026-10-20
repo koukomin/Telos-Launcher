@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">תיקיות</string>
+    <string name="ermis_move">העברה לתיקייה</string>
+    <string name="ermis_archive">העברה לארכיון</string>
+    <string name="ermis_trash">העברה לאשפה</string>
+    <string name="ermis_spam">העברה לספאם</string>
+    <string name="ermis_forward">העברה לנמען אחר</string>
+    <string name="ermis_reply_all">מענה לכולם</string>
+    <string name="ermis_search_server">חיפוש בדואר האחרון בשרת</string>
+    <string name="ermis_search_server_help">חיפוש בנושא ובשולח של 5000 ההודעות האחרונות בשרת והצגת עד 100 התאמות.</string>
+    <string name="ermis_select_account">יש לבחור חשבון כדי לעיין בתיקיות שלו.</string>
+    <string name="ermis_forward_original">ההודעה המקורית מצורפת (.eml)</string>
+    <string name="ermis_html_view">הודעה מעוצבת</string>
+    <string name="ermis_text_view">טקסט פשוט</string>
+    <string name="ermis_show_folder">הצגת תיקייה</string>
+    <string name="ermis_server_results">תוצאות אחרונות מהשרת</string>
+</resources>

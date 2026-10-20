@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Mape</string>
+    <string name="ermis_move">Premakni v mapo</string>
+    <string name="ermis_archive">Arhiviraj</string>
+    <string name="ermis_trash">Premakni v smetnjak</string>
+    <string name="ermis_spam">Premakni med neželeno pošto</string>
+    <string name="ermis_forward">Posreduj</string>
+    <string name="ermis_reply_all">Odgovori vsem</string>
+    <string name="ermis_search_server">Išči po nedavni pošti na strežniku</string>
+    <string name="ermis_search_server_help">Išče po zadevi in pošiljatelju v zadnjih 5000 sporočilih na strežniku ter prikaže do 100 zadetkov.</string>
+    <string name="ermis_select_account">Izberi račun za brskanje po njegovih mapah.</string>
+    <string name="ermis_forward_original">Izvirno sporočilo je priloženo (.eml)</string>
+    <string name="ermis_html_view">Oblikovano sporočilo</string>
+    <string name="ermis_text_view">Navadno besedilo</string>
+    <string name="ermis_show_folder">Pokaži mapo</string>
+    <string name="ermis_server_results">Nedavni rezultati s strežnika</string>
+</resources>

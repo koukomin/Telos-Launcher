@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Klasörler</string>
+    <string name="ermis_move">Klasöre taşı</string>
+    <string name="ermis_archive">Arşivle</string>
+    <string name="ermis_trash">Çöp kutusuna taşı</string>
+    <string name="ermis_spam">Spam klasörüne taşı</string>
+    <string name="ermis_forward">İlet</string>
+    <string name="ermis_reply_all">Tümünü yanıtla</string>
+    <string name="ermis_search_server">Sunucudaki son postalarda ara</string>
+    <string name="ermis_search_server_help">Sunucudaki son 5000 iletinin konu ve gönderen alanlarında arama yapar ve en fazla 100 eşleşme gösterir.</string>
+    <string name="ermis_select_account">Klasörlerine göz atmak için bir hesap seçin.</string>
+    <string name="ermis_forward_original">Özgün ileti eklendi (.eml)</string>
+    <string name="ermis_html_view">Biçimlendirilmiş ileti</string>
+    <string name="ermis_text_view">Düz metin</string>
+    <string name="ermis_show_folder">Klasörü göster</string>
+    <string name="ermis_server_results">Son sunucu sonuçları</string>
+</resources>

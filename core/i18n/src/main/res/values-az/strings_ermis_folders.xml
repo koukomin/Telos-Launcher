@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Qovluqlar</string>
+    <string name="ermis_move">Qovluğa köçür</string>
+    <string name="ermis_archive">Arxivlə</string>
+    <string name="ermis_trash">Zibil qutusuna köçür</string>
+    <string name="ermis_spam">Spama köçür</string>
+    <string name="ermis_forward">Yönləndir</string>
+    <string name="ermis_reply_all">Hamısına cavab ver</string>
+    <string name="ermis_search_server">Serverdəki son məktublarda axtar</string>
+    <string name="ermis_search_server_help">Serverdəki ən son 5,000 məktubun mövzu və göndərənində axtarır, 100-dək uyğun nəticə göstərir.</string>
+    <string name="ermis_select_account">Qovluqlarına baxmaq üçün hesab seçin.</string>
+    <string name="ermis_forward_original">Orijinal məktub əlavə edilib (.eml)</string>
+    <string name="ermis_html_view">Formatlanmış məktub</string>
+    <string name="ermis_text_view">Sadə mətn</string>
+    <string name="ermis_show_folder">Qovluğu göstər</string>
+    <string name="ermis_server_results">Son server nəticələri</string>
+</resources>

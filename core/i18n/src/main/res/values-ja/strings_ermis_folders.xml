@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">フォルダー</string>
+    <string name="ermis_move">フォルダーに移動</string>
+    <string name="ermis_archive">アーカイブ</string>
+    <string name="ermis_trash">ゴミ箱に移動</string>
+    <string name="ermis_spam">迷惑メールに移動</string>
+    <string name="ermis_forward">転送</string>
+    <string name="ermis_reply_all">全員に返信</string>
+    <string name="ermis_search_server">サーバー上の最近のメールを検索</string>
+    <string name="ermis_search_server_help">サーバー上の最新 5000 件のメールの件名と送信者を検索し、最大 100 件の一致を表示します。</string>
+    <string name="ermis_select_account">フォルダーを表示するアカウントを選択してください。</string>
+    <string name="ermis_forward_original">元のメッセージを添付（.eml）</string>
+    <string name="ermis_html_view">書式付きメッセージ</string>
+    <string name="ermis_text_view">プレーンテキスト</string>
+    <string name="ermis_show_folder">フォルダーを表示</string>
+    <string name="ermis_server_results">サーバー上の最近の検索結果</string>
+</resources>

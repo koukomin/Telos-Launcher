@@ -14,11 +14,16 @@ import javax.mail.*
 import javax.mail.internet.*
 import javax.mail.util.ByteArrayDataSource
 import javax.activation.DataHandler
+import com.sun.mail.imap.IMAPFolder
+import com.sun.mail.imap.IMAPStore
+import javax.mail.search.FromStringTerm
+import javax.mail.search.OrTerm
+import javax.mail.search.SubjectTerm
 
 @Serializable
 private data class StoredMail(val accounts: List<ErmisAccount> = emptyList(), val passwords: Map<String,String> = emptyMap(),
     val messages: List<ErmisMessage> = emptyList(), val uidValidity: Map<String,Long> = emptyMap(),
-    val drafts: List<ErmisSavedDraft> = emptyList())
+    val drafts: List<ErmisSavedDraft> = emptyList(), val folders: List<ErmisFolder> = emptyList())
 
 class ErmisRepository private constructor(private val context: Context) {
     private val mutable = MutableStateFlow(ErmisState(loading = true))
@@ -35,7 +40,7 @@ class ErmisRepository private constructor(private val context: Context) {
                 vault.read()?.let { json.decodeFromString<StoredMail>(it) }?.let {
                     passwords = it.passwords
                     uidValidity = it.uidValidity
-                    mutable.value = ErmisState(it.accounts, it.messages, drafts = it.drafts)
+                    mutable.value = ErmisState(it.accounts, it.messages, drafts = it.drafts, folders = it.folders)
                 }
                 mutable.update { it.copy(loading = false) }
             } catch (e: Exception) { mutable.update { it.copy(loading = false, error = context.getString(de.mm20.launcher2.comms.R.string.ermis_error_cache)) } }
@@ -59,7 +64,7 @@ class ErmisRepository private constructor(private val context: Context) {
             } finally { mutable.update { it.copy(loading = false) } }
         }
     }
-    private fun persist(snapshot: ErmisState = state.value) = vault.write(json.encodeToString(StoredMail(snapshot.accounts, passwords, snapshot.messages.take(1000).map { it.copy(body=it.body.take(32_000)) }, uidValidity, snapshot.drafts)))
+    private fun persist(snapshot: ErmisState = state.value) = vault.write(json.encodeToString(StoredMail(snapshot.accounts, passwords, snapshot.messages.take(1000).map { it.copy(body=it.body.take(32_000), html="") }, uidValidity, snapshot.drafts, snapshot.folders)))
     private fun account(id: String) = state.value.accounts.first { it.id == id }
     private fun session(a: ErmisAccount? = null): Session = ErmisMailSession.create(
         oauth = a?.googleAccount != null, tls13 = android.os.Build.VERSION.SDK_INT >= 29)
@@ -84,12 +89,65 @@ class ErmisRepository private constructor(private val context: Context) {
     private fun <T> connection(endpoint: String, block: () -> T): T = try { block() }
         catch (e: CancellationException) { throw e }
         catch (e: Exception) { throw ErmisConnectionException(endpoint, e) }
-    private fun <T> inbox(a: ErmisAccount, block: (Folder, UIDFolder) -> T): T {
+    private fun <T> mailbox(a: ErmisAccount, name: String, mode: Int = Folder.READ_WRITE, block: (Folder, UIDFolder) -> T): T {
         val store = store(a)
         try {
-            val folder = store.getFolder("INBOX")
-            folder.open(Folder.READ_WRITE)
-            try { return block(folder, folder as UIDFolder) } finally { folder.close(false) }
+            val mailbox = store.getFolder(ErmisMailboxPolicy.folder(name))
+            require(mailbox.exists() && mailbox.type and Folder.HOLDS_MESSAGES != 0)
+            mailbox.open(mode)
+            try { return block(mailbox, mailbox as UIDFolder) } finally { mailbox.close(false) }
+        } finally { store.close() }
+    }
+    private fun checkValidity(accountId: String, folder: String, uids: UIDFolder, replaceChanged: Boolean) {
+        val key = ErmisMailboxPolicy.validityKey(accountId, folder)
+        val current = uids.getUIDValidity()
+        val previous = uidValidity[key]
+        if (!replaceChanged) require(previous == current) { "Mailbox changed; synchronize first" }
+        else if (previous != null && previous != current) {
+            mutable.update { state -> state.copy(messages = state.messages.filterNot { ErmisMailboxPolicy.matches(it, accountId, folder) }) }
+        }
+        uidValidity = uidValidity + (key to current)
+    }
+    private fun headerAddresses(values: Array<Address>?): List<String> = values.orEmpty().take(100).map { address ->
+        (if (address is InternetAddress) address.toUnicodeString() else MimeUtility.decodeText(address.toString()))
+            .replace('\r', ' ').replace('\n', ' ').take(16_000)
+    }
+    private fun summaries(a: ErmisAccount, folder: String, mailbox: Folder, uids: UIDFolder, messages: Array<Message>): List<ErmisMessage> {
+        if (messages.isEmpty()) return emptyList()
+        mailbox.fetch(messages, FetchProfile().apply {
+            add(FetchProfile.Item.ENVELOPE); add(FetchProfile.Item.FLAGS); add(UIDFolder.FetchProfileItem.UID)
+            add("Message-ID"); add("In-Reply-To"); add("References")
+        })
+        return messages.filterNot { it.isExpunged || it.isSet(Flags.Flag.DELETED) }.map { m ->
+            val uid = uids.getUID(m)
+            require(uid > 0)
+            val previous = state.value.messages.find { ErmisMailboxPolicy.matches(it, a.id, folder, uid) }
+            ErmisMessage(a.id, uid, ErmisConversations.identifiers(m.getHeader("Message-ID")?.firstOrNull().orEmpty()).firstOrNull().orEmpty(),
+                headerAddresses(m.from).joinToString(", ").take(16_000), m.subject.orEmpty().take(16_000),
+                previous?.preview.orEmpty(), previous?.body.orEmpty(), m.sentDate?.time ?: 0L,
+                m.isSet(Flags.Flag.SEEN), m.isSet(Flags.Flag.FLAGGED), previous?.attachments.orEmpty(), previous?.note.orEmpty(),
+                m.getHeader("In-Reply-To")?.firstOrNull().orEmpty(),
+                ErmisConversations.identifiers(m.getHeader("References")?.joinToString(" ").orEmpty()), folder,
+                headerAddresses(m.getRecipients(Message.RecipientType.TO)), headerAddresses(m.getRecipients(Message.RecipientType.CC)),
+                headerAddresses(m.replyTo).joinToString(", ").take(16_000), previous?.html.orEmpty())
+        }
+    }
+    suspend fun loadFolders(accountId: String): List<ErmisFolder> = operation {
+        val store = store(account(accountId))
+        try {
+            // JavaMail materializes LIST before this check; reject unusually large server catalogs.
+            val listed = store.defaultFolder.list("*")
+            require(listed.size <= 1000)
+            val selectable = listed.filter { it.type and Folder.HOLDS_MESSAGES != 0 }
+            require(selectable.size <= 200)
+            val folders = selectable.map { f ->
+                val fullName = ErmisMailboxPolicy.folder(f.fullName)
+                ErmisFolder(accountId, fullName, f.name.take(1024), ErmisMailboxPolicy.role(fullName, f.name,
+                    (f as? IMAPFolder)?.attributes?.take(32).orEmpty()))
+            }.distinctBy { it.id }.sortedWith(compareBy<ErmisFolder> { it.role != ErmisFolderRole.INBOX }.thenBy { it.name.lowercase(java.util.Locale.ROOT) })
+            mutable.update { it.copy(folders = it.folders.filterNot { f -> f.accountId == accountId } + folders) }
+            persist()
+            folders
         } finally { store.close() }
     }
     suspend fun addAccount(account: ErmisAccount, password: String) = operation {
@@ -103,66 +161,127 @@ class ErmisRepository private constructor(private val context: Context) {
     }
     suspend fun removeAccount(id: String) = operation {
         passwords = passwords - id
-        uidValidity = uidValidity - id
-        mutable.update { it.copy(accounts = it.accounts.filterNot { a -> a.id == id }, messages = it.messages.filterNot { m -> m.accountId == id }, drafts = it.drafts.filterNot { d -> d.accountId == id }) }
+        uidValidity = uidValidity.filterKeys { it != id && !it.startsWith("$id|") }
+        mutable.update { it.copy(accounts = it.accounts.filterNot { a -> a.id == id }, messages = it.messages.filterNot { m -> m.accountId == id }, drafts = it.drafts.filterNot { d -> d.accountId == id || d.forwardSource?.accountId == id }, folders = it.folders.filterNot { f -> f.accountId == id }) }
         persist()
         if (state.value.accounts.isEmpty()) ErmisWorker.cancel(context)
     }
-    suspend fun sync(accountId: String? = null) = operation {
+    suspend fun sync(accountId: String? = null, folder: String = "INBOX") = operation {
+        val canonical = ErmisMailboxPolicy.folder(folder)
+        require(accountId != null || canonical == "INBOX")
         for (a in state.value.accounts.filter { accountId == null || it.id == accountId }) {
-            inbox(a) { folder, uids ->
-                if (uidValidity[a.id] != null && uidValidity[a.id] != uids.getUIDValidity()) {
-                    mutable.update { it.copy(messages = it.messages.filterNot { m -> m.accountId == a.id }) }
+            mailbox(a, canonical, Folder.READ_ONLY) { mailbox, uids ->
+                checkValidity(a.id, canonical, uids, replaceChanged = true)
+                val count = mailbox.messageCount
+                val incoming = if (count == 0) emptyList() else summaries(a, canonical, mailbox, uids, mailbox.getMessages(maxOf(1, count - 149), count))
+                mutable.update { state ->
+                    val retained = state.messages.filterNot { ErmisMailboxPolicy.matches(it, a.id, canonical) }
+                    val merged = if (accountId == null) (retained + incoming).sortedByDescending { it.date }.take(1000)
+                        else (incoming + retained).take(1000).sortedByDescending { it.date }
+                    state.copy(messages = merged)
                 }
-                uidValidity = uidValidity + (a.id to uids.getUIDValidity())
-                val count = folder.messageCount
-                val incoming = if (count == 0) emptyList() else folder.getMessages(maxOf(1,count - 149), count).map { m ->
-                    val uid = uids.getUID(m)
-                    val previous = state.value.messages.find { it.accountId == a.id && it.uid == uid }
-                    ErmisMessage(a.id, uid, ErmisConversations.identifiers(m.getHeader("Message-ID")?.firstOrNull().orEmpty()).firstOrNull().orEmpty(),
-                        m.from?.joinToString(", ") { MimeUtility.decodeText(it.toString()) }.orEmpty(), m.subject.orEmpty(),
-                        previous?.preview.orEmpty(), previous?.body.orEmpty(), m.sentDate?.time ?: 0L,
-                        m.isSet(Flags.Flag.SEEN), m.isSet(Flags.Flag.FLAGGED), previous?.attachments.orEmpty(), previous?.note.orEmpty(),
-                        m.getHeader("In-Reply-To")?.firstOrNull().orEmpty(),
-                        ErmisConversations.identifiers(m.getHeader("References")?.joinToString(" ").orEmpty()))
-                }
-                mutable.update { it.copy(messages = (it.messages.filterNot { m -> m.accountId == a.id } + incoming).sortedByDescending { m -> m.date }) }
             }
         }
         persist()
     }
-    suspend fun loadMessage(accountId: String, uid: Long): ErmisMessage? = operation {
-        inbox(account(accountId)) { _, uids ->
-            require(uidValidity[accountId] == uids.getUIDValidity()) { "Mailbox changed; synchronize first" }
-            val m = uids.getMessageByUID(uid) ?: return@inbox null
+    /** Server-side sender/subject search, bounded to the most recent 5000 messages and 100 results. */
+    suspend fun serverSearch(accountId: String, folder: String, query: String): List<ErmisMessage> = operation {
+        require(query.isNotBlank() && query.length <= 256 && query.none { it == '\r' || it == '\n' || it == '\u0000' })
+        val a = account(accountId)
+        val canonical = ErmisMailboxPolicy.folder(folder)
+        val result = mailbox(a, canonical, Folder.READ_ONLY) { mailbox, uids ->
+            checkValidity(accountId, canonical, uids, replaceChanged = true)
+            val count = mailbox.messageCount
+            if (count == 0) emptyList() else {
+                val candidates = mailbox.getMessages(maxOf(1, count - ErmisMailboxPolicy.SERVER_SEARCH_WINDOW + 1), count)
+                val found = mailbox.search(OrTerm(SubjectTerm(query.trim()), FromStringTerm(query.trim())), candidates)
+                    .sortedByDescending { it.messageNumber }.take(ErmisMailboxPolicy.SERVER_SEARCH_RESULTS).toTypedArray()
+                summaries(a, canonical, mailbox, uids, found)
+            }
+        }
+        mutable.update { state -> state.copy(messages = (result + state.messages)
+            .distinctBy { Triple(it.accountId, it.folder, it.uid) }.take(1000).sortedByDescending { it.date }) }
+        persist()
+        result
+    }
+    suspend fun loadMessage(accountId: String, uid: Long, folder: String = "INBOX"): ErmisMessage? = operation {
+        mailbox(account(accountId), folder) { _, uids ->
+            checkValidity(accountId, folder, uids, replaceChanged = false)
+            val m = uids.getMessageByUID(uid) ?: return@mailbox null
             val result = StringBuilder(); val attachments = mutableListOf<ErmisAttachment>()
             val mime = ErmisMime.read(m)
             result.append(mime.body)
             attachments.addAll(mime.attachments.mapIndexed { index, part -> ErmisAttachment(index, part.fileName?.let { MimeUtility.decodeText(it) } ?: "attachment", part.contentType.substringBefore(';'), part.size) })
             m.setFlag(Flags.Flag.SEEN, true)
-            val old = state.value.messages.firstOrNull { it.accountId == accountId && it.uid == uid } ?: return@inbox null
-            val updated = old.copy(body = result.toString(), preview = result.toString().take(180), attachments = attachments, read = true)
+            val old = state.value.messages.firstOrNull { ErmisMailboxPolicy.matches(it, accountId, folder, uid) } ?: return@mailbox null
+            val updated = old.copy(body = result.toString(), preview = result.toString().take(180), attachments = attachments, read = true,
+                to = headerAddresses(m.getRecipients(Message.RecipientType.TO)), cc = headerAddresses(m.getRecipients(Message.RecipientType.CC)),
+                replyTo = headerAddresses(m.replyTo).joinToString(", ").take(16_000), html = mime.html)
             val remoteNote = fetchNote(account(accountId), updated.messageId)
             val finalMessage = if (remoteNote != null) updated.copy(note=remoteNote) else updated
             replace(finalMessage); persist(); finalMessage
         }
     }
-    private fun replace(message: ErmisMessage) { mutable.update { it.copy(messages = it.messages.map { m -> if (m.accountId == message.accountId && m.uid == message.uid) message else m }) } }
-    suspend fun read(accountId: String, uid: Long) = operation { flag(accountId,uid,Flags.Flag.SEEN,true) }
-    suspend fun star(accountId: String, uid: Long, starred: Boolean) = operation { flag(accountId,uid,Flags.Flag.FLAGGED,starred) }
-    private fun flag(id: String, uid: Long, flag: Flags.Flag, value: Boolean) {
-        inbox(account(id)) { _, uids ->
-            require(uidValidity[id] == uids.getUIDValidity()) { "Mailbox changed; synchronize first" }
+    private fun replace(message: ErmisMessage) { mutable.update { it.copy(messages = it.messages.map { m -> if (ErmisMailboxPolicy.matches(m, message.accountId, message.folder, message.uid)) message
+        else if (message.html.isNotEmpty() && m.html.isNotEmpty()) m.copy(html="") else m }) } }
+    suspend fun read(accountId: String, uid: Long, folder: String = "INBOX") = operation { flag(accountId, uid, folder, Flags.Flag.SEEN, true) }
+    suspend fun star(accountId: String, uid: Long, starred: Boolean, folder: String = "INBOX") = operation { flag(accountId, uid, folder, Flags.Flag.FLAGGED, starred) }
+    private fun flag(id: String, uid: Long, folder: String, flag: Flags.Flag, value: Boolean) {
+        mailbox(account(id), folder) { _, uids ->
+            checkValidity(id, folder, uids, replaceChanged = false)
             uids.getMessageByUID(uid)?.setFlag(flag, value)
         }
-        state.value.messages.find { it.accountId == id && it.uid == uid }?.let { replace(if (flag == Flags.Flag.SEEN) it.copy(read=value) else it.copy(starred=value)) }
+        state.value.messages.find { ErmisMailboxPolicy.matches(it, id, folder, uid) }?.let { replace(if (flag == Flags.Flag.SEEN) it.copy(read=value) else it.copy(starred=value)) }
         persist()
+    }
+    suspend fun moveMessage(accountId: String, uid: Long, sourceFolder: String, targetFolder: String) = operation {
+        val source = ErmisMailboxPolicy.folder(sourceFolder)
+        val target = ErmisMailboxPolicy.folder(targetFolder)
+        require(source != target)
+        mailbox(account(accountId), source) { mailbox, uids ->
+            checkValidity(accountId, source, uids, replaceChanged = false)
+            val message = uids.getMessageByUID(uid) ?: error("Message unavailable")
+            val imap = mailbox as? IMAPFolder ?: error("IMAP mailbox required")
+            val store = imap.store as? IMAPStore ?: error("IMAP store required")
+            val destination = store.getFolder(target)
+            require(destination.exists() && destination.type and Folder.HOLDS_MESSAGES != 0)
+            val messages = arrayOf(message)
+            ErmisMovePolicy.execute(store.hasCapability("MOVE"), store.hasCapability("UIDPLUS"),
+                move = {
+                    if (store.hasCapability("UIDPLUS")) imap.moveUIDMessages(messages, destination)
+                    else imap.moveMessages(messages, destination)
+                },
+                copy = { imap.copyMessages(messages, destination) },
+                markDeleted = { message.setFlag(Flags.Flag.DELETED, true) },
+                expungeSelected = { imap.expunge(messages) })
+        }
+        mutable.update { state -> state.copy(messages = state.messages.filterNot { ErmisMailboxPolicy.matches(it, accountId, source, uid) }) }
+        persist()
+    }
+    suspend fun forwardSource(accountId: String, folder: String, uid: Long): ErmisForwardSource = operation {
+        val canonical = ErmisMailboxPolicy.folder(folder)
+        mailbox(account(accountId), canonical, Folder.READ_ONLY) { _, uids ->
+            checkValidity(accountId, canonical, uids, replaceChanged = false)
+            require(uids.getMessageByUID(uid) != null) { "Message unavailable" }
+            ErmisForwardSource(accountId, canonical, uid, uids.getUIDValidity()).also(ErmisForwardPolicy::validate)
+        }
+    }
+    private fun forwardBytes(source: ErmisForwardSource): ByteArray {
+        ErmisForwardPolicy.validate(source)
+        return mailbox(account(source.accountId), source.folder, Folder.READ_ONLY) { _, uids ->
+            ErmisForwardPolicy.requireSameMailbox(source, uids.getUIDValidity())
+            val original = uids.getMessageByUID(source.uid) as? MimeMessage ?: error("Message unavailable")
+            val output = ErmisBoundedOutputStream(15_000_000)
+            original.writeTo(output, arrayOf("Bcc", "Resent-Bcc"))
+            output.toByteArray()
+        }
     }
     suspend fun saveDraft(id: String, draft: ErmisDraft): ErmisSavedDraft = operation {
         account(draft.accountId)
+        draft.forwardSource?.let { ErmisForwardPolicy.validate(it); account(it.accountId) }
         val saved = ErmisSavedDraft(id, draft.accountId, draft.to, draft.subject, draft.body,
             draft.attachments.map { it.toString() }, draft.inReplyTo, draft.references, draft.cc, draft.bcc,
-            System.currentTimeMillis())
+            System.currentTimeMillis(), draft.forwardSource)
         ErmisDraftPolicy.validate(saved)
         // Persisted drafts must remain readable after a process restart. Never drop inaccessible attachments.
         val permissions = context.contentResolver.persistedUriPermissions
@@ -183,7 +302,8 @@ class ErmisRepository private constructor(private val context: Context) {
         val a = account(draft.accountId)
         val recipients = ErmisRecipients.parse(draft.to, draft.cc, draft.bcc)
         ErmisRecipients.validateHeaders(draft.subject, draft.inReplyTo, draft.references)
-        require(draft.body.toByteArray(Charsets.UTF_8).size <= 200_000 && draft.attachments.size <= 20)
+        require(draft.body.toByteArray(Charsets.UTF_8).size <= 200_000 && draft.attachments.size + (if (draft.forwardSource != null) 1 else 0) <= 20)
+        val forwarded = draft.forwardSource?.let(::forwardBytes)
         val message = MimeMessage(session()).apply {
             setFrom(InternetAddress(a.email, a.name)); recipients.apply(this)
             setSubject(draft.subject, "UTF-8"); sentDate = java.util.Date()
@@ -191,7 +311,12 @@ class ErmisRepository private constructor(private val context: Context) {
             draft.inReplyTo?.takeIf { !it.contains('\r') && !it.contains('\n') }?.let { setHeader("In-Reply-To",it) }
             val multipart = MimeMultipart()
             multipart.addBodyPart(MimeBodyPart().apply { setText(draft.body,"UTF-8") })
-            var total = 0
+            var total = forwarded?.size ?: 0
+            if (forwarded != null) multipart.addBodyPart(MimeBodyPart().apply {
+                dataHandler = DataHandler(ByteArrayDataSource(forwarded, "message/rfc822"))
+                fileName = "forwarded-message.eml"
+                disposition = Part.ATTACHMENT
+            })
             for (uri in draft.attachments) {
                 val bytes = context.contentResolver.openInputStream(uri)?.use { bounded(it, 15_000_000) } ?: error("Attachment unavailable")
                 total += bytes.size; require(total <= 20_000_000) { "Attachments exceed 20 MB" }
@@ -217,9 +342,9 @@ class ErmisRepository private constructor(private val context: Context) {
         }
         // Sending is explicit; never silently resend after a connection failure.
     }
-    suspend fun saveNote(accountId: String, uid: Long, text: String) = operation {
+    suspend fun saveNote(accountId: String, uid: Long, text: String, folder: String = "INBOX") = operation {
         require(text.length <= 50_000)
-        val old = state.value.messages.first { it.accountId == accountId && it.uid == uid }
+        val old = state.value.messages.first { ErmisMailboxPolicy.matches(it, accountId, folder, uid) }
         replace(old.copy(note=text)); persist()
         val a = account(accountId)
         if (a.imapHost.equals("imap.gmail.com", true) && old.messageId.isNotBlank()) {
@@ -236,7 +361,9 @@ class ErmisRepository private constructor(private val context: Context) {
                     }
                     notes.appendMessages(arrayOf(note))
                     existing.forEach { it.setFlag(Flags.Flag.DELETED,true) }
-                } finally { notes.close(true) }
+                    if (existing.isNotEmpty() && notes is IMAPFolder && (store as? IMAPStore)?.hasCapability("UIDPLUS") == true)
+                        notes.expunge(existing.toTypedArray())
+                } finally { notes.close(false) }
             } finally { store.close() }
         }
     }
@@ -255,9 +382,9 @@ class ErmisRepository private constructor(private val context: Context) {
             } finally { notes.close(false) }
         } finally { store.close() }
     }
-    suspend fun downloadAttachment(accountId: String, uid: Long, index: Int, destination: Uri) = operation {
-        inbox(account(accountId)) { _, uids ->
-            require(uidValidity[accountId] == uids.getUIDValidity()) { "Mailbox changed; synchronize first" }
+    suspend fun downloadAttachment(accountId: String, uid: Long, index: Int, destination: Uri, folder: String = "INBOX") = operation {
+        mailbox(account(accountId), folder) { _, uids ->
+            checkValidity(accountId, folder, uids, replaceChanged = false)
             val m = uids.getMessageByUID(uid) ?: error("Message unavailable")
             val parts = ErmisMime.read(m).attachments
             require(index in parts.indices)

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">資料夾</string>
+    <string name="ermis_move">移至資料夾</string>
+    <string name="ermis_archive">封存</string>
+    <string name="ermis_trash">移至垃圾桶</string>
+    <string name="ermis_spam">移至垃圾郵件</string>
+    <string name="ermis_forward">轉寄</string>
+    <string name="ermis_reply_all">全部回覆</string>
+    <string name="ermis_search_server">搜尋伺服器上的近期郵件</string>
+    <string name="ermis_search_server_help">搜尋伺服器上最新 5000 封郵件的主旨和寄件者，最多顯示 100 筆符合的結果。</string>
+    <string name="ermis_select_account">請選取帳戶以瀏覽其資料夾。</string>
+    <string name="ermis_forward_original">已附加原始郵件（.eml）</string>
+    <string name="ermis_html_view">格式化郵件</string>
+    <string name="ermis_text_view">純文字</string>
+    <string name="ermis_show_folder">顯示資料夾</string>
+    <string name="ermis_server_results">伺服器上的近期搜尋結果</string>
+</resources>

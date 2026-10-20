@@ -12,11 +12,11 @@ object ErmisConversations {
             while (parents[current] != current) { parents[current] = parents[parents[current]]; current = parents[current] }
             return current
         }
-        val owners = mutableMapOf<Pair<String, String>, Int>()
+        val owners = mutableMapOf<Triple<String, String, String>, Int>()
         messages.forEachIndexed { index, mail ->
             val ids = (identifiers(mail.messageId) + identifiers(mail.inReplyTo) + mail.references.flatMap(::identifiers)).distinct()
             ids.forEach { id ->
-                val previous = owners.putIfAbsent(mail.accountId to id, index)
+                val previous = owners.putIfAbsent(Triple(mail.accountId, ErmisMailboxPolicy.folder(mail.folder), id), index)
                 if (previous != null) parents[root(index)] = root(previous)
             }
         }

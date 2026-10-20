@@ -28,6 +28,7 @@ internal object ErmisMailSession {
         setProperty("mail.smtp.auth", "true")
         setProperty("mail.smtps.auth", "true")
         setProperty("mail.imaps.peek", "true")
+        setProperty("mail.imaps.throwsearchexception", "true")
     })
 
     fun store(session: Session): Store = IMAPSSLStore(session, null)

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Папки</string>
+    <string name="ermis_move">Преместване в папка</string>
+    <string name="ermis_archive">Архивиране</string>
+    <string name="ermis_trash">Преместване в кошчето</string>
+    <string name="ermis_spam">Преместване в спам</string>
+    <string name="ermis_forward">Препращане</string>
+    <string name="ermis_reply_all">Отговор до всички</string>
+    <string name="ermis_search_server">Търсене в скорошната поща на сървъра</string>
+    <string name="ermis_search_server_help">Търси по тема и подател в последните 5,000 съобщения на сървъра и показва до 100 съвпадения.</string>
+    <string name="ermis_select_account">Изберете акаунт, за да прегледате папките му.</string>
+    <string name="ermis_forward_original">Оригиналното съобщение е прикачено (.eml)</string>
+    <string name="ermis_html_view">Форматирано съобщение</string>
+    <string name="ermis_text_view">Обикновен текст</string>
+    <string name="ermis_show_folder">Показване на папката</string>
+    <string name="ermis_server_results">Скорошни резултати от сървъра</string>
+</resources>

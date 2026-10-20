@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Dosare</string>
+    <string name="ermis_move">Mută în dosar</string>
+    <string name="ermis_archive">Arhivează</string>
+    <string name="ermis_trash">Mută în coș</string>
+    <string name="ermis_spam">Mută în spam</string>
+    <string name="ermis_forward">Redirecționează</string>
+    <string name="ermis_reply_all">Răspunde tuturor</string>
+    <string name="ermis_search_server">Caută în mesajele recente de pe server</string>
+    <string name="ermis_search_server_help">Caută subiectul și expeditorul în ultimele 5000 de mesaje de pe server și afișează până la 100 de potriviri.</string>
+    <string name="ermis_select_account">Selectează un cont pentru a-i răsfoi dosarele.</string>
+    <string name="ermis_forward_original">Mesajul original atașat (.eml)</string>
+    <string name="ermis_html_view">Mesaj formatat</string>
+    <string name="ermis_text_view">Text simplu</string>
+    <string name="ermis_show_folder">Afișează dosarul</string>
+    <string name="ermis_server_results">Rezultate recente de pe server</string>
+</resources>

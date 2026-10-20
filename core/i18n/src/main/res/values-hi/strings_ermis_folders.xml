@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">फ़ोल्डर</string>
+    <string name="ermis_move">फ़ोल्डर में ले जाएँ</string>
+    <string name="ermis_archive">संग्रहीत करें</string>
+    <string name="ermis_trash">ट्रैश में ले जाएँ</string>
+    <string name="ermis_spam">स्पैम में ले जाएँ</string>
+    <string name="ermis_forward">फ़ॉरवर्ड करें</string>
+    <string name="ermis_reply_all">सभी को जवाब दें</string>
+    <string name="ermis_search_server">सर्वर के हाल के मेल खोजें</string>
+    <string name="ermis_search_server_help">सर्वर के नवीनतम 5,000 संदेशों के विषय और प्रेषक में खोजता है और अधिकतम 100 मिलान दिखाता है।</string>
+    <string name="ermis_select_account">फ़ोल्डर देखने के लिए कोई खाता चुनें।</string>
+    <string name="ermis_forward_original">मूल संदेश संलग्न है (.eml)</string>
+    <string name="ermis_html_view">फ़ॉर्मैट किया गया संदेश</string>
+    <string name="ermis_text_view">सादा पाठ</string>
+    <string name="ermis_show_folder">फ़ोल्डर दिखाएँ</string>
+    <string name="ermis_server_results">सर्वर के हाल के परिणाम</string>
+</resources>

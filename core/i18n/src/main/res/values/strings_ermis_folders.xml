@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Folders</string>
+    <string name="ermis_move">Move to folder</string>
+    <string name="ermis_archive">Archive</string>
+    <string name="ermis_trash">Move to trash</string>
+    <string name="ermis_spam">Move to spam</string>
+    <string name="ermis_forward">Forward</string>
+    <string name="ermis_reply_all">Reply all</string>
+    <string name="ermis_search_server">Search recent mail on server</string>
+    <string name="ermis_search_server_help">Searches subject and sender in the latest 5,000 server messages and shows up to 100 matches.</string>
+    <string name="ermis_select_account">Select an account to browse its folders.</string>
+    <string name="ermis_forward_original">Original message attached (.eml)</string>
+    <string name="ermis_html_view">Formatted message</string>
+    <string name="ermis_text_view">Plain text</string>
+    <string name="ermis_show_folder">Show folder</string>
+    <string name="ermis_server_results">Recent server results</string>
+</resources>

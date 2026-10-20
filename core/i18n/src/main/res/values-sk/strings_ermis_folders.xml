@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Priečinky</string>
+    <string name="ermis_move">Presunúť do priečinka</string>
+    <string name="ermis_archive">Archivovať</string>
+    <string name="ermis_trash">Presunúť do koša</string>
+    <string name="ermis_spam">Presunúť do spamu</string>
+    <string name="ermis_forward">Preposlať</string>
+    <string name="ermis_reply_all">Odpovedať všetkým</string>
+    <string name="ermis_search_server">Hľadať v nedávnej pošte na serveri</string>
+    <string name="ermis_search_server_help">Vyhľadáva predmet a odosielateľa v posledných 5000 správach na serveri a zobrazí najviac 100 zhôd.</string>
+    <string name="ermis_select_account">Vyberte účet, ktorého priečinky chcete prehliadať.</string>
+    <string name="ermis_forward_original">Pôvodná správa priložená (.eml)</string>
+    <string name="ermis_html_view">Formátovaná správa</string>
+    <string name="ermis_text_view">Obyčajný text</string>
+    <string name="ermis_show_folder">Zobraziť priečinok</string>
+    <string name="ermis_server_results">Nedávne výsledky zo servera</string>
+</resources>

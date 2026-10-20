@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Папки</string>
+    <string name="ermis_move">Перемістити до папки</string>
+    <string name="ermis_archive">Архівувати</string>
+    <string name="ermis_trash">Перемістити до кошика</string>
+    <string name="ermis_spam">Перемістити до спаму</string>
+    <string name="ermis_forward">Переслати</string>
+    <string name="ermis_reply_all">Відповісти всім</string>
+    <string name="ermis_search_server">Шукати в нещодавній пошті на сервері</string>
+    <string name="ermis_search_server_help">Пошук за темою та відправником серед останніх 5000 повідомлень на сервері з показом до 100 збігів.</string>
+    <string name="ermis_select_account">Виберіть обліковий запис для перегляду його папок.</string>
+    <string name="ermis_forward_original">Оригінальне повідомлення додано (.eml)</string>
+    <string name="ermis_html_view">Форматоване повідомлення</string>
+    <string name="ermis_text_view">Звичайний текст</string>
+    <string name="ermis_show_folder">Показати папку</string>
+    <string name="ermis_server_results">Нещодавні результати із сервера</string>
+</resources>

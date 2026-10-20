@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Mapes</string>
+    <string name="ermis_move">Pārvietot uz mapi</string>
+    <string name="ermis_archive">Arhivēt</string>
+    <string name="ermis_trash">Pārvietot uz atkritni</string>
+    <string name="ermis_spam">Pārvietot uz mēstulēm</string>
+    <string name="ermis_forward">Pārsūtīt</string>
+    <string name="ermis_reply_all">Atbildēt visiem</string>
+    <string name="ermis_search_server">Meklēt servera jaunākajā pastā</string>
+    <string name="ermis_search_server_help">Meklē tēmu un sūtītāju servera jaunākajos 5000 ziņojumos un parāda līdz 100 atbilstībām.</string>
+    <string name="ermis_select_account">Atlasiet kontu, lai pārlūkotu tā mapes.</string>
+    <string name="ermis_forward_original">Pievienots sākotnējais ziņojums (.eml)</string>
+    <string name="ermis_html_view">Formatēts ziņojums</string>
+    <string name="ermis_text_view">Vienkāršs teksts</string>
+    <string name="ermis_show_folder">Rādīt mapi</string>
+    <string name="ermis_server_results">Jaunākie servera rezultāti</string>
+</resources>

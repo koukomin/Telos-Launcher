@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">ফোল্ডার</string>
+    <string name="ermis_move">ফোল্ডারে সরান</string>
+    <string name="ermis_archive">আর্কাইভ করুন</string>
+    <string name="ermis_trash">ট্র্যাশে সরান</string>
+    <string name="ermis_spam">স্প্যামে সরান</string>
+    <string name="ermis_forward">ফরোয়ার্ড করুন</string>
+    <string name="ermis_reply_all">সবাইকে উত্তর দিন</string>
+    <string name="ermis_search_server">সার্ভারের সাম্প্রতিক মেইলে খুঁজুন</string>
+    <string name="ermis_search_server_help">সার্ভারের সর্বশেষ 5,000টি বার্তার বিষয় ও প্রেরক অনুসন্ধান করে সর্বাধিক 100টি মিল দেখায়।</string>
+    <string name="ermis_select_account">ফোল্ডার দেখতে একটি অ্যাকাউন্ট নির্বাচন করুন।</string>
+    <string name="ermis_forward_original">মূল বার্তা সংযুক্ত (.eml)</string>
+    <string name="ermis_html_view">বিন্যাস করা বার্তা</string>
+    <string name="ermis_text_view">সাধারণ পাঠ্য</string>
+    <string name="ermis_show_folder">ফোল্ডার দেখান</string>
+    <string name="ermis_server_results">সার্ভারের সাম্প্রতিক ফলাফল</string>
+</resources>

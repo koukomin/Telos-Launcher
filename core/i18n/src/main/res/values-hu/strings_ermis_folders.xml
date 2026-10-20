@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Mappák</string>
+    <string name="ermis_move">Áthelyezés mappába</string>
+    <string name="ermis_archive">Archiválás</string>
+    <string name="ermis_trash">Áthelyezés a kukába</string>
+    <string name="ermis_spam">Áthelyezés a levélszemétbe</string>
+    <string name="ermis_forward">Továbbítás</string>
+    <string name="ermis_reply_all">Válasz mindenkinek</string>
+    <string name="ermis_search_server">Legutóbbi levelek keresése a kiszolgálón</string>
+    <string name="ermis_search_server_help">A kiszolgáló legutóbbi 5,000 üzenetének tárgyában és feladójában keres, és legfeljebb 100 találatot jelenít meg.</string>
+    <string name="ermis_select_account">Válassz fiókot a mappáinak böngészéséhez.</string>
+    <string name="ermis_forward_original">Eredeti üzenet mellékelve (.eml)</string>
+    <string name="ermis_html_view">Formázott üzenet</string>
+    <string name="ermis_text_view">Egyszerű szöveg</string>
+    <string name="ermis_show_folder">Mappa megjelenítése</string>
+    <string name="ermis_server_results">Legutóbbi kiszolgálói találatok</string>
+</resources>

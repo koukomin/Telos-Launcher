@@ -11,16 +11,18 @@ internal object ErmisDraftPolicy {
         require(listOf(draft.to, draft.cc, draft.bcc, draft.subject).all {
             it.length <= 16_000 && !it.contains('\r') && !it.contains('\n')
         })
-        require(draft.attachmentUris.size <= 20 && draft.attachmentUris.distinct().size == draft.attachmentUris.size)
+        require(draft.attachmentUris.size + (if (draft.forwardSource != null) 1 else 0) <= 20 && draft.attachmentUris.distinct().size == draft.attachmentUris.size)
         require(draft.attachmentUris.all { it.length <= 4096 && it.startsWith("content://") })
         require(draft.references.size <= 100 && draft.references.all { validHeader(it) })
         require(draft.inReplyTo == null || validHeader(draft.inReplyTo))
+        draft.forwardSource?.let(ErmisForwardPolicy::validate)
     }
     private fun validHeader(text: String) = text.length <= 998 && !text.contains('\r') && !text.contains('\n')
     private fun bytes(draft: ErmisSavedDraft): Int = listOf(draft.id, draft.accountId, draft.to, draft.cc,
         draft.bcc, draft.subject, draft.body, draft.inReplyTo.orEmpty()).sumOf { it.toByteArray(Charsets.UTF_8).size } +
         draft.attachmentUris.sumOf { it.toByteArray(Charsets.UTF_8).size } +
-        draft.references.sumOf { it.toByteArray(Charsets.UTF_8).size }
+        draft.references.sumOf { it.toByteArray(Charsets.UTF_8).size } +
+        (draft.forwardSource?.let { it.accountId.toByteArray(Charsets.UTF_8).size + it.folder.toByteArray(Charsets.UTF_8).size + 32 } ?: 0)
     fun upsert(existing: List<ErmisSavedDraft>, draft: ErmisSavedDraft): List<ErmisSavedDraft> {
         validate(draft)
         val next = (existing.filterNot { it.id == draft.id } + draft).sortedByDescending { it.updatedAt }

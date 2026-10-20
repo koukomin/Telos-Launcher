@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_folders">Kaustad</string>
+    <string name="ermis_move">Teisalda kausta</string>
+    <string name="ermis_archive">Arhiveeri</string>
+    <string name="ermis_trash">Teisalda prügikasti</string>
+    <string name="ermis_spam">Teisalda rämpsposti</string>
+    <string name="ermis_forward">Edasta</string>
+    <string name="ermis_reply_all">Vasta kõigile</string>
+    <string name="ermis_search_server">Otsi serveri hiljutisest postist</string>
+    <string name="ermis_search_server_help">Otsib teemat ja saatjat serveri viimase 5,000 kirja hulgast ning kuvab kuni 100 vastet.</string>
+    <string name="ermis_select_account">Kaustade sirvimiseks vali konto.</string>
+    <string name="ermis_forward_original">Algne kiri on manuses (.eml)</string>
+    <string name="ermis_html_view">Vormindatud kiri</string>
+    <string name="ermis_text_view">Lihttekst</string>
+    <string name="ermis_show_folder">Näita kausta</string>
+    <string name="ermis_server_results">Hiljutised serveritulemused</string>
+</resources>
