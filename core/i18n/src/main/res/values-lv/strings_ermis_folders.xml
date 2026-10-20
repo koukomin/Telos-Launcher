@@ -8,7 +8,7 @@
     <string name="ermis_forward">Pārsūtīt</string>
     <string name="ermis_reply_all">Atbildēt visiem</string>
     <string name="ermis_search_server">Meklēt servera jaunākajā pastā</string>
-    <string name="ermis_search_server_help">Meklē tēmu un sūtītāju servera jaunākajos 5000 ziņojumos un parāda līdz 100 atbilstībām.</string>
+    <string name="ermis_search_server_help">Meklē pēdējo 5000 servera ziņojumu tēmā, sūtītājā un tekstā un rāda līdz 100 rezultātiem.</string>
     <string name="ermis_select_account">Atlasiet kontu, lai pārlūkotu tā mapes.</string>
     <string name="ermis_forward_original">Pievienots sākotnējais ziņojums (.eml)</string>
     <string name="ermis_html_view">Formatēts ziņojums</string>

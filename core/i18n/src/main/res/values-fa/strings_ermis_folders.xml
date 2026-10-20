@@ -8,7 +8,7 @@
     <string name="ermis_forward">بازارسال</string>
     <string name="ermis_reply_all">پاسخ به همه</string>
     <string name="ermis_search_server">جستجو در ایمیل‌های اخیر سرور</string>
-    <string name="ermis_search_server_help">موضوع و فرستندهٔ آخرین 5,000 پیام سرور را جستجو می‌کند و حداکثر 100 نتیجهٔ مطابق را نشان می‌دهد.</string>
+    <string name="ermis_search_server_help">در موضوع، فرستنده و متن ۵٬۰۰۰ پیام اخیر سرور جستجو می‌کند و تا ۱۰۰ نتیجه نشان می‌دهد.</string>
     <string name="ermis_select_account">برای مرور پوشه‌ها یک حساب انتخاب کنید.</string>
     <string name="ermis_forward_original">پیام اصلی پیوست شده است (.eml)</string>
     <string name="ermis_html_view">پیام قالب‌بندی‌شده</string>

@@ -8,7 +8,7 @@
     <string name="ermis_forward">전달</string>
     <string name="ermis_reply_all">전체답장</string>
     <string name="ermis_search_server">서버의 최근 메일 검색</string>
-    <string name="ermis_search_server_help">서버의 최신 메시지 5000개에서 제목과 보낸사람을 검색하여 일치하는 결과를 최대 100개 표시합니다.</string>
+    <string name="ermis_search_server_help">서버의 최근 메일 5,000개의 제목, 발신자, 본문을 검색하고 최대 100개의 결과를 표시합니다.</string>
     <string name="ermis_select_account">폴더를 탐색할 계정을 선택하세요.</string>
     <string name="ermis_forward_original">원본 메시지 첨부됨 (.eml)</string>
     <string name="ermis_html_view">서식 있는 메시지</string>

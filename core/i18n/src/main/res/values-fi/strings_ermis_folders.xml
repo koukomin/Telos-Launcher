@@ -8,7 +8,7 @@
     <string name="ermis_forward">Välitä</string>
     <string name="ermis_reply_all">Vastaa kaikille</string>
     <string name="ermis_search_server">Hae palvelimen viimeaikaisesta postista</string>
-    <string name="ermis_search_server_help">Hakee aihetta ja lähettäjää palvelimen uusimmasta 5,000 viestistä ja näyttää enintään 100 osumaa.</string>
+    <string name="ermis_search_server_help">Hakee aiheesta, lähettäjästä ja viestitekstistä palvelimen 5 000 uusimmasta viestistä ja näyttää enintään 100 osumaa.</string>
     <string name="ermis_select_account">Valitse tili, jonka kansioita haluat selata.</string>
     <string name="ermis_forward_original">Alkuperäinen viesti liitteenä (.eml)</string>
     <string name="ermis_html_view">Muotoiltu viesti</string>

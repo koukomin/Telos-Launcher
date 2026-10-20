@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_new_folder">Yeni qovluq</string>
+    <string name="hf_folder_name">Qovluğun adı</string>
+    <string name="hf_folder_rename">Qovluğun adını dəyiş</string>
+</resources>

@@ -8,7 +8,7 @@
     <string name="ermis_forward">Препращане</string>
     <string name="ermis_reply_all">Отговор до всички</string>
     <string name="ermis_search_server">Търсене в скорошната поща на сървъра</string>
-    <string name="ermis_search_server_help">Търси по тема и подател в последните 5,000 съобщения на сървъра и показва до 100 съвпадения.</string>
+    <string name="ermis_search_server_help">Търси по тема, подател и текст в последните 5000 съобщения на сървъра и показва до 100 съвпадения.</string>
     <string name="ermis_select_account">Изберете акаунт, за да прегледате папките му.</string>
     <string name="ermis_forward_original">Оригиналното съобщение е прикачено (.eml)</string>
     <string name="ermis_html_view">Форматирано съобщение</string>

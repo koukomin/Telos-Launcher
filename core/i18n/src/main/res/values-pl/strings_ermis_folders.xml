@@ -8,7 +8,7 @@
     <string name="ermis_forward">Przekaż dalej</string>
     <string name="ermis_reply_all">Odpowiedz wszystkim</string>
     <string name="ermis_search_server">Szukaj w najnowszej poczcie na serwerze</string>
-    <string name="ermis_search_server_help">Wyszukuje temat i nadawcę w 5000 najnowszych wiadomości na serwerze i pokazuje do 100 dopasowań.</string>
+    <string name="ermis_search_server_help">Przeszukuje temat, nadawcę i treść ostatnich 5000 wiadomości na serwerze i wyświetla do 100 wyników.</string>
     <string name="ermis_select_account">Wybierz konto, aby przeglądać jego foldery.</string>
     <string name="ermis_forward_original">Załączono oryginalną wiadomość (.eml)</string>
     <string name="ermis_html_view">Sformatowana wiadomość</string>

@@ -19,6 +19,11 @@ class ErmisMailboxPolicyTest {
         assertThrows(IllegalArgumentException::class.java) { ErmisMailboxPolicy.validityKey("one|other", "Inbox") }
         assertThrows(IllegalArgumentException::class.java) { ErmisMailboxPolicy.folder("INBOX\r\nUID EXPUNGE 1:*") }
     }
+    @Test fun customFoldersRejectInboxControlsAndWildcardNames() {
+        assertEquals("Πελάτες 2026", ErmisMailboxPolicy.customFolder("  Πελάτες 2026  "))
+        for (name in listOf("INBOX", " inbox ", "", "  ", "Personal*", "Personal%", "A\tB", "A\nB", "A\u0000B"))
+            assertThrows(IllegalArgumentException::class.java) { ErmisMailboxPolicy.customFolder(name) }
+    }
     @Test fun specialUseAttributesRecognizeLocalizedRolesBeforeNames() {
         assertEquals(ErmisFolderRole.TRASH, ErmisMailboxPolicy.role("[Gmail]/Κάδος", "Κάδος", listOf("\\Trash")))
         assertEquals(ErmisFolderRole.SPAM, ErmisMailboxPolicy.role("Unwanted", "Unwanted", listOf("\\jUnK")))

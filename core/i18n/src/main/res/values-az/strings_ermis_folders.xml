@@ -8,7 +8,7 @@
     <string name="ermis_forward">Yönləndir</string>
     <string name="ermis_reply_all">Hamısına cavab ver</string>
     <string name="ermis_search_server">Serverdəki son məktublarda axtar</string>
-    <string name="ermis_search_server_help">Serverdəki ən son 5,000 məktubun mövzu və göndərənində axtarır, 100-dək uyğun nəticə göstərir.</string>
+    <string name="ermis_search_server_help">Serverdəki son 5.000 mesajın mövzusunda, göndərənində və mətnində axtarır və ən çox 100 nəticə göstərir.</string>
     <string name="ermis_select_account">Qovluqlarına baxmaq üçün hesab seçin.</string>
     <string name="ermis_forward_original">Orijinal məktub əlavə edilib (.eml)</string>
     <string name="ermis_html_view">Formatlanmış məktub</string>

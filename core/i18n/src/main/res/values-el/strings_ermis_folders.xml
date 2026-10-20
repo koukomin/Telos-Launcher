@@ -8,7 +8,7 @@
     <string name="ermis_forward">Προώθηση</string>
     <string name="ermis_reply_all">Απάντηση σε όλους</string>
     <string name="ermis_search_server">Αναζήτηση πρόσφατων μηνυμάτων στον διακομιστή</string>
-    <string name="ermis_search_server_help">Αναζητά θέμα και αποστολέα στα τελευταία 5.000 μηνύματα του διακομιστή και εμφανίζει έως 100 αποτελέσματα.</string>
+    <string name="ermis_search_server_help">Αναζητά θέμα, αποστολέα και σώμα μηνύματος στα τελευταία 5.000 μηνύματα του διακομιστή και εμφανίζει έως 100 αποτελέσματα.</string>
     <string name="ermis_select_account">Επίλεξε λογαριασμό για να δεις τους φακέλους του.</string>
     <string name="ermis_forward_original">Συνημμένο αρχικό μήνυμα (.eml)</string>
     <string name="ermis_html_view">Μορφοποιημένο μήνυμα</string>

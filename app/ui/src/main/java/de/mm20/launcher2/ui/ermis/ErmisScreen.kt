@@ -89,6 +89,9 @@ private fun ErmisMailbox() {
     var forwarding by remember { mutableStateOf<ErmisForwardSource?>(null) }
     var mailboxId by rememberSaveable { mutableStateOf("INBOX") }
     var foldersOpen by remember { mutableStateOf(false) }
+    var editingFolder by remember { mutableStateOf<ErmisFolder?>(null) }
+    var folderEditorOpen by remember { mutableStateOf(false) }
+    var folderName by rememberSaveable { mutableStateOf("") }
     var moving by remember { mutableStateOf<ErmisMessage?>(null) }
     var moveTarget by remember { mutableStateOf<Pair<ErmisMessage, ErmisFolder>?>(null) }
     var serverResults by remember { mutableStateOf<Set<Long>?>(null) }
@@ -109,7 +112,7 @@ private fun ErmisMailbox() {
     val visible = remember(state.messages, accountId, mailboxId, starred, query, serverResults) { state.messages.filter { message ->
         (accountId == null || message.accountId == accountId) && message.folder == mailboxId &&
             (serverResults == null || message.uid in serverResults.orEmpty()) && (!starred || message.starred) &&
-            (query.isBlank() || listOf(message.from, message.subject, message.preview).any { it.contains(query, true) })
+            (serverResults != null || query.isBlank() || listOf(message.from, message.subject, message.preview).any { it.contains(query, true) })
     }.sortedByDescending { it.date } }
     val visibleDrafts = remember(state.drafts, accountId, query) {
         state.drafts.filter { draft -> (accountId == null || draft.accountId == accountId) &&
@@ -121,7 +124,7 @@ private fun ErmisMailbox() {
     Scaffold(containerColor = androidx.compose.ui.graphics.Color.Transparent,
         topBar = { Row(Modifier.statusBarsPadding().fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close)) }
-            OutlinedTextField(query, { query = it }, placeholder = { Text(stringResource(R.string.ermis_search)) },
+            OutlinedTextField(query, { query = it; serverResults = null }, placeholder = { Text(stringResource(R.string.ermis_search)) },
                 modifier = Modifier.weight(1f), singleLine = true, shape = MaterialTheme.shapes.extraLarge)
             IconButton(onClick = { accounts = true }) { Icon(painterResource(R.drawable.person_24px), stringResource(R.string.ermis_accounts)) }
         } },
@@ -149,7 +152,12 @@ private fun ErmisMailbox() {
                         TextButton(enabled = !state.loading, onClick = { foldersOpen = true; accountId?.let { id -> task { repository.loadFolders(id) } } }) { Text(stringResource(R.string.ermis_folders)) }
                         if (accountId != null && query.isNotBlank()) TextButton(enabled = !state.loading, onClick = {
                             val id = accountId ?: return@TextButton
-                            task { serverResults = repository.serverSearch(id, mailboxId, query).map { it.uid }.toSet() }
+                            val searchedFolder = mailboxId
+                            val searchedQuery = query
+                            task {
+                                val matches = repository.serverSearch(id, searchedFolder, searchedQuery).map { it.uid }.toSet()
+                                if (accountId == id && mailboxId == searchedFolder && query == searchedQuery) serverResults = matches
+                            }
                         }) { Text(stringResource(R.string.ermis_search_server)) }
                         if (serverResults != null) FilterChip(true, onClick = { serverResults = null }, label = { Text(stringResource(R.string.ermis_show_folder)) })
                     }
@@ -244,11 +252,41 @@ private fun ErmisMailbox() {
             if (accountId == null) {
                 item { Text(stringResource(R.string.ermis_select_account)) }
                 items(state.accounts, key = { it.id }) { account -> TextButton(enabled = !state.loading, onClick = { selectAccount(account.id) }) { Text(account.email) } }
-            } else items(accountFolders, key = { it.id }) { folder ->
-                TextButton(enabled = !state.loading, onClick = { mailboxId = folder.id; foldersOpen = false; serverResults = null; showingDrafts = false; query = ""; task { repository.sync(accountId, folder.id) } }) { Text(folder.name) }
+            } else {
+                item { TextButton(enabled = !state.loading, onClick = {
+                    editingFolder = null; folderName = ""; folderEditorOpen = true; foldersOpen = false
+                }) { Text(stringResource(R.string.hc_new_folder)) } }
+                items(accountFolders, key = { it.id }) { folder ->
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        TextButton(modifier = Modifier.weight(1f), enabled = !state.loading, onClick = { mailboxId = folder.id; foldersOpen = false; serverResults = null; showingDrafts = false; query = ""; task { repository.sync(accountId, folder.id) } }) { Text(folder.name) }
+                        if (folder.role == ErmisFolderRole.OTHER) TextButton(enabled = !state.loading, onClick = {
+                            editingFolder = folder; folderName = folder.id; folderEditorOpen = true; foldersOpen = false
+                        }) { Text(stringResource(R.string.hc_rename)) }
+                    }
+                }
             }
         }
     }, confirmButton = { TextButton(onClick = { foldersOpen = false }) { Text(stringResource(R.string.hc_close)) } })
+    if (folderEditorOpen) AlertDialog(onDismissRequest = { if (!state.loading) folderEditorOpen = false },
+        title = { Text(stringResource(if (editingFolder == null) R.string.hc_new_folder else R.string.hf_folder_rename)) },
+        text = { OutlinedTextField(folderName, { folderName = it }, enabled = !state.loading,
+            label = { Text(stringResource(R.string.hf_folder_name)) }, singleLine = true) },
+        confirmButton = { TextButton(enabled = !state.loading && folderName.isNotBlank() && accountId != null, onClick = {
+            val id = accountId ?: return@TextButton
+            val original = editingFolder
+            val requestedName = folderName
+            task {
+                if (original == null) repository.createFolder(id, requestedName)
+                else repository.renameFolder(id, original.id, requestedName)
+                folderEditorOpen = false; foldersOpen = true
+                if (original != null && mailboxId == original.id) {
+                    mailboxId = requestedName.trim(); serverResults = null; selected = null
+                }
+                repository.loadFolders(id)
+                repository.sync(id, mailboxId)
+            }
+        }) { Text(stringResource(R.string.hc_save)) } },
+        dismissButton = { TextButton(enabled = !state.loading, onClick = { folderEditorOpen = false }) { Text(stringResource(R.string.hc_cancel)) } })
     moving?.let { message ->
         val choices = remember(state.folders, message.accountId, message.folder) { state.folders.filter { it.accountId == message.accountId && it.id != message.folder } }
         AlertDialog(onDismissRequest = { moving = null }, title = { Text(stringResource(R.string.ermis_move)) }, text = {

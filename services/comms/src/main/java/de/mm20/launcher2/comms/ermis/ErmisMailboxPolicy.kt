@@ -10,6 +10,11 @@ object ErmisMailboxPolicy {
         require(value.isNotEmpty() && value.length <= 1024 && value.none { it == '\r' || it == '\n' || it == '\u0000' })
         return if (value.equals("INBOX", true)) "INBOX" else value
     }
+    fun customFolder(value: String): String {
+        val canonical = folder(value.trim())
+        require(canonical != "INBOX" && canonical.none { it.isISOControl() || it == '*' || it == '%' })
+        return canonical
+    }
     fun validityKey(accountId: String, mailbox: String): String {
         require(accountId.isNotEmpty() && !accountId.contains('|'))
         val canonical = folder(mailbox)

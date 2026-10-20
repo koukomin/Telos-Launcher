@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_new_folder">Folder baharu</string>
+    <string name="hf_folder_name">Nama folder</string>
+    <string name="hf_folder_rename">Namakan semula folder</string>
+</resources>

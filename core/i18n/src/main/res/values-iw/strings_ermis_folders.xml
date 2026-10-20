@@ -8,7 +8,7 @@
     <string name="ermis_forward">העברה לנמען אחר</string>
     <string name="ermis_reply_all">מענה לכולם</string>
     <string name="ermis_search_server">חיפוש בדואר האחרון בשרת</string>
-    <string name="ermis_search_server_help">חיפוש בנושא ובשולח של 5000 ההודעות האחרונות בשרת והצגת עד 100 התאמות.</string>
+    <string name="ermis_search_server_help">מחפש בנושא, בשולח ובגוף של 5,000 ההודעות האחרונות בשרת ומציג עד 100 תוצאות.</string>
     <string name="ermis_select_account">יש לבחור חשבון כדי לעיין בתיקיות שלו.</string>
     <string name="ermis_forward_original">ההודעה המקורית מצורפת (.eml)</string>
     <string name="ermis_html_view">הודעה מעוצבת</string>

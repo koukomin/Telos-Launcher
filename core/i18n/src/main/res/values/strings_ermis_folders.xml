@@ -8,7 +8,7 @@
     <string name="ermis_forward">Forward</string>
     <string name="ermis_reply_all">Reply all</string>
     <string name="ermis_search_server">Search recent mail on server</string>
-    <string name="ermis_search_server_help">Searches subject and sender in the latest 5,000 server messages and shows up to 100 matches.</string>
+    <string name="ermis_search_server_help">Searches subject, sender and message body in the latest 5,000 server messages and shows up to 100 matches.</string>
     <string name="ermis_select_account">Select an account to browse its folders.</string>
     <string name="ermis_forward_original">Original message attached (.eml)</string>
     <string name="ermis_html_view">Formatted message</string>

@@ -16,6 +16,7 @@ import javax.mail.util.ByteArrayDataSource
 import javax.activation.DataHandler
 import com.sun.mail.imap.IMAPFolder
 import com.sun.mail.imap.IMAPStore
+import javax.mail.search.BodyTerm
 import javax.mail.search.FromStringTerm
 import javax.mail.search.OrTerm
 import javax.mail.search.SubjectTerm
@@ -150,6 +151,46 @@ class ErmisRepository private constructor(private val context: Context) {
             folders
         } finally { store.close() }
     }
+    /** Create only an explicitly named custom mailbox; never replace an existing server folder. */
+    suspend fun createFolder(accountId: String, name: String) = operation {
+        val canonical = ErmisMailboxPolicy.customFolder(name)
+        require(state.value.folders.count { it.accountId == accountId } < 200)
+        val store = store(account(accountId))
+        try {
+            val target = store.getFolder(canonical)
+            require(!target.exists())
+            check(target.create(Folder.HOLDS_MESSAGES))
+        } finally { store.close() }
+    }
+    /** Special-use folders and mailbox hierarchies are deliberately not renamed. */
+    suspend fun renameFolder(accountId: String, name: String, targetName: String) = operation {
+        val sourceName = ErmisMailboxPolicy.customFolder(name)
+        val canonical = ErmisMailboxPolicy.customFolder(targetName)
+        require(sourceName != canonical)
+        val store = store(account(accountId))
+        try {
+            val source = store.getFolder(sourceName)
+            require(source.exists() && source.type and Folder.HOLDS_MESSAGES != 0)
+            require(ErmisMailboxPolicy.role(source.fullName, source.name,
+                (source as? IMAPFolder)?.attributes.orEmpty()) == ErmisFolderRole.OTHER)
+            require(source.list("*").isEmpty())
+            val target = store.getFolder(canonical)
+            require(!target.exists())
+            check(source.renameTo(target))
+            // Retain source UIDs only in forward references, which independently verify UIDVALIDITY.
+            // The renamed mailbox must be synchronized before its cached rows can be used again.
+            uidValidity = uidValidity - ErmisMailboxPolicy.validityKey(accountId, sourceName)
+            mutable.update { state -> state.copy(
+                messages = state.messages.filterNot { ErmisMailboxPolicy.matches(it, accountId, sourceName) },
+                folders = state.folders.filterNot { it.accountId == accountId && it.id == sourceName },
+                drafts = state.drafts.map { draft ->
+                    val forward = draft.forwardSource
+                    if (forward != null && forward.accountId == accountId && forward.folder == sourceName)
+                        draft.copy(forwardSource = forward.copy(folder = canonical)) else draft
+                }) }
+            persist()
+        } finally { store.close() }
+    }
     suspend fun addAccount(account: ErmisAccount, password: String) = operation {
         ErmisValidation.validate(account); require(password.isNotBlank())
         require(state.value.accounts.size < 20 || state.value.accounts.any { it.id == account.id }) { "Account limit reached" }
@@ -184,7 +225,7 @@ class ErmisRepository private constructor(private val context: Context) {
         }
         persist()
     }
-    /** Server-side sender/subject search, bounded to the most recent 5000 messages and 100 results. */
+    /** Server-side sender/subject/body search, bounded to the most recent 5000 messages and 100 results. */
     suspend fun serverSearch(accountId: String, folder: String, query: String): List<ErmisMessage> = operation {
         require(query.isNotBlank() && query.length <= 256 && query.none { it == '\r' || it == '\n' || it == '\u0000' })
         val a = account(accountId)
@@ -194,7 +235,7 @@ class ErmisRepository private constructor(private val context: Context) {
             val count = mailbox.messageCount
             if (count == 0) emptyList() else {
                 val candidates = mailbox.getMessages(maxOf(1, count - ErmisMailboxPolicy.SERVER_SEARCH_WINDOW + 1), count)
-                val found = mailbox.search(OrTerm(SubjectTerm(query.trim()), FromStringTerm(query.trim())), candidates)
+                val found = mailbox.search(OrTerm(arrayOf(SubjectTerm(query.trim()), FromStringTerm(query.trim()), BodyTerm(query.trim()))), candidates)
                     .sortedByDescending { it.messageNumber }.take(ErmisMailboxPolicy.SERVER_SEARCH_RESULTS).toTypedArray()
                 summaries(a, canonical, mailbox, uids, found)
             }

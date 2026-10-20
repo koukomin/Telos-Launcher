@@ -8,7 +8,7 @@
     <string name="ermis_forward">Videresend</string>
     <string name="ermis_reply_all">Svar alle</string>
     <string name="ermis_search_server">Søg i seneste mail på serveren</string>
-    <string name="ermis_search_server_help">Søger i emne og afsender i de seneste 5,000 serverbeskeder og viser op til 100 resultater.</string>
+    <string name="ermis_search_server_help">Søger i emne, afsender og tekst i de seneste 5.000 serverbeskeder og viser op til 100 resultater.</string>
     <string name="ermis_select_account">Vælg en konto for at gennemse dens mapper.</string>
     <string name="ermis_forward_original">Oprindelig besked vedhæftet (.eml)</string>
     <string name="ermis_html_view">Formateret besked</string>

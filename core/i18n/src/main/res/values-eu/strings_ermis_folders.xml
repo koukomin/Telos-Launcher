@@ -8,7 +8,7 @@
     <string name="ermis_forward">Birbidali</string>
     <string name="ermis_reply_all">Erantzun guztiei</string>
     <string name="ermis_search_server">Bilatu zerbitzariko azken mezuetan</string>
-    <string name="ermis_search_server_help">Zerbitzariko azken 5,000 mezuen gaian eta bidaltzailean bilatzen du, eta gehienez 100 emaitza erakusten ditu.</string>
+    <string name="ermis_search_server_help">Zerbitzariko azken 5.000 mezuen gaian, bidaltzailean eta gorputzean bilatzen du, eta gehienez 100 emaitza erakusten ditu.</string>
     <string name="ermis_select_account">Hautatu kontu bat haren karpetak arakatzeko.</string>
     <string name="ermis_forward_original">Jatorrizko mezua erantsita (.eml)</string>
     <string name="ermis_html_view">Formatudun mezua</string>

@@ -8,7 +8,7 @@
     <string name="ermis_forward">Majukan</string>
     <string name="ermis_reply_all">Balas semua</string>
     <string name="ermis_search_server">Cari mel terkini pada pelayan</string>
-    <string name="ermis_search_server_help">Mencari subjek dan pengirim dalam 5000 mesej pelayan terkini dan memaparkan sehingga 100 padanan.</string>
+    <string name="ermis_search_server_help">Mencari subjek, pengirim dan isi dalam 5,000 mesej pelayan terkini dan memaparkan sehingga 100 hasil.</string>
     <string name="ermis_select_account">Pilih akaun untuk melayari foldernya.</string>
     <string name="ermis_forward_original">Mesej asal dilampirkan (.eml)</string>
     <string name="ermis_html_view">Mesej berformat</string>

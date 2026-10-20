@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.first
 class ErmisWorker(context: Context, params: WorkerParameters): CoroutineWorker(context,params) {
     override suspend fun doWork(): Result {
         val repo=ErmisRepository.get(applicationContext)
-        val before=repo.state.first { !it.loading }.messages.map { it.accountId to it.uid }.toSet()
+        val before=repo.state.first { !it.loading }.messages.filter { it.folder == "INBOX" }.map { it.accountId to it.uid }.toSet()
         return try {
             repo.sync()
-            val fresh=repo.state.value.messages.filter { !it.read && (it.accountId to it.uid) !in before }
+            val fresh=repo.state.value.messages.filter { it.folder == "INBOX" && !it.read && (it.accountId to it.uid) !in before }
             if(fresh.isNotEmpty()) {
                 val manager=applicationContext.getSystemService(NotificationManager::class.java)
                 manager.createNotificationChannel(NotificationChannel("ermis-mail",applicationContext.getString(R.string.ermis_new_mail),NotificationManager.IMPORTANCE_DEFAULT))

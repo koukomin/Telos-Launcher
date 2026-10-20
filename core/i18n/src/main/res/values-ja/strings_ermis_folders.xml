@@ -8,7 +8,7 @@
     <string name="ermis_forward">転送</string>
     <string name="ermis_reply_all">全員に返信</string>
     <string name="ermis_search_server">サーバー上の最近のメールを検索</string>
-    <string name="ermis_search_server_help">サーバー上の最新 5000 件のメールの件名と送信者を検索し、最大 100 件の一致を表示します。</string>
+    <string name="ermis_search_server_help">サーバー上の最新5,000件のメールの件名・差出人・本文を検索し、最大100件を表示します。</string>
     <string name="ermis_select_account">フォルダーを表示するアカウントを選択してください。</string>
     <string name="ermis_forward_original">元のメッセージを添付（.eml）</string>
     <string name="ermis_html_view">書式付きメッセージ</string>

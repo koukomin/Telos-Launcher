@@ -8,7 +8,7 @@
     <string name="ermis_forward">Posreduj</string>
     <string name="ermis_reply_all">Odgovori vsem</string>
     <string name="ermis_search_server">Išči po nedavni pošti na strežniku</string>
-    <string name="ermis_search_server_help">Išče po zadevi in pošiljatelju v zadnjih 5000 sporočilih na strežniku ter prikaže do 100 zadetkov.</string>
+    <string name="ermis_search_server_help">Išče po zadevi, pošiljatelju in besedilu zadnjih 5.000 sporočil na strežniku ter prikaže do 100 zadetkov.</string>
     <string name="ermis_select_account">Izberi račun za brskanje po njegovih mapah.</string>
     <string name="ermis_forward_original">Izvirno sporočilo je priloženo (.eml)</string>
     <string name="ermis_html_view">Oblikovano sporočilo</string>

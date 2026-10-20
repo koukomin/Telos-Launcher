@@ -8,7 +8,7 @@
     <string name="ermis_forward">Přeposlat</string>
     <string name="ermis_reply_all">Odpovědět všem</string>
     <string name="ermis_search_server">Hledat v nedávné poště na serveru</string>
-    <string name="ermis_search_server_help">Prohledá předmět a odesílatele posledních 5,000 zpráv na serveru a zobrazí až 100 shod.</string>
+    <string name="ermis_search_server_help">Prohledá předmět, odesílatele a text posledních 5 000 zpráv na serveru a zobrazí až 100 výsledků.</string>
     <string name="ermis_select_account">Vyberte účet, jehož složky chcete procházet.</string>
     <string name="ermis_forward_original">Původní zpráva je přiložena (.eml)</string>
     <string name="ermis_html_view">Formátovaná zpráva</string>

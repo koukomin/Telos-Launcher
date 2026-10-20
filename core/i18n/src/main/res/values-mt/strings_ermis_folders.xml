@@ -8,7 +8,7 @@
     <string name="ermis_forward">Għaddi</string>
     <string name="ermis_reply_all">Wieġeb lil kulħadd</string>
     <string name="ermis_search_server">Fittex fil-posta reċenti fuq is-server</string>
-    <string name="ermis_search_server_help">Ifittex fis-suġġett u fil-mittent tal-aħħar 5000 messaġġ fuq is-server u juri sa 100 riżultat.</string>
+    <string name="ermis_search_server_help">Ifittex fis-suġġett, fil-mittent u fil-korp tal-aħħar 5,000 messaġġ fuq is-server u juri sa 100 riżultat.</string>
     <string name="ermis_select_account">Agħżel kont biex tibbrawżja il-fowlders tiegħu.</string>
     <string name="ermis_forward_original">Il-messaġġ oriġinali mehmuż (.eml)</string>
     <string name="ermis_html_view">Messaġġ ifformattjat</string>

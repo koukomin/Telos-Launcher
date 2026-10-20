@@ -8,7 +8,7 @@
     <string name="ermis_forward">Weiterleiten</string>
     <string name="ermis_reply_all">Allen antworten</string>
     <string name="ermis_search_server">Neuere Nachrichten auf dem Server durchsuchen</string>
-    <string name="ermis_search_server_help">Durchsucht Betreff und Absender der letzten 5,000 Nachrichten auf dem Server und zeigt bis zu 100 Treffer.</string>
+    <string name="ermis_search_server_help">Durchsucht Betreff, Absender und Nachrichtentext der letzten 5.000 Servernachrichten und zeigt bis zu 100 Treffer.</string>
     <string name="ermis_select_account">Wähle ein Konto aus, um dessen Ordner zu durchsuchen.</string>
     <string name="ermis_forward_original">Originalnachricht angehängt (.eml)</string>
     <string name="ermis_html_view">Formatierte Nachricht</string>

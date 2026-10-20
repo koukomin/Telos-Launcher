@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_new_folder">Folder baru</string>
+    <string name="hf_folder_name">Nama folder</string>
+    <string name="hf_folder_rename">Ganti nama folder</string>
+</resources>

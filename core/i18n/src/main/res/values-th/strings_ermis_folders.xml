@@ -8,7 +8,7 @@
     <string name="ermis_forward">ส่งต่อ</string>
     <string name="ermis_reply_all">ตอบกลับทั้งหมด</string>
     <string name="ermis_search_server">ค้นหาอีเมลล่าสุดบนเซิร์ฟเวอร์</string>
-    <string name="ermis_search_server_help">ค้นหาหัวเรื่องและผู้ส่งในข้อความล่าสุด 5000 รายการบนเซิร์ฟเวอร์ และแสดงผลที่ตรงกันสูงสุด 100 รายการ</string>
+    <string name="ermis_search_server_help">ค้นหาหัวเรื่อง ผู้ส่ง และเนื้อหาในข้อความล่าสุด 5,000 ฉบับบนเซิร์ฟเวอร์ และแสดงผลสูงสุด 100 รายการ</string>
     <string name="ermis_select_account">เลือกบัญชีเพื่อเรียกดูโฟลเดอร์</string>
     <string name="ermis_forward_original">แนบข้อความต้นฉบับแล้ว (.eml)</string>
     <string name="ermis_html_view">ข้อความแบบจัดรูปแบบ</string>

@@ -8,7 +8,7 @@
     <string name="ermis_forward">Transférer</string>
     <string name="ermis_reply_all">Répondre à tous</string>
     <string name="ermis_search_server">Rechercher dans les messages récents du serveur</string>
-    <string name="ermis_search_server_help">Recherche l’objet et l’expéditeur parmi les 5,000 derniers messages du serveur et affiche jusqu’à 100 résultats.</string>
+    <string name="ermis_search_server_help">Recherche dans l’objet, l’expéditeur et le corps des 5 000 derniers messages du serveur et affiche jusqu’à 100 résultats.</string>
     <string name="ermis_select_account">Sélectionnez un compte pour parcourir ses dossiers.</string>
     <string name="ermis_forward_original">Message d’origine joint (.eml)</string>
     <string name="ermis_html_view">Message mis en forme</string>

@@ -8,7 +8,7 @@
     <string name="ermis_forward">Cuir ar aghaidh</string>
     <string name="ermis_reply_all">Freagair cách</string>
     <string name="ermis_search_server">Cuardaigh ríomhphost le déanaí ar an bhfreastalaí</string>
-    <string name="ermis_search_server_help">Cuardaítear ábhar agus seoltóir sna 5,000 teachtaireacht is déanaí ar an bhfreastalaí agus taispeántar suas le 100 toradh.</string>
+    <string name="ermis_search_server_help">Cuardaíonn sé ábhar, seoltóir agus corp na 5,000 teachtaireacht is déanaí ar an bhfreastalaí agus taispeánann sé suas le 100 toradh.</string>
     <string name="ermis_select_account">Roghnaigh cuntas chun a chuid fillteán a bhrabhsáil.</string>
     <string name="ermis_forward_original">Bunteachtaireacht ceangailte (.eml)</string>
     <string name="ermis_html_view">Teachtaireacht fhormáidithe</string>

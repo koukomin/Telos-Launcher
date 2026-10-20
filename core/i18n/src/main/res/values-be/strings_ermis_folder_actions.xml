@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_new_folder">Новая папка</string>
+    <string name="hf_folder_name">Назва папкі</string>
+    <string name="hf_folder_rename">Перайменаваць папку</string>
+</resources>

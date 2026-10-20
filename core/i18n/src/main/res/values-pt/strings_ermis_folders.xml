@@ -8,7 +8,7 @@
     <string name="ermis_forward">Reencaminhar</string>
     <string name="ermis_reply_all">Responder a todos</string>
     <string name="ermis_search_server">Pesquisar correio recente no servidor</string>
-    <string name="ermis_search_server_help">Pesquisa o assunto e o remetente nas últimas 5000 mensagens do servidor e apresenta até 100 correspondências.</string>
+    <string name="ermis_search_server_help">Pesquisa assunto, remetente e corpo nas últimas 5.000 mensagens do servidor e apresenta até 100 resultados.</string>
     <string name="ermis_select_account">Selecione uma conta para explorar as suas pastas.</string>
     <string name="ermis_forward_original">Mensagem original anexada (.eml)</string>
     <string name="ermis_html_view">Mensagem formatada</string>

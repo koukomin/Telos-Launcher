@@ -8,7 +8,7 @@
     <string name="ermis_forward">Plusendi</string>
     <string name="ermis_reply_all">Respondi al ĉiuj</string>
     <string name="ermis_search_server">Serĉi en lastatempa poŝto ĉe la servilo</string>
-    <string name="ermis_search_server_help">Serĉas temon kaj sendinton en la plej novaj 5,000 servilaj mesaĝoj kaj montras ĝis 100 kongruojn.</string>
+    <string name="ermis_search_server_help">Serĉas temon, sendinton kaj tekston en la lastaj 5 000 servilaj mesaĝoj kaj montras ĝis 100 rezultojn.</string>
     <string name="ermis_select_account">Elektu konton por foliumi ĝiajn dosierujojn.</string>
     <string name="ermis_forward_original">Originala mesaĝo alkroĉita (.eml)</string>
     <string name="ermis_html_view">Formatita mesaĝo</string>

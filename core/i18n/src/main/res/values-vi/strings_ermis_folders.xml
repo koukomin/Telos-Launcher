@@ -8,7 +8,7 @@
     <string name="ermis_forward">Chuyển tiếp</string>
     <string name="ermis_reply_all">Trả lời tất cả</string>
     <string name="ermis_search_server">Tìm thư gần đây trên máy chủ</string>
-    <string name="ermis_search_server_help">Tìm chủ đề và người gửi trong 5000 thư mới nhất trên máy chủ và hiển thị tối đa 100 kết quả phù hợp.</string>
+    <string name="ermis_search_server_help">Tìm chủ đề, người gửi và nội dung trong 5.000 thư gần nhất trên máy chủ và hiển thị tối đa 100 kết quả.</string>
     <string name="ermis_select_account">Chọn tài khoản để duyệt các thư mục của tài khoản đó.</string>
     <string name="ermis_forward_original">Đã đính kèm thư gốc (.eml)</string>
     <string name="ermis_html_view">Thư có định dạng</string>

@@ -77,6 +77,7 @@ fun NetworkPrivacyScreen() {
                     enabled = config.torEnabled, onClick = { backStack.add(NetworkTorAppsRoute) })
             }
         }
+        item { NetworkRouteChooser() }
         item { Text(stringResource(R.string.nt_scope), Modifier.padding(16.dp)) }
         item { Text(stringResource(R.string.nt_safety), Modifier.padding(16.dp)) }
         item { Web3Lookup() }

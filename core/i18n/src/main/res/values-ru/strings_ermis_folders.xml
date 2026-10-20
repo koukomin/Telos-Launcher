@@ -8,7 +8,7 @@
     <string name="ermis_forward">Переслать</string>
     <string name="ermis_reply_all">Ответить всем</string>
     <string name="ermis_search_server">Искать в недавних письмах на сервере</string>
-    <string name="ermis_search_server_help">Поиск по теме и отправителю среди 5000 последних писем на сервере с отображением до 100 совпадений.</string>
+    <string name="ermis_search_server_help">Ищет по теме, отправителю и тексту последних 5000 писем на сервере и показывает до 100 совпадений.</string>
     <string name="ermis_select_account">Выберите учётную запись для просмотра её папок.</string>
     <string name="ermis_forward_original">Исходное письмо прикреплено (.eml)</string>
     <string name="ermis_html_view">Форматированное письмо</string>

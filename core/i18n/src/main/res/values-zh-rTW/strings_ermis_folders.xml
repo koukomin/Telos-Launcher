@@ -8,7 +8,7 @@
     <string name="ermis_forward">轉寄</string>
     <string name="ermis_reply_all">全部回覆</string>
     <string name="ermis_search_server">搜尋伺服器上的近期郵件</string>
-    <string name="ermis_search_server_help">搜尋伺服器上最新 5000 封郵件的主旨和寄件者，最多顯示 100 筆符合的結果。</string>
+    <string name="ermis_search_server_help">搜尋伺服器上最近 5,000 封郵件的主旨、寄件者和內文，最多顯示 100 筆結果。</string>
     <string name="ermis_select_account">請選取帳戶以瀏覽其資料夾。</string>
     <string name="ermis_forward_original">已附加原始郵件（.eml）</string>
     <string name="ermis_html_view">格式化郵件</string>

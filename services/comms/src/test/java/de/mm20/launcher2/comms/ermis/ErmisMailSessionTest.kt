@@ -21,6 +21,7 @@ class ErmisMailSessionTest {
         assertNull(session.getProperty("mail.imaps.auth.mechanisms"))
         assertEquals("TLSv1.2", session.getProperty("mail.imaps.ssl.protocols"))
         assertEquals("true", session.getProperty("mail.smtp.starttls.required"))
+        assertEquals("true", session.getProperty("mail.imaps.throwsearchexception"))
         assertEquals("20000", session.getProperty("mail.smtps.timeout"))
     }
     @Test fun supportedProvidersAreConstructedDirectlyInsteadOfDiscoveredByClassName() {
