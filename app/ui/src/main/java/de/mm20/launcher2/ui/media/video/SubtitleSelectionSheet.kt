@@ -45,7 +45,7 @@ internal fun SubtitleSelectionSheet(player: Player, onDismiss: () -> Unit, onFil
             .sortedWith(compareBy({ it.language }, { it.label }))
     }
     val disabled = player.trackSelectionParameters.disabledTrackTypes.contains(C.TRACK_TYPE_TEXT)
-    ModalBottomSheet(onDismissRequest = onDismiss) {
+    ModalBottomSheet(onDismissRequest = onDismiss, containerColor = MaterialTheme.colorScheme.surfaceContainer) {
         Column(Modifier.fillMaxWidth().fillMaxHeight(0.9f).navigationBarsPadding().padding(horizontal = 16.dp)) {
             Text(stringResource(R.string.hc_subtitles), style = MaterialTheme.typography.titleLarge)
             LazyColumn(Modifier.fillMaxWidth().weight(1f)) {
