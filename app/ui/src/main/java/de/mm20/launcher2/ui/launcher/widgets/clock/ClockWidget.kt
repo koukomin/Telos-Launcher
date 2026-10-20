@@ -102,7 +102,8 @@ fun ClockWidget(
             ClockWidgetColors.Dark -> true
             ClockWidgetColors.Light -> false
             else -> null
-        }
+        },
+        backing = false,
     )
     val darkColors = readability.darkText
 

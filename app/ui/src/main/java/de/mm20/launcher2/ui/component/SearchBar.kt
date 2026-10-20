@@ -71,7 +71,10 @@ fun SearchBar(
     onKeyboardActionGo: (KeyboardActionScope.() -> Unit)? = null
 ) {
 
-    val readability = rememberWallpaperContentStyle(forcedDark = if (automaticColors) null else darkColors)
+    val readability = rememberWallpaperContentStyle(
+        forcedDark = if (automaticColors) null else darkColors,
+        backing = false,
+    )
     val transition = updateTransition(level, label = "Searchbar")
     val context = LocalContext.current
     val searchUiSettings: SearchUiSettings = koinInject()
@@ -130,17 +133,9 @@ fun SearchBar(
         MaterialTheme.colorScheme.surface.copy(alpha = backgroundOpacity)
     )
     val resolvedContentColor = if (overWallpaper) readability.color else panelContent
-    // Keep a backing while the panel fades in/out; never expose transitional text on raw pixels.
-    val transitionBacking = rememberWallpaperContentStyle(
-        forcedDark = resolvedContentColor == Color.Black
-    )
     LauncherCard(
         modifier = modifier
-            .then(when {
-                overWallpaper -> readability.modifier
-                backgroundOpacity < 0.8f -> transitionBacking.modifier
-                else -> Modifier
-            })
+            .then(if (overWallpaper) readability.modifier else Modifier)
             .alpha(opacity),
         backgroundOpacity = backgroundOpacity,
         elevation = elevation,

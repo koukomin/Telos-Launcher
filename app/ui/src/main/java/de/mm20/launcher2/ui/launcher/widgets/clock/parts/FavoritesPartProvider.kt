@@ -522,7 +522,7 @@ private fun DockPageIndicator(
     currentPage: Int,
     color: Color?,
 ) {
-    val readability = rememberWallpaperContentStyle()
+    val readability = rememberWallpaperContentStyle(backing = false)
     val dotColor = color ?: readability.color
     Row(
         modifier = Modifier
