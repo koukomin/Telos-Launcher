@@ -426,7 +426,7 @@ fun ContactsScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ContactRow(
+internal fun ContactRow(
     contact: DialerContact,
     query: String,
     onOpen: () -> Unit,

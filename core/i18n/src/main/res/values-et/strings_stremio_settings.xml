@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">HTTP vahemälu</string>
+    <string name="stremio_auto_next">Esita järgmine osa automaatselt</string>
+    <string name="stremio_hide_screeners">Välista CAM / Screener</string>
+</resources>

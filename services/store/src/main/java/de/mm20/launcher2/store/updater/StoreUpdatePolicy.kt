@@ -15,6 +15,6 @@ object StoreUpdatePolicy {
                 return false
             }
         }
-        return !options.trackOnly && !options.pinned && !options.excludeFromBackground && (options.autoUpdate ?: globalEnabled)
+        return !options.trackOnly && !options.pinned && !options.excludeFromBackground && globalEnabled && options.autoUpdate != false
     }
 }

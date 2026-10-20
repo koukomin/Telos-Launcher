@@ -43,6 +43,8 @@ import de.mm20.launcher2.comms.media.video.torrent.TorrentStreamer
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Plays local videos, web streams, and torrents. A torrent is opened first (finding peers, reading
@@ -77,12 +79,20 @@ fun VideoPlayerScreen(
             val config = VideoServices.config()
             runCatching { TorrentStreamer.open(context, torrentSource, config.torrentWifiOnly, context.findActivity(), torrentFileIdx) }
                 .onSuccess { opened ->
+                    if (context.findActivity()?.intent?.getBooleanExtra("stremio_auto_continuation", false) == true &&
+                        opened.videos.none { it.index == torrentFileIdx }) {
+                        error = context.getString(R.string.au_video_torrent_failed)
+                        context.findActivity()?.let { TorrentStreamer.release(it) }
+                        return@onSuccess
+                    }
                     val name = TorrentStreamer.torrentName()
+                    val selectedOnly = context.findActivity()?.intent?.getBooleanExtra("stremio_playback", false) == true
+                    val videos = if (selectedOnly) listOf(opened.videos[opened.startPosition]) else opened.videos
                     resolved = ResolvedMedia(
-                        uris = opened.videos.map { Uri.parse(it.url) },
-                        titles = opened.videos.map { it.name.substringBeforeLast('.') },
-                        mediaIds = opened.videos.map { "torrent:$name/${it.name}" },
-                        startIndex = opened.startPosition,
+                        uris = videos.map { Uri.parse(it.url) },
+                        titles = videos.map { it.name.substringBeforeLast('.') },
+                        mediaIds = videos.map { "torrent:$name/${it.name}" },
+                        startIndex = if (selectedOnly) 0 else opened.startPosition,
                     )
                 }
                 .onFailure {
@@ -173,12 +183,31 @@ private fun PlayerContent(
 
     val networkGate = remember { de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "torrent") }
     val managedNetwork = isTorrent || uris.any { it.scheme in setOf("http", "https") && it.host !in setOf("127.0.0.1", "localhost", "::1", "[::1]") }
+    val stremio = context.findActivity()?.intent?.getBooleanExtra("stremio_playback", false) == true
+    val playbackRuntime by produceState<Pair<de.mm20.launcher2.comms.stremio.StremioPlaybackSettings, androidx.media3.datasource.DataSource.Factory>?>(null, stremio) {
+        if (stremio) value = withContext(Dispatchers.IO) {
+            val settings = de.mm20.launcher2.comms.stremio.StremioPlaybackSettings.load(context)
+            val factory = runCatching<androidx.media3.datasource.DataSource.Factory> {
+                val cache = de.mm20.launcher2.ui.media.stremio.StremioStreamCache.obtain(context, settings.cacheBytes)
+                androidx.media3.datasource.cache.CacheDataSource.Factory()
+                    .setCache(cache).setUpstreamDataSourceFactory(RemoteRoutingDataSource.factory(context))
+                    .setFlags(androidx.media3.datasource.cache.CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR)
+            }.getOrElse { RemoteRoutingDataSource.factory(context) }
+            settings to factory
+        }
+    }
+    if (stremio && playbackRuntime == null) {
+        Box(Modifier.fillMaxSize().background(Color.Black), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator(color = Color.White)
+        }
+        return
+    }
     val player = remember {
         videoState("started")
         val renderers = de.mm20.launcher2.comms.media.MediaDecoderPack.renderersFactory(context)
         ExoPlayer.Builder(context, renderers).setWakeMode(androidx.media3.common.C.WAKE_MODE_NETWORK)
             // addresses of network storages (rem://) are read through Telos Files
-            .setMediaSourceFactory(androidx.media3.exoplayer.source.DefaultMediaSourceFactory(RemoteRoutingDataSource.factory(context)))
+            .setMediaSourceFactory(androidx.media3.exoplayer.source.DefaultMediaSourceFactory(playbackRuntime?.second ?: RemoteRoutingDataSource.factory(context)))
             // audio focus (other apps pause or duck) and pausing when the headphones are unplugged
             .setAudioAttributes(
                 androidx.media3.common.AudioAttributes.Builder()
@@ -189,6 +218,13 @@ private fun PlayerContent(
             )
             .setHandleAudioBecomingNoisy(true)
             .build().apply {
+            playbackRuntime?.first?.let { settings ->
+                trackSelectionParameters = trackSelectionParameters.buildUpon()
+                    .setPreferredAudioLanguages(*settings.audioLanguages.toTypedArray())
+                    .setPreferredTextLanguages(*settings.subtitleLanguages.toTypedArray())
+                    .setTrackTypeDisabled(C.TRACK_TYPE_TEXT, settings.subtitleLanguages.isEmpty())
+                    .build()
+            }
             setVideoChangeFrameRateStrategy(
                 if (VideoPrefs.matchFrameRate(context)) C.VIDEO_CHANGE_FRAME_RATE_STRATEGY_ONLY_IF_SEAMLESS
                 else C.VIDEO_CHANGE_FRAME_RATE_STRATEGY_OFF
@@ -306,6 +342,8 @@ private fun PlayerContent(
         onDispose { VideoSession.detach(context, player) }
     }
 
+    val continuationScope = rememberCoroutineScope()
+    var continuationRequested by remember(player) { mutableStateOf(false) }
     DisposableEffect(player) {
         val listener = object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {
@@ -316,7 +354,22 @@ private fun PlayerContent(
             }
 
             override fun onPlaybackStateChanged(playbackState: Int) {
-                if (playbackState == Player.STATE_ENDED) scrobble("stop", finished = true)
+                if (playbackState == Player.STATE_ENDED) {
+                    scrobble("stop", finished = true)
+                    if (stremio && playbackRuntime?.first?.autoNextEpisode == true && !continuationRequested && networkGate.allowed.value) {
+                        continuationRequested = true
+                        continuationScope.launch {
+                            val activity = context.findActivity() ?: return@launch
+                            val next = runCatching {
+                                de.mm20.launcher2.ui.media.stremio.StremioEpisodeContinuation.next(context.applicationContext, android.content.Intent(activity.intent))
+                            }.getOrNull()
+                            if (next != null && !activity.isFinishing && !activity.isDestroyed) {
+                                activity.intent = next
+                                activity.recreate()
+                            }
+                        }
+                    }
+                }
             }
 
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
@@ -470,6 +523,12 @@ private fun PlayerContent(
 
     var subtitleMenu by remember { mutableStateOf(false) }
     var showOnlineSubtitles by remember { mutableStateOf(false) }
+    if (subtitleMenu) SubtitleSelectionSheet(
+        player = player,
+        onDismiss = { subtitleMenu = false },
+        onFile = { subtitleMenu = false; subtitlePicker.launch("*/*") },
+        onOnline = { subtitleMenu = false; showOnlineSubtitles = true },
+    )
     DisposableEffect(player) {
         var shownId = player.currentMediaItem?.mediaId
         val l = object : Player.Listener {
@@ -490,9 +549,11 @@ private fun PlayerContent(
     // The subtitle used last time for this video comes back without asking the internet; otherwise,
     // when the user turned it on, one is fetched from the sources (in their order)
     LaunchedEffect(currentFileName) {
+        if (stremio && playbackRuntime?.first?.subtitleLanguages?.isEmpty() == true) return@LaunchedEffect
         val item = player.currentMediaItem ?: return@LaunchedEffect
         val config = VideoServices.config()
-        val query = SubtitleService.queryFor(context, item.localConfiguration?.uri, currentFileName, config.languages)
+        val query = SubtitleService.queryFor(context, item.localConfiguration?.uri, currentFileName,
+            playbackRuntime?.first?.subtitleLanguages?.joinToString(",") ?: config.languages)
         val key = SubtitleFiles.videoKey(currentFileName, query.byteSize)
         currentVideoKey = key
         if (item.localConfiguration?.subtitleConfigurations?.isNotEmpty() == true) return@LaunchedEffect
@@ -584,6 +645,12 @@ private fun PlayerContent(
                     controllerShowTimeoutMs = 3000
                     setControllerVisibilityListener(PlayerView.ControllerVisibilityListener { visibility ->
                         controlsVisible = visibility == View.VISIBLE
+                        context.findActivity()?.window?.let { window ->
+                            androidx.core.view.WindowInsetsControllerCompat(window, window.decorView).apply {
+                                if (controlsVisible) show(androidx.core.view.WindowInsetsCompat.Type.systemBars())
+                                else hide(androidx.core.view.WindowInsetsCompat.Type.systemBars())
+                            }
+                        }
                     })
                 }
             },
@@ -691,16 +758,6 @@ private fun PlayerContent(
                 Box {
                     TextButton(onClick = { subtitleMenu = true }) {
                         Text(stringResource(R.string.hc_subtitles_2), color = Color.White)
-                    }
-                    DropdownMenu(expanded = subtitleMenu, onDismissRequest = { subtitleMenu = false }) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.hc_from_a_file)) },
-                            onClick = { subtitleMenu = false; subtitlePicker.launch("*/*") },
-                        )
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.hc_search_online)) },
-                            onClick = { subtitleMenu = false; showOnlineSubtitles = true },
-                        )
                     }
                 }
                 IconButton(onClick = { showMenu = true }) {

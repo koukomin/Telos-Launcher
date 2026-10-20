@@ -91,7 +91,7 @@ fun NetworkLogsScreen() {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    var tab by rememberSaveable { mutableIntStateOf(TAB_CONNECTIONS) }
+    var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("network.logs.tab", TAB_CONNECTIONS)
     var query by rememberSaveable { mutableStateOf("") }
     var blockedFilter by rememberSaveable { mutableIntStateOf(0) } // 0 all, 1 blocked, 2 allowed
     var appFilter by rememberSaveable { mutableStateOf<Int?>(null) }

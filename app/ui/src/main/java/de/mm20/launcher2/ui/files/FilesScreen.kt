@@ -266,7 +266,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
         }.focusable(),
         drawerState = drawer,
         drawerContent = {
-            ModalDrawerSheet {
+            ModalDrawerSheet(drawerContainerColor = MaterialTheme.colorScheme.surfaceContainer) {
                 StorageDrawer(
                     vm = vm,
                     onGo = { target -> vm.open(target); scope.launch { drawer.close() } },

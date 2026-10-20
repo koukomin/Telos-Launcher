@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">HTTP кеш</string>
+    <string name="stremio_auto_next">Автоматично пускане на следващия епизод</string>
+    <string name="stremio_hide_screeners">Изключване на CAM / Screener</string>
+</resources>

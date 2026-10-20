@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">Taisce HTTP</string>
+    <string name="stremio_auto_next">Seinn an chéad eipeasóid eile go huathoibríoch</string>
+    <string name="stremio_hide_screeners">Fág CAM / Screener as an áireamh</string>
+</resources>

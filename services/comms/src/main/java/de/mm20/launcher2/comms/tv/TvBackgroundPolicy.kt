@@ -5,6 +5,9 @@ object TvBackgroundPolicy {
     /** The service stops itself when nothing played for this long */
     const val IDLE_STOP_MS = 5 * 60 * 1000L
 
+    /** Upgrade the old pause-on-leave default once; subsequent explicit opt-outs survive. */
+    fun backgroundAfterUpgrade(saved: Boolean, version: Int): Boolean = version < 1 || saved
+
     /** Leaving the app or switching the screen off pauses playback unless the user allowed background playback */
     fun pauseWhenLeaving(keepInBackground: Boolean, screenOff: Boolean = false): Boolean = !keepInBackground && !screenOff
 

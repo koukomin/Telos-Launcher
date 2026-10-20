@@ -132,7 +132,7 @@ fun MusicScreen(
             g.tracks.mapIndexed { i, t -> "${i + 1}. ${t.title}" }).joinToString("\n")
         if (!ShareActions.shareText(context, text, g.title)) Toast.makeText(context, shareFailed, Toast.LENGTH_SHORT).show()
     }
-    var tab by rememberSaveable { mutableStateOf(0) }
+    var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("music.tab", 0)
     var query by rememberSaveable { mutableStateOf("") }
     var group by remember { mutableStateOf<TrackGroup?>(null) }
     var showNowPlaying by rememberSaveable { mutableStateOf(false) }

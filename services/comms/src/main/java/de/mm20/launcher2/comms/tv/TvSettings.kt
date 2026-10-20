@@ -32,7 +32,7 @@ class TvSettings(context: Context) {
     val extraPlaylistsEnabled: StateFlow<Boolean> get() = _extraPlaylists
     /** Optional programme guide (EPG); default on, only active when Greece is selected */
     val epgEnabled: StateFlow<Boolean> get() = _epg
-    /** Keep playing with the screen off / when the app is left (foreground service with notification); default off */
+    /** Keep playing with the screen off / when the app is left (foreground service with notification); default on */
     val keepPlayingInBackground: StateFlow<Boolean> get() = _background
 
     private var bad: Map<String, Long> = emptyMap()
@@ -44,7 +44,9 @@ class TvSettings(context: Context) {
         _disclaimerShown.value = j.optBoolean("disclaimer", false)
         _extraPlaylists.value = j.optBoolean("extraPlaylists", true)
         _epg.value = j.optBoolean("epg", true)
-        _background.value = j.optBoolean("background", true)
+        _background.value = TvBackgroundPolicy.backgroundAfterUpgrade(
+            j.optBoolean("background", true), j.optInt("backgroundPolicyVersion", 0),
+        )
         val b = j.optJSONObject("bad")
         bad = buildMap {
             if (b != null) {
@@ -55,6 +57,7 @@ class TvSettings(context: Context) {
                 }
             }
         }
+        if (j.optInt("backgroundPolicyVersion", 0) < 1) save()
     }
 
     fun setSelectedCountries(codes: List<String>) {
@@ -155,6 +158,7 @@ class TvSettings(context: Context) {
                     .put("extraPlaylists", _extraPlaylists.value)
                     .put("epg", _epg.value)
                     .put("background", _background.value)
+                    .put("backgroundPolicyVersion", 1)
                 val b = JSONObject()
                 for ((k, v) in bad) b.put(k, v)
                 j.put("bad", b)

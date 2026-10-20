@@ -469,7 +469,6 @@ class StoreViewModel : ViewModel(), KoinComponent {
                     displayName = app.label,
                     source = source,
                 )
-                options.update(item.id) { it.copy(autoUpdate = false) }
                 repository.insertItem(item)
                 found++
             }

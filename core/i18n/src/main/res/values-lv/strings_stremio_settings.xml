@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">HTTP kešatmiņa</string>
+    <string name="stremio_auto_next">Automātiski atskaņot nākamo sēriju</string>
+    <string name="stremio_hide_screeners">Izslēgt CAM / Screener</string>
+</resources>

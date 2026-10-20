@@ -17,6 +17,12 @@ open class VideoPlaybackService : MediaSessionService() {
 
     override fun onCreate() {
         super.onCreate()
+        // Video's session must never overwrite music/radio/TV/YouTube cards.
+        setMediaNotificationProvider(
+            androidx.media3.session.DefaultMediaNotificationProvider.Builder(this)
+                .setNotificationId(if (de.mm20.launcher2.base.ProcessInfo.isolatedPlayer) 7406 else 7405)
+                .build()
+        )
         VideoSession.service = this
         VideoSession.player?.let { open(it) }
     }
@@ -78,6 +84,13 @@ object VideoSession {
         this.player = null
         val s = service
         s?.close()
-        s?.stopSelf()
+        // A next episode recreates the screen in the same process. Keep the
+        // empty service briefly so the replacement player can reattach safely.
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+            if (this.player == null && service === s) {
+                service = null
+                s?.stopSelf()
+            }
+        }, 1500L)
     }
 }

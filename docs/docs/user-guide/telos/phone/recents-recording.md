@@ -162,3 +162,6 @@ on another phone cannot be decrypted.
 | "Cannot play recording" | No audio player app is installed that handles `audio/mp4`, or the Keystore key is gone after a reset |
 | Auto-record does not start | Grant the microphone permission and check the call became active (answered) |
 | Old recordings do not disappear | Deleting happens when a new recording starts |
+
+
+While typing in Recents search, matching recent calls appear first, followed by matching contacts in the same list. Contact details and call confirmation remain available without switching tabs.

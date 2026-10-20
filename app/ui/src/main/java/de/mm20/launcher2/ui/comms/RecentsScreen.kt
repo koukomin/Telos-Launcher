@@ -131,6 +131,12 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
         }
     }
     val collapsed = remember(filtered) { collapseRecents(filtered) }
+    val contactsViewModel: ContactsViewModel = viewModel()
+    val contacts by contactsViewModel.contacts.collectAsStateWithLifecycle()
+    val defaultNumbers by contactsViewModel.defaultNumbers.collectAsStateWithLifecycle()
+    val matchingContacts = remember(contacts, searchQuery) {
+        if (searchQuery.isBlank()) emptyList() else ContactSearch.search(searchQuery, contacts)
+    }
 
     Column(Modifier.fillMaxSize()) {
         if (showFilters || filter != RecentsFilter.All) Row(
@@ -197,9 +203,9 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
             }
         }
 
-        if (filtered.isEmpty() && searchQuery.isNotBlank()) {
+        if (filtered.isEmpty() && matchingContacts.isEmpty() && searchQuery.isNotBlank()) {
             de.mm20.launcher2.ui.component.SearchEmptyState(searchQuery)
-        } else if (filtered.isEmpty()) {
+        } else if (filtered.isEmpty() && searchQuery.isBlank()) {
             val isDefaultDialer = remember(context) {
                 val pkg = context.packageName
                 val tm = context.getSystemService(android.telecom.TelecomManager::class.java)
@@ -215,6 +221,10 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
             )
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
+                if (searchQuery.isNotBlank() && collapsed.isNotEmpty()) item(key = "recents-heading") {
+                    Text(stringResource(R.string.au_phonea_recents), Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.titleSmall)
+                }
                 items(collapsed, key = { it.call.id }) { group ->
                     RecentCallRow(
                         call = group.call,
@@ -241,6 +251,24 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                             backStack.add(ContactDetailsRoute(phoneNumber = group.call.phoneNumber))
                         },
                         onLongPress = { cabCall = group },
+                    )
+                }
+                if (matchingContacts.isNotEmpty()) item(key = "contacts-heading") {
+                    Text(stringResource(R.string.preference_search_contacts), Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.titleSmall)
+                }
+                items(matchingContacts, key = { "contact-${it.id}" }) { contact ->
+                    val number = remember(contact, defaultNumbers) { contactsViewModel.numberFor(contact) }
+                    val open = { backStack.add(ContactDetailsRoute(contactId = contact.id)); Unit }
+                    ContactRow(
+                        contact = contact, query = searchQuery, onOpen = open,
+                        onCall = {
+                            if (!tapToCall || number.isEmpty()) open()
+                            else if (confirmBeforeCall) pendingCall = number
+                            else viewModel.dial(context, number)
+                        },
+                        onSms = { if (number.isNotEmpty()) context.tryStartActivity(MessengerIntentUtils.sms(number)); Unit },
+                        onLongPress = open,
                     )
                 }
             }

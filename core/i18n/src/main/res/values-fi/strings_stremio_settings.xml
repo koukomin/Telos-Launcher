@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">HTTP-välimuisti</string>
+    <string name="stremio_auto_next">Toista seuraava jakso automaattisesti</string>
+    <string name="stremio_hide_screeners">Sulje CAM / Screener pois</string>
+</resources>

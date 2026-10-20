@@ -72,7 +72,7 @@ private fun RadioDashboardContent(
     val recordingState by playerViewModel.recordingState.collectAsStateWithLifecycle()
     val isRecording = recordingState is de.mm20.launcher2.comms.radio.RadioRecorder.State.Recording
 
-    var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
+    var selectedTabIndex by de.mm20.launcher2.ui.component.rememberPersistentUiState("radio.tab", 0)
     val tabs = listOf(
         stringResource(R.string.au_radio_tab_collection),
         stringResource(R.string.hc_search),

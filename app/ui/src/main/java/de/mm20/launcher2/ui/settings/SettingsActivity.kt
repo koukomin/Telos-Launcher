@@ -230,7 +230,7 @@ open class SettingsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (redirectVirtualApp(intent)) {
-            finish()
+            finishRedirectHost()
             return
         }
         WindowCompat.enableEdgeToEdge(window)
@@ -664,6 +664,9 @@ open class SettingsActivity : BaseActivity() {
                 }
             }
 
+            if (this@SettingsActivity is TelosAppActivity) {
+                initialRoute?.let { de.mm20.launcher2.ui.component.PersistNavigation(backStack, it) }
+            }
             val wallpaperColors by wallpaperColorsAsState()
             CompositionLocalProvider(
                 LocalWallpaperColors provides wallpaperColors,
@@ -768,7 +771,10 @@ open class SettingsActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        if (redirectVirtualApp(intent)) return
+        if (redirectVirtualApp(intent)) {
+            finishRedirectHost()
+            return
+        }
         setIntent(intent)
         applyTaskLabel(intent)
         applyVirtualAppOrientation(
@@ -778,6 +784,11 @@ open class SettingsActivity : BaseActivity() {
         )
         val newRoute = getStartRoute(intent)
         initialRoute = newRoute
+    }
+
+    /** A redirect-only root must not remain as a blank Settings card with a replayable base intent. */
+    private fun finishRedirectHost() {
+        if (isTaskRoot) finishAndRemoveTask() else finish()
     }
 
     /** Keep every existing entry point (drawer, notifications, shares) on the same app task. */
@@ -796,7 +807,7 @@ open class SettingsActivity : BaseActivity() {
             flags = (flags and (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or
                 Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or
                 Intent.FLAG_ACTIVITY_MULTIPLE_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS).inv()) or
-                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or Intent.FLAG_ACTIVITY_RETAIN_IN_RECENTS
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT
         })
         return true
     }

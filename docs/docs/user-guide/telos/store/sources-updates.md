@@ -187,3 +187,14 @@ Only the first category of an app is kept on import. Installed state is taken fr
 ### Obtainium import
 
 Use the Store menu to import an Obtainium JSON export, a single app configuration or an array of configurations. Supported source options, category, pinning and track-only settings are retained. Global Obtainium preferences and credentials are not imported. Unsupported sources are reported in the import summary. App and bulk-app links import configurations; add links prefill the source form. Import does not install apps or enable automatic updates.
+
+
+Automatic updates are enabled for new Store configurations and newly discovered
+non-Play apps follow that setting. Turn off automatic installation in Store
+settings to stop all automatic installs, or disable it for individual apps.
+Existing saved settings are preserved. Play-managed installs are excluded from
+automatic installation even if a separate source is tracked. Wi-Fi, battery and
+background check settings still apply. Android confirmation is required with the
+session installer; silent updates need an available privileged installer.
+Launcher self-updates are deferred while an alarm is scheduled; other apps can
+still update.

@@ -185,7 +185,7 @@ fun PhotosScreen(embedded: Boolean = false) {
     }
     LaunchedEffect(Unit) { if (hasPermission) viewModel.load(context) }
 
-    var tab by rememberSaveable { mutableIntStateOf(0) }
+    var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("photos.tab", 0)
     var album by remember { mutableStateOf<Album?>(null) }
     var columns by rememberSaveable { mutableIntStateOf(4) }
     var selected by remember { mutableStateOf<Set<Uri>>(emptySet()) }

@@ -333,3 +333,13 @@ time triggers only take effect while the launcher process is alive.
 - Overlays depend on the display-over-other-apps permission, which some manufacturers restrict.
 - The Dynamic Island timer is not fed by anything yet.
 - Context profile triggers do not run in the background.
+
+
+Virtual app navigation stacks and common tab selections are saved independently
+of Android's temporary activity state, including embedded app pages. Reopening
+after process loss restores compatible saved navigation; Files also restores
+folders and split-pane workspace. This does not replay confirmation dialogs,
+restart every media session, or recover arbitrary unsaved editor forms.
+
+
+Closing a virtual app removes its finished document task from Recents. Compatibility launches through Settings clean up their temporary root task so a blank Settings card cannot reopen the app. Process recovery applies to unfinished tasks, not an explicit close.

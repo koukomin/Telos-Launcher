@@ -21,7 +21,7 @@ data class ItemOptions(
     /** A label to group apps */
     val category: String = "",
     val note: String = "",
-    /** null follows the existing global setting; discovered apps explicitly start with false. */
+    /** null follows the existing global setting; newly discovered apps follow the global setting. */
     val autoUpdate: Boolean? = null,
 )
 
@@ -33,7 +33,7 @@ data class GlobalOptions(
     val wifiOnly: Boolean = true,
     val notifyUpdates: Boolean = true,
     /** Install updates without asking when Shizuku or root allows it (never otherwise) */
-    val autoInstall: Boolean = false,
+    val autoInstall: Boolean = true,
     val updateFrozenApps: Boolean = false,
     /** session, shizuku, root, or external:<package>. */
     val installer: String = "session",

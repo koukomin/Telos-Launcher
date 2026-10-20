@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">Memòria cau HTTP</string>
+    <string name="settings">Configuració</string>
+    <string name="dl_category_audio">Àudio</string>
+    <string name="hc_subtitles">Subtítols</string>
+    <string name="dl_t_select_none">Cap</string>
+    <string name="au3_appearance_cs_primary">Principal</string>
+    <string name="au3_appearance_cs_secondary">Secundària</string>
+    <string name="stremio_auto_next">Reprodueix automàticament el següent episodi</string>
+    <string name="stremio_hide_screeners">Exclou CAM / Screener</string>
+    <string name="screenrec_resolution">Resolució</string>
+    <string name="au20_viewer_info_size">Mida</string>
+    <string name="hc_from_a_file">Des de fitxer</string>
+    <string name="hc_search_online">Cerca en línia</string>
+    <string name="au_video_torrent_failed">No es pot obrir el torrent</string>
+</resources>

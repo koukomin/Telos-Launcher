@@ -1314,3 +1314,29 @@ Telos video wallpaper glass samples only the service’s own rendered surface wi
 
 
 The home clock, transparent resting search bar and dock page dots have no automatic rectangular contrast backing. Wallpaper-aware foreground selection still runs, while the search bar keeps its explicitly selected style and active surface. Other widget/app glass panels and their contrast policy are unchanged. This also removes the extra backing that appeared when wallpaper sampling was unavailable on Android 13 and newer.
+
+
+Recent UI refinements preserve wallpaper blur while giving popup menus and
+navigation drawers readable tonal backgrounds. Phone Recents search lists
+matching calls followed by matching contacts without switching tabs. Files tabs
+and workspace actions use separate rows, and the media mini player uses paired
+contrast colors for its play/pause control.
+
+
+New Store configurations enable automatic non-Play updates by default, with a
+global off switch and per-app exclusions. Existing saved choices are retained;
+silent installation requires a supported privileged installer. Virtual-app route
+stacks and common tab selections are checkpointed for reopening after process
+loss, alongside the existing Files workspace, alarm and Network recovery.
+
+
+Virtual-app task cleanup removes temporary Settings redirect cards and explicitly finished app tasks from Recents, while retaining recovery for unfinished tasks.
+
+
+TV/video controls and system bars respond to taps across portrait letterbox areas. TV upgrades legacy pause-on-leave defaults to background playback, with subsequent opt-outs preserved. Normal and isolated video have separate notification IDs alongside existing Music, Radio, TV and YouTube media notifications.
+
+
+Stremio Fork adds ordered primary/secondary audio and subtitle preferences (including None), a 1/2/5/10/20 GB LRU HTTP cache per player process, and access to existing shared torrent speed/network settings. Temporary torrent staging is separate from that HTTP cache budget.
+
+
+Playback gains a searchable subtitle-track sheet. Stremio adds opt-in catalog-based next-episode continuation and conservative resolution/advertised-size/CAM-source preferences; unknown metadata and manual fallback remain available, without changing video decoding.

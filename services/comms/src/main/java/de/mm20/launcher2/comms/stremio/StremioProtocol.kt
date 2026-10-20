@@ -180,6 +180,7 @@ object StremioProtocol {
                 sources = s.optJSONArray("sources").strings(),
                 subtitles = s.optJSONArray("subtitles").objects(::subtitleOf),
                 filename = s.optJSONObject("behaviorHints")?.str("filename"),
+                sizeBytes = s.optJSONObject("behaviorHints")?.optLong("videoSize", 0)?.takeIf { it > 0 },
             )
         }
     }

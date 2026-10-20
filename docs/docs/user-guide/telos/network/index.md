@@ -70,3 +70,9 @@ WAN lookup runs only when tapped and contacts the displayed `api.ipify.org` endp
 Tor is available from the Network home and settings. The shared system route chooser, also available in the System widget, selects Direct, an imported WireGuard profile, or Tor. Direct disables the selected proxy route while the local Network firewall may remain active. Tor starts internally and TCP/DNS traffic fails closed while it connects; unsupported UDP is blocked. The System widget uses the same process reader as the System app, subject to Android process visibility limits.
 
 The VPN notification exposes status and controls. Pause offers 5 minutes, 30 minutes, one hour or two hours, plus Stop. Resume restores the wanted configuration. Android exact-alarm/background-service restrictions may delay automatic resume; Resume remains available manually. System always-on VPN lockdown can block connectivity while paused. Stopping explicitly cancels pending resume.
+
+
+Network restores its saved on/off intent, configuration and any pause deadline
+after a recoverable service restart or package update. Resume requires the
+existing Android VPN consent; reboot follows Start on boot. Force-stop and
+revoking VPN consent can prevent automatic recovery.

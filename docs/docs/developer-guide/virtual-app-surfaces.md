@@ -37,3 +37,77 @@ Telos video wallpaper glass samples only the service’s own rendered surface wi
 
 
 The home clock, transparent resting search bar and dock page dots have no automatic rectangular contrast backing. Wallpaper-aware foreground selection still runs, while the search bar keeps its explicitly selected style and active surface. Other widget/app glass panels and their contrast policy are unchanged. This also removes the extra backing that appeared when wallpaper sampling was unavailable on Android 13 and newer.
+
+
+## Readable overlays, controls and search
+
+Keep `surface`/`background` clear for root scaffolds, but preserve opaque
+`surfaceContainer` for Material popup menus. Files and Phone drawers explicitly
+use that role: wallpaper blur remains behind the app, while overlay labels do
+not mix with underlying content. Playback buttons use paired
+primaryContainer/onPrimaryContainer roles, never the transparent root surface as
+foreground. Test both paused and playing TV mini player states.
+
+Files workspace chrome uses separate rows for scrollable tabs and fixed actions,
+so large fonts and narrow windows cannot squeeze a selected tab into a sliver.
+Phone Recents search appends ContactSearch results after filtered recent calls in
+one lazy list. It reuses ContactsViewModel privacy filtering, preferred numbers,
+contact detail rows and existing call confirmation, without changing tabs.
+
+Agent visual checks must include Greek labels, large system fonts, narrow and
+wide windows, light/dark and animated wallpapers, and menus/drawers opened over
+text. Preserve the no-plate home clock/search/dock-dot rule and single shared
+blur backing documented above. Physical-device verification is still required.
+
+
+## Process and package replacement continuity
+
+PersistentUiState stores small tab selections independently of Android's optional
+saved-instance bundle. Clock, Store, Phone, Radio, Music, Video, Photos, Stremio,
+NextDNS and Network logs use it. PersistentNavigation checkpoints bounded (32
+routes / 64 KiB) virtual-app navigation stacks in standalone and embedded hosts;
+serialization and disk reads run on IO. Routes restore only under the same root,
+without replacing navigation that changed during loading. Transient confirmation
+routes are excluded; failed/incompatible snapshots fall back to the root. R8
+retains NavKey class names for this lookup. This is navigation continuity, not a
+snapshot of arbitrary ViewModels, playback sessions, dialogs or unsaved forms.
+
+Files already persists open paths, selected tabs, split panes and active pane.
+ClockAlarms persists alarm definitions before scheduling, and its receiver
+reschedules on boot, package replacement, timezone/time changes and exact-alarm
+authorization. Process death does not itself remove AlarmManager registrations.
+Network persists wanted/off state, configuration and pause deadline; sticky VPN
+restart, package replacement and activity resume restore it, subject to existing
+VPN consent and the user's boot policy. Android force-stop/revoked permissions
+are not equivalent to a recoverable crash. End-to-end update/crash checks on a
+physical device remain outstanding.
+
+
+## Recents task cleanup
+
+SettingsActivity is a compatibility entry point for virtual apps. After forwarding to TelosAppActivity it removes a root redirect task, including when the redirect arrives through onNewIntent. A non-root redirect finishes only itself. Virtual-app document launches do not request RETAIN_IN_RECENTS, and explicitly finishing a root TelosAppActivity removes its document task. This prevents a blank Settings card from replaying the original virtual-app launch. Unfinished tasks still retain normal Android process-recreation and navigation recovery. Device validation of swipe-away, Back and re-opening from Recents remains required.
+
+
+## Media control visibility and background playback
+
+TV toggles controls over its full-window gesture surface and synchronizes system bars with controls. Local/stream video owns the single-tap gesture sequence across the full PlayerView, including portrait letterbox regions, without double toggling through native ACTION_UP. Existing double-tap, seek, volume and brightness gestures remain. Video controller visibility also drives system bars.
+
+TV upgrades legacy pause-on-leave settings once to background playback; subsequent explicit opt-outs are saved with backgroundPolicyVersion=1. Video uses notification IDs 7405/7406 (normal/isolated process); Music, Radio, TV and YouTube already use distinct 7401–7404 IDs and MediaSession services. Actual Android media-card display still depends on playback/session state and system notification settings.
+
+
+## Stremio playback preferences
+
+StremioPlaybackSettings stores ordered audio/text language preferences and a validated 1/2/5/10/20 GiB HTTP cache choice, read/written on IO and shared through an atomic file with the isolated player. Empty audio preferences leave automatic selection; empty primary text disables text and automatic subtitle lookup even if a secondary language remains. Stremio launch intents carry an explicit marker so local videos retain their existing behavior. Media3 receives the preference lists before preparation; manual player track selection remains possible.
+
+StremioStreamCache uses a process-local SimpleCache handle, separate disk locks for normal/isolated players, a touch-aware LRU evictor and immediate trim on the next player open after a budget reduction. A cache error falls back to the normal routed data source. The budget applies per player HTTP cache; torrent staging files remain separate and are not a bounded rolling torrent cache. Temporary torrent files are still removed by the existing TorrentStreamer cleanup. Settings embed the existing shared torrent controls for rate limits, peer discovery, encryption and connections; no second torrent session is created.
+
+
+## Stremio episode continuation and safe source preferences
+
+Stremio-marked torrent playback queues only the selected file, avoiding accidental automatic playback of unrelated files. An opt-in end-of-playback continuation resolves the next catalog-provided episode ID (bounded queue of 100), from the same add-on and transport, with a 15-second deadline. It only accepts web/torrent playback; no external browser is launched. The activity is recreated with the next intent so isolated playback does not explicitly finish/kill its process between episodes. The media service briefly defers stopping an empty session to allow replacement attachment. No match or a provider/network error leaves playback ended. These transitions still require device lifecycle validation.
+
+Optional resolution, maximum advertised size and CAM/screener preferences read source metadata and names. Unknown fields remain visible; manual browsing restores all sources if a filter would hide everything. Automatic continuation does not use that empty-result fallback. No URL, codec, bitrate, torrent piece behavior or video decode path is changed by filtering.
+
+SubtitleSelectionSheet lists individual text tracks with language/label and selected state, supports search and None, and keeps file/online actions below a lazy scrolling list that adapts to landscape height.
+
+Automatic torrent continuation additionally requires a non-negative provider file index; the opened torrent must contain that video index, otherwise it stops instead of selecting the largest file. Episode IDs and intent titles are bounded to 512 characters each to keep the 100-entry continuation queue within a predictable intent payload.

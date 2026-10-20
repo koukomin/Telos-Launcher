@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">HTTP 캐시</string>
+    <string name="stremio_auto_next">다음 에피소드 자동 재생</string>
+    <string name="stremio_hide_screeners">CAM / Screener 제외</string>
+</resources>

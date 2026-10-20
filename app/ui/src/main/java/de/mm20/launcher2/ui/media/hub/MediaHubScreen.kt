@@ -689,8 +689,8 @@ private fun HubMiniPlayer(
                         }
                     },
                     shape = CircleShape,
-                    color = scheme.onSurface,
-                    contentColor = scheme.surface,
+                    color = scheme.primaryContainer,
+                    contentColor = scheme.onPrimaryContainer,
                     modifier = Modifier.size(48.dp),
                 ) {
                     Box(contentAlignment = Alignment.Center) {

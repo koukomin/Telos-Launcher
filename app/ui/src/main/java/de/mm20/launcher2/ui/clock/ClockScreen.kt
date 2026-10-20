@@ -66,7 +66,7 @@ fun ClockScreen() {
     val context = LocalContext.current
     val activity = context as? Activity
     val backStack = LocalBackStack.current
-    var selectedTab by remember { mutableIntStateOf(0) }
+    var selectedTab by de.mm20.launcher2.ui.component.rememberPersistentUiState("clock.tab", 0)
     var night by remember { mutableStateOf(false) }
     var now by remember { mutableStateOf(ZonedDateTime.now()) }
     LaunchedEffect(Unit) { while (isActive) { now = ZonedDateTime.now(); delay(1000) } }
