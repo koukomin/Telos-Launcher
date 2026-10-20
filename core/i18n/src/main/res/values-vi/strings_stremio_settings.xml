@@ -13,4 +13,5 @@
     <string name="au20_viewer_info_size">Kích thước</string>
     <string name="hc_from_a_file">Từ tệp</string>
     <string name="hc_search_online">Tìm trực tuyến</string>
+    <string name="au_video_torrent_failed">Không thể mở torrent</string>
 </resources>

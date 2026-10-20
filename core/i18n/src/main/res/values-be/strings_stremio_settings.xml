@@ -13,4 +13,5 @@
     <string name="au20_viewer_info_size">Памер</string>
     <string name="hc_from_a_file">З файла</string>
     <string name="hc_search_online">Шукаць у інтэрнэце</string>
+    <string name="au_video_torrent_failed">Не ўдалося адкрыць торэнт</string>
 </resources>

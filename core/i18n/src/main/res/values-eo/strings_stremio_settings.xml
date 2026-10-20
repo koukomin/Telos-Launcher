@@ -13,4 +13,5 @@
     <string name="au20_viewer_info_size">Grandeco</string>
     <string name="hc_from_a_file">El dosiero</string>
     <string name="hc_search_online">Serĉi interrete</string>
+    <string name="au_video_torrent_failed">Ne eblis malfermi la torenton</string>
 </resources>

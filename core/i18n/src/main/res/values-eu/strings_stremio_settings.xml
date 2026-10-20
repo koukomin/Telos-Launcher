@@ -13,4 +13,5 @@
     <string name="au20_viewer_info_size">Tamaina</string>
     <string name="hc_from_a_file">Fitxategi batetik</string>
     <string name="hc_search_online">Bilatu sarean</string>
+    <string name="au_video_torrent_failed">Ezin izan da torrenta ireki</string>
 </resources>

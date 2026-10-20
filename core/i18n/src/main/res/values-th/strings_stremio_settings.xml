@@ -13,4 +13,5 @@
     <string name="au20_viewer_info_size">ขนาด</string>
     <string name="hc_from_a_file">จากไฟล์</string>
     <string name="hc_search_online">ค้นหาออนไลน์</string>
+    <string name="au_video_torrent_failed">ไม่สามารถเปิดทอร์เรนต์ได้</string>
 </resources>
