@@ -35,7 +35,9 @@ data class WallpaperColors(
                 Color(colors.primaryColor.toArgb()),
                 colors.secondaryColor?.toArgb()?.let { Color(it) },
                 colors.tertiaryColor?.toArgb()?.let { Color(it) },
-                colors.colorHints
+                // Palette colors are public on 27; contrast hints became public on 31.
+                // Older releases retain conservative text/scrim fallback behavior.
+                if (Build.VERSION.SDK_INT >= 31) colors.colorHints else 0
             )
         }
     }

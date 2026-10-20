@@ -46,7 +46,7 @@ internal class PluginActionComponent(
         withContext(Dispatchers.IO) {
             try {
                 context.contentResolver.call(
-                    authority,
+                    android.net.Uri.Builder().scheme("content").authority(authority).build(),
                     GestureActionPluginContract.Methods.Invoke,
                     actionId,
                     null,

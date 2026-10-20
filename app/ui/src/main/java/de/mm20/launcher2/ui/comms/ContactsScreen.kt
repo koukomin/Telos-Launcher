@@ -142,7 +142,7 @@ fun ContactsScreen(
         ContactSearch.search(query, pool)
     }
     val rows = remember(filtered, query) {
-        val grouped = if (query.isBlank()) {
+        val grouped: Map<Char, List<DialerContact>> = if (query.isBlank()) {
             filtered.groupBy {
                 val first = GreekText.fold(it.displayName).firstOrNull()?.uppercaseChar()
                 if (first != null && first.isLetter()) first else '#'

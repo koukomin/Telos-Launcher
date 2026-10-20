@@ -46,7 +46,7 @@ object PlayStoreInventory {
                 installer?.originatingPackageName == PLAY_PACKAGE
             if (!fromPlay) return@mapNotNull null
             val pkgInfo = runCatching { pm.getPackageInfo(info.packageName, flags) }.getOrNull()
-            val versionCode = pkgInfo?.longVersionCode ?: 0L
+            val versionCode = pkgInfo?.let(androidx.core.content.pm.PackageInfoCompat::getLongVersionCode) ?: 0L
             PlayStoreApp(
                 packageName = info.packageName,
                 label = info.loadLabel(pm).toString(),

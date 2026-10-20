@@ -127,7 +127,7 @@ fun WorkProfileSettingsScreen() {
                         SwitchPreference(
                             title = stringResource(R.string.preference_work_profile_pause),
                             summary = stringResource(R.string.preference_work_profile_pause_summary),
-                            enabled = hasManageProfilesPermission == true,
+                            enabled = hasManageProfilesPermission == true && android.os.Build.VERSION.SDK_INT >= 28,
                             value = workProfileState?.locked != true,
                             onValueChanged = { setPaused(!it) },
                         )

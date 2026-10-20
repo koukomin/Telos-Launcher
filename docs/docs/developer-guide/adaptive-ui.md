@@ -133,8 +133,9 @@ Regression coverage:
 - `AdaptiveLayoutPolicyTest`: width/font/display-scale matrix, preferred-count bounds,
   pane width+height budgets, settings reflow, reading width and scientific key label budgets.
 - `PreferenceAdaptiveTest` (instrumented): wrapped-title/control geometry, labeled toggle and
-  disabled state, growing navigation labels/selected semantics. It exports navigation PNGs into
-  the test target's external cache; inspect them before calling the result visually verified.
+  disabled state, growing navigation labels/selected semantics. On API 29+ it exports light/dark preference and navigation PNGs through MediaStore into
+  Pictures/TelosUiValidation, which survives test-app cleanup. CI collects them as artifacts;
+  inspect them before calling the result visually verified.
 - Existing contrast tests remain separate and must continue to pass.
 
 Run with one worker and in-process Kotlin compilation on 8 GiB runners. Use a 2 GiB Gradle
@@ -143,3 +144,9 @@ previously exceeded this runner's memory during #46. Focused lint results must n
 IDs and must never be described as a clean full lint result.
 
 Execution results and outstanding device checks are recorded in [UI validation](./ui-validation).
+
+Compatibility fixes found by focused lint use SDK guards and existing AndroidX compat APIs.
+Do not reference public wallpaper contrast hints before API 31, recoverable media actions before
+29 or profile controls before 28. On older releases retain conservative scrims / unsupported
+control states. Explicitly type collection branch results as Kotlin Map when mixed sorted/linked
+maps could infer newer JDK interfaces such as SequencedMap on a JDK 21 build host.

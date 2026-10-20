@@ -117,10 +117,32 @@ class PreferenceAdaptiveTest {
     }
 
     private fun saveScreenshot(name: String) {
-        val output = File(InstrumentationRegistry.getInstrumentation().targetContext.externalCacheDir, name)
-        output.outputStream().use { stream ->
-            compose.onRoot().captureToImage().asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val bitmap = compose.onRoot().captureToImage().asAndroidBitmap()
+        if (android.os.Build.VERSION.SDK_INT >= 29) {
+            // Shared test evidence survives AGP's test-APK uninstall; app cache does not.
+            // Creating our own images through MediaStore needs no storage-read permission.
+            val values = android.content.ContentValues().apply {
+                put(android.provider.MediaStore.Images.Media.DISPLAY_NAME, name)
+                put(android.provider.MediaStore.Images.Media.MIME_TYPE, "image/png")
+                put(android.provider.MediaStore.Images.Media.RELATIVE_PATH,
+                    android.os.Environment.DIRECTORY_PICTURES + "/TelosUiValidation")
+                put(android.provider.MediaStore.Images.Media.IS_PENDING, 1)
+            }
+            val uri = checkNotNull(context.contentResolver.insert(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values,
+            ))
+            checkNotNull(context.contentResolver.openOutputStream(uri)).use { stream ->
+                check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream))
+            }
+            context.contentResolver.update(uri, android.content.ContentValues().apply {
+                put(android.provider.MediaStore.Images.Media.IS_PENDING, 0)
+            }, null, null)
+        } else {
+            val output = File(context.externalCacheDir, name)
+            output.outputStream().use { stream ->
+                check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream))
+            }
         }
     }
-
 }

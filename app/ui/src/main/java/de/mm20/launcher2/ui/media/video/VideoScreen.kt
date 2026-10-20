@@ -191,7 +191,9 @@ fun VideoScreen() {
                     ResumeStore.markUnwatched(context, video.uri)
                     viewModel.load(context)
                 } catch (e: SecurityException) {
-                    val action = (e as? android.app.RecoverableSecurityException)?.userAction?.actionIntent?.intentSender
+                    val action = if (Build.VERSION.SDK_INT >= 29) {
+                        (e as? android.app.RecoverableSecurityException)?.userAction?.actionIntent?.intentSender
+                    } else null
                     if (action != null) deleteLauncher.launch(androidx.activity.result.IntentSenderRequest.Builder(action).build()) else throw e
                 }
             }

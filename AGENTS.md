@@ -135,3 +135,8 @@ keep [validation evidence](docs/docs/developer-guide/ui-validation.md) accurate.
   coverage for changed policies/components. Record commands, commit, screenshots and untested
   states. Compilation/previews/static tests are not device or visual verification; do not label
   an unreviewed screen or the entire UI phase complete.
+
+- Keep min-SDK compatibility explicit: use existing AndroidX compat calls or SDK guards, never
+  suppress a real NewApi failure. Do not let JDK 21 collection inference introduce SequencedMap
+  into Android paths that support older APIs. CI screenshots must survive test-APK uninstall;
+  follow the documented MediaStore collection pattern and verify artifact retrieval.

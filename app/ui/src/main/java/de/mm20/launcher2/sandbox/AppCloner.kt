@@ -79,7 +79,6 @@ object AppCloner {
         }
 
         try {
-            val crossProfileApps = context.getSystemService(Context.CROSS_PROFILE_APPS_SERVICE) as android.content.pm.CrossProfileApps
             // There is no easy way to bindServiceAsUser without reflection or SYSTEM privileges.
             // Using reflection for Context.bindServiceAsUser
             val bindServiceAsUser = Context::class.java.getMethod(

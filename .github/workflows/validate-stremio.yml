@@ -66,31 +66,31 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: chmod +x gradlew
       - name: Test Stremio protocol and watched state
-        run: ./gradlew :services:comms:testDebugUnitTest --stacktrace
+        run: ./gradlew :services:comms:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test home media session discovery and priority
-        run: ./gradlew :services:music:testDebugUnitTest --stacktrace
+        run: ./gradlew :services:music:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test Tor routing and Web3 resolution
-        run: ./gradlew :services:network:testDebugUnitTest --stacktrace
+        run: ./gradlew :services:network:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test frozen launcher component ordering
-        run: ./gradlew :data:applications:testDebugUnitTest --stacktrace
+        run: ./gradlew :data:applications:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test persisted frozen-app snapshots
-        run: ./gradlew :core:preferences:testDebugUnitTest --stacktrace
+        run: ./gradlew :core:preferences:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test freeze transitions and partial failures
-        run: ./gradlew :services:freeze:testDebugUnitTest --stacktrace
+        run: ./gradlew :services:freeze:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test GIF wallpaper decoder limits
-        run: ./gradlew :services:wallpapers:testDebugUnitTest --stacktrace
+        run: ./gradlew :services:wallpapers:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test virtual app task identities
-        run: ./gradlew :core:base:testDebugUnitTest --tests 'de.mm20.launcher2.webapp.EmbeddedBrowserPolicyTest' --tests 'de.mm20.launcher2.applock.VirtualAppTaskTest' --tests 'de.mm20.launcher2.search.TelosAppKeywordsTest' --tests 'de.mm20.launcher2.helper.BatchNamesTest' --tests 'de.mm20.launcher2.helper.StorageAnalysisTest' --tests 'de.mm20.launcher2.helper.FileTrashTest' --tests 'de.mm20.launcher2.helper.FileSearchIndexTest' --tests 'de.mm20.launcher2.helper.FileTreeOpsTest' --tests 'de.mm20.launcher2.helper.ResumableFileTransferTest' --tests 'de.mm20.launcher2.helper.PasswordFileEncryptionTest' --tests 'de.mm20.launcher2.helper.SplitZipArchiveTest' --tests 'de.mm20.launcher2.helper.ExclusiveFilePublicationTest' --stacktrace
+        run: ./gradlew :core:base:testDebugUnitTest --tests 'de.mm20.launcher2.webapp.EmbeddedBrowserPolicyTest' --tests 'de.mm20.launcher2.applock.VirtualAppTaskTest' --tests 'de.mm20.launcher2.search.TelosAppKeywordsTest' --tests 'de.mm20.launcher2.helper.BatchNamesTest' --tests 'de.mm20.launcher2.helper.StorageAnalysisTest' --tests 'de.mm20.launcher2.helper.FileTrashTest' --tests 'de.mm20.launcher2.helper.FileSearchIndexTest' --tests 'de.mm20.launcher2.helper.FileTreeOpsTest' --tests 'de.mm20.launcher2.helper.ResumableFileTransferTest' --tests 'de.mm20.launcher2.helper.PasswordFileEncryptionTest' --tests 'de.mm20.launcher2.helper.SplitZipArchiveTest' --tests 'de.mm20.launcher2.helper.ExclusiveFilePublicationTest' --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test Downloader queue and transfer policies
-        run: ./gradlew :services:downloads:testDebugUnitTest --stacktrace
+        run: ./gradlew :services:downloads:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test Store download and update policies
-        run: ./gradlew :services:store:testDebugUnitTest --stacktrace
+        run: ./gradlew :services:store:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test UI settings, archives, contact recovery, wallpaper contrast and adaptive layouts
         run: ./gradlew :app:ui:testDefaultDebugUnitTest :app:ui:compileDefaultDebugAndroidTestKotlin --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m --stacktrace
       - name: Test streaming APK downloads with a constrained heap
-        run: ./gradlew :data:store:testDebugUnitTest --stacktrace
+        run: ./gradlew :data:store:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Build debug APK
-        run: ./gradlew :app:app:assembleDefaultDebug --stacktrace
+        run: ./gradlew :app:app:assembleDefaultDebug --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - uses: actions/upload-artifact@v4
         with:
           name: telos-stremio-debug
