@@ -40,7 +40,7 @@ class ErmisRepository private constructor(private val context: Context) {
                 vault.read()?.let { json.decodeFromString<StoredMail>(it) }?.let {
                     passwords = it.passwords
                     uidValidity = it.uidValidity
-                    mutable.value = ErmisState(it.accounts, it.messages, drafts = it.drafts, folders = it.folders)
+                    mutable.value = ErmisState(it.accounts, ErmisCachePolicy.bound(it.messages), drafts = it.drafts, folders = it.folders)
                 }
                 mutable.update { it.copy(loading = false) }
             } catch (e: Exception) { mutable.update { it.copy(loading = false, error = context.getString(de.mm20.launcher2.comms.R.string.ermis_error_cache)) } }
@@ -178,7 +178,7 @@ class ErmisRepository private constructor(private val context: Context) {
                     val retained = state.messages.filterNot { ErmisMailboxPolicy.matches(it, a.id, canonical) }
                     val merged = if (accountId == null) (retained + incoming).sortedByDescending { it.date }.take(1000)
                         else (incoming + retained).take(1000).sortedByDescending { it.date }
-                    state.copy(messages = merged)
+                    state.copy(messages = ErmisCachePolicy.bound(merged))
                 }
             }
         }
@@ -199,8 +199,8 @@ class ErmisRepository private constructor(private val context: Context) {
                 summaries(a, canonical, mailbox, uids, found)
             }
         }
-        mutable.update { state -> state.copy(messages = (result + state.messages)
-            .distinctBy { Triple(it.accountId, it.folder, it.uid) }.take(1000).sortedByDescending { it.date }) }
+        mutable.update { state -> state.copy(messages = ErmisCachePolicy.bound((result + state.messages)
+            .distinctBy { Triple(it.accountId, it.folder, it.uid) }.take(1000).sortedByDescending { it.date })) }
         persist()
         result
     }
@@ -222,8 +222,8 @@ class ErmisRepository private constructor(private val context: Context) {
             replace(finalMessage); persist(); finalMessage
         }
     }
-    private fun replace(message: ErmisMessage) { mutable.update { it.copy(messages = it.messages.map { m -> if (ErmisMailboxPolicy.matches(m, message.accountId, message.folder, message.uid)) message
-        else if (message.html.isNotEmpty() && m.html.isNotEmpty()) m.copy(html="") else m }) } }
+    private fun replace(message: ErmisMessage) { mutable.update { state -> state.copy(messages = ErmisCachePolicy.bound(
+        state.messages.map { if (ErmisMailboxPolicy.matches(it, message.accountId, message.folder, message.uid)) message else it }, message)) } }
     suspend fun read(accountId: String, uid: Long, folder: String = "INBOX") = operation { flag(accountId, uid, folder, Flags.Flag.SEEN, true) }
     suspend fun star(accountId: String, uid: Long, starred: Boolean, folder: String = "INBOX") = operation { flag(accountId, uid, folder, Flags.Flag.FLAGGED, starred) }
     private fun flag(id: String, uid: Long, folder: String, flag: Flags.Flag, value: Boolean) {
