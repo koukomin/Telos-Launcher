@@ -110,10 +110,11 @@ fun ClockScreen() {
 
 @Composable
 private fun ClockDigits(text: String, color: Color = MaterialTheme.colorScheme.primary) {
-    val scale = LocalDensity.current.fontScale
-    BoxWithConstraints(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-        Text(text, fontSize = (maxWidth.value / (text.length * .65f) / scale).coerceAtMost(48f).sp,
-            fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, color = color, maxLines = 1)
+    // Important time values remain full-size and can be panned on narrow windows.
+    Box(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), contentAlignment = Alignment.Center) {
+        Text(text, style = MaterialTheme.typography.displayMedium,
+            fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, color = color,
+            maxLines = 1, softWrap = false)
     }
 }
 

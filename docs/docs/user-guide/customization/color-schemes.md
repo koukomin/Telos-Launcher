@@ -127,3 +127,16 @@ reuse it; new wallpapers retain the previous text polarity with a matching prote
 while sampling is pending. Position changes retain the previous text polarity with a protective scrim until geometry has
 settled for 150 ms, then select cached cells without decoding images. Text colors are not
 animated through low-contrast gray.
+
+
+## Window and text size
+
+The launcher uses the active window dimensions, including split-screen changes. Search and filter
+bars reserve their measured content height. Shared settings rows move controls below long text
+when necessary; settings content stays centered on wide windows. Telos Comms and Media navigation
+labels can wrap. Files shows the active tab when two readable panes do not fit. Calculator keys,
+clock values and the calendar week can scroll rather than reduce important text to fit.
+
+These adaptations retain Android text/display scaling and the launcher font setting. Saved grid
+counts remain preferences; fewer columns may be displayed in a narrow window. Device validation
+and remaining limits are tracked in the [UI validation record](../../developer-guide/ui-validation).

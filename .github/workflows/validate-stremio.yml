@@ -7,6 +7,10 @@ on:
       - 'data/widgets/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/launcher/widgets/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/theme/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/layout/**'
+      - 'app/ui/src/test/java/de/mm20/launcher2/ui/layout/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/preferences/**'
+      - 'app/ui/src/androidTest/**'
       - 'app/ui/src/test/java/de/mm20/launcher2/ui/theme/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/LauncherCard.kt'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/SearchBar.kt'
@@ -81,8 +85,8 @@ jobs:
         run: ./gradlew :services:downloads:testDebugUnitTest --stacktrace
       - name: Test Store download and update policies
         run: ./gradlew :services:store:testDebugUnitTest --stacktrace
-      - name: Test UI settings, archives, contact recovery and wallpaper contrast
-        run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests 'de.mm20.launcher2.ui.files.FilesSettingsTransferTest' --tests 'de.mm20.launcher2.ui.files.ArchiveWriterTest' --tests 'de.mm20.launcher2.ui.comms.ContactBlockStatusTest' --tests 'de.mm20.launcher2.ui.theme.ContrastPolicyTest' --stacktrace
+      - name: Test UI settings, archives, contact recovery, wallpaper contrast and adaptive layouts
+        run: ./gradlew :app:ui:testDefaultDebugUnitTest :app:ui:compileDefaultDebugAndroidTestKotlin --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m --stacktrace
       - name: Test streaming APK downloads with a constrained heap
         run: ./gradlew :data:store:testDebugUnitTest --stacktrace
       - name: Build debug APK
@@ -91,3 +95,14 @@ jobs:
         with:
           name: telos-stremio-debug
           path: app/app/build/outputs/apk/default/debug/*.apk
+      - name: Focused UI lint (API, descriptions and RTL)
+        run: ./gradlew :app:ui:lintDefaultDebug -I tools/validation/ui-lint.init.gradle --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs=-Xmx1536m -Pandroid.experimental.lint.heapSize=3g --stacktrace
+      - name: Upload UI check reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: adaptive-ui-check-reports
+          path: |
+            app/ui/build/reports/tests/
+            app/ui/build/reports/lint-results-*
+            app/ui/build/test-results/

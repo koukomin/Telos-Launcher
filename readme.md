@@ -408,6 +408,11 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 
 ### Customization
 
+- **Adaptive UI foundations:** launcher/search measurements follow the active window; shared
+  settings and navigation labels grow with text, and selected app grids/panes reflow or scroll
+  when space is insufficient. See the [implemented scope and UI contract](docs/docs/developer-guide/adaptive-ui.md)
+  and [validation record](docs/docs/developer-guide/ui-validation.md) for checks and device-review limits.
+
 - **Wallpaper readability:** Wallpaper settings offer Automatic, White and Black text. The clock,
   home labels, transparent search bar and widget backings use protective scrims when pixels are
   unavailable or mixed. Local contrast sampling is limited to permitted, uncropped static wallpapers

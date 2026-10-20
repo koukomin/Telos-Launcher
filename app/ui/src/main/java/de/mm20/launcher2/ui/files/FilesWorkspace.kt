@@ -184,12 +184,13 @@ private fun FilesScreenBody() {
             val first = workspace.tabs.first { it.id == workspace.left }
             val second = workspace.tabs.firstOrNull { it.id == workspace.right }
             if (!workspace.dual || second == null) FilesPane(first, true, {}, Modifier.fillMaxSize())
-            else if (maxWidth >= 640.dp) Row(Modifier.fillMaxSize().padding(6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            else if (de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy.sideBySide(
+                maxWidth.value, maxHeight.value, androidx.compose.ui.platform.LocalDensity.current.fontScale,
+            )) Row(Modifier.fillMaxSize().padding(6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 FilesPane(first, !workspace.activeRight, { workspace.activeRight = false; workspace.persist() }, Modifier.weight(1f).fillMaxHeight())
                 FilesPane(second, workspace.activeRight, { workspace.activeRight = true; workspace.persist() }, Modifier.weight(1f).fillMaxHeight())
-            } else Column(Modifier.fillMaxSize().padding(6.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilesPane(first, !workspace.activeRight, { workspace.activeRight = false; workspace.persist() }, Modifier.weight(1f).fillMaxWidth())
-                FilesPane(second, workspace.activeRight, { workspace.activeRight = true; workspace.persist() }, Modifier.weight(1f).fillMaxWidth())
+            } else {
+                FilesPane(if (workspace.activeRight) second else first, true, {}, Modifier.fillMaxSize())
             }
         }
     }

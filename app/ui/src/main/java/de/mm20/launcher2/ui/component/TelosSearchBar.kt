@@ -35,6 +35,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -192,7 +194,8 @@ private fun SearchPill(
                 BasicTextField(
                     value = value,
                     onValueChange = onValueChange,
-                    modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+                    modifier = Modifier.fillMaxWidth().focusRequester(focusRequester)
+                        .semantics { contentDescription = placeholder },
                     enabled = enabled,
                     singleLine = true,
                     textStyle = MaterialTheme.typography.bodyLarge.copy(
@@ -214,7 +217,7 @@ private fun SearchPill(
                 enter = fadeIn() + scaleIn(),
                 exit = fadeOut() + scaleOut(),
             ) {
-                IconButton(onClick = { onValueChange("") }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = { onValueChange("") }, modifier = Modifier.size(de.mm20.launcher2.ui.layout.UiSpacing.TouchTarget)) {
                     Icon(
                         painterResource(R.drawable.close_24px),
                         contentDescription = stringResource(R.string.ts_clear),

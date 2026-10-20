@@ -113,3 +113,25 @@ Use `tools/i18n/` (see its README): `extract.py` for missing keys, `build.py` to
 - Add necessary UI translations for every change, for all supported languages, with Greek as the priority alongside English.
 - Update README, docs and Pages source content when the behavior changes.
 - Push development changes to the working PR branch. Do not merge or create a release without the user explicitly asking.
+
+## UI consistency and adaptation (mandatory)
+
+Read [the adaptive UI contract](docs/docs/developer-guide/adaptive-ui.md) before UI changes and
+keep [validation evidence](docs/docs/developer-guide/ui-validation.md) accurate.
+
+- Reuse `LauncherTheme` semantic colors/typography/shapes, `UiSpacing`, shared preference/search/
+  navigation components and `LauncherCard` composited foregrounds. Preserve explicit theme,
+  transparency and wallpaper-readability settings; do not introduce an independent palette.
+- Decide layout from actual available width **and height**, after padding/insets; use
+  `AdaptiveLayoutPolicy` for existing shared space decisions. Never infer content fit from
+  orientation, screen/device class or system display metrics alone.
+- Never clamp/replace system fontScale or shrink essential text to fit. Let text wrap and heights
+  grow; reduce columns, collapse panes or scroll. Keep important values/actions reachable.
+- Apply/consume Scaffold, cutout/system-bar and IME insets once. Maintain 48dp targets, labeled
+  toggle/tab semantics, disabled behavior and non-color-only state. Keep navigation/drafts/scroll
+  in existing saveable state/ViewModels across layout changes; do not reset them on resize.
+- Validate compact/medium/expanded and short landscape at font 0.85 (where supported), 1.0, 1.3,
+  2.0 plus enlarged display size, both themes, wallpaper contrast and IME. Add behavioral regression
+  coverage for changed policies/components. Record commands, commit, screenshots and untested
+  states. Compilation/previews/static tests are not device or visual verification; do not label
+  an unreviewed screen or the entire UI phase complete.

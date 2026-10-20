@@ -27,6 +27,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
@@ -652,6 +658,7 @@ open class SettingsActivity : BaseActivity() {
 
 
         setContent {
+            val containerSize = androidx.compose.ui.platform.LocalWindowInfo.current.containerSize
             val backStack = rememberNavBackStack(MainRoute)
 
             LaunchedEffect(initialRoute) {
@@ -663,6 +670,9 @@ open class SettingsActivity : BaseActivity() {
 
             val wallpaperColors by wallpaperColorsAsState()
             CompositionLocalProvider(
+                de.mm20.launcher2.ui.locals.LocalWindowSize provides androidx.compose.ui.geometry.Size(
+                    containerSize.width.toFloat(), containerSize.height.toFloat(),
+                ),
                 LocalWallpaperColors provides wallpaperColors,
                 LocalBackStack provides backStack,
             ) {
@@ -692,6 +702,8 @@ open class SettingsActivity : BaseActivity() {
                         OverlayHost(
                             modifier = Modifier
                                 .fillMaxSize()
+                                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
+                                .imePadding()
                                 .background(de.mm20.launcher2.ui.component.virtualAppSurface())
                         ) {
                             // a Telos app opened directly is the only entry: going back from it closes the activity

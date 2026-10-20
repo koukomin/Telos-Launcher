@@ -67,6 +67,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
@@ -1161,10 +1162,10 @@ internal fun LauncherScaffold(
             }
         }
 
+        val searchBarDensity = LocalDensity.current
+        var measuredSearchBarHeight by remember { mutableStateOf(56.dp) }
         val searchBarHeight by animateDpAsState(
-            if (state.isSearchBarHidden) 0.dp
-            else if (searchActions.isEmpty()) 56.dp
-            else 104.dp
+            if (state.isSearchBarHidden) 0.dp else measuredSearchBarHeight
         )
 
         val isFilterBarVisible =
@@ -1180,7 +1181,8 @@ internal fun LauncherScaffold(
                 (imeSource - imeTarget).absoluteValue.coerceAtLeast(imeCurrent))
             .coerceIn(0f, 1f)
 
-        val filterBarHeight by animateDpAsState(if (isFilterBarVisible) imeProgress * 50.dp else 0.dp)
+        var measuredFilterBarHeight by remember { mutableStateOf(50.dp) }
+        val filterBarHeight by animateDpAsState(if (isFilterBarVisible) imeProgress * measuredFilterBarHeight else 0.dp)
 
         LaunchedEffect(state) {
             config.homeComponent.onPreActivate(state)
@@ -1445,6 +1447,7 @@ internal fun LauncherScaffold(
 
             CompositionLocalProvider(
                 LocalScaffoldPage provides ScaffoldPage.Home,
+                de.mm20.launcher2.ui.locals.LocalSearchBarHeight provides searchBarHeight,
             ) {
                 config.homeComponent.Component(
                     Modifier
@@ -1526,6 +1529,7 @@ internal fun LauncherScaffold(
             ) {
                 LauncherSearchBar(
                     modifier = Modifier
+                        .onSizeChanged { measuredSearchBarHeight = with(searchBarDensity) { it.height.toDp() } }
                         .widthIn(max = 916.dp)
                         .align(
                             if (config.searchBarPosition == SearchBarPosition.Top) Alignment.TopCenter
@@ -1555,14 +1559,15 @@ internal fun LauncherScaffold(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .offset(y = (1f - imeProgress) * 50.dp)
+                        .offset(y = (1f - imeProgress) * measuredFilterBarHeight)
                         .alpha(imeProgress),
                     contentAlignment = Alignment.BottomCenter,
                 ) {
                     KeyboardFilterBar(
                         filters = filters,
                         onFiltersChange = { searchVM.setFilters(it) },
-                        items = filterBarItems
+                        items = filterBarItems,
+                        onContentHeightChanged = { measuredFilterBarHeight = with(searchBarDensity) { it.toDp() } },
                     )
                 }
             }

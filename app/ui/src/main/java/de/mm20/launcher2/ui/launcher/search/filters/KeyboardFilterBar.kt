@@ -5,6 +5,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -21,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -34,6 +36,7 @@ fun KeyboardFilterBar(
     filters: SearchFilters,
     onFiltersChange: (SearchFilters) -> Unit,
     items: List<KeyboardFilterBarItem>,
+    onContentHeightChanged: (Int) -> Unit = {},
 ) {
     val context = LocalContext.current
     val allCategoriesEnabled = filters.allCategoriesEnabled
@@ -43,7 +46,8 @@ fun KeyboardFilterBar(
             .background(MaterialTheme.colorScheme.surfaceContainerLow)
             .navigationBarsPadding()
             .imePadding()
-            .height(50.dp)
+            .heightIn(min = 50.dp)
+            .onSizeChanged { onContentHeightChanged(it.height) }
     ) {
         HorizontalDivider()
         Row(

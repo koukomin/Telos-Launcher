@@ -227,6 +227,9 @@ dependencies {
     implementation("com.google.guava:guava:31.1-android")
     // === TELOS_PENDING_REVIEW_END: radio_mini_player ===
 
+    androidTestImplementation(libs.androidx.compose.uitestjunit4)
+    androidTestImplementation(libs.androidx.junit)
+    debugImplementation(libs.androidx.compose.uitestmanifest)
     testImplementation(libs.bundles.tests)
     testImplementation("org.json:json:20240303")
 }

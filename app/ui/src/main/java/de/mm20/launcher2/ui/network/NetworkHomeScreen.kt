@@ -9,6 +9,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -41,6 +44,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
@@ -122,7 +126,7 @@ fun NetworkHomeScreen() {
     val card = MaterialTheme.colorScheme.surface.copy(alpha = t.surface)
     val bar = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
     val ring by animateColorAsState(
-        if (on) Color(0xFF00E5A8) else MaterialTheme.colorScheme.outline,
+        if (on) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
         label = "ring",
     )
 
@@ -149,16 +153,16 @@ fun NetworkHomeScreen() {
             },
         ) { pad ->
             LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
+                columns = GridCells.Adaptive(240.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale),
                 modifier = Modifier.fillMaxSize().padding(pad).padding(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                item(span = { GridItemSpan(2) }) {
+                item(span = { GridItemSpan(maxLineSpan) }) {
                     Column(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                         Box(
                             Modifier
-                                .size(168.dp)
+                                .widthIn(min = 168.dp).heightIn(min = 168.dp)
                                 .background(ring.copy(alpha = if (on) 0.18f else 0.08f), CircleShape)
                                 .clickable(enabled = state !is NetState.Starting) {
                                     if (on || state is NetState.Starting) engine.stop()
@@ -171,7 +175,7 @@ fun NetworkHomeScreen() {
                         ) {
                             Box(
                                 Modifier
-                                    .size(132.dp)
+                                    .widthIn(min = 132.dp).heightIn(min = 132.dp).padding(16.dp)
                                     .background(card, CircleShape),
                                 contentAlignment = Alignment.Center,
                             ) {
@@ -214,7 +218,7 @@ fun NetworkHomeScreen() {
                             Text((state as NetState.Error).message, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 12.dp))
                             TextButton(onClick = { engine.acknowledgeError() }) { Text(stringResource(R.string.net_hub_dismiss)) }
                         }
-                        Row(Modifier.padding(top = 20.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        FlowRow(Modifier.padding(top = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             StatChip(stringResource(R.string.net_hub_stat_blocked_dns), number.format(stats.dnsBlocked), card) {
                                 backStack.add(NetworkLogsRoute)
                             }
@@ -224,7 +228,7 @@ fun NetworkHomeScreen() {
                         }
                     }
                 }
-                item(span = { GridItemSpan(2) }) { NetworkRouteChooser() }
+                item(span = { GridItemSpan(maxLineSpan) }) { NetworkRouteChooser() }
                 item { HubTile(title = "Tor", value = stringResource(R.string.nt_onion),
                     icon = Icons.visibility_off_24px, card = card, onClick = { backStack.add(NetworkPrivacyRoute) }) }
                 item {
@@ -282,7 +286,7 @@ fun NetworkHomeScreen() {
                         onClick = { backStack.add(NetworkSettingsRoute) },
                     )
                 }
-                item(span = { GridItemSpan(2) }) {
+                item(span = { GridItemSpan(maxLineSpan) }) {
                     Text(
                         stringResource(R.string.net_hub_safety),
                         style = MaterialTheme.typography.bodySmall,
@@ -301,12 +305,14 @@ fun NetworkHomeScreen() {
 private fun StatChip(label: String, value: String, card: Color, onClick: () -> Unit) {
     Column(
         Modifier
-            .background(card, RoundedCornerShape(16.dp))
+            .clip(MaterialTheme.shapes.medium)
+            .background(card)
+            .heightIn(min = 48.dp)
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 10.dp),
     ) {
         Text(value, fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
-        Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+        Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
@@ -315,14 +321,15 @@ private fun HubTile(title: String, value: String, icon: Int, card: Color, onClic
     Column(
         Modifier
             .fillMaxWidth()
-            .aspectRatio(1.15f)
-            .background(card, RoundedCornerShape(22.dp))
+            .heightIn(min = 160.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .background(card)
             .clickable(onClick = onClick)
             .padding(16.dp),
     ) {
-        Icon(painterResource(icon), contentDescription = null, modifier = Modifier.size(28.dp), tint = Color(0xFF00E5A8))
-        Spacer(Modifier.weight(1f))
+        Icon(painterResource(icon), contentDescription = null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
+        Spacer(Modifier.height(16.dp))
         Text(title, fontWeight = FontWeight.SemiBold)
-        Text(value, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
+        Text(value, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }

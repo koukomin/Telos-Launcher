@@ -13,6 +13,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import de.mm20.launcher2.ui.component.AdaptiveNavigationBar
+import de.mm20.launcher2.ui.component.AdaptiveNavigationItem
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
@@ -258,16 +260,15 @@ fun CommsDashboardScreen(
             },
             bottomBar = {
                 if (!inSubScreen) {
-                    NavigationBar(
+                    AdaptiveNavigationBar(
                         containerColor = MaterialTheme.colorScheme.surfaceContainer,
-                        tonalElevation = 0.dp,
                     ) {
                         listOf(
                             Triple(CommsTab.Recents, R.drawable.schedule_24px, CommsTab.Recents.label),
                             Triple(CommsTab.Contacts, R.drawable.person_24px_filled, CommsTab.Contacts.label),
                             Triple(CommsTab.Messages, R.drawable.sms_24px, CommsTab.Messages.label),
                         ).forEach { (tab, icon, label) ->
-                            NavigationBarItem(
+                            AdaptiveNavigationItem(
                                 selected = selectedTab == tab,
                                 onClick = { selectedTab = tab },
                                 icon = { if (tab == CommsTab.Messages) DefaultSmsLauncherIcon() else Icon(painterResource(icon), contentDescription = null) },

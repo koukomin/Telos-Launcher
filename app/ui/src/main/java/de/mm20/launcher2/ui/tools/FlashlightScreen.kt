@@ -238,15 +238,15 @@ fun FlashlightScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Φακός & Σειρήνα / Μορς", color = Color.White) },
+                title = { Text("Φακός & Σειρήνα / Μορς", color = MaterialTheme.colorScheme.onSurface) },
                 navigationIcon = {
                     IconButton(onClick = { backStack.removeLastOrNull() }) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back", tint = Color.White)
+                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back", tint = MaterialTheme.colorScheme.onSurface)
                     }
                 },
                 actions = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("Landscape", color = Color.Gray, fontSize = 12.sp)
+                        Text("Landscape", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                         Switch(
                             checked = allowLandscape,
                             onCheckedChange = { allowLandscape = it },
@@ -254,10 +254,10 @@ fun FlashlightScreen() {
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Black)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface)
             )
         },
-        containerColor = Color.Black
+        containerColor = MaterialTheme.colorScheme.surface
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -296,20 +296,20 @@ fun FlashlightScreen() {
                     modifier = Modifier
                         .size(110.dp)
                         .clip(CircleShape)
-                        .background(if (isTorchOn || isScreenFlashOn) MaterialTheme.colorScheme.primary else Color.DarkGray)
+                        .background(if (isTorchOn || isScreenFlashOn) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHighest)
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.light_mode_24px),
                         contentDescription = "Flashlight",
                         modifier = Modifier.size(48.dp),
-                        tint = if (isTorchOn || isScreenFlashOn) MaterialTheme.colorScheme.onPrimary else Color.White
+                        tint = if (isTorchOn || isScreenFlashOn) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
                     )
                 }
                 Spacer(Modifier.height(8.dp))
                 Text(
                     text = if (isTorchOn || isScreenFlashOn) "ON" else "OFF",
                     style = MaterialTheme.typography.titleLarge,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -318,11 +318,11 @@ fun FlashlightScreen() {
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.medium,
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Light Source", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                        Text("Light Source", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
                         Spacer(Modifier.height(8.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
                             FlashlightTarget.entries.forEach { target ->
@@ -342,11 +342,11 @@ fun FlashlightScreen() {
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.medium,
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Screen Light Color & Brightness", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                        Text("Screen Light Color & Brightness", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
                         Spacer(Modifier.height(12.dp))
 
                         LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -368,7 +368,7 @@ fun FlashlightScreen() {
 
                         Spacer(Modifier.height(12.dp))
 
-                        Text("Screen Brightness", style = MaterialTheme.typography.labelMedium, color = Color.White)
+                        Text("Screen Brightness", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurface)
                         Slider(
                             value = screenBrightness,
                             onValueChange = {
@@ -384,15 +384,15 @@ fun FlashlightScreen() {
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.medium,
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.4f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Emergency Siren & Police Flasher", style = MaterialTheme.typography.titleMedium, color = Color.Red, fontWeight = FontWeight.Bold)
+                        Text("Emergency Siren & Police Flasher", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.error, fontWeight = FontWeight.Bold)
                         Spacer(Modifier.height(8.dp))
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Checkbox(checked = sirenAlternatingColors, onCheckedChange = { sirenAlternatingColors = it })
-                            Text("Alternating Red/Blue Police Strobe", color = Color.White, style = MaterialTheme.typography.bodySmall)
+                            Text("Alternating Red/Blue Police Strobe", color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.bodySmall)
                         }
                         Spacer(Modifier.height(8.dp))
                         Button(
@@ -417,7 +417,7 @@ fun FlashlightScreen() {
                                     }
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = if (isSirenPlaying) Color.DarkGray else Color.Red),
+                            colors = ButtonDefaults.buttonColors(containerColor = if (isSirenPlaying) MaterialTheme.colorScheme.surfaceContainerHighest else MaterialTheme.colorScheme.error),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(if (isSirenPlaying) "STOP SIREN" else "START POLICE SIREN & ALARM", fontWeight = FontWeight.Bold)
@@ -430,11 +430,11 @@ fun FlashlightScreen() {
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.medium,
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Strobe Light (Blink Frequency)", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                        Text("Strobe Light (Blink Frequency)", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
                         Spacer(Modifier.height(8.dp))
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Slider(
@@ -463,7 +463,7 @@ fun FlashlightScreen() {
                                 modifier = Modifier.weight(1f)
                             )
                             Spacer(Modifier.width(8.dp))
-                            Text("${strobeFreqHz.toInt()} Hz", color = Color.White)
+                            Text("${strobeFreqHz.toInt()} Hz", color = MaterialTheme.colorScheme.onSurface)
                         }
                     }
                 }
@@ -473,11 +473,11 @@ fun FlashlightScreen() {
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.medium,
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Text-to-Morse & SOS Signals", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                        Text("Text-to-Morse & SOS Signals", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
                         Spacer(Modifier.height(12.dp))
 
                         OutlinedTextField(

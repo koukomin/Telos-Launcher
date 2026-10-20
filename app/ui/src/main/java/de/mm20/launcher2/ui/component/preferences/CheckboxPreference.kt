@@ -24,12 +24,14 @@ fun CheckboxPreference(
         iconPadding = iconPadding,
         summary = summary,
         enabled = enabled,
+        toggleValue = value,
+        toggleRole = androidx.compose.ui.semantics.Role.Checkbox,
         onClick = {
             onValueChanged(!value)
         },
         controls = {
             Checkbox(
-                enabled = enabled, checked = value, onCheckedChange = onValueChanged, colors = checkboxColors
+                enabled = enabled, checked = value, onCheckedChange = null, colors = checkboxColors
             )
         }
     )
@@ -51,12 +53,14 @@ fun CheckboxPreference(
         iconPadding = iconPadding,
         summary = summary,
         enabled = enabled,
+        toggleValue = value,
+        toggleRole = androidx.compose.ui.semantics.Role.Checkbox,
         onClick = {
             onValueChanged(!value)
         },
         controls = {
             Checkbox(
-                enabled = enabled, checked = value, onCheckedChange = onValueChanged,
+                enabled = enabled, checked = value, onCheckedChange = null,
             )
         }
     )

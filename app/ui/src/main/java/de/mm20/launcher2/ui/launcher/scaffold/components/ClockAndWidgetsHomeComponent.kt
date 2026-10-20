@@ -127,16 +127,19 @@ internal class ClockAndWidgetsHomeComponent(
                             else 0.dp
                         )
 
+                        val clockHeight = (state.size.height.toDp() - pageInsets.calculateTopPadding() - pageInsets.calculateBottomPadding()).coerceAtLeast(0.dp)
+                        val fillClockArea = fillHeight == true && clockHeight >=
+                            (300f * androidx.compose.ui.platform.LocalDensity.current.fontScale).dp
                         ClockWidget(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                then if (fillHeight == true) {
+                                then if (fillClockArea) {
                                     Modifier
                                         .padding(bottom = bottomPadding)
-                                        .height(state.size.height.toDp() - pageInsets.calculateTopPadding() - pageInsets.calculateBottomPadding())
+                                        .height(clockHeight)
                             } else Modifier,
                             editMode = editMode,
-                            fillScreenHeight = fillHeight == true,
+                            fillScreenHeight = fillClockArea,
                         )
                         WidgetColumn(
                             modifier = Modifier

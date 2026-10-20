@@ -9,7 +9,6 @@ import android.app.WallpaperManager
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -127,10 +126,6 @@ abstract class SharedLauncherActivity(
 
         val wallpaperManager = WallpaperManager.getInstance(this)
 
-        val windowSize = Resources.getSystem().displayMetrics.let {
-            Size(it.widthPixels.toFloat(), it.heightPixels.toFloat())
-        }
-
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         viewModel.setSystemInDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
@@ -138,6 +133,8 @@ abstract class SharedLauncherActivity(
         val bottomSheetManager = LauncherBottomSheetManager(this)
 
         setContent {
+            val containerSize = androidx.compose.ui.platform.LocalWindowInfo.current.containerSize
+            val windowSize = Size(containerSize.width.toFloat(), containerSize.height.toFloat())
             val snackbarHostState = remember { SnackbarHostState() }
             val wallpaperColors by wallpaperColorsAsState()
             val dimBackground by viewModel.dimBackground.collectAsState()

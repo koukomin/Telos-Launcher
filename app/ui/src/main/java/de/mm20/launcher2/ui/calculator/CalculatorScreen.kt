@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.calculator
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.res.Configuration
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -11,11 +10,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -54,8 +56,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -64,11 +64,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -159,7 +160,7 @@ private fun TopBar(title: String, onBack: () -> Unit, actions: @Composable () ->
 // ---- calculator page ------------------------------------------------------------------------
 
 /** In landscape the keys cannot be round and square: seven rows of them would not fit the screen. */
-private val LocalCompactKeys = compositionLocalOf { false }
+
 
 private enum class KeyKind { Number, Operator, Clear, Function, Equals }
 
@@ -181,9 +182,10 @@ private fun RoundKey(
         KeyKind.Function -> scheme.surfaceContainer to (if (selected) scheme.primary else scheme.onSurfaceVariant)
         KeyKind.Equals -> scheme.primary to scheme.onPrimary
     }
-    val compact = LocalCompactKeys.current
     Box(
-        modifier.padding(4.dp).then(if (compact) Modifier.height(32.dp) else Modifier.aspectRatio(1f)).clip(CircleShape).background(bg).clickable(onClick = onClick),
+        modifier.padding(4.dp).heightIn(min = de.mm20.launcher2.ui.layout.UiSpacing.TouchTarget)
+            .clip(MaterialTheme.shapes.large).background(bg).clickable(onClick = onClick)
+            .padding(horizontal = 4.dp, vertical = 8.dp),
         contentAlignment = Alignment.Center,
     ) {
         if (iconRes != null) {
@@ -192,7 +194,7 @@ private fun RoundKey(
             Text(
                 label,
                 color = fg,
-                fontSize = (if (compact) minOf(fontSize, 18) else fontSize).sp,
+                fontSize = fontSize.sp,
                 fontWeight = if (kind == KeyKind.Clear || selected) FontWeight.SemiBold else FontWeight.Normal,
                 maxLines = 1,
             )
@@ -204,79 +206,88 @@ private fun RoundKey(
 @Composable
 private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: () -> Unit) {
     val context = LocalContext.current
-    val landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
-    var scientificChoice by rememberSaveable { mutableStateOf(false) }
-    val scientific = scientificChoice || landscape
-    var inverse by rememberSaveable { mutableStateOf(false) }
-    var showHistory by rememberSaveable { mutableStateOf(false) }
-    var menu by remember { mutableStateOf(false) }
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val scale = LocalDensity.current.fontScale
+        val twoPanes = de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy.sideBySide(maxWidth.value, maxHeight.value, scale)
+        var scientificChoice by rememberSaveable { mutableStateOf(false) }
+        val scientific = scientificChoice || twoPanes
+        var inverse by rememberSaveable { mutableStateOf(false) }
+        var showHistory by rememberSaveable { mutableStateOf(false) }
+        var menu by remember { mutableStateOf(false) }
 
-    val topBar: @Composable () -> Unit = {
-        // top bar: scientific or standard keys, VAT, unit converter, more
-        Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
-            Spacer(Modifier.weight(1f))
-            if (!landscape) {
-                IconButton(onClick = { scientificChoice = !scientificChoice }) {
-                    Text(
-                        text = if (scientific) "+ −\n× =" else "√ π\ne =",
-                        fontSize = 13.sp,
-                        lineHeight = 14.sp,
-                        fontWeight = FontWeight.Medium,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(2.dp),
-                    )
+        val topBar: @Composable () -> Unit = {
+            // top bar: scientific or standard keys, VAT, unit converter, more
+            Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                Spacer(Modifier.weight(1f))
+                if (!twoPanes) {
+                    val modeLabel = stringResource(if (scientific) R.string.calculator_standard else R.string.calculator_scientific)
+                    IconButton(onClick = { scientificChoice = !scientificChoice }, modifier = Modifier.semantics { contentDescription = modeLabel }) {
+                        Text(
+                            text = if (scientific) "+ −\n× =" else "√ π\ne =",
+                            fontSize = 13.sp,
+                            lineHeight = 14.sp,
+                            fontWeight = FontWeight.Medium,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(2.dp),
+                        )
+                    }
                 }
-            }
-            IconButton(onClick = onVat) {
-                Icon(painterResource(R.drawable.ic_calc_vat), contentDescription = stringResource(R.string.calculator_vat))
-            }
-            IconButton(onClick = onUnits) {
-                Icon(painterResource(R.drawable.ic_calc_grid), contentDescription = stringResource(R.string.calculator_unit_converter))
-            }
-            Box {
-                IconButton(onClick = { menu = true }) {
-                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.calculator_more))
+                IconButton(onClick = onVat) {
+                    Icon(painterResource(R.drawable.ic_calc_vat), contentDescription = stringResource(R.string.calculator_vat))
                 }
-                DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                    DropdownMenuItem(text = { Text(stringResource(R.string.calculator_history)) }, onClick = { menu = false; showHistory = true })
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.calculator_copy_result)) },
-                        onClick = {
-                            menu = false
-                            val text = vm.currentValue()?.let { CalcEngine.format(it) } ?: vm.expression
-                            if (text.isNotEmpty()) copyToClipboard(context, text.toDisplay())
-                        },
-                    )
+                IconButton(onClick = onUnits) {
+                    Icon(painterResource(R.drawable.ic_calc_grid), contentDescription = stringResource(R.string.calculator_unit_converter))
+                }
+                Box {
+                    IconButton(onClick = { menu = true }) {
+                        Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.calculator_more))
+                    }
+                    DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                        DropdownMenuItem(text = { Text(stringResource(R.string.calculator_history)) }, onClick = { menu = false; showHistory = true })
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.calculator_copy_result)) },
+                            onClick = {
+                                menu = false
+                                val text = vm.currentValue()?.let { CalcEngine.format(it) } ?: vm.expression
+                                if (text.isNotEmpty()) copyToClipboard(context, text.toDisplay())
+                            },
+                        )
+                    }
                 }
             }
         }
-    }
 
-    if (landscape) {
-        Row(Modifier.fillMaxSize()) {
-            Column(Modifier.weight(1f).fillMaxHeight()) {
-                topBar()
-                Display(vm, Modifier.weight(1f), onHistory = { showHistory = true })
-            }
-            Box(Modifier.weight(1.5f).fillMaxHeight(), contentAlignment = Alignment.Center) {
-                CompositionLocalProvider(LocalCompactKeys provides true) {
-                    ScientificKeys(vm, inverse, { inverse = !inverse }, Modifier.padding(horizontal = 12.dp))
+        val keys: @Composable (Modifier) -> Unit = { modifier ->
+            BoxWithConstraints(modifier) {
+                // Scroll instead of squeezing scientific labels or shrinking the user's text.
+                val keyWidth = de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy.keypadWidth(
+                    maxWidth.value, if (scientific) 5 else 4, scale,
+                ).dp
+                Box(Modifier.horizontalScroll(rememberScrollState())) {
+                    val keyModifier = Modifier.width(keyWidth).padding(horizontal = 12.dp, vertical = 8.dp)
+                    if (scientific) ScientificKeys(vm, inverse, { inverse = !inverse }, keyModifier)
+                    else StandardKeys(vm, keyModifier)
                 }
             }
         }
-    } else Column(Modifier.fillMaxSize()) {
-        topBar()
-        Display(vm, Modifier.weight(1f), onHistory = { showHistory = true })
-        if (scientific) {
-            ScientificKeys(vm, inverse, { inverse = !inverse }, Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
-        } else {
-            StandardKeys(vm, Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+        if (twoPanes) {
+            Row(Modifier.fillMaxSize()) {
+                Column(Modifier.weight(1f).fillMaxHeight().verticalScroll(rememberScrollState())) {
+                    topBar()
+                    Display(vm, Modifier, onHistory = { showHistory = true })
+                }
+                keys(Modifier.weight(1.5f).fillMaxHeight().verticalScroll(rememberScrollState()))
+            }
+        } else Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+            topBar()
+            Display(vm, Modifier, onHistory = { showHistory = true })
+            keys(Modifier.fillMaxWidth())
         }
-    }
 
-    if (showHistory) {
-        ModalBottomSheet(onDismissRequest = { showHistory = false }, sheetState = rememberModalBottomSheetState()) {
-            HistorySheet(vm, onPick = { vm.replaceExpression(it); showHistory = false })
+        if (showHistory) {
+            ModalBottomSheet(onDismissRequest = { showHistory = false }, sheetState = rememberModalBottomSheetState()) {
+                HistorySheet(vm, onPick = { vm.replaceExpression(it); showHistory = false })
+            }
         }
     }
 }
@@ -437,7 +448,7 @@ private fun UnitsPage(onBack: () -> Unit, onPick: (UnitCat) -> Unit) {
     Column(Modifier.fillMaxSize()) {
         TopBar(stringResource(R.string.calculator_unit_converter), onBack)
         LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
+            columns = GridCells.Adaptive(144.dp * LocalDensity.current.fontScale),
             modifier = Modifier.fillMaxSize(),
             contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -446,7 +457,7 @@ private fun UnitsPage(onBack: () -> Unit, onPick: (UnitCat) -> Unit) {
             items(UnitCat.entries.toList()) { cat ->
                 Column(
                     Modifier
-                        .aspectRatio(1f)
+                        .heightIn(min = 144.dp)
                         .clip(RoundedCornerShape(16.dp))
                         .background(MaterialTheme.colorScheme.surfaceContainerHigh)
                         .clickable { onPick(cat) }
@@ -468,8 +479,6 @@ private fun UnitsPage(onBack: () -> Unit, onPick: (UnitCat) -> Unit) {
                         stringResource(cat.label),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(top = 8.dp),
                     )
                 }

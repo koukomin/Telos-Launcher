@@ -22,6 +22,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -48,12 +50,12 @@ fun ErmisScreen() {
     val repository = remember { ErmisRepository.get(context.applicationContext) }
     val state by repository.state.collectAsState()
     val scope = rememberCoroutineScope()
-    var accountId by remember { mutableStateOf<String?>(null) }
-    var query by remember { mutableStateOf("") }
-    var starred by remember { mutableStateOf(false) }
-    var accounts by remember { mutableStateOf(false) }
-    var adding by remember { mutableStateOf(false) }
-    var composing by remember { mutableStateOf(false) }
+    var accountId by rememberSaveable { mutableStateOf<String?>(null) }
+    var query by rememberSaveable { mutableStateOf("") }
+    var starred by rememberSaveable { mutableStateOf(false) }
+    var accounts by rememberSaveable { mutableStateOf(false) }
+    var adding by rememberSaveable { mutableStateOf(false) }
+    var composing by rememberSaveable { mutableStateOf(false) }
     var reply by remember { mutableStateOf<ErmisMessage?>(null) }
     val notifications = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { }
     var selected by remember { mutableStateOf<ErmisMessage?>(null) }
@@ -98,7 +100,7 @@ fun ErmisScreen() {
         if (visible.isEmpty() && state.accounts.isNotEmpty() && !state.loading) item { Text(stringResource(R.string.ermis_empty), Modifier.padding(24.dp)) }
         items(conversations, key = { "${it.first().accountId}:${it.first().uid}" }) { conversation ->
             val message = conversation.first()
-            Card(Modifier.fillMaxWidth().padding(horizontal = 12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = .72f))) {
+            de.mm20.launcher2.ui.component.LauncherCard(Modifier.fillMaxWidth().padding(horizontal = 12.dp), shape = MaterialTheme.shapes.medium) {
                 Row(Modifier.fillMaxWidth().clickable {
                     selected = message
                     task { val loaded = repository.loadMessage(message.accountId, message.uid) ?: message; if (selected?.accountId == message.accountId && selected?.uid == message.uid) selected = loaded }
@@ -148,9 +150,9 @@ private fun AddAccountDialog(busy: Boolean, onDismiss: () -> Unit, onAuthError: 
             finally { authenticating = false }
         }
     }
-    var email by remember { mutableStateOf("") }; var password by remember { mutableStateOf("") }
-    var username by remember { mutableStateOf("") }; var imap by remember { mutableStateOf("") }; var smtp by remember { mutableStateOf("") }
-    var imapPort by remember { mutableStateOf("993") }; var smtpPort by remember { mutableStateOf("465") }; var startTls by remember { mutableStateOf(false) }
+    var email by rememberSaveable { mutableStateOf("") }; var password by remember { mutableStateOf("") }
+    var username by rememberSaveable { mutableStateOf("") }; var imap by rememberSaveable { mutableStateOf("") }; var smtp by rememberSaveable { mutableStateOf("") }
+    var imapPort by rememberSaveable { mutableStateOf("993") }; var smtpPort by rememberSaveable { mutableStateOf("465") }; var startTls by rememberSaveable { mutableStateOf(false) }
     AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(R.string.ermis_add_account)) }, text = {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(stringResource(R.string.ermis_tls_help))
@@ -176,9 +178,11 @@ private fun AddAccountDialog(busy: Boolean, onDismiss: () -> Unit, onAuthError: 
 @Composable
 private fun ComposeDialog(accounts: List<ErmisAccount>, initialAccount: String?, reply: ErmisMessage?, busy: Boolean, onDismiss: () -> Unit, onSend: (ErmisDraft) -> Unit) {
     val context = LocalContext.current
-    var account by remember { mutableStateOf(reply?.accountId ?: initialAccount ?: accounts.firstOrNull()?.id) }
-    var to by remember { mutableStateOf(reply?.from.orEmpty()) }; var subject by remember { mutableStateOf(reply?.subject?.let { if (it.startsWith("Re:", true)) it else "Re: $it" }.orEmpty()) }; var body by remember { mutableStateOf("") }
-    var attachments by remember { mutableStateOf<List<Uri>>(emptyList()) }
+    var account by rememberSaveable { mutableStateOf(reply?.accountId ?: initialAccount ?: accounts.firstOrNull()?.id) }
+    var to by rememberSaveable { mutableStateOf(reply?.from.orEmpty()) }; var subject by rememberSaveable { mutableStateOf(reply?.subject?.let { if (it.startsWith("Re:", true)) it else "Re: $it" }.orEmpty()) }; var body by rememberSaveable { mutableStateOf("") }
+    var attachments by rememberSaveable(stateSaver = listSaver<List<Uri>, String>(
+        save = { uris -> uris.map { it.toString() } }, restore = { uris -> uris.map(Uri::parse) },
+    )) { mutableStateOf<List<Uri>>(emptyList()) }
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris -> attachments = (attachments + uris).distinct() }
     AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(R.string.ermis_compose)) }, text = {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {

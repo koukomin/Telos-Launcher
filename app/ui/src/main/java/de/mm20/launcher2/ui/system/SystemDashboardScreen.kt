@@ -173,7 +173,7 @@ fun SystemDashboardScreen() {
                                 HwuiRenderer.MODE_OPENGL -> stringResource(R.string.hc_graphics_opengl)
                                 else -> stringResource(R.string.hc_graphics_default)
                             },
-                            color = if (liveRenderer == HwuiRenderer.MODE_VULKAN) Color(0xFF00E5A8) else scheme.primary,
+                            color = if (liveRenderer == HwuiRenderer.MODE_VULKAN) scheme.primary else scheme.primary,
                         )
                         Text(stringResource(R.string.hc_graphics_api_about_summary), style = MaterialTheme.typography.bodySmall)
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -232,7 +232,7 @@ fun SystemDashboardScreen() {
                             stringResource(R.string.net_hub_title) + " · " + stringResource(
                                 if (vpnOn) R.string.net_hub_state_on else R.string.net_hub_state_off,
                             ),
-                            color = if (vpnOn) Color(0xFF00E5A8) else scheme.onSurfaceVariant,
+                            color = if (vpnOn) scheme.primary else scheme.onSurfaceVariant,
                         )
                         Text("${stringResource(R.string.net_hub_stat_dns)} ${dnsServer.name}")
                         Text("${stringResource(R.string.net_hub_stat_blocked_dns)} ${netStats.dnsBlocked}  ·  ${stringResource(R.string.net_hub_stat_blocked_conn)} ${netStats.connectionsBlocked}")
@@ -284,16 +284,12 @@ fun SystemDashboardScreen() {
 
 @Composable
 private fun GlassCard(content: @Composable () -> Unit) {
-    val scheme = MaterialTheme.colorScheme
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(scheme.surface.copy(alpha = 0.55f))
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-        content = { content() },
-    )
+    de.mm20.launcher2.ui.component.LauncherCard(shape = MaterialTheme.shapes.medium) {
+        Column(
+            Modifier.fillMaxWidth().padding(de.mm20.launcher2.ui.layout.UiSpacing.Content),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+        ) { content() }
+    }
 }
 
 private fun formatUptime(ms: Long): String {
