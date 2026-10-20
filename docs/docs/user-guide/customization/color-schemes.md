@@ -111,7 +111,9 @@ instead of the active wallpaper. Telos deliberately does not analyze that defaul
 not request broad file access or screen capture, and uses a stable scrim instead. The global
 palette supplied by Android still supplies theme colors, but is not treated as local pixels.
 
-On Android 8–12, local sampling is attempted only if the existing external-storage read
+Android 8.0 also uses the fallback because it has no wallpaper-colors change callback.
+
+On Android 8.1–12, local sampling is attempted only if the existing external-storage read
 permission is already granted, a static wallpaper file is available and its aspect ratio matches
 the window. Cropped/wide scrolling images are rejected rather than guessing their viewport.
 Blur and wallpaper dimming also use the fallback because the raw image no longer represents

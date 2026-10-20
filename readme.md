@@ -411,7 +411,7 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 - **Wallpaper readability:** Wallpaper settings offer Automatic, White and Black text. The clock,
   home labels, transparent search bar and widget backings use protective scrims when pixels are
   unavailable or mixed. Local contrast sampling is limited to permitted, uncropped static wallpapers
-  on Android 8–12 with blur/dimming off; Android 13+ and live wallpapers use the safe fallback.
+  on Android 8.1–12 with blur/dimming off; Android 13+ and live wallpapers use the safe fallback.
   Default shared panel opacity is 80%; saved custom transparency values and explicit clock/label
   colors remain respected. Third-party widget content and explicitly theme-colored clock faces may
   control their own colors. See [readability details](docs/docs/user-guide/customization/color-schemes.md#wallpaper-readability).

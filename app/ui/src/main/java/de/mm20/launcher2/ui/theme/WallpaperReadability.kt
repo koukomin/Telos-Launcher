@@ -34,7 +34,8 @@ import kotlin.math.abs
  */
 @Suppress("DEPRECATION")
 private fun readWallpaperSamples(context: Context, aspect: Float): WallpaperSamples? {
-    if (Build.VERSION.SDK_INT >= 33 || ContextCompat.checkSelfPermission(context,
+    // API 26 has no wallpaper-colors callback: a foreground change could leave stale pixels.
+    if (Build.VERSION.SDK_INT < 27 || Build.VERSION.SDK_INT >= 33 || ContextCompat.checkSelfPermission(context,
             Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) return null
     return try {
         val manager = WallpaperManager.getInstance(context)
