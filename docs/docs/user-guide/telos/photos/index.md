@@ -173,3 +173,6 @@ viewer add-on.
 ### Shared trash
 
 Files, Viewer and Media share a delete/trash choice and restore UI. Local files use an atomic same-volume move with durable metadata, a default 30-day retention configurable to 1–365 days for future deletions, and daily expiry cleanup. Restore never overwrites an existing file. Android-managed media trash uses the system’s fixed 30-day retention and permission dialog. Unsupported storages offer explicitly confirmed permanent deletion. The private trash is removed on app uninstall or app-data deletion.
+
+
+Static photos chosen with **Set wallpaper** now offer **Home**, **Lock**, or **Both** directly through Telos. Home/Both also creates the small private snapshot used by shared frosted backgrounds. Lock-only changes do not replace that snapshot. Animated GIFs and video retain the external wallpaper handoff.

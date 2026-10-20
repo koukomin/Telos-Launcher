@@ -112,7 +112,7 @@ fun AppearanceSettingsScreen() {
                 Preference(
                     icon = R.drawable.wallpaper_24px,
                     title = stringResource(id = R.string.wallpaper),
-                    summary = stringResource(id = R.string.preference_wallpaper_summary),
+                    summary = stringResource(id = R.string.frosted_glass_wallpaper_help),
                     onClick = {
                         backStack.add(WallpaperSettingsRoute)
                     }

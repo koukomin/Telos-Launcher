@@ -114,6 +114,7 @@ fun WidgetItem(
             .then(wallpaperStyle?.modifier ?: Modifier),
         elevation = elevation,
         backgroundOpacity = backgroundOpacity,
+        frosted = glassWidgets && backgroundOpacity > 0f,
         contentColor = wallpaperStyle?.color,
     ) {
         Column {

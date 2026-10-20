@@ -31,7 +31,6 @@ import de.mm20.launcher2.ui.component.virtualAppGlass
 import de.mm20.launcher2.ui.component.virtualAppSurface
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.theme.transparency.transparency
-import dev.chrisbanes.haze.hazeSource
 
 /**
  * True inside Telos Media (the hub): the hub shows the top bar (space pill and back button) and
@@ -92,7 +91,7 @@ fun MediaFrame(
             )
         },
     ) { padding ->
-        Box(Modifier.fillMaxSize().padding(padding).hazeSource(blur.haze).background(virtualAppSurface())) {
+        Box(Modifier.fillMaxSize().padding(padding).background(virtualAppSurface())) {
             content()
         }
     }

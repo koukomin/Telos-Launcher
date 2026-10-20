@@ -86,6 +86,7 @@ import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import de.mm20.launcher2.ui.component.frostedGlass
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
@@ -105,10 +106,6 @@ import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.theme.transparency.transparency
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
-import dev.chrisbanes.haze.rememberHazeState
 import de.mm20.launcher2.ui.comms.RadioViewModel
 import de.mm20.launcher2.ui.comms.radio.RadioDashboardScreen
 import de.mm20.launcher2.ui.locals.LocalBackStack
@@ -228,7 +225,7 @@ fun MediaHubScreen(initialSpace: String = "") {
     val uiSettings: UiSettings = koinInject()
     val blurRadius by uiSettings.drawerBackgroundBlur.collectAsState(32)
     val t = MaterialTheme.transparency
-    val hazeState = rememberHazeState(blurEnabled = isAtLeastApiLevel(33) && blurRadius > 0)
+    val hazeState = de.mm20.launcher2.ui.component.rememberVirtualAppBlur()
 
     Surface(
         color = Color.Transparent,
@@ -242,13 +239,13 @@ fun MediaHubScreen(initialSpace: String = "") {
                     Brush.verticalGradient(
                         listOf(
                             accent.copy(alpha = 0.10f * t.surface),
-                            scheme.surface.copy(alpha = t.background),
+                            Color.Transparent,
                         )
                     )
                 )
                 .statusBarsPadding()
         ) {
-            Box(Modifier.weight(1f).fillMaxWidth().hazeSource(hazeState)) {
+            Box(Modifier.weight(1f).fillMaxWidth()) {
                 AnimatedContent(
                     targetState = current,
                     transitionSpec = {
@@ -344,7 +341,7 @@ private fun HubToolbar(
     reduceAnimations: Boolean,
     onBack: () -> Unit,
     actions: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit,
-    haze: HazeState,
+    haze: de.mm20.launcher2.ui.component.VirtualAppBlur,
     blurRadius: Int,
 ) {
     val sources = available.filter { it.group == current.group }
@@ -518,7 +515,7 @@ private fun SpacePill(
 private fun HubBottomBar(
     current: MediaSpace,
     groupSpaces: List<MediaSpace>,
-    haze: HazeState,
+    haze: de.mm20.launcher2.ui.component.VirtualAppBlur,
     blurRadius: Int,
     onSelect: (MediaSpace) -> Unit,
 ) {
@@ -561,7 +558,7 @@ private fun HubMiniPlayer(
     radioVm: RadioViewModel,
     tvVm: TvViewModel,
     reduceAnimations: Boolean,
-    haze: HazeState,
+    haze: de.mm20.launcher2.ui.component.VirtualAppBlur,
     blurRadius: Int,
     onOpen: (MediaSpace) -> Unit,
     modifier: Modifier = Modifier,
@@ -736,13 +733,6 @@ private fun HubMiniPlayer(
     }
 }
 
-private fun Modifier.hubGlass(haze: HazeState, blur: Int, color: Color): Modifier {
-    return if (blur > 0) {
-        hazeEffect(haze) {
-            blurRadius = blur.dp
-            backgroundColor = color
-        }.background(color)
-    } else {
-        background(color)
-    }
-}
+@Suppress("UNUSED_PARAMETER")
+private fun Modifier.hubGlass(haze: de.mm20.launcher2.ui.component.VirtualAppBlur, blur: Int, color: Color): Modifier =
+    this.frostedGlass(color)

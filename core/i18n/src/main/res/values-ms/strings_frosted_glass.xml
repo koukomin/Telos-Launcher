@@ -1,0 +1,10 @@
+<resources>
+    <string name="frosted_glass_wallpaper_help">Kaca kabur menggunakan kertas dinding utama statik yang ditetapkan dalam Telos. Kertas dinding langsung atau luaran menggunakan warna lut sinar.</string>
+
+    <string name="wallpaper_target_dialog_title">Tetapkan kertas dinding untuk</string>
+    <string name="preference_wallpaper_set_home">Skrin utama</string>
+    <string name="preference_wallpaper_set_lock">Skrin kunci</string>
+    <string name="preference_wallpaper_set_both">Kedua-duanya</string>
+    <string name="wallpaper_set_success">Kertas dinding ditetapkan</string>
+    <string name="wallpaper_set_failure">Tidak dapat menetapkan kertas dinding</string>
+</resources>

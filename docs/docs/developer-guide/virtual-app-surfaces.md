@@ -19,3 +19,15 @@ SMTP completion preserves the original send result even if QUIT/disconnect fails
 Installed-app export uses a CreateDocument grant and performs package enumeration and bounded streaming copies on IO. InstalledApkExport preserves single APK bytes and writes every split to a ZIP using a 64 KiB buffer. Metadata is rechecked after export; failed or cancelled documents are deleted where supported. No bitmap list or whole APK buffer is retained. Communication JVM tests verify single APK identity and split bundle completeness.
 
 Ermis messages can be marked unread from the message actions. The change is applied to the selected account, mailbox and UID on the IMAP server before updating the cache; unavailable messages cannot falsely appear updated.
+
+## Shared cached frosted backdrop
+
+FrostedGlassProvider in LauncherTheme is inherited by inline apps and shared across standalone Telos app surfaces. GlassWallpaperStore only processes explicitly selected home images, binds a <=512-pixel snapshot to WallpaperManager wallpaper ID, and rejects live/mismatched sources. Decode, three separable box passes and file IO run on IO; the service retains at most two ARGB frames (glass + optional secondary-page wallpaper radius), without recycling frames still used by Compose. Input is capped at 32 MiB / 100 MP. The thumbnail is atomically persisted and no source photo copy survives selection. API 26/27 EXIF orientation is handled explicitly.
+
+FrostedGeometry defines one center-crop in window coordinates. Each surface subtracts its position in the window, clips to its own shape and draws the cached image plus exactly one requested tint, subtle highlight and border. Scrolling affects coordinates only, not decoding. Source capture and native window-blur calls were removed, along with the Haze runtime dependency. VirtualAppTheme prevents nested wrappers from adding a second full-window tint; explicit media/document content surfaces remain readable. Radius/color notifications are coalesced, and lifecycle resume/wallpaper colors revalidate the wallpaper ID. Pure JVM tests cover subsampling limits, blur invariants and portrait/landscape/split-window crop geometry. Real-device screenshot/performance validation remains outstanding.
+
+The provider supplies pixels only; it never paints a full-screen layer over the home wallpaper. The existing wallpaper-blur preference is drawn only on secondary pages that do not own their glass backing, so enabling it does not blur the home wallpaper or add another layer under widget cards and inline apps.
+
+Radius is converted from dp using the actual window-to-source center-crop scale, including portrait/landscape changes. Settings and Calendar avoid adding a second full-window backing; full-screen Ermis dialogs own exactly one shared backing in their own window. Photos Home/Both actions use the same snapshot writer as the wallpaper settings.
+
+Material container-low/high roles retain their surface/elevated theme opacity for inner controls and cards; only full-window background/surface roles are cleared. Existing wallpaper target/action messages are completed in all supported locales when reused from Photos.

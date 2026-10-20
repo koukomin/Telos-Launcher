@@ -145,7 +145,7 @@ fun CalendarScreen() {
     androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) { granted = hasPermission(context) }
     LaunchedEffect(granted) { if (granted) vm.reload() }
 
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)).systemBarsPadding()) {
+    Box(Modifier.fillMaxSize().background(de.mm20.launcher2.ui.component.virtualAppSurface()).systemBarsPadding()) {
         if (!granted) {
             Column(Modifier.fillMaxSize().padding(32.dp), Arrangement.Center, Alignment.CenterHorizontally) {
                 Text(stringResource(R.string.cal_permission), textAlign = TextAlign.Center)

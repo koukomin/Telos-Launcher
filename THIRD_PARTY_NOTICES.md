@@ -329,3 +329,7 @@ Original copyright/SPDX notices remain in `services/comms/.../akou/fingerprint/`
 Test-only audio excerpt: “Sneaky Snitch” by Kevin MacLeod, https://incompetech.com/music/royalty-free/mp3-royaltyfree/Sneaky%20Snitch.mp3, Creative Commons Attribution 4.0, https://creativecommons.org/licenses/by/4.0/. Converted to 10-second mono 16 kHz PCM excerpt as documented in `services/comms/src/test/resources/ASSET_LICENSE.md`; not packaged in the application.
 
 The complete Mail/Activation artifact license and notice texts are bundled in `assets/licenses/android-mail-activation-1.6.7-NOTICES.txt` in the APK.
+
+## Frosted surfaces
+
+The shared cached-wallpaper glass renderer and bounded box blur are independently implemented Telos code under the project license. The former Haze runtime dependency has been removed; no Haze source code is copied into this renderer.

@@ -64,7 +64,7 @@ fun ErmisScreen() {
         surfaceContainerHighest = paper, onSurface = ink, onBackground = ink,
         onSurfaceVariant = ink.copy(alpha = .78f)) }
     MaterialTheme(colorScheme = colors) {
-        Surface(color = paper.copy(alpha = .96f), modifier = Modifier.fillMaxSize()) { ErmisMailbox() }
+        Surface(color = androidx.compose.ui.graphics.Color.Transparent, modifier = Modifier.fillMaxSize()) { ErmisMailbox() }
     }
 }
 
@@ -471,15 +471,17 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
 @Composable
 private fun MailPage(onDismiss: () -> Unit, title: String, action: @Composable () -> Unit, content: @Composable () -> Unit) {
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
-        Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
-            Scaffold(topBar = {
-                Row(Modifier.statusBarsPadding().fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close)) }
-                    Text(title, Modifier.weight(1f), maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, style = MaterialTheme.typography.titleMedium)
-                    action()
+        CompositionLocalProvider(de.mm20.launcher2.ui.component.LocalGlassSurface provides false) {
+            de.mm20.launcher2.ui.component.VirtualAppTheme {
+                Scaffold(containerColor = androidx.compose.ui.graphics.Color.Transparent, topBar = {
+                    Row(Modifier.statusBarsPadding().fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                        IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close)) }
+                        Text(title, Modifier.weight(1f), maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, style = MaterialTheme.typography.titleMedium)
+                        action()
+                    }
+                }) { padding ->
+                    Box(Modifier.fillMaxSize().padding(padding).imePadding().padding(horizontal = 20.dp)) { content() }
                 }
-            }) { padding ->
-                Box(Modifier.fillMaxSize().padding(padding).imePadding().padding(horizontal = 20.dp)) { content() }
             }
         }
     }

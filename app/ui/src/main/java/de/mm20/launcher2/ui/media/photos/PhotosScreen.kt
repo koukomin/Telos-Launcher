@@ -24,7 +24,6 @@ import de.mm20.launcher2.ui.component.rememberVirtualAppBlur
 import de.mm20.launcher2.ui.component.virtualAppElevated
 import de.mm20.launcher2.ui.component.virtualAppGlass
 import de.mm20.launcher2.ui.component.virtualAppSurface
-import dev.chrisbanes.haze.hazeSource
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -268,7 +267,7 @@ fun PhotosScreen(embedded: Boolean = false) {
             }
         },
     ) { padding ->
-        Column(Modifier.fillMaxSize().padding(padding).hazeSource(blur.haze)) {
+        Column(Modifier.fillMaxSize().padding(padding)) {
             Row(
                 Modifier.fillMaxWidth().then(if (embedded) Modifier else Modifier.statusBarsPadding()).padding(start = 20.dp, end = 12.dp, top = if (embedded) 4.dp else 12.dp, bottom = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,

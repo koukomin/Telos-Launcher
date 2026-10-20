@@ -109,7 +109,6 @@ import de.mm20.launcher2.ui.component.virtualAppElevated
 import de.mm20.launcher2.ui.component.virtualAppGlass
 import de.mm20.launcher2.ui.component.virtualAppSurface
 import de.mm20.launcher2.ui.locals.LocalBackStack
-import dev.chrisbanes.haze.hazeSource
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import de.mm20.launcher2.ui.files.remote.ConnectionsRoute
@@ -455,7 +454,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                 }
             },
         ) { padding ->
-            Box(Modifier.fillMaxSize().padding(padding).hazeSource(blur.haze).background(virtualAppSurface())) {
+            Box(Modifier.fillMaxSize().padding(padding).background(virtualAppSurface())) {
                 val current = vm.path
                 when {
                     current == null -> HomePage(vm)

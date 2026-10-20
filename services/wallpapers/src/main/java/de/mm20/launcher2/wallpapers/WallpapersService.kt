@@ -17,6 +17,12 @@ enum class StaticWallpaperTarget {
 }
 
 class WallpapersService(private val context: Context) {
+    private val glass = GlassWallpaperStore(context.applicationContext)
+    val glassRevision = glass.revision
+    suspend fun loadGlassWallpaper(radius: Int, widthDp: Int, heightDp: Int): android.graphics.Bitmap? = withContext(Dispatchers.IO) {
+        try { glass.load(radius, widthDp, heightDp) } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled } catch (_: Exception) { null }
+    }
+
 
     /**
      * Sets a static image wallpaper for the given target. Home and lock screen can be set
@@ -25,6 +31,10 @@ class WallpapersService(private val context: Context) {
     suspend fun setStaticWallpaper(uri: Uri, target: StaticWallpaperTarget): Boolean {
         return withContext(Dispatchers.IO) {
             try {
+                if (target != StaticWallpaperTarget.Lock) {
+                    return@withContext glass.set(uri, if (target == StaticWallpaperTarget.Both)
+                        WallpaperManager.FLAG_SYSTEM or WallpaperManager.FLAG_LOCK else WallpaperManager.FLAG_SYSTEM)
+                }
                 context.contentResolver.openInputStream(uri)?.use { stream ->
                     val flags = when (target) {
                         StaticWallpaperTarget.Home -> WallpaperManager.FLAG_SYSTEM
@@ -35,6 +45,7 @@ class WallpapersService(private val context: Context) {
                     WallpaperManager.getInstance(context).setStream(stream, null, true, flags)
                     true
                 } == true
+            } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled
             } catch (e: Exception) {
                 CrashReporter.logException(e)
                 false

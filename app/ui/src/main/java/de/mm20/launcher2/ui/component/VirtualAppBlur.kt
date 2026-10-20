@@ -1,100 +1,48 @@
 package de.mm20.launcher2.ui.component
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.theme.transparency.transparency
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
-import dev.chrisbanes.haze.rememberHazeState
-import org.koin.compose.koinInject
 
-data class VirtualAppBlur(
-    val haze: HazeState,
-    val radius: Int,
-)
-
-@Composable
-fun rememberVirtualAppBlur(): VirtualAppBlur {
-    val uiSettings: UiSettings = koinInject()
-    val blurRadius by uiSettings.drawerBackgroundBlur.collectAsStateWithLifecycle(32)
-    val enabled = isAtLeastApiLevel(33) && blurRadius > 0
-    val haze = rememberHazeState(blurEnabled = enabled)
-    return remember(haze, blurRadius, enabled) {
-        VirtualAppBlur(haze, if (enabled) blurRadius else 0)
-    }
-}
-
+/** Compatibility token for screen chrome; all pixels come from the shared provider. */
+class VirtualAppBlur internal constructor()
+@Composable fun rememberVirtualAppBlur(): VirtualAppBlur = remember { VirtualAppBlur() }
 val LocalVirtualAppBlur = staticCompositionLocalOf<VirtualAppBlur?> { null }
 
-@Composable
-fun virtualAppSurface(): Color {
-    val t = MaterialTheme.transparency
-    return if (LocalVirtualAppBlur.current != null) Color.Transparent else MaterialTheme.colorScheme.surface.copy(alpha = t.background)
-}
+@Composable fun virtualAppSurface(): Color = if (LocalVirtualAppBlur.current != null) Color.Transparent
+    else MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)
+@Composable fun virtualAppElevated(): Color = MaterialTheme.colorScheme.surfaceContainerHigh
+    .copy(alpha = MaterialTheme.transparency.elevatedSurface)
 
-@Composable
-fun virtualAppElevated(): Color {
-    val t = MaterialTheme.transparency
-    return MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
+@Composable fun VirtualAppWindow(content: @Composable () -> Unit) {
+    if (LocalGlassSurface.current) content() else VirtualAppTheme(content)
 }
+@Suppress("UNUSED_PARAMETER")
+fun Modifier.virtualAppGlass(blur: VirtualAppBlur, color: Color): Modifier = frostedGlass(color)
 
-/** Glass window for virtual apps that do not set up haze themselves (Calculator, Notes, …). */
-@Composable
-fun VirtualAppWindow(content: @Composable () -> Unit) {
-    val blur = rememberVirtualAppBlur()
-    CompositionLocalProvider(LocalVirtualAppBlur provides blur) {
-        Box(Modifier.fillMaxSize().hazeSource(blur.haze).background(virtualAppSurface())) {
-            content()
-        }
-    }
-}
-
-fun Modifier.virtualAppGlass(blur: VirtualAppBlur, color: Color): Modifier {
-    return if (blur.radius > 0) {
-        hazeEffect(blur.haze) {
-            blurRadius = blur.radius.dp
-            backgroundColor = color
-        }.background(color)
-    } else {
-        background(color)
-    }
-}
-
-/** Shared default for every virtual-app route, including future screens using ordinary Scaffolds. */
-@Composable
-fun VirtualAppTheme(content: @Composable () -> Unit) {
-    val blur = rememberVirtualAppBlur()
-    de.mm20.launcher2.ui.launcher.helper.WallpaperBlur { blur.radius }
+/** A single backing, including standalone and inline apps; nested wrappers do not add opacity. */
+@Composable fun VirtualAppTheme(content: @Composable () -> Unit) {
+    if (LocalGlassSurface.current) { content(); return }
+    val token = rememberVirtualAppBlur()
     val base = MaterialTheme.colorScheme
-    val alpha = MaterialTheme.transparency.background.coerceIn(0.35f, 0.92f)
-    val colors = remember(base, alpha) {
-        base.copy(
-            background = Color.Transparent,
-            surface = Color.Transparent,
-            surfaceContainerLowest = base.surfaceContainerLowest.copy(alpha = alpha),
-            surfaceContainerLow = base.surfaceContainerLow.copy(alpha = alpha),
-            surfaceContainer = Color.Transparent,
-            surfaceContainerHigh = base.surfaceContainerHigh.copy(alpha = alpha),
-            surfaceContainerHighest = base.surfaceContainerHighest.copy(alpha = alpha),
-        )
-    }
-    CompositionLocalProvider(LocalVirtualAppBlur provides blur) {
+    val alpha = MaterialTheme.transparency.background.coerceIn(0f, 1f)
+    val backing = base.surface.copy(alpha = alpha)
+    val surfaceAlpha = MaterialTheme.transparency.surface.coerceIn(0f, 1f)
+    val elevatedAlpha = MaterialTheme.transparency.elevatedSurface.coerceIn(0f, 1f)
+    val colors = remember(base, surfaceAlpha, elevatedAlpha) { base.copy(
+        background = Color.Transparent, surface = Color.Transparent, surfaceContainer = Color.Transparent,
+        surfaceContainerLowest = base.surfaceContainerLowest.copy(alpha = surfaceAlpha),
+        surfaceContainerLow = base.surfaceContainerLow.copy(alpha = surfaceAlpha),
+        surfaceContainerHigh = base.surfaceContainerHigh.copy(alpha = elevatedAlpha),
+        surfaceContainerHighest = base.surfaceContainerHighest.copy(alpha = elevatedAlpha),
+    ) }
+    CompositionLocalProvider(LocalVirtualAppBlur provides token, LocalGlassSurface provides true) {
         MaterialTheme(colorScheme = colors, typography = MaterialTheme.typography, shapes = MaterialTheme.shapes) {
-            Box(Modifier.fillMaxSize().background(base.surface.copy(alpha = alpha))) { content() }
+            Box(Modifier.fillMaxSize().frostedGlass(backing)) { content() }
         }
     }
 }
