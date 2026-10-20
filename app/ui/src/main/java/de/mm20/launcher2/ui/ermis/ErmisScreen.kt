@@ -91,6 +91,10 @@ private fun ErmisMailbox() {
         (accountId == null || message.accountId == accountId) && (!starred || message.starred) &&
             (query.isBlank() || listOf(message.from, message.subject, message.preview).any { it.contains(query, true) })
     }.sortedByDescending { it.date } }
+    val visibleDrafts = remember(state.drafts, accountId, query) {
+        state.drafts.filter { draft -> (accountId == null || draft.accountId == accountId) &&
+            (query.isBlank() || listOf(draft.to, draft.cc, draft.bcc, draft.subject, draft.body).any { it.contains(query, true) }) }
+    }
     val conversations = remember(visible) { ErmisConversations.group(visible) }
     val selectedConversation = remember(state.messages, selected?.accountId, selected?.uid) { ErmisConversations.group(state.messages).firstOrNull { thread -> thread.any { it.accountId == selected?.accountId && it.uid == selected?.uid } }.orEmpty() }
     val dateFormatter = remember { DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT) }
@@ -132,7 +136,7 @@ private fun ErmisMailbox() {
             }
         }
         if (!showingDrafts && visible.isEmpty() && state.accounts.isNotEmpty() && !state.loading) item { Text(stringResource(R.string.ermis_empty), Modifier.padding(24.dp)) }
-        if (showingDrafts) items(state.drafts.filter { accountId == null || it.accountId == accountId }, key = { "draft:${it.id}" }) { draft ->
+        if (showingDrafts) items(visibleDrafts, key = { "draft:${it.id}" }) { draft ->
             ListItem(headlineContent = { Text(draft.subject.ifBlank { stringResource(R.string.ermis_no_subject) }) },
                 supportingContent = { Text(draft.to.ifBlank { draft.cc.ifBlank { draft.bcc } } + "\n" + draft.body.take(160), maxLines = 3) },
                 leadingContent = { Icon(painterResource(R.drawable.draft_24px), null) },
