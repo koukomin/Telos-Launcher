@@ -214,6 +214,11 @@ private fun PagerVideo(uri: Uri, onTap: () -> Unit) {
     )
 }
 
+private val staticPhotoWallpaperTargets = listOf(
+    R.string.preference_wallpaper_set_home to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Home,
+    R.string.preference_wallpaper_set_lock to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Lock,
+    R.string.preference_wallpaper_set_both to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Both)
+
 @Composable
 private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     val context = LocalContext.current
@@ -231,11 +236,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
         AlertDialog(onDismissRequest = { if (!settingWallpaper) wallpaperUri = null },
             title = { Text(stringResource(R.string.wallpaper_target_dialog_title)) },
             text = { Column {
-                val choices = listOf(
-                    R.string.preference_wallpaper_set_home to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Home,
-                    R.string.preference_wallpaper_set_lock to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Lock,
-                    R.string.preference_wallpaper_set_both to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Both)
-                choices.forEach { (label, target) ->
+                staticPhotoWallpaperTargets.forEach { (label, target) ->
                     TextButton(enabled = !settingWallpaper, onClick = {
                         settingWallpaper = true
                         wallpaperScope.launch {

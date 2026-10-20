@@ -51,14 +51,15 @@ fun FrostedGlassProvider(content: @Composable () -> Unit) {
         onDispose { owner.lifecycle.removeObserver(observer) }
     }
     val config = LocalConfiguration.current
-    val viewport = maxOf(config.screenWidthDp, config.screenHeightDp).coerceAtLeast(1)
-    val backdrop by produceState(FrostedBackdrop(null, null), radius, wholeEnabled, wholeRadius, revision, colors, resumed, viewport) {
+    val widthDp = config.screenWidthDp.coerceAtLeast(1)
+    val heightDp = config.screenHeightDp.coerceAtLeast(1)
+    val backdrop by produceState(FrostedBackdrop(null, null), radius, wholeEnabled, wholeRadius, revision, colors, resumed, widthDp, heightDp) {
         value = FrostedBackdrop(null, null) // Never keep old wallpaper pixels while validating a change.
         kotlinx.coroutines.delay(120) // Coalesce radius-slider and wallpaper-color updates.
         value = withContext(Dispatchers.IO) {
             FrostedBackdrop(
-                if (radius > 0) service.loadGlassWallpaper(radius, viewport)?.asImageBitmap() else null,
-                if (wholeEnabled && wholeRadius > 0) service.loadGlassWallpaper(wholeRadius, viewport)?.asImageBitmap() else null,
+                if (radius > 0) service.loadGlassWallpaper(radius, widthDp, heightDp)?.asImageBitmap() else null,
+                if (wholeEnabled && wholeRadius > 0) service.loadGlassWallpaper(wholeRadius, widthDp, heightDp)?.asImageBitmap() else null,
             )
         }
     }

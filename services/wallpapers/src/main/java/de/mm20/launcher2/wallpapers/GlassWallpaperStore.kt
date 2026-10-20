@@ -26,7 +26,8 @@ internal class GlassWallpaperStore(private val context: Context) {
     private val changes = MutableStateFlow(0L)
     val revision = changes.asStateFlow()
     private val file get() = AtomicFile(File(context.filesDir, "wallpapers/glass.snapshot"))
-    private val frames = LinkedHashMap<Pair<Int, Int>, Bitmap>()
+    private data class Key(val wallpaperId: Int, val radius: Int, val width: Int, val height: Int)
+    private val frames = LinkedHashMap<Key, Bitmap>()
 
     // Caller runs on IO. The same bounded input sets both the actual wallpaper and its snapshot.
     suspend fun set(uri: Uri, flags: Int): Boolean = mutex.withLock {
@@ -87,12 +88,11 @@ internal class GlassWallpaperStore(private val context: Context) {
         } finally { source.delete() }
     }
 
-    suspend fun load(radiusDp: Int, viewportDp: Int): Bitmap? = mutex.withLock {
+    suspend fun load(radiusDp: Int, widthDp: Int, heightDp: Int): Bitmap? = mutex.withLock {
         val manager = WallpaperManager.getInstance(context)
         if (manager.wallpaperInfo != null || radiusDp <= 0) { frames.clear(); return@withLock null }
         val id = manager.getWallpaperId(WallpaperManager.FLAG_SYSTEM)
-        val radius = (radiusDp.coerceIn(0, 100) * GlassPixels.MAX_EDGE.toFloat() / viewportDp.coerceAtLeast(1)).roundToInt().coerceIn(1, 32)
-        val key = id to radius
+        val key = Key(id, radiusDp.coerceIn(0, 100), widthDp, heightDp)
         frames[key]?.let { return@withLock it }
         val snapshot = try { file.openRead() } catch (_: java.io.FileNotFoundException) { frames.clear(); return@withLock null }
         val bitmap = snapshot.use { raw ->
@@ -108,12 +108,13 @@ internal class GlassWallpaperStore(private val context: Context) {
         try {
             val pixels = IntArray(bitmap.width * bitmap.height)
             bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
+            val radius = GlassPixels.sourceRadius(radiusDp, bitmap.width, bitmap.height, widthDp, heightDp)
             val result = Bitmap.createBitmap(GlassPixels.blur(pixels, bitmap.width, bitmap.height, radius), bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
             if (manager.wallpaperInfo != null || manager.getWallpaperId(WallpaperManager.FLAG_SYSTEM) != id) {
                 result.recycle(); return@withLock null
             }
             // At most two immutable frames (glass + optional whole-wallpaper blur), <= 2 MiB.
-            frames.keys.filter { it.first != id }.forEach { frames.remove(it) }
+            frames.keys.filter { it.wallpaperId != id }.forEach { frames.remove(it) }
             if (frames.size >= 2) frames.remove(frames.keys.first())
             frames[key] = result
             // Do not recycle evicted frames: a Compose frame can still be drawing one.

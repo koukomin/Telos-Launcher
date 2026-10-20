@@ -8,6 +8,11 @@ class GlassPixelsTest {
         assertEquals(16, GlassPixels.sampleSize(8000, 6000))
         assertThrows(IllegalArgumentException::class.java) { GlassPixels.sampleSize(100000, 100000) }
     }
+    @Test fun blurRadiusUsesTheActualCenterCropScale() {
+        assertEquals(0, GlassPixels.sourceRadius(0, 512, 256, 400, 800))
+        assertEquals(10, GlassPixels.sourceRadius(32, 512, 256, 400, 800))
+        assertEquals(20, GlassPixels.sourceRadius(32, 512, 256, 800, 400))
+    }
     @Test fun flatColorsSurviveBlurAndInputRemainsImmutable() {
         val pixels = IntArray(8 * 8) { 0xff18293a.toInt() }
         assertArrayEquals(pixels, GlassPixels.blur(pixels, 8, 8, 4))

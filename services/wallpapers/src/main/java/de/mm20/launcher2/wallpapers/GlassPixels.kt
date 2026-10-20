@@ -9,6 +9,12 @@ internal object GlassPixels {
         while ((maxOf(width, height) + sample - 1) / sample > MAX_EDGE) sample *= 2
         return sample
     }
+    fun sourceRadius(radiusDp: Int, imageWidth: Int, imageHeight: Int, windowWidthDp: Int, windowHeightDp: Int): Int {
+        require(minOf(imageWidth, imageHeight, windowWidthDp, windowHeightDp) > 0)
+        if (radiusDp <= 0) return 0
+        val scale = maxOf(windowWidthDp.toFloat() / imageWidth, windowHeightDp.toFloat() / imageHeight)
+        return kotlin.math.round(radiusDp.coerceIn(0, 100) / scale).toInt().coerceIn(1, 32)
+    }
     fun blur(pixels: IntArray, width: Int, height: Int, radius: Int): IntArray {
         require(width in 1..MAX_EDGE && height in 1..MAX_EDGE && pixels.size == width * height)
         require(radius in 0..32)

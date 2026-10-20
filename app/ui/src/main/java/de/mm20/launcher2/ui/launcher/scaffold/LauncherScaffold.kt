@@ -1058,6 +1058,8 @@ internal fun LauncherScaffold(
     val filterBarItems by searchVM.filterBarItems.collectAsState(emptyList())
     val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
 
+    val glassSettings = koinInject<de.mm20.launcher2.preferences.ui.UiSettings>()
+    val glassWidgets by remember { glassSettings.widgetsGlassBackground }.collectAsState(true)
     val desktopModeSettings = koinInject<de.mm20.launcher2.preferences.ui.DesktopModeSettings>()
     val keyboardShortcuts by desktopModeSettings.hardwareKeyboardShortcuts.collectAsState(true)
 
@@ -1458,7 +1460,7 @@ internal fun LauncherScaffold(
                         .homePageAnimation(
                             state,
                             if (config.homeComponent.drawBackground) {
-                                config.backgroundColor.copy(alpha = if (glassWidgets && (config.homeComponent is WidgetsComponent || config.homeComponent is ClockAndWidgetsHomeComponent)) 0.18f else MaterialTheme.transparency.background)
+                                config.backgroundColor.copy(alpha = if (glassWidgets && (config.homeComponent is WidgetsComponent || config.homeComponent is ClockAndWidgetsHomeComponent)) 0f else MaterialTheme.transparency.background)
                             } else {
                                 Color.Transparent
                             }

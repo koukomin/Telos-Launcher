@@ -19,8 +19,8 @@ enum class StaticWallpaperTarget {
 class WallpapersService(private val context: Context) {
     private val glass = GlassWallpaperStore(context.applicationContext)
     val glassRevision = glass.revision
-    suspend fun loadGlassWallpaper(radius: Int, viewportDp: Int): android.graphics.Bitmap? = withContext(Dispatchers.IO) {
-        try { glass.load(radius, viewportDp) } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled } catch (_: Exception) { null }
+    suspend fun loadGlassWallpaper(radius: Int, widthDp: Int, heightDp: Int): android.graphics.Bitmap? = withContext(Dispatchers.IO) {
+        try { glass.load(radius, widthDp, heightDp) } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled } catch (_: Exception) { null }
     }
 
 

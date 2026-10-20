@@ -127,7 +127,7 @@ fun LauncherTheme(
                     content = {
                         val context = androidx.compose.ui.platform.LocalContext.current
                         de.mm20.launcher2.ui.component.FrostedGlassProvider {
-                            if (context is de.mm20.launcher2.ui.settings.TelosAppActivity) {
+                            if (context is de.mm20.launcher2.ui.settings.SettingsActivity) {
                                 de.mm20.launcher2.ui.component.VirtualAppTheme(content = content)
                             } else content()
                         }
