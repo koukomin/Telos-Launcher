@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_phonea_recents">Cuộc gọi gần đây</string>
+    <string name="preference_search_contacts">Danh bạ</string>
+</resources>
