@@ -108,6 +108,13 @@ class WallpaperSettings internal constructor(
         dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperPauseOnDesktopMode = pause)) }
     }
 
+    val textColors
+        get() = dataStore.data.map { it.wallpaper.wallpaperTextColors }.distinctUntilChanged()
+
+    fun setTextColors(colors: de.mm20.launcher2.preferences.SystemBarColors) {
+        dataStore.update { it.copy(wallpaper = it.wallpaper.copy(wallpaperTextColors = colors)) }
+    }
+
     val dimWallpaper
         get() = dataStore.data.map {
             it.wallpaper.wallpaperDim

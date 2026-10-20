@@ -1,0 +1,6 @@
+<resources>
+    <string name="wallpaper_content_color">Texto sobre el fondo</string>
+    <string name="wallpaper_content_auto">Automático</string>
+    <string name="wallpaper_content_white">Blanco</string>
+    <string name="wallpaper_content_black">Negro</string>
+</resources>

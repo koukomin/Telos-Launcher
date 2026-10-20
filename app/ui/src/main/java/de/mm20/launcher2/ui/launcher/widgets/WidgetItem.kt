@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets
 
+import de.mm20.launcher2.ui.theme.rememberWallpaperContentStyle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.appwidget.AppWidgetManager
 import androidx.compose.animation.AnimatedVisibility
@@ -100,14 +101,18 @@ fun WidgetItem(
     val elevation by animateDpAsState(if (isDragged) 8.dp else 0.dp)
 
     val backgroundOpacity by animateFloatAsState(
-        if (widget is AppWidget && !widget.config.background && !editMode) 0f else if (glassWidgets && widget !is AppWidget) 0.42f else MaterialTheme.transparency.surface,
+        if (widget is AppWidget && !widget.config.background && !editMode) 0f else if (!glassWidgets && widget !is AppWidget) 1f else MaterialTheme.transparency.surface,
         label = "widgetCardBackgroundOpacity",
     )
 
+    val wallpaperStyle = if (widget is AppWidget && !widget.config.background && !editMode)
+        rememberWallpaperContentStyle() else null
     LauncherCard(
-        modifier = modifier.zIndex(if (isDragged) 1f else 0f),
+        modifier = modifier.zIndex(if (isDragged) 1f else 0f)
+            .then(wallpaperStyle?.modifier ?: Modifier),
         elevation = elevation,
         backgroundOpacity = backgroundOpacity,
+        contentColor = wallpaperStyle?.color,
     ) {
         Column {
             AnimatedVisibility(editMode) {

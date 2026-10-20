@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.parts
 
+import de.mm20.launcher2.ui.theme.rememberWallpaperContentStyle
 import android.content.Context
 import android.appwidget.AppWidgetManager
 import androidx.compose.foundation.background
@@ -521,10 +522,12 @@ private fun DockPageIndicator(
     currentPage: Int,
     color: Color?,
 ) {
-    val dotColor = color ?: MaterialTheme.colorScheme.onSurfaceVariant
+    val readability = rememberWallpaperContentStyle()
+    val dotColor = color ?: readability.color
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .then(readability.modifier)
             .padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.Center,
     ) {

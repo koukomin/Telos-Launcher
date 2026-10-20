@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.homescreen.wallpaper
 
+import de.mm20.launcher2.preferences.SystemBarColors
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
@@ -63,6 +64,7 @@ fun WallpaperSettingsScreen() {
     val videoSpeed by viewModel.videoSpeed.collectAsStateWithLifecycle()
     val videoStartBehavior by viewModel.videoStartBehavior.collectAsStateWithLifecycle()
 
+    val textColors by viewModel.textColors.collectAsStateWithLifecycle()
     val dimWallpaper by viewModel.dimWallpaper.collectAsStateWithLifecycle()
     val blurWallpaper by viewModel.blurWallpaper.collectAsStateWithLifecycle()
     val blurWallpaperRadius by viewModel.blurWallpaperRadius.collectAsStateWithLifecycle()
@@ -156,6 +158,16 @@ fun WallpaperSettingsScreen() {
     PreferenceScreen(title = stringResource(R.string.preference_screen_wallpaper)) {
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_wallpaper)) {
+                ListPreference(
+                    title = stringResource(R.string.wallpaper_content_color),
+                    value = textColors,
+                    items = listOf(
+                        stringResource(R.string.wallpaper_content_auto) to SystemBarColors.Auto,
+                        stringResource(R.string.wallpaper_content_white) to SystemBarColors.Light,
+                        stringResource(R.string.wallpaper_content_black) to SystemBarColors.Dark,
+                    ),
+                    onValueChanged = viewModel::setTextColors,
+                )
                 Preference(
                     title = stringResource(R.string.wallpaper_animated_gif),
                     onClick = { gifPicker.launch(arrayOf("image/gif")) },

@@ -1,0 +1,6 @@
+<resources>
+    <string name="wallpaper_content_color">Horma-paperaren testua</string>
+    <string name="wallpaper_content_auto">Automatikoa</string>
+    <string name="wallpaper_content_white">Zuria</string>
+    <string name="wallpaper_content_black">Beltza</string>
+</resources>

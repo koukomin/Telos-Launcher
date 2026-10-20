@@ -68,6 +68,9 @@ fun LauncherSearchBar(
             searchVM.search(spoken)
         }
     }
+    val readabilityUiSettings = org.koin.compose.koinInject<de.mm20.launcher2.preferences.ui.UiSettings>()
+    val searchBarColors by remember { readabilityUiSettings.searchBarColor }
+        .collectAsState(de.mm20.launcher2.preferences.SearchBarColors.Auto)
     val hiddenItemsButtonEnabled by searchVM.hiddenResultsButton.collectAsState(false)
     val hiddenItems = searchVM.hiddenResults
 
@@ -91,6 +94,7 @@ fun LauncherSearchBar(
             },
             reverse = bottomSearchBar,
             darkColors = darkColors,
+            automaticColors = !isSearchOpen && searchBarColors == de.mm20.launcher2.preferences.SearchBarColors.Auto,
             menu = {
                 AnimatedVisibility(
                     hiddenItemsButtonEnabled && isSearchOpen && hiddenItems.isNotEmpty(),

@@ -73,3 +73,26 @@ decoder or of the torrent engine then ends that process, not the launcher.
 
 SIP and the photo editor still run in the launcher process. SIP would need a service with an
 interface between the processes.
+
+
+## Wallpaper contrast
+
+`ui/theme/ContrastPolicy.kt` contains the pure sRGB/WCAG black/white policy;
+`WallpaperSamples.kt` selects a conservative region from a small extrema grid.
+`WallpaperReadability.kt` loads permitted static wallpaper files on IO, gates legacy APIs,
+checks the viewport, caches one result and observes resume/wallpaper changes. It never requests
+additional permissions. Failed reads, live wallpapers, blur/dim and ambiguous crops use a scrim.
+`WallpaperContentStyle` attaches geometry and backing to wallpaper content; `LocalOnWallpaper`
+is scoped to clock/home content and reset by shared cards.
+
+`LauncherCard` propagates composited surface ranges and resolved content colors to nested cards.
+Tonal overlays are disabled there so the surface does not change after the contrast decision.
+`TransparencyScheme` preserves explicit stored values; only missing values and the built-in
+Default scheme use 0.80. Existing clock, custom-label and third-party widget styling remains an
+explicit limitation. Unit tests live in `ui/theme/ContrastPolicyTest.kt` and run with
+`./gradlew :app:ui:testDefaultDebugUnitTest --tests '*ContrastPolicyTest'`.
+
+Device review should cover bright/dark/checkerboard static wallpapers, denied permissions,
+Android 13+, live/video wallpapers, blur/dim, forced white/black, clock/theme-color overrides,
+custom labels, both widget-background settings, custom transparency (0/0.8/1), drawer transitions,
+rotation, split screen, changing wallpapers with the same palette and returning from the picker.
