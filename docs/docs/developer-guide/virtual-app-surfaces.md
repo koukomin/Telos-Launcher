@@ -29,3 +29,5 @@ FrostedGeometry defines one center-crop in window coordinates. Each surface subt
 The provider supplies pixels only; it never paints a full-screen layer over the home wallpaper. The existing wallpaper-blur preference is drawn only on secondary pages that do not own their glass backing, so enabling it does not blur the home wallpaper or add another layer under widget cards and inline apps.
 
 Radius is converted from dp using the actual window-to-source center-crop scale, including portrait/landscape changes. Settings and Calendar avoid adding a second full-window backing; full-screen Ermis dialogs own exactly one shared backing in their own window. Photos Home/Both actions use the same snapshot writer as the wallpaper settings.
+
+Material container-low/high roles retain their surface/elevated theme opacity for inner controls and cards; only full-window background/surface roles are cleared. Existing wallpaper target/action messages are completed in all supported locales when reused from Photos.

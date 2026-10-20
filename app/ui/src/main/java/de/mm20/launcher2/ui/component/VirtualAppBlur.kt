@@ -31,8 +31,15 @@ fun Modifier.virtualAppGlass(blur: VirtualAppBlur, color: Color): Modifier = fro
     val base = MaterialTheme.colorScheme
     val alpha = MaterialTheme.transparency.background.coerceIn(0f, 1f)
     val backing = base.surface.copy(alpha = alpha)
-    val colors = remember(base) { base.copy(background = Color.Transparent, surface = Color.Transparent,
-        surfaceContainer = Color.Transparent) }
+    val surfaceAlpha = MaterialTheme.transparency.surface.coerceIn(0f, 1f)
+    val elevatedAlpha = MaterialTheme.transparency.elevatedSurface.coerceIn(0f, 1f)
+    val colors = remember(base, surfaceAlpha, elevatedAlpha) { base.copy(
+        background = Color.Transparent, surface = Color.Transparent, surfaceContainer = Color.Transparent,
+        surfaceContainerLowest = base.surfaceContainerLowest.copy(alpha = surfaceAlpha),
+        surfaceContainerLow = base.surfaceContainerLow.copy(alpha = surfaceAlpha),
+        surfaceContainerHigh = base.surfaceContainerHigh.copy(alpha = elevatedAlpha),
+        surfaceContainerHighest = base.surfaceContainerHighest.copy(alpha = elevatedAlpha),
+    ) }
     CompositionLocalProvider(LocalVirtualAppBlur provides token, LocalGlassSurface provides true) {
         MaterialTheme(colorScheme = colors, typography = MaterialTheme.typography, shapes = MaterialTheme.shapes) {
             Box(Modifier.fillMaxSize().frostedGlass(backing)) { content() }

@@ -1,3 +1,10 @@
 <resources>
     <string name="frosted_glass_wallpaper_help">Матавае шкло выкарыстоўвае статычныя шпалеры галоўнага экрана, зададзеныя ў Telos. Жывыя або знешнія шпалеры выкарыстоўваюць напаўпразрысты адценне.</string>
+
+    <string name="wallpaper_target_dialog_title">Усталяваць шпалеры для</string>
+    <string name="preference_wallpaper_set_home">Галоўны экран</string>
+    <string name="preference_wallpaper_set_lock">Экран блакіроўкі</string>
+    <string name="preference_wallpaper_set_both">Абодва</string>
+    <string name="wallpaper_set_success">Шпалеры ўсталяваны</string>
+    <string name="wallpaper_set_failure">Не ўдалося ўсталяваць шпалеры</string>
 </resources>

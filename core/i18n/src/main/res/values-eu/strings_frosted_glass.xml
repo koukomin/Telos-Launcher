@@ -1,3 +1,10 @@
 <resources>
     <string name="frosted_glass_wallpaper_help">Beira lausoak Telosen ezarritako hasierako pantailako horma-paper estatikoa erabiltzen du. Horma-paper biziek edo kanpokoek kolore zeharrargia erabiltzen dute.</string>
+
+    <string name="wallpaper_target_dialog_title">Ezarri horma-papera hemen</string>
+    <string name="preference_wallpaper_set_home">Hasierako pantaila</string>
+    <string name="preference_wallpaper_set_lock">Blokeo-pantaila</string>
+    <string name="preference_wallpaper_set_both">Biak</string>
+    <string name="wallpaper_set_success">Horma-papera ezarrita</string>
+    <string name="wallpaper_set_failure">Ezin izan da horma-papera ezarri</string>
 </resources>

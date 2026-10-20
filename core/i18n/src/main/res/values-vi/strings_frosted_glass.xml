@@ -1,3 +1,10 @@
 <resources>
     <string name="frosted_glass_wallpaper_help">Kính mờ dùng hình nền chính tĩnh được đặt trong Telos. Hình nền động hoặc bên ngoài dùng lớp màu bán trong suốt.</string>
+
+    <string name="wallpaper_target_dialog_title">Đặt hình nền cho</string>
+    <string name="preference_wallpaper_set_home">Màn hình chính</string>
+    <string name="preference_wallpaper_set_lock">Màn hình khóa</string>
+    <string name="preference_wallpaper_set_both">Cả hai</string>
+    <string name="wallpaper_set_success">Đã đặt hình nền</string>
+    <string name="wallpaper_set_failure">Không thể đặt hình nền</string>
 </resources>

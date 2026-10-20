@@ -1,3 +1,10 @@
 <resources>
     <string name="frosted_glass_wallpaper_help">กระจกฝ้าใช้ภาพพื้นหลังหน้าหลักแบบนิ่งที่ตั้งค่าใน Telos ภาพพื้นหลังเคลื่อนไหวหรือจากภายนอกใช้สีโปร่งแสง</string>
+
+    <string name="wallpaper_target_dialog_title">ตั้งค่าภาพพื้นหลังสำหรับ</string>
+    <string name="preference_wallpaper_set_home">หน้าจอหลัก</string>
+    <string name="preference_wallpaper_set_lock">หน้าจอล็อก</string>
+    <string name="preference_wallpaper_set_both">ทั้งสอง</string>
+    <string name="wallpaper_set_success">ตั้งค่าภาพพื้นหลังแล้ว</string>
+    <string name="wallpaper_set_failure">ไม่สามารถตั้งค่าภาพพื้นหลังได้</string>
 </resources>
