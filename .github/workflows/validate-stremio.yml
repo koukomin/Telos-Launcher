@@ -6,6 +6,10 @@ on:
       - 'services/widgets/**'
       - 'data/widgets/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/launcher/widgets/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/theme/**'
+      - 'app/ui/src/test/java/de/mm20/launcher2/ui/theme/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/LauncherCard.kt'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/SearchBar.kt'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/launcher/scaffold/**'
       - 'services/network/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/network/**'
@@ -77,8 +81,8 @@ jobs:
         run: ./gradlew :services:downloads:testDebugUnitTest --stacktrace
       - name: Test Store download and update policies
         run: ./gradlew :services:store:testDebugUnitTest --stacktrace
-      - name: Test UI settings, archives and contact recovery
-        run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests 'de.mm20.launcher2.ui.files.FilesSettingsTransferTest' --tests 'de.mm20.launcher2.ui.files.ArchiveWriterTest' --tests 'de.mm20.launcher2.ui.comms.ContactBlockStatusTest' --stacktrace
+      - name: Test UI settings, archives, contact recovery and wallpaper contrast
+        run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests 'de.mm20.launcher2.ui.files.FilesSettingsTransferTest' --tests 'de.mm20.launcher2.ui.files.ArchiveWriterTest' --tests 'de.mm20.launcher2.ui.comms.ContactBlockStatusTest' --tests 'de.mm20.launcher2.ui.theme.ContrastPolicyTest' --stacktrace
       - name: Test streaming APK downloads with a constrained heap
         run: ./gradlew :data:store:testDebugUnitTest --stacktrace
       - name: Build debug APK
