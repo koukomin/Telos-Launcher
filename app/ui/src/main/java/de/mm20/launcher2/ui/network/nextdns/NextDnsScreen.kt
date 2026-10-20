@@ -45,7 +45,7 @@ fun NextDnsScreen() {
     val visibleRules = remember(rules, query) { rules.filter { query.isBlank() || it.id.contains(query.trim(), true) } }
     PreferenceScreen(title = { Text(stringResource(R.string.nd_title)) }, topBarActions = {
         IconButton(enabled = state.connected && !state.loading, onClick = { vm.refresh(query, if (blockedOnly) "blocked" else null) }) {
-            Icon(painterResource(R.drawable.refresh_24px), stringResource(R.string.hc_refresh))
+            Icon(painterResource(R.drawable.restart_alt_24px), stringResource(R.string.hc_refresh))
         }
     }) {
         item {

@@ -73,7 +73,13 @@ class NextDnsVM : ViewModel(), KoinComponent {
         val page = repository.loadLogs(search, status, cursor)
         mutable.update { it.copy(logs = (it.logs + page.items).take(1000), cursor = if (it.logs.size + page.items.size >= 1000) null else page.cursor) }
     }
-    fun put(allow: Boolean, domain: String) = operation { repository.putRule(allow, domain); refreshContent() }
+    fun put(allow: Boolean, domain: String) = operation {
+        val normalized = NextDnsValidation.domain(domain)
+        val existing = (if (allow) mutable.value.allowed else mutable.value.denied).firstOrNull { it.id == normalized }
+        if (existing == null) repository.putRule(allow, normalized)
+        else if (!existing.active) repository.setRuleActive(allow, normalized, true)
+        refreshContent()
+    }
     fun toggle(allow: Boolean, domain: String, active: Boolean) = operation { repository.setRuleActive(allow, domain, active); refreshContent() }
     fun delete(allow: Boolean, domain: String) = operation { repository.deleteRule(allow, domain); refreshContent() }
     fun applyDns() = operation {

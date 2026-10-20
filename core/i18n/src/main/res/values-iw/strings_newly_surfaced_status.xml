@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hf_freeze_active">פעיל</string>
+    <string name="hf_freeze_frozen">מוקפא</string>
+    <string name="hf_freeze_connected_via">מחובר באמצעות %1$s</string>
+    <string name="hf_freeze_disconnected">מנותק</string>
+</resources>
