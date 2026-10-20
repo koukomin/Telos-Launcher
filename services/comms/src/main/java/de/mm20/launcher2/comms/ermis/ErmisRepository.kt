@@ -368,7 +368,7 @@ class ErmisRepository private constructor(private val context: Context) {
             setContent(multipart); saveChanges()
         }
         val transport = transport(a)
-        try { transport.sendMessage(message,recipients.envelope) } finally { transport.close() }
+        ErmisSmtpCompletion.send({ transport.sendMessage(message,recipients.envelope) }, { transport.close() })
         // Gmail stores its own sent copy. Other accounts receive an IMAP Sent copy after SMTP succeeds.
         if (!a.imapHost.equals("imap.gmail.com", true)) {
             try {

@@ -140,6 +140,8 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
     val filesPrefs = remember { context.getSharedPreferences("telos_files", android.content.Context.MODE_PRIVATE) }
+    var ftpPath by remember { mutableStateOf<String?>(null) }
+    ftpPath?.let { path -> de.mm20.launcher2.ui.files.remote.FilesFtpServerDialog(path) { ftpPath = null } }
     var lockOnOpen by remember { mutableStateOf(filesPrefs.getBoolean("lock_on_open", false)) }
 
     var hasAccess by remember { mutableStateOf(hasAllFilesAccess(context)) }
@@ -370,6 +372,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                         DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_collections)) }, onClick = { menuOpen = false; showCollections = true })
                                         vm.path?.takeIf { !vm.rootMode && !RemotePath.isRemote(it) && !ArchivePath.isArchive(it) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { folder ->
                                             DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_sharing_title)) }, onClick = { menuOpen = false; sharingPath = folder })
+                                            DropdownMenuItem(text = { Text("FTP") }, onClick = { menuOpen = false; ftpPath = folder })
                                         }
                                         DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_transfers_title)) }, onClick = { menuOpen = false; showTransfers = true })
                                         DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_toolbar_title)) }, onClick = { menuOpen = false; showToolbarSettings = true })

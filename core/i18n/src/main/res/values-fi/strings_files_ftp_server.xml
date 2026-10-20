@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP ei ole salattu. Vain tämä kansio jaetaan. Pysähtyy suljettaessa tai taustalla.</string>
+    <string name="nf_ftp_uploads">Lataa uusia tiedostoja (enintään 2 GiB; ei korvaamista)</string>
+</resources>

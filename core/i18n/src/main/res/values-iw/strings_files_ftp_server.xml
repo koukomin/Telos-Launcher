@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP אינו מוצפן. רק תיקייה זו משותפת. נעצר בסגירה או במעבר לרקע.</string>
+    <string name="nf_ftp_uploads">העלאת קבצים חדשים (עד 2 GiB; ללא דריסה)</string>
+</resources>

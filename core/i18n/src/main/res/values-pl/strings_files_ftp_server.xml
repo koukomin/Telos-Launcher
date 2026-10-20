@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP nie jest szyfrowany. Udostępniany jest tylko ten folder. Zatrzymuje się po zamknięciu lub w tle.</string>
+    <string name="nf_ftp_uploads">Przesyłaj nowe pliki (do 2 GiB; bez nadpisywania)</string>
+</resources>

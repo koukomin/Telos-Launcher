@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP এনক্রিপ্ট করা নয়। শুধু এই ফোল্ডার শেয়ার হয়। বন্ধ করলে বা পটভূমিতে গেলে থামে।</string>
+    <string name="nf_ftp_uploads">নতুন ফাইল আপলোড (সর্বোচ্চ ২ GiB; প্রতিস্থাপন নয়)</string>
+</resources>

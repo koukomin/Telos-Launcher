@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">Az FTP nem titkosított. Csak ez a mappa van megosztva. Bezáráskor vagy a háttérben leáll.</string>
+    <string name="nf_ftp_uploads">Új fájlok feltöltése (legfeljebb 2 GiB; felülírás nélkül)</string>
+</resources>

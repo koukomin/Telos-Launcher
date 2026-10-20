@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP is niet versleuteld. Alleen deze map wordt gedeeld. Stopt bij sluiten of op de achtergrond.</string>
+    <string name="nf_ftp_uploads">Nieuwe bestanden uploaden (tot 2 GiB; niet overschrijven)</string>
+</resources>
