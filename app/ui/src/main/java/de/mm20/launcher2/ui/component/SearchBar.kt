@@ -72,7 +72,6 @@ fun SearchBar(
 ) {
 
     val readability = rememberWallpaperContentStyle(forcedDark = if (automaticColors) null else darkColors)
-    val overWallpaper = style == SearchBarStyle.Transparent && level == SearchBarLevel.Resting
     val transition = updateTransition(level, label = "Searchbar")
     val context = LocalContext.current
     val searchUiSettings: SearchUiSettings = koinInject()
@@ -124,6 +123,9 @@ fun SearchBar(
         else 1f
     }
 
+    // Use wallpaper text only after the actual surface has faded out, not at the target
+    // state change. Otherwise white text can briefly sit on a still-light panel.
+    val overWallpaper = style == SearchBarStyle.Transparent && backgroundOpacity <= 0.01f
     val panelContent = panelContentColor(
         MaterialTheme.colorScheme.surface.copy(alpha = backgroundOpacity)
     )
