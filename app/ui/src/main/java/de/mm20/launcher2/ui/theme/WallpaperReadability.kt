@@ -40,9 +40,11 @@ private fun readWallpaperSamples(context: Context, aspect: Float): WallpaperSamp
         val manager = WallpaperManager.getInstance(context)
         if (manager.wallpaperInfo != null) return null
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        manager.getWallpaperFile(WallpaperManager.FLAG_SYSTEM)?.use {
+        val headerFile = manager.getWallpaperFile(WallpaperManager.FLAG_SYSTEM) ?: return null
+        headerFile.use {
+            // inJustDecodeBounds intentionally returns null; only file availability is nullable.
             BitmapFactory.decodeFileDescriptor(it.fileDescriptor, null, bounds)
-        } ?: return null
+        }
         if (bounds.outWidth <= 0 || bounds.outHeight <= 0 ||
             abs(bounds.outWidth.toFloat() / bounds.outHeight - aspect) > 0.01f) return null
         val options = BitmapFactory.Options().apply {
@@ -138,7 +140,9 @@ internal fun rememberWallpaperContentStyle(forcedDark: Boolean? = null): Wallpap
     val samples = LocalWallpaperSamples.current
     val mode = LocalWallpaperTextMode.current
     val rootView = androidx.compose.ui.platform.LocalView.current.rootView
-    val viewport = Rect(0f, 0f, rootView.width.toFloat(), rootView.height.toFloat())
+    val viewport = remember(rootView.width, rootView.height) {
+        Rect(0f, 0f, rootView.width.toFloat(), rootView.height.toFloat())
+    }
     var bounds by remember { mutableStateOf<Rect?>(null) }
     var settledBounds by remember { mutableStateOf<Rect?>(null) }
     LaunchedEffect(bounds) {
@@ -154,16 +158,21 @@ internal fun rememberWallpaperContentStyle(forcedDark: Boolean? = null): Wallpap
         // Until layout is known, use a scrim rather than guessing a local region.
         if (settledBounds == null) chooseContrast(forcedDark = forced)
         else samples?.choice(viewport.width, viewport.height, forced,
-            settledBounds!!.left / viewport.width, settledBounds!!.top / viewport.height,
-            settledBounds!!.right / viewport.width, settledBounds!!.bottom / viewport.height)
+            // Include neighboring cells for small crop/zoom/position rounding differences.
+            settledBounds!!.left / viewport.width - 1f / 16, settledBounds!!.top / viewport.height - 1f / 32,
+            settledBounds!!.right / viewport.width + 1f / 16, settledBounds!!.bottom / viewport.height + 1f / 32)
             ?: chooseContrast(forcedDark = forced)
     }
     // During scrolling/dragging, keep the last text polarity with a safe backing. Change
     // polarity at most once after geometry settles instead of following each frame's pixels.
-    val choice = if (bounds != settledBounds)
-        chooseContrast(forcedDark = forced ?: settledChoice.darkText) else settledChoice
-    val backing = if (choice.darkText) Color.White else Color.Black
-    return WallpaperContentStyle(choice.darkText, Modifier
-        .onGloballyPositioned { bounds = it.boundsInWindow() }
-        .background(backing.copy(alpha = choice.scrimAlpha)), choice.scrimAlpha)
+    val moving = bounds != settledBounds
+    val choice = remember(moving, forced, settledChoice) {
+        if (moving) chooseContrast(forcedDark = forced ?: settledChoice.darkText) else settledChoice
+    }
+    val geometry = remember { Modifier.onGloballyPositioned { bounds = it.boundsInWindow() } }
+    return remember(choice, geometry) {
+        val backing = if (choice.darkText) Color.White else Color.Black
+        WallpaperContentStyle(choice.darkText,
+            geometry.background(backing.copy(alpha = choice.scrimAlpha)), choice.scrimAlpha)
+    }
 }
