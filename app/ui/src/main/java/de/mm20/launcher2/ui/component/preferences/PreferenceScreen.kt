@@ -38,7 +38,6 @@ import de.mm20.launcher2.ui.component.virtualAppElevated
 import de.mm20.launcher2.ui.component.virtualAppGlass
 import de.mm20.launcher2.ui.component.virtualAppSurface
 import de.mm20.launcher2.ui.theme.transparency.transparency
-import dev.chrisbanes.haze.hazeSource
 import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropColumn
 import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropListState
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
@@ -101,7 +100,7 @@ fun PreferenceScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .hazeSource(blur.haze)
+
                 .background(virtualAppSurface())
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             state = lazyColumnState,
@@ -146,7 +145,7 @@ fun DragAndDropPreferenceScreen(
         LazyDragAndDropColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .hazeSource(blur.haze)
+
                 .background(virtualAppSurface())
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             state = lazyColumnState,

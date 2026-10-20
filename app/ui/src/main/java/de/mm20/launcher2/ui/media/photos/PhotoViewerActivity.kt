@@ -25,7 +25,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.ui.viewinterop.AndroidView
 import de.mm20.launcher2.ui.component.rememberVirtualAppBlur
 import de.mm20.launcher2.ui.theme.transparency.transparency
-import dev.chrisbanes.haze.hazeSource
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.calculateCentroid
@@ -263,7 +262,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
         Modifier
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 1f - MaterialTheme.transparency.background * 0.15f))
-            .hazeSource(blur.haze),
+            ,
     ) {
         HorizontalPager(state = pager, modifier = Modifier.fillMaxSize()) { page ->
             val uri = uris[page]

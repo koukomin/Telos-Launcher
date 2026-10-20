@@ -115,7 +115,6 @@ import de.mm20.launcher2.ui.component.virtualAppGlass
 import de.mm20.launcher2.ui.component.virtualAppSurface
 import de.mm20.launcher2.ui.media.photos.ViewerLibrary
 import de.mm20.launcher2.ui.theme.transparency.transparency
-import dev.chrisbanes.haze.hazeSource
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.material3.TopAppBarDefaults
@@ -491,7 +490,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
             )
         },
     ) { padding ->
-        Box(Modifier.fillMaxSize().padding(padding).hazeSource(blur.haze)) {
+        Box(Modifier.fillMaxSize().padding(padding)) {
             when (val s = state) {
                 DocState.Loading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
                 is DocState.Failed -> Text(s.message, Modifier.align(Alignment.Center).padding(32.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)

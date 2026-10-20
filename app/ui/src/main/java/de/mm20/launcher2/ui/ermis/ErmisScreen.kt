@@ -64,7 +64,7 @@ fun ErmisScreen() {
         surfaceContainerHighest = paper, onSurface = ink, onBackground = ink,
         onSurfaceVariant = ink.copy(alpha = .78f)) }
     MaterialTheme(colorScheme = colors) {
-        Surface(color = paper.copy(alpha = .96f), modifier = Modifier.fillMaxSize()) { ErmisMailbox() }
+        Surface(color = androidx.compose.ui.graphics.Color.Transparent, modifier = Modifier.fillMaxSize()) { ErmisMailbox() }
     }
 }
 

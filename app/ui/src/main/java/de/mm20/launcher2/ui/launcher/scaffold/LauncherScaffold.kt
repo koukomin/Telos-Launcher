@@ -67,6 +67,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
+import de.mm20.launcher2.ui.component.frostedGlass
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
@@ -108,12 +109,12 @@ import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.SharedLauncherActivity
-import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.scaffold.animation.Offset3D
 import de.mm20.launcher2.ui.launcher.scaffold.animation.PushScaffoldAnimationController
 import de.mm20.launcher2.ui.launcher.scaffold.animation.RubberbandScaffoldAnimationController
 import de.mm20.launcher2.ui.launcher.scaffold.animation.ScaffoldAnimationController
 import de.mm20.launcher2.ui.launcher.scaffold.animation.ZoomInScaffoldAnimationController
+import de.mm20.launcher2.ui.launcher.scaffold.components.TelosAppPageComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.ScaffoldComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.WidgetsComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.ClockAndWidgetsHomeComponent
@@ -122,10 +123,6 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import de.mm20.launcher2.ui.theme.transparency.transparency
-import de.mm20.launcher2.ui.locals.LocalLauncherHazeState
-import dev.chrisbanes.haze.hazeEffect
-import dev.chrisbanes.haze.hazeSource
-import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.awaitCancellation
@@ -1061,11 +1058,9 @@ internal fun LauncherScaffold(
     val filterBarItems by searchVM.filterBarItems.collectAsState(emptyList())
     val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
 
-    val hazeState = rememberHazeState(blurEnabled = isAtLeastApiLevel(33))
     val desktopModeSettings = koinInject<de.mm20.launcher2.preferences.ui.DesktopModeSettings>()
     val keyboardShortcuts by desktopModeSettings.hardwareKeyboardShortcuts.collectAsState(true)
 
-    CompositionLocalProvider(LocalLauncherHazeState provides hazeState) {
     BoxWithConstraints(
         modifier = modifier,
     ) {
@@ -1239,23 +1234,6 @@ internal fun LauncherScaffold(
             }
         }
 
-        val drawerUi: de.mm20.launcher2.preferences.ui.UiSettings = org.koin.compose.koinInject()
-        val drawerBlur by drawerUi.drawerBackgroundBlur.collectAsState(32)
-        val customDrawer by drawerUi.drawerBackgroundEnabled.collectAsState(true)
-        val glassWidgets by drawerUi.widgetsGlassBackground.collectAsState(true)
-        val activeComponent = if (state.currentProgress >= 0.5f) state.currentComponent else config.homeComponent
-        val targetBlur = when {
-            activeComponent is SearchComponent && customDrawer -> drawerBlur.dp
-            glassWidgets && (activeComponent is WidgetsComponent || activeComponent is ClockAndWidgetsHomeComponent) -> 32.dp
-            else -> config.wallpaperBlurRadius
-        }
-        if (targetBlur > 0.dp) {
-            val wallpaperBlur by animateIntAsState(
-                if (activeComponent?.drawBackground == true || (glassWidgets && activeComponent is ClockAndWidgetsHomeComponent)) targetBlur.toPixels().toInt() else 0
-            )
-            WallpaperBlur { wallpaperBlur }
-        }
-
         if (!config.finishOnBack || state.currentProgress > 0) {
             PredictiveBackHandler {
                 try {
@@ -1369,7 +1347,6 @@ internal fun LauncherScaffold(
                         }
                     }
                 )
-                .hazeSource(hazeState)
                 .nestedScroll(nestedScrollConnection)
                 .multiFingerGestures(
                     enabled = config.pinchIn != null || config.pinchOut != null ||
@@ -1580,11 +1557,7 @@ internal fun LauncherScaffold(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .hazeEffect(hazeState) {
-                        blurRadius = 4.dp
-                        backgroundColor = config.backgroundColor
-                    }
-                    .background(
+                    .frostedGlass(
                         MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.background)
                     )
                     .statusBarsPadding()
@@ -1601,17 +1574,12 @@ internal fun LauncherScaffold(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .hazeEffect(hazeState) {
-                        blurRadius = 4.dp
-                        backgroundColor = config.backgroundColor
-                    }
-                    .background(
+                    .frostedGlass(
                         MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.background)
                     )
                     .navigationBarsPadding()
             )
         }
-    }
     }
 }
 
@@ -1663,7 +1631,7 @@ private fun SecondaryPage(
             .fillMaxSize()
             .secondaryPageAnimation(
                 state,
-                if (component is SearchComponent && customDrawer) Color.Transparent else config.backgroundColor.copy(alpha = if (glassWidgets && (component is WidgetsComponent || component is ClockAndWidgetsHomeComponent)) 0.18f else MaterialTheme.transparency.background),
+                if (component is SearchComponent && customDrawer) Color.Transparent else config.backgroundColor.copy(alpha = if (component is TelosAppPageComponent || (glassWidgets && (component is WidgetsComponent || component is ClockAndWidgetsHomeComponent))) 0f else MaterialTheme.transparency.background),
             )
         val composable = composables[component]
 

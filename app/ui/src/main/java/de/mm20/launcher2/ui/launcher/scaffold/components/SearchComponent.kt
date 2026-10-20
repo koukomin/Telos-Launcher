@@ -3,8 +3,7 @@ package de.mm20.launcher2.ui.launcher.scaffold.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material3.MaterialTheme
-import dev.chrisbanes.haze.hazeEffect
-import de.mm20.launcher2.ui.locals.LocalLauncherHazeState
+import de.mm20.launcher2.ui.component.frostedGlass
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -109,26 +108,12 @@ internal class SearchComponent(
             }
         }
 
-        val haze = de.mm20.launcher2.ui.locals.LocalLauncherHazeState.current
-        val drawerBlur by uiSettings.drawerBackgroundBlur.collectAsState(32)
         BoxWithConstraints(
                 modifier = if (drawerBackgroundEnabled) {
                     val color = drawerBackgroundColor?.let { androidx.compose.ui.graphics.Color(it) }
                         ?: if (de.mm20.launcher2.ui.locals.LocalDarkTheme.current) androidx.compose.ui.graphics.Color.Black else androidx.compose.ui.graphics.Color.White
-                    val glass = modifier
-                        .then(
-                            if (haze != null && drawerBlur > 0) {
-                                Modifier.hazeEffect(haze) {
-                                    blurRadius = drawerBlur.dp
-                                    backgroundColor = color.copy(alpha = drawerBackgroundOpacity)
-                                }
-                            } else Modifier
-                        )
-                        .background(color.copy(alpha = drawerBackgroundOpacity.coerceIn(0.12f, 0.55f)))
-                    glass
-                } else {
-                    modifier
-                },
+                    modifier.frostedGlass(color.copy(alpha = drawerBackgroundOpacity.coerceIn(0f, 1f)))
+                } else modifier,
                 contentAlignment = Alignment.Center
             ) {
                 val availableWidth = if (drawerFullWidth) maxWidth else minOf(maxWidth, 916.dp)

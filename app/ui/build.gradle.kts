@@ -117,7 +117,6 @@ dependencies {
     implementation(libs.accompanist.pagerindicators)
     implementation(libs.accompanist.flowlayout)
 
-    implementation(libs.haze)
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.activitycompose)

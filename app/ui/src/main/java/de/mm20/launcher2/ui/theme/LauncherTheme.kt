@@ -126,9 +126,11 @@ fun LauncherTheme(
                     LocalContentColor provides MaterialTheme.colorScheme.onSurface,
                     content = {
                         val context = androidx.compose.ui.platform.LocalContext.current
-                        if (context is de.mm20.launcher2.ui.settings.TelosAppActivity) {
-                            de.mm20.launcher2.ui.component.VirtualAppTheme(content = content)
-                        } else content()
+                        de.mm20.launcher2.ui.component.FrostedGlassProvider {
+                            if (context is de.mm20.launcher2.ui.settings.TelosAppActivity) {
+                                de.mm20.launcher2.ui.component.VirtualAppTheme(content = content)
+                            } else content()
+                        }
                     },
                 )
             }

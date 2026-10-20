@@ -175,7 +175,7 @@ fun WallpaperSettingsScreen() {
                 Preference(
                     icon = R.drawable.wallpaper_24px,
                     title = stringResource(R.string.preference_wallpaper_change),
-                    summary = stringResource(R.string.preference_wallpaper_change_summary),
+                    summary = stringResource(R.string.frosted_glass_wallpaper_help),
                     onClick = {
                         wallpaperPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
                     }

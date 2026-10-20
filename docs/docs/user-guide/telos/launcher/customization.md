@@ -165,3 +165,11 @@ Settings > Language and region.
 - Fallback icon packs, as described above, have no UI.
 - A layout preset overwrites settings, there is no one-tap undo.
 - Video wallpaper theming and the wallpaper settings are in [Home screen](./home-screen#wallpaper).
+
+## Shared frosted glass
+
+Drawer, glass-enabled widgets and Telos app backgrounds and toolbars use the same frosted wallpaper snapshot. In **Appearance → Wallpaper**, choose a static image and apply it to **Home** or **Both**. This also creates the small private glass snapshot; lock-screen-only changes leave the home snapshot alone. Existing or externally selected wallpapers require reselecting the home image inside Telos. Live and external wallpapers use tinted translucency, with no claim of live blur.
+
+Drawer opacity covers 0–100% without an extra hidden tint. Blur radius is independent. App and widget opacity comes from the selected transparency theme; the widget-glass switch remains available. Camera/video/photo/document content is not blurred; their toolbars use shared glass. The thumbnail is center-cropped to the window, so external OEM wallpaper scrolling/crops may differ. Selecting a new wallpaper invalidates the old snapshot. Whole-wallpaper blur uses its own cached radius; radius zero disables it.
+
+Home images are limited to 32 MiB and 100 megapixels. No wallpaper-read permission is requested. A missing, unavailable or mismatched snapshot falls back to tint. Build and unit-test success does not replace visual confirmation on the device.

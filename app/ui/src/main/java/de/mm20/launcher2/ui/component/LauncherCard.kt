@@ -28,6 +28,7 @@ fun LauncherCard(
     shape: Shape = MaterialTheme.shapes.medium,
     color: Color = MaterialTheme.colorScheme.surface.copy(alpha = backgroundOpacity.coerceIn(0f, 1f)),
     contentColor: Color? = null,
+    frosted: Boolean = false,
     content: @Composable () -> Unit = {}
 ) {
     val behind = LocalSurfaceRange.current
@@ -48,12 +49,12 @@ fun LauncherCard(
     CompositionLocalProvider(LocalOnWallpaper provides false, LocalSurfaceRange provides range) {
         MaterialTheme(colorScheme = colors) {
             Surface(
-                modifier = modifier,
+                modifier = if (frosted) modifier.frostedGlass(color, shape) else modifier,
                 shape = shape,
                 content = content,
                 contentColor = resolvedContent,
-                color = color,
-                shadowElevation = if (color.alpha == 1f) elevation else 0.dp,
+                color = if (frosted) Color.Transparent else color,
+                shadowElevation = if (frosted) maxOf(1.dp, elevation) else if (color.alpha == 1f) elevation else 0.dp,
                 // Avoid a hidden tonal tint changing the surface after contrast was computed.
                 tonalElevation = 0.dp,
             )
