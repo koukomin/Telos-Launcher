@@ -35,7 +35,7 @@ internal fun StremioPlaybackSheet(onDismiss: () -> Unit) {
     val languages = remember(locale) {
         Locale.getISOLanguages().map { it to Locale.forLanguageTag(it).getDisplayLanguage(locale) }.sortedBy { it.second }
     }
-    ModalBottomSheet(onDismissRequest = onDismiss) {
+    ModalBottomSheet(onDismissRequest = onDismiss, containerColor = MaterialTheme.colorScheme.surfaceContainer) {
         LazyColumn(Modifier.fillMaxWidth().navigationBarsPadding(), contentPadding = PaddingValues(bottom = 24.dp)) {
             item { Text(stringResource(R.string.settings), Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge) }
             settings?.let { s ->
