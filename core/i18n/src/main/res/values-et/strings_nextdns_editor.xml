@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS-i redaktor</string>
+    <string name="nd_intro">Muudatused mõjutavad kõiki seda NextDNS-i profiili kasutavaid seadmeid.</string>
+    <string name="nd_key">API võti</string>
+    <string name="nd_profile">Profiili ID</string>
+    <string name="nd_connect">Ühenda profiil</string>
+    <string name="nd_disconnect">Eemalda salvestatud võti</string>
+    <string name="nd_logs">DNS-i ajalugu</string>
+    <string name="nd_allowlist">Lubatud loend</string>
+    <string name="nd_denylist">Blokeeritud loend</string>
+    <string name="nd_allow">Luba domeen</string>
+    <string name="nd_deny">Blokeeri domeen</string>
+    <string name="nd_domain">Domeen</string>
+    <string name="nd_more">Laadi rohkem</string>
+    <string name="nd_apply">Kasuta seda profiili DNS-i jaoks</string>
+    <string name="nd_applied">Profiil on Telos Networki jaoks valitud.</string>
+    <string name="nd_help">Kasuta oma NextDNS-i konto lehel olevat API võtit. Redaktoriga ühendamine ei muuda DNS-serverit.</string>
+    <string name="nd_empty">Kirjed puuduvad.</string>
+    <string name="nd_error_auth">NextDNS keeldus juurdepääsust. Kontrolli API võtit ja profiili.</string>
+    <string name="nd_error_invalid">Kontrolli profiili ID-d ja domeeni.</string>
+    <string name="nd_error_rate">NextDNS-i päringute piirang on saavutatud. Proovi hiljem uuesti.</string>
+    <string name="nd_error_network">NextDNS-iga ei saa ühendust.</string>
+    <string name="nd_error_api">NextDNS lükkas toimingu tagasi või tagastas toetamata vastuse.</string>
+    <string name="nd_error_unconfigured">Ühenda esmalt NextDNS-i profiil.</string>
+    <string name="nd_rule_title">Domeenireegel</string>
+</resources>

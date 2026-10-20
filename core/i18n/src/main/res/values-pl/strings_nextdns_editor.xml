@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Edytor NextDNS</string>
+    <string name="nd_intro">Zmiany dotyczą każdego urządzenia korzystającego z tego profilu NextDNS.</string>
+    <string name="nd_key">Klucz API</string>
+    <string name="nd_profile">Identyfikator profilu</string>
+    <string name="nd_connect">Połącz profil</string>
+    <string name="nd_disconnect">Usuń zapisany klucz</string>
+    <string name="nd_logs">Historia DNS</string>
+    <string name="nd_allowlist">Lista dozwolonych</string>
+    <string name="nd_denylist">Lista blokowanych</string>
+    <string name="nd_allow">Zezwól na domenę</string>
+    <string name="nd_deny">Zablokuj domenę</string>
+    <string name="nd_domain">Domena</string>
+    <string name="nd_more">Wczytaj więcej</string>
+    <string name="nd_apply">Użyj tego profilu do DNS</string>
+    <string name="nd_applied">Wybrano profil dla Telos Network.</string>
+    <string name="nd_help">Użyj klucza API ze strony swojego konta NextDNS. Połączenie edytora nie zmienia serwera DNS.</string>
+    <string name="nd_empty">Brak wpisów.</string>
+    <string name="nd_error_auth">NextDNS odmówił dostępu. Sprawdź klucz API i profil.</string>
+    <string name="nd_error_invalid">Sprawdź identyfikator profilu i domenę.</string>
+    <string name="nd_error_rate">Osiągnięto limit żądań NextDNS. Spróbuj ponownie później.</string>
+    <string name="nd_error_network">Nie można połączyć się z NextDNS.</string>
+    <string name="nd_error_api">NextDNS odrzucił operację lub zwrócił nieobsługiwaną odpowiedź.</string>
+    <string name="nd_error_unconfigured">Najpierw połącz profil NextDNS.</string>
+    <string name="nd_rule_title">Reguła domeny</string>
+</resources>

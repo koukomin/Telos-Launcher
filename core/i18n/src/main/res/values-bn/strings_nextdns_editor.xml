@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS সম্পাদক</string>
+    <string name="nd_intro">পরিবর্তনগুলি এই NextDNS প্রোফাইল ব্যবহারকারী প্রতিটি ডিভাইসে প্রভাব ফেলে।</string>
+    <string name="nd_key">API কী</string>
+    <string name="nd_profile">প্রোফাইল আইডি</string>
+    <string name="nd_connect">প্রোফাইল সংযুক্ত করুন</string>
+    <string name="nd_disconnect">সংরক্ষিত কী সরান</string>
+    <string name="nd_logs">DNS ইতিহাস</string>
+    <string name="nd_allowlist">অনুমোদিত তালিকা</string>
+    <string name="nd_denylist">অবরুদ্ধ তালিকা</string>
+    <string name="nd_allow">ডোমেন অনুমোদন করুন</string>
+    <string name="nd_deny">ডোমেন ব্লক করুন</string>
+    <string name="nd_domain">ডোমেন</string>
+    <string name="nd_more">আরও লোড করুন</string>
+    <string name="nd_apply">DNS-এর জন্য এই প্রোফাইল ব্যবহার করুন</string>
+    <string name="nd_applied">Telos Network-এর জন্য প্রোফাইল নির্বাচন করা হয়েছে।</string>
+    <string name="nd_help">আপনার NextDNS অ্যাকাউন্ট পৃষ্ঠার API কী ব্যবহার করুন। সম্পাদক সংযুক্ত করলে আপনার DNS সার্ভার পরিবর্তন হয় না।</string>
+    <string name="nd_empty">কোনো এন্ট্রি নেই।</string>
+    <string name="nd_error_auth">NextDNS অ্যাক্সেস প্রত্যাখ্যান করেছে। API কী এবং প্রোফাইল পরীক্ষা করুন।</string>
+    <string name="nd_error_invalid">প্রোফাইল আইডি এবং ডোমেন পরীক্ষা করুন।</string>
+    <string name="nd_error_rate">NextDNS অনুরোধের সীমা পূর্ণ হয়েছে। পরে আবার চেষ্টা করুন।</string>
+    <string name="nd_error_network">NextDNS-এর সঙ্গে সংযোগ করা যাচ্ছে না।</string>
+    <string name="nd_error_api">NextDNS কাজটি প্রত্যাখ্যান করেছে বা অসমর্থিত উত্তর দিয়েছে।</string>
+    <string name="nd_error_unconfigured">প্রথমে একটি NextDNS প্রোফাইল সংযুক্ত করুন।</string>
+    <string name="nd_rule_title">ডোমেনের নিয়ম</string>
+</resources>

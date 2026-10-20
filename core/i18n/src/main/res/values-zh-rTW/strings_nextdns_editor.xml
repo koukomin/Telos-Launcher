@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS 編輯器</string>
+    <string name="nd_intro">變更會影響使用此 NextDNS 設定檔的所有裝置。</string>
+    <string name="nd_key">API 金鑰</string>
+    <string name="nd_profile">設定檔 ID</string>
+    <string name="nd_connect">連線設定檔</string>
+    <string name="nd_disconnect">移除已儲存的金鑰</string>
+    <string name="nd_logs">DNS 歷程記錄</string>
+    <string name="nd_allowlist">允許清單</string>
+    <string name="nd_denylist">封鎖清單</string>
+    <string name="nd_allow">允許網域</string>
+    <string name="nd_deny">封鎖網域</string>
+    <string name="nd_domain">網域</string>
+    <string name="nd_more">載入更多</string>
+    <string name="nd_apply">將此設定檔用於 DNS</string>
+    <string name="nd_applied">已為 Telos Network 選取此設定檔。</string>
+    <string name="nd_help">請使用 NextDNS 帳戶頁面上的 API 金鑰。連線編輯器不會變更 DNS 伺服器。</string>
+    <string name="nd_empty">沒有項目。</string>
+    <string name="nd_error_auth">NextDNS 拒絕存取。請檢查 API 金鑰和設定檔。</string>
+    <string name="nd_error_invalid">請檢查設定檔 ID 和網域。</string>
+    <string name="nd_error_rate">已達到 NextDNS 要求限制。請稍後再試。</string>
+    <string name="nd_error_network">無法連線至 NextDNS。</string>
+    <string name="nd_error_api">NextDNS 拒絕了此操作或傳回不支援的回應。</string>
+    <string name="nd_error_unconfigured">請先連線 NextDNS 設定檔。</string>
+    <string name="nd_rule_title">網域規則</string>
+</resources>

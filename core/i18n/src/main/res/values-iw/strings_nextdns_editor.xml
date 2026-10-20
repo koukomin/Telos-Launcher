@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">עורך NextDNS</string>
+    <string name="nd_intro">השינויים משפיעים על כל מכשיר שמשתמש בפרופיל NextDNS הזה.</string>
+    <string name="nd_key">מפתח API</string>
+    <string name="nd_profile">מזהה פרופיל</string>
+    <string name="nd_connect">חיבור פרופיל</string>
+    <string name="nd_disconnect">הסרת המפתח השמור</string>
+    <string name="nd_logs">היסטוריית DNS</string>
+    <string name="nd_allowlist">רשימת היתרים</string>
+    <string name="nd_denylist">רשימת חסימות</string>
+    <string name="nd_allow">אישור דומיין</string>
+    <string name="nd_deny">חסימת דומיין</string>
+    <string name="nd_domain">דומיין</string>
+    <string name="nd_more">טעינת רשומות נוספות</string>
+    <string name="nd_apply">שימוש בפרופיל הזה עבור DNS</string>
+    <string name="nd_applied">הפרופיל נבחר עבור Telos Network.</string>
+    <string name="nd_help">יש להשתמש במפתח ה-API מדף החשבון שלך ב-NextDNS. חיבור העורך אינו משנה את שרת ה-DNS שלך.</string>
+    <string name="nd_empty">אין רשומות.</string>
+    <string name="nd_error_auth">NextDNS דחה את הגישה. יש לבדוק את מפתח ה-API ואת הפרופיל.</string>
+    <string name="nd_error_invalid">יש לבדוק את מזהה הפרופיל ואת הדומיין.</string>
+    <string name="nd_error_rate">הגעת למגבלת הבקשות של NextDNS. יש לנסות שוב מאוחר יותר.</string>
+    <string name="nd_error_network">לא ניתן להתחבר ל-NextDNS.</string>
+    <string name="nd_error_api">NextDNS דחה את הפעולה או החזיר תשובה שאינה נתמכת.</string>
+    <string name="nd_error_unconfigured">יש לחבר תחילה פרופיל NextDNS.</string>
+    <string name="nd_rule_title">כלל דומיין</string>
+    <string name="hc_remove">הסרה</string>
+    <string name="hc_search">חיפוש</string>
+</resources>

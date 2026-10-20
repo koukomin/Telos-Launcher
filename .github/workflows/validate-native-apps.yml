@@ -4,6 +4,8 @@ on:
     paths:
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/camera/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/ermis/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/network/nextdns/**'
+      - 'services/network/src/main/java/de/mm20/launcher2/network/nextdns/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/media/akou/**'
       - 'services/comms/src/main/java/de/mm20/launcher2/comms/ermis/**'
       - 'services/comms/src/main/java/de/mm20/launcher2/comms/akou/**'
@@ -25,7 +27,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: chmod +x gradlew
       - name: Compile native app screens and run communication tests
-        run: ./gradlew :services:comms:testDebugUnitTest :app:ui:compileDefaultDebugKotlin --continue --stacktrace
+        run: ./gradlew :services:comms:testDebugUnitTest :services:network:testDebugUnitTest :app:ui:compileDefaultDebugKotlin --continue --stacktrace
       - name: Test camera bounds, telemetry, magnifier and Files exclusions
         run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests '*CameraImageSizingTest' --tests '*CpuTelemetryTest' --tests '*MagnifierFilterTest' --tests '*StorageExclusionsTest' --stacktrace
       - uses: actions/upload-artifact@v4

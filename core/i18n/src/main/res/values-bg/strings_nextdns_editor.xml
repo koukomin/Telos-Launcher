@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Редактор на NextDNS</string>
+    <string name="nd_intro">Промените засягат всяко устройство, което използва този профил в NextDNS.</string>
+    <string name="nd_key">API ключ</string>
+    <string name="nd_profile">Идентификатор на профила</string>
+    <string name="nd_connect">Свързване на профил</string>
+    <string name="nd_disconnect">Премахване на запазения ключ</string>
+    <string name="nd_logs">История на DNS</string>
+    <string name="nd_allowlist">Списък с разрешени</string>
+    <string name="nd_denylist">Списък с блокирани</string>
+    <string name="nd_allow">Разрешаване на домейн</string>
+    <string name="nd_deny">Блокиране на домейн</string>
+    <string name="nd_domain">Домейн</string>
+    <string name="nd_more">Зареждане на още</string>
+    <string name="nd_apply">Използване на този профил за DNS</string>
+    <string name="nd_applied">Профилът е избран за Telos Network.</string>
+    <string name="nd_help">Използвайте API ключа от страницата на профила си в NextDNS. Свързването на редактора не променя DNS сървъра ви.</string>
+    <string name="nd_empty">Няма записи.</string>
+    <string name="nd_error_auth">NextDNS отказа достъп. Проверете API ключа и профила.</string>
+    <string name="nd_error_invalid">Проверете идентификатора на профила и домейна.</string>
+    <string name="nd_error_rate">Достигнат е лимитът за заявки към NextDNS. Опитайте отново по-късно.</string>
+    <string name="nd_error_network">Няма връзка с NextDNS.</string>
+    <string name="nd_error_api">NextDNS отхвърли операцията или върна неподдържан отговор.</string>
+    <string name="nd_error_unconfigured">Първо свържете профил в NextDNS.</string>
+    <string name="nd_rule_title">Правило за домейн</string>
+</resources>

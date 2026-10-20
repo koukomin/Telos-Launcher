@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS-muokkain</string>
+    <string name="nd_intro">Muutokset vaikuttavat kaikkiin tätä NextDNS-profiilia käyttäviin laitteisiin.</string>
+    <string name="nd_key">API-avain</string>
+    <string name="nd_profile">Profiilin tunnus</string>
+    <string name="nd_connect">Yhdistä profiili</string>
+    <string name="nd_disconnect">Poista tallennettu avain</string>
+    <string name="nd_logs">DNS-historia</string>
+    <string name="nd_allowlist">Sallittujen luettelo</string>
+    <string name="nd_denylist">Estettyjen luettelo</string>
+    <string name="nd_allow">Salli verkkotunnus</string>
+    <string name="nd_deny">Estä verkkotunnus</string>
+    <string name="nd_domain">Verkkotunnus</string>
+    <string name="nd_more">Lataa lisää</string>
+    <string name="nd_apply">Käytä tätä profiilia DNS:ään</string>
+    <string name="nd_applied">Profiili valittu Telos Networkille.</string>
+    <string name="nd_help">Käytä NextDNS-tilisivusi API-avainta. Muokkaimen yhdistäminen ei muuta DNS-palvelintasi.</string>
+    <string name="nd_empty">Ei merkintöjä.</string>
+    <string name="nd_error_auth">NextDNS esti pääsyn. Tarkista API-avain ja profiili.</string>
+    <string name="nd_error_invalid">Tarkista profiilin tunnus ja verkkotunnus.</string>
+    <string name="nd_error_rate">NextDNS-pyyntöjen raja on saavutettu. Yritä myöhemmin uudelleen.</string>
+    <string name="nd_error_network">NextDNS:ään ei saada yhteyttä.</string>
+    <string name="nd_error_api">NextDNS hylkäsi toiminnon tai palautti vastauksen, jota ei tueta.</string>
+    <string name="nd_error_unconfigured">Yhdistä ensin NextDNS-profiili.</string>
+    <string name="nd_rule_title">Verkkotunnussääntö</string>
+</resources>

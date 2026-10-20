@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS エディター</string>
+    <string name="nd_intro">変更は、この NextDNS プロファイルを使用するすべてのデバイスに適用されます。</string>
+    <string name="nd_key">API キー</string>
+    <string name="nd_profile">プロファイル ID</string>
+    <string name="nd_connect">プロファイルを接続</string>
+    <string name="nd_disconnect">保存したキーを削除</string>
+    <string name="nd_logs">DNS 履歴</string>
+    <string name="nd_allowlist">許可リスト</string>
+    <string name="nd_denylist">拒否リスト</string>
+    <string name="nd_allow">ドメインを許可</string>
+    <string name="nd_deny">ドメインをブロック</string>
+    <string name="nd_domain">ドメイン</string>
+    <string name="nd_more">さらに読み込む</string>
+    <string name="nd_apply">このプロファイルを DNS に使用</string>
+    <string name="nd_applied">Telos Network 用のプロファイルを選択しました。</string>
+    <string name="nd_help">NextDNS のアカウントページにある API キーを使用してください。エディターの接続では DNS サーバーは変更されません。</string>
+    <string name="nd_empty">エントリーはありません。</string>
+    <string name="nd_error_auth">NextDNS がアクセスを拒否しました。API キーとプロファイルを確認してください。</string>
+    <string name="nd_error_invalid">プロファイル ID とドメインを確認してください。</string>
+    <string name="nd_error_rate">NextDNS のリクエスト制限に達しました。後でもう一度お試しください。</string>
+    <string name="nd_error_network">NextDNS に接続できません。</string>
+    <string name="nd_error_api">NextDNS が操作を拒否したか、未対応の応答を返しました。</string>
+    <string name="nd_error_unconfigured">先に NextDNS プロファイルを接続してください。</string>
+    <string name="nd_rule_title">ドメインルール</string>
+</resources>

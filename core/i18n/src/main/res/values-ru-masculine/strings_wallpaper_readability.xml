@@ -1,0 +1,6 @@
+<resources>
+    <string name="wallpaper_content_color">Текст на обоях</string>
+    <string name="wallpaper_content_auto">Автоматически</string>
+    <string name="wallpaper_content_white">Белый</string>
+    <string name="wallpaper_content_black">Чёрный</string>
+</resources>

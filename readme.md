@@ -408,6 +408,15 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 
 ### Customization
 
+- **Wallpaper readability:** Wallpaper settings offer Automatic, White and Black text. The clock,
+  home labels, transparent search bar and widget backings use protective scrims when pixels are
+  unavailable or mixed. Local contrast sampling is limited to permitted, uncropped static wallpapers
+  on Android 8.1–12 with blur/dimming off; Android 13+ and live wallpapers use the safe fallback.
+  Default shared panel opacity is 80%; saved custom transparency values and explicit clock/label
+  colors remain respected. Third-party widget content and explicitly theme-colored clock faces may
+  control their own colors. See [readability details](docs/docs/user-guide/customization/color-schemes.md#wallpaper-readability).
+
+
 <details>
 <summary><b>Themes, presets, fonts, blur, grid, icons, badges, motion, per-item changes, language</b></summary>
 
@@ -878,7 +887,7 @@ A firewall and DNS filter that works through the Android VPN service, built on t
 - **Runtime fixes:** Tor mode can be changed while Network is active and reconnects with bootstrap progress. Messages requests the Android SMS role before SMS permissions and offers system settings after a denied prompt; conversation cards adapt to large fonts, and Phone has a Messages tab. Scrobbling settings remain in Music/Radio. Shutters persist virtual app targets and distinguish virtual hosts. Freeze usage access appears only when foreground protection needs it; the expanded freeze notification lists only available thawed candidates. Video, TV, YouTube and music retain foreground-service playback with the screen off; torrent streams supply non-null native flags and wait for asynchronous handle creation.
 - **VPN recovery:** previously active Network settings are restored after process restarts and app updates when Android permits. Sticky service restoration, immediate foreground promotion and bounded retries recover failures; explicit Stop and VPN revocation stay off. The boot receiver requires "Start on boot"; opening the launcher also restores saved active intent. A failed tunnel closes; use Android lockdown if connections must stay blocked while it is down. Telos itself remains outside the tunnel
 - **On/off hub** with the state (off, starting, on, stopped, permission needed), the active DNS server, the active WireGuard tunnels and the number of blocked DNS queries and connections
-- **DNS:** system DNS, plain DNS, DNS over HTTPS, DNS over TLS, DNSCrypt, Oblivious DoH and local DNS servers (custom DNS over HTTPS needs `https://`; `http://` only for loopback, link-local, private, `.local`/`.lan`/`.home.arpa`/`.internal` and single-label hosts), built-in providers (Mullvad is not offered), your own servers, a NextDNS setup by configuration ID and a test button, with a health display
+- **DNS:** system DNS, plain DNS, DNS over HTTPS, DNS over TLS, DNSCrypt, Oblivious DoH and local DNS servers (custom DNS over HTTPS needs `https://`; `http://` only for loopback, link-local, private, `.local`/`.lan`/`.home.arpa`/`.internal` and single-label hosts), built-in providers (Mullvad is not offered), your own servers, a NextDNS setup by configuration ID and a test button, with a health display. The integrated NextDNS editor uses an encrypted API key to read/search profile DNS history and manage allowlist/denylist entries; selecting that profile as the device DNS is a separate action
 - **Tor / Web3:** embedded Tor for `.onion` DNS and Tor-only app routing (TCP, blocked while Tor is unavailable within the running VPN); optional startup on visible onion queries. Telos itself remains outside the VPN. Read-only ASCII Web3 lookup separates websites and wallet addresses: `.eth` through ENS Ideas / eth.limo, supported Unstoppable names through your own HTTPS API proxy. Explicit website gateways, no universal blockchain DNS claim. [Setup and limits](docs/docs/user-guide/telos/network/tor-web3.md).
 - **WireGuard:** import `.conf` files, from a QR code image or pasted text, or add tunnels by hand, a system default tunnel, a tunnel per app, "only on mobile data" and lockdown (block the app while its tunnel is down). The tunnels run inside the engine, no second VPN is needed
 - **Firewall:** wrapping app cards with UID, traffic totals, allowed/blocked filters and immediate Wi-Fi, mobile/5G, LAN, other-VPN and VPN-exclusion chips; expanded per-app metered/unmetered blocking, notes and scoped IP/domain rules. Rethink-inspired controls include block everything, roaming, background, screen off, ignore universal rules, bypass the firewall, exclude from the VPN and temporary allow for 15 minutes to 8 hours; universal rules for all apps (including metered networks, device locked, new apps, unknown apps, UDP, plain HTTP, own-DNS bypass and default deny), and custom IP and domain rules that block or trust

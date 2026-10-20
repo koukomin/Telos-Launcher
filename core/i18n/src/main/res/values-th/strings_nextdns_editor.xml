@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">ตัวแก้ไข NextDNS</string>
+    <string name="nd_intro">การเปลี่ยนแปลงมีผลกับทุกอุปกรณ์ที่ใช้โปรไฟล์ NextDNS นี้</string>
+    <string name="nd_key">คีย์ API</string>
+    <string name="nd_profile">รหัสโปรไฟล์</string>
+    <string name="nd_connect">เชื่อมต่อโปรไฟล์</string>
+    <string name="nd_disconnect">ลบคีย์ที่บันทึกไว้</string>
+    <string name="nd_logs">ประวัติ DNS</string>
+    <string name="nd_allowlist">รายการที่อนุญาต</string>
+    <string name="nd_denylist">รายการที่บล็อก</string>
+    <string name="nd_allow">อนุญาตโดเมน</string>
+    <string name="nd_deny">บล็อกโดเมน</string>
+    <string name="nd_domain">โดเมน</string>
+    <string name="nd_more">โหลดเพิ่มเติม</string>
+    <string name="nd_apply">ใช้โปรไฟล์นี้สำหรับ DNS</string>
+    <string name="nd_applied">เลือกโปรไฟล์สำหรับ Telos Network แล้ว</string>
+    <string name="nd_help">ใช้คีย์ API จากหน้าบัญชี NextDNS ของคุณ การเชื่อมต่อตัวแก้ไขจะไม่เปลี่ยนเซิร์ฟเวอร์ DNS ของคุณ</string>
+    <string name="nd_empty">ไม่มีรายการ</string>
+    <string name="nd_error_auth">NextDNS ปฏิเสธการเข้าถึง ตรวจสอบคีย์ API และโปรไฟล์</string>
+    <string name="nd_error_invalid">ตรวจสอบรหัสโปรไฟล์และโดเมน</string>
+    <string name="nd_error_rate">ถึงขีดจำกัดคำขอของ NextDNS แล้ว ลองอีกครั้งภายหลัง</string>
+    <string name="nd_error_network">ไม่สามารถเชื่อมต่อกับ NextDNS ได้</string>
+    <string name="nd_error_api">NextDNS ปฏิเสธการดำเนินการหรือส่งคำตอบที่ไม่รองรับกลับมา</string>
+    <string name="nd_error_unconfigured">เชื่อมต่อโปรไฟล์ NextDNS ก่อน</string>
+    <string name="nd_rule_title">กฎโดเมน</string>
+    <string name="hc_remove">นำออก</string>
+    <string name="hc_search">ค้นหา</string>
+</resources>

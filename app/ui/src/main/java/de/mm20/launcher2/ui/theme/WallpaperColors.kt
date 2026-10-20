@@ -23,6 +23,7 @@ data class WallpaperColors(
     val secondary: Color? = null,
     val tertiary: Color? = null,
     private val hints: Int = 0,
+    val revision: Int = 0,
 ) {
     val supportsDarkText: Boolean
         get() = hints and android.app.WallpaperColors.HINT_SUPPORTS_DARK_TEXT != 0
@@ -46,14 +47,15 @@ fun wallpaperColorsAsState(): State<WallpaperColors> {
     val context = LocalContext.current
     val state = remember { mutableStateOf(WallpaperColors()) }
     if (isAtLeastApiLevel(27)) {
-        DisposableEffect(null) {
+        DisposableEffect(context) {
+            var revision = 0
             val wallpaperManager = WallpaperManager.getInstance(context)
             val callback = WallpaperManager.OnColorsChangedListener { colors, which ->
                 if (which and WallpaperManager.FLAG_SYSTEM == 0) return@OnColorsChangedListener
                 if (colors != null) {
-                    state.value = WallpaperColors.fromPlatformType(colors)
+                    state.value = WallpaperColors.fromPlatformType(colors).copy(revision = ++revision)
                 } else {
-                    state.value = WallpaperColors()
+                    state.value = WallpaperColors(revision = ++revision)
                 }
             }
             wallpaperManager.addOnColorsChangedListener(
@@ -63,9 +65,10 @@ fun wallpaperColorsAsState(): State<WallpaperColors> {
 
             scope.launch {
                 val colors = withContext(Dispatchers.IO) {
-                    wallpaperManager.getWallpaperColors(WallpaperManager.FLAG_SYSTEM)
+                    try { wallpaperManager.getWallpaperColors(WallpaperManager.FLAG_SYSTEM) }
+                    catch (_: SecurityException) { null }
                 } ?: return@launch
-                state.value = WallpaperColors.fromPlatformType(colors)
+                if (revision == 0) state.value = WallpaperColors.fromPlatformType(colors)
             }
             onDispose {
                 wallpaperManager.removeOnColorsChangedListener(callback)

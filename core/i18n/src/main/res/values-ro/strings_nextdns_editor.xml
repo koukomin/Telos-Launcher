@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Editor NextDNS</string>
+    <string name="nd_intro">Modificările afectează fiecare dispozitiv care folosește acest profil NextDNS.</string>
+    <string name="nd_key">Cheie API</string>
+    <string name="nd_profile">ID profil</string>
+    <string name="nd_connect">Conectează profilul</string>
+    <string name="nd_disconnect">Elimină cheia salvată</string>
+    <string name="nd_logs">Istoric DNS</string>
+    <string name="nd_allowlist">Listă de permisiuni</string>
+    <string name="nd_denylist">Listă de blocare</string>
+    <string name="nd_allow">Permite domeniul</string>
+    <string name="nd_deny">Blochează domeniul</string>
+    <string name="nd_domain">Domeniu</string>
+    <string name="nd_more">Încarcă mai multe</string>
+    <string name="nd_apply">Folosește acest profil pentru DNS</string>
+    <string name="nd_applied">Profil selectat pentru Telos Network.</string>
+    <string name="nd_help">Folosește cheia API de pe pagina contului NextDNS. Conectarea editorului nu schimbă serverul DNS.</string>
+    <string name="nd_empty">Nu există înregistrări.</string>
+    <string name="nd_error_auth">NextDNS a refuzat accesul. Verifică cheia API și profilul.</string>
+    <string name="nd_error_invalid">Verifică ID-ul profilului și domeniul.</string>
+    <string name="nd_error_rate">S-a atins limita de cereri NextDNS. Încearcă din nou mai târziu.</string>
+    <string name="nd_error_network">Nu se poate contacta NextDNS.</string>
+    <string name="nd_error_api">NextDNS a respins operațiunea sau a returnat un răspuns neacceptat.</string>
+    <string name="nd_error_unconfigured">Conectează mai întâi un profil NextDNS.</string>
+    <string name="nd_rule_title">Regulă de domeniu</string>
+</resources>

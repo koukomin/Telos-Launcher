@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Editor NextDNS</string>
+    <string name="nd_intro">Zmeny ovplyvnia každé zariadenie používajúce tento profil NextDNS.</string>
+    <string name="nd_key">Kľúč API</string>
+    <string name="nd_profile">ID profilu</string>
+    <string name="nd_connect">Pripojiť profil</string>
+    <string name="nd_disconnect">Odstrániť uložený kľúč</string>
+    <string name="nd_logs">História DNS</string>
+    <string name="nd_allowlist">Zoznam povolených</string>
+    <string name="nd_denylist">Zoznam blokovaných</string>
+    <string name="nd_allow">Povoliť doménu</string>
+    <string name="nd_deny">Blokovať doménu</string>
+    <string name="nd_domain">Doména</string>
+    <string name="nd_more">Načítať ďalšie</string>
+    <string name="nd_apply">Použiť tento profil pre DNS</string>
+    <string name="nd_applied">Profil bol vybraný pre Telos Network.</string>
+    <string name="nd_help">Použite kľúč API zo stránky svojho účtu NextDNS. Pripojenie editora nezmení server DNS.</string>
+    <string name="nd_empty">Žiadne záznamy.</string>
+    <string name="nd_error_auth">NextDNS odmietol prístup. Skontrolujte kľúč API a profil.</string>
+    <string name="nd_error_invalid">Skontrolujte ID profilu a doménu.</string>
+    <string name="nd_error_rate">Bol dosiahnutý limit požiadaviek NextDNS. Skúste to neskôr.</string>
+    <string name="nd_error_network">Nedá sa pripojiť k NextDNS.</string>
+    <string name="nd_error_api">NextDNS odmietol operáciu alebo vrátil nepodporovanú odpoveď.</string>
+    <string name="nd_error_unconfigured">Najprv pripojte profil NextDNS.</string>
+    <string name="nd_rule_title">Pravidlo domény</string>
+</resources>

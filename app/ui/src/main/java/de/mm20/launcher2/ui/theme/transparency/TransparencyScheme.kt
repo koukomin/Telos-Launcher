@@ -5,40 +5,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import de.mm20.launcher2.themes.transparencies.Transparencies
-import de.mm20.launcher2.ui.locals.LocalWallpaperColors
-
 
 @Composable
 fun transparencySchemeOf(transparencies: Transparencies, dark: Boolean? = null): TransparencyScheme {
-    val extra = wallpaperGlassExtra(dark ?: de.mm20.launcher2.ui.locals.LocalDarkTheme.current)
-    return remember(transparencies, extra) {
+    return remember(transparencies) {
         TransparencyScheme(
-            background = ((transparencies.background ?: 0.22f) + extra).coerceIn(0.16f, 0.88f),
-            surface = ((transparencies.surface ?: 0.48f) + extra * 0.45f).coerceIn(0.28f, 0.92f),
-            elevatedSurface = ((transparencies.elevatedSurface ?: 0.62f) + extra * 0.35f).coerceIn(0.40f, 0.95f),
+            background = (transparencies.background ?: 0.80f).coerceIn(0f, 1f),
+            surface = (transparencies.surface ?: 0.80f).coerceIn(0f, 1f),
+            elevatedSurface = (transparencies.elevatedSurface ?: 0.80f).coerceIn(0f, 1f),
         )
     }
 }
 
-/** Extra glass when a dark theme sits on a light wallpaper (or the reverse). */
-@Composable
-fun wallpaperGlassExtra(dark: Boolean): Float {
-    val wallpaper = LocalWallpaperColors.current
-    return when {
-        dark && wallpaper.supportsDarkText -> 0.40f
-        !dark && !wallpaper.supportsDarkText -> 0.34f
-        else -> 0f
-    }
-}
-
 data class TransparencyScheme(
-    val background: Float = 0.22f,
-    val surface: Float = 0.48f,
-    val elevatedSurface: Float = 0.62f,
+    val background: Float = 0.80f,
+    val surface: Float = 0.80f,
+    val elevatedSurface: Float = 0.80f,
 )
 
 val LocalTransparencyScheme = compositionLocalOf { TransparencyScheme() }
-
 val MaterialTheme.transparency
-    @Composable
-    get() = LocalTransparencyScheme.current
+    @Composable get() = LocalTransparencyScheme.current

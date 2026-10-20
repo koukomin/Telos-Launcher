@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS 편집기</string>
+    <string name="nd_intro">변경 사항은 이 NextDNS 프로필을 사용하는 모든 기기에 적용됩니다.</string>
+    <string name="nd_key">API 키</string>
+    <string name="nd_profile">프로필 ID</string>
+    <string name="nd_connect">프로필 연결</string>
+    <string name="nd_disconnect">저장된 키 삭제</string>
+    <string name="nd_logs">DNS 기록</string>
+    <string name="nd_allowlist">허용 목록</string>
+    <string name="nd_denylist">차단 목록</string>
+    <string name="nd_allow">도메인 허용</string>
+    <string name="nd_deny">도메인 차단</string>
+    <string name="nd_domain">도메인</string>
+    <string name="nd_more">더 불러오기</string>
+    <string name="nd_apply">이 프로필을 DNS에 사용</string>
+    <string name="nd_applied">Telos Network에 사용할 프로필을 선택했습니다.</string>
+    <string name="nd_help">NextDNS 계정 페이지의 API 키를 사용하세요. 편집기를 연결해도 DNS 서버는 변경되지 않습니다.</string>
+    <string name="nd_empty">항목이 없습니다.</string>
+    <string name="nd_error_auth">NextDNS가 접근을 거부했습니다. API 키와 프로필을 확인하세요.</string>
+    <string name="nd_error_invalid">프로필 ID와 도메인을 확인하세요.</string>
+    <string name="nd_error_rate">NextDNS 요청 한도에 도달했습니다. 나중에 다시 시도하세요.</string>
+    <string name="nd_error_network">NextDNS에 연결할 수 없습니다.</string>
+    <string name="nd_error_api">NextDNS가 작업을 거부했거나 지원하지 않는 응답을 반환했습니다.</string>
+    <string name="nd_error_unconfigured">먼저 NextDNS 프로필을 연결하세요.</string>
+    <string name="nd_rule_title">도메인 규칙</string>
+</resources>

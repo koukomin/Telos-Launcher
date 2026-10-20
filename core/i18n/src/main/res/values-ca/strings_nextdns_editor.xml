@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Editor de NextDNS</string>
+    <string name="nd_intro">Els canvis afecten tots els dispositius que utilitzen aquest perfil de NextDNS.</string>
+    <string name="nd_key">Clau API</string>
+    <string name="nd_profile">ID del perfil</string>
+    <string name="nd_connect">Connecta el perfil</string>
+    <string name="nd_disconnect">Elimina la clau desada</string>
+    <string name="nd_logs">Historial de DNS</string>
+    <string name="nd_allowlist">Llista de permesos</string>
+    <string name="nd_denylist">Llista de bloquejats</string>
+    <string name="nd_allow">Permet el domini</string>
+    <string name="nd_deny">Bloqueja el domini</string>
+    <string name="nd_domain">Domini</string>
+    <string name="nd_more">Carrega’n més</string>
+    <string name="nd_apply">Utilitza aquest perfil per al DNS</string>
+    <string name="nd_applied">S’ha seleccionat el perfil per a Telos Network.</string>
+    <string name="nd_help">Utilitza la clau API de la pàgina del teu compte de NextDNS. Connectar l’editor no canvia el servidor DNS.</string>
+    <string name="nd_empty">No hi ha entrades.</string>
+    <string name="nd_error_auth">NextDNS ha denegat l’accés. Comprova la clau API i el perfil.</string>
+    <string name="nd_error_invalid">Comprova l’ID del perfil i el domini.</string>
+    <string name="nd_error_rate">S’ha assolit el límit de sol·licituds de NextDNS. Torna-ho a provar més tard.</string>
+    <string name="nd_error_network">No es pot connectar amb NextDNS.</string>
+    <string name="nd_error_api">NextDNS ha rebutjat l’operació o ha retornat una resposta no compatible.</string>
+    <string name="nd_error_unconfigured">Connecta primer un perfil de NextDNS.</string>
+    <string name="nd_rule_title">Regla de domini</string>
+    <string name="hc_remove">Elimina</string>
+    <string name="hc_search">Cerca</string>
+</resources>

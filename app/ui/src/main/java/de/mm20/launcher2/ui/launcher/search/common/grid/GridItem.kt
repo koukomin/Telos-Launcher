@@ -1,5 +1,8 @@
 package de.mm20.launcher2.ui.launcher.search.common.grid
 
+import de.mm20.launcher2.ui.theme.relativeLuminance
+import de.mm20.launcher2.ui.theme.rememberWallpaperContentStyle
+import de.mm20.launcher2.ui.theme.LocalOnWallpaper
 import android.content.ClipData
 import android.view.View
 import androidx.activity.compose.BackHandler
@@ -340,9 +343,14 @@ fun GridItem(
             )
         }
         if (showLabels) {
+            val onWallpaper = LocalOnWallpaper.current
+            val labelStyle = if (onWallpaper) rememberWallpaperContentStyle(
+                gridSettings.labelColor?.let { relativeLuminance(it) > 0.5 }?.not()
+            ) else null
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .then(labelStyle?.modifier ?: Modifier)
                     .padding(vertical = 4.dp),
                 text = item.labelOverride ?: item.label,
                 textAlign = TextAlign.Center,
@@ -357,7 +365,7 @@ fun GridItem(
                 maxLines = gridSettings.labelMaxLines,
                 overflow = TextOverflow.Ellipsis,
                 color = gridSettings.labelColor?.let { androidx.compose.ui.graphics.Color(it) }
-                    ?: MaterialTheme.colorScheme.onBackground,
+                    ?: labelStyle?.color ?: androidx.compose.material3.LocalContentColor.current,
             )
         }
     }

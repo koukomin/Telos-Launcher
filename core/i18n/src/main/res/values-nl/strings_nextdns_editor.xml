@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS-editor</string>
+    <string name="nd_intro">Wijzigingen gelden voor elk apparaat dat dit NextDNS-profiel gebruikt.</string>
+    <string name="nd_key">API-sleutel</string>
+    <string name="nd_profile">Profiel-ID</string>
+    <string name="nd_connect">Profiel verbinden</string>
+    <string name="nd_disconnect">Opgeslagen sleutel verwijderen</string>
+    <string name="nd_logs">DNS-geschiedenis</string>
+    <string name="nd_allowlist">Toegestane lijst</string>
+    <string name="nd_denylist">Blokkeerlijst</string>
+    <string name="nd_allow">Domein toestaan</string>
+    <string name="nd_deny">Domein blokkeren</string>
+    <string name="nd_domain">Domein</string>
+    <string name="nd_more">Meer laden</string>
+    <string name="nd_apply">Dit profiel voor DNS gebruiken</string>
+    <string name="nd_applied">Profiel geselecteerd voor Telos Network.</string>
+    <string name="nd_help">Gebruik de API-sleutel van je NextDNS-accountpagina. Verbinden met de editor verandert je DNS-server niet.</string>
+    <string name="nd_empty">Geen vermeldingen.</string>
+    <string name="nd_error_auth">NextDNS heeft de toegang geweigerd. Controleer de API-sleutel en het profiel.</string>
+    <string name="nd_error_invalid">Controleer de profiel-ID en het domein.</string>
+    <string name="nd_error_rate">De aanvraaglimiet van NextDNS is bereikt. Probeer het later opnieuw.</string>
+    <string name="nd_error_network">NextDNS is niet bereikbaar.</string>
+    <string name="nd_error_api">NextDNS heeft de bewerking geweigerd of een niet-ondersteund antwoord gegeven.</string>
+    <string name="nd_error_unconfigured">Verbind eerst een NextDNS-profiel.</string>
+    <string name="nd_rule_title">Domeinregel</string>
+</resources>

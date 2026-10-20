@@ -79,3 +79,51 @@ of each section.
 For each scheme color, you can either select a custom color, or you can derive a color from a key color.
 To derive a color from a key color, select <span class="material-symbols-rounded">palette</span> **Palette**, and then select the key color
 to derive from. You can then adjust the tone of the derived color by dragging the **T** slider.
+
+
+## Wallpaper readability
+
+In **Home screen > Wallpaper > Wallpaper text**, choose **Automatic**, **White**, or **Black**.
+Automatic compares the worst sampled light and dark pixels with black and white text using
+relative luminance and a 4.5:1 normal-text contrast target. It does not use the average wallpaper
+color as proof that a particular label will be readable.
+
+The clock and dynamic zone, home favorite labels, transparent resting search bar, page indicators
+and transparent external-widget backings get a local protective scrim when the background is
+mixed or cannot be read. White text uses a 65% black scrim; black text uses an 80% white
+scrim when needed. Explicit clock colors and custom grid label colors retain priority. Custom
+label colors and the clock's **Use theme color** option can reduce contrast; these remain explicit
+user choices. Third-party widgets can draw their own text and backgrounds, so their internal
+content cannot be recolored reliably by the launcher.
+
+The default transparency scheme now uses **80% opacity** for backgrounds, surfaces and elevated
+surfaces. The alternative semi-transparent scheme and saved custom schemes keep their values.
+The sliders show the same 80% fallback as the renderer; an explicit value, including zero, is
+not increased according to wallpaper hints. Turning off widget glass uses solid widget cards.
+Shared launcher cards select text and icons from the final alpha-composited surface, including
+nested shared cards, rather than using the wallpaper text choice. Very low custom opacity can
+still reduce contrast on complex wallpapers.
+
+### Android and live wallpaper limits
+
+Android 13 and later restrict access to wallpaper image pixels and can return a default image
+instead of the active wallpaper. Telos deliberately does not analyze that default image, does
+not request broad file access or screen capture, and uses a stable scrim instead. The global
+palette supplied by Android still supplies theme colors, but is not treated as local pixels.
+
+Android 8.0 also uses the fallback because it has no wallpaper-colors change callback.
+
+On Android 8.1–12, local sampling is attempted only if the existing external-storage read
+permission is already granted, a static wallpaper file is available and its aspect ratio matches
+the window. Cropped/wide scrolling images are rejected rather than guessing their viewport.
+Blur and wallpaper dimming also use the fallback because the raw image no longer represents
+the final screen pixels. All live/video/GIF wallpapers use the fallback; there is no continuous
+frame capture. OEM cropping/zoom and tiny image details remain reasons to check readability on
+a device. Samples are approximate, not a pixel-perfect accessibility certification.
+
+Sampling and luminance analysis happen off the UI thread. Only one small grid of luminance
+ranges is cached, keyed by wallpaper ID, viewport and permission. Repeated resume/color events
+reuse it; new wallpapers retain the previous text polarity with a matching protective backing
+while sampling is pending. Position changes retain the previous text polarity with a protective scrim until geometry has
+settled for 150 ms, then select cached cells without decoding images. Text colors are not
+animated through low-contrast gray.

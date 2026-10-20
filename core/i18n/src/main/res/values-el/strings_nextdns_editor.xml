@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Επεξεργασία NextDNS</string>
+    <string name="nd_intro">Οι αλλαγές επηρεάζουν κάθε συσκευή που χρησιμοποιεί αυτό το προφίλ NextDNS.</string>
+    <string name="nd_key">Κλειδί API</string>
+    <string name="nd_profile">Αναγνωριστικό προφίλ</string>
+    <string name="nd_connect">Σύνδεση προφίλ</string>
+    <string name="nd_disconnect">Αφαίρεση αποθηκευμένου κλειδιού</string>
+    <string name="nd_logs">Ιστορικό DNS</string>
+    <string name="nd_allowlist">Λίστα επιτρεπόμενων</string>
+    <string name="nd_denylist">Λίστα αποκλεισμένων</string>
+    <string name="nd_allow">Να επιτρέπεται ο τομέας</string>
+    <string name="nd_deny">Αποκλεισμός τομέα</string>
+    <string name="nd_domain">Τομέας</string>
+    <string name="nd_more">Φόρτωση περισσότερων</string>
+    <string name="nd_apply">Χρήση αυτού του προφίλ για DNS</string>
+    <string name="nd_applied">Το προφίλ επιλέχθηκε για το Telos Network.</string>
+    <string name="nd_help">Χρησιμοποίησε το κλειδί API από τη σελίδα λογαριασμού NextDNS. Η σύνδεση στον επεξεργαστή δεν αλλάζει τον διακομιστή DNS.</string>
+    <string name="nd_empty">Δεν υπάρχουν καταχωρίσεις.</string>
+    <string name="nd_error_auth">Το NextDNS αρνήθηκε την πρόσβαση. Έλεγξε το κλειδί API και το προφίλ.</string>
+    <string name="nd_error_invalid">Έλεγξε το αναγνωριστικό προφίλ και τον τομέα.</string>
+    <string name="nd_error_rate">Συμπληρώθηκε το όριο αιτημάτων του NextDNS. Δοκίμασε αργότερα.</string>
+    <string name="nd_error_network">Αδυναμία σύνδεσης στο NextDNS.</string>
+    <string name="nd_error_api">Το NextDNS απέρριψε την ενέργεια ή επέστρεψε μη υποστηριζόμενη απάντηση.</string>
+    <string name="nd_error_unconfigured">Σύνδεσε πρώτα ένα προφίλ NextDNS.</string>
+    <string name="nd_rule_title">Κανόνας τομέα</string>
+</resources>

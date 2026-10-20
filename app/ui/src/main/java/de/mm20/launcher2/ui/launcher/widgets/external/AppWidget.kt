@@ -23,8 +23,6 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
-import de.mm20.launcher2.ui.locals.LocalDarkTheme
-import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.BatteryWidget
@@ -47,7 +45,7 @@ fun AppWidget(
     val context = LocalContext.current
 
     val lightBackground =
-        if (widget.config.background) !LocalDarkTheme.current else LocalPreferDarkContentOverWallpaper.current
+        androidx.compose.material3.LocalContentColor.current == androidx.compose.ui.graphics.Color.Black
 
     val widgetInfo = remember(widget.config.widgetId) {
         AppWidgetManager.getInstance(context)

@@ -1,0 +1,6 @@
+<resources>
+    <string name="wallpaper_content_color">Text na tapetě</string>
+    <string name="wallpaper_content_auto">Automaticky</string>
+    <string name="wallpaper_content_white">Bílá</string>
+    <string name="wallpaper_content_black">Černá</string>
+</resources>

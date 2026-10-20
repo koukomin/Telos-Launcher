@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS संपादक</string>
+    <string name="nd_intro">बदलाव इस NextDNS प्रोफ़ाइल का उपयोग करने वाले हर डिवाइस को प्रभावित करते हैं।</string>
+    <string name="nd_key">API कुंजी</string>
+    <string name="nd_profile">प्रोफ़ाइल आईडी</string>
+    <string name="nd_connect">प्रोफ़ाइल कनेक्ट करें</string>
+    <string name="nd_disconnect">सहेजी गई कुंजी हटाएँ</string>
+    <string name="nd_logs">DNS इतिहास</string>
+    <string name="nd_allowlist">अनुमति सूची</string>
+    <string name="nd_denylist">ब्लॉक सूची</string>
+    <string name="nd_allow">डोमेन की अनुमति दें</string>
+    <string name="nd_deny">डोमेन ब्लॉक करें</string>
+    <string name="nd_domain">डोमेन</string>
+    <string name="nd_more">और लोड करें</string>
+    <string name="nd_apply">DNS के लिए इस प्रोफ़ाइल का उपयोग करें</string>
+    <string name="nd_applied">Telos Network के लिए प्रोफ़ाइल चुनी गई।</string>
+    <string name="nd_help">अपने NextDNS खाता पृष्ठ की API कुंजी का उपयोग करें। संपादक कनेक्ट करने से आपका DNS सर्वर नहीं बदलता।</string>
+    <string name="nd_empty">कोई प्रविष्टि नहीं।</string>
+    <string name="nd_error_auth">NextDNS ने पहुँच अस्वीकार कर दी। API कुंजी और प्रोफ़ाइल जाँचें।</string>
+    <string name="nd_error_invalid">प्रोफ़ाइल आईडी और डोमेन जाँचें।</string>
+    <string name="nd_error_rate">NextDNS अनुरोध सीमा पूरी हो गई है। बाद में फिर कोशिश करें।</string>
+    <string name="nd_error_network">NextDNS से कनेक्ट नहीं हो पा रहा है।</string>
+    <string name="nd_error_api">NextDNS ने कार्रवाई अस्वीकार कर दी या असमर्थित उत्तर दिया।</string>
+    <string name="nd_error_unconfigured">पहले NextDNS प्रोफ़ाइल कनेक्ट करें।</string>
+    <string name="nd_rule_title">डोमेन नियम</string>
+</resources>

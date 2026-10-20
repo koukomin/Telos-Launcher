@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Trình chỉnh sửa NextDNS</string>
+    <string name="nd_intro">Thay đổi ảnh hưởng đến mọi thiết bị sử dụng hồ sơ NextDNS này.</string>
+    <string name="nd_key">Khóa API</string>
+    <string name="nd_profile">ID hồ sơ</string>
+    <string name="nd_connect">Kết nối hồ sơ</string>
+    <string name="nd_disconnect">Xóa khóa đã lưu</string>
+    <string name="nd_logs">Lịch sử DNS</string>
+    <string name="nd_allowlist">Danh sách cho phép</string>
+    <string name="nd_denylist">Danh sách chặn</string>
+    <string name="nd_allow">Cho phép miền</string>
+    <string name="nd_deny">Chặn miền</string>
+    <string name="nd_domain">Miền</string>
+    <string name="nd_more">Tải thêm</string>
+    <string name="nd_apply">Dùng hồ sơ này cho DNS</string>
+    <string name="nd_applied">Đã chọn hồ sơ cho Telos Network.</string>
+    <string name="nd_help">Dùng khóa API từ trang tài khoản NextDNS của bạn. Việc kết nối trình chỉnh sửa không thay đổi máy chủ DNS.</string>
+    <string name="nd_empty">Không có mục nào.</string>
+    <string name="nd_error_auth">NextDNS từ chối quyền truy cập. Hãy kiểm tra khóa API và hồ sơ.</string>
+    <string name="nd_error_invalid">Kiểm tra ID hồ sơ và miền.</string>
+    <string name="nd_error_rate">Đã đạt giới hạn yêu cầu của NextDNS. Hãy thử lại sau.</string>
+    <string name="nd_error_network">Không thể kết nối với NextDNS.</string>
+    <string name="nd_error_api">NextDNS đã từ chối thao tác hoặc trả về phản hồi không được hỗ trợ.</string>
+    <string name="nd_error_unconfigured">Hãy kết nối hồ sơ NextDNS trước.</string>
+    <string name="nd_rule_title">Quy tắc miền</string>
+    <string name="hc_remove">Xóa</string>
+    <string name="hc_search">Tìm kiếm</string>
+</resources>

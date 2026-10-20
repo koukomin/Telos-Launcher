@@ -57,6 +57,7 @@ private typealias IconsNetworkDnsScreen = de.mm20.launcher2.base.R.drawable
 @Composable
 fun NetworkDnsScreen() {
     val vm: NetworkDnsVM = viewModel()
+    val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
     val context = LocalContext.current
     val servers by vm.servers.collectAsStateWithLifecycle()
     val selected by vm.selected.collectAsStateWithLifecycle()
@@ -118,6 +119,12 @@ fun NetworkDnsScreen() {
                     title = stringResource(R.string.net_dns_add_custom),
                     icon = IconsNetworkDnsScreen.add_24px,
                     onClick = { formIsNew = true; form = DnsServer("", DnsKind.Doh, "") },
+                )
+                Preference(
+                    title = stringResource(R.string.nd_title),
+                    summary = stringResource(R.string.nd_intro),
+                    icon = IconsNetworkDnsScreen.edit_24px,
+                    onClick = { backStack.add(de.mm20.launcher2.ui.network.nextdns.NextDnsRoute) },
                 )
                 Preference(
                     title = stringResource(R.string.net_dns_nextdns),

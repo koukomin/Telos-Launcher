@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Editor NextDNS</string>
+    <string name="nd_intro">Perubahan memengaruhi semua perangkat yang menggunakan profil NextDNS ini.</string>
+    <string name="nd_key">Kunci API</string>
+    <string name="nd_profile">ID profil</string>
+    <string name="nd_connect">Hubungkan profil</string>
+    <string name="nd_disconnect">Hapus kunci tersimpan</string>
+    <string name="nd_logs">Riwayat DNS</string>
+    <string name="nd_allowlist">Daftar diizinkan</string>
+    <string name="nd_denylist">Daftar diblokir</string>
+    <string name="nd_allow">Izinkan domain</string>
+    <string name="nd_deny">Blokir domain</string>
+    <string name="nd_domain">Domain</string>
+    <string name="nd_more">Muat lainnya</string>
+    <string name="nd_apply">Gunakan profil ini untuk DNS</string>
+    <string name="nd_applied">Profil dipilih untuk Telos Network.</string>
+    <string name="nd_help">Gunakan kunci API dari halaman akun NextDNS Anda. Menghubungkan editor tidak mengubah server DNS Anda.</string>
+    <string name="nd_empty">Tidak ada entri.</string>
+    <string name="nd_error_auth">NextDNS menolak akses. Periksa kunci API dan profil.</string>
+    <string name="nd_error_invalid">Periksa ID profil dan domain.</string>
+    <string name="nd_error_rate">Batas permintaan NextDNS tercapai. Coba lagi nanti.</string>
+    <string name="nd_error_network">Tidak dapat terhubung ke NextDNS.</string>
+    <string name="nd_error_api">NextDNS menolak operasi atau mengembalikan respons yang tidak didukung.</string>
+    <string name="nd_error_unconfigured">Hubungkan profil NextDNS terlebih dahulu.</string>
+    <string name="nd_rule_title">Aturan domain</string>
+    <string name="hc_remove">Hapus</string>
+    <string name="hc_search">Cari</string>
+</resources>

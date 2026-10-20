@@ -264,7 +264,7 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                 val uiSettings: de.mm20.launcher2.preferences.ui.UiSettings = koinInject()
                 val searchBarStyle by uiSettings.searchBarStyle.collectAsState(de.mm20.launcher2.preferences.SearchBarStyle.Transparent)
                 val bottomSearchBar by uiSettings.bottomSearchBar.collectAsState(false)
-                val preferDarkContent = de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper.current
+                val readability = de.mm20.launcher2.ui.theme.rememberWallpaperContentStyle()
 
                 IconButton(
                     onClick = {
@@ -273,12 +273,13 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                     },
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .padding(top = if (!bottomSearchBar && searchBarStyle != de.mm20.launcher2.preferences.SearchBarStyle.Hidden) 64.dp else 0.dp),
+                        .padding(top = if (!bottomSearchBar && searchBarStyle != de.mm20.launcher2.preferences.SearchBarStyle.Hidden) 64.dp else 0.dp)
+                        .then(readability.modifier),
                 ) {
                     Icon(
                         painterResource(R.drawable.tune_24px),
                         contentDescription = stringResource(R.string.web_apps_panel_edit),
-                        tint = if (preferDarkContent) Color(0, 0, 0, 180) else Color.White
+                        tint = readability.color
                     )
                 }
             }

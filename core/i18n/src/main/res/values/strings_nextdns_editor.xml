@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS editor</string>
+    <string name="nd_intro">Changes affect every device using this NextDNS profile.</string>
+    <string name="nd_key">API key</string>
+    <string name="nd_profile">Profile ID</string>
+    <string name="nd_connect">Connect profile</string>
+    <string name="nd_disconnect">Remove saved key</string>
+    <string name="nd_logs">DNS history</string>
+    <string name="nd_allowlist">Allowlist</string>
+    <string name="nd_denylist">Denylist</string>
+    <string name="nd_allow">Allow domain</string>
+    <string name="nd_deny">Block domain</string>
+    <string name="nd_domain">Domain</string>
+    <string name="nd_more">Load more</string>
+    <string name="nd_apply">Use this profile for DNS</string>
+    <string name="nd_applied">Profile selected for Telos Network.</string>
+    <string name="nd_help">Use the API key from your NextDNS account page. Connecting the editor does not change your DNS server.</string>
+    <string name="nd_empty">No entries.</string>
+    <string name="nd_error_auth">NextDNS refused access. Check the API key and profile.</string>
+    <string name="nd_error_invalid">Check the profile ID and domain.</string>
+    <string name="nd_error_rate">NextDNS rate limit reached. Try again later.</string>
+    <string name="nd_error_network">Cannot reach NextDNS.</string>
+    <string name="nd_error_api">NextDNS rejected the operation or returned an unsupported response.</string>
+    <string name="nd_error_unconfigured">Connect a NextDNS profile first.</string>
+    <string name="nd_rule_title">Domain rule</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Editor de NextDNS</string>
+    <string name="nd_intro">Le cambios affice omne dispositivos que usa iste profilo NextDNS.</string>
+    <string name="nd_key">Clave API</string>
+    <string name="nd_profile">ID del profilo</string>
+    <string name="nd_connect">Connecter profilo</string>
+    <string name="nd_disconnect">Remover clave salvate</string>
+    <string name="nd_logs">Historia DNS</string>
+    <string name="nd_allowlist">Lista de permissos</string>
+    <string name="nd_denylist">Lista de blocatos</string>
+    <string name="nd_allow">Permitter dominio</string>
+    <string name="nd_deny">Blocar dominio</string>
+    <string name="nd_domain">Dominio</string>
+    <string name="nd_more">Cargar plus</string>
+    <string name="nd_apply">Usar iste profilo pro DNS</string>
+    <string name="nd_applied">Profilo seligite pro Telos Network.</string>
+    <string name="nd_help">Usa le clave API del pagina de tu conto NextDNS. Connecter le editor non cambia tu servitor DNS.</string>
+    <string name="nd_empty">Nulle entratas.</string>
+    <string name="nd_error_auth">NextDNS ha refusate le accesso. Verifica le clave API e le profilo.</string>
+    <string name="nd_error_invalid">Verifica le ID del profilo e le dominio.</string>
+    <string name="nd_error_rate">Le limite de requestas NextDNS es attingite. Reproba plus tarde.</string>
+    <string name="nd_error_network">Impossibile connecter a NextDNS.</string>
+    <string name="nd_error_api">NextDNS ha rejectate le operation o retornate un responsa non supportate.</string>
+    <string name="nd_error_unconfigured">Connecte primo un profilo NextDNS.</string>
+    <string name="nd_rule_title">Regula de dominio</string>
+    <string name="hc_remove">Remover</string>
+    <string name="hc_search">Cercar</string>
+</resources>

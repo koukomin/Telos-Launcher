@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">Uređivač za NextDNS</string>
+    <string name="nd_intro">Promjene utječu na sve uređaje koji upotrebljavaju ovaj NextDNS profil.</string>
+    <string name="nd_key">API ključ</string>
+    <string name="nd_profile">ID profila</string>
+    <string name="nd_connect">Poveži profil</string>
+    <string name="nd_disconnect">Ukloni spremljeni ključ</string>
+    <string name="nd_logs">Povijest DNS-a</string>
+    <string name="nd_allowlist">Popis dopuštenih</string>
+    <string name="nd_denylist">Popis blokiranih</string>
+    <string name="nd_allow">Dopusti domenu</string>
+    <string name="nd_deny">Blokiraj domenu</string>
+    <string name="nd_domain">Domena</string>
+    <string name="nd_more">Učitaj više</string>
+    <string name="nd_apply">Upotrijebi ovaj profil za DNS</string>
+    <string name="nd_applied">Profil je odabran za Telos Network.</string>
+    <string name="nd_help">Upotrijebite API ključ sa stranice svojeg NextDNS računa. Povezivanje uređivača ne mijenja vaš DNS poslužitelj.</string>
+    <string name="nd_empty">Nema unosa.</string>
+    <string name="nd_error_auth">NextDNS je odbio pristup. Provjerite API ključ i profil.</string>
+    <string name="nd_error_invalid">Provjerite ID profila i domenu.</string>
+    <string name="nd_error_rate">Dosegnuto je ograničenje zahtjeva za NextDNS. Pokušajte ponovno kasnije.</string>
+    <string name="nd_error_network">Nije moguće povezati se s NextDNS-om.</string>
+    <string name="nd_error_api">NextDNS je odbio radnju ili vratio nepodržan odgovor.</string>
+    <string name="nd_error_unconfigured">Najprije povežite NextDNS profil.</string>
+    <string name="nd_rule_title">Pravilo domene</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nd_title">NextDNS-szerkesztő</string>
+    <string name="nd_intro">A módosítások minden olyan eszközt érintenek, amely ezt a NextDNS-profilt használja.</string>
+    <string name="nd_key">API-kulcs</string>
+    <string name="nd_profile">Profilazonosító</string>
+    <string name="nd_connect">Profil csatlakoztatása</string>
+    <string name="nd_disconnect">Mentett kulcs eltávolítása</string>
+    <string name="nd_logs">DNS-előzmények</string>
+    <string name="nd_allowlist">Engedélyezési lista</string>
+    <string name="nd_denylist">Tiltólista</string>
+    <string name="nd_allow">Domain engedélyezése</string>
+    <string name="nd_deny">Domain tiltása</string>
+    <string name="nd_domain">Domain</string>
+    <string name="nd_more">Továbbiak betöltése</string>
+    <string name="nd_apply">E profil használata DNS-hez</string>
+    <string name="nd_applied">Profil kiválasztva a Telos Network számára.</string>
+    <string name="nd_help">Használd a NextDNS-fiókod oldalán található API-kulcsot. A szerkesztő csatlakoztatása nem módosítja a DNS-kiszolgálódat.</string>
+    <string name="nd_empty">Nincsenek bejegyzések.</string>
+    <string name="nd_error_auth">A NextDNS megtagadta a hozzáférést. Ellenőrizd az API-kulcsot és a profilt.</string>
+    <string name="nd_error_invalid">Ellenőrizd a profilazonosítót és a domaint.</string>
+    <string name="nd_error_rate">Elérted a NextDNS kéréskorlátját. Próbáld újra később.</string>
+    <string name="nd_error_network">A NextDNS nem érhető el.</string>
+    <string name="nd_error_api">A NextDNS elutasította a műveletet, vagy nem támogatott választ adott.</string>
+    <string name="nd_error_unconfigured">Először csatlakoztass egy NextDNS-profilt.</string>
+    <string name="nd_rule_title">Domainszabály</string>
+</resources>

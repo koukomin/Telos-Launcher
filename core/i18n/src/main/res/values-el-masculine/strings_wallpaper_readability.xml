@@ -1,0 +1,6 @@
+<resources>
+    <string name="wallpaper_content_color">Κείμενο ταπετσαρίας</string>
+    <string name="wallpaper_content_auto">Αυτόματο</string>
+    <string name="wallpaper_content_white">Λευκό</string>
+    <string name="wallpaper_content_black">Μαύρο</string>
+</resources>

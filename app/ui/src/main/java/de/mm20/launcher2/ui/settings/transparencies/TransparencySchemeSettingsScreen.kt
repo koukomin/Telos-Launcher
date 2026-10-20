@@ -117,19 +117,19 @@ fun TransparencySchemeSettingsScreen(themeId: UUID) {
                 TransparencyPreference(
                     title = stringResource(R.string.hc_background),
                     value = theme!!.background,
-                    defaultValue = 0.85f,
+                    defaultValue = 0.80f,
                     onValueChange = { viewModel.updateTransparencies(theme!!.copy(background = it)) }
                 )
                 TransparencyPreference(
                     title = stringResource(R.string.hc_surface),
                     value = theme!!.surface,
-                    defaultValue = 1f,
+                    defaultValue = 0.80f,
                     onValueChange = { viewModel.updateTransparencies(theme!!.copy(surface = it)) }
                 )
                 TransparencyPreference(
                     title = stringResource(R.string.hc_elevated_surface),
                     value = theme!!.elevatedSurface,
-                    defaultValue = 1f,
+                    defaultValue = 0.80f,
                     onValueChange = { viewModel.updateTransparencies(theme!!.copy(elevatedSurface = it)) }
                 )
             }

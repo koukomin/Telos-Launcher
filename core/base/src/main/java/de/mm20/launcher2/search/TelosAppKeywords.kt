@@ -37,7 +37,7 @@ object TelosAppKeywords {
         "telos_ermis_app" to listOf("email", "mail", "gmail", "inbox", "fairmail", "ermis", "ηλεκτρονικό ταχυδρομείο", "αλληλογραφία"),
         "telos_calendar_app" to listOf("events", "agenda", "schedule", "ημερολόγιο", "εκδηλώσεις"),
         "telos_downloads_app" to listOf("download", "downloader", "λήψεις", "κατεβάσματα"),
-        "telos_network_app" to listOf("vpn", "dns", "firewall", "wifi", "internet", "δίκτυο", "τείχος προστασίας"),
+        "telos_network_app" to listOf("nextdns", "vpn", "dns", "firewall", "wifi", "internet", "δίκτυο", "τείχος προστασίας"),
         "telos_system_app" to listOf("system", "cpu", "ram", "wifi", "ip", "processes", "σύστημα", "επεξεργαστής"),
         "telos_trash_app" to listOf("trash", "bin", "recycle", "κάδος", "ανακύκλωση"),
         "telos_voice_recorder_app" to listOf("recorder", "recording", "dictaphone", "audio", "καταγραφή ήχου", "εγγραφή φωνής"),

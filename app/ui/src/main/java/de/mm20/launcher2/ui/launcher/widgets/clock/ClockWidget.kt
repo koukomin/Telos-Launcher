@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock
 
+import de.mm20.launcher2.ui.theme.LocalOnWallpaper
+import de.mm20.launcher2.ui.theme.rememberWallpaperContentStyle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -76,7 +78,6 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock2
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.OrbitClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.SegmentClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
-import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.locals.LocalTimeFormat
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreenVM
 import de.mm20.launcher2.ui.utils.isTwentyFourHours
@@ -96,12 +97,18 @@ fun ClockWidget(
     val alignment by viewModel.alignment.collectAsState()
     val time = LocalTime.current
 
-    val darkColors =
-        color == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || color == ClockWidgetColors.Dark
+    val readability = rememberWallpaperContentStyle(
+        when (color) {
+            ClockWidgetColors.Dark -> true
+            ClockWidgetColors.Light -> false
+            else -> null
+        }
+    )
+    val darkColors = readability.darkText
 
     val contentColor =
         if (darkColors) {
-            Color(0, 0, 0, 180)
+            Color.Black
         } else {
             Color.White
         }
@@ -156,100 +163,106 @@ fun ClockWidget(
             }
         } else {
             var configure by remember { mutableStateOf(false) }
-            Column(modifier = modifier) {
-                BoxWithConstraints(
-                    modifier = Modifier
-                        .then(if (fillScreenHeight) Modifier.weight(1f) else Modifier)
-                        .fillMaxWidth()
-                        .padding(horizontal = if (compact == true) 0.dp else 24.dp),
-                    contentAlignment = when (alignment) {
-                        ClockWidgetAlignment.Center -> Alignment.Center
-                        ClockWidgetAlignment.Top -> Alignment.TopCenter
-                        else -> Alignment.BottomCenter
-                    }
-                ) {
-                    // Landscape / split screen / desktop windows: when the area is too short for
-                    // the large clock, use the single-line variant of the selected face.
-                    val shrinkClock = shouldUseCompactClock(maxHeight.value)
-                    CompositionLocalProvider(
-                        LocalContentColor provides contentColor
-                    ) {
-                        if (compact == false) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                Box(
-                                    modifier = Modifier.combinedClickable(
-                                        enabled = clockStyle !is ClockWidgetStyle.Empty,
-                                        indication = null,
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        onLongClick = { configure = true },
-                                    ) {
-                                        viewModel.launchClockApp(context)
-                                    }
-                                ) {
-                                    Clock(clockStyle, shrinkClock, darkColors)
-                                }
-
-                                if (partProvider != null) {
-                                    DynamicZone(
-                                        modifier = Modifier.padding(bottom = 8.dp),
-                                        compact = false,
-                                        provider = partProvider,
-                                    )
-                                }
-                            }
-                        }
-                        if (compact == true) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(end = 8.dp, bottom = 16.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                if (partProvider != null) {
-                                    DynamicZone(
-                                        modifier = Modifier.weight(1f),
-                                        compact = true,
-                                        provider = partProvider,
-                                    )
-                                }
-                                if (clockStyle !is ClockWidgetStyle.Empty) {
-                                    Box(
-                                        modifier = Modifier
-                                            .padding(horizontal = 16.dp)
-                                            .height(56.dp)
-                                            .width(2.dp)
-                                            .background(
-                                                LocalContentColor.current
-                                            ),
-                                    )
-                                }
-                                Box(
-                                    modifier = Modifier.combinedClickable(
-                                        enabled = clockStyle !is ClockWidgetStyle.Empty,
-                                        indication = null,
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        onLongClick = { configure = true },
-                                    ) {
-                                        viewModel.launchClockApp(context)
-                                    }
-                                ) {
-                                    Clock(clockStyle, true, darkColors)
-                                }
-                            }
-                        }
-                    }
-                }
-                val dockProvider by viewModel.dockProvider.collectAsState()
-                if (dockProvider != null) {
-                    Box(
+            CompositionLocalProvider(LocalOnWallpaper provides true) {
+                Column(modifier = modifier) {
+                    BoxWithConstraints(
                         modifier = Modifier
+                            .then(if (fillScreenHeight) Modifier.weight(1f) else Modifier)
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp)
+                            .padding(horizontal = if (compact == true) 0.dp else 24.dp),
+                        contentAlignment = when (alignment) {
+                            ClockWidgetAlignment.Center -> Alignment.Center
+                            ClockWidgetAlignment.Top -> Alignment.TopCenter
+                            else -> Alignment.BottomCenter
+                        }
                     ) {
-                        dockProvider?.Component(false)
+                        // Landscape / split screen / desktop windows: when the area is too short for
+                        // the large clock, use the single-line variant of the selected face.
+                        val shrinkClock = shouldUseCompactClock(maxHeight.value)
+                        CompositionLocalProvider(
+                            LocalContentColor provides contentColor,
+                            de.mm20.launcher2.ui.theme.LocalWallpaperSamples provides
+                                if (readability.scrimAlpha > 0f) null else de.mm20.launcher2.ui.theme.LocalWallpaperSamples.current
+                        ) {
+                            if (compact == false) {
+                                Column(
+                                    modifier = readability.modifier,
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    Box(
+                                        modifier = Modifier.combinedClickable(
+                                            enabled = clockStyle !is ClockWidgetStyle.Empty,
+                                            indication = null,
+                                            interactionSource = remember { MutableInteractionSource() },
+                                            onLongClick = { configure = true },
+                                        ) {
+                                            viewModel.launchClockApp(context)
+                                        }
+                                    ) {
+                                        Clock(clockStyle, shrinkClock, darkColors)
+                                    }
+
+                                    if (partProvider != null) {
+                                        DynamicZone(
+                                            modifier = Modifier.padding(bottom = 8.dp),
+                                            compact = false,
+                                            provider = partProvider,
+                                        )
+                                    }
+                                }
+                            }
+                            if (compact == true) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .then(readability.modifier)
+                                        .padding(end = 8.dp, bottom = 16.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    if (partProvider != null) {
+                                        DynamicZone(
+                                            modifier = Modifier.weight(1f),
+                                            compact = true,
+                                            provider = partProvider,
+                                        )
+                                    }
+                                    if (clockStyle !is ClockWidgetStyle.Empty) {
+                                        Box(
+                                            modifier = Modifier
+                                                .padding(horizontal = 16.dp)
+                                                .height(56.dp)
+                                                .width(2.dp)
+                                                .background(
+                                                    LocalContentColor.current
+                                                ),
+                                        )
+                                    }
+                                    Box(
+                                        modifier = Modifier.combinedClickable(
+                                            enabled = clockStyle !is ClockWidgetStyle.Empty,
+                                            indication = null,
+                                            interactionSource = remember { MutableInteractionSource() },
+                                            onLongClick = { configure = true },
+                                        ) {
+                                            viewModel.launchClockApp(context)
+                                        }
+                                    ) {
+                                        Clock(clockStyle, true, darkColors)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    val dockProvider by viewModel.dockProvider.collectAsState()
+                    if (dockProvider != null) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 16.dp)
+                        ) {
+                            dockProvider?.Component(false)
+                        }
                     }
                 }
             }
