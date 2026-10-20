@@ -5,6 +5,13 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class TvBackgroundPolicyTest {
+    @Test fun upgradesLegacyPauseDefaultButPreservesLaterOptOut() {
+        assertTrue(TvBackgroundPolicy.backgroundAfterUpgrade(false, 0))
+        assertTrue(TvBackgroundPolicy.backgroundAfterUpgrade(true, 0))
+        assertFalse(TvBackgroundPolicy.backgroundAfterUpgrade(false, 1))
+        assertTrue(TvBackgroundPolicy.backgroundAfterUpgrade(true, 1))
+    }
+
     @org.junit.Test fun screenOffKeepsAudioEvenWithLegacyBackgroundPreferenceOff() {
         org.junit.Assert.assertFalse(TvBackgroundPolicy.pauseWhenLeaving(false, screenOff = true))
         org.junit.Assert.assertTrue(TvBackgroundPolicy.videoDisabled(false, true, screenOff = true))

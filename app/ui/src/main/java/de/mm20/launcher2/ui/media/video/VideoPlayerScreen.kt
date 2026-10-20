@@ -584,6 +584,12 @@ private fun PlayerContent(
                     controllerShowTimeoutMs = 3000
                     setControllerVisibilityListener(PlayerView.ControllerVisibilityListener { visibility ->
                         controlsVisible = visibility == View.VISIBLE
+                        context.findActivity()?.window?.let { window ->
+                            androidx.core.view.WindowInsetsControllerCompat(window, window.decorView).apply {
+                                if (controlsVisible) show(androidx.core.view.WindowInsetsCompat.Type.systemBars())
+                                else hide(androidx.core.view.WindowInsetsCompat.Type.systemBars())
+                            }
+                        }
                     })
                 }
             },

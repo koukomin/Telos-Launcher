@@ -182,3 +182,6 @@ Scrollable headers and content reduce controls competing with media at large fon
 
 
 The TV mini player provides a contrasting play/pause icon reflecting the current playback state; tap it to pause or resume.
+
+
+Tap anywhere on a TV or video picture, including the blank bands above and below a landscape picture in portrait, to toggle playback controls and Android system bars. TV continues audio playback when switching apps by default; a one-time upgrade enables this for legacy configurations. You can disable it in TV playback settings. Music, Radio, TV, YouTube and Video expose media-session controls in Android notifications; video notifications have separate IDs so they do not replace other players.

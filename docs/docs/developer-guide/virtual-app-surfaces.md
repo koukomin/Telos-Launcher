@@ -86,3 +86,10 @@ physical device remain outstanding.
 ## Recents task cleanup
 
 SettingsActivity is a compatibility entry point for virtual apps. After forwarding to TelosAppActivity it removes a root redirect task, including when the redirect arrives through onNewIntent. A non-root redirect finishes only itself. Virtual-app document launches do not request RETAIN_IN_RECENTS, and explicitly finishing a root TelosAppActivity removes its document task. This prevents a blank Settings card from replaying the original virtual-app launch. Unfinished tasks still retain normal Android process-recreation and navigation recovery. Device validation of swipe-away, Back and re-opening from Recents remains required.
+
+
+## Media control visibility and background playback
+
+TV toggles controls over its full-window gesture surface and synchronizes system bars with controls. Local/stream video owns the single-tap gesture sequence across the full PlayerView, including portrait letterbox regions, without double toggling through native ACTION_UP. Existing double-tap, seek, volume and brightness gestures remain. Video controller visibility also drives system bars.
+
+TV upgrades legacy pause-on-leave settings once to background playback; subsequent explicit opt-outs are saved with backgroundPolicyVersion=1. Video uses notification IDs 7405/7406 (normal/isolated process); Music, Radio, TV and YouTube already use distinct 7401–7404 IDs and MediaSession services. Actual Android media-card display still depends on playback/session state and system notification settings.

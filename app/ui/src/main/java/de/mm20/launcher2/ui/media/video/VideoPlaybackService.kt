@@ -17,6 +17,12 @@ open class VideoPlaybackService : MediaSessionService() {
 
     override fun onCreate() {
         super.onCreate()
+        // Video's session must never overwrite music/radio/TV/YouTube cards.
+        setMediaNotificationProvider(
+            androidx.media3.session.DefaultMediaNotificationProvider.Builder(this)
+                .setNotificationId(if (de.mm20.launcher2.base.ProcessInfo.isolatedPlayer) 7406 else 7405)
+                .build()
+        )
         VideoSession.service = this
         VideoSession.player?.let { open(it) }
     }
