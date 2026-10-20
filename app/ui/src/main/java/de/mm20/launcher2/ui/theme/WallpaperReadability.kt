@@ -145,6 +145,7 @@ internal fun rememberWallpaperContentStyle(forcedDark: Boolean? = null): Wallpap
     }
     var bounds by remember { mutableStateOf<Rect?>(null) }
     var settledBounds by remember { mutableStateOf<Rect?>(null) }
+    var lastDarkText by remember { mutableStateOf(false) }
     LaunchedEffect(bounds) {
         delay(150)
         settledBounds = bounds
@@ -154,14 +155,15 @@ internal fun rememberWallpaperContentStyle(forcedDark: Boolean? = null): Wallpap
         SystemBarColors.Light -> false
         else -> null
     }
-    val settledChoice = remember(samples, settledBounds, viewport, forced) {
+    val fallbackDark = forced ?: lastDarkText
+    val settledChoice = remember(samples, settledBounds, viewport, forced, fallbackDark) {
         // Until layout is known, use a scrim rather than guessing a local region.
-        if (settledBounds == null) chooseContrast(forcedDark = forced)
+        if (settledBounds == null) chooseContrast(forcedDark = fallbackDark)
         else samples?.choice(viewport.width, viewport.height, forced,
             // Include neighboring cells for small crop/zoom/position rounding differences.
             settledBounds!!.left / viewport.width - 1f / 16, settledBounds!!.top / viewport.height - 1f / 32,
             settledBounds!!.right / viewport.width + 1f / 16, settledBounds!!.bottom / viewport.height + 1f / 32)
-            ?: chooseContrast(forcedDark = forced)
+            ?: chooseContrast(forcedDark = fallbackDark)
     }
     // During scrolling/dragging, keep the last text polarity with a safe backing. Change
     // polarity at most once after geometry settles instead of following each frame's pixels.
@@ -169,6 +171,9 @@ internal fun rememberWallpaperContentStyle(forcedDark: Boolean? = null): Wallpap
     val choice = remember(moving, forced, settledChoice) {
         if (moving) chooseContrast(forcedDark = forced ?: settledChoice.darkText) else settledChoice
     }
+    // New wallpaper samples may be pending: keep the previous polarity with a matching
+    // scrim instead of briefly flipping to white and back on every invalidation.
+    SideEffect { lastDarkText = choice.darkText }
     val geometry = remember { Modifier.onGloballyPositioned { bounds = it.boundsInWindow() } }
     return remember(choice, geometry) {
         val backing = if (choice.darkText) Color.White else Color.Black

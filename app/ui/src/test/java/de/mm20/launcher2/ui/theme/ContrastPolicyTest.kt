@@ -15,6 +15,7 @@ class ContrastPolicyTest {
     }
     @Test fun missingPixelsUseStableWhiteOnBlackBacking() {
         assertEquals(ContrastChoice(false, 0.65f), chooseContrast())
+        assertEquals(ContrastChoice(true, 0.8f), chooseContrast(forcedDark = true))
     }
     @Test fun forcedColorsArePreservedAndProtected() {
         assertEquals(ContrastChoice(true, 0.8f), chooseContrast(0.0, 0.0, true))

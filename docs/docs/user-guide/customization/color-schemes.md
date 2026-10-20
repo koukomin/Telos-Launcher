@@ -90,7 +90,7 @@ color as proof that a particular label will be readable.
 
 The clock and dynamic zone, home favorite labels, transparent resting search bar, page indicators
 and transparent external-widget backings get a local protective scrim when the background is
-mixed or cannot be read. White text uses a 65% black scrim; forced black text uses an 80% white
+mixed or cannot be read. White text uses a 65% black scrim; black text uses an 80% white
 scrim when needed. Explicit clock colors and custom grid label colors retain priority. Custom
 label colors and the clock's **Use theme color** option can reduce contrast; these remain explicit
 user choices. Third-party widgets can draw their own text and backgrounds, so their internal
@@ -121,6 +121,7 @@ a device. Samples are approximate, not a pixel-perfect accessibility certificati
 
 Sampling and luminance analysis happen off the UI thread. Only one small grid of luminance
 ranges is cached, keyed by wallpaper ID, viewport and permission. Repeated resume/color events
-reuse it; new wallpapers are protected while sampling is pending. Position changes retain the previous text polarity with a protective scrim until geometry has
+reuse it; new wallpapers retain the previous text polarity with a matching protective backing
+while sampling is pending. Position changes retain the previous text polarity with a protective scrim until geometry has
 settled for 150 ms, then select cached cells without decoding images. Text colors are not
 animated through low-contrast gray.
