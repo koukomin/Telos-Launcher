@@ -1,154 +1,291 @@
 package de.mm20.launcher2.ui.terminal
 
-import android.app.DownloadManager
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.os.Environment
+import android.os.Build
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.preferences.Preference
-import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.coroutines.*
+import kotlinx.serialization.Serializable
+import java.io.File
+import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import org.json.JSONObject
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import kotlinx.serialization.Serializable
+import java.util.zip.ZipInputStream
 
 @Serializable
 data object TerminalRoute : NavKey
 
-/** Official Termux owns its required prefix, UID and signed add-on ecosystem. */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TerminalScreen() {
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
-    var resolving by remember { mutableStateOf(false) }
-    var refresh by remember { mutableIntStateOf(0) }
-    val lifecycleOwner = LocalLifecycleOwner.current
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_RESUME) refresh++ }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+
+    val termuxDir = remember { File(context.filesDir, "termux_usr") }
+    val bashExecutable = remember { File(termuxDir, "bin/bash") }
+    var isInstalled by remember { mutableStateOf(bashExecutable.exists()) }
+
+    var isDownloading by remember { mutableStateOf(false) }
+    var downloadProgress by remember { mutableFloatStateOf(0f) }
+    var statusText by remember { mutableStateOf("") }
+
+    var commandInput by remember { mutableStateOf("") }
+    val terminalOutput = remember { mutableStateListOf<String>("Telos Interactive Termux-Compatible Shell", "Type 'help' or any bash command...") }
+
+    fun runCommand(cmd: String) {
+        if (cmd.isBlank()) return
+        terminalOutput.add("$ $cmd")
+        commandInput = ""
+
+        scope.launch(Dispatchers.IO) {
+            try {
+                val env = mapOf(
+                    "PATH" to "${termuxDir.absolutePath}/bin:${termuxDir.absolutePath}/usr/bin",
+                    "HOME" to context.filesDir.absolutePath,
+                    "TERM" to "xterm-256color"
+                )
+                val pb = ProcessBuilder(bashExecutable.absolutePath, "-c", cmd)
+                pb.environment().putAll(env)
+                pb.directory(context.filesDir)
+                pb.redirectErrorStream(true)
+
+                val process = pb.start()
+                val reader = process.inputStream.bufferedReader()
+                var line: String?
+                while (reader.readLine().also { line = it } != null) {
+                    val outLine = line ?: ""
+                    withContext(Dispatchers.Main) {
+                        terminalOutput.add(outLine)
+                    }
+                }
+                process.waitFor()
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    terminalOutput.add("Error executing command: ${e.message}")
+                }
+            }
+        }
     }
-    val manager = remember { context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager }
-    val preferences = remember { context.getSharedPreferences("terminal_installer", Context.MODE_PRIVATE) }
-    var downloadId by rememberSaveable { mutableLongStateOf(preferences.getLong("download_id", -1)) }
-    var status by remember { mutableIntStateOf(0) }
-    var progress by remember { mutableFloatStateOf(0f) }
-    fun open(intent: Intent) {
-        try { context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
-        catch (_: Exception) { Toast.makeText(context, R.string.terminal_open_failed, Toast.LENGTH_LONG).show() }
-    }
-    fun website(url: String) = open(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-    fun download() {
-        scope.launch {
-          resolving = true
-          try {
-            val version = withContext(Dispatchers.IO) {
-                val connection = URL("https://f-droid.org/api/v1/packages/com.termux").openConnection() as HttpURLConnection
-                connection.connectTimeout = 15_000
-                connection.readTimeout = 15_000
-                connection.instanceFollowRedirects = false
-                try {
-                    check(connection.responseCode == 200)
-                    val bytes = connection.inputStream.use { input ->
-                        val output = java.io.ByteArrayOutputStream()
-                        val buffer = ByteArray(4096)
-                        while (output.size() <= 16_384) {
-                            val count = input.read(buffer, 0, minOf(buffer.size, 16_385 - output.size()))
-                            if (count < 0) break
-                            output.write(buffer, 0, count)
+
+    fun downloadCoreRuntime() {
+        isDownloading = true
+        statusText = "Λήψη Termux Core Runtime..."
+        downloadProgress = 0f
+
+        scope.launch(Dispatchers.IO) {
+            try {
+                val abi = when {
+                    Build.SUPPORTED_ABIS.contains("arm64-v8a") -> "aarch64"
+                    Build.SUPPORTED_ABIS.contains("armeabi-v7a") -> "arm"
+                    Build.SUPPORTED_ABIS.contains("x86_64") -> "x86_64"
+                    else -> "aarch64"
+                }
+
+                val downloadUrlStr = "https://github.com/termux/termux-packages/releases/download/bootstrap-2024.01.27/$abi-bootstrap.zip"
+                val zipFile = File(context.cacheDir, "bootstrap.zip")
+
+                // Handle Redirects (302/307)
+                var currentUrlStr = downloadUrlStr
+                var redirects = 0
+                var conn: HttpURLConnection
+                while (redirects < 10) {
+                    val url = URL(currentUrlStr)
+                    conn = url.openConnection() as HttpURLConnection
+                    conn.instanceFollowRedirects = true
+                    conn.connectTimeout = 15000
+                    conn.readTimeout = 15000
+                    val code = conn.responseCode
+                    if (code == 301 || code == 302 || code == 303 || code == 307 || code == 308) {
+                        val loc = conn.getHeaderField("Location")
+                        if (loc != null) {
+                            currentUrlStr = loc
+                            redirects++
+                            continue
                         }
-                        output.toByteArray()
                     }
-                    check(bytes.size <= 16_384)
-                    val metadata = JSONObject(String(bytes, Charsets.UTF_8))
-                    check(metadata.getString("packageName") == "com.termux")
-                    metadata.getLong("suggestedVersionCode").also { check(it > 0) }
-                } finally { connection.disconnect() }
+
+                    val totalSize = conn.contentLength.toFloat()
+                    var downloaded = 0L
+
+                    conn.inputStream.use { input ->
+                        FileOutputStream(zipFile).use { output ->
+                            val buffer = ByteArray(8192)
+                            var read: Int
+                            while (input.read(buffer).also { read = it } != -1) {
+                                output.write(buffer, 0, read)
+                                downloaded += read
+                                if (totalSize > 0) {
+                                    withContext(Dispatchers.Main) {
+                                        downloadProgress = (downloaded / totalSize).coerceIn(0f, 1f)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break
+                }
+
+                withContext(Dispatchers.Main) {
+                    statusText = "Εγκατάσταση & Ρύθμιση..."
+                }
+
+                // Extract Zip Entry
+                termuxDir.mkdirs()
+                ZipInputStream(zipFile.inputStream()).use { zis ->
+                    var entry = zis.nextEntry
+                    while (entry != null) {
+                        val outFile = File(termuxDir, entry.name)
+                        if (entry.isDirectory) {
+                            outFile.mkdirs()
+                        } else {
+                            outFile.parentFile?.mkdirs()
+                            FileOutputStream(outFile).use { fos ->
+                                zis.copyTo(fos)
+                            }
+                            if (entry.name.contains("bin/")) {
+                                outFile.setExecutable(true)
+                            }
+                        }
+                        entry = zis.nextEntry
+                    }
+                }
+
+                zipFile.delete()
+
+                withContext(Dispatchers.Main) {
+                    isDownloading = false
+                    isInstalled = true
+                    Toast.makeText(context, "Το Termux Core εγκαταστάθηκε επιτυχώς!", Toast.LENGTH_SHORT).show()
+                }
+
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    isDownloading = false
+                    statusText = "Σφάλμα λήψης: ${e.message}"
+                }
             }
-            // Termux installs/configures its bootstrap under its own required prefix on first launch.
-            downloadId = manager.enqueue(DownloadManager.Request(Uri.parse("https://f-droid.org/repo/com.termux_${version}.apk"))
-                .setTitle("Termux · F-Droid")
-                .setMimeType("application/vnd.android.package-archive")
-                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "termux-fdroid-${System.currentTimeMillis()}.apk"))
-            preferences.edit().putLong("download_id", downloadId).apply()
-          } catch (_: Exception) { Toast.makeText(context, R.string.terminal_open_failed, Toast.LENGTH_LONG).show() }
-          finally { resolving = false }
         }
     }
-    LaunchedEffect(downloadId, refresh) {
-        if (downloadId < 0) return@LaunchedEffect
-        while (true) {
-            var found = false
-            runCatching {
-                manager.query(DownloadManager.Query().setFilterById(downloadId)).use { cursor ->
-                    if (cursor.moveToFirst()) {
-                        found = true
-                        status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
-                        val total = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
-                        val received = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
-                        progress = if (total > 0) (received.toFloat() / total).coerceIn(0f, 1f) else 0f
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Telos Terminal (Termux Core)", fontWeight = FontWeight.Bold, color = Color.Green) },
+                navigationIcon = {
+                    IconButton(onClick = { backStack.removeLastOrNull() }) {
+                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back", tint = Color.Green)
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Black)
+            )
+        },
+        containerColor = Color.Black
+    ) { padding ->
+        if (!isInstalled) {
+            // On-Demand Installer View
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    painter = painterResource(de.mm20.launcher2.base.R.drawable.ic_app_terminal_full),
+                    contentDescription = "Terminal",
+                    modifier = Modifier.size(80.dp),
+                    tint = Color.Green
+                )
+                Spacer(Modifier.height(16.dp))
+                Text("Termux-Compatible Core Runtime", style = MaterialTheme.typography.titleLarge, color = Color.White, fontWeight = FontWeight.Bold)
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    "Για να διατηρηθεί το μέγεθος της εφαρμογής Telos μικρό, το περιβάλλον Termux Core (~20MB) λαμβάνεται on-demand απευθείας στη συσκευή.",
+                    color = Color.LightGray,
+                    fontSize = 14.sp
+                )
+                Spacer(Modifier.height(24.dp))
+
+                if (isDownloading) {
+                    LinearProgressIndicator(progress = { downloadProgress }, modifier = Modifier.fillMaxWidth())
+                    Spacer(Modifier.height(8.dp))
+                    Text(statusText, color = Color.Green, fontSize = 12.sp)
+                } else {
+                    Button(
+                        onClick = { downloadCoreRuntime() },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00AA00)),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Λήψη Termux Core On-Demand", color = Color.Black, fontWeight = FontWeight.Bold)
                     }
                 }
             }
-            if (!found || status == DownloadManager.STATUS_SUCCESSFUL || status == DownloadManager.STATUS_FAILED) break
-            delay(750)
-        }
-    }
-    val downloading = status == DownloadManager.STATUS_RUNNING || status == DownloadManager.STATUS_PENDING || status == DownloadManager.STATUS_PAUSED
-    PreferenceScreen(title = { Text(stringResource(R.string.terminal_title)) }) {
-        item(key = "runtime") {
-            Column(Modifier.fillMaxWidth().padding(16.dp)) {
-                Text(stringResource(R.string.terminal_runtime_summary))
-                Button(onClick = {
-                    val launch = context.packageManager.getLaunchIntentForPackage("com.termux")
-                    if (launch != null) open(launch) else download()
-                }, enabled = !downloading && !resolving, modifier = Modifier.fillMaxWidth().padding(top = 16.dp)) {
-                    Text(stringResource(if (context.packageManager.getLaunchIntentForPackage("com.termux") != null) R.string.hc_open else R.string.hc_install) + " · Termux")
+        } else {
+            // Interactive Embedded Terminal Session View
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .background(Color.Black)
+                    .padding(8.dp)
+            ) {
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    reverseLayout = false
+                ) {
+                    items(terminalOutput) { line ->
+                        Text(
+                            text = line,
+                            color = Color.Green,
+                            fontFamily = FontFamily.Monospace,
+                            fontSize = 13.sp
+                        )
+                    }
                 }
-                if (downloading) {
-                    LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth().padding(top = 12.dp))
-                    TextButton(onClick = { manager.remove(downloadId); downloadId = -1; status = 0; preferences.edit().remove("download_id").apply() }) { Text(stringResource(R.string.hc_cancel)) }
-                }
-                if (status == DownloadManager.STATUS_SUCCESSFUL) {
-                    Button(onClick = {
-                        val uri = manager.getUriForDownloadedFile(downloadId)
-                        if (uri != null) open(Intent(Intent.ACTION_VIEW).setDataAndType(uri, "application/vnd.android.package-archive").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION))
-                        else open(Intent(DownloadManager.ACTION_VIEW_DOWNLOADS))
-                    }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.hc_install) + " · Termux · F-Droid") }
-                }
-                if (status == DownloadManager.STATUS_FAILED) {
-                    Text(stringResource(R.string.hc_failed_try_again), color = MaterialTheme.colorScheme.error)
-                    TextButton(onClick = ::download) { Text(stringResource(R.string.hc_retry)) }
-                }
+
+                Spacer(Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = commandInput,
+                    onValueChange = { commandInput = it },
+                    placeholder = { Text("Enter command...", color = Color.DarkGray) },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+                    keyboardActions = KeyboardActions(onSend = { runCommand(commandInput) }),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.Green,
+                        unfocusedBorderColor = Color.DarkGray,
+                        focusedTextColor = Color.Green,
+                        unfocusedTextColor = Color.Green
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
-        }
-        item(key = "source") {
-            Preference(title = { Text("Termux · F-Droid") }, onClick = { website("https://f-droid.org/packages/com.termux/") })
-        }
-        item(key = "packages") {
-            Preference(title = { Text("pkg · apt · Python · Git · SSH") }, onClick = { website("https://github.com/termux/termux-packages/wiki/Package-Management") })
-        }
-        item(key = "plugins") {
-            Preference(title = { Text("Termux:API · Boot · Widget · Tasker · Float · Styling") }, onClick = { website("https://github.com/termux/termux-app#termux-app-and-plugins") })
         }
     }
 }

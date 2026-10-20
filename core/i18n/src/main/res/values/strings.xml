@@ -1904,4 +1904,4 @@
     <string name="telos_trash_unlock">Unlock trash</string>
     <string name="telos_os_trash_unavailable">No system recycle bin was found on this device</string>
     <string name="telos_media_compact_list">Compact list</string>
-<string name="telos_akou_app_label">Άκου</string><string name="telos_magnifier_app_label">Magnifier</string><string name="telos_flashlight_app_label">Flashlight</string></resources>
+<string name="telos_akou_app_label">Άκου</string><string name="telos_magnifier_app_label">Magnifier</string><string name="telos_flashlight_app_label">Flashlight</string><string name="hf_freeze_disconnect">Disconnected</string></resources>
