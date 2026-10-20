@@ -124,7 +124,7 @@ fun VideoScreen() {
         }
     }
 
-    var tab by rememberSaveable { mutableStateOf(0) }
+    var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("video.tab", 0)
     var query by rememberSaveable { mutableStateOf("") }
     var group by remember { mutableStateOf<VideoGroup?>(null) }
     BackHandler(enabled = group != null) { group = null }

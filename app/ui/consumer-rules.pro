@@ -7,3 +7,8 @@
 -keep class com.tom_roush.pdfbox.** { *; }
 -dontwarn com.tom_roush.pdfbox.**
 -dontwarn com.gemalto.jp2.**
+
+# PersistentNavigation resolves only serializable UI NavKey routes by their stored
+# class name. Keep route names stable in minified builds; serializer members use
+# the Kotlin serialization library's existing consumer rules.
+-keepnames class de.mm20.launcher2.ui.** implements androidx.navigation3.runtime.NavKey

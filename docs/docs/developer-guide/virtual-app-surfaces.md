@@ -37,3 +37,52 @@ Telos video wallpaper glass samples only the service’s own rendered surface wi
 
 
 The home clock, transparent resting search bar and dock page dots have no automatic rectangular contrast backing. Wallpaper-aware foreground selection still runs, while the search bar keeps its explicitly selected style and active surface. Other widget/app glass panels and their contrast policy are unchanged. This also removes the extra backing that appeared when wallpaper sampling was unavailable on Android 13 and newer.
+
+
+## Readable overlays, controls and search
+
+Keep `surface`/`background` clear for root scaffolds, but preserve opaque
+`surfaceContainer` for Material popup menus. Files and Phone drawers explicitly
+use that role: wallpaper blur remains behind the app, while overlay labels do
+not mix with underlying content. Playback buttons use paired
+primaryContainer/onPrimaryContainer roles, never the transparent root surface as
+foreground. Test both paused and playing TV mini player states.
+
+Files workspace chrome uses separate rows for scrollable tabs and fixed actions,
+so large fonts and narrow windows cannot squeeze a selected tab into a sliver.
+Phone Recents search appends ContactSearch results after filtered recent calls in
+one lazy list. It reuses ContactsViewModel privacy filtering, preferred numbers,
+contact detail rows and existing call confirmation, without changing tabs.
+
+Agent visual checks must include Greek labels, large system fonts, narrow and
+wide windows, light/dark and animated wallpapers, and menus/drawers opened over
+text. Preserve the no-plate home clock/search/dock-dot rule and single shared
+blur backing documented above. Physical-device verification is still required.
+
+
+## Process and package replacement continuity
+
+PersistentUiState stores small tab selections independently of Android's optional
+saved-instance bundle. Clock, Store, Phone, Radio, Music, Video, Photos, Stremio,
+NextDNS and Network logs use it. PersistentNavigation checkpoints bounded (32
+routes / 64 KiB) virtual-app navigation stacks in standalone and embedded hosts;
+serialization and disk reads run on IO. Routes restore only under the same root,
+without replacing navigation that changed during loading. Transient confirmation
+routes are excluded; failed/incompatible snapshots fall back to the root. R8
+retains NavKey class names for this lookup. This is navigation continuity, not a
+snapshot of arbitrary ViewModels, playback sessions, dialogs or unsaved forms.
+
+Files already persists open paths, selected tabs, split panes and active pane.
+ClockAlarms persists alarm definitions before scheduling, and its receiver
+reschedules on boot, package replacement, timezone/time changes and exact-alarm
+authorization. Process death does not itself remove AlarmManager registrations.
+Network persists wanted/off state, configuration and pause deadline; sticky VPN
+restart, package replacement and activity resume restore it, subject to existing
+VPN consent and the user's boot policy. Android force-stop/revoked permissions
+are not equivalent to a recoverable crash. End-to-end update/crash checks on a
+physical device remain outstanding.
+
+
+## Recents task cleanup
+
+SettingsActivity is a compatibility entry point for virtual apps. After forwarding to TelosAppActivity it removes a root redirect task, including when the redirect arrives through onNewIntent. A non-root redirect finishes only itself. Virtual-app document launches do not request RETAIN_IN_RECENTS, and explicitly finishing a root TelosAppActivity removes its document task. This prevents a blank Settings card from replaying the original virtual-app launch. Unfinished tasks still retain normal Android process-recreation and navigation recovery. Device validation of swipe-away, Back and re-opening from Recents remains required.

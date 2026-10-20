@@ -1314,3 +1314,20 @@ Telos video wallpaper glass samples only the service’s own rendered surface wi
 
 
 The home clock, transparent resting search bar and dock page dots have no automatic rectangular contrast backing. Wallpaper-aware foreground selection still runs, while the search bar keeps its explicitly selected style and active surface. Other widget/app glass panels and their contrast policy are unchanged. This also removes the extra backing that appeared when wallpaper sampling was unavailable on Android 13 and newer.
+
+
+Recent UI refinements preserve wallpaper blur while giving popup menus and
+navigation drawers readable tonal backgrounds. Phone Recents search lists
+matching calls followed by matching contacts without switching tabs. Files tabs
+and workspace actions use separate rows, and the media mini player uses paired
+contrast colors for its play/pause control.
+
+
+New Store configurations enable automatic non-Play updates by default, with a
+global off switch and per-app exclusions. Existing saved choices are retained;
+silent installation requires a supported privileged installer. Virtual-app route
+stacks and common tab selections are checkpointed for reopening after process
+loss, alongside the existing Files workspace, alarm and Network recovery.
+
+
+Virtual-app task cleanup removes temporary Settings redirect cards and explicitly finished app tasks from Recents, while retaining recovery for unfinished tasks.

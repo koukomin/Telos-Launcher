@@ -236,7 +236,7 @@ private fun StremioHome(vm: StremioViewModel) {
     val query by vm.query.collectAsStateWithLifecycle()
     val watching by vm.watching.collectAsStateWithLifecycle()
     val saved by vm.saved.collectAsStateWithLifecycle()
-    var tab by rememberSaveable { mutableIntStateOf(0) }
+    var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("stremio.tab", 0)
 
     Column(Modifier.fillMaxSize()) {
         TabRow(selectedTabIndex = tab, containerColor = Color.Transparent) {

@@ -73,7 +73,10 @@ fun CommsDashboardScreen(
         "keypad", "dialpad", "dial" -> CommsTab.Keypad
         else -> CommsTab.Recents
     }
-    var selectedTab by rememberSaveable(initialTab) { mutableStateOf(defaultTab) }
+    var selectedTab by de.mm20.launcher2.ui.component.rememberPersistentUiState(
+        "phone.tab.$initialTab", defaultTab, { it.name },
+        { name -> CommsTab.entries.firstOrNull { it.name == name } },
+    )
     var searchQuery by rememberSaveable { mutableStateOf("") }
     var showFilters by remember { mutableStateOf(false) }
     var showClearHistoryDialog by remember { mutableStateOf(false) }
@@ -116,6 +119,7 @@ fun CommsDashboardScreen(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(
+                drawerContainerColor = MaterialTheme.colorScheme.surfaceContainer,
                 modifier = Modifier.width(280.dp),
                 drawerShape = RoundedCornerShape(topEnd = 28.dp, bottomEnd = 28.dp),
             ) {

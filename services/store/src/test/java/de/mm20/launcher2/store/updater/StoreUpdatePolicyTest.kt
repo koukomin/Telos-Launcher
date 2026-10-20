@@ -11,11 +11,18 @@ class StoreUpdatePolicyTest {
         assertTrue(StoreUpdatePolicy.discoverInstaller("com.aurora.store"))
         assertTrue(StoreUpdatePolicy.discoverInstaller(null))
     }
-    @Test fun discoveredAppsRequireTheirOwnOptInEvenWhenGlobalIsOn() {
+    @Test fun globalDefaultAndPerAppOptOut() {
         assertFalse(StoreUpdatePolicy.automatic(ItemOptions(autoUpdate = false), true))
-        assertTrue(StoreUpdatePolicy.automatic(ItemOptions(autoUpdate = true), false))
+        assertFalse(StoreUpdatePolicy.automatic(ItemOptions(autoUpdate = true), false))
         assertFalse(StoreUpdatePolicy.automatic(ItemOptions(), false))
         assertTrue(StoreUpdatePolicy.automatic(ItemOptions(), true))
+    }
+    @Test fun newInstallsEnableAutomaticUpdatesByDefault() {
+        assertTrue(de.mm20.launcher2.store.options.GlobalOptions().autoInstall)
+        val saved = kotlinx.serialization.json.Json.decodeFromString(
+            de.mm20.launcher2.store.options.GlobalOptions.serializer(), """{"autoInstall":false}""",
+        )
+        assertFalse(saved.autoInstall)
     }
     @Test fun optInDoesNotOverrideTrackingPinningOrBackgroundExclusion() {
         assertFalse(StoreUpdatePolicy.automatic(ItemOptions(autoUpdate = true, trackOnly = true), true))

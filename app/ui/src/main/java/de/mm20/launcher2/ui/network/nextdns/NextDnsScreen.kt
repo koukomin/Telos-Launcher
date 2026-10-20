@@ -33,7 +33,7 @@ fun NextDnsScreen() {
     // Account-wide API keys never enter saved instance state or the ViewModel.
     var key by remember { mutableStateOf("") }
     var settings by rememberSaveable { mutableStateOf(false) }
-    var tab by rememberSaveable { mutableStateOf(0) }
+    var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("nextdns.tab", 0)
     var query by rememberSaveable { mutableStateOf("") }
     var blockedOnly by rememberSaveable { mutableStateOf(false) }
     var editDomain by remember { mutableStateOf<String?>(null) }

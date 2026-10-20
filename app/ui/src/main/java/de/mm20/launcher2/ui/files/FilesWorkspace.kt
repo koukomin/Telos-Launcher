@@ -201,18 +201,17 @@ private typealias WsIcons = de.mm20.launcher2.base.R.drawable
 @Composable
 private fun FilesWorkspaceChrome(workspace: FilesWorkspaceViewModel) {
     val scheme = MaterialTheme.colorScheme
-    Row(
+    Column(
         Modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .clip(RoundedCornerShape(28.dp))
             .background(virtualAppElevated())
             .padding(6.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         Row(
-            Modifier.weight(1f).horizontalScroll(rememberScrollState()),
+            Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -251,6 +250,8 @@ private fun FilesWorkspaceChrome(workspace: FilesWorkspaceViewModel) {
                 }
             }
         }
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically) {
         ChromeIcon(
             icon = WsIcons.add_24px,
             label = stringResource(R.string.telos_files_new_tab),
@@ -266,6 +267,7 @@ private fun FilesWorkspaceChrome(workspace: FilesWorkspaceViewModel) {
             onClick = workspace::togglePanels,
         )
         FilesSettingsTransferButton(workspace)
+        }
     }
 }
 

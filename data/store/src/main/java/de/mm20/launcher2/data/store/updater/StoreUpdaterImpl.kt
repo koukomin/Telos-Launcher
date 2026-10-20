@@ -65,8 +65,16 @@ class StoreUpdaterImpl(
         val global = options.global.value
         if (background && updates.isNotEmpty() && installer.canInstallSilently()) {
             for (item in updates.toList()) {
+                // A tracked GitHub/F-Droid source must not take over a Play-managed install.
+                val playManaged = runCatching {
+                    val pm = context.packageManager
+                    val origin = if (Build.VERSION.SDK_INT >= 30) pm.getInstallSourceInfo(item.packageName).installingPackageName
+                        else @Suppress("DEPRECATION") pm.getInstallerPackageName(item.packageName)
+                    origin == "com.android.vending"
+                }.getOrDefault(true)
+                if (playManaged) continue
                 val itemOptions = options.item(item.id)
-                if (!de.mm20.launcher2.store.updater.StoreUpdatePolicy.automatic(itemOptions, global.autoInstall, context)) continue
+                if (!de.mm20.launcher2.store.updater.StoreUpdatePolicy.automatic(itemOptions, global.autoInstall, if (item.packageName == context.packageName) context else null)) continue
                 if (handler.install(item) is StoreAction.Installed) {
                     installed += item
                     updates.remove(item)
@@ -77,7 +85,7 @@ class StoreUpdaterImpl(
         CheckSummary(updates, installed, failed)
     }
 
-    /** Discover supported non-Play installs without opting them into automatic installation. */
+    /** Discover supported non-Play installs following the global automatic-update setting. */
     private suspend fun discoverInstalled() = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
         val pm = context.packageManager
         val tracked = repository.getAll().map { it.packageName }.toSet()
@@ -102,7 +110,6 @@ class StoreUpdaterImpl(
             if (source == null || source is AppSource.AffiliatePlayStore) continue
             val item = StoreItem(java.util.UUID.randomUUID().toString(), app.packageName,
                 pm.getApplicationLabel(app).toString(), source)
-            options.update(item.id) { it.copy(autoUpdate = false) }
             repository.insertItem(item)
         }
     }

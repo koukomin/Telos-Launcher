@@ -212,6 +212,7 @@ internal class TelosAppPageComponent private constructor(
 
         val root = remember(key) { TelosPages.rootRoute(key) } ?: return
         val backStack = rememberNavBackStack(root)
+        de.mm20.launcher2.ui.component.PersistNavigation(backStack, root)
 
         // The back button of an app's first screen removes it from the stack, there is nothing
         // below it: close the page then.
@@ -224,7 +225,7 @@ internal class TelosAppPageComponent private constructor(
             de.mm20.launcher2.ui.component.VirtualAppTheme {
                 Box(
                     modifier = modifier
-                        .background(MaterialTheme.colorScheme.surfaceContainer)
+                        .background(androidx.compose.ui.graphics.Color.Transparent)
                         // The apps add the system bars themselves. Applied first, so that the
                         // navigation bar is not added a second time while the keyboard is open.
                         .imePadding()

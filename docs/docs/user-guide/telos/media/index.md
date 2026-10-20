@@ -179,3 +179,6 @@ TV changes channel with horizontal swipes (left: next; right: previous). Opening
 Music, YouTube Music and Radio retain separate last-played items. Opening one source never substitutes the last MP3 from another source. YouTube Music supports local favorites and named playlists. Artist-radio actions use related recommendations from a seed track; these are not an official account-synchronized artist station. The playback queue belongs to the playback service and survives closing the hub.
 
 Scrollable headers and content reduce controls competing with media at large font sizes. Virtual-app pages share wallpaper-aware surfaces and keep player contrast controls where needed.
+
+
+The TV mini player provides a contrasting play/pause icon reflecting the current playback state; tap it to pause or resume.

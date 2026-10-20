@@ -113,3 +113,42 @@ Use `tools/i18n/` (see its README): `extract.py` for missing keys, `build.py` to
 - Add necessary UI translations for every change, for all supported languages, with Greek as the priority alongside English.
 - Update README, docs and Pages source content when the behavior changes.
 - Push development changes to the working PR branch. Do not merge or create a release without the user explicitly asking.
+
+## UI design rules for every agent
+
+Read `docs/docs/developer-guide/virtual-app-surfaces.md` before changing launcher,
+widget or Telos app chrome. Preserve the shared static/video wallpaper blur and
+single root backing. Only root background/surface roles may be transparent;
+`surfaceContainer` must retain an opaque tonal color for popup menus. Navigation
+drawers explicitly use that container so underlying text cannot show through.
+Never use a cleared `surface` as an icon foreground: use paired Material roles
+(e.g. primaryContainer/onPrimaryContainer) for playback controls, including TV.
+Home clock, resting transparent search and dock page dots have no extra plate.
+Files workspace tabs get their own horizontally scrolling row, with actions in a
+separate row; preserve user font scale and minimum touch targets. Dialer Recents
+search shows live call matches first and matching contacts afterwards in one lazy
+list, retaining hidden-contact rules and call confirmation. Reuse translated
+labels. Verify bright/dark wallpaper, video wallpaper, Greek text, large fonts,
+narrow screens, menu/drawer overlays and playing/paused states. Clearly state
+when build or device validation could not be performed.
+
+
+## Restart and update continuity
+
+New Store profiles default to automatic non-Play updates. Preserve an existing
+explicit opt-out. The global auto-install switch is a master switch; per-app
+false, pinning, tracking-only and background exclusion must still win. Never
+automatically take over an install managed by com.android.vending. Session
+installers still require Android confirmation; do not promise silent updates
+without a supported privileged installer. Defer launcher self-updates while an
+alarm is scheduled, without blocking unrelated app updates.
+
+Use PersistentUiState for small navigation choices and PersistNavigation for
+virtual-app route stacks in standalone and embedded hosts. Do not persist
+passwords, confirmation dialogs or pending destructive actions. Keep snapshots
+bounded, load/serialize them off the main thread, and retain the route-name R8
+rule. Files owns its existing workspace persistence. Alarm definitions and Network
+intent/configuration are durable independently of screen navigation. Never claim
+crash/update recovery is device-verified based solely on reading the code.
+
+Virtual-app task redirects must finish and remove a redirect-only Settings root on both onCreate and onNewIntent. Do not retain explicitly finished virtual-app document tasks in Recents. Keep unfinished-task/process recovery separate from explicit close; no lifecycle callback should relaunch a closed app.
