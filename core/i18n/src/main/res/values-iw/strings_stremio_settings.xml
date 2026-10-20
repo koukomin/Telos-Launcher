@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">מטמון HTTP</string>
+    <string name="settings">הגדרות</string>
+    <string name="dl_category_audio">שמע</string>
+    <string name="hc_subtitles">כתוביות</string>
+    <string name="dl_t_select_none">ללא</string>
+    <string name="au3_appearance_cs_primary">ראשית</string>
+    <string name="au3_appearance_cs_secondary">משנית</string>
+</resources>

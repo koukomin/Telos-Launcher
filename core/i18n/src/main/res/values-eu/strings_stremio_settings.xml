@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">HTTP cachea</string>
+    <string name="settings">Ezarpenak</string>
+    <string name="dl_category_audio">Audioa</string>
+    <string name="hc_subtitles">Azpitituluak</string>
+    <string name="dl_t_select_none">Bat ere ez</string>
+    <string name="au3_appearance_cs_primary">Nagusia</string>
+    <string name="au3_appearance_cs_secondary">Bigarren mailakoa</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">Кэш HTTP</string>
+    <string name="settings">Налады</string>
+    <string name="dl_category_audio">Гук</string>
+    <string name="hc_subtitles">Субцітры</string>
+    <string name="dl_t_select_none">Няма</string>
+    <string name="au3_appearance_cs_primary">Асноўная</string>
+    <string name="au3_appearance_cs_secondary">Дадатковая</string>
+</resources>

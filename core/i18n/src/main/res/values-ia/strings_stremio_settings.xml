@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">Cache HTTP</string>
+    <string name="settings">Configurationes</string>
+    <string name="dl_category_audio">Audio</string>
+    <string name="hc_subtitles">Subtitulos</string>
+    <string name="dl_t_select_none">Nulle</string>
+    <string name="au3_appearance_cs_primary">Principal</string>
+    <string name="au3_appearance_cs_secondary">Secundari</string>
+</resources>

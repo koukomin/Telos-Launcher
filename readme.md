@@ -1334,3 +1334,6 @@ Virtual-app task cleanup removes temporary Settings redirect cards and explicitl
 
 
 TV/video controls and system bars respond to taps across portrait letterbox areas. TV upgrades legacy pause-on-leave defaults to background playback, with subsequent opt-outs preserved. Normal and isolated video have separate notification IDs alongside existing Music, Radio, TV and YouTube media notifications.
+
+
+Stremio Fork adds ordered primary/secondary audio and subtitle preferences (including None), a 1/2/5/10/20 GB LRU HTTP cache per player process, and access to existing shared torrent speed/network settings. Temporary torrent staging is separate from that HTTP cache budget.

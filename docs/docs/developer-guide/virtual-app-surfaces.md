@@ -93,3 +93,10 @@ SettingsActivity is a compatibility entry point for virtual apps. After forwardi
 TV toggles controls over its full-window gesture surface and synchronizes system bars with controls. Local/stream video owns the single-tap gesture sequence across the full PlayerView, including portrait letterbox regions, without double toggling through native ACTION_UP. Existing double-tap, seek, volume and brightness gestures remain. Video controller visibility also drives system bars.
 
 TV upgrades legacy pause-on-leave settings once to background playback; subsequent explicit opt-outs are saved with backgroundPolicyVersion=1. Video uses notification IDs 7405/7406 (normal/isolated process); Music, Radio, TV and YouTube already use distinct 7401–7404 IDs and MediaSession services. Actual Android media-card display still depends on playback/session state and system notification settings.
+
+
+## Stremio playback preferences
+
+StremioPlaybackSettings stores ordered audio/text language preferences and a validated 1/2/5/10/20 GiB HTTP cache choice, read/written on IO and shared through an atomic file with the isolated player. Empty audio preferences leave automatic selection; empty primary text disables text and automatic subtitle lookup even if a secondary language remains. Stremio launch intents carry an explicit marker so local videos retain their existing behavior. Media3 receives the preference lists before preparation; manual player track selection remains possible.
+
+StremioStreamCache uses a process-local SimpleCache handle, separate disk locks for normal/isolated players, a touch-aware LRU evictor and immediate trim on the next player open after a budget reduction. A cache error falls back to the normal routed data source. The budget applies per player HTTP cache; torrent staging files remain separate and are not a bounded rolling torrent cache. Temporary torrent files are still removed by the existing TorrentStreamer cleanup. Settings embed the existing shared torrent controls for rate limits, peer discovery, encryption and connections; no second torrent session is created.

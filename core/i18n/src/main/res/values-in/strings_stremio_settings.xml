@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_http_cache">Cache HTTP</string>
+    <string name="settings">Setelan</string>
+    <string name="dl_category_audio">Audio</string>
+    <string name="hc_subtitles">Subtitel</string>
+    <string name="dl_t_select_none">Tidak ada</string>
+    <string name="au3_appearance_cs_primary">Utama</string>
+    <string name="au3_appearance_cs_secondary">Sekunder</string>
+</resources>

@@ -88,6 +88,8 @@ fun StremioScreen() {
     val addons by vm.addons.collectAsStateWithLifecycle()
     val detail by vm.detail.collectAsStateWithLifecycle()
     val streams by vm.streams.collectAsStateWithLifecycle()
+    var showPlaybackSettings by remember { mutableStateOf(false) }
+    if (showPlaybackSettings) StremioPlaybackSheet { showPlaybackSettings = false }
     var showActions by remember { mutableStateOf(false) }
     var showNetworkRules by remember { mutableStateOf(false) }
     var showAddons by remember { mutableStateOf(false) }
@@ -124,6 +126,10 @@ fun StremioScreen() {
                 Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
             }
             androidx.compose.material3.DropdownMenu(expanded = showActions, onDismissRequest = { showActions = false }) {
+                androidx.compose.material3.DropdownMenuItem(
+                    text = { Text(stringResource(R.string.settings)) },
+                    onClick = { showActions = false; showPlaybackSettings = true },
+                )
                 androidx.compose.material3.DropdownMenuItem(
                     text = { Text(stringResource(R.string.dl_settings_rules)) },
                     onClick = { showActions = false; showNetworkRules = true },
