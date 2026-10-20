@@ -35,6 +35,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -57,6 +60,9 @@ class VideoWallpaperService : WallpaperService() {
     inner class VideoEngine : Engine(), KoinComponent {
 
         private val settings: WallpaperSettings by inject()
+        private val wallpapers: WallpapersService by inject()
+        private val glassActive = MutableStateFlow(false)
+        private val glassOwner = Any()
         private val desktopModeManager: DesktopModeManager by inject()
         private val powerManager
             get() = this@VideoWallpaperService.getSystemService<PowerManager>()
@@ -105,6 +111,28 @@ class VideoWallpaperService : WallpaperService() {
             super.onCreate(surfaceHolder)
             val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
             this.scope = scope
+            scope.launch {
+                combine(wallpapers.videoGlass.requests, glassActive) { requests, active ->
+                    if (active) requests else emptyList()
+                }.collectLatest { requests ->
+                    if (requests.isEmpty()) {
+                        wallpapers.videoGlass.clear(glassOwner)
+                        return@collectLatest
+                    }
+                    wallpapers.videoGlass.claim(glassOwner)
+                    try {
+                        while (true) {
+                            val bitmap = copyVideoGlass(surfaceHolder)
+                            if (bitmap != null) {
+                                wallpapers.videoGlass.publish(glassOwner, blurVideoGlass(bitmap, requests))
+                            } else {
+                                wallpapers.videoGlass.publish(glassOwner, emptyMap())
+                            }
+                            delay(if (bitmap == null) 500L else 125L)
+                        }
+                    } finally { wallpapers.videoGlass.clear(glassOwner) }
+                }
+            }
 
             scope.launch {
                 settings.videoPauseOnBatterySaver.collect {
@@ -254,6 +282,8 @@ class VideoWallpaperService : WallpaperService() {
                 thermalListener?.let { powerManager?.removeThermalStatusListener(it) }
                 thermalListener = null
             }
+            glassActive.value = false
+            wallpapers.videoGlass.clear(glassOwner)
             scope?.cancel()
             scope = null
             // onDestroy runs on the main thread: do not enqueue cleanup into the cancelled scope.
@@ -280,6 +310,7 @@ class VideoWallpaperService : WallpaperService() {
          * resumes near the previous position when conditions clear.
          */
         private fun updatePlayback() {
+            glassActive.value = !isPreview && shouldPlay()
             scope?.launch {
                 playerMutex.withLock {
                     if (shouldPlay()) {

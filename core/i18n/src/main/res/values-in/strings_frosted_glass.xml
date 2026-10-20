@@ -1,5 +1,5 @@
 <resources>
-    <string name="frosted_glass_wallpaper_help">Kaca buram memakai wallpaper beranda statis yang diatur di Telos. Wallpaper hidup atau eksternal memakai warna tembus pandang.</string>
+    <string name="frosted_glass_wallpaper_help">Kaca buram mendukung gambar beranda yang dipilih di Telos dan wallpaper video Telos. Wallpaper lain memakai warna tembus pandang.</string>
 
     <string name="wallpaper_target_dialog_title">Atur wallpaper untuk</string>
     <string name="preference_wallpaper_set_home">Layar utama</string>

@@ -42,6 +42,8 @@ android {
 
 dependencies {
     testImplementation(libs.bundles.tests)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation("androidx.test:runner:1.6.2")
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.bundles.androidx.lifecycle)

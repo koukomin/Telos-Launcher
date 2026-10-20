@@ -1,5 +1,5 @@
 <resources>
-    <string name="frosted_glass_wallpaper_help">El vidre esmerilat usa un fons d’inici estàtic definit a Telos. Els fons animats o externs usen un tint translúcid.</string>
+    <string name="frosted_glass_wallpaper_help">El vidre esmerilat admet imatges triades al Telos i fons de vídeo Telos. Els altres fons utilitzen un tint translúcid.</string>
 
     <string name="wallpaper_target_dialog_title">Estableix el fons per a</string>
     <string name="preference_wallpaper_set_home">Pantalla d’inici</string>

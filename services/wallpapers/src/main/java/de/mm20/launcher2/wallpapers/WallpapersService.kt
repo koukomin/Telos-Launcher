@@ -17,6 +17,7 @@ enum class StaticWallpaperTarget {
 }
 
 class WallpapersService(private val context: Context) {
+    val videoGlass = VideoGlass()
     private val glass = GlassWallpaperStore(context.applicationContext)
     val glassRevision = glass.revision
     suspend fun loadGlassWallpaper(radius: Int, widthDp: Int, heightDp: Int): android.graphics.Bitmap? = withContext(Dispatchers.IO) {

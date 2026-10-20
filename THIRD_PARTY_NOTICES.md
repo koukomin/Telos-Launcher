@@ -333,3 +333,5 @@ The complete Mail/Activation artifact license and notice texts are bundled in `a
 ## Frosted surfaces
 
 The shared cached-wallpaper glass renderer and bounded box blur are independently implemented Telos code under the project license. The former Haze runtime dependency has been removed; no Haze source code is copied into this renderer.
+
+Video glass instrumentation uses the existing AndroidX Test JUnit extension (Apache-2.0) and the already pinned AndroidX Test runner 1.6.2 as test-only dependencies; release APK dependencies are unchanged.

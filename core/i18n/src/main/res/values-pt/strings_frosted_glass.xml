@@ -1,3 +1,3 @@
 <resources>
-    <string name="frosted_glass_wallpaper_help">O vidro fosco usa um fundo inicial estático definido no Telos. Fundos animados ou externos usam uma tonalidade translúcida.</string>
+    <string name="frosted_glass_wallpaper_help">O vidro fosco suporta imagens escolhidas no Telos e fundos de vídeo Telos. Outros fundos usam uma tonalidade translúcida.</string>
 </resources>
