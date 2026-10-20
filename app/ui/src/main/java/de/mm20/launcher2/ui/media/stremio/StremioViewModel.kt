@@ -301,7 +301,15 @@ class StremioViewModel : ViewModel(), KoinComponent {
                 val fromAddons = withTimeoutOrNull(6_000) { client.allSubtitles(addons.value, state.type, state.videoId, extra) }.orEmpty()
                 (stream.subtitles + fromAddons).distinctBy { it.url }.take(MAX_SUBTITLES)
             }
+            val remaining = de.mm20.launcher2.comms.stremio.StremioEpisodeQueue.after(
+                state.type, _detail.value?.meta?.videos.orEmpty(), state.videoId,
+            )
             fun withSubtitles(intent: Intent): Intent = intent
+                .putStringArrayListExtra("stremio_next_ids", ArrayList(remaining.map { it.id }))
+                .putStringArrayListExtra("stremio_next_titles", ArrayList(remaining.map { it.title }))
+                .putExtra("stremio_type", state.type)
+                .putExtra("stremio_addon", stream.addonName)
+                .putExtra("stremio_kind", stream.kind.name)
                 .putExtra("stremio_playback", true)
                 .putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_URLS, ArrayList(subtitles.map { it.url }))
                 .putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_LANGS, ArrayList(subtitles.map { it.lang }))

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="stremio_http_cache">Mezipaměť HTTP</string>
+    <string name="stremio_auto_next">Automaticky přehrát další epizodu</string>
+    <string name="stremio_hide_screeners">Vyloučit CAM / Screener</string>
 </resources>

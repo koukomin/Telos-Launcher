@@ -7,4 +7,10 @@
     <string name="dl_t_select_none">ללא</string>
     <string name="au3_appearance_cs_primary">ראשית</string>
     <string name="au3_appearance_cs_secondary">משנית</string>
+    <string name="stremio_auto_next">ניגון אוטומטי של הפרק הבא</string>
+    <string name="stremio_hide_screeners">החרגת CAM / Screener</string>
+    <string name="screenrec_resolution">רזולוציה</string>
+    <string name="au20_viewer_info_size">גודל</string>
+    <string name="hc_from_a_file">מקובץ</string>
+    <string name="hc_search_online">חיפוש מקוון</string>
 </resources>

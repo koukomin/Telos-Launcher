@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="stremio_http_cache">HTTP कैश</string>
+    <string name="stremio_auto_next">अगला एपिसोड अपने आप चलाएँ</string>
+    <string name="stremio_hide_screeners">CAM / Screener को बाहर रखें</string>
 </resources>

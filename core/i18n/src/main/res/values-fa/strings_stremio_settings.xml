@@ -7,4 +7,10 @@
     <string name="dl_t_select_none">هیچ‌کدام</string>
     <string name="au3_appearance_cs_primary">اصلی</string>
     <string name="au3_appearance_cs_secondary">ثانویه</string>
+    <string name="stremio_auto_next">پخش خودکار قسمت بعدی</string>
+    <string name="stremio_hide_screeners">حذف CAM / Screener</string>
+    <string name="screenrec_resolution">وضوح</string>
+    <string name="au20_viewer_info_size">اندازه</string>
+    <string name="hc_from_a_file">از فایل</string>
+    <string name="hc_search_online">جستجوی آنلاین</string>
 </resources>

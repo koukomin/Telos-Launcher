@@ -1337,3 +1337,6 @@ TV/video controls and system bars respond to taps across portrait letterbox area
 
 
 Stremio Fork adds ordered primary/secondary audio and subtitle preferences (including None), a 1/2/5/10/20 GB LRU HTTP cache per player process, and access to existing shared torrent speed/network settings. Temporary torrent staging is separate from that HTTP cache budget.
+
+
+Playback gains a searchable subtitle-track sheet. Stremio adds opt-in catalog-based next-episode continuation and conservative resolution/advertised-size/CAM-source preferences; unknown metadata and manual fallback remain available, without changing video decoding.

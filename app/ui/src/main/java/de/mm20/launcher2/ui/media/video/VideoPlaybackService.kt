@@ -84,6 +84,13 @@ object VideoSession {
         this.player = null
         val s = service
         s?.close()
-        s?.stopSelf()
+        // A next episode recreates the screen in the same process. Keep the
+        // empty service briefly so the replacement player can reattach safely.
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+            if (this.player == null && service === s) {
+                service = null
+                s?.stopSelf()
+            }
+        }, 1500L)
     }
 }

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="stremio_http_cache">HTTP-Cache</string>
+    <string name="stremio_auto_next">Nächste Folge automatisch abspielen</string>
+    <string name="stremio_hide_screeners">CAM / Screener ausschließen</string>
 </resources>

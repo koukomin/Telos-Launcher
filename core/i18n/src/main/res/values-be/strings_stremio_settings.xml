@@ -7,4 +7,10 @@
     <string name="dl_t_select_none">Няма</string>
     <string name="au3_appearance_cs_primary">Асноўная</string>
     <string name="au3_appearance_cs_secondary">Дадатковая</string>
+    <string name="stremio_auto_next">Аўтаматычна прайграваць наступны эпізод</string>
+    <string name="stremio_hide_screeners">Выключыць CAM / Screener</string>
+    <string name="screenrec_resolution">Раздзяляльнасць</string>
+    <string name="au20_viewer_info_size">Памер</string>
+    <string name="hc_from_a_file">З файла</string>
+    <string name="hc_search_online">Шукаць у інтэрнэце</string>
 </resources>
