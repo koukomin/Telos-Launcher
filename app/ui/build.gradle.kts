@@ -14,6 +14,10 @@ android {
     }
 
     packaging {
+        // The standalone library test APK includes both existing JavaMail jars. Preserve
+        // their duplicate notices together rather than dropping license text to package it.
+        resources.merges.add("META-INF/LICENSE.md")
+        resources.merges.add("META-INF/NOTICE.md")
         resources.excludes.add("META-INF/DEPENDENCIES")
         resources.excludes.add("META-INF/INDEX.LIST")
     }
