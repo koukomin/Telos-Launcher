@@ -7,4 +7,10 @@
     <string name="dl_t_select_none">Heç biri</string>
     <string name="au3_appearance_cs_primary">Əsas</string>
     <string name="au3_appearance_cs_secondary">İkinci</string>
+    <string name="stremio_auto_next">Növbəti bölümü avtomatik oynat</string>
+    <string name="stremio_hide_screeners">CAM / Screener mənbələrini istisna et</string>
+    <string name="screenrec_resolution">Ayırdetmə</string>
+    <string name="au20_viewer_info_size">Ölçü</string>
+    <string name="hc_from_a_file">Fayldan</string>
+    <string name="hc_search_online">İnternetdə axtar</string>
 </resources>

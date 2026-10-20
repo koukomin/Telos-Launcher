@@ -7,4 +7,10 @@
     <string name="dl_t_select_none">Tiada</string>
     <string name="au3_appearance_cs_primary">Utama</string>
     <string name="au3_appearance_cs_secondary">Sekunder</string>
+    <string name="stremio_auto_next">Mainkan episod seterusnya secara automatik</string>
+    <string name="stremio_hide_screeners">Kecualikan CAM / Screener</string>
+    <string name="screenrec_resolution">Resolusi</string>
+    <string name="au20_viewer_info_size">Saiz</string>
+    <string name="hc_from_a_file">Daripada fail</string>
+    <string name="hc_search_online">Cari dalam talian</string>
 </resources>

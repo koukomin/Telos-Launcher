@@ -127,6 +127,7 @@ data class StreamItem(
     val sources: List<String> = emptyList(),
     val subtitles: List<SubtitleItem> = emptyList(),
     val filename: String? = null,
+    val sizeBytes: Long? = null,
 ) {
     /** What Telos can do with it; other kinds (Usenet, archives) are not supported */
     val kind: Kind

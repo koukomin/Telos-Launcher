@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="stremio_http_cache">HTTP-mellemlager</string>
+    <string name="stremio_auto_next">Afspil næste episode automatisk</string>
+    <string name="stremio_hide_screeners">Udeluk CAM / Screener</string>
 </resources>

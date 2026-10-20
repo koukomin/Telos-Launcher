@@ -188,3 +188,8 @@ Tap anywhere on a TV or video picture, including the blank bands above and below
 
 
 Stremio Fork → menu → Settings offers primary and secondary audio/subtitle languages, including None, plus a 1/2/5/10/20 GB HTTP playback cache. Primary None disables automatic subtitles; empty audio preferences leave the stream/player default. Secondary languages are fallbacks when available. The cache evicts older HTTP data automatically; settings take effect on the next playback. This is a per-player HTTP cache, not a total limit on temporary torrent files. The same settings sheet exposes shared torrent speed limits, connections, discovery, encryption, seeding and transfer-network rules. It does not claim full settings parity with the official Stremio client.
+
+
+During playback, Subtitles opens a searchable sheet listing available subtitle languages/tracks and the current choice, with None, local file and online search actions.
+
+Stremio Settings also offers opt-in next-episode playback. It continues only when catalog episode metadata and a compatible stream from the same add-on are available; otherwise it stops. Multi-file Stremio torrents no longer automatically run into unrelated files. Optional resolution, maximum source size and CAM/screener exclusion are metadata preferences: unknown sources remain available, and manual browsing restores the full list if all known sources would be filtered out. These filters do not change video encoding or force an unsupported playback mode.

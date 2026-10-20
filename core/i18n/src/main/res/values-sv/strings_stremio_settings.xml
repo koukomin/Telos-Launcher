@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="stremio_http_cache">HTTP-cache</string>
+    <string name="stremio_auto_next">Spela nästa avsnitt automatiskt</string>
+    <string name="stremio_hide_screeners">Uteslut CAM / Screener</string>
 </resources>

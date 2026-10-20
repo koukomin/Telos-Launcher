@@ -414,6 +414,14 @@ private fun Episodes(vm: StremioViewModel, meta: Meta) {
 @Composable
 private fun StreamsSheet(vm: StremioViewModel, state: StreamsState) {
     val context = LocalContext.current
+    val preferences by androidx.compose.runtime.produceState<de.mm20.launcher2.comms.stremio.StremioPlaybackSettings?>(null) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            de.mm20.launcher2.comms.stremio.StremioPlaybackSettings.load(context)
+        }
+    }
+    val visibleStreams = remember(state.items, preferences) {
+        preferences?.let { de.mm20.launcher2.comms.stremio.StremioStreamFilter.apply(state.items, it) } ?: state.items
+    }
     ModalBottomSheet(onDismissRequest = { vm.closeStreams() }) {
         Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp).padding(bottom = 24.dp)) {
             Text(stringResource(R.string.au22_stremio_streams), style = MaterialTheme.typography.titleLarge)
@@ -424,7 +432,7 @@ private fun StreamsSheet(vm: StremioViewModel, state: StreamsState) {
                 Text(stringResource(R.string.au22_stremio_no_streams), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(vertical = 16.dp))
             } else {
                 LazyColumn(modifier = Modifier.fillMaxWidth().height(420.dp)) {
-                    items(state.items, key = { it.streamKey() + "#" + state.items.indexOf(it) }) { s ->
+                    items(visibleStreams, key = { it.streamKey() + "#" + state.items.indexOf(it) }) { s ->
                         StreamRow(s, last = s.streamKey() == state.lastUsed) {
                             vm.play(context, s, state) { opened ->
                                 if (opened) vm.closeStreams()

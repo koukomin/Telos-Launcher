@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="stremio_http_cache">HTTP 缓存</string>
+    <string name="stremio_auto_next">自动播放下一集</string>
+    <string name="stremio_hide_screeners">排除 CAM / Screener</string>
 </resources>

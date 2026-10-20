@@ -80,11 +80,13 @@ fun VideoPlayerScreen(
             runCatching { TorrentStreamer.open(context, torrentSource, config.torrentWifiOnly, context.findActivity(), torrentFileIdx) }
                 .onSuccess { opened ->
                     val name = TorrentStreamer.torrentName()
+                    val selectedOnly = context.findActivity()?.intent?.getBooleanExtra("stremio_playback", false) == true
+                    val videos = if (selectedOnly) listOf(opened.videos[opened.startPosition]) else opened.videos
                     resolved = ResolvedMedia(
-                        uris = opened.videos.map { Uri.parse(it.url) },
-                        titles = opened.videos.map { it.name.substringBeforeLast('.') },
-                        mediaIds = opened.videos.map { "torrent:$name/${it.name}" },
-                        startIndex = opened.startPosition,
+                        uris = videos.map { Uri.parse(it.url) },
+                        titles = videos.map { it.name.substringBeforeLast('.') },
+                        mediaIds = videos.map { "torrent:$name/${it.name}" },
+                        startIndex = if (selectedOnly) 0 else opened.startPosition,
                     )
                 }
                 .onFailure {
@@ -334,6 +336,8 @@ private fun PlayerContent(
         onDispose { VideoSession.detach(context, player) }
     }
 
+    val continuationScope = rememberCoroutineScope()
+    var continuationRequested by remember(player) { mutableStateOf(false) }
     DisposableEffect(player) {
         val listener = object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {
@@ -344,7 +348,22 @@ private fun PlayerContent(
             }
 
             override fun onPlaybackStateChanged(playbackState: Int) {
-                if (playbackState == Player.STATE_ENDED) scrobble("stop", finished = true)
+                if (playbackState == Player.STATE_ENDED) {
+                    scrobble("stop", finished = true)
+                    if (stremio && playbackRuntime?.first?.autoNextEpisode == true && !continuationRequested && networkGate.allowed.value) {
+                        continuationRequested = true
+                        continuationScope.launch {
+                            val activity = context.findActivity() ?: return@launch
+                            val next = runCatching {
+                                de.mm20.launcher2.ui.media.stremio.StremioEpisodeContinuation.next(context.applicationContext, android.content.Intent(activity.intent))
+                            }.getOrNull()
+                            if (next != null && !activity.isFinishing && !activity.isDestroyed) {
+                                activity.intent = next
+                                activity.recreate()
+                            }
+                        }
+                    }
+                }
             }
 
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
@@ -498,6 +517,12 @@ private fun PlayerContent(
 
     var subtitleMenu by remember { mutableStateOf(false) }
     var showOnlineSubtitles by remember { mutableStateOf(false) }
+    if (subtitleMenu) SubtitleSelectionSheet(
+        player = player,
+        onDismiss = { subtitleMenu = false },
+        onFile = { subtitleMenu = false; subtitlePicker.launch("*/*") },
+        onOnline = { subtitleMenu = false; showOnlineSubtitles = true },
+    )
     DisposableEffect(player) {
         var shownId = player.currentMediaItem?.mediaId
         val l = object : Player.Listener {
@@ -727,16 +752,6 @@ private fun PlayerContent(
                 Box {
                     TextButton(onClick = { subtitleMenu = true }) {
                         Text(stringResource(R.string.hc_subtitles_2), color = Color.White)
-                    }
-                    DropdownMenu(expanded = subtitleMenu, onDismissRequest = { subtitleMenu = false }) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.hc_from_a_file)) },
-                            onClick = { subtitleMenu = false; subtitlePicker.launch("*/*") },
-                        )
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.hc_search_online)) },
-                            onClick = { subtitleMenu = false; showOnlineSubtitles = true },
-                        )
                     }
                 }
                 IconButton(onClick = { showMenu = true }) {

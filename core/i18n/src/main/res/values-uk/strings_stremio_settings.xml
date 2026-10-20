@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="stremio_http_cache">Кеш HTTP</string>
+    <string name="stremio_auto_next">Автоматично відтворювати наступну серію</string>
+    <string name="stremio_hide_screeners">Виключити CAM / Screener</string>
 </resources>

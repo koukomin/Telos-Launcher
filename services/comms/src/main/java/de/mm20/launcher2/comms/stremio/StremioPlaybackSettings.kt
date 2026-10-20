@@ -13,6 +13,10 @@ data class StremioPlaybackSettings(
     val subtitles: String = Locale.getDefault().language,
     val subtitleFallback: String = "en",
     val cacheGb: Int = 5,
+    val autoNextEpisode: Boolean = false,
+    val resolution: Int = 0,
+    val maxSizeGb: Int = 0,
+    val hideScreeners: Boolean = false,
 ) {
     val audioLanguages get() = listOf(audio, audioFallback).filter { it.isNotBlank() }.distinct()
     val subtitleLanguages get() = if (subtitles.isBlank()) emptyList() else listOf(subtitles, subtitleFallback).filter { it.isNotBlank() }.distinct()
@@ -29,14 +33,20 @@ data class StremioPlaybackSettings(
             } ?: default
             d.copy(audio = lang("audio", d.audio), audioFallback = lang("audioFallback", d.audioFallback),
                 subtitles = lang("subtitles", d.subtitles), subtitleFallback = lang("subtitleFallback", d.subtitleFallback),
-                cacheGb = j.optInt("cacheGb", 5).takeIf { it in cacheChoices } ?: 5)
+                cacheGb = j.optInt("cacheGb", 5).takeIf { it in cacheChoices } ?: 5,
+                autoNextEpisode = j.optBoolean("autoNextEpisode", false),
+                resolution = j.optInt("resolution", 0).takeIf { it in listOf(0, 480, 720, 1080, 1440, 2160) } ?: 0,
+                maxSizeGb = j.optInt("maxSizeGb", 0).takeIf { it in listOf(0, 1, 2, 5, 10, 20, 50) } ?: 0,
+                hideScreeners = j.optBoolean("hideScreeners", false))
         }.getOrDefault(StremioPlaybackSettings())
         @Synchronized fun save(context: Context, settings: StremioPlaybackSettings) {
             val f = file(context)
             val tmp = File(f.parentFile, "${f.name}.tmp")
             tmp.writeText(JSONObject().put("audio", settings.audio).put("audioFallback", settings.audioFallback)
                 .put("subtitles", settings.subtitles).put("subtitleFallback", settings.subtitleFallback)
-                .put("cacheGb", settings.cacheGb).toString())
+                .put("cacheGb", settings.cacheGb).put("autoNextEpisode", settings.autoNextEpisode)
+                .put("resolution", settings.resolution).put("maxSizeGb", settings.maxSizeGb)
+                .put("hideScreeners", settings.hideScreeners).toString())
             check(tmp.renameTo(f)) { "Playback preferences could not be saved" }
         }
     }
