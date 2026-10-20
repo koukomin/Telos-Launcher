@@ -1,0 +1,3 @@
+<resources>
+    <string name="nf_apk_export_scope">Delade appar exporteras som ZIP med alla APK-filer. ZIP kan inte installeras direkt.</string>
+</resources>

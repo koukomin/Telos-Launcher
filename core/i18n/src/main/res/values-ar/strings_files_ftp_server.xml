@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP غير مشفر. تتم مشاركة هذا المجلد فقط. يتوقف عند الإغلاق أو الانتقال إلى الخلفية.</string>
+    <string name="nf_ftp_uploads">السماح برفع ملفات جديدة (حتى 2 GiB؛ دون استبدال)</string>
+</resources>

@@ -1,0 +1,6 @@
+<resources>
+    <string name="nf_apk_export_scope">Zatitutako aplikazioak APK guztiak dituen ZIP gisa esportatzen dira. ZIPa ezin da zuzenean instalatu.</string>
+    <string name="hc_backup_saved">Babeskopia gordeta</string>
+    <string name="hc_export">Esportatu</string>
+    <string name="hc_export_failed">Esportazioak huts egin du</string>
+</resources>

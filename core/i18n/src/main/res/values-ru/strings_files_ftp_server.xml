@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP не зашифрован. Доступна только эта папка. Работа прекращается при закрытии или в фоне.</string>
+    <string name="nf_ftp_uploads">Загрузка новых файлов (до 2 ГиБ; без замены)</string>
+</resources>

@@ -1,0 +1,3 @@
+<resources>
+    <string name="nf_apk_export_scope">Jagatud rakendused eksporditakse kõigi APK-dega ZIP-failina. ZIP-i ei saa otse installida.</string>
+</resources>

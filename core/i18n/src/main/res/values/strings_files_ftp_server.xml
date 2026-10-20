@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP is unencrypted. Only this folder is shared. Stops when closed or in the background.</string>
+    <string name="nf_ftp_uploads">Allow new-file uploads (up to 2 GiB; no overwriting)</string>
+</resources>

@@ -243,6 +243,7 @@ private fun ErmisMailbox() {
             val source = repository.forwardSource(message.accountId, message.folder, message.uid)
             editingDraft = null; replyAll = false; forwarding = source; reply = message; selected = null; composing = true
         } },
+        onMarkUnread = { task { repository.setRead(message.accountId, message.uid, false, message.folder); selected = null } },
         onMove = { target -> moveTarget = message to target },
         onMoveAny = { moving = message; task { repository.loadFolders(message.accountId) } },
         onSaveNote = { task { repository.saveNote(message.accountId, message.uid, it, message.folder); selected = selected?.copy(note = it) } },
@@ -420,7 +421,7 @@ private fun ComposeDialog(accounts: List<ErmisAccount>, initialAccount: String?,
 }
 
 @Composable
-private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage>, folders: List<ErmisFolder>, onSelect: (ErmisMessage) -> Unit, onDismiss: () -> Unit, onReply: () -> Unit, onReplyAll: () -> Unit, onForward: () -> Unit, onMove: (ErmisFolder) -> Unit, onMoveAny: () -> Unit, onSaveNote: (String) -> Unit, onDownload: (ErmisAttachment, Uri) -> Unit) {
+private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage>, folders: List<ErmisFolder>, onSelect: (ErmisMessage) -> Unit, onDismiss: () -> Unit, onReply: () -> Unit, onReplyAll: () -> Unit, onForward: () -> Unit, onMarkUnread: () -> Unit, onMove: (ErmisFolder) -> Unit, onMoveAny: () -> Unit, onSaveNote: (String) -> Unit, onDownload: (ErmisAttachment, Uri) -> Unit) {
     var conversationOpen by remember { mutableStateOf(false) }
     var showHtml by remember(message.accountId, message.folder, message.uid, message.html) { mutableStateOf(message.html.isNotBlank()) }
     val htmlHeight = (LocalConfiguration.current.screenHeightDp * .6f).coerceIn(180f, 640f).dp
@@ -445,6 +446,7 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
                 TextButton(onClick = onReplyAll) { Text(stringResource(R.string.ermis_reply_all)) }
                 TextButton(onClick = onForward) { Text(stringResource(R.string.ermis_forward)) }
                 TextButton(onClick = onMoveAny) { Text(stringResource(R.string.ermis_move)) }
+                TextButton(onClick = onMarkUnread) { Text(stringResource(R.string.comms_mark_unread)) }
                 moveActions.forEach { (label, folder) -> TextButton(onClick = { onMove(folder) }) { Text(stringResource(label)) } }
             }
             if (message.html.isNotBlank()) FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

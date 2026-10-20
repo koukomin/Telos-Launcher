@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP không được mã hóa. Chỉ chia sẻ thư mục này. Dừng khi đóng hoặc chạy nền.</string>
+    <string name="nf_ftp_uploads">Cho phép tải lên tệp mới (tối đa 2 GiB; không ghi đè)</string>
+</resources>

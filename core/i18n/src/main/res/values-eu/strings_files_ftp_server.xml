@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP ez dago zifratuta. Karpeta hau bakarrik partekatzen da. Ixtean edo atzeko planoan gelditzen da.</string>
+    <string name="nf_ftp_uploads">Fitxategi berriak kargatu (2 GiB arte; gainidatzi gabe)</string>
+</resources>

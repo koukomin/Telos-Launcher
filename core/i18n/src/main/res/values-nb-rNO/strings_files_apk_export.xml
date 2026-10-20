@@ -1,0 +1,3 @@
+<resources>
+    <string name="nf_apk_export_scope">Oppdelte apper eksporteres som ZIP med alle APK-filer. ZIP kan ikke installeres direkte.</string>
+</resources>

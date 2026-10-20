@@ -1,0 +1,3 @@
+<resources>
+    <string name="nf_apk_export_scope">Delené aplikácie sa exportujú ako ZIP so všetkými APK. ZIP sa nedá priamo nainštalovať.</string>
+</resources>

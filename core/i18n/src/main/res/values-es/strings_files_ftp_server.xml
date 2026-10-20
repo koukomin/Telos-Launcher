@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP no está cifrado. Solo se comparte esta carpeta. Se detiene al cerrar o pasar a segundo plano.</string>
+    <string name="nf_ftp_uploads">Subir archivos nuevos (hasta 2 GiB; sin sobrescribir)</string>
+</resources>

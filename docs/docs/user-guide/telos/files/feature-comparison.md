@@ -51,7 +51,7 @@
 | MediaFire/SugarSync | Ναι | Ναι | Δεν υπάρχουν direct clients |
 | pCloud/HiDrive/Mail.ru/4Sync/4Shared/Meo | Ναι | — | Δεν υπάρχουν dedicated clients |
 | Cloud app ήδη συνδεδεμένο στο κινητό | — | — | Υπάρχει επιλογή system document provider, εφόσον το app εκθέτει φακέλους |
-| FTP/HTTP/WebDAV/DLNA server | Ναι | FTP και web sharing | Προστέθηκε read-only HTTP share σε ιδιωτικό LAN όσο είναι ορατό το dialog· όχι FTP/WebDAV/DLNA server |
+| FTP/HTTP/WebDAV/DLNA server | Ναι | FTP και web sharing | HTTP share και FTP server σε ιδιωτικό LAN όσο είναι ορατό το dialog· όχι WebDAV/DLNA server |
 | MiX Send-to/TCP/Bluetooth transfer | Ναι | — | Android Share υπάρχει· όχι MiX-compatible peer/server protocol |
 | Ανάδρομη αναζήτηση/ανάλυση remote storage | Προχωρημένη | Μερικά εργαλεία cloud | Προστέθηκε περιορισμένη recursive remote αναζήτηση· όχι πλήρης remote ανάλυση |
 

@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP 未加密。仅共享此文件夹。关闭窗口或进入后台时停止。</string>
+    <string name="nf_ftp_uploads">允许上传新文件（最大 2 GiB；不覆盖现有文件）</string>
+</resources>

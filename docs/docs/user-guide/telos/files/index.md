@@ -216,3 +216,14 @@ Local search supports type/extension, size and inclusive modified-date filters, 
 ### Shizuku access
 
 Shizuku access waits for the Android permission result before opening accessible folders. It uses the rights of the running Shizuku service, normally ADB shell; this is not superuser access and Android or the device vendor may still restrict folders. System partition remount controls are available only in superuser mode. Copy and drag operations retain the source access backend even when the destination tab uses another mode.
+
+## FTP server
+
+Open a supported local folder, then choose **FTP** from the overflow menu. Start sharing and use the displayed address, `telos` username and newly generated session password in a passive FTP client. Only the chosen folder is exposed; symbolic links cannot escape its directory handles. The session stops when the dialog closes or Telos enters the background. Unsupported filesystem providers fail to start. FTP is unencrypted; use a trusted local network.
+
+Directory browsing, listings, file sizes, downloads and resumed downloads are supported. Uploads are off by default; enabling them permits new files up to 2 GiB each. Existing files are never overwritten, and failed uploads remove their own partial file. TLS, active-mode FTP, remote deletion/renaming, directory creation and upload resume are not implemented. At most four clients and 10,000 entries per listing are supported. This is a foreground transfer session, not a persistent background server.
+
+
+## Export installed apps
+
+Choose **Apps** in the overflow menu, search by app name or package and choose **Export**. Android asks where to create the file. Single-APK apps export as an APK; split apps export a ZIP containing base.apk and every split APK. A ZIP is not directly installable: installation requires a compatible split-package installer. App data and settings are not included. Interrupted exports are removed where the destination provider permits deletion; an app update during export is treated as a failed export.

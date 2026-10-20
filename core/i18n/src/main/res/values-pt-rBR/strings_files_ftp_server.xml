@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP não é criptografado. Só esta pasta é compartilhada. Para ao fechar ou em segundo plano.</string>
+    <string name="nf_ftp_uploads">Enviar novos arquivos (até 2 GiB; sem substituir)</string>
+</resources>

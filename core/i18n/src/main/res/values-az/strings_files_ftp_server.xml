@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP şifrələnmir. Yalnız bu qovluq paylaşılır. Bağlandıqda və ya arxa planda dayanır.</string>
+    <string name="nf_ftp_uploads">Yeni faylların yüklənməsi (2 GiB-dək; üzərinə yazılmır)</string>
+</resources>

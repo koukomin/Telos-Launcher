@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP är okrypterat. Endast denna mapp delas. Stoppar vid stängning eller i bakgrunden.</string>
+    <string name="nf_ftp_uploads">Ladda upp nya filer (högst 2 GiB; ingen överskrivning)</string>
+</resources>

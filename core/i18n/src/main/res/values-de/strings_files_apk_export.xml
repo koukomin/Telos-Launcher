@@ -1,0 +1,3 @@
+<resources>
+    <string name="nf_apk_export_scope">Geteilte Apps werden als ZIP mit allen APKs exportiert. ZIP-Pakete lassen sich nicht direkt installieren.</string>
+</resources>

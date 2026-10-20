@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP ไม่ได้เข้ารหัส แชร์เฉพาะโฟลเดอร์นี้ และหยุดเมื่อปิดหรืออยู่เบื้องหลัง</string>
+    <string name="nf_ftp_uploads">อนุญาตอัปโหลดไฟล์ใหม่ (สูงสุด 2 GiB; ไม่เขียนทับ)</string>
+</resources>

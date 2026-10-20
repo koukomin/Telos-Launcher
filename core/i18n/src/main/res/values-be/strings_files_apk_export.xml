@@ -1,0 +1,6 @@
+<resources>
+    <string name="nf_apk_export_scope">Падзеленыя праграмы экспартуюцца ў ZIP з усімі APK. ZIP нельга ўсталяваць напрамую.</string>
+    <string name="hc_backup_saved">Рэзервовая копія захавана</string>
+    <string name="hc_export">Экспартаваць</string>
+    <string name="hc_export_failed">Не ўдалося экспартаваць</string>
+</resources>

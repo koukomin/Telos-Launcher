@@ -78,6 +78,7 @@ dependencies {
 
     implementation(libs.koin.android)
     implementation(libs.androidx.work)
+    testImplementation(libs.commons.net)
     testImplementation(libs.bundles.tests)
 
     implementation(project(":core:ktx"))

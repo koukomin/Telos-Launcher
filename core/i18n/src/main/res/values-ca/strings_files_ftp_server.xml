@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP no està xifrat. Només es comparteix aquesta carpeta. S’atura en tancar o en segon pla.</string>
+    <string name="nf_ftp_uploads">Pujar fitxers nous (fins a 2 GiB; sense sobreescriure)</string>
+</resources>

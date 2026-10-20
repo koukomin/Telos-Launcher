@@ -1,0 +1,6 @@
+<resources>
+    <string name="nf_apk_export_scope">Les aplicacions dividides s’exporten en ZIP amb tots els APK. El ZIP no es pot instal·lar directament.</string>
+    <string name="hc_backup_saved">Còpia desada</string>
+    <string name="hc_export">Exporta</string>
+    <string name="hc_export_failed">Ha fallat l’exportació</string>
+</resources>

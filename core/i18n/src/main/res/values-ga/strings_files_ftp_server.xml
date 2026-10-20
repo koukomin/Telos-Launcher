@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">Níl FTP criptithe. Ní roinntear ach an fillteán seo. Stopann sé nuair a dhúntar é nó sa chúlra.</string>
+    <string name="nf_ftp_uploads">Uaslódáil comhaid nua (suas le 2 GiB; gan forscríobh)</string>
+</resources>

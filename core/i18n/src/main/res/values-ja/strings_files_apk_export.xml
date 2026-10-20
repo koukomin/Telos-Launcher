@@ -1,0 +1,3 @@
+<resources>
+    <string name="nf_apk_export_scope">分割アプリはすべてのAPKを含むZIPとしてエクスポートされます。ZIPは直接インストールできません。</string>
+</resources>

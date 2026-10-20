@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP tidak terenkripsi. Hanya folder ini yang dibagikan. Berhenti saat ditutup atau di latar belakang.</string>
+    <string name="nf_ftp_uploads">Unggah berkas baru (hingga 2 GiB; tanpa menimpa)</string>
+</resources>

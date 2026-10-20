@@ -266,12 +266,14 @@ class ErmisRepository private constructor(private val context: Context) {
     }
     private fun replace(message: ErmisMessage) { mutable.update { state -> state.copy(messages = ErmisCachePolicy.bound(
         state.messages.map { if (ErmisMailboxPolicy.matches(it, message.accountId, message.folder, message.uid)) message else it }, message)) } }
-    suspend fun read(accountId: String, uid: Long, folder: String = "INBOX") = operation { flag(accountId, uid, folder, Flags.Flag.SEEN, true) }
+    suspend fun read(accountId: String, uid: Long, folder: String = "INBOX") = setRead(accountId, uid, true, folder)
+    suspend fun setRead(accountId: String, uid: Long, read: Boolean, folder: String = "INBOX") = operation { flag(accountId, uid, folder, Flags.Flag.SEEN, read) }
     suspend fun star(accountId: String, uid: Long, starred: Boolean, folder: String = "INBOX") = operation { flag(accountId, uid, folder, Flags.Flag.FLAGGED, starred) }
     private fun flag(id: String, uid: Long, folder: String, flag: Flags.Flag, value: Boolean) {
         mailbox(account(id), folder) { _, uids ->
             checkValidity(id, folder, uids, replaceChanged = false)
-            uids.getMessageByUID(uid)?.setFlag(flag, value)
+            val message = uids.getMessageByUID(uid) ?: error("Message unavailable")
+            message.setFlag(flag, value)
         }
         state.value.messages.find { ErmisMailboxPolicy.matches(it, id, folder, uid) }?.let { replace(if (flag == Flags.Flag.SEEN) it.copy(read=value) else it.copy(starred=value)) }
         persist()
@@ -368,7 +370,7 @@ class ErmisRepository private constructor(private val context: Context) {
             setContent(multipart); saveChanges()
         }
         val transport = transport(a)
-        try { transport.sendMessage(message,recipients.envelope) } finally { transport.close() }
+        ErmisSmtpCompletion.send({ transport.sendMessage(message,recipients.envelope) }, { transport.close() })
         // Gmail stores its own sent copy. Other accounts receive an IMAP Sent copy after SMTP succeeds.
         if (!a.imapHost.equals("imap.gmail.com", true)) {
             try {

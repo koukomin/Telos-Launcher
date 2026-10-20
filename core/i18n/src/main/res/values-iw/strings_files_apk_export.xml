@@ -1,0 +1,6 @@
+<resources>
+    <string name="nf_apk_export_scope">אפליקציות מפוצלות מיוצאות כ־ZIP עם כל קובצי ה־APK. לא ניתן להתקין ZIP ישירות.</string>
+    <string name="hc_backup_saved">הגיבוי נשמר</string>
+    <string name="hc_export">ייצוא</string>
+    <string name="hc_export_failed">הייצוא נכשל</string>
+</resources>

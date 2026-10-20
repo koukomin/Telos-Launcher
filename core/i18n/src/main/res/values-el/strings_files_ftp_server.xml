@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">Το FTP δεν είναι κρυπτογραφημένο. Κοινοποιείται μόνο αυτός ο φάκελος. Σταματά με το κλείσιμο ή στο παρασκήνιο.</string>
+    <string name="nf_ftp_uploads">Νέα αρχεία έως 2 GiB, χωρίς αντικατάσταση</string>
+</resources>

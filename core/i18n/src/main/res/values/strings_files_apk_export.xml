@@ -1,0 +1,3 @@
+<resources>
+    <string name="nf_apk_export_scope">Split apps export as a ZIP containing all APKs. ZIP bundles cannot be installed directly.</string>
+</resources>

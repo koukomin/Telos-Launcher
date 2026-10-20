@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP ni šifriran. V skupni rabi je le ta mapa. Ustavi se ob zaprtju ali v ozadju.</string>
+    <string name="nf_ftp_uploads">Nalaganje novih datotek (do 2 GiB; brez prepisovanja)</string>
+</resources>

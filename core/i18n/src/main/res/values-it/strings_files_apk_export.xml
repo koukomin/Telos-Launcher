@@ -1,0 +1,3 @@
+<resources>
+    <string name="nf_apk_export_scope">Le app suddivise vengono esportate in ZIP con tutti gli APK. Lo ZIP non si installa direttamente.</string>
+</resources>

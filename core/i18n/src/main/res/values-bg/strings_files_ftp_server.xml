@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP не е шифрован. Споделя се само тази папка. Спира при затваряне или във фонов режим.</string>
+    <string name="nf_ftp_uploads">Качване на нови файлове (до 2 GiB; без презаписване)</string>
+</resources>

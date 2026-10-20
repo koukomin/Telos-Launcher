@@ -1,0 +1,3 @@
+<resources>
+    <string name="nf_apk_export_scope">বিভক্ত অ্যাপ সব APK সহ ZIP হিসেবে রপ্তানি হয়। ZIP সরাসরি ইনস্টল করা যায় না।</string>
+</resources>

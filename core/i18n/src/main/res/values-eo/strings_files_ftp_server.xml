@@ -1,0 +1,4 @@
+<resources>
+    <string name="nf_ftp_scope">FTP ne estas ĉifrita. Nur ĉi tiu dosierujo estas dividata. Haltas ĉe fermo aŭ en la fono.</string>
+    <string name="nf_ftp_uploads">Alŝuti novajn dosierojn (ĝis 2 GiB; sen anstataŭigo)</string>
+</resources>
