@@ -39,3 +39,5 @@ Draft attachments retain Android document-read permission. Providers that refuse
 ## Gmail feature coverage
 
 The current client is not feature-complete with Gmail. It has native multi-account inboxes, conversation grouping, stars, cached search, reply/send, attachments, local notes and periodic notifications. Editing multiple Gmail labels, whole-mailbox search, remote images and sender CSS, server-synchronized drafts, scheduled send, snooze and Gmail category/smart features still need implementation. Existing-folder browsing, safe move/archive/trash/spam, bounded recent server search, passive HTML, reply-all and original-message forwarding are implemented. Google/microG account access also depends on provider approval; the presence of microG alone does not guarantee mail scope access. These limitations must not be presented as completed Gmail parity.
+
+Ermis messages can be marked unread from the message actions. The change is applied to the selected account, mailbox and UID on the IMAP server before updating the cache; unavailable messages cannot falsely appear updated.

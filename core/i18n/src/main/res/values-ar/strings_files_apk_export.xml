@@ -1,0 +1,3 @@
+<resources>
+    <string name="nf_apk_export_scope">تُصدّر التطبيقات المقسمة بصيغة ZIP تضم جميع ملفات APK. لا يمكن تثبيت ZIP مباشرة.</string>
+</resources>

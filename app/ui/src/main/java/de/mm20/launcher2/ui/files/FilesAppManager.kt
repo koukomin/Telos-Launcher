@@ -1,206 +1,113 @@
 package de.mm20.launcher2.ui.files
 
-import android.content.Context
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
-import android.os.Environment
-import android.text.format.Formatter
+import android.provider.DocumentsContract
 import android.widget.Toast
-import androidx.compose.foundation.Image
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.core.graphics.drawable.toBitmap
+import de.mm20.launcher2.helper.InstalledApkExport
 import de.mm20.launcher2.ui.R
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.File
+import java.util.Locale
 
-data class InstalledAppItem(
-    val label: String,
-    val packageName: String,
-    val versionName: String,
-    val apkPath: String,
-    val apkSize: Long,
-    val icon: Drawable?,
-    val isSystem: Boolean
-)
+private data class ExportableApp(val packageName: String, val label: String)
 
-@OptIn(ExperimentalMaterial3Api::class)
+/** Export only through an explicit CreateDocument grant; no silent Downloads overwrite. */
 @Composable
 fun FilesAppManagerDialog(onDismiss: () -> Unit) {
-    val context = LocalContext.current
+    val context = LocalContext.current.applicationContext
     val scope = rememberCoroutineScope()
-
-    var installedApps by remember { mutableStateOf<List<InstalledAppItem>>(emptyList()) }
-    var searchQuery by remember { mutableStateOf("") }
-    var isLoading by remember { mutableStateOf(true) }
-
+    var apps by remember { mutableStateOf<List<ExportableApp>>(emptyList()) }
+    var loading by remember { mutableStateOf(true) }
+    var busy by remember { mutableStateOf(false) }
+    var query by rememberSaveable { mutableStateOf("") }
+    var pendingBundle by rememberSaveable { mutableStateOf(false) }
+    var pending by rememberSaveable { mutableStateOf<String?>(null) }
+    var failed by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
-        withContext(Dispatchers.IO) {
-            val pm = context.packageManager
-            val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
-            val list = packages.map { appInfo ->
-                val label = pm.getApplicationLabel(appInfo).toString()
-                val pkgInfo = runCatching { pm.getPackageInfo(appInfo.packageName, 0) }.getOrNull()
-                val apkFile = File(appInfo.sourceDir)
-                val icon = runCatching { pm.getApplicationIcon(appInfo) }.getOrNull()
-                val isSys = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
-
-                InstalledAppItem(
-                    label = label,
-                    packageName = appInfo.packageName,
-                    versionName = pkgInfo?.versionName ?: "1.0",
-                    apkPath = appInfo.sourceDir,
-                    apkSize = if (apkFile.exists()) apkFile.length() else 0L,
-                    icon = icon,
-                    isSystem = isSys
-                )
-            }.sortedBy { it.label }
-
-            withContext(Dispatchers.Main) {
-                installedApps = list
-                isLoading = false
+        try {
+            apps = withContext(Dispatchers.IO) {
+                val pm = context.packageManager
+                pm.getInstalledApplications(0).map { app ->
+                    ExportableApp(app.packageName, pm.getApplicationLabel(app).toString().take(1024))
+                }.sortedBy { it.label.lowercase(Locale.ROOT) }
             }
-        }
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (_: Exception) { failed = true }
+        finally { loading = false }
     }
-
-    val filteredApps = remember(searchQuery, installedApps) {
-        if (searchQuery.isBlank()) installedApps
-        else installedApps.filter {
-            it.label.contains(searchQuery, ignoreCase = true) ||
-                    it.packageName.contains(searchQuery, ignoreCase = true)
-        }
-    }
-
-    fun extractApk(app: InstalledAppItem) {
-        scope.launch(Dispatchers.IO) {
+    val picker = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/octet-stream")) { uri ->
+        val selected = pending; val bundle = pendingBundle; pending = null
+        if (uri != null) scope.launch {
+            busy = true
+            var complete = false
             try {
-                val source = File(app.apkPath)
-                if (!source.exists()) return@launch
-
-                val targetDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Telos/APKs")
-                targetDir.mkdirs()
-
-                val targetFile = File(targetDir, "${app.label}_${app.versionName}.apk")
-                source.copyTo(targetFile, overwrite = true)
-
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "Το APK αποθηκεύτηκε στο Downloads/Telos/APKs", Toast.LENGTH_LONG).show()
+                withContext(Dispatchers.IO) {
+                    require(selected != null)
+                    val pm = context.packageManager
+                    val initial = pm.getPackageInfo(selected, 0)
+                    val app = requireNotNull(initial.applicationInfo)
+                    val paths = listOf(app.sourceDir) + app.splitSourceDirs.orEmpty().sorted()
+                    require((paths.size > 1) == bundle)
+                    context.contentResolver.openOutputStream(uri, "w")?.use { output ->
+                        InstalledApkExport.write(paths.map(::File), output, checkActive = { ensureActive() })
+                    } ?: error("Destination unavailable")
+                    val after = pm.getPackageInfo(selected, 0)
+                    val current = requireNotNull(after.applicationInfo)
+                    require(initial.lastUpdateTime == after.lastUpdateTime && paths == listOf(current.sourceDir) + current.splitSourceDirs.orEmpty().sorted())
+                    complete = true
                 }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "Σφάλμα εξαγωγής: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.hc_backup_saved), Toast.LENGTH_LONG).show()
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (_: Exception) { failed = true }
+            finally {
+                if (!complete) withContext(NonCancellable + Dispatchers.IO) {
+                    runCatching { DocumentsContract.deleteDocument(context.contentResolver, uri) }
                 }
+                busy = false
             }
         }
     }
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(R.drawable.apps_24px),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(28.dp)
-                )
-                Spacer(Modifier.width(12.dp))
-                Text("Διαχειριστής Εφαρμογών & Εξαγωγή APK", fontWeight = FontWeight.Bold)
+    val shown = remember(apps, query) { apps.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.label, it.packageName) } }
+    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(R.string.hc_apps)) }, text = {
+        LazyColumn(Modifier.fillMaxWidth().heightIn(max = 500.dp)) {
+            item {
+                Text(stringResource(R.string.nf_apk_export_scope))
+                OutlinedTextField(query, { query = it }, label = { Text(stringResource(R.string.hc_search)) }, singleLine = true)
+                if (loading || busy) LinearProgressIndicator(Modifier.fillMaxWidth())
+                if (failed) Text(stringResource(R.string.hc_export_failed), color = MaterialTheme.colorScheme.error)
             }
-        },
-        text = {
-            Column(modifier = Modifier.fillMaxWidth().height(480.dp)) {
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    label = { Text("Αναζήτηση Εφαρμογής") },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(Modifier.height(12.dp))
-
-                if (isLoading) {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
+            items(shown, key = { it.packageName }) { app ->
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Column(Modifier.weight(1f).padding(vertical = 8.dp)) {
+                        Text(app.label, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                        Text(app.packageName, style = MaterialTheme.typography.bodySmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
                     }
-                } else {
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        items(filteredApps) { app ->
-                            Card(
-                                modifier = Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(12.dp),
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f)
-                                )
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth().padding(12.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    val iconBmp = remember(app.icon) { app.icon?.toBitmap(80, 80) }
-                                    if (iconBmp != null) {
-                                        Image(
-                                            bitmap = iconBmp.asImageBitmap(),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(40.dp)
-                                        )
-                                    } else {
-                                        Icon(
-                                            painter = painterResource(R.drawable.apps_24px),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(40.dp)
-                                        )
-                                    }
-
-                                    Spacer(Modifier.width(12.dp))
-
-                                    Column(modifier = Modifier.weight(1f)) {
-                                        Text(app.label, fontWeight = FontWeight.Bold, maxLines = 1)
-                                        Text(
-                                            text = "${app.packageName} • ${Formatter.formatFileSize(context, app.apkSize)}",
-                                            fontSize = 11.sp,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            maxLines = 1
-                                        )
-                                    }
-
-                                    IconButton(onClick = { extractApk(app) }) {
-                                        Icon(
-                                            painter = painterResource(R.drawable.download_24px),
-                                            contentDescription = "Extract APK",
-                                            tint = MaterialTheme.colorScheme.primary
-                                        )
-                                    }
-                                }
-                            }
+                    TextButton(enabled = !busy && pending == null, onClick = {
+                        pending = app.packageName; failed = false
+                        scope.launch {
+                            val split = withContext(Dispatchers.IO) { runCatching {
+                                context.packageManager.getApplicationInfo(app.packageName, 0).splitSourceDirs.orEmpty().isNotEmpty()
+                            }.getOrNull() }
+                            if (split == null) { pending = null; failed = true }
+                            else try { pendingBundle = split; picker.launch(app.packageName + if (split) ".zip" else ".apk") }
+                            catch (_: Exception) { pending = null; failed = true }
                         }
-                    }
+                    }) { Text(stringResource(R.string.hc_export)) }
                 }
             }
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Κλείσιμο")
-            }
         }
-    )
+    }, confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } })
 }

@@ -1,0 +1,3 @@
+<resources>
+    <string name="nf_apk_export_scope">Bölünmüş uygulamalar tüm APK dosyalarıyla ZIP olarak dışa aktarılır. ZIP doğrudan yüklenemez.</string>
+</resources>

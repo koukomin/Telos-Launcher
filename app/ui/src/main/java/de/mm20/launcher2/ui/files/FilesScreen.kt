@@ -172,6 +172,8 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     var addMenu by remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf<FilesDialog?>(null) }
     var showTrash by remember { mutableStateOf(false) }
+    var showApps by remember { mutableStateOf(false) }
+    if (showApps) FilesAppManagerDialog { showApps = false }
     var showTransfers by remember { mutableStateOf(false) }
     var encryptionEntry by remember { mutableStateOf<Pair<FsEntry, Boolean>?>(null) }
     encryptionEntry?.let { (entry, decrypt) -> FilesEncryptionDialog(java.io.File(entry.path), decrypt,
@@ -370,6 +372,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                     }
                                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                                         DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_collections)) }, onClick = { menuOpen = false; showCollections = true })
+                                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_apps)) }, onClick = { menuOpen = false; showApps = true })
                                         vm.path?.takeIf { !vm.rootMode && !RemotePath.isRemote(it) && !ArchivePath.isArchive(it) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { folder ->
                                             DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_sharing_title)) }, onClick = { menuOpen = false; sharingPath = folder })
                                             DropdownMenuItem(text = { Text("FTP") }, onClick = { menuOpen = false; ftpPath = folder })
