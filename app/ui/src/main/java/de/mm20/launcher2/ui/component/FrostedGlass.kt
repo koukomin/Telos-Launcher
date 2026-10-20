@@ -1,8 +1,5 @@
 package de.mm20.launcher2.ui.component
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -65,10 +62,7 @@ fun FrostedGlassProvider(content: @Composable () -> Unit) {
             )
         }
     }
-    CompositionLocalProvider(LocalFrostedBackdrop provides backdrop) {
-        Box(Modifier.fillMaxSize().then(if (wholeEnabled)
-            Modifier.frostedGlass(Color.Transparent, wholeWallpaper = true) else Modifier)) { content() }
-    }
+    CompositionLocalProvider(LocalFrostedBackdrop provides backdrop, content = content)
 }
 
 /** The tint is drawn exactly once. Every panel samples the same viewport-aligned snapshot. */

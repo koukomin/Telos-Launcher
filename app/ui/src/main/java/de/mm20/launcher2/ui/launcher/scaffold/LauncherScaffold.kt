@@ -1627,12 +1627,14 @@ private fun SecondaryPage(
 
     if (component != null) {
 
+        val ownsGlass = component is SearchComponent && customDrawer || component is TelosAppPageComponent ||
+            glassWidgets && (component is WidgetsComponent || component is ClockAndWidgetsHomeComponent)
+        val pageColor = if (ownsGlass) Color.Transparent else config.backgroundColor.copy(alpha = MaterialTheme.transparency.background)
+        val cachedPageBlur = !ownsGlass && config.wallpaperBlurRadius > 0.dp
         val mod = modifier
             .fillMaxSize()
-            .secondaryPageAnimation(
-                state,
-                if (component is SearchComponent && customDrawer) Color.Transparent else config.backgroundColor.copy(alpha = if (component is TelosAppPageComponent || (glassWidgets && (component is WidgetsComponent || component is ClockAndWidgetsHomeComponent))) 0f else MaterialTheme.transparency.background),
-            )
+            .secondaryPageAnimation(state, if (cachedPageBlur) Color.Transparent else pageColor)
+            .then(if (cachedPageBlur) Modifier.frostedGlass(pageColor, wholeWallpaper = true) else Modifier)
         val composable = composables[component]
 
         CompositionLocalProvider(
