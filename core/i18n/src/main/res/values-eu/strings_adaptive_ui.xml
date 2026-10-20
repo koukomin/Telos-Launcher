@@ -1,0 +1,18 @@
+<resources>
+    <string name="au_phonea_backspace">Ezabatu digitua</string>
+    <string name="cal_no_events">Ez dago gertaerarik</string>
+    <string name="calculator_copy_result">Kopiatu emaitza</string>
+    <string name="calculator_history">Historia</string>
+    <string name="calculator_more">Aukera gehiago</string>
+    <string name="calculator_scientific">Kalkulagailu zientifikoa</string>
+    <string name="calculator_standard">Kalkulagailu arrunta</string>
+    <string name="calculator_unit_converter">Unitate-bihurgailua</string>
+    <string name="calculator_vat">BEZ</string>
+    <string name="hc_no_contacts_found">Ez da kontakturik aurkitu</string>
+    <string name="hc_speed_dial_not_assigned">Markatze bizkorra esleitu gabe</string>
+    <string name="recents_empty_msg">Deien historia hemen agertuko da.</string>
+    <string name="recents_empty_title">Ez dago azken deirik</string>
+    <string name="screenrec_no_recordings">Oraindik ez dago pantaila-grabaziorik</string>
+    <string name="search_action_call">Deitu</string>
+    <string name="search_action_contact">Gehitu kontaktuetara</string>
+</resources>

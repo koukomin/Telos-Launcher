@@ -1,0 +1,18 @@
+<resources>
+    <string name="au_phonea_backspace">Rəqəmi sil</string>
+    <string name="cal_no_events">Tədbir yoxdur</string>
+    <string name="calculator_copy_result">Nəticəni köçür</string>
+    <string name="calculator_history">Tarixçə</string>
+    <string name="calculator_more">Digər seçimlər</string>
+    <string name="calculator_scientific">Elmi kalkulyator</string>
+    <string name="calculator_standard">Standart kalkulyator</string>
+    <string name="calculator_unit_converter">Vahid çeviricisi</string>
+    <string name="calculator_vat">ƏDV</string>
+    <string name="hc_no_contacts_found">Kontakt tapılmadı</string>
+    <string name="hc_speed_dial_not_assigned">Sürətli yığım təyin edilməyib</string>
+    <string name="recents_empty_msg">Zəng tarixçəniz burada görünəcək.</string>
+    <string name="recents_empty_title">Son zənglər yoxdur</string>
+    <string name="screenrec_no_recordings">Hələ ekran yazısı yoxdur</string>
+    <string name="search_action_call">Zəng et</string>
+    <string name="search_action_contact">Kontaktlara əlavə et</string>
+</resources>

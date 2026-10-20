@@ -1,0 +1,18 @@
+<resources>
+    <string name="au_phonea_backspace">Forigi ciferon</string>
+    <string name="cal_no_events">Neniuj eventoj</string>
+    <string name="calculator_copy_result">Kopii rezulton</string>
+    <string name="calculator_history">Historio</string>
+    <string name="calculator_more">Pliaj opcioj</string>
+    <string name="calculator_scientific">Scienca kalkulilo</string>
+    <string name="calculator_standard">Norma kalkulilo</string>
+    <string name="calculator_unit_converter">Unuokonvertilo</string>
+    <string name="calculator_vat">AVI</string>
+    <string name="hc_no_contacts_found">Neniuj kontaktoj trovitaj</string>
+    <string name="hc_speed_dial_not_assigned">Rapida diskado ne asignita</string>
+    <string name="recents_empty_msg">Via alvokhistorio aperos ĉi tie.</string>
+    <string name="recents_empty_title">Neniuj lastatempaj alvokoj</string>
+    <string name="screenrec_no_recordings">Ankoraŭ neniuj ekranregistraĵoj</string>
+    <string name="search_action_call">Voki</string>
+    <string name="search_action_contact">Aldoni al kontaktoj</string>
+</resources>

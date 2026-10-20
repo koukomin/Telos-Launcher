@@ -1,0 +1,18 @@
+<resources>
+    <string name="au_phonea_backspace">Suprimeix un dígit</string>
+    <string name="cal_no_events">No hi ha esdeveniments</string>
+    <string name="calculator_copy_result">Copia el resultat</string>
+    <string name="calculator_history">Historial</string>
+    <string name="calculator_more">Més opcions</string>
+    <string name="calculator_scientific">Calculadora científica</string>
+    <string name="calculator_standard">Calculadora estàndard</string>
+    <string name="calculator_unit_converter">Convertidor d’unitats</string>
+    <string name="calculator_vat">IVA</string>
+    <string name="hc_no_contacts_found">No s’han trobat contactes</string>
+    <string name="hc_speed_dial_not_assigned">Marcatge ràpid no assignat</string>
+    <string name="recents_empty_msg">L’historial de trucades apareixerà aquí.</string>
+    <string name="recents_empty_title">No hi ha trucades recents</string>
+    <string name="screenrec_no_recordings">Encara no hi ha enregistraments de pantalla</string>
+    <string name="search_action_call">Truca</string>
+    <string name="search_action_contact">Afegeix als contactes</string>
+</resources>

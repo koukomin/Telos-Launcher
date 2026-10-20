@@ -1,0 +1,18 @@
+<resources>
+    <string name="au_phonea_backspace">Hapus digit</string>
+    <string name="cal_no_events">Tidak ada acara</string>
+    <string name="calculator_copy_result">Salin hasil</string>
+    <string name="calculator_history">Riwayat</string>
+    <string name="calculator_more">Opsi lainnya</string>
+    <string name="calculator_scientific">Kalkulator ilmiah</string>
+    <string name="calculator_standard">Kalkulator standar</string>
+    <string name="calculator_unit_converter">Pengonversi satuan</string>
+    <string name="calculator_vat">PPN</string>
+    <string name="hc_no_contacts_found">Tidak ada kontak ditemukan</string>
+    <string name="hc_speed_dial_not_assigned">Panggilan cepat belum ditetapkan</string>
+    <string name="recents_empty_msg">Riwayat panggilan Anda akan muncul di sini.</string>
+    <string name="recents_empty_title">Tidak ada panggilan terbaru</string>
+    <string name="screenrec_no_recordings">Belum ada rekaman layar</string>
+    <string name="search_action_call">Telepon</string>
+    <string name="search_action_contact">Tambahkan ke kontak</string>
+</resources>
