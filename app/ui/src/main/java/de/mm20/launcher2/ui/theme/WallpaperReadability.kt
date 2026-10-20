@@ -137,7 +137,10 @@ internal data class WallpaperContentStyle(
 
 /** Geometry changes only select cached cells; decoding and luminance analysis run on IO. */
 @Composable
-internal fun rememberWallpaperContentStyle(forcedDark: Boolean? = null): WallpaperContentStyle {
+internal fun rememberWallpaperContentStyle(
+    forcedDark: Boolean? = null,
+    backing: Boolean = true,
+): WallpaperContentStyle {
     val samples = LocalWallpaperSamples.current
     val mode = LocalWallpaperTextMode.current
     val rootView = androidx.compose.ui.platform.LocalView.current.rootView
@@ -176,9 +179,10 @@ internal fun rememberWallpaperContentStyle(forcedDark: Boolean? = null): Wallpap
     // scrim instead of briefly flipping to white and back on every invalidation.
     SideEffect { lastDarkText = choice.darkText }
     val geometry = remember { Modifier.onGloballyPositioned { bounds = it.boundsInWindow() } }
-    return remember(choice, geometry) {
-        val backing = if (choice.darkText) Color.White else Color.Black
+    return remember(choice, geometry, backing) {
+        val tint = if (choice.darkText) Color.White else Color.Black
         WallpaperContentStyle(choice.darkText,
-            geometry.background(backing.copy(alpha = choice.scrimAlpha)), choice.scrimAlpha)
+            if (backing) geometry.background(tint.copy(alpha = choice.scrimAlpha)) else geometry,
+            if (backing) choice.scrimAlpha else 0f)
     }
 }
