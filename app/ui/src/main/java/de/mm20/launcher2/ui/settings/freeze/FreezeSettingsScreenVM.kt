@@ -134,12 +134,19 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
         sortedApps, _showSystemApps, _showIconlessApps, _iconlessApps,
     ) { apps, showSystem, showIconless, iconlessApps ->
         withContext(Dispatchers.Default) {
-            val filteredApps = if (showSystem) apps else apps.filterNot { isSystemApp(it.componentName.packageName) }
+            // Filter out Telos Virtual Apps since freezing launcher built-in apps makes no sense
+            val realApps = apps.filterNot {
+                it.key.startsWith("telos_") ||
+                it.componentName.packageName.startsWith("de.mm20.launcher2.tools") ||
+                it.componentName.packageName == context.packageName
+            }
+            val filteredApps = if (showSystem) realApps else realApps.filterNot { isSystemApp(it.componentName.packageName) }
             if (showIconless) {
-                // Avoid intermediate list allocation by sizing the target list
                 val result = ArrayList<Application>(filteredApps.size + iconlessApps.size)
                 result.addAll(filteredApps)
-                result.addAll(iconlessApps)
+                result.addAll(iconlessApps.filterNot {
+                    it.key.startsWith("telos_") || it.componentName.packageName == context.packageName
+                })
                 result.sort()
                 result
             } else {
