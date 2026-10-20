@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Dréachtaí</string>
+    <string name="ermis_cc">Cóip</string>
+    <string name="ermis_bcc">Cóip cheilte</string>
+</resources>

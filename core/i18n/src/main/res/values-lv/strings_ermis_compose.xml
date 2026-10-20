@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Melnraksti</string>
+    <string name="ermis_cc">Kopija</string>
+    <string name="ermis_bcc">Diskrētā kopija</string>
+</resources>

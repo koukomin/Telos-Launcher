@@ -17,7 +17,8 @@ import javax.activation.DataHandler
 
 @Serializable
 private data class StoredMail(val accounts: List<ErmisAccount> = emptyList(), val passwords: Map<String,String> = emptyMap(),
-    val messages: List<ErmisMessage> = emptyList(), val uidValidity: Map<String,Long> = emptyMap())
+    val messages: List<ErmisMessage> = emptyList(), val uidValidity: Map<String,Long> = emptyMap(),
+    val drafts: List<ErmisSavedDraft> = emptyList())
 
 class ErmisRepository private constructor(private val context: Context) {
     private val mutable = MutableStateFlow(ErmisState(loading = true))
@@ -34,7 +35,7 @@ class ErmisRepository private constructor(private val context: Context) {
                 vault.read()?.let { json.decodeFromString<StoredMail>(it) }?.let {
                     passwords = it.passwords
                     uidValidity = it.uidValidity
-                    mutable.value = ErmisState(it.accounts, it.messages)
+                    mutable.value = ErmisState(it.accounts, it.messages, drafts = it.drafts)
                 }
                 mutable.update { it.copy(loading = false) }
             } catch (e: Exception) { mutable.update { it.copy(loading = false, error = context.getString(de.mm20.launcher2.comms.R.string.ermis_error_cache)) } }
@@ -58,7 +59,7 @@ class ErmisRepository private constructor(private val context: Context) {
             } finally { mutable.update { it.copy(loading = false) } }
         }
     }
-    private fun persist() = vault.write(json.encodeToString(StoredMail(state.value.accounts, passwords, state.value.messages.take(1000).map { it.copy(body=it.body.take(32_000)) }, uidValidity)))
+    private fun persist(snapshot: ErmisState = state.value) = vault.write(json.encodeToString(StoredMail(snapshot.accounts, passwords, snapshot.messages.take(1000).map { it.copy(body=it.body.take(32_000)) }, uidValidity, snapshot.drafts)))
     private fun account(id: String) = state.value.accounts.first { it.id == id }
     private fun session(a: ErmisAccount? = null): Session = ErmisMailSession.create(
         oauth = a?.googleAccount != null, tls13 = android.os.Build.VERSION.SDK_INT >= 29)
@@ -103,7 +104,7 @@ class ErmisRepository private constructor(private val context: Context) {
     suspend fun removeAccount(id: String) = operation {
         passwords = passwords - id
         uidValidity = uidValidity - id
-        mutable.update { it.copy(accounts = it.accounts.filterNot { a -> a.id == id }, messages = it.messages.filterNot { m -> m.accountId == id }) }
+        mutable.update { it.copy(accounts = it.accounts.filterNot { a -> a.id == id }, messages = it.messages.filterNot { m -> m.accountId == id }, drafts = it.drafts.filterNot { d -> d.accountId == id }) }
         persist()
         if (state.value.accounts.isEmpty()) ErmisWorker.cancel(context)
     }
@@ -157,12 +158,34 @@ class ErmisRepository private constructor(private val context: Context) {
         state.value.messages.find { it.accountId == id && it.uid == uid }?.let { replace(if (flag == Flags.Flag.SEEN) it.copy(read=value) else it.copy(starred=value)) }
         persist()
     }
+    suspend fun saveDraft(id: String, draft: ErmisDraft): ErmisSavedDraft = operation {
+        account(draft.accountId)
+        val saved = ErmisSavedDraft(id, draft.accountId, draft.to, draft.subject, draft.body,
+            draft.attachments.map { it.toString() }, draft.inReplyTo, draft.references, draft.cc, draft.bcc,
+            System.currentTimeMillis())
+        ErmisDraftPolicy.validate(saved)
+        // Persisted drafts must remain readable after a process restart. Never drop inaccessible attachments.
+        val permissions = context.contentResolver.persistedUriPermissions
+        require(draft.attachments.all { uri -> permissions.any { it.uri == uri && it.isReadPermission } }) {
+            "Attachment needs persistent document permission"
+        }
+        val next = state.value.copy(drafts = ErmisDraftPolicy.upsert(state.value.drafts, saved))
+        persist(next)
+        mutable.value = next
+        saved
+    }
+    suspend fun deleteDraft(id: String) = operation {
+        val next = state.value.copy(drafts = state.value.drafts.filterNot { it.id == id })
+        persist(next)
+        mutable.value = next
+    }
     suspend fun send(draft: ErmisDraft) = operation {
         val a = account(draft.accountId)
-        val recipients = InternetAddress.parse(draft.to, true).also { require(it.isNotEmpty()); it.forEach { address -> address.validate() } }
-        require(!draft.subject.contains('\r') && !draft.subject.contains('\n'))
+        val recipients = ErmisRecipients.parse(draft.to, draft.cc, draft.bcc)
+        ErmisRecipients.validateHeaders(draft.subject, draft.inReplyTo, draft.references)
+        require(draft.body.toByteArray(Charsets.UTF_8).size <= 200_000 && draft.attachments.size <= 20)
         val message = MimeMessage(session()).apply {
-            setFrom(InternetAddress(a.email, a.name)); setRecipients(Message.RecipientType.TO, recipients)
+            setFrom(InternetAddress(a.email, a.name)); recipients.apply(this)
             setSubject(draft.subject, "UTF-8"); sentDate = java.util.Date()
             draft.references.filter { !it.contains('\r') && !it.contains('\n') }.takeLast(100).takeIf { it.isNotEmpty() }?.let { setHeader("References", it.joinToString(" ")) }
             draft.inReplyTo?.takeIf { !it.contains('\r') && !it.contains('\n') }?.let { setHeader("In-Reply-To",it) }
@@ -178,7 +201,7 @@ class ErmisRepository private constructor(private val context: Context) {
             setContent(multipart); saveChanges()
         }
         val transport = transport(a)
-        try { transport.sendMessage(message,recipients) } finally { transport.close() }
+        try { transport.sendMessage(message,recipients.envelope) } finally { transport.close() }
         // Gmail stores its own sent copy. Other accounts receive an IMAP Sent copy after SMTP succeeds.
         if (!a.imapHost.equals("imap.gmail.com", true)) {
             try {

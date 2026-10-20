@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Abbozzi</string>
+    <string name="ermis_cc">Kopja</string>
+    <string name="ermis_bcc">Kopja moħbija</string>
+</resources>

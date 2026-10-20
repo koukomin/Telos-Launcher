@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Osnutki</string>
+    <string name="ermis_cc">Kp</string>
+    <string name="ermis_bcc">Skp</string>
+</resources>

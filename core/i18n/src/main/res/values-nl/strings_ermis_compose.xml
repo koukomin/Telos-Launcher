@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">Concepten</string>
+    <string name="ermis_cc">Cc</string>
+    <string name="ermis_bcc">Bcc</string>
+</resources>

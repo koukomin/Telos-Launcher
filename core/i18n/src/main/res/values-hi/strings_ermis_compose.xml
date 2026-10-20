@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">ड्राफ़्ट</string>
+    <string name="ermis_cc">प्रतिलिपि</string>
+    <string name="ermis_bcc">गुप्त प्रतिलिपि</string>
+</resources>

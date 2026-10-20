@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">草稿</string>
+    <string name="ermis_cc">抄送</string>
+    <string name="ermis_bcc">密送</string>
+</resources>

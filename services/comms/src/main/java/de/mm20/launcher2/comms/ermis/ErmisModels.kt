@@ -18,9 +18,19 @@ data class ErmisMessage(val accountId: String, val uid: Long, val messageId: Str
     val inReplyTo: String = "", val references: List<String> = emptyList())
 data class ErmisDraft(val accountId: String, val to: String, val subject: String, val body: String,
     val attachments: List<Uri> = emptyList(), val inReplyTo: String? = null,
-    val references: List<String> = emptyList())
+    val references: List<String> = emptyList(), val cc: String = "", val bcc: String = "")
+
+@Serializable
+data class ErmisSavedDraft(val id: String, val accountId: String, val to: String,
+    val subject: String, val body: String, val attachmentUris: List<String> = emptyList(),
+    val inReplyTo: String? = null, val references: List<String> = emptyList(),
+    val cc: String = "", val bcc: String = "", val updatedAt: Long = 0L) {
+    fun toDraft(): ErmisDraft = ErmisDraft(accountId, to, subject, body, attachmentUris.map(Uri::parse),
+        inReplyTo, references, cc, bcc)
+}
+
 data class ErmisState(val accounts: List<ErmisAccount> = emptyList(), val messages: List<ErmisMessage> = emptyList(),
-    val loading: Boolean = false, val error: String? = null)
+    val loading: Boolean = false, val error: String? = null, val drafts: List<ErmisSavedDraft> = emptyList())
 
 object ErmisValidation {
     private val identifier = Regex("[A-Za-z0-9_-]{1,80}")

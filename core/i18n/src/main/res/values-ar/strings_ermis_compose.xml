@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_drafts">المسودات</string>
+    <string name="ermis_cc">نسخة</string>
+    <string name="ermis_bcc">نسخة مخفية</string>
+</resources>
