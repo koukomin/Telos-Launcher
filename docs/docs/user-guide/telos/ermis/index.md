@@ -16,4 +16,14 @@ Open a message to read its text, reply, save a note or save an attachment using 
 
 **Compose** selects the sending account and accepts recipients, a subject, message and file attachments. The file picker can access document providers, including compatible cloud storage providers. Telos Files private connections are not automatically document providers. For large files, upload separately and paste the sharing link; Ermis does not silently upload attachments to a third party. A send action is explicit and reports server failures; a failed request is never automatically resent. Each outgoing message is limited to 20 MB of attachments in total and 15 MB per file. SMTP success is reported separately from a failed Sent-folder copy, so the user is not told to resend an already sent message.
 
-The inbox and dialogs wrap text and scroll with larger fonts. They use the shared Telos glass theme.
+## Layout and device contacts
+
+Ermis keeps a lightly translucent background with its own contrasting mail surfaces, so wallpaper cannot make text fields or message cards disappear. Search stays at the top; the floating Compose button opens a full-screen editor. Reading also uses a full-screen page. Both pages scroll with large fonts and keep navigation/actions outside the scrolling message, with keyboard and system-bar insets.
+
+In Compose, tap the person icon beside To to choose an email address from Android contacts, including contacts from synchronized device accounts. Only the address selected by you is read; this picker does not require broad address-book access. Contacts without email addresses are not offered. Typed recipients remain available if the device has no compatible picker.
+
+For an existing Google/microG account, open Mail accounts and select Google / microG sign-in again to grant consent anew. Expired OAuth credentials are invalidated and refreshed once during connection; password failures and sending are never automatically retried. Connection errors identify the IMAP or SMTP host and port without exposing credentials or raw server responses.
+
+## Gmail feature coverage
+
+The current client is not feature-complete with Gmail. It has native multi-account inboxes, conversation grouping, stars, cached search, reply/send, attachments, local notes and periodic notifications. Folder/label management, archive/trash/spam workflows, server-side search, HTML layout, saved drafts, CC/BCC, forwarding/reply-all, scheduled send, snooze and Gmail category/smart features still need implementation. Google/microG account access also depends on provider approval; the presence of microG alone does not guarantee mail scope access. These limitations must not be presented as completed Gmail parity.

@@ -1,6 +1,13 @@
 package de.mm20.launcher2.ui.ermis
 
 import android.net.Uri
+import android.content.Intent
+import android.provider.ContactsContract
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.graphics.luminance
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import android.accounts.AccountManager
 import androidx.activity.compose.LocalActivity
 import kotlinx.coroutines.CancellationException
@@ -21,6 +28,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.comms.ermis.*
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import java.text.DateFormat
@@ -44,12 +51,31 @@ data object ErmisRoute : NavKey
 
 @Composable
 fun ErmisScreen() {
+    // VirtualAppTheme deliberately clears surface colors. Reconstruct readable mail surfaces
+    // from a tonal container before applying translucency; text must never sit on raw wallpaper.
+    val inherited = MaterialTheme.colorScheme
+    val dark = inherited.onSurface.luminance() > .5f
+    val paper = if (dark) androidx.compose.ui.graphics.Color(0xFF141A20) else androidx.compose.ui.graphics.Color(0xFFF6F8FC)
+    val ink = if (dark) androidx.compose.ui.graphics.Color(0xFFE6EAF0) else androidx.compose.ui.graphics.Color(0xFF18212A)
+    val colors = remember(inherited, dark) { inherited.copy(surface = paper, background = paper,
+        surfaceContainer = paper, surfaceContainerLow = paper, surfaceContainerHigh = paper,
+        surfaceContainerHighest = paper, onSurface = ink, onBackground = ink,
+        onSurfaceVariant = ink.copy(alpha = .78f)) }
+    MaterialTheme(colorScheme = colors) {
+        Surface(color = paper.copy(alpha = .96f), modifier = Modifier.fillMaxSize()) { ErmisMailbox() }
+    }
+}
+
+@Composable
+private fun ErmisMailbox() {
     val context = LocalContext.current
+    val activity = LocalActivity.current
+    val backStack = LocalBackStack.current
     val repository = remember { ErmisRepository.get(context.applicationContext) }
     val state by repository.state.collectAsState()
     val scope = rememberCoroutineScope()
     var accountId by remember { mutableStateOf<String?>(null) }
-    var query by remember { mutableStateOf("") }
+    var query by rememberSaveable { mutableStateOf("") }
     var starred by remember { mutableStateOf(false) }
     var accounts by remember { mutableStateOf(false) }
     var adding by remember { mutableStateOf(false) }
@@ -66,13 +92,20 @@ fun ErmisScreen() {
     val conversations = remember(visible) { ErmisConversations.group(visible) }
     val selectedConversation = remember(state.messages, selected?.accountId, selected?.uid) { ErmisConversations.group(state.messages).firstOrNull { thread -> thread.any { it.accountId == selected?.accountId && it.uid == selected?.uid } }.orEmpty() }
     val dateFormatter = remember { DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT) }
-    PreferenceScreen(title = { Text(stringResource(R.string.ermis_title)) }, topBarActions = {
-        IconButton(onClick = { composing = true }, enabled = state.accounts.isNotEmpty()) { Icon(painterResource(R.drawable.edit_24px), stringResource(R.string.ermis_compose)) }
-        IconButton(onClick = { accounts = true }) { Icon(painterResource(R.drawable.settings_24px), stringResource(R.string.ermis_accounts)) }
-    }) {
+    Scaffold(containerColor = androidx.compose.ui.graphics.Color.Transparent,
+        topBar = { Row(Modifier.statusBarsPadding().fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+            IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close)) }
+            OutlinedTextField(query, { query = it }, placeholder = { Text(stringResource(R.string.ermis_search)) },
+                modifier = Modifier.weight(1f), singleLine = true, shape = MaterialTheme.shapes.extraLarge)
+            IconButton(onClick = { accounts = true }) { Icon(painterResource(R.drawable.person_24px), stringResource(R.string.ermis_accounts)) }
+        } },
+        floatingActionButton = { if (state.accounts.isNotEmpty()) ExtendedFloatingActionButton(
+            onClick = { composing = true }, icon = { Icon(painterResource(R.drawable.edit_24px), null) },
+            text = { Text(stringResource(R.string.ermis_compose)) }) }
+    ) { padding ->
+      LazyColumn(Modifier.fillMaxSize().padding(padding), contentPadding = PaddingValues(bottom = 104.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
         item {
             Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(query, { query = it }, label = { Text(stringResource(R.string.ermis_search)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilterChip(!starred, onClick = { starred = false }, label = { Text(stringResource(R.string.ermis_inbox)) })
                     FilterChip(starred, onClick = { starred = true }, label = { Text(stringResource(R.string.ermis_starred)) })
@@ -98,7 +131,7 @@ fun ErmisScreen() {
         if (visible.isEmpty() && state.accounts.isNotEmpty() && !state.loading) item { Text(stringResource(R.string.ermis_empty), Modifier.padding(24.dp)) }
         items(conversations, key = { "${it.first().accountId}:${it.first().uid}" }) { conversation ->
             val message = conversation.first()
-            Card(Modifier.fillMaxWidth().padding(horizontal = 12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = .72f))) {
+            Card(Modifier.fillMaxWidth().padding(horizontal = 12.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)) {
                 Row(Modifier.fillMaxWidth().clickable {
                     selected = message
                     task { val loaded = repository.loadMessage(message.accountId, message.uid) ?: message; if (selected?.accountId == message.accountId && selected?.uid == message.uid) selected = loaded }
@@ -107,7 +140,7 @@ fun ErmisScreen() {
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         Text(message.from, fontWeight = if (message.read) FontWeight.Normal else FontWeight.Bold)
                         Text(message.subject.ifBlank { context.getString(R.string.ermis_no_subject) }, style = MaterialTheme.typography.titleMedium, fontWeight = if (message.read) FontWeight.Normal else FontWeight.SemiBold)
-                        Text(message.preview, style = MaterialTheme.typography.bodyMedium, maxLines = 3)
+                        Text(message.preview, style = MaterialTheme.typography.bodyMedium, maxLines = 2)
                         Text(dateFormatter.format(Date(message.date)), style = MaterialTheme.typography.labelSmall)
                         if (conversation.size > 1) Text(stringResource(R.string.ermis_conversation_count, conversation.size), style = MaterialTheme.typography.labelSmall)
                     }
@@ -115,12 +148,16 @@ fun ErmisScreen() {
                 }
             }
         }
+      }
     }
     if (accounts) AlertDialog(onDismissRequest = { accounts = false }, title = { Text(stringResource(R.string.ermis_accounts)) }, text = {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             state.accounts.forEach { account ->
                 Text(account.email, style = MaterialTheme.typography.titleMedium)
                 Text("IMAP ${account.imapHost}:${account.imapPort}\nSMTP ${account.smtpHost}:${account.smtpPort}", style = MaterialTheme.typography.bodySmall)
+                if (account.googleAccount != null && activity != null) TextButton(enabled = !state.loading, onClick = {
+                    task { repository.addAccount(account, ErmisGoogleAuth.consent(activity, account.googleAccount)); repository.sync(account.id) }
+                }) { Text(stringResource(R.string.ermis_google_sign_in)) }
                 TextButton(onClick = { task { repository.removeAccount(account.id); if (accountId == account.id) accountId = null } }) { Text(stringResource(R.string.ermis_remove)) }
             }
             Button(onClick = { adding = true; accounts = false }) { Text(stringResource(R.string.ermis_add_account)) }
@@ -138,7 +175,7 @@ private fun AddAccountDialog(busy: Boolean, onDismiss: () -> Unit, onAuthError: 
     val scope = rememberCoroutineScope()
     var authenticating by remember { mutableStateOf(false) }
     val googleChooser = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        val email = result.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
+        val email = result.data?.takeIf { it.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE) == "com.google" }?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
         if (result.resultCode == android.app.Activity.RESULT_OK && email != null && activity != null) scope.launch {
             authenticating = true
             try {
@@ -177,13 +214,31 @@ private fun AddAccountDialog(busy: Boolean, onDismiss: () -> Unit, onAuthError: 
 private fun ComposeDialog(accounts: List<ErmisAccount>, initialAccount: String?, reply: ErmisMessage?, busy: Boolean, onDismiss: () -> Unit, onSend: (ErmisDraft) -> Unit) {
     val context = LocalContext.current
     var account by remember { mutableStateOf(reply?.accountId ?: initialAccount ?: accounts.firstOrNull()?.id) }
-    var to by remember { mutableStateOf(reply?.from.orEmpty()) }; var subject by remember { mutableStateOf(reply?.subject?.let { if (it.startsWith("Re:", true)) it else "Re: $it" }.orEmpty()) }; var body by remember { mutableStateOf("") }
+    var to by rememberSaveable { mutableStateOf(reply?.from.orEmpty()) }; var subject by rememberSaveable { mutableStateOf(reply?.subject?.let { if (it.startsWith("Re:", true)) it else "Re: $it" }.orEmpty()) }; var body by rememberSaveable { mutableStateOf("") }
     var attachments by remember { mutableStateOf<List<Uri>>(emptyList()) }
+    val scope = rememberCoroutineScope()
+    var contactError by remember { mutableStateOf(false) }
+    val contactPicker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val uri = result.data?.data
+        if (result.resultCode == android.app.Activity.RESULT_OK && uri != null) scope.launch {
+            val address = withContext(Dispatchers.IO) {
+                runCatching { context.contentResolver.query(uri, arrayOf(ContactsContract.CommonDataKinds.Email.ADDRESS), null, null, null)?.use {
+                    if (it.moveToFirst()) it.getString(0) else null
+                } }.getOrNull()
+            }
+            if (address.isNullOrBlank()) contactError = true
+            else { contactError = false; to = if (to.isBlank()) address else to.trimEnd().trimEnd(',') + ", " + address }
+        }
+    }
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris -> attachments = (attachments + uris).distinct() }
-    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(R.string.ermis_compose)) }, text = {
+    MailPage(onDismiss, title = stringResource(R.string.ermis_compose), action = { TextButton(enabled = !busy && account != null && to.contains('@'), onClick = { onSend(ErmisDraft(account!!, to.trim(), subject, body, attachments, reply?.messageId, (reply?.references.orEmpty() + listOfNotNull(reply?.messageId)).distinct())) }) { Text(stringResource(R.string.ermis_send)) } }) {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             FlowRow { accounts.forEach { a -> FilterChip(account == a.id, onClick = { account = a.id }, label = { Text(a.email) }) } }
-            OutlinedTextField(to, { to = it }, label = { Text(stringResource(R.string.ermis_to)) }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(to, { to = it }, label = { Text(stringResource(R.string.ermis_to)) }, modifier = Modifier.fillMaxWidth(),
+                trailingIcon = { IconButton(onClick = { runCatching { contactPicker.launch(Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Email.CONTENT_URI)) }.onFailure { contactError = true } }) {
+                    Icon(painterResource(R.drawable.person_24px), stringResource(R.string.tsp_search_contacts))
+                } })
+            if (contactError) Text(stringResource(R.string.hc_no_contacts_found), color = MaterialTheme.colorScheme.error)
             OutlinedTextField(subject, { subject = it }, label = { Text(stringResource(R.string.ermis_subject)) }, modifier = Modifier.fillMaxWidth())
             OutlinedTextField(body, { body = it }, label = { Text(stringResource(R.string.ermis_body)) }, minLines = 5, modifier = Modifier.fillMaxWidth())
             TextButton(onClick = { picker.launch(arrayOf("*/*")) }) { Icon(painterResource(R.drawable.attach_file_24px), null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.ermis_attach)) }
@@ -193,7 +248,7 @@ private fun ComposeDialog(accounts: List<ErmisAccount>, initialAccount: String?,
                 Row(verticalAlignment = Alignment.CenterVertically) { Text(name, Modifier.weight(1f)); IconButton(onClick = { attachments = attachments - uri }) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.ermis_remove)) } }
             }
         }
-    }, confirmButton = { TextButton(enabled = !busy && account != null && to.contains('@'), onClick = { onSend(ErmisDraft(account!!, to.trim(), subject, body, attachments, reply?.messageId, (reply?.references.orEmpty() + listOfNotNull(reply?.messageId)).distinct())) }) { Text(stringResource(R.string.ermis_send)) } }, dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } })
+    }
 }
 
 @Composable
@@ -201,7 +256,7 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
     var note by remember(message.accountId, message.uid, message.note) { mutableStateOf(message.note) }
     var attachment by remember { mutableStateOf<ErmisAttachment?>(null) }
     val download = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/octet-stream")) { uri -> if (uri != null) attachment?.let { onDownload(it, uri) } }
-    AlertDialog(onDismissRequest = onDismiss, title = { Text(message.subject.ifBlank { stringResource(R.string.ermis_no_subject) }) }, text = {
+    MailPage(onDismiss, title = message.subject.ifBlank { stringResource(R.string.ermis_no_subject) }, action = { TextButton(onClick = onReply) { Text(stringResource(R.string.ermis_reply)) } }) {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(16.dp)) {
             if (conversation.size > 1) {
                 Text(stringResource(R.string.ermis_conversation_count, conversation.size), style = MaterialTheme.typography.labelLarge)
@@ -216,5 +271,22 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
             OutlinedTextField(note, { note = it }, label = { Text(stringResource(R.string.ermis_note)) }, modifier = Modifier.fillMaxWidth(), minLines = 2)
             TextButton(onClick = { onSaveNote(note) }) { Text(stringResource(R.string.ermis_note_save)) }
         }
-    }, confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } })
+    }
+}
+
+@Composable
+private fun MailPage(onDismiss: () -> Unit, title: String, action: @Composable () -> Unit, content: @Composable () -> Unit) {
+    Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
+        Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
+            Scaffold(topBar = {
+                Row(Modifier.statusBarsPadding().fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close)) }
+                    Text(title, Modifier.weight(1f), maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, style = MaterialTheme.typography.titleMedium)
+                    action()
+                }
+            }) { padding ->
+                Box(Modifier.fillMaxSize().padding(padding).imePadding().padding(horizontal = 20.dp)) { content() }
+            }
+        }
+    }
 }

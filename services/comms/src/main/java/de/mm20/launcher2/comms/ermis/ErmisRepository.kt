@@ -10,7 +10,6 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.util.Properties
 import javax.mail.*
 import javax.mail.internet.*
 import javax.mail.util.ByteArrayDataSource
@@ -47,54 +46,43 @@ class ErmisRepository private constructor(private val context: Context) {
         mutex.withLock {
             mutable.update { it.copy(loading = true, error = null) }
             try { runInterruptible { block() } } catch (e: CancellationException) { throw e } catch (e: Exception) {
-                mutable.update { it.copy(error = when (e) {
-                    is AuthenticationFailedException -> context.getString(de.mm20.launcher2.comms.R.string.ermis_error_auth)
-                    is javax.net.ssl.SSLException -> context.getString(de.mm20.launcher2.comms.R.string.ermis_error_tls)
-                    else -> context.getString(de.mm20.launcher2.comms.R.string.ermis_error_generic)
-                }) }; throw e
+                val causes = ErmisMailFailure.causes(e)
+                val detail = context.getString(when (ErmisMailFailure.kind(causes)) {
+                    ErmisFailureKind.GOOGLE_ACCESS -> de.mm20.launcher2.comms.R.string.ermis_google_unavailable
+                    ErmisFailureKind.AUTHENTICATION -> de.mm20.launcher2.comms.R.string.ermis_error_auth
+                    ErmisFailureKind.TLS -> de.mm20.launcher2.comms.R.string.ermis_error_tls
+                    ErmisFailureKind.OTHER -> de.mm20.launcher2.comms.R.string.ermis_error_generic
+                })
+                val endpoint = causes.filterIsInstance<ErmisConnectionException>().firstOrNull()?.endpoint
+                mutable.update { it.copy(error = if (endpoint == null) detail else "$endpoint\n$detail") }; throw e
             } finally { mutable.update { it.copy(loading = false) } }
         }
     }
     private fun persist() = vault.write(json.encodeToString(StoredMail(state.value.accounts, passwords, state.value.messages.take(1000).map { it.copy(body=it.body.take(32_000)) }, uidValidity)))
     private fun account(id: String) = state.value.accounts.first { it.id == id }
-    private fun session(a: ErmisAccount? = null): Session = Session.getInstance(Properties().apply {
-        if (a?.googleAccount != null) {
-            for (protocol in listOf("imaps", "smtp", "smtps")) {
-                setProperty("mail.$protocol.auth.mechanisms", "XOAUTH2")
-                setProperty("mail.$protocol.auth.login.disable", "true")
-                setProperty("mail.$protocol.auth.plain.disable", "true")
-            }
-        }
-        for (protocol in listOf("imaps", "smtp", "smtps")) {
-            setProperty("mail.$protocol.connectiontimeout", "15000")
-            setProperty("mail.$protocol.timeout", "20000")
-            setProperty("mail.$protocol.writetimeout", "20000")
-            setProperty("mail.$protocol.ssl.checkserveridentity", "true")
-            setProperty("mail.$protocol.ssl.protocols", if (android.os.Build.VERSION.SDK_INT >= 29) "TLSv1.2 TLSv1.3" else "TLSv1.2")
-        }
-        setProperty("mail.smtp.starttls.enable", "true")
-        setProperty("mail.smtp.starttls.required", "true")
-        setProperty("mail.smtp.auth", "true")
-        setProperty("mail.smtps.auth", "true")
-        setProperty("mail.imaps.peek", "true")
-    })
+    private fun session(a: ErmisAccount? = null): Session = ErmisMailSession.create(
+        oauth = a?.googleAccount != null, tls13 = android.os.Build.VERSION.SDK_INT >= 29)
     private fun secret(a: ErmisAccount): String = a.googleAccount?.let { ErmisGoogleAuth.token(context, it) } ?: passwords.getValue(a.id)
-    private fun store(a: ErmisAccount, password: String = secret(a)): Store {
-        val result = session(a).getStore("imaps")
-        try { result.connect(a.imapHost, a.imapPort, a.username, password); return result }
-        catch (e: Exception) {
-            if (a.googleAccount != null && e is AuthenticationFailedException) runCatching { ErmisGoogleAuth.invalidate(context, password) }
-            runCatching { result.close() }; throw e
+    private fun <T> authenticate(a: ErmisAccount, password: String, connect: (String) -> T): T =
+        ErmisAuthRetry.connect(password, a.googleAccount != null,
+            invalidate = { ErmisGoogleAuth.invalidate(context, it) }, refresh = { secret(a) }, connect = connect)
+    private fun store(a: ErmisAccount, password: String? = null): Store = connection("IMAP ${a.imapHost}:${a.imapPort}") {
+        authenticate(a, password ?: secret(a)) { token ->
+            val result = ErmisMailSession.store(session(a))
+            try { result.connect(a.imapHost, a.imapPort, a.username, token); result }
+            catch (e: Exception) { runCatching { result.close() }; throw e }
         }
     }
-    private fun transport(a: ErmisAccount, password: String = secret(a)): Transport {
-        val result = session(a).getTransport(if (a.smtpStartTls) "smtp" else "smtps")
-        try { result.connect(a.smtpHost, a.smtpPort, a.username, password); return result }
-        catch (e: Exception) {
-            if (a.googleAccount != null && e is AuthenticationFailedException) runCatching { ErmisGoogleAuth.invalidate(context, password) }
-            runCatching { result.close() }; throw e
+    private fun transport(a: ErmisAccount, password: String? = null): Transport = connection("SMTP ${a.smtpHost}:${a.smtpPort}") {
+        authenticate(a, password ?: secret(a)) { token ->
+            val result = ErmisMailSession.transport(session(a), a.smtpStartTls)
+            try { result.connect(a.smtpHost, a.smtpPort, a.username, token); result }
+            catch (e: Exception) { runCatching { result.close() }; throw e }
         }
     }
+    private fun <T> connection(endpoint: String, block: () -> T): T = try { block() }
+        catch (e: CancellationException) { throw e }
+        catch (e: Exception) { throw ErmisConnectionException(endpoint, e) }
     private fun <T> inbox(a: ErmisAccount, block: (Folder, UIDFolder) -> T): T {
         val store = store(a)
         try {
