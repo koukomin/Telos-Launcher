@@ -1496,4 +1496,4 @@
     <string name="telos_trash_unlock">Ξεκλείδωμα κάδου</string>
     <string name="telos_os_trash_unavailable">Δεν βρέθηκε κάδος του συστήματος σε αυτή τη συσκευή</string>
     <string name="telos_media_compact_list">Συμπαγής λίστα</string>
-<string name="telos_akou_app_label">Άκου</string><string name="telos_magnifier_app_label">Μεγεθυντικός Φακός</string><string name="telos_flashlight_app_label">Φακός</string></resources>
+<string name="telos_akou_app_label">Άκου</string><string name="telos_magnifier_app_label">Μεγεθυντικός Φακός</string><string name="telos_flashlight_app_label">Φακός</string><string name="hf_freeze_disconnect">Αποσυνδέθηκε</string></resources>
