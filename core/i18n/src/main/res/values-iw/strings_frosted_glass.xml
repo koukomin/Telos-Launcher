@@ -1,5 +1,5 @@
 <resources>
-    <string name="frosted_glass_wallpaper_help">זכוכית חלבית משתמשת בטפט בית סטטי שהוגדר ב־Telos. טפטים חיים או חיצוניים משתמשים בגוון שקוף למחצה.</string>
+    <string name="frosted_glass_wallpaper_help">זכוכית חלבית תומכת בתמונות בית שנבחרו ב־Telos ובטפטי וידאו של Telos. טפטים אחרים משתמשים בגוון שקוף למחצה.</string>
 
     <string name="wallpaper_target_dialog_title">הגדרת טפט עבור</string>
     <string name="preference_wallpaper_set_home">מסך הבית</string>

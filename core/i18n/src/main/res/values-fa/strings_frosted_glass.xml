@@ -1,5 +1,5 @@
 <resources>
-    <string name="frosted_glass_wallpaper_help">شیشه مات از پس‌زمینه ثابت صفحه اصلی تنظیم‌شده در Telos استفاده می‌کند. پس‌زمینه‌های زنده یا خارجی از رنگ نیمه‌شفاف استفاده می‌کنند.</string>
+    <string name="frosted_glass_wallpaper_help">شیشه مات از تصاویر انتخاب‌شده در Telos و پس‌زمینه‌های ویدیویی Telos پشتیبانی می‌کند. سایر پس‌زمینه‌ها از رنگ نیمه‌شفاف استفاده می‌کنند.</string>
 
     <string name="wallpaper_target_dialog_title">تنظیم پس‌زمینه برای</string>
     <string name="preference_wallpaper_set_home">صفحه اصلی</string>

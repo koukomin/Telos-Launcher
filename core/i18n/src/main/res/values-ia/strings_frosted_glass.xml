@@ -1,5 +1,5 @@
 <resources>
-    <string name="frosted_glass_wallpaper_help">Le vitro gelate usa un fundo static del schermo principal definite in Telos. Fundos animate o externe usa un tinta translucide.</string>
+    <string name="frosted_glass_wallpaper_help">Le vitro gelate supporta imagines seligite in Telos e fundos video Telos. Altere fundos usa un tinta translucide.</string>
 
     <string name="wallpaper_target_dialog_title">Definir fundo pro</string>
     <string name="preference_wallpaper_set_home">Schermo principal</string>

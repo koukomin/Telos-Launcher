@@ -1,5 +1,5 @@
 <resources>
-    <string name="frosted_glass_wallpaper_help">Buzlu şüşə Telos-da qurulmuş statik ana ekran divar kağızından istifadə edir. Canlı və ya xarici divar kağızlarında yarımşəffaf rəng istifadə olunur.</string>
+    <string name="frosted_glass_wallpaper_help">Buzlu şüşə Telos-da seçilən ana ekran şəkillərini və Telos video divar kağızlarını dəstəkləyir. Digər divar kağızları yarımşəffaf rəng istifadə edir.</string>
 
     <string name="wallpaper_target_dialog_title">Divar kağızını tətbiq et</string>
     <string name="preference_wallpaper_set_home">Ana ekran</string>
