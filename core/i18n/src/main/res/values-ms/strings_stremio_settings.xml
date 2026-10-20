@@ -13,4 +13,5 @@
     <string name="au20_viewer_info_size">Saiz</string>
     <string name="hc_from_a_file">Daripada fail</string>
     <string name="hc_search_online">Cari dalam talian</string>
+    <string name="au_video_torrent_failed">Torrent tidak dapat dibuka</string>
 </resources>

@@ -13,4 +13,5 @@
     <string name="au20_viewer_info_size">اندازه</string>
     <string name="hc_from_a_file">از فایل</string>
     <string name="hc_search_online">جستجوی آنلاین</string>
+    <string name="au_video_torrent_failed">فایل تورنت باز نشد</string>
 </resources>
