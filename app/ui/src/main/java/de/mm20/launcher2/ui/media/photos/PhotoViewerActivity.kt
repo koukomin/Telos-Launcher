@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import kotlinx.coroutines.launch
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -222,6 +223,34 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     var confirmDelete by remember { mutableStateOf(false) }
     var more by remember { mutableStateOf(false) }
     var starred by remember { mutableStateOf(false) }
+    var wallpaperUri by remember { mutableStateOf<Uri?>(null) }
+    var settingWallpaper by remember { mutableStateOf(false) }
+    val wallpaperScope = rememberCoroutineScope()
+    val wallpapers = org.koin.compose.koinInject<de.mm20.launcher2.wallpapers.WallpapersService>()
+    wallpaperUri?.let { selectedUri ->
+        AlertDialog(onDismissRequest = { if (!settingWallpaper) wallpaperUri = null },
+            title = { Text(stringResource(R.string.wallpaper_target_dialog_title)) },
+            text = { Column {
+                val choices = listOf(
+                    R.string.preference_wallpaper_set_home to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Home,
+                    R.string.preference_wallpaper_set_lock to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Lock,
+                    R.string.preference_wallpaper_set_both to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Both)
+                choices.forEach { (label, target) ->
+                    TextButton(enabled = !settingWallpaper, onClick = {
+                        settingWallpaper = true
+                        wallpaperScope.launch {
+                            try {
+                                val ok = wallpapers.setStaticWallpaper(selectedUri, target)
+                                Toast.makeText(context, context.getString(if (ok) R.string.wallpaper_set_success else R.string.wallpaper_set_failure), Toast.LENGTH_SHORT).show()
+                                wallpaperUri = null
+                            } finally { settingWallpaper = false }
+                        }
+                    }) { Text(stringResource(label)) }
+                }
+                if (settingWallpaper) LinearProgressIndicator(Modifier.fillMaxWidth())
+            } },
+            confirmButton = { TextButton(enabled = !settingWallpaper, onClick = { wallpaperUri = null }) { Text(stringResource(R.string.hc_cancel)) } })
+    }
     val current = uris[pager.currentPage]
     val mime = remember(current) { context.contentResolver.getType(current).orEmpty() }
     val isVideo = mime.startsWith("video/")
@@ -298,7 +327,8 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                             text = { Text(stringResource(R.string.viewer_set_wallpaper)) },
                             onClick = {
                                 more = false
-                                runCatching {
+                                if (!isVideo && mime != "image/gif") wallpaperUri = current
+                                else runCatching {
                                     context.startActivity(
                                         Intent(Intent.ACTION_ATTACH_DATA).setDataAndType(current, mime.ifBlank { "image/*" })
                                             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
