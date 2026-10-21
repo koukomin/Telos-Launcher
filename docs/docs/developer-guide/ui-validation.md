@@ -72,3 +72,8 @@ its delete symbol. Static aliases provide 22 OS Recents identities. Final-head
 build/test outcomes and artifacts are recorded in PR #60. Physical-device OEM
 Recents caching, notification headers, playback/hardware and crash/update recovery
 remain separate acceptance checks; none are claimed passed by these component tests.
+
+
+## English dark-wallpaper gallery (PR #61)
+
+[Capture run 39628520954](https://github.com/koukomin/Telos-Launcher/actions/runs/39628520954) succeeded and retained 30 PNGs, UI XML and capture metadata, with no reported capture failures. The contact sheet was visually inspected before publishing the gallery: all 30 routes rendered, including Settings and System, without a visible crash dialog. Preview images preserve dimensions and use WebP compression; original PNGs remain in the workflow artifact. See the [gallery](../user-guide/telos/screenshots) for exact build-source metadata and environment. This is one clean English dark-mode emulator pass, not the full font/window/wallpaper or physical-device acceptance matrix.

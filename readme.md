@@ -40,9 +40,9 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 
 ## Development screenshots
 
-Real, unedited captures from a clean Pixel 7 emulator (Android API 35, x86_64 debug), without personal accounts. These show the development UI; they do not validate live playback or account sync.
+30 captures from a clean Pixel 7 emulator (Android API 35, x86_64 debug), in English with a dark wallpaper and shared blur, covering the launcher, built-in apps and Settings. No personal accounts. These show the development UI; they do not validate live playback or account sync.
 
-[View the gallery](docs/docs/user-guide/telos/screenshots.md). Each original PNG includes its capture resolution; the gallery identifies its source commit.
+[View the gallery](docs/docs/user-guide/telos/screenshots.md). The gallery includes WebP previews at the captured dimensions, source metadata and a link to the original PNG artifact.
 
 Πραγματικές λήψεις από καθαρό emulator με development build, χωρίς προσωπικούς λογαριασμούς. [Συλλογή screenshots](docs/docs/user-guide/telos/screenshots.md).
 
