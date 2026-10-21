@@ -50,6 +50,7 @@ class FreezeManager internal constructor(
     // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
     private val operationMutex = Mutex()
+    private val companionMutex = Mutex()
 
     private val shizukuProvider = ShizukuProvider(context.packageName)
     private val rootProvider = RootProvider()
@@ -148,8 +149,9 @@ class FreezeManager internal constructor(
     }
 
     /** Explicit dependencies only; disabled by default. Shared companions keep all active owners. */
-    suspend fun unfreezeCompanions(master: String, userId: Int): Set<String> {
-        if (userId != Process.myUid() / 100000 || master !in settings.companionEnabled.first()) return emptySet()
+    suspend fun unfreezeCompanions(master: String, userId: Int): Set<String> = withContext(kotlinx.coroutines.Dispatchers.IO) {
+        companionMutex.withLock {
+        if (userId != Process.myUid() / 100000 || master !in settings.companionEnabled.first()) return@withLock emptySet()
         val packages = settings.companionExtras.first()[master].orEmpty().split(',')
             .map { it.trim() }.filter { it != master && VALID_PACKAGE_NAME.matches(it) }.distinct()
         val existingHolds = settings.companionHolds.first().keys
@@ -159,17 +161,22 @@ class FreezeManager internal constructor(
             else if (isFrozen(pkg)) {
                 if (pkg !in unfreeze(pkg, userId, fromUser = false)) {
                     settings.addCompanionHolds(master, thawed)
-                    releaseCompanions(master, userId)
+                    releaseCompanionsLocked(master, userId)
                     error("Could not unfreeze companion $pkg")
                 }
                 thawed += pkg
             }
         }
         settings.addCompanionHolds(master, thawed)
-        return thawed
+        thawed
+        }
     }
 
-    suspend fun releaseCompanions(master: String, userId: Int) {
+    suspend fun releaseCompanions(master: String, userId: Int) = withContext(kotlinx.coroutines.Dispatchers.IO) {
+        companionMutex.withLock { releaseCompanionsLocked(master, userId) }
+    }
+
+    private suspend fun releaseCompanionsLocked(master: String, userId: Int) {
         if (userId != Process.myUid() / 100000) return
         val released = settings.clearCompanionHoldsForMaster(master)
         if (released.isNotEmpty()) setSuspended(released.toList(), true, userId)
@@ -221,11 +228,13 @@ class FreezeManager internal constructor(
 
     private suspend fun freezeHeldCompanions(masters: Set<String>, userId: Int) {
         if (masters.isEmpty() || userId != Process.myUid() / 100000) return
+        companionMutex.withLock {
         val extras = mutableListOf<String>()
         for (master in masters) {
             extras += settings.clearCompanionHoldsForMaster(master)
         }
         if (extras.isNotEmpty()) setSuspended(extras, true, userId)
+        }
     }
 
     /** Apply a method change to an already frozen app before committing its new policy. */
