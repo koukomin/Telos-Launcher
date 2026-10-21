@@ -289,7 +289,7 @@
             android:targetActivity=".settings.TelosAppActivity"
             android:exported="false"
             android:label="@string/telos_system_label"
-            android:icon="@drawable/ic_app_network_full" />
+            android:icon="@drawable/ic_app_system_full" />
         <activity-alias
             android:name=".settings.TelosApp_trash"
             android:targetActivity=".settings.TelosAppActivity"
@@ -337,7 +337,7 @@
             android:targetActivity=".settings.TelosAppActivity"
             android:exported="false"
             android:label="@string/ermis_title"
-            android:icon="@drawable/ic_app_messages_full" />
+            android:icon="@drawable/ic_app_ermis_full" />
         <activity-alias
             android:name=".settings.TelosApp_calendar"
             android:targetActivity=".settings.TelosAppActivity"

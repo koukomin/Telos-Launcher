@@ -51,3 +51,24 @@ execution; the later CI component tests described above are separate evidence. T
 only repository build reports survived. No light/dark/wallpaper UI visual pass is claimed. Hardware camera, calls/SIP,
 recording, account mail/sync and third-party live/widget internals still require suitable devices,
 permissions/accounts and real content.
+
+## Consolidated app polish (PR #60)
+
+PR #60 incorporates #40 and #47, reconciled through main `0a7dadf` and removes
+the embedded terminal in favor of external Termux. Earlier historical terminal
+references above describe the old reconciliation, not the final feature set.
+
+CI run [39586454561](https://github.com/koukomin/Telos-Launcher/actions/runs/39586454561)
+passed five Android UI tests and collected 42 screenshots. Light/dark radio palette,
+large-text preference and navigation component screenshots were retrieved and
+visually inspected. They are component evidence, not full app/device certification.
+A later instrumented-test compilation exhausted a 2 GiB heap; the compilation
+steps now receive 3 GiB, retaining one worker and in-process Kotlin compilation.
+
+The final notification pass checks shared glyph/large-icon identity on Android.
+Media3 services now set explicit app glyphs; mail, alarm, SIP and Network use shared
+identity. Ermis/System full icons retain their launcher colors, and Trash retains
+its delete symbol. Static aliases provide 22 OS Recents identities. Final-head
+build/test outcomes and artifacts are recorded in PR #60. Physical-device OEM
+Recents caching, notification headers, playback/hardware and crash/update recovery
+remain separate acceptance checks; none are claimed passed by these component tests.
