@@ -9,6 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -117,7 +119,8 @@ fun SmartFreezeDashboardScreen(tabs: @Composable () -> Unit = {}) {
                 onClick = { detailKey = app.key }, controls = {
                     Checkbox(checked = app.key in selected, enabled = !busy,
                         onCheckedChange = { checked -> selected = if (checked) (selected + app.key).distinct() else selected - app.key },
-                        modifier = Modifier.sizeIn(minWidth = 48.dp, minHeight = 48.dp))
+                        modifier = Modifier.sizeIn(minWidth = 48.dp, minHeight = 48.dp)
+                            .semantics { contentDescription = app.label })
                 })
         }
     }
