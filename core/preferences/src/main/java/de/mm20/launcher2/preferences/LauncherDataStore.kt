@@ -56,7 +56,8 @@ internal class LauncherDataStore(
     // Backups are plain files that can end up anywhere. Passwords and keys are encrypted with a key
     // that exists only on this device (useless elsewhere), and the hidden contacts are private.
     override fun forBackup(data: LauncherSettingsData): LauncherSettingsData = data.copy(
-        freeze = data.freeze.copy(freezeMaintenance = emptyMap()),
+        freeze = data.freeze.copy(freezeMaintenance = emptyMap(), freezeScreenOffPending = emptyMap(),
+            freezeScreenOffBoot = -1, freezeRecentsThawed = emptySet(), freezeCompanionHolds = emptyMap(), freezeSystemRiskApproved = emptySet()),
         comms = data.comms.copy(
             tmdbApiKeyEnc = "",
             subtitleApiKeyEnc = "",
@@ -95,7 +96,12 @@ internal class LauncherDataStore(
                 protectionCustomLockHashed = current.protection.protectionCustomLockHashed,
                 protectionUseCustomLock = current.protection.protectionUseCustomLock,
             ),
-            freeze = restored.freeze.copy(freezeMaintenance = current.freeze.freezeMaintenance),
+            freeze = restored.freeze.copy(freezeMaintenance = current.freeze.freezeMaintenance,
+                freezeScreenOffPending = current.freeze.freezeScreenOffPending,
+                freezeScreenOffBoot = current.freeze.freezeScreenOffBoot,
+                freezeRecentsThawed = current.freeze.freezeRecentsThawed,
+                freezeCompanionHolds = current.freeze.freezeCompanionHolds,
+                freezeSystemRiskApproved = current.freeze.freezeSystemRiskApproved),
             comms = comms.copy(
                 sipEnabled = comms.sipEnabled && comms.sipPasswordEnc.isNotBlank(),
                 remotePhonebookEnabled = comms.remotePhonebookEnabled && comms.remotePhonebookPasswordEnc.isNotBlank(),

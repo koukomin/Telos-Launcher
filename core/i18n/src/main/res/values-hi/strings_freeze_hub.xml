@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">सेटिंग के लिए ऐप पर टैप करें; सामूहिक कार्रवाइयों के लिए चेकबॉक्स चुनें।</string>
+    <string name="freeze_hub_unfreeze">फ्रीज़ हटाएँ</string>
+    <string name="freeze_hub_profile_notice">स्वचालित नियम केवल इस Android उपयोगकर्ता पर लागू होते हैं।</string>
+    <string name="freeze_hub_delay">स्क्रीन बंद होने के बाद विलंब</string>
+    <string name="freeze_hub_delay_help">इस स्वतः फ्रीज़ ऐप के लिए प्रोफ़ाइल समय को बदलता है। स्क्रीन चालू होने पर रद्द होता है। Android कार्रवाई में देरी कर सकता है।</string>
+    <string name="freeze_hub_inherit">प्रोफ़ाइल समय इस्तेमाल करें</string>
+    <string name="freeze_hub_companions">साथ में फ्रीज़ हटाएँ</string>
+    <string name="freeze_hub_companion_help">इस ऐप को खोलने या इसका फ्रीज़ हटाने से पहले चुने गए ऐप का फ्रीज़ हटाता है। डिफ़ॉल्ट रूप से बंद। उदाहरण: Gemini → Google, सशुल्क ऐप → Play Store, गेम → गेम ऑप्टिमाइज़र।</string>
+    <string name="freeze_hub_unknown">समुदाय का विवरण उपलब्ध नहीं है। सुरक्षा अज्ञात है।</string>
+    <string name="freeze_hub_uad_help">समुदाय के हटाने संबंधी नोट, फ्रीज़ की गारंटी नहीं। Unsafe ऐप अवरुद्ध हैं; Expert ऐप के लिए स्वीकृति चाहिए।</string>
+    <string name="freeze_hub_expert">इस Expert ऐप को फ्रीज़ करने दें</string>
+    <string name="freeze_hub_result">पूर्ण: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">ऐप विवरण अपने आप अपडेट करें</string>
+    <string name="freeze_hub_auto_update_help">फ्रीज़ मैनेजर खुलने पर हर बार UAD-NG अपडेट जाँचता है। डिफ़ॉल्ट रूप से चालू।</string>
+    <string name="freeze_hub_update_failed">अपडेट विफल। अंतिम मान्य डेटाबेस रखा गया है।</string>
+    <string name="freeze_hub_recents">हाल के ऐप से हटाने पर फ्रीज़ करें</string>
+    <string name="freeze_hub_recents_help">अंतिम कार्य हटने पर प्रबंधित या Telos से मुक्त किए ऐप फिर फ्रीज़ करता है। Shizuku चाहिए; उपयोग अपवाद लागू रहते हैं। डिफ़ॉल्ट रूप से बंद।</string>
+    <string name="freeze_hub_recents_unavailable">हाल के ऐप की पहचान उपलब्ध नहीं। Shizuku शुरू करके अनुमति दें।</string>
+</resources>

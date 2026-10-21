@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Puuduta rakendust seadistamiseks; kasuta märkeruute hulgitoiminguteks.</string>
+    <string name="freeze_hub_unfreeze">Sulata</string>
+    <string name="freeze_hub_profile_notice">Automaatreeglid kehtivad ainult sellele Androidi kasutajale.</string>
+    <string name="freeze_hub_delay">Viivitus pärast ekraani kustumist</string>
+    <string name="freeze_hub_delay_help">Asendab selle automaatselt külmutatava rakenduse profiiliaja. Ekraani sisselülitamisel tühistatakse. Android võib täitmist edasi lükata.</string>
+    <string name="freeze_hub_inherit">Kasuta profiiliaega</string>
+    <string name="freeze_hub_companions">Sulata koos</string>
+    <string name="freeze_hub_companion_help">Sulatab valitud rakendused enne selle avamist või sulatamist. Vaikimisi väljas. Näited: Gemini → Google, tasuline rakendus → Play Store, mäng → mänguoptimeerija.</string>
+    <string name="freeze_hub_unknown">Kogukonna kirjeldus puudub. Ohutus teadmata.</string>
+    <string name="freeze_hub_uad_help">Kogukonna eemaldamismärkused ei taga külmutamise ohutust. Unsafe blokeeritakse; Expert nõuab kinnitust.</string>
+    <string name="freeze_hub_expert">Luba selle Expert-rakenduse külmutamine</string>
+    <string name="freeze_hub_result">Valmis: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Uuenda rakenduste kirjeldusi automaatselt</string>
+    <string name="freeze_hub_auto_update_help">Kontrollib UAD-NG-d külmutushalduri igal avamisel. Vaikimisi sees.</string>
+    <string name="freeze_hub_update_failed">Uuendamine ebaõnnestus. Viimane kehtiv andmebaas säilitatakse.</string>
+    <string name="freeze_hub_recents">Külmuta pärast hiljutistest eemaldamist</string>
+    <string name="freeze_hub_recents_help">Külmutab hallatud või Telose sulatatud rakendused pärast viimase ülesande eemaldamist. Vajab Shizukut ja järgib kasutuserandeid. Vaikimisi väljas.</string>
+    <string name="freeze_hub_recents_unavailable">Hiljutiste tuvastus pole saadaval. Käivita Shizuku ja anna luba.</string>
+</resources>

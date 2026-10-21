@@ -258,7 +258,7 @@ open class SettingsActivity : BaseActivity() {
                 MainSettingsScreen()
             }
             entry<SmartFreezeDashboardRoute> {
-                de.mm20.launcher2.ui.settings.freeze.FreezeDashboardScreen()
+                FreezeSettingsScreen()
             }
             entry<AdvancedSettingsRoute> {
                 AdvancedSettingsScreen()

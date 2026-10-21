@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Πάτησε μια εφαρμογή για ρυθμίσεις· χρησιμοποίησε τα κουτάκια για μαζικές ενέργειες.</string>
+    <string name="freeze_hub_unfreeze">Ξεπάγωμα</string>
+    <string name="freeze_hub_profile_notice">Οι αυτόματοι κανόνες ισχύουν μόνο για αυτόν τον χρήστη Android.</string>
+    <string name="freeze_hub_delay">Καθυστέρηση μετά το σβήσιμο οθόνης</string>
+    <string name="freeze_hub_delay_help">Υπερισχύει του προφίλ για αυτήν την εφαρμογή αυτόματου παγώματος. Ακυρώνεται όταν ανάβει η οθόνη. Το Android ενδέχεται να καθυστερήσει την εκτέλεση.</string>
+    <string name="freeze_hub_inherit">Χρήση χρόνου προφίλ</string>
+    <string name="freeze_hub_companions">Ξεπάγωμα μαζί</string>
+    <string name="freeze_hub_companion_help">Ξεπαγώνει πρώτα τις επιλεγμένες εφαρμογές όταν ανοίγεις ή ξεπαγώνεις αυτήν την εφαρμογή. Αρχικά ανενεργό. Παραδείγματα: Gemini → Google, εφαρμογή επί πληρωμή → Play Store, παιχνίδι → εφαρμογή βελτιστοποίησης παιχνιδιών.</string>
+    <string name="freeze_hub_unknown">Δεν υπάρχει κοινοτική περιγραφή. Η ασφάλεια είναι άγνωστη.</string>
+    <string name="freeze_hub_uad_help">Κοινοτικές πληροφορίες αφαίρεσης, όχι εγγύηση για το πάγωμα. Οι εφαρμογές Unsafe αποκλείονται· οι Expert απαιτούν έγκριση.</string>
+    <string name="freeze_hub_expert">Να επιτρέπεται το πάγωμα αυτής της εφαρμογής Expert</string>
+    <string name="freeze_hub_result">Ολοκληρώθηκαν: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Αυτόματη ενημέρωση περιγραφών εφαρμογών</string>
+    <string name="freeze_hub_auto_update_help">Ελέγχει τη βάση UAD-NG σε κάθε άνοιγμα της διαχείρισης παγώματος. Ενεργό από προεπιλογή.</string>
+    <string name="freeze_hub_update_failed">Η ενημέρωση απέτυχε. Διατηρείται η τελευταία έγκυρη βάση.</string>
+    <string name="freeze_hub_recents">Πάγωμα μετά την αφαίρεση από τα Recents</string>
+    <string name="freeze_hub_recents_help">Ξαναπαγώνει διαχειριζόμενες εφαρμογές ή όσες ξεπάγωσε το Telos όταν αφαιρεθεί η τελευταία κάρτα τους. Απαιτεί Shizuku και σέβεται τις εξαιρέσεις χρήσης. Αρχικά ανενεργό.</string>
+    <string name="freeze_hub_recents_unavailable">Η ανίχνευση Recents δεν είναι διαθέσιμη. Εκκίνησε το Shizuku και παραχώρησε άδεια.</string>
+</resources>

@@ -563,6 +563,8 @@ data class FeedGroup(
 data class FreezeGroup(
     val freezeBackend: FreezeBackendPreference = FreezeBackendPreference.Auto,
     val freezeAutoFreezeEnabled: Boolean = false,
+    val freezeOnRecentsRemoval: Boolean = false,
+    val freezeRecentsThawed: Set<String> = emptySet(),
     val freezeOnScreenOff: Boolean = false,
     val freezeOnIdle: Boolean = false,
     val freezeIdleTimeoutMinutes: Int = 15,
@@ -596,6 +598,16 @@ data class FreezeGroup(
     /** Packages whose firewall blockAll we set for a Play update; value is whether blockAll was already on. */
     val playUpdateNetBlocked: Map<String, Boolean> = emptyMap(),
     val playUpdatePlayStoreHeld: Boolean = false,
+    /** Check upstream descriptions on each manager entry, preserving an explicit opt-out. */
+    val freezeBloatAutoUpdate: Boolean = true,
+    val freezeSystemRiskApproved: Set<String> = emptySet(),
+    /** Missing entry inherits profile; zero freezes immediately; positive values are minutes. */
+    val freezeScreenOffDelays: Map<String, Int> = emptyMap(),
+    /** Pending alarm deadlines use elapsed realtime, and never survive a device reboot. */
+    val freezeScreenOffPending: Map<String, Long> = emptyMap(),
+    val freezeScreenOffBoot: Int = -1,
+    /** Explicit opt-in, including on upgrades from the old inferred companion prompt. */
+    val freezeCompanionEnabled: Set<String> = emptySet(),
     val freezeCompanionExtras: Map<String, String> = emptyMap(),
     val freezeCompanionHolds: Map<String, String> = emptyMap(),
     val freezeGameBoosterPackage: String = "",

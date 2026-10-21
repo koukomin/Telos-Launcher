@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">アプリをタップして設定し、チェックボックスで一括操作します。</string>
+    <string name="freeze_hub_unfreeze">凍結解除</string>
+    <string name="freeze_hub_profile_notice">自動ルールはこの Android ユーザーにのみ適用されます。</string>
+    <string name="freeze_hub_delay">画面消灯後の遅延</string>
+    <string name="freeze_hub_delay_help">この自動凍結アプリではプロファイルの時間より優先します。点灯時に中止します。Android により実行が遅れる場合があります。</string>
+    <string name="freeze_hub_inherit">プロファイルの時間を使用</string>
+    <string name="freeze_hub_companions">まとめて凍結解除</string>
+    <string name="freeze_hub_companion_help">このアプリを開くか凍結解除する前に、選択したアプリを解除します。初期設定はオフ。例：Gemini → Google、有料アプリ → Play Store、ゲーム → ゲーム最適化アプリ。</string>
+    <string name="freeze_hub_unknown">コミュニティの説明はありません。安全性は不明です。</string>
+    <string name="freeze_hub_uad_help">削除に関するコミュニティ情報であり凍結の安全性は保証しません。Unsafe は禁止、Expert は承認が必要です。</string>
+    <string name="freeze_hub_expert">この Expert アプリの凍結を許可</string>
+    <string name="freeze_hub_result">完了：%1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">アプリの説明を自動更新</string>
+    <string name="freeze_hub_auto_update_help">凍結管理を開くたびに UAD-NG の更新を確認します。初期設定はオンです。</string>
+    <string name="freeze_hub_update_failed">更新に失敗しました。最後の有効なデータベースを保持します。</string>
+    <string name="freeze_hub_recents">履歴から削除した後に凍結</string>
+    <string name="freeze_hub_recents_help">最後のタスク削除後、管理対象または Telos が解除したアプリを再凍結します。Shizuku が必要で、使用中の除外設定も適用します。初期設定はオフです。</string>
+    <string name="freeze_hub_recents_unavailable">履歴の検出を利用できません。Shizuku を起動し権限を許可してください。</string>
+</resources>

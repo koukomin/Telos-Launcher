@@ -28,6 +28,22 @@ class FreezeSettings internal constructor(
         dataStore.update { it.copy(freeze = it.freeze.copy(freezeBackend = backend)) }
     }
 
+    val freezeOnRecentsRemoval get() = dataStore.data.map { it.freeze.freezeOnRecentsRemoval }
+    val recentsThawed get() = dataStore.data.map { it.freeze.freezeRecentsThawed }
+    fun setFreezeOnRecentsRemoval(enabled: Boolean) {
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeOnRecentsRemoval = enabled,
+            freezeRecentsThawed = if (enabled) it.freeze.freezeRecentsThawed else emptySet())) }
+    }
+    suspend fun trackRecentsThaw(pkg: String) {
+        dataStore.updateAndWait { current ->
+            if (!current.freeze.freezeOnRecentsRemoval) current else current.copy(freeze = current.freeze.copy(
+                freezeRecentsThawed = (current.freeze.freezeRecentsThawed + pkg).takeLastBounded()))
+        }
+    }
+    suspend fun forgetRecentsThaw(packages: Set<String>) {
+        dataStore.updateAndWait { it.copy(freeze = it.freeze.copy(freezeRecentsThawed = it.freeze.freezeRecentsThawed - packages)) }
+    }
+
     val autoFreezeEnabled
         get() = dataStore.data.map { it.freeze.freezeAutoFreezeEnabled }
 
@@ -289,6 +305,41 @@ class FreezeSettings internal constructor(
         dataStore.update { it.copy(freeze = it.freeze.copy(playUpdatePlayStoreHeld = held)) }
     }
 
+    val bloatAutoUpdate get() = dataStore.data.map { it.freeze.freezeBloatAutoUpdate }
+    fun setBloatAutoUpdate(value: Boolean) {
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeBloatAutoUpdate = value)) }
+    }
+    val systemRiskApproved get() = dataStore.data.map { it.freeze.freezeSystemRiskApproved }
+    fun setSystemRiskApproved(pkg: String, approved: Boolean) {
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeSystemRiskApproved =
+            if (approved) it.freeze.freezeSystemRiskApproved + pkg else it.freeze.freezeSystemRiskApproved - pkg)) }
+    }
+    val screenOffDelays get() = dataStore.data.map { it.freeze.freezeScreenOffDelays }
+    val screenOffPending get() = dataStore.data.map { it.freeze.freezeScreenOffPending }
+    val screenOffBoot get() = dataStore.data.map { it.freeze.freezeScreenOffBoot }
+    suspend fun setScreenOffPending(pending: Map<String, Long>, boot: Int) {
+        dataStore.updateAndWait { it.copy(freeze = it.freeze.copy(
+            freezeScreenOffPending = pending, freezeScreenOffBoot = boot)) }
+    }
+    fun setScreenOffDelay(packageName: String, minutes: Int?) {
+        require(minutes == null || minutes in 0..1440)
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeScreenOffDelays =
+            if (minutes == null) it.freeze.freezeScreenOffDelays - packageName
+            else it.freeze.freezeScreenOffDelays + (packageName to minutes))) }
+    }
+    val companionEnabled get() = dataStore.data.map { it.freeze.freezeCompanionEnabled }
+    fun setCompanionRule(master: String, enabled: Boolean, companions: Set<String>) {
+        dataStore.update { it.copy(freeze = it.freeze.copy(
+            freezeCompanionEnabled = if (enabled) it.freeze.freezeCompanionEnabled + master
+                else it.freeze.freezeCompanionEnabled - master,
+            freezeCompanionExtras = it.freeze.freezeCompanionExtras +
+                (master to companions.filter { pkg -> pkg != master }.sorted().joinToString(",")))) }
+    }
+    fun setCandidates(packages: Set<String>, enabled: Boolean) {
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeCandidates =
+            if (enabled) it.freeze.freezeCandidates + packages else it.freeze.freezeCandidates - packages)) }
+    }
+
     val companionExtras
         get() = dataStore.data.map { it.freeze.freezeCompanionExtras }
 
@@ -306,8 +357,7 @@ class FreezeSettings internal constructor(
     suspend fun addCompanionHolds(master: String, companions: Collection<String>) {
         if (companions.isEmpty()) return
         dataStore.updateAndWait {
-            val holds = it.freeze.freezeCompanionHolds.toMutableMap()
-            companions.forEach { pkg -> holds[pkg] = master }
+            val holds = addCompanionOwners(it.freeze.freezeCompanionHolds, master, companions)
             it.copy(freeze = it.freeze.copy(freezeCompanionHolds = holds))
         }
     }
@@ -315,9 +365,9 @@ class FreezeSettings internal constructor(
     suspend fun clearCompanionHoldsForMaster(master: String): Set<String> {
         var removed = emptySet<String>()
         dataStore.updateAndWait {
-            val holds = it.freeze.freezeCompanionHolds
-            removed = holds.filterValues { m -> m == master }.keys
-            it.copy(freeze = it.freeze.copy(freezeCompanionHolds = holds - removed))
+            val (remaining, released) = removeCompanionOwner(it.freeze.freezeCompanionHolds, master)
+            removed = released
+            it.copy(freeze = it.freeze.copy(freezeCompanionHolds = remaining))
         }
         return removed
     }
@@ -344,3 +394,5 @@ class FreezeSettings internal constructor(
         dataStore.update { it.copy(freeze = it.freeze.copy(freezeGameBoosterApps = packages)) }
     }
 }
+
+private fun Set<String>.takeLastBounded(): Set<String> = if (size <= 1000) this else toList().takeLast(1000).toSet()

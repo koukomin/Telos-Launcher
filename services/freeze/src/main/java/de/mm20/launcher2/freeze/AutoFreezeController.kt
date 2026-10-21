@@ -64,6 +64,42 @@ class AutoFreezeController internal constructor(
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var idleJob: Job? = null
+    private val screenCycle = java.util.concurrent.atomic.AtomicLong(0)
+    private val screenOffMutex = kotlinx.coroutines.sync.Mutex()
+    private fun screenOffAlarm() = PendingIntent.getBroadcast(context, 4830,
+        Intent(context, ScreenOffFreezeReceiver::class.java),
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+    private fun bootCount() = android.provider.Settings.Global.getInt(
+        context.contentResolver, android.provider.Settings.Global.BOOT_COUNT, -1)
+    private fun isScreenOn() = context.getSystemService<PowerManager>()?.isInteractive != false
+
+    private suspend fun clearScreenOffPlan() {
+        context.getSystemService<AlarmManager>()?.cancel(screenOffAlarm())
+        settings.setScreenOffPending(emptyMap(), bootCount())
+    }
+
+    /** Also used by the manifest receiver when Android recreates the launcher for its alarm. */
+    suspend fun dispatchScreenOffAlarm() {
+        screenOffMutex.lock()
+        try {
+            if (!screenOffPlanIsValid(isScreenOn(), settings.autoFreezeEnabled.first(),
+                settings.screenOffBoot.first(), bootCount())) {
+                clearScreenOffPlan()
+                return
+            }
+            val pending = settings.screenOffPending.first()
+            val now = SystemClock.elapsedRealtime()
+            val due = pending.filterValues { it <= now }.keys
+            // Consume this deadline even if an app is excluded. Never bypass safety/maintenance.
+            val remaining = pending - due
+            settings.setScreenOffPending(remaining, bootCount())
+            if (due.isNotEmpty() && !isScreenOn()) freezeCandidates(due)
+            remaining.values.minOrNull()?.let { deadline ->
+                context.getSystemService<AlarmManager>()?.setAndAllowWhileIdle(
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP, deadline, screenOffAlarm())
+            }
+        } finally { screenOffMutex.unlock() }
+    }
     private var playWatchJob: Job? = null
 
     private val receiver = object : BroadcastReceiver() {
@@ -183,31 +219,40 @@ class AutoFreezeController internal constructor(
     }
 
     private fun onScreenOff() {
+        val cycle = screenCycle.incrementAndGet()
         idleJob?.cancel()
-        exclusionChecker.pinnedScreenOffPackage =
-            usageStatsProvider.currentForegroundPackage()
-                ?: usageStatsProvider.lastForegroundPackage()
-        scope.launch {
-            if (!settings.autoFreezeEnabled.first()) return@launch
-            if (profileManager.resolvedSettings.first().freezeOnScreenOff) {
-                freezeCandidates()
-            }
-        }
-        // The idle timeout counts from the moment the screen turns off; turning the screen
-        // back on (onScreenOn) cancels it.
         idleJob = scope.launch {
-            if (!settings.autoFreezeEnabled.first()) return@launch
-            val resolved = profileManager.resolvedSettings.first()
-            if (!resolved.freezeOnIdle) return@launch
-            delay(resolved.idleTimeoutMinutes * 60_000L)
-            freezeCandidates()
+            screenOffMutex.lock()
+            try {
+                if (screenCycle.get() != cycle) return@launch
+                clearScreenOffPlan()
+                if (!settings.autoFreezeEnabled.first() || isScreenOn()) return@launch
+                exclusionChecker.pinnedScreenOffPackage =
+                    usageStatsProvider.currentForegroundPackage() ?: usageStatsProvider.lastForegroundPackage()
+                val resolved = profileManager.resolvedSettings.first()
+                val now = SystemClock.elapsedRealtime()
+                val pending = screenOffFreezeDelays(settings.candidates.first(), settings.screenOffDelays.first(),
+                    resolved.freezeOnScreenOff, resolved.freezeOnIdle, resolved.idleTimeoutMinutes)
+                    .mapValues { (_, delay) -> now + delay }
+                settings.setScreenOffPending(pending, bootCount())
+            } finally { screenOffMutex.unlock() }
+            dispatchScreenOffAlarm()
         }
     }
 
     private fun onScreenOn() {
+        val cycle = screenCycle.incrementAndGet()
         idleJob?.cancel()
         idleJob = null
-        exclusionChecker.pinnedScreenOffPackage = null
+        scope.launch {
+            screenOffMutex.lock()
+            try {
+                if (screenCycle.get() == cycle) {
+                    exclusionChecker.pinnedScreenOffPackage = null
+                    clearScreenOffPlan()
+                }
+            } finally { screenOffMutex.unlock() }
+        }
         refreshNotificationLater()
     }
 
@@ -405,6 +450,19 @@ class AutoFreezeController internal constructor(
         }
     }
 
+    /** A confirmed last-task removal; independent of screen-off timing and the master auto switch. */
+    suspend fun freezeAfterRecentsRemoval(packageName: String) {
+        if (!settings.freezeOnRecentsRemoval.first() || freezeManager.isFrozen(packageName)) return
+        if (packageName !in settings.candidates.first() && packageName !in settings.recentsThawed.first()) return
+        if (packageName in settings.neverFreezeApps.first() ||
+            packageName in settings.companionHolds.first() ||
+            settings.maintenance.first().values.any { it.packageName == packageName } ||
+            settings.playUpdatePauseUntil.first() > System.currentTimeMillis() ||
+            exclusionChecker.isExcluded(packageName)) return
+        freezeManager.refreshBackendState()
+        freezeManager.freezeInBackground(listOf(packageName))
+    }
+
     private suspend fun freezableCandidates(): List<String> {
         val candidates = settings.candidates.first()
         if (candidates.isEmpty()) return emptyList()
@@ -419,13 +477,13 @@ class AutoFreezeController internal constructor(
             .filterNot { exclusionChecker.isExcluded(it) }
     }
 
-    private suspend fun freezeCandidates() {
+    private suspend fun freezeCandidates(onlyPackages: Set<String>? = null) {
         val pauseUntil = settings.playUpdatePauseUntil.first()
         if (pauseUntil > System.currentTimeMillis()) return
         // A backend that dies (Shizuku binder gone, root denied, ...) must not crash the launcher
         // from this background scope.
         try {
-            val freezable = freezableCandidates()
+            val freezable = freezableCandidates().filter { onlyPackages == null || it in onlyPackages }
             if (freezable.isEmpty()) { updateUnfrozenNotification(); return }
             freezeManager.refreshBackendState()
             // Not freeze(): this runs from a background trigger (screen-off/idle/battery-saver, no

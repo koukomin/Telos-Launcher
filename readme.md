@@ -499,7 +499,7 @@ Backup and restore ask first **what** to include: **Launcher** (settings and the
 ### Profiles
 
 - **Personal, Work, Private and Dual/clone** profiles are recognized (private space on Android 15+; OEM Dual Apps such as Xiaomi user 999 as Clone). The Samsung Secure Folder is hidden. Apps get tabs per profile in the empty-search grid (clone copies stay on the main tab), work apps a briefcase badge, private apps a lock badge, dual apps a person badge.
-- Opening a frozen app can **unfreeze companions** with it (Gemini → Google, ReVanced/Morphe YouTube → microG, Play-licensed apps → Play Store, games you tie to a game booster). Those companions stay unfrozen until the master app is frozen again, including Freeze all and screen-off. Foreground, the app that was in front when the screen turned off, music and network-active apps are skipped by auto-freeze (foreground skip is on by default).
+- An explicitly enabled per-app rule can **unfreeze selected companions** before opening or unfreezing it (Gemini → Google, ReVanced/Morphe YouTube → microG, Play-licensed apps → Play Store, games you tie to a game booster). Those companions stay unfrozen until the master app is frozen again, including Freeze all and screen-off. Foreground, the app that was in front when the screen turned off, music and network-active apps are skipped by auto-freeze (foreground skip is on by default).
 - **Sandbox** (experimental, pending review): **Initialize Telos Sandbox** starts managed profile provisioning with Telos as profile owner; **Clone to Sandbox** copies an app into the work profile. OEM dual apps (Viber, WhatsApp, …) also appear in the app drawer and in the Phone sidebar.
 - **Context profiles** (experimental) are a different feature: named bundles of overrides (gestures, freeze profile, widget page, Do Not Disturb, brightness, launch an app) triggered manually, by time, WiFi name, Bluetooth device, Battery Saver or charging, checked only while the launcher is open. Details below.
 
@@ -1083,7 +1083,13 @@ An app installer and updater that works like [Obtainium](https://github.com/Imra
 
 ### Smart Freeze
 
-Freeze or hide apps you do not need right now. It is a launcher feature in Settings (Freeze Manager and Smart Freeze Dashboard), not a Telos app, so it does not appear in the Store. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/).
+Freeze or hide apps you do not need right now. It is a launcher feature in Settings (one Freeze Manager with Apps, Auto-freeze and Settings tabs), not a Telos app, so it does not appear in the Store. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/).
+
+- Search by app name or package, filter frozen/auto-freeze entries, select all shown and run explicit bulk **Freeze**, **Unfreeze** or **Auto-freeze** actions. Results report successes against the selected total.
+- Per-app screen-off delays override the active profile (including immediate global freezing); inherited timing remains the default. Screen-on cancels pending deadlines. Android idle restrictions may defer alarms.
+- **Freeze after removal from Recents** is off by default. With Shizuku task-event access, removing an app’s final task refreezes an auto-freeze candidate or an app previously thawed by Telos; another live task, another Android user, usage exclusions and update/companion holds prevent inappropriate refreezing. Android/OEM callback support must be available.
+- **Unfreeze together** is off by default for every app. Choose installed companion apps; Gemini → Google appears as an inactive template when both are installed. No automatic inference for all Play Store apps.
+- UAD-NG descriptions and removal categories are bundled for offline use. Automatic updates are **on by default**, checked on each Freeze Manager entry, and can be disabled in its Settings tab. Conditional requests and atomic validated caching retain the last good database after failures. Unsafe system apps are blocked; Expert system apps require explicit per-app approval. Unknown descriptions never imply safety.
 
 **Backends**
 
@@ -1198,7 +1204,9 @@ adapted, the original license is respected.
 | [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) | GPL-3.0 | Privacy features: biometric lock, secure call screen, call screening, callback reminders |
 | [Ever Dialer](https://github.com/hari161008/Ever-Dialer) | GPL-3.0 | Power-user features: recording backends and retention, gestures, auto redial, fake calls, network switcher, notes |
 | [GAMA](https://github.com/palincat/gama) | see project | Idea only for the Vulkan/OpenGL HWUI switch (`debug.hwui.renderer`); no GAMA source was copied |
-| [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0 | Freeze backends (Shizuku, Dhizuku) and OEM suspend fallbacks |
+| [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0 | Freeze backends (Shizuku, Dhizuku), OEM suspend fallbacks and reference for centralized system-app safety gates |
+| [UAD-NG](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation) | GPL-3.0 | Bundled package descriptions and removal recommendations, with conditional updates on Freeze Manager entry |
+| [Canta](https://github.com/samolego/Canta) | LGPL-3.0 | Reference for UAD-NG description sourcing; no Canta code copied |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | Video live wallpaper engine |
 | [Stremio add-on protocol](https://github.com/Stremio/stremio-addon-sdk) (docs) and [stremio-core](https://github.com/Stremio/stremio-core) (API types) and [stremio-watched-bitfield](https://github.com/Stremio/stremio-watched-bitfield) (watched-state format) | MIT | The public description of the add-on protocol (manifest, catalog, meta, stream, subtitles and add-on catalog requests) and the request formats of the account service documented in stremio-core were used to write Telos' own client in Telos Media. No code of Stremio or of other Stremio clients is used |
 | [iptv-org](https://github.com/iptv-org/iptv) (API and database) | Unlicense (public domain) | Channel list, logos and stream addresses of Telos TV, downloaded from `iptv-org.github.io/api` only after you accept the disclaimer and open TV. The streams belong to third parties |

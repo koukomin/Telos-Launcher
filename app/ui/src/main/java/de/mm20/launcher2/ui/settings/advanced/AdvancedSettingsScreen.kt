@@ -57,14 +57,7 @@ fun AdvancedSettingsScreen() {
                         backStack.add(PluginsSettingsRoute)
                     }
                 )
-                Preference(
-                    icon = R.drawable.ac_unit_24px,
-                    title = stringResource(id = R.string.preference_screen_freeze),
-                    summary = stringResource(id = R.string.preference_screen_freeze_summary),
-                    onClick = {
-                        backStack.add(FreezeSettingsRoute)
-                    }
-                )
+
                 Preference(
                     icon = R.drawable.lock_24px,
                     title = stringResource(id = R.string.preference_screen_app_lock),

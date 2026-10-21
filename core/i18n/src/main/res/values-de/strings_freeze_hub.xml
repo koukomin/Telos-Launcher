@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">App für Einstellungen antippen; Kästchen für Sammelaktionen nutzen.</string>
+    <string name="freeze_hub_unfreeze">Auftauen</string>
+    <string name="freeze_hub_profile_notice">Automatische Regeln gelten nur für diesen Android-Nutzer.</string>
+    <string name="freeze_hub_delay">Verzögerung nach Bildschirm-Aus</string>
+    <string name="freeze_hub_delay_help">Ersetzt die Profilzeit für diese automatisch eingefrorene App. Bei Bildschirm-An abgebrochen. Android kann die Ausführung verzögern.</string>
+    <string name="freeze_hub_inherit">Profilzeit verwenden</string>
+    <string name="freeze_hub_companions">Gemeinsam auftauen</string>
+    <string name="freeze_hub_companion_help">Taut gewählte Apps zuerst auf, wenn diese App geöffnet oder aufgetaut wird. Standardmäßig aus. Beispiele: Gemini → Google, Kauf-App → Play Store, Spiel → Spieleoptimierer.</string>
+    <string name="freeze_hub_unknown">Keine Community-Beschreibung. Sicherheit unbekannt.</string>
+    <string name="freeze_hub_uad_help">Community-Hinweise zur Entfernung, keine Einfriergarantie. Unsafe-Apps sind gesperrt; Expert-Apps brauchen Zustimmung.</string>
+    <string name="freeze_hub_expert">Einfrieren dieser Expert-App erlauben</string>
+    <string name="freeze_hub_result">Abgeschlossen: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">App-Beschreibungen automatisch aktualisieren</string>
+    <string name="freeze_hub_auto_update_help">Beim Öffnen der Einfrierverwaltung nach UAD-NG-Updates suchen. Standardmäßig an.</string>
+    <string name="freeze_hub_update_failed">Aktualisierung fehlgeschlagen. Letzte gültige Datenbank bleibt erhalten.</string>
+    <string name="freeze_hub_recents">Nach Entfernen aus der Übersicht einfrieren</string>
+    <string name="freeze_hub_recents_help">Verwaltete oder von Telos aufgetaute Apps nach Entfernen ihrer letzten Aufgabe einfrieren. Benötigt Shizuku; Nutzungsausnahmen gelten weiter. Standardmäßig aus.</string>
+    <string name="freeze_hub_recents_unavailable">Erkennung der Übersicht nicht verfügbar. Shizuku starten und Berechtigung erteilen.</string>
+</resources>

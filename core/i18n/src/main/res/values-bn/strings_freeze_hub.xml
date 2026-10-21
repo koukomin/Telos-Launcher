@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">সেটিংসের জন্য অ্যাপে ট্যাপ করুন; একসঙ্গে কাজের জন্য চেকবক্স ব্যবহার করুন।</string>
+    <string name="freeze_hub_unfreeze">ফ্রিজ মুক্ত করুন</string>
+    <string name="freeze_hub_profile_notice">স্বয়ংক্রিয় নিয়ম শুধু এই Android ব্যবহারকারীর জন্য প্রযোজ্য।</string>
+    <string name="freeze_hub_delay">স্ক্রিন বন্ধের পর বিলম্ব</string>
+    <string name="freeze_hub_delay_help">এই স্বয়ংক্রিয় ফ্রিজ অ্যাপের জন্য প্রোফাইলের সময় বদলায়। স্ক্রিন চালু হলে বাতিল হয়। Android কাজটি বিলম্বিত করতে পারে।</string>
+    <string name="freeze_hub_inherit">প্রোফাইলের সময় ব্যবহার করুন</string>
+    <string name="freeze_hub_companions">একসঙ্গে ফ্রিজ মুক্ত করুন</string>
+    <string name="freeze_hub_companion_help">এই অ্যাপ খোলা বা ফ্রিজ মুক্ত করার আগে নির্বাচিত অ্যাপগুলির ফ্রিজ মুক্ত করে। ডিফল্টে বন্ধ। উদাহরণ: Gemini → Google, অর্থপ্রদত্ত অ্যাপ → Play Store, গেম → গেম অপ্টিমাইজার।</string>
+    <string name="freeze_hub_unknown">কমিউনিটির বিবরণ নেই। নিরাপত্তা অজানা।</string>
+    <string name="freeze_hub_uad_help">কমিউনিটির অপসারণের নোট, ফ্রিজের নিশ্চয়তা নয়। Unsafe অ্যাপ অবরুদ্ধ; Expert অ্যাপের অনুমোদন দরকার।</string>
+    <string name="freeze_hub_expert">এই Expert অ্যাপ ফ্রিজ করার অনুমতি দিন</string>
+    <string name="freeze_hub_result">সম্পন্ন: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">অ্যাপের বিবরণ স্বয়ংক্রিয়ভাবে আপডেট করুন</string>
+    <string name="freeze_hub_auto_update_help">ফ্রিজ ম্যানেজার খোলার সময় প্রতিবার UAD-NG আপডেট পরীক্ষা করে। ডিফল্টে চালু।</string>
+    <string name="freeze_hub_update_failed">আপডেট ব্যর্থ। সর্বশেষ বৈধ ডেটাবেস রাখা হয়েছে।</string>
+    <string name="freeze_hub_recents">সাম্প্রতিক অ্যাপ থেকে সরালে ফ্রিজ করুন</string>
+    <string name="freeze_hub_recents_help">শেষ টাস্ক সরালে পরিচালিত বা Telos দ্বারা মুক্ত করা অ্যাপ আবার ফ্রিজ করে। Shizuku প্রয়োজন এবং ব্যবহার সংক্রান্ত ব্যতিক্রম মানা হয়। ডিফল্টে বন্ধ।</string>
+    <string name="freeze_hub_recents_unavailable">সাম্প্রতিক অ্যাপ শনাক্তকরণ নেই। Shizuku চালু করে অনুমতি দিন।</string>
+</resources>

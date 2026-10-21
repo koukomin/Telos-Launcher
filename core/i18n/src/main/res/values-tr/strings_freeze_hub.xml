@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Ayarlar için uygulamaya dokunun; toplu işlemler için kutuları kullanın.</string>
+    <string name="freeze_hub_unfreeze">Dondurmayı kaldır</string>
+    <string name="freeze_hub_profile_notice">Otomatik kurallar yalnızca bu Android kullanıcısı için geçerlidir.</string>
+    <string name="freeze_hub_delay">Ekran kapandıktan sonraki gecikme</string>
+    <string name="freeze_hub_delay_help">Bu otomatik dondurulan uygulamada profil süresini geçersiz kılar. Ekran açıldığında iptal edilir. Android yürütmeyi geciktirebilir.</string>
+    <string name="freeze_hub_inherit">Profil süresini kullan</string>
+    <string name="freeze_hub_companions">Birlikte çöz</string>
+    <string name="freeze_hub_companion_help">Bu uygulama açılırken veya çözülürken önce seçili uygulamaları çözer. Varsayılan olarak kapalıdır. Örnekler: Gemini → Google, ücretli uygulama → Play Store, oyun → oyun iyileştirici.</string>
+    <string name="freeze_hub_unknown">Topluluk açıklaması yok. Güvenlik bilinmiyor.</string>
+    <string name="freeze_hub_uad_help">Topluluk kaldırma notları dondurma garantisi değildir. Unsafe engellenir; Expert onay gerektirir.</string>
+    <string name="freeze_hub_expert">Bu Expert uygulamasını dondurmaya izin ver</string>
+    <string name="freeze_hub_result">Tamamlandı: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Uygulama açıklamalarını otomatik güncelle</string>
+    <string name="freeze_hub_auto_update_help">Dondurma Yöneticisi her açıldığında UAD-NG güncellemelerini denetler. Varsayılan olarak açık.</string>
+    <string name="freeze_hub_update_failed">Güncelleme başarısız. Son geçerli veritabanı korunuyor.</string>
+    <string name="freeze_hub_recents">Son kullanılanlardan kaldırılınca dondur</string>
+    <string name="freeze_hub_recents_help">Son görevi kaldırılınca yönetilen veya Telos ile çözülmüş uygulamaları yeniden dondurur. Shizuku gerektirir; kullanım istisnaları geçerlidir. Varsayılan olarak kapalı.</string>
+    <string name="freeze_hub_recents_unavailable">Son kullanılanlar algılanamıyor. Shizuku uygulamasını başlatıp izin verin.</string>
+</resources>

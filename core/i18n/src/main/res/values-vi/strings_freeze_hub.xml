@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Chạm vào ứng dụng để cài đặt; dùng ô chọn cho thao tác hàng loạt.</string>
+    <string name="freeze_hub_unfreeze">Rã đông</string>
+    <string name="freeze_hub_profile_notice">Quy tắc tự động chỉ áp dụng cho người dùng Android này.</string>
+    <string name="freeze_hub_delay">Độ trễ sau khi tắt màn hình</string>
+    <string name="freeze_hub_delay_help">Ghi đè thời gian hồ sơ cho ứng dụng đóng băng tự động này. Hủy khi bật màn hình. Android có thể trì hoãn thực thi.</string>
+    <string name="freeze_hub_inherit">Dùng thời gian hồ sơ</string>
+    <string name="freeze_hub_companions">Rã đông cùng nhau</string>
+    <string name="freeze_hub_companion_help">Rã đông các ứng dụng đã chọn trước khi mở hoặc rã đông ứng dụng này. Mặc định tắt. Ví dụ: Gemini → Google, ứng dụng trả phí → Play Store, trò chơi → trình tối ưu trò chơi.</string>
+    <string name="freeze_hub_unknown">Không có mô tả cộng đồng. Chưa rõ độ an toàn.</string>
+    <string name="freeze_hub_uad_help">Ghi chú gỡ bỏ của cộng đồng không bảo đảm đóng băng an toàn. Unsafe bị chặn; Expert cần phê duyệt.</string>
+    <string name="freeze_hub_expert">Cho phép đóng băng ứng dụng Expert này</string>
+    <string name="freeze_hub_result">Hoàn tất: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Tự động cập nhật mô tả ứng dụng</string>
+    <string name="freeze_hub_auto_update_help">Kiểm tra UAD-NG mỗi khi mở trình quản lý đóng băng. Mặc định bật.</string>
+    <string name="freeze_hub_update_failed">Cập nhật thất bại. Giữ lại cơ sở dữ liệu hợp lệ gần nhất.</string>
+    <string name="freeze_hub_recents">Đóng băng khi xóa khỏi ứng dụng gần đây</string>
+    <string name="freeze_hub_recents_help">Đóng băng lại ứng dụng được quản lý hoặc đã được Telos rã đông sau khi tác vụ cuối bị xóa. Cần Shizuku và tuân thủ ngoại lệ sử dụng. Mặc định tắt.</string>
+    <string name="freeze_hub_recents_unavailable">Không thể phát hiện ứng dụng gần đây. Khởi động Shizuku và cấp quyền.</string>
+</resources>

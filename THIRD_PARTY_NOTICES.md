@@ -335,3 +335,20 @@ The complete Mail/Activation artifact license and notice texts are bundled in `a
 The shared cached-wallpaper glass renderer and bounded box blur are independently implemented Telos code under the project license. The former Haze runtime dependency has been removed; no Haze source code is copied into this renderer.
 
 Video glass instrumentation uses the existing AndroidX Test JUnit extension (Apache-2.0) and the already pinned AndroidX Test runner 1.6.2 as test-only dependencies; release APK dependencies are unchanged.
+
+
+## UAD-NG package descriptions
+
+The unmodified `resources/assets/uad_lists.json` from Universal-Debloater-Alliance/
+universal-android-debloater-next-generation is bundled with gzip compression in
+`services/freeze/src/main/assets/uad_lists.json.gz`. Snapshot: upstream commit
+`e0af3336d8f71fcb2b65ad4949051cf25c654f61` (2026-10-19), GPL-3.0; copyright
+Universal Debloater Alliance and its contributors. The full GPL-3.0 text is in
+`LICENSE.txt`; original source is available at
+https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/tree/e0af3336d8f71fcb2b65ad4949051cf25c654f61.
+Runtime updates use that same project’s main-branch JSON. Attribution remains visible in app details.
+
+Canta (samolego/Canta, LGPL-3.0) was inspected to identify its UAD-NG source URL;
+no Canta source code is copied. Thor commit `6dbf7ee4f3777b8cb26790facb8846f3706b3699`
+(2026-10-21, GPL-3.0-or-later) was reviewed for freezer behavior; the additional
+safety policy and updater here are independently implemented. Existing Thor attribution above remains.

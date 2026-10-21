@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">הקישו על יישום להגדרות; השתמשו בתיבות הסימון לפעולות מרובות.</string>
+    <string name="freeze_hub_unfreeze">הפשרה</string>
+    <string name="freeze_hub_profile_notice">כללים אוטומטיים חלים רק על משתמש Android זה.</string>
+    <string name="freeze_hub_delay">השהיה לאחר כיבוי המסך</string>
+    <string name="freeze_hub_delay_help">מחליף את זמן הפרופיל ליישום זה עם הקפאה אוטומטית. מבוטל בהדלקת המסך. Android עשוי לעכב את הביצוע.</string>
+    <string name="freeze_hub_inherit">שימוש בזמן הפרופיל</string>
+    <string name="freeze_hub_companions">הפשרה יחד</string>
+    <string name="freeze_hub_companion_help">מפשיר תחילה את היישומים שנבחרו בעת פתיחת יישום זה או הפשרתו. כבוי כברירת מחדל. דוגמאות: Gemini → Google, יישום בתשלום → Play Store, משחק → ממטב משחקים.</string>
+    <string name="freeze_hub_unknown">אין תיאור קהילתי. הבטיחות אינה ידועה.</string>
+    <string name="freeze_hub_uad_help">הערות הסרה קהילתיות אינן ערובה להקפאה בטוחה. Unsafe חסומים; Expert דורשים אישור.</string>
+    <string name="freeze_hub_expert">אפשר הקפאת יישום Expert זה</string>
+    <string name="freeze_hub_result">הושלמו: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">עדכון אוטומטי של תיאורי יישומים</string>
+    <string name="freeze_hub_auto_update_help">בודק עדכוני UAD-NG בכל פתיחה של מנהל ההקפאה. פעיל כברירת מחדל.</string>
+    <string name="freeze_hub_update_failed">העדכון נכשל. מסד הנתונים התקין האחרון נשמר.</string>
+    <string name="freeze_hub_recents">הקפאה לאחר הסרה מהאחרונים</string>
+    <string name="freeze_hub_recents_help">מקפיא מחדש יישומים מנוהלים או שהופשרו ב־Telos לאחר הסרת המשימה האחרונה. נדרש Shizuku והחרגות שימוש נשמרות. כבוי כברירת מחדל.</string>
+    <string name="freeze_hub_recents_unavailable">זיהוי האחרונים אינו זמין. הפעילו Shizuku ותנו הרשאה.</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">แตะแอปเพื่อตั้งค่า ใช้ช่องทำเครื่องหมายสำหรับการทำงานหลายแอป</string>
+    <string name="freeze_hub_unfreeze">เลิกแช่แข็ง</string>
+    <string name="freeze_hub_profile_notice">กฎอัตโนมัติใช้กับผู้ใช้ Android นี้เท่านั้น</string>
+    <string name="freeze_hub_delay">หน่วงเวลาหลังปิดหน้าจอ</string>
+    <string name="freeze_hub_delay_help">แทนที่เวลาของโปรไฟล์สำหรับแอปแช่แข็งอัตโนมัตินี้ ยกเลิกเมื่อเปิดหน้าจอ Android อาจเลื่อนการทำงานออกไป</string>
+    <string name="freeze_hub_inherit">ใช้เวลาของโปรไฟล์</string>
+    <string name="freeze_hub_companions">เลิกแช่แข็งพร้อมกัน</string>
+    <string name="freeze_hub_companion_help">เลิกแช่แข็งแอปที่เลือกก่อนเปิดหรือเลิกแช่แข็งแอปนี้ ปิดไว้ตามค่าเริ่มต้น ตัวอย่าง: Gemini → Google, แอปเสียเงิน → Play Store, เกม → แอปเพิ่มประสิทธิภาพเกม</string>
+    <string name="freeze_hub_unknown">ไม่มีคำอธิบายจากชุมชน ไม่ทราบความปลอดภัย</string>
+    <string name="freeze_hub_uad_help">ข้อมูลการลบจากชุมชนไม่รับประกันการแช่แข็ง แอป Unsafe ถูกบล็อก ส่วน Expert ต้องอนุมัติ</string>
+    <string name="freeze_hub_expert">อนุญาตให้แช่แข็งแอป Expert นี้</string>
+    <string name="freeze_hub_result">เสร็จแล้ว: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">อัปเดตคำอธิบายแอปอัตโนมัติ</string>
+    <string name="freeze_hub_auto_update_help">ตรวจสอบ UAD-NG ทุกครั้งที่เปิดตัวจัดการแช่แข็ง เปิดตามค่าเริ่มต้น</string>
+    <string name="freeze_hub_update_failed">อัปเดตไม่สำเร็จ เก็บฐานข้อมูลที่ใช้ได้ล่าสุดไว้</string>
+    <string name="freeze_hub_recents">แช่แข็งเมื่อนำออกจากแอปล่าสุด</string>
+    <string name="freeze_hub_recents_help">แช่แข็งแอปที่จัดการหรือที่ Telos เลิกแช่แข็งอีกครั้งเมื่อนำงานสุดท้ายออก ต้องใช้ Shizuku และเคารพข้อยกเว้นการใช้งาน ปิดตามค่าเริ่มต้น</string>
+    <string name="freeze_hub_recents_unavailable">ตรวจหาแอปล่าสุดไม่ได้ โปรดเปิด Shizuku และให้สิทธิ์</string>
+</resources>

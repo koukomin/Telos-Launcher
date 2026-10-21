@@ -31,6 +31,7 @@ class FreezeManager internal constructor(
     private val context: Context,
     private val settings: FreezeSettings,
     private val usageStats: AppUsageStatsProvider,
+    private val descriptions: BloatDescriptions,
 ) {
     // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
     private val dhizukuProvider = DhizukuProvider(context)
@@ -49,6 +50,7 @@ class FreezeManager internal constructor(
     // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
     private val operationMutex = Mutex()
+    private val companionMutex = Mutex()
 
     private val shizukuProvider = ShizukuProvider(context.packageName)
     private val rootProvider = RootProvider()
@@ -72,7 +74,15 @@ class FreezeManager internal constructor(
         it.packageName == packageName && it.userId == Process.myUid() / 100000 && it.operationId.isNotEmpty()
     }
     suspend fun launchThawed(packageName: String, user: UserHandle, preferred: ComponentName,
-        launch: (ComponentName) -> Boolean) = maintenance.launchThawed(packageName, user, preferred, launch)
+        launch: (ComponentName) -> Boolean): Boolean {
+        val wasFrozen = user == Process.myUserHandle() && withContext(kotlinx.coroutines.Dispatchers.IO) { isFrozen(packageName) }
+        val started = maintenance.launchThawed(packageName, user, preferred, launch)
+        if (started && wasFrozen) {
+            settings.trackRecentsThaw(packageName)
+            onUserUnfreeze?.invoke(packageName)
+        }
+        return started
+    }
 
     private suspend fun maintenanceProvider(name: String?): Pair<String, PrivilegedAccessProvider>? {
         if (name == null) refreshBackendState()
@@ -142,11 +152,42 @@ class FreezeManager internal constructor(
     suspend fun freeze(packageName: String, userId: Int = Process.myUid() / 100000): Set<String> {
         if (_activeBackend.value == null) refreshBackendState()
         val result = setSuspended(listOf(packageName), true, userId)
-        if (packageName in result) {
-            val companions = settings.clearCompanionHoldsForMaster(packageName)
-            if (companions.isNotEmpty()) setSuspended(companions.toList(), true, userId)
-        }
+        freezeHeldCompanions(result, userId)
         return result
+    }
+
+    /** Explicit dependencies only; disabled by default. Shared companions keep all active owners. */
+    suspend fun unfreezeCompanions(master: String, userId: Int): Set<String> = withContext(kotlinx.coroutines.Dispatchers.IO) {
+        companionMutex.withLock {
+        if (userId != Process.myUid() / 100000 || master !in settings.companionEnabled.first()) return@withLock emptySet()
+        val packages = settings.companionExtras.first()[master].orEmpty().split(',')
+            .map { it.trim() }.filter { it != master && VALID_PACKAGE_NAME.matches(it) }.distinct()
+        val existingHolds = settings.companionHolds.first().keys
+        val thawed = linkedSetOf<String>()
+        for (pkg in packages) {
+            if (pkg in existingHolds) thawed += pkg
+            else if (isFrozen(pkg)) {
+                if (pkg !in unfreeze(pkg, userId, fromUser = false)) {
+                    settings.addCompanionHolds(master, thawed)
+                    releaseCompanionsLocked(master, userId)
+                    error("Could not unfreeze companion $pkg")
+                }
+                thawed += pkg
+            }
+        }
+        settings.addCompanionHolds(master, thawed)
+        thawed
+        }
+    }
+
+    suspend fun releaseCompanions(master: String, userId: Int) = withContext(kotlinx.coroutines.Dispatchers.IO) {
+        companionMutex.withLock { releaseCompanionsLocked(master, userId) }
+    }
+
+    private suspend fun releaseCompanionsLocked(master: String, userId: Int) {
+        if (userId != Process.myUid() / 100000) return
+        val released = settings.clearCompanionHoldsForMaster(master)
+        if (released.isNotEmpty()) setSuspended(released.toList(), true, userId)
     }
 
     /** Called after a user-driven unfreeze (launcher tap), not after Play-update thaw. */
@@ -159,7 +200,10 @@ class FreezeManager internal constructor(
     ): Set<String> {
         if (_activeBackend.value == null) refreshBackendState()
         val result = setSuspended(listOf(packageName), false, userId)
-        if (fromUser) onUserUnfreeze?.invoke(packageName)
+        if (fromUser && packageName in result) {
+            if (userId == Process.myUid() / 100000) settings.trackRecentsThaw(packageName)
+            onUserUnfreeze?.invoke(packageName)
+        }
         return result
     }
 
@@ -183,7 +227,10 @@ class FreezeManager internal constructor(
         if (packageNames.isEmpty()) return
         if (_activeBackend.value == null) refreshBackendState()
         if (_activeBackend.value == FreezeBackendType.Island) {
-            islandProvider.postFreezeNotification(packageNames)
+            val approved = settings.systemRiskApproved.first()
+            val safe = packageNames.filter { VALID_PACKAGE_NAME.matches(it) && it !in PROTECTED_PACKAGES &&
+                descriptions.allowsFreeze(it, it in approved, userId) }
+            if (safe.isNotEmpty()) islandProvider.postFreezeNotification(safe)
         } else {
             val changed = operationMutex.withLock { applySuspended(packageNames, true, userId, respectMaintenance = true) }
             freezeHeldCompanions(changed, userId)
@@ -191,12 +238,14 @@ class FreezeManager internal constructor(
     }
 
     private suspend fun freezeHeldCompanions(masters: Set<String>, userId: Int) {
-        if (masters.isEmpty()) return
+        if (masters.isEmpty() || userId != Process.myUid() / 100000) return
+        companionMutex.withLock {
         val extras = mutableListOf<String>()
         for (master in masters) {
             extras += settings.clearCompanionHoldsForMaster(master)
         }
         if (extras.isNotEmpty()) setSuspended(extras, true, userId)
+        }
     }
 
     /** Apply a method change to an already frozen app before committing its new policy. */
@@ -269,7 +318,9 @@ class FreezeManager internal constructor(
             Log.w(TAG, "All targeted packages are protected system packages. Aborting freeze.")
             return emptySet()
         }
-        val targetPackages = safePackages
+        val approved = if (suspended) settings.systemRiskApproved.first() else emptySet()
+        val targetPackages = if (suspended) safePackages.filter { descriptions.allowsFreeze(it, it in approved, userId) } else safePackages
+        if (targetPackages.isEmpty()) return emptySet()
         // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
         val backend = _activeBackend.value
@@ -309,11 +360,35 @@ class FreezeManager internal constructor(
             } else transition(targetPackages)
         }
 
+        // A successful shell exit or empty binder failure array is not sufficient evidence.
+        val verified = succeeded.filterTo(linkedSetOf()) { pkg ->
+            var confirmed = false
+            repeat(3) { attempt ->
+                if (!confirmed) {
+                    if (attempt > 0) kotlinx.coroutines.delay(125)
+                    confirmed = withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        runCatching {
+                            val user = UserHandle.getUserHandleForUid(userId * 100000)
+                            val flags = PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES
+                            val info = if (userId == Process.myUid() / 100000) context.packageManager.getApplicationInfo(pkg, flags)
+                                else requireNotNull(context.getSystemService(LauncherApps::class.java)).getApplicationInfo(pkg, flags, user)
+                            if (info.flags and ApplicationInfo.FLAG_INSTALLED == 0) false
+                            else if (suspended && backend == FreezeBackendType.Island) freezeState(pkg) != AppFreezeState.Normal
+                            else if (suspended) methodApplied(pkg, user, methods[pkg] ?: FreezeMethod.Suspend)
+                            else info.enabled && info.flags and ApplicationInfo.FLAG_SUSPENDED == 0 &&
+                                (userId != Process.myUid() / 100000 || freezeState(pkg) == AppFreezeState.Normal)
+                        }.getOrDefault(false)
+                    }
+                }
+            }
+            confirmed
+        }
+        if (suspended && userId == Process.myUid() / 100000) settings.forgetRecentsThaw(verified)
         val now = System.currentTimeMillis()
-        for (packageName in succeeded) {
+        for (packageName in verified) {
             if (suspended) settings.recordFrozen(packageName, now) else settings.recordUnfrozen(packageName, now)
         }
-        return succeeded
+        return verified
     }
 
     suspend fun forceStop(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {

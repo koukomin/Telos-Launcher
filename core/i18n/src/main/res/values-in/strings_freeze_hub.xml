@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Ketuk aplikasi untuk pengaturan; gunakan kotak centang untuk tindakan massal.</string>
+    <string name="freeze_hub_unfreeze">Cairkan</string>
+    <string name="freeze_hub_profile_notice">Aturan otomatis hanya berlaku untuk pengguna Android ini.</string>
+    <string name="freeze_hub_delay">Jeda setelah layar mati</string>
+    <string name="freeze_hub_delay_help">Mengganti waktu profil untuk aplikasi pembekuan otomatis ini. Dibatalkan saat layar menyala. Android dapat menunda eksekusi.</string>
+    <string name="freeze_hub_inherit">Gunakan waktu profil</string>
+    <string name="freeze_hub_companions">Cairkan bersama</string>
+    <string name="freeze_hub_companion_help">Cairkan aplikasi terpilih terlebih dahulu saat membuka atau mencairkan aplikasi ini. Nonaktif secara bawaan. Contoh: Gemini → Google, aplikasi berbayar → Play Store, gim → pengoptimal gim.</string>
+    <string name="freeze_hub_unknown">Tidak ada deskripsi komunitas. Keamanan tidak diketahui.</string>
+    <string name="freeze_hub_uad_help">Catatan penghapusan komunitas bukan jaminan pembekuan. Aplikasi Unsafe diblokir; Expert memerlukan persetujuan.</string>
+    <string name="freeze_hub_expert">Izinkan pembekuan aplikasi Expert ini</string>
+    <string name="freeze_hub_result">Selesai: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Perbarui deskripsi aplikasi otomatis</string>
+    <string name="freeze_hub_auto_update_help">Periksa UAD-NG setiap kali Pengelola Pembekuan dibuka. Aktif secara bawaan.</string>
+    <string name="freeze_hub_update_failed">Pembaruan gagal. Database valid terakhir dipertahankan.</string>
+    <string name="freeze_hub_recents">Bekukan setelah dihapus dari aplikasi terbaru</string>
+    <string name="freeze_hub_recents_help">Membekukan kembali aplikasi terkelola atau yang dicairkan Telos setelah tugas terakhir dihapus. Memerlukan Shizuku dan mematuhi pengecualian penggunaan. Nonaktif secara bawaan.</string>
+    <string name="freeze_hub_recents_unavailable">Deteksi aplikasi terbaru tidak tersedia. Jalankan Shizuku dan berikan izin.</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Palieskite programėlę nustatymams; žymimieji laukeliai skirti masiniams veiksmams.</string>
+    <string name="freeze_hub_unfreeze">Atšildyti</string>
+    <string name="freeze_hub_profile_notice">Automatinės taisyklės galioja tik šiam Android naudotojui.</string>
+    <string name="freeze_hub_delay">Delsa išjungus ekraną</string>
+    <string name="freeze_hub_delay_help">Pakeičia šios automatiškai užšaldomos programėlės profilio laiką. Įjungus ekraną atšaukiama. Android gali atidėti vykdymą.</string>
+    <string name="freeze_hub_inherit">Naudoti profilio laiką</string>
+    <string name="freeze_hub_companions">Atšildyti kartu</string>
+    <string name="freeze_hub_companion_help">Pirmiausia atšildo pasirinktas programėles atidarant ar atšildant šią. Pagal numatymą išjungta. Pavyzdžiai: Gemini → Google, mokama programėlė → Play Store, žaidimas → žaidimų optimizatorius.</string>
+    <string name="freeze_hub_unknown">Nėra bendruomenės aprašo. Sauga nežinoma.</string>
+    <string name="freeze_hub_uad_help">Bendruomenės šalinimo pastabos negarantuoja užšaldymo saugos. Unsafe blokuojamos; Expert reikia patvirtinimo.</string>
+    <string name="freeze_hub_expert">Leisti užšaldyti šią Expert programėlę</string>
+    <string name="freeze_hub_result">Baigta: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Automatiškai naujinti programėlių aprašus</string>
+    <string name="freeze_hub_auto_update_help">Tikrina UAD-NG kiekvieną kartą atidarius užšaldymo tvarkyklę. Pagal numatymą įjungta.</string>
+    <string name="freeze_hub_update_failed">Atnaujinti nepavyko. Išsaugota paskutinė tinkama duomenų bazė.</string>
+    <string name="freeze_hub_recents">Užšaldyti pašalinus iš naujausių</string>
+    <string name="freeze_hub_recents_help">Iš naujo užšaldo valdomas ar Telos atšildytas programėles pašalinus paskutinę užduotį. Reikia Shizuku, naudojimo išimtys galioja. Pagal numatymą išjungta.</string>
+    <string name="freeze_hub_recents_unavailable">Naujausių aptikimas neprieinamas. Paleiskite Shizuku ir suteikite leidimą.</string>
+</resources>

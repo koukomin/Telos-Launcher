@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Tapáil aip dá socruithe; úsáid ticbhoscaí le haghaidh gníomhartha iolracha.</string>
+    <string name="freeze_hub_unfreeze">Díreoigh</string>
+    <string name="freeze_hub_profile_notice">Ní bhaineann rialacha uathoibríocha ach leis an úsáideoir Android seo.</string>
+    <string name="freeze_hub_delay">Moill tar éis an scáileán a mhúchadh</string>
+    <string name="freeze_hub_delay_help">Sáraíonn sé am na próifíle don aip uathreoite seo. Cealaítear é nuair a lastar an scáileán. Féadfaidh Android moill a chur ar an rith.</string>
+    <string name="freeze_hub_inherit">Úsáid am na próifíle</string>
+    <string name="freeze_hub_companions">Díreoigh le chéile</string>
+    <string name="freeze_hub_companion_help">Díreoitear na haipeanna roghnaithe ar dtús agus an aip seo á hoscailt nó á díreo. Múchta de réir réamhshocraithe. Samplaí: Gemini → Google, aip íoctha → Play Store, cluiche → optamóir cluichí.</string>
+    <string name="freeze_hub_unknown">Níl cur síos pobail ann. Níl an tsábháilteacht ar eolas.</string>
+    <string name="freeze_hub_uad_help">Nótaí bainte ón bpobal, ní ráthaíocht reo iad. Cuirtear cosc ar Unsafe; teastaíonn cead do Expert.</string>
+    <string name="freeze_hub_expert">Ceadaigh reo na haipe Expert seo</string>
+    <string name="freeze_hub_result">Críochnaithe: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Nuashonraigh tuairiscí aipeanna go huathoibríoch</string>
+    <string name="freeze_hub_auto_update_help">Seiceáil UAD-NG gach uair a osclaítear an bainisteoir reo. Cumasaithe de réir réamhshocraithe.</string>
+    <string name="freeze_hub_update_failed">Theip ar an nuashonrú. Coinnítear an bunachar bailí deireanach.</string>
+    <string name="freeze_hub_recents">Reo tar éis baint ó aipeanna le déanaí</string>
+    <string name="freeze_hub_recents_help">Athreoitear aipeanna bainistithe nó díreoite ag Telos nuair a bhaintear an tasc deireanach. Teastaíonn Shizuku; cloítear le heisceachtaí úsáide. Múchta de réir réamhshocraithe.</string>
+    <string name="freeze_hub_recents_unavailable">Níl braith aipeanna le déanaí ar fáil. Tosaigh Shizuku agus tabhair cead.</string>
+</resources>

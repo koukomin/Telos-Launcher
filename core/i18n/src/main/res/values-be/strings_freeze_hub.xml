@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Націсніце праграму для налад; сцяжкі прызначаны для групавых дзеянняў.</string>
+    <string name="freeze_hub_unfreeze">Размарозіць</string>
+    <string name="freeze_hub_profile_notice">Аўтаматычныя правілы дзейнічаюць толькі для гэтага карыстальніка Android.</string>
+    <string name="freeze_hub_delay">Затрымка пасля выключэння экрана</string>
+    <string name="freeze_hub_delay_help">Замяняе час профілю для гэтай праграмы з аўтазамарожваннем. Скасоўваецца пры ўключэнні экрана. Android можа затрымаць выкананне.</string>
+    <string name="freeze_hub_inherit">Выкарыстоўваць час профілю</string>
+    <string name="freeze_hub_companions">Размарожваць разам</string>
+    <string name="freeze_hub_companion_help">Спачатку размарожвае выбраныя праграмы пры адкрыцці або размарожванні гэтай. Першапачаткова выключана. Прыклады: Gemini → Google, платная праграма → Play Store, гульня → гульнявы аптымізатар.</string>
+    <string name="freeze_hub_unknown">Няма апісання супольнасці. Бяспека невядомая.</string>
+    <string name="freeze_hub_uad_help">Заўвагі супольнасці пра выдаленне не гарантуюць бяспеку замарожвання. Unsafe блакуюцца; Expert патрабуюць згоды.</string>
+    <string name="freeze_hub_expert">Дазволіць замарожванне гэтай праграмы Expert</string>
+    <string name="freeze_hub_result">Завершана: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Аўтаматычна абнаўляць апісанні праграм</string>
+    <string name="freeze_hub_auto_update_help">Правярае UAD-NG пры кожным адкрыцці кіравання замарожваннем. Першапачаткова ўключана.</string>
+    <string name="freeze_hub_update_failed">Абнаўленне не ўдалося. Захавана апошняя дзейная база.</string>
+    <string name="freeze_hub_recents">Замарожваць пасля выдалення з нядаўніх</string>
+    <string name="freeze_hub_recents_help">Зноў замарожвае кіраваныя або размарожаныя Telos праграмы пасля выдалення апошняй задачы. Патрэбны Shizuku; выключэнні выкарыстання дзейнічаюць. Першапачаткова выключана.</string>
+    <string name="freeze_hub_recents_unavailable">Выяўленне нядаўніх недаступнае. Запусціце Shizuku і дайце дазвол.</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Klepnutím nastavíte aplikaci; zaškrtávací políčka slouží k hromadným akcím.</string>
+    <string name="freeze_hub_unfreeze">Rozmrazit</string>
+    <string name="freeze_hub_profile_notice">Automatická pravidla platí jen pro tohoto uživatele Androidu.</string>
+    <string name="freeze_hub_delay">Prodleva po vypnutí obrazovky</string>
+    <string name="freeze_hub_delay_help">Nahrazuje čas profilu pro tuto automaticky zmrazovanou aplikaci. Při zapnutí obrazovky se ruší. Android může provedení zpozdit.</string>
+    <string name="freeze_hub_inherit">Použít čas profilu</string>
+    <string name="freeze_hub_companions">Rozmrazovat společně</string>
+    <string name="freeze_hub_companion_help">Nejprve rozmrazí vybrané aplikace při otevření či rozmrazení této aplikace. Ve výchozím stavu vypnuto. Příklady: Gemini → Google, placená aplikace → Play Store, hra → herní optimalizátor.</string>
+    <string name="freeze_hub_unknown">Bez komunitního popisu. Bezpečnost neznámá.</string>
+    <string name="freeze_hub_uad_help">Komunitní poznámky k odstranění nezaručují bezpečné zmrazení. Unsafe jsou blokovány; Expert vyžadují souhlas.</string>
+    <string name="freeze_hub_expert">Povolit zmrazení této aplikace Expert</string>
+    <string name="freeze_hub_result">Dokončeno: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Automaticky aktualizovat popisy aplikací</string>
+    <string name="freeze_hub_auto_update_help">Kontroluje UAD-NG při každém otevření správce zmrazování. Ve výchozím stavu zapnuto.</string>
+    <string name="freeze_hub_update_failed">Aktualizace selhala. Zachována poslední platná databáze.</string>
+    <string name="freeze_hub_recents">Zmrazit po odebrání z nedávných</string>
+    <string name="freeze_hub_recents_help">Znovu zmrazí spravované nebo Telosem rozmrazené aplikace po odebrání poslední úlohy. Vyžaduje Shizuku a respektuje výjimky používání. Ve výchozím stavu vypnuto.</string>
+    <string name="freeze_hub_recents_unavailable">Detekce nedávných není dostupná. Spusťte Shizuku a udělte oprávnění.</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Dodirnite aplikaciju za postavke; kućice služe za skupne radnje.</string>
+    <string name="freeze_hub_unfreeze">Odmrzni</string>
+    <string name="freeze_hub_profile_notice">Automatska pravila vrijede samo za ovog korisnika Androida.</string>
+    <string name="freeze_hub_delay">Odgoda nakon gašenja zaslona</string>
+    <string name="freeze_hub_delay_help">Zamjenjuje vrijeme profila za ovu automatski zamrzavanu aplikaciju. Poništava se paljenjem zaslona. Android može odgoditi izvršavanje.</string>
+    <string name="freeze_hub_inherit">Koristi vrijeme profila</string>
+    <string name="freeze_hub_companions">Odmrzni zajedno</string>
+    <string name="freeze_hub_companion_help">Najprije odmrzava odabrane aplikacije pri otvaranju ili odmrzavanju ove. Zadano isključeno. Primjeri: Gemini → Google, plaćena aplikacija → Play Store, igra → optimizator igara.</string>
+    <string name="freeze_hub_unknown">Nema opisa zajednice. Sigurnost je nepoznata.</string>
+    <string name="freeze_hub_uad_help">Bilješke zajednice o uklanjanju nisu jamstvo za zamrzavanje. Unsafe su blokirane; Expert zahtijevaju odobrenje.</string>
+    <string name="freeze_hub_expert">Dopusti zamrzavanje ove aplikacije Expert</string>
+    <string name="freeze_hub_result">Dovršeno: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Automatski ažuriraj opise aplikacija</string>
+    <string name="freeze_hub_auto_update_help">Provjerava UAD-NG pri svakom otvaranju upravitelja zamrzavanja. Zadano uključeno.</string>
+    <string name="freeze_hub_update_failed">Ažuriranje nije uspjelo. Zadržana je zadnja valjana baza.</string>
+    <string name="freeze_hub_recents">Zamrzni nakon uklanjanja iz nedavnih</string>
+    <string name="freeze_hub_recents_help">Ponovno zamrzava upravljane aplikacije ili one koje je Telos odmrznuo nakon uklanjanja zadnjeg zadatka. Zahtijeva Shizuku i poštuje iznimke uporabe. Zadano isključeno.</string>
+    <string name="freeze_hub_recents_unavailable">Otkrivanje nedavnih nije dostupno. Pokrenite Shizuku i dajte dopuštenje.</string>
+</resources>

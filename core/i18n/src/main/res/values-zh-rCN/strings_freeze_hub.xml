@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">点按应用进行设置；使用复选框执行批量操作。</string>
+    <string name="freeze_hub_unfreeze">解冻</string>
+    <string name="freeze_hub_profile_notice">自动规则仅适用于此 Android 用户。</string>
+    <string name="freeze_hub_delay">熄屏后的延迟</string>
+    <string name="freeze_hub_delay_help">覆盖此自动冻结应用的配置时间。亮屏时取消。Android 可能延迟执行。</string>
+    <string name="freeze_hub_inherit">使用配置时间</string>
+    <string name="freeze_hub_companions">一起解冻</string>
+    <string name="freeze_hub_companion_help">打开或解冻此应用前，先解冻选定的应用。默认关闭。例如：Gemini → Google，付费应用 → Play Store，游戏 → 游戏优化应用。</string>
+    <string name="freeze_hub_unknown">暂无社区说明，安全性未知。</string>
+    <string name="freeze_hub_uad_help">社区卸载说明不保证冻结安全。Unsafe 应用被禁止冻结；Expert 应用需要批准。</string>
+    <string name="freeze_hub_expert">允许冻结此 Expert 应用</string>
+    <string name="freeze_hub_result">已完成：%1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">自动更新应用说明</string>
+    <string name="freeze_hub_auto_update_help">每次打开冻结管理器时检查 UAD-NG 更新。默认开启。</string>
+    <string name="freeze_hub_update_failed">更新失败，保留最后一个有效数据库。</string>
+    <string name="freeze_hub_recents">从最近任务中移除后冻结</string>
+    <string name="freeze_hub_recents_help">移除最后一个任务后，重新冻结受管理或由 Telos 解冻的应用。需要 Shizuku，并遵守使用排除规则。默认关闭。</string>
+    <string name="freeze_hub_recents_unavailable">最近任务检测不可用。请启动 Shizuku 并授予权限。</string>
+</resources>

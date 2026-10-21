@@ -125,7 +125,7 @@ fun MainSettingsScreen() {
                 // === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions ===
                 Preference(
                     icon = R.drawable.ac_unit_24px,
-                    title = stringResource(R.string.hc_smart_freeze_dashboard),
+                    title = stringResource(R.string.preference_screen_freeze),
                     summary = stringResource(R.string.hc_manage_frozen_apps_and_shizuku_status),
                     onClick = {
                         backStack.add(SmartFreezeDashboardRoute)

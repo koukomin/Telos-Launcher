@@ -46,6 +46,21 @@ data object FreezeSettingsRoute : NavKey
 
 @Composable
 fun FreezeSettingsScreen() {
+    val rootVm: FreezeSettingsScreenVM = viewModel()
+    LaunchedEffect(Unit) { rootVm.enterFreezeManagement() }
+    var tab by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(0) }
+    val tabs: @Composable () -> Unit = { FreezeManagementTabs(tab) { tab = it } }
+    val holder = androidx.compose.runtime.saveable.rememberSaveableStateHolder()
+    holder.SaveableStateProvider(tab) {
+        when (tab) {
+            0 -> SmartFreezeDashboardScreen(tabs)
+            else -> FreezeSettingsContent(tab, tabs)
+        }
+    }
+}
+
+@Composable
+private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
     val context = LocalContext.current
     val viewModel: FreezeSettingsScreenVM = viewModel()
 
@@ -103,7 +118,17 @@ fun FreezeSettingsScreen() {
         title = stringResource(R.string.preference_screen_freeze),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
-        item {
+        item { tabs() }
+        if (section == 2) item {
+            val autoUpdate by viewModel.bloatAutoUpdate.collectAsStateWithLifecycle()
+            val updateStatus by viewModel.bloatUpdateStatus.collectAsStateWithLifecycle()
+            SwitchPreference(title = stringResource(R.string.freeze_hub_auto_update),
+                summary = stringResource(R.string.freeze_hub_auto_update_help), value = autoUpdate,
+                onValueChanged = viewModel::setBloatAutoUpdate)
+            if (updateStatus == de.mm20.launcher2.freeze.BloatUpdateStatus.Failed)
+                Text(stringResource(R.string.freeze_hub_update_failed))
+            if (updateStatus == de.mm20.launcher2.freeze.BloatUpdateStatus.Updating)
+                androidx.compose.material3.LinearProgressIndicator()
             PreferenceCategory(title = stringResource(R.string.freeze_maintenance_title)) {
                 SwitchPreference(title = stringResource(R.string.netfw_filter_user), value = includeUsers,
                     onValueChanged = { includeUsers = it }, enabled = !maintenanceBusy)
@@ -129,7 +154,7 @@ fun FreezeSettingsScreen() {
                     onClick = { viewModel.restoreFrozenApps() })
             }
         }
-        item {
+        if (section == 2) item {
             Preference(
                 icon = R.drawable.bar_chart_24px,
                 title = stringResource(R.string.preference_freeze_dashboard),
@@ -137,7 +162,7 @@ fun FreezeSettingsScreen() {
                 onClick = { backStack.add(FreezeDashboardRoute) }
             )
         }
-        item {
+        if (section == 2) item {
             PreferenceCategory(title = stringResource(R.string.preference_freeze_backend_category)) {
                 ListPreference(
                     title = stringResource(R.string.preference_freeze_backend),
@@ -188,7 +213,13 @@ fun FreezeSettingsScreen() {
                 )
             }
         }
-        item {
+        if (section == 1) item {
+            val recentsEnabled by viewModel.freezeOnRecentsRemoval.collectAsStateWithLifecycle()
+            val recentsConnected by viewModel.recentsConnected.collectAsStateWithLifecycle()
+            SwitchPreference(title = stringResource(R.string.freeze_hub_recents),
+                summary = stringResource(R.string.freeze_hub_recents_help), value = recentsEnabled,
+                onValueChanged = viewModel::setFreezeOnRecentsRemoval)
+            if (recentsEnabled && !recentsConnected) Text(stringResource(R.string.freeze_hub_recents_unavailable))
             PreferenceCategory(title = stringResource(R.string.preference_freeze_auto_category)) {
                 SwitchPreference(
                     title = stringResource(R.string.preference_freeze_auto_enabled),
@@ -293,24 +324,12 @@ fun FreezeSettingsScreen() {
                                 label = { Text(stringResource(R.string.au_freeze_kbps, it)) }
                             )
                         }
-                        TextPreference(
-                            title = stringResource(R.string.freeze_game_booster_package),
-                            summary = stringResource(R.string.freeze_game_booster_package_summary),
-                            value = gameBoosterPackage,
-                            onValueChanged = { viewModel.setGameBoosterPackage(it) },
-                            placeholder = "com.miui.securitycenter",
-                        )
-                        TextPreference(
-                            title = stringResource(R.string.freeze_game_booster_apps),
-                            summary = stringResource(R.string.freeze_game_booster_apps_summary),
-                            value = gameBoosterApps.joinToString(", "),
-                            onValueChanged = { viewModel.setGameBoosterAppsCsv(it) },
-                        )
+
                     }
                 }
             }
         }
-        item {
+        if (section == 2) item {
             PreferenceCategory(title = stringResource(R.string.preference_freeze_apps_category)) {
                 Text(
                     text = stringResource(R.string.preference_freeze_apps_summary),
@@ -358,70 +377,6 @@ fun FreezeSettingsScreen() {
                     onValueChanged = { if (it != null) viewModel.setFrozenAppStyle(it) }
                 )
                 // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
-            }
-        }
-        itemsIndexed(apps, key = { _, it -> it.key }) { _, app ->
-            val icon by viewModel.getIcon(app, 32.dp.value.toInt()).collectAsStateWithLifecycle(null)
-            val state = appFreezeState(app.componentName.packageName, candidates, neverFreezeApps)
-            val method = appFreezeMethod(app.componentName.packageName, freezeMethods)
-            // Live OS state, independent of the candidate config below - an app can be frozen
-            // right now by Icebox, Island, adb, or anything else, regardless of whether this
-            // app's own auto-freeze considers it a candidate.
-            val isFrozenNow = remember(app.componentName.packageName, apps) {
-                viewModel.isFrozen(app.componentName.packageName)
-            }
-            var showMenu by remember { mutableStateOf(false) }
-            val candidateSummary = stringResource(
-                when (state) {
-                    AppFreezeState.None -> R.string.freeze_app_state_none
-                    AppFreezeState.Candidate -> {
-                        if (method == FreezeMethod.Disable) R.string.freeze_app_state_candidate_disable
-                        else R.string.freeze_app_state_candidate_suspend
-                    }
-                    AppFreezeState.NeverFreeze -> R.string.freeze_app_state_never
-                }
-            )
-            Preference(
-                title = app.label,
-                icon = {
-                    ShapedLauncherIcon(size = 32.dp, icon = { icon }, frozen = isFrozenNow)
-                },
-                summary = if (isFrozenNow) {
-                    stringResource(R.string.freeze_dashboard_currently_frozen) + " · " + candidateSummary
-                } else {
-                    candidateSummary
-                },
-                onClick = { showMenu = true },
-            )
-            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.freeze_app_state_none)) },
-                    onClick = {
-                        viewModel.setAppFreezeState(app, AppFreezeState.None)
-                        showMenu = false
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.freeze_app_state_candidate_suspend)) },
-                    onClick = {
-                        viewModel.setAppFreezeState(app, AppFreezeState.Candidate, FreezeMethod.Suspend)
-                        showMenu = false
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.freeze_app_state_candidate_disable)) },
-                    onClick = {
-                        viewModel.setAppFreezeState(app, AppFreezeState.Candidate, FreezeMethod.Disable)
-                        showMenu = false
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text(stringResource(R.string.freeze_app_state_never)) },
-                    onClick = {
-                        viewModel.setAppFreezeState(app, AppFreezeState.NeverFreeze)
-                        showMenu = false
-                    }
-                )
             }
         }
     }

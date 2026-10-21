@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Dotknij aplikacji, aby ją ustawić; pola wyboru służą do działań zbiorczych.</string>
+    <string name="freeze_hub_unfreeze">Odmroź</string>
+    <string name="freeze_hub_profile_notice">Reguły automatyczne dotyczą tylko tego użytkownika Androida.</string>
+    <string name="freeze_hub_delay">Opóźnienie po wyłączeniu ekranu</string>
+    <string name="freeze_hub_delay_help">Zastępuje czas profilu dla tej aplikacji z automatycznym zamrażaniem. Anulowane po włączeniu ekranu. Android może opóźnić wykonanie.</string>
+    <string name="freeze_hub_inherit">Użyj czasu profilu</string>
+    <string name="freeze_hub_companions">Odmrażaj razem</string>
+    <string name="freeze_hub_companion_help">Najpierw odmraża wybrane aplikacje podczas otwierania lub odmrażania tej aplikacji. Domyślnie wyłączone. Przykłady: Gemini → Google, płatna aplikacja → Play Store, gra → optymalizator gier.</string>
+    <string name="freeze_hub_unknown">Brak opisu społeczności. Bezpieczeństwo nieznane.</string>
+    <string name="freeze_hub_uad_help">Uwagi społeczności o usuwaniu nie gwarantują bezpiecznego zamrażania. Unsafe są blokowane; Expert wymagają zgody.</string>
+    <string name="freeze_hub_expert">Zezwól na zamrażanie tej aplikacji Expert</string>
+    <string name="freeze_hub_result">Ukończono: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Automatycznie aktualizuj opisy aplikacji</string>
+    <string name="freeze_hub_auto_update_help">Sprawdza UAD-NG przy każdym otwarciu menedżera zamrażania. Domyślnie włączone.</string>
+    <string name="freeze_hub_update_failed">Aktualizacja nieudana. Zachowano ostatnią poprawną bazę.</string>
+    <string name="freeze_hub_recents">Zamrażaj po usunięciu z ostatnich</string>
+    <string name="freeze_hub_recents_help">Ponownie zamraża zarządzane lub odmrożone przez Telos aplikacje po usunięciu ostatniego zadania. Wymaga Shizuku i respektuje wykluczenia użycia. Domyślnie wyłączone.</string>
+    <string name="freeze_hub_recents_unavailable">Wykrywanie ostatnich niedostępne. Uruchom Shizuku i przyznaj uprawnienie.</string>
+</resources>

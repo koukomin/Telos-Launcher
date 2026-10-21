@@ -11,18 +11,23 @@ is launched again (and unfrozen) the next time you open it from the launcher.
 
 ::: info Where
 Smart Freeze is a feature of the launcher settings, not a separate Telos app, so it does not appear in
-[Telos Store](../store/). You find it in two places:
+[Telos Store](../store/). Open **Settings > Freeze Manager**. The legacy dashboard and manager routes both resolve to this same screen.
 
-- **Settings > Advanced > Freeze Manager**: the backend, auto-freeze options and the app list.
-- **Settings > Smart Freeze Dashboard**: backend status, counters, filters and a quick toggle for each app.
+| Tab | Purpose |
+| --- | --- |
+| Apps | Search name/package, show system/iconless entries, filter frozen/auto-freeze, select all shown, clear selection, explicit Freeze / Unfreeze / Auto-freeze actions |
+| Auto-freeze | Master switch, profiles, triggers and activity exclusions |
+| Settings | Backend/permissions, original-state update maintenance, history, icon style, visibility and database update preference |
+
+Tap an app row to change its policy, timing, companion apps or read its UAD-NG description. Checkboxes select entries for bulk actions; selecting alone never changes Android state. A result such as 4/5 means one operation was not completed; it is not silently treated as success.
 
 There is also a **Freeze** home screen widget with a "Freeze now" button, and Freeze / Unfreeze entries in the context
 menu of an app. Updating a frozen Play Store app from Telos Store thaws it, then freezes it again as soon as Play
 installs a new version. If Play Store itself is frozen, Telos unfreezes it for that session and freezes it again when
 the updates finish. With Telos Network VPN on and the Store setting enabled, that app has no internet until you
-open it. Opening a frozen app can also unfreeze companions (Google for Gemini, microG for ReVanced/Morphe YouTube,
-Play Store for Play-licensed apps, a game booster for games you list). Those stay unfrozen until the master app is
-frozen again. Auto-freeze skips the foreground app (on by default), the app that was in front when the screen turned off, music, and apps with network traffic.
+open it. Opening or explicitly unfreezing an app can first thaw its **explicitly enabled** companions. Choose them from the installed-app picker in the app row. Every rule is off by default, including after upgrading. If Gemini and Google are installed, Gemini shows Google as an inactive example. Play Store for a paid app and a game optimizer for a game must be chosen by the user; installation from Play Store alone never enables a rule. Successfully thawed companions are held until their master is frozen again. Shared companions remain held while another master still needs them. Rules apply only to the current Android user.
+
+Auto-freeze skips the foreground app (on by default), the app that was in front when the screen turned off, music, and apps with network traffic.
 :::
 
 ## What it is
@@ -66,16 +71,18 @@ Settings shows a hint until it is granted.
 - **App status**: every app, whether it is Normal, Suspended, Disabled or Hidden, how long it ran today ("1h 5m today",
   "Under 1m", "Not used today") and "Running now". It needs Usage access and has a **Refresh** action.
 
-### Smart Freeze Dashboard
+### Apps tab
 
 | Element | What it does |
 | --- | --- |
-| Backend Status | "Connected via (backend)" or "Disconnected", with **Grant Permission** when the permission is missing |
-| Counters | Frozen Apps, Auto-Freeze List, Last Execution ("Monitoring") |
-| Search field "Search Apps" | Filters the list |
-| Filter chips | All, User, System, Frozen |
-| App rows | Name, "Frozen" or "Active", an **Auto-Freeze** switch that adds or removes the app as a candidate |
-| **Toggle Freeze (N)** button | Freezes or unfreezes the selected apps |
+| Backend status | Shows the current backend; setup and permission controls are in Settings |
+| Search | Matches app label and package name |
+| Filter chips | All, Frozen and Auto-freeze list |
+| System / iconless switches | Include installed entries beyond ordinary launcher apps |
+| App row | Opens policy, timing, companions and community notes |
+| Checkbox | Selects the row for bulk actions; selection is preserved across tabs |
+| Select all shown / Clear selection | Adds currently filtered rows or clears selection |
+| Freeze / Unfreeze / Auto-freeze actions | Explicit operations with successful/selected totals; no mixed-state toggle |
 
 ## What it can do
 
@@ -179,3 +186,27 @@ Frozen application targets assigned to icon shutters and folder children use the
 ## Foreground permission and notification
 
 Usage access is requested when enabling foreground-app protection and is only listed while that protection is enabled and access is missing. The quick-freeze notification is hidden when no installed, thawed, eligible candidates remain; expand it to see their app names. Virtual app targets can be saved in dock shutters.
+
+
+## Per-app screen-off timing
+
+Set the app policy to Auto-freeze, enable the global auto-freeze switch, then choose **Delay after screen-off** in that app’s row. **Use profile timing** is the default. Immediately, 1, 5, 10, 15, 30, 60 or 120 minutes replace the profile’s screen-off/idle timing for that app. For example, a 10-minute app delay wins even when the profile freezes the rest immediately. An explicit app delay also works if the profile has neither screen-off nor idle enabled. Never-freeze, active-use exclusions and update/companion holds still win.
+
+Turning the screen on cancels pending deadlines. Alarms use elapsed time, persist through launcher process recreation, and are discarded across device reboot. Android may defer inexact alarms during Doze; these are not exact wall-clock appointments. Manual Freeze now and the separate battery-saver trigger keep their own behavior.
+
+## Community descriptions and database updates
+
+Descriptions and the Recommended / Advanced / Expert / Unsafe removal labels come from [UAD-NG](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation), the same upstream used by Canta and Thor. They describe removal impacts and may be in English. They are not a guarantee that freezing is safe on your particular ROM.
+
+**Update app descriptions automatically** is enabled by default in the Settings tab. Every entry into Freeze Manager checks the upstream HTTPS endpoint; unchanged content uses ETag/304 instead of downloading the list again. Disable this preference to use the installed database without automatic network checks. A bundled snapshot works on first use offline. Failed downloads, invalid or oversized responses never replace the last validated cache.
+
+The freeze service blocks Unsafe **system** apps and requires explicit per-app consent for Expert system apps. If no valid database can be loaded, system freezing fails closed; unfreezing remains available. Packages without a description are shown as unknown, never as safe. These gates also cover bulk and automatic freeze paths.
+
+
+## Freeze after removal from Recents
+
+Enable **Auto-freeze > Freeze after removal from Recents** if desired; it is **off by default**, including after an upgrade. The setting uses privileged task-removal callbacks on Android 10+ through running, authorized Shizuku. It can use Shizuku only for detection while your configured freezing backend performs the operation. Root alone, Usage access, device owner and Accessibility do not provide this listener through their ordinary APIs.
+
+A real task-removal event triggers a fresh task read. Telos only refreezes a current-user auto-freeze candidate or an app that Telos actually thawed for the user while this option was enabled, and only after its last task has gone. Multiple tasks, work-profile events, Never freeze, active-use exclusions, maintenance sessions and companion holds remain respected. This option is independent of the screen-off master switch and timing overrides. It does not freeze every arbitrary installed app.
+
+Android’s callback reports task removal, including an app calling finishAndRemoveTask; it does not reveal whether the user swiped the card. Switching apps or returning Home only refreshes the task cache and does not trigger freezing. Missing permission, unknown task identity, a failed task read or a full/truncated task page causes Telos to skip the action. The Settings warning indicates unavailable detection rather than claiming it works. OEM execution and reconnection still require device acceptance.
