@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.layout
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.material3.lightColorScheme
@@ -34,6 +35,56 @@ import org.junit.Test
 /** Instrumented geometry test, not a substitute for screenshot/TalkBack review. */
 class PreferenceAdaptiveTest {
     @get:Rule val compose = createComposeRule()
+
+    @Test fun radioPaletteDoesNotInheritTheParentTextColor() {
+        val dark = mutableStateOf(false)
+        var actual = androidx.compose.ui.graphics.Color.Unspecified
+        var expected = androidx.compose.ui.graphics.Color.Unspecified
+        compose.setContent {
+            MaterialTheme(colorScheme = darkColorScheme()) {
+                CompositionLocalProvider(androidx.compose.material3.LocalContentColor provides androidx.compose.ui.graphics.Color.Magenta) {
+                    de.mm20.launcher2.ui.comms.radio.RadioAppearance(
+                        de.mm20.launcher2.comms.radio.RadioSettings.Values(theme = if (dark.value) "dark" else "light", dynamicColors = false, translucent = true)
+                    ) {
+                        val foreground = androidx.compose.material3.LocalContentColor.current
+                        val paired = MaterialTheme.colorScheme.onSurface
+                        androidx.compose.runtime.SideEffect { actual = foreground; expected = paired }
+                        Box(Modifier.fillMaxSize().then(Modifier.background(MaterialTheme.colorScheme.surfaceContainer))) {
+                            Text("Ραδιόφωνο · Αθήνα", Modifier.testTag("radio-label"))
+                        }
+                    }
+                }
+            }
+        }
+        for (mode in listOf(false, true)) {
+            compose.runOnIdle { dark.value = mode }
+            compose.onNodeWithTag("radio-label").assertIsDisplayed()
+            compose.runOnIdle { org.junit.Assert.assertEquals(expected, actual) }
+            saveScreenshot("radio-palette-$mode.png")
+        }
+    }
+
+    @Test fun virtualAppKeepsRootGlassAndOpaqueInnerContainers() {
+        var alphas = emptyList<Float>()
+        var rootAlpha = 1f
+        compose.setContent {
+            MaterialTheme(colorScheme = darkColorScheme()) {
+                de.mm20.launcher2.ui.component.VirtualAppTheme {
+                    val colors = MaterialTheme.colorScheme
+                    androidx.compose.runtime.SideEffect {
+                        rootAlpha = colors.surface.alpha
+                        alphas = listOf(colors.surfaceContainerLowest.alpha, colors.surfaceContainerLow.alpha,
+                            colors.surfaceContainer.alpha, colors.surfaceContainerHigh.alpha, colors.surfaceContainerHighest.alpha)
+                    }
+                    Text("Readable controls")
+                }
+            }
+        }
+        compose.runOnIdle {
+            org.junit.Assert.assertEquals(0f, rootAlpha)
+            assertTrue(alphas.all { it == 1f })
+        }
+    }
 
     @Test fun controlsNeverOverlapLargeWrappedTitles() {
         val width = mutableFloatStateOf(320f)
