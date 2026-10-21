@@ -258,3 +258,8 @@ for built-in notification glyphs and large icons. Media3 providers must explicit
 set their small icon after build(); retain station/album/video artwork. Never use
 a colored full app tile as a status-bar small icon (Android masks it). Notification
 content intents must open the relevant virtual-app route, not the launcher home.
+
+Launcher typography stores lineHeight in em. Never call Density.toDp() on an
+arbitrary TextUnit: it only accepts sp. For header/toolbar sizing, measure text
+with the actual TextStyle and font scale; cover em, sp and unspecified heights in
+Settings regression tests, including the real MainSettingsScreen.

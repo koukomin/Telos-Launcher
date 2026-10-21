@@ -35,7 +35,7 @@ adb("shell", "cmd", "statusbar", "collapse", check=False)
 adb("shell", "am", "start", "-n", APP + "/de.mm20.launcher2.ui.launcher.LauncherActivity")
 time.sleep(2)
 
-screens = [('01-launcher', None, None, None), ('02-media-listen', 'settings/media_hub', 'music', None), ('03-youtube-music', 'settings/media_hub', 'youtube_music', None), ('04-youtube-video', 'settings/media_hub', 'youtube', None), ('05-stremio-fork', 'settings/media_hub', 'stremio', None), ('06-files', 'settings/files', None, None), ('07-store', 'settings/store', None, None), ('08-viewer', 'settings/viewer', None, None), ('09-notes', 'settings/notes', None, None), ('10-calendar', 'settings/calendar', None, None), ('11-calculator', 'settings/calculator', None, None), ('12-downloads', 'settings/downloads', None, None), ('13-phone', 'settings/comms', None, 'phone'), ('14-messages', 'settings/comms', None, 'messages'), ('15-radio', 'settings/media_hub', 'radio', None), ('16-tv', 'settings/media_hub', 'tv', None), ('17-video', 'settings/media_hub', 'video', None), ('18-clock', 'settings/clock', None, None), ('19-ermis', 'settings/ermis', None, None), ('20-akou', 'settings/akou', None, None), ('21-network', 'settings/network', None, None), ('22-system', 'settings/system', None, None), ('23-trash', 'settings/trash', None, None), ('24-camera', 'settings/camera', None, None), ('25-magnifier', 'settings/magnifier', None, None), ('26-flashlight', 'settings/flashlight', None, None), ('27-voice-recorder', 'settings/voice_recorder', None, None), ('28-screen-recorder', 'settings/screen_recorder', None, None), ('29-screenshot', 'settings/screenshot', None, None)]
+screens = [('01-launcher', None, None, None), ('02-media-listen', 'settings/media_hub', 'music', None), ('03-youtube-music', 'settings/media_hub', 'youtube_music', None), ('04-youtube-video', 'settings/media_hub', 'youtube', None), ('05-stremio-fork', 'settings/media_hub', 'stremio', None), ('06-files', 'settings/files', None, None), ('07-store', 'settings/store', None, None), ('08-viewer', 'settings/viewer', None, None), ('09-notes', 'settings/notes', None, None), ('10-calendar', 'settings/calendar', None, None), ('11-calculator', 'settings/calculator', None, None), ('12-downloads', 'settings/downloads', None, None), ('13-phone', 'settings/comms', None, 'phone'), ('14-messages', 'settings/comms', None, 'messages'), ('15-radio', 'settings/media_hub', 'radio', None), ('16-tv', 'settings/media_hub', 'tv', None), ('17-video', 'settings/media_hub', 'video', None), ('18-clock', 'settings/clock', None, None), ('19-ermis', 'settings/ermis', None, None), ('20-akou', 'settings/akou', None, None), ('21-network', 'settings/network', None, None), ('22-system', 'settings/system', None, None), ('23-trash', 'settings/trash', None, None), ('24-camera', 'settings/camera', None, None), ('25-magnifier', 'settings/magnifier', None, None), ('26-flashlight', 'settings/flashlight', None, None), ('27-voice-recorder', 'settings/voice_recorder', None, None), ('28-screen-recorder', 'settings/screen_recorder', None, None), ('29-screenshot', 'settings/screenshot', None, None), ('30-settings', None, None, None)]
 def wait_for_rendered_ui(name, timeout=40):
     deadline = time.monotonic() + timeout
     expected = {
@@ -52,6 +52,7 @@ def wait_for_rendered_ui(name, timeout=40):
         "24-camera": ["Camera", "Photo"], "25-magnifier": ["Magnifier", "Freeze"],
         "26-flashlight": ["Flashlight", "Siren"], "27-voice-recorder": ["Voice recorder", "Record"],
         "28-screen-recorder": ["Screen recorder", "Record"], "29-screenshot": ["Screenshot", "Capture"],
+        "30-settings": ["Appearance", "Home screen"],
     }[name]
     dump = b""
     while time.monotonic() < deadline:
@@ -89,10 +90,12 @@ def tap_label(label, attribute="text"):
 
 failures = []
 for name, route, space, tab in screens:
-    if route:
+    if route or name == "30-settings":
         if name == "23-trash":
             adb("shell", "locksettings", "set-pin", "2468")
-        args = ["shell", "am", "start", "-n", APP + "/de.mm20.launcher2.ui.settings.SettingsActivity", "--es", "de.mm20.launcher2.settings.ROUTE", route]
+        args = ["shell", "am", "start", "-n", APP + "/de.mm20.launcher2.ui.settings.SettingsActivity"]
+        if route:
+            args += ["--es", "de.mm20.launcher2.settings.ROUTE", route]
         if space:
             args += ["--es", "de.mm20.launcher2.settings.MEDIA_SPACE", space]
         if tab:
@@ -112,6 +115,8 @@ for name, route, space, tab in screens:
         adb("shell", "input", "swipe", "540", "550", "540", "1700", "500")
         time.sleep(2)
     try:
+        if name == "01-launcher":
+            tap_label("Skip")
         dump = wait_for_rendered_ui(name)
         if name == "16-tv" and tap_label("Accept"):
             time.sleep(12)

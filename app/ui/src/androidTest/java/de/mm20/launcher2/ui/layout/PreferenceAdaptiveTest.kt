@@ -27,6 +27,7 @@ import java.io.File
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.ui.component.preferences.Preference
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -35,6 +36,43 @@ import org.junit.Test
 /** Instrumented geometry test, not a substitute for screenshot/TalkBack review. */
 class PreferenceAdaptiveTest {
     @get:Rule val compose = createComposeRule()
+
+    @Test fun settingsOpensWithLauncherRelativeAndUnspecifiedLineHeights() {
+        val scale = mutableFloatStateOf(1f)
+        val heightMode = androidx.compose.runtime.mutableIntStateOf(0)
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        compose.setContent {
+            val typography = de.mm20.launcher2.ui.theme.typography.typographyOf(
+                de.mm20.launcher2.themes.typography.Typography(name = "Settings regression")
+            )
+            check(typography.titleLarge.lineHeight.isEm)
+            val lineHeight = when (heightMode.intValue) {
+                1 -> androidx.compose.ui.unit.TextUnit.Unspecified
+                2 -> 28.sp
+                else -> typography.titleLarge.lineHeight
+            }
+            val density = LocalDensity.current
+            val stack = androidx.navigation3.runtime.rememberNavBackStack(
+                de.mm20.launcher2.ui.settings.main.MainRoute
+            )
+            CompositionLocalProvider(
+                LocalDensity provides Density(density.density, scale.floatValue),
+                de.mm20.launcher2.ui.locals.LocalBackStack provides stack,
+            ) {
+                MaterialTheme(colorScheme = darkColorScheme(), typography = typography.copy(
+                    titleLarge = typography.titleLarge.copy(lineHeight = lineHeight)
+                )) {
+                    de.mm20.launcher2.ui.settings.main.MainSettingsScreen()
+                }
+            }
+        }
+        for (mode in 0..2) for (fontScale in listOf(0.85f, 1f, 1.3f, 2f)) {
+            compose.runOnIdle { heightMode.intValue = mode; scale.floatValue = fontScale }
+            compose.onNodeWithText(context.getString(de.mm20.launcher2.ui.R.string.settings)).assertIsDisplayed()
+            compose.onNodeWithText(context.getString(de.mm20.launcher2.ui.R.string.preference_screen_appearance)).assertIsDisplayed()
+            saveScreenshot("settings-line-height-$mode-$fontScale.png")
+        }
+    }
 
     @Test fun virtualNotificationsCarryTheirOwnIdentity() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
