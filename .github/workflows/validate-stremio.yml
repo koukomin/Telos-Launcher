@@ -86,7 +86,7 @@ jobs:
       - name: Test Store download and update policies
         run: ./gradlew :services:store:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Test UI settings, archives, contact recovery, wallpaper contrast and adaptive layouts
-        run: ./gradlew :app:ui:testDefaultDebugUnitTest :app:ui:compileDefaultDebugAndroidTestKotlin --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx2048m --stacktrace
+        run: ./gradlew :app:ui:testDefaultDebugUnitTest :app:ui:compileDefaultDebugAndroidTestKotlin --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace
       - name: Test streaming APK downloads with a constrained heap
         run: ./gradlew :data:store:testDebugUnitTest --stacktrace --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m
       - name: Build debug APK
