@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">الطرفية</string>
-    <string name="terminal_runtime_summary">يستخدم تطبيق Termux المثبت بشكل منفصل. ثبّت Termux وجميع إضافاته من المصدر نفسه. تعمل الصدفة داخل Termux خارج Telos.</string>
-    <string name="terminal_open_failed">تعذر فتح Termux أو الموقع.</string>
-</resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Mondo</string>
+    <string name="clock_world">Monda tempo</string>
     <string name="clock_alarm">Vekhorloĝo</string>
     <string name="clock_timer">Temporizilo</string>
     <string name="clock_stopwatch">Kronometro</string>

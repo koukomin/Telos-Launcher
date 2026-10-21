@@ -13,6 +13,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.material3.ListItem
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -100,6 +104,15 @@ fun TvPlayerDialog(
     val streamIndex by controller.streamIndex.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val epgKey = rememberTvEpgKey(viewModel, refresh = true)
+    var channelSheet by remember { mutableStateOf(false) }
+    var channelQuery by remember { mutableStateOf("") }
+    val home by viewModel.home.collectAsStateWithLifecycle()
+    val favorites by viewModel.favorites.collectAsStateWithLifecycle()
+    val custom by viewModel.customChannels.collectAsStateWithLifecycle()
+    val channels = remember(home, favorites, custom) { (favorites + custom + home.channels).distinctBy { it.id } }
+    val matching = remember(channels, channelQuery) {
+        de.mm20.launcher2.comms.search.TelosSearch.filter(channels, channelQuery) { listOf(it.name) }
+    }
     var epgSheet by remember(channel?.id) { mutableStateOf<TvProgramme?>(null) }
 
     Dialog(
@@ -143,6 +156,24 @@ fun TvPlayerDialog(
             }
         }
 
+        if (channelSheet) ModalBottomSheet(
+            onDismissRequest = { channelSheet = false },
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        ) {
+            de.mm20.launcher2.ui.component.TelosSearchBar(channelQuery, { channelQuery = it }, stringResource(R.string.au12_tvui_search_hint))
+            LazyColumn(Modifier.fillMaxWidth().heightIn(max = 480.dp).navigationBarsPadding()) {
+                items(matching, key = { it.id }) { candidate ->
+                    ListItem(
+                        headlineContent = { Text(candidate.name) },
+                        leadingContent = { TvLogo(candidate, Modifier.size(40.dp), corner = 10.dp) },
+                        trailingContent = { if (candidate.id == channel?.id) Icon(painterResource(R.drawable.check_24px), null) },
+                        modifier = Modifier.clickable {
+                            viewModel.play(candidate, channels); channelSheet = false; controls = true
+                        },
+                    )
+                }
+            }
+        }
         val current = channel
         Box(Modifier.fillMaxSize().background(Color.Black)) {
             AndroidView(
@@ -273,6 +304,9 @@ fun TvPlayerDialog(
                                 modifier = Modifier.background(Color(0xB31A1A1A), androidx.compose.foundation.shape.CircleShape)) {
                                 Icon(painterResource(R.drawable.arrow_back_24px),
                                     contentDescription = stringResource(R.string.hc_back), tint = Color.White)
+                            }
+                            IconButton(onClick = { channelSheet = true }) {
+                                Icon(painterResource(R.drawable.menu_24px), stringResource(R.string.au12_tvsearch_pref_title), tint = Color.White)
                             }
                             IconButton(onClick = onMinimize) {
                                 Icon(

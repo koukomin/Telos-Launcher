@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">No ho tornis a mostrar</string>
+  <string name="app_polish_show_info">Mostra informació abans de gravar</string>
+  <string name="app_polish_yellow_black">Groc / negre</string>
+  <string name="app_polish_blue_yellow">Blau / groc</string>
+  <string name="app_polish_exit_light">Toca per sortir de la llum de pantalla</string>
+  <string name="app_polish_light_source">Font de llum</string>
+  <string name="app_polish_screen_light">Llum de pantalla</string>
+  <string name="app_polish_siren">Sirena d’emergència</string>
+  <string name="app_polish_alternating">Alternança vermell / blau</string>
+  <string name="app_polish_strobe">Freqüència de parpelleig</string>
+  <string name="app_polish_morse">Codi Morse</string>
+  <string name="app_polish_message">Missatge per transmetre</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Reinicia les aplicacions afectades per utilitzar el renderitzador seleccionat.</string>
+  <string name="app_polish_restart_notice">Mostra l’avís de reinici del renderitzador</string>
+</resources>

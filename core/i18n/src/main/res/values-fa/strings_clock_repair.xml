@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">جهان</string>
+    <string name="clock_world">ساعت جهانی</string>
     <string name="clock_alarm">زنگ هشدار</string>
     <string name="clock_timer">زمان‌سنج</string>
     <string name="clock_stopwatch">کرنومتر</string>

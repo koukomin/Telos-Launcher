@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Non mostrare più</string>
+  <string name="app_polish_show_info">Mostra informazioni prima di registrare</string>
+  <string name="app_polish_yellow_black">Giallo / nero</string>
+  <string name="app_polish_blue_yellow">Blu / giallo</string>
+  <string name="app_polish_exit_light">Tocca per uscire dalla luce dello schermo</string>
+  <string name="app_polish_light_source">Sorgente luminosa</string>
+  <string name="app_polish_screen_light">Luce dello schermo</string>
+  <string name="app_polish_siren">Sirena di emergenza</string>
+  <string name="app_polish_alternating">Alternanza rosso / blu</string>
+  <string name="app_polish_strobe">Frequenza di lampeggio</string>
+  <string name="app_polish_morse">Codice Morse</string>
+  <string name="app_polish_message">Messaggio da trasmettere</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Riavvia le app interessate per usare il motore di rendering selezionato.</string>
+  <string name="app_polish_restart_notice">Mostra avviso di riavvio del rendering</string>
+</resources>

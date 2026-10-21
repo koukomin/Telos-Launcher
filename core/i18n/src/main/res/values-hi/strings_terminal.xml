@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">टर्मिनल</string>
-    <string name="terminal_runtime_summary">अलग से इंस्टॉल किए गए Termux का उपयोग करता है। Termux और सभी ऐड-ऑन एक ही स्रोत से इंस्टॉल करें। शेल Telos के बाहर Termux में चलता है।</string>
-    <string name="terminal_open_failed">Termux या वेबसाइट नहीं खुल सकी।</string>
-</resources>

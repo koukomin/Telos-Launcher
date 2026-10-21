@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -77,6 +78,7 @@ enum class MagnifierFilter(val label: String, val matrix: FloatArray?) {
 @Composable
 fun MagnifierScreen() {
     val context = LocalContext.current
+    var filterMenu by remember { mutableStateOf(false) }
     var hasPermission by remember {
         mutableStateOf(
             ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
@@ -155,7 +157,7 @@ fun MagnifierScreen() {
         }
     }
 
-    Box(
+    BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
@@ -248,11 +250,11 @@ fun MagnifierScreen() {
         // Overlay Controls (Glassmorphism M3 2026 UI)
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(16.dp)
+                .fillMaxWidth(if (maxWidth >= 480.dp && maxHeight < 400.dp) 0.6f else 1f)
+                .align(Alignment.BottomEnd)
+                .padding(8.dp)
                 .background(Color.Black.copy(alpha = 0.75f), RoundedCornerShape(24.dp))
-                .padding(16.dp),
+                .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Zoom Slider
@@ -260,7 +262,7 @@ fun MagnifierScreen() {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
             ) {
-                Icon(painterResource(R.drawable.search_24px), contentDescription = "Zoom", tint = Color.White)
+                Icon(painterResource(R.drawable.search_24px), contentDescription = stringResource(R.string.au_video_zoom), tint = Color.White)
                 Spacer(Modifier.width(8.dp))
                 Slider(
                     value = zoomLevel,
@@ -289,33 +291,33 @@ fun MagnifierScreen() {
                 Text("${"%.1f".format(zoomLevel)}x", color = Color.White, fontWeight = FontWeight.Bold)
             }
 
-            Spacer(Modifier.height(12.dp))
-
-            // Color Filters Row
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                items(MagnifierFilter.entries) { filter ->
-                    FilterChip(
-                        selected = currentFilter == filter,
-                        onClick = { currentFilter = filter },
-                        label = { Text(filter.label) },
-                        colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = MaterialTheme.colorScheme.primary,
-                            selectedLabelColor = MaterialTheme.colorScheme.onPrimary
-                        )
-                    )
-                }
-            }
-
-            Spacer(Modifier.height(16.dp))
-
             // Action Buttons (Torch & Freeze Frame)
             Row(
-                horizontalArrangement = Arrangement.SpaceAround,
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
                 modifier = Modifier.fillMaxWidth()
             ) {
+                Box {
+                    TextButton(onClick = { filterMenu = true }) {
+                        Text(stringResource(when (currentFilter) {
+                            MagnifierFilter.Normal -> R.string.vn_size_normal
+                            MagnifierFilter.Inverted -> R.string.au3_appearance_cs_inverse_colors
+                            MagnifierFilter.Monochrome -> R.string.au3_searchset_icon_monochrome
+                            MagnifierFilter.YellowOnBlack -> R.string.app_polish_yellow_black
+                            MagnifierFilter.BlueOnYellow -> R.string.app_polish_blue_yellow
+                        }), maxLines = 1)
+                    }
+                    DropdownMenu(filterMenu, { filterMenu = false }) {
+                        MagnifierFilter.entries.forEach { filter ->
+                            DropdownMenuItem(text = { Text(stringResource(when (filter) {
+                                MagnifierFilter.Normal -> R.string.vn_size_normal
+                                MagnifierFilter.Inverted -> R.string.au3_appearance_cs_inverse_colors
+                                MagnifierFilter.Monochrome -> R.string.au3_searchset_icon_monochrome
+                                MagnifierFilter.YellowOnBlack -> R.string.app_polish_yellow_black
+                                MagnifierFilter.BlueOnYellow -> R.string.app_polish_blue_yellow
+                            })) }, onClick = { currentFilter = filter; filterMenu = false })
+                        }
+                    }
+                }
                 IconButton(
                     onClick = {
                         val builder = previewRequestBuilder ?: return@IconButton
@@ -331,13 +333,13 @@ fun MagnifierScreen() {
                     },
                     enabled = hasFlash && !isFrozen && captureSession != null,
                     modifier = Modifier
-                        .size(56.dp)
+                        .size(48.dp)
                         .clip(CircleShape)
                         .background(if (torchOn) MaterialTheme.colorScheme.primary else Color.DarkGray)
                 ) {
                     Icon(
                         painterResource(R.drawable.light_mode_24px),
-                        contentDescription = "Torch",
+                        contentDescription = stringResource(R.string.telos_flashlight_app_label),
                         tint = if (torchOn) MaterialTheme.colorScheme.onPrimary else Color.White
                     )
                 }

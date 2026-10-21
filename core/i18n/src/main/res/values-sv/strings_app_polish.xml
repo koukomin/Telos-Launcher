@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Visa inte igen</string>
+  <string name="app_polish_show_info">Visa information före inspelning</string>
+  <string name="app_polish_yellow_black">Gul / svart</string>
+  <string name="app_polish_blue_yellow">Blå / gul</string>
+  <string name="app_polish_exit_light">Tryck för att lämna skärmljuset</string>
+  <string name="app_polish_light_source">Ljuskälla</string>
+  <string name="app_polish_screen_light">Skärmljus</string>
+  <string name="app_polish_siren">Nödsiren</string>
+  <string name="app_polish_alternating">Växlande rött / blått</string>
+  <string name="app_polish_strobe">Blinkfrekvens</string>
+  <string name="app_polish_morse">Morsekod</string>
+  <string name="app_polish_message">Meddelande att sända</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Starta om berörda appar för att använda vald renderare.</string>
+  <string name="app_polish_restart_notice">Visa meddelande om omstart av renderare</string>
+</resources>

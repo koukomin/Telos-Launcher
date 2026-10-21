@@ -273,7 +273,7 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                     },
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .padding(top = if (!bottomSearchBar && searchBarStyle != de.mm20.launcher2.preferences.SearchBarStyle.Hidden) 64.dp else 0.dp)
+                        .padding(top = if (!bottomSearchBar && searchBarStyle != de.mm20.launcher2.preferences.SearchBarStyle.Hidden) de.mm20.launcher2.ui.locals.LocalSearchBarHeight.current + 8.dp else 0.dp)
                         .then(readability.modifier),
                 ) {
                     Icon(

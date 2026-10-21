@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">ไม่ต้องแสดงอีก</string>
+  <string name="app_polish_show_info">แสดงข้อมูลก่อนบันทึกเสียง</string>
+  <string name="app_polish_yellow_black">เหลือง / ดำ</string>
+  <string name="app_polish_blue_yellow">น้ำเงิน / เหลือง</string>
+  <string name="app_polish_exit_light">แตะเพื่อออกจากไฟหน้าจอ</string>
+  <string name="app_polish_light_source">แหล่งกำเนิดแสง</string>
+  <string name="app_polish_screen_light">ไฟหน้าจอ</string>
+  <string name="app_polish_siren">ไซเรนฉุกเฉิน</string>
+  <string name="app_polish_alternating">แดง / น้ำเงินสลับกัน</string>
+  <string name="app_polish_strobe">ความถี่การกะพริบ</string>
+  <string name="app_polish_morse">รหัสมอร์ส</string>
+  <string name="app_polish_message">ข้อความที่จะส่ง</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">เริ่มแอปที่เกี่ยวข้องใหม่เพื่อใช้ตัวเรนเดอร์ที่เลือก</string>
+  <string name="app_polish_restart_notice">แสดงคำแนะนำให้เริ่มตัวเรนเดอร์ใหม่</string>
+</resources>

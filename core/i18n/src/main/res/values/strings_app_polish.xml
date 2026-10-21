@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Do not show again</string>
+  <string name="app_polish_show_info">Show information before recording</string>
+  <string name="app_polish_yellow_black">Yellow / black</string>
+  <string name="app_polish_blue_yellow">Blue / yellow</string>
+  <string name="app_polish_exit_light">Tap to exit screen light</string>
+  <string name="app_polish_light_source">Light source</string>
+  <string name="app_polish_screen_light">Screen light</string>
+  <string name="app_polish_siren">Emergency siren</string>
+  <string name="app_polish_alternating">Alternating red / blue</string>
+  <string name="app_polish_strobe">Blink frequency</string>
+  <string name="app_polish_morse">Morse code</string>
+  <string name="app_polish_message">Message to transmit</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Restart affected apps to use the selected renderer.</string>
+  <string name="app_polish_restart_notice">Show renderer restart notice</string>
+</resources>

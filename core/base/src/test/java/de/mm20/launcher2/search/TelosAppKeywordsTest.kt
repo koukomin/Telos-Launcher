@@ -5,7 +5,7 @@ import org.junit.Test
 
 class TelosAppKeywordsTest {
     @Test fun everyCatalogFeatureRetainsTelosAndItsEnglishNameAsAliases() {
-        val domains = listOf("phone", "messages", "media", "radio", "music", "video", "youtube", "youtube_music", "viewer", "files", "calculator", "notes", "calendar", "downloads", "network", "voice_recorder", "screen_recorder", "screenshot", "store", "terminal")
+        val domains = listOf("phone", "messages", "media", "radio", "music", "video", "youtube", "youtube_music", "viewer", "files", "calculator", "notes", "calendar", "downloads", "network", "voice_recorder", "screen_recorder", "screenshot", "store")
         for (domain in domains) {
             val aliases = TelosAppKeywords.forDomain("telos_${domain}_app").map { it.lowercase() }
             assertTrue(domain, "telos" in aliases)
@@ -22,11 +22,6 @@ class TelosAppKeywordsTest {
     @Test fun browserAliasesRemainAvailableAcrossDisplayLanguages() {
         val aliases = TelosAppKeywords.forKey("telos_ironewolf_app://browser").map { it.lowercase() }
         for (name in listOf("ironewolf", "telos ironewolf", "telos", "ironfox", "firefox", "περιηγητής"))
-            assertTrue(name, name in aliases)
-    }
-    @Test fun terminalIsDiscoverableByRuntimeAndLocalizedNames() {
-        val aliases = TelosAppKeywords.forKey("telos_terminal_app://terminal")
-        for (name in listOf("termux", "τερματικό", "shell", "telos terminal"))
             assertTrue(name, name in aliases)
     }
     @Test fun futureVirtualAppsRetainTheTelosAliasWithoutCatalogRegistration() {

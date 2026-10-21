@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Bir daha göstərmə</string>
+  <string name="app_polish_show_info">Yazmadan əvvəl məlumatı göstər</string>
+  <string name="app_polish_yellow_black">Sarı / qara</string>
+  <string name="app_polish_blue_yellow">Mavi / sarı</string>
+  <string name="app_polish_exit_light">Ekran işığından çıxmaq üçün toxunun</string>
+  <string name="app_polish_light_source">İşıq mənbəyi</string>
+  <string name="app_polish_screen_light">Ekran işığı</string>
+  <string name="app_polish_siren">Fövqəladə hal sirenası</string>
+  <string name="app_polish_alternating">Növbəli qırmızı / mavi</string>
+  <string name="app_polish_strobe">Yanıb-sönmə tezliyi</string>
+  <string name="app_polish_morse">Morze kodu</string>
+  <string name="app_polish_message">Göndəriləcək mesaj</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Seçilmiş renderləyicidən istifadə etmək üçün aidiyyəti tətbiqləri yenidən başladın.</string>
+  <string name="app_polish_restart_notice">Renderləyicinin yenidən başladılması bildirişini göstər</string>
+</resources>

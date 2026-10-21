@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Nu mai afișa</string>
+  <string name="app_polish_show_info">Afișează informații înainte de înregistrare</string>
+  <string name="app_polish_yellow_black">Galben / negru</string>
+  <string name="app_polish_blue_yellow">Albastru / galben</string>
+  <string name="app_polish_exit_light">Atinge pentru a ieși din lumina ecranului</string>
+  <string name="app_polish_light_source">Sursă de lumină</string>
+  <string name="app_polish_screen_light">Lumina ecranului</string>
+  <string name="app_polish_siren">Sirenă de urgență</string>
+  <string name="app_polish_alternating">Alternare roșu / albastru</string>
+  <string name="app_polish_strobe">Frecvența clipirii</string>
+  <string name="app_polish_morse">Cod Morse</string>
+  <string name="app_polish_message">Mesaj de transmis</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Repornește aplicațiile afectate pentru a folosi motorul de randare selectat.</string>
+  <string name="app_polish_restart_notice">Afișează notificarea de repornire a randării</string>
+</resources>

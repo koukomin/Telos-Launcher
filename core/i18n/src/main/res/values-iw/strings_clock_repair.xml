@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">עולם</string>
+    <string name="clock_world">שעון עולמי</string>
     <string name="clock_alarm">שעון מעורר</string>
     <string name="clock_timer">טיימר</string>
     <string name="clock_stopwatch">שעון עצר</string>

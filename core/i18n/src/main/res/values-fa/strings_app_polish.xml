@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">دیگر نمایش نده</string>
+  <string name="app_polish_show_info">نمایش اطلاعات پیش از ضبط</string>
+  <string name="app_polish_yellow_black">زرد / سیاه</string>
+  <string name="app_polish_blue_yellow">آبی / زرد</string>
+  <string name="app_polish_exit_light">برای خروج از نور صفحه ضربه بزنید</string>
+  <string name="app_polish_light_source">منبع نور</string>
+  <string name="app_polish_screen_light">نور صفحه</string>
+  <string name="app_polish_siren">آژیر اضطراری</string>
+  <string name="app_polish_alternating">قرمز / آبی متناوب</string>
+  <string name="app_polish_strobe">بسامد چشمک‌زدن</string>
+  <string name="app_polish_morse">کد مورس</string>
+  <string name="app_polish_message">پیام برای ارسال</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">برای استفاده از رندرکنندهٔ انتخاب‌شده، برنامه‌های مربوط را دوباره راه‌اندازی کنید.</string>
+  <string name="app_polish_restart_notice">نمایش اعلان راه‌اندازی دوبارهٔ رندرکننده</string>
+</resources>

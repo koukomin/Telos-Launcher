@@ -11,3 +11,7 @@ Alarm definitions are stored independently of the launcher process and
 rescheduled after package updates and device reboot. Exact-alarm permission must
 remain granted. The last Clock tab is also saved. End-to-end crash/update
 recovery has not yet been verified on a physical device.
+
+The World time search uses the same pill as the other Telos apps. Focus it without
+typing to see a short list of capitals. Athens is first, except when Greece is
+already selected as the home country or app locale.

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">Terminal</string>
-    <string name="terminal_runtime_summary">Uses the separately installed Termux app. Install Termux and all its add-ons from the same source. The shell runs in Termux, outside Telos.</string>
-    <string name="terminal_open_failed">Could not open Termux or the website.</string>
-</resources>

@@ -35,7 +35,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -70,11 +73,12 @@ fun TelosSearchBar(
     trailing: (@Composable RowScope.() -> Unit)? = null,
     filters: (@Composable () -> Unit)? = null,
     enabled: Boolean = true,
+    onFocusChanged: (Boolean) -> Unit = {},
 ) {
     Column(modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)) {
         SearchPill(
             value, onValueChange, placeholder, Modifier.fillMaxWidth(), 56.dp,
-            autoFocus, onSearch, leading, trailing, enabled,
+            autoFocus, onSearch, leading, trailing, enabled, onFocusChanged,
         )
         if (filters != null) {
             Row(
@@ -104,11 +108,12 @@ fun TelosSearchTopBar(
     trailing: (@Composable RowScope.() -> Unit)? = null,
     filters: (@Composable () -> Unit)? = null,
     enabled: Boolean = true,
+    onFocusChanged: (Boolean) -> Unit = {},
 ) {
     Column(modifier.fillMaxWidth()) {
         SearchPill(
             value, onValueChange, placeholder, Modifier.fillMaxWidth(), 44.dp,
-            autoFocus, onSearch, leading, trailing, enabled,
+            autoFocus, onSearch, leading, trailing, enabled, onFocusChanged,
         )
         if (filters != null) {
             Row(
@@ -135,6 +140,7 @@ private fun SearchPill(
     leading: (@Composable () -> Unit)?,
     trailing: (@Composable RowScope.() -> Unit)?,
     enabled: Boolean,
+    onFocusChanged: (Boolean) -> Unit,
 ) {
     val interaction = remember { MutableInteractionSource() }
     val focused by interaction.collectIsFocusedAsState()
@@ -192,7 +198,8 @@ private fun SearchPill(
                 BasicTextField(
                     value = value,
                     onValueChange = onValueChange,
-                    modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+                    modifier = Modifier.fillMaxWidth().focusRequester(focusRequester).onFocusChanged { onFocusChanged(it.isFocused) }
+                        .semantics { contentDescription = placeholder },
                     enabled = enabled,
                     singleLine = true,
                     textStyle = MaterialTheme.typography.bodyLarge.copy(
@@ -214,7 +221,7 @@ private fun SearchPill(
                 enter = fadeIn() + scaleIn(),
                 exit = fadeOut() + scaleOut(),
             ) {
-                IconButton(onClick = { onValueChange("") }, modifier = Modifier.size(40.dp)) {
+                IconButton(onClick = { onValueChange("") }, modifier = Modifier.size(de.mm20.launcher2.ui.layout.UiSpacing.TouchTarget)) {
                     Icon(
                         painterResource(R.drawable.close_24px),
                         contentDescription = stringResource(R.string.ts_clear),

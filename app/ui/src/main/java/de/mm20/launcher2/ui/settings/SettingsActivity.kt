@@ -27,6 +27,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
@@ -221,6 +226,7 @@ open class SettingsActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        applyTaskLabel(intent)
         val koin = org.koin.mp.KoinPlatform.getKoin()
         if (koin.get<de.mm20.launcher2.network.api.NetworkSettings>().current.engineWanted) {
             koin.get<de.mm20.launcher2.network.NetworkEngine>().restoreIfWanted()
@@ -318,9 +324,6 @@ open class SettingsActivity : BaseActivity() {
             }
             entry<de.mm20.launcher2.ui.ermis.ErmisRoute> {
                 de.mm20.launcher2.ui.ermis.ErmisScreen()
-            }
-            entry<de.mm20.launcher2.ui.terminal.TerminalRoute> {
-                de.mm20.launcher2.ui.terminal.TerminalScreen()
             }
             entry<de.mm20.launcher2.ui.network.NetworkRoute> {
                 de.mm20.launcher2.ui.network.NetworkHomeScreen()
@@ -655,6 +658,7 @@ open class SettingsActivity : BaseActivity() {
 
 
         setContent {
+            val containerSize = androidx.compose.ui.platform.LocalWindowInfo.current.containerSize
             val backStack = rememberNavBackStack(MainRoute)
 
             LaunchedEffect(initialRoute) {
@@ -669,6 +673,9 @@ open class SettingsActivity : BaseActivity() {
             }
             val wallpaperColors by wallpaperColorsAsState()
             CompositionLocalProvider(
+                de.mm20.launcher2.ui.locals.LocalWindowSize provides androidx.compose.ui.geometry.Size(
+                    containerSize.width.toFloat(), containerSize.height.toFloat(),
+                ),
                 LocalWallpaperColors provides wallpaperColors,
                 LocalBackStack provides backStack,
             ) {
@@ -698,6 +705,8 @@ open class SettingsActivity : BaseActivity() {
                         OverlayHost(
                             modifier = Modifier
                                 .fillMaxSize()
+                                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
+                                .imePadding()
                                 .background(de.mm20.launcher2.ui.component.virtualAppSurface())
                         ) {
                             // a Telos app opened directly is the only entry: going back from it closes the activity
@@ -738,7 +747,9 @@ open class SettingsActivity : BaseActivity() {
      * was opened ("Telos Media") instead of "Settings".
      */
     private fun applyTaskLabel(intent: Intent) {
-        val route = intent.getStringExtra(EXTRA_ROUTE) ?: return
+        val route = intent.getStringExtra(EXTRA_ROUTE)
+            ?: intent.data?.takeIf { it.host == "kvaesitso.mm20.de" }?.getQueryParameter("route")
+            ?: return
         val domain = when (route) {
             ROUTE_COMMS -> if (intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) == "messages")
                 "telos_messages_app" else "telos_phone_app"
@@ -750,7 +761,6 @@ open class SettingsActivity : BaseActivity() {
             SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> "telos_youtube_music_app"
             ROUTE_PHOTOS, SettingsDeepLinkContract.ROUTE_VIEWER -> "telos_viewer_app"
             ROUTE_FILES -> "telos_files_app"
-            SettingsDeepLinkContract.ROUTE_TERMINAL -> "telos_terminal_app"
             ROUTE_NETWORK -> "telos_network_app"
             SettingsDeepLinkContract.ROUTE_SYSTEM -> "telos_system_app"
             SettingsDeepLinkContract.ROUTE_TRASH -> "telos_trash_app"
@@ -764,6 +774,10 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_CALENDAR -> "telos_calendar_app"
             ROUTE_DOWNLOADS -> "telos_downloads_app"
             ROUTE_STORE -> "telos_store_app"
+            "settings/clock" -> "telos_clock_app"
+            "settings/akou" -> "telos_akou_app"
+            "settings/magnifier" -> "telos_magnifier_app"
+            "settings/flashlight" -> "telos_flashlight_app"
             else -> return
         }
         de.mm20.launcher2.search.VirtualAppAppearance.applyRecents(this, domain)
@@ -853,7 +867,6 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_PHOTOS -> de.mm20.launcher2.ui.media.docs.ViewerRoute
             SettingsDeepLinkContract.ROUTE_VIEWER -> de.mm20.launcher2.ui.media.docs.ViewerRoute
             ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
-            SettingsDeepLinkContract.ROUTE_TERMINAL -> de.mm20.launcher2.ui.terminal.TerminalRoute
             "settings/akou" -> de.mm20.launcher2.ui.media.akou.AkouRoute
             "settings/clock" -> de.mm20.launcher2.ui.clock.ClockRoute
             SettingsDeepLinkContract.ROUTE_CAMERA -> de.mm20.launcher2.ui.camera.CameraRoute

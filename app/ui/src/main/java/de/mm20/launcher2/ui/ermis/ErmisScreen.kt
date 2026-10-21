@@ -32,6 +32,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -76,9 +77,9 @@ private fun ErmisMailbox() {
     val repository = remember { ErmisRepository.get(context.applicationContext) }
     val state by repository.state.collectAsState()
     val scope = rememberCoroutineScope()
-    var accountId by remember { mutableStateOf<String?>(null) }
+    var accountId by rememberSaveable { mutableStateOf<String?>(null) }
     var query by rememberSaveable { mutableStateOf("") }
-    var starred by remember { mutableStateOf(false) }
+    var starred by rememberSaveable { mutableStateOf(false) }
     var accounts by remember { mutableStateOf(false) }
     var adding by remember { mutableStateOf(false) }
     var composing by remember { mutableStateOf(false) }
@@ -321,9 +322,9 @@ private fun AddAccountDialog(busy: Boolean, onDismiss: () -> Unit, onAuthError: 
             finally { authenticating = false }
         } else if (result.resultCode == android.app.Activity.RESULT_OK) onAuthError()
     }
-    var email by remember { mutableStateOf("") }; var password by remember { mutableStateOf("") }
-    var username by remember { mutableStateOf("") }; var imap by remember { mutableStateOf("") }; var smtp by remember { mutableStateOf("") }
-    var imapPort by remember { mutableStateOf("993") }; var smtpPort by remember { mutableStateOf("465") }; var startTls by remember { mutableStateOf(false) }
+    var email by rememberSaveable { mutableStateOf("") }; var password by remember { mutableStateOf("") }
+    var username by rememberSaveable { mutableStateOf("") }; var imap by rememberSaveable { mutableStateOf("") }; var smtp by rememberSaveable { mutableStateOf("") }
+    var imapPort by rememberSaveable { mutableStateOf("993") }; var smtpPort by rememberSaveable { mutableStateOf("465") }; var startTls by rememberSaveable { mutableStateOf(false) }
     AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(R.string.ermis_add_account)) }, text = {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(stringResource(R.string.ermis_tls_help))

@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Pasaulis</string>
+    <string name="clock_world">Pasaulio laikas</string>
     <string name="clock_alarm">Žadintuvas</string>
     <string name="clock_timer">Laikmatis</string>
     <string name="clock_stopwatch">Chronometras</string>

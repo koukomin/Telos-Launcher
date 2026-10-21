@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Vairs nerādīt</string>
+  <string name="app_polish_show_info">Rādīt informāciju pirms ierakstīšanas</string>
+  <string name="app_polish_yellow_black">Dzeltens / melns</string>
+  <string name="app_polish_blue_yellow">Zils / dzeltens</string>
+  <string name="app_polish_exit_light">Pieskarieties, lai izietu no ekrāna gaismas</string>
+  <string name="app_polish_light_source">Gaismas avots</string>
+  <string name="app_polish_screen_light">Ekrāna gaisma</string>
+  <string name="app_polish_siren">Avārijas sirēna</string>
+  <string name="app_polish_alternating">Pārmaiņus sarkans / zils</string>
+  <string name="app_polish_strobe">Mirgošanas biežums</string>
+  <string name="app_polish_morse">Morzes kods</string>
+  <string name="app_polish_message">Pārraidāmais ziņojums</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Lai izmantotu izvēlēto renderētāju, restartējiet attiecīgās lietotnes.</string>
+  <string name="app_polish_restart_notice">Rādīt paziņojumu par renderētāja restartēšanu</string>
+</resources>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">টার্মিনাল</string>
-    <string name="terminal_runtime_summary">আলাদাভাবে ইনস্টল করা Termux ব্যবহার করে। Termux ও সব অ্যাড-অন একই উৎস থেকে ইনস্টল করুন। শেল Telos-এর বাইরে Termux-এ চলে।</string>
-    <string name="terminal_open_failed">Termux বা ওয়েবসাইট খোলা যায়নি।</string>
-</resources>

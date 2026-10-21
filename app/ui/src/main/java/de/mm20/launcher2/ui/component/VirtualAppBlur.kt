@@ -16,7 +16,7 @@ val LocalVirtualAppBlur = staticCompositionLocalOf<VirtualAppBlur?> { null }
 @Composable fun virtualAppSurface(): Color = if (LocalVirtualAppBlur.current != null) Color.Transparent
     else MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.background)
 @Composable fun virtualAppElevated(): Color = MaterialTheme.colorScheme.surfaceContainerHigh
-    .copy(alpha = MaterialTheme.transparency.elevatedSurface)
+    .copy(alpha = 1f)
 
 @Composable fun VirtualAppWindow(content: @Composable () -> Unit) {
     if (LocalGlassSurface.current) content() else VirtualAppTheme(content)
@@ -31,19 +31,17 @@ fun Modifier.virtualAppGlass(blur: VirtualAppBlur, color: Color): Modifier = fro
     val base = MaterialTheme.colorScheme
     val alpha = MaterialTheme.transparency.background.coerceIn(0f, 1f)
     val backing = base.surface.copy(alpha = alpha)
-    val surfaceAlpha = MaterialTheme.transparency.surface.coerceIn(0f, 1f)
-    val elevatedAlpha = MaterialTheme.transparency.elevatedSurface.coerceIn(0f, 1f)
-    val colors = remember(base, surfaceAlpha, elevatedAlpha) { base.copy(
+    val colors = remember(base) { base.copy(
         background = Color.Transparent,
         // Keep root scaffolds transparent; popup containers must obscure underlying text.
         surface = Color.Transparent,
         surfaceContainer = base.surfaceContainer.copy(alpha = 1f),
-        surfaceContainerLowest = base.surfaceContainerLowest.copy(alpha = surfaceAlpha),
-        surfaceContainerLow = base.surfaceContainerLow.copy(alpha = surfaceAlpha),
-        surfaceContainerHigh = base.surfaceContainerHigh.copy(alpha = elevatedAlpha),
-        surfaceContainerHighest = base.surfaceContainerHighest.copy(alpha = elevatedAlpha),
+        surfaceContainerLowest = base.surfaceContainerLowest.copy(alpha = 1f),
+        surfaceContainerLow = base.surfaceContainerLow.copy(alpha = 1f),
+        surfaceContainerHigh = base.surfaceContainerHigh.copy(alpha = 1f),
+        surfaceContainerHighest = base.surfaceContainerHighest.copy(alpha = 1f),
     ) }
-    CompositionLocalProvider(LocalVirtualAppBlur provides token, LocalGlassSurface provides true) {
+    CompositionLocalProvider(LocalVirtualAppBlur provides token, LocalGlassSurface provides true, androidx.compose.material3.LocalContentColor provides colors.onSurface) {
         MaterialTheme(colorScheme = colors, typography = MaterialTheme.typography, shapes = MaterialTheme.shapes) {
             Box(Modifier.fillMaxSize().frostedGlass(backing)) { content() }
         }

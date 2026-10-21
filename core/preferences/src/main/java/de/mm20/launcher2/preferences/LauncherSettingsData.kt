@@ -1419,6 +1419,7 @@ data class CommsGroup(
     /** default | vulkan | opengl — system HWUI renderer (debug.hwui.renderer) */
     val hwuiRenderer: String = "default",
     val hwuiRestoreOnBoot: Boolean = true,
+    val hwuiShowRestartNotice: Boolean = true,
     /** Allow Vulkan/OpenGL tap-switch on the System home widget. */
     val hwuiWidgetSwitch: Boolean = false,
 )

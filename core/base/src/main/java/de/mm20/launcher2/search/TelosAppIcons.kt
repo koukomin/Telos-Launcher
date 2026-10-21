@@ -5,7 +5,6 @@ import de.mm20.launcher2.base.R
 /** Explicit resource references survive release shrinking, unlike constructed drawable names. */
 object TelosAppIcons {
     fun forDomain(domain: String): Int? = when (domain) {
-        "telos_terminal_app" -> R.drawable.ic_app_terminal_full
         "telos_phone_app" -> R.drawable.ic_app_phone_full
         "telos_messages_app" -> R.drawable.ic_app_messages_full
         "telos_radio_app" -> R.drawable.ic_app_radio_full

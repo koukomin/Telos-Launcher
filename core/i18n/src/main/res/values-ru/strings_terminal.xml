@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">Терминал</string>
-    <string name="terminal_runtime_summary">Использует отдельно установленный Termux. Установите Termux и все дополнения из одного источника. Оболочка работает в Termux вне Telos.</string>
-    <string name="terminal_open_failed">Не удалось открыть Termux или сайт.</string>
-</resources>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Ez erakutsi berriro</string>
+  <string name="app_polish_show_info">Erakutsi informazioa grabatu aurretik</string>
+  <string name="app_polish_yellow_black">Horia / beltza</string>
+  <string name="app_polish_blue_yellow">Urdina / horia</string>
+  <string name="app_polish_exit_light">Sakatu pantailaren argitik irteteko</string>
+  <string name="app_polish_light_source">Argi-iturria</string>
+  <string name="app_polish_screen_light">Pantailaren argia</string>
+  <string name="app_polish_siren">Larrialdiko sirena</string>
+  <string name="app_polish_alternating">Gorria / urdina txandaka</string>
+  <string name="app_polish_strobe">Keinu-maiztasuna</string>
+  <string name="app_polish_morse">Morse kodea</string>
+  <string name="app_polish_message">Igortzeko mezua</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Berrabiarazi dagokien aplikazioak hautatutako errendatzailea erabiltzeko.</string>
+  <string name="app_polish_restart_notice">Erakutsi errendatzailea berrabiarazteko abisua</string>
+</resources>

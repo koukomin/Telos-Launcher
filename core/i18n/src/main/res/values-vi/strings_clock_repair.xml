@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Thế giới</string>
+    <string name="clock_world">Giờ thế giới</string>
     <string name="clock_alarm">Báo thức</string>
     <string name="clock_timer">Hẹn giờ</string>
     <string name="clock_stopwatch">Bấm giờ</string>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Να μην εμφανιστεί ξανά</string>
+  <string name="app_polish_show_info">Εμφάνιση πληροφοριών πριν την ηχογράφηση</string>
+  <string name="app_polish_yellow_black">Κίτρινο / μαύρο</string>
+  <string name="app_polish_blue_yellow">Μπλε / κίτρινο</string>
+  <string name="app_polish_exit_light">Πάτησε για έξοδο από τον φωτισμό οθόνης</string>
+  <string name="app_polish_light_source">Πηγή φωτός</string>
+  <string name="app_polish_screen_light">Φωτισμός οθόνης</string>
+  <string name="app_polish_siren">Σειρήνα έκτακτης ανάγκης</string>
+  <string name="app_polish_alternating">Εναλλαγή κόκκινου / μπλε</string>
+  <string name="app_polish_strobe">Συχνότητα αναλαμπών</string>
+  <string name="app_polish_morse">Κώδικας Μορς</string>
+  <string name="app_polish_message">Μήνυμα προς μετάδοση</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Επανεκκίνησε τις εφαρμογές που επηρεάζονται για να χρησιμοποιήσουν την επιλεγμένη μηχανή γραφικών.</string>
+  <string name="app_polish_restart_notice">Ενημέρωση για επανεκκίνηση μετά την αλλαγή γραφικών</string>
+</resources>

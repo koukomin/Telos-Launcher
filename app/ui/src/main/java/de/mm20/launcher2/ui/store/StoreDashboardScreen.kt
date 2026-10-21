@@ -968,7 +968,7 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                     )
                     Row(Modifier.padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         if (installed) {
-                            OutlinedButton(onClick = { onOpen(app) }) { Text(stringResource(R.string.hc_open)) }
+                            if (app.key.substringBefore("://") != "telos_store_app") OutlinedButton(onClick = { onOpen(app) }) { Text(stringResource(R.string.hc_open)) }
                             if (app.removable) TextButton(onClick = { onToggle(app, false) }) { Text(stringResource(R.string.hc_remove)) }
                         } else {
                             Button(onClick = { onToggle(app, true) }) { Text(stringResource(R.string.hc_install)) }

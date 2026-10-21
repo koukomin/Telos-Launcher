@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Ná taispeáin arís</string>
+  <string name="app_polish_show_info">Taispeáin faisnéis roimh thaifeadadh</string>
+  <string name="app_polish_yellow_black">Buí / dubh</string>
+  <string name="app_polish_blue_yellow">Gorm / buí</string>
+  <string name="app_polish_exit_light">Tapáil chun solas an scáileáin a fhágáil</string>
+  <string name="app_polish_light_source">Foinse solais</string>
+  <string name="app_polish_screen_light">Solas an scáileáin</string>
+  <string name="app_polish_siren">Siréan éigeandála</string>
+  <string name="app_polish_alternating">Dearg / gorm malartach</string>
+  <string name="app_polish_strobe">Minicíocht splancadh</string>
+  <string name="app_polish_morse">Cód Morse</string>
+  <string name="app_polish_message">Teachtaireacht le tarchur</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Atosaigh na haipeanna lena mbaineann chun an rindreálaí roghnaithe a úsáid.</string>
+  <string name="app_polish_restart_notice">Taispeáin fógra atosaithe an rindreálaí</string>
+</resources>

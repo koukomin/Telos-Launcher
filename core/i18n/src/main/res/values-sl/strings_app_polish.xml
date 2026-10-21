@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Ne prikaži več</string>
+  <string name="app_polish_show_info">Prikaži informacije pred snemanjem</string>
+  <string name="app_polish_yellow_black">Rumena / črna</string>
+  <string name="app_polish_blue_yellow">Modra / rumena</string>
+  <string name="app_polish_exit_light">Tapnite za izhod iz zaslonske luči</string>
+  <string name="app_polish_light_source">Vir svetlobe</string>
+  <string name="app_polish_screen_light">Zaslonska luč</string>
+  <string name="app_polish_siren">Sirena v sili</string>
+  <string name="app_polish_alternating">Izmenično rdeče / modro</string>
+  <string name="app_polish_strobe">Frekvenca utripanja</string>
+  <string name="app_polish_morse">Morsejeva abeceda</string>
+  <string name="app_polish_message">Sporočilo za oddajanje</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Za uporabo izbranega izrisovalnika znova zaženite zadevne aplikacije.</string>
+  <string name="app_polish_restart_notice">Prikaži obvestilo o ponovnem zagonu izrisovalnika</string>
+</resources>

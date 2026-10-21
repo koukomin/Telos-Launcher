@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">Terminalas</string>
-    <string name="terminal_runtime_summary">Naudoja atskirai įdiegtą Termux. Termux ir visus priedus įdiekite iš to paties šaltinio. Apvalkalas veikia Termux, už Telos ribų.</string>
-    <string name="terminal_open_failed">Nepavyko atidaryti Termux arba svetainės.</string>
-</resources>

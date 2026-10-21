@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">לא להציג שוב</string>
+  <string name="app_polish_show_info">הצגת מידע לפני הקלטה</string>
+  <string name="app_polish_yellow_black">צהוב / שחור</string>
+  <string name="app_polish_blue_yellow">כחול / צהוב</string>
+  <string name="app_polish_exit_light">יש להקיש כדי לצאת מתאורת המסך</string>
+  <string name="app_polish_light_source">מקור אור</string>
+  <string name="app_polish_screen_light">תאורת מסך</string>
+  <string name="app_polish_siren">צפירת חירום</string>
+  <string name="app_polish_alternating">אדום / כחול לסירוגין</string>
+  <string name="app_polish_strobe">תדירות הבהוב</string>
+  <string name="app_polish_morse">קוד מורס</string>
+  <string name="app_polish_message">הודעה לשידור</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">יש להפעיל מחדש את היישומים הרלוונטיים כדי להשתמש במנוע העיבוד שנבחר.</string>
+  <string name="app_polish_restart_notice">הצגת הודעה על הפעלה מחדש של מנוע העיבוד</string>
+</resources>

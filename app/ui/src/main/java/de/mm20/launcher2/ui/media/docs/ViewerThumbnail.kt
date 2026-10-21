@@ -47,7 +47,7 @@ internal object ViewerThumbnails {
         if (Build.VERSION.SDK_INT >= 29) {
             runCatching { resolver.loadThumbnail(uri, Size(EDGE, EDGE), null) }.getOrNull()?.let { return it }
         }
-        val mime = resolver.getType(uri).orEmpty()
+        val mime = runCatching { resolver.getType(uri) }.getOrNull().orEmpty()
         val ext = DocumentTypes.ext(name)
         if (mime.startsWith("image/") || ext in setOf("jpg", "jpeg", "png", "webp", "gif", "heic", "avif", "bmp")) {
             val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
@@ -61,7 +61,15 @@ internal object ViewerThumbnails {
             val retriever = MediaMetadataRetriever()
             return try {
                 retriever.setDataSource(context, uri)
-                if (Build.VERSION.SDK_INT >= 27) retriever.getScaledFrameAtTime(-1, MediaMetadataRetriever.OPTION_CLOSEST_SYNC, EDGE, EDGE)
+                if (Build.VERSION.SDK_INT >= 27) {
+                    val width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)?.toIntOrNull()?.coerceAtLeast(1) ?: EDGE
+                    val height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)?.toIntOrNull()?.coerceAtLeast(1) ?: EDGE
+                    val scale = EDGE.toFloat() / maxOf(width, height)
+                    val w = (width * scale).toInt().coerceAtLeast(1)
+                    val h = (height * scale).toInt().coerceAtLeast(1)
+                    retriever.getScaledFrameAtTime(1_000_000L, MediaMetadataRetriever.OPTION_CLOSEST_SYNC, w, h)
+                        ?: retriever.getScaledFrameAtTime(0L, MediaMetadataRetriever.OPTION_CLOSEST, w, h)
+                }
                 else retriever.getFrameAtTime(-1)?.let { source ->
                     Bitmap.createScaledBitmap(source, EDGE, EDGE, true).also { if (it !== source) source.recycle() }
                 }

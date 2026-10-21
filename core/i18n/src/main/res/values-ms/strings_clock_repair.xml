@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Dunia</string>
+    <string name="clock_world">Waktu dunia</string>
     <string name="clock_alarm">Penggera</string>
     <string name="clock_timer">Pemasa</string>
     <string name="clock_stopwatch">Jam randik</string>

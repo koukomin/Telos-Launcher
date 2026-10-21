@@ -59,6 +59,7 @@ object VirtualAppAppearance {
 
     fun applyRecents(activity: Activity, domain: String) {
         val label = TelosAppLabels.forDomain(activity, domain)
+        activity.title = label
         val res = TelosAppIcons.forDomain(domain)
         val bmp = res?.let { bitmap(activity, it) }
         runCatching {

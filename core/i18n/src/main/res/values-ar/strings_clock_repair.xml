@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">العالم</string>
+    <string name="clock_world">التوقيت العالمي</string>
     <string name="clock_alarm">المنبه</string>
     <string name="clock_timer">المؤقت</string>
     <string name="clock_stopwatch">ساعة الإيقاف</string>

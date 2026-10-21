@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Більше не показувати</string>
+  <string name="app_polish_show_info">Показувати інформацію перед записом</string>
+  <string name="app_polish_yellow_black">Жовтий / чорний</string>
+  <string name="app_polish_blue_yellow">Синій / жовтий</string>
+  <string name="app_polish_exit_light">Торкніться, щоб вимкнути світло екрана</string>
+  <string name="app_polish_light_source">Джерело світла</string>
+  <string name="app_polish_screen_light">Світло екрана</string>
+  <string name="app_polish_siren">Аварійна сирена</string>
+  <string name="app_polish_alternating">Чергування червоного / синього</string>
+  <string name="app_polish_strobe">Частота блимання</string>
+  <string name="app_polish_morse">Код Морзе</string>
+  <string name="app_polish_message">Повідомлення для передавання</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Перезапустіть відповідні застосунки, щоб використовувати вибраний засіб візуалізації.</string>
+  <string name="app_polish_restart_notice">Показувати сповіщення про перезапуск візуалізації</string>
+</resources>

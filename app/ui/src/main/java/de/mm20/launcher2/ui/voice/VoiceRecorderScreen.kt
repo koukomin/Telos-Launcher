@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -283,7 +284,10 @@ fun VoiceRecorderScreen() {
                 },
             )
         } else {
-            Column(Modifier.fillMaxSize()) {
+            androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
+            val scrollPage = maxHeight < (600f * androidx.compose.ui.platform.LocalDensity.current.fontScale).dp
+            val listHeight = maxOf(240.dp, maxHeight / 2)
+            Column(Modifier.fillMaxSize().then(if (scrollPage) Modifier.verticalScroll(rememberScrollState()) else Modifier)) {
                 Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     if (searching) {
                         TelosSearchTopBar(
@@ -352,7 +356,7 @@ fun VoiceRecorderScreen() {
                         label = { Text(stringResource(R.string.voice_call_recordings)) },
                     )
                 }
-                Box(Modifier.weight(1f).fillMaxWidth()) {
+                Box(Modifier.then(if (scrollPage) Modifier.height(listHeight) else Modifier.weight(1f)).fillMaxWidth()) {
                     de.mm20.launcher2.ui.component.AuthGate(
                         enabled = tab == 2 && lockCalls,
                         title = stringResource(R.string.auth_gate_recordings),
@@ -391,6 +395,7 @@ fun VoiceRecorderScreen() {
                 Box(Modifier.fillMaxWidth().padding(vertical = 20.dp), contentAlignment = Alignment.Center) {
                     RecordButton(onClick = ::startRecording)
                 }
+            }
             }
         }
     }
@@ -566,14 +571,14 @@ private fun shareRecording(context: Context, item: RecordingItem) {
 @Composable
 private fun RecordingPage(state: VoiceRecorderState, onPauseResume: () -> Unit, onStop: () -> Unit, onDiscard: () -> Unit) {
     val paused = state.status == VoiceStatus.Paused
-    Column(Modifier.fillMaxSize().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(Modifier.weight(1f))
         Text(
             stringResource(if (paused) R.string.voice_notification_paused else R.string.voice_notification_recording),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        Text(formatDuration(state.elapsedMs), fontSize = 64.sp, fontWeight = FontWeight.Light, modifier = Modifier.padding(vertical = 16.dp))
+        Text(formatDuration(state.elapsedMs), fontSize = 64.sp, fontWeight = FontWeight.Light, modifier = Modifier.padding(vertical = 16.dp).horizontalScroll(rememberScrollState()), maxLines = 1, softWrap = false)
         Waveform(state.amplitudes, Modifier.fillMaxWidth().height(120.dp))
         Spacer(Modifier.weight(1f))
         Row(Modifier.fillMaxWidth().padding(bottom = 24.dp), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {

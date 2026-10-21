@@ -1,0 +1,18 @@
+<resources>
+    <string name="au_phonea_backspace">ลบตัวเลข</string>
+    <string name="cal_no_events">ไม่มีกิจกรรม</string>
+    <string name="calculator_copy_result">คัดลอกผลลัพธ์</string>
+    <string name="calculator_history">ประวัติ</string>
+    <string name="calculator_more">ตัวเลือกเพิ่มเติม</string>
+    <string name="calculator_scientific">เครื่องคิดเลขวิทยาศาสตร์</string>
+    <string name="calculator_standard">เครื่องคิดเลขมาตรฐาน</string>
+    <string name="calculator_unit_converter">ตัวแปลงหน่วย</string>
+    <string name="calculator_vat">ภาษีมูลค่าเพิ่ม</string>
+    <string name="hc_no_contacts_found">ไม่พบรายชื่อติดต่อ</string>
+    <string name="hc_speed_dial_not_assigned">ยังไม่ได้กำหนดหมายเลขโทรด่วน</string>
+    <string name="recents_empty_msg">ประวัติการโทรของคุณจะแสดงที่นี่</string>
+    <string name="recents_empty_title">ไม่มีการโทรล่าสุด</string>
+    <string name="screenrec_no_recordings">ยังไม่มีการบันทึกหน้าจอ</string>
+    <string name="search_action_call">โทร</string>
+    <string name="search_action_contact">เพิ่มในรายชื่อติดต่อ</string>
+</resources>

@@ -12,3 +12,10 @@ Install only one of them. They are signed with the same key, so you can later sw
 ## Ποιο APK να κατεβάσω;
 
 Σχεδόν όλα τα κινητά των τελευταίων ~8 ετών είναι 64-bit. **Κατέβασε το `telos-arm64-v8a.apk`**, εκτός αν ξέρεις ότι το κινητό σου είναι παλιό και 32-bit. Το `telos-armeabi-v7a.apk` είναι μόνο για παλιά 32-bit κινητά: αν το 64-bit λέει ότι δεν είναι συμβατό με τη συσκευή σου, δοκίμασε αυτό. Εγκατάστησε μόνο ένα από τα δύο.
+
+
+## UI validation / Έλεγχος UI
+
+See the [UI validation record](https://github.com/koukomin/Telos-Launcher/blob/main/docs/docs/developer-guide/ui-validation.md)
+for automated evidence and outstanding device checks. Builds and policy tests alone do not
+certify every screen, live wallpaper, hardware or account state visually.

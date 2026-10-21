@@ -1,0 +1,148 @@
+package de.mm20.launcher2.ui.layout
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.*
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.test.platform.app.InstrumentationRegistry
+import de.mm20.launcher2.ui.component.AdaptiveNavigationBar
+import de.mm20.launcher2.ui.component.AdaptiveNavigationItem
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import androidx.compose.runtime.mutableStateOf
+import android.graphics.Bitmap
+import java.io.File
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ui.component.preferences.Preference
+import org.junit.Assert.assertTrue
+import org.junit.Rule
+import org.junit.Test
+
+/** Instrumented geometry test, not a substitute for screenshot/TalkBack review. */
+class PreferenceAdaptiveTest {
+    @get:Rule val compose = createComposeRule()
+
+    @Test fun controlsNeverOverlapLargeWrappedTitles() {
+        val width = mutableFloatStateOf(320f)
+        val dark = mutableStateOf(false)
+        val scale = mutableFloatStateOf(1f)
+        compose.setContent {
+            val density = LocalDensity.current
+            CompositionLocalProvider(LocalDensity provides Density(density.density, scale.floatValue)) {
+                MaterialTheme(colorScheme = if (dark.value) darkColorScheme() else lightColorScheme()) {
+                    Surface(Modifier.fillMaxSize()) {
+                    Box(Modifier.fillMaxSize()) {
+                    Box(Modifier.width(width.floatValue.dp).testTag("viewport")) {
+                        Preference(
+                            title = { Text("A long setting title that must wrap without losing its control", Modifier.testTag("title")) },
+                            controls = { Text("Control", Modifier.testTag("control")) },
+                        )
+                    }
+                    }
+                    }
+                }
+            }
+        }
+        // CI provisions a >=840dp window; assert that each requested constraint was actually applied.
+        for (isDark in listOf(false, true)) for (w in listOf(240f, 320f, 600f, 840f)) for (s in listOf(0.85f, 1f, 1.3f, 2f)) {
+            compose.runOnIdle { dark.value = isDark; width.floatValue = w; scale.floatValue = s }
+            compose.onNodeWithTag("viewport").assertWidthIsEqualTo(w.dp)
+            val title = compose.onNodeWithTag("title", useUnmergedTree = true).fetchSemanticsNode().boundsInRoot
+            val control = compose.onNodeWithTag("control", useUnmergedTree = true).fetchSemanticsNode().boundsInRoot
+            assertTrue("$w dp / $s", control.top >= title.bottom || control.left >= title.right)
+            assertTrue(title.height > 0 && control.height > 0)
+            saveScreenshot("preference-$isDark-$w-$s.png")
+        }
+    }
+    @Test fun settingHasOneLabeledToggleAndDisabledState() {
+        val checked = mutableStateOf(false)
+        val enabled = mutableStateOf(true)
+        compose.setContent {
+            MaterialTheme {
+                SwitchPreference(title = "Setting", value = checked.value, enabled = enabled.value,
+                    onValueChanged = { checked.value = it })
+            }
+        }
+        compose.onNodeWithText("Setting").assertIsOff().performClick().assertIsOn()
+        compose.runOnIdle { enabled.value = false }
+        compose.onNodeWithText("Setting").assertIsNotEnabled().assertIsOn()
+    }
+
+    @Test fun navigationLabelsGrowAndSelectedStateIsExposed() {
+        val scale = mutableFloatStateOf(1f)
+        val selected = mutableStateOf(0)
+        val dark = mutableStateOf(false)
+        compose.setContent {
+            val density = LocalDensity.current
+            CompositionLocalProvider(LocalDensity provides Density(density.density, scale.floatValue)) {
+                MaterialTheme(colorScheme = if (dark.value) darkColorScheme() else lightColorScheme()) {
+                    Surface(Modifier.fillMaxSize()) {
+                    Box(Modifier.fillMaxSize()) {
+                    Box(Modifier.width(320.dp)) {
+                        AdaptiveNavigationBar(Modifier.testTag("bar")) {
+                            listOf("Recent calls", "All contacts", "Text messages").forEachIndexed { index, label ->
+                                AdaptiveNavigationItem(selected.value == index, { selected.value = index },
+                                    icon = { Text("•") }, label = { Text(label, Modifier.testTag("label$index")) })
+                            }
+                        }
+                    }
+                    }
+                    }
+                }
+            }
+        }
+        for (isDark in listOf(false, true)) for (s in listOf(0.85f, 1f, 1.3f, 2f)) {
+            compose.runOnIdle { dark.value = isDark; scale.floatValue = s }
+            val bar = compose.onNodeWithTag("bar").fetchSemanticsNode().boundsInRoot
+            for (index in 0..2) {
+                val label = compose.onNodeWithTag("label$index", useUnmergedTree = true).fetchSemanticsNode().boundsInRoot
+                assertTrue("Label $index / $s", label.bottom <= bar.bottom && label.right <= bar.right)
+            }
+            saveScreenshot("adaptive-navigation-$isDark-$s.png")
+        }
+        compose.onNodeWithText("All contacts").performClick().assertIsSelected()
+    }
+
+    private fun saveScreenshot(name: String) {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val bitmap = compose.onRoot().captureToImage().asAndroidBitmap()
+        if (android.os.Build.VERSION.SDK_INT >= 29) {
+            // Shared test evidence survives AGP's test-APK uninstall; app cache does not.
+            // Creating our own images through MediaStore needs no storage-read permission.
+            val values = android.content.ContentValues().apply {
+                put(android.provider.MediaStore.Images.Media.DISPLAY_NAME, name)
+                put(android.provider.MediaStore.Images.Media.MIME_TYPE, "image/png")
+                put(android.provider.MediaStore.Images.Media.RELATIVE_PATH,
+                    android.os.Environment.DIRECTORY_PICTURES + "/TelosUiValidation")
+                put(android.provider.MediaStore.Images.Media.IS_PENDING, 1)
+            }
+            val uri = checkNotNull(context.contentResolver.insert(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values,
+            ))
+            checkNotNull(context.contentResolver.openOutputStream(uri)).use { stream ->
+                check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream))
+            }
+            context.contentResolver.update(uri, android.content.ContentValues().apply {
+                put(android.provider.MediaStore.Images.Media.IS_PENDING, 0)
+            }, null, null)
+        } else {
+            val output = File(context.externalCacheDir, name)
+            output.outputStream().use { stream ->
+                check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream))
+            }
+        }
+    }
+}

@@ -266,7 +266,10 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
         }.focusable(),
         drawerState = drawer,
         drawerContent = {
-            ModalDrawerSheet(drawerContainerColor = MaterialTheme.colorScheme.surfaceContainer) {
+            ModalDrawerSheet(
+                modifier = Modifier.width((androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp * 0.86f).dp.coerceAtMost(360.dp)),
+                drawerContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+            ) {
                 StorageDrawer(
                     vm = vm,
                     onGo = { target -> vm.open(target); scope.launch { drawer.close() } },

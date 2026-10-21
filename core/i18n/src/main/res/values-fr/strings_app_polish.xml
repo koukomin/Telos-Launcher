@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Ne plus afficher</string>
+  <string name="app_polish_show_info">Afficher les informations avant l’enregistrement</string>
+  <string name="app_polish_yellow_black">Jaune / noir</string>
+  <string name="app_polish_blue_yellow">Bleu / jaune</string>
+  <string name="app_polish_exit_light">Touchez pour quitter l’éclairage de l’écran</string>
+  <string name="app_polish_light_source">Source lumineuse</string>
+  <string name="app_polish_screen_light">Éclairage de l’écran</string>
+  <string name="app_polish_siren">Sirène d’urgence</string>
+  <string name="app_polish_alternating">Alternance rouge / bleu</string>
+  <string name="app_polish_strobe">Fréquence des clignotements</string>
+  <string name="app_polish_morse">Code Morse</string>
+  <string name="app_polish_message">Message à transmettre</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Redémarrez les applications concernées pour utiliser le moteur de rendu choisi.</string>
+  <string name="app_polish_restart_notice">Afficher l’avis de redémarrage du moteur de rendu</string>
+</resources>

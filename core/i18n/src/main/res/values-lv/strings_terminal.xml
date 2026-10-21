@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">Terminālis</string>
-    <string name="terminal_runtime_summary">Izmanto atsevišķi instalētu Termux. Instalējiet Termux un visus papildinājumus no viena avota. Čaula darbojas Termux ārpus Telos.</string>
-    <string name="terminal_open_failed">Neizdevās atvērt Termux vai vietni.</string>
-</resources>

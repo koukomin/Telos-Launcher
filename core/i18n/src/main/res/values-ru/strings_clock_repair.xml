@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Мир</string>
+    <string name="clock_world">Мировое время</string>
     <string name="clock_alarm">Будильник</string>
     <string name="clock_timer">Таймер</string>
     <string name="clock_stopwatch">Секундомер</string>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Ne montru denove</string>
+  <string name="app_polish_show_info">Montru informojn antaŭ registrado</string>
+  <string name="app_polish_yellow_black">Flava / nigra</string>
+  <string name="app_polish_blue_yellow">Blua / flava</string>
+  <string name="app_polish_exit_light">Tuŝu por forlasi la ekranlumon</string>
+  <string name="app_polish_light_source">Lumfonto</string>
+  <string name="app_polish_screen_light">Ekranlumo</string>
+  <string name="app_polish_siren">Krizsireno</string>
+  <string name="app_polish_alternating">Alterna ruĝa / blua</string>
+  <string name="app_polish_strobe">Fulmfrekvenco</string>
+  <string name="app_polish_morse">Morsa kodo</string>
+  <string name="app_polish_message">Mesaĝo por elsendi</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Restartigu la koncernajn apojn por uzi la elektitan bildigilon.</string>
+  <string name="app_polish_restart_notice">Montru avizon pri restartigo de la bildigilo</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Ne prikazuj ponovno</string>
+  <string name="app_polish_show_info">Prikaži informacije prije snimanja</string>
+  <string name="app_polish_yellow_black">Žuta / crna</string>
+  <string name="app_polish_blue_yellow">Plava / žuta</string>
+  <string name="app_polish_exit_light">Dodirnite za izlazak iz svjetla zaslona</string>
+  <string name="app_polish_light_source">Izvor svjetla</string>
+  <string name="app_polish_screen_light">Svjetlo zaslona</string>
+  <string name="app_polish_siren">Sirena za hitne slučajeve</string>
+  <string name="app_polish_alternating">Naizmjenično crveno / plavo</string>
+  <string name="app_polish_strobe">Učestalost treptanja</string>
+  <string name="app_polish_morse">Morseov kod</string>
+  <string name="app_polish_message">Poruka za slanje</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Ponovno pokrenite odgovarajuće aplikacije za upotrebu odabranog prikazivača.</string>
+  <string name="app_polish_restart_notice">Prikaži obavijest o ponovnom pokretanju prikazivača</string>
+</resources>

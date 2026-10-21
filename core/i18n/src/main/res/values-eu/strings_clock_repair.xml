@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Mundua</string>
+    <string name="clock_world">Munduko ordua</string>
     <string name="clock_alarm">Alarma</string>
     <string name="clock_timer">Tenporizadorea</string>
     <string name="clock_stopwatch">Kronometroa</string>

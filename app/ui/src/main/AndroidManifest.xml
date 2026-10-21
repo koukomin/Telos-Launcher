@@ -16,9 +16,6 @@
         <intent>
             <action android:name="android.speech.action.RECOGNIZE_SPEECH" />
         </intent>
-        <intent>
-            <action android:name="com.termux.RUN_COMMAND" />
-        </intent>
     </queries>
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -235,11 +232,12 @@
         <!-- One document task per virtual app; Settings keeps its own normal task. -->
         <activity
             android:name=".settings.TelosAppActivity"
+            android:icon="@mipmap/ic_launcher"
             android:exported="false"
             android:documentLaunchMode="intoExisting"
             android:launchMode="standard"
             android:taskAffinity=""
-            android:label="@string/settings"
+            android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:enableOnBackInvokedCallback="true" />
 

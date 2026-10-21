@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Maailma</string>
+    <string name="clock_world">Maailmanaika</string>
     <string name="clock_alarm">Herätys</string>
     <string name="clock_timer">Ajastin</string>
     <string name="clock_stopwatch">Sekuntikello</string>

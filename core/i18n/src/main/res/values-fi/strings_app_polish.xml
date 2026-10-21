@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Älä näytä uudelleen</string>
+  <string name="app_polish_show_info">Näytä tiedot ennen tallennusta</string>
+  <string name="app_polish_yellow_black">Keltainen / musta</string>
+  <string name="app_polish_blue_yellow">Sininen / keltainen</string>
+  <string name="app_polish_exit_light">Poistu näytön valosta napauttamalla</string>
+  <string name="app_polish_light_source">Valonlähde</string>
+  <string name="app_polish_screen_light">Näytön valo</string>
+  <string name="app_polish_siren">Hätäsireeni</string>
+  <string name="app_polish_alternating">Vuorotteleva punainen / sininen</string>
+  <string name="app_polish_strobe">Vilkkumistaajuus</string>
+  <string name="app_polish_morse">Morsekoodi</string>
+  <string name="app_polish_message">Lähetettävä viesti</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Käynnistä kyseiset sovellukset uudelleen käyttääksesi valittua renderöijää.</string>
+  <string name="app_polish_restart_notice">Näytä renderöijän uudelleenkäynnistysilmoitus</string>
+</resources>

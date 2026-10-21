@@ -146,7 +146,7 @@ fun NotesScreen() {
                 } else if (notes.isEmpty()) {
                     Box(Modifier.fillMaxSize(), Alignment.Center) { Text(stringResource(R.string.notes_empty), color = MaterialTheme.colorScheme.onSurfaceVariant) }
                 } else LazyVerticalStaggeredGrid(
-                    StaggeredGridCells.Adaptive(160.dp), Modifier.fillMaxSize(),
+                    StaggeredGridCells.Adaptive(160.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale), Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalItemSpacing = 8.dp,
                 ) {
                     items(notes, key = { it.id }) { n ->
@@ -198,7 +198,7 @@ private fun NoteCard(n: Note, onClick: () -> Unit, onLong: () -> Unit, trash: Bo
     val bg = noteColor(n.color, MaterialTheme.colorScheme.surfaceContainerHigh)
     val fg = if (n.color == 0) MaterialTheme.colorScheme.onSurface else Color.Black
     Column(
-        Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(bg)
+        Modifier.fillMaxWidth().clip(MaterialTheme.shapes.medium).background(bg)
             .combinedClickableCompat(onClick, onLong).padding(14.dp),
     ) {
         if (n.title.isNotBlank()) Text(n.title, style = MaterialTheme.typography.titleMedium, color = fg, maxLines = 2, overflow = TextOverflow.Ellipsis)

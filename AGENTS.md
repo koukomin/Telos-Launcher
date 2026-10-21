@@ -158,3 +158,92 @@ Media playback controls must respond to taps across the full player surface, inc
 Stremio playback preferences use ordered primary/secondary audio and subtitle languages; empty primary subtitles disables text tracks and automatic subtitle lookup. Scope these preferences to Stremio launches, including the isolated player process. The 1/2/5/10/20 GB choice is an LRU HTTP cache per player process, not a total torrent staging quota. Never describe it as a cap on all torrent disk usage. Network/speed controls reuse the shared TorrentSession settings rather than create a second torrent engine.
 
 Subtitle selection uses a searchable, scrollable bottom sheet with explicit selected/off state and fixed file/online actions; keep it usable in landscape and with large fonts. Stremio autoplay is opt-in, uses only catalog-provided episode IDs and the same add-on/transport, with one bounded request on actual playback end. Never autoplay external-browser streams or random files from a multi-file torrent. Resolution/size/screener preferences only filter metadata, never alter playback: preserve unknown metadata and fail open for manual browsing, but stop automatic continuation if no candidate matches.
+
+## Theme contract for every Telos app
+
+The wallpaper blur belongs to the single shared root. Material container roles
+(lowest/low/normal/high/highest) inside virtual apps are opaque tonal surfaces;
+never apply another per-card alpha or use transparent surface as a text/icon
+color. Any scoped MaterialTheme must also provide LocalContentColor from its
+own onSurface. Radio's appearance override, its station bar, popups and mini
+players must obey the same foreground/background pairing. Full-screen camera,
+video and screen-light content may intentionally own black or illuminated pixels.
+Keep zoom and utility actions compact in landscape without shrinking touch targets.
+
+Every new virtual app must be registered in SettingsDeepLinkContract.virtualAppTaskId,
+SettingsActivity task-domain mapping, TelosAppLabels and TelosAppIcons. A manifest
+label alone cannot represent several document tasks. Test launcher, notifications,
+rotation, process recreation and explicit close independently. Biometric screens
+reattach their callbacks to the retained AndroidX prompt after rotation; do not
+start another prompt from every new composition or persist an unlocked flag to disk.
+
+Do not reintroduce an embedded terminal or bootstrap downloader. Termux is an external Store recommendation; its app, prefix and sessions belong to com.termux. Keep any external launch integration separate from Telos virtual-app registration.
+
+HWUI property values are skiavk/skiagl; the process chooses its pipeline once.
+Restoring the property after launcher startup does not retroactively switch its
+already-created renderer. Explain app-process restart rather than promise that
+Activity.recreate or restarting System UI switches every app. Keep restart notices
+on by default with an explicit preference to hide them. Never restart system UI
+or kill unrelated apps automatically.
+
+Saved Wi-Fi credentials require explicit reveal and device authentication. Do not
+persist, log or copy them to telemetry. Associate keys with their own network block,
+never fall back to the first saved password for an unknown current SSID. Clear
+revealed values on backgrounding. Shizuku availability does not guarantee that an
+OEM permits reading its Wi-Fi store; show a failure rather than fabricated data.
+## Mandatory Telos UI and icon design contract (all coding agents)
+
+These instructions are binding for any AI coding assistant or contributor working in this repository. Read `AGENTS.md` and `docs/ICON_DESIGN.md` before editing any Telos virtual app, Dialer, launcher icon, UI resource or icon pipeline. Treat these as acceptance criteria, not suggestions. Do not claim implementation from documentation alone.
+
+### Dialer: large contact photograph
+
+- Incoming, outgoing and in-call screens must show a prominently large contact photograph, inspired by the visual prominence in Google Phone, without copying proprietary assets.
+- Use a responsive edge-to-edge photo region where appropriate, preserving clear caller identity, number, call status, controls, accessibility and safe areas. Account for compact screens, tablets, landscape, large font sizes, cutouts and gesture/navigation insets.
+- Support contact photo fallback to a polished initials/avatar design; never stretch low-resolution images or obscure critical actions.
+- Keep the existing call-state logic, telecom permissions, accessibility labels and functional call controls intact. Add UI previews and tests for photo/no-photo, light/dark, incoming/outgoing/active and large text.
+
+### Flat adaptive icon system
+
+- The default launcher icon is the quality baseline. All Telos virtual-app icons must form a cohesive **Telos Flat Adaptive** family.
+- Follow the detailed mandatory specification in `docs/ICON_DESIGN.md`. Do not use glossy, skeuomorphic, faux-3D, complex-gradient, shadow-heavy or inconsistent icons.
+- Implement foreground/background layers with Android adaptive icon masks, keeping recognizable content within the safe zone across circle, square, squircle, rounded-square and OEM masks. Never bake the final mask shape into the artwork.
+- Use a shared vector-based geometry and color-token system; icons must be crisp at small sizes, distinguishable from official third-party brand icons, and coherent in light/dark/monochrome modes.
+- Verify all Telos virtual apps, app drawer, dock, search results, sidebar and system surfaces use the correct icons. Where the user chooses an icon pack or custom icon, honor that selection in launcher-controlled surfaces unless a documented exception applies.
+- Before completion, produce a contact sheet showing every affected icon under multiple masks and on light/dark backgrounds; validate visually and update documentation, localization and tests where applicable.
+
+### Delivery gates
+
+- Implement and verify behavior in code, not only in screenshots or prose. Do not mark tasks complete without a passing build and relevant tests or an explicit explanation of what could not be tested.
+- Preserve existing launcher functionality and avoid unrelated UI changes.
+- Submit changes in a PR; do not merge or release unless explicitly instructed.
+
+## Mandatory UI design for all AI coding agents
+
+Before modifying virtual apps, Dialer, icons or app surfaces, read `docs/ICON_DESIGN.md` and comply with its acceptance criteria. Dialer must show a large contact photo (Google Phone-inspired prominence, no copied proprietary assets) on incoming, outgoing and active calls; provide initials fallback, responsive layout, safe controls, large-text accessibility and tests. Keep user-selected icon packs and custom icons on launcher-controlled surfaces. Update translations, README and docs with implemented changes. Never claim completion without build and visual QA.
+
+## UI consistency and adaptation (mandatory)
+
+Read [the adaptive UI contract](docs/docs/developer-guide/adaptive-ui.md) before UI changes and
+keep [validation evidence](docs/docs/developer-guide/ui-validation.md) accurate.
+
+- Reuse `LauncherTheme` semantic colors/typography/shapes, `UiSpacing`, shared preference/search/
+  navigation components and `LauncherCard` composited foregrounds. Preserve explicit theme,
+  transparency and wallpaper-readability settings; do not introduce an independent palette.
+- Decide layout from actual available width **and height**, after padding/insets; use
+  `AdaptiveLayoutPolicy` for existing shared space decisions. Never infer content fit from
+  orientation, screen/device class or system display metrics alone.
+- Never clamp/replace system fontScale or shrink essential text to fit. Let text wrap and heights
+  grow; reduce columns, collapse panes or scroll. Keep important values/actions reachable.
+- Apply/consume Scaffold, cutout/system-bar and IME insets once. Maintain 48dp targets, labeled
+  toggle/tab semantics, disabled behavior and non-color-only state. Keep navigation/drafts/scroll
+  in existing saveable state/ViewModels across layout changes; do not reset them on resize.
+- Validate compact/medium/expanded and short landscape at font 0.85 (where supported), 1.0, 1.3,
+  2.0 plus enlarged display size, both themes, wallpaper contrast and IME. Add behavioral regression
+  coverage for changed policies/components. Record commands, commit, screenshots and untested
+  states. Compilation/previews/static tests are not device or visual verification; do not label
+  an unreviewed screen or the entire UI phase complete.
+
+- Keep min-SDK compatibility explicit: use existing AndroidX compat calls or SDK guards, never
+  suppress a real NewApi failure. Do not let JDK 21 collection inference introduce SequencedMap
+  into Android paths that support older APIs. CI screenshots must survive test-APK uninstall;
+  follow the documented MediaStore collection pattern and verify artifact retrieval.

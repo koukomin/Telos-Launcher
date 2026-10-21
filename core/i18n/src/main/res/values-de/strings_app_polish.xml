@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Nicht erneut anzeigen</string>
+  <string name="app_polish_show_info">Informationen vor der Aufnahme anzeigen</string>
+  <string name="app_polish_yellow_black">Gelb / Schwarz</string>
+  <string name="app_polish_blue_yellow">Blau / Gelb</string>
+  <string name="app_polish_exit_light">Tippen, um das Bildschirmlicht zu verlassen</string>
+  <string name="app_polish_light_source">Lichtquelle</string>
+  <string name="app_polish_screen_light">Bildschirmlicht</string>
+  <string name="app_polish_siren">Notfallsirene</string>
+  <string name="app_polish_alternating">Abwechselnd Rot / Blau</string>
+  <string name="app_polish_strobe">Blinkfrequenz</string>
+  <string name="app_polish_morse">Morsecode</string>
+  <string name="app_polish_message">Zu sendende Nachricht</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Starten Sie betroffene Apps neu, um den gewählten Renderer zu verwenden.</string>
+  <string name="app_polish_restart_notice">Hinweis zum Renderer-Neustart anzeigen</string>
+</resources>

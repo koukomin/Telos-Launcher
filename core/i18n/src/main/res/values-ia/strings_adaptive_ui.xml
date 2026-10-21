@@ -1,0 +1,18 @@
+<resources>
+    <string name="au_phonea_backspace">Deler cifra</string>
+    <string name="cal_no_events">Nulle eventos</string>
+    <string name="calculator_copy_result">Copiar resultato</string>
+    <string name="calculator_history">Historia</string>
+    <string name="calculator_more">Plus de optiones</string>
+    <string name="calculator_scientific">Calculator scientific</string>
+    <string name="calculator_standard">Calculator standard</string>
+    <string name="calculator_unit_converter">Convertitor de unitates</string>
+    <string name="calculator_vat">IVA</string>
+    <string name="hc_no_contacts_found">Nulle contactos trovate</string>
+    <string name="hc_speed_dial_not_assigned">Composition rapide non assignate</string>
+    <string name="recents_empty_msg">Tu historia de appellos apparera hic.</string>
+    <string name="recents_empty_title">Nulle appellos recente</string>
+    <string name="screenrec_no_recordings">Ancora nulle registrationes del schermo</string>
+    <string name="search_action_call">Appellar</string>
+    <string name="search_action_contact">Adder al contactos</string>
+</resources>

@@ -303,7 +303,7 @@ internal fun PosterCard(g: VideoGroup, meta: VideoMeta?, modifier: Modifier, onO
     Column(modifier.pressScale({ onOpen(g) })) {
         Box(Modifier.fillMaxWidth().aspectRatio(2f / 3f).shadow(4.dp, shape).clip(shape)) {
             if (meta?.posterUrl != null) {
-                Poster(meta.posterUrl, Modifier.fillMaxSize())
+                Poster(meta.posterUrl, Modifier.fillMaxSize()) { VideoThumb(g.items.first(), Modifier.fillMaxSize()) }
             } else {
                 VideoThumb(g.items.first(), Modifier.fillMaxSize())
             }

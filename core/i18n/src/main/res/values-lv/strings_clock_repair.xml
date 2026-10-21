@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Pasaule</string>
+    <string name="clock_world">Pasaules laiks</string>
     <string name="clock_alarm">Modinātājs</string>
     <string name="clock_timer">Taimeris</string>
     <string name="clock_stopwatch">Hronometrs</string>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">Terminalo</string>
-    <string name="terminal_runtime_summary">Uzas aparte instalitan Termux. Instalu Termux kaj ĉiujn aldonaĵojn el la sama fonto. La ŝelo funkcias en Termux ekster Telos.</string>
-    <string name="terminal_open_failed">Ne eblis malfermi Termux aŭ la retejon.</string>
-</resources>

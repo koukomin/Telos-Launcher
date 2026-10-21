@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">Terminal</string>
-    <string name="terminal_runtime_summary">Koristi zasebno instalirani Termux. Instalirajte Termux i sve dodatke iz istog izvora. Ljuska se izvodi u Termuxu izvan Telosa.</string>
-    <string name="terminal_open_failed">Nije moguće otvoriti Termux ili web-stranicu.</string>
-</resources>

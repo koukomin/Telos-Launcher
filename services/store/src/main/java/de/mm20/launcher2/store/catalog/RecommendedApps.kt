@@ -35,6 +35,11 @@ object RecommendedApps {
         RecommendedApp("Droid-ify", RecommendedCategory.Stores, AppSource.FDroid("com.looker.droidify"), "com.looker.droidify"),
 
         // ---- Tools ----
+        RecommendedApp(
+            "Termux", RecommendedCategory.Tools,
+            AppSource.GitHub("termux", "termux-app", assetNameRegex = "^termux-app_.*\\+github-debug_(arm64-v8a|armeabi-v7a|x86_64|x86|universal)\\.apk$"),
+            "com.termux",
+        ),
         RecommendedApp("Shizuku", RecommendedCategory.Tools, AppSource.GitHub("RikkaApps", "Shizuku"), "moe.shizuku.privileged.api"),
         RecommendedApp("Shizuku Next", RecommendedCategory.Tools, AppSource.GitHub("rushiranpise", "Shizuku-Next")),
         RecommendedApp("Morphe Manager", RecommendedCategory.Tools, AppSource.GitHub("MorpheApp", "morphe-manager")),

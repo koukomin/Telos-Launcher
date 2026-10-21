@@ -11,6 +11,7 @@ import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -167,6 +168,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
     val context = LocalContext.current
     val calendars by vm.calendars.collectAsState()
     val events by vm.events.collectAsState()
+    var pickMonth by remember { mutableStateOf(false) }
     val month by vm.month.collectAsState()
     val selected by vm.selected.collectAsState()
     val message by vm.message.collectAsState()
@@ -251,6 +253,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
         return
     }
 
+    if (pickMonth) MonthYearDialog(month, { vm.go(it); pickMonth = false }, { pickMonth = false })
     Scaffold(
         containerColor = Color.Transparent,
         snackbarHost = { SnackbarHost(snack) },
@@ -265,7 +268,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { vm.go(month.minusMonths(1)) }) { Icon(painterResource(R.drawable.chevron_backward_24px), stringResource(R.string.cal_previous)) }
                 Text(month.atDay(1).format(DateTimeFormatter.ofPattern("LLLL yyyy")).replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.weight(1f), textAlign = TextAlign.Center)
+                    modifier = Modifier.weight(1f).clickable { pickMonth = true }, textAlign = TextAlign.Center)
                 IconButton(onClick = { vm.go(month.plusMonths(1)) }) { Icon(painterResource(R.drawable.chevron_forward_24px), stringResource(R.string.cal_next)) }
                 IconButton(onClick = { vm.selected.value = LocalDate.now(); vm.go(YearMonth.now()) }) { Icon(painterResource(R.drawable.today_24px), stringResource(R.string.cal_today)) }
                 IconButton(onClick = { searching = !searching; if (!searching) calQuery = "" }) {
@@ -317,25 +320,32 @@ private fun CalendarContent(vm: CalendarViewModel) {
                 }
                 return@Scaffold
             }
-            MonthGrid(month, selected, events, onSelect = {
+            val dayEvents = remember(events, selected) {
+                events.filter { selected in it.firstDay..it.lastDay }.sortedWith(compareByDescending<CalEvent> { it.allDay }.thenBy { it.begin })
+            }
+            LazyColumn(contentPadding = PaddingValues(bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            item(key = "month") { MonthGrid(month, selected, events, onSelect = {
                 vm.selected.value = it
                 // a day of the previous or next month shown in the grid: move to that month
                 if (YearMonth.from(it) != month) vm.go(YearMonth.from(it))
-            })
+            }) }
+            item(key = "selected-day") {
             HorizontalDivider(Modifier.padding(vertical = 8.dp))
-            val dayEvents = events.filter { selected in it.firstDay..it.lastDay }.sortedWith(compareByDescending<CalEvent> { it.allDay }.thenBy { it.begin })
             Text(selected.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(horizontal = 16.dp))
+            }
             if (calendars.isEmpty()) {
-                Column(Modifier.fillMaxWidth().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                item(key = "no-calendars") { Column(Modifier.fillMaxWidth().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(stringResource(R.string.cal_no_calendars), textAlign = TextAlign.Center)
                     Button(onClick = { vm.io { vm.repo.createLocalCalendar("Telos", 0xFF1E88E5.toInt()) } }, modifier = Modifier.padding(top = 12.dp)) { Text(stringResource(R.string.cal_create_local)) }
                 }
+                }
             } else if (dayEvents.isEmpty()) {
-                Text(stringResource(R.string.cal_no_events), Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
-            } else LazyColumn(contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                item(key = "no-events") { Text(stringResource(R.string.cal_no_events), Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            } else {
                 items(dayEvents, key = { "${it.id}-${it.begin}" }) { ev ->
                     EventRow(ev, writable.any { it.id == ev.calendarId }) { openEvent(ev) }
                 }
+            }
             }
         }
     }
@@ -349,33 +359,38 @@ private fun MonthGrid(month: YearMonth, selected: LocalDate, events: List<CalEve
     val offset = (first.dayOfWeek.value - week.firstDayOfWeek.value + 7) % 7
     val start = first.minusDays(offset.toLong())
     val today = LocalDate.now()
-    Column(Modifier.padding(horizontal = 8.dp)) {
-        Row {
-            for (i in 0 until 7) Text(week.firstDayOfWeek.plus(i.toLong()).getDisplayName(TextStyle.SHORT, Locale.getDefault()), Modifier.weight(1f),
-                textAlign = TextAlign.Center, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        for (w in 0 until 6) {
+    androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val calendarWidth = maxOf(maxWidth, maxOf(48.dp, 48.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale) * 7 + 16.dp)
+        Box(Modifier.horizontalScroll(rememberScrollState())) {
+        Column(Modifier.width(calendarWidth).padding(horizontal = 8.dp)) {
             Row {
-                for (d in 0 until 7) {
-                    val day = start.plusDays((w * 7 + d).toLong())
-                    val inMonth = day.month == month.month
-                    val colors = events.filter { day in it.firstDay..it.lastDay }.map { it.color }.distinct().take(3)
-                    Column(
-                        Modifier.weight(1f).height(48.dp).padding(2.dp).clip(RoundedCornerShape(12.dp))
-                            .background(if (day == selected) MaterialTheme.colorScheme.primaryContainer else Color.Transparent)
-                            .clickable { onSelect(day) },
-                        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
-                    ) {
-                        Text(day.dayOfMonth.toString(), style = MaterialTheme.typography.bodyMedium,
-                            color = when { day == today -> MaterialTheme.colorScheme.primary; inMonth -> MaterialTheme.colorScheme.onSurface; else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.35f) },
-                            fontWeight = if (day == today) androidx.compose.ui.text.font.FontWeight.Bold else null)
-                        Row(Modifier.height(8.dp).padding(top = 2.dp), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-                            colors.forEach { Box(Modifier.size(5.dp).clip(CircleShape).background(Color(it))) }
+                for (i in 0 until 7) Text(week.firstDayOfWeek.plus(i.toLong()).getDisplayName(TextStyle.SHORT, Locale.getDefault()), Modifier.weight(1f),
+                    textAlign = TextAlign.Center, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            for (w in 0 until 6) {
+                Row {
+                    for (d in 0 until 7) {
+                        val day = start.plusDays((w * 7 + d).toLong())
+                        val inMonth = day.month == month.month
+                        val colors = events.filter { day in it.firstDay..it.lastDay }.map { it.color }.distinct().take(3)
+                        Column(
+                            Modifier.weight(1f).heightIn(min = 52.dp).padding(2.dp).clip(RoundedCornerShape(12.dp))
+                                .background(if (day == selected) MaterialTheme.colorScheme.primaryContainer else Color.Transparent)
+                                .clickable { onSelect(day) },
+                            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
+                        ) {
+                            Text(day.dayOfMonth.toString(), style = MaterialTheme.typography.bodyMedium,
+                                color = when { day == today -> MaterialTheme.colorScheme.primary; inMonth -> MaterialTheme.colorScheme.onSurface; else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.35f) },
+                                fontWeight = if (day == today) androidx.compose.ui.text.font.FontWeight.Bold else null)
+                            Row(Modifier.height(8.dp).padding(top = 2.dp), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                                colors.forEach { Box(Modifier.size(5.dp).clip(CircleShape).background(Color(it))) }
+                            }
                         }
                     }
                 }
             }
         }
+    }
     }
 }
 
@@ -480,5 +495,37 @@ private fun CalendarsDialog(vm: CalendarViewModel, calendars: List<DeviceCalenda
             }
         },
         confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cal_ok)) } },
+    )
+}
+
+
+/** Native wheel controls also accept keyboard entry without a separate mode. */
+@Composable
+private fun MonthYearDialog(initial: YearMonth, onChoose: (YearMonth) -> Unit, onDismiss: () -> Unit) {
+    val hostActivity = androidx.activity.compose.LocalActivity.current
+    var chosenMonth by remember { mutableIntStateOf(initial.monthValue) }
+    var chosenYear by remember { mutableIntStateOf(initial.year.coerceIn(1, 9999)) }
+    val locale = androidx.compose.ui.platform.LocalConfiguration.current.locales[0]
+    val names = remember(locale) { java.text.DateFormatSymbols(locale).months.take(12).toTypedArray() }
+    AlertDialog(onDismissRequest = onDismiss,
+        title = { Text(initial.atDay(1).format(DateTimeFormatter.ofPattern("LLLL yyyy", locale))) },
+        text = {
+            Row(Modifier.fillMaxWidth()) {
+                androidx.compose.ui.viewinterop.AndroidView(modifier = Modifier.weight(1f).height(180.dp), factory = { context ->
+                    android.widget.NumberPicker(context).apply {
+                        minValue = 1; maxValue = 12; displayedValues = names; value = chosenMonth
+                        setOnValueChangedListener { _, _, value -> chosenMonth = value }
+                    }
+                })
+                androidx.compose.ui.viewinterop.AndroidView(modifier = Modifier.weight(1f).height(180.dp), factory = { context ->
+                    android.widget.NumberPicker(context).apply {
+                        minValue = 1; maxValue = 9999; value = chosenYear; wrapSelectorWheel = false
+                        setOnValueChangedListener { _, _, value -> chosenYear = value }
+                    }
+                })
+            }
+        },
+        confirmButton = { TextButton(onClick = { hostActivity?.currentFocus?.clearFocus(); onChoose(YearMonth.of(chosenYear, chosenMonth)) }) { Text(stringResource(android.R.string.ok)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
     )
 }

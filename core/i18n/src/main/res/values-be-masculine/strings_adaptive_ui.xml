@@ -1,0 +1,18 @@
+<resources>
+    <string name="au_phonea_backspace">Выдаліць лічбу</string>
+    <string name="cal_no_events">Няма падзей</string>
+    <string name="calculator_copy_result">Скапіяваць вынік</string>
+    <string name="calculator_history">Гісторыя</string>
+    <string name="calculator_more">Іншыя параметры</string>
+    <string name="calculator_scientific">Навуковы калькулятар</string>
+    <string name="calculator_standard">Стандартны калькулятар</string>
+    <string name="calculator_unit_converter">Канвертар адзінак</string>
+    <string name="calculator_vat">ПДВ</string>
+    <string name="hc_no_contacts_found">Кантакты не знойдзены</string>
+    <string name="hc_speed_dial_not_assigned">Хуткі набор не прызначаны</string>
+    <string name="recents_empty_msg">Тут будзе паказана гісторыя вашых выклікаў.</string>
+    <string name="recents_empty_title">Няма нядаўніх выклікаў</string>
+    <string name="screenrec_no_recordings">Пакуль няма запісаў экрана</string>
+    <string name="search_action_call">Патэлефанаваць</string>
+    <string name="search_action_contact">Дадаць у кантакты</string>
+</resources>

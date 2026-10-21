@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Dünya</string>
+    <string name="clock_world">Dünya vaxtı</string>
     <string name="clock_alarm">Zəngli saat</string>
     <string name="clock_timer">Taymer</string>
     <string name="clock_stopwatch">Saniyəölçən</string>
