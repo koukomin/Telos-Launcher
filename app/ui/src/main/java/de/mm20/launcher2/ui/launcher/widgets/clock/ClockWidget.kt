@@ -25,7 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.DropdownMenuGroup
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.SelectableDropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -592,7 +592,7 @@ fun ConfigureClockWidgetSheet(
                         DropdownMenuGroup(
                             shapes = MenuDefaults.groupShapes()
                         ) {
-                            DropdownMenuItem(
+                            SelectableDropdownMenuItem(
                                 shapes = MenuDefaults.itemShape(0, 3),
                                 selected = alignment == ClockWidgetAlignment.Top,
                                 selectedLeadingIcon = {
@@ -613,7 +613,7 @@ fun ConfigureClockWidgetSheet(
                                     showDropdown = false
                                 }
                             )
-                            DropdownMenuItem(
+                            SelectableDropdownMenuItem(
                                 shapes = MenuDefaults.itemShape(1, 3),
                                 selected = alignment == ClockWidgetAlignment.Center,
                                 selectedLeadingIcon = {
@@ -633,7 +633,7 @@ fun ConfigureClockWidgetSheet(
                                     viewModel.setAlignment(ClockWidgetAlignment.Center)
                                     showDropdown = false
                                 })
-                            DropdownMenuItem(
+                            SelectableDropdownMenuItem(
                                 shapes = MenuDefaults.itemShape(2, 3),
                                 selected = alignment == ClockWidgetAlignment.Bottom,
                                 selectedLeadingIcon = {

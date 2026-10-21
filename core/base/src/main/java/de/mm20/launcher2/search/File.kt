@@ -3,6 +3,7 @@ package de.mm20.launcher2.search
 import android.content.Context
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.base.R
+import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
@@ -65,16 +66,16 @@ interface File : SavableSearchable {
     }
 
     fun getFileType(context: Context): String {
-        if (isDirectory) return context.getString(R.string.file_type_directory)
+        if (isDirectory) return context.getString(I18nR.string.file_type_directory)
         if (mimeType == "application/vnd.de.mm20.launcher2.backup") {
             return context.getString(
-                R.string.file_type_launcherbackup,
+                I18nR.string.file_type_launcherbackup,
                 context.getString(R.string.app_name)
             )
         }
         if (mimeType == "application/vnd.de.mm20.launcher2.theme") {
             return context.getString(
-                R.string.file_type_launchertheme,
+                I18nR.string.file_type_launchertheme,
                 context.getString(R.string.app_name)
             )
         }
@@ -84,10 +85,10 @@ interface File : SavableSearchable {
             "application/x-gtar",
             "application/x-tar",
             "application/java-archive",
-            "application/x-7z-compressed" -> R.string.file_type_archive
+            "application/x-7z-compressed" -> I18nR.string.file_type_archive
             "application/x-gzip",
-            "application/x-bzip2" -> R.string.file_type_compressed
-            "application/vnd.android.package-archive" -> R.string.file_type_android
+            "application/x-bzip2" -> I18nR.string.file_type_compressed
+            "application/vnd.android.package-archive" -> I18nR.string.file_type_android
             "text/x-asm",
             "text/x-c",
             "text/x-java-source",
@@ -95,38 +96,38 @@ interface File : SavableSearchable {
             "text/x-pascal",
             "text/x-script.perl",
             "text/javascript",
-            "application/json" -> R.string.file_type_source_code
+            "application/json" -> I18nR.string.file_type_source_code
             "application/vnd.oasis.opendocument.text",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             "application/msword",
             "application/x-iwork-pages-sffpages",
             "application/vnd.apple.pages",
-            "application/vnd.google-apps.document" -> R.string.file_type_document
+            "application/vnd.google-apps.document" -> I18nR.string.file_type_document
             "application/vnd.oasis.opendocument.spreadsheet",
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             "application/vnd.ms-excel",
             "application/x-iwork-numbers-sffnumbers",
             "application/vnd.apple.numbers",
-            "application/vnd.google-apps.spreadsheet" -> R.string.file_type_spreadsheet
+            "application/vnd.google-apps.spreadsheet" -> I18nR.string.file_type_spreadsheet
             "application/vnd.openxmlformats-officedocument.presentationml.presentation",
             "application/vnd.ms-powerpoint",
             "application/x-iwork-keynote-sffkey",
             "application/vnd.apple.keynote",
-            "application/vnd.google-apps.presentation" -> R.string.file_type_presentation
-            "text/plain" -> R.string.file_type_text
-            "application/vnd.google-apps.drawing" -> R.string.file_type_drawing
-            "application/vnd.google-apps.form" -> R.string.file_type_form
-            "application/epub+zip" -> R.string.file_type_ebook
+            "application/vnd.google-apps.presentation" -> I18nR.string.file_type_presentation
+            "text/plain" -> I18nR.string.file_type_text
+            "application/vnd.google-apps.drawing" -> I18nR.string.file_type_drawing
+            "application/vnd.google-apps.form" -> I18nR.string.file_type_form
+            "application/epub+zip" -> I18nR.string.file_type_ebook
             else -> when {
-                mimeType.startsWith("image/") -> R.string.file_type_image
-                mimeType.startsWith("video/") -> R.string.file_type_video
-                mimeType.startsWith("audio/") -> R.string.file_type_music
-                else -> R.string.file_type_none
+                mimeType.startsWith("image/") -> I18nR.string.file_type_image
+                mimeType.startsWith("video/") -> I18nR.string.file_type_video
+                mimeType.startsWith("audio/") -> I18nR.string.file_type_music
+                else -> I18nR.string.file_type_none
             }
         }
-        if (resource == R.string.file_type_none && label.matches(Regex(".+\\..+"))) {
+        if (resource == I18nR.string.file_type_none && label.matches(Regex(".+\\..+"))) {
             val extension = label.substringAfterLast(".").uppercase(Locale.getDefault())
-            return context.getString(R.string.file_type_generic, extension)
+            return context.getString(I18nR.string.file_type_generic, extension)
         }
         return context.getString(resource)
     }

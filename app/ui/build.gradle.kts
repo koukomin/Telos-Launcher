@@ -51,13 +51,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlin {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_1_8)
+            jvmTarget.set(JvmTarget.JVM_11)
             optIn.add("androidx.compose.ui.ExperimentalComposeUiApi")
             optIn.add("androidx.compose.foundation.ExperimentalFoundationApi")
             optIn.add("androidx.compose.ui.text.ExperimentalTextApi")
@@ -91,12 +91,12 @@ android {
 
 dependencies {
     // CameraX
-    implementation("androidx.camera:camera-core:1.3.2")
-    implementation("androidx.camera:camera-camera2:1.3.2")
-    implementation("androidx.camera:camera-lifecycle:1.3.2")
-    implementation("androidx.camera:camera-view:1.3.2")
-    implementation("androidx.camera:camera-video:1.3.2")
-    implementation("androidx.camera:camera-extensions:1.3.2")
+    implementation("androidx.camera:camera-core:1.6.2")
+    implementation("androidx.camera:camera-camera2:1.6.2")
+    implementation("androidx.camera:camera-lifecycle:1.6.2")
+    implementation("androidx.camera:camera-view:1.6.2")
+    implementation("androidx.camera:camera-video:1.6.2")
+    implementation("androidx.camera:camera-extensions:1.6.2")
 
     implementation(libs.bundles.kotlin)
 
@@ -227,14 +227,14 @@ dependencies {
     implementation(libs.androidx.media3.rtsp)
     implementation(libs.androidx.media3.common)
     implementation(libs.androidx.exifinterface)
-    implementation("com.google.guava:guava:31.1-android")
+    implementation("com.google.guava:guava:33.7.2-android")
     // === TELOS_PENDING_REVIEW_END: radio_mini_player ===
 
     androidTestImplementation(libs.androidx.compose.uitestjunit4)
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.uitestmanifest)
     testImplementation(libs.bundles.tests)
-    testImplementation("org.json:json:20240303")
+    testImplementation("org.json:json:20260814")
 }
 // Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
 configurations.all {

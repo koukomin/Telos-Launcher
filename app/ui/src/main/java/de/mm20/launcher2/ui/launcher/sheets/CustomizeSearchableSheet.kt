@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+
 package de.mm20.launcher2.ui.launcher.sheets
 
 import androidx.compose.foundation.background
@@ -15,11 +17,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,6 +60,7 @@ import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
 import kotlinx.coroutines.flow.first
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomizeSearchableSheet(
     searchable: SavableSearchable?,
@@ -166,7 +171,7 @@ fun CustomizeSearchableSheet(
                 OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .menuAnchor(MenuAnchorType.PrimaryNotEditable),
+                        .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable),
                     value = when (visibility) {
                         VisibilityLevel.Default -> {
                             when (searchable) {
@@ -200,7 +205,7 @@ fun CustomizeSearchableSheet(
                     },
                     colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
                 )
-                ExposedDropdownMenu(
+                DropdownMenu(
                     expanded = showDropdown,
                     onDismissRequest = {
                         showDropdown = false

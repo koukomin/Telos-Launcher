@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
+import de.mm20.launcher2.base.R
 import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.serialization.ColorIntAsHexSerializer
 import de.mm20.launcher2.serialization.UUIDSerializer

@@ -43,6 +43,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.SliderState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -171,14 +172,13 @@ fun MusicWidget(widget: MusicWidget) {
                                 LocalLayoutDirection provides LayoutDirection.Ltr
                             ) {
                                 if (playbackState != PlaybackState.Stopped && supportedActions.seekTo && widget.config.interactiveProgressBar) {
+                                    val sliderValue = (if (isDragged) seekPosition else pos?.toFloat()) ?: 0f
                                     Slider(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(horizontal = 14.dp)
                                             .requiredHeightIn(max = 20.dp),
-                                        value = (if (isDragged) seekPosition else pos?.toFloat())
-                                            ?: 0f,
-                                        valueRange = 0f..dur.toFloat(),
+                                        state = remember(sliderValue, dur) { SliderState(sliderValue, 0, 0f..dur.toFloat()) }.apply { this.value = sliderValue },
                                         interactionSource = interactionSource,
                                         onValueChange = {
                                             seekPosition = it
@@ -189,9 +189,9 @@ fun MusicWidget(widget: MusicWidget) {
                                                 pos = it.toLong()
                                             }
                                         },
-                                        track = {
+                                        track = { sliderState: SliderState ->
                                             SliderDefaults.Track(
-                                                sliderState = it,
+                                                sliderState = sliderState,
                                                 modifier = Modifier.requiredHeight(4.dp)
                                             )
                                         }

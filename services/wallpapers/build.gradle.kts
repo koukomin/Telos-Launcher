@@ -28,13 +28,13 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlin {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_1_8)
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
     namespace = "de.mm20.launcher2.wallpapers"
@@ -43,7 +43,7 @@ android {
 dependencies {
     testImplementation(libs.bundles.tests)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation("androidx.test:runner:1.6.2")
+    androidTestImplementation("androidx.test:runner:1.7.0")
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.bundles.androidx.lifecycle)

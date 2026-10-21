@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -183,13 +184,14 @@ fun HsvColorPicker(
                 )
             }
         }
+        val satValue = state.sat
         Slider(
             modifier = Modifier.padding(top = 16.dp),
-            value = state.sat,
+            state = remember(satValue) { SliderState(satValue, 0, 0f..1f) }.apply { this.value = satValue },
             onValueChange = {
                 state.setSat(it)
             },
-            track = {
+            track = { sliderState: SliderState ->
                 Canvas(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -207,7 +209,7 @@ fun HsvColorPicker(
                     )
                 }
             },
-            thumb = {
+            thumb = { sliderState: SliderState ->
                 Box(
                     modifier = Modifier
                         .padding(vertical = 2.dp, horizontal = 8.dp)
@@ -218,13 +220,14 @@ fun HsvColorPicker(
                 )
             }
         )
+        val valValue = state.value
         Slider(
             modifier = Modifier,
-            value = state.value,
+            state = remember(valValue) { SliderState(valValue, 0, 0f..1f) }.apply { this.value = valValue },
             onValueChange = {
                 state.setValue(it)
             },
-            track = {
+            track = { sliderState: SliderState ->
                 Canvas(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -242,7 +245,7 @@ fun HsvColorPicker(
                     )
                 }
             },
-            thumb = {
+            thumb = { sliderState: SliderState ->
                 Box(
                     modifier = Modifier
                         .padding(vertical = 2.dp, horizontal = 8.dp)

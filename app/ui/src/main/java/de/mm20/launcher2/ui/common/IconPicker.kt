@@ -17,7 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuGroup
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.SelectableDropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MenuDefaults
@@ -192,7 +192,7 @@ fun IconPicker(
                         DropdownMenuGroup(
                             shapes = MenuDefaults.groupShapes()
                         ) {
-                            DropdownMenuItem(
+                            SelectableDropdownMenuItem(
                                 selected = filterIconPack == null,
                                 shapes = MenuDefaults.itemShape(
                                     0,
@@ -211,7 +211,7 @@ fun IconPicker(
                                 }
                             )
                             installedIconPacks?.forEachIndexed { i, iconPack ->
-                                DropdownMenuItem(
+                                SelectableDropdownMenuItem(
                                     selected = filterIconPack == iconPack,
                                     shapes = MenuDefaults.itemShape(
                                         i + 1,

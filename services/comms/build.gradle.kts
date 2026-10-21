@@ -47,13 +47,13 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlin {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_1_8)
+            jvmTarget.set(JvmTarget.JVM_11)
             optIn.add("androidx.media3.common.util.UnstableApi")
         }
     }
@@ -61,8 +61,8 @@ android {
 }
 
 dependencies {
-    implementation("com.sun.mail:android-mail:1.6.7")
-    implementation("com.sun.mail:android-activation:1.6.7")
+    implementation("com.sun.mail:android-mail:1.6.8")
+    implementation("com.sun.mail:android-activation:1.6.8")
     implementation("com.github.TeamNewPipe:NewPipeExtractor:v0.26.5")
     implementation(libs.okhttp)
     implementation(libs.jsoup)
@@ -92,7 +92,7 @@ dependencies {
     
     // === TELOS_PENDING_REVIEW_START: sms_and_radio_engine ===
     testImplementation(libs.bundles.tests)
-    testImplementation("org.json:json:20240303")
+    testImplementation("org.json:json:20260814")
     testImplementation("net.sf.kxml:kxml2:2.3.0")
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.session)

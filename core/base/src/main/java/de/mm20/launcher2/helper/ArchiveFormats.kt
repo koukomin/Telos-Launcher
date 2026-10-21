@@ -86,7 +86,11 @@ object ArchiveFormats {
 
     /** The file name for a new archive: [wanted] gets the extension of the chosen format if it does not have it yet */
     fun withExtension(wanted: String, extension: String): String {
-        val trimmed = wanted.trim().ifEmpty { "archive" }
-        return if (trimmed.lowercase().endsWith(extension.lowercase())) trimmed else trimmed + extension
+        val trimmed = wanted.trim()
+        val name = if (trimmed.isEmpty()) "archive" else trimmed
+        if (name.lowercase().endsWith(extension.lowercase())) {
+            return name.substring(0, name.length - extension.length) + extension
+        }
+        return name + extension
     }
 }

@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuGroup
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.SelectableDropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -117,7 +117,7 @@ fun CalendarWidget(
                         shapes = MenuDefaults.groupShapes()
                     ) {
                         for ((i, date) in availableDates.withIndex()) {
-                            DropdownMenuItem(
+                            SelectableDropdownMenuItem(
                                 shapes = MenuDefaults.itemShape(i, availableDates.size),
                                 selected = date == selectedDate,
                                 text = {

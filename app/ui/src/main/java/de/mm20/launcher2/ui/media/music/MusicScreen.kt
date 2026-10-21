@@ -687,8 +687,9 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                 Spacer(Modifier.height(12.dp))
                 Surface(shape = RoundedCornerShape(28.dp), color = Color.Transparent, contentColor = white, modifier = Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                        val sliderValue = dragging ?: (position.toFloat() / duration).coerceIn(0f, 1f)
                         Slider(
-                            value = dragging ?: (position.toFloat() / duration).coerceIn(0f, 1f),
+                            state = remember(sliderValue) { SliderState(sliderValue, 0, 0f..1f) }.apply { this.value = sliderValue },
                             onValueChange = { dragging = it },
                             onValueChangeFinished = {
                                 dragging?.let { viewModel.seekTo((it * duration).toLong()) }
@@ -699,10 +700,10 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                                 activeTrackColor = white,
                                 inactiveTrackColor = Color.White.copy(alpha = 0.30f),
                             ),
-                            thumb = { Box(Modifier.size(14.dp).background(white, CircleShape)) },
-                            track = { state ->
+                            thumb = { sliderState: SliderState -> Box(Modifier.size(14.dp).background(white, CircleShape)) },
+                            track = { sliderState: SliderState ->
                                 SliderDefaults.Track(
-                                    sliderState = state,
+                                    sliderState = sliderState,
                                     modifier = Modifier.requiredHeight(4.dp),
                                     colors = SliderDefaults.colors(
                                         activeTrackColor = white,

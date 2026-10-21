@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -194,14 +195,14 @@ fun HctColorPicker(
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Center
             )
+            val chromaValue = state.chroma
             Slider(
                 modifier = Modifier.weight(1f),
-                value = state.chroma,
-                valueRange = 0f..150f,
+                state = remember(chromaValue) { SliderState(chromaValue, 0, 0f..150f) }.apply { this.value = chromaValue },
                 onValueChange = {
                     state.setChroma(it)
                 },
-                track = {
+                track = { sliderState: SliderState ->
                     Canvas(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -233,7 +234,7 @@ fun HctColorPicker(
                         )
                     }
                 },
-                thumb = {
+                thumb = { sliderState: SliderState ->
                     Box(
                         modifier = Modifier
                             .padding(vertical = 2.dp, horizontal = 8.dp)
@@ -261,14 +262,14 @@ fun HctColorPicker(
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Center
             )
+            val toneValue = state.tone
             Slider(
                 modifier = Modifier.weight(1f),
-                value = state.tone,
+                state = remember(toneValue) { SliderState(toneValue, 0, 0f..100f) }.apply { this.value = toneValue },
                 onValueChange = {
                     state.setTone(it)
                 },
-                valueRange = 0f..100f,
-                track = {
+                track = { sliderState: SliderState ->
                     Canvas(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -295,7 +296,7 @@ fun HctColorPicker(
                         )
                     }
                 },
-                thumb = {
+                thumb = { sliderState: SliderState ->
                     Box(
                         modifier = Modifier
                             .padding(vertical = 2.dp, horizontal = 8.dp)

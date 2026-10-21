@@ -1,16 +1,17 @@
 package de.mm20.launcher2.licenses
 
 import android.content.Context
-import de.mm20.launcher2.base.R
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 object AppLicense {
     fun get(context: Context): OpenSourceLibrary {
         return OpenSourceLibrary(
-            name = context.getString(R.string.app_name),
-            description = context.getString(R.string.preference_about_license),
+            name = context.getString(BaseR.string.app_name),
+            description = context.getString(I18nR.string.preference_about_license),
             copyrightNote = "Copyright (C) 2021–2026 MM2-0 and the Kvaesitso contributors",
-            licenseName = R.string.gpl3_name,
-            licenseText = R.raw.license_gpl_3,
+            licenseName = BaseR.string.gpl3_name,
+            licenseText = BaseR.raw.license_gpl_3,
             url = "https://github.com/koukomin/Telos-Launcher"
         )
     }

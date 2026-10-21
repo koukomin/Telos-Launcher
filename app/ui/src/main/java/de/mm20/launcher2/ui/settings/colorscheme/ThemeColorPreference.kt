@@ -24,6 +24,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.ToggleButton
@@ -314,13 +315,12 @@ fun ThemeColorPreference(
                             )
                             Slider(
                                 modifier = Modifier.weight(1f),
-                                value = tone,
-                                valueRange = 0f..100f,
+                                state = remember(tone) { SliderState(tone, 0, 0f..100f) }.apply { this.value = tone },
                                 onValueChange = {
                                     tone = it
                                     currentValue = themeColor.copy(tone = it.roundToInt())
                                 },
-                                track = {
+                                track = { sliderState: SliderState ->
                                     Canvas(
                                         modifier = Modifier
                                             .fillMaxWidth()
@@ -394,7 +394,7 @@ fun ThemeColorPreference(
                                         )
                                     }
                                 },
-                                thumb = {
+                                thumb = { sliderState: SliderState ->
                                     Box(
                                         modifier = Modifier
                                             .padding(vertical = 2.dp, horizontal = 8.dp)

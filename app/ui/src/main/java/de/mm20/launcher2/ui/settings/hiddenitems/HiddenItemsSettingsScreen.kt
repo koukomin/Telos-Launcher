@@ -13,6 +13,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
+import androidx.compose.material3.SelectableDropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
@@ -219,15 +220,16 @@ private fun VisibilityDropdown(
         DropdownMenuGroup(
             shapes = MenuDefaults.groupShapes(),
         ) {
-            MenuDefaults.Label {
-                Text(
-                    text = stringResource(R.string.customize_item_visibility),
-                )
-            }
+            Text(
+                text = stringResource(R.string.customize_item_visibility),
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
 
             val count = if (item is Application || item is CalendarEvent) 3 else 2
 
-            DropdownMenuItem(
+            SelectableDropdownMenuItem(
                 selected = value == VisibilityLevel.Default,
                 shapes = MenuDefaults.itemShape(0, count),
                 leadingIcon = {
@@ -256,7 +258,7 @@ private fun VisibilityDropdown(
                 },
             )
             if (item is Application || item is CalendarEvent) {
-                DropdownMenuItem(
+                SelectableDropdownMenuItem(
                     selected = value == VisibilityLevel.SearchOnly,
                     shapes = MenuDefaults.itemShape(1, count),
                     leadingIcon = {
@@ -279,7 +281,7 @@ private fun VisibilityDropdown(
                     },
                 )
             }
-            DropdownMenuItem(
+            SelectableDropdownMenuItem(
                 selected = value == VisibilityLevel.Hidden,
                 shapes = MenuDefaults.itemShape(count - 1, count),
                 leadingIcon = {
