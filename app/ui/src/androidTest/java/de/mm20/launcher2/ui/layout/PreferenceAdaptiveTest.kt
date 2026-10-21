@@ -36,6 +36,23 @@ import org.junit.Test
 class PreferenceAdaptiveTest {
     @get:Rule val compose = createComposeRule()
 
+    @Test fun radioDefaultFollowsTheLauncherPalette() {
+        var actual = androidx.compose.ui.graphics.Color.Unspecified
+        val launcher = darkColorScheme()
+        compose.setContent {
+            MaterialTheme(colorScheme = launcher) {
+                de.mm20.launcher2.ui.comms.radio.RadioAppearance(
+                    de.mm20.launcher2.comms.radio.RadioSettings.Values(theme = "system", dynamicColors = true)
+                ) {
+                    val foreground = MaterialTheme.colorScheme.onSurface
+                    androidx.compose.runtime.SideEffect { actual = foreground }
+                    Text("Radio follows launcher")
+                }
+            }
+        }
+        compose.runOnIdle { org.junit.Assert.assertEquals(launcher.onSurface, actual) }
+    }
+
     @Test fun radioPaletteDoesNotInheritTheParentTextColor() {
         val dark = mutableStateOf(false)
         var actual = androidx.compose.ui.graphics.Color.Unspecified

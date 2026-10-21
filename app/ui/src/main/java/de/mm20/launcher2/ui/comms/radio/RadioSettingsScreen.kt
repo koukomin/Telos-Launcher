@@ -26,6 +26,7 @@ internal fun RadioAppearance(values: RadioSettings.Values, content: @Composable 
     val context = LocalContext.current
     val dark = when (values.theme) { "dark" -> true; "light" -> false; else -> isSystemInDarkTheme() }
     val colors = when {
+        values.theme == "system" -> MaterialTheme.colorScheme
         values.dynamicColors && Build.VERSION.SDK_INT >= 31 -> if (dark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         dark -> darkColorScheme()
         else -> lightColorScheme()
