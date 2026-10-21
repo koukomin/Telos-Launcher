@@ -154,3 +154,10 @@ maps could infer newer JDK interfaces such as SequencedMap on a JDK 21 build hos
 Gender-specific resource directories must inherit base-language translations.
 English filler entries that override a translated base string are removed; retain
 actual grammatical variants instead of copying the full English catalog.
+
+Virtual-app Recents metadata and notification identity are separate Android paths.
+Keep static task aliases and dynamic TaskDescription metadata aligned. Media3
+providers explicitly set a monochrome app glyph; other app notifications use
+VirtualAppAppearance. Preserve media artwork and use a unique PendingIntent identity
+when opening each app route. Android/OEM notification headers can still show the
+shared APK name because virtual apps are not separate installed packages.

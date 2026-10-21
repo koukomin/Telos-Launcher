@@ -70,7 +70,7 @@ class TvPlaybackService : MediaSessionService(), KoinComponent {
                 .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.TV)
                 .setChannelId(CHANNEL_ID)
                 .setChannelName(I18nR.string.au15_tvbg_channel_name)
-                .build()
+                .build().apply { setSmallIcon(de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_video_app")!!) }
         )
         scope.launch {
             controller.player.collect { onPlayer(it) }

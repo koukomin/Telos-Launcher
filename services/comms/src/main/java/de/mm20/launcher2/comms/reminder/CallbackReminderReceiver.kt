@@ -34,7 +34,7 @@ class CallbackReminderReceiver : BroadcastReceiver() {
         nm.notify(
             number.hashCode(),
             NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(android.R.drawable.stat_sys_phone_call)
+                .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_phone_app") }
                 .setContentTitle(context.getString(I18nR.string.au_phoneb_reminder_title, name))
                 .setContentText(number)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)

@@ -252,3 +252,9 @@ keep [validation evidence](docs/docs/developer-guide/ui-validation.md) accurate.
 Locale gender variants inherit their base language. Do not fill a feminine or
 masculine resource directory with English copies of already translated base
 strings; keep only actual variant-specific translations and let Android inherit.
+
+Notification identity is separate from Recents metadata. Use VirtualAppAppearance
+for built-in notification glyphs and large icons. Media3 providers must explicitly
+set their small icon after build(); retain station/album/video artwork. Never use
+a colored full app tile as a status-bar small icon (Android masks it). Notification
+content intents must open the relevant virtual-app route, not the launcher home.

@@ -175,7 +175,7 @@ class StoreUpdaterImpl(
                     ?: de.mm20.launcher2.base.R.drawable.ic_app_store_full,
             )
             .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_store_app") }
-            .setLargeIcon(largeIcon)
+            .apply { largeIcon?.let { setLargeIcon(it) } }
             .setContentTitle(title)
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(text))

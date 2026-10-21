@@ -54,6 +54,7 @@ dependencies {
     api("com.celzero:firestack:${libs.versions.firestack.get()}@aar")
 
     implementation(project(":core:i18n"))
+    implementation(project(":core:base"))
 
     testImplementation(libs.bundles.tests)
 }

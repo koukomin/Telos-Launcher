@@ -36,6 +36,25 @@ import org.junit.Test
 class PreferenceAdaptiveTest {
     @get:Rule val compose = createComposeRule()
 
+    @Test fun virtualNotificationsCarryTheirOwnIdentity() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val domains = listOf("phone", "messages", "ermis", "clock", "network", "store", "radio", "music", "video", "youtube")
+        for (app in domains) {
+            val domain = "telos_${app}_app"
+            val notification = de.mm20.launcher2.search.VirtualAppAppearance.decorate(
+                androidx.core.app.NotificationCompat.Builder(context, "identity-test"), context, domain
+            ).build()
+            val glyph = de.mm20.launcher2.search.VirtualAppAppearance.glyph(domain)
+            org.junit.Assert.assertNotNull(domain, glyph)
+            org.junit.Assert.assertEquals(domain, glyph, notification.smallIcon.resId)
+            org.junit.Assert.assertNotNull(domain, notification.getLargeIcon())
+        }
+        org.junit.Assert.assertNotEquals(
+            de.mm20.launcher2.search.TelosAppIcons.forDomain("telos_store_app"),
+            de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_store_app")
+        )
+    }
+
     @Test fun radioDefaultFollowsTheLauncherPalette() {
         var actual = androidx.compose.ui.graphics.Color.Unspecified
         val launcher = darkColorScheme()
