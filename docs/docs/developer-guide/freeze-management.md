@@ -30,3 +30,10 @@ Thor’s wider installer, export, extension, permissions and App Ops products ar
 ## Validation
 
 CI `Validate freeze management` compiles the actual UI and runs freeze/preferences regressions. Policy tests cover global-immediate override, explicit immediate override, disabled inherited triggers, candidate scope, imported bounds and UAD case/failure behavior. Preference tests cover upgrade defaults and round-trip persistence. Device acceptance still requires screen-off/on, process recreation, Doze, Shizuku/root denial, group launch failures, large fonts and narrow/landscape UI. Do not mark those checks passed from JVM results alone.
+
+
+## Recents removal opt-in
+
+`RecentsFreezeMonitor` is dormant by default. When enabled on API 29+, it registers a real ITaskStackListener through the existing Shizuku binder bridge; no new daemon, Accessibility polling or public getRecentTasks inference is introduced. Transaction IDs come from the device’s stub. Only system_server callbacks are accepted. Task creation/stack-change events refresh a bounded identity cache; only onTaskRemoved can request freezing. A fresh complete task snapshot must prove there is no remaining task for that current-user package. Failed/unknown/full-page reads fail closed; permission loss disconnects and retries without prompting.
+
+Removal is not evidence of a user swipe specifically: Android also emits removal for application finishAndRemoveTask. The observer does not infer removal from list differences. Eligible packages are explicit candidates or verified user thaws tracked while the preference is enabled; runtime thaw markers stay out of portable backups. Never-freeze, usage, maintenance, Play-update and companion exclusions remain authoritative. Shizuku is required for observation even if another provider performs freezing. Physical-device callback/reconnection behavior is pending validation.

@@ -74,7 +74,15 @@ class FreezeManager internal constructor(
         it.packageName == packageName && it.userId == Process.myUid() / 100000 && it.operationId.isNotEmpty()
     }
     suspend fun launchThawed(packageName: String, user: UserHandle, preferred: ComponentName,
-        launch: (ComponentName) -> Boolean) = maintenance.launchThawed(packageName, user, preferred, launch)
+        launch: (ComponentName) -> Boolean): Boolean {
+        val wasFrozen = user == Process.myUserHandle() && withContext(kotlinx.coroutines.Dispatchers.IO) { isFrozen(packageName) }
+        val started = maintenance.launchThawed(packageName, user, preferred, launch)
+        if (started && wasFrozen) {
+            settings.trackRecentsThaw(packageName)
+            onUserUnfreeze?.invoke(packageName)
+        }
+        return started
+    }
 
     private suspend fun maintenanceProvider(name: String?): Pair<String, PrivilegedAccessProvider>? {
         if (name == null) refreshBackendState()
@@ -192,7 +200,10 @@ class FreezeManager internal constructor(
     ): Set<String> {
         if (_activeBackend.value == null) refreshBackendState()
         val result = setSuspended(listOf(packageName), false, userId)
-        if (fromUser) onUserUnfreeze?.invoke(packageName)
+        if (fromUser && packageName in result) {
+            if (userId == Process.myUid() / 100000) settings.trackRecentsThaw(packageName)
+            onUserUnfreeze?.invoke(packageName)
+        }
         return result
     }
 
@@ -372,6 +383,7 @@ class FreezeManager internal constructor(
             }
             confirmed
         }
+        if (suspended && userId == Process.myUid() / 100000) settings.forgetRecentsThaw(verified)
         val now = System.currentTimeMillis()
         for (packageName in verified) {
             if (suspended) settings.recordFrozen(packageName, now) else settings.recordUnfrozen(packageName, now)

@@ -563,6 +563,8 @@ data class FeedGroup(
 data class FreezeGroup(
     val freezeBackend: FreezeBackendPreference = FreezeBackendPreference.Auto,
     val freezeAutoFreezeEnabled: Boolean = false,
+    val freezeOnRecentsRemoval: Boolean = false,
+    val freezeRecentsThawed: Set<String> = emptySet(),
     val freezeOnScreenOff: Boolean = false,
     val freezeOnIdle: Boolean = false,
     val freezeIdleTimeoutMinutes: Int = 15,

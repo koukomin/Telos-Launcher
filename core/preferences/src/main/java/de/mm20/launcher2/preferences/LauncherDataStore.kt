@@ -57,7 +57,7 @@ internal class LauncherDataStore(
     // that exists only on this device (useless elsewhere), and the hidden contacts are private.
     override fun forBackup(data: LauncherSettingsData): LauncherSettingsData = data.copy(
         freeze = data.freeze.copy(freezeMaintenance = emptyMap(), freezeScreenOffPending = emptyMap(),
-            freezeScreenOffBoot = -1, freezeCompanionHolds = emptyMap(), freezeSystemRiskApproved = emptySet()),
+            freezeScreenOffBoot = -1, freezeRecentsThawed = emptySet(), freezeCompanionHolds = emptyMap(), freezeSystemRiskApproved = emptySet()),
         comms = data.comms.copy(
             tmdbApiKeyEnc = "",
             subtitleApiKeyEnc = "",
@@ -99,6 +99,7 @@ internal class LauncherDataStore(
             freeze = restored.freeze.copy(freezeMaintenance = current.freeze.freezeMaintenance,
                 freezeScreenOffPending = current.freeze.freezeScreenOffPending,
                 freezeScreenOffBoot = current.freeze.freezeScreenOffBoot,
+                freezeRecentsThawed = current.freeze.freezeRecentsThawed,
                 freezeCompanionHolds = current.freeze.freezeCompanionHolds,
                 freezeSystemRiskApproved = current.freeze.freezeSystemRiskApproved),
             comms = comms.copy(

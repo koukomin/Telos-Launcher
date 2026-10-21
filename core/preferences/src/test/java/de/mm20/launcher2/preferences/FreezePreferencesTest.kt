@@ -8,6 +8,8 @@ class FreezePreferencesTest {
     @Test fun upgradingOldPreferencesDoesNotEnableCompanionRules() {
         val old = Json.decodeFromString<FreezeGroup>("""{"freezeCompanionExtras":{"com.example.app":"com.example.helper"}}""")
         assertTrue(old.freezeBloatAutoUpdate)
+        assertFalse(old.freezeOnRecentsRemoval)
+        assertTrue(old.freezeRecentsThawed.isEmpty())
         assertTrue(old.freezeCompanionEnabled.isEmpty())
         assertTrue(old.freezeScreenOffDelays.isEmpty())
         assertTrue(old.freezeScreenOffPending.isEmpty())

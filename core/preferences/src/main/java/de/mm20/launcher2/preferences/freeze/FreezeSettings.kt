@@ -28,6 +28,22 @@ class FreezeSettings internal constructor(
         dataStore.update { it.copy(freeze = it.freeze.copy(freezeBackend = backend)) }
     }
 
+    val freezeOnRecentsRemoval get() = dataStore.data.map { it.freeze.freezeOnRecentsRemoval }
+    val recentsThawed get() = dataStore.data.map { it.freeze.freezeRecentsThawed }
+    fun setFreezeOnRecentsRemoval(enabled: Boolean) {
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeOnRecentsRemoval = enabled,
+            freezeRecentsThawed = if (enabled) it.freeze.freezeRecentsThawed else emptySet())) }
+    }
+    suspend fun trackRecentsThaw(pkg: String) {
+        dataStore.updateAndWait { current ->
+            if (!current.freeze.freezeOnRecentsRemoval) current else current.copy(freeze = current.freeze.copy(
+                freezeRecentsThawed = (current.freeze.freezeRecentsThawed + pkg).takeLastBounded()))
+        }
+    }
+    suspend fun forgetRecentsThaw(packages: Set<String>) {
+        dataStore.updateAndWait { it.copy(freeze = it.freeze.copy(freezeRecentsThawed = it.freeze.freezeRecentsThawed - packages)) }
+    }
+
     val autoFreezeEnabled
         get() = dataStore.data.map { it.freeze.freezeAutoFreezeEnabled }
 
@@ -378,3 +394,5 @@ class FreezeSettings internal constructor(
         dataStore.update { it.copy(freeze = it.freeze.copy(freezeGameBoosterApps = packages)) }
     }
 }
+
+private fun Set<String>.takeLastBounded(): Set<String> = if (size <= 1000) this else toList().takeLast(1000).toSet()

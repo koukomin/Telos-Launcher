@@ -201,3 +201,12 @@ Descriptions and the Recommended / Advanced / Expert / Unsafe removal labels com
 **Update app descriptions automatically** is enabled by default in the Settings tab. Every entry into Freeze Manager checks the upstream HTTPS endpoint; unchanged content uses ETag/304 instead of downloading the list again. Disable this preference to use the installed database without automatic network checks. A bundled snapshot works on first use offline. Failed downloads, invalid or oversized responses never replace the last validated cache.
 
 The freeze service blocks Unsafe **system** apps and requires explicit per-app consent for Expert system apps. If no valid database can be loaded, system freezing fails closed; unfreezing remains available. Packages without a description are shown as unknown, never as safe. These gates also cover bulk and automatic freeze paths.
+
+
+## Freeze after removal from Recents
+
+Enable **Auto-freeze > Freeze after removal from Recents** if desired; it is **off by default**, including after an upgrade. The setting uses privileged task-removal callbacks on Android 10+ through running, authorized Shizuku. It can use Shizuku only for detection while your configured freezing backend performs the operation. Root alone, Usage access, device owner and Accessibility do not provide this listener through their ordinary APIs.
+
+A real task-removal event triggers a fresh task read. Telos only refreezes a current-user auto-freeze candidate or an app that Telos actually thawed for the user while this option was enabled, and only after its last task has gone. Multiple tasks, work-profile events, Never freeze, active-use exclusions, maintenance sessions and companion holds remain respected. This option is independent of the screen-off master switch and timing overrides. It does not freeze every arbitrary installed app.
+
+Android’s callback reports task removal, including an app calling finishAndRemoveTask; it does not reveal whether the user swiped the card. Switching apps or returning Home only refreshes the task cache and does not trigger freezing. Missing permission, unknown task identity, a failed task read or a full/truncated task page causes Telos to skip the action. The Settings warning indicates unavailable detection rather than claiming it works. OEM execution and reconnection still require device acceptance.

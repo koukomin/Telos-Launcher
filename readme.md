@@ -1087,6 +1087,7 @@ Freeze or hide apps you do not need right now. It is a launcher feature in Setti
 
 - Search by app name or package, filter frozen/auto-freeze entries, select all shown and run explicit bulk **Freeze**, **Unfreeze** or **Auto-freeze** actions. Results report successes against the selected total.
 - Per-app screen-off delays override the active profile (including immediate global freezing); inherited timing remains the default. Screen-on cancels pending deadlines. Android idle restrictions may defer alarms.
+- **Freeze after removal from Recents** is off by default. With Shizuku task-event access, removing an app’s final task refreezes an auto-freeze candidate or an app previously thawed by Telos; another live task, another Android user, usage exclusions and update/companion holds prevent inappropriate refreezing. Android/OEM callback support must be available.
 - **Unfreeze together** is off by default for every app. Choose installed companion apps; Gemini → Google appears as an inactive template when both are installed. No automatic inference for all Play Store apps.
 - UAD-NG descriptions and removal categories are bundled for offline use. Automatic updates are **on by default**, checked on each Freeze Manager entry, and can be disabled in its Settings tab. Conditional requests and atomic validated caching retain the last good database after failures. Unsafe system apps are blocked; Expert system apps require explicit per-app approval. Unknown descriptions never imply safety.
 

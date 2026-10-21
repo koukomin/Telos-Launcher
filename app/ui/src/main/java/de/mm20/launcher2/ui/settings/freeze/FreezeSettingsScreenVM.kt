@@ -274,6 +274,11 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
                 .sortedBy { it.second.lowercase() }
         })
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val freezeOnRecentsRemoval = freezeSettings.freezeOnRecentsRemoval
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    private val recentsMonitor: de.mm20.launcher2.freeze.RecentsFreezeMonitor by inject()
+    val recentsConnected = recentsMonitor.connected
+    fun setFreezeOnRecentsRemoval(value: Boolean) = freezeSettings.setFreezeOnRecentsRemoval(value)
     val screenOffDelays = freezeSettings.screenOffDelays.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
     val companionEnabled = freezeSettings.companionEnabled.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
     val companionExtras = freezeSettings.companionExtras.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())

@@ -214,6 +214,12 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
             }
         }
         if (section == 1) item {
+            val recentsEnabled by viewModel.freezeOnRecentsRemoval.collectAsStateWithLifecycle()
+            val recentsConnected by viewModel.recentsConnected.collectAsStateWithLifecycle()
+            SwitchPreference(title = stringResource(R.string.freeze_hub_recents),
+                summary = stringResource(R.string.freeze_hub_recents_help), value = recentsEnabled,
+                onValueChanged = viewModel::setFreezeOnRecentsRemoval)
+            if (recentsEnabled && !recentsConnected) Text(stringResource(R.string.freeze_hub_recents_unavailable))
             PreferenceCategory(title = stringResource(R.string.preference_freeze_auto_category)) {
                 SwitchPreference(
                     title = stringResource(R.string.preference_freeze_auto_enabled),

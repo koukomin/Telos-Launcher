@@ -82,3 +82,6 @@ remain separate acceptance checks; none are claimed passed by these component te
 ## Freeze manager consolidation (PR #63)
 
 The unified Apps / Auto-freeze / Settings implementation adds app timing, explicit companion rules and UAD descriptions with on-entry updates (default on, opt-out preserved). The VitePress build passed locally; all 50 new locale sets parsed with preserved result placeholders, and the bundled source contains 5,381 entries. Local Gradle could not download its wrapper due to restricted network access; Android compilation and freeze/preferences regression outcomes are delegated to the PR’s `Validate freeze management` check. No new screenshot or device/Doze pass is claimed. See [freeze architecture and audit](./freeze-management) for test scope and device acceptance needs.
+
+
+The same PR adds the disabled-by-default Recents removal opt-in. Unit tests distinguish last-task removal, remaining tasks and other-user events. Shizuku registration, OEM callbacks, “close all”, process/binder reconnect and physical-device refreezing remain unverified until device acceptance; JVM task-policy tests do not certify those capabilities.
