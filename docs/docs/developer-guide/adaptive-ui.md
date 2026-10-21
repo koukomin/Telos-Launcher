@@ -150,3 +150,7 @@ Do not reference public wallpaper contrast hints before API 31, recoverable medi
 29 or profile controls before 28. On older releases retain conservative scrims / unsupported
 control states. Explicitly type collection branch results as Kotlin Map when mixed sorted/linked
 maps could infer newer JDK interfaces such as SequencedMap on a JDK 21 build host.
+
+Gender-specific resource directories must inherit base-language translations.
+English filler entries that override a translated base string are removed; retain
+actual grammatical variants instead of copying the full English catalog.

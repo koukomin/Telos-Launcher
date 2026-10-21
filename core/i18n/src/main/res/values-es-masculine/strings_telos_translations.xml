@@ -2,11 +2,11 @@
 <resources>
     <string name="telos_files_peek_select">Seleccionar</string>
     <string name="telos_files_smb_nearby">Equipos en esta red</string>
-    <string name="system_widget_free">%1$s free</string>
+
     <string name="system_widget_lan_ip">LAN %1$s</string>
-    <string name="system_widget_public_ip">Online %1$s</string>
+
     <string name="system_widget_vpn_ip">VPN %1$s</string>
-    <string name="system_widget_no_task_killer">No task killer or booster app found. Opening System.</string>
+
     <string name="telos_youtube_account_microg">microG is for Play Services apps. Telos YouTube does not use it. Sign in in the browser with the buttons below. A native Google account in Telos is not available yet.</string>
     <string name="camera_geotag">GPS on photos</string>
     <string name="camera_pano_done">Stitch panorama (%1$d)</string>

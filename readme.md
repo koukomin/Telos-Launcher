@@ -1352,3 +1352,6 @@ capital suggestions, compact Magnifier controls, a month/year wheel picker and
 multi-file deletion in Viewer. Settings offers authenticated saved Wi-Fi reveal
 when privileged access is available, and an optional renderer restart notice.
 The embedded terminal has been removed. Official Termux is available in Store → Recommended → Tools.
+
+Gender-specific locale variants inherit the translated base language rather than
+masking it with copied English strings.

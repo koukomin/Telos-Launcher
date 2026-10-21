@@ -247,3 +247,7 @@ keep [validation evidence](docs/docs/developer-guide/ui-validation.md) accurate.
   suppress a real NewApi failure. Do not let JDK 21 collection inference introduce SequencedMap
   into Android paths that support older APIs. CI screenshots must survive test-APK uninstall;
   follow the documented MediaStore collection pattern and verify artifact retrieval.
+
+Locale gender variants inherit their base language. Do not fill a feminine or
+masculine resource directory with English copies of already translated base
+strings; keep only actual variant-specific translations and let Android inherit.
