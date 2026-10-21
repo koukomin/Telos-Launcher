@@ -37,6 +37,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import de.mm20.launcher2.ui.R
@@ -192,12 +194,19 @@ private fun PreferenceScreenTopBar(
     val colorScheme = MaterialTheme.colorScheme
     val activity = LocalActivity.current
 
+    // Launcher typography uses relative em line heights. Density.toDp(TextUnit) accepts
+    // sp only; measure two actual lines so em and unspecified heights both resolve safely.
+    val titleSize = rememberTextMeasurer().measure(
+        AnnotatedString("Ag\nAg"),
+        style = MaterialTheme.typography.titleLarge,
+        maxLines = 2,
+    ).size
+    val expandedHeight = maxOf(64.dp, with(LocalDensity.current) { titleSize.height.toDp() + 16.dp })
+
     CenterAlignedTopAppBar(
         modifier = modifier,
         title = title,
-        expandedHeight = maxOf(64.dp, with(LocalDensity.current) {
-            MaterialTheme.typography.titleLarge.lineHeight.toDp() * 2 + 16.dp
-        }),
+        expandedHeight = expandedHeight,
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent,

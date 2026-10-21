@@ -10,6 +10,10 @@ on:
       - 'services/comms/src/main/java/de/mm20/launcher2/comms/ermis/**'
       - 'services/comms/src/main/java/de/mm20/launcher2/comms/akou/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/files/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/preferences/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/main/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/theme/typography/**'
+      - 'app/ui/src/androidTest/**'
       - '.github/workflows/validate-native-apps.yml'
   workflow_dispatch:
 permissions:
