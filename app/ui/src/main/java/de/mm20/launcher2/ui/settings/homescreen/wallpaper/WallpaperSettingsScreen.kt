@@ -99,10 +99,6 @@ fun WallpaperSettingsScreen() {
         }
     }
 
-    val gifPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-        if (uri != null) viewModel.setVideoWallpaper(uri, false, ::activateVideoIfNeeded)
-    }
-
     var appendToPlaylist by rememberSaveable { mutableStateOf(false) }
     val videoPicker = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -167,10 +163,6 @@ fun WallpaperSettingsScreen() {
                         stringResource(R.string.wallpaper_content_black) to SystemBarColors.Dark,
                     ),
                     onValueChanged = viewModel::setTextColors,
-                )
-                Preference(
-                    title = stringResource(R.string.wallpaper_animated_gif),
-                    onClick = { gifPicker.launch(arrayOf("image/gif")) },
                 )
                 Preference(
                     icon = R.drawable.wallpaper_24px,
