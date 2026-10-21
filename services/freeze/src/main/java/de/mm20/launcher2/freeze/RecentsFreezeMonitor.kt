@@ -133,9 +133,9 @@ class RecentsFreezeMonitor internal constructor(
         val slice = HiddenApiBypass.invoke(api.javaClass, api, "getRecentTasks", 256, 0, userId) ?: return null
         val tasks = slice.javaClass.getMethod("getList").invoke(slice) as? List<*> ?: return null
         if (tasks.size >= 256) return null // A full page cannot prove another task is absent.
-        tasks.mapNotNull { value ->
-            val task = value as? ActivityManager.RecentTaskInfo ?: return@mapNotNull null
-            val pkg = task.baseIntent?.component?.packageName ?: return@mapNotNull null
+        tasks.map { value ->
+            val task = value as? ActivityManager.RecentTaskInfo ?: return null
+            val pkg = task.baseIntent?.component?.packageName ?: return null
             val owner = task.javaClass.getField("userId").getInt(task)
             RecentsTask(task.taskId, pkg, owner)
         }

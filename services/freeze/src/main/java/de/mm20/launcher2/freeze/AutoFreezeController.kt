@@ -452,7 +452,7 @@ class AutoFreezeController internal constructor(
 
     /** A confirmed last-task removal; independent of screen-off timing and the master auto switch. */
     suspend fun freezeAfterRecentsRemoval(packageName: String) {
-        if (!settings.freezeOnRecentsRemoval.first()) return
+        if (!settings.freezeOnRecentsRemoval.first() || freezeManager.isFrozen(packageName)) return
         if (packageName !in settings.candidates.first() && packageName !in settings.recentsThawed.first()) return
         if (packageName in settings.neverFreezeApps.first() ||
             packageName in settings.companionHolds.first() ||
