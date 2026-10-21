@@ -31,6 +31,7 @@ class FreezeManager internal constructor(
     private val context: Context,
     private val settings: FreezeSettings,
     private val usageStats: AppUsageStatsProvider,
+    private val descriptions: BloatDescriptions,
 ) {
     // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
     private val dhizukuProvider = DhizukuProvider(context)
@@ -149,6 +150,34 @@ class FreezeManager internal constructor(
         return result
     }
 
+    /** Explicit dependencies only; disabled by default. Shared companions keep all active owners. */
+    suspend fun unfreezeCompanions(master: String, userId: Int): Set<String> {
+        if (userId != Process.myUid() / 100000 || master !in settings.companionEnabled.first()) return emptySet()
+        val packages = settings.companionExtras.first()[master].orEmpty().split(',')
+            .map { it.trim() }.filter { it != master && VALID_PACKAGE_NAME.matches(it) }.distinct()
+        val existingHolds = settings.companionHolds.first().keys
+        val thawed = linkedSetOf<String>()
+        for (pkg in packages) {
+            if (pkg in existingHolds) thawed += pkg
+            else if (isFrozen(pkg)) {
+                if (pkg !in unfreeze(pkg, userId, fromUser = false)) {
+                    settings.addCompanionHolds(master, thawed)
+                    releaseCompanions(master, userId)
+                    error("Could not unfreeze companion $pkg")
+                }
+                thawed += pkg
+            }
+        }
+        settings.addCompanionHolds(master, thawed)
+        return thawed
+    }
+
+    suspend fun releaseCompanions(master: String, userId: Int) {
+        if (userId != Process.myUid() / 100000) return
+        val released = settings.clearCompanionHoldsForMaster(master)
+        if (released.isNotEmpty()) setSuspended(released.toList(), true, userId)
+    }
+
     /** Called after a user-driven unfreeze (launcher tap), not after Play-update thaw. */
     var onUserUnfreeze: ((String) -> Unit)? = null
 
@@ -183,7 +212,10 @@ class FreezeManager internal constructor(
         if (packageNames.isEmpty()) return
         if (_activeBackend.value == null) refreshBackendState()
         if (_activeBackend.value == FreezeBackendType.Island) {
-            islandProvider.postFreezeNotification(packageNames)
+            val approved = settings.systemRiskApproved.first()
+            val safe = packageNames.filter { VALID_PACKAGE_NAME.matches(it) && it !in PROTECTED_PACKAGES &&
+                descriptions.allowsFreeze(it, it in approved) }
+            if (safe.isNotEmpty()) islandProvider.postFreezeNotification(safe)
         } else {
             val changed = operationMutex.withLock { applySuspended(packageNames, true, userId, respectMaintenance = true) }
             freezeHeldCompanions(changed, userId)
@@ -269,7 +301,9 @@ class FreezeManager internal constructor(
             Log.w(TAG, "All targeted packages are protected system packages. Aborting freeze.")
             return emptySet()
         }
-        val targetPackages = safePackages
+        val approved = if (suspended) settings.systemRiskApproved.first() else emptySet()
+        val targetPackages = if (suspended) safePackages.filter { descriptions.allowsFreeze(it, it in approved) } else safePackages
+        if (targetPackages.isEmpty()) return emptySet()
         // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
         val backend = _activeBackend.value

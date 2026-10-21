@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Touchez une appli pour ses réglages ; cochez les cases pour les actions groupées.</string>
+    <string name="freeze_hub_unfreeze">Dégeler</string>
+    <string name="freeze_hub_profile_notice">Les règles automatiques concernent uniquement cet utilisateur Android.</string>
+    <string name="freeze_hub_delay">Délai après extinction de l’écran</string>
+    <string name="freeze_hub_delay_help">Remplace le délai du profil pour cette appli à gel automatique. Annulé au rallumage. Android peut retarder l’exécution.</string>
+    <string name="freeze_hub_inherit">Utiliser le délai du profil</string>
+    <string name="freeze_hub_companions">Dégeler ensemble</string>
+    <string name="freeze_hub_companion_help">Dégèle d’abord les applis choisies à l’ouverture ou au dégel de cette appli. Désactivé par défaut. Exemples : Gemini → Google, appli payante → Play Store, jeu → optimiseur de jeux.</string>
+    <string name="freeze_hub_unknown">Aucune description communautaire. Sécurité inconnue.</string>
+    <string name="freeze_hub_uad_help">Notes communautaires de suppression, sans garantie pour le gel. Les applis Unsafe sont bloquées ; les Expert nécessitent un accord.</string>
+    <string name="freeze_hub_expert">Autoriser le gel de cette appli Expert</string>
+    <string name="freeze_hub_result">Terminées : %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Actualiser automatiquement les descriptions</string>
+    <string name="freeze_hub_auto_update_help">Vérifie UAD-NG à chaque ouverture du gestionnaire de gel. Activé par défaut.</string>
+    <string name="freeze_hub_update_failed">Échec de la mise à jour. Dernière base valide conservée.</string>
+</resources>

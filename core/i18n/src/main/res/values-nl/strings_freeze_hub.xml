@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Tik op een app voor instellingen; gebruik selectievakjes voor bulkacties.</string>
+    <string name="freeze_hub_unfreeze">Ontdooien</string>
+    <string name="freeze_hub_profile_notice">Automatische regels gelden alleen voor deze Android-gebruiker.</string>
+    <string name="freeze_hub_delay">Vertraging na scherm uit</string>
+    <string name="freeze_hub_delay_help">Vervangt de profieltijd voor deze automatisch bevroren app. Geannuleerd bij scherm aan. Android kan de uitvoering uitstellen.</string>
+    <string name="freeze_hub_inherit">Profieltijd gebruiken</string>
+    <string name="freeze_hub_companions">Samen ontdooien</string>
+    <string name="freeze_hub_companion_help">Ontdooit eerst de gekozen apps bij het openen of ontdooien van deze app. Standaard uit. Voorbeelden: Gemini → Google, betaalde app → Play Store, spel → speloptimalisatie-app.</string>
+    <string name="freeze_hub_unknown">Geen communitybeschrijving. Veiligheid onbekend.</string>
+    <string name="freeze_hub_uad_help">Communitynotities over verwijderen garanderen geen veilig bevriezen. Unsafe-apps zijn geblokkeerd; Expert-apps vereisen toestemming.</string>
+    <string name="freeze_hub_expert">Bevriezen van deze Expert-app toestaan</string>
+    <string name="freeze_hub_result">Voltooid: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">App-beschrijvingen automatisch bijwerken</string>
+    <string name="freeze_hub_auto_update_help">Controleert UAD-NG bij het openen van de bevriesbeheerder. Standaard aan.</string>
+    <string name="freeze_hub_update_failed">Bijwerken mislukt. Laatste geldige database behouden.</string>
+</resources>

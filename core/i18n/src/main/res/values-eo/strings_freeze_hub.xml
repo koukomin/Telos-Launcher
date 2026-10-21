@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Tuŝu aplikaĵon por agordoj; uzu markobutonojn por amasaj agoj.</string>
+    <string name="freeze_hub_unfreeze">Malfrostigi</string>
+    <string name="freeze_hub_profile_notice">Aŭtomataj reguloj validas nur por ĉi tiu Android-uzanto.</string>
+    <string name="freeze_hub_delay">Prokrasto post ekranmalŝalto</string>
+    <string name="freeze_hub_delay_help">Anstataŭigas la profilan tempon por ĉi tiu aŭtomate frostigita aplikaĵo. Nuligita je ekranŝalto. Android povas prokrasti plenumon.</string>
+    <string name="freeze_hub_inherit">Uzi profilan tempon</string>
+    <string name="freeze_hub_companions">Malfrostigi kune</string>
+    <string name="freeze_hub_companion_help">Unue malfrostigas elektitajn aplikaĵojn dum malfermo aŭ malfrostigo de ĉi tiu. Defaŭlte malŝaltita. Ekzemploj: Gemini → Google, pagita aplikaĵo → Play Store, ludo → ludoptimumigilo.</string>
+    <string name="freeze_hub_unknown">Neniu komunuma priskribo. Sekureco nekonata.</string>
+    <string name="freeze_hub_uad_help">Komunumaj forigaj notoj ne garantias sekuran frostigon. Unsafe estas blokitaj; Expert bezonas aprobon.</string>
+    <string name="freeze_hub_expert">Permesi frostigon de ĉi tiu Expert-aplikaĵo</string>
+    <string name="freeze_hub_result">Plenumitaj: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Aŭtomate ĝisdatigi aplikaĵajn priskribojn</string>
+    <string name="freeze_hub_auto_update_help">Kontrolas UAD-NG je ĉiu malfermo de Frostadministrilo. Defaŭlte ŝaltita.</string>
+    <string name="freeze_hub_update_failed">Ĝisdatigo malsukcesis. La lasta valida datumbazo restas.</string>
+</resources>

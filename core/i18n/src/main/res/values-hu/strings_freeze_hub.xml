@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Koppints az alkalmazásra a beállításokhoz; tömeges művelethez jelöld be a négyzeteket.</string>
+    <string name="freeze_hub_unfreeze">Feloldás</string>
+    <string name="freeze_hub_profile_notice">Az automatikus szabályok csak erre az Android-felhasználóra érvényesek.</string>
+    <string name="freeze_hub_delay">Késleltetés a képernyő kikapcsolása után</string>
+    <string name="freeze_hub_delay_help">Felülírja a profil idejét ennél az automatikusan fagyasztott alkalmazásnál. A képernyő bekapcsolásakor törlődik. Az Android késleltetheti a végrehajtást.</string>
+    <string name="freeze_hub_inherit">Profil idejének használata</string>
+    <string name="freeze_hub_companions">Közös feloldás</string>
+    <string name="freeze_hub_companion_help">Először feloldja a kijelölt alkalmazásokat ennek megnyitásakor vagy feloldásakor. Alapból kikapcsolva. Példák: Gemini → Google, fizetős alkalmazás → Play Store, játék → játékoptimalizáló.</string>
+    <string name="freeze_hub_unknown">Nincs közösségi leírás. A biztonság ismeretlen.</string>
+    <string name="freeze_hub_uad_help">Közösségi eltávolítási megjegyzések, nem fagyasztási garancia. Az Unsafe tiltott; az Expert jóváhagyást igényel.</string>
+    <string name="freeze_hub_expert">Ezen Expert alkalmazás fagyasztásának engedélyezése</string>
+    <string name="freeze_hub_result">Befejezve: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Alkalmazásleírások automatikus frissítése</string>
+    <string name="freeze_hub_auto_update_help">UAD-NG-frissítést keres a fagyasztáskezelő minden megnyitásakor. Alapból bekapcsolva.</string>
+    <string name="freeze_hub_update_failed">A frissítés sikertelen. Az utolsó érvényes adatbázis megmarad.</string>
+</resources>

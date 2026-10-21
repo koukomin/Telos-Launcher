@@ -18,7 +18,7 @@ first one that is available, in this order.
 | 5 | Island | The Island app, only for apps already in the Island profile | request only | no |
 
 ::: warning Dhizuku is experimental
-In the backend picker (**Settings > Advanced > Freeze Manager > Backend > Freeze backend**) you can choose **System
+In the backend picker (**Settings > Freeze Manager > Settings > Backend > Freeze backend**) you can choose **System
 default**, **Shizuku**, **Dhizuku**, **Root**, **Island** or **Device owner** by hand. On System default, Dhizuku is used
 only when no Shizuku is available. Read the [Dhizuku note](#dhizuku) first.
 :::
@@ -256,3 +256,10 @@ Icon-pack generation uses disabled-aware resource lookup, and frozen scans prefe
 launcher component over an arbitrary seasonal/icon alias. An inactive alternate alias does not
 classify an otherwise launchable application as frozen. No device-level visual or Root/Shizuku
 integration test has been performed in the cloud environment.
+
+
+## App overrides and dependencies
+
+Per-app timing is configured in **Freeze Manager > Apps > app row**. It replaces profile screen-off/idle timing only, while master enablement and exclusions remain authoritative. See the [screen-off examples](./#per-app-screen-off-timing). Companion selection and opt-in live in the same app detail. Both old settings entry routes now open one tabbed hub.
+
+Database checks run once per entry to that hub when its **Settings > Update app descriptions automatically** switch is on (default). They do not run for each app row or tab change. A disabled switch is preserved on later launches and updates.

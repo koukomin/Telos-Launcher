@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Toca una app para configurarla; usa las casillas para acciones en lote.</string>
+    <string name="freeze_hub_unfreeze">Descongelar</string>
+    <string name="freeze_hub_profile_notice">Las reglas automáticas solo se aplican a este usuario de Android.</string>
+    <string name="freeze_hub_delay">Retraso tras apagar la pantalla</string>
+    <string name="freeze_hub_delay_help">Sustituye el tiempo del perfil para esta app de congelación automática. Se cancela al encender la pantalla. Android puede retrasar la ejecución.</string>
+    <string name="freeze_hub_inherit">Usar tiempo del perfil</string>
+    <string name="freeze_hub_companions">Descongelar juntas</string>
+    <string name="freeze_hub_companion_help">Descongela primero las apps elegidas al abrir o descongelar esta app. Desactivado por defecto. Ejemplos: Gemini → Google, app de pago → Play Store, juego → optimizador de juegos.</string>
+    <string name="freeze_hub_unknown">Sin descripción comunitaria. Seguridad desconocida.</string>
+    <string name="freeze_hub_uad_help">Notas comunitarias de eliminación, sin garantía para congelar. Las apps Unsafe se bloquean; las Expert requieren aprobación.</string>
+    <string name="freeze_hub_expert">Permitir congelar esta app Expert</string>
+    <string name="freeze_hub_result">Completadas: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Actualizar descripciones automáticamente</string>
+    <string name="freeze_hub_auto_update_help">Busca actualizaciones de UAD-NG al abrir el gestor de congelación. Activado por defecto.</string>
+    <string name="freeze_hub_update_failed">Error al actualizar. Se conserva la última base válida.</string>
+</resources>

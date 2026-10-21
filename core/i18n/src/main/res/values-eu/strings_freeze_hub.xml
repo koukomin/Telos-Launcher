@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Sakatu aplikazioa ezarpenetarako; erabili kontrol-laukiak taldeko ekintzetarako.</string>
+    <string name="freeze_hub_unfreeze">Desizoztu</string>
+    <string name="freeze_hub_profile_notice">Arau automatikoak Android erabiltzaile honi soilik aplikatzen zaizkio.</string>
+    <string name="freeze_hub_delay">Pantaila itzali ondoko atzerapena</string>
+    <string name="freeze_hub_delay_help">Profil-denbora ordezten du automatikoki izozten den aplikazio honetan. Pantaila piztean bertan behera uzten da. Android-ek exekuzioa atzeratu dezake.</string>
+    <string name="freeze_hub_inherit">Erabili profil-denbora</string>
+    <string name="freeze_hub_companions">Desizoztu batera</string>
+    <string name="freeze_hub_companion_help">Hautatutako aplikazioak desizozten ditu lehenik aplikazio hau ireki edo desizoztean. Berez itzalita. Adibideak: Gemini → Google, ordainpeko aplikazioa → Play Store, jokoa → joko-optimizatzailea.</string>
+    <string name="freeze_hub_unknown">Ez dago komunitatearen deskribapenik. Segurtasuna ezezaguna da.</string>
+    <string name="freeze_hub_uad_help">Komunitatearen kentze-oharrak ez dira izozteko bermea. Unsafe blokeatuta daude; Expert-ek baimena behar dute.</string>
+    <string name="freeze_hub_expert">Baimendu Expert aplikazio hau izoztea</string>
+    <string name="freeze_hub_result">Osatuta: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Eguneratu aplikazioen deskribapenak automatikoki</string>
+    <string name="freeze_hub_auto_update_help">Izozte-kudeatzailea irekitzean UAD-NG eguneraketak egiaztatzen ditu. Berez gaituta.</string>
+    <string name="freeze_hub_update_failed">Eguneratzeak huts egin du. Azken baliozko datu-basea mantenduko da.</string>
+</resources>

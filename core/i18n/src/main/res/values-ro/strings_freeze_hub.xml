@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Atinge o aplicație pentru setări; folosește casetele pentru acțiuni în lot.</string>
+    <string name="freeze_hub_unfreeze">Dezgheață</string>
+    <string name="freeze_hub_profile_notice">Regulile automate se aplică doar acestui utilizator Android.</string>
+    <string name="freeze_hub_delay">Întârziere după stingerea ecranului</string>
+    <string name="freeze_hub_delay_help">Înlocuiește timpul profilului pentru această aplicație cu înghețare automată. Se anulează la aprinderea ecranului. Android poate întârzia execuția.</string>
+    <string name="freeze_hub_inherit">Folosește timpul profilului</string>
+    <string name="freeze_hub_companions">Dezgheață împreună</string>
+    <string name="freeze_hub_companion_help">Dezgheață întâi aplicațiile selectate când deschizi sau dezgheți această aplicație. Implicit dezactivat. Exemple: Gemini → Google, aplicație plătită → Play Store, joc → optimizator de jocuri.</string>
+    <string name="freeze_hub_unknown">Fără descriere comunitară. Siguranță necunoscută.</string>
+    <string name="freeze_hub_uad_help">Note comunitare despre eliminare, nu o garanție pentru înghețare. Unsafe sunt blocate; Expert necesită aprobare.</string>
+    <string name="freeze_hub_expert">Permite înghețarea acestei aplicații Expert</string>
+    <string name="freeze_hub_result">Finalizate: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Actualizează automat descrierile</string>
+    <string name="freeze_hub_auto_update_help">Verifică UAD-NG la fiecare deschidere a gestionarului de înghețare. Implicit activat.</string>
+    <string name="freeze_hub_update_failed">Actualizarea a eșuat. Se păstrează ultima bază validă.</string>
+</resources>

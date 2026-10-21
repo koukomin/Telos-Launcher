@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">點選應用程式進行設定；使用核取方塊執行批次操作。</string>
+    <string name="freeze_hub_unfreeze">解凍</string>
+    <string name="freeze_hub_profile_notice">自動規則僅適用於此 Android 使用者。</string>
+    <string name="freeze_hub_delay">關閉螢幕後的延遲</string>
+    <string name="freeze_hub_delay_help">覆寫此自動凍結應用程式的設定時間。亮屏時取消。Android 可能延遲執行。</string>
+    <string name="freeze_hub_inherit">使用設定時間</string>
+    <string name="freeze_hub_companions">一起解凍</string>
+    <string name="freeze_hub_companion_help">開啟或解凍此應用程式前，先解凍選取的應用程式。預設關閉。例如：Gemini → Google，付費應用程式 → Play Store，遊戲 → 遊戲最佳化程式。</string>
+    <string name="freeze_hub_unknown">暫無社群說明，安全性未知。</string>
+    <string name="freeze_hub_uad_help">社群移除說明不保證凍結安全。Unsafe 應用程式禁止凍結；Expert 應用程式需要核准。</string>
+    <string name="freeze_hub_expert">允許凍結此 Expert 應用程式</string>
+    <string name="freeze_hub_result">已完成：%1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">自動更新應用程式說明</string>
+    <string name="freeze_hub_auto_update_help">每次開啟凍結管理員時檢查 UAD-NG 更新。預設開啟。</string>
+    <string name="freeze_hub_update_failed">更新失敗，保留最後有效的資料庫。</string>
+</resources>

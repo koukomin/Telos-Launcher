@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">برای تنظیمات روی برنامه بزنید؛ برای کارهای گروهی از کادرها استفاده کنید.</string>
+    <string name="freeze_hub_unfreeze">خروج از انجماد</string>
+    <string name="freeze_hub_profile_notice">قوانین خودکار فقط برای این کاربر Android اعمال می‌شوند.</string>
+    <string name="freeze_hub_delay">تأخیر پس از خاموشی صفحه</string>
+    <string name="freeze_hub_delay_help">زمان نمایه را برای این برنامه با انجماد خودکار جایگزین می‌کند. با روشن‌شدن صفحه لغو می‌شود. Android ممکن است اجرا را به تأخیر بیندازد.</string>
+    <string name="freeze_hub_inherit">استفاده از زمان نمایه</string>
+    <string name="freeze_hub_companions">خروج هم‌زمان از انجماد</string>
+    <string name="freeze_hub_companion_help">هنگام بازکردن یا خروج این برنامه از انجماد، ابتدا برنامه‌های انتخاب‌شده را آزاد می‌کند. پیش‌فرض خاموش است. نمونه‌ها: Gemini → Google، برنامه پولی → Play Store، بازی → بهینه‌ساز بازی.</string>
+    <string name="freeze_hub_unknown">توضیح انجمن موجود نیست. ایمنی نامشخص است.</string>
+    <string name="freeze_hub_uad_help">یادداشت‌های حذف انجمن تضمین انجماد نیستند. برنامه‌های Unsafe مسدودند؛ Expert به تأیید نیاز دارند.</string>
+    <string name="freeze_hub_expert">اجازه انجماد این برنامه Expert</string>
+    <string name="freeze_hub_result">انجام شد: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">به‌روزرسانی خودکار توضیحات برنامه‌ها</string>
+    <string name="freeze_hub_auto_update_help">در هر بار بازشدن مدیریت انجماد، به‌روزرسانی UAD-NG بررسی می‌شود. پیش‌فرض روشن است.</string>
+    <string name="freeze_hub_update_failed">به‌روزرسانی ناموفق بود. آخرین پایگاه معتبر حفظ می‌شود.</string>
+</resources>

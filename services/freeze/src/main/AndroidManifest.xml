@@ -19,6 +19,7 @@
     </queries>
 
     <application>
+        <receiver android:name=".ScreenOffFreezeReceiver" android:exported="false" />
         <provider
             android:name="rikka.shizuku.ShizukuProvider"
             android:authorities="${applicationId}.shizuku"

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Tapnite aplikacijo za nastavitve; potrditvena polja so za skupinska dejanja.</string>
+    <string name="freeze_hub_unfreeze">Odmrzni</string>
+    <string name="freeze_hub_profile_notice">Samodejna pravila veljajo le za tega uporabnika Androida.</string>
+    <string name="freeze_hub_delay">Zakasnitev po izklopu zaslona</string>
+    <string name="freeze_hub_delay_help">Nadomesti čas profila za to samodejno zamrznjeno aplikacijo. Ob vklopu zaslona se prekliče. Android lahko zakasni izvedbo.</string>
+    <string name="freeze_hub_inherit">Uporabi čas profila</string>
+    <string name="freeze_hub_companions">Odmrzni skupaj</string>
+    <string name="freeze_hub_companion_help">Najprej odmrzne izbrane aplikacije ob odpiranju ali odmrzovanju te aplikacije. Privzeto izklopljeno. Primeri: Gemini → Google, plačljiva aplikacija → Play Store, igra → optimizator iger.</string>
+    <string name="freeze_hub_unknown">Ni opisa skupnosti. Varnost je neznana.</string>
+    <string name="freeze_hub_uad_help">Opombe skupnosti o odstranitvi niso jamstvo za zamrzovanje. Unsafe so blokirane; Expert potrebujejo odobritev.</string>
+    <string name="freeze_hub_expert">Dovoli zamrzovanje te aplikacije Expert</string>
+    <string name="freeze_hub_result">Dokončano: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Samodejno posodobi opise aplikacij</string>
+    <string name="freeze_hub_auto_update_help">Preveri UAD-NG ob vsakem odprtju upravljanja zamrzovanja. Privzeto vklopljeno.</string>
+    <string name="freeze_hub_update_failed">Posodobitev ni uspela. Ohranjena je zadnja veljavna zbirka.</string>
+</resources>

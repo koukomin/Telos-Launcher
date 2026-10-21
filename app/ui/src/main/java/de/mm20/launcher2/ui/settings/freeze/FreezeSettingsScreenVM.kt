@@ -21,6 +21,7 @@ import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -264,6 +265,78 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
+    val companionChoices = kotlinx.coroutines.flow.flow {
+        emit(withContext(Dispatchers.IO) {
+            context.packageManager.getInstalledApplications(PackageManager.MATCH_DISABLED_COMPONENTS)
+                .filter { it.packageName != context.packageName }
+                .map { it.packageName to it.loadLabel(context.packageManager).toString() }
+                .sortedBy { it.second.lowercase() }
+        })
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val screenOffDelays = freezeSettings.screenOffDelays.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+    val companionEnabled = freezeSettings.companionEnabled.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+    val companionExtras = freezeSettings.companionExtras.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+    val riskApproved = freezeSettings.systemRiskApproved.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+    private val descriptions: de.mm20.launcher2.freeze.BloatDescriptions by inject()
+    val bloatDescriptions = descriptions.data
+    val bloatUpdateStatus = descriptions.status
+    val bloatAutoUpdate = freezeSettings.bloatAutoUpdate.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    fun setBloatAutoUpdate(value: Boolean) = freezeSettings.setBloatAutoUpdate(value)
+    fun enterFreezeManagement() {
+        viewModelScope.launch {
+            descriptions.entries()
+            if (freezeSettings.bloatAutoUpdate.first()) descriptions.refresh()
+        }
+    }
+    fun setDelay(pkg: String, minutes: Int?) = freezeSettings.setScreenOffDelay(pkg, minutes)
+    fun setCompanionRule(pkg: String, enabled: Boolean, packages: Set<String>) =
+        freezeSettings.setCompanionRule(pkg, enabled, packages)
+    fun setRiskApproved(pkg: String, value: Boolean) = freezeSettings.setSystemRiskApproved(pkg, value)
+    private val refresh = MutableStateFlow(0)
+    val frozenStates = combine(allApps, refresh) { apps, _ -> withContext(Dispatchers.IO) {
+        apps.associate { app -> app.key to if (app.user == android.os.Process.myUserHandle()) {
+            freezeManager.isFrozen(app.componentName.packageName)
+        } else runCatching {
+            val service = context.getSystemService(android.content.pm.LauncherApps::class.java)
+            val info = service.getApplicationInfo(app.componentName.packageName, PackageManager.MATCH_DISABLED_COMPONENTS, app.user)
+            !info.enabled || info.flags and ApplicationInfo.FLAG_SUSPENDED != 0
+        }.getOrDefault(false) }
+    } }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+    private val _bulkBusy = MutableStateFlow(false)
+    val bulkBusy = _bulkBusy.asStateFlow()
+    private val _bulkResult = MutableStateFlow<String?>(null)
+    val bulkResult = _bulkResult.asStateFlow()
+    fun bulkAction(apps: List<Application>, action: Int) {
+        if (_bulkBusy.value) return
+        _bulkBusy.value = true
+        viewModelScope.launch {
+            var done = 0
+            try {
+                freezeManager.refreshBackendState()
+                for (app in apps) {
+                    val pkg = app.componentName.packageName
+                    val ok = runCatching {
+                        when (action) {
+                            0 -> pkg in freezeManager.freeze(pkg, app.user.hashCode())
+                            1 -> { freezeManager.unfreezeCompanions(pkg, app.user.hashCode())
+                                val ok = pkg in freezeManager.unfreeze(pkg, app.user.hashCode())
+                                if (!ok) freezeManager.releaseCompanions(pkg, app.user.hashCode())
+                                ok }
+                            else -> app.user == android.os.Process.myUserHandle() &&
+                                freezeManager.updateAppPolicy(pkg, app.user, true, false, appFreezeMethod(pkg, freezeMethods.value))
+                        }
+                    }.getOrElse { error ->
+                        if (error is kotlinx.coroutines.CancellationException) throw error
+                        false
+                    }
+                    if (ok) done++
+                }
+                _bulkResult.value = context.getString(de.mm20.launcher2.ui.R.string.freeze_hub_result, done, apps.size)
+            } finally { _bulkBusy.value = false; refresh.value++ }
+        }
+    }
+    fun refreshAppStates() { refresh.value++ }
 
     private fun showPolicyError() {
         android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.pdft_error_title,

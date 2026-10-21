@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Tryck på en app för inställningar; använd kryssrutorna för massåtgärder.</string>
+    <string name="freeze_hub_unfreeze">Tina upp</string>
+    <string name="freeze_hub_profile_notice">Automatiska regler gäller bara denna Android-användare.</string>
+    <string name="freeze_hub_delay">Fördröjning efter släckt skärm</string>
+    <string name="freeze_hub_delay_help">Ersätter profiltiden för denna automatiskt frysta app. Avbryts när skärmen tänds. Android kan fördröja körningen.</string>
+    <string name="freeze_hub_inherit">Använd profiltid</string>
+    <string name="freeze_hub_companions">Tina upp tillsammans</string>
+    <string name="freeze_hub_companion_help">Tinar först upp valda appar när denna app öppnas eller tinas upp. Av som standard. Exempel: Gemini → Google, betalapp → Play Store, spel → speloptimerare.</string>
+    <string name="freeze_hub_unknown">Ingen gemenskapsbeskrivning. Säkerheten är okänd.</string>
+    <string name="freeze_hub_uad_help">Gemenskapens borttagningsanteckningar garanterar inte säker frysning. Unsafe-appar blockeras; Expert-appar kräver godkännande.</string>
+    <string name="freeze_hub_expert">Tillåt frysning av denna Expert-app</string>
+    <string name="freeze_hub_result">Klart: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Uppdatera appbeskrivningar automatiskt</string>
+    <string name="freeze_hub_auto_update_help">Kontrollera UAD-NG varje gång fryshanteraren öppnas. På som standard.</string>
+    <string name="freeze_hub_update_failed">Uppdateringen misslyckades. Senaste giltiga databas behålls.</string>
+</resources>

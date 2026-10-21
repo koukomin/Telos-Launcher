@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Ketik aplikasi untuk tetapan; gunakan kotak semak untuk tindakan pukal.</string>
+    <string name="freeze_hub_unfreeze">Nyahbeku</string>
+    <string name="freeze_hub_profile_notice">Peraturan automatik hanya terpakai kepada pengguna Android ini.</string>
+    <string name="freeze_hub_delay">Kelewatan selepas skrin dimatikan</string>
+    <string name="freeze_hub_delay_help">Menggantikan masa profil untuk aplikasi pembekuan automatik ini. Dibatalkan apabila skrin dihidupkan. Android mungkin melambatkan pelaksanaan.</string>
+    <string name="freeze_hub_inherit">Guna masa profil</string>
+    <string name="freeze_hub_companions">Nyahbeku bersama</string>
+    <string name="freeze_hub_companion_help">Nyahbeku aplikasi terpilih dahulu apabila membuka atau menyahbeku aplikasi ini. Dimatikan secara lalai. Contoh: Gemini → Google, aplikasi berbayar → Play Store, permainan → pengoptimum permainan.</string>
+    <string name="freeze_hub_unknown">Tiada penerangan komuniti. Keselamatan tidak diketahui.</string>
+    <string name="freeze_hub_uad_help">Nota penyingkiran komuniti bukan jaminan pembekuan. Aplikasi Unsafe disekat; Expert memerlukan kelulusan.</string>
+    <string name="freeze_hub_expert">Benarkan pembekuan aplikasi Expert ini</string>
+    <string name="freeze_hub_result">Selesai: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Kemas kini penerangan secara automatik</string>
+    <string name="freeze_hub_auto_update_help">Semak UAD-NG setiap kali Pengurus Pembekuan dibuka. Aktif secara lalai.</string>
+    <string name="freeze_hub_update_failed">Kemas kini gagal. Pangkalan data sah terakhir dikekalkan.</string>
+</resources>

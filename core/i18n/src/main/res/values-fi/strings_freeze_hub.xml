@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Avaa asetukset napauttamalla sovellusta; valitse ruudut joukkotoimintoihin.</string>
+    <string name="freeze_hub_unfreeze">Sulata</string>
+    <string name="freeze_hub_profile_notice">Automaattiset säännöt koskevat vain tätä Android-käyttäjää.</string>
+    <string name="freeze_hub_delay">Viive näytön sammuttamisen jälkeen</string>
+    <string name="freeze_hub_delay_help">Korvaa profiilin ajan tälle automaattisesti jäädytettävälle sovellukselle. Perutaan näytön käynnistyessä. Android voi viivästyttää suoritusta.</string>
+    <string name="freeze_hub_inherit">Käytä profiilin aikaa</string>
+    <string name="freeze_hub_companions">Sulata yhdessä</string>
+    <string name="freeze_hub_companion_help">Sulattaa valitut sovellukset ensin, kun tämä sovellus avataan tai sulatetaan. Oletuksena pois. Esimerkit: Gemini → Google, maksullinen sovellus → Play Store, peli → pelioptimointi.</string>
+    <string name="freeze_hub_unknown">Ei yhteisön kuvausta. Turvallisuutta ei tunneta.</string>
+    <string name="freeze_hub_uad_help">Yhteisön poistohuomiot eivät takaa jäädytyksen turvallisuutta. Unsafe estetään; Expert vaatii hyväksynnän.</string>
+    <string name="freeze_hub_expert">Salli tämän Expert-sovelluksen jäädytys</string>
+    <string name="freeze_hub_result">Valmis: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Päivitä sovelluskuvaukset automaattisesti</string>
+    <string name="freeze_hub_auto_update_help">Tarkistaa UAD-NG-päivitykset jäädytyshallinnan avautuessa. Oletuksena päällä.</string>
+    <string name="freeze_hub_update_failed">Päivitys epäonnistui. Viimeinen kelvollinen tietokanta säilytetään.</string>
+</resources>

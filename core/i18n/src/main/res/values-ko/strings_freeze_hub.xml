@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">앱을 눌러 설정하고 체크박스로 일괄 작업을 선택하세요.</string>
+    <string name="freeze_hub_unfreeze">동결 해제</string>
+    <string name="freeze_hub_profile_notice">자동 규칙은 이 Android 사용자에게만 적용됩니다.</string>
+    <string name="freeze_hub_delay">화면이 꺼진 후 지연</string>
+    <string name="freeze_hub_delay_help">이 자동 동결 앱의 프로필 시간을 재정의합니다. 화면이 켜지면 취소됩니다. Android가 실행을 지연할 수 있습니다.</string>
+    <string name="freeze_hub_inherit">프로필 시간 사용</string>
+    <string name="freeze_hub_companions">함께 동결 해제</string>
+    <string name="freeze_hub_companion_help">이 앱을 열거나 해제하기 전에 선택한 앱부터 해제합니다. 기본값은 꺼짐입니다. 예: Gemini → Google, 유료 앱 → Play Store, 게임 → 게임 최적화 앱.</string>
+    <string name="freeze_hub_unknown">커뮤니티 설명이 없습니다. 안전성은 알 수 없습니다.</string>
+    <string name="freeze_hub_uad_help">커뮤니티 제거 정보이며 동결 안전성을 보장하지 않습니다. Unsafe 앱은 차단되고 Expert 앱은 승인이 필요합니다.</string>
+    <string name="freeze_hub_expert">이 Expert 앱의 동결 허용</string>
+    <string name="freeze_hub_result">완료: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">앱 설명 자동 업데이트</string>
+    <string name="freeze_hub_auto_update_help">동결 관리자를 열 때마다 UAD-NG 업데이트를 확인합니다. 기본값은 켜짐입니다.</string>
+    <string name="freeze_hub_update_failed">업데이트 실패. 마지막 유효한 데이터베이스를 유지합니다.</string>
+</resources>

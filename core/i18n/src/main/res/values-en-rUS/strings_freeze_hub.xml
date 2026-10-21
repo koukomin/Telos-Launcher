@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Tap an app for its settings; use checkboxes for bulk actions.</string>
+    <string name="freeze_hub_unfreeze">Unfreeze</string>
+    <string name="freeze_hub_profile_notice">Automatic rules apply only to this Android user.</string>
+    <string name="freeze_hub_delay">Delay after screen-off</string>
+    <string name="freeze_hub_delay_help">Overrides profile timing for this auto-freeze app. Cancelled on screen-on. Android may delay execution.</string>
+    <string name="freeze_hub_inherit">Use profile timing</string>
+    <string name="freeze_hub_companions">Unfreeze together</string>
+    <string name="freeze_hub_companion_help">First unfreeze the selected apps when opening or unfreezing this app. Off by default. Examples: Gemini → Google, paid app → Play Store, game → game booster.</string>
+    <string name="freeze_hub_unknown">No community description. Safety is unknown.</string>
+    <string name="freeze_hub_uad_help">Community removal notes, not a freezing guarantee. Unsafe apps are blocked; Expert apps require approval.</string>
+    <string name="freeze_hub_expert">Allow freezing this Expert app</string>
+    <string name="freeze_hub_result">Completed: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Update app descriptions automatically</string>
+    <string name="freeze_hub_auto_update_help">Check UAD-NG for updates whenever Freeze Manager opens. Enabled by default.</string>
+    <string name="freeze_hub_update_failed">Update failed. Keeping the last valid database.</string>
+</resources>

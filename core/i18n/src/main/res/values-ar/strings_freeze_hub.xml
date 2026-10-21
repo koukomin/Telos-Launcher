@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">اضغط على التطبيق لإعداده؛ استخدم مربعات الاختيار للإجراءات الجماعية.</string>
+    <string name="freeze_hub_unfreeze">إلغاء التجميد</string>
+    <string name="freeze_hub_profile_notice">تنطبق القواعد التلقائية على مستخدم Android هذا فقط.</string>
+    <string name="freeze_hub_delay">التأخير بعد إطفاء الشاشة</string>
+    <string name="freeze_hub_delay_help">يتجاوز توقيت الملف لهذا التطبيق ذي التجميد التلقائي. يُلغى عند تشغيل الشاشة. قد يؤخر Android التنفيذ.</string>
+    <string name="freeze_hub_inherit">استخدام توقيت الملف</string>
+    <string name="freeze_hub_companions">إلغاء التجميد معًا</string>
+    <string name="freeze_hub_companion_help">يلغي تجميد التطبيقات المحددة أولًا عند فتح هذا التطبيق أو إلغاء تجميده. معطّل افتراضيًا. أمثلة: Gemini → Google، تطبيق مدفوع → Play Store، لعبة → محسّن الألعاب.</string>
+    <string name="freeze_hub_unknown">لا يوجد وصف من المجتمع. السلامة غير معروفة.</string>
+    <string name="freeze_hub_uad_help">ملاحظات إزالة من المجتمع وليست ضمانًا للتجميد. تُحظر تطبيقات Unsafe وتتطلب تطبيقات Expert موافقة.</string>
+    <string name="freeze_hub_expert">السماح بتجميد تطبيق Expert هذا</string>
+    <string name="freeze_hub_result">اكتمل: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">تحديث أوصاف التطبيقات تلقائيًا</string>
+    <string name="freeze_hub_auto_update_help">يفحص UAD-NG عند كل فتح لمدير التجميد. مفعّل افتراضيًا.</string>
+    <string name="freeze_hub_update_failed">فشل التحديث. يتم الاحتفاظ بآخر قاعدة صالحة.</string>
+</resources>

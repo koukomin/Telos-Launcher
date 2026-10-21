@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Нажмите приложение для настройки; флажки служат для групповых действий.</string>
+    <string name="freeze_hub_unfreeze">Разморозить</string>
+    <string name="freeze_hub_profile_notice">Автоправила действуют только для этого пользователя Android.</string>
+    <string name="freeze_hub_delay">Задержка после выключения экрана</string>
+    <string name="freeze_hub_delay_help">Заменяет время профиля для этого приложения с автозаморозкой. Отменяется при включении экрана. Android может задержать выполнение.</string>
+    <string name="freeze_hub_inherit">Использовать время профиля</string>
+    <string name="freeze_hub_companions">Размораживать вместе</string>
+    <string name="freeze_hub_companion_help">Сначала размораживает выбранные приложения при открытии или разморозке этого. По умолчанию выключено. Примеры: Gemini → Google, платное приложение → Play Store, игра → игровой оптимизатор.</string>
+    <string name="freeze_hub_unknown">Нет описания сообщества. Безопасность неизвестна.</string>
+    <string name="freeze_hub_uad_help">Заметки сообщества об удалении не гарантируют безопасность заморозки. Unsafe блокируются; Expert требуют согласия.</string>
+    <string name="freeze_hub_expert">Разрешить заморозку этого приложения Expert</string>
+    <string name="freeze_hub_result">Завершено: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Автообновление описаний приложений</string>
+    <string name="freeze_hub_auto_update_help">Проверять UAD-NG при каждом открытии управления заморозкой. Включено по умолчанию.</string>
+    <string name="freeze_hub_update_failed">Обновление не удалось. Сохранена последняя рабочая база.</string>
+</resources>

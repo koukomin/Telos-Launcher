@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Tocca un application pro configurar lo; usa quadratos pro actiones collective.</string>
+    <string name="freeze_hub_unfreeze">Disgelar</string>
+    <string name="freeze_hub_profile_notice">Regulas automatic se applica solmente a iste usator Android.</string>
+    <string name="freeze_hub_delay">Retardo post extinction del schermo</string>
+    <string name="freeze_hub_delay_help">Reimplacia le tempore del profilo pro iste application con congelation automatic. Cancellate al accender le schermo. Android pote retardar le execution.</string>
+    <string name="freeze_hub_inherit">Usar tempore del profilo</string>
+    <string name="freeze_hub_companions">Disgelar insimul</string>
+    <string name="freeze_hub_companion_help">Disgela primo le applicationes seligite al aperir o disgelar iste application. Disactivate per defecto. Exemplos: Gemini → Google, application pagate → Play Store, joco → optimisator de jocos.</string>
+    <string name="freeze_hub_unknown">Nulle description communitari. Securitate incognite.</string>
+    <string name="freeze_hub_uad_help">Notas communitari de remotion, non un garantia de congelation. Unsafe es blocate; Expert require approbation.</string>
+    <string name="freeze_hub_expert">Permitter congelation de iste application Expert</string>
+    <string name="freeze_hub_result">Completate: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Actualisar automaticamente descriptiones</string>
+    <string name="freeze_hub_auto_update_help">Verifica UAD-NG cata vice que le gestor de congelation se aperi. Activate per defecto.</string>
+    <string name="freeze_hub_update_failed">Actualisation fallite. Le ultime base valide es conservate.</string>
+</resources>

@@ -1,0 +1,33 @@
+name: Validate freeze management
+on:
+  pull_request:
+    paths:
+      - 'services/freeze/**'
+      - 'core/preferences/**'
+      - 'core/i18n/src/main/res/**/strings_freeze_hub.xml'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/freeze/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/common/SearchableItemVM.kt'
+      - '.github/workflows/validate-freeze.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: temurin
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Freeze policy regressions and UI compilation
+        run: bash ./gradlew :services:freeze:testDebugUnitTest :core:preferences:testDebugUnitTest :app:ui:compileDefaultDebugKotlin --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: freeze-test-results
+          path: |
+            services/freeze/build/reports/tests/
+            core/preferences/build/reports/tests/

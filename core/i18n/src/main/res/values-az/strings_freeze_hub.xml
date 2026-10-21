@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Parametrlər üçün tətbiqə toxunun; toplu əməliyyatlar üçün xanaları seçin.</string>
+    <string name="freeze_hub_unfreeze">Dondurmanı aç</string>
+    <string name="freeze_hub_profile_notice">Avtomatik qaydalar yalnız bu Android istifadəçisinə aiddir.</string>
+    <string name="freeze_hub_delay">Ekran söndükdən sonra gecikmə</string>
+    <string name="freeze_hub_delay_help">Bu avtomatik dondurulan tətbiq üçün profil vaxtını əvəz edir. Ekran yandıqda ləğv olunur. Android icranı gecikdirə bilər.</string>
+    <string name="freeze_hub_inherit">Profil vaxtından istifadə et</string>
+    <string name="freeze_hub_companions">Birlikdə dondurmanı aç</string>
+    <string name="freeze_hub_companion_help">Bu tətbiqi açarkən və ya dondurmasını açarkən əvvəlcə seçilmiş tətbiqləri açır. Standart olaraq sönülüdür. Nümunələr: Gemini → Google, ödənişli tətbiq → Play Store, oyun → oyun optimizatoru.</string>
+    <string name="freeze_hub_unknown">İcma təsviri yoxdur. Təhlükəsizlik məlum deyil.</string>
+    <string name="freeze_hub_uad_help">İcmanın silmə qeydləri dondurma zəmanəti deyil. Unsafe bloklanır; Expert təsdiq tələb edir.</string>
+    <string name="freeze_hub_expert">Bu Expert tətbiqinin dondurulmasına icazə ver</string>
+    <string name="freeze_hub_result">Tamamlandı: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Tətbiq təsvirlərini avtomatik yenilə</string>
+    <string name="freeze_hub_auto_update_help">Dondurma meneceri hər açıldıqda UAD-NG yeniləmələrini yoxlayır. Standart olaraq aktivdir.</string>
+    <string name="freeze_hub_update_failed">Yeniləmə alınmadı. Son etibarlı baza saxlanılır.</string>
+</resources>

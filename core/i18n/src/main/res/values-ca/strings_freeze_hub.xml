@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Toca una aplicació per configurar-la; usa les caselles per a accions en lot.</string>
+    <string name="freeze_hub_unfreeze">Descongela</string>
+    <string name="freeze_hub_profile_notice">Les regles automàtiques només afecten aquest usuari d’Android.</string>
+    <string name="freeze_hub_delay">Retard després d’apagar la pantalla</string>
+    <string name="freeze_hub_delay_help">Substitueix el temps del perfil per a aquesta aplicació de congelació automàtica. Es cancel·la en encendre la pantalla. Android pot retardar l’execució.</string>
+    <string name="freeze_hub_inherit">Usa el temps del perfil</string>
+    <string name="freeze_hub_companions">Descongela juntes</string>
+    <string name="freeze_hub_companion_help">Primer descongela les aplicacions triades en obrir o descongelar aquesta aplicació. Desactivat per defecte. Exemples: Gemini → Google, aplicació de pagament → Play Store, joc → optimitzador de jocs.</string>
+    <string name="freeze_hub_unknown">Sense descripció comunitària. Seguretat desconeguda.</string>
+    <string name="freeze_hub_uad_help">Notes comunitàries d’eliminació, sense garantia per congelar. Unsafe es bloquegen; Expert requereixen aprovació.</string>
+    <string name="freeze_hub_expert">Permet congelar aquesta aplicació Expert</string>
+    <string name="freeze_hub_result">Completades: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Actualitza les descripcions automàticament</string>
+    <string name="freeze_hub_auto_update_help">Comprova UAD-NG cada vegada que s’obre el gestor de congelació. Activat per defecte.</string>
+    <string name="freeze_hub_update_failed">Ha fallat l’actualització. Es conserva l’última base vàlida.</string>
+</resources>

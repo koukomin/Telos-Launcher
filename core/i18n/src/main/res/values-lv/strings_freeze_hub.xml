@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="freeze_hub_selection_help">Pieskarieties lietotnei iestatījumiem; atzīmes izmantojiet grupu darbībām.</string>
+    <string name="freeze_hub_unfreeze">Atkausēt</string>
+    <string name="freeze_hub_profile_notice">Automātiskie noteikumi attiecas tikai uz šo Android lietotāju.</string>
+    <string name="freeze_hub_delay">Aizkave pēc ekrāna izslēgšanas</string>
+    <string name="freeze_hub_delay_help">Aizstāj profila laiku šai automātiski iesaldējamajai lietotnei. Atcelts, ieslēdzot ekrānu. Android var aizkavēt izpildi.</string>
+    <string name="freeze_hub_inherit">Izmantot profila laiku</string>
+    <string name="freeze_hub_companions">Atkausēt kopā</string>
+    <string name="freeze_hub_companion_help">Vispirms atkausē atlasītās lietotnes, atverot vai atkausējot šo. Pēc noklusējuma izslēgts. Piemēri: Gemini → Google, maksas lietotne → Play Store, spēle → spēļu optimizētājs.</string>
+    <string name="freeze_hub_unknown">Nav kopienas apraksta. Drošība nav zināma.</string>
+    <string name="freeze_hub_uad_help">Kopienas noņemšanas piezīmes negarantē iesaldēšanas drošību. Unsafe tiek bloķētas; Expert jāapstiprina.</string>
+    <string name="freeze_hub_expert">Atļaut iesaldēt šo Expert lietotni</string>
+    <string name="freeze_hub_result">Pabeigts: %1$d / %2$d</string>
+    <string name="freeze_hub_auto_update">Automātiski atjaunināt lietotņu aprakstus</string>
+    <string name="freeze_hub_auto_update_help">Pārbauda UAD-NG katrā iesaldēšanas pārvaldnieka atvēršanā. Pēc noklusējuma ieslēgts.</string>
+    <string name="freeze_hub_update_failed">Atjaunināšana neizdevās. Saglabāta pēdējā derīgā datubāze.</string>
+</resources>
