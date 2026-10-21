@@ -9,3 +9,6 @@ internal fun screenOffFreezeDelays(
         ?: if (screenOff) 0 else if (idle) idleMinutes.coerceIn(1, 1440) else null
     minutes?.let { pkg to it * 60_000L }
 }.toMap()
+
+internal fun screenOffPlanIsValid(interactive: Boolean, enabled: Boolean, savedBoot: Int, currentBoot: Int): Boolean =
+    !interactive && enabled && savedBoot == currentBoot

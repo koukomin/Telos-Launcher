@@ -82,8 +82,8 @@ class AutoFreezeController internal constructor(
     suspend fun dispatchScreenOffAlarm() {
         screenOffMutex.lock()
         try {
-            if (isScreenOn() || !settings.autoFreezeEnabled.first() ||
-                settings.screenOffBoot.first() != bootCount()) {
+            if (!screenOffPlanIsValid(isScreenOn(), settings.autoFreezeEnabled.first(),
+                settings.screenOffBoot.first(), bootCount())) {
                 clearScreenOffPlan()
                 return
             }

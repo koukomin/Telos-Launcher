@@ -36,8 +36,8 @@ internal fun parseBloatDescriptions(text: String): Map<String, BloatDescription>
     val result = rows.mapValues { (pkg, element) ->
         require(pkg.length <= 255 && pkg.matches(PACKAGE_NAME))
         val row = element.jsonObject
-        val description = row["description"]?.jsonPrimitive?.content.orEmpty()
-        val recommendation = row["removal"]?.jsonPrimitive?.content.orEmpty()
+        val description = requireNotNull(row["description"]).jsonPrimitive.also { require(it.isString) }.content
+        val recommendation = requireNotNull(row["removal"]).jsonPrimitive.also { require(it.isString) }.content
         require(description.length <= 64_000 && recommendation.length <= 100)
         BloatDescription(description, recommendation)
     }
@@ -51,6 +51,7 @@ class BloatDescriptions(private val context: Context) {
     private val refreshMutex = Mutex()
     private var loaded = false
     private var failed = false
+    private var cacheValidated = false
     private val _data = MutableStateFlow<Map<String, BloatDescription>>(emptyMap())
     val data = _data.asStateFlow()
     private val _status = MutableStateFlow(BloatUpdateStatus.Idle)
@@ -62,6 +63,7 @@ class BloatDescriptions(private val context: Context) {
         mutex.withLock {
             if (!loaded) {
                 val saved = runCatching { cache.openRead().bufferedReader().use { parseBloatDescriptions(it.readText()) } }.getOrNull()
+                cacheValidated = saved != null
                 val bundled = saved ?: runCatching {
                     context.assets.open("uad_lists.json.gz").use { input ->
                         GZIPInputStream(input).bufferedReader().use { parseBloatDescriptions(it.readText()) }
@@ -86,7 +88,7 @@ class BloatDescriptions(private val context: Context) {
                 connection.connectTimeout = 10_000
                 connection.readTimeout = 10_000
                 connection.instanceFollowRedirects = false
-                val etag = if (cache.baseFile.exists()) runCatching {
+                val etag = if (cacheValidated) runCatching {
                     etagFile.openRead().bufferedReader().use { it.readText() }.take(512)
                 }.getOrNull() else null
                 if (!etag.isNullOrBlank()) connection.setRequestProperty("If-None-Match", etag)
@@ -111,8 +113,9 @@ class BloatDescriptions(private val context: Context) {
                 val parsed = parseBloatDescriptions(bytes.toString(Charsets.UTF_8))
                 writeAtomic(cache, bytes)
                 val newEtag = connection.getHeaderField("ETag").orEmpty().take(512)
-                writeAtomic(etagFile, newEtag.toByteArray())
-                mutex.withLock { _data.value = parsed; failed = false; loaded = true }
+                mutex.withLock { _data.value = parsed; failed = false; loaded = true; cacheValidated = true }
+                runCatching { writeAtomic(etagFile, newEtag.toByteArray()) }
+                    .onFailure { android.util.Log.w("BloatDescriptions", "Could not cache ETag", it) }
                 _status.value = BloatUpdateStatus.Current
             } catch (error: CancellationException) { _status.value = BloatUpdateStatus.Idle; throw error }
             catch (error: Exception) {
@@ -122,9 +125,13 @@ class BloatDescriptions(private val context: Context) {
         }
     }
 
-    suspend fun allowsFreeze(pkg: String, expertApproved: Boolean): Boolean = withContext(Dispatchers.IO) {
-        val info = runCatching { context.packageManager.getApplicationInfo(pkg,
-            PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES) }.getOrNull()
+    suspend fun allowsFreeze(pkg: String, expertApproved: Boolean, userId: Int = android.os.Process.myUid() / 100000): Boolean = withContext(Dispatchers.IO) {
+        val info = runCatching {
+            val flags = PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES
+            if (userId == android.os.Process.myUid() / 100000) context.packageManager.getApplicationInfo(pkg, flags)
+            else requireNotNull(context.getSystemService(android.content.pm.LauncherApps::class.java))
+                .getApplicationInfo(pkg, flags, android.os.UserHandle.getUserHandleForUid(userId * 100000))
+        }.getOrNull()
             ?: return@withContext false
         if (info.flags and ApplicationInfo.FLAG_SYSTEM == 0) return@withContext true
         val data = entries()

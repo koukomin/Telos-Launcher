@@ -19,6 +19,8 @@ Thor head reviewed: `6dbf7ee4f3777b8cb26790facb8846f3706b3699`. Canta head: `9b3
 | Central Unsafe gate; Expert acknowledgement; no-data failure closed for system apps | Added at the service mutation boundary, including bulk/background and Island notification requests |
 | App descriptions / removal category | Same upstream UAD-NG data, pinned offline fallback and on-entry conditional updater |
 | Bulk selection and clear outcomes | Search/package filters, select-all-shown, explicit Freeze/Unfreeze/Auto-freeze, success count |
+| Verify actual Android state, not shell exit alone | Mutation results now read back package enabled/suspended state before counting success or recording statistics |
+| Native Unpause action on Android 11+ | Requested on the Shizuku binder path; optional reflection failure retains the standard OEM dialog. Root shell retains its existing dialog, without adding a root daemon |
 | Keep app data; never silently escalate disable into uninstall | Existing Root/Shizuku suspend/disable and restoration journal preserved; no uninstall fallback added |
 | Per-user operations / Dhizuku owner scope | Existing provider restrictions preserved; new timing/dependency rules are current-user only |
 | Scheduled actions | Added screen-off delays requested here; not a claim of full calendar/extension/export parity with Thor |

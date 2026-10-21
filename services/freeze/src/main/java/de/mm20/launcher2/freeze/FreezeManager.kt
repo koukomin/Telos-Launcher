@@ -143,10 +143,7 @@ class FreezeManager internal constructor(
     suspend fun freeze(packageName: String, userId: Int = Process.myUid() / 100000): Set<String> {
         if (_activeBackend.value == null) refreshBackendState()
         val result = setSuspended(listOf(packageName), true, userId)
-        if (packageName in result) {
-            val companions = settings.clearCompanionHoldsForMaster(packageName)
-            if (companions.isNotEmpty()) setSuspended(companions.toList(), true, userId)
-        }
+        freezeHeldCompanions(result, userId)
         return result
     }
 
@@ -214,7 +211,7 @@ class FreezeManager internal constructor(
         if (_activeBackend.value == FreezeBackendType.Island) {
             val approved = settings.systemRiskApproved.first()
             val safe = packageNames.filter { VALID_PACKAGE_NAME.matches(it) && it !in PROTECTED_PACKAGES &&
-                descriptions.allowsFreeze(it, it in approved) }
+                descriptions.allowsFreeze(it, it in approved, userId) }
             if (safe.isNotEmpty()) islandProvider.postFreezeNotification(safe)
         } else {
             val changed = operationMutex.withLock { applySuspended(packageNames, true, userId, respectMaintenance = true) }
@@ -223,7 +220,7 @@ class FreezeManager internal constructor(
     }
 
     private suspend fun freezeHeldCompanions(masters: Set<String>, userId: Int) {
-        if (masters.isEmpty()) return
+        if (masters.isEmpty() || userId != Process.myUid() / 100000) return
         val extras = mutableListOf<String>()
         for (master in masters) {
             extras += settings.clearCompanionHoldsForMaster(master)
@@ -302,7 +299,7 @@ class FreezeManager internal constructor(
             return emptySet()
         }
         val approved = if (suspended) settings.systemRiskApproved.first() else emptySet()
-        val targetPackages = if (suspended) safePackages.filter { descriptions.allowsFreeze(it, it in approved) } else safePackages
+        val targetPackages = if (suspended) safePackages.filter { descriptions.allowsFreeze(it, it in approved, userId) } else safePackages
         if (targetPackages.isEmpty()) return emptySet()
         // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
@@ -343,11 +340,34 @@ class FreezeManager internal constructor(
             } else transition(targetPackages)
         }
 
+        // A successful shell exit or empty binder failure array is not sufficient evidence.
+        val verified = succeeded.filterTo(linkedSetOf()) { pkg ->
+            var confirmed = false
+            repeat(3) { attempt ->
+                if (!confirmed) {
+                    if (attempt > 0) kotlinx.coroutines.delay(125)
+                    confirmed = withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        runCatching {
+                            val user = UserHandle.getUserHandleForUid(userId * 100000)
+                            val flags = PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES
+                            val info = if (userId == Process.myUid() / 100000) context.packageManager.getApplicationInfo(pkg, flags)
+                                else requireNotNull(context.getSystemService(LauncherApps::class.java)).getApplicationInfo(pkg, flags, user)
+                            if (info.flags and ApplicationInfo.FLAG_INSTALLED == 0) false
+                            else if (suspended && backend == FreezeBackendType.Island) freezeState(pkg) != AppFreezeState.Normal
+                            else if (suspended) methodApplied(pkg, user, methods[pkg] ?: FreezeMethod.Suspend)
+                            else info.enabled && info.flags and ApplicationInfo.FLAG_SUSPENDED == 0 &&
+                                (userId != Process.myUid() / 100000 || freezeState(pkg) == AppFreezeState.Normal)
+                        }.getOrDefault(false)
+                    }
+                }
+            }
+            confirmed
+        }
         val now = System.currentTimeMillis()
-        for (packageName in succeeded) {
+        for (packageName in verified) {
             if (suspended) settings.recordFrozen(packageName, now) else settings.recordUnfrozen(packageName, now)
         }
-        return succeeded
+        return verified
     }
 
     suspend fun forceStop(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {

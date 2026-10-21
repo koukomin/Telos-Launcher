@@ -71,16 +71,18 @@ Settings shows a hint until it is granted.
 - **App status**: every app, whether it is Normal, Suspended, Disabled or Hidden, how long it ran today ("1h 5m today",
   "Under 1m", "Not used today") and "Running now". It needs Usage access and has a **Refresh** action.
 
-### Smart Freeze Dashboard
+### Apps tab
 
 | Element | What it does |
 | --- | --- |
-| Backend Status | "Connected via (backend)" or "Disconnected", with **Grant Permission** when the permission is missing |
-| Counters | Frozen Apps, Auto-Freeze List, Last Execution ("Monitoring") |
-| Search field "Search Apps" | Filters the list |
-| Filter chips | All, User, System, Frozen |
-| App rows | Name, "Frozen" or "Active", an **Auto-Freeze** switch that adds or removes the app as a candidate |
-| **Toggle Freeze (N)** button | Freezes or unfreezes the selected apps |
+| Backend status | Shows the current backend; setup and permission controls are in Settings |
+| Search | Matches app label and package name |
+| Filter chips | All, Frozen and Auto-freeze list |
+| System / iconless switches | Include installed entries beyond ordinary launcher apps |
+| App row | Opens policy, timing, companions and community notes |
+| Checkbox | Selects the row for bulk actions; selection is preserved across tabs |
+| Select all shown / Clear selection | Adds currently filtered rows or clears selection |
+| Freeze / Unfreeze / Auto-freeze actions | Explicit operations with successful/selected totals; no mixed-state toggle |
 
 ## What it can do
 

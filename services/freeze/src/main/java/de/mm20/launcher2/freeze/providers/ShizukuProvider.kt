@@ -194,20 +194,28 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
     // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     private fun setSuspended(pm: Any, packageName: String, suspended: Boolean, userId: Int): Boolean {
         val pkgs = arrayOf(packageName)
+        val dialog = if (suspended && isAtLeastApiLevel(30)) runCatching {
+            val builderClass = Class.forName("android.content.pm.SuspendDialogInfo\$Builder")
+            val builder = HiddenApiBypass.newInstance(builderClass)
+            val action = Class.forName("android.content.pm.SuspendDialogInfo")
+                .getField("BUTTON_ACTION_UNSUSPEND").getInt(null)
+            HiddenApiBypass.invoke(builderClass, builder, "setNeutralButtonAction", action)
+            HiddenApiBypass.invoke(builderClass, builder, "build")
+        }.getOrNull() else null
         val failed = when {
             isAtLeastApiLevel(Build.VERSION_CODES.UPSIDE_DOWN_CAKE) -> HiddenApiBypass.invoke(
                 pm.javaClass, pm, "setPackagesSuspendedAsUser",
-                pkgs, suspended, null, null, null, 0, callerPackage, userId, userId,
+                pkgs, suspended, null, null, dialog, 0, callerPackage, userId, userId,
             )
 
             isAtLeastApiLevel(Build.VERSION_CODES.Q) -> HiddenApiBypass.invoke(
                 pm.javaClass, pm, "setPackagesSuspendedAsUser",
-                pkgs, suspended, null, null, null, callerPackage, userId,
+                pkgs, suspended, null, null, dialog, callerPackage, userId,
             )
 
             isAtLeastApiLevel(Build.VERSION_CODES.P) -> HiddenApiBypass.invoke(
                 pm.javaClass, pm, "setPackagesSuspendedAsUser",
-                pkgs, suspended, null, null, null, callerPackage, userId,
+                pkgs, suspended, null, null, dialog, callerPackage, userId,
             )
 
             else -> pm.javaClass.getMethod(

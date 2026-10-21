@@ -68,9 +68,8 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val contactSearchSettings: ContactSearchSettings by inject()
     private val freezeManager: FreezeManager by inject()
     private val freezeSettings: de.mm20.launcher2.preferences.freeze.FreezeSettings by inject()
-    private val companionRuleEnabled by lazy {
+    private val companionRuleEnabled =
         freezeSettings.companionEnabled.stateIn(viewModelScope, SharingStarted.Eagerly, emptySet())
-    }
     private val appLockManager: de.mm20.launcher2.applock.AppLockManager by inject()
     private val appLockSettings: de.mm20.launcher2.preferences.applock.AppLockSettings by inject()
     private val searchableRepository: de.mm20.launcher2.searchable.SavableSearchableRepository by inject()

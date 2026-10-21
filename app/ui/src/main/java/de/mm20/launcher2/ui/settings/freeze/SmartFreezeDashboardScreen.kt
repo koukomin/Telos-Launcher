@@ -25,7 +25,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object SmartFreezeDashboardRoute : NavKey
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun SmartFreezeDashboardScreen(tabs: @Composable () -> Unit = {}) {
     val vm: FreezeSettingsScreenVM = viewModel()
@@ -52,7 +52,28 @@ fun SmartFreezeDashboardScreen(tabs: @Composable () -> Unit = {}) {
                 when (filter) { 1 -> frozen[app.key] == true; 2 -> app.componentName.packageName in candidates; else -> true }
         }
     }
-    val picked = remember(apps, selected) { apps.filter { it.key in selected } }
+    val picked = remember(apps, selected) { apps.filter { it.key in selected }.distinctBy { it.user.hashCode() to it.componentName.packageName } }
+    val bulkActions: @Composable () -> Unit = {
+            Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
+                Column(Modifier.fillMaxWidth().padding(horizontal = 8.dp)) {
+            if (picked.isNotEmpty()) {
+                Text(stringResource(R.string.nwg_selected, picked.size), modifier = Modifier.padding(horizontal = 16.dp))
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf(R.string.freeze_widget_freeze_now, R.string.hf_freeze_active, R.string.hf_freeze_auto_list)
+                        .forEachIndexed { action, label ->
+                            Button(enabled = !busy, onClick = { vm.bulkAction(picked, action) }) {
+                                Text(if (action == 1) stringResource(R.string.freeze_hub_unfreeze) else stringResource(label))
+                            }
+                        }
+                }
+            }
+            if (busy) LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+            result?.let { Text(it, modifier = Modifier.padding(16.dp)) }
+                }
+            }
+    }
+    BoxWithConstraints {
+        val pinActions = maxHeight >= 480.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale
     PreferenceScreen(title = stringResource(R.string.preference_screen_freeze)) {
         item { tabs() }
         item {
@@ -79,19 +100,10 @@ fun SmartFreezeDashboardScreen(tabs: @Composable () -> Unit = {}) {
                 }
                 TextButton(enabled = !busy, onClick = { selected = emptyList() }) { Text(stringResource(R.string.nwg_clear_selection)) }
             }
-            if (picked.isNotEmpty()) {
-                Text(stringResource(R.string.nwg_selected, picked.size), modifier = Modifier.padding(horizontal = 16.dp))
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf(R.string.freeze_widget_freeze_now, R.string.hf_freeze_active, R.string.hf_freeze_auto_list)
-                        .forEachIndexed { action, label ->
-                            Button(enabled = !busy, onClick = { vm.bulkAction(picked, action) }) {
-                                Text(if (action == 1) stringResource(R.string.freeze_hub_unfreeze) else stringResource(label))
-                            }
-                        }
-                }
-            }
-            if (busy) LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-            result?.let { Text(it, modifier = Modifier.padding(16.dp)) }
+        }
+        if (picked.isNotEmpty() || busy || result != null) {
+            if (pinActions) stickyHeader(key = "freeze-bulk-actions") { bulkActions() }
+            else item(key = "freeze-bulk-actions") { bulkActions() }
         }
         items(shown, key = { it.key }) { app ->
             val pkg = app.componentName.packageName
@@ -108,6 +120,7 @@ fun SmartFreezeDashboardScreen(tabs: @Composable () -> Unit = {}) {
                         modifier = Modifier.sizeIn(minWidth = 48.dp, minHeight = 48.dp))
                 })
         }
+    }
     }
     apps.firstOrNull { it.key == detailKey }?.let { app ->
         FreezeAppPolicyDialog(app, apps, vm) { detailKey = null }
