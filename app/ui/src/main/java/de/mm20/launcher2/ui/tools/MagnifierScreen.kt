@@ -297,14 +297,14 @@ fun MagnifierScreen() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Box {
-                    TextButton(onClick = { filterMenu = true }) {
-                        Text(stringResource(when (currentFilter) {
+                    IconButton(onClick = { filterMenu = true }) {
+                        Icon(painterResource(R.drawable.palette_24px), stringResource(when (currentFilter) {
                             MagnifierFilter.Normal -> R.string.vn_size_normal
                             MagnifierFilter.Inverted -> R.string.au3_appearance_cs_inverse_colors
                             MagnifierFilter.Monochrome -> R.string.au3_searchset_icon_monochrome
                             MagnifierFilter.YellowOnBlack -> R.string.app_polish_yellow_black
                             MagnifierFilter.BlueOnYellow -> R.string.app_polish_blue_yellow
-                        }), maxLines = 1)
+                        }), tint = Color.White)
                     }
                     DropdownMenu(filterMenu, { filterMenu = false }) {
                         MagnifierFilter.entries.forEach { filter ->
@@ -344,25 +344,26 @@ fun MagnifierScreen() {
                     )
                 }
 
-                Button(
+                IconButton(
                     onClick = {
-                        val session = captureSession ?: return@Button
+                        val session = captureSession ?: return@IconButton
                         try {
                             if (!isFrozen) session.stopRepeating()
                             else {
-                                val builder = previewRequestBuilder ?: return@Button
+                                val builder = previewRequestBuilder ?: return@IconButton
                                 session.setRepeatingRequest(builder.build(), null, null)
                             }
                             isFrozen = !isFrozen
                         } catch (_: Exception) {}
                     },
                     enabled = captureSession != null,
-                    shape = RoundedCornerShape(16.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (isFrozen) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary
+                    modifier = Modifier.size(48.dp).clip(CircleShape).background(
+                        if (isFrozen) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary
                     )
                 ) {
-                    Text(stringResource(if (isFrozen) R.string.virtual_magnifier_resume else R.string.virtual_magnifier_freeze))
+                    Icon(painterResource(if (isFrozen) R.drawable.play_arrow_24px else R.drawable.pause_24px),
+                        stringResource(if (isFrozen) R.string.virtual_magnifier_resume else R.string.virtual_magnifier_freeze),
+                        tint = if (isFrozen) MaterialTheme.colorScheme.onTertiary else MaterialTheme.colorScheme.onSecondary)
                 }
             }
         }

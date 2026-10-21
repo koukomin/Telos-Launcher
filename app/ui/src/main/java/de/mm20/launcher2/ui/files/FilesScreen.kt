@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -267,7 +268,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
         drawerState = drawer,
         drawerContent = {
             ModalDrawerSheet(
-                modifier = Modifier.width((androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp * 0.86f).dp.coerceAtMost(360.dp)),
+                modifier = Modifier.widthIn(max = 360.dp).fillMaxWidth(0.86f),
                 drawerContainerColor = MaterialTheme.colorScheme.surfaceContainer,
             ) {
                 StorageDrawer(

@@ -30,7 +30,7 @@ The provider supplies pixels only; it never paints a full-screen layer over the 
 
 Radius is converted from dp using the actual window-to-source center-crop scale, including portrait/landscape changes. Settings and Calendar avoid adding a second full-window backing; full-screen Ermis dialogs own exactly one shared backing in their own window. Photos Home/Both actions use the same snapshot writer as the wallpaper settings.
 
-Material container-low/high roles retain their surface/elevated theme opacity for inner controls and cards; only full-window background/surface roles are cleared. Existing wallpaper target/action messages are completed in all supported locales when reused from Photos.
+Material container roles are opaque tonal surfaces for inner controls and cards; only full-window background/surface roles are cleared. Existing wallpaper target/action messages are completed in all supported locales when reused from Photos.
 
 
 Telos video wallpaper glass samples only the service’s own rendered surface with asynchronous PixelCopy, at most 192 pixels per edge and eight updates per second (slower than video playback). One readback can be in flight across engines; CPU blur runs on Default and shares up to four radius/viewport profiles across active Activity providers. No player rebuild, screen capture, permission prompt or extra decoder is needed. Sampling stops when the wallpaper is hidden, playback pauses for battery/thermal policy, or no started glass provider requests frames; failures clear to translucent tint. Preview engines never publish. Compose reads the shared frame state during drawing, avoiding full-page recomposition on each frame. Static wallpaper caching remains unchanged. Physical-device visual/performance verification remains outstanding.
@@ -138,8 +138,6 @@ running process: Android locks that pipeline at initialization. The notice is
 on by default and configurable. Saved Wi-Fi reveal is authenticated and disabled
 without root/Shizuku; parsing cannot cross network blocks, and backgrounding clears
 revealed credentials. OEM/SELinux restrictions may still prevent reading the store.
-
-Camera owns its CameraX/Camera2 capture pipeline. Ermis owns native IMAP/SMTP transport, encrypted storage and mail UI. Termux runs as a separate app installed through Store; no embedded runtime remains.
 
 Use the [adaptive UI contract](./adaptive-ui) for shared tokens, preference/navigation components,
 font scaling, insets and required validation. See [UI validation](./ui-validation) for execution
