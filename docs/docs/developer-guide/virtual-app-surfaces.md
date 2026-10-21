@@ -115,7 +115,8 @@ Automatic torrent continuation additionally requires a non-negative provider fil
 ## Utility and media readability
 
 The shared virtual-app palette now keeps every container role opaque, while the
-root backing retains wallpaper blur. Radio inherits the launcher palette by default, and its scoped theme supplies
+root backing retains wallpaper blur. Cleared root roles retain their RGB tone so
+legacy opacity adjustments do not accidentally become black. Radio inherits the launcher palette by default, and its scoped theme supplies
 its own content color, so a light Radio palette cannot inherit white text from a dark
 launcher. Compact station rows use fixed-size logos and adaptive columns. Media
 search opens from an icon with an expand/fade animation. Drawer width leaves an

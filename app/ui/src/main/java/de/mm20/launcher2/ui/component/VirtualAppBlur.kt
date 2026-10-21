@@ -32,9 +32,10 @@ fun Modifier.virtualAppGlass(blur: VirtualAppBlur, color: Color): Modifier = fro
     val alpha = MaterialTheme.transparency.background.coerceIn(0f, 1f)
     val backing = base.surface.copy(alpha = alpha)
     val colors = remember(base) { base.copy(
-        background = Color.Transparent,
+        background = base.background.copy(alpha = 0f),
+        // Retain RGB so legacy controls restoring opacity keep the correct theme tone.
         // Keep root scaffolds transparent; popup containers must obscure underlying text.
-        surface = Color.Transparent,
+        surface = base.surface.copy(alpha = 0f),
         surfaceContainer = base.surfaceContainer.copy(alpha = 1f),
         surfaceContainerLowest = base.surfaceContainerLowest.copy(alpha = 1f),
         surfaceContainerLow = base.surfaceContainerLow.copy(alpha = 1f),

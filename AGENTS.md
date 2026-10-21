@@ -164,7 +164,7 @@ Subtitle selection uses a searchable, scrollable bottom sheet with explicit sele
 The wallpaper blur belongs to the single shared root. Material container roles
 (lowest/low/normal/high/highest) inside virtual apps are opaque tonal surfaces;
 never apply another per-card alpha or use transparent surface as a text/icon
-color. Any scoped MaterialTheme must also provide LocalContentColor from its
+color. Clear only root alpha, retaining its RGB tone for legacy opacity restoration. Any scoped MaterialTheme must also provide LocalContentColor from its
 own onSurface. Radio's default appearance inherits the launcher palette. Its explicit appearance
 override, station bar, popups and mini players must obey the same foreground/background pairing. Full-screen camera,
 video and screen-light content may intentionally own black or illuminated pixels.

@@ -84,12 +84,14 @@ class PreferenceAdaptiveTest {
     @Test fun virtualAppKeepsRootGlassAndOpaqueInnerContainers() {
         var alphas = emptyList<Float>()
         var rootAlpha = 1f
+        var restoredSurface = androidx.compose.ui.graphics.Color.Unspecified
         compose.setContent {
             MaterialTheme(colorScheme = darkColorScheme()) {
                 de.mm20.launcher2.ui.component.VirtualAppTheme {
                     val colors = MaterialTheme.colorScheme
                     androidx.compose.runtime.SideEffect {
                         rootAlpha = colors.surface.alpha
+                        restoredSurface = colors.surface.copy(alpha = 1f)
                         alphas = listOf(colors.surfaceContainerLowest.alpha, colors.surfaceContainerLow.alpha,
                             colors.surfaceContainer.alpha, colors.surfaceContainerHigh.alpha, colors.surfaceContainerHighest.alpha)
                     }
@@ -98,7 +100,8 @@ class PreferenceAdaptiveTest {
             }
         }
         compose.runOnIdle {
-            org.junit.Assert.assertEquals(0f, rootAlpha)
+            org.junit.Assert.assertEquals(0f, rootAlpha, 0f)
+            org.junit.Assert.assertEquals(darkColorScheme().surface, restoredSurface)
             assertTrue(alphas.all { it == 1f })
         }
     }
