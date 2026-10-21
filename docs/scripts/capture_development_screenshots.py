@@ -16,11 +16,15 @@ def adb(*args, check=True):
 
 apk = glob.glob("app/app/build/outputs/apk/default/debug/*.apk")[0]
 adb("install", "-r", apk)
-for permission in ["CAMERA", "RECORD_AUDIO", "READ_PHONE_STATE", "READ_CALL_LOG", "READ_CONTACTS", "WRITE_CONTACTS", "READ_CALENDAR", "WRITE_CALENDAR", "POST_NOTIFICATIONS", "READ_MEDIA_IMAGES", "READ_MEDIA_VIDEO", "READ_MEDIA_AUDIO"]:
+for role in ["android.app.role.DIALER", "android.app.role.SMS"]:
+    adb("shell", "cmd", "role", "add-role-holder", role, APP, check=False)
+for permission in ["READ_SMS", "SEND_SMS", "RECEIVE_SMS", "CAMERA", "RECORD_AUDIO", "READ_PHONE_STATE", "READ_CALL_LOG", "READ_CONTACTS", "WRITE_CONTACTS", "READ_CALENDAR", "WRITE_CALENDAR", "POST_NOTIFICATIONS", "READ_MEDIA_IMAGES", "READ_MEDIA_VIDEO", "READ_MEDIA_AUDIO"]:
     adb("shell", "pm", "grant", APP, "android.permission." + permission, check=False)
 adb("shell", "appops", "set", APP, "MANAGE_EXTERNAL_STORAGE", "allow", check=False)
 adb("shell", "cmd", "role", "add-role-holder", "android.app.role.HOME", APP, check=False)
-adb("shell", "settings", "put", "system", "screen_off_timeout", "600000")
+adb("shell", "settings", "put", "secure", "enabled_accessibility_services", APP + "/de.mm20.launcher2.globalactions.LauncherAccessibilityService")
+adb("shell", "settings", "put", "secure", "accessibility_enabled", "1")
+adb("shell", "settings", "put", "system", "screen_off_timeout", "1800000")
 adb("shell", "settings", "put", "system", "system_locales", "en-US")
 adb("shell", "cmd", "uimode", "night", "yes")
 adb("shell", "am", "broadcast", "-n", APP + "/de.mm20.launcher2.development.ScreenshotSetupReceiver")
@@ -69,6 +73,20 @@ def wait_for_rendered_ui(name, timeout=40):
     (OUT / (name + "-logcat.txt")).write_bytes(adb("logcat", "-d", "-s", "AndroidRuntime", "ActivityTaskManager", "Launcher", check=False).stdout)
     raise RuntimeError("UI did not render: " + name)
 
+def tap_label(label, attribute="text"):
+    adb("shell", "uiautomator", "dump", "/sdcard/telos-ui.xml", check=False)
+    dump = adb("shell", "cat", "/sdcard/telos-ui.xml", check=False).stdout
+    try:
+        nodes = ET.fromstring(dump).iter("node")
+        node = next(n for n in nodes if n.attrib.get(attribute) == label)
+        import re
+        x1, y1, x2, y2 = map(int, re.findall(r"\d+", node.attrib["bounds"]))
+        adb("shell", "input", "tap", str((x1 + x2) // 2), str((y1 + y2) // 2))
+        time.sleep(1)
+        return True
+    except (ET.ParseError, StopIteration, KeyError):
+        return False
+
 failures = []
 for name, route, space, tab in screens:
     if route:
@@ -95,6 +113,18 @@ for name, route, space, tab in screens:
         time.sleep(2)
     try:
         dump = wait_for_rendered_ui(name)
+        if name == "16-tv" and tap_label("Accept"):
+            time.sleep(12)
+            dump = wait_for_rendered_ui(name)
+        if name == "15-radio" and tap_label("Search"):
+            if tap_label("Search", attribute="content-desc"):
+                adb("shell", "input", "text", "BBC")
+                adb("shell", "input", "keyevent", "KEYCODE_BACK")
+                time.sleep(10)
+            dump = wait_for_rendered_ui(name)
+            if b"BBC" not in dump:
+                tap_label("Collection")
+                dump = wait_for_rendered_ui(name)
     except RuntimeError as error:
         failures.append(name)
         print(error, flush=True)
