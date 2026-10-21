@@ -409,6 +409,13 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
     var query by rememberSaveable { mutableStateOf("") }
     var info by remember { mutableStateOf<DocTarget?>(null) }
     var pendingDelete by remember { mutableStateOf<DocTarget?>(null) }
+    var selected by rememberSaveable { mutableStateOf(emptyList<String>()) }
+    var deleteSelected by remember { mutableStateOf(false) }
+    if (deleteSelected && selected.isNotEmpty()) de.mm20.launcher2.ui.trash.UriDeleteDialog(
+        selected.map(Uri::parse),
+        { selected.forEach { vm.removeRecent(context, it) }; selected = emptyList(); vm.scan(context) },
+        { deleteSelected = false },
+    )
     var showTrash by remember { mutableStateOf(false) }
     if (showTrash) de.mm20.launcher2.ui.trash.TrashDialog({ showTrash = false }, { vm.scan(context) })
     pendingDelete?.let { target -> de.mm20.launcher2.ui.trash.UriDeleteDialog(target.uri,
@@ -458,6 +465,11 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
+                }
+                if (selected.isNotEmpty()) {
+                    Text(selected.size.toString())
+                    IconButton(onClick = { deleteSelected = true }) { Icon(painterResource(R.drawable.delete_24px), stringResource(R.string.hc_delete)) }
+                    IconButton(onClick = { selected = emptyList() }) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.hc_cancel)) }
                 }
                 FilledTonalButton(onClick = { picker.launch(arrayOf("*/*")) }) {
                     Icon(painterResource(R.drawable.folder_24px), contentDescription = null, modifier = Modifier.size(18.dp))
@@ -604,7 +616,12 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                     val target = f.target()
                     DocRow(
                         f,
-                        onOpen = { open(f.uri, f.name, f.size) },
+                        onOpen = {
+                            if (selected.isEmpty()) open(f.uri, f.name, f.size)
+                            else selected = if (f.uri.toString() in selected) selected - f.uri.toString() else selected + f.uri.toString()
+                        },
+                        selected = f.uri.toString() in selected,
+                        onSelect = { selected = if (f.uri.toString() in selected) selected - f.uri.toString() else selected + f.uri.toString() },
                         onShare = { share(target) },
                         onOpenWith = { openWith(context, f.uri, f.name) },
                         onInfo = { info = target },
@@ -672,6 +689,8 @@ private fun AccessCard(onAllow: () -> Unit) {
 @Composable
 private fun DocRow(
     file: DocFile,
+    selected: Boolean,
+    onSelect: () -> Unit,
     onOpen: () -> Unit,
     onShare: () -> Unit,
     onOpenWith: () -> Unit,
@@ -691,6 +710,7 @@ private fun DocRow(
             ),
         ) {
             Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(selected, { onSelect() })
                 ViewerThumbnail(file.uri, file.name, file.modified, Modifier.size(64.dp).clip(RoundedCornerShape(14.dp))) { TypeTile(file.ext, 64.dp) }
                 Column(Modifier.weight(1f).padding(start = 12.dp)) {
                     Text(file.name, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)

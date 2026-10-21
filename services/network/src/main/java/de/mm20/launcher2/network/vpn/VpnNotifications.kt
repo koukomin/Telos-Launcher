@@ -12,7 +12,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.i18n.R as I18nR
-import de.mm20.launcher2.network.R
 import de.mm20.launcher2.network.api.NetworkSettingsValues
 import de.mm20.launcher2.network.api.NotificationDetail
 
@@ -49,7 +48,9 @@ internal object VpnNotifications {
     }
 
     private fun openApp(context: Context): PendingIntent? {
-        val intent = context.packageManager.getLaunchIntentForPackage(context.packageName) ?: return null
+        val intent = Intent().setClassName(context.packageName, de.mm20.launcher2.applock.SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+            .putExtra(de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_ROUTE, de.mm20.launcher2.applock.SettingsDeepLinkContract.ROUTE_NETWORK)
+        intent.data = android.net.Uri.parse("telos://notification/network")
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
     }
@@ -73,7 +74,7 @@ internal object VpnNotifications {
         val status = context.getString(if (paused) I18nR.string.work_profile_status_paused else I18nR.string.net_hub_state_off)
         val text = if (paused) status + " · " + android.text.format.DateFormat.getTimeFormat(context).format(java.util.Date(settings.pauseUntilMs)) else status
         val builder = NotificationCompat.Builder(context, CHANNEL_SERVICE)
-            .setSmallIcon(R.drawable.ic_network_notification)
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_network_app") }
             .setContentTitle(context.getString(I18nR.string.net_hub_title))
             .setContentText("VPN · $text")
             .setContentIntent(openApp(context))
@@ -88,7 +89,7 @@ internal object VpnNotifications {
     fun starting(context: Context): Notification {
         ensureChannels(context)
         return NotificationCompat.Builder(context, CHANNEL_SERVICE)
-            .setSmallIcon(R.drawable.ic_network_notification)
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_network_app") }
             .setContentTitle(context.getString(I18nR.string.net_notif_title))
             .setContentText(context.getString(I18nR.string.net_dns_engine_starting))
             .setOngoing(true).setOnlyAlertOnce(true)
@@ -105,7 +106,7 @@ internal object VpnNotifications {
             context.getString(I18nR.string.net_notif_text)
         }
         return NotificationCompat.Builder(context, CHANNEL_SERVICE)
-            .setSmallIcon(R.drawable.ic_network_notification)
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_network_app") }
             .setContentTitle(context.getString(I18nR.string.net_notif_title))
             .setContentText(text)
             .setContentIntent(openApp(context))
@@ -130,7 +131,7 @@ internal object VpnNotifications {
         ) return
         ensureChannels(context)
         val notification = NotificationCompat.Builder(context, CHANNEL_ALERTS)
-            .setSmallIcon(R.drawable.ic_network_notification)
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_network_app") }
             .setContentTitle(context.getString(I18nR.string.net_alert_stopped_title))
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(text))

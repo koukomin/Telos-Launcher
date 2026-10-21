@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">ターミナル</string>
-    <string name="terminal_runtime_summary">別途インストールされたTermuxを使用します。Termuxとすべてのアドオンを同じ配布元からインストールしてください。シェルはTelosの外部のTermuxで動作します。</string>
-    <string name="terminal_open_failed">Termuxまたはウェブサイトを開けませんでした。</string>
-</resources>

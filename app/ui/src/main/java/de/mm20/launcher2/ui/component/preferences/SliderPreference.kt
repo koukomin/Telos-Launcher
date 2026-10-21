@@ -72,11 +72,10 @@ fun SliderPreference(
                 text = title,
                 style = MaterialTheme.typography.titleMedium
             )
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Column(horizontalAlignment = Alignment.End) {
                 Slider(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = enabled,
                     value = sliderValue,
                     onValueChange = {
                         sliderValue = it
@@ -97,7 +96,7 @@ fun SliderPreference(
                         minimumFractionDigits = 0
                     } }
                     Text(
-                        modifier = Modifier.width(56.dp).padding(start = 24.dp),
+                        modifier = Modifier.widthIn(min = 56.dp).padding(start = 12.dp),
                         text = format.format(sliderValue),
                         style = MaterialTheme.typography.titleSmall,
                         textAlign = TextAlign.Center,

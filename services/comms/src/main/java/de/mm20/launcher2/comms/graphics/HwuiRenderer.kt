@@ -16,7 +16,7 @@ object HwuiRenderer {
 
     const val PROP = "debug.hwui.renderer"
     const val VALUE_VULKAN = "skiavk"
-    const val VALUE_OPENGL = "opengl"
+    const val VALUE_OPENGL = "skiagl"
 
     /** Shown when Shizuku and root are missing. */
     fun adbCommand(mode: String): String {
@@ -48,7 +48,7 @@ object HwuiRenderer {
             MODE_OPENGL -> "setprop $PROP $VALUE_OPENGL"
             else -> "setprop $PROP \"\""
         }
-        val ok = privilegedShell(cmd) != null
+        val ok = privilegedShell(cmd) != null && current() == mode
         if (!ok) Log.w(TAG, "Could not set $PROP")
         ok
     }
@@ -60,8 +60,9 @@ object HwuiRenderer {
     private fun privilegedShell(cmd: String): String? {
         runCatching {
             val p = Runtime.getRuntime().exec(arrayOf("su", "-c", cmd))
-            val text = p.inputStream.bufferedReader().readText()
-            if (p.waitFor() == 0) return text
+            if (!p.waitFor(5, java.util.concurrent.TimeUnit.SECONDS)) { p.destroy(); return@runCatching }
+            val text = p.inputStream.bufferedReader().use { it.readText() }
+            if (p.exitValue() == 0) return text
         }
         return runCatching {
             val shizuku = Class.forName("rikka.shizuku.Shizuku")

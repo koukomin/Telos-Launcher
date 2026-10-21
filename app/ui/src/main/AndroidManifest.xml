@@ -16,9 +16,6 @@
         <intent>
             <action android:name="android.speech.action.RECOGNIZE_SPEECH" />
         </intent>
-        <intent>
-            <action android:name="com.termux.RUN_COMMAND" />
-        </intent>
     </queries>
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -235,13 +232,148 @@
         <!-- One document task per virtual app; Settings keeps its own normal task. -->
         <activity
             android:name=".settings.TelosAppActivity"
+            android:icon="@mipmap/ic_launcher"
             android:exported="false"
             android:documentLaunchMode="intoExisting"
             android:launchMode="standard"
             android:taskAffinity=""
-            android:label="@string/settings"
+            android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:enableOnBackInvokedCallback="true" />
+
+        <!-- Static per-app metadata also supports OEM Recents which ignore dynamic task labels. -->
+        <activity-alias
+            android:name=".settings.TelosApp_phone"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/virtual_app_phone"
+            android:icon="@drawable/ic_app_phone_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_messages"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/hc_messages"
+            android:icon="@drawable/ic_app_messages_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_media"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/dl_m_tab"
+            android:icon="@drawable/ic_app_media_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_viewer"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/virtual_app_viewer"
+            android:icon="@drawable/ic_app_viewer_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_files"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/pdft_files"
+            android:icon="@drawable/ic_app_files_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_store"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/hf_store_title"
+            android:icon="@drawable/ic_app_store_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_network"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/hc_network"
+            android:icon="@drawable/ic_app_network_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_system"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/telos_system_label"
+            android:icon="@drawable/ic_app_system_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_trash"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/telos_trash_title"
+            android:icon="@drawable/delete_24px" />
+        <activity-alias
+            android:name=".settings.TelosApp_calculator"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/calculator_title"
+            android:icon="@drawable/ic_app_calculator_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_voice_recorder"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/voice_title"
+            android:icon="@drawable/ic_app_voice_recorder_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_camera"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/camera_title"
+            android:icon="@drawable/ic_app_camera_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_screen_recorder"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/screenrec_title"
+            android:icon="@drawable/ic_app_screen_recorder_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_screenshot"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/screenshot_title"
+            android:icon="@drawable/ic_app_screenshot_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_notes"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/notes_title"
+            android:icon="@drawable/ic_app_notes_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_ermis"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/ermis_title"
+            android:icon="@drawable/ic_app_ermis_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_calendar"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/backup_group_calendar"
+            android:icon="@drawable/ic_app_calendar_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_downloads"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/dl_title"
+            android:icon="@drawable/ic_app_downloads_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_clock"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/preference_screen_clockwidget"
+            android:icon="@drawable/schedule_24px" />
+        <activity-alias
+            android:name=".settings.TelosApp_akou"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/telos_akou_app_label"
+            android:icon="@drawable/ic_app_youtube_music_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_magnifier"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/telos_magnifier_app_label"
+            android:icon="@drawable/search_24px" />
+        <activity-alias
+            android:name=".settings.TelosApp_flashlight"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/telos_flashlight_app_label"
+            android:icon="@drawable/light_mode_24px" />
 
         <activity
             android:name=".settings.SettingsActivity"

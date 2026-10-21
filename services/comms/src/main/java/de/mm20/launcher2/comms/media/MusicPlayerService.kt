@@ -34,7 +34,7 @@ class MusicPlayerService : MediaSessionService() {
     override fun onCreate() {
         super.onCreate()
         setMediaNotificationProvider(androidx.media3.session.DefaultMediaNotificationProvider.Builder(this)
-            .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.MUSIC).build())
+            .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.MUSIC).build().apply { setSmallIcon(de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_music_app")!!) })
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(C.USAGE_MEDIA)
             .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)

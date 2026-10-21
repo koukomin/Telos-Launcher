@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Ne jelenjen meg újra</string>
+  <string name="app_polish_show_info">Tájékoztató megjelenítése felvétel előtt</string>
+  <string name="app_polish_yellow_black">Sárga / fekete</string>
+  <string name="app_polish_blue_yellow">Kék / sárga</string>
+  <string name="app_polish_exit_light">Koppintson a képernyőfény bezárásához</string>
+  <string name="app_polish_light_source">Fényforrás</string>
+  <string name="app_polish_screen_light">Képernyőfény</string>
+  <string name="app_polish_siren">Vészjelző sziréna</string>
+  <string name="app_polish_alternating">Váltakozó piros / kék</string>
+  <string name="app_polish_strobe">Villogási gyakoriság</string>
+  <string name="app_polish_morse">Morzekód</string>
+  <string name="app_polish_message">Továbbítandó üzenet</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">A kiválasztott renderelő használatához indítsa újra az érintett alkalmazásokat.</string>
+  <string name="app_polish_restart_notice">Renderelő-újraindítási értesítés megjelenítése</string>
+</resources>

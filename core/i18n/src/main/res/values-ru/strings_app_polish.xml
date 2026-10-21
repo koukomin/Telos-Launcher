@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Больше не показывать</string>
+  <string name="app_polish_show_info">Показывать сведения перед записью</string>
+  <string name="app_polish_yellow_black">Жёлтый / чёрный</string>
+  <string name="app_polish_blue_yellow">Синий / жёлтый</string>
+  <string name="app_polish_exit_light">Нажмите, чтобы выключить подсветку экрана</string>
+  <string name="app_polish_light_source">Источник света</string>
+  <string name="app_polish_screen_light">Подсветка экрана</string>
+  <string name="app_polish_siren">Аварийная сирена</string>
+  <string name="app_polish_alternating">Чередование красного / синего</string>
+  <string name="app_polish_strobe">Частота мигания</string>
+  <string name="app_polish_morse">Код Морзе</string>
+  <string name="app_polish_message">Сообщение для передачи</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Перезапустите затронутые приложения, чтобы использовать выбранный рендерер.</string>
+  <string name="app_polish_restart_notice">Показывать уведомление о перезапуске рендерера</string>
+</resources>

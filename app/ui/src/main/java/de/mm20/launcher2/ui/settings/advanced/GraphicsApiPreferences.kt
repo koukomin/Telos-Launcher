@@ -30,6 +30,8 @@ fun GraphicsApiPreferenceCategory() {
     val scope = rememberCoroutineScope()
     val hwuiRenderer by comms.hwuiRenderer.collectAsStateWithLifecycle("default")
     val hwuiRestoreOnBoot by comms.hwuiRestoreOnBoot.collectAsStateWithLifecycle(true)
+    val restartNotice by comms.hwuiShowRestartNotice.collectAsStateWithLifecycle(true)
+    var explainRestart by remember { mutableStateOf(false) }
     val hwuiWidgetSwitch by comms.hwuiWidgetSwitch.collectAsStateWithLifecycle(false)
     var liveRenderer by remember { mutableStateOf<String?>(null) }
     var privileged by remember { mutableStateOf(false) }
@@ -37,6 +39,12 @@ fun GraphicsApiPreferenceCategory() {
         liveRenderer = withContext(Dispatchers.IO) { HwuiRenderer.current() }
         privileged = HwuiRenderer.privilegedAvailable()
     }
+    if (explainRestart) androidx.compose.material3.AlertDialog(
+        onDismissRequest = { explainRestart = false },
+        title = { androidx.compose.material3.Text(stringResource(R.string.hc_graphics_api)) },
+        text = { androidx.compose.material3.Text(stringResource(R.string.app_polish_renderer_restart)) },
+        confirmButton = { androidx.compose.material3.TextButton(onClick = { explainRestart = false }) { androidx.compose.material3.Text(stringResource(android.R.string.ok)) } },
+    )
     PreferenceCategory(title = stringResource(R.string.hc_graphics_api)) {
         Preference(
             title = stringResource(R.string.hc_graphics_api_about),
@@ -59,6 +67,7 @@ fun GraphicsApiPreferenceCategory() {
                     val ok = HwuiRenderer.apply(mode)
                     liveRenderer = HwuiRenderer.current()
                     privileged = HwuiRenderer.privilegedAvailable()
+                    if (ok && restartNotice) explainRestart = true
                     val msg = if (ok) {
                         context.getString(R.string.hc_graphics_applied)
                     } else {
@@ -93,6 +102,12 @@ fun GraphicsApiPreferenceCategory() {
             summary = stringResource(R.string.hc_graphics_restore_boot_summary),
             value = hwuiRestoreOnBoot,
             onValueChanged = { comms.setHwuiRestoreOnBoot(it) },
+        )
+        SwitchPreference(
+            title = stringResource(R.string.app_polish_restart_notice),
+            summary = stringResource(R.string.app_polish_renderer_restart),
+            value = restartNotice,
+            onValueChanged = comms::setHwuiShowRestartNotice,
         )
         SwitchPreference(
             title = stringResource(R.string.hc_graphics_widget_switch),

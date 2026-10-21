@@ -165,7 +165,7 @@ fun RadioNowPlayingBar(stations: List<RadioStation>, onOpen: () -> Unit, modifie
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 8.dp)
                 .clip(RoundedCornerShape(24.dp))
-                .background(Brush.horizontalGradient(listOf(logoColor.copy(alpha = 0.35f).compositeOver(surface), surface)))
+                .background(Brush.horizontalGradient(listOf(logoColor.copy(alpha = 0.08f).compositeOver(surface), surface)))
                 .pressScale(reduce, onOpen)
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -178,7 +178,7 @@ fun RadioNowPlayingBar(stations: List<RadioStation>, onOpen: () -> Unit, modifie
             Column(Modifier.weight(1f)) {
                 Text(
                     name.ifEmpty { stringResource(R.string.au_radio_unknown_station) },
-                    style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold,
+                    style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1, overflow = TextOverflow.Ellipsis,
                 )
                 Text(

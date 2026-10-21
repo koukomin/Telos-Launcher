@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="preference_grid_glass_summary">Blurred transparent background for the drawer and app grid, on light and dark wallpapers</string>
-    <string name="telos_system_label">System</string>
-    <string name="telos_system_cpu">CPU</string>
+
+
+
     <string name="telos_system_ram">RAM</string>
-    <string name="telos_system_network">Network</string>
-    <string name="telos_system_uptime">Uptime %1$s</string>
-    <string name="telos_system_unlock_wifi">Unlock Wi-Fi passwords</string>
-    <string name="telos_system_reveal_wifi">Reveal Wi-Fi password</string>
-    <string name="telos_system_reading_wifi">Reading saved networks…</string>
-    <string name="telos_system_wifi_need_root">Root or Shizuku is required to read saved Wi-Fi passwords</string>
-    <string name="telos_system_saved_wifi">Saved networks</string>
-    <string name="telos_system_processes">Processes</string>
-    <string name="telos_trash_unlock">Unlock trash</string>
-    <string name="telos_os_trash_unavailable">No system recycle bin was found on this device</string>
-    <string name="telos_media_compact_list">Compact list</string>
+
+
+
+
+
+
+
+
+
+
+
 </resources>

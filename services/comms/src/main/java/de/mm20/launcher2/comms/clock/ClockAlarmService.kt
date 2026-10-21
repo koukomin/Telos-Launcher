@@ -27,7 +27,7 @@ class ClockAlarmService : Service() {
         manager.createNotificationChannel(NotificationChannel("clock_alarms", getString(R.string.clock_alarm), NotificationManager.IMPORTANCE_HIGH))
         val stop = PendingIntent.getService(this, 0, Intent(this, ClockAlarmService::class.java).setAction("dismiss"), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         startForeground(7141, NotificationCompat.Builder(this, "clock_alarms")
-            .setSmallIcon(de.mm20.launcher2.base.R.drawable.alarm_24px)
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, this, "telos_clock_app") }
             .setContentTitle(intent?.getStringExtra("label").takeUnless { it.isNullOrBlank() } ?: getString(R.string.clock_alarm))
             .setContentText(getString(R.string.clock_dismiss)).setContentIntent(stop)
             .setCategory(NotificationCompat.CATEGORY_ALARM).setOngoing(true)

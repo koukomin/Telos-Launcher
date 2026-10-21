@@ -102,7 +102,7 @@ Built-in apps display short localized names such as **Phone / Τηλέφωνο**
 - **Contacts and Phone:** edit through the Android contact editor, explicitly confirmed deletion, persistent all/selected-account filters, account membership in duplicate-contact groups and live contact photos in recent calls. The large dialer heading is removed; search and menu share the top row.
 - **Compact Media:** one source/action toolbar replaces stacked source chips and headings; labeled overflow actions and scrolling category tabs leave more space for media and large fonts. TV uses horizontal channel swipes, wrapping now/next programme details and independent Greek playlist fallback when the main catalog is unavailable. Local Video, Music, Radio, TV, YouTube and YouTube Music share one Media3 player stack with official NextLib FFmpeg software decoders from Maven; playback stays in Telos. Telos Viewer (photos and documents) stays built into the launcher.
 - **Home glass and System widget:** Appearance exposes drawer blur and opacity directly. Built-in widget cards use wallpaper glass by default, with a switch, and the sidebar is slimmer. The Network widget is gone. The System widget (off in the picker until you enable it in Telos System) shows RAM used of total, storage used of total plus free space, opaque Vulkan/OpenGL buttons for the live renderer, LAN IP, public online IP, VPN tunnel IP, VPN state and device traffic. Tap RAM to open an installed task killer/booster (or Telos System). Tap storage to open Telos disk cleanup. Vulkan/OpenGL can be switched from the widget when that option is on in Settings → Advanced. The clock weather row is larger, uses vivid animated icons, and opens the weather app.
-- **Terminal (experimental):** the current screen downloads a Termux bootstrap and runs individual commands. It is not a persistent PTY or a fully integrated Termux runtime. Prefix and Android execution compatibility remain unverified; use official Termux for an established environment.
+- **Termux:** install and update the official separate app from Store → Recommended → Tools. No terminal runtime or bootstrap downloader is bundled in Telos.
 
 ### Installer, dock, drawer and GIF wallpaper updates
 
@@ -407,6 +407,11 @@ Telos has built-in widgets, hosts any Android app widget and shows small widgets
 Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/system-catalogue#favorites).
 
 ### Customization
+
+- **Adaptive UI foundations:** launcher/search measurements follow the active window; shared
+  settings and navigation labels grow with text, and selected app grids/panes reflow or scroll
+  when space is insufficient. See the [implemented scope and UI contract](docs/docs/developer-guide/adaptive-ui.md)
+  and [validation record](docs/docs/developer-guide/ui-validation.md) for checks and device-review limits.
 
 - **Wallpaper readability:** Wallpaper settings offer Automatic, White and Black text. The clock,
   home labels, transparent search bar and widget backings use protective scrims when pixels are
@@ -1213,7 +1218,7 @@ adapted, the original license is respected.
 | [NetGuard](https://github.com/M66B/NetGuard) | GPL-3.0-only | Feature ideas for Telos Network (notify on access, new-app alerts, pause on call, speed notification, hosts import). Engine stays Rethink/firestack; no NetGuard JNI was copied |
 | [FairEmail](https://github.com/M66B/FairEmail) | GPL-3.0 | Feature ideas for Ermis. No FairEmail source copied |
 | [Jakarta Mail / Activation for Android](https://github.com/eclipse-ee4j/mail) | EPL-2.0 / secondary GPL-2.0 with Classpath Exception | Native Ermis IMAP, SMTP and MIME transports |
-| [Termux](https://github.com/termux/termux-app) | GPL-3.0-only (upstream app) | Experimental on-demand bootstrap download; no upstream app source is bundled or copied; runtime relocation and execution compatibility remain incomplete |
+| [Termux](https://github.com/termux/termux-app) | GPL-3.0-only (upstream app) | External Store recommendation and optional external-app launch; no upstream app source or runtime bundled |
 | [Tor Android](https://github.com/guardianproject/tor-android) / [Tor](https://www.torproject.org/) | BSD-3-Clause | Embedded Tor client, used unchanged as `info.guardianproject:tor-android:0.4.9.14`; notices bundled in the license screen |
 | [firestack](https://github.com/celzero/firestack) | MPL-2.0 | The Go network engine behind Telos Network, used unchanged as a Maven dependency (`com.celzero:firestack`) |
 | [WireGuard](https://www.wireguard.com) | MIT / GPL-2.0 (see project) | The tunnel protocol of Telos Network, implemented inside firestack (WireGuard is a registered trademark of Jason A. Donenfeld; Telos is not affiliated) |
@@ -1288,7 +1293,7 @@ Transfer network rules independently block Wi-Fi, mobile data, roaming and meter
 - Network exposes Tor in its home/settings and a shared system route chooser (Direct, WireGuard or Tor), including the System widget. Tor selection fails closed while starting; unsupported Tor UDP is blocked. VPN notifications expose status, stop, resume and timed pauses.
 - Calls resolve saved contact names before optional online lookup, provide notification actions and a fixed hang-up control, and optionally use the incoming contact photo as a background. Online Greek caller identification is opt-in and community reports are suggestions, never automatic blocking. Personal and system blocklists are enabled by default and written independently.
 - Media remembers Music, YouTube Music and Radio separately. Local YouTube favorites/playlists and seed-track related recommendations do not require account synchronization. Radio imports Transistor station archives and supports image backups, restore confirmation and M3U export.
-- Clock has persisted one-shot alarms with audio-file/radio sounds and fallback tone, plus local city/country search using the device language, English and Greek aliases. Exact alarm permission is required for scheduling. Terminal currently downloads an experimental bootstrap, not an Android APK; prefix relocation, persistent PTY and Android execution compatibility are incomplete.
+- Clock has persisted one-shot alarms with audio-file/radio sounds and fallback tone, plus local city/country search using the device language, English and Greek aliases. Exact alarm permission is required for scheduling. Official Termux is offered as a separate Android app in Store; the embedded terminal and bootstrap downloader have been removed.
 - Virtual apps share wallpaper-aware glass surfaces. Scrollable controls, wrapping labels, source-specific mini players and bounded image/video/PDF previews improve large-font and narrow-screen layouts. Unsupported preview formats retain a file-type fallback.
 
 ### Implementation audit
@@ -1299,7 +1304,7 @@ Music recognition sources: [Audile](https://github.com/AudileTeam/Audile), [Song
 
 Ermis supports custom IMAP folder creation and renaming of custom leaf folders (excluding special-use folders and existing targets). Bounded recent server search includes message bodies; server-only matches remain visible even without a cached body. Tor / Web3 also exposes the shared Direct/WireGuard/Tor system route chooser.
 
-Terminal runtime audit: the newly added in-process bootstrap is experimental, not a complete Termux runtime. Download/extraction limits and canonical-path checks constrain it; prefix relocation, a persistent PTY and modern Android execution compatibility remain unverified. The Files FTP dialog is wired into local-folder navigation and supports authenticated passive browsing, downloads/resume and optional new-file uploads. It stops on close/background; no TLS, deletion, overwrite or upload-resume support. Files also exports installed apps to a user-selected document: a single APK stays byte-identical, while split apps export all components in an explicit ZIP (not directly installable).
+The embedded Terminal screen and runtime downloader were removed; install official Termux through Store. The Files FTP dialog is wired into local-folder navigation and supports authenticated passive browsing, downloads/resume and optional new-file uploads. It stops on close/background; no TLS, deletion, overwrite or upload-resume support. Files also exports installed apps to a user-selected document: a single APK stays byte-identical, while split apps export all components in an explicit ZIP (not directly installable).
 
 Ermis keeps successful SMTP acceptance successful even if disconnect fails, avoiding misleading retry prompts. Files has an authenticated foreground FTP server for the selected local folder, with optional non-overwriting uploads and streaming transfer bounds.
 
@@ -1340,3 +1345,16 @@ Stremio Fork adds ordered primary/secondary audio and subtitle preferences (incl
 
 
 Playback gains a searchable subtitle-track sheet. Stremio adds opt-in catalog-based next-episode continuation and conservative resolution/advertised-size/CAM-source preferences; unknown metadata and manual fallback remain available, without changing video decoding.
+
+Telos app polish: readable tonal cards over the shared wallpaper blur, compact
+Radio stations, expandable media search, an in-player TV channel list, world-time
+capital suggestions, compact Magnifier controls, a month/year wheel picker and
+multi-file deletion in Viewer. Settings offers authenticated saved Wi-Fi reveal
+when privileged access is available, and an optional renderer restart notice.
+The embedded terminal has been removed. Official Termux is available in Store → Recommended → Tools.
+
+Gender-specific locale variants inherit the translated base language rather than
+masking it with copied English strings.
+
+Standalone virtual-app Recents tasks have static localized Android labels and
+icons as well as dynamic task metadata, including on OEM launchers.

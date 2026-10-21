@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Monde</string>
+    <string name="clock_world">Heure mondiale</string>
     <string name="clock_alarm">Alarme</string>
     <string name="clock_timer">Minuteur</string>
     <string name="clock_stopwatch">Chronomètre</string>

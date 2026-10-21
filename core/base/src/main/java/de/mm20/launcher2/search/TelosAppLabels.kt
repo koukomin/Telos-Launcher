@@ -7,7 +7,10 @@ import de.mm20.launcher2.i18n.R
 /** Display labels are localized; domains and persisted keys never change with language. */
 object TelosAppLabels {
     fun resourceForDomain(domain: String): Int? = when (domain) {
-        "telos_terminal_app" -> R.string.terminal_title
+        "telos_clock_app" -> R.string.preference_screen_clockwidget
+        "telos_akou_app" -> R.string.telos_akou_app_label
+        "telos_magnifier_app" -> R.string.telos_magnifier_app_label
+        "telos_flashlight_app" -> R.string.telos_flashlight_app_label
         "telos_ironewolf_app" -> R.string.ironewolf_name
         "telos_phone_app" -> R.string.virtual_app_phone
         "telos_messages_app" -> R.string.hc_messages

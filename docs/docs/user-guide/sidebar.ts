@@ -114,7 +114,7 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         link: '/docs/user-guide/telos/clock',
       },
       {
-        text: 'Terminal',
+        text: 'Termux (external)',
         link: '/docs/user-guide/telos/terminal',
       },
       {

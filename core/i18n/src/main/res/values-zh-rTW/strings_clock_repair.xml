@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">世界</string>
+    <string name="clock_world">世界時間</string>
     <string name="clock_alarm">鬧鐘</string>
     <string name="clock_timer">計時器</string>
     <string name="clock_stopwatch">碼錶</string>

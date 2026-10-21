@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">Teirminéal</string>
-    <string name="terminal_runtime_summary">Úsáideann sé Termux suiteáilte ar leithligh. Suiteáil Termux agus gach breiseán ón bhfoinse chéanna. Ritheann an bhlaosc in Termux lasmuigh de Telos.</string>
-    <string name="terminal_open_failed">Níorbh fhéidir Termux ná an suíomh a oscailt.</string>
-</resources>

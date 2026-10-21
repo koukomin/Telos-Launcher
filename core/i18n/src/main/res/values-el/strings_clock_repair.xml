@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Κόσμος</string>
+    <string name="clock_world">Παγκόσμια ώρα</string>
     <string name="clock_alarm">Ξυπνητήρι</string>
     <string name="clock_timer">Αντίστροφη μέτρηση</string>
     <string name="clock_stopwatch">Χρονόμετρο</string>

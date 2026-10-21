@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Nie pokazuj ponownie</string>
+  <string name="app_polish_show_info">Pokazuj informacje przed nagrywaniem</string>
+  <string name="app_polish_yellow_black">Żółty / czarny</string>
+  <string name="app_polish_blue_yellow">Niebieski / żółty</string>
+  <string name="app_polish_exit_light">Dotknij, aby wyłączyć światło ekranu</string>
+  <string name="app_polish_light_source">Źródło światła</string>
+  <string name="app_polish_screen_light">Światło ekranu</string>
+  <string name="app_polish_siren">Syrena alarmowa</string>
+  <string name="app_polish_alternating">Naprzemiennie czerwony / niebieski</string>
+  <string name="app_polish_strobe">Częstotliwość migania</string>
+  <string name="app_polish_morse">Kod Morse’a</string>
+  <string name="app_polish_message">Wiadomość do nadania</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Uruchom ponownie odpowiednie aplikacje, aby użyć wybranego renderera.</string>
+  <string name="app_polish_restart_notice">Pokazuj powiadomienie o ponownym uruchomieniu renderera</string>
+</resources>

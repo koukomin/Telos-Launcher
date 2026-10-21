@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Znovu nezobrazovat</string>
+  <string name="app_polish_show_info">Zobrazit informace před nahráváním</string>
+  <string name="app_polish_yellow_black">Žlutá / černá</string>
+  <string name="app_polish_blue_yellow">Modrá / žlutá</string>
+  <string name="app_polish_exit_light">Klepnutím ukončíte světlo obrazovky</string>
+  <string name="app_polish_light_source">Zdroj světla</string>
+  <string name="app_polish_screen_light">Světlo obrazovky</string>
+  <string name="app_polish_siren">Nouzová siréna</string>
+  <string name="app_polish_alternating">Střídání červené / modré</string>
+  <string name="app_polish_strobe">Frekvence blikání</string>
+  <string name="app_polish_morse">Morseova abeceda</string>
+  <string name="app_polish_message">Zpráva k odeslání</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Pro použití vybraného vykreslování restartujte příslušné aplikace.</string>
+  <string name="app_polish_restart_notice">Zobrazit upozornění na restart vykreslování</string>
+</resources>

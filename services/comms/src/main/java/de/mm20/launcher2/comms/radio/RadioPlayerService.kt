@@ -58,7 +58,7 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
     override fun onCreate() {
         super.onCreate()
         setMediaNotificationProvider(androidx.media3.session.DefaultMediaNotificationProvider.Builder(this)
-            .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.RADIO).build())
+            .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.RADIO).build().apply { setSmallIcon(de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_radio_app")!!) })
 
         // Configure audio attributes for media playback
         val audioAttributes = AudioAttributes.Builder()

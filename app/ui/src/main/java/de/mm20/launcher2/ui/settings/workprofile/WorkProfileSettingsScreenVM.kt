@@ -29,6 +29,7 @@ class WorkProfileSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setWorkProfilePaused(paused: Boolean) {
+        if (android.os.Build.VERSION.SDK_INT < 28) return
         val profile = workProfile.value ?: return
         if (paused) profileManager.lockProfile(profile) else profileManager.unlockProfile(profile)
     }

@@ -10,6 +10,14 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/virtual-app-surfaces',
   },
   {
+    text: 'Adaptive UI contract',
+    link: '/docs/developer-guide/adaptive-ui',
+  },
+  {
+    text: 'UI validation',
+    link: '/docs/developer-guide/ui-validation',
+  },
+  {
     text: 'Setup',
     link: '/docs/developer-guide/setup',
   },

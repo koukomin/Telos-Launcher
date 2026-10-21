@@ -110,10 +110,11 @@ fun ClockScreen() {
 
 @Composable
 private fun ClockDigits(text: String, color: Color = MaterialTheme.colorScheme.primary) {
-    val scale = LocalDensity.current.fontScale
-    BoxWithConstraints(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-        Text(text, fontSize = (maxWidth.value / (text.length * .65f) / scale).coerceAtMost(48f).sp,
-            fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, color = color, maxLines = 1)
+    // Important time values remain full-size and can be panned on narrow windows.
+    Box(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), contentAlignment = Alignment.Center) {
+        Text(text, style = MaterialTheme.typography.displayMedium,
+            fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold, color = color,
+            maxLines = 1, softWrap = false)
     }
 }
 
@@ -121,13 +122,23 @@ private fun ClockDigits(text: String, color: Color = MaterialTheme.colorScheme.p
 private fun WorldClockTab() {
     var now by remember { mutableStateOf(Instant.now()) }
     var query by remember { mutableStateOf("") }
+    var searchFocused by remember { mutableStateOf(false) }
     val configuration = LocalConfiguration.current
     val locale = configuration.locales[0] ?: Locale.getDefault()
     val resources = LocalContext.current.resources
     val packagedLocales = remember(resources) { resources.assets.locales.toList() }
     var cities by remember(locale) { mutableStateOf(emptyList<WorldClockCity>()) }
     LaunchedEffect(locale, packagedLocales) { cities = withContext(Dispatchers.Default) { WorldClockSearch.index(locale, packagedLocales) } }
-    val results = remember(query, cities) { WorldClockSearch.search(cities, query) }
+    val countrySettings: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
+    val homeCountry by countrySettings.homeCountry.collectAsState(initial = "")
+    val results = remember(query, cities, searchFocused, locale, homeCountry) {
+        if (query.isNotBlank()) WorldClockSearch.search(cities, query)
+        else if (searchFocused) {
+            val zones = listOf("Europe/Athens", "Europe/London", "Europe/Paris", "Europe/Berlin", "Europe/Rome", "Europe/Madrid", "Asia/Tokyo")
+            zones.filterNot { it == "Europe/Athens" && (homeCountry.equals("GR", true) || locale.country == "GR" || locale.language == "el") }
+                .mapNotNull { zone -> cities.firstOrNull { it.zoneId == zone } }
+        } else emptyList()
+    }
     LaunchedEffect(Unit) { while (isActive) { now = Instant.now(); delay(1000) } }
     LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item {
@@ -136,7 +147,13 @@ private fun WorldClockTab() {
                 ClockDigits(ZonedDateTime.ofInstant(now, ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm:ss")))
             } }
         }
-        item { OutlinedTextField(query, { query = it }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.clock_city_search)) }, singleLine = true) }
+        item {
+            de.mm20.launcher2.ui.component.TelosSearchBar(
+                value = query, onValueChange = { query = it },
+                placeholder = stringResource(R.string.clock_world),
+                onFocusChanged = { searchFocused = it },
+            )
+        }
         items(results, key = { it.zoneId }) { city ->
             Card(Modifier.fillMaxWidth()) { Column(Modifier.fillMaxWidth().padding(16.dp)) {
                 Text(city.city, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)

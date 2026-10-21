@@ -35,49 +35,38 @@ fun SearchResultGrid(
      * row should read as centered, not stuck to the start. */
     centerRows: Boolean = false,
 ) {
-    @Suppress("NAME_SHADOWING")
-    val columns = columns.coerceAtLeast(1)
-    AnimatedContent(
-        items to transitionKey,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(4.dp),
-        transitionSpec = {
-            fadeIn() togetherWith fadeOut()
-        },
-        contentKey = { it.second }
-    ) { (items, _) ->
-        Column(
-            verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
-        ) {
-            for (i in 0 until ceil(items.size / columns.toFloat()).toInt()) {
-                if (centerRows) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
-                    ) {
-                        for (j in 0 until columns) {
-                            val item = items.getOrNull(i * columns + j) ?: continue
-                            key(item.key) {
-                                GridItem(
-                                    item = item,
-                                    showLabels = showLabels,
-                                    highlight = item.key == highlightedItem?.key,
-                                    enableShutterGesture = enableShutterGesture,
-                                    enableFloatingLauncherDragSource = enableFloatingLauncherDragSource,
-                                )
-                            }
-                        }
-                    }
-                } else {
-                    Row {
-                        for (j in 0 until columns) {
-                            val item = items.getOrNull(i * columns + j)
-                            if (item != null) {
+    androidx.compose.foundation.layout.BoxWithConstraints(modifier.fillMaxWidth()) {
+        val scale = androidx.compose.ui.platform.LocalDensity.current.fontScale
+        val grid = LocalGridSettings.current
+        @Suppress("NAME_SHADOWING")
+        val columns = de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy.columns(
+            (maxWidth - 8.dp).value,
+            maxOf(grid.iconSize + 16f, if (showLabels) 72f * scale else 48f),
+            columns,
+        )
+        AnimatedContent(
+            items to transitionKey,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp),
+            transitionSpec = {
+                fadeIn() togetherWith fadeOut()
+            },
+            contentKey = { it.second }
+        ) { (items, _) ->
+            Column(
+                verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
+            ) {
+                for (i in 0 until ceil(items.size / columns.toFloat()).toInt()) {
+                    if (centerRows) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            for (j in 0 until columns) {
+                                val item = items.getOrNull(i * columns + j) ?: continue
                                 key(item.key) {
                                     GridItem(
-                                        modifier = Modifier
-                                            .weight(1f),
                                         item = item,
                                         showLabels = showLabels,
                                         highlight = item.key == highlightedItem?.key,
@@ -85,8 +74,27 @@ fun SearchResultGrid(
                                         enableFloatingLauncherDragSource = enableFloatingLauncherDragSource,
                                     )
                                 }
-                            } else {
-                                Spacer(modifier = Modifier.weight(1f))
+                            }
+                        }
+                    } else {
+                        Row {
+                            for (j in 0 until columns) {
+                                val item = items.getOrNull(i * columns + j)
+                                if (item != null) {
+                                    key(item.key) {
+                                        GridItem(
+                                            modifier = Modifier
+                                                .weight(1f),
+                                            item = item,
+                                            showLabels = showLabels,
+                                            highlight = item.key == highlightedItem?.key,
+                                            enableShutterGesture = enableShutterGesture,
+                                            enableFloatingLauncherDragSource = enableFloatingLauncherDragSource,
+                                        )
+                                    }
+                                } else {
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
                             }
                         }
                     }

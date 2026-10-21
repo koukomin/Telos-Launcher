@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -53,7 +53,7 @@ fun ColumnScope.SearchBarActions(
         LazyRow(
             modifier = Modifier
                 .consumeAllScrolling()
-                .height(48.dp)
+                .heightIn(min = 56.dp)
                 .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp),
             verticalAlignment = Alignment.CenterVertically,
             contentPadding = PaddingValues(start = 8.dp, end = 4.dp)

@@ -37,7 +37,7 @@ class YouTubePlayerService : MediaSessionService(), KoinComponent {
     override fun onCreate() {
         super.onCreate()
         setMediaNotificationProvider(androidx.media3.session.DefaultMediaNotificationProvider.Builder(this)
-            .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.YOUTUBE).build())
+            .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.YOUTUBE).build().apply { setSmallIcon(de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_youtube_app")!!) })
         val default = DefaultMediaSourceFactory(DefaultDataSource.Factory(this,
             DefaultHttpDataSource.Factory().setUserAgent("Mozilla/5.0").setAllowCrossProtocolRedirects(true)))
         val sources = object : MediaSource.Factory by default {

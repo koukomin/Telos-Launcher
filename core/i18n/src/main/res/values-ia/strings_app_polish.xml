@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Non monstrar de novo</string>
+  <string name="app_polish_show_info">Monstrar informationes ante registrar</string>
+  <string name="app_polish_yellow_black">Jalne / nigre</string>
+  <string name="app_polish_blue_yellow">Blau / jalne</string>
+  <string name="app_polish_exit_light">Tocca pro quitar le lumine del schermo</string>
+  <string name="app_polish_light_source">Fonte de lumine</string>
+  <string name="app_polish_screen_light">Lumine del schermo</string>
+  <string name="app_polish_siren">Sirena de emergentia</string>
+  <string name="app_polish_alternating">Rubie / blau alternante</string>
+  <string name="app_polish_strobe">Frequentia de intermittentie</string>
+  <string name="app_polish_morse">Codice Morse</string>
+  <string name="app_polish_message">Message a transmitter</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Reinitia le applicationes concernite pro usar le renderisator seligite.</string>
+  <string name="app_polish_restart_notice">Monstrar aviso de reinitio del renderisator</string>
+</resources>

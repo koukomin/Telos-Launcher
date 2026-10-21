@@ -190,3 +190,6 @@ Files also get **Open with...** and **Share** buttons in the dialog.
 
 
 Workspace tabs scroll in their own row above the workspace action buttons, leaving room for large text. The navigation drawer and overflow menus cover underlying text with a readable tonal surface.
+
+Tap outside the navigation drawer to close it. Its width leaves a visible outside
+area on compact windows, including with large system text.

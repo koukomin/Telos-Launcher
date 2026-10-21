@@ -64,7 +64,7 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
         Surface(
             shape = RoundedCornerShape(16.dp),
             // Glassmorphic translucent fallback using Surface
-            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
+            color = MaterialTheme.colorScheme.surfaceContainer,
             modifier = Modifier.fillMaxWidth()
         ) {
             Row(
@@ -146,7 +146,7 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
-                
+
                 IconButton(onClick = { viewModel.stop() }) {
                     Icon(
                         painter = painterResource(R.drawable.close_24px),

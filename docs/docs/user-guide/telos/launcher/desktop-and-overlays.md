@@ -343,3 +343,17 @@ restart every media session, or recover arbitrary unsaved editor forms.
 
 
 Closing a virtual app removes its finished document task from Recents. Compatibility launches through Settings clean up their temporary root task so a blank Settings card cannot reopen the app. Process recovery applies to unfinished tasks, not an explicit close.
+
+### Renderer and saved Wi-Fi
+
+The selected Vulkan/OpenGL HWUI property is restored when Telos starts if restore
+is enabled and root or Shizuku is available. Android chooses the renderer once
+per app process; restart affected apps to use the new selection. Restarting only
+System UI or recreating a page does not switch all running apps. The explanatory
+notice is enabled by default and can be disabled in Advanced → Graphics API.
+
+Advanced settings also offers saved Wi-Fi passwords. Root or authorized Shizuku
+must be available, and device authentication is required before reveal. Some OEMs
+restrict store access even with Shizuku. The current-network reveal button in
+System appears only for a connected network with a supported password security type;
+it never substitutes another saved network's password.

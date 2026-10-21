@@ -1,0 +1,18 @@
+<resources>
+    <string name="au_phonea_backspace">Xóa chữ số</string>
+    <string name="cal_no_events">Không có sự kiện</string>
+    <string name="calculator_copy_result">Sao chép kết quả</string>
+    <string name="calculator_history">Lịch sử</string>
+    <string name="calculator_more">Tùy chọn khác</string>
+    <string name="calculator_scientific">Máy tính khoa học</string>
+    <string name="calculator_standard">Máy tính tiêu chuẩn</string>
+    <string name="calculator_unit_converter">Bộ chuyển đổi đơn vị</string>
+    <string name="calculator_vat">Thuế GTGT</string>
+    <string name="hc_no_contacts_found">Không tìm thấy liên hệ</string>
+    <string name="hc_speed_dial_not_assigned">Chưa gán số quay nhanh</string>
+    <string name="recents_empty_msg">Lịch sử cuộc gọi của bạn sẽ xuất hiện ở đây.</string>
+    <string name="recents_empty_title">Không có cuộc gọi gần đây</string>
+    <string name="screenrec_no_recordings">Chưa có bản ghi màn hình</string>
+    <string name="search_action_call">Gọi</string>
+    <string name="search_action_contact">Thêm vào danh bạ</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">عدم العرض مجددًا</string>
+  <string name="app_polish_show_info">عرض المعلومات قبل التسجيل</string>
+  <string name="app_polish_yellow_black">أصفر / أسود</string>
+  <string name="app_polish_blue_yellow">أزرق / أصفر</string>
+  <string name="app_polish_exit_light">اضغط للخروج من إضاءة الشاشة</string>
+  <string name="app_polish_light_source">مصدر الضوء</string>
+  <string name="app_polish_screen_light">إضاءة الشاشة</string>
+  <string name="app_polish_siren">صفارة الطوارئ</string>
+  <string name="app_polish_alternating">تناوب الأحمر / الأزرق</string>
+  <string name="app_polish_strobe">تردد الوميض</string>
+  <string name="app_polish_morse">شفرة مورس</string>
+  <string name="app_polish_message">الرسالة المراد إرسالها</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">أعد تشغيل التطبيقات المعنية لاستخدام محرّك العرض المحدد.</string>
+  <string name="app_polish_restart_notice">عرض تنبيه إعادة تشغيل محرّك العرض</string>
+</resources>

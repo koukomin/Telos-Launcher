@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Không hiển thị lại</string>
+  <string name="app_polish_show_info">Hiển thị thông tin trước khi ghi âm</string>
+  <string name="app_polish_yellow_black">Vàng / đen</string>
+  <string name="app_polish_blue_yellow">Xanh dương / vàng</string>
+  <string name="app_polish_exit_light">Chạm để thoát đèn màn hình</string>
+  <string name="app_polish_light_source">Nguồn sáng</string>
+  <string name="app_polish_screen_light">Đèn màn hình</string>
+  <string name="app_polish_siren">Còi báo khẩn cấp</string>
+  <string name="app_polish_alternating">Đỏ / xanh dương luân phiên</string>
+  <string name="app_polish_strobe">Tần số nhấp nháy</string>
+  <string name="app_polish_morse">Mã Morse</string>
+  <string name="app_polish_message">Tin nhắn cần truyền</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Khởi động lại các ứng dụng liên quan để dùng trình kết xuất đã chọn.</string>
+  <string name="app_polish_restart_notice">Hiển thị thông báo khởi động lại trình kết xuất</string>
+</resources>

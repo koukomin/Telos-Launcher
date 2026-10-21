@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Jangan tampilkan lagi</string>
+  <string name="app_polish_show_info">Tampilkan informasi sebelum merekam</string>
+  <string name="app_polish_yellow_black">Kuning / hitam</string>
+  <string name="app_polish_blue_yellow">Biru / kuning</string>
+  <string name="app_polish_exit_light">Ketuk untuk keluar dari lampu layar</string>
+  <string name="app_polish_light_source">Sumber cahaya</string>
+  <string name="app_polish_screen_light">Lampu layar</string>
+  <string name="app_polish_siren">Sirene darurat</string>
+  <string name="app_polish_alternating">Merah / biru bergantian</string>
+  <string name="app_polish_strobe">Frekuensi kedip</string>
+  <string name="app_polish_morse">Kode Morse</string>
+  <string name="app_polish_message">Pesan untuk dikirim</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Mulai ulang aplikasi terkait untuk menggunakan perender yang dipilih.</string>
+  <string name="app_polish_restart_notice">Tampilkan pemberitahuan mulai ulang perender</string>
+</resources>

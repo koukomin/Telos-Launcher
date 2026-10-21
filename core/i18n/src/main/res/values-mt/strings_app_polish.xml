@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Turix aktar</string>
+  <string name="app_polish_show_info">Uri informazzjoni qabel ir-reġistrazzjoni</string>
+  <string name="app_polish_yellow_black">Isfar / iswed</string>
+  <string name="app_polish_blue_yellow">Blu / isfar</string>
+  <string name="app_polish_exit_light">Agħfas biex toħroġ mid-dawl tal-iskrin</string>
+  <string name="app_polish_light_source">Sors tad-dawl</string>
+  <string name="app_polish_screen_light">Dawl tal-iskrin</string>
+  <string name="app_polish_siren">Sirena ta’ emerġenza</string>
+  <string name="app_polish_alternating">Aħmar / blu alternati</string>
+  <string name="app_polish_strobe">Frekwenza tat-teptip</string>
+  <string name="app_polish_morse">Kodiċi Morse</string>
+  <string name="app_polish_message">Messaġġ biex jintbagħat</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Erġa’ ibda l-apps affettwati biex tuża r-renderer magħżul.</string>
+  <string name="app_polish_restart_notice">Uri avviż biex jerġa’ jibda r-renderer</string>
+</resources>

@@ -46,7 +46,7 @@ class FakeCallReceiver : BroadcastReceiver() {
         nm.notify(
             9999,
             NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(android.R.drawable.stat_sys_phone_call)
+                .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_phone_app") }
                 .setContentTitle(name)
                 .setContentText(
                     if (number.isBlank()) context.getString(I18nR.string.comms_incoming_call)

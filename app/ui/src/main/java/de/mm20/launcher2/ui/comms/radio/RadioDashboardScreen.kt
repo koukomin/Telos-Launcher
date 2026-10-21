@@ -218,7 +218,7 @@ private fun RadioDashboardContent(
                 }
                 Column(modifier = Modifier.fillMaxSize()) {
                 if (favorites.isNotEmpty()) {
-                    de.mm20.launcher2.ui.component.TelosSearchBar(
+                    de.mm20.launcher2.ui.media.MediaSearchBar(
                         collectionQuery, { collectionQuery = it }, stringResource(R.string.tsm_search_my_stations)
                     )
                 }
@@ -247,7 +247,7 @@ private fun RadioDashboardContent(
 
             1 -> {
                 Column(modifier = Modifier.fillMaxSize()) {
-                    de.mm20.launcher2.ui.component.TelosSearchBar(
+                    de.mm20.launcher2.ui.media.MediaSearchBar(
                         searchQuery, { viewModel.updateSearchQuery(it) }, stringResource(R.string.tsm_search_radio_browser)
                     )
                     val reduceAnim by org.koin.compose.koinInject<de.mm20.launcher2.preferences.ui.PerformanceSettings>().reduceAnimations.collectAsState(false)

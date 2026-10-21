@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Vis ikke igen</string>
+  <string name="app_polish_show_info">Vis oplysninger før optagelse</string>
+  <string name="app_polish_yellow_black">Gul / sort</string>
+  <string name="app_polish_blue_yellow">Blå / gul</string>
+  <string name="app_polish_exit_light">Tryk for at forlade skærmlyset</string>
+  <string name="app_polish_light_source">Lyskilde</string>
+  <string name="app_polish_screen_light">Skærmlys</string>
+  <string name="app_polish_siren">Nødsirene</string>
+  <string name="app_polish_alternating">Skiftevis rød / blå</string>
+  <string name="app_polish_strobe">Blinkfrekvens</string>
+  <string name="app_polish_morse">Morsekode</string>
+  <string name="app_polish_message">Besked til afsendelse</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Genstart de berørte apps for at bruge den valgte renderer.</string>
+  <string name="app_polish_restart_notice">Vis besked om genstart af renderer</string>
+</resources>

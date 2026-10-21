@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">No volver a mostrar</string>
+  <string name="app_polish_show_info">Mostrar información antes de grabar</string>
+  <string name="app_polish_yellow_black">Amarillo / negro</string>
+  <string name="app_polish_blue_yellow">Azul / amarillo</string>
+  <string name="app_polish_exit_light">Toca para salir de la luz de pantalla</string>
+  <string name="app_polish_light_source">Fuente de luz</string>
+  <string name="app_polish_screen_light">Luz de pantalla</string>
+  <string name="app_polish_siren">Sirena de emergencia</string>
+  <string name="app_polish_alternating">Alternar rojo / azul</string>
+  <string name="app_polish_strobe">Frecuencia de parpadeo</string>
+  <string name="app_polish_morse">Código morse</string>
+  <string name="app_polish_message">Mensaje para transmitir</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Reinicia las aplicaciones afectadas para usar el renderizador seleccionado.</string>
+  <string name="app_polish_restart_notice">Mostrar aviso de reinicio del renderizador</string>
+</resources>

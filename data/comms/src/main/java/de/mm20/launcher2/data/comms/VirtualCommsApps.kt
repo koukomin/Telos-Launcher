@@ -1231,7 +1231,6 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualDownloadsApp(context),
         VirtualNetworkApp(context),
         VirtualSystemApp(context),
-        VirtualTerminalApp(context),
     )
 }
 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===

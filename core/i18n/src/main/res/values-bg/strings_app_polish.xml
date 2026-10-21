@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Да не се показва отново</string>
+  <string name="app_polish_show_info">Показване на информация преди запис</string>
+  <string name="app_polish_yellow_black">Жълто / черно</string>
+  <string name="app_polish_blue_yellow">Синьо / жълто</string>
+  <string name="app_polish_exit_light">Докоснете за изход от светлината на екрана</string>
+  <string name="app_polish_light_source">Източник на светлина</string>
+  <string name="app_polish_screen_light">Светлина от екрана</string>
+  <string name="app_polish_siren">Аварийна сирена</string>
+  <string name="app_polish_alternating">Редуване на червено / синьо</string>
+  <string name="app_polish_strobe">Честота на мигане</string>
+  <string name="app_polish_morse">Морзов код</string>
+  <string name="app_polish_message">Съобщение за предаване</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Рестартирайте засегнатите приложения, за да използвате избрания механизъм за изобразяване.</string>
+  <string name="app_polish_restart_notice">Известие за рестартиране на изобразяването</string>
+</resources>

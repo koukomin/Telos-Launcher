@@ -29,12 +29,13 @@ fun SwitchPreference(
         iconPadding = iconPadding,
         summary = summary,
         enabled = enabled,
+        toggleValue = value,
         onClick = {
             onValueChanged(!value)
         },
         controls = {
             Switch(
-                enabled = enabled, checked = value, onCheckedChange = onValueChanged,
+                enabled = enabled, checked = value, onCheckedChange = null,
                 thumbContent = {
                     Icon(
                         painterResource(if (value) R.drawable.check_20px else R.drawable.close_20px),

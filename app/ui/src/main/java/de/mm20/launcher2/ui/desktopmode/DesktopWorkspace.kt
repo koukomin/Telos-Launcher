@@ -87,17 +87,7 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
                     if (event.type != KeyEventType.KeyDown || !event.isMetaPressed) false
                     else when (event.key) {
                         Key.Enter -> {
-                            context.startActivity(Intent().apply {
-                                setClassName(
-                                    context.packageName,
-                                    de.mm20.launcher2.applock.SettingsDeepLinkContract.ACTIVITY_CLASS_NAME,
-                                )
-                                putExtra(
-                                    de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_ROUTE,
-                                    de.mm20.launcher2.applock.SettingsDeepLinkContract.ROUTE_TERMINAL,
-                                )
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            })
+                            de.mm20.launcher2.ui.common.openExternalTermux(context)
                             true
                         }
                         else -> false
@@ -110,7 +100,7 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
                         contextMenuOffset = IntOffset(offset.x.toInt(), offset.y.toInt())
                         showContextMenu = true
                     },
-                    // Secondary click (mouse right-click) naturally falls through here or via custom gesture logic 
+                    // Secondary click (mouse right-click) naturally falls through here or via custom gesture logic
                     // To handle mouse secondary clicks precisely in Compose 1.4+, we can use onClick with PointerEventPass
                 )
             }
@@ -124,7 +114,7 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
         ) {
             items(pinnedApps, key = { it.key }) { app ->
                 var showAppMenu by remember { mutableStateOf(false) }
-                
+
                 val iconSizePx = 48.dp.toPixels().toInt()
                 val iconFlow = remember(app) { viewModel.getIcon(app, iconSizePx) }
                 val icon by iconFlow.collectAsStateWithLifecycle(null)
@@ -134,8 +124,8 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
                         modifier = Modifier
                             .fillMaxSize()
                             .combinedClickable(
-                                onClick = { 
-                                    launchOnDisplay(context, app, freeformActive) 
+                                onClick = {
+                                    launchOnDisplay(context, app, freeformActive)
                                 },
                                 onLongClick = { showAppMenu = true }
                             )
@@ -199,7 +189,7 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
 
         // Desktop Wallpaper Context Menu
         if (showContextMenu) {
-            // Using a simple popup or dropdown. Due to constraints, DropdownMenu without an anchor wraps at 0,0 
+            // Using a simple popup or dropdown. Due to constraints, DropdownMenu without an anchor wraps at 0,0
             // To position it precisely we could use a Popup, but for this milestone DropdownMenu with Box offset works.
             Box(modifier = Modifier.offset { contextMenuOffset }) {
                 DropdownMenu(
@@ -246,7 +236,7 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
             }
         }
     }
-    
+
     // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
     if (showAddShortcutPicker) {
         DismissableBottomSheet(

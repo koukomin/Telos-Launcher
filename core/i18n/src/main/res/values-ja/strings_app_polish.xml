@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">今後表示しない</string>
+  <string name="app_polish_show_info">録音前に説明を表示</string>
+  <string name="app_polish_yellow_black">黄 / 黒</string>
+  <string name="app_polish_blue_yellow">青 / 黄</string>
+  <string name="app_polish_exit_light">タップして画面ライトを終了</string>
+  <string name="app_polish_light_source">光源</string>
+  <string name="app_polish_screen_light">画面ライト</string>
+  <string name="app_polish_siren">緊急サイレン</string>
+  <string name="app_polish_alternating">赤と青を交互に点滅</string>
+  <string name="app_polish_strobe">点滅の頻度</string>
+  <string name="app_polish_morse">モールス信号</string>
+  <string name="app_polish_message">送信するメッセージ</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">選択したレンダラーを使用するには、対象のアプリを再起動してください。</string>
+  <string name="app_polish_restart_notice">レンダラーの再起動案内を表示</string>
+</resources>

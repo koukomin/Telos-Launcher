@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">Terminal</string>
-    <string name="terminal_runtime_summary">Juża Termux installat separatament. Installa Termux u ż-żidiet kollha mill-istess sors. Il-qoxra taħdem f’Termux barra minn Telos.</string>
-    <string name="terminal_open_failed">Ma setax jinfetaħ Termux jew is-sit.</string>
-</resources>

@@ -171,18 +171,16 @@ fun RadioStationCard(
         label = "cardTint",
     )
     val low = MaterialTheme.colorScheme.surfaceContainerLow
-    Column(
+    Row(
         modifier
             .pressScale(reduce, onClick = { if (uiSettings.tapPlays) player.toggleStation(station) else onLongClick() }, onLongClick = onLongClick)
             .clip(RoundedCornerShape(24.dp))
             .background(Brush.verticalGradient(listOf(tint.compositeOver(low), low)))
             .padding(12.dp),
     ) {
-        Box {
-            RadioLogo(station, Modifier.fillMaxWidth().aspectRatio(1f), corner = 18.dp)
-            RadioPlayButton(station, player, Modifier.align(Alignment.BottomEnd).padding(6.dp))
-        }
-        Row(Modifier.padding(top = 10.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        RadioLogo(station, Modifier.size(52.dp), corner = 12.dp, pad = 6.dp)
+        Column(Modifier.weight(1f).padding(start = 10.dp)) {
+        Row(Modifier.padding(top = 2.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             if (playing) RadioEqualizer(!reduce, MaterialTheme.colorScheme.primary)
             Text(station.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
@@ -193,6 +191,7 @@ fun RadioStationCard(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
+        }
     }
 }
 
@@ -248,7 +247,7 @@ fun RadioHome(
         }
     }
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Adaptive(260.dp),
         contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 8.dp, bottom = 24.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -285,7 +284,7 @@ fun RadioHome(
                     )
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                         items(recent, key = { it.id }) { s ->
-                            RadioStationCard(s, player, { onLongClick(s) }, Modifier.width(156.dp))
+                            RadioStationCard(s, player, { onLongClick(s) }, Modifier.width(260.dp))
                         }
                     }
                 }

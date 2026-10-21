@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">दोबारा न दिखाएँ</string>
+  <string name="app_polish_show_info">रिकॉर्डिंग से पहले जानकारी दिखाएँ</string>
+  <string name="app_polish_yellow_black">पीला / काला</string>
+  <string name="app_polish_blue_yellow">नीला / पीला</string>
+  <string name="app_polish_exit_light">स्क्रीन की रोशनी बंद करने के लिए टैप करें</string>
+  <string name="app_polish_light_source">प्रकाश स्रोत</string>
+  <string name="app_polish_screen_light">स्क्रीन की रोशनी</string>
+  <string name="app_polish_siren">आपातकालीन सायरन</string>
+  <string name="app_polish_alternating">बारी-बारी लाल / नीला</string>
+  <string name="app_polish_strobe">चमकने की आवृत्ति</string>
+  <string name="app_polish_morse">मोर्स कोड</string>
+  <string name="app_polish_message">भेजने वाला संदेश</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">चुने गए रेंडरर का उपयोग करने के लिए संबंधित ऐप फिर से शुरू करें।</string>
+  <string name="app_polish_restart_notice">रेंडरर फिर से शुरू करने की सूचना दिखाएँ</string>
+</resources>

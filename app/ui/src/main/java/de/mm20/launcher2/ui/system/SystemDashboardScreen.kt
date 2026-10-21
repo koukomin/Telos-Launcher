@@ -85,7 +85,6 @@ import kotlin.math.sin
 @Serializable
 data object SystemDashboardRoute : NavKey
 
-private data class WifiEntry(val ssid: String, val psk: String?)
 internal data class ProcRow(val pid: Int, val name: String, val ramKb: Long?)
 
 @Composable
@@ -100,6 +99,8 @@ fun SystemDashboardScreen() {
     var ramTotal by remember { mutableStateOf(0L) }
     var ips by remember { mutableStateOf(listOf<String>()) }
     var wifiSsid by remember { mutableStateOf<String?>(null) }
+    var secureWifi by remember { mutableStateOf(false) }
+    var privilegedWifi by remember { mutableStateOf(false) }
     var wifiPsk by remember { mutableStateOf<String?>(null) }
     var showPsk by remember { mutableStateOf(false) }
     var networks by remember { mutableStateOf<List<WifiEntry>>(emptyList()) }
@@ -118,6 +119,12 @@ fun SystemDashboardScreen() {
     val pulse = rememberInfiniteTransition(label = "sysPulse")
     val t by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(2400, easing = LinearEasing), RepeatMode.Restart), label = "t")
 
+    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+        scope.launch { privilegedWifi = HwuiRenderer.privilegedAvailable() }
+    }
+    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_STOP) {
+        wifiPsk = null; showPsk = false; networks = emptyList()
+    }
     LaunchedEffect(Unit) {
         var previousCpu: Pair<Long, Long>? = null
         while (true) {
@@ -130,7 +137,11 @@ fun SystemDashboardScreen() {
             ramUsed = mi.totalMem - mi.availMem
             ramTotal = mi.totalMem
             ips = localIps()
-            wifiSsid = currentSsid(context)
+            val connectedSsid = currentSsid(context)
+            if (connectedSsid != wifiSsid) { wifiPsk = null; showPsk = false; networks = emptyList() }
+            wifiSsid = connectedSsid
+            secureWifi = hasWifiPassword(context)
+
             processes = withContext(Dispatchers.IO) { runningProcs(context) }
             liveRenderer = HwuiRenderer.current()
             delay(1500)
@@ -173,7 +184,7 @@ fun SystemDashboardScreen() {
                                 HwuiRenderer.MODE_OPENGL -> stringResource(R.string.hc_graphics_opengl)
                                 else -> stringResource(R.string.hc_graphics_default)
                             },
-                            color = if (liveRenderer == HwuiRenderer.MODE_VULKAN) Color(0xFF00E5A8) else scheme.primary,
+                            color = if (liveRenderer == HwuiRenderer.MODE_VULKAN) scheme.primary else scheme.primary,
                         )
                         Text(stringResource(R.string.hc_graphics_api_about_summary), style = MaterialTheme.typography.bodySmall)
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -232,7 +243,7 @@ fun SystemDashboardScreen() {
                             stringResource(R.string.net_hub_title) + " · " + stringResource(
                                 if (vpnOn) R.string.net_hub_state_on else R.string.net_hub_state_off,
                             ),
-                            color = if (vpnOn) Color(0xFF00E5A8) else scheme.onSurfaceVariant,
+                            color = if (vpnOn) scheme.primary else scheme.onSurfaceVariant,
                         )
                         Text("${stringResource(R.string.net_hub_stat_dns)} ${dnsServer.name}")
                         Text("${stringResource(R.string.net_hub_stat_blocked_dns)} ${netStats.dnsBlocked}  ·  ${stringResource(R.string.net_hub_stat_blocked_conn)} ${netStats.connectionsBlocked}")
@@ -243,7 +254,7 @@ fun SystemDashboardScreen() {
                             val payload = "WIFI:T:WPA;S:${wifiSsid.orEmpty()};P:${wifiPsk.orEmpty()};;"
                             ContactQrImage(payload, Modifier.padding(top = 8.dp))
                         }
-                        FilledTonalButton(onClick = {
+                        if (wifiSsid != null && secureWifi) FilledTonalButton(enabled = privilegedWifi, onClick = {
                             scope.launch {
                                 val act = activity ?: return@launch
                                 val ok = AuthManager().authenticateNative(act, context.getString(R.string.telos_system_unlock_wifi))
@@ -252,7 +263,6 @@ fun SystemDashboardScreen() {
                                 val list = withContext(Dispatchers.IO) { readWifiStore() }
                                 networks = list
                                 wifiPsk = list.firstOrNull { it.ssid == wifiSsid }?.psk
-                                    ?: list.firstOrNull()?.psk
                                 showPsk = true
                                 status = if (list.isEmpty()) context.getString(R.string.telos_system_wifi_need_root) else null
                             }
@@ -260,6 +270,7 @@ fun SystemDashboardScreen() {
                         status?.let { Text(it, color = scheme.error) }
                     }
                 }
+                item { SavedWifiPasswordsPreference() }
                 if (networks.isNotEmpty()) {
                     item { Text(stringResource(R.string.telos_system_saved_wifi), style = MaterialTheme.typography.titleMedium) }
                     items(networks, key = { it.ssid }) { n ->
@@ -284,16 +295,12 @@ fun SystemDashboardScreen() {
 
 @Composable
 private fun GlassCard(content: @Composable () -> Unit) {
-    val scheme = MaterialTheme.colorScheme
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(scheme.surface.copy(alpha = 0.55f))
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-        content = { content() },
-    )
+    de.mm20.launcher2.ui.component.LauncherCard(shape = MaterialTheme.shapes.medium) {
+        Column(
+            Modifier.fillMaxWidth().padding(de.mm20.launcher2.ui.layout.UiSpacing.Content),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+        ) { content() }
+    }
 }
 
 private fun formatUptime(ms: Long): String {
@@ -317,8 +324,7 @@ private fun localIps(): List<String> = buildList {
 @Suppress("DEPRECATION")
 private fun currentSsid(context: Context): String? {
     val cm = context.getSystemService<ConnectivityManager>() ?: return null
-    val caps = cm.getNetworkCapabilities(cm.activeNetwork) ?: return null
-    if (!caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) return null
+    if (cm.allNetworks.none { cm.getNetworkCapabilities(it)?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true }) return null
     val wm = context.getSystemService<WifiManager>() ?: return null
     val ssid = wm.connectionInfo?.ssid?.trim('"')
     return ssid?.takeIf { it.isNotBlank() && it != "<unknown ssid>" }
@@ -386,22 +392,24 @@ private fun shizuku(cmd: String): String? = runCatching {
     stream.bufferedReader().readText()
 }.getOrNull()
 
-private fun readWifiStore(): List<WifiEntry> {
+internal fun readWifiStore(): List<WifiEntry> {
     val files = listOf(
         "/data/misc/apexdata/com.android.wifi/WifiConfigStore.xml",
         "/data/misc/wifi/WifiConfigStore.xml",
         "/data/misc/wifi/wpa_supplicant.conf",
     )
-    val raw = files.firstNotNullOfOrNull { privileged("cat $it") }.orEmpty() +
-        (privileged("dumpsys wifi").orEmpty())
-    if (raw.isBlank()) return emptyList()
-    val xml = Regex("<string name=\"SSID\">(?:&quot;)?(.*?)(?:&quot;)?</string>[\\s\\S]*?<string name=\"PreSharedKey\">(?:&quot;)?(.*?)(?:&quot;)?</string>")
-        .findAll(raw)
-        .map { WifiEntry(it.groupValues[1].replace("&quot;", "").trim('"'), it.groupValues[2].replace("&quot;", "").trim('"')) }
-        .toList()
-    if (xml.isNotEmpty()) return xml.distinctBy { it.ssid }
-    val conf = Regex("ssid=\"([^\"]+)\"[\\s\\S]*?psk=\"([^\"]+)\"").findAll(raw)
-        .map { WifiEntry(it.groupValues[1], it.groupValues[2]) }
-        .toList()
-    return conf.distinctBy { it.ssid }
+    // User credential stores can be separate from the system-wide store.
+    val raw = files.mapNotNull { privileged("cat $it 2>/dev/null") } + listOfNotNull(
+        privileged("cat /data/misc_ce/*/wifi/WifiConfigStore.xml /data/misc_ce/*/apexdata/com.android.wifi/WifiConfigStore.xml 2>/dev/null")
+    )
+    return raw.flatMap(SavedWifiParser::parse).distinctBy { it.ssid }
 }
+
+private fun hasWifiPassword(context: Context): Boolean = runCatching {
+    if (currentSsid(context) == null || Build.VERSION.SDK_INT < 31) return false
+    val info = context.getSystemService<WifiManager>()?.connectionInfo ?: return false
+    info.currentSecurityType in setOf(
+        android.net.wifi.WifiInfo.SECURITY_TYPE_PSK, android.net.wifi.WifiInfo.SECURITY_TYPE_SAE,
+        android.net.wifi.WifiInfo.SECURITY_TYPE_WEP, android.net.wifi.WifiInfo.SECURITY_TYPE_WAPI_PSK,
+    )
+}.getOrDefault(false)

@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">विश्व</string>
+    <string name="clock_world">विश्व समय</string>
     <string name="clock_alarm">अलार्म</string>
     <string name="clock_timer">टाइमर</string>
     <string name="clock_stopwatch">स्टॉपवॉच</string>

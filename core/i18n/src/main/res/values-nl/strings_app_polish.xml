@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Niet meer tonen</string>
+  <string name="app_polish_show_info">Informatie tonen vóór opname</string>
+  <string name="app_polish_yellow_black">Geel / zwart</string>
+  <string name="app_polish_blue_yellow">Blauw / geel</string>
+  <string name="app_polish_exit_light">Tik om het schermlicht te verlaten</string>
+  <string name="app_polish_light_source">Lichtbron</string>
+  <string name="app_polish_screen_light">Schermlicht</string>
+  <string name="app_polish_siren">Noodsirene</string>
+  <string name="app_polish_alternating">Afwisselend rood / blauw</string>
+  <string name="app_polish_strobe">Knipperfrequentie</string>
+  <string name="app_polish_morse">Morsecode</string>
+  <string name="app_polish_message">Te verzenden bericht</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Start de betrokken apps opnieuw om de gekozen renderer te gebruiken.</string>
+  <string name="app_polish_restart_notice">Melding over herstarten van renderer tonen</string>
+</resources>

@@ -1,0 +1,13 @@
+// Focused UI check set for constrained runners. This is not full application lint.
+gradle.beforeProject { project ->
+    if (project.path == ':app:ui') {
+        project.pluginManager.withPlugin('com.android.library') {
+            project.androidComponents.finalizeDsl { android ->
+                android.lint.checkOnly.clear()
+                android.lint.checkOnly.addAll(['NewApi', 'InlinedApi', 'ContentDescription', 'RtlHardcoded'])
+                android.lint.checkDependencies = false
+                android.lint.abortOnError = true
+            }
+        }
+    }
+}

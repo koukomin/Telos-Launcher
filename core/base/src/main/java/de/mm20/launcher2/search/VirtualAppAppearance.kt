@@ -39,6 +39,8 @@ object VirtualAppAppearance {
         "telos_downloads_app" -> R.drawable.ic_app_downloads_fg
         "telos_network_app", "telos_system_app" -> R.drawable.ic_app_network_fg
         "telos_media_app" -> R.drawable.ic_app_media_fg
+        "telos_store_app" -> R.drawable.local_convenience_store_24px
+        "telos_akou_app" -> R.drawable.ic_app_youtube_music_fg
         else -> TelosAppIcons.forDomain(domain)
     }
 
@@ -59,6 +61,7 @@ object VirtualAppAppearance {
 
     fun applyRecents(activity: Activity, domain: String) {
         val label = TelosAppLabels.forDomain(activity, domain)
+        activity.title = label
         val res = TelosAppIcons.forDomain(domain)
         val bmp = res?.let { bitmap(activity, it) }
         runCatching {

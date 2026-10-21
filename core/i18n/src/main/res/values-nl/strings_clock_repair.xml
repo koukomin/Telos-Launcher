@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Wereld</string>
+    <string name="clock_world">Wereldtijd</string>
     <string name="clock_alarm">Alarm</string>
     <string name="clock_timer">Timer</string>
     <string name="clock_stopwatch">Stopwatch</string>

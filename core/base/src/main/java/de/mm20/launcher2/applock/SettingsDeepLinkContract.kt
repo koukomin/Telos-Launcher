@@ -43,7 +43,6 @@ object SettingsDeepLinkContract {
     const val ROUTE_ERMIS = "settings/ermis"
     const val ROUTE_CALENDAR = "settings/calendar"
     const val ROUTE_DOWNLOADS = "settings/downloads"
-    const val ROUTE_TERMINAL = "settings/terminal"
     const val ROUTE_NETWORK = "settings/network"
     const val ROUTE_SYSTEM = "settings/system"
     const val ROUTE_TRASH = "settings/trash"
@@ -56,7 +55,6 @@ object SettingsDeepLinkContract {
         ROUTE_PHOTOS, ROUTE_VIEWER -> "viewer"
         ROUTE_FILES -> "files"
         ROUTE_STORE -> "store"
-        ROUTE_TERMINAL -> "terminal"
         ROUTE_NETWORK -> "network"
         ROUTE_SYSTEM -> "system"
         ROUTE_TRASH -> "trash"
@@ -69,7 +67,14 @@ object SettingsDeepLinkContract {
         ROUTE_ERMIS -> "ermis"
         ROUTE_CALENDAR -> "calendar"
         ROUTE_DOWNLOADS -> "downloads"
+        "settings/clock" -> "clock"
+        "settings/akou" -> "akou"
+        "settings/magnifier" -> "magnifier"
+        "settings/flashlight" -> "flashlight"
         else -> null
     }
+    /** Alias metadata gives OEM Recents a stable label/icon even without TaskDescription support. */
+    fun virtualAppActivityClassName(route: String?, commsTab: String? = null): String? =
+        virtualAppTaskId(route, commsTab)?.let { "de.mm20.launcher2.ui.settings.TelosApp_$it" }
     // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }

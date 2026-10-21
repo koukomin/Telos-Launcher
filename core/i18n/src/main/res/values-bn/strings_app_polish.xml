@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">আবার দেখাবেন না</string>
+  <string name="app_polish_show_info">রেকর্ডিংয়ের আগে তথ্য দেখান</string>
+  <string name="app_polish_yellow_black">হলুদ / কালো</string>
+  <string name="app_polish_blue_yellow">নীল / হলুদ</string>
+  <string name="app_polish_exit_light">স্ক্রিনের আলো বন্ধ করতে ট্যাপ করুন</string>
+  <string name="app_polish_light_source">আলোর উৎস</string>
+  <string name="app_polish_screen_light">স্ক্রিনের আলো</string>
+  <string name="app_polish_siren">জরুরি সাইরেন</string>
+  <string name="app_polish_alternating">পর্যায়ক্রমে লাল / নীল</string>
+  <string name="app_polish_strobe">ঝলকানির হার</string>
+  <string name="app_polish_morse">মোর্স কোড</string>
+  <string name="app_polish_message">পাঠানোর বার্তা</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">নির্বাচিত রেন্ডারার ব্যবহার করতে সংশ্লিষ্ট অ্যাপগুলো পুনরায় চালু করুন।</string>
+  <string name="app_polish_restart_notice">রেন্ডারার পুনরায় চালুর বিজ্ঞপ্তি দেখান</string>
+</resources>

@@ -25,20 +25,20 @@ object AppCloner {
             val pm = context.packageManager
             val appInfo = pm.getApplicationInfo(app.componentName.packageName, PackageManager.GET_META_DATA)
             val apkFile = File(appInfo.sourceDir)
-            
+
             if (!apkFile.exists() || !apkFile.canRead()) {
                 Log.e("AppCloner", "APK file not found or not readable: ${apkFile.absolutePath}")
                 return@withContext false
             }
 
             val pfd = ParcelFileDescriptor.open(apkFile, ParcelFileDescriptor.MODE_READ_ONLY)
-            
+
             val bridge = bindToSandboxBridge(context, workProfileUser) ?: run {
                 Log.e("AppCloner", "Could not bind to SandboxBridgeService in work profile")
                 pfd.close()
                 return@withContext false
             }
-            
+
             bridge.installApp(pfd, app.componentName.packageName)
             // pfd is closed by the remote service or when the local reference goes away
             return@withContext true
@@ -64,13 +64,13 @@ object AppCloner {
             override fun onServiceDisconnected(name: ComponentName?) {
                 // Ignore
             }
-            
+
             override fun onBindingDied(name: ComponentName?) {
                 if (cont.isActive) {
                     cont.resume(null)
                 }
             }
-            
+
             override fun onNullBinding(name: ComponentName?) {
                 if (cont.isActive) {
                     cont.resume(null)
@@ -79,7 +79,6 @@ object AppCloner {
         }
 
         try {
-            val crossProfileApps = context.getSystemService(Context.CROSS_PROFILE_APPS_SERVICE) as android.content.pm.CrossProfileApps
             // There is no easy way to bindServiceAsUser without reflection or SYSTEM privileges.
             // Using reflection for Context.bindServiceAsUser
             val bindServiceAsUser = Context::class.java.getMethod(

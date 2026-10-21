@@ -1,6 +1,11 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.imePadding
@@ -64,7 +69,6 @@ internal object TelosPages {
         "telos_notes_app://notes" -> de.mm20.launcher2.ui.notes.NotesRoute
         "telos_calendar_app://calendar" -> de.mm20.launcher2.ui.calendar.CalendarRoute
         "telos_downloads_app://downloads" -> de.mm20.launcher2.ui.downloads.DownloadsRoute()
-        "telos_terminal_app://terminal" -> de.mm20.launcher2.ui.terminal.TerminalRoute
         "telos_network_app://network" -> de.mm20.launcher2.ui.network.NetworkRoute
         "telos_system_app://system" -> de.mm20.launcher2.ui.system.SystemDashboardRoute
         "telos_voice_recorder_app://voice_recorder" -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
@@ -116,7 +120,6 @@ internal object TelosPages {
         }
         entry<de.mm20.launcher2.ui.downloads.DownloadsRoute> { de.mm20.launcher2.ui.downloads.DownloadsScreen(it.initialUrls) }
         entry<de.mm20.launcher2.ui.downloads.DownloadsSettingsRoute> { de.mm20.launcher2.ui.downloads.DownloadsSettingsScreen() }
-        entry<de.mm20.launcher2.ui.terminal.TerminalRoute> { de.mm20.launcher2.ui.terminal.TerminalScreen() }
         entry<de.mm20.launcher2.ui.network.NetworkRoute> { de.mm20.launcher2.ui.network.NetworkHomeScreen() }
         entry<de.mm20.launcher2.ui.network.NetworkPrivacyRoute> { de.mm20.launcher2.ui.network.NetworkPrivacyScreen() }
         entry<de.mm20.launcher2.ui.network.NetworkTorAppsRoute> { de.mm20.launcher2.ui.network.NetworkTorAppsScreen() }
@@ -229,6 +232,7 @@ internal class TelosAppPageComponent private constructor(
                         // The apps add the system bars themselves. Applied first, so that the
                         // navigation bar is not added a second time while the keyboard is open.
                         .imePadding()
+                        .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
                 ) {
                     if (!isEmpty) {
                         NavDisplay(

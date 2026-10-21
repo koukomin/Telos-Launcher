@@ -26,6 +26,7 @@ internal fun RadioAppearance(values: RadioSettings.Values, content: @Composable 
     val context = LocalContext.current
     val dark = when (values.theme) { "dark" -> true; "light" -> false; else -> isSystemInDarkTheme() }
     val colors = when {
+        values.theme == "system" -> MaterialTheme.colorScheme
         values.dynamicColors && Build.VERSION.SDK_INT >= 31 -> if (dark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         dark -> darkColorScheme()
         else -> lightColorScheme()
@@ -33,10 +34,10 @@ internal fun RadioAppearance(values: RadioSettings.Values, content: @Composable 
     val scheme = if (values.translucent) colors.copy(
         background = Color.Transparent,
         surface = Color.Transparent,
-        surfaceContainerLow = colors.surfaceContainerLow.copy(alpha = .72f),
-        surfaceContainer = colors.surfaceContainer.copy(alpha = .78f),
+        surfaceContainerLow = colors.surfaceContainerLow,
+        surfaceContainer = colors.surfaceContainer,
     ) else colors
-    CompositionLocalProvider(LocalRadioUiSettings provides values) {
+    CompositionLocalProvider(LocalRadioUiSettings provides values, LocalContentColor provides scheme.onSurface) {
         MaterialTheme(colorScheme = scheme, typography = MaterialTheme.typography, content = content)
     }
 }

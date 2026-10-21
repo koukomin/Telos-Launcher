@@ -78,3 +78,8 @@ exists on both sides stays as the newer one.
 - No background sync, no merge of two changes to the same note
 - Notes deleted in the Markdown folder go to the trash in Telos, but a note you trash in Telos stays in the folder until you delete it for good. To protect your notes, nothing is trashed when the folder cannot be listed, when it is empty and cannot be reached (offline cloud folder, lost permission), or when a single sync would trash more than half of the synced notes. The sync then reports how many deletions it skipped
 - Deleting a synced note for good (also by emptying it) removes its file and its Nextcloud note on the next sync, so it does not come back
+
+To import Google Keep notes, export Keep with Google Takeout, then choose
+**Notes → overflow menu → Import** and select the ZIP or individual JSON files.
+This imports note text, checklists, labels and supported flags; it is not live
+Google Keep synchronization and does not import every attachment type.

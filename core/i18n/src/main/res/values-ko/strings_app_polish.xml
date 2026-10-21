@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">다시 표시하지 않기</string>
+  <string name="app_polish_show_info">녹음 전에 안내 표시</string>
+  <string name="app_polish_yellow_black">노란색 / 검은색</string>
+  <string name="app_polish_blue_yellow">파란색 / 노란색</string>
+  <string name="app_polish_exit_light">탭하여 화면 조명 종료</string>
+  <string name="app_polish_light_source">광원</string>
+  <string name="app_polish_screen_light">화면 조명</string>
+  <string name="app_polish_siren">비상 사이렌</string>
+  <string name="app_polish_alternating">빨간색 / 파란색 교대</string>
+  <string name="app_polish_strobe">깜박임 빈도</string>
+  <string name="app_polish_morse">모스 부호</string>
+  <string name="app_polish_message">전송할 메시지</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">선택한 렌더러를 사용하려면 해당 앱을 다시 시작하세요.</string>
+  <string name="app_polish_restart_notice">렌더러 다시 시작 안내 표시</string>
+</resources>

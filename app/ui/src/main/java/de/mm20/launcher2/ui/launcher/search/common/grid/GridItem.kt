@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -204,6 +205,7 @@ fun GridItem(
                     Modifier
                 }
             )
+            .sizeIn(minWidth = 48.dp, minHeight = 48.dp)
             .combinedClickable(
                 onClick = {
                     if (item is Folder && item.isCover) {
@@ -288,7 +290,7 @@ fun GridItem(
         // === TELOS_PENDING_REVIEW_START: perf_optimizations ===
         val windowSize = LocalWindowSize.current
         val iconSizeDp = LocalGridSettings.current.iconSize.dp
-        
+
         if (item is Application) {
             HandleEnterHomeTransition {
                 val cn = item.componentName
@@ -319,7 +321,7 @@ fun GridItem(
         }
         val highlightBg = MaterialTheme.colorScheme.surfaceVariant
         val highlightFg = MaterialTheme.colorScheme.surface
-        
+
         Box(
             modifier = if (highlight) {
                 semanticsModifier.background(highlightBg, iconShape)

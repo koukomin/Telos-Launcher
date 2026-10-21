@@ -193,3 +193,15 @@ Stremio Fork → menu → Settings offers primary and secondary audio/subtitle l
 During playback, Subtitles opens a searchable sheet listing available subtitle languages/tracks and the current choice, with None, local file and online search actions.
 
 Stremio Settings also offers opt-in next-episode playback. It continues only when catalog episode metadata and a compatible stream from the same add-on are available; otherwise it stops. Multi-file Stremio torrents no longer automatically run into unrelated files. Optional resolution, maximum source size and CAM/screener exclusion are metadata preferences: unknown sources remain available, and manual browsing restores the full list if all known sources would be filtered out. These filters do not change video encoding or force an unsupported playback mode.
+
+### Compact controls and local previews
+
+Use the search icon to expand or collapse media search. Radio stations use compact
+rows with small logos. The TV player's list button opens searchable channel
+selection without leaving playback. Viewer supports selecting several files and
+then using Delete; the shared dialog offers a bin or permanent deletion where
+supported. Local video frames are also used when a movie/series cover is absent
+or fails to load. Formats or codecs unsupported by Android retain a file-type icon.
+
+In Άκου, hide the recording information with “Do not show again”. The top-right
+menu opens the information and its visibility switch again.

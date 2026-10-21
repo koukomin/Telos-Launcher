@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.component.preferences
 
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -30,54 +32,48 @@ fun Preference(
     controls: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
     containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
+    toggleValue: Boolean? = null,
+    toggleRole: Role = Role.Switch,
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(MaterialTheme.shapes.extraSmall)
-            .clickable(enabled = enabled, onClick = onClick)
-            .background(containerColor)
-            .padding(
-                start = if (icon != null) 8.dp else 16.dp,
-                end = 16.dp,
-            )
-            .alpha(if (enabled) 1f else 0.38f),
-    ) {
-        if (icon != null) {
-            Box(
-                modifier = Modifier
-                    .width(56.dp)
-                    .padding(end = 8.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                icon()
-            }
-        } else {
-            Box(modifier = Modifier.size(0.dp))
-        }
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .padding(vertical = 16.dp),
-        ) {
-            ProvideTextStyle(value = MaterialTheme.typography.titleMedium) {
-                title()
-            }
-            if (summary != null) {
-                CompositionLocalProvider(
-                    LocalTextStyle provides MaterialTheme.typography.bodyMedium,
-                    LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant,
-                ) {
-                    summary()
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val stacked = controls != null && de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy.stackPreference(
+            maxWidth.value, androidx.compose.ui.platform.LocalDensity.current.fontScale,
+        )
+        val text: @Composable () -> Unit = {
+            Column(Modifier.padding(vertical = de.mm20.launcher2.ui.layout.UiSpacing.Content)) {
+                ProvideTextStyle(MaterialTheme.typography.titleMedium) { title() }
+                if (summary != null) {
+                    CompositionLocalProvider(
+                        LocalTextStyle provides MaterialTheme.typography.bodyMedium,
+                        LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant,
+                    ) { summary() }
                 }
             }
         }
-        if (controls != null) {
-            Box(
-                modifier = Modifier.padding(start = 24.dp)
+        CompositionLocalProvider(LocalContentColor provides androidx.compose.material3.contentColorFor(containerColor)) {
+            Column(
+                Modifier.fillMaxWidth()
+                    .clip(MaterialTheme.shapes.extraSmall)
+                    .background(containerColor)
+                    .then(if (toggleValue != null) Modifier.toggleable(
+                        value = toggleValue, enabled = enabled, role = toggleRole,
+                        onValueChange = { onClick() },
+                    ) else Modifier.clickable(enabled = enabled, onClick = onClick))
+                    .heightIn(min = de.mm20.launcher2.ui.layout.UiSpacing.TouchTarget)
+                    .padding(horizontal = de.mm20.launcher2.ui.layout.UiSpacing.Content),
             ) {
-                controls()
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    if (icon != null) {
+                        Box(Modifier.width(48.dp).padding(end = 8.dp).alpha(if (enabled) 1f else 0.38f), contentAlignment = Alignment.CenterStart) { icon() }
+                    }
+                    Box(Modifier.weight(1f).alpha(if (enabled) 1f else 0.38f)) { text() }
+                    if (controls != null && !stacked) {
+                        Box(Modifier.padding(start = 24.dp)) { controls() }
+                    }
+                }
+                if (controls != null && stacked) {
+                    Box(Modifier.align(Alignment.End).padding(bottom = 12.dp)) { controls() }
+                }
             }
         }
     }
@@ -93,6 +89,8 @@ fun Preference(
     controls: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
     containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
+    toggleValue: Boolean? = null,
+    toggleRole: Role = Role.Switch,
 ) {
     Preference(
         title = {
@@ -108,6 +106,8 @@ fun Preference(
         controls = controls,
         enabled = enabled,
         containerColor = containerColor,
+        toggleValue = toggleValue,
+        toggleRole = toggleRole,
     )
 
 }
@@ -122,6 +122,8 @@ fun Preference(
     controls: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
     containerColor: Color = MaterialTheme.colorScheme.surfaceBright,
+    toggleValue: Boolean? = null,
+    toggleRole: Role = Role.Switch,
 ) {
     Preference(
         title,
@@ -133,6 +135,6 @@ fun Preference(
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
-        }, iconPadding, summary, onClick, controls, enabled, containerColor,
+        }, iconPadding, summary, onClick, controls, enabled, containerColor, toggleValue, toggleRole,
     )
 }

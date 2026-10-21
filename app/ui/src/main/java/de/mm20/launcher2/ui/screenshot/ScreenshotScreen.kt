@@ -104,7 +104,7 @@ fun ScreenshotScreen() {
     de.mm20.launcher2.ui.component.VirtualAppWindow {
     Box(Modifier.fillMaxSize().systemBarsPadding()) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
+            columns = GridCells.Adaptive(120.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale),
             contentPadding = PaddingValues(12.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),

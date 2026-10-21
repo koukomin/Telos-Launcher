@@ -1,5 +1,5 @@
 <resources>
-    <string name="clock_world">Svet</string>
+    <string name="clock_world">Svetový čas</string>
     <string name="clock_alarm">Budík</string>
     <string name="clock_timer">Časovač</string>
     <string name="clock_stopwatch">Stopky</string>

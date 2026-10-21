@@ -71,8 +71,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -87,6 +85,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import de.mm20.launcher2.ui.component.frostedGlass
+import de.mm20.launcher2.ui.component.AdaptiveNavigationBar
+import de.mm20.launcher2.ui.component.AdaptiveNavigationItem
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
@@ -525,23 +525,21 @@ private fun HubBottomBar(
     }.distinctBy { it.group }
     val t = MaterialTheme.transparency
     val glass = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
-    NavigationBar(
+    AdaptiveNavigationBar(
         modifier = Modifier.hubGlass(haze, blurRadius, glass),
         containerColor = Color.Transparent,
-        tonalElevation = 0.dp,
     ) {
         dests.forEach { dest ->
             val selected = dest.group == current.group
-            NavigationBarItem(
+            AdaptiveNavigationItem(
                 selected = selected,
                 onClick = { onSelect(dest) },
                 icon = {
                     Icon(painterResource(dest.groupIcon), contentDescription = null, modifier = Modifier.size(22.dp))
                 },
                 label = {
-                    Text(stringResource(dest.groupLabel), style = MaterialTheme.typography.labelSmall, maxLines = 1)
+                    Text(stringResource(dest.groupLabel))
                 },
-                alwaysShowLabel = true,
             )
         }
     }

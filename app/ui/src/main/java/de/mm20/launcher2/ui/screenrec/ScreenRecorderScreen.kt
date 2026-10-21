@@ -13,6 +13,8 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -158,7 +160,8 @@ fun ScreenRecorderScreen() {
 
     de.mm20.launcher2.ui.component.VirtualAppWindow {
     Box(Modifier.fillMaxSize().systemBarsPadding()) {
-        Column(Modifier.fillMaxSize()) {
+        LazyColumn(Modifier.fillMaxSize()) {
+            item(key = "controls") {
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = { backStack.add(ScreenRecorderSettingsRoute) }) {
@@ -196,7 +199,7 @@ fun ScreenRecorderScreen() {
                             stringResource(if (state.status == ScreenRecStatus.Paused) R.string.screenrec_paused else R.string.screenrec_recording),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
-                        Text(formatDuration(state.elapsedMs), fontSize = 56.sp, fontWeight = FontWeight.Light, modifier = Modifier.padding(vertical = 8.dp))
+                        Text(formatDuration(state.elapsedMs), fontSize = 56.sp, fontWeight = FontWeight.Light, modifier = Modifier.padding(vertical = 8.dp).horizontalScroll(rememberScrollState()), maxLines = 1, softWrap = false)
                         Row(horizontalArrangement = Arrangement.spacedBy(24.dp), verticalAlignment = Alignment.CenterVertically) {
                             IconButton(
                                 onClick = { ScreenRecorderService.togglePause(context) },
@@ -221,16 +224,15 @@ fun ScreenRecorderScreen() {
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
             )
+            }
             if (recordings.isEmpty()) {
-                Text(stringResource(R.string.screenrec_no_recordings), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 20.dp))
+                item(key = "empty") { Text(stringResource(R.string.screenrec_no_recordings), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 20.dp)) }
             } else {
-                TelosSearchBar(recQuery, { recQuery = it }, stringResource(R.string.tsp_search_recordings))
-                if (shownRecordings.isEmpty() && recQuery.isNotBlank()) SearchEmptyState(recQuery)
-                LazyColumn(Modifier.weight(1f).fillMaxWidth()) {
+                item(key = "search") { TelosSearchBar(recQuery, { recQuery = it }, stringResource(R.string.tsp_search_recordings)) }
+                if (shownRecordings.isEmpty() && recQuery.isNotBlank()) item(key = "search-empty") { SearchEmptyState(recQuery) }
                     items(shownRecordings, key = { it.uri.toString() }) { rec ->
                         RecordingRow(rec, onDelete = { deleting = rec })
                     }
-                }
             }
         }
     }

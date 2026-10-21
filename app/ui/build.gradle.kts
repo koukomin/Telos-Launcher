@@ -14,13 +14,17 @@ android {
     }
 
     packaging {
+        // The standalone library test APK includes both existing JavaMail jars. Preserve
+        // their duplicate notices together rather than dropping license text to package it.
+        resources.merges.add("META-INF/LICENSE.md")
+        resources.merges.add("META-INF/NOTICE.md")
         resources.excludes.add("META-INF/DEPENDENCIES")
         resources.excludes.add("META-INF/INDEX.LIST")
     }
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
         signingConfig = signingConfigs.getByName("debug")
@@ -226,6 +230,9 @@ dependencies {
     implementation("com.google.guava:guava:31.1-android")
     // === TELOS_PENDING_REVIEW_END: radio_mini_player ===
 
+    androidTestImplementation(libs.androidx.compose.uitestjunit4)
+    androidTestImplementation(libs.androidx.junit)
+    debugImplementation(libs.androidx.compose.uitestmanifest)
     testImplementation(libs.bundles.tests)
     testImplementation("org.json:json:20240303")
 }

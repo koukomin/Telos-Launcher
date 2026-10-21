@@ -1,0 +1,18 @@
+<resources>
+    <string name="au_phonea_backspace">حذف رقم</string>
+    <string name="cal_no_events">رویدادی وجود ندارد</string>
+    <string name="calculator_copy_result">کپی نتیجه</string>
+    <string name="calculator_history">تاریخچه</string>
+    <string name="calculator_more">گزینه‌های بیشتر</string>
+    <string name="calculator_scientific">ماشین‌حساب علمی</string>
+    <string name="calculator_standard">ماشین‌حساب استاندارد</string>
+    <string name="calculator_unit_converter">مبدل واحد</string>
+    <string name="calculator_vat">مالیات بر ارزش افزوده</string>
+    <string name="hc_no_contacts_found">مخاطبی پیدا نشد</string>
+    <string name="hc_speed_dial_not_assigned">شماره‌گیری سریع تنظیم نشده است</string>
+    <string name="recents_empty_msg">تاریخچه تماس‌های شما اینجا نمایش داده می‌شود.</string>
+    <string name="recents_empty_title">تماس اخیری وجود ندارد</string>
+    <string name="screenrec_no_recordings">هنوز ضبط صفحه‌ای وجود ندارد</string>
+    <string name="search_action_call">تماس</string>
+    <string name="search_action_contact">افزودن به مخاطبان</string>
+</resources>

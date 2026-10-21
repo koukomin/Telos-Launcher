@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">Terminal</string>
-    <string name="terminal_runtime_summary">Folosește Termux instalat separat. Instalați Termux și toate suplimentele din aceeași sursă. Shell-ul rulează în Termux, în afara Telos.</string>
-    <string name="terminal_open_failed">Nu s-a putut deschide Termux sau site-ul.</string>
-</resources>

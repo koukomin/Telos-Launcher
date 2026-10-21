@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">不再显示</string>
+  <string name="app_polish_show_info">录音前显示说明</string>
+  <string name="app_polish_yellow_black">黄色 / 黑色</string>
+  <string name="app_polish_blue_yellow">蓝色 / 黄色</string>
+  <string name="app_polish_exit_light">点按退出屏幕照明</string>
+  <string name="app_polish_light_source">光源</string>
+  <string name="app_polish_screen_light">屏幕照明</string>
+  <string name="app_polish_siren">紧急警报</string>
+  <string name="app_polish_alternating">红蓝交替</string>
+  <string name="app_polish_strobe">闪烁频率</string>
+  <string name="app_polish_morse">摩尔斯电码</string>
+  <string name="app_polish_message">要发送的消息</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">请重启受影响的应用，以使用所选渲染器。</string>
+  <string name="app_polish_restart_notice">显示渲染器重启提示</string>
+</resources>

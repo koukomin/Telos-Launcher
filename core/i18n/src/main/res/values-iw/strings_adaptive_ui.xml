@@ -1,0 +1,18 @@
+<resources>
+    <string name="au_phonea_backspace">מחיקת ספרה</string>
+    <string name="cal_no_events">אין אירועים</string>
+    <string name="calculator_copy_result">העתקת התוצאה</string>
+    <string name="calculator_history">היסטוריה</string>
+    <string name="calculator_more">אפשרויות נוספות</string>
+    <string name="calculator_scientific">מחשבון מדעי</string>
+    <string name="calculator_standard">מחשבון רגיל</string>
+    <string name="calculator_unit_converter">ממיר יחידות</string>
+    <string name="calculator_vat">מע״מ</string>
+    <string name="hc_no_contacts_found">לא נמצאו אנשי קשר</string>
+    <string name="hc_speed_dial_not_assigned">לא הוגדר חיוג מהיר</string>
+    <string name="recents_empty_msg">היסטוריית השיחות שלך תופיע כאן.</string>
+    <string name="recents_empty_title">אין שיחות אחרונות</string>
+    <string name="screenrec_no_recordings">עדיין אין הקלטות מסך</string>
+    <string name="search_action_call">התקשרות</string>
+    <string name="search_action_contact">הוספה לאנשי קשר</string>
+</resources>

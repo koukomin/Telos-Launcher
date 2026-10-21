@@ -4,6 +4,13 @@ import androidx.activity.compose.LocalActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
@@ -60,7 +67,7 @@ fun PreferenceScreen(
                 title,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(horizontal = 16.dp),
-                maxLines = 1
+                maxLines = 2
             )
         },
         topBarActions = topBarActions,
@@ -96,23 +103,28 @@ fun PreferenceScreen(
             )
         },
         containerColor = Color.Transparent
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-
-                .background(virtualAppSurface())
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
-            state = lazyColumnState,
-            content = content,
-            verticalArrangement = verticalArrangement,
-            contentPadding = PaddingValues(
-                top = it.calculateTopPadding() + 12.dp,
-                bottom = it.calculateBottomPadding() + 12.dp,
-                start = 12.dp,
-                end = 12.dp
+    ) { insets ->
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val gutter = de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy.contentGutter(maxWidth.value).dp
+            val direction = LocalLayoutDirection.current
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .consumeWindowInsets(insets)
+                    .imePadding()
+                    .background(virtualAppSurface())
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                state = lazyColumnState,
+                content = content,
+                verticalArrangement = verticalArrangement,
+                contentPadding = PaddingValues(
+                    top = insets.calculateTopPadding() + 12.dp,
+                    bottom = insets.calculateBottomPadding() + 12.dp,
+                    start = insets.calculateStartPadding(direction) + gutter,
+                    end = insets.calculateEndPadding(direction) + gutter
+                )
             )
-        )
+        }
     }
 }
 
@@ -141,24 +153,29 @@ fun DragAndDropPreferenceScreen(
             )
         },
         containerColor = Color.Transparent
-    ) {
-        LazyDragAndDropColumn(
-            modifier = Modifier
-                .fillMaxSize()
-
-                .background(virtualAppSurface())
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
-            state = lazyColumnState,
-            content = content,
-            verticalArrangement = verticalArrangement,
-            contentPadding = PaddingValues(
-                top = it.calculateTopPadding() + 12.dp,
-                bottom = it.calculateBottomPadding() + 12.dp,
-                start = 12.dp,
-                end = 12.dp
-            ),
-            bidirectionalDrag = false,
-        )
+    ) { insets ->
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val gutter = de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy.contentGutter(maxWidth.value).dp
+            val direction = LocalLayoutDirection.current
+            LazyDragAndDropColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .consumeWindowInsets(insets)
+                    .imePadding()
+                    .background(virtualAppSurface())
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                state = lazyColumnState,
+                content = content,
+                verticalArrangement = verticalArrangement,
+                contentPadding = PaddingValues(
+                    top = insets.calculateTopPadding() + 12.dp,
+                    bottom = insets.calculateBottomPadding() + 12.dp,
+                    start = insets.calculateStartPadding(direction) + gutter,
+                    end = insets.calculateEndPadding(direction) + gutter
+                ),
+                bidirectionalDrag = false,
+            )
+        }
     }
 }
 
@@ -178,6 +195,9 @@ private fun PreferenceScreenTopBar(
     CenterAlignedTopAppBar(
         modifier = modifier,
         title = title,
+        expandedHeight = maxOf(64.dp, with(LocalDensity.current) {
+            MaterialTheme.typography.titleLarge.lineHeight.toDp() * 2 + 16.dp
+        }),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent,

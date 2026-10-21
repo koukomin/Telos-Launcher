@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">Terminal</string>
-    <string name="terminal_runtime_summary">Usa Termux installate separatemente. Installa Termux e tote extensiones del mesme fonte. Le shell se executa in Termux, foras de Telos.</string>
-    <string name="terminal_open_failed">Impossibile aperir Termux o le sito web.</string>
-</resources>

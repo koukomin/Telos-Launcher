@@ -174,6 +174,14 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
             )
         }
 
+        // Restore persisted renderer intent on process startup too; do not block first frame.
+        launch(Dispatchers.IO) {
+            runCatching {
+                val graphics = get<CommsSettings>().snapshot.first()
+                val renderer = de.mm20.launcher2.comms.graphics.HwuiRenderer
+                if (graphics.hwuiRestoreOnBoot && graphics.hwuiRenderer != renderer.MODE_DEFAULT && renderer.current() != graphics.hwuiRenderer) renderer.apply(graphics.hwuiRenderer)
+            }
+        }
         // Resume the floating quick launcher overlay after a process restart (e.g. reboot),
         // since it isn't a persistent system-level component and only runs while this process
         // is alive.

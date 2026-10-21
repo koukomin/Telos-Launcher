@@ -18,7 +18,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.Alignment
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -105,7 +115,17 @@ fun MediaSearchBar(
     placeholder: String,
     modifier: Modifier = Modifier,
 ) {
-    de.mm20.launcher2.ui.component.TelosSearchBar(value, onValueChange, placeholder, modifier)
+    var expanded by rememberSaveable { mutableStateOf(value.isNotEmpty()) }
+    Column(modifier.fillMaxWidth()) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+            IconButton(onClick = { expanded = !expanded; if (!expanded) onValueChange("") }) {
+                Icon(painterResource(if (expanded) R.drawable.close_24px else R.drawable.search_24px), placeholder)
+            }
+        }
+        AnimatedVisibility(expanded, enter = expandVertically() + fadeIn(), exit = shrinkVertically() + fadeOut()) {
+            de.mm20.launcher2.ui.component.TelosSearchBar(value, onValueChange, placeholder, autoFocus = true)
+        }
+    }
 }
 
 /** Playback notifications need the notification permission on Android 13 and newer. */

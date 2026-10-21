@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Больш не паказваць</string>
+  <string name="app_polish_show_info">Паказваць звесткі перад запісам</string>
+  <string name="app_polish_yellow_black">Жоўты / чорны</string>
+  <string name="app_polish_blue_yellow">Сіні / жоўты</string>
+  <string name="app_polish_exit_light">Націсніце, каб выключыць святло экрана</string>
+  <string name="app_polish_light_source">Крыніца святла</string>
+  <string name="app_polish_screen_light">Святло экрана</string>
+  <string name="app_polish_siren">Аварыйная сірэна</string>
+  <string name="app_polish_alternating">Чаргаванне чырвонага / сіняга</string>
+  <string name="app_polish_strobe">Частата мігцення</string>
+  <string name="app_polish_morse">Код Морзэ</string>
+  <string name="app_polish_message">Паведамленне для перадачы</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Перазапусціце адпаведныя праграмы, каб выкарыстоўваць выбраны сродак візуалізацыі.</string>
+  <string name="app_polish_restart_notice">Паказваць апавяшчэнне пра перазапуск візуалізацыі</string>
+</resources>

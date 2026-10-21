@@ -21,7 +21,7 @@ open class VideoPlaybackService : MediaSessionService() {
         setMediaNotificationProvider(
             androidx.media3.session.DefaultMediaNotificationProvider.Builder(this)
                 .setNotificationId(if (de.mm20.launcher2.base.ProcessInfo.isolatedPlayer) 7406 else 7405)
-                .build()
+                .build().apply { setSmallIcon(de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_video_app")!!) }
         )
         VideoSession.service = this
         VideoSession.player?.let { open(it) }

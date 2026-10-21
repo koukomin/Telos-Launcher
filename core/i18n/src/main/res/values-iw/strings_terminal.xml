@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="terminal_title">מסוף</string>
-    <string name="terminal_runtime_summary">משתמש ב־Termux המותקן בנפרד. יש להתקין את Termux ואת כל התוספים מאותו מקור. המעטפת פועלת ב־Termux מחוץ ל־Telos.</string>
-    <string name="terminal_open_failed">לא ניתן לפתוח את Termux או את האתר.</string>
-</resources>

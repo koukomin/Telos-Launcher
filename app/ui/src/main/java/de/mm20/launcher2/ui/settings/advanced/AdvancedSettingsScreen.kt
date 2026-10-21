@@ -29,6 +29,7 @@ fun AdvancedSettingsScreen() {
     ) {
         item {
             GraphicsApiPreferenceCategory()
+            de.mm20.launcher2.ui.system.SavedWifiPasswordsPreference()
         }
         item {
             PreferenceCategory {

@@ -2,7 +2,7 @@
 
 VirtualAppTheme in app/ui/component/VirtualAppBlur.kt supplies wallpaper-aware backgrounds through the launcher theme for TelosAppActivity and embedded virtual routes. New routes should use this wrapper rather than add an opaque root surface. Preserve contrast on media/night-mode surfaces. Use scrolling content with fixed critical actions, wrap labels, and adapt to available width rather than reduce the user font scale.
 
-Camera owns its CameraX/Camera2 capture pipeline. Ermis owns native IMAP/SMTP transport, encrypted storage and mail UI. Terminal currently has an experimental bootstrap downloader/command runner; prefix relocation, persistent PTY and Android execution compatibility remain unimplemented. TerminalRuntimeArchive bounds expansion and rejects canonical-path escapes. Keep capability and provider limits explicit.
+Camera owns its CameraX/Camera2 capture pipeline. Ermis owns native IMAP/SMTP transport, encrypted storage and mail UI. The embedded terminal was removed. Official Termux is a Store recommendation and external keyboard-shortcut destination.
 
 Ermis scopes a readable tonal palette inside the transparent virtual-app theme: cleared parent surface colors cannot be reused as mail-card or input backgrounds. Its root retains a small amount of wallpaper translucency; composer/reader pages use opaque surfaces. Android Email contact picking grants access only to the chosen data URI, read on Dispatchers.IO; it does not enumerate the full address book.
 
@@ -30,7 +30,7 @@ The provider supplies pixels only; it never paints a full-screen layer over the 
 
 Radius is converted from dp using the actual window-to-source center-crop scale, including portrait/landscape changes. Settings and Calendar avoid adding a second full-window backing; full-screen Ermis dialogs own exactly one shared backing in their own window. Photos Home/Both actions use the same snapshot writer as the wallpaper settings.
 
-Material container-low/high roles retain their surface/elevated theme opacity for inner controls and cards; only full-window background/surface roles are cleared. Existing wallpaper target/action messages are completed in all supported locales when reused from Photos.
+Material container roles are opaque tonal surfaces for inner controls and cards; only full-window background/surface roles are cleared. Existing wallpaper target/action messages are completed in all supported locales when reused from Photos.
 
 
 Telos video wallpaper glass samples only the service’s own rendered surface with asynchronous PixelCopy, at most 192 pixels per edge and eight updates per second (slower than video playback). One readback can be in flight across engines; CPU blur runs on Default and shares up to four radius/viewport profiles across active Activity providers. No player rebuild, screen capture, permission prompt or extra decoder is needed. Sampling stops when the wallpaper is hidden, playback pauses for battery/thermal policy, or no started glass provider requests frames; failures clear to translucent tint. Preview engines never publish. Compose reads the shared frame state during drawing, avoiding full-page recomposition on each frame. Static wallpaper caching remains unchanged. Physical-device visual/performance verification remains outstanding.
@@ -111,3 +111,43 @@ Optional resolution, maximum advertised size and CAM/screener preferences read s
 SubtitleSelectionSheet lists individual text tracks with language/label and selected state, supports search and None, and keeps file/online actions below a lazy scrolling list that adapts to landscape height.
 
 Automatic torrent continuation additionally requires a non-negative provider file index; the opened torrent must contain that video index, otherwise it stops instead of selecting the largest file. Episode IDs and intent titles are bounded to 512 characters each to keep the 100-entry continuation queue within a predictable intent payload.
+
+## Utility and media readability
+
+The shared virtual-app palette now keeps every container role opaque, while the
+root backing retains wallpaper blur. Cleared root roles retain their RGB tone so
+legacy opacity adjustments do not accidentally become black. Radio inherits the launcher palette by default, and its scoped theme supplies
+its own content color, so a light Radio palette cannot inherit white text from a dark
+launcher. Compact station rows use fixed-size logos and adaptive columns. Media
+search opens from an icon with an expand/fade animation. Drawer width leaves an
+outside dismissal area even on narrow windows with large fonts.
+
+Clock suggestions appear on focused empty search, starting with Athens unless
+Greece is the home country or app locale. The search uses the shared pill.
+Magnifier filters move into a menu and controls occupy a smaller landscape panel.
+The trash unlock screen reattaches to AndroidX's retained biometric prompt; the
+unlock state lives only in the task ViewModel. Process death requires authentication.
+
+Video thumbnails use the bounded shared ViewerThumbnails cache and retriever
+fallback, not just MediaStore.loadThumbnail. Poster load errors fall back to a
+local video frame. Unsupported formats/codecs still show the file-type tile.
+Viewer selection reuses the shared URI delete/trash flow for multiple files.
+
+HWUI startup restoration is asynchronous and honors the existing opt-in. OpenGL
+uses skiagl. The selected property is not proof of the renderer in an already
+running process: Android locks that pipeline at initialization. The notice is
+on by default and configurable. Saved Wi-Fi reveal is authenticated and disabled
+without root/Shizuku; parsing cannot cross network blocks, and backgrounding clears
+revealed credentials. OEM/SELinux restrictions may still prevent reading the store.
+
+Use the [adaptive UI contract](./adaptive-ui) for shared tokens, preference/navigation components,
+font scaling, insets and required validation. See [UI validation](./ui-validation) for execution
+evidence; shared host changes are not proof that every hardware/editor state was visually tested.
+
+
+Recents uses one non-exported activity alias per document-task identity, each with
+a static localized label and icon targeting TelosAppActivity. This preserves app
+identity on OEM launchers that fall back to ActivityInfo instead of dynamic
+TaskDescription metadata. Media and Viewer route aliases retain their existing
+shared task identities. Existing Android snapshots may retain old metadata until
+the old task is closed/reopened; no old task or unsaved editor is forcibly removed.

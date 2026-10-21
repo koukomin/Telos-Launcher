@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Ära enam näita</string>
+  <string name="app_polish_show_info">Näita teavet enne salvestamist</string>
+  <string name="app_polish_yellow_black">Kollane / must</string>
+  <string name="app_polish_blue_yellow">Sinine / kollane</string>
+  <string name="app_polish_exit_light">Ekraanivalgusest väljumiseks puuduta</string>
+  <string name="app_polish_light_source">Valgusallikas</string>
+  <string name="app_polish_screen_light">Ekraanivalgus</string>
+  <string name="app_polish_siren">Häiresireen</string>
+  <string name="app_polish_alternating">Vahelduv punane / sinine</string>
+  <string name="app_polish_strobe">Vilkumissagedus</string>
+  <string name="app_polish_morse">Morsekood</string>
+  <string name="app_polish_message">Edastatav sõnum</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Valitud renderdaja kasutamiseks taaskäivita asjaomased rakendused.</string>
+  <string name="app_polish_restart_notice">Näita renderdaja taaskäivitamise teadet</string>
+</resources>

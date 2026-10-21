@@ -501,6 +501,11 @@ class CommsSettings internal constructor(
     fun setHwuiRestoreOnBoot(enabled: Boolean) {
         dataStore.update { it.copy(comms = it.comms.copy(hwuiRestoreOnBoot = enabled)) }
     }
+    val hwuiShowRestartNotice
+        get() = dataStore.data.map { it.comms.hwuiShowRestartNotice }
+    fun setHwuiShowRestartNotice(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(hwuiShowRestartNotice = enabled)) }
+    }
     val hwuiWidgetSwitch
         get() = dataStore.data.map { it.comms.hwuiWidgetSwitch }
     fun setHwuiWidgetSwitch(enabled: Boolean) {

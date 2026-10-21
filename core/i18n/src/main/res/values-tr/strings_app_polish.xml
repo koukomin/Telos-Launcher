@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Bir daha gösterme</string>
+  <string name="app_polish_show_info">Kayıttan önce bilgileri göster</string>
+  <string name="app_polish_yellow_black">Sarı / siyah</string>
+  <string name="app_polish_blue_yellow">Mavi / sarı</string>
+  <string name="app_polish_exit_light">Ekran ışığından çıkmak için dokunun</string>
+  <string name="app_polish_light_source">Işık kaynağı</string>
+  <string name="app_polish_screen_light">Ekran ışığı</string>
+  <string name="app_polish_siren">Acil durum sireni</string>
+  <string name="app_polish_alternating">Dönüşümlü kırmızı / mavi</string>
+  <string name="app_polish_strobe">Yanıp sönme sıklığı</string>
+  <string name="app_polish_morse">Mors kodu</string>
+  <string name="app_polish_message">İletilecek mesaj</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Seçilen oluşturucuyu kullanmak için etkilenen uygulamaları yeniden başlatın.</string>
+  <string name="app_polish_restart_notice">Oluşturucu yeniden başlatma uyarısını göster</string>
+</resources>

@@ -91,7 +91,7 @@ class VideoWallpaperService : WallpaperService() {
 
         private var xOffset = 0.5f
         private var cachedColors: WallpaperColors? = null
-        
+
         // === TELOS_PENDING_REVIEW_START: undead_wallpaper_sync ===
         private val playerMutex = Mutex()
         private var isDoubleTapPaused = false
@@ -227,7 +227,7 @@ class VideoWallpaperService : WallpaperService() {
             super.onSurfaceChanged(holder, format, width, height)
             // The Presentation effect is sized to the surface, so a resize (e.g. rotation)
             // needs a rebuilt pipeline. With default transforms MediaCodec handles scaling.
-            if (!hasDefaultTransforms()) recreatePlayer()
+            recreatePlayer()
         }
 
         override fun onSurfaceDestroyed(holder: SurfaceHolder) {
@@ -418,7 +418,7 @@ class VideoWallpaperService : WallpaperService() {
 
         @OptIn(UnstableApi::class)
         private fun buildEffects(): List<Effect> {
-            if (hasDefaultTransforms()) return emptyList()
+
 
             val effects = mutableListOf<Effect>()
 
@@ -477,10 +477,10 @@ class VideoWallpaperService : WallpaperService() {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) return
             scope?.launch(Dispatchers.IO) {
                 val dir = WallpapersService.getVideoDir(this@VideoWallpaperService)
-                val file = dir.listFiles()?.filter { !it.name.endsWith(".tmp") }?.firstOrNull() 
+                val file = dir.listFiles()?.filter { !it.name.endsWith(".tmp") }?.firstOrNull()
                     ?: WallpapersService.getVideoFile(this@VideoWallpaperService).takeIf { it.exists() }
                     ?: return@launch
-                
+
                 val retriever = MediaMetadataRetriever()
                 try {
                     retriever.setDataSource(file.absolutePath)

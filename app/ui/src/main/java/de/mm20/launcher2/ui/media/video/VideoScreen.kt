@@ -191,7 +191,9 @@ fun VideoScreen() {
                     ResumeStore.markUnwatched(context, video.uri)
                     viewModel.load(context)
                 } catch (e: SecurityException) {
-                    val action = (e as? android.app.RecoverableSecurityException)?.userAction?.actionIntent?.intentSender
+                    val action = if (Build.VERSION.SDK_INT >= 29) {
+                        (e as? android.app.RecoverableSecurityException)?.userAction?.actionIntent?.intentSender
+                    } else null
                     if (action != null) deleteLauncher.launch(androidx.activity.result.IntentSenderRequest.Builder(action).build()) else throw e
                 }
             }
@@ -609,12 +611,8 @@ internal fun VideoMenu(video: VideoItem, expanded: Boolean, seen: Boolean, onDis
 internal fun VideoThumb(video: VideoItem, modifier: Modifier) {
     val context = LocalContext.current
     val bitmap by produceState<Bitmap?>(null, video.uri) {
-        value = withContext(Dispatchers.IO) {
-            runCatching {
-                if (Build.VERSION.SDK_INT >= 29) context.contentResolver.loadThumbnail(video.uri, Size(320, 180), null)
-                else null
-            }.getOrNull()
-        }
+        value = null
+        value = de.mm20.launcher2.ui.media.docs.ViewerThumbnails.load(context.applicationContext, video.uri, video.fileName, video.durationMs)
     }
     Box(modifier.background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
         val b = bitmap
@@ -635,12 +633,13 @@ internal fun formatDuration(ms: Long): String {
 }
 
 @Composable
-internal fun Poster(url: String?, modifier: Modifier) {
+internal fun Poster(url: String?, modifier: Modifier, fallback: (@Composable () -> Unit)? = null) {
+    var failed by remember(url) { mutableStateOf(false) }
     Box(modifier.background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
-        if (url == null) {
-            Icon(painterResource(R.drawable.movie_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
+        if (url == null || failed) {
+            if (fallback != null) fallback() else Icon(painterResource(R.drawable.movie_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
         } else {
-            coil.compose.AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+            coil.compose.AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize(), onError = { failed = true })
         }
     }
 }

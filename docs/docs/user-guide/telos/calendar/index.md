@@ -58,3 +58,6 @@ calendar (same title and start) are not added twice. The backup also keeps the *
 - No guests, no video links, no tasks, one reminder per event
 - Editing one occurrence of a repeating event is not possible, only the whole series
 - Sync is done by the account's sync adapter, so Telos cannot show a sync error
+
+Tap the month/year heading to jump directly to another month and year. The wheel
+controls support both scrolling and keyboard editing; confirm to change the view.

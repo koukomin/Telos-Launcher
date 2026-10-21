@@ -44,6 +44,10 @@ fun AkouScreen() {
     val history = remember { AkouHistory(context.applicationContext) }
     var entries by remember { mutableStateOf<List<RecognizedSong>>(emptyList()) }
     LaunchedEffect(history) { entries = withContext(Dispatchers.IO) { history.read() } }
+    val prefs = remember { context.applicationContext.getSharedPreferences("akou_ui", android.content.Context.MODE_PRIVATE) }
+    var showDisclosure by remember { mutableStateOf(true) }
+    var showAbout by remember { mutableStateOf(false) }
+    LaunchedEffect(prefs) { showDisclosure = withContext(Dispatchers.IO) { prefs.getBoolean("show_disclosure", true) } }
     var phase by remember { mutableIntStateOf(0) }
     var status by remember { mutableIntStateOf(0) }
     var job by remember { mutableStateOf<Job?>(null) }
@@ -72,15 +76,24 @@ fun AkouScreen() {
     LifecycleEventEffect(Lifecycle.Event.ON_STOP) { job?.cancel() }
     DisposableEffect(Unit) { onDispose { job?.cancel() } }
     Scaffold(containerColor = MaterialTheme.colorScheme.surface, topBar = {
-        TopAppBar(title = { Text("Άκου") }, navigationIcon = {
+        TopAppBar(title = { Text(stringResource(R.string.telos_akou_app_label)) }, navigationIcon = {
             IconButton(onClick = { backStack.removeLastOrNull() }) {
                 Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
+            }
+        }, actions = {
+            IconButton(onClick = { showAbout = true }) {
+                Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.hc_settings))
             }
         })
     }) { padding ->
         LazyColumn(Modifier.fillMaxSize().padding(padding), contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item {
-                Text(stringResource(R.string.akou_provider_disclosure), style = MaterialTheme.typography.bodyMedium)
+                if (showDisclosure) {
+                    Text(stringResource(R.string.akou_provider_disclosure), style = MaterialTheme.typography.bodyMedium)
+                    TextButton(onClick = { showDisclosure = false; prefs.edit().putBoolean("show_disclosure", false).apply() }) {
+                        Text(stringResource(R.string.app_polish_dont_show))
+                    }
+                }
                 Spacer(Modifier.height(12.dp))
                 Button( modifier = Modifier.fillMaxWidth(), onClick = {
                     if (phase != 0) job?.cancel()
@@ -116,4 +129,19 @@ fun AkouScreen() {
             }
         }
     }
+    if (showAbout) AlertDialog(
+        onDismissRequest = { showAbout = false },
+        title = { Text(stringResource(R.string.telos_akou_app_label)) },
+        text = { Column {
+            Text(stringResource(R.string.akou_provider_disclosure))
+            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+                Checkbox(checked = showDisclosure, onCheckedChange = {
+                    showDisclosure = it; prefs.edit().putBoolean("show_disclosure", it).apply()
+                })
+                Text(stringResource(R.string.app_polish_show_info), Modifier.weight(1f))
+            }
+        } },
+        confirmButton = { TextButton(onClick = { showAbout = false }) { Text(stringResource(android.R.string.ok)) } },
+    )
+
 }

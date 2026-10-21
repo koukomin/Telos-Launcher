@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_polish_dont_show">Daugiau nerodyti</string>
+  <string name="app_polish_show_info">Rodyti informaciją prieš įrašant</string>
+  <string name="app_polish_yellow_black">Geltona / juoda</string>
+  <string name="app_polish_blue_yellow">Mėlyna / geltona</string>
+  <string name="app_polish_exit_light">Palieskite, kad išjungtumėte ekrano šviesą</string>
+  <string name="app_polish_light_source">Šviesos šaltinis</string>
+  <string name="app_polish_screen_light">Ekrano šviesa</string>
+  <string name="app_polish_siren">Avarinė sirena</string>
+  <string name="app_polish_alternating">Pakaitomis raudona / mėlyna</string>
+  <string name="app_polish_strobe">Mirksėjimo dažnis</string>
+  <string name="app_polish_morse">Morzės kodas</string>
+  <string name="app_polish_message">Siunčiamas pranešimas</string>
+  <string name="app_polish_sos">SOS</string>
+  <string name="app_polish_renderer_restart">Norėdami naudoti pasirinktą atvaizdavimo sistemą, iš naujo paleiskite susijusias programėles.</string>
+  <string name="app_polish_restart_notice">Rodyti pranešimą apie atvaizdavimo sistemos paleidimą iš naujo</string>
+</resources>

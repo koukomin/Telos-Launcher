@@ -277,6 +277,7 @@ class SipService : Service(), KoinComponent {
                 de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_phone_app")
                     ?: android.R.drawable.stat_sys_phone_call,
             )
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, this, "telos_phone_app") }
             .setContentTitle("Telos SIP")
             .setContentText(text)
             .setOngoing(true)
@@ -292,6 +293,7 @@ class SipService : Service(), KoinComponent {
                 de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_phone_app")
                     ?: android.R.drawable.stat_sys_phone_call,
             )
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, this, "telos_phone_app") }
             .setContentTitle(getString(I18nR.string.au_phoneb_sip_incoming))
             .setContentText(name)
             .setCategory(NotificationCompat.CATEGORY_CALL)
@@ -306,7 +308,7 @@ class SipService : Service(), KoinComponent {
 
     private fun missedNotification(number: String): Notification =
         NotificationCompat.Builder(this, CHANNEL_CALLS)
-            .setSmallIcon(android.R.drawable.sym_call_missed)
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, this, "telos_phone_app") }
             .setContentTitle(getString(I18nR.string.au_phoneb_sip_missed))
             .setContentText(SipUri.displayName(this, number))
             .setAutoCancel(true)

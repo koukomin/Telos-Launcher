@@ -5,6 +5,7 @@ import android.media.AudioManager
 import android.media.ToneGenerator
 import android.provider.ContactsContract
 import android.widget.Toast
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -126,278 +127,274 @@ fun DialpadScreen(initialNumber: String = "") {
         val ok = de.mm20.launcher2.comms.AuthManager().authenticateNative(activity, vaultTitle)
         if (ok) viewModel.onVaultAuthSuccess() else viewModel.onVaultAuthHandled()
     }
-    val landscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
-    val fontScale = LocalDensity.current.fontScale.coerceIn(1f, 1.4f)
-    val keySize = (
-        when {
-            landscape -> 48.dp
-            LocalConfiguration.current.screenHeightDp < 480 -> 46.dp
-            LocalConfiguration.current.screenHeightDp < 700 -> 60.dp
-            else -> 78.dp
+    androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
+        val fontScale = LocalDensity.current.fontScale
+        val keySize = minOf(78.dp, (maxWidth - 24.dp) / 3).coerceAtLeast(48.dp)
+        val compact = maxHeight < 700.dp || fontScale > 1.15f
+
+        val toneGenerator = remember {
+            runCatching { ToneGenerator(AudioManager.STREAM_DTMF, 80) }.getOrNull()
         }
-    ) * fontScale
-    val compact = landscape || fontScale > 1.15f
-
-    val toneGenerator = remember {
-        runCatching { ToneGenerator(AudioManager.STREAM_DTMF, 80) }.getOrNull()
-    }
-    DisposableEffect(toneGenerator) {
-        onDispose { toneGenerator?.release() }
-    }
-
-    fun playTone(digit: Char) {
-        if (!sounds) return
-        val tone = when (digit) {
-            '0' -> ToneGenerator.TONE_DTMF_0
-            '1' -> ToneGenerator.TONE_DTMF_1
-            '2' -> ToneGenerator.TONE_DTMF_2
-            '3' -> ToneGenerator.TONE_DTMF_3
-            '4' -> ToneGenerator.TONE_DTMF_4
-            '5' -> ToneGenerator.TONE_DTMF_5
-            '6' -> ToneGenerator.TONE_DTMF_6
-            '7' -> ToneGenerator.TONE_DTMF_7
-            '8' -> ToneGenerator.TONE_DTMF_8
-            '9' -> ToneGenerator.TONE_DTMF_9
-            '*' -> ToneGenerator.TONE_DTMF_S
-            '#' -> ToneGenerator.TONE_DTMF_P
-            else -> return
+        DisposableEffect(toneGenerator) {
+            onDispose { toneGenerator?.release() }
         }
-        toneGenerator?.startTone(tone, 150)
-    }
 
-    fun onDigit(digit: String, long: Boolean) {
-        if (vibrate) haptic.performHapticFeedback(
-            if (long) HapticFeedbackType.LongPress else HapticFeedbackType.TextHandleMove
-        )
-        if (long) {
-            if (digit == "0") {
-                playTone('0')
-                viewModel.onKeyPressed('+')
-            } else if (digit == "1" && speedDials[1].isNullOrEmpty()) {
-                viewModel.dialVoicemail(context)
-            } else if (digit.first().isDigit()) {
-                val number = speedDials[digit.toInt()]
-                if (number != null) viewModel.dial(context, number)
-                else Toast.makeText(context, context.getString(R.string.hc_speed_dial_not_assigned), Toast.LENGTH_SHORT).show()
+        fun playTone(digit: Char) {
+            if (!sounds) return
+            val tone = when (digit) {
+                '0' -> ToneGenerator.TONE_DTMF_0
+                '1' -> ToneGenerator.TONE_DTMF_1
+                '2' -> ToneGenerator.TONE_DTMF_2
+                '3' -> ToneGenerator.TONE_DTMF_3
+                '4' -> ToneGenerator.TONE_DTMF_4
+                '5' -> ToneGenerator.TONE_DTMF_5
+                '6' -> ToneGenerator.TONE_DTMF_6
+                '7' -> ToneGenerator.TONE_DTMF_7
+                '8' -> ToneGenerator.TONE_DTMF_8
+                '9' -> ToneGenerator.TONE_DTMF_9
+                '*' -> ToneGenerator.TONE_DTMF_S
+                '#' -> ToneGenerator.TONE_DTMF_P
+                else -> return
             }
-        } else {
-            playTone(digit.first())
-            viewModel.onKeyPressed(digit.first())
+            toneGenerator?.startTone(tone, 150)
         }
-    }
 
-    Column(
-        Modifier
-            .fillMaxSize()
-            .then(if (compact) Modifier.verticalScroll(rememberScrollState()) else Modifier),
-    ) {
-        Text(
-            text = input.ifEmpty { " " },
-            style = MaterialTheme.typography.headlineMedium.copy(fontSize = if (compact) 28.sp else 36.sp),
-            fontWeight = FontWeight.Normal,
-            color = MaterialTheme.colorScheme.onSurface,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 56.dp)
-                .heightIn(min = 56.dp)
-                .combinedClickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = {},
-                    onLongClick = {
-                        val clip = context.getSystemService(android.content.ClipboardManager::class.java)
-                            ?.primaryClip?.getItemAt(0)?.text?.toString().orEmpty()
-                        clip.filter { it.isDigit() || it == '+' || it == '*' || it == '#' }
-                            .forEach { viewModel.onKeyPressed(it) }
-                    },
-                ),
-        )
-        if (input.isNotBlank()) {
-            Text(
-                text = stringResource(R.string.search_action_contact),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .clip(RoundedCornerShape(12.dp))
-                    .clickable {
-                        val intent = Intent(Intent.ACTION_INSERT).apply {
-                            type = ContactsContract.RawContacts.CONTENT_TYPE
-                            putExtra(ContactsContract.Intents.Insert.PHONE, input)
-                        }
-                        context.tryStartActivity(intent)
-                    }
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
+        fun onDigit(digit: String, long: Boolean) {
+            if (vibrate) haptic.performHapticFeedback(
+                if (long) HapticFeedbackType.LongPress else HapticFeedbackType.TextHandleMove
             )
-        }
-        Box(if (compact) Modifier.fillMaxWidth().heightIn(min = 96.dp, max = 200.dp) else Modifier.weight(1f).fillMaxWidth()) {
-            if (input.isBlank()) {
-                if (recents.isEmpty()) {
-                    EmptyCommsTab(
-                        title = stringResource(R.string.recents_empty_title),
-                        message = stringResource(R.string.recents_empty_msg),
-                    )
-                } else {
-                    LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(recents, key = { it.id }) { call ->
-                            RecentCallRow(
-                                call = call,
-                                onCall = { viewModel.dial(context, call.phoneNumber) },
-                                onSms = { context.tryStartActivity(MessengerIntentUtils.sms(call.phoneNumber)) },
-                                onDelete = { viewModel.deleteRecent(call) },
-                                onDetails = {
-                                    backStack.add(ContactDetailsRoute(phoneNumber = call.phoneNumber))
-                                },
-                            )
-                        }
-                    }
+            if (long) {
+                if (digit == "0") {
+                    playTone('0')
+                    viewModel.onKeyPressed('+')
+                } else if (digit == "1" && speedDials[1].isNullOrEmpty()) {
+                    viewModel.dialVoicemail(context)
+                } else if (digit.first().isDigit()) {
+                    val number = speedDials[digit.toInt()]
+                    if (number != null) viewModel.dial(context, number)
+                    else Toast.makeText(context, context.getString(R.string.hc_speed_dial_not_assigned), Toast.LENGTH_SHORT).show()
                 }
             } else {
-                if (t9Results.isEmpty()) {
-                    Text(
-                        text = stringResource(R.string.hc_no_contacts_found),
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
-                    )
-                }
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(t9Results, key = { it.id }) { contact ->
-                        T9ContactRow(
-                            contact = contact,
-                            onCall = {
-                                contact.phoneNumbers.firstOrNull()?.let { viewModel.dial(context, it) }
-                            },
-                            onDetails = {
-                                backStack.add(ContactDetailsRoute(contactId = contact.id))
-                            },
-                        )
-                    }
-                }
+                playTone(digit.first())
+                viewModel.onKeyPressed(digit.first())
             }
         }
 
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 8.dp),
+            Modifier
+                .fillMaxSize()
+                .then(if (compact) Modifier.verticalScroll(rememberScrollState()) else Modifier),
         ) {
-            for (row in DIALPAD_KEYS.chunked(3)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                ) {
-                    for (key in row) {
-                        val letters = when (alphabet) {
-                            "greek" -> key.greek
-                            "cyrillic" -> key.cyrillic
-                            else -> key.latin
-                        }.ifEmpty { if (key.digit == "0") "+" else "" }
-                        DialpadKey(
-                            size = keySize,
-                            digit = key.digit,
-                            sublabel = if (hideLetters) "" else letters,
-                            onClick = { onDigit(key.digit, long = false) },
-                            onLongClick = { onDigit(key.digit, long = true) },
-                        )
-                    }
-                }
-            }
-
-            Row(
+            Text(
+                text = input.ifEmpty { " " },
+                style = MaterialTheme.typography.headlineMedium.copy(fontSize = if (compact) 28.sp else 36.sp),
+                fontWeight = FontWeight.Normal,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp, bottom = 8.dp),
-                horizontalArrangement = Arrangement.SpaceAround,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Box(Modifier.weight(1f))
-                if (sims.size >= 2) {
-                    sims.take(2).forEach { sim ->
-                        Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                            FloatingActionButton(
-                                onClick = {
-                                    viewModel.dialSim(
-                                        context,
-                                        input.filter { it.isDigit() || it == '+' || it == '*' || it == '#' },
-                                        sim.handle,
-                                    )
-                                },
-                                containerColor = MaterialTheme.colorScheme.primary,
-                                contentColor = MaterialTheme.colorScheme.onPrimary,
-                                modifier = Modifier.size(56.dp),
-                                shape = CircleShape,
-                            ) {
-                                Text(sim.label.take(4), style = MaterialTheme.typography.labelSmall)
+                    .padding(horizontal = 16.dp)
+                    .horizontalScroll(rememberScrollState(), reverseScrolling = true)
+                    .heightIn(min = 56.dp)
+                    .combinedClickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = {},
+                        onLongClick = {
+                            val clip = context.getSystemService(android.content.ClipboardManager::class.java)
+                                ?.primaryClip?.getItemAt(0)?.text?.toString().orEmpty()
+                            clip.filter { it.isDigit() || it == '+' || it == '*' || it == '#' }
+                                .forEach { viewModel.onKeyPressed(it) }
+                        },
+                    ),
+            )
+            if (input.isNotBlank()) {
+                Text(
+                    text = stringResource(R.string.search_action_contact),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .clip(RoundedCornerShape(12.dp))
+                        .clickable {
+                            val intent = Intent(Intent.ACTION_INSERT).apply {
+                                type = ContactsContract.RawContacts.CONTENT_TYPE
+                                putExtra(ContactsContract.Intents.Insert.PHONE, input)
+                            }
+                            context.tryStartActivity(intent)
+                        }
+                        .heightIn(min = 48.dp)
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                )
+            }
+            Box(if (compact) Modifier.fillMaxWidth().heightIn(min = 96.dp, max = 200.dp) else Modifier.weight(1f).fillMaxWidth()) {
+                if (input.isBlank()) {
+                    if (recents.isEmpty()) {
+                        EmptyCommsTab(
+                            title = stringResource(R.string.recents_empty_title),
+                            message = stringResource(R.string.recents_empty_msg),
+                        )
+                    } else {
+                        LazyColumn(modifier = Modifier.fillMaxSize()) {
+                            items(recents, key = { it.id }) { call ->
+                                RecentCallRow(
+                                    call = call,
+                                    onCall = { viewModel.dial(context, call.phoneNumber) },
+                                    onSms = { context.tryStartActivity(MessengerIntentUtils.sms(call.phoneNumber)) },
+                                    onDelete = { viewModel.deleteRecent(call) },
+                                    onDetails = {
+                                        backStack.add(ContactDetailsRoute(phoneNumber = call.phoneNumber))
+                                    },
+                                )
                             }
                         }
                     }
                 } else {
-                    Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                        FloatingActionButton(
-                            onClick = { viewModel.dial(context) },
-                            containerColor = RdCallGreen,
-                            contentColor = Color.White,
-                            modifier = Modifier.size(68.dp),
-                            shape = CircleShape,
-                        ) {
-                            Icon(
-                                painterResource(R.drawable.rd_ic_phone_green_vector),
-                                contentDescription = stringResource(R.string.search_action_call),
-                                modifier = Modifier.size(28.dp),
+                    if (t9Results.isEmpty()) {
+                        Text(
+                            text = stringResource(R.string.hc_no_contacts_found),
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                        )
+                    }
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        items(t9Results, key = { it.id }) { contact ->
+                            T9ContactRow(
+                                contact = contact,
+                                onCall = {
+                                    contact.phoneNumbers.firstOrNull()?.let { viewModel.dial(context, it) }
+                                },
+                                onDetails = {
+                                    backStack.add(ContactDetailsRoute(contactId = contact.id))
+                                },
                             )
                         }
                     }
                 }
-                if (sipOffered) {
-                    Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                        FloatingActionButton(
-                            onClick = {
-                                viewModel.dialSip(
-                                    context,
-                                    input.filter { it.isDigit() || it == '+' || it == '*' || it == '#' },
-                                )
-                            },
-                            containerColor = MaterialTheme.colorScheme.tertiary,
-                            contentColor = MaterialTheme.colorScheme.onTertiary,
-                            modifier = Modifier.size(56.dp),
-                            shape = CircleShape,
-                        ) {
-                            Text("SIP", style = MaterialTheme.typography.labelSmall)
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+            ) {
+                for (row in DIALPAD_KEYS.chunked(3)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                    ) {
+                        for (key in row) {
+                            val letters = when (alphabet) {
+                                "greek" -> key.greek
+                                "cyrillic" -> key.cyrillic
+                                else -> key.latin
+                            }.ifEmpty { if (key.digit == "0") "+" else "" }
+                            DialpadKey(
+                                size = keySize,
+                                digit = key.digit,
+                                sublabel = if (hideLetters) "" else letters,
+                                onClick = { onDigit(key.digit, long = false) },
+                                onLongClick = { onDigit(key.digit, long = true) },
+                            )
                         }
                     }
                 }
-                Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    Box(
-                        modifier = Modifier
-                            .size(56.dp)
-                            .clip(CircleShape)
-                            .alpha(if (input.isNotEmpty()) 1f else 0f)
-                            .combinedClickable(
-                                enabled = input.isNotEmpty(),
-                                role = androidx.compose.ui.semantics.Role.Button,
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, bottom = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Box(Modifier.weight(1f))
+                    if (sims.size >= 2) {
+                        sims.take(2).forEach { sim ->
+                            Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                                FloatingActionButton(
+                                    onClick = {
+                                        viewModel.dialSim(
+                                            context,
+                                            input.filter { it.isDigit() || it == '+' || it == '*' || it == '#' },
+                                            sim.handle,
+                                        )
+                                    },
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                                    modifier = Modifier.size(56.dp),
+                                    shape = CircleShape,
+                                ) {
+                                    Text(sim.label.take(4), style = MaterialTheme.typography.labelSmall)
+                                }
+                            }
+                        }
+                    } else {
+                        Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                            FloatingActionButton(
+                                onClick = { viewModel.dial(context) },
+                                containerColor = RdCallGreen,
+                                contentColor = Color.White,
+                                modifier = Modifier.size(68.dp),
+                                shape = CircleShape,
+                            ) {
+                                Icon(
+                                    painterResource(R.drawable.rd_ic_phone_green_vector),
+                                    contentDescription = stringResource(R.string.search_action_call),
+                                    modifier = Modifier.size(28.dp),
+                                )
+                            }
+                        }
+                    }
+                    if (sipOffered) {
+                        Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                            FloatingActionButton(
                                 onClick = {
-                                    if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                                    viewModel.onBackspace()
+                                    viewModel.dialSip(
+                                        context,
+                                        input.filter { it.isDigit() || it == '+' || it == '*' || it == '#' },
+                                    )
                                 },
-                                onLongClick = {
-                                    if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                    viewModel.onClear()
-                                },
-                            ),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Icon(
-                            painterResource(R.drawable.rd_ic_backspace),
-                            contentDescription = stringResource(R.string.au_phonea_backspace),
-                            tint = MaterialTheme.colorScheme.onSurface,
-                        )
+                                containerColor = MaterialTheme.colorScheme.tertiary,
+                                contentColor = MaterialTheme.colorScheme.onTertiary,
+                                modifier = Modifier.size(56.dp),
+                                shape = CircleShape,
+                            ) {
+                                Text("SIP", style = MaterialTheme.typography.labelSmall)
+                            }
+                        }
+                    }
+                    Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                        Box(
+                            modifier = Modifier
+                                .size(56.dp)
+                                .clip(CircleShape)
+                                .alpha(if (input.isNotEmpty()) 1f else 0f)
+                                .combinedClickable(
+                                    enabled = input.isNotEmpty(),
+                                    role = androidx.compose.ui.semantics.Role.Button,
+                                    onClick = {
+                                        if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                        viewModel.onBackspace()
+                                    },
+                                    onLongClick = {
+                                        if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                        viewModel.onClear()
+                                    },
+                                ),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Icon(
+                                painterResource(R.drawable.rd_ic_backspace),
+                                contentDescription = stringResource(R.string.au_phonea_backspace),
+                                tint = MaterialTheme.colorScheme.onSurface,
+                            )
+                        }
                     }
                 }
             }
@@ -416,27 +413,29 @@ private fun DialpadKey(
 ) {
     Box(
         modifier = Modifier
-            .size(size)
+            .width(size)
+            .heightIn(min = size)
             .clip(CircleShape)
             .combinedClickable(
                 role = androidx.compose.ui.semantics.Role.Button,
                 onClick = onClick,
                 onLongClick = onLongClick,
-            ),
+            )
+            .padding(vertical = 8.dp),
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = digit,
-                fontSize = if (size >= 70.dp) 36.sp else if (size >= 56.dp) 28.sp else 22.sp,
+                fontSize = 28.sp,
                 fontWeight = FontWeight.Normal,
-                lineHeight = if (size >= 70.dp) 38.sp else if (size >= 56.dp) 30.sp else 24.sp,
+                lineHeight = 32.sp,
                 color = MaterialTheme.colorScheme.onSurface,
             )
             Text(
                 text = sublabel.ifEmpty { " " },
-                fontSize = if (size >= 56.dp) 12.sp else 9.sp,
-                lineHeight = if (size >= 56.dp) 12.sp else 9.sp,
+                fontSize = 12.sp,
+                lineHeight = 16.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                 textAlign = TextAlign.Center,
             )
