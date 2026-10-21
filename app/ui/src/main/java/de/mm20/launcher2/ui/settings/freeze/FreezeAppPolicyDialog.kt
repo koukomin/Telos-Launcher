@@ -20,7 +20,7 @@ import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.component.preferences.*
 
 @Composable
-internal fun FreezeAppPolicyDialog(app: Application, apps: List<Application>, vm: FreezeSettingsScreenVM, close: () -> Unit) {
+internal fun FreezeAppPolicyDialog(app: Application, vm: FreezeSettingsScreenVM, close: () -> Unit) {
     val pkg = app.componentName.packageName
     val currentUser = app.user == Process.myUserHandle()
     val candidates by vm.candidates.collectAsStateWithLifecycle()

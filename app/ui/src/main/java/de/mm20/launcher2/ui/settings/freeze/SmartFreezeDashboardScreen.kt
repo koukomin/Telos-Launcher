@@ -123,6 +123,6 @@ fun SmartFreezeDashboardScreen(tabs: @Composable () -> Unit = {}) {
     }
     }
     apps.firstOrNull { it.key == detailKey }?.let { app ->
-        FreezeAppPolicyDialog(app, apps, vm) { detailKey = null }
+        FreezeAppPolicyDialog(app, vm) { detailKey = null }
     }
 }

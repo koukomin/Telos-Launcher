@@ -221,15 +221,14 @@ class AutoFreezeController internal constructor(
     private fun onScreenOff() {
         val cycle = screenCycle.incrementAndGet()
         idleJob?.cancel()
-        exclusionChecker.pinnedScreenOffPackage =
-            usageStatsProvider.currentForegroundPackage()
-                ?: usageStatsProvider.lastForegroundPackage()
         idleJob = scope.launch {
             screenOffMutex.lock()
             try {
                 if (screenCycle.get() != cycle) return@launch
                 clearScreenOffPlan()
                 if (!settings.autoFreezeEnabled.first() || isScreenOn()) return@launch
+                exclusionChecker.pinnedScreenOffPackage =
+                    usageStatsProvider.currentForegroundPackage() ?: usageStatsProvider.lastForegroundPackage()
                 val resolved = profileManager.resolvedSettings.first()
                 val now = SystemClock.elapsedRealtime()
                 val pending = screenOffFreezeDelays(settings.candidates.first(), settings.screenOffDelays.first(),
@@ -245,10 +244,14 @@ class AutoFreezeController internal constructor(
         val cycle = screenCycle.incrementAndGet()
         idleJob?.cancel()
         idleJob = null
-        exclusionChecker.pinnedScreenOffPackage = null
         scope.launch {
             screenOffMutex.lock()
-            try { if (screenCycle.get() == cycle) clearScreenOffPlan() } finally { screenOffMutex.unlock() }
+            try {
+                if (screenCycle.get() == cycle) {
+                    exclusionChecker.pinnedScreenOffPackage = null
+                    clearScreenOffPlan()
+                }
+            } finally { screenOffMutex.unlock() }
         }
         refreshNotificationLater()
     }

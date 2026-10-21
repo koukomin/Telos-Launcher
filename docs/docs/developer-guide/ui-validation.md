@@ -77,3 +77,8 @@ remain separate acceptance checks; none are claimed passed by these component te
 ## English dark-wallpaper gallery (PR #61)
 
 [Capture run 39628520954](https://github.com/koukomin/Telos-Launcher/actions/runs/39628520954) succeeded and retained 30 PNGs, UI XML and capture metadata, with no reported capture failures. The contact sheet was visually inspected before publishing the gallery: all 30 routes rendered, including Settings and System, without a visible crash dialog. Preview images preserve dimensions and use WebP compression; original PNGs remain in the workflow artifact. See the [gallery](../user-guide/telos/screenshots) for exact build-source metadata and environment. This is one clean English dark-mode emulator pass, not the full font/window/wallpaper or physical-device acceptance matrix.
+
+
+## Freeze manager consolidation (PR #63)
+
+The unified Apps / Auto-freeze / Settings implementation adds app timing, explicit companion rules and UAD descriptions with on-entry updates (default on, opt-out preserved). The VitePress build passed locally; all 50 new locale sets parsed with preserved result placeholders, and the bundled source contains 5,381 entries. Local Gradle could not download its wrapper due to restricted network access; Android compilation and freeze/preferences regression outcomes are delegated to the PR’s `Validate freeze management` check. No new screenshot or device/Doze pass is claimed. See [freeze architecture and audit](./freeze-management) for test scope and device acceptance needs.

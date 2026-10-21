@@ -341,11 +341,7 @@ class FreezeSettings internal constructor(
     suspend fun addCompanionHolds(master: String, companions: Collection<String>) {
         if (companions.isEmpty()) return
         dataStore.updateAndWait {
-            val holds = it.freeze.freezeCompanionHolds.toMutableMap()
-            companions.forEach { pkg ->
-                holds[pkg] = (holds[pkg].orEmpty().split(',').filter { it.isNotBlank() }.toSet() + master)
-                    .sorted().joinToString(",")
-            }
+            val holds = addCompanionOwners(it.freeze.freezeCompanionHolds, master, companions)
             it.copy(freeze = it.freeze.copy(freezeCompanionHolds = holds))
         }
     }
@@ -353,12 +349,9 @@ class FreezeSettings internal constructor(
     suspend fun clearCompanionHoldsForMaster(master: String): Set<String> {
         var removed = emptySet<String>()
         dataStore.updateAndWait {
-            val holds = it.freeze.freezeCompanionHolds
-            val remaining = holds.mapValues { (_, owners) ->
-                owners.split(',').filter { owner -> owner.isNotBlank() && owner != master }.joinToString(",")
-            }
-            removed = remaining.filterValues { owners -> owners.isEmpty() }.keys
-            it.copy(freeze = it.freeze.copy(freezeCompanionHolds = remaining - removed))
+            val (remaining, released) = removeCompanionOwner(it.freeze.freezeCompanionHolds, master)
+            removed = released
+            it.copy(freeze = it.freeze.copy(freezeCompanionHolds = remaining))
         }
         return removed
     }

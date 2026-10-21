@@ -596,9 +596,10 @@ data class FreezeGroup(
     /** Packages whose firewall blockAll we set for a Play update; value is whether blockAll was already on. */
     val playUpdateNetBlocked: Map<String, Boolean> = emptyMap(),
     val playUpdatePlayStoreHeld: Boolean = false,
-    /** Missing entry inherits profile; zero freezes immediately; positive values are minutes. */
+    /** Check upstream descriptions on each manager entry, preserving an explicit opt-out. */
     val freezeBloatAutoUpdate: Boolean = true,
     val freezeSystemRiskApproved: Set<String> = emptySet(),
+    /** Missing entry inherits profile; zero freezes immediately; positive values are minutes. */
     val freezeScreenOffDelays: Map<String, Int> = emptyMap(),
     /** Pending alarm deadlines use elapsed realtime, and never survive a device reboot. */
     val freezeScreenOffPending: Map<String, Long> = emptyMap(),

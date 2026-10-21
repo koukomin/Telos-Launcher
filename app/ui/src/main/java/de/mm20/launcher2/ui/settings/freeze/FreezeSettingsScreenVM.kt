@@ -268,8 +268,8 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
 
     val companionChoices = kotlinx.coroutines.flow.flow {
         emit(withContext(Dispatchers.IO) {
-            context.packageManager.getInstalledApplications(PackageManager.MATCH_DISABLED_COMPONENTS)
-                .filter { it.packageName != context.packageName }
+            context.packageManager.getInstalledApplications(PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES)
+                .filter { it.packageName != context.packageName && it.flags and ApplicationInfo.FLAG_INSTALLED != 0 }
                 .map { it.packageName to it.loadLabel(context.packageManager).toString() }
                 .sortedBy { it.second.lowercase() }
         })
