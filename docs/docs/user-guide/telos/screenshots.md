@@ -1,83 +1,131 @@
 # Development screenshots / Screenshots ανάπτυξης
 
-Real, unedited screenshots from a clean development-build emulator. Empty libraries are intentional; no personal accounts are connected. These captures show UI, not device or playback validation.
+30 real emulator captures covering the launcher, built-in apps and Settings. English UI, system dark mode and a dark blue/burgundy wallpaper with the default shared wallpaper blur. Empty libraries and account setup screens reflect the clean emulator. Camera and Magnifier show the Android emulator virtual scene.
 
-Πραγματικά, μη επεξεργασμένα screenshots από καθαρό emulator με development build. Οι κενές βιβλιοθήκες είναι αναμενόμενες και δεν υπάρχουν προσωπικοί λογαριασμοί. Οι εικόνες δείχνουν το UI, όχι έλεγχο συσκευής ή αναπαραγωγής.
+30 πραγματικές λήψεις: αρχική οθόνη, ενσωματωμένες εφαρμογές και Settings. Αγγλικό UI, σκοτεινό θέμα και σκούρο φόντο με το κοινό blur. Οι κενές βιβλιοθήκες και οι οθόνες σύνδεσης αντιστοιχούν σε καθαρό emulator.
 
-**Capture:** Pixel 7 emulator · Android API 35 · x86_64 debug · English UI.
+**Capture:** Pixel 7 · Android API 35 · x86_64 debug · en-US.
 
-**Source commit:** `8c62f40f652197ac2954cdf5a7b79427cb43c628`.
+**Capture workflow:** [39628520954](https://github.com/koukomin/Telos-Launcher/actions/runs/39628520954), checked head `6179a5a434465fa239dd786e7448dde6bf8bb3cc` (merged in PR #61). The artifact capture manifest records build-source commit `12cd7f13bad8ac2723d128c01c0411ea5855c100`; this is preserved as recorded rather than relabeled as the merge commit.
 
-## Telos Launcher — home clock and search bar
+WebP previews below retain the captured dimensions. Original, unedited PNGs, UI XML and capture metadata are available in the workflow’s **telos-development-screenshots** artifact. These images demonstrate rendering, not live playback, account synchronization, physical hardware or ARM-only torrent/SIP validation.
 
-Telos Launcher — ρολόι και αναζήτηση στην αρχική οθόνη
+## Launcher — home clock and search
 
-![Telos Launcher — home clock and search bar](/img/telos-development-01-launcher.png)
+![Launcher — home clock and search](/img/telos-development-01-launcher.webp)
 
-## Telos Media — Listen and local music
+## Media — local music
 
-Telos Media — Ακρόαση και τοπική μουσική
+![Media — local music](/img/telos-development-02-media-listen.webp)
 
-![Telos Media — Listen and local music](/img/telos-development-02-media-listen.png)
+## YouTube Music
 
-## Telos Media — YouTube Music search
+![YouTube Music](/img/telos-development-03-youtube-music.webp)
 
-Telos Media — αναζήτηση YouTube Music
+## YouTube video
 
-![Telos Media — YouTube Music search](/img/telos-development-03-youtube-music.png)
+![YouTube video](/img/telos-development-04-youtube-video.webp)
 
-## Telos Media — YouTube video search
+## Stremio Fork — account sign-in
 
-Telos Media — αναζήτηση βίντεο YouTube
+![Stremio Fork — account sign-in](/img/telos-development-05-stremio-fork.webp)
 
-![Telos Media — YouTube video search](/img/telos-development-04-youtube-video.png)
+## Files
 
-## Stremio Fork — introduction and account sign-in
+![Files](/img/telos-development-06-files.webp)
 
-Stremio Fork — περιγραφή και σύνδεση λογαριασμού
+## Store
 
-![Stremio Fork — introduction and account sign-in](/img/telos-development-05-stremio-fork.png)
+![Store](/img/telos-development-07-store.webp)
 
-## Telos Files — storage, tabs and two-panel controls
+## Viewer
 
-Telos Files — αποθηκευτικός χώρος, καρτέλες και δύο πάνελ
+![Viewer](/img/telos-development-08-viewer.webp)
 
-![Telos Files — storage, tabs and two-panel controls](/img/telos-development-06-files.png)
+## Notes
 
-## Telos Store — sources and compact filter button
+![Notes](/img/telos-development-09-notes.webp)
 
-Telos Store — πηγές και μικρό κουμπί φίλτρων
+## Calendar
 
-![Telos Store — sources and compact filter button](/img/telos-development-07-store.png)
+![Calendar](/img/telos-development-10-calendar.webp)
 
-## Telos Viewer — photos and documents
+## Calculator
 
-Telos Viewer — φωτογραφίες και έγγραφα
+![Calculator](/img/telos-development-11-calculator.webp)
 
-![Telos Viewer — photos and documents](/img/telos-development-08-viewer.png)
+## Downloads
 
-## Telos Notes — notes list
+![Downloads](/img/telos-development-12-downloads.webp)
 
-Telos Notes — λίστα σημειώσεων
+## Phone
 
-![Telos Notes — notes list](/img/telos-development-09-notes.png)
+![Phone](/img/telos-development-13-phone.webp)
 
-## Telos Calendar — month view and local calendar setup
+## Messages
 
-Telos Calendar — προβολή μήνα και τοπικό ημερολόγιο
+![Messages](/img/telos-development-14-messages.webp)
 
-![Telos Calendar — month view and local calendar setup](/img/telos-development-10-calendar.png)
+## Radio
 
-## Telos Calculator — calculator and conversion tools
+![Radio](/img/telos-development-15-radio.webp)
 
-Telos Calculator — αριθμομηχανή και εργαλεία μετατροπής
+## TV
 
-![Telos Calculator — calculator and conversion tools](/img/telos-development-11-calculator.png)
+![TV](/img/telos-development-16-tv.webp)
 
-## Telos Downloads — download categories
+## Local video
 
-Telos Downloads — κατηγορίες λήψεων
+![Local video](/img/telos-development-17-video.webp)
 
-![Telos Downloads — download categories](/img/telos-development-12-downloads.png)
+## Clock
 
-The original PNG files retain the captured screen resolution. Empty libraries reflect the clean emulator; they do not represent a signed-in account or demonstrate live playback.
+![Clock](/img/telos-development-18-clock.webp)
+
+## Ermis — mail account setup
+
+![Ermis — mail account setup](/img/telos-development-19-ermis.webp)
+
+## Akou — music recognition
+
+![Akou — music recognition](/img/telos-development-20-akou.webp)
+
+## Network
+
+![Network](/img/telos-development-21-network.webp)
+
+## System
+
+![System](/img/telos-development-22-system.webp)
+
+## Trash
+
+![Trash](/img/telos-development-23-trash.webp)
+
+## Camera
+
+![Camera](/img/telos-development-24-camera.webp)
+
+## Magnifier
+
+![Magnifier](/img/telos-development-25-magnifier.webp)
+
+## Flashlight
+
+![Flashlight](/img/telos-development-26-flashlight.webp)
+
+## Voice recorder
+
+![Voice recorder](/img/telos-development-27-voice-recorder.webp)
+
+## Screen recorder
+
+![Screen recorder](/img/telos-development-28-screen-recorder.webp)
+
+## Screenshot
+
+![Screenshot](/img/telos-development-29-screenshot.webp)
+
+## Settings
+
+![Settings](/img/telos-development-30-settings.webp)

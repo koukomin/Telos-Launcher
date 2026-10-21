@@ -103,34 +103,130 @@ features:
   import Footer from '.vitepress/theme/Footer.vue'
   const shots = [
   {
-    "src": "/img/telos-development-01-launcher.png",
-    "caption": "Telos Launcher — home clock and search bar"
+    "src": "/img/telos-development-01-launcher.webp",
+    "caption": "Launcher — home clock and search"
   },
   {
-    "src": "/img/telos-development-03-youtube-music.png",
-    "caption": "Telos Media — YouTube Music search"
+    "src": "/img/telos-development-02-media-listen.webp",
+    "caption": "Media — local music"
   },
   {
-    "src": "/img/telos-development-05-stremio-fork.png",
-    "caption": "Stremio Fork — introduction and account sign-in"
+    "src": "/img/telos-development-03-youtube-music.webp",
+    "caption": "YouTube Music"
   },
   {
-    "src": "/img/telos-development-06-files.png",
-    "caption": "Telos Files — storage, tabs and two-panel controls"
+    "src": "/img/telos-development-04-youtube-video.webp",
+    "caption": "YouTube video"
   },
   {
-    "src": "/img/telos-development-07-store.png",
-    "caption": "Telos Store — sources and compact filter button"
+    "src": "/img/telos-development-05-stremio-fork.webp",
+    "caption": "Stremio Fork — account sign-in"
   },
   {
-    "src": "/img/telos-development-11-calculator.png",
-    "caption": "Telos Calculator — calculator and conversion tools"
+    "src": "/img/telos-development-06-files.webp",
+    "caption": "Files"
+  },
+  {
+    "src": "/img/telos-development-07-store.webp",
+    "caption": "Store"
+  },
+  {
+    "src": "/img/telos-development-08-viewer.webp",
+    "caption": "Viewer"
+  },
+  {
+    "src": "/img/telos-development-09-notes.webp",
+    "caption": "Notes"
+  },
+  {
+    "src": "/img/telos-development-10-calendar.webp",
+    "caption": "Calendar"
+  },
+  {
+    "src": "/img/telos-development-11-calculator.webp",
+    "caption": "Calculator"
+  },
+  {
+    "src": "/img/telos-development-12-downloads.webp",
+    "caption": "Downloads"
+  },
+  {
+    "src": "/img/telos-development-13-phone.webp",
+    "caption": "Phone"
+  },
+  {
+    "src": "/img/telos-development-14-messages.webp",
+    "caption": "Messages"
+  },
+  {
+    "src": "/img/telos-development-15-radio.webp",
+    "caption": "Radio"
+  },
+  {
+    "src": "/img/telos-development-16-tv.webp",
+    "caption": "TV"
+  },
+  {
+    "src": "/img/telos-development-17-video.webp",
+    "caption": "Local video"
+  },
+  {
+    "src": "/img/telos-development-18-clock.webp",
+    "caption": "Clock"
+  },
+  {
+    "src": "/img/telos-development-19-ermis.webp",
+    "caption": "Ermis — mail account setup"
+  },
+  {
+    "src": "/img/telos-development-20-akou.webp",
+    "caption": "Akou — music recognition"
+  },
+  {
+    "src": "/img/telos-development-21-network.webp",
+    "caption": "Network"
+  },
+  {
+    "src": "/img/telos-development-22-system.webp",
+    "caption": "System"
+  },
+  {
+    "src": "/img/telos-development-23-trash.webp",
+    "caption": "Trash"
+  },
+  {
+    "src": "/img/telos-development-24-camera.webp",
+    "caption": "Camera"
+  },
+  {
+    "src": "/img/telos-development-25-magnifier.webp",
+    "caption": "Magnifier"
+  },
+  {
+    "src": "/img/telos-development-26-flashlight.webp",
+    "caption": "Flashlight"
+  },
+  {
+    "src": "/img/telos-development-27-voice-recorder.webp",
+    "caption": "Voice recorder"
+  },
+  {
+    "src": "/img/telos-development-28-screen-recorder.webp",
+    "caption": "Screen recorder"
+  },
+  {
+    "src": "/img/telos-development-29-screenshot.webp",
+    "caption": "Screenshot"
+  },
+  {
+    "src": "/img/telos-development-30-settings.webp",
+    "caption": "Settings"
   }
 ]
 </script>
 <div class="telos-note">
   <strong>Development preview · Pixel 7 emulator · Android API 35</strong><br />
-  Real captures from a clean debug build, without personal accounts.
+  30 captures · English UI · dark wallpaper and shared blur · clean debug build, without personal accounts.
   Πραγματικές λήψεις από καθαρό development build σε emulator, χωρίς προσωπικούς λογαριασμούς.
   <a :href="withBase('/docs/user-guide/telos/screenshots')">All screenshots / Όλα τα screenshots</a>
 </div>
