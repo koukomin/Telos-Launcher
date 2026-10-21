@@ -73,5 +73,8 @@ object SettingsDeepLinkContract {
         "settings/flashlight" -> "flashlight"
         else -> null
     }
+    /** Alias metadata gives OEM Recents a stable label/icon even without TaskDescription support. */
+    fun virtualAppActivityClassName(route: String?, commsTab: String? = null): String? =
+        virtualAppTaskId(route, commsTab)?.let { "de.mm20.launcher2.ui.settings.TelosApp_$it" }
     // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }

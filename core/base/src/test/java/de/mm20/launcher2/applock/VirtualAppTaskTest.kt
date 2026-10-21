@@ -17,6 +17,13 @@ class VirtualAppTaskTest {
         assertEquals(routes.size, ids.toSet().size)
     }
 
+    @Test fun recentsAliasesHaveStableIndependentComponents() {
+        assertEquals("de.mm20.launcher2.ui.settings.TelosApp_ermis", contract.virtualAppActivityClassName(contract.ROUTE_ERMIS))
+        assertNotEquals(contract.virtualAppActivityClassName(contract.ROUTE_FILES), contract.virtualAppActivityClassName(contract.ROUTE_ERMIS))
+        assertEquals(contract.virtualAppActivityClassName(contract.ROUTE_MEDIA), contract.virtualAppActivityClassName(contract.ROUTE_RADIO))
+        assertNull(contract.virtualAppActivityClassName("settings/unknown"))
+    }
+
     @Test fun mediaAndViewerAliasesReuseTheirAppTask() {
         for (route in listOf(contract.ROUTE_MEDIA, contract.ROUTE_MUSIC, contract.ROUTE_RADIO, contract.ROUTE_VIDEO))
             assertEquals("media", contract.virtualAppTaskId(route))

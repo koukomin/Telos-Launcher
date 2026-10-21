@@ -1355,3 +1355,6 @@ The embedded terminal has been removed. Official Termux is available in Store â†
 
 Gender-specific locale variants inherit the translated base language rather than
 masking it with copied English strings.
+
+Standalone virtual-app Recents tasks have static localized Android labels and
+icons as well as dynamic task metadata, including on OEM launchers.

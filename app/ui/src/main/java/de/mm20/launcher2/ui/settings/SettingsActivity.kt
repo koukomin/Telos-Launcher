@@ -813,8 +813,11 @@ open class SettingsActivity : BaseActivity() {
         val id = SettingsDeepLinkContract.virtualAppTaskId(
             route, source.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB),
         ) ?: return false
+        val appActivity = SettingsDeepLinkContract.virtualAppActivityClassName(
+            route, source.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB),
+        ) ?: return false
         startActivity(Intent(source).apply {
-            setClass(this@SettingsActivity, TelosAppActivity::class.java)
+            setClassName(this@SettingsActivity, appActivity)
             putExtra(EXTRA_ROUTE, route)
             data = android.net.Uri.parse("telos-task://app/$id")
             // Task matching uses component + data, not extras. Never force a duplicate task.

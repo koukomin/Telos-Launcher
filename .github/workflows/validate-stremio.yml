@@ -53,6 +53,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Verify virtual-app Recents metadata
+        run: python tools/validation/virtual_app_manifest.py
       - name: Validate changed translations and Android placeholders
         env:
           TELOS_TRANSLATION_BASE: ${{ github.event.pull_request.base.sha || github.sha }}

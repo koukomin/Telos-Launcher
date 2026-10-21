@@ -171,7 +171,8 @@ video and screen-light content may intentionally own black or illuminated pixels
 Keep zoom and utility actions compact in landscape without shrinking touch targets.
 
 Every new virtual app must be registered in SettingsDeepLinkContract.virtualAppTaskId,
-SettingsActivity task-domain mapping, TelosAppLabels and TelosAppIcons. A manifest
+SettingsActivity task-domain mapping, its static Android activity-alias metadata,
+TelosAppLabels and TelosAppIcons. A manifest
 label alone cannot represent several document tasks. Test launcher, notifications,
 rotation, process recreation and explicit close independently. Biometric screens
 reattach their callbacks to the retained AndroidX prompt after rotation; do not

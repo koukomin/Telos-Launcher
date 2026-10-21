@@ -143,3 +143,11 @@ revealed credentials. OEM/SELinux restrictions may still prevent reading the sto
 Use the [adaptive UI contract](./adaptive-ui) for shared tokens, preference/navigation components,
 font scaling, insets and required validation. See [UI validation](./ui-validation) for execution
 evidence; shared host changes are not proof that every hardware/editor state was visually tested.
+
+
+Recents uses one non-exported activity alias per document-task identity, each with
+a static localized label and icon targeting TelosAppActivity. This preserves app
+identity on OEM launchers that fall back to ActivityInfo instead of dynamic
+TaskDescription metadata. Media and Viewer route aliases retain their existing
+shared task identities. Existing Android snapshots may retain old metadata until
+the old task is closed/reopened; no old task or unsaved editor is forcibly removed.
