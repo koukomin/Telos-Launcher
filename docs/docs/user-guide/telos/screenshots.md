@@ -129,4 +129,3 @@ WebP previews below retain the captured dimensions. Original, unedited PNGs, UI 
 ## Settings
 
 ![Settings](/img/telos-development-30-settings.webp)
-
