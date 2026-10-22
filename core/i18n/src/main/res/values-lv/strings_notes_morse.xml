@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Kopīgot kā attēlu</string>
+    <string name="morse_light">Gaisma</string>
+    <string name="morse_sound">Skaņa</string>
+    <string name="morse_light_sound">Gaisma un skaņa</string>
+    <string name="morse_language_help">Grieķu Morzes kods; citas rakstības zemāk transliterē latīņu burtiem. Skaņa izmanto multivides skaļumu.</string>
+    <string name="morse_unsupported">Dažas rakstzīmes nevar nosūtīt.</string>
+</resources>

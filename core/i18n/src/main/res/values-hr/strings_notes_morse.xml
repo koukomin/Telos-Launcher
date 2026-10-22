@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Podijeli kao sliku</string>
+    <string name="morse_light">Svjetlo</string>
+    <string name="morse_sound">Zvuk</string>
+    <string name="morse_light_sound">Svjetlo i zvuk</string>
+    <string name="morse_language_help">Grčka Morseova abeceda; ostala pisma transliteriraju se u latinicu ispod. Zvuk koristi glasnoću medija.</string>
+    <string name="morse_unsupported">Neke znakove nije moguće poslati.</string>
+</resources>

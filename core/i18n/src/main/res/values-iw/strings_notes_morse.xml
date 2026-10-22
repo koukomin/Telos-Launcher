@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">שיתוף כתמונה</string>
+    <string name="morse_light">אור</string>
+    <string name="morse_sound">צליל</string>
+    <string name="morse_light_sound">אור וצליל</string>
+    <string name="morse_language_help">מורס יווני; כתבים אחרים מתועתקים ללטינית למטה. הצליל משתמש בעוצמת המדיה.</string>
+    <string name="morse_unsupported">לא ניתן לשלוח חלק מהתווים.</string>
+</resources>

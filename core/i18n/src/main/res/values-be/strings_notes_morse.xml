@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Падзяліцца выявай</string>
+    <string name="morse_light">Святло</string>
+    <string name="morse_sound">Гук</string>
+    <string name="morse_light_sound">Святло і гук</string>
+    <string name="morse_language_help">Грэчаская азбука Морзэ; іншыя пісьменнасці транслітаруюцца лацінкай ніжэй. Гук выкарыстоўвае гучнасць медыя.</string>
+    <string name="morse_unsupported">Некаторыя сімвалы нельга адправіць.</string>
+</resources>

@@ -105,6 +105,9 @@ object ShareActions {
         }.isSuccess
     }
 
+    internal fun shareUris(context: Context, uris: List<Uri>, mime: String, subject: String?): Boolean =
+        send(context, uris, mime, subject)
+
     /** A .vcf card (CRLF line ends, escaped values); the text is attached as well for apps that only take text */
     fun shareContactVcard(context: Context, name: String, phones: List<String>, emails: List<String>): Boolean = runCatching {
         cleanup(context)
@@ -118,7 +121,7 @@ object ShareActions {
 
     /** A note as plain text, or as a .md file (title as heading) */
     fun shareNote(context: Context, title: String, body: String, asMarkdownFile: Boolean): Boolean {
-        if (!asMarkdownFile) return shareText(context, body.ifBlank { title }, title.ifBlank { null })
+        if (!asMarkdownFile) return shareText(context, listOf(title, body).filter { it.isNotBlank() }.joinToString("\n\n"), title.ifBlank { null })
         return runCatching {
             cleanup(context)
             val md = (if (title.isNotBlank()) "# $title\n\n" else "") + body

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Bagikan sebagai gambar</string>
+    <string name="morse_light">Cahaya</string>
+    <string name="morse_sound">Suara</string>
+    <string name="morse_light_sound">Cahaya dan suara</string>
+    <string name="morse_language_help">Morse Yunani; aksara lain ditransliterasikan ke Latin di bawah. Suara memakai volume media.</string>
+    <string name="morse_unsupported">Beberapa karakter tidak dapat dikirim.</string>
+</resources>

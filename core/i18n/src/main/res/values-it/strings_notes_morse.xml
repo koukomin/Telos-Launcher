@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Condividi come immagine</string>
+    <string name="morse_light">Luce</string>
+    <string name="morse_sound">Suono</string>
+    <string name="morse_light_sound">Luce e suono</string>
+    <string name="morse_language_help">Morse greco; le altre scritture sono traslitterate in latino qui sotto. Il suono usa il volume multimediale.</string>
+    <string name="morse_unsupported">Alcuni caratteri non possono essere inviati.</string>
+</resources>

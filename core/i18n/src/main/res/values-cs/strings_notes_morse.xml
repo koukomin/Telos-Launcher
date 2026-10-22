@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Sdílet jako obrázek</string>
+    <string name="morse_light">Světlo</string>
+    <string name="morse_sound">Zvuk</string>
+    <string name="morse_light_sound">Světlo a zvuk</string>
+    <string name="morse_language_help">Řecká Morseova abeceda; ostatní písma se níže přepisují do latinky. Zvuk používá hlasitost médií.</string>
+    <string name="morse_unsupported">Některé znaky nelze odeslat.</string>
+</resources>

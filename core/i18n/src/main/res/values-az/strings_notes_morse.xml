@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Şəkil kimi paylaş</string>
+    <string name="morse_light">İşıq</string>
+    <string name="morse_sound">Səs</string>
+    <string name="morse_light_sound">İşıq və səs</string>
+    <string name="morse_language_help">Yunan Morze kodu; digər yazılar aşağıda latın hərflərinə çevrilir. Səs media səviyyəsindən istifadə edir.</string>
+    <string name="morse_unsupported">Bəzi simvollar göndərilə bilmir.</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Jaa kuvana</string>
+    <string name="morse_light">Valo</string>
+    <string name="morse_sound">Ääni</string>
+    <string name="morse_light_sound">Valo ja ääni</string>
+    <string name="morse_language_help">Kreikkalainen morse; muut kirjoitusjärjestelmät muunnetaan latinalaisiksi alla. Ääni käyttää median äänenvoimakkuutta.</string>
+    <string name="morse_unsupported">Joitakin merkkejä ei voi lähettää.</string>
+</resources>

@@ -839,6 +839,11 @@ Records the screen to a video with MediaProjection. [Docs](https://koukomin.gith
 
 **Status and limitations:** Android asks for the capture permission every time, no system sound (only the microphone), protected content is black, no Live Alert or Dynamic Island entry, no editing.
 
+### Flashlight and Morse
+
+- Morse accepts text in every supported Telos language offline: Greek uses the Greek radio alphabet; other scripts use visible Latin romanization into international Morse (not national Wabun, SKATS or Chinese telegraph codes). Unsupported symbols are reported.
+- Choose light, sound or both; light can use the camera flash, screen, or both. Media volume controls sound. Dot/dash and gaps use 1/3 and 1/3/7 units; Stop, leaving the app or tapping the screen-light view stops output and restores brightness.
+
 ### Telos Notes
 
 A notes app with local storage and optional sync. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/).
@@ -848,9 +853,10 @@ A notes app with local storage and optional sync. [Docs](https://koukomin.github
 - Import Google Keep (Takeout json or zip), Evernote (.enex), Markdown and text files and zips of them (Notion and Joplin exports)
 - Importing the same file twice skips duplicates and reports how many
 - Matching notes show up in the launcher search
+- Share a note as plain text (title and body), Markdown, or full-content PNG images. Long notes are paginated; image export is bounded to 100,000 characters and 32 pages.
 - The **Notes** part of the Telos backup
 
-**Status and limitations:** no direct sync with Google Keep, OneNote, Microsoft Sticky Notes, Apple Notes or Notion (no usable public API for a launcher, import only where an export exists), no background sync, no images, notes are not encrypted.
+**Status and limitations:** no direct sync with Google Keep, OneNote, Microsoft Sticky Notes, Apple Notes or Notion (no usable public API for a launcher, import only where an export exists), no background sync, no image attachments, notes are not encrypted.
 
 ### Telos Calendar
 
@@ -1206,6 +1212,7 @@ adapted, the original license is respected.
 | [GAMA](https://github.com/palincat/gama) | see project | Idea only for the Vulkan/OpenGL HWUI switch (`debug.hwui.renderer`); no GAMA source was copied |
 | [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0 | Freeze backends (Shizuku, Dhizuku), OEM suspend fallbacks and reference for centralized system-app safety gates |
 | [UAD-NG](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation) | GPL-3.0 | Bundled package descriptions and removal recommendations, with conditional updates on Freeze Manager entry |
+| [AnyAscii](https://github.com/anyascii/anyascii) | ISC | Compact offline Unicode romanization for multilingual Morse, pinned to 0.3.3 |
 | [Canta](https://github.com/samolego/Canta) | LGPL-3.0 | Reference for UAD-NG description sourcing; no Canta code copied |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | Video live wallpaper engine |
 | [Stremio add-on protocol](https://github.com/Stremio/stremio-addon-sdk) (docs) and [stremio-core](https://github.com/Stremio/stremio-core) (API types) and [stremio-watched-bitfield](https://github.com/Stremio/stremio-watched-bitfield) (watched-state format) | MIT | The public description of the add-on protocol (manifest, catalog, meta, stream, subtitles and add-on catalog requests) and the request formats of the account service documented in stremio-core were used to write Telos' own client in Telos Media. No code of Stremio or of other Stremio clients is used |

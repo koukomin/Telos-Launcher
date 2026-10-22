@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">分享為圖片</string>
+    <string name="morse_light">燈光</string>
+    <string name="morse_sound">聲音</string>
+    <string name="morse_light_sound">燈光和聲音</string>
+    <string name="morse_language_help">希臘語使用希臘摩斯碼；其他文字轉寫為拉丁字母（顯示在下方）。聲音使用媒體音量。</string>
+    <string name="morse_unsupported">部分字元無法傳送。</string>
+</resources>

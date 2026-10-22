@@ -57,3 +57,6 @@
 -keep class com.sun.mail.smtp.SMTPSSLTransport { public <init>(javax.mail.Session, javax.mail.URLName); }
 # Activation loads these MIME content handlers from the library mailcap resource.
 -keep class com.sun.mail.handlers.** implements javax.activation.DataContentHandler { public <init>(); public *; }
+
+# Preserve the package used by AnyAscii Unicode resource lookups.
+-keepnames class com.anyascii.AnyAscii

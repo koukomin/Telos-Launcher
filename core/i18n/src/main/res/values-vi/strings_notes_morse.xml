@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Chia sẻ dưới dạng ảnh</string>
+    <string name="morse_light">Ánh sáng</string>
+    <string name="morse_sound">Âm thanh</string>
+    <string name="morse_light_sound">Ánh sáng và âm thanh</string>
+    <string name="morse_language_help">Morse Hy Lạp; các chữ viết khác được chuyển tự sang Latinh bên dưới. Âm thanh dùng âm lượng đa phương tiện.</string>
+    <string name="morse_unsupported">Không thể gửi một số ký tự.</string>
+</resources>

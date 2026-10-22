@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Partekatu irudi gisa</string>
+    <string name="morse_light">Argia</string>
+    <string name="morse_sound">Soinua</string>
+    <string name="morse_light_sound">Argia eta soinua</string>
+    <string name="morse_language_help">Greziar Morse; beste idazkerak behean latindar letretara transliteratzen dira. Soinuak multimedia-bolumena erabiltzen du.</string>
+    <string name="morse_unsupported">Zenbait karaktere ezin dira bidali.</string>
+</resources>

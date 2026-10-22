@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Jaga pildina</string>
+    <string name="morse_light">Valgus</string>
+    <string name="morse_sound">Heli</string>
+    <string name="morse_light_sound">Valgus ja heli</string>
+    <string name="morse_language_help">Kreeka morse; teised kirjad translitereeritakse allpool ladina tähtedeks. Heli kasutab meedia helitugevust.</string>
+    <string name="morse_unsupported">Mõnda märki ei saa saata.</string>
+</resources>

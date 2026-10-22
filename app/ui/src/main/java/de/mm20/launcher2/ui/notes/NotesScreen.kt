@@ -6,6 +6,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -172,6 +174,7 @@ fun NotesScreen() {
                                         if (r == SnackbarResult.ActionPerformed) vm.save(n)
                                     }
                                 })
+                            NoteImageShareItem(n) { cardMenu = false }
                             de.mm20.launcher2.ui.common.share.ShareMenuItem(onClick = {
                                 cardMenu = false
                                 de.mm20.launcher2.ui.common.share.ShareActions.shareNote(context, n.title, n.body, false)
@@ -223,7 +226,7 @@ private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Uni
     var labelDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
     Column(Modifier.fillMaxSize().background(bg).imePadding()) {
-        Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onClose) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.notes_back), tint = fg) }
             Spacer(Modifier.weight(1f))
             IconButton(onClick = { onChange(note.copy(pinned = !note.pinned)) }) {
@@ -236,6 +239,7 @@ private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Uni
                 var shareMenu by remember { mutableStateOf(false) }
                 IconButton(onClick = { shareMenu = true }) { Icon(painterResource(R.drawable.share_24px), stringResource(R.string.notes_share), tint = fg) }
                 DropdownMenu(shareMenu, { shareMenu = false }) {
+                    NoteImageShareItem(note) { shareMenu = false }
                     DropdownMenuItem(text = { Text(stringResource(R.string.au9_share_note_text)) }, onClick = {
                         shareMenu = false
                         de.mm20.launcher2.ui.common.share.ShareActions.shareNote(context, note.title, note.body, false)
@@ -331,3 +335,19 @@ private fun SyncDialog(vm: NotesViewModel, onDismiss: () -> Unit) {
 }
 
 private fun Uri_decode(s: String) = android.net.Uri.decode(s).substringAfter("tree/")
+
+@Composable
+private fun NoteImageShareItem(note: Note, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var busy by remember { mutableStateOf(false) }
+    DropdownMenuItem(enabled = !busy, text = { Text(stringResource(R.string.notes_share_image)) }, onClick = {
+        busy = true
+        scope.launch {
+            val success = shareNoteImages(context, note)
+            if (!success) android.widget.Toast.makeText(context, R.string.au9_share_failed, android.widget.Toast.LENGTH_LONG).show()
+            busy = false
+            onDismiss()
+        }
+    })
+}

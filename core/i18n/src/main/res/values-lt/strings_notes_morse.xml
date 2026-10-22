@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Bendrinti kaip vaizdą</string>
+    <string name="morse_light">Šviesa</string>
+    <string name="morse_sound">Garsas</string>
+    <string name="morse_light_sound">Šviesa ir garsas</string>
+    <string name="morse_language_help">Graikų Morzės kodas; kiti raštai toliau transliteruojami lotyniškai. Garsas naudoja medijos garsumą.</string>
+    <string name="morse_unsupported">Kai kurių simbolių negalima siųsti.</string>
+</resources>

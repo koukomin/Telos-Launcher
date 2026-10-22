@@ -65,17 +65,6 @@ val SCREEN_COLORS = listOf(
     "Green" to Color(0xFF00FF00)
 )
 
-private val MORSE_MAP = mapOf(
-    'A' to ".-", 'B' to "-...", 'C' to "-.-.", 'D' to "-..", 'E' to ".",
-    'F' to "..-.", 'G' to "--.", 'H' to "....", 'I' to "..", 'J' to ".---",
-    'K' to "-.-", 'L' to ".-..", 'M' to "--", 'N' to "-.", 'O' to "---",
-    'P' to ".--.", 'Q' to "--.-", 'R' to ".-.", 'S' to "...", 'T' to "-",
-    'U' to "..-", 'V' to "...-", 'W' to ".--", 'X' to "-..-", 'Y' to "-.--",
-    'Z' to "--..", '1' to ".----", '2' to "..---", '3' to "...--", '4' to "....-",
-    '5' to ".....", '6' to "-....", '7' to "--...", '8' to "---..", '9' to "----.",
-    '0' to "-----", ' ' to " "
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlashlightScreen() {
@@ -109,7 +98,7 @@ fun FlashlightScreen() {
     var torchStrength by remember { mutableFloatStateOf(1f) }
     var maxStrength by remember { mutableIntStateOf(1) }
 
-    var outputMode by remember { mutableStateOf(FlashlightOutputMode.LightOnly) }
+    var outputMode by remember { mutableStateOf(FlashlightOutputMode.LightAndSound) }
     var strobeFreqHz by remember { mutableFloatStateOf(0f) }
     var morseText by remember { mutableStateOf("SOS") }
     var isMorsePlaying by remember { mutableStateOf(false) }
@@ -123,6 +112,14 @@ fun FlashlightScreen() {
 
     val toneGenerator = remember {
         try { ToneGenerator(AudioManager.STREAM_MUSIC, 100) } catch (_: Exception) { null }
+    }
+
+    LaunchedEffect(toneGenerator) { if (toneGenerator == null) outputMode = FlashlightOutputMode.LightOnly }
+
+    DisposableEffect(isMorsePlaying) {
+        val alreadyKept = activity?.window?.attributes?.flags?.and(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) != 0
+        if (isMorsePlaying) activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        onDispose { if (isMorsePlaying && !alreadyKept) activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) }
     }
 
     // Lock Orientation to Portrait by Default
@@ -166,6 +163,58 @@ fun FlashlightScreen() {
         }
     }
 
+    var signalGeneration by remember { mutableIntStateOf(0) }
+    fun stopSignals() {
+        signalGeneration++
+        morseJob?.cancel(); strobeJob?.cancel(); sirenJob?.cancel()
+        toneGenerator?.stopTone()
+        setHardwareTorch(false)
+        isTorchOn = false; isScreenFlashOn = false
+        isMorsePlaying = false; isSirenPlaying = false; strobeFreqHz = 0f
+        applyScreenBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
+    }
+
+    fun startMorse(code: String, repeat: Boolean) {
+        stopSignals()
+        if (code.isBlank()) return
+        val generation = signalGeneration
+        val mode = outputMode
+        val target = targetMode
+        val screen = mode != FlashlightOutputMode.SoundOnly && target != FlashlightTarget.Flash
+        isMorsePlaying = true
+        val previous = morseJob
+        morseJob = scope.launch {
+            previous?.join()
+            isMorsePlaying = true
+            try {
+                if (screen) applyScreenBrightness(screenBrightness)
+                val pulses = withContext(Dispatchers.Default) { MorseCodec.pulses(code) }
+                do {
+                    for (pulse in pulses) {
+                        ensureActive()
+                        if (mode != FlashlightOutputMode.SoundOnly) {
+                            if (target != FlashlightTarget.Screen) setHardwareTorch(pulse.on)
+                            if (screen) isScreenFlashOn = pulse.on
+                        }
+                        if (mode != FlashlightOutputMode.LightOnly) {
+                            if (pulse.on) toneGenerator?.startTone(ToneGenerator.TONE_DTMF_0)
+                            else toneGenerator?.stopTone()
+                        }
+                        delay(pulse.units * 100L)
+                    }
+                    toneGenerator?.stopTone(); setHardwareTorch(false); isScreenFlashOn = false
+                    if (repeat) delay(700L)
+                } while (repeat && isActive)
+            } finally {
+                if (generation == signalGeneration) {
+                    toneGenerator?.stopTone(); setHardwareTorch(false)
+                    isScreenFlashOn = false; isMorsePlaying = false
+                    applyScreenBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
+                }
+            }
+        }
+    }
+
     // Auto-switch Light Target Sources
     fun switchLightTarget(newTarget: FlashlightTarget) {
         targetMode = newTarget
@@ -191,6 +240,7 @@ fun FlashlightScreen() {
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
         fun stopOutputs() {
+            signalGeneration++
             strobeJob?.cancel()
             morseJob?.cancel()
             sirenJob?.cancel()
@@ -220,19 +270,15 @@ fun FlashlightScreen() {
     }
 
     // Fullscreen Screen Light Overlay
-    if (isScreenFlashOn) {
+    if (isScreenFlashOn || (isMorsePlaying && outputMode != FlashlightOutputMode.SoundOnly && targetMode != FlashlightTarget.Flash)) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(selectedScreenColor)
-                .clickable {
-                    isScreenFlashOn = false
-                    isTorchOn = false
-                    applyScreenBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
-                },
+                .background(if (isScreenFlashOn) selectedScreenColor else Color.Black)
+                .clickable { stopSignals() },
             contentAlignment = Alignment.Center
         ) {
-            Text(stringResource(R.string.app_polish_exit_light), color = if (selectedScreenColor == Color.White) Color.Black else Color.White, style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.app_polish_exit_light), color = if (isScreenFlashOn && selectedScreenColor == Color.White) Color.Black else Color.White, style = MaterialTheme.typography.titleMedium)
         }
         return
     }
@@ -274,13 +320,9 @@ fun FlashlightScreen() {
                 Spacer(Modifier.height(8.dp))
                 IconButton(
                     onClick = {
-                        isTorchOn = !isTorchOn
-                        strobeJob?.cancel()
-                        strobeFreqHz = 0f
-                        morseJob?.cancel()
-                        sirenJob?.cancel()
-                        isMorsePlaying = false
-                        isSirenPlaying = false
+                        val on = !isTorchOn
+                        stopSignals()
+                        isTorchOn = on
 
                         if (targetMode == FlashlightTarget.Flash || targetMode == FlashlightTarget.Both) {
                             setHardwareTorch(isTorchOn, (torchStrength * maxStrength).toInt())
@@ -326,13 +368,13 @@ fun FlashlightScreen() {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(stringResource(R.string.app_polish_light_source), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
                         Spacer(Modifier.height(8.dp))
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
                             FlashlightTarget.entries.forEach { target ->
                                 FilterChip(
                                     selected = targetMode == target,
-                                    onClick = { switchLightTarget(target) },
+                                    onClick = { stopSignals(); switchLightTarget(target) },
+                                    enabled = cameraId != null || target == FlashlightTarget.Screen,
                                     label = { Text(stringResource(when (target) { FlashlightTarget.Flash -> R.string.camera_native_flash; FlashlightTarget.Screen -> R.string.app_polish_screen_light; FlashlightTarget.Both -> R.string.preference_wallpaper_set_both }), fontSize = 12.sp) },
-                                    modifier = Modifier.weight(1f)
                                 )
                             }
                         }
@@ -405,9 +447,8 @@ fun FlashlightScreen() {
                                     setHardwareTorch(false)
                                     applyScreenBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
                                 } else {
+                                    stopSignals()
                                     isSirenPlaying = true
-                                    strobeJob?.cancel()
-                                    morseJob?.cancel()
                                     sirenJob = scope.launch(Dispatchers.Default) {
                                         playSiren(
                                             target = targetMode,
@@ -442,8 +483,8 @@ fun FlashlightScreen() {
                             Slider(
                                 value = strobeFreqHz,
                                 onValueChange = { hz ->
+                                    stopSignals()
                                     strobeFreqHz = hz
-                                    strobeJob?.cancel()
                                     if (hz > 0f) {
                                         isTorchOn = false
                                         strobeJob = scope.launch(Dispatchers.Default) {
@@ -484,15 +525,34 @@ fun FlashlightScreen() {
 
                         OutlinedTextField(
                             value = morseText,
-                            onValueChange = { morseText = it },
+                            onValueChange = { morseText = it.take(2000) },
                             label = { Text(stringResource(R.string.app_polish_message)) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth()
                         )
 
-                        val morseCode = remember(morseText) {
-                            morseText.uppercase().map { MORSE_MAP[it] ?: "" }.joinToString(" ")
+                        val conversion by produceState<Pair<String, MorseCodec.Encoded>?>(null, morseText) {
+                            val input = morseText
+                            value = input to withContext(Dispatchers.IO) { MorseCodec.encode(input) }
                         }
+                        val encoded = conversion?.takeIf { it.first == morseText }?.second
+                        val morseCode = encoded?.code.orEmpty()
+                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            FlashlightOutputMode.entries.forEach { mode ->
+                                FilterChip(selected = outputMode == mode,
+                                    onClick = { stopSignals(); outputMode = mode },
+                                    enabled = toneGenerator != null || mode == FlashlightOutputMode.LightOnly,
+                                    label = { Text(stringResource(when (mode) {
+                                        FlashlightOutputMode.LightOnly -> R.string.morse_light
+                                        FlashlightOutputMode.SoundOnly -> R.string.morse_sound
+                                        FlashlightOutputMode.LightAndSound -> R.string.morse_light_sound
+                                    })) })
+                            }
+                        }
+                        if (toneGenerator == null) Text(stringResource(R.string.virtual_telemetry_unavailable), color = MaterialTheme.colorScheme.error)
+                        Text(stringResource(R.string.morse_language_help), style = MaterialTheme.typography.bodySmall)
+                        if (encoded?.romanized == true) Text(encoded.readable, style = MaterialTheme.typography.bodySmall)
+                        if (encoded?.unsupported == true) Text(stringResource(R.string.morse_unsupported), color = MaterialTheme.colorScheme.error)
 
                         Spacer(Modifier.height(8.dp))
                         Text(
@@ -507,26 +567,9 @@ fun FlashlightScreen() {
                         Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
                             Button(
                                 onClick = {
-                                    if (isMorsePlaying) {
-                                        morseJob?.cancel()
-                                        isMorsePlaying = false
-                                        setHardwareTorch(false)
-                                    } else {
-                                        isMorsePlaying = true
-                                        strobeJob?.cancel()
-                                        strobeFreqHz = 0f
-                                        morseJob = scope.launch(Dispatchers.Default) {
-                                            playMorseSequence(
-                                                code = morseCode,
-                                                mode = outputMode,
-                                                target = targetMode,
-                                                toneGenerator = toneGenerator,
-                                                setTorch = { setHardwareTorch(it) }
-                                            )
-                                            isMorsePlaying = false
-                                        }
-                                    }
+                                    if (isMorsePlaying) stopSignals() else startMorse(morseCode, false)
                                 },
+                                enabled = isMorsePlaying || morseCode.isNotBlank(),
                                 modifier = Modifier.weight(1f)
                             ) {
                                 Text(if (isMorsePlaying) stringResource(R.string.hc_stop) else stringResource(R.string.hc_send))
@@ -535,21 +578,7 @@ fun FlashlightScreen() {
                             Button(
                                 onClick = {
                                     morseText = "SOS"
-                                    isMorsePlaying = true
-                                    strobeJob?.cancel()
-                                    strobeFreqHz = 0f
-                                    morseJob = scope.launch(Dispatchers.Default) {
-                                        while (isActive) {
-                                            playMorseSequence(
-                                                code = "... --- ...",
-                                                mode = outputMode,
-                                                target = targetMode,
-                                                toneGenerator = toneGenerator,
-                                                setTorch = { setHardwareTorch(it) }
-                                            )
-                                            delay(1000L)
-                                        }
-                                    }
+                                    startMorse("... --- ...", true)
                                 },
                                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
                                 modifier = Modifier.weight(1f)
@@ -580,58 +609,5 @@ private suspend fun playSiren(
             toneGenerator?.startTone(ToneGenerator.TONE_SUP_RINGTONE, 250)
         } catch (_: Exception) {}
         delay(200L)
-    }
-}
-
-
-private suspend fun playMorseSequence(
-    code: String,
-    mode: FlashlightOutputMode,
-    target: FlashlightTarget,
-    toneGenerator: ToneGenerator?,
-    setTorch: (Boolean) -> Unit
-) {
-    val unitMs = 100L
-    for (char in code) {
-        when (char) {
-            '.' -> {
-                emitSignal(true, mode, target, toneGenerator, setTorch)
-                delay(unitMs)
-                emitSignal(false, mode, target, toneGenerator, setTorch)
-                delay(unitMs)
-            }
-            '-' -> {
-                emitSignal(true, mode, target, toneGenerator, setTorch)
-                delay(unitMs * 3)
-                emitSignal(false, mode, target, toneGenerator, setTorch)
-                delay(unitMs)
-            }
-            ' ' -> {
-                delay(unitMs * 3)
-            }
-        }
-    }
-}
-
-private fun emitSignal(
-    on: Boolean,
-    mode: FlashlightOutputMode,
-    target: FlashlightTarget,
-    toneGenerator: ToneGenerator?,
-    setTorch: (Boolean) -> Unit
-) {
-    if (on) {
-        if (mode == FlashlightOutputMode.LightOnly || mode == FlashlightOutputMode.LightAndSound) {
-            if (target == FlashlightTarget.Flash || target == FlashlightTarget.Both) {
-                setTorch(true)
-            }
-        }
-        if (mode == FlashlightOutputMode.SoundOnly || mode == FlashlightOutputMode.LightAndSound) {
-            try {
-                toneGenerator?.startTone(ToneGenerator.TONE_PROP_BEEP, 100)
-            } catch (_: Exception) {}
-        }
-    } else {
-        setTorch(false)
     }
 }

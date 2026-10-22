@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Share as image</string>
+    <string name="morse_light">Light</string>
+    <string name="morse_sound">Sound</string>
+    <string name="morse_light_sound">Light and sound</string>
+    <string name="morse_language_help">Greek Morse; other scripts use Latin transliteration (shown below). Media volume controls sound.</string>
+    <string name="morse_unsupported">Some characters cannot be sent.</string>
+</resources>
