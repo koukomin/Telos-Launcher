@@ -124,6 +124,12 @@ fun FlashlightScreen() {
         onDispose { if (active && !alreadyKept) activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) }
     }
 
+    DisposableEffect(activity) {
+        val previousStream = activity?.volumeControlStream ?: AudioManager.USE_DEFAULT_STREAM_TYPE
+        activity?.volumeControlStream = AudioManager.STREAM_MUSIC
+        onDispose { activity?.volumeControlStream = previousStream }
+    }
+
     // Lock Orientation to Portrait by Default
     DisposableEffect(allowLandscape) {
         val orig = activity?.requestedOrientation ?: ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
@@ -451,7 +457,7 @@ fun FlashlightScreen() {
                                 } else {
                                     stopSignals()
                                     isSirenPlaying = true
-                                    sirenJob = scope.launch(Dispatchers.Default) {
+                                    sirenJob = scope.launch {
                                         playSiren(
                                             target = targetMode,
                                             alternating = sirenAlternatingColors,
@@ -489,7 +495,7 @@ fun FlashlightScreen() {
                                     strobeFreqHz = hz
                                     if (hz > 0f) {
                                         isTorchOn = false
-                                        strobeJob = scope.launch(Dispatchers.Default) {
+                                        strobeJob = scope.launch {
                                             val intervalMs = (1000f / hz / 2f).toLong().coerceAtLeast(20L)
                                             var state = false
                                             while (isActive) {
