@@ -32,6 +32,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.NavKey
@@ -559,7 +560,7 @@ fun FlashlightScreen() {
                         }
                         if (toneGenerator == null) Text(stringResource(R.string.virtual_telemetry_unavailable), color = MaterialTheme.colorScheme.error)
                         Text(stringResource(R.string.morse_language_help), style = MaterialTheme.typography.bodySmall)
-                        if (encoded?.romanized == true) Text(encoded.readable, style = MaterialTheme.typography.bodySmall)
+                        if (encoded?.romanized == true) Text(encoded.readable, style = MaterialTheme.typography.bodySmall.copy(textDirection = TextDirection.Ltr))
                         if (encoded?.unsupported == true) Text(stringResource(R.string.morse_unsupported), color = MaterialTheme.colorScheme.error)
 
                         Spacer(Modifier.height(8.dp))
@@ -567,7 +568,7 @@ fun FlashlightScreen() {
                             text = morseCode,
                             fontFamily = FontFamily.Monospace,
                             color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium.copy(textDirection = TextDirection.Ltr)
                         )
 
                         Spacer(Modifier.height(16.dp))

@@ -3,6 +3,12 @@ package de.mm20.launcher2.ui.tools
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.style.TextDirection
+import org.junit.Assert.assertEquals
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.activity.ComponentActivity
@@ -32,13 +38,18 @@ class MorseScreenTest {
         }
         compose.setContent {
             val stack = rememberNavBackStack(FlashlightRoute)
-            CompositionLocalProvider(LocalBackStack provides stack) {
+            CompositionLocalProvider(LocalBackStack provides stack, LocalLayoutDirection provides LayoutDirection.Rtl) {
                 MaterialTheme(colorScheme = darkColorScheme()) { FlashlightScreen() }
             }
         }
         compose.onNodeWithTag("flashlight-controls").performScrollToNode(hasSetTextAction())
         compose.onNode(hasSetTextAction()).performTextReplacement("ΘΧΨΩ")
         compose.waitUntil(5_000) { compose.onAllNodesWithText("-.-. ---- --.- .--").fetchSemanticsNodes().isNotEmpty() }
+        compose.onNodeWithText("-.-. ---- --.- .--").performSemanticsAction(SemanticsActions.GetTextLayoutResult) { readLayout ->
+            val results = mutableListOf<TextLayoutResult>()
+            readLayout(results)
+            assertEquals(TextDirection.Ltr, results.single().layoutInput.style.textDirection)
+        }
         compose.onNodeWithText(context.getString(R.string.morse_light)).performScrollTo().performClick()
         // Emulator has no physical flash. Explicitly select screen even if a virtual camera advertises one.
         compose.onNodeWithTag("flashlight-controls").performScrollToNode(hasText(context.getString(R.string.app_polish_screen_light)))
