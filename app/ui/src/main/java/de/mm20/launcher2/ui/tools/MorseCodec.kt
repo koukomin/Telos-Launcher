@@ -6,12 +6,13 @@ import java.util.Locale
 
 /** Greek radio alphabet, otherwise offline romanization into international Morse. */
 object MorseCodec {
-    private val latin = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".zip(
+    private val latin = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toList().zip(
         listOf(".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..", "-----", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.")
     ).toMap() + mapOf('.' to ".-.-.-", ',' to "--..--", '?' to "..--..", '/' to "-..-.", '-' to "-....-", '@' to ".--.-.", ':' to "---...", '=' to "-...-", '+' to ".-.-.", '\'' to ".----.", '"' to ".-..-.", '(' to "-.--.", ')' to "-.--.-", '!' to "-.-.--")
-    private val greek = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ".zip(
+    private val greek = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ".toList().zip(
         listOf(".-", "-...", "--.", "-..", ".", "--..", "....", "-.-.", "..", "-.-", ".-..", "--", "-.", "-..-", "---", ".--.", ".-.", "...", "-", "-.--", "..-.", "----", "--.-", ".--")
     ).toMap()
+    private val silentLetters = setOf("ъ", "ь")
     data class Encoded(val code: String, val readable: String, val romanized: Boolean, val unsupported: Boolean)
     data class Pulse(val on: Boolean, val units: Int)
 
@@ -31,15 +32,18 @@ object MorseCodec {
             if (direct != null) {
                 tokens.add(direct); readable.append(source); continue
             }
-            if (Character.isWhitespace(cp)) {
+            if (Character.getType(cp) == Character.FORMAT.toInt()) continue
+            if (Character.isWhitespace(cp) || Character.isSpaceChar(cp)) {
                 if (tokens.isNotEmpty() && tokens.last() != "/") tokens.add("/")
                 readable.append(' '); continue
             }
             val combining = Character.getType(cp) == Character.NON_SPACING_MARK.toInt() || Character.getType(cp) == Character.COMBINING_SPACING_MARK.toInt()
             if (!Character.isLetterOrDigit(cp) && !combining && cp > 127) { unsupported = true; continue }
-            val ascii = AnyAscii.transliterate(source).uppercase(Locale.ROOT)
+            // AnyAscii treats unvocalized alef as silent; keep it explicit for a user-entered signal.
+            val ascii = (if (cp == 0x0627 || cp == 0x0623 || cp == 0x0625 || cp == 0x0622 || cp == 0x0671) "A"
+                else AnyAscii.transliterate(source)).replace('`', '\'').uppercase(Locale.ROOT)
             if (cp > 127) romanized = true
-            if (ascii.isEmpty() && !combining) unsupported = true
+            if (ascii.isEmpty() && !combining && source.lowercase(Locale.ROOT) !in silentLetters) unsupported = true
             readable.append(ascii)
             for (ch in ascii) {
                 if (ch.isWhitespace()) {

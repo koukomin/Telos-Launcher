@@ -85,3 +85,7 @@ The unified Apps / Auto-freeze / Settings implementation adds app timing, explic
 
 
 The same PR adds the disabled-by-default Recents removal opt-in. Unit tests distinguish last-task removal, remaining tasks and other-user events. Shizuku registration, OEM callbacks, “close all”, process/binder reconnect and physical-device refreezing remain unverified until device acceptance; JVM task-policy tests do not certify those capabilities.
+
+## Notes sharing and multilingual Morse (PR #64)
+
+Local validation on 2026-10-22: all 50 base-locale XML sets parse with six translated labels each; `npm run docs:build --prefix docs` passes. The exact MorseCodec and MorseCodecTest sources compile with Kotlin 2.3.21 and the pinned AnyAscii 0.3.3 jar; JUnit 4.13.2 reports six passing tests, including Greek accents/final sigma, other supported scripts, Turkish device locale, unsupported symbols, whitespace and PARIS timing. Full local Gradle cannot download its distribution due to the environment network restriction. GitHub CI compiles the Android screens and runs JVM tests plus bounded image-export and screen-Morse instrumentation. Actual sound, camera-flash response, OEM lifecycle behavior and the full theme/font/window visual matrix remain unverified on a physical device.

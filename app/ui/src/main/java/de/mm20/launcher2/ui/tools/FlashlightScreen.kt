@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.painterResource
@@ -88,7 +89,7 @@ fun FlashlightScreen() {
     }
 
     var isTorchOn by remember { mutableStateOf(false) }
-    var targetMode by remember { mutableStateOf(if (cameraId == null) FlashlightTarget.Screen else FlashlightTarget.Flash) }
+    var targetMode by rememberSaveable { mutableStateOf(if (cameraId == null) FlashlightTarget.Screen else FlashlightTarget.Flash) }
     var allowLandscape by rememberSaveable { mutableStateOf(false) }
 
     var screenBrightness by remember { mutableFloatStateOf(1.0f) }
@@ -98,9 +99,9 @@ fun FlashlightScreen() {
     var torchStrength by remember { mutableFloatStateOf(1f) }
     var maxStrength by remember { mutableIntStateOf(1) }
 
-    var outputMode by remember { mutableStateOf(FlashlightOutputMode.LightAndSound) }
+    var outputMode by rememberSaveable { mutableStateOf(FlashlightOutputMode.LightAndSound) }
     var strobeFreqHz by remember { mutableFloatStateOf(0f) }
-    var morseText by remember { mutableStateOf("SOS") }
+    var morseText by rememberSaveable { mutableStateOf("SOS") }
     var isMorsePlaying by remember { mutableStateOf(false) }
 
     var isSirenPlaying by remember { mutableStateOf(false) }
@@ -117,9 +118,10 @@ fun FlashlightScreen() {
     LaunchedEffect(toneGenerator) { if (toneGenerator == null) outputMode = FlashlightOutputMode.LightOnly }
 
     DisposableEffect(isMorsePlaying) {
+        val active = isMorsePlaying
         val alreadyKept = activity?.window?.attributes?.flags?.and(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) != 0
-        if (isMorsePlaying) activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        onDispose { if (isMorsePlaying && !alreadyKept) activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) }
+        if (active) activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        onDispose { if (active && !alreadyKept) activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) }
     }
 
     // Lock Orientation to Portrait by Default
@@ -308,7 +310,7 @@ fun FlashlightScreen() {
         containerColor = Color.Transparent
     ) { padding ->
         LazyColumn(
-            modifier = Modifier
+            modifier = Modifier.testTag("flashlight-controls")
                 .fillMaxSize()
                 .padding(padding),
             contentPadding = PaddingValues(16.dp),

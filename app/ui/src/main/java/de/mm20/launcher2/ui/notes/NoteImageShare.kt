@@ -20,7 +20,9 @@ internal suspend fun renderNoteImages(context: Context, note: Note): List<File>?
     val app = context.applicationContext
     return withContext(Dispatchers.IO) {
         runCatching {
-            val text = listOf(note.title, note.body).filter { it.isNotBlank() }.joinToString("\n\n")
+            val parts = listOf(note.title, note.body).filter { it.isNotBlank() }
+            require(parts.sumOf { it.length.toLong() } + (if (parts.size > 1) 2 else 0) <= 100_000)
+            val text = parts.joinToString("\n\n")
             require(text.length <= 100_000 && text.isNotBlank())
             val styled = SpannableString(text)
             if (note.title.isNotBlank()) styled.setSpan(RelativeSizeSpan(1.4f), 0, note.title.length, 0)
