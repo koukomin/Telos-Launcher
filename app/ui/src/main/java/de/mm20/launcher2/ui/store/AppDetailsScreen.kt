@@ -122,7 +122,14 @@ fun AppDetailsScreen(itemId: String) {
                 }
             }
             item.latestRelease?.changelog?.takeIf { it.isNotBlank() }?.let { changelog ->
-                item { Card(stringResource(R.string.hf_store_changelog)) { Text(changelog.take(4000), style = MaterialTheme.typography.bodyMedium) } }
+                item {
+                    Card(stringResource(R.string.hf_store_changelog)) {
+                        de.mm20.launcher2.ui.component.markdown.MarkdownText(
+                            text = changelog.take(4000),
+                            onTextChange = {}, // Read-only viewer
+                        )
+                    }
+                }
             }
             item {
                 Card(stringResource(R.string.hf_store_app_settings)) {
