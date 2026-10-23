@@ -196,6 +196,20 @@ fun AppDetailsScreen(itemId: String) {
                 }
             }
             item {
+                Card(stringResource(R.string.store_audio_focus_title)) {
+                    SwitchLine(
+                        stringResource(R.string.store_audio_focus_ignore_loss),
+                        stringResource(R.string.store_audio_focus_ignore_loss_summary),
+                        o.ignoreAudioFocusLoss,
+                    ) { v -> viewModel.setOptions(item.id) { it.copy(ignoreAudioFocusLoss = v) } }
+                    SwitchLine(
+                        stringResource(R.string.store_audio_focus_mute_app),
+                        stringResource(R.string.store_audio_focus_mute_app_summary),
+                        o.muteAppAudio,
+                    ) { v -> viewModel.setOptions(item.id) { it.copy(muteAppAudio = v) } }
+                }
+            }
+            item {
                 var isRootAvailable by remember { mutableStateOf(false) }
                 LaunchedEffect(Unit) {
                     withContext(kotlinx.coroutines.Dispatchers.IO) {

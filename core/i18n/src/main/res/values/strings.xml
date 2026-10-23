@@ -1142,6 +1142,11 @@
     <string name="search_action_ai">AI Search</string>
     <string name="hc_high_volume_warning_title">High Volume Boost Warning</string>
     <string name="hc_high_volume_warning_text">Boosting audio above 100% may cause sound distortion or potential speaker damage. Telos is not responsible for hardware damage. Use at your own risk.</string>
+    <string name="store_audio_focus_title">Audio Focus Mixer</string>
+    <string name="store_audio_focus_ignore_loss">Ignore Audio Focus Loss</string>
+    <string name="store_audio_focus_ignore_loss_summary">Allow simultaneous audio playback alongside other playing apps (Dual Audio)</string>
+    <string name="store_audio_focus_mute_app">Mute App Audio</string>
+    <string name="store_audio_focus_mute_app_summary">Completely silences all audio output from this application</string>
     <string name="store_tab_installed_apps">Installed Apps</string>
     <string name="store_show_system_apps">Show system apps</string>
     <string name="store_show_virtual_apps">Show virtual apps</string>

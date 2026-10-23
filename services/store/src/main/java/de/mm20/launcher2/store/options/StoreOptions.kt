@@ -25,6 +25,10 @@ data class ItemOptions(
     val note: String = "",
     /** null follows the existing global setting; newly discovered apps follow the global setting. */
     val autoUpdate: Boolean? = null,
+    val ignoreAudioFocusLoss: Boolean = false,
+    val muteAppAudio: Boolean = false,
+    val blockWifi: Boolean = false,
+    val blockMobileData: Boolean = false,
 )
 
 /** Settings of the Store as a whole. */

@@ -1515,4 +1515,11 @@
     <string name="hc_high_volume_warning_title">Προειδοποίηση Ενίσχυσης Ήχου</string>
     <string name="hc_high_volume_warning_text">Η ενίσχυση ήχου πάνω από 100% ενδέχεται να προκαλέσει παραμόρφωση ή βλάβη στα ηχεία της συσκευής. Το Telos δεν φέρει ευθύνη για τυχόν βλάβες. Χρήση με δική σας ευθύνη.</string>
 
+
+    <string name="store_audio_focus_title">Μίκτης Εστίασης Ήχου (Audio Focus Mixer)</string>
+    <string name="store_audio_focus_ignore_loss">Παράβλεψη Απώλειας Εστίασης Ήχου</string>
+    <string name="store_audio_focus_ignore_loss_summary">Επιτρέπει την ταυτόχρονη αναπαραγωγή ήχου μαζί με άλλες εφαρμογές (Διπλός Ήχος)</string>
+    <string name="store_audio_focus_mute_app">Σίγαση Ήχου Εφαρμογής</string>
+    <string name="store_audio_focus_mute_app_summary">Σιγάζει πλήρως όλον τον ήχο που παράγεται από αυτήν την εφαρμογή</string>
+
 </resources>
