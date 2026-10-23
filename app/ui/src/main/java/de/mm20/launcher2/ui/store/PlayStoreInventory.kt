@@ -104,25 +104,24 @@ object PlayStoreInventory {
         val market = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")).setPackage(PLAY_PACKAGE)
         market.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         if (!context.tryStartActivity(market)) {
-            context.tryStartActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName"))
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
+            val launchIntent = context.packageManager.getLaunchIntentForPackage(PLAY_PACKAGE)
+            if (launchIntent != null) {
+                launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.tryStartActivity(launchIntent)
+            }
         }
     }
 
     fun openPlayUpdates(context: Context) {
-        val intents = listOf(
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/myapps/updates")).setPackage(PLAY_PACKAGE),
-            Intent("com.google.android.finsky.VIEW_MY_DOWNLOADS").setPackage(PLAY_PACKAGE).putExtra("trigger_update_all", true),
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/updates")).setPackage(PLAY_PACKAGE),
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/myapps")).setPackage(PLAY_PACKAGE),
-            Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$PLAY_PACKAGE")).setPackage(PLAY_PACKAGE),
-        )
-        for (intent in intents) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            if (context.tryStartActivity(intent)) return
+        val launchIntent = context.packageManager.getLaunchIntentForPackage(PLAY_PACKAGE)
+        if (launchIntent != null) {
+            launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            if (context.tryStartActivity(launchIntent)) return
         }
+
+        val market = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$PLAY_PACKAGE")).setPackage(PLAY_PACKAGE)
+        market.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.tryStartActivity(market)
     }
 
     private fun versionParts(value: String): List<Long> =
