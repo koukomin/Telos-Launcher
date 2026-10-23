@@ -112,7 +112,7 @@
     <string name="telos_files_toolbar_down">Mou %1$s avall</string>
     <string name="telos_files_toolbar_info">Tria fins a %1$d dreceres i canvia\'n l\'ordre. La navegació, la cerca i el menú continuen disponibles. Totes les accions es mantenen al menú.</string>
     <string name="telos_files_toolbar_reset">Restaura els valors predeterminats</string>
-    <string name="telos_files_toolbar_save">Desa</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Personalitza la barra d\'eines</string>
     <string name="telos_files_toolbar_up">Mou %1$s amunt</string>
     <string name="telos_files_transfer_added">S\'ha afegit a la cua de transferències de fitxers</string>

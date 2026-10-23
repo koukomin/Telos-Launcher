@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Xóa peer</string>
     <string name="nwg_mobile_only">Chỉ khi dùng dữ liệu di động</string>
     <string name="nwg_lockdown">Chặn các ứng dụng khi đường hầm không hoạt động</string>
-    <string name="nwg_save">Lưu</string>
-    <string name="nwg_cancel">Hủy</string>
-    <string name="nwg_delete">Xóa</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Chia sẻ cấu hình</string>
     <string name="nwg_share_warning">Cấu hình đã xuất có chứa khóa riêng tư.</string>
     <string name="nwg_import">Nhập</string>

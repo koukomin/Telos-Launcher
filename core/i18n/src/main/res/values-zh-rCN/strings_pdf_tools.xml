@@ -6,11 +6,11 @@
     <string name="pdft_no_files">尚未添加任何文件。</string>
     <string name="pdft_add_pdf">添加 PDF</string>
     <string name="pdft_add_images">添加图片</string>
-    <string name="pdft_add">添加</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">整理</string>
     <string name="pdft_group_optimize">优化</string>
     <string name="pdft_group_security">安全</string>
-    <string name="pdft_group_edit">编辑</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">转换</string>
     <string name="pdft_group_view">查看与对比</string>
     <string name="pdft_tool_merge">合并</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">返回</string>
     <string name="pdft_back_to_tools">返回工具</string>
     <string name="pdft_close">关闭</string>
-    <string name="pdft_cancel">取消</string>
-    <string name="pdft_ok">确定</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">应用</string>
     <string name="pdft_change">更换</string>
     <string name="pdft_remove">移除</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">完成</string>
     <string name="pdft_compress_result">从 %1$s 减小到 %2$s（缩小 %3$d%%）</string>
     <string name="pdft_compress_no_gain">结果（%2$s）并不比原文件（%1$s）更小。此文件主要由文字和矢量图形构成。</string>
-    <string name="pdft_save">保存</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">保存到 %1$s</string>
     <string name="pdft_save_choose_folder">选择文件夹…</string>
     <string name="pdft_save_as">另存为…</string>

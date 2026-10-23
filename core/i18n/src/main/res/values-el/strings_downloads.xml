@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Πατήστε Προσθήκη και επικολλήστε έναν σύνδεσμο, ή μοιραστείτε έναν σύνδεσμο στο Telos Downloads.</string>
     <string name="dl_empty_filter_title">Τίποτα εδώ</string>
     <string name="dl_empty_filter_text">Καμία λήψη δεν ταιριάζει με αυτό το φίλτρο.</string>
-    <string name="dl_add">Προσθήκη</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Προσθήκη λήψης</string>
     <string name="dl_links_hint">Σύνδεσμοι, ένας ανά γραμμή</string>
     <string name="dl_invalid_links">Κανένας έγκυρος σύνδεσμος. Μόνο σύνδεσμοι http και https μπορούν να ληφθούν.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Αφαίρεση του %1$s; Το τμήμα που έχει ληφθεί διαγράφεται.</string>
     <string name="dl_delete_with_file">Αφαίρεση και διαγραφή αρχείου</string>
     <string name="dl_delete_keep_file">Αφαίρεση, διατήρηση αρχείου</string>
-    <string name="dl_cancel">Άκυρο</string>
-    <string name="dl_save">Αποθήκευση</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Καμία εφαρμογή δεν μπορεί να ανοίξει αυτό το αρχείο</string>
     <string name="dl_pause_all">Παύση όλων</string>
     <string name="dl_resume_all">Συνέχεια όλων</string>

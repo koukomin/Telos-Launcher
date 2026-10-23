@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Níor cuireadh aon chomhad leis go fóill.</string>
     <string name="pdft_add_pdf">Cuir PDF leis</string>
     <string name="pdft_add_images">Cuir íomhánna leis</string>
-    <string name="pdft_add">Cuir leis</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Eagraigh</string>
     <string name="pdft_group_optimize">Barrfheabhsaigh</string>
     <string name="pdft_group_security">Slándáil</string>
-    <string name="pdft_group_edit">Cuir in eagar</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Tiontaigh</string>
     <string name="pdft_group_view">Féach agus cuir i gcomparáid</string>
     <string name="pdft_tool_merge">Cumasc</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Ar ais</string>
     <string name="pdft_back_to_tools">Ar ais chuig na huirlisí</string>
     <string name="pdft_close">Dún</string>
-    <string name="pdft_cancel">Cealaigh</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Cuir i bhfeidhm</string>
     <string name="pdft_change">Athraigh</string>
     <string name="pdft_remove">Bain</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Déanta</string>
     <string name="pdft_compress_result">Ó %1$s go %2$s (%3$d%% níos lú)</string>
     <string name="pdft_compress_no_gain">Níl an toradh (%2$s) níos lú ná an bunleagan (%1$s). Is téacs agus grafaicí veicteora is mó atá sa chomhad.</string>
-    <string name="pdft_save">Sábháil</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Sábháil i %1$s</string>
     <string name="pdft_save_choose_folder">Roghnaigh fillteán…</string>
     <string name="pdft_save_as">Sábháil mar…</string>

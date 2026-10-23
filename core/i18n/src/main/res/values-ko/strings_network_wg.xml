@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">피어 제거</string>
     <string name="nwg_mobile_only">모바일 데이터에서만</string>
     <string name="nwg_lockdown">터널이 끊어진 동안 앱 차단</string>
-    <string name="nwg_save">저장</string>
-    <string name="nwg_cancel">취소</string>
-    <string name="nwg_delete">삭제</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">설정 공유</string>
     <string name="nwg_share_warning">내보낸 설정에는 개인 키가 포함되어 있습니다.</string>
     <string name="nwg_import">가져오기</string>

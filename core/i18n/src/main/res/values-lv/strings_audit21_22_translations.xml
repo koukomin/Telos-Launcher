@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Neizdevās atvērt arhīvu</string>
     <string name="au21_arch_pw_title">Nepieciešama parole</string>
     <string name="au21_arch_pw_info">%1$s ir aizsargāts ar paroli. Ievadiet paroli, lai to atvērtu vai izsaiņotu. Parole tiek glabāta tikai atmiņā, kamēr atrodaties arhīvā, un nekad netiek saglabāta.</string>
-    <string name="au21_arch_ok">Labi</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Notiek pārbaude…</string>
     <string name="au21_arch_show">Rādīt</string>
     <string name="au21_arch_hide">Paslēpt</string>

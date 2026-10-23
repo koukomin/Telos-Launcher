@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Удалить список</string>
     <string name="blocklists_custom_name">Название</string>
     <string name="blocklists_custom_url">Адрес (https)</string>
-    <string name="blocklists_add">Добавить</string>
-    <string name="blocklists_cancel">Отмена</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Принимаются только адреса https</string>
     <string name="blocklists_import_failed">Файл не содержит пригодных записей или не может быть прочитан</string>
     <string name="blocklists_schedule">Автообновление</string>

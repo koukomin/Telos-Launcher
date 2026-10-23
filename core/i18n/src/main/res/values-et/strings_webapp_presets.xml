@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Sõnumside</string>
     <string name="web_app_preset_category_video">Video ja muusika</string>
     <string name="web_app_preset_category_work">Tootlikkus ja töö</string>
-    <string name="web_app_preset_add">Lisa</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Lisa %1$s</string>
     <string name="web_app_preset_dialog_summary">Vali lisatavad veebirakendused. Need salvestatakse nagu sinu enda loodud veebirakendused.</string>
     <string name="web_app_preset_exists">On juba sinu veebirakenduste hulgas, kasutatakse uuesti</string>

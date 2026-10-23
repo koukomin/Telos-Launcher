@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Arkistoa ei voitu avata</string>
     <string name="au21_arch_pw_title">Salasana vaaditaan</string>
     <string name="au21_arch_pw_info">%1$s on salasanasuojattu. Anna salasana avataksesi tai purkaaksesi sen. Salasana pidetään vain muistissa, kun olet arkistossa, eikä sitä koskaan tallenneta.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Tarkistetaan…</string>
     <string name="au21_arch_show">Näytä</string>
     <string name="au21_arch_hide">Piilota</string>

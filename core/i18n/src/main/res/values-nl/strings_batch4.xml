@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Tik op Toevoegen en plak een link, of deel een link met Telos Downloads.</string>
     <string name="dl_empty_filter_title">Niets te zien</string>
     <string name="dl_empty_filter_text">Geen downloads komen overeen met dit filter.</string>
-    <string name="dl_add">Toevoegen</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Download toevoegen</string>
     <string name="dl_links_hint">Links, één per regel</string>
     <string name="dl_invalid_links">Geen geldige link. Alleen http- en https-links kunnen worden gedownload.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">%1$s verwijderen? Het gedownloade deel wordt verwijderd.</string>
     <string name="dl_delete_with_file">Verwijderen en bestand wissen</string>
     <string name="dl_delete_keep_file">Verwijderen, bestand bewaren</string>
-    <string name="dl_cancel">Annuleren</string>
-    <string name="dl_save">Opslaan</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Geen app kan dit bestand openen</string>
     <string name="dl_pause_all">Alles pauzeren</string>
     <string name="dl_resume_all">Alles hervatten</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Links op het klembord herkennen</string>
     <string name="dl_p3_detect_clipboard_sum">Wanneer je Downloads opent, wordt een gekopieerde link, videosite-adres of magneetlink aangeboden. Android kan melden dat de app het klembord heeft gelezen.</string>
     <string name="dl_p3_clip_found">Op het klembord: %1$s</string>
-    <string name="dl_p3_clip_add">Toevoegen</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Schema</string>
     <string name="dl_p3_schedule_enable">Alleen op bepaalde tijden downloaden</string>
     <string name="dl_p3_schedule_sum">Buiten het tijdvenster wachten downloads in de wachtrij.</string>

@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Arhiivi avamine ebaõnnestus</string>
     <string name="au21_arch_pw_title">Parool on nõutav</string>
     <string name="au21_arch_pw_info">%1$s on parooliga kaitstud. Selle avamiseks või lahtipakkimiseks sisesta parool. Parooli hoitakse mälus ainult seni, kuni oled arhiivis, ja seda ei salvestata kunagi.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Kontrollimine…</string>
     <string name="au21_arch_show">Kuva</string>
     <string name="au21_arch_hide">Peida</string>

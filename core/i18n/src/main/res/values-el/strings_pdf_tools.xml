@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Δεν έχει προστεθεί κανένα αρχείο ακόμη.</string>
     <string name="pdft_add_pdf">Προσθήκη PDF</string>
     <string name="pdft_add_images">Προσθήκη εικόνων</string>
-    <string name="pdft_add">Προσθήκη</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Οργάνωση</string>
     <string name="pdft_group_optimize">Βελτιστοποίηση</string>
     <string name="pdft_group_security">Ασφάλεια</string>
-    <string name="pdft_group_edit">Επεξεργασία</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Μετατροπή</string>
     <string name="pdft_group_view">Προβολή και σύγκριση</string>
     <string name="pdft_tool_merge">Συγχώνευση</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Πίσω</string>
     <string name="pdft_back_to_tools">Πίσω στα εργαλεία</string>
     <string name="pdft_close">Κλείσιμο</string>
-    <string name="pdft_cancel">Ακύρωση</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Εφαρμογή</string>
     <string name="pdft_change">Αλλαγή</string>
     <string name="pdft_remove">Αφαίρεση</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Ολοκληρώθηκε</string>
     <string name="pdft_compress_result">Από %1$s σε %2$s (%3$d%% μικρότερο)</string>
     <string name="pdft_compress_no_gain">Το αποτέλεσμα (%2$s) δεν είναι μικρότερο από το αρχικό (%1$s). Το αρχείο περιέχει κυρίως κείμενο και διανυσματικά γραφικά.</string>
-    <string name="pdft_save">Αποθήκευση</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Αποθήκευση στο %1$s</string>
     <string name="pdft_save_choose_folder">Επιλογή φακέλου…</string>
     <string name="pdft_save_as">Αποθήκευση ως…</string>

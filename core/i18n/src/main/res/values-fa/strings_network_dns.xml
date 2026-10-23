@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">شناسه پیکربندی</string>
     <string name="net_dns_nextdns_device">نام دستگاه (اختیاری)</string>
     <string name="net_dns_nextdns_bad_id">شناسه پیکربندی از ۴ تا ۱۲ حرف و رقم تشکیل می‌شود.</string>
-    <string name="net_dns_nextdns_add">افزودن</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">ارائه‌دهنده</string>
     <string name="net_dns_detail_protocol">پروتکل</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">استفاده از این سرور</string>
     <string name="net_dns_action_test">آزمایش</string>
     <string name="net_dns_action_copy">رونوشت به‌عنوان سرور سفارشی</string>
-    <string name="net_dns_action_edit">ویرایش</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">حذف</string>
-    <string name="net_dns_save">ذخیره</string>
-    <string name="net_dns_cancel">لغو</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">در حال آزمایش…</string>
     <string name="net_dns_test_ok">پاسخ در %1$d میلی‌ثانیه</string>
     <string name="net_dns_test_fail">آزمایش ناموفق بود: %1$s</string>

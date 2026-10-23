@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Tapáil Cuir leis agus greamaigh nasc, nó comhroinn nasc le Telos Downloads.</string>
     <string name="dl_empty_filter_title">Rud ar bith anseo</string>
     <string name="dl_empty_filter_text">Níl aon íoslódáil ag teacht leis an scagaire seo.</string>
-    <string name="dl_add">Cuir leis</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Cuir íoslódáil leis</string>
     <string name="dl_links_hint">Naisc, ceann amháin an líne</string>
     <string name="dl_invalid_links">Níl aon nasc bailí ann. Ní féidir ach naisc http agus https a íoslódáil.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">An mbainfear %1$s? Scriosfar an chuid a íoslódáladh.</string>
     <string name="dl_delete_with_file">Bain agus scrios an comhad</string>
     <string name="dl_delete_keep_file">Bain, coinnigh an comhad</string>
-    <string name="dl_cancel">Cealaigh</string>
-    <string name="dl_save">Sábháil</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Níl aon aip ann a oibríonn leis an gcomhad seo</string>
     <string name="dl_pause_all">Cuir gach ceann ar sos</string>
     <string name="dl_resume_all">Lean ar aghaidh leis na cinn go léir</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Braith naisc sa ghearrthaisce</string>
     <string name="dl_p3_detect_clipboard_sum">Nuair a osclaíonn tú Downloads, mol nasc, seoladh suíomh físeáin nó nasc maighnéad a chóipeáil tú. D\'fhéadfadh Android a rá leat gur léigh an aip an gearrthaisce.</string>
     <string name="dl_p3_clip_found">Sa ghearrthaisce: %1$s</string>
-    <string name="dl_p3_clip_add">Cuir leis</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Sceideal</string>
     <string name="dl_p3_schedule_enable">Ná híoslódáil ach ag amanna áirithe</string>
     <string name="dl_p3_schedule_sum">Lasmuigh den fhuinneog ama fanann íoslódálacha sa scuaine.</string>

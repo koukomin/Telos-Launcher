@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Buang peer</string>
     <string name="nwg_mobile_only">Hanya pada data mudah alih</string>
     <string name="nwg_lockdown">Sekat aplikasi semasa terowong terputus</string>
-    <string name="nwg_save">Simpan</string>
-    <string name="nwg_cancel">Batal</string>
-    <string name="nwg_delete">Padam</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Kongsi konfigurasi</string>
     <string name="nwg_share_warning">Konfigurasi yang dieksport mengandungi kunci peribadi.</string>
     <string name="nwg_import">Import</string>

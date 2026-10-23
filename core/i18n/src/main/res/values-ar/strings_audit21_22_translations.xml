@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">تعذّر فتح الأرشيف</string>
     <string name="au21_arch_pw_title">كلمة المرور مطلوبة</string>
     <string name="au21_arch_pw_info">%1$s محمي بكلمة مرور. أدخل كلمة المرور لفتحه أو فك ضغطه. تُحفظ كلمة المرور في الذاكرة فقط أثناء وجودك داخل الأرشيف ولا يتم حفظها أبدًا.</string>
-    <string name="au21_arch_ok">حسنًا</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">جارٍ التحقق…</string>
     <string name="au21_arch_show">إظهار</string>
     <string name="au21_arch_hide">إخفاء</string>

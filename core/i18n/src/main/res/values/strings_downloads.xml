@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Tap Add and paste a link, or share a link to Telos Downloads.</string>
     <string name="dl_empty_filter_title">Nothing here</string>
     <string name="dl_empty_filter_text">No downloads match this filter.</string>
-    <string name="dl_add">Add</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Add download</string>
     <string name="dl_links_hint">Links, one per line</string>
     <string name="dl_invalid_links">No valid link. Only http and https links can be downloaded.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Remove %1$s? The part that was downloaded is deleted.</string>
     <string name="dl_delete_with_file">Remove and delete file</string>
     <string name="dl_delete_keep_file">Remove, keep file</string>
-    <string name="dl_cancel">Cancel</string>
-    <string name="dl_save">Save</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">No app can open this file</string>
     <string name="dl_pause_all">Pause all</string>
     <string name="dl_resume_all">Resume all</string>

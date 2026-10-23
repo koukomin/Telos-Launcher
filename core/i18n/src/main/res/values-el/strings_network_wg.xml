@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Αφαίρεση peer</string>
     <string name="nwg_mobile_only">Μόνο με δεδομένα κινητής</string>
     <string name="nwg_lockdown">Φραγή των εφαρμογών όσο το τούνελ είναι εκτός λειτουργίας</string>
-    <string name="nwg_save">Αποθήκευση</string>
-    <string name="nwg_cancel">Ακύρωση</string>
-    <string name="nwg_delete">Διαγραφή</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Κοινοποίηση ρύθμισης</string>
     <string name="nwg_share_warning">Η εξαγόμενη ρύθμιση περιέχει το ιδιωτικό κλειδί.</string>
     <string name="nwg_import">Εισαγωγή</string>

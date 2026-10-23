@@ -12,7 +12,7 @@
     <string name="dl_empty_text">추가를 누르고 링크를 붙여넣거나, 링크를 Telos 다운로드로 공유하세요.</string>
     <string name="dl_empty_filter_title">항목이 없어요</string>
     <string name="dl_empty_filter_text">이 필터와 일치하는 다운로드가 없어요.</string>
-    <string name="dl_add">추가</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">다운로드 추가</string>
     <string name="dl_links_hint">링크 (한 줄에 하나씩)</string>
     <string name="dl_invalid_links">올바른 링크가 없어요. http와 https 링크만 다운로드할 수 있어요.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">%1$s을(를) 제거할까요? 다운로드된 부분은 삭제돼요.</string>
     <string name="dl_delete_with_file">제거하고 파일 삭제</string>
     <string name="dl_delete_keep_file">제거하고 파일 유지</string>
-    <string name="dl_cancel">취소</string>
-    <string name="dl_save">저장</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">이 파일을 열 수 있는 앱이 없어요</string>
     <string name="dl_pause_all">모두 일시중지</string>
     <string name="dl_resume_all">모두 재개</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">클립보드의 링크 감지</string>
     <string name="dl_p3_detect_clipboard_sum">다운로드를 열 때 복사한 링크, 동영상 사이트 주소 또는 마그넷 링크를 제안해요. Android에서 앱이 클립보드를 읽었다고 알릴 수 있어요.</string>
     <string name="dl_p3_clip_found">클립보드: %1$s</string>
-    <string name="dl_p3_clip_add">추가</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">일정</string>
     <string name="dl_p3_schedule_enable">정해진 시간에만 다운로드</string>
     <string name="dl_p3_schedule_sum">시간대 밖에서는 다운로드가 대기열에서 대기해요.</string>

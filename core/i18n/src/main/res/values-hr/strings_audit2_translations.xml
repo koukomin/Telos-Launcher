@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Očisti</string>
     <string name="au2_netsec_reset_message">Pravila vatrozida za %1$d trenutno prikazanih aplikacija bit će vraćena na zadano.</string>
     <string name="au2_netsec_confirm_reset">Resetiraj</string>
-    <string name="au2_netsec_cancel">Odustani</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Snimi</string>
     <string name="au2_radio2_stop_recording">Zaustavi snimanje</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

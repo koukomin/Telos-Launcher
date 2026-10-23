@@ -112,7 +112,7 @@
     <string name="telos_files_toolbar_down">Pindahkan %1$s ke bawah</string>
     <string name="telos_files_toolbar_info">Pilih hingga %1$d pintasan dan ubah urutannya. Navigasi, pencarian, dan menu tetap tersedia. Semua tindakan tetap ada di menu.</string>
     <string name="telos_files_toolbar_reset">Pulihkan bawaan</string>
-    <string name="telos_files_toolbar_save">Simpan</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Sesuaikan bilah alat</string>
     <string name="telos_files_toolbar_up">Pindahkan %1$s ke atas</string>
     <string name="telos_files_transfer_added">Ditambahkan ke antrean transfer berkas</string>

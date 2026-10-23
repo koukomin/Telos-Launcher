@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">ID cấu hình</string>
     <string name="net_dns_nextdns_device">Tên thiết bị (không bắt buộc)</string>
     <string name="net_dns_nextdns_bad_id">ID cấu hình gồm 4 đến 12 chữ cái và chữ số.</string>
-    <string name="net_dns_nextdns_add">Thêm</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Nhà cung cấp</string>
     <string name="net_dns_detail_protocol">Giao thức</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Dùng máy chủ này</string>
     <string name="net_dns_action_test">Kiểm tra</string>
     <string name="net_dns_action_copy">Sao chép thành máy chủ tùy chỉnh</string>
-    <string name="net_dns_action_edit">Chỉnh sửa</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Xóa</string>
-    <string name="net_dns_save">Lưu</string>
-    <string name="net_dns_cancel">Hủy</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Đang kiểm tra…</string>
     <string name="net_dns_test_ok">Phản hồi sau %1$d ms</string>
     <string name="net_dns_test_fail">Kiểm tra thất bại: %1$s</string>

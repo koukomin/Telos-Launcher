@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Níorbh fhéidir an chartlann a oscailt</string>
     <string name="au21_arch_pw_title">Tá focal faire de dhíth</string>
     <string name="au21_arch_pw_info">Tá %1$s cosanta ag focal faire. Cuir isteach a fhocal faire chun é a oscailt nó a dhíphacáil. Ní choinnítear an focal faire ach i gcuimhne agus tú sa chartlann, agus ní shábháiltear choíche é.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Ag seiceáil…</string>
     <string name="au21_arch_show">Taispeáin</string>
     <string name="au21_arch_hide">Folaigh</string>

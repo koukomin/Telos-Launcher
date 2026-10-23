@@ -280,7 +280,7 @@
     <string name="preference_floating_launcher_tools">Snelle hulpmiddelen</string>
     <string name="preference_floating_launcher_tools_summary">Toon knoppen voor screenshot, rekenmachine en snelle instellingen in het paneel. De screenshotknop vereist de toegankelijkheidsservice</string>
     <string name="floating_launcher_title">Slimme functies</string>
-    <string name="floating_launcher_edit">Bewerken</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Recente bestanden</string>
     <string name="floating_launcher_recent_files_empty">Geen recente bestanden. Telos heeft hiervoor toegang tot bestanden nodig; je kunt die toestaan wanneer je Telos Bestanden opent.</string>
     <string name="floating_launcher_recent_files_no_app">Geen app kan dit bestand openen</string>
@@ -324,10 +324,10 @@
     <string name="floating_launcher_folder_name">Mapnaam</string>
     <string name="floating_launcher_folder_select_apps">Kies minimaal 2 apps om te groeperen</string>
     <string name="floating_launcher_create">Aanmaken</string>
-    <string name="floating_launcher_cancel">Annuleren</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Map hernoemen</string>
     <string name="floating_launcher_delete_folder">Map verwijderen</string>
-    <string name="floating_launcher_save">Opslaan</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Map openen</string>
     <string name="floating_launcher_all_apps">Alle apps</string>
     <string name="floating_launcher_file_dock">Bestandsdock</string>
@@ -684,7 +684,7 @@
     <string name="comms_unblock_number">Nummer deblokkeren</string>
     <string name="comms_no_previous_calls">Geen eerdere gesprekken</string>
     <string name="comms_clear_history">Gespreksgeschiedenis wissen?</string>
-    <string name="comms_clear_history_confirm">Verwijderen</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Integraties</string>
     <string name="filter_incoming">Inkomend</string>
     <string name="filter_outgoing">Uitgaand</string>
@@ -705,7 +705,7 @@
     <string name="comms_answer">Opnemen</string>
     <string name="comms_reject">Weigeren</string>
     <string name="comms_hangup">Ophangen</string>
-    <string name="comms_add_call">Toevoegen</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Samenvoegen</string>
     <string name="comms_swap">Wisselen</string>
     <string name="backup_choose_parts">Waarvan wil je een back-up maken?</string>
@@ -792,9 +792,9 @@
     <string name="cal_no_events">Geen afspraken</string>
     <string name="cal_no_title">(geen titel)</string>
     <string name="cal_all_day">Hele dag</string>
-    <string name="cal_cancel">Annuleren</string>
-    <string name="cal_delete">Verwijderen</string>
-    <string name="cal_save">Opslaan</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Titel</string>
     <string name="cal_location">Locatie</string>
     <string name="cal_description">Beschrijving</string>
@@ -811,7 +811,7 @@
     <string name="cal_series_note">Wijzigingen en verwijderen gelden voor de hele reeks.</string>
     <string name="cal_on_phone">Op deze telefoon</string>
     <string name="cal_new_local">Nieuwe lokale agenda</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google-, CalDAV- (DAVx5) en Exchange-agenda\'s worden door het systeem gesynchroniseerd via hun account. Lokale agenda\'s blijven op de telefoon en zitten in de Telos-back-up.</string>
     <string name="cal_view_agenda">Komende 30 dagen</string>
     <string name="cal_view_month">Maandweergave</string>
@@ -834,8 +834,8 @@
     <string name="notes_title_hint">Titel</string>
     <string name="notes_body_hint">Notitie</string>
     <string name="notes_labels_hint">werk, thuis</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">Annuleren</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">%d notities geïmporteerd</string>
     <string name="notes_synced">Gesynchroniseerd: %1$d verzonden, %2$d ontvangen</string>
     <string name="notes_sync_failed">Synchronisatie mislukt: %s</string>
@@ -893,7 +893,7 @@
     <string name="screenshot_cannot_open">De afbeelding kon niet worden geopend</string>
     <string name="screenshot_notification_channel">Screenshots</string>
     <string name="screenshot_notification_text">Tik om te bewerken</string>
-    <string name="screenshot_edit">Bewerken</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Screenshots</string>
     <string name="screenshot_none">Nog geen screenshots</string>
     <string name="screenshot_undo">Ongedaan maken</string>
@@ -927,7 +927,7 @@
     <string name="floating_launcher_section_widgets">Widgets</string>
     <string name="floating_launcher_section_apps">Apps</string>
     <string name="floating_launcher_done">Klaar</string>
-    <string name="floating_launcher_add">Toevoegen</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Zwevende balk</string>
     <string name="preference_category_sidebar_style">Stijl van zijbalk</string>
     <string name="preference_floating_launcher_side">Kant van het scherm</string>
@@ -957,10 +957,10 @@
     <string name="voice_start_failed">De opname kon niet worden gestart</string>
     <string name="voice_rename">Hernoemen</string>
     <string name="voice_rename_failed">De naam is leeg of wordt al gebruikt</string>
-    <string name="voice_save">Opslaan</string>
-    <string name="voice_cancel">Annuleren</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Deze opname verwijderen?</string>
-    <string name="voice_delete">Verwijderen</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Delen</string>
     <string name="voice_share_failed">De opname kon niet worden gedeeld</string>
     <string name="voice_play">Afspelen</string>

@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Elimină peer</string>
     <string name="nwg_mobile_only">Doar pe date mobile</string>
     <string name="nwg_lockdown">Blochează aplicațiile cât timp tunelul nu funcționează</string>
-    <string name="nwg_save">Salvează</string>
-    <string name="nwg_cancel">Anulează</string>
-    <string name="nwg_delete">Șterge</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Partajează configurația</string>
     <string name="nwg_share_warning">Configurația exportată conține cheia privată.</string>
     <string name="nwg_import">Importă</string>

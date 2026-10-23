@@ -39,7 +39,7 @@
     <string name="telos_files_toolbar_down">Mover %1$s hacia abajo</string>
     <string name="telos_files_toolbar_info">Elige hasta %1$d accesos directos y cambia su orden. La navegación, la búsqueda y el menú siguen disponibles. Todas las acciones permanecen en el menú.</string>
     <string name="telos_files_toolbar_reset">Restaurar valores predeterminados</string>
-    <string name="telos_files_toolbar_save">Guardar</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Personalizar barra de herramientas</string>
     <string name="telos_files_toolbar_up">Mover %1$s hacia arriba</string>
     <string name="telos_files_transfer_added">Añadido a la cola de transferencias de archivos</string>

@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Oraindik ez da fitxategirik gehitu.</string>
     <string name="pdft_add_pdf">Gehitu PDFa</string>
     <string name="pdft_add_images">Gehitu irudiak</string>
-    <string name="pdft_add">Gehitu</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Antolatu</string>
     <string name="pdft_group_optimize">Optimizatu</string>
     <string name="pdft_group_security">Segurtasuna</string>
-    <string name="pdft_group_edit">Editatu</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Bihurtu</string>
     <string name="pdft_group_view">Ikusi eta konparatu</string>
     <string name="pdft_tool_merge">Batu</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Atzera</string>
     <string name="pdft_back_to_tools">Itzuli tresnetara</string>
     <string name="pdft_close">Itxi</string>
-    <string name="pdft_cancel">Utzi</string>
-    <string name="pdft_ok">Ados</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Aplikatu</string>
     <string name="pdft_change">Aldatu</string>
     <string name="pdft_remove">Kendu</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Eginda</string>
     <string name="pdft_compress_result">%1$s-tik %2$s-ra (%%%3$d txikiagoa)</string>
     <string name="pdft_compress_no_gain">Emaitza (%2$s) ez da jatorrizkoa (%1$s) baino txikiagoa. Fitxategiak batez ere testua eta bektore-grafikoak ditu.</string>
-    <string name="pdft_save">Gorde</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Gorde hemen: %1$s</string>
     <string name="pdft_save_choose_folder">Aukeratu karpeta bat…</string>
     <string name="pdft_save_as">Gorde honela…</string>

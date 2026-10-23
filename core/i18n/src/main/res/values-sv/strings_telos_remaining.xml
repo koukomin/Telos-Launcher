@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Flytta %1$s nedåt</string>
     <string name="telos_files_toolbar_info">Välj upp till %1$d genvägar och ändra deras ordning. Navigering, sökning och menyn förblir tillgängliga. Alla åtgärder finns kvar i menyn.</string>
     <string name="telos_files_toolbar_reset">Återställ standardvärden</string>
-    <string name="telos_files_toolbar_save">Spara</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Anpassa verktygsfält</string>
     <string name="telos_files_toolbar_up">Flytta %1$s uppåt</string>
     <string name="telos_files_transfer_added">Tillagd i filöverföringskön</string>

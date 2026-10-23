@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">%1$s lejjebb mozgatása</string>
     <string name="telos_files_toolbar_info">Válassz legfeljebb %1$d parancsikont, és módosítsd a sorrendjüket. A navigáció, keresés és menü továbbra is elérhető. Minden művelet megmarad a menüben.</string>
     <string name="telos_files_toolbar_reset">Alapértékek visszaállítása</string>
-    <string name="telos_files_toolbar_save">Mentés</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Eszköztár testreszabása</string>
     <string name="telos_files_toolbar_up">%1$s feljebb mozgatása</string>
     <string name="telos_files_transfer_added">Hozzáadva a fájlátviteli sorhoz</string>

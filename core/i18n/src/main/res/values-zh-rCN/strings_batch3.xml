@@ -74,8 +74,8 @@
     <string name="blocklists_remove">移除列表</string>
     <string name="blocklists_custom_name">名称</string>
     <string name="blocklists_custom_url">地址（https）</string>
-    <string name="blocklists_add">添加</string>
-    <string name="blocklists_cancel">取消</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">仅接受 https 地址</string>
     <string name="blocklists_import_failed">文件中没有可用条目，或无法读取</string>
     <string name="blocklists_schedule">自动更新</string>

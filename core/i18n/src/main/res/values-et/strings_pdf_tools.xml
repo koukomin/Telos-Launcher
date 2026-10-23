@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Faile pole veel lisatud.</string>
     <string name="pdft_add_pdf">Lisa PDF</string>
     <string name="pdft_add_images">Lisa pilte</string>
-    <string name="pdft_add">Lisa</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Korrasta</string>
     <string name="pdft_group_optimize">Optimeeri</string>
     <string name="pdft_group_security">Turvalisus</string>
-    <string name="pdft_group_edit">Muuda</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Teisenda</string>
     <string name="pdft_group_view">Vaata ja võrdle</string>
     <string name="pdft_tool_merge">Ühenda</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Tagasi</string>
     <string name="pdft_back_to_tools">Tagasi tööriistade juurde</string>
     <string name="pdft_close">Sulge</string>
-    <string name="pdft_cancel">Tühista</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Rakenda</string>
     <string name="pdft_change">Muuda</string>
     <string name="pdft_remove">Eemalda</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Valmis</string>
     <string name="pdft_compress_result">%1$s → %2$s (%3$d%% väiksem)</string>
     <string name="pdft_compress_no_gain">Tulemus (%2$s) pole originaalist (%1$s) väiksem. Fail sisaldab peamiselt teksti ja vektorgraafikat.</string>
-    <string name="pdft_save">Salvesta</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Salvesta kausta %1$s</string>
     <string name="pdft_save_choose_folder">Vali kaust…</string>
     <string name="pdft_save_as">Salvesta nimega…</string>

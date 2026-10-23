@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">إزالة النظير</string>
     <string name="nwg_mobile_only">على بيانات الجوال فقط</string>
     <string name="nwg_lockdown">حظر التطبيقات أثناء توقف النفق</string>
-    <string name="nwg_save">حفظ</string>
-    <string name="nwg_cancel">إلغاء</string>
-    <string name="nwg_delete">حذف</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">مشاركة الإعدادات</string>
     <string name="nwg_share_warning">تحتوي الإعدادات المُصدَّرة على المفتاح الخاص.</string>
     <string name="nwg_import">استيراد</string>

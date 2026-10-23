@@ -6,11 +6,11 @@
     <string name="pdft_no_files">No files added yet.</string>
     <string name="pdft_add_pdf">Add PDF</string>
     <string name="pdft_add_images">Add images</string>
-    <string name="pdft_add">Add</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Organize</string>
     <string name="pdft_group_optimize">Optimize</string>
     <string name="pdft_group_security">Security</string>
-    <string name="pdft_group_edit">Edit</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Convert</string>
     <string name="pdft_group_view">View and compare</string>
     <string name="pdft_tool_merge">Merge</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Back</string>
     <string name="pdft_back_to_tools">Back to the tools</string>
     <string name="pdft_close">Close</string>
-    <string name="pdft_cancel">Cancel</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Apply</string>
     <string name="pdft_change">Change</string>
     <string name="pdft_remove">Remove</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Done</string>
     <string name="pdft_compress_result">From %1$s to %2$s (%3$d%% smaller)</string>
     <string name="pdft_compress_no_gain">The result (%2$s) is not smaller than the original (%1$s). The file mostly contains text and vector graphics.</string>
-    <string name="pdft_save">Save</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Save to %1$s</string>
     <string name="pdft_save_choose_folder">Choose a folder...</string>
     <string name="pdft_save_as">Save as...</string>

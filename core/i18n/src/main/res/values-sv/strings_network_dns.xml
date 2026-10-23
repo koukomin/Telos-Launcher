@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Konfigurations-ID</string>
     <string name="net_dns_nextdns_device">Enhetsnamn (valfritt)</string>
     <string name="net_dns_nextdns_bad_id">Ett konfigurations-ID består av 4 till 12 bokstäver och siffror.</string>
-    <string name="net_dns_nextdns_add">Lägg till</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Leverantör</string>
     <string name="net_dns_detail_protocol">Protokoll</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Använd den här servern</string>
     <string name="net_dns_action_test">Testa</string>
     <string name="net_dns_action_copy">Kopiera som egen server</string>
-    <string name="net_dns_action_edit">Redigera</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Ta bort</string>
-    <string name="net_dns_save">Spara</string>
-    <string name="net_dns_cancel">Avbryt</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Testar …</string>
     <string name="net_dns_test_ok">Svar på %1$d ms</string>
     <string name="net_dns_test_fail">Testet misslyckades: %1$s</string>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Onayla</string>
-    <string name="au4_confirms_cancel">İptal</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Nextcloud oturumu kapatılsın mı?</string>
     <string name="au4_confirms_nc_message">Nextcloud hesabınız bu başlatıcıdan kaldırılacak. İstediğiniz zaman yeniden oturum açabilirsiniz.</string>
     <string name="au4_confirms_oc_title">ownCloud oturumu kapatılsın mı?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">%1$d uygulama için mobil veri erişimi engellensin mi?</string>
     <string name="au4_noteslink_link_existing">Mevcut dosyayı bağla</string>
     <string name="au4_noteslink_create_new">Yeni dosya oluştur</string>
-    <string name="au4_noteslink_cancel">İptal</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Yeniden arama denemeleri</string>
     <string name="au4_settingsnew1_redial_delay">Denemeler arasındaki gecikme</string>
     <string name="au4_settingsnew1_seconds">%1$d sn</string>

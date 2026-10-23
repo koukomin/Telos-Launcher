@@ -46,7 +46,7 @@
     <string name="od_cell_value">Érték</string>
     <string name="od_cell_hint">Szöveg, szám vagy =-lel kezdődő képlet</string>
     <string name="od_formula_replaced">Ez a cella képletet tartalmaz (%1$s). Egy új érték felülírja.</string>
-    <string name="od_ok">OK</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">%1$d. munkalap</string>
     <string name="od_slide_of">%1$d. dia / %2$d</string>
     <string name="od_delete_slide">Dia törlése</string>

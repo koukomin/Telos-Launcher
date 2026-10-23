@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Confirmar</string>
-    <string name="au4_confirms_cancel">Cancelar</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">¿Cerrar sesión en Nextcloud?</string>
     <string name="au4_confirms_nc_message">Tu cuenta de Nextcloud se eliminará de este launcher. Puedes volver a iniciar sesión en cualquier momento.</string>
     <string name="au4_confirms_oc_title">¿Cerrar sesión en ownCloud?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">¿Bloquear el acceso a datos móviles para %1$d aplicaciones?</string>
     <string name="au4_noteslink_link_existing">Vincular archivo existente</string>
     <string name="au4_noteslink_create_new">Crear archivo nuevo</string>
-    <string name="au4_noteslink_cancel">Cancelar</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Intentos de rellamada</string>
     <string name="au4_settingsnew1_redial_delay">Retraso entre intentos</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

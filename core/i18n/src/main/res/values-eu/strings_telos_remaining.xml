@@ -112,7 +112,7 @@
     <string name="telos_files_toolbar_down">Mugitu %1$s behera</string>
     <string name="telos_files_toolbar_info">Aukeratu gehienez %1$d lasterbide eta aldatu haien ordena. Nabigazioa, bilaketa eta menua erabilgarri jarraitzen dute. Ekintza guztiek menuan jarraitzen dute.</string>
     <string name="telos_files_toolbar_reset">Leheneratu lehenetsiak</string>
-    <string name="telos_files_toolbar_save">Gorde</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Pertsonalizatu tresna-barra</string>
     <string name="telos_files_toolbar_up">Mugitu %1$s gora</string>
     <string name="telos_files_transfer_added">Fitxategi-transferentzien ilarara gehitu da</string>

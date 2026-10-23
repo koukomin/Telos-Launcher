@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Der er endnu ikke tilføjet nogen filer.</string>
     <string name="pdft_add_pdf">Tilføj PDF</string>
     <string name="pdft_add_images">Tilføj billeder</string>
-    <string name="pdft_add">Tilføj</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Organiser</string>
     <string name="pdft_group_optimize">Optimer</string>
     <string name="pdft_group_security">Sikkerhed</string>
-    <string name="pdft_group_edit">Rediger</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Konverter</string>
     <string name="pdft_group_view">Vis og sammenlign</string>
     <string name="pdft_tool_merge">Sammenflet</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Tilbage</string>
     <string name="pdft_back_to_tools">Tilbage til værktøjerne</string>
     <string name="pdft_close">Luk</string>
-    <string name="pdft_cancel">Annuller</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Anvend</string>
     <string name="pdft_change">Skift</string>
     <string name="pdft_remove">Fjern</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Færdig</string>
     <string name="pdft_compress_result">Fra %1$s til %2$s (%3$d%% mindre)</string>
     <string name="pdft_compress_no_gain">Resultatet (%2$s) er ikke mindre end originalen (%1$s). Filen består mest af tekst og vektorgrafik.</string>
-    <string name="pdft_save">Gem</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Gem i %1$s</string>
     <string name="pdft_save_choose_folder">Vælg en mappe…</string>
     <string name="pdft_save_as">Gem som…</string>

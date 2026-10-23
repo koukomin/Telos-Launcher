@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Докоснете „Добавяне“ и поставете връзка или споделете връзка към Telos Downloads.</string>
     <string name="dl_empty_filter_title">Тук няма нищо</string>
     <string name="dl_empty_filter_text">Няма изтегляния, които отговарят на този филтър.</string>
-    <string name="dl_add">Добавяне</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Добавяне на изтегляне</string>
     <string name="dl_links_hint">Връзки, по една на ред</string>
     <string name="dl_invalid_links">Няма валидна връзка. Могат да се изтеглят само http и https връзки.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Да се премахне ли %1$s? Изтеглената част ще бъде изтрита.</string>
     <string name="dl_delete_with_file">Премахване и изтриване на файла</string>
     <string name="dl_delete_keep_file">Премахване, запазване на файла</string>
-    <string name="dl_cancel">Отказ</string>
-    <string name="dl_save">Запазване</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Няма приложение, което може да отвори този файл</string>
     <string name="dl_pause_all">Пауза на всички</string>
     <string name="dl_resume_all">Продължаване на всички</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Откриване на връзки в клипборда</string>
     <string name="dl_p3_detect_clipboard_sum">Когато отворите Изтегляния, предлага копирана връзка, адрес на видео сайт или magnet връзка. Android може да ви уведоми, че приложението е прочело клипборда.</string>
     <string name="dl_p3_clip_found">В клипборда: %1$s</string>
-    <string name="dl_p3_clip_add">Добавяне</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">График</string>
     <string name="dl_p3_schedule_enable">Изтегляне само в определено време</string>
     <string name="dl_p3_schedule_sum">Извън времевия прозорец изтеглянията чакат в опашката.</string>

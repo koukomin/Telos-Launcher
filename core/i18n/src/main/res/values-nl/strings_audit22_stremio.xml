@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Verder kijken</string>
     <string name="au22_stremio_no_results">Niets gevonden</string>
     <string name="au22_stremio_library_empty">Je bibliotheek is leeg. Open een titel en sla die hier op.</string>
-    <string name="au22_stremio_save">Opslaan</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Opgeslagen</string>
     <string name="au22_stremio_season">Seizoen %d</string>
     <string name="au22_stremio_streams">Kies een stream</string>

@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">কনফিগারেশন আইডি</string>
     <string name="net_dns_nextdns_device">ডিভাইসের নাম (ঐচ্ছিক)</string>
     <string name="net_dns_nextdns_bad_id">কনফিগারেশন আইডিতে ৪ থেকে ১২টি অক্ষর ও অঙ্ক থাকে।</string>
-    <string name="net_dns_nextdns_add">যোগ করুন</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">প্রদানকারী</string>
     <string name="net_dns_detail_protocol">প্রোটোকল</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">এই সার্ভার ব্যবহার করুন</string>
     <string name="net_dns_action_test">পরীক্ষা করুন</string>
     <string name="net_dns_action_copy">কাস্টম সার্ভার হিসেবে কপি করুন</string>
-    <string name="net_dns_action_edit">সম্পাদনা</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">সরান</string>
-    <string name="net_dns_save">সংরক্ষণ</string>
-    <string name="net_dns_cancel">বাতিল</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">পরীক্ষা চলছে…</string>
     <string name="net_dns_test_ok">%1$d ms-এ উত্তর এসেছে</string>
     <string name="net_dns_test_fail">পরীক্ষা ব্যর্থ হয়েছে: %1$s</string>

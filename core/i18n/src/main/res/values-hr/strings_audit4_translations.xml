@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Potvrdi</string>
-    <string name="au4_confirms_cancel">Odustani</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Odjava iz Nextclouda?</string>
     <string name="au4_confirms_nc_message">Vaš Nextcloud račun bit će uklonjen iz ovog launchera. Možete se ponovno prijaviti u bilo kojem trenutku.</string>
     <string name="au4_confirms_oc_title">Odjava iz ownClouda?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Blokirati pristup mobilnim podacima za %1$d aplikacija?</string>
     <string name="au4_noteslink_link_existing">Poveži postojeću datoteku</string>
     <string name="au4_noteslink_create_new">Stvori novu datoteku</string>
-    <string name="au4_noteslink_cancel">Odustani</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Pokušaji ponovnog biranja</string>
     <string name="au4_settingsnew1_redial_delay">Odgoda između pokušaja</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Stuknij Dodaj i wklej link albo udostępnij link do Telos Downloads.</string>
     <string name="dl_empty_filter_title">Nic tu nie ma</string>
     <string name="dl_empty_filter_text">Żadne pobieranie nie pasuje do tego filtra.</string>
-    <string name="dl_add">Dodaj</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Dodaj pobieranie</string>
     <string name="dl_links_hint">Linki, po jednym w wierszu</string>
     <string name="dl_invalid_links">Brak prawidłowego linku. Można pobierać tylko linki http i https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Usunąć %1$s? Pobrana część zostanie usunięta.</string>
     <string name="dl_delete_with_file">Usuń razem z plikiem</string>
     <string name="dl_delete_keep_file">Usuń, zachowaj plik</string>
-    <string name="dl_cancel">Anuluj</string>
-    <string name="dl_save">Zapisz</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Żadna aplikacja nie może otworzyć tego pliku</string>
     <string name="dl_pause_all">Wstrzymaj wszystko</string>
     <string name="dl_resume_all">Wznów wszystko</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Wykrywaj linki w schowku</string>
     <string name="dl_p3_detect_clipboard_sum">Po otwarciu Pobierania zaproponuje skopiowany link, adres strony z wideo lub link magnet. Android może poinformować, że aplikacja odczytała schowek.</string>
     <string name="dl_p3_clip_found">W schowku: %1$s</string>
-    <string name="dl_p3_clip_add">Dodaj</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Harmonogram</string>
     <string name="dl_p3_schedule_enable">Pobieraj tylko o określonych porach</string>
     <string name="dl_p3_schedule_sum">Poza przedziałem czasu pobieranie czeka w kolejce.</string>

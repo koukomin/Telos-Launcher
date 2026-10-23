@@ -281,7 +281,7 @@
     <string name="preference_floating_launcher_tools">Hızlı araçlar</string>
     <string name="preference_floating_launcher_tools_summary">Panelde ekran görüntüsü, hesap makinesi ve hızlı ayarlar düğmelerini göster. Ekran görüntüsü düğmesi erişilebilirlik hizmetini gerektirir</string>
     <string name="floating_launcher_title">Akıllı işlevler</string>
-    <string name="floating_launcher_edit">Düzenle</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Son dosyalar</string>
     <string name="floating_launcher_recent_files_empty">Son dosya yok. Telos\'un bunun için dosyalara erişmesi gerekir; Telos Dosyalar\'ı açtığınızda izin verebilirsiniz.</string>
     <string name="floating_launcher_recent_files_no_app">Bu dosyayı açabilecek uygulama yok</string>
@@ -325,10 +325,10 @@
     <string name="floating_launcher_folder_name">Klasör adı</string>
     <string name="floating_launcher_folder_select_apps">Gruplamak için en az 2 uygulama seçin</string>
     <string name="floating_launcher_create">Oluştur</string>
-    <string name="floating_launcher_cancel">İptal</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Klasörü yeniden adlandır</string>
     <string name="floating_launcher_delete_folder">Klasörü sil</string>
-    <string name="floating_launcher_save">Kaydet</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Klasörü aç</string>
     <string name="floating_launcher_all_apps">Tüm uygulamalar</string>
     <string name="floating_launcher_file_dock">Dosya Dock\'u</string>
@@ -705,7 +705,7 @@
     <string name="comms_unblock_number">Numaranın engelini kaldır</string>
     <string name="comms_no_previous_calls">Önceki arama yok</string>
     <string name="comms_clear_history">Arama geçmişi temizlensin mi?</string>
-    <string name="comms_clear_history_confirm">Sil</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Entegrasyonlar</string>
     <string name="filter_incoming">Gelen</string>
     <string name="filter_outgoing">Giden</string>
@@ -726,7 +726,7 @@
     <string name="comms_answer">Yanıtla</string>
     <string name="comms_reject">Reddet</string>
     <string name="comms_hangup">Kapat</string>
-    <string name="comms_add_call">Ekle</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Birleştir</string>
     <string name="comms_swap">Değiştir</string>
     <string name="backup_choose_parts">Neleri yedeklemek istiyorsunuz?</string>
@@ -813,9 +813,9 @@
     <string name="cal_no_events">Etkinlik yok</string>
     <string name="cal_no_title">(başlıksız)</string>
     <string name="cal_all_day">Tüm gün</string>
-    <string name="cal_cancel">İptal</string>
-    <string name="cal_delete">Sil</string>
-    <string name="cal_save">Kaydet</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Başlık</string>
     <string name="cal_location">Konum</string>
     <string name="cal_description">Açıklama</string>
@@ -832,7 +832,7 @@
     <string name="cal_series_note">Değişiklikler ve silme işlemi tüm seriye uygulanır.</string>
     <string name="cal_on_phone">Bu telefonda</string>
     <string name="cal_new_local">Yeni yerel takvim</string>
-    <string name="cal_ok">Tamam</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google, CalDAV (DAVx5) ve Exchange takvimleri sistem tarafından hesapları üzerinden eşitlenir. Yerel takvimler telefonda kalır ve Telos yedeğine dahildir.</string>
     <string name="cal_view_agenda">Sonraki 30 gün</string>
     <string name="cal_view_month">Ay görünümü</string>
@@ -855,8 +855,8 @@
     <string name="notes_title_hint">Başlık</string>
     <string name="notes_body_hint">Not</string>
     <string name="notes_labels_hint">iş, ev</string>
-    <string name="notes_ok">Tamam</string>
-    <string name="notes_cancel">İptal</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">%d not içe aktarıldı</string>
     <string name="notes_synced">Eşitlendi: %1$d gönderildi, %2$d alındı</string>
     <string name="notes_sync_failed">Eşitleme başarısız: %s</string>
@@ -914,7 +914,7 @@
     <string name="screenshot_cannot_open">Resim açılamadı</string>
     <string name="screenshot_notification_channel">Ekran görüntüleri</string>
     <string name="screenshot_notification_text">Düzenlemek için dokunun</string>
-    <string name="screenshot_edit">Düzenle</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Ekran görüntüleri</string>
     <string name="screenshot_none">Henüz ekran görüntüsü yok</string>
     <string name="screenshot_undo">Geri al</string>
@@ -948,7 +948,7 @@
     <string name="floating_launcher_section_widgets">Widget\'lar</string>
     <string name="floating_launcher_section_apps">Uygulamalar</string>
     <string name="floating_launcher_done">Bitti</string>
-    <string name="floating_launcher_add">Ekle</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Yüzen çubuk</string>
     <string name="preference_category_sidebar_style">Kenar çubuğu stili</string>
     <string name="preference_floating_launcher_side">Ekranın tarafı</string>
@@ -978,10 +978,10 @@
     <string name="voice_start_failed">Kayıt başlatılamadı</string>
     <string name="voice_rename">Yeniden adlandır</string>
     <string name="voice_rename_failed">Ad boş veya zaten kullanılıyor</string>
-    <string name="voice_save">Kaydet</string>
-    <string name="voice_cancel">İptal</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Bu kayıt silinsin mi?</string>
-    <string name="voice_delete">Sil</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Paylaş</string>
     <string name="voice_share_failed">Kayıt paylaşılamadı</string>
     <string name="voice_play">Oynat</string>

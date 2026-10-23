@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Δεν ήταν δυνατό το άνοιγμα του αρχείου</string>
     <string name="au21_arch_pw_title">Απαιτείται κωδικός</string>
     <string name="au21_arch_pw_info">Το %1$s προστατεύεται με κωδικό. Εισαγάγετε τον κωδικό για να το ανοίξετε ή να το αποσυμπιέσετε. Ο κωδικός διατηρείται στη μνήμη μόνο όσο βρίσκεστε μέσα στο αρχείο και δεν αποθηκεύεται ποτέ.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Έλεγχος…</string>
     <string name="au21_arch_show">Εμφάνιση</string>
     <string name="au21_arch_hide">Απόκρυψη</string>

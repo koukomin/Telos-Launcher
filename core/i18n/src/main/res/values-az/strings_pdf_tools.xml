@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Hələ heç bir fayl əlavə edilməyib.</string>
     <string name="pdft_add_pdf">PDF əlavə et</string>
     <string name="pdft_add_images">Şəkil əlavə et</string>
-    <string name="pdft_add">Əlavə et</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Nizamlama</string>
     <string name="pdft_group_optimize">Optimallaşdırma</string>
     <string name="pdft_group_security">Təhlükəsizlik</string>
-    <string name="pdft_group_edit">Redaktə</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Çevirmə</string>
     <string name="pdft_group_view">Baxış və müqayisə</string>
     <string name="pdft_tool_merge">Birləşdir</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Geri</string>
     <string name="pdft_back_to_tools">Alətlərə qayıt</string>
     <string name="pdft_close">Bağla</string>
-    <string name="pdft_cancel">Ləğv et</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Tətbiq et</string>
     <string name="pdft_change">Dəyiş</string>
     <string name="pdft_remove">Sil</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Hazırdır</string>
     <string name="pdft_compress_result">%1$s-dən %2$s-a (%%%3$d kiçik)</string>
     <string name="pdft_compress_no_gain">Nəticə (%2$s) orijinaldan (%1$s) kiçik deyil. Fayl əsasən mətn və vektor qrafikadan ibarətdir.</string>
-    <string name="pdft_save">Saxla</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">%1$s qovluğuna saxla</string>
     <string name="pdft_save_choose_folder">Qovluq seç…</string>
     <string name="pdft_save_as">Belə saxla…</string>

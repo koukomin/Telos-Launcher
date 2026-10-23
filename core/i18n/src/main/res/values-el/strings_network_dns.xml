@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Αναγνωριστικό διαμόρφωσης</string>
     <string name="net_dns_nextdns_device">Όνομα συσκευής (προαιρετικό)</string>
     <string name="net_dns_nextdns_bad_id">Το αναγνωριστικό διαμόρφωσης αποτελείται από 4 έως 12 γράμματα και ψηφία.</string>
-    <string name="net_dns_nextdns_add">Προσθήκη</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Πάροχος</string>
     <string name="net_dns_detail_protocol">Πρωτόκολλο</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Χρήση αυτού του διακομιστή</string>
     <string name="net_dns_action_test">Δοκιμή</string>
     <string name="net_dns_action_copy">Αντιγραφή ως προσαρμοσμένος διακομιστής</string>
-    <string name="net_dns_action_edit">Επεξεργασία</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Αφαίρεση</string>
-    <string name="net_dns_save">Αποθήκευση</string>
-    <string name="net_dns_cancel">Ακύρωση</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Γίνεται δοκιμή…</string>
     <string name="net_dns_test_ok">Απάντηση σε %1$d ms</string>
     <string name="net_dns_test_fail">Η δοκιμή απέτυχε: %1$s</string>

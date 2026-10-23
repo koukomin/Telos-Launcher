@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Agorda identigilo</string>
     <string name="net_dns_nextdns_device">Nomo de aparato (nedeviga)</string>
     <string name="net_dns_nextdns_bad_id">Agorda identigilo konsistas el 4 ĝis 12 literoj kaj ciferoj.</string>
-    <string name="net_dns_nextdns_add">Aldoni</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Provizanto</string>
     <string name="net_dns_detail_protocol">Protokolo</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Uzi ĉi tiun servilon</string>
     <string name="net_dns_action_test">Testi</string>
     <string name="net_dns_action_copy">Kopii kiel propran servilon</string>
-    <string name="net_dns_action_edit">Redakti</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Forigi</string>
-    <string name="net_dns_save">Konservi</string>
-    <string name="net_dns_cancel">Nuligi</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Testado…</string>
     <string name="net_dns_test_ok">Respondo en %1$d ms</string>
     <string name="net_dns_test_fail">Testo malsukcesis: %1$s</string>

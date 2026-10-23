@@ -10,7 +10,7 @@
     <string name="floating_launcher_section_widgets">Widgets</string>
     <string name="floating_launcher_section_apps">Apps</string>
     <string name="floating_launcher_done">Done</string>
-    <string name="floating_launcher_add">Add</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Floating bar</string>
     <string name="preference_category_sidebar_style">Sidebar style</string>
     <string name="preference_floating_launcher_side">Side of the screen</string>

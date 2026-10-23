@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">无法打开压缩包</string>
     <string name="au21_arch_pw_title">需要密码</string>
     <string name="au21_arch_pw_info">%1$s 受密码保护。请输入密码以打开或解压。密码仅在您位于压缩包内时保留在内存中，绝不会被保存。</string>
-    <string name="au21_arch_ok">确定</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">正在检查…</string>
     <string name="au21_arch_show">显示</string>
     <string name="au21_arch_hide">隐藏</string>

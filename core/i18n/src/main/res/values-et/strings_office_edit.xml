@@ -46,7 +46,7 @@
     <string name="od_cell_value">Väärtus</string>
     <string name="od_cell_hint">Tekst, arv või valem, mis algab märgiga =</string>
     <string name="od_formula_replaced">See lahter sisaldab valemit (%1$s). Uus väärtus asendab selle.</string>
-    <string name="od_ok">OK</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">Leht %1$d</string>
     <string name="od_slide_of">Slaid %1$d / %2$d</string>
     <string name="od_delete_slide">Kustuta slaid</string>

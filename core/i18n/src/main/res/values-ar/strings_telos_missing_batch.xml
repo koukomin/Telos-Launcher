@@ -72,7 +72,7 @@
     <string name="disclaimer">اخلاء المسؤولية</string>
     <string name="disclaimer_currency_converter">أسعار الصرف كما ينشرها البنك المركزي الأوروبي مرة واحدة في اليوم. يتم توفير جميع المعلومات \"كما هي\" دون أي نوع من الضمان. لا نتحمل أي مسؤولية عن هذه المعلومات.\n\n\n\nاخر تحديث: %1$s</string>
     <string name="duplicate">تكرار</string>
-    <string name="edit">تعديل</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="edit_favorites_dialog_empty_section">اسحب العناصر الى هنا</string>
     <string name="edit_favorites_dialog_new_tag">إنشاء علامة</string>
     <string name="edit_favorites_dialog_pinned_sorted">مثبت - يتم فرزه يدويا</string>
@@ -198,7 +198,7 @@
     <string name="menu_clear_cache">مسح ذاكرة التخزين المؤقت</string>
     <string name="menu_contacts_open_externally">افتح فى تطبيق جهات الاتصال</string>
     <string name="menu_customize">تخصيص</string>
-    <string name="menu_delete">حذف</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_dial">اتصال</string>
     <string name="menu_edit_widgets">تحرير أدوات الواجهة</string>
     <string name="menu_favorites_pin">إضافة الى المفضلة</string>
@@ -275,7 +275,7 @@
     <string name="note_widget_linked_file_summary">مرتبط بـ %1$s</string>
     <string name="notes_widget_action_dismiss">استبعاد</string>
     <string name="notes_widget_action_new">ملاحظة جديدة</string>
-    <string name="notes_widget_action_save">‌حفظ</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_dismissed">تم ‏رفض الملاحظة</string>
     <string name="notes_widget_export_filename">ملاحظة_%1$s</string>
     <string name="notes_widget_placeholder">اكتب ملاحظة</string>
@@ -761,7 +761,7 @@
     <string name="restore_incompatible_file">تم إنشاء هذه النسخة الاحتياطية بإصدار مختلف من %1$s ولا يمكن استعادتها بهذا الإصدار.</string>
     <string name="restore_invalid_file">لا يبدو أن الملف المحدد نسخة احتياطية. هل أنت متأكد من أنك حددت الملف الصحيح؟</string>
     <string name="restore_meta">تم الإنشاء في %1$s على %2$s باستخدام %3$s.</string>
-    <string name="save">حفظ</string>
+    <string name="save">@string/hc_save</string>
     <string name="save_as_file">حفظ كملف</string>
     <string name="search_action_alarm">ضبط المنبه</string>
     <string name="search_action_app">التطبيق</string>

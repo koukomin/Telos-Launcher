@@ -6,11 +6,11 @@
     <string name="pdft_no_files">ファイルはまだ追加されていません。</string>
     <string name="pdft_add_pdf">PDFを追加</string>
     <string name="pdft_add_images">画像を追加</string>
-    <string name="pdft_add">追加</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">整理</string>
     <string name="pdft_group_optimize">最適化</string>
     <string name="pdft_group_security">セキュリティ</string>
-    <string name="pdft_group_edit">編集</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">変換</string>
     <string name="pdft_group_view">表示と比較</string>
     <string name="pdft_tool_merge">結合</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">戻る</string>
     <string name="pdft_back_to_tools">ツールに戻る</string>
     <string name="pdft_close">閉じる</string>
-    <string name="pdft_cancel">キャンセル</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">適用</string>
     <string name="pdft_change">変更</string>
     <string name="pdft_remove">削除</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">完了</string>
     <string name="pdft_compress_result">%1$s から %2$s へ（%3$d%%縮小）</string>
     <string name="pdft_compress_no_gain">結果（%2$s）は元のファイル（%1$s）より小さくなりませんでした。このファイルは主にテキストとベクター図形でできています。</string>
-    <string name="pdft_save">保存</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">%1$sに保存</string>
     <string name="pdft_save_choose_folder">フォルダを選択…</string>
     <string name="pdft_save_as">名前を付けて保存…</string>

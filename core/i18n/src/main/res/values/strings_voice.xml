@@ -15,10 +15,10 @@
     <string name="voice_start_failed">The recording could not be started</string>
     <string name="voice_rename">Rename</string>
     <string name="voice_rename_failed">The name is empty or already used</string>
-    <string name="voice_save">Save</string>
-    <string name="voice_cancel">Cancel</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Delete this recording?</string>
-    <string name="voice_delete">Delete</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Share</string>
     <string name="voice_share_failed">The recording could not be shared</string>
     <string name="voice_play">Play</string>

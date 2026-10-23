@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">متابعة المشاهدة</string>
     <string name="au22_stremio_no_results">لم يتم العثور على شيء</string>
     <string name="au22_stremio_library_empty">مكتبتك فارغة. افتح عنوانًا واحفظه هنا.</string>
-    <string name="au22_stremio_save">حفظ</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">تم الحفظ</string>
     <string name="au22_stremio_season">الموسم %d</string>
     <string name="au22_stremio_streams">اختر بثًا</string>

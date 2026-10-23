@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Jatka katsomista</string>
     <string name="au22_stremio_no_results">Mitään ei löytynyt</string>
     <string name="au22_stremio_library_empty">Kirjastosi on tyhjä. Avaa nimike ja tallenna se tänne.</string>
-    <string name="au22_stremio_save">Tallenna</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Tallennettu</string>
     <string name="au22_stremio_season">Kausi %d</string>
     <string name="au22_stremio_streams">Valitse striimi</string>

@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Rensa</string>
     <string name="au2_netsec_reset_message">Brandväggsreglerna för de %1$d appar som visas återställs till standard.</string>
     <string name="au2_netsec_confirm_reset">Återställ</string>
-    <string name="au2_netsec_cancel">Avbryt</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Spela in</string>
     <string name="au2_radio2_stop_recording">Stoppa inspelning</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

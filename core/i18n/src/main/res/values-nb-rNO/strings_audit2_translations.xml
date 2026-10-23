@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Tøm</string>
     <string name="au2_netsec_reset_message">Brannmurreglene for de %1$d appene som vises nå, tilbakestilles til standard.</string>
     <string name="au2_netsec_confirm_reset">Tilbakestill</string>
-    <string name="au2_netsec_cancel">Avbryt</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Ta opp</string>
     <string name="au2_radio2_stop_recording">Stopp opptak</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

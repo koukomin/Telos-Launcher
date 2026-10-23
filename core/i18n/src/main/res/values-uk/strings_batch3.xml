@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Вилучити список</string>
     <string name="blocklists_custom_name">Назва</string>
     <string name="blocklists_custom_url">Адреса (https)</string>
-    <string name="blocklists_add">Додати</string>
-    <string name="blocklists_cancel">Скасувати</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Приймаються лише адреси https</string>
     <string name="blocklists_import_failed">Файл не містить придатних записів або його не вдалося прочитати</string>
     <string name="blocklists_schedule">Автооновлення</string>

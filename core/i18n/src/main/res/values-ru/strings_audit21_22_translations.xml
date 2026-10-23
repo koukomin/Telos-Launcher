@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Не удалось открыть архив</string>
     <string name="au21_arch_pw_title">Требуется пароль</string>
     <string name="au21_arch_pw_info">%1$s защищён паролем. Введите пароль, чтобы открыть или распаковать его. Пароль хранится в памяти только пока вы находитесь в архиве и никогда не сохраняется.</string>
-    <string name="au21_arch_ok">ОК</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Проверка…</string>
     <string name="au21_arch_show">Показать</string>
     <string name="au21_arch_hide">Скрыть</string>

@@ -112,7 +112,7 @@
     <string name="telos_files_toolbar_down">%1$s elementini aşağı daşı</string>
     <string name="telos_files_toolbar_info">Ən çox %1$d qısayol seçin və sıralarını dəyişin. Naviqasiya, axtarış və menyu əlçatan qalır. Bütün əməliyyatlar menyuda qalır.</string>
     <string name="telos_files_toolbar_reset">Standartları bərpa et</string>
-    <string name="telos_files_toolbar_save">Saxla</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Alətlər panelini fərdiləşdir</string>
     <string name="telos_files_toolbar_up">%1$s elementini yuxarı daşı</string>
     <string name="telos_files_transfer_added">Fayl ötürmə növbəsinə əlavə edildi</string>

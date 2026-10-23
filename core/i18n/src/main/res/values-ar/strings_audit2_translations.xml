@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">مسح</string>
     <string name="au2_netsec_reset_message">ستتم إعادة تعيين قواعد جدار الحماية للتطبيقات المعروضة حاليًا وعددها %1$d إلى الإعدادات الافتراضية.</string>
     <string name="au2_netsec_confirm_reset">إعادة تعيين</string>
-    <string name="au2_netsec_cancel">إلغاء</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">تسجيل</string>
     <string name="au2_radio2_stop_recording">إيقاف التسجيل</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

@@ -280,7 +280,7 @@
     <string name="preference_floating_launcher_tools">أدوات سريعة</string>
     <string name="preference_floating_launcher_tools_summary">عرض أزرار لقطة الشاشة والآلة الحاسبة والإعدادات السريعة في اللوحة. يتطلب زر لقطة الشاشة خدمة إمكانية الوصول</string>
     <string name="floating_launcher_title">وظائف ذكية</string>
-    <string name="floating_launcher_edit">تعديل</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">الملفات الأخيرة</string>
     <string name="floating_launcher_recent_files_empty">لا توجد ملفات حديثة. يحتاج Telos إلى الوصول إلى الملفات لذلك، ويمكنك السماح به عند فتح ملفات Telos.</string>
     <string name="floating_launcher_recent_files_no_app">لا يوجد تطبيق يمكنه فتح هذا الملف</string>
@@ -324,10 +324,10 @@
     <string name="floating_launcher_folder_name">اسم المجلد</string>
     <string name="floating_launcher_folder_select_apps">اختر تطبيقين على الأقل للتجميع</string>
     <string name="floating_launcher_create">إنشاء</string>
-    <string name="floating_launcher_cancel">إلغاء</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">إعادة تسمية المجلد</string>
     <string name="floating_launcher_delete_folder">حذف المجلد</string>
-    <string name="floating_launcher_save">حفظ</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">فتح المجلد</string>
     <string name="floating_launcher_all_apps">كل التطبيقات</string>
     <string name="floating_launcher_file_dock">رصيف الملفات</string>
@@ -692,7 +692,7 @@
     <string name="comms_unblock_number">إلغاء حظر الرقم</string>
     <string name="comms_no_previous_calls">لا توجد مكالمات سابقة</string>
     <string name="comms_clear_history">مسح سجل المكالمات؟</string>
-    <string name="comms_clear_history_confirm">حذف</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">التكاملات</string>
     <string name="filter_incoming">الواردة</string>
     <string name="filter_outgoing">الصادرة</string>
@@ -713,7 +713,7 @@
     <string name="comms_answer">رد</string>
     <string name="comms_reject">رفض</string>
     <string name="comms_hangup">إنهاء</string>
-    <string name="comms_add_call">إضافة</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">دمج</string>
     <string name="comms_swap">تبديل</string>
     <string name="backup_choose_parts">ما الذي تريد نسخه احتياطيًا؟</string>
@@ -800,9 +800,9 @@
     <string name="cal_no_events">لا توجد أحداث</string>
     <string name="cal_no_title">(بلا عنوان)</string>
     <string name="cal_all_day">طوال اليوم</string>
-    <string name="cal_cancel">إلغاء</string>
-    <string name="cal_delete">حذف</string>
-    <string name="cal_save">حفظ</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">العنوان</string>
     <string name="cal_location">الموقع</string>
     <string name="cal_description">الوصف</string>
@@ -819,7 +819,7 @@
     <string name="cal_series_note">التغييرات والحذف تنطبق على السلسلة بأكملها.</string>
     <string name="cal_on_phone">على هذا الهاتف</string>
     <string name="cal_new_local">تقويم محلي جديد</string>
-    <string name="cal_ok">حسنًا</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">تقويمات Google وCalDAV (DAVx5) وExchange تتم مزامنتها بواسطة النظام عبر حسابها. التقويمات المحلية تبقى على الهاتف وتدخل في النسخة الاحتياطية لـ Telos.</string>
     <string name="cal_view_agenda">الـ 30 يومًا القادمة</string>
     <string name="cal_view_month">عرض الشهر</string>
@@ -842,8 +842,8 @@
     <string name="notes_title_hint">العنوان</string>
     <string name="notes_body_hint">ملاحظة</string>
     <string name="notes_labels_hint">عمل، منزل</string>
-    <string name="notes_ok">حسنًا</string>
-    <string name="notes_cancel">إلغاء</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">تم استيراد %d ملاحظة</string>
     <string name="notes_synced">تمت المزامنة: أُرسل %1$d، واستُلم %2$d</string>
     <string name="notes_sync_failed">فشلت المزامنة: %s</string>
@@ -901,7 +901,7 @@
     <string name="screenshot_cannot_open">تعذر فتح الصورة</string>
     <string name="screenshot_notification_channel">لقطات الشاشة</string>
     <string name="screenshot_notification_text">اضغط للتعديل</string>
-    <string name="screenshot_edit">تعديل</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">لقطات الشاشة</string>
     <string name="screenshot_none">لا توجد لقطات شاشة بعد</string>
     <string name="screenshot_undo">تراجع</string>
@@ -935,7 +935,7 @@
     <string name="floating_launcher_section_widgets">الأدوات المصغرة</string>
     <string name="floating_launcher_section_apps">التطبيقات</string>
     <string name="floating_launcher_done">تم</string>
-    <string name="floating_launcher_add">إضافة</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">الشريط العائم</string>
     <string name="preference_category_sidebar_style">نمط الشريط الجانبي</string>
     <string name="preference_floating_launcher_side">جانب الشاشة</string>
@@ -965,10 +965,10 @@
     <string name="voice_start_failed">تعذر بدء التسجيل</string>
     <string name="voice_rename">إعادة تسمية</string>
     <string name="voice_rename_failed">الاسم فارغ أو مستخدم بالفعل</string>
-    <string name="voice_save">حفظ</string>
-    <string name="voice_cancel">إلغاء</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">حذف هذا التسجيل؟</string>
-    <string name="voice_delete">حذف</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">مشاركة</string>
     <string name="voice_share_failed">تعذرت مشاركة التسجيل</string>
     <string name="voice_play">تشغيل</string>

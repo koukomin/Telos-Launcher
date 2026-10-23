@@ -39,7 +39,7 @@
     <string name="telos_files_toolbar_down">Sposta %1$s in basso</string>
     <string name="telos_files_toolbar_info">Scegli fino a %1$d scorciatoie e modifica il loro ordine. Navigazione, ricerca e menu rimangono disponibili. Tutte le azioni restano nel menu.</string>
     <string name="telos_files_toolbar_reset">Ripristina valori predefiniti</string>
-    <string name="telos_files_toolbar_save">Salva</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Personalizza barra degli strumenti</string>
     <string name="telos_files_toolbar_up">Sposta %1$s in alto</string>
     <string name="telos_files_transfer_added">Aggiunto alla coda dei trasferimenti di file</string>

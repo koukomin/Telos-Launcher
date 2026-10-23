@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Confirmă</string>
-    <string name="au4_confirms_cancel">Anulează</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Deconectare de la Nextcloud?</string>
     <string name="au4_confirms_nc_message">Contul dvs. Nextcloud va fi eliminat din acest launcher. Vă puteți conecta din nou oricând.</string>
     <string name="au4_confirms_oc_title">Deconectare de la ownCloud?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Blocați accesul la datele mobile pentru %1$d aplicații?</string>
     <string name="au4_noteslink_link_existing">Asociază un fișier existent</string>
     <string name="au4_noteslink_create_new">Creează un fișier nou</string>
-    <string name="au4_noteslink_cancel">Anulează</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Încercări de reapelare</string>
     <string name="au4_settingsnew1_redial_delay">Întârziere între încercări</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

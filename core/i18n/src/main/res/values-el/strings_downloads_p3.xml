@@ -78,7 +78,7 @@
     <string name="dl_p3_detect_clipboard">Εντοπισμός συνδέσμων στο πρόχειρο</string>
     <string name="dl_p3_detect_clipboard_sum">Όταν ανοίγετε τις Λήψεις, προτείνει έναν σύνδεσμο, μια διεύθυνση ιστοσελίδας βίντεο ή έναν σύνδεσμο magnet που αντιγράψατε. Το Android μπορεί να σας ειδοποιήσει ότι η εφαρμογή διάβασε το πρόχειρο.</string>
     <string name="dl_p3_clip_found">Στο πρόχειρο: %1$s</string>
-    <string name="dl_p3_clip_add">Προσθήκη</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Προγραμματισμός</string>
     <string name="dl_p3_schedule_enable">Λήψη μόνο σε ορισμένες ώρες</string>
     <string name="dl_p3_schedule_sum">Εκτός του χρονικού παραθύρου οι λήψεις περιμένουν στην ουρά.</string>

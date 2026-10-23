@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Още не са добавени файлове.</string>
     <string name="pdft_add_pdf">Добавяне на PDF</string>
     <string name="pdft_add_images">Добавяне на изображения</string>
-    <string name="pdft_add">Добавяне</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Организиране</string>
     <string name="pdft_group_optimize">Оптимизиране</string>
     <string name="pdft_group_security">Сигурност</string>
-    <string name="pdft_group_edit">Редактиране</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Преобразуване</string>
     <string name="pdft_group_view">Преглед и сравнение</string>
     <string name="pdft_tool_merge">Обединяване</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Назад</string>
     <string name="pdft_back_to_tools">Обратно към инструментите</string>
     <string name="pdft_close">Затваряне</string>
-    <string name="pdft_cancel">Отказ</string>
-    <string name="pdft_ok">Добре</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Прилагане</string>
     <string name="pdft_change">Промяна</string>
     <string name="pdft_remove">Премахване</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Готово</string>
     <string name="pdft_compress_result">От %1$s на %2$s (с %3$d%% по-малко)</string>
     <string name="pdft_compress_no_gain">Резултатът (%2$s) не е по-малък от оригинала (%1$s). Файлът съдържа предимно текст и векторна графика.</string>
-    <string name="pdft_save">Запазване</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Запазване в %1$s</string>
     <string name="pdft_save_choose_folder">Избор на папка…</string>
     <string name="pdft_save_as">Запазване като…</string>

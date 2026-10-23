@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Noņemt peer</string>
     <string name="nwg_mobile_only">Tikai mobilajos datos</string>
     <string name="nwg_lockdown">Bloķēt lietotnes, kamēr tunelis nedarbojas</string>
-    <string name="nwg_save">Saglabāt</string>
-    <string name="nwg_cancel">Atcelt</string>
-    <string name="nwg_delete">Dzēst</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Kopīgot konfigurāciju</string>
     <string name="nwg_share_warning">Eksportētā konfigurācija satur privāto atslēgu.</string>
     <string name="nwg_import">Importēt</string>

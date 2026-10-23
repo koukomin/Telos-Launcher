@@ -112,7 +112,7 @@
     <string name="telos_files_toolbar_down">Movi %1$s malsupren</string>
     <string name="telos_files_toolbar_info">Elektu ĝis %1$d ŝparvojojn kaj ŝanĝu ilian ordon. Navigado, serĉo kaj la menuo restas disponeblaj. Ĉiuj agoj restas en la menuo.</string>
     <string name="telos_files_toolbar_reset">Restarigi defaŭltojn</string>
-    <string name="telos_files_toolbar_save">Konservi</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Agordi ilobreton</string>
     <string name="telos_files_toolbar_up">Movi %1$s supren</string>
     <string name="telos_files_transfer_added">Aldonita al la dosiertransiga atendovico</string>

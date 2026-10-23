@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Presunúť %1$s nadol</string>
     <string name="telos_files_toolbar_info">Vyberte najviac %1$d skratiek a zmeňte ich poradie. Navigácia, hľadanie a ponuka zostanú dostupné. Všetky akcie zostávajú v ponuke.</string>
     <string name="telos_files_toolbar_reset">Obnoviť predvolené nastavenia</string>
-    <string name="telos_files_toolbar_save">Uložiť</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Prispôsobiť panel nástrojov</string>
     <string name="telos_files_toolbar_up">Presunúť %1$s nahor</string>
     <string name="telos_files_transfer_added">Pridané do frontu prenosov súborov</string>

@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Pašalinti peer</string>
     <string name="nwg_mobile_only">Tik mobiliaisiais duomenimis</string>
     <string name="nwg_lockdown">Blokuoti programas, kol tunelis neveikia</string>
-    <string name="nwg_save">Išsaugoti</string>
-    <string name="nwg_cancel">Atšaukti</string>
-    <string name="nwg_delete">Ištrinti</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Bendrinti konfigūraciją</string>
     <string name="nwg_share_warning">Eksportuota konfigūracija turi privatųjį raktą.</string>
     <string name="nwg_import">Importuoti</string>

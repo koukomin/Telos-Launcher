@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Meldinger</string>
     <string name="web_app_preset_category_video">Video og musikk</string>
     <string name="web_app_preset_category_work">Produktivitet og jobb</string>
-    <string name="web_app_preset_add">Legg til</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Legg til %1$s</string>
     <string name="web_app_preset_dialog_summary">Velg nettappene som skal legges til. De lagres som alle nettapper du lager selv.</string>
     <string name="web_app_preset_exists">Finnes allerede i nettappene dine, gjenbrukes</string>

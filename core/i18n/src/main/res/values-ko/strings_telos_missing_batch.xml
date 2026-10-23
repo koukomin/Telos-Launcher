@@ -31,7 +31,7 @@
     <string name="disclaimer">면책 조항</string>
     <string name="disclaimer_currency_converter">European Central Bank(유럽중앙은행)에서 하루에 한 번 게시하는 환율입니다. 모든 정보는 어떠한 종류나 성격의 보증도 제공하지 않고 \"있는 그대로\" 제공합니다. 이 정보에 대해서는 어떠한 책임도 지지 않습니다.\n\n\n\n마지막 업데이트: %1$s</string>
     <string name="duplicate">복제</string>
-    <string name="edit">편집</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="edit_favorites_dialog_empty_section">여기에 항목 끌어다 놓기</string>
     <string name="edit_favorites_dialog_new_tag">태그 만들기…</string>
     <string name="edit_favorites_dialog_pinned_sorted">고정됨 – 수동 정렬됨</string>
@@ -126,7 +126,7 @@
     <string name="menu_clear_cache">캐시 지우기</string>
     <string name="menu_contacts_open_externally">연락처 앱으로 열기</string>
     <string name="menu_customize">사용자 정의</string>
-    <string name="menu_delete">삭제</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_edit_widgets">위젯 편집</string>
     <string name="menu_favorites_pin">즐겨찾기에 고정</string>
     <string name="menu_favorites_unpin">고정 해제</string>
@@ -164,7 +164,7 @@
     <string name="no_account_owncloud">아직 Owncloud 계정을 연결하지 않았습니다.</string>
     <string name="notes_widget_action_dismiss">취소</string>
     <string name="notes_widget_action_new">새 메모</string>
-    <string name="notes_widget_action_save">저장</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_dismissed">메모를 취소했습니다.</string>
     <string name="notes_widget_export_filename">메모_%1$s</string>
     <string name="notes_widget_placeholder">메모 쓰기…</string>
@@ -428,7 +428,7 @@
     <string name="restore_different_minor_version">이 백업은 다른 버전의 %1$s에서 생성되었습니다. 일부 데이터를 복원하지 못할 수 있습니다.</string>
     <string name="restore_incompatible_file">이 백업은 다른 버전의 %1$s에서 생성되었습니다. 이 버전에서 복원할 수 없습니다.</string>
     <string name="restore_meta">%1$s에 %2$s의 %3$s에서 생성한 백업입니다.</string>
-    <string name="save">저장</string>
+    <string name="save">@string/hc_save</string>
     <string name="search_action_alarm">알람 설정</string>
     <string name="search_action_app">앱</string>
     <string name="search_action_call">전화</string>

@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Εκκαθάριση</string>
     <string name="au2_netsec_reset_message">Οι κανόνες τείχους προστασίας των %1$d εφαρμογών που εμφανίζονται αυτήν τη στιγμή θα επαναφερθούν στις προεπιλογές.</string>
     <string name="au2_netsec_confirm_reset">Επαναφορά</string>
-    <string name="au2_netsec_cancel">Ακύρωση</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Εγγραφή</string>
     <string name="au2_radio2_stop_recording">Διακοπή εγγραφής</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

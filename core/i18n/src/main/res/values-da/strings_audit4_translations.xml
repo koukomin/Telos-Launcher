@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Bekræft</string>
-    <string name="au4_confirms_cancel">Annuller</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Log ud af Nextcloud?</string>
     <string name="au4_confirms_nc_message">Din Nextcloud-konto fjernes fra denne launcher. Du kan logge ind igen når som helst.</string>
     <string name="au4_confirms_oc_title">Log ud af ownCloud?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Bloker adgang til mobildata for %1$d apps?</string>
     <string name="au4_noteslink_link_existing">Link eksisterende fil</string>
     <string name="au4_noteslink_create_new">Opret ny fil</string>
-    <string name="au4_noteslink_cancel">Annuller</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Genopkaldsforsøg</string>
     <string name="au4_settingsnew1_redial_delay">Forsinkelse mellem forsøg</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

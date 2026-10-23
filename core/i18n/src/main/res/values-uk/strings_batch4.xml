@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Натисніть «Додати» та вставте посилання або поділіться посиланням із Telos Downloads.</string>
     <string name="dl_empty_filter_title">Тут порожньо</string>
     <string name="dl_empty_filter_text">Немає завантажень, що відповідають цьому фільтру.</string>
-    <string name="dl_add">Додати</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Додати завантаження</string>
     <string name="dl_links_hint">Посилання, по одному в рядку</string>
     <string name="dl_invalid_links">Немає дійсного посилання. Можна завантажувати лише посилання http і https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Видалити %1$s? Уже завантажену частину буде видалено.</string>
     <string name="dl_delete_with_file">Видалити разом із файлом</string>
     <string name="dl_delete_keep_file">Видалити, залишити файл</string>
-    <string name="dl_cancel">Скасувати</string>
-    <string name="dl_save">Зберегти</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Немає застосунку для відкриття цього файлу</string>
     <string name="dl_pause_all">Призупинити все</string>
     <string name="dl_resume_all">Продовжити все</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Розпізнавати посилання в буфері обміну</string>
     <string name="dl_p3_detect_clipboard_sum">Під час відкриття «Завантажень» пропонувати скопійоване посилання, адресу сайту з відео або magnet-посилання. Android може повідомити, що застосунок прочитав буфер обміну.</string>
     <string name="dl_p3_clip_found">У буфері обміну: %1$s</string>
-    <string name="dl_p3_clip_add">Додати</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Розклад</string>
     <string name="dl_p3_schedule_enable">Завантажувати лише в певний час</string>
     <string name="dl_p3_schedule_sum">Поза часовим вікном завантаження очікують у черзі.</string>

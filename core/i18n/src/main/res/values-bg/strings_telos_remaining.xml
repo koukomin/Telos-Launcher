@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Преместване на %1$s надолу</string>
     <string name="telos_files_toolbar_info">Изберете до %1$d преки пътища и променете реда им. Навигацията, търсенето и менюто остават достъпни. Всички действия остават в менюто.</string>
     <string name="telos_files_toolbar_reset">Възстановяване на стандартните настройки</string>
-    <string name="telos_files_toolbar_save">Запазване</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Персонализиране на лентата с инструменти</string>
     <string name="telos_files_toolbar_up">Преместване на %1$s нагоре</string>
     <string name="telos_files_transfer_added">Добавено в опашката за файлови прехвърляния</string>

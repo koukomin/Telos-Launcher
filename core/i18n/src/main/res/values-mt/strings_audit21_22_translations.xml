@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Ma nstabx possibbli li jinfetaħ l-arkivju</string>
     <string name="au21_arch_pw_title">Password meħtieġa</string>
     <string name="au21_arch_pw_info">%1$s huwa protett b\'password. Daħħal il-password tiegħu biex tiftaħ jew tneħħi mill-pakkett. Il-password tinżamm biss fil-memorja waqt li tkun fl-arkivju u qatt ma tiġi ssejvjata.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Qed jiġi vverifikat…</string>
     <string name="au21_arch_show">Uri</string>
     <string name="au21_arch_hide">Aħbi</string>

@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">消去</string>
     <string name="au2_netsec_reset_message">現在表示されている %1$d 個のアプリのファイアウォールルールがデフォルトにリセットされます。</string>
     <string name="au2_netsec_confirm_reset">リセット</string>
-    <string name="au2_netsec_cancel">キャンセル</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">録音</string>
     <string name="au2_radio2_stop_recording">録音を停止</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

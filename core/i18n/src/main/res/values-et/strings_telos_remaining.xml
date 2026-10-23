@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Liiguta %1$s alla</string>
     <string name="telos_files_toolbar_info">Vali kuni %1$d otseteed ja muuda nende järjekorda. Navigeerimine, otsing ja menüü jäävad kättesaadavaks. Kõik toimingud jäävad menüüsse.</string>
     <string name="telos_files_toolbar_reset">Taasta vaikeväärtused</string>
-    <string name="telos_files_toolbar_save">Salvesta</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Kohanda tööriistariba</string>
     <string name="telos_files_toolbar_up">Liiguta %1$s üles</string>
     <string name="telos_files_transfer_added">Lisatud failiülekannete järjekorda</string>

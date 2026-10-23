@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Az archívumot nem sikerült megnyitni</string>
     <string name="au21_arch_pw_title">Jelszó szükséges</string>
     <string name="au21_arch_pw_info">A(z) %1$s jelszóval védett. Adja meg a jelszót a megnyitáshoz vagy kicsomagoláshoz. A jelszót csak addig őrizzük a memóriában, amíg az archívumban van, és soha nem mentjük el.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Ellenőrzés…</string>
     <string name="au21_arch_show">Megjelenítés</string>
     <string name="au21_arch_hide">Elrejtés</string>

@@ -12,7 +12,7 @@
     <string name="dl_empty_text">যোগ করুন-এ ট্যাপ করে লিংক পেস্ট করুন, অথবা কোনো লিংক Telos ডাউনলোডে শেয়ার করুন।</string>
     <string name="dl_empty_filter_title">এখানে কিছু নেই</string>
     <string name="dl_empty_filter_text">এই ফিল্টারের সাথে কোনো ডাউনলোড মেলেনি।</string>
-    <string name="dl_add">যোগ করুন</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">ডাউনলোড যোগ করুন</string>
     <string name="dl_links_hint">লিংক, প্রতি লাইনে একটি</string>
     <string name="dl_invalid_links">কোনো বৈধ লিংক নেই। শুধুমাত্র http ও https লিংক ডাউনলোড করা যায়।</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">%1$s সরাবেন? যতটুকু ডাউনলোড হয়েছে তা মুছে যাবে।</string>
     <string name="dl_delete_with_file">সরান এবং ফাইল মুছুন</string>
     <string name="dl_delete_keep_file">সরান, ফাইল রাখুন</string>
-    <string name="dl_cancel">বাতিল</string>
-    <string name="dl_save">সেভ করুন</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">কোনো অ্যাপ এই ফাইলটি খুলতে পারে না</string>
     <string name="dl_pause_all">সব বিরতি দিন</string>
     <string name="dl_resume_all">সব আবার শুরু করুন</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">ক্লিপবোর্ডে লিংক শনাক্ত করুন</string>
     <string name="dl_p3_detect_clipboard_sum">ডাউনলোড খুললে, আপনার কপি করা লিংক, ভিডিও সাইটের ঠিকানা বা ম্যাগনেট লিংক প্রস্তাব করবে। Android আপনাকে জানাতে পারে যে অ্যাপ ক্লিপবোর্ড পড়েছে।</string>
     <string name="dl_p3_clip_found">ক্লিপবোর্ডে: %1$s</string>
-    <string name="dl_p3_clip_add">যোগ করুন</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">সময়সূচি</string>
     <string name="dl_p3_schedule_enable">শুধু নির্দিষ্ট সময়ে ডাউনলোড করুন</string>
     <string name="dl_p3_schedule_sum">সময়সীমার বাইরে ডাউনলোড সারিতে অপেক্ষা করে।</string>

@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">ID konfigurace</string>
     <string name="net_dns_nextdns_device">Název zařízení (volitelné)</string>
     <string name="net_dns_nextdns_bad_id">ID konfigurace se skládá ze 4 až 12 písmen a číslic.</string>
-    <string name="net_dns_nextdns_add">Přidat</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Poskytovatel</string>
     <string name="net_dns_detail_protocol">Protokol</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Použít tento server</string>
     <string name="net_dns_action_test">Otestovat</string>
     <string name="net_dns_action_copy">Kopírovat jako vlastní server</string>
-    <string name="net_dns_action_edit">Upravit</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Odebrat</string>
-    <string name="net_dns_save">Uložit</string>
-    <string name="net_dns_cancel">Zrušit</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Testuje se…</string>
     <string name="net_dns_test_ok">Odpověď za %1$d ms</string>
     <string name="net_dns_test_fail">Test selhal: %1$s</string>

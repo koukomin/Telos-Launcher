@@ -72,7 +72,7 @@
     <string name="disclaimer">声明</string>
     <string name="disclaimer_currency_converter">欧洲中央银行每天公布一次的汇率。所有信息均按\"原样\"提供，不提供任何保证。对于这些信息，我们不承担任何责任。\n\n\n\n最后更新: %1$s</string>
     <string name="duplicate">复制</string>
-    <string name="edit">编辑</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="edit_favorites_dialog_empty_section">拖动项目到此</string>
     <string name="edit_favorites_dialog_new_tag">创建标签</string>
     <string name="edit_favorites_dialog_pinned_sorted">固定 – 手动排序</string>
@@ -198,7 +198,7 @@
     <string name="menu_clear_cache">清除缓存</string>
     <string name="menu_contacts_open_externally">在“联系人”应用中打开</string>
     <string name="menu_customize">自定义</string>
-    <string name="menu_delete">删除</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_dial">呼叫</string>
     <string name="menu_edit_widgets">编辑组件</string>
     <string name="menu_favorites_pin">固定到收藏夹</string>
@@ -275,7 +275,7 @@
     <string name="note_widget_linked_file_summary">链接到 %1$s</string>
     <string name="notes_widget_action_dismiss">删除</string>
     <string name="notes_widget_action_new">新建笔记</string>
-    <string name="notes_widget_action_save">保存</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_dismissed">笔记已删除</string>
     <string name="notes_widget_export_filename">笔记_%1$s</string>
     <string name="notes_widget_placeholder">写个笔记</string>
@@ -763,7 +763,7 @@
     <string name="restore_incompatible_file">此备份在不一致的版本%1$s下创建且不能在当前版本恢复.</string>
     <string name="restore_invalid_file">所选择的文件不是备份文件.你是否确定选择了正确的文件？</string>
     <string name="restore_meta">由%3$s于%1$s在%2$s中创建.</string>
-    <string name="save">保存</string>
+    <string name="save">@string/hc_save</string>
     <string name="save_as_file">保存为文件</string>
     <string name="search_action_alarm">设置闹钟</string>
     <string name="search_action_app">应用程序</string>

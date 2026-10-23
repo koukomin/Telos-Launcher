@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Flyt %1$s ned</string>
     <string name="telos_files_toolbar_info">Vælg op til %1$d genveje, og ændr deres rækkefølge. Navigation, søgning og menuen forbliver tilgængelige. Alle handlinger findes stadig i menuen.</string>
     <string name="telos_files_toolbar_reset">Gendan standardindstillinger</string>
-    <string name="telos_files_toolbar_save">Gem</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Tilpas værktøjslinje</string>
     <string name="telos_files_toolbar_up">Flyt %1$s op</string>
     <string name="telos_files_transfer_added">Føjet til køen for filoverførsler</string>

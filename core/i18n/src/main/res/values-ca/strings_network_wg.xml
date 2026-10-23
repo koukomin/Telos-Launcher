@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Elimina el parell</string>
     <string name="nwg_mobile_only">Només amb dades mòbils</string>
     <string name="nwg_lockdown">Bloqueja les aplicacions mentre el túnel estigui caigut</string>
-    <string name="nwg_save">Desa</string>
-    <string name="nwg_cancel">Cancel·la</string>
-    <string name="nwg_delete">Suprimeix</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Comparteix la configuració</string>
     <string name="nwg_share_warning">La configuració exportada conté la clau privada.</string>
     <string name="nwg_import">Importa</string>

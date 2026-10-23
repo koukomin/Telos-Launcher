@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Elimină lista</string>
     <string name="blocklists_custom_name">Nume</string>
     <string name="blocklists_custom_url">Adresă (https)</string>
-    <string name="blocklists_add">Adaugă</string>
-    <string name="blocklists_cancel">Anulează</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Sunt acceptate doar adresele https</string>
     <string name="blocklists_import_failed">Fișierul nu conține intrări utilizabile sau nu a putut fi citit</string>
     <string name="blocklists_schedule">Actualizare automată</string>

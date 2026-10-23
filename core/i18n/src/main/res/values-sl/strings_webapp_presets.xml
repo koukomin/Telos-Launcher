@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Sporočanje</string>
     <string name="web_app_preset_category_video">Video in glasba</string>
     <string name="web_app_preset_category_work">Produktivnost in delo</string>
-    <string name="web_app_preset_add">Dodaj</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Dodaj: %1$s</string>
     <string name="web_app_preset_dialog_summary">Izberite spletne aplikacije za dodajanje. Shranjene bodo enako kot spletne aplikacije, ki jih ustvarite sami.</string>
     <string name="web_app_preset_exists">Že med vašimi spletnimi aplikacijami, bo ponovno uporabljena</string>

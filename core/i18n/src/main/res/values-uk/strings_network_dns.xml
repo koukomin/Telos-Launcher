@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Ідентифікатор конфігурації</string>
     <string name="net_dns_nextdns_device">Назва пристрою (необов’язково)</string>
     <string name="net_dns_nextdns_bad_id">Ідентифікатор конфігурації складається з 4–12 літер і цифр.</string>
-    <string name="net_dns_nextdns_add">Додати</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Провайдер</string>
     <string name="net_dns_detail_protocol">Протокол</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Використовувати цей сервер</string>
     <string name="net_dns_action_test">Перевірити</string>
     <string name="net_dns_action_copy">Копіювати як власний сервер</string>
-    <string name="net_dns_action_edit">Змінити</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Видалити</string>
-    <string name="net_dns_save">Зберегти</string>
-    <string name="net_dns_cancel">Скасувати</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Перевірка…</string>
     <string name="net_dns_test_ok">Відповідь за %1$d мс</string>
     <string name="net_dns_test_fail">Перевірка не вдалася: %1$s</string>

@@ -280,7 +280,7 @@
     <string name="preference_floating_launcher_tools">Ferramentas rápidas</string>
     <string name="preference_floating_launcher_tools_summary">Mostra botões de captura de tela, calculadora e configurações rápidas no painel. O botão de captura de tela requer o serviço de acessibilidade</string>
     <string name="floating_launcher_title">Funções inteligentes</string>
-    <string name="floating_launcher_edit">Editar</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Arquivos recentes</string>
     <string name="floating_launcher_recent_files_empty">Nenhum arquivo recente. O Telos precisa de acesso aos arquivos para isso; você pode permitir ao abrir o Telos Arquivos.</string>
     <string name="floating_launcher_recent_files_no_app">Nenhum app pode abrir este arquivo</string>
@@ -324,10 +324,10 @@
     <string name="floating_launcher_folder_name">Nome da pasta</string>
     <string name="floating_launcher_folder_select_apps">Escolha pelo menos 2 apps para agrupar</string>
     <string name="floating_launcher_create">Criar</string>
-    <string name="floating_launcher_cancel">Cancelar</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Renomear pasta</string>
     <string name="floating_launcher_delete_folder">Excluir pasta</string>
-    <string name="floating_launcher_save">Salvar</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Abrir pasta</string>
     <string name="floating_launcher_all_apps">Todos os apps</string>
     <string name="floating_launcher_file_dock">Dock de arquivos</string>
@@ -698,7 +698,7 @@
     <string name="comms_unblock_number">Desbloquear número</string>
     <string name="comms_no_previous_calls">Nenhuma chamada anterior</string>
     <string name="comms_clear_history">Limpar histórico de chamadas?</string>
-    <string name="comms_clear_history_confirm">Excluir</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Integrações</string>
     <string name="filter_incoming">Recebidas</string>
     <string name="filter_outgoing">Realizadas</string>
@@ -719,7 +719,7 @@
     <string name="comms_answer">Atender</string>
     <string name="comms_reject">Rejeitar</string>
     <string name="comms_hangup">Desligar</string>
-    <string name="comms_add_call">Adicionar</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Mesclar</string>
     <string name="comms_swap">Alternar</string>
     <string name="backup_choose_parts">O que você quer incluir no backup?</string>
@@ -806,9 +806,9 @@
     <string name="cal_no_events">Sem eventos</string>
     <string name="cal_no_title">(sem título)</string>
     <string name="cal_all_day">Dia inteiro</string>
-    <string name="cal_cancel">Cancelar</string>
-    <string name="cal_delete">Excluir</string>
-    <string name="cal_save">Salvar</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Título</string>
     <string name="cal_location">Local</string>
     <string name="cal_description">Descrição</string>
@@ -825,7 +825,7 @@
     <string name="cal_series_note">Alterações e exclusões se aplicam a toda a série.</string>
     <string name="cal_on_phone">Neste telefone</string>
     <string name="cal_new_local">Novo calendário local</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Os calendários Google, CalDAV (DAVx5) e Exchange são sincronizados pelo sistema por meio da conta correspondente. Os calendários locais ficam no telefone e estão incluídos no backup do Telos.</string>
     <string name="cal_view_agenda">Próximos 30 dias</string>
     <string name="cal_view_month">Visualização mensal</string>
@@ -848,8 +848,8 @@
     <string name="notes_title_hint">Título</string>
     <string name="notes_body_hint">Nota</string>
     <string name="notes_labels_hint">trabalho, casa</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">Cancelar</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">%d notas importadas</string>
     <string name="notes_synced">Sincronizado: %1$d enviadas, %2$d recebidas</string>
     <string name="notes_sync_failed">Falha na sincronização: %s</string>
@@ -907,7 +907,7 @@
     <string name="screenshot_cannot_open">Não foi possível abrir a imagem</string>
     <string name="screenshot_notification_channel">Capturas de tela</string>
     <string name="screenshot_notification_text">Toque para editar</string>
-    <string name="screenshot_edit">Editar</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Capturas de tela</string>
     <string name="screenshot_none">Nenhuma captura de tela ainda</string>
     <string name="screenshot_undo">Desfazer</string>
@@ -941,7 +941,7 @@
     <string name="floating_launcher_section_widgets">Widgets</string>
     <string name="floating_launcher_section_apps">Apps</string>
     <string name="floating_launcher_done">Concluir</string>
-    <string name="floating_launcher_add">Adicionar</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Barra flutuante</string>
     <string name="preference_category_sidebar_style">Estilo da barra lateral</string>
     <string name="preference_floating_launcher_side">Lado da tela</string>
@@ -971,10 +971,10 @@
     <string name="voice_start_failed">Não foi possível iniciar a gravação</string>
     <string name="voice_rename">Renomear</string>
     <string name="voice_rename_failed">O nome está vazio ou já está em uso</string>
-    <string name="voice_save">Salvar</string>
-    <string name="voice_cancel">Cancelar</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Excluir esta gravação?</string>
-    <string name="voice_delete">Excluir</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Compartilhar</string>
     <string name="voice_share_failed">Não foi possível compartilhar a gravação</string>
     <string name="voice_play">Reproduzir</string>

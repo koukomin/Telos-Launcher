@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Deimhnigh</string>
-    <string name="au4_confirms_cancel">Cealaigh</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Logáil amach as Nextcloud?</string>
     <string name="au4_confirms_nc_message">Bainfear do chuntas Nextcloud den lainseálaí seo. Is féidir leat logáil isteach arís am ar bith.</string>
     <string name="au4_confirms_oc_title">Logáil amach as ownCloud?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Bac rochtain sonraí soghluaiste do %1$d aip?</string>
     <string name="au4_noteslink_link_existing">Nasc comhad atá ann cheana</string>
     <string name="au4_noteslink_create_new">Cruthaigh comhad nua</string>
-    <string name="au4_noteslink_cancel">Cealaigh</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Iarrachtaí athdhiailithe</string>
     <string name="au4_settingsnew1_redial_delay">Moill idir iarrachtaí</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

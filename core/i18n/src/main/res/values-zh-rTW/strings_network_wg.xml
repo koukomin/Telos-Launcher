@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">移除對等端</string>
     <string name="nwg_mobile_only">僅使用行動數據時</string>
     <string name="nwg_lockdown">通道中斷時封鎖這些應用程式</string>
-    <string name="nwg_save">儲存</string>
-    <string name="nwg_cancel">取消</string>
-    <string name="nwg_delete">刪除</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">分享設定</string>
     <string name="nwg_share_warning">匯出的設定包含私密金鑰。</string>
     <string name="nwg_import">匯入</string>

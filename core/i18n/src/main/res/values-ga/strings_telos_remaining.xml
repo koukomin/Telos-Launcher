@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Bog %1$s síos</string>
     <string name="telos_files_toolbar_info">Roghnaigh suas le %1$d aicearra agus athraigh a n-ord. Fanann nascleanúint, cuardach agus an roghchlár ar fáil. Fanann gach gníomh sa roghchlár.</string>
     <string name="telos_files_toolbar_reset">Athchóirigh na réamhshocruithe</string>
-    <string name="telos_files_toolbar_save">Sábháil</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Saincheap an barra uirlisí</string>
     <string name="telos_files_toolbar_up">Bog %1$s suas</string>
     <string name="telos_files_transfer_added">Cuireadh leis an scuaine aistrithe comhad é</string>

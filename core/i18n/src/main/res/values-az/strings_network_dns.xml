@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Konfiqurasiya ID-si</string>
     <string name="net_dns_nextdns_device">Cihaz adı (ixtiyari)</string>
     <string name="net_dns_nextdns_bad_id">Konfiqurasiya ID-si 4–12 hərf və rəqəmdən ibarətdir.</string>
-    <string name="net_dns_nextdns_add">Əlavə et</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Provayder</string>
     <string name="net_dns_detail_protocol">Protokol</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Bu serverdən istifadə et</string>
     <string name="net_dns_action_test">Sına</string>
     <string name="net_dns_action_copy">Fərdi server kimi kopyala</string>
-    <string name="net_dns_action_edit">Redaktə et</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Sil</string>
-    <string name="net_dns_save">Saxla</string>
-    <string name="net_dns_cancel">Ləğv et</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Sınanır…</string>
     <string name="net_dns_test_ok">%1$d ms ərzində cavab verdi</string>
     <string name="net_dns_test_fail">Sınaq uğursuz oldu: %1$s</string>

@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">आर्काइव नहीं खोला जा सका</string>
     <string name="au21_arch_pw_title">पासवर्ड आवश्यक है</string>
     <string name="au21_arch_pw_info">%1$s पासवर्ड से सुरक्षित है। इसे खोलने या अनपैक करने के लिए इसका पासवर्ड दर्ज करें। पासवर्ड केवल तब तक मेमोरी में रहता है जब तक आप आर्काइव के अंदर हैं, और इसे कभी सहेजा नहीं जाता।</string>
-    <string name="au21_arch_ok">ठीक है</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">जाँच हो रही है…</string>
     <string name="au21_arch_show">दिखाएँ</string>
     <string name="au21_arch_hide">छिपाएँ</string>

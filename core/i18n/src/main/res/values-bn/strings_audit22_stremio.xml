@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">দেখা চালিয়ে যান</string>
     <string name="au22_stremio_no_results">কিছু পাওয়া যায়নি</string>
     <string name="au22_stremio_library_empty">আপনার লাইব্রেরি খালি। একটি শিরোনাম খুলে এখানে সংরক্ষণ করুন।</string>
-    <string name="au22_stremio_save">সংরক্ষণ</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">সংরক্ষিত</string>
     <string name="au22_stremio_season">সিজন %d</string>
     <string name="au22_stremio_streams">একটি স্ট্রিম বেছে নিন</string>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Ikkonferma</string>
-    <string name="au4_confirms_cancel">Ikkanċella</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Oħroġ minn Nextcloud?</string>
     <string name="au4_confirms_nc_message">Il-kont tiegħek ta\' Nextcloud se jitneħħa minn dan il-launcher. Tista\' tidħol mill-ġdid fi kwalunkwe ħin.</string>
     <string name="au4_confirms_oc_title">Oħroġ minn ownCloud?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Timblokka l-aċċess għad-dejta mobbli għal %1$d applikazzjonijiet?</string>
     <string name="au4_noteslink_link_existing">Orbot fajl eżistenti</string>
     <string name="au4_noteslink_create_new">Oħloq fajl ġdid</string>
-    <string name="au4_noteslink_cancel">Ikkanċella</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Tentattivi ta\' sejħa mill-ġdid</string>
     <string name="au4_settingsnew1_redial_delay">Dewmien bejn it-tentattivi</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

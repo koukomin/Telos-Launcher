@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Kontynuuj oglądanie</string>
     <string name="au22_stremio_no_results">Nic nie znaleziono</string>
     <string name="au22_stremio_library_empty">Twoja biblioteka jest pusta. Otwórz tytuł i zapisz go tutaj.</string>
-    <string name="au22_stremio_save">Zapisz</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Zapisano</string>
     <string name="au22_stremio_season">Sezon %d</string>
     <string name="au22_stremio_streams">Wybierz strumień</string>

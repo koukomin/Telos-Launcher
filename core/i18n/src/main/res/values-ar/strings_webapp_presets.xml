@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">المراسلة</string>
     <string name="web_app_preset_category_video">الفيديو والموسيقى</string>
     <string name="web_app_preset_category_work">الإنتاجية والعمل</string>
-    <string name="web_app_preset_add">إضافة</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">إضافة %1$s</string>
     <string name="web_app_preset_dialog_summary">اختر تطبيقات الويب التي تريد إضافتها. تُحفظ بالطريقة نفسها التي تُحفظ بها تطبيقات الويب التي تنشئها بنفسك.</string>
     <string name="web_app_preset_exists">موجود بالفعل في تطبيقات الويب لديك وسيُعاد استخدامه</string>

@@ -283,7 +283,7 @@
     <string name="preference_floating_launcher_tools">Быстрые инструменты</string>
     <string name="preference_floating_launcher_tools_summary">Показывать в панели кнопки скриншота, калькулятора и быстрых настроек. Для кнопки скриншота нужна служба специальных возможностей</string>
     <string name="floating_launcher_title">Умные функции</string>
-    <string name="floating_launcher_edit">Изменить</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Недавние файлы</string>
     <string name="floating_launcher_recent_files_empty">Нет недавних файлов. Для этого Telos нужен доступ к файлам — вы можете разрешить его при открытии Telos Files.</string>
     <string name="floating_launcher_recent_files_no_app">Нет приложения, способного открыть этот файл</string>
@@ -327,10 +327,10 @@
     <string name="floating_launcher_folder_name">Название папки</string>
     <string name="floating_launcher_folder_select_apps">Выберите не менее 2 приложений для группировки</string>
     <string name="floating_launcher_create">Создать</string>
-    <string name="floating_launcher_cancel">Отмена</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Переименовать папку</string>
     <string name="floating_launcher_delete_folder">Удалить папку</string>
-    <string name="floating_launcher_save">Сохранить</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Открыть папку</string>
     <string name="floating_launcher_all_apps">Все приложения</string>
     <string name="floating_launcher_file_dock">Файловый док</string>
@@ -761,7 +761,7 @@
     <string name="comms_unblock_number">Разблокировать номер</string>
     <string name="comms_no_previous_calls">Нет предыдущих звонков</string>
     <string name="comms_clear_history">Очистить историю звонков?</string>
-    <string name="comms_clear_history_confirm">Удалить</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Интеграции</string>
     <string name="filter_incoming">Входящие</string>
     <string name="filter_outgoing">Исходящие</string>
@@ -782,7 +782,7 @@
     <string name="comms_answer">Ответить</string>
     <string name="comms_reject">Отклонить</string>
     <string name="comms_hangup">Завершить</string>
-    <string name="comms_add_call">Добавить</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Объединить</string>
     <string name="comms_swap">Переключить</string>
     <string name="backup_choose_parts">Что вы хотите сохранить в резервной копии?</string>
@@ -869,9 +869,9 @@
     <string name="cal_no_events">Нет событий</string>
     <string name="cal_no_title">(без названия)</string>
     <string name="cal_all_day">Весь день</string>
-    <string name="cal_cancel">Отмена</string>
-    <string name="cal_delete">Удалить</string>
-    <string name="cal_save">Сохранить</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Название</string>
     <string name="cal_location">Место</string>
     <string name="cal_description">Описание</string>
@@ -888,7 +888,7 @@
     <string name="cal_series_note">Изменения и удаление применяются ко всей серии.</string>
     <string name="cal_on_phone">На этом телефоне</string>
     <string name="cal_new_local">Новый локальный календарь</string>
-    <string name="cal_ok">ОК</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Календари Google, CalDAV (DAVx5) и Exchange синхронизируются системой через их аккаунт. Локальные календари остаются на телефоне и входят в резервную копию Telos.</string>
     <string name="cal_view_agenda">Ближайшие 30 дней</string>
     <string name="cal_view_month">Вид по месяцам</string>
@@ -911,8 +911,8 @@
     <string name="notes_title_hint">Заголовок</string>
     <string name="notes_body_hint">Заметка</string>
     <string name="notes_labels_hint">работа, дом</string>
-    <string name="notes_ok">ОК</string>
-    <string name="notes_cancel">Отмена</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">Импортировано заметок: %d</string>
     <string name="notes_synced">Синхронизировано: отправлено %1$d, получено %2$d</string>
     <string name="notes_sync_failed">Ошибка синхронизации: %s</string>
@@ -970,7 +970,7 @@
     <string name="screenshot_cannot_open">Не удалось открыть изображение</string>
     <string name="screenshot_notification_channel">Скриншоты</string>
     <string name="screenshot_notification_text">Нажмите, чтобы изменить</string>
-    <string name="screenshot_edit">Изменить</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Скриншоты</string>
     <string name="screenshot_none">Скриншотов пока нет</string>
     <string name="screenshot_undo">Отменить</string>
@@ -1004,7 +1004,7 @@
     <string name="floating_launcher_section_widgets">Виджеты</string>
     <string name="floating_launcher_section_apps">Приложения</string>
     <string name="floating_launcher_done">Готово</string>
-    <string name="floating_launcher_add">Добавить</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Плавающая панель</string>
     <string name="preference_category_sidebar_style">Стиль боковой панели</string>
     <string name="preference_floating_launcher_side">Сторона экрана</string>
@@ -1034,10 +1034,10 @@
     <string name="voice_start_failed">Не удалось начать запись</string>
     <string name="voice_rename">Переименовать</string>
     <string name="voice_rename_failed">Имя пустое или уже используется</string>
-    <string name="voice_save">Сохранить</string>
-    <string name="voice_cancel">Отмена</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Удалить эту запись?</string>
-    <string name="voice_delete">Удалить</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Поделиться</string>
     <string name="voice_share_failed">Не удалось поделиться записью</string>
     <string name="voice_play">Воспроизвести</string>

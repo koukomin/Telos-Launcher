@@ -12,7 +12,7 @@
     <string name="dl_empty_text">اضغط على «إضافة» والصق رابطًا، أو شارك رابطًا مع تنزيلات Telos.</string>
     <string name="dl_empty_filter_title">لا يوجد شيء هنا</string>
     <string name="dl_empty_filter_text">لا توجد تنزيلات تطابق هذا الفلتر.</string>
-    <string name="dl_add">إضافة</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">إضافة تنزيل</string>
     <string name="dl_links_hint">الروابط، رابط في كل سطر</string>
     <string name="dl_invalid_links">لا يوجد رابط صالح. يمكن تنزيل روابط http وhttps فقط.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">هل تريد إزالة %1$s؟ سيتم حذف الجزء الذي تم تنزيله.</string>
     <string name="dl_delete_with_file">إزالة وحذف الملف</string>
     <string name="dl_delete_keep_file">إزالة مع الاحتفاظ بالملف</string>
-    <string name="dl_cancel">إلغاء</string>
-    <string name="dl_save">حفظ</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">لا يوجد تطبيق يمكنه فتح هذا الملف</string>
     <string name="dl_pause_all">إيقاف الكل مؤقتًا</string>
     <string name="dl_resume_all">استئناف الكل</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">اكتشاف الروابط في الحافظة</string>
     <string name="dl_p3_detect_clipboard_sum">عند فتح التنزيلات، اقتراح رابط أو عنوان موقع فيديو أو رابط Magnet قمت بنسخه. قد يُعلمك Android بأن التطبيق قرأ الحافظة.</string>
     <string name="dl_p3_clip_found">في الحافظة: %1$s</string>
-    <string name="dl_p3_clip_add">إضافة</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">الجدولة</string>
     <string name="dl_p3_schedule_enable">التنزيل في أوقات معينة فقط</string>
     <string name="dl_p3_schedule_sum">خارج النافذة الزمنية تنتظر التنزيلات في قائمة الانتظار.</string>

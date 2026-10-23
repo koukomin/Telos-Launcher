@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Tocca Aggiungi e incolla un link, oppure condividi un link con Telos Downloads.</string>
     <string name="dl_empty_filter_title">Niente qui</string>
     <string name="dl_empty_filter_text">Nessun download corrisponde a questo filtro.</string>
-    <string name="dl_add">Aggiungi</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Aggiungi download</string>
     <string name="dl_links_hint">Link, uno per riga</string>
     <string name="dl_invalid_links">Nessun link valido. Si possono scaricare solo link http e https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Rimuovere %1$s? La parte scaricata verrà eliminata.</string>
     <string name="dl_delete_with_file">Rimuovi ed elimina il file</string>
     <string name="dl_delete_keep_file">Rimuovi, tieni il file</string>
-    <string name="dl_cancel">Annulla</string>
-    <string name="dl_save">Salva</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Nessuna app può aprire questo file</string>
     <string name="dl_pause_all">Metti tutto in pausa</string>
     <string name="dl_resume_all">Riprendi tutto</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Rileva i link negli appunti</string>
     <string name="dl_p3_detect_clipboard_sum">Quando apri Download, propone un link, l\'indirizzo di un sito video o un magnet link che hai copiato. Android potrebbe avvisarti che l\'app ha letto gli appunti.</string>
     <string name="dl_p3_clip_found">Negli appunti: %1$s</string>
-    <string name="dl_p3_clip_add">Aggiungi</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Pianificazione</string>
     <string name="dl_p3_schedule_enable">Scarica solo in certi orari</string>
     <string name="dl_p3_schedule_sum">Fuori dalla fascia oraria i download restano in coda.</string>

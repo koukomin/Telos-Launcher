@@ -20,9 +20,9 @@
     <string name="cal_no_events">No events</string>
     <string name="cal_no_title">(no title)</string>
     <string name="cal_all_day">All day</string>
-    <string name="cal_cancel">Cancel</string>
-    <string name="cal_delete">Delete</string>
-    <string name="cal_save">Save</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Title</string>
     <string name="cal_location">Location</string>
     <string name="cal_description">Description</string>
@@ -39,7 +39,7 @@
     <string name="cal_series_note">Changes and deleting apply to the whole series.</string>
     <string name="cal_on_phone">On this phone</string>
     <string name="cal_new_local">New local calendar</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google, CalDAV (DAVx5) and Exchange calendars are synced by the system through their account. Local calendars stay on the phone and are in the Telos backup.</string>
     <string name="cal_view_agenda">Next 30 days</string>
     <string name="cal_view_month">Month view</string>

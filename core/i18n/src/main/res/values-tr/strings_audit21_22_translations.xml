@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Arşiv açılamadı</string>
     <string name="au21_arch_pw_title">Parola gerekli</string>
     <string name="au21_arch_pw_info">%1$s parola korumalı. Açmak veya çıkarmak için parolasını girin. Parola yalnızca arşivin içindeyken bellekte tutulur ve asla kaydedilmez.</string>
-    <string name="au21_arch_ok">Tamam</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Denetleniyor…</string>
     <string name="au21_arch_show">Göster</string>
     <string name="au21_arch_hide">Gizle</string>

@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Konfigurációs azonosító</string>
     <string name="net_dns_nextdns_device">Eszköz neve (nem kötelező)</string>
     <string name="net_dns_nextdns_bad_id">A konfigurációs azonosító 4–12 betűből és számjegyből áll.</string>
-    <string name="net_dns_nextdns_add">Hozzáadás</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Szolgáltató</string>
     <string name="net_dns_detail_protocol">Protokoll</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Kiszolgáló használata</string>
     <string name="net_dns_action_test">Tesztelés</string>
     <string name="net_dns_action_copy">Másolás egyéni kiszolgálóként</string>
-    <string name="net_dns_action_edit">Szerkesztés</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Eltávolítás</string>
-    <string name="net_dns_save">Mentés</string>
-    <string name="net_dns_cancel">Mégse</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Tesztelés…</string>
     <string name="net_dns_test_ok">Válasz %1$d ms alatt</string>
     <string name="net_dns_test_fail">A teszt sikertelen: %1$s</string>

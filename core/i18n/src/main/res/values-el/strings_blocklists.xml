@@ -17,8 +17,8 @@
     <string name="blocklists_remove">Αφαίρεση λίστας</string>
     <string name="blocklists_custom_name">Όνομα</string>
     <string name="blocklists_custom_url">Διεύθυνση (https)</string>
-    <string name="blocklists_add">Προσθήκη</string>
-    <string name="blocklists_cancel">Άκυρο</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Γίνονται δεκτές μόνο διευθύνσεις https</string>
     <string name="blocklists_import_failed">Το αρχείο δεν περιέχει χρήσιμες εγγραφές ή δεν ήταν δυνατή η ανάγνωσή του</string>
     <string name="blocklists_schedule">Αυτόματη ενημέρωση</string>

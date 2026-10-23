@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">即時通訊</string>
     <string name="web_app_preset_category_video">影音與音樂</string>
     <string name="web_app_preset_category_work">生產力與工作</string>
-    <string name="web_app_preset_add">新增</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">新增%1$s</string>
     <string name="web_app_preset_dialog_summary">選擇要新增的網頁應用程式。它們的儲存方式與您自行建立的網頁應用程式相同。</string>
     <string name="web_app_preset_exists">已在您的網頁應用程式中，將直接重複使用</string>

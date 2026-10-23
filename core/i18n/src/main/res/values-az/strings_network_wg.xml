@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Peer-i sil</string>
     <string name="nwg_mobile_only">Yalnız mobil datada</string>
     <string name="nwg_lockdown">Tunel işləmədikdə tətbiqləri blokla</string>
-    <string name="nwg_save">Yadda saxla</string>
-    <string name="nwg_cancel">Ləğv et</string>
-    <string name="nwg_delete">Sil</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Konfiqurasiyanı paylaş</string>
     <string name="nwg_share_warning">İxrac edilmiş konfiqurasiyada gizli açar var.</string>
     <string name="nwg_import">İdxal et</string>

@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Toque em Adicionar e cole um link, ou compartilhe um link com o Telos Downloads.</string>
     <string name="dl_empty_filter_title">Nada aqui</string>
     <string name="dl_empty_filter_text">Nenhum download corresponde a este filtro.</string>
-    <string name="dl_add">Adicionar</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Adicionar download</string>
     <string name="dl_links_hint">Links, um por linha</string>
     <string name="dl_invalid_links">Nenhum link válido. Só é possível baixar links http e https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Remover %1$s? A parte já baixada será excluída.</string>
     <string name="dl_delete_with_file">Remover e excluir arquivo</string>
     <string name="dl_delete_keep_file">Remover, manter arquivo</string>
-    <string name="dl_cancel">Cancelar</string>
-    <string name="dl_save">Salvar</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Nenhum app consegue abrir este arquivo</string>
     <string name="dl_pause_all">Pausar tudo</string>
     <string name="dl_resume_all">Retomar tudo</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Detectar links na área de transferência</string>
     <string name="dl_p3_detect_clipboard_sum">Ao abrir Downloads, sugere um link, um endereço de site de vídeo ou um link magnet que você copiou. O Android pode avisar que o app leu a área de transferência.</string>
     <string name="dl_p3_clip_found">Na área de transferência: %1$s</string>
-    <string name="dl_p3_clip_add">Adicionar</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Agendamento</string>
     <string name="dl_p3_schedule_enable">Baixar apenas em determinados horários</string>
     <string name="dl_p3_schedule_sum">Fora do período definido, os downloads ficam aguardando na fila.</string>

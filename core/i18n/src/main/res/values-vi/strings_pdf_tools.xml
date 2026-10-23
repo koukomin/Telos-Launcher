@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Chưa thêm tệp nào.</string>
     <string name="pdft_add_pdf">Thêm PDF</string>
     <string name="pdft_add_images">Thêm ảnh</string>
-    <string name="pdft_add">Thêm</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Sắp xếp</string>
     <string name="pdft_group_optimize">Tối ưu hóa</string>
     <string name="pdft_group_security">Bảo mật</string>
-    <string name="pdft_group_edit">Chỉnh sửa</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Chuyển đổi</string>
     <string name="pdft_group_view">Xem và so sánh</string>
     <string name="pdft_tool_merge">Gộp</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Quay lại</string>
     <string name="pdft_back_to_tools">Quay lại công cụ</string>
     <string name="pdft_close">Đóng</string>
-    <string name="pdft_cancel">Hủy</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Áp dụng</string>
     <string name="pdft_change">Đổi</string>
     <string name="pdft_remove">Xóa</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Xong</string>
     <string name="pdft_compress_result">Từ %1$s xuống %2$s (nhỏ hơn %3$d%%)</string>
     <string name="pdft_compress_no_gain">Kết quả (%2$s) không nhỏ hơn bản gốc (%1$s). Tệp này chủ yếu chứa văn bản và đồ họa vector.</string>
-    <string name="pdft_save">Lưu</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Lưu vào %1$s</string>
     <string name="pdft_save_choose_folder">Chọn thư mục…</string>
     <string name="pdft_save_as">Lưu thành…</string>

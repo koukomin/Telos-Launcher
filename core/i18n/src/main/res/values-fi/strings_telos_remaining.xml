@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Siirrä %1$s alaspäin</string>
     <string name="telos_files_toolbar_info">Valitse enintään %1$d pikavalintaa ja muuta niiden järjestystä. Navigointi, haku ja valikko pysyvät käytettävissä. Kaikki toiminnot löytyvät edelleen valikosta.</string>
     <string name="telos_files_toolbar_reset">Palauta oletukset</string>
-    <string name="telos_files_toolbar_save">Tallenna</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Muokkaa työkalupalkkia</string>
     <string name="telos_files_toolbar_up">Siirrä %1$s ylöspäin</string>
     <string name="telos_files_transfer_added">Lisätty tiedostonsiirtojonoon</string>

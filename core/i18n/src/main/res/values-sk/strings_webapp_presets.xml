@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Správy</string>
     <string name="web_app_preset_category_video">Video a hudba</string>
     <string name="web_app_preset_category_work">Produktivita a práca</string>
-    <string name="web_app_preset_add">Pridať</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Pridať: %1$s</string>
     <string name="web_app_preset_dialog_summary">Vyberte webové aplikácie, ktoré chcete pridať. Uložia sa rovnako ako webové aplikácie, ktoré vytvoríte sami.</string>
     <string name="web_app_preset_exists">Už medzi vašimi webovými aplikáciami, bude sa znova používať</string>

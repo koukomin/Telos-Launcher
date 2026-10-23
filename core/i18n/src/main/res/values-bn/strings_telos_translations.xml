@@ -154,10 +154,10 @@
     <string name="voice_start_failed">রেকর্ডিং শুরু করা যায়নি</string>
     <string name="voice_rename">নাম পরিবর্তন</string>
     <string name="voice_rename_failed">নামটি খালি বা আগে থেকেই ব্যবহৃত</string>
-    <string name="voice_save">সংরক্ষণ করুন</string>
-    <string name="voice_cancel">বাতিল</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">এই রেকর্ডিং মুছবেন?</string>
-    <string name="voice_delete">মুছুন</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">শেয়ার</string>
     <string name="voice_share_failed">রেকর্ডিং শেয়ার করা যায়নি</string>
     <string name="voice_play">চালান</string>
@@ -501,7 +501,7 @@
     <string name="preference_floating_launcher_tools">দ্রুত টুলস</string>
     <string name="preference_floating_launcher_tools_summary">প্যানেলে স্ক্রিনশট, ক্যালকুলেটর ও কুইক সেটিংস বোতাম দেখান। স্ক্রিনশট বোতামের জন্য অ্যাক্সেসিবিলিটি সার্ভিস প্রয়োজন</string>
     <string name="floating_launcher_title">স্মার্ট ফাংশন</string>
-    <string name="floating_launcher_edit">সম্পাদনা</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">সাম্প্রতিক ফাইল</string>
     <string name="floating_launcher_recent_files_empty">কোনো সাম্প্রতিক ফাইল নেই। এর জন্য Telos-এর ফাইল অ্যাক্সেস প্রয়োজন, Telos Files খুললে অনুমতি দিতে পারবেন।</string>
     <string name="floating_launcher_recent_files_no_app">কোনো অ্যাপ এই ফাইল খুলতে পারে না</string>
@@ -545,10 +545,10 @@
     <string name="floating_launcher_folder_name">ফোল্ডারের নাম</string>
     <string name="floating_launcher_folder_select_apps">গ্রুপ করতে কমপক্ষে ২টি অ্যাপ বেছে নিন</string>
     <string name="floating_launcher_create">তৈরি করুন</string>
-    <string name="floating_launcher_cancel">বাতিল</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">ফোল্ডারের নাম পরিবর্তন করুন</string>
     <string name="floating_launcher_delete_folder">ফোল্ডার মুছুন</string>
-    <string name="floating_launcher_save">সংরক্ষণ করুন</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">ফোল্ডার খুলুন</string>
     <string name="floating_launcher_all_apps">সব অ্যাপ</string>
     <string name="floating_launcher_file_dock">ফাইল ডক</string>
@@ -1430,7 +1430,7 @@
     <string name="comms_unblock_number">নম্বর আনব্লক করুন</string>
     <string name="comms_no_previous_calls">কোনো আগের কল নেই</string>
     <string name="comms_clear_history">কল ইতিহাস মুছবেন?</string>
-    <string name="comms_clear_history_confirm">মুছুন</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">ইন্টিগ্রেশন</string>
     <string name="filter_incoming">ইনকামিং</string>
     <string name="filter_outgoing">আউটগোয়িং</string>
@@ -1451,7 +1451,7 @@
     <string name="comms_answer">রিসিভ করুন</string>
     <string name="comms_reject">প্রত্যাখ্যান করুন</string>
     <string name="comms_hangup">কল কাটুন</string>
-    <string name="comms_add_call">যোগ করুন</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">মার্জ করুন</string>
     <string name="comms_swap">অদলবদল</string>
     <string name="backup_choose_parts">আপনি কী ব্যাকআপ করতে চান?</string>
@@ -1538,9 +1538,9 @@
     <string name="cal_no_events">কোনো ইভেন্ট নেই</string>
     <string name="cal_no_title">(শিরোনামহীন)</string>
     <string name="cal_all_day">সারাদিন</string>
-    <string name="cal_cancel">বাতিল</string>
-    <string name="cal_delete">মুছুন</string>
-    <string name="cal_save">সংরক্ষণ করুন</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">শিরোনাম</string>
     <string name="cal_location">লোকেশন</string>
     <string name="cal_description">বিবরণ</string>
@@ -1557,7 +1557,7 @@
     <string name="cal_series_note">পরিবর্তন ও মুছে ফেলা পুরো সিরিজে প্রযোজ্য হবে।</string>
     <string name="cal_on_phone">এই ফোনে</string>
     <string name="cal_new_local">নতুন লোকাল ক্যালেন্ডার</string>
-    <string name="cal_ok">ঠিক আছে</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google, CalDAV (DAVx5) ও Exchange ক্যালেন্ডার সিস্টেম তাদের অ্যাকাউন্টের মাধ্যমে সিঙ্ক করে। লোকাল ক্যালেন্ডার ফোনেই থাকে এবং Telos ব্যাকআপে অন্তর্ভুক্ত।</string>
     <string name="cal_view_agenda">পরবর্তী ৩০ দিন</string>
     <string name="cal_view_month">মাসের ভিউ</string>
@@ -1580,8 +1580,8 @@
     <string name="notes_title_hint">শিরোনাম</string>
     <string name="notes_body_hint">নোট</string>
     <string name="notes_labels_hint">কাজ, বাড়ি</string>
-    <string name="notes_ok">ঠিক আছে</string>
-    <string name="notes_cancel">বাতিল</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">%dটি নোট ইমপোর্ট করা হয়েছে</string>
     <string name="notes_synced">সিঙ্ক হয়েছে: %1$dটি পাঠানো, %2$dটি প্রাপ্ত</string>
     <string name="notes_sync_failed">সিঙ্ক ব্যর্থ হয়েছে: %s</string>
@@ -1639,7 +1639,7 @@
     <string name="screenshot_cannot_open">ছবিটি খোলা যায়নি</string>
     <string name="screenshot_notification_channel">স্ক্রিনশট</string>
     <string name="screenshot_notification_text">সম্পাদনা করতে ট্যাপ করুন</string>
-    <string name="screenshot_edit">সম্পাদনা</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">স্ক্রিনশট</string>
     <string name="screenshot_none">এখনো কোনো স্ক্রিনশট নেই</string>
     <string name="screenshot_undo">আনডু</string>
@@ -1673,7 +1673,7 @@
     <string name="floating_launcher_section_widgets">উইজেট</string>
     <string name="floating_launcher_section_apps">অ্যাপস</string>
     <string name="floating_launcher_done">সম্পন্ন</string>
-    <string name="floating_launcher_add">যোগ করুন</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">ফ্লোটিং বার</string>
     <string name="preference_category_sidebar_style">সাইডবারের স্টাইল</string>
     <string name="preference_floating_launcher_side">স্ক্রিনের পাশ</string>

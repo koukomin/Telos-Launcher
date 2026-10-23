@@ -46,7 +46,7 @@
     <string name="od_cell_value">Nilai</string>
     <string name="od_cell_hint">Teks, angka, atau rumus yang diawali =</string>
     <string name="od_formula_replaced">Sel ini berisi rumus (%1$s). Nilai baru akan menggantikannya.</string>
-    <string name="od_ok">OK</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">Lembar %1$d</string>
     <string name="od_slide_of">Slide %1$d dari %2$d</string>
     <string name="od_delete_slide">Hapus slide</string>

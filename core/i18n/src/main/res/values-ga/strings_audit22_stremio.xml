@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Lean ar aghaidh ag féachaint</string>
     <string name="au22_stremio_no_results">Níor aimsíodh tada</string>
     <string name="au22_stremio_library_empty">Tá do leabharlann folamh. Oscail teideal agus sábháil anseo é.</string>
-    <string name="au22_stremio_save">Sábháil</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Sábháilte</string>
     <string name="au22_stremio_season">Séasúr %d</string>
     <string name="au22_stremio_streams">Roghnaigh sruth</string>

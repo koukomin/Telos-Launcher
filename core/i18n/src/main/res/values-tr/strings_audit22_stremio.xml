@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">İzlemeye devam et</string>
     <string name="au22_stremio_no_results">Hiçbir şey bulunamadı</string>
     <string name="au22_stremio_library_empty">Kitaplığınız boş. Bir başlık açıp buraya kaydedin.</string>
-    <string name="au22_stremio_save">Kaydet</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Kaydedildi</string>
     <string name="au22_stremio_season">%d. sezon</string>
     <string name="au22_stremio_streams">Bir yayın seçin</string>

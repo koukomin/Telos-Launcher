@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Effacer</string>
     <string name="au2_netsec_reset_message">Les règles de pare-feu des %1$d applications actuellement affichées seront rétablies aux valeurs par défaut.</string>
     <string name="au2_netsec_confirm_reset">Réinitialiser</string>
-    <string name="au2_netsec_cancel">Annuler</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Enregistrer</string>
     <string name="au2_radio2_stop_recording">Arrêter l\'enregistrement</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

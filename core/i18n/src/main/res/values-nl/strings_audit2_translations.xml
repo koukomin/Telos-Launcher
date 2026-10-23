@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Wissen</string>
     <string name="au2_netsec_reset_message">De firewallregels van de %1$d apps die nu worden getoond, worden teruggezet naar de standaardwaarden.</string>
     <string name="au2_netsec_confirm_reset">Resetten</string>
-    <string name="au2_netsec_cancel">Annuleren</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Opnemen</string>
     <string name="au2_radio2_stop_recording">Opname stoppen</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

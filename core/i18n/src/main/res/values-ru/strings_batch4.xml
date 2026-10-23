@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Нажмите «Добавить» и вставьте ссылку или поделитесь ссылкой с Telos Downloads.</string>
     <string name="dl_empty_filter_title">Здесь пусто</string>
     <string name="dl_empty_filter_text">Нет загрузок, подходящих под этот фильтр.</string>
-    <string name="dl_add">Добавить</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Добавить загрузку</string>
     <string name="dl_links_hint">Ссылки, по одной в строке</string>
     <string name="dl_invalid_links">Нет подходящей ссылки. Можно скачивать только ссылки http и https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Удалить %1$s? Уже загруженная часть будет удалена.</string>
     <string name="dl_delete_with_file">Удалить вместе с файлом</string>
     <string name="dl_delete_keep_file">Удалить, оставить файл</string>
-    <string name="dl_cancel">Отмена</string>
-    <string name="dl_save">Сохранить</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Нет приложения для открытия этого файла</string>
     <string name="dl_pause_all">Приостановить все</string>
     <string name="dl_resume_all">Продолжить все</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Распознавать ссылки в буфере обмена</string>
     <string name="dl_p3_detect_clipboard_sum">При открытии «Загрузок» предлагать скопированную ссылку, адрес сайта с видео или magnet-ссылку. Android может сообщить, что приложение прочитало буфер обмена.</string>
     <string name="dl_p3_clip_found">В буфере обмена: %1$s</string>
-    <string name="dl_p3_clip_add">Добавить</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Расписание</string>
     <string name="dl_p3_schedule_enable">Загружать только в определённое время</string>
     <string name="dl_p3_schedule_sum">Вне временного окна загрузки ждут в очереди.</string>

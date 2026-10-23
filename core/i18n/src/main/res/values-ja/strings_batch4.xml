@@ -12,7 +12,7 @@
     <string name="dl_empty_text">「追加」をタップしてリンクを貼り付けるか、リンクを Telos ダウンロードに共有してください。</string>
     <string name="dl_empty_filter_title">該当なし</string>
     <string name="dl_empty_filter_text">このフィルターに一致するダウンロードはありません。</string>
-    <string name="dl_add">追加</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">ダウンロードを追加</string>
     <string name="dl_links_hint">リンク（1行に1つ）</string>
     <string name="dl_invalid_links">有効なリンクがありません。ダウンロードできるのは http と https のリンクのみです。</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">%1$s を削除しますか？ダウンロード済みの部分は削除されます。</string>
     <string name="dl_delete_with_file">削除してファイルも消去</string>
     <string name="dl_delete_keep_file">削除（ファイルは残す）</string>
-    <string name="dl_cancel">キャンセル</string>
-    <string name="dl_save">保存</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">このファイルを開けるアプリがありません</string>
     <string name="dl_pause_all">すべて一時停止</string>
     <string name="dl_resume_all">すべて再開</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">クリップボードのリンクを検出</string>
     <string name="dl_p3_detect_clipboard_sum">ダウンロードを開いたときに、コピーしたリンク、動画サイトのアドレス、マグネットリンクを提案します。Android から、アプリがクリップボードを読み取ったと通知される場合があります。</string>
     <string name="dl_p3_clip_found">クリップボード内：%1$s</string>
-    <string name="dl_p3_clip_add">追加</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">スケジュール</string>
     <string name="dl_p3_schedule_enable">特定の時間帯のみダウンロード</string>
     <string name="dl_p3_schedule_sum">時間帯以外は、ダウンロードはキューで待機します。</string>

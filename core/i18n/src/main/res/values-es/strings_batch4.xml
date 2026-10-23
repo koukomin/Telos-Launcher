@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Toca Añadir y pega un enlace, o comparte un enlace con Telos Descargas.</string>
     <string name="dl_empty_filter_title">Nada aquí</string>
     <string name="dl_empty_filter_text">Ninguna descarga coincide con este filtro.</string>
-    <string name="dl_add">Añadir</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Añadir descarga</string>
     <string name="dl_links_hint">Enlaces, uno por línea</string>
     <string name="dl_invalid_links">Ningún enlace válido. Solo se pueden descargar enlaces http y https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">¿Quitar %1$s? La parte descargada se eliminará.</string>
     <string name="dl_delete_with_file">Quitar y eliminar archivo</string>
     <string name="dl_delete_keep_file">Quitar, conservar archivo</string>
-    <string name="dl_cancel">Cancelar</string>
-    <string name="dl_save">Guardar</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Ninguna aplicación puede abrir este archivo</string>
     <string name="dl_pause_all">Pausar todas</string>
     <string name="dl_resume_all">Reanudar todas</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Detectar enlaces en el portapapeles</string>
     <string name="dl_p3_detect_clipboard_sum">Al abrir Descargas, ofrece un enlace, una dirección de sitio de vídeo o un enlace magnet que hayas copiado. Android puede avisarte de que la app leyó el portapapeles.</string>
     <string name="dl_p3_clip_found">En el portapapeles: %1$s</string>
-    <string name="dl_p3_clip_add">Añadir</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Horario</string>
     <string name="dl_p3_schedule_enable">Descargar solo en ciertas horas</string>
     <string name="dl_p3_schedule_sum">Fuera de la franja horaria, las descargas esperan en la cola.</string>

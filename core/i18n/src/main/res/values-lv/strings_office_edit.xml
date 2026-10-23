@@ -46,7 +46,7 @@
     <string name="od_cell_value">Vērtība</string>
     <string name="od_cell_hint">Teksts, skaitlis vai formula, kas sākas ar =</string>
     <string name="od_formula_replaced">Šajā šūnā ir formula (%1$s). Jauna vērtība to aizstās.</string>
-    <string name="od_ok">Labi</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">%1$d. lapa</string>
     <string name="od_slide_of">%1$d. slaids no %2$d</string>
     <string name="od_delete_slide">Dzēst slaidu</string>

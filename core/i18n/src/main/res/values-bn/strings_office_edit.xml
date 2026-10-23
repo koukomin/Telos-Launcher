@@ -46,7 +46,7 @@
     <string name="od_cell_value">মান</string>
     <string name="od_cell_hint">লেখা, সংখ্যা বা = দিয়ে শুরু হওয়া সূত্র</string>
     <string name="od_formula_replaced">এই ঘরে একটি সূত্র আছে (%1$s)। নতুন মান সেটির জায়গা নেবে।</string>
-    <string name="od_ok">ঠিক আছে</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">শিট %1$d</string>
     <string name="od_slide_of">স্লাইড %1$d / %2$d</string>
     <string name="od_delete_slide">স্লাইড মুছুন</string>

@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Cancella</string>
     <string name="au2_netsec_reset_message">Le regole del firewall delle %1$d app attualmente mostrate verranno ripristinate ai valori predefiniti.</string>
     <string name="au2_netsec_confirm_reset">Ripristina</string>
-    <string name="au2_netsec_cancel">Annulla</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Registra</string>
     <string name="au2_radio2_stop_recording">Interrompi registrazione</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Aitheantas cumraíochta</string>
     <string name="net_dns_nextdns_device">Ainm feiste (roghnach)</string>
     <string name="net_dns_nextdns_bad_id">Is éard atá in aitheantas cumraíochta ná 4 go 12 litir agus digit.</string>
-    <string name="net_dns_nextdns_add">Cuir leis</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Soláthraí</string>
     <string name="net_dns_detail_protocol">Prótacal</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Úsáid an freastalaí seo</string>
     <string name="net_dns_action_test">Tástáil</string>
     <string name="net_dns_action_copy">Cóipeáil mar fhreastalaí saincheaptha</string>
-    <string name="net_dns_action_edit">Cuir in eagar</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Bain</string>
-    <string name="net_dns_save">Sábháil</string>
-    <string name="net_dns_cancel">Cealaigh</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Ag tástáil…</string>
     <string name="net_dns_test_ok">Freagra laistigh de %1$d ms</string>
     <string name="net_dns_test_fail">Theip ar an tástáil: %1$s</string>

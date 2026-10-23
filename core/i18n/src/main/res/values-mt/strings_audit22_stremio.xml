@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Kompli ara</string>
     <string name="au22_stremio_no_results">Ma nstab xejn</string>
     <string name="au22_stremio_library_empty">Il-librerija tiegħek hija vojta. Iftaħ titlu u ssejvjah hawn.</string>
-    <string name="au22_stremio_save">Issejvja</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Issejvjat</string>
     <string name="au22_stremio_season">Staġun %d</string>
     <string name="au22_stremio_streams">Agħżel stream</string>

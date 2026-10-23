@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Nog geen bestanden toegevoegd.</string>
     <string name="pdft_add_pdf">PDF toevoegen</string>
     <string name="pdft_add_images">Afbeeldingen toevoegen</string>
-    <string name="pdft_add">Toevoegen</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Ordenen</string>
     <string name="pdft_group_optimize">Optimaliseren</string>
     <string name="pdft_group_security">Beveiliging</string>
-    <string name="pdft_group_edit">Bewerken</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Converteren</string>
     <string name="pdft_group_view">Bekijken en vergelijken</string>
     <string name="pdft_tool_merge">Samenvoegen</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Terug</string>
     <string name="pdft_back_to_tools">Terug naar de hulpmiddelen</string>
     <string name="pdft_close">Sluiten</string>
-    <string name="pdft_cancel">Annuleren</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Toepassen</string>
     <string name="pdft_change">Wijzigen</string>
     <string name="pdft_remove">Verwijderen</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Klaar</string>
     <string name="pdft_compress_result">Van %1$s naar %2$s (%3$d%% kleiner)</string>
     <string name="pdft_compress_no_gain">Het resultaat (%2$s) is niet kleiner dan het origineel (%1$s). Het bestand bestaat vooral uit tekst en vectorafbeeldingen.</string>
-    <string name="pdft_save">Opslaan</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Opslaan in %1$s</string>
     <string name="pdft_save_choose_folder">Kies een map…</string>
     <string name="pdft_save_as">Opslaan als…</string>

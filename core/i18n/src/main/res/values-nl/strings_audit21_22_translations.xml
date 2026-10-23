@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Kan het archief niet openen</string>
     <string name="au21_arch_pw_title">Wachtwoord vereist</string>
     <string name="au21_arch_pw_info">%1$s is met een wachtwoord beveiligd. Voer het wachtwoord in om het te openen of uit te pakken. Het wachtwoord wordt alleen in het geheugen bewaard zolang u in het archief bent en wordt nooit opgeslagen.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Controleren…</string>
     <string name="au21_arch_show">Tonen</string>
     <string name="au21_arch_hide">Verbergen</string>

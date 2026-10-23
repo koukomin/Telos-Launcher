@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Remover peer</string>
     <string name="nwg_mobile_only">Solmente con datos mobile</string>
     <string name="nwg_lockdown">Blocar le applicationes durante que le tunnel es inactive</string>
-    <string name="nwg_save">Salvar</string>
-    <string name="nwg_cancel">Cancellar</string>
-    <string name="nwg_delete">Deler</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Condivider configuration</string>
     <string name="nwg_share_warning">Le configuration exportate contine le clave private.</string>
     <string name="nwg_import">Importar</string>

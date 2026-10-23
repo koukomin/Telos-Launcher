@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Dodirnite Dodaj i zalijepite poveznicu ili podijelite poveznicu s aplikacijom Telos Downloads.</string>
     <string name="dl_empty_filter_title">Ovdje nema ničega</string>
     <string name="dl_empty_filter_text">Nijedno preuzimanje ne odgovara ovom filtru.</string>
-    <string name="dl_add">Dodaj</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Dodaj preuzimanje</string>
     <string name="dl_links_hint">Poveznice, jedna po retku</string>
     <string name="dl_invalid_links">Nema valjane poveznice. Mogu se preuzimati samo poveznice http i https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Ukloniti %1$s? Preuzeti dio bit će izbrisan.</string>
     <string name="dl_delete_with_file">Ukloni i izbriši datoteku</string>
     <string name="dl_delete_keep_file">Ukloni, zadrži datoteku</string>
-    <string name="dl_cancel">Odustani</string>
-    <string name="dl_save">Spremi</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Nijedna aplikacija ne može otvoriti ovu datoteku</string>
     <string name="dl_pause_all">Pauziraj sve</string>
     <string name="dl_resume_all">Nastavi sve</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Prepoznaj poveznice u međuspremniku</string>
     <string name="dl_p3_detect_clipboard_sum">Pri otvaranju Preuzimanja nudi kopiranu poveznicu, adresu web-mjesta s videom ili magnet poveznicu. Android vas može obavijestiti da je aplikacija čitala međuspremnik.</string>
     <string name="dl_p3_clip_found">U međuspremniku: %1$s</string>
-    <string name="dl_p3_clip_add">Dodaj</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Raspored</string>
     <string name="dl_p3_schedule_enable">Preuzimaj samo u određeno vrijeme</string>
     <string name="dl_p3_schedule_sum">Izvan vremenskog okvira preuzimanja čekaju u redu.</string>

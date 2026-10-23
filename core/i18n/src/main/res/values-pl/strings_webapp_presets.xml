@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Komunikatory</string>
     <string name="web_app_preset_category_video">Wideo i muzyka</string>
     <string name="web_app_preset_category_work">Produktywność i praca</string>
-    <string name="web_app_preset_add">Dodaj</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Dodaj: %1$s</string>
     <string name="web_app_preset_dialog_summary">Wybierz aplikacje internetowe do dodania. Zostaną zapisane tak samo jak aplikacje utworzone przez Ciebie.</string>
     <string name="web_app_preset_exists">Już w Twoich aplikacjach internetowych, zostanie użyta ponownie</string>

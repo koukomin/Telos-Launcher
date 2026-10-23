@@ -46,7 +46,7 @@
     <string name="od_cell_value">Balioa</string>
     <string name="od_cell_hint">Testua, zenbakia edo = ikurrarekin hasten den formula</string>
     <string name="od_formula_replaced">Gelaxka honek formula bat dauka (%1$s). Balio berri batek ordezkatuko du.</string>
-    <string name="od_ok">Ados</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">%1$d. orria</string>
     <string name="od_slide_of">%1$d. diapositiba, %2$d guztira</string>
     <string name="od_delete_slide">Ezabatu diapositiba</string>

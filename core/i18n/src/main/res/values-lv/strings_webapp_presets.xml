@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Ziņapmaiņa</string>
     <string name="web_app_preset_category_video">Video un mūzika</string>
     <string name="web_app_preset_category_work">Produktivitāte un darbs</string>
-    <string name="web_app_preset_add">Pievienot</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Pievienot: %1$s</string>
     <string name="web_app_preset_dialog_summary">Izvēlieties tīmekļa lietotnes, ko pievienot. Tās tiek saglabātas tāpat kā pašu izveidotās tīmekļa lietotnes.</string>
     <string name="web_app_preset_exists">Jau ir jūsu tīmekļa lietotnēs, tiks izmantota atkārtoti</string>

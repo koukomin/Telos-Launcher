@@ -20,9 +20,9 @@
     <string name="cal_no_events">Κανένα γεγονός</string>
     <string name="cal_no_title">(χωρίς τίτλο)</string>
     <string name="cal_all_day">Ολοήμερο</string>
-    <string name="cal_cancel">Άκυρο</string>
-    <string name="cal_delete">Διαγραφή</string>
-    <string name="cal_save">Αποθήκευση</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Τίτλος</string>
     <string name="cal_location">Τοποθεσία</string>
     <string name="cal_description">Περιγραφή</string>
@@ -39,7 +39,7 @@
     <string name="cal_series_note">Οι αλλαγές και η διαγραφή ισχύουν για όλη τη σειρά.</string>
     <string name="cal_on_phone">Σε αυτό το κινητό</string>
     <string name="cal_new_local">Νέο τοπικό ημερολόγιο</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Τα ημερολόγια Google, CalDAV (DAVx5) και Exchange συγχρονίζονται από το σύστημα μέσω του λογαριασμού τους. Τα τοπικά ημερολόγια μένουν στο κινητό και μπαίνουν στο backup του Telos.</string>
     <string name="cal_view_agenda">Επόμενες 30 μέρες</string>
     <string name="cal_view_month">Μηνιαία προβολή</string>

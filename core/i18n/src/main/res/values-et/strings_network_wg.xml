@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Eemalda peer</string>
     <string name="nwg_mobile_only">Ainult mobiilandmesidega</string>
     <string name="nwg_lockdown">Blokeeri rakendused, kuni tunnel ei tööta</string>
-    <string name="nwg_save">Salvesta</string>
-    <string name="nwg_cancel">Tühista</string>
-    <string name="nwg_delete">Kustuta</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Jaga konfiguratsiooni</string>
     <string name="nwg_share_warning">Eksporditud konfiguratsioon sisaldab privaatvõtit.</string>
     <string name="nwg_import">Impordi</string>

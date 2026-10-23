@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Ankoraŭ neniu dosiero estas aldonita.</string>
     <string name="pdft_add_pdf">Aldoni PDF-on</string>
     <string name="pdft_add_images">Aldoni bildojn</string>
-    <string name="pdft_add">Aldoni</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Organizi</string>
     <string name="pdft_group_optimize">Optimumigi</string>
     <string name="pdft_group_security">Sekureco</string>
-    <string name="pdft_group_edit">Redakti</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Konverti</string>
     <string name="pdft_group_view">Rigardi kaj kompari</string>
     <string name="pdft_tool_merge">Kunfandi</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Reen</string>
     <string name="pdft_back_to_tools">Reen al la iloj</string>
     <string name="pdft_close">Fermi</string>
-    <string name="pdft_cancel">Nuligi</string>
-    <string name="pdft_ok">Bone</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Apliki</string>
     <string name="pdft_change">Ŝanĝi</string>
     <string name="pdft_remove">Forigi</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Preta</string>
     <string name="pdft_compress_result">De %1$s al %2$s (%3$d%% pli malgranda)</string>
     <string name="pdft_compress_no_gain">La rezulto (%2$s) ne estas pli malgranda ol la originalo (%1$s). La dosiero enhavas ĉefe tekston kaj vektorajn grafikaĵojn.</string>
-    <string name="pdft_save">Konservi</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Konservi en %1$s</string>
     <string name="pdft_save_choose_folder">Elekti dosierujon…</string>
     <string name="pdft_save_as">Konservi kiel…</string>

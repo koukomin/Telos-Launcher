@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Продовжити перегляд</string>
     <string name="au22_stremio_no_results">Нічого не знайдено</string>
     <string name="au22_stremio_library_empty">Ваша бібліотека порожня. Відкрийте назву й збережіть її тут.</string>
-    <string name="au22_stremio_save">Зберегти</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Збережено</string>
     <string name="au22_stremio_season">Сезон %d</string>
     <string name="au22_stremio_streams">Виберіть потік</string>

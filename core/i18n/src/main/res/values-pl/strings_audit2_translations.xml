@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Wyczyść</string>
     <string name="au2_netsec_reset_message">Reguły zapory dla %1$d aktualnie wyświetlanych aplikacji zostaną przywrócone do domyślnych.</string>
     <string name="au2_netsec_confirm_reset">Resetuj</string>
-    <string name="au2_netsec_cancel">Anuluj</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Nagraj</string>
     <string name="au2_radio2_stop_recording">Zatrzymaj nagrywanie</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">ピアを削除</string>
     <string name="nwg_mobile_only">モバイルデータ通信時のみ</string>
     <string name="nwg_lockdown">トンネルが切断されている間はアプリをブロック</string>
-    <string name="nwg_save">保存</string>
-    <string name="nwg_cancel">キャンセル</string>
-    <string name="nwg_delete">削除</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">設定を共有</string>
     <string name="nwg_share_warning">エクスポートした設定には秘密鍵が含まれます。</string>
     <string name="nwg_import">インポート</string>

@@ -46,7 +46,7 @@
     <string name="od_cell_value">Reikšmė</string>
     <string name="od_cell_hint">Tekstas, skaičius arba formulė, prasidedanti =</string>
     <string name="od_formula_replaced">Šiame langelyje yra formulė (%1$s). Nauja reikšmė ją pakeis.</string>
-    <string name="od_ok">Gerai</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">%1$d lapas</string>
     <string name="od_slide_of">Skaidrė %1$d iš %2$d</string>
     <string name="od_delete_slide">Ištrinti skaidrę</string>

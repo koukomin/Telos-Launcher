@@ -202,9 +202,9 @@
     <string name="cal_no_events">予定なし</string>
     <string name="cal_no_title">(タイトルなし)</string>
     <string name="cal_all_day">終日</string>
-    <string name="cal_cancel">キャンセル</string>
-    <string name="cal_delete">削除</string>
-    <string name="cal_save">保存</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">タイトル</string>
     <string name="cal_location">場所</string>
     <string name="cal_description">説明</string>
@@ -221,7 +221,7 @@
     <string name="cal_series_note">変更と削除は、シリーズ全体に適用されます。</string>
     <string name="cal_on_phone">このスマートフォン上</string>
     <string name="cal_new_local">新しいローカルカレンダー</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google、CalDAV (DAVx5)、Exchangeのカレンダーは、アカウントを通じてシステムが同期します。ローカルカレンダーはスマートフォンに保存され、Telosのバックアップに含まれます。</string>
     <string name="cal_view_agenda">今後30日間</string>
     <string name="cal_view_month">月表示</string>
@@ -244,8 +244,8 @@
     <string name="notes_title_hint">タイトル</string>
     <string name="notes_body_hint">ノート</string>
     <string name="notes_labels_hint">仕事、自宅</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">キャンセル</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">%d件のノートをインポートしました</string>
     <string name="notes_synced">同期しました: %1$d件送信、%2$d件受信</string>
     <string name="notes_sync_failed">同期に失敗しました: %s</string>
@@ -303,7 +303,7 @@
     <string name="screenshot_cannot_open">画像を開けませんでした</string>
     <string name="screenshot_notification_channel">スクリーンショット</string>
     <string name="screenshot_notification_text">タップして編集</string>
-    <string name="screenshot_edit">編集</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">スクリーンショット</string>
     <string name="screenshot_none">スクリーンショットはまだありません</string>
     <string name="screenshot_undo">元に戻す</string>
@@ -337,7 +337,7 @@
     <string name="floating_launcher_section_widgets">ウィジェット</string>
     <string name="floating_launcher_section_apps">アプリ</string>
     <string name="floating_launcher_done">完了</string>
-    <string name="floating_launcher_add">追加</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">フローティングバー</string>
     <string name="preference_category_sidebar_style">サイドバーのスタイル</string>
     <string name="preference_floating_launcher_side">画面の側</string>
@@ -367,10 +367,10 @@
     <string name="voice_start_failed">録音を開始できませんでした</string>
     <string name="voice_rename">名前を変更</string>
     <string name="voice_rename_failed">名前が空か、すでに使用されています</string>
-    <string name="voice_save">保存</string>
-    <string name="voice_cancel">キャンセル</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">この録音を削除しますか?</string>
-    <string name="voice_delete">削除</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">共有</string>
     <string name="voice_share_failed">録音を共有できませんでした</string>
     <string name="voice_play">再生</string>
@@ -715,7 +715,7 @@
     <string name="preference_floating_launcher_tools">クイックツール</string>
     <string name="preference_floating_launcher_tools_summary">パネルにスクリーンショット、電卓、クイック設定のボタンを表示します。スクリーンショットのボタンにはユーザー補助サービスが必要です</string>
     <string name="floating_launcher_title">スマート機能</string>
-    <string name="floating_launcher_edit">編集</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">最近のファイル</string>
     <string name="floating_launcher_recent_files_empty">最近のファイルはありません。この機能にはTelosのファイルへのアクセスが必要です。Telosファイルを開いたときに許可できます。</string>
     <string name="floating_launcher_recent_files_no_app">このファイルを開けるアプリがありません</string>
@@ -759,10 +759,10 @@
     <string name="floating_launcher_folder_name">フォルダ名</string>
     <string name="floating_launcher_folder_select_apps">グループ化するアプリを2つ以上選択してください</string>
     <string name="floating_launcher_create">作成</string>
-    <string name="floating_launcher_cancel">キャンセル</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">フォルダ名を変更</string>
     <string name="floating_launcher_delete_folder">フォルダを削除</string>
-    <string name="floating_launcher_save">保存</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">フォルダを開く</string>
     <string name="floating_launcher_all_apps">すべてのアプリ</string>
     <string name="floating_launcher_file_dock">ファイルドック</string>
@@ -1594,7 +1594,7 @@
     <string name="comms_unblock_number">番号のブロックを解除</string>
     <string name="comms_no_previous_calls">過去の通話はありません</string>
     <string name="comms_clear_history">通話履歴を消去しますか?</string>
-    <string name="comms_clear_history_confirm">削除</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">連携</string>
     <string name="filter_incoming">着信</string>
     <string name="filter_outgoing">発信</string>
@@ -1615,7 +1615,7 @@
     <string name="comms_answer">応答</string>
     <string name="comms_reject">拒否</string>
     <string name="comms_hangup">終了</string>
-    <string name="comms_add_call">追加</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">統合</string>
     <string name="comms_swap">切り替え</string>
     <string name="backup_choose_parts">バックアップする項目を選択してください</string>

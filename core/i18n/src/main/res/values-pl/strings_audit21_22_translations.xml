@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Nie można otworzyć archiwum</string>
     <string name="au21_arch_pw_title">Wymagane hasło</string>
     <string name="au21_arch_pw_info">%1$s jest chronione hasłem. Wprowadź hasło, aby je otworzyć lub rozpakować. Hasło jest przechowywane w pamięci tylko podczas przeglądania archiwum i nigdy nie jest zapisywane.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Sprawdzanie…</string>
     <string name="au21_arch_show">Pokaż</string>
     <string name="au21_arch_hide">Ukryj</string>

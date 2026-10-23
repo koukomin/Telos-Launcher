@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Inga filer har lagts till än.</string>
     <string name="pdft_add_pdf">Lägg till PDF</string>
     <string name="pdft_add_images">Lägg till bilder</string>
-    <string name="pdft_add">Lägg till</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Organisera</string>
     <string name="pdft_group_optimize">Optimera</string>
     <string name="pdft_group_security">Säkerhet</string>
-    <string name="pdft_group_edit">Redigera</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Konvertera</string>
     <string name="pdft_group_view">Visa och jämför</string>
     <string name="pdft_tool_merge">Slå ihop</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Tillbaka</string>
     <string name="pdft_back_to_tools">Tillbaka till verktygen</string>
     <string name="pdft_close">Stäng</string>
-    <string name="pdft_cancel">Avbryt</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Använd</string>
     <string name="pdft_change">Ändra</string>
     <string name="pdft_remove">Ta bort</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Klart</string>
     <string name="pdft_compress_result">Från %1$s till %2$s (%3$d%% mindre)</string>
     <string name="pdft_compress_no_gain">Resultatet (%2$s) är inte mindre än originalet (%1$s). Filen består mest av text och vektorgrafik.</string>
-    <string name="pdft_save">Spara</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Spara i %1$s</string>
     <string name="pdft_save_choose_folder">Välj en mapp…</string>
     <string name="pdft_save_as">Spara som…</string>

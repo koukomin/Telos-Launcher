@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">無法開啟壓縮檔</string>
     <string name="au21_arch_pw_title">需要密碼</string>
     <string name="au21_arch_pw_info">%1$s 受密碼保護。請輸入密碼以開啟或解壓縮。密碼僅在您位於壓縮檔內時保留在記憶體中，絕不會被儲存。</string>
-    <string name="au21_arch_ok">確定</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">正在檢查…</string>
     <string name="au21_arch_show">顯示</string>
     <string name="au21_arch_hide">隱藏</string>

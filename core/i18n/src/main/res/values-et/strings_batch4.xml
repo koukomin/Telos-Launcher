@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Puuduta nuppu Lisa ja kleebi link või jaga link rakendusele Telos Downloads.</string>
     <string name="dl_empty_filter_title">Siin pole midagi</string>
     <string name="dl_empty_filter_text">Ükski allalaadimine ei vasta sellele filtrile.</string>
-    <string name="dl_add">Lisa</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Lisa allalaadimine</string>
     <string name="dl_links_hint">Lingid, üks rea kohta</string>
     <string name="dl_invalid_links">Kehtivat linki pole. Allalaadida saab ainult http- ja https-linke.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Kas eemaldada %1$s? Allalaaditud osa kustutatakse.</string>
     <string name="dl_delete_with_file">Eemalda ja kustuta fail</string>
     <string name="dl_delete_keep_file">Eemalda, fail jäta alles</string>
-    <string name="dl_cancel">Tühista</string>
-    <string name="dl_save">Salvesta</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Ükski rakendus ei saa seda faili avada</string>
     <string name="dl_pause_all">Peata kõik</string>
     <string name="dl_resume_all">Jätka kõiki</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Tuvasta lingid lõikelaualt</string>
     <string name="dl_p3_detect_clipboard_sum">Allalaadimiste avamisel pakutakse kopeeritud linki, videosaidi aadressi või magnetlinki. Android võib teavitada, et rakendus luges lõikelauda.</string>
     <string name="dl_p3_clip_found">Lõikelaual: %1$s</string>
-    <string name="dl_p3_clip_add">Lisa</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Ajakava</string>
     <string name="dl_p3_schedule_enable">Allalaadimine ainult teatud ajal</string>
     <string name="dl_p3_schedule_sum">Väljaspool ajaakent allalaadimised ootavad järjekorras.</string>

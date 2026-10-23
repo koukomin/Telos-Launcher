@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Ryd</string>
     <string name="au2_netsec_reset_message">Firewallreglerne for de %1$d apps, der vises, nulstilles til standard.</string>
     <string name="au2_netsec_confirm_reset">Nulstil</string>
-    <string name="au2_netsec_cancel">Annuller</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Optag</string>
     <string name="au2_radio2_stop_recording">Stop optagelse</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

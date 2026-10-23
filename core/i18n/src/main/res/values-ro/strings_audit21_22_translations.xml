@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Arhiva nu a putut fi deschisă</string>
     <string name="au21_arch_pw_title">Parolă necesară</string>
     <string name="au21_arch_pw_info">%1$s este protejat prin parolă. Introduceți parola pentru a-l deschide sau dezarhiva. Parola este păstrată în memorie doar cât timp vă aflați în arhivă și nu este salvată niciodată.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Se verifică…</string>
     <string name="au21_arch_show">Afișează</string>
     <string name="au21_arch_hide">Ascunde</string>

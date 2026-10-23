@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">继续观看</string>
     <string name="au22_stremio_no_results">未找到任何内容</string>
     <string name="au22_stremio_library_empty">您的媒体库为空。打开某个影片并将其保存到这里。</string>
-    <string name="au22_stremio_save">保存</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">已保存</string>
     <string name="au22_stremio_season">第 %d 季</string>
     <string name="au22_stremio_streams">选择一个流</string>

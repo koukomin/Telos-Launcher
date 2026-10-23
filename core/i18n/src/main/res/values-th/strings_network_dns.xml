@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">รหัสการกำหนดค่า</string>
     <string name="net_dns_nextdns_device">ชื่ออุปกรณ์ (ไม่บังคับ)</string>
     <string name="net_dns_nextdns_bad_id">รหัสการกำหนดค่าประกอบด้วยตัวอักษรและตัวเลข 4 ถึง 12 ตัว</string>
-    <string name="net_dns_nextdns_add">เพิ่ม</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">ผู้ให้บริการ</string>
     <string name="net_dns_detail_protocol">โปรโตคอล</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">ใช้เซิร์ฟเวอร์นี้</string>
     <string name="net_dns_action_test">ทดสอบ</string>
     <string name="net_dns_action_copy">คัดลอกเป็นเซิร์ฟเวอร์ที่กำหนดเอง</string>
-    <string name="net_dns_action_edit">แก้ไข</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">ลบ</string>
-    <string name="net_dns_save">บันทึก</string>
-    <string name="net_dns_cancel">ยกเลิก</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">กำลังทดสอบ…</string>
     <string name="net_dns_test_ok">ตอบกลับใน %1$d มิลลิวินาที</string>
     <string name="net_dns_test_fail">การทดสอบล้มเหลว: %1$s</string>

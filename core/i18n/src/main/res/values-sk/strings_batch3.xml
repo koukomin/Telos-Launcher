@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Odstrániť zoznam</string>
     <string name="blocklists_custom_name">Názov</string>
     <string name="blocklists_custom_url">Adresa (https)</string>
-    <string name="blocklists_add">Pridať</string>
-    <string name="blocklists_cancel">Zrušiť</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Akceptujú sa iba adresy https</string>
     <string name="blocklists_import_failed">Súbor neobsahuje použiteľné záznamy alebo sa nepodarilo prečítať</string>
     <string name="blocklists_schedule">Automatická aktualizácia</string>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Apstiprināt</string>
-    <string name="au4_confirms_cancel">Atcelt</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Vai izrakstīties no Nextcloud?</string>
     <string name="au4_confirms_nc_message">Jūsu Nextcloud konts tiks noņemts no šī palaidēja. Jūs varat pierakstīties atkārtoti jebkurā laikā.</string>
     <string name="au4_confirms_oc_title">Vai izrakstīties no ownCloud?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Vai bloķēt piekļuvi mobilajiem datiem %1$d lietotnēm?</string>
     <string name="au4_noteslink_link_existing">Saistīt esošu failu</string>
     <string name="au4_noteslink_create_new">Izveidot jaunu failu</string>
-    <string name="au4_noteslink_cancel">Atcelt</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Atkārtotas sastādīšanas mēģinājumi</string>
     <string name="au4_settingsnew1_redial_delay">Aizkave starp mēģinājumiem</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

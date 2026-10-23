@@ -46,7 +46,7 @@
     <string name="od_cell_value">मान</string>
     <string name="od_cell_hint">टेक्स्ट, संख्या या = से शुरू होने वाला सूत्र</string>
     <string name="od_formula_replaced">इस सेल में एक सूत्र है (%1$s)। नया मान उसे बदल देगा।</string>
-    <string name="od_ok">ठीक है</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">शीट %1$d</string>
     <string name="od_slide_of">स्लाइड %1$d / %2$d</string>
     <string name="od_delete_slide">स्लाइड हटाएँ</string>

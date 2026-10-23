@@ -35,7 +35,7 @@
     <string name="disclaimer">Vastuuvapauslauseke</string>
     <string name="disclaimer_currency_converter">Euroopan keskuspankin päivittäin julkaisemat vaihtokurssit. Tiedot toimitetaan sellaisinaan ilman minkäänlaista takuuta. Mitään vastuuta ei oteta näistä tiedoista.\n\n\n\nTiedot päivitetty: %1$s</string>
     <string name="duplicate">Monista</string>
-    <string name="edit">Muokkaa</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="edit_favorites_dialog_empty_section">Vedä kohteita tähän</string>
     <string name="edit_favorites_dialog_new_tag">Luo avainsana…</string>
     <string name="edit_favorites_dialog_pinned_sorted">Kiinnitetty - käsin järjestetty</string>
@@ -134,7 +134,7 @@
     <string name="menu_clear_cache">Tyhjennä välimuisti</string>
     <string name="menu_contacts_open_externally">Avaa kontaktisovelluksessa</string>
     <string name="menu_customize">Mukauta</string>
-    <string name="menu_delete">Poista</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_edit_widgets">Muokkaa pienoisohjelmia</string>
     <string name="menu_favorites_pin">Kiinnitä suosikkeihin</string>
     <string name="menu_favorites_unpin">Poista kiinnitys</string>
@@ -193,7 +193,7 @@
     <string name="note_widget_linked_file_summary">Yhdistetty tiedostoon %1$s</string>
     <string name="notes_widget_action_dismiss">Hylkää</string>
     <string name="notes_widget_action_new">Uusi muistiinpano</string>
-    <string name="notes_widget_action_save">Tallenna</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_dismissed">Muistiinpano hylätty.</string>
     <string name="notes_widget_export_filename">Muistiinpano_%1$s</string>
     <string name="notes_widget_placeholder">Kirjoita muistiinpano…</string>
@@ -457,7 +457,7 @@
     <string name="restore_incompatible_file">Tämä varmuuskopio on luotu sovelluksen %1$s toisella versiolla eikä sitä voida palauttaa tällä versiolla.</string>
     <string name="restore_invalid_file">Valittu tiedosto ei vaikuta olevan varmuuskopio. Oletko varma, että valitsit oikean tiedoston?</string>
     <string name="restore_meta">%3$s loi %1$s laitteella %2$s.</string>
-    <string name="save">Tallenna</string>
+    <string name="save">@string/hc_save</string>
     <string name="search_action_alarm">Aseta hälytys</string>
     <string name="search_action_app">Sovellus</string>
     <string name="search_action_call">Soita</string>

@@ -6,11 +6,11 @@
     <string name="pdft_no_files">עדיין לא נוספו קבצים.</string>
     <string name="pdft_add_pdf">הוספת PDF</string>
     <string name="pdft_add_images">הוספת תמונות</string>
-    <string name="pdft_add">הוספה</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">ארגון</string>
     <string name="pdft_group_optimize">אופטימיזציה</string>
     <string name="pdft_group_security">אבטחה</string>
-    <string name="pdft_group_edit">עריכה</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">המרה</string>
     <string name="pdft_group_view">תצוגה והשוואה</string>
     <string name="pdft_tool_merge">מיזוג</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">חזרה</string>
     <string name="pdft_back_to_tools">חזרה לכלים</string>
     <string name="pdft_close">סגירה</string>
-    <string name="pdft_cancel">ביטול</string>
-    <string name="pdft_ok">אישור</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">החלה</string>
     <string name="pdft_change">שינוי</string>
     <string name="pdft_remove">הסרה</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">בוצע</string>
     <string name="pdft_compress_result">מ-%1$s ל-%2$s (קטן ב-%3$d%%)</string>
     <string name="pdft_compress_no_gain">התוצאה (%2$s) אינה קטנה מהמקור (%1$s). הקובץ מכיל בעיקר טקסט וגרפיקה וקטורית.</string>
-    <string name="pdft_save">שמירה</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">שמירה ב-%1$s</string>
     <string name="pdft_save_choose_folder">בחירת תיקייה…</string>
     <string name="pdft_save_as">שמירה בשם…</string>

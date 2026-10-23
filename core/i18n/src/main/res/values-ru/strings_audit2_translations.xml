@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Очистить</string>
     <string name="au2_netsec_reset_message">Правила брандмауэра для %1$d показанных сейчас приложений будут сброшены до значений по умолчанию.</string>
     <string name="au2_netsec_confirm_reset">Сбросить</string>
-    <string name="au2_netsec_cancel">Отмена</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Запись</string>
     <string name="au2_radio2_stop_recording">Остановить запись</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

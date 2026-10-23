@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Meddelanden</string>
     <string name="web_app_preset_category_video">Video och musik</string>
     <string name="web_app_preset_category_work">Produktivitet och arbete</string>
-    <string name="web_app_preset_add">Lägg till</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Lägg till %1$s</string>
     <string name="web_app_preset_dialog_summary">Välj vilka webbappar som ska läggas till. De sparas som alla webbappar du skapar själv.</string>
     <string name="web_app_preset_exists">Finns redan bland dina webbappar, återanvänds</string>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Потвърждаване</string>
-    <string name="au4_confirms_cancel">Отказ</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Изход от Nextcloud?</string>
     <string name="au4_confirms_nc_message">Вашият акаунт в Nextcloud ще бъде премахнат от този лаунчър. Можете да влезете отново по всяко време.</string>
     <string name="au4_confirms_oc_title">Изход от ownCloud?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Блокиране на достъпа до мобилни данни за %1$d приложения?</string>
     <string name="au4_noteslink_link_existing">Свързване на съществуващ файл</string>
     <string name="au4_noteslink_create_new">Създаване на нов файл</string>
-    <string name="au4_noteslink_cancel">Отказ</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Опити за повторно набиране</string>
     <string name="au4_settingsnew1_redial_delay">Забавяне между опитите</string>
     <string name="au4_settingsnew1_seconds">%1$d сек</string>

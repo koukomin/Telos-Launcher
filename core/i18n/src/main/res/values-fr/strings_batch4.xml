@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Appuyez sur Ajouter et collez un lien, ou partagez un lien avec Telos Téléchargements.</string>
     <string name="dl_empty_filter_title">Rien ici</string>
     <string name="dl_empty_filter_text">Aucun téléchargement ne correspond à ce filtre.</string>
-    <string name="dl_add">Ajouter</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Ajouter un téléchargement</string>
     <string name="dl_links_hint">Liens, un par ligne</string>
     <string name="dl_invalid_links">Aucun lien valide. Seuls les liens http et https peuvent être téléchargés.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Retirer %1$s ? La partie déjà téléchargée sera supprimée.</string>
     <string name="dl_delete_with_file">Retirer et supprimer le fichier</string>
     <string name="dl_delete_keep_file">Retirer, conserver le fichier</string>
-    <string name="dl_cancel">Annuler</string>
-    <string name="dl_save">Enregistrer</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Aucune application ne peut ouvrir ce fichier</string>
     <string name="dl_pause_all">Tout mettre en pause</string>
     <string name="dl_resume_all">Tout reprendre</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Détecter les liens dans le presse-papiers</string>
     <string name="dl_p3_detect_clipboard_sum">À l\'ouverture de Téléchargements, propose un lien, une adresse de site vidéo ou un lien magnet que vous avez copié. Android peut vous indiquer que l\'application a lu le presse-papiers.</string>
     <string name="dl_p3_clip_found">Dans le presse-papiers : %1$s</string>
-    <string name="dl_p3_clip_add">Ajouter</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Planification</string>
     <string name="dl_p3_schedule_enable">Télécharger uniquement à certaines heures</string>
     <string name="dl_p3_schedule_sum">En dehors de la plage horaire, les téléchargements attendent dans la file.</string>

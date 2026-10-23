@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Zatím nebyly přidány žádné soubory.</string>
     <string name="pdft_add_pdf">Přidat PDF</string>
     <string name="pdft_add_images">Přidat obrázky</string>
-    <string name="pdft_add">Přidat</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Uspořádání</string>
     <string name="pdft_group_optimize">Optimalizace</string>
     <string name="pdft_group_security">Zabezpečení</string>
-    <string name="pdft_group_edit">Úpravy</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Převod</string>
     <string name="pdft_group_view">Zobrazení a porovnání</string>
     <string name="pdft_tool_merge">Sloučit</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Zpět</string>
     <string name="pdft_back_to_tools">Zpět k nástrojům</string>
     <string name="pdft_close">Zavřít</string>
-    <string name="pdft_cancel">Zrušit</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Použít</string>
     <string name="pdft_change">Změnit</string>
     <string name="pdft_remove">Odebrat</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Hotovo</string>
     <string name="pdft_compress_result">Z %1$s na %2$s (o %3$d %% méně)</string>
     <string name="pdft_compress_no_gain">Výsledek (%2$s) není menší než originál (%1$s). Soubor obsahuje většinou text a vektorovou grafiku.</string>
-    <string name="pdft_save">Uložit</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Uložit do %1$s</string>
     <string name="pdft_save_choose_folder">Vybrat složku…</string>
     <string name="pdft_save_as">Uložit jako…</string>

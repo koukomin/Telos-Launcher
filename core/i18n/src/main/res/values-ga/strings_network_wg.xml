@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Bain piaras</string>
     <string name="nwg_mobile_only">Ar shonraí soghluaiste amháin</string>
     <string name="nwg_lockdown">Bac na haipeanna cé go bhfuil an tollán síos</string>
-    <string name="nwg_save">Sábháil</string>
-    <string name="nwg_cancel">Cealaigh</string>
-    <string name="nwg_delete">Scrios</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Roinn cumraíocht</string>
     <string name="nwg_share_warning">Tá an eochair phríobháideach sa chumraíocht easpórtáilte.</string>
     <string name="nwg_import">Iompórtáil</string>

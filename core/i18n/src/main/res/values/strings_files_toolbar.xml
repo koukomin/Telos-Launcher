@@ -5,5 +5,5 @@
     <string name="telos_files_toolbar_up">Move %1$s up</string>
     <string name="telos_files_toolbar_down">Move %1$s down</string>
     <string name="telos_files_toolbar_reset">Restore defaults</string>
-    <string name="telos_files_toolbar_save">Save</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
 </resources>

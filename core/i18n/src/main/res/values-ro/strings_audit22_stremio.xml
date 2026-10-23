@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Continuă vizionarea</string>
     <string name="au22_stremio_no_results">Nu s-a găsit nimic</string>
     <string name="au22_stremio_library_empty">Biblioteca ta este goală. Deschide un titlu și salvează-l aici.</string>
-    <string name="au22_stremio_save">Salvează</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Salvat</string>
     <string name="au22_stremio_season">Sezonul %d</string>
     <string name="au22_stremio_streams">Alege un flux</string>

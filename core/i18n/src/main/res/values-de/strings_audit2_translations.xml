@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Löschen</string>
     <string name="au2_netsec_reset_message">Die Firewall-Regeln der %1$d aktuell angezeigten Apps werden auf die Standardwerte zurückgesetzt.</string>
     <string name="au2_netsec_confirm_reset">Zurücksetzen</string>
-    <string name="au2_netsec_cancel">Abbrechen</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Aufnehmen</string>
     <string name="au2_radio2_stop_recording">Aufnahme beenden</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

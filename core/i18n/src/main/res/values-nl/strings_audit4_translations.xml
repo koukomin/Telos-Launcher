@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Bevestigen</string>
-    <string name="au4_confirms_cancel">Annuleren</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Afmelden bij Nextcloud?</string>
     <string name="au4_confirms_nc_message">Je Nextcloud-account wordt van deze launcher verwijderd. Je kunt op elk moment weer inloggen.</string>
     <string name="au4_confirms_oc_title">Afmelden bij ownCloud?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Toegang tot mobiele data blokkeren voor %1$d apps?</string>
     <string name="au4_noteslink_link_existing">Bestaand bestand koppelen</string>
     <string name="au4_noteslink_create_new">Nieuw bestand maken</string>
-    <string name="au4_noteslink_cancel">Annuleren</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Aantal belpogingen</string>
     <string name="au4_settingsnew1_redial_delay">Wachttijd tussen pogingen</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

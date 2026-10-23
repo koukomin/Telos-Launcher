@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Għadu ma ġie miżjud l-ebda fajl.</string>
     <string name="pdft_add_pdf">Żid PDF</string>
     <string name="pdft_add_images">Żid stampi</string>
-    <string name="pdft_add">Żid</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Organizza</string>
     <string name="pdft_group_optimize">Ottimizza</string>
     <string name="pdft_group_security">Sigurtà</string>
-    <string name="pdft_group_edit">Editja</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Ikkonverti</string>
     <string name="pdft_group_view">Ara u qabbel</string>
     <string name="pdft_tool_merge">Għaqqad</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Lura</string>
     <string name="pdft_back_to_tools">Lura għall-għodod</string>
     <string name="pdft_close">Għalaq</string>
-    <string name="pdft_cancel">Ikkanċella</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Applika</string>
     <string name="pdft_change">Biddel</string>
     <string name="pdft_remove">Neħħi</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Lest</string>
     <string name="pdft_compress_result">Minn %1$s għal %2$s (%3$d%% iżgħar)</string>
     <string name="pdft_compress_no_gain">Ir-riżultat (%2$s) mhuwiex iżgħar mill-oriġinal (%1$s). Il-fajl fih l-aktar test u grafika vettorjali.</string>
-    <string name="pdft_save">Issejvja</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Issejvja f\'%1$s</string>
     <string name="pdft_save_choose_folder">Agħżel folder…</string>
     <string name="pdft_save_as">Issejvja bħala…</string>

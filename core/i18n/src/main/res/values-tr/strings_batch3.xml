@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Listeyi kaldır</string>
     <string name="blocklists_custom_name">Ad</string>
     <string name="blocklists_custom_url">Adres (https)</string>
-    <string name="blocklists_add">Ekle</string>
-    <string name="blocklists_cancel">İptal</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Yalnızca https adresleri kabul edilir</string>
     <string name="blocklists_import_failed">Dosyada kullanılabilir girdi yok veya dosya okunamadı</string>
     <string name="blocklists_schedule">Otomatik güncelleme</string>

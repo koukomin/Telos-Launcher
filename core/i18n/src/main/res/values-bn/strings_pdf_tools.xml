@@ -6,11 +6,11 @@
     <string name="pdft_no_files">এখনও কোনো ফাইল যোগ করা হয়নি।</string>
     <string name="pdft_add_pdf">PDF যোগ করুন</string>
     <string name="pdft_add_images">ছবি যোগ করুন</string>
-    <string name="pdft_add">যোগ করুন</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">সাজানো</string>
     <string name="pdft_group_optimize">অপ্টিমাইজ</string>
     <string name="pdft_group_security">নিরাপত্তা</string>
-    <string name="pdft_group_edit">সম্পাদনা</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">রূপান্তর</string>
     <string name="pdft_group_view">দেখা ও তুলনা</string>
     <string name="pdft_tool_merge">একত্র করুন</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">ফিরে যান</string>
     <string name="pdft_back_to_tools">টুলে ফিরে যান</string>
     <string name="pdft_close">বন্ধ করুন</string>
-    <string name="pdft_cancel">বাতিল</string>
-    <string name="pdft_ok">ঠিক আছে</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">প্রয়োগ করুন</string>
     <string name="pdft_change">পরিবর্তন</string>
     <string name="pdft_remove">সরান</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">হয়ে গেছে</string>
     <string name="pdft_compress_result">%1$s থেকে %2$s (%3$d%% ছোট)</string>
     <string name="pdft_compress_no_gain">ফলাফল (%2$s) মূল ফাইলের (%1$s) চেয়ে ছোট নয়। ফাইলটিতে বেশিরভাগই লেখা ও ভেক্টর গ্রাফিক্স আছে।</string>
-    <string name="pdft_save">সংরক্ষণ</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">%1$s-এ সংরক্ষণ করুন</string>
     <string name="pdft_save_choose_folder">ফোল্ডার বেছে নিন…</string>
     <string name="pdft_save_as">এই নামে সংরক্ষণ করুন…</string>

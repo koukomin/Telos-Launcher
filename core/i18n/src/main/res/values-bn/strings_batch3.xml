@@ -74,8 +74,8 @@
     <string name="blocklists_remove">তালিকা সরান</string>
     <string name="blocklists_custom_name">নাম</string>
     <string name="blocklists_custom_url">ঠিকানা (https)</string>
-    <string name="blocklists_add">যোগ করুন</string>
-    <string name="blocklists_cancel">বাতিল</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">শুধু https ঠিকানা গ্রহণ করা হয়</string>
     <string name="blocklists_import_failed">ফাইলে ব্যবহারযোগ্য কোনো এন্ট্রি নেই বা ফাইলটি পড়া যায়নি</string>
     <string name="blocklists_schedule">স্বয়ংক্রিয় আপডেট</string>

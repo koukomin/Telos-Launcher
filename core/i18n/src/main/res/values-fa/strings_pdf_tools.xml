@@ -6,11 +6,11 @@
     <string name="pdft_no_files">هنوز فایلی اضافه نشده است.</string>
     <string name="pdft_add_pdf">افزودن PDF</string>
     <string name="pdft_add_images">افزودن تصویر</string>
-    <string name="pdft_add">افزودن</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">سازماندهی</string>
     <string name="pdft_group_optimize">بهینه‌سازی</string>
     <string name="pdft_group_security">امنیت</string>
-    <string name="pdft_group_edit">ویرایش</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">تبدیل</string>
     <string name="pdft_group_view">نمایش و مقایسه</string>
     <string name="pdft_tool_merge">ادغام</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">بازگشت</string>
     <string name="pdft_back_to_tools">بازگشت به ابزارها</string>
     <string name="pdft_close">بستن</string>
-    <string name="pdft_cancel">لغو</string>
-    <string name="pdft_ok">تأیید</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">اعمال</string>
     <string name="pdft_change">تغییر</string>
     <string name="pdft_remove">حذف</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">انجام شد</string>
     <string name="pdft_compress_result">از %1$s به %2$s (%3$d%% کوچک‌تر)</string>
     <string name="pdft_compress_no_gain">نتیجه (%2$s) از فایل اصلی (%1$s) کوچک‌تر نیست. این فایل بیشتر شامل متن و گرافیک برداری است.</string>
-    <string name="pdft_save">ذخیره</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">ذخیره در %1$s</string>
     <string name="pdft_save_choose_folder">انتخاب پوشه…</string>
     <string name="pdft_save_as">ذخیره به‌عنوان…</string>

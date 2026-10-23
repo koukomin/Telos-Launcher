@@ -12,7 +12,7 @@
     <string name="dl_empty_text">點選「新增」並貼上連結，或將連結分享到 Telos 下載。</string>
     <string name="dl_empty_filter_title">這裡沒有內容</string>
     <string name="dl_empty_filter_text">沒有符合此篩選條件的下載項目。</string>
-    <string name="dl_add">新增</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">新增下載</string>
     <string name="dl_links_hint">連結，每行一個</string>
     <string name="dl_invalid_links">沒有有效的連結。只能下載 http 和 https 連結。</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">要移除 %1$s 嗎？已下載的部分將會刪除。</string>
     <string name="dl_delete_with_file">移除並刪除檔案</string>
     <string name="dl_delete_keep_file">移除，保留檔案</string>
-    <string name="dl_cancel">取消</string>
-    <string name="dl_save">儲存</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">沒有可以開啟此檔案的應用程式</string>
     <string name="dl_pause_all">全部暫停</string>
     <string name="dl_resume_all">全部繼續</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">偵測剪貼簿中的連結</string>
     <string name="dl_p3_detect_clipboard_sum">開啟「下載」時，提示你複製的連結、影片網站網址或磁力連結。Android 可能會提示該應用程式讀取了剪貼簿。</string>
     <string name="dl_p3_clip_found">剪貼簿中：%1$s</string>
-    <string name="dl_p3_clip_add">新增</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">排程</string>
     <string name="dl_p3_schedule_enable">僅在特定時間下載</string>
     <string name="dl_p3_schedule_sum">在時段之外，下載項目會在佇列中等待。</string>

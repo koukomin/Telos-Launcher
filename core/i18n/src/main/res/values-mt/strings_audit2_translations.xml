@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Neħħi</string>
     <string name="au2_netsec_reset_message">Ir-regoli tal-firewall tal-%1$d apps murija bħalissa se jiġu rrisettjati għall-valuri awtomatiċi.</string>
     <string name="au2_netsec_confirm_reset">Irrisettja</string>
-    <string name="au2_netsec_cancel">Ikkanċella</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Irrekordja</string>
     <string name="au2_radio2_stop_recording">Waqqaf ir-reġistrazzjoni</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

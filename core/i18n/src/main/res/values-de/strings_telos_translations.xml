@@ -201,7 +201,7 @@
     <string name="preference_floating_launcher_tools">Schnellwerkzeuge</string>
     <string name="preference_floating_launcher_tools_summary">Schaltflächen für Screenshot, Rechner und Schnelleinstellungen im Panel anzeigen. Die Screenshot-Schaltfläche benötigt den Bedienungshilfendienst</string>
     <string name="floating_launcher_title">Smarte Funktionen</string>
-    <string name="floating_launcher_edit">Bearbeiten</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Zuletzt verwendete Dateien</string>
     <string name="floating_launcher_recent_files_empty">Keine zuletzt verwendeten Dateien. Telos benötigt dafür Zugriff auf Dateien; du kannst ihn erlauben, wenn du Telos Files öffnest.</string>
     <string name="floating_launcher_recent_files_no_app">Keine App kann diese Datei öffnen</string>
@@ -810,7 +810,7 @@
     <string name="comms_unblock_number">Nummer entblockieren</string>
     <string name="comms_no_previous_calls">Keine früheren Anrufe</string>
     <string name="comms_clear_history">Anrufverlauf löschen?</string>
-    <string name="comms_clear_history_confirm">Löschen</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Integrationen</string>
     <string name="filter_incoming">Eingehend</string>
     <string name="filter_outgoing">Ausgehend</string>
@@ -831,7 +831,7 @@
     <string name="comms_answer">Annehmen</string>
     <string name="comms_reject">Ablehnen</string>
     <string name="comms_hangup">Auflegen</string>
-    <string name="comms_add_call">Hinzufügen</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Zusammenführen</string>
     <string name="comms_swap">Wechseln</string>
     <string name="backup_choose_parts">Was möchtest du sichern?</string>
@@ -918,9 +918,9 @@
     <string name="cal_no_events">Keine Termine</string>
     <string name="cal_no_title">(kein Titel)</string>
     <string name="cal_all_day">Ganztägig</string>
-    <string name="cal_cancel">Abbrechen</string>
-    <string name="cal_delete">Löschen</string>
-    <string name="cal_save">Speichern</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Titel</string>
     <string name="cal_location">Ort</string>
     <string name="cal_description">Beschreibung</string>
@@ -937,7 +937,7 @@
     <string name="cal_series_note">Änderungen und Löschen gelten für die gesamte Serie.</string>
     <string name="cal_on_phone">Auf diesem Handy</string>
     <string name="cal_new_local">Neuer lokaler Kalender</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google-, CalDAV- (DAVx5) und Exchange-Kalender werden vom System über ihr Konto synchronisiert. Lokale Kalender bleiben auf dem Handy und sind im Telos-Backup enthalten.</string>
     <string name="cal_view_agenda">Nächste 30 Tage</string>
     <string name="cal_view_month">Monatsansicht</string>
@@ -960,8 +960,8 @@
     <string name="notes_title_hint">Titel</string>
     <string name="notes_body_hint">Notiz</string>
     <string name="notes_labels_hint">Arbeit, Zuhause</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">Abbrechen</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">%d Notizen importiert</string>
     <string name="notes_synced">Synchronisiert: %1$d gesendet, %2$d empfangen</string>
     <string name="notes_sync_failed">Synchronisierung fehlgeschlagen: %s</string>
@@ -1019,7 +1019,7 @@
     <string name="screenshot_cannot_open">Das Bild konnte nicht geöffnet werden</string>
     <string name="screenshot_notification_channel">Screenshots</string>
     <string name="screenshot_notification_text">Zum Bearbeiten tippen</string>
-    <string name="screenshot_edit">Bearbeiten</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Screenshots</string>
     <string name="screenshot_none">Noch keine Screenshots</string>
     <string name="screenshot_undo">Rückgängig</string>
@@ -1053,7 +1053,7 @@
     <string name="floating_launcher_section_widgets">Widgets</string>
     <string name="floating_launcher_section_apps">Apps</string>
     <string name="floating_launcher_done">Fertig</string>
-    <string name="floating_launcher_add">Hinzufügen</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Schwebende Leiste</string>
     <string name="preference_category_sidebar_style">Seitenleistenstil</string>
     <string name="preference_floating_launcher_side">Bildschirmseite</string>
@@ -1083,10 +1083,10 @@
     <string name="voice_start_failed">Die Aufnahme konnte nicht gestartet werden</string>
     <string name="voice_rename">Umbenennen</string>
     <string name="voice_rename_failed">Der Name ist leer oder bereits vergeben</string>
-    <string name="voice_save">Speichern</string>
-    <string name="voice_cancel">Abbrechen</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Diese Aufnahme löschen?</string>
-    <string name="voice_delete">Löschen</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Teilen</string>
     <string name="voice_share_failed">Die Aufnahme konnte nicht geteilt werden</string>
     <string name="voice_play">Wiedergeben</string>

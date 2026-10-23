@@ -112,7 +112,7 @@
     <string name="telos_files_toolbar_down">เลื่อน %1$s ลง</string>
     <string name="telos_files_toolbar_info">เลือกทางลัดสูงสุด %1$d รายการและเปลี่ยนลำดับ การนำทาง การค้นหา และเมนูยังคงใช้งานได้ ทุกคำสั่งยังอยู่ในเมนู</string>
     <string name="telos_files_toolbar_reset">คืนค่าเริ่มต้น</string>
-    <string name="telos_files_toolbar_save">บันทึก</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">ปรับแต่งแถบเครื่องมือ</string>
     <string name="telos_files_toolbar_up">เลื่อน %1$s ขึ้น</string>
     <string name="telos_files_transfer_added">เพิ่มในคิวถ่ายโอนไฟล์แล้ว</string>

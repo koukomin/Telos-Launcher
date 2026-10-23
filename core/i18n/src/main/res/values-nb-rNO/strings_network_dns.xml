@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Konfigurasjons-ID</string>
     <string name="net_dns_nextdns_device">Enhetsnavn (valgfritt)</string>
     <string name="net_dns_nextdns_bad_id">En konfigurasjons-ID består av 4 til 12 bokstaver og sifre.</string>
-    <string name="net_dns_nextdns_add">Legg til</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Leverandør</string>
     <string name="net_dns_detail_protocol">Protokoll</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Bruk denne serveren</string>
     <string name="net_dns_action_test">Test</string>
     <string name="net_dns_action_copy">Kopier som egen server</string>
-    <string name="net_dns_action_edit">Rediger</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Fjern</string>
-    <string name="net_dns_save">Lagre</string>
-    <string name="net_dns_cancel">Avbryt</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Tester …</string>
     <string name="net_dns_test_ok">Svar på %1$d ms</string>
     <string name="net_dns_test_fail">Testen mislyktes: %1$s</string>

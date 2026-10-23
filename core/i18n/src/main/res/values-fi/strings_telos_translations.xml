@@ -328,7 +328,7 @@
     <string name="preference_floating_launcher_tools">Pikatyökalut</string>
     <string name="preference_floating_launcher_tools_summary">Näytä kuvakaappaus-, laskin- ja pika-asetuspainikkeet paneelissa. Kuvakaappauspainike vaatii käytettävyyspalvelun</string>
     <string name="floating_launcher_title">Älytoiminnot</string>
-    <string name="floating_launcher_edit">Muokkaa</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Viimeaikaiset tiedostot</string>
     <string name="floating_launcher_recent_files_empty">Ei viimeaikaisia tiedostoja. Telos tarvitsee tähän pääsyn tiedostoihin; voit sallia sen avatessasi Telos Filesin.</string>
     <string name="floating_launcher_recent_files_no_app">Mikään sovellus ei voi avata tätä tiedostoa</string>
@@ -372,10 +372,10 @@
     <string name="floating_launcher_folder_name">Kansion nimi</string>
     <string name="floating_launcher_folder_select_apps">Valitse vähintään 2 sovellusta ryhmitettäväksi</string>
     <string name="floating_launcher_create">Luo</string>
-    <string name="floating_launcher_cancel">Peruuta</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Nimeä kansio uudelleen</string>
     <string name="floating_launcher_delete_folder">Poista kansio</string>
-    <string name="floating_launcher_save">Tallenna</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Avaa kansio</string>
     <string name="floating_launcher_all_apps">Kaikki sovellukset</string>
     <string name="floating_launcher_file_dock">Tiedostotelakka</string>
@@ -1032,7 +1032,7 @@
     <string name="comms_unblock_number">Poista numeron esto</string>
     <string name="comms_no_previous_calls">Ei aiempia puheluita</string>
     <string name="comms_clear_history">Tyhjennetäänkö puheluhistoria?</string>
-    <string name="comms_clear_history_confirm">Poista</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Integraatiot</string>
     <string name="filter_incoming">Saapuneet</string>
     <string name="filter_outgoing">Soitetut</string>
@@ -1053,7 +1053,7 @@
     <string name="comms_answer">Vastaa</string>
     <string name="comms_reject">Hylkää</string>
     <string name="comms_hangup">Lopeta puhelu</string>
-    <string name="comms_add_call">Lisää</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Yhdistä</string>
     <string name="comms_swap">Vaihda</string>
     <string name="backup_choose_parts">Mitä haluat varmuuskopioida?</string>
@@ -1140,9 +1140,9 @@
     <string name="cal_no_events">Ei tapahtumia</string>
     <string name="cal_no_title">(ei otsikkoa)</string>
     <string name="cal_all_day">Koko päivä</string>
-    <string name="cal_cancel">Peruuta</string>
-    <string name="cal_delete">Poista</string>
-    <string name="cal_save">Tallenna</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Otsikko</string>
     <string name="cal_location">Sijainti</string>
     <string name="cal_description">Kuvaus</string>
@@ -1159,7 +1159,7 @@
     <string name="cal_series_note">Muutokset ja poistaminen koskevat koko sarjaa.</string>
     <string name="cal_on_phone">Tässä puhelimessa</string>
     <string name="cal_new_local">Uusi paikallinen kalenteri</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google-, CalDAV- (DAVx5) ja Exchange-kalenterit synkronoidaan järjestelmän toimesta tilin kautta. Paikalliset kalenterit pysyvät puhelimessa ja sisältyvät Telos-varmuuskopioon.</string>
     <string name="cal_view_agenda">Seuraavat 30 päivää</string>
     <string name="cal_view_month">Kuukausinäkymä</string>
@@ -1182,8 +1182,8 @@
     <string name="notes_title_hint">Otsikko</string>
     <string name="notes_body_hint">Muistiinpano</string>
     <string name="notes_labels_hint">työ, koti</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">Peruuta</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">%d muistiinpanoa tuotu</string>
     <string name="notes_synced">Synkronoitu: %1$d lähetetty, %2$d vastaanotettu</string>
     <string name="notes_sync_failed">Synkronointi epäonnistui: %s</string>
@@ -1241,7 +1241,7 @@
     <string name="screenshot_cannot_open">Kuvaa ei voitu avata</string>
     <string name="screenshot_notification_channel">Kuvakaappaukset</string>
     <string name="screenshot_notification_text">Muokkaa napauttamalla</string>
-    <string name="screenshot_edit">Muokkaa</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Kuvakaappaukset</string>
     <string name="screenshot_none">Ei vielä kuvakaappauksia</string>
     <string name="screenshot_undo">Kumoa</string>
@@ -1275,7 +1275,7 @@
     <string name="floating_launcher_section_widgets">Widgetit</string>
     <string name="floating_launcher_section_apps">Sovellukset</string>
     <string name="floating_launcher_done">Valmis</string>
-    <string name="floating_launcher_add">Lisää</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Kelluva palkki</string>
     <string name="preference_category_sidebar_style">Sivupalkin tyyli</string>
     <string name="preference_floating_launcher_side">Näytön reuna</string>
@@ -1305,10 +1305,10 @@
     <string name="voice_start_failed">Tallennusta ei voitu aloittaa</string>
     <string name="voice_rename">Nimeä uudelleen</string>
     <string name="voice_rename_failed">Nimi on tyhjä tai jo käytössä</string>
-    <string name="voice_save">Tallenna</string>
-    <string name="voice_cancel">Peruuta</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Poistetaanko tämä tallenne?</string>
-    <string name="voice_delete">Poista</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Jaa</string>
     <string name="voice_share_failed">Tallennetta ei voitu jakaa</string>
     <string name="voice_play">Toista</string>

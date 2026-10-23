@@ -21,7 +21,7 @@
     <string name="menu_website">Otwórz stronę www</string>
     <string name="action_undo">Cofnij</string>
     <string name="action_import">Importuj</string>
-    <string name="menu_delete">Usuń</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_remove">Usuń</string>
     <string name="menu_contacts_open_externally">Otwórz w kontaktach</string>
     <string name="menu_calendar_open_externally">Otwórz w kalendarzu</string>
@@ -107,15 +107,15 @@
     <string name="widget_add_widget">Dodaj widżet</string>
     <string name="notes_widget_placeholder">Napisz notatkę…</string>
     <string name="notes_widget_action_new">Nowa notatka</string>
-    <string name="notes_widget_action_save">Zapisz</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_export_filename">Notatka_%1$s</string>
     <string name="notes_widget_action_dismiss">Odrzuć</string>
     <string name="notes_widget_dismissed">Notatka odrzucona.</string>
     <string name="shortcut_summary">Z %1$s</string>
     <string name="close">Zamknij</string>
-    <string name="save">Zapisz</string>
+    <string name="save">@string/hc_save</string>
     <string name="duplicate">Duplikuj</string>
-    <string name="edit">Edytuj</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="skip">Pomiń</string>
     <string name="action_next">Dalej</string>
     <string name="turn_off">Wyłącz</string>

@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">कॉन्फ़िगरेशन ID</string>
     <string name="net_dns_nextdns_device">डिवाइस का नाम (वैकल्पिक)</string>
     <string name="net_dns_nextdns_bad_id">कॉन्फ़िगरेशन ID में 4 से 12 अक्षर और अंक होते हैं।</string>
-    <string name="net_dns_nextdns_add">जोड़ें</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">प्रदाता</string>
     <string name="net_dns_detail_protocol">प्रोटोकॉल</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">यह सर्वर इस्तेमाल करें</string>
     <string name="net_dns_action_test">जाँचें</string>
     <string name="net_dns_action_copy">कस्टम सर्वर के रूप में कॉपी करें</string>
-    <string name="net_dns_action_edit">संपादित करें</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">हटाएँ</string>
-    <string name="net_dns_save">सहेजें</string>
-    <string name="net_dns_cancel">रद्द करें</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">जाँच हो रही है…</string>
     <string name="net_dns_test_ok">%1$d ms में जवाब मिला</string>
     <string name="net_dns_test_fail">जाँच विफल रही: %1$s</string>

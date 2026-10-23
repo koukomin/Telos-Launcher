@@ -10,7 +10,7 @@
     <string name="floating_launcher_section_widgets">Γραφικά στοιχεία</string>
     <string name="floating_launcher_section_apps">Εφαρμογές</string>
     <string name="floating_launcher_done">Τέλος</string>
-    <string name="floating_launcher_add">Προσθήκη</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Αιωρούμενη γραμμή</string>
     <string name="preference_category_sidebar_style">Στυλ πλαϊνής γραμμής</string>
     <string name="preference_floating_launcher_side">Πλευρά της οθόνης</string>

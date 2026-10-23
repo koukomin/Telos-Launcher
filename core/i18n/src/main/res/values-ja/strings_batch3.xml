@@ -74,8 +74,8 @@
     <string name="blocklists_remove">リストを削除</string>
     <string name="blocklists_custom_name">名前</string>
     <string name="blocklists_custom_url">アドレス（https）</string>
-    <string name="blocklists_add">追加</string>
-    <string name="blocklists_cancel">キャンセル</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">https のアドレスのみ使用できます</string>
     <string name="blocklists_import_failed">ファイルに使用可能なエントリがないか、読み込めませんでした</string>
     <string name="blocklists_schedule">自動更新</string>

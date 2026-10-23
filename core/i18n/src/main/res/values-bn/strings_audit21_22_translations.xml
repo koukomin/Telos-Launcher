@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">আর্কাইভ খোলা যায়নি</string>
     <string name="au21_arch_pw_title">পাসওয়ার্ড প্রয়োজন</string>
     <string name="au21_arch_pw_info">%1$s পাসওয়ার্ড দিয়ে সুরক্ষিত। এটি খুলতে বা আনপ্যাক করতে পাসওয়ার্ড দিন। আপনি আর্কাইভের ভেতরে থাকা পর্যন্তই পাসওয়ার্ড মেমরিতে থাকে এবং কখনও সংরক্ষিত হয় না।</string>
-    <string name="au21_arch_ok">ঠিক আছে</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">পরীক্ষা করা হচ্ছে…</string>
     <string name="au21_arch_show">দেখান</string>
     <string name="au21_arch_hide">লুকান</string>

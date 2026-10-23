@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Forigi peer</string>
     <string name="nwg_mobile_only">Nur per poŝtelefona datumo</string>
     <string name="nwg_lockdown">Bloki la aplikaĵojn dum la tunelo ne funkcias</string>
-    <string name="nwg_save">Konservi</string>
-    <string name="nwg_cancel">Nuligi</string>
-    <string name="nwg_delete">Forigi</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Kundividi agordon</string>
     <string name="nwg_share_warning">La elportita agordo enhavas la privatan ŝlosilon.</string>
     <string name="nwg_import">Importi</string>

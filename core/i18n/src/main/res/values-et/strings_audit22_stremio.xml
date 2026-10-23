@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Jätka vaatamist</string>
     <string name="au22_stremio_no_results">Midagi ei leitud</string>
     <string name="au22_stremio_library_empty">Sinu kogu on tühi. Ava pealkiri ja salvesta see siia.</string>
-    <string name="au22_stremio_save">Salvesta</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Salvestatud</string>
     <string name="au22_stremio_season">%d. hooaeg</string>
     <string name="au22_stremio_streams">Vali voog</string>

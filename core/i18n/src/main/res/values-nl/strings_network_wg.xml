@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Peer verwijderen</string>
     <string name="nwg_mobile_only">Alleen via mobiele data</string>
     <string name="nwg_lockdown">Apps blokkeren zolang de tunnel niet actief is</string>
-    <string name="nwg_save">Opslaan</string>
-    <string name="nwg_cancel">Annuleren</string>
-    <string name="nwg_delete">Verwijderen</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Configuratie delen</string>
     <string name="nwg_share_warning">De geëxporteerde configuratie bevat de privésleutel.</string>
     <string name="nwg_import">Importeren</string>

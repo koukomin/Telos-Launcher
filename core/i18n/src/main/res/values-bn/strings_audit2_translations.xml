@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">মুছুন</string>
     <string name="au2_netsec_reset_message">বর্তমানে দেখানো %1$d টি অ্যাপের ফায়ারওয়াল নিয়ম ডিফল্টে রিসেট করা হবে।</string>
     <string name="au2_netsec_confirm_reset">রিসেট করুন</string>
-    <string name="au2_netsec_cancel">বাতিল করুন</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">রেকর্ড করুন</string>
     <string name="au2_radio2_stop_recording">রেকর্ডিং বন্ধ করুন</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

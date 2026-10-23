@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Teachtaireachtaí</string>
     <string name="web_app_preset_category_video">Físeáin agus ceol</string>
     <string name="web_app_preset_category_work">Táirgiúlacht agus obair</string>
-    <string name="web_app_preset_add">Cuir leis</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Cuir %1$s leis</string>
     <string name="web_app_preset_dialog_summary">Roghnaigh na haipeanna gréasáin le cur leis. Sábháiltear iad cosúil le haon aip ghréasáin a chruthaíonn tú féin.</string>
     <string name="web_app_preset_exists">Ann cheana i d\'aipeanna gréasáin, athúsáidfear é</string>

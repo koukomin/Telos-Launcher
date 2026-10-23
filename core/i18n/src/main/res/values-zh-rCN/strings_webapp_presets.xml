@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">即时通讯</string>
     <string name="web_app_preset_category_video">视频和音乐</string>
     <string name="web_app_preset_category_work">效率与办公</string>
-    <string name="web_app_preset_add">添加</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">添加%1$s</string>
     <string name="web_app_preset_dialog_summary">选择要添加的网页应用。它们的保存方式与您自己创建的网页应用相同。</string>
     <string name="web_app_preset_exists">已在您的网页应用中，将直接复用</string>

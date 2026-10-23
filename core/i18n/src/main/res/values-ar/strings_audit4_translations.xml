@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">تأكيد</string>
-    <string name="au4_confirms_cancel">إلغاء</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">تسجيل الخروج من Nextcloud؟</string>
     <string name="au4_confirms_nc_message">ستتم إزالة حساب Nextcloud الخاص بك من هذا المشغّل. يمكنك تسجيل الدخول مجددًا في أي وقت.</string>
     <string name="au4_confirms_oc_title">تسجيل الخروج من ownCloud؟</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">حظر الوصول إلى بيانات الجوال لـ %1$d من التطبيقات؟</string>
     <string name="au4_noteslink_link_existing">ربط ملف موجود</string>
     <string name="au4_noteslink_create_new">إنشاء ملف جديد</string>
-    <string name="au4_noteslink_cancel">إلغاء</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">محاولات إعادة الاتصال</string>
     <string name="au4_settingsnew1_redial_delay">المهلة بين المحاولات</string>
     <string name="au4_settingsnew1_seconds">%1$d ث</string>

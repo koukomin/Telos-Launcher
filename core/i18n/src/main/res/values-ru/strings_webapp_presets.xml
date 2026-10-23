@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Мессенджеры</string>
     <string name="web_app_preset_category_video">Видео и музыка</string>
     <string name="web_app_preset_category_work">Продуктивность и работа</string>
-    <string name="web_app_preset_add">Добавить</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Добавить: %1$s</string>
     <string name="web_app_preset_dialog_summary">Выберите веб-приложения для добавления. Они сохраняются так же, как и созданные вами веб-приложения.</string>
     <string name="web_app_preset_exists">Уже есть в ваших веб-приложениях, будет использовано повторно</string>

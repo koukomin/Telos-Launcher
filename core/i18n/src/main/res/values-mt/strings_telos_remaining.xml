@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Mexxi %1$s ’l isfel</string>
     <string name="telos_files_toolbar_info">Agħżel sa %1$d shortcut u ibdel l-ordni tagħhom. In-navigazzjoni, it-tfittxija u l-menu jibqgħu disponibbli. L-azzjonijiet kollha jibqgħu fil-menu.</string>
     <string name="telos_files_toolbar_reset">Irrestawra l-valuri prestabbiliti</string>
-    <string name="telos_files_toolbar_save">Issejvja</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Ippersonalizza l-barra tal-għodod</string>
     <string name="telos_files_toolbar_up">Mexxi %1$s ’il fuq</string>
     <string name="telos_files_transfer_added">Miżjud mal-kju tat-trasferiment tal-fajls</string>

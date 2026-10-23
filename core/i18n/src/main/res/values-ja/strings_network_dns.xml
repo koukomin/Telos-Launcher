@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">設定 ID</string>
     <string name="net_dns_nextdns_device">デバイス名（任意）</string>
     <string name="net_dns_nextdns_bad_id">設定 ID は 4～12 文字の英数字です。</string>
-    <string name="net_dns_nextdns_add">追加</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">プロバイダー</string>
     <string name="net_dns_detail_protocol">プロトコル</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">このサーバーを使用</string>
     <string name="net_dns_action_test">テスト</string>
     <string name="net_dns_action_copy">カスタムサーバーとしてコピー</string>
-    <string name="net_dns_action_edit">編集</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">削除</string>
-    <string name="net_dns_save">保存</string>
-    <string name="net_dns_cancel">キャンセル</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">テスト中…</string>
     <string name="net_dns_test_ok">%1$d ミリ秒で応答</string>
     <string name="net_dns_test_fail">テストに失敗しました: %1$s</string>

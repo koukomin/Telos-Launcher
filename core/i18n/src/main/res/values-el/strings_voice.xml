@@ -15,10 +15,10 @@
     <string name="voice_start_failed">Η εγγραφή δεν μπόρεσε να ξεκινήσει</string>
     <string name="voice_rename">Μετονομασία</string>
     <string name="voice_rename_failed">Το όνομα είναι κενό ή χρησιμοποιείται ήδη</string>
-    <string name="voice_save">Αποθήκευση</string>
-    <string name="voice_cancel">Ακύρωση</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Διαγραφή αυτής της εγγραφής;</string>
-    <string name="voice_delete">Διαγραφή</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Κοινοποίηση</string>
     <string name="voice_share_failed">Η εγγραφή δεν μπόρεσε να κοινοποιηθεί</string>
     <string name="voice_play">Αναπαραγωγή</string>

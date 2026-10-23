@@ -318,7 +318,7 @@
     <string name="preference_floating_launcher_tools">Szybkie narzędzia</string>
     <string name="preference_floating_launcher_tools_summary">Pokaż w panelu przyciski zrzutu ekranu, kalkulatora i szybkich ustawień. Przycisk zrzutu ekranu wymaga usługi dostępności</string>
     <string name="floating_launcher_title">Inteligentne funkcje</string>
-    <string name="floating_launcher_edit">Edytuj</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Ostatnie pliki</string>
     <string name="floating_launcher_recent_files_empty">Brak ostatnich plików. Telos potrzebuje do tego dostępu do plików – możesz go przyznać po otwarciu Telos Files.</string>
     <string name="floating_launcher_recent_files_no_app">Żadna aplikacja nie może otworzyć tego pliku</string>
@@ -362,10 +362,10 @@
     <string name="floating_launcher_folder_name">Nazwa folderu</string>
     <string name="floating_launcher_folder_select_apps">Wybierz co najmniej 2 aplikacje do zgrupowania</string>
     <string name="floating_launcher_create">Utwórz</string>
-    <string name="floating_launcher_cancel">Anuluj</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Zmień nazwę folderu</string>
     <string name="floating_launcher_delete_folder">Usuń folder</string>
-    <string name="floating_launcher_save">Zapisz</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Otwórz folder</string>
     <string name="floating_launcher_all_apps">Wszystkie aplikacje</string>
     <string name="floating_launcher_file_dock">Dok plików</string>
@@ -921,7 +921,7 @@
     <string name="comms_unblock_number">Odblokuj numer</string>
     <string name="comms_no_previous_calls">Brak wcześniejszych połączeń</string>
     <string name="comms_clear_history">Wyczyścić historię połączeń?</string>
-    <string name="comms_clear_history_confirm">Usuń</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Integracje</string>
     <string name="filter_incoming">Przychodzące</string>
     <string name="filter_outgoing">Wychodzące</string>
@@ -942,7 +942,7 @@
     <string name="comms_answer">Odbierz</string>
     <string name="comms_reject">Odrzuć</string>
     <string name="comms_hangup">Rozłącz</string>
-    <string name="comms_add_call">Dodaj</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Połącz</string>
     <string name="comms_swap">Zamień</string>
     <string name="backup_choose_parts">Co chcesz zarchiwizować?</string>
@@ -1029,9 +1029,9 @@
     <string name="cal_no_events">Brak wydarzeń</string>
     <string name="cal_no_title">(bez tytułu)</string>
     <string name="cal_all_day">Cały dzień</string>
-    <string name="cal_cancel">Anuluj</string>
-    <string name="cal_delete">Usuń</string>
-    <string name="cal_save">Zapisz</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Tytuł</string>
     <string name="cal_location">Miejsce</string>
     <string name="cal_description">Opis</string>
@@ -1048,7 +1048,7 @@
     <string name="cal_series_note">Zmiany i usunięcie dotyczą całej serii.</string>
     <string name="cal_on_phone">Na tym telefonie</string>
     <string name="cal_new_local">Nowy kalendarz lokalny</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Kalendarze Google, CalDAV (DAVx5) i Exchange są synchronizowane przez system za pośrednictwem ich konta. Kalendarze lokalne pozostają na telefonie i są w kopii zapasowej Telos.</string>
     <string name="cal_view_agenda">Następne 30 dni</string>
     <string name="cal_view_month">Widok miesiąca</string>
@@ -1071,8 +1071,8 @@
     <string name="notes_title_hint">Tytuł</string>
     <string name="notes_body_hint">Notatka</string>
     <string name="notes_labels_hint">praca, dom</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">Anuluj</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">Zaimportowano notatek: %d</string>
     <string name="notes_synced">Zsynchronizowano: wysłano %1$d, odebrano %2$d</string>
     <string name="notes_sync_failed">Synchronizacja nie powiodła się: %s</string>
@@ -1130,7 +1130,7 @@
     <string name="screenshot_cannot_open">Nie udało się otworzyć obrazu</string>
     <string name="screenshot_notification_channel">Zrzuty ekranu</string>
     <string name="screenshot_notification_text">Dotknij, aby edytować</string>
-    <string name="screenshot_edit">Edytuj</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Zrzuty ekranu</string>
     <string name="screenshot_none">Brak zrzutów ekranu</string>
     <string name="screenshot_undo">Cofnij</string>
@@ -1164,7 +1164,7 @@
     <string name="floating_launcher_section_widgets">Widżety</string>
     <string name="floating_launcher_section_apps">Aplikacje</string>
     <string name="floating_launcher_done">Gotowe</string>
-    <string name="floating_launcher_add">Dodaj</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Pływający pasek</string>
     <string name="preference_category_sidebar_style">Styl paska bocznego</string>
     <string name="preference_floating_launcher_side">Strona ekranu</string>
@@ -1194,10 +1194,10 @@
     <string name="voice_start_failed">Nie udało się rozpocząć nagrywania</string>
     <string name="voice_rename">Zmień nazwę</string>
     <string name="voice_rename_failed">Nazwa jest pusta lub już używana</string>
-    <string name="voice_save">Zapisz</string>
-    <string name="voice_cancel">Anuluj</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Usunąć to nagranie?</string>
-    <string name="voice_delete">Usuń</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Udostępnij</string>
     <string name="voice_share_failed">Nie udało się udostępnić nagrania</string>
     <string name="voice_play">Odtwarzaj</string>

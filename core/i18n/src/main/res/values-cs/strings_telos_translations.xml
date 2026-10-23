@@ -280,7 +280,7 @@
     <string name="preference_floating_launcher_tools">Rychlé nástroje</string>
     <string name="preference_floating_launcher_tools_summary">Zobrazit v panelu tlačítka snímku obrazovky, kalkulačky a rychlého nastavení. Tlačítko snímku obrazovky vyžaduje službu usnadnění</string>
     <string name="floating_launcher_title">Chytré funkce</string>
-    <string name="floating_launcher_edit">Upravit</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Nedávné soubory</string>
     <string name="floating_launcher_recent_files_empty">Žádné nedávné soubory. Telos k tomu potřebuje přístup k souborům, který můžete povolit při otevření Telos Soubory.</string>
     <string name="floating_launcher_recent_files_no_app">Tento soubor nemůže otevřít žádná aplikace</string>
@@ -324,10 +324,10 @@
     <string name="floating_launcher_folder_name">Název složky</string>
     <string name="floating_launcher_folder_select_apps">Vyberte alespoň 2 aplikace ke seskupení</string>
     <string name="floating_launcher_create">Vytvořit</string>
-    <string name="floating_launcher_cancel">Zrušit</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Přejmenovat složku</string>
     <string name="floating_launcher_delete_folder">Smazat složku</string>
-    <string name="floating_launcher_save">Uložit</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Otevřít složku</string>
     <string name="floating_launcher_all_apps">Všechny aplikace</string>
     <string name="floating_launcher_file_dock">Dok souborů</string>
@@ -684,7 +684,7 @@
     <string name="comms_unblock_number">Odblokovat číslo</string>
     <string name="comms_no_previous_calls">Žádné předchozí hovory</string>
     <string name="comms_clear_history">Vymazat historii hovorů?</string>
-    <string name="comms_clear_history_confirm">Smazat</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Integrace</string>
     <string name="filter_incoming">Příchozí</string>
     <string name="filter_outgoing">Odchozí</string>
@@ -705,7 +705,7 @@
     <string name="comms_answer">Přijmout</string>
     <string name="comms_reject">Odmítnout</string>
     <string name="comms_hangup">Zavěsit</string>
-    <string name="comms_add_call">Přidat</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Spojit</string>
     <string name="comms_swap">Přepnout</string>
     <string name="backup_choose_parts">Co chcete zálohovat?</string>
@@ -792,9 +792,9 @@
     <string name="cal_no_events">Žádné události</string>
     <string name="cal_no_title">(bez názvu)</string>
     <string name="cal_all_day">Celý den</string>
-    <string name="cal_cancel">Zrušit</string>
-    <string name="cal_delete">Smazat</string>
-    <string name="cal_save">Uložit</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Název</string>
     <string name="cal_location">Místo</string>
     <string name="cal_description">Popis</string>
@@ -811,7 +811,7 @@
     <string name="cal_series_note">Změny a smazání se týkají celé série.</string>
     <string name="cal_on_phone">V tomto telefonu</string>
     <string name="cal_new_local">Nový místní kalendář</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Kalendáře Google, CalDAV (DAVx5) a Exchange synchronizuje systém prostřednictvím jejich účtu. Místní kalendáře zůstávají v telefonu a jsou součástí zálohy Telos.</string>
     <string name="cal_view_agenda">Příštích 30 dní</string>
     <string name="cal_view_month">Měsíční zobrazení</string>
@@ -834,8 +834,8 @@
     <string name="notes_title_hint">Název</string>
     <string name="notes_body_hint">Poznámka</string>
     <string name="notes_labels_hint">práce, domov</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">Zrušit</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">Importováno poznámek: %d</string>
     <string name="notes_synced">Synchronizováno: odesláno %1$d, přijato %2$d</string>
     <string name="notes_sync_failed">Synchronizace selhala: %s</string>
@@ -893,7 +893,7 @@
     <string name="screenshot_cannot_open">Obrázek se nepodařilo otevřít</string>
     <string name="screenshot_notification_channel">Snímky obrazovky</string>
     <string name="screenshot_notification_text">Klepnutím upravíte</string>
-    <string name="screenshot_edit">Upravit</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Snímky obrazovky</string>
     <string name="screenshot_none">Zatím žádné snímky obrazovky</string>
     <string name="screenshot_undo">Zpět</string>
@@ -927,7 +927,7 @@
     <string name="floating_launcher_section_widgets">Widgety</string>
     <string name="floating_launcher_section_apps">Aplikace</string>
     <string name="floating_launcher_done">Hotovo</string>
-    <string name="floating_launcher_add">Přidat</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Plovoucí lišta</string>
     <string name="preference_category_sidebar_style">Styl postranního panelu</string>
     <string name="preference_floating_launcher_side">Strana obrazovky</string>
@@ -957,10 +957,10 @@
     <string name="voice_start_failed">Nahrávání se nepodařilo spustit</string>
     <string name="voice_rename">Přejmenovat</string>
     <string name="voice_rename_failed">Název je prázdný nebo již používaný</string>
-    <string name="voice_save">Uložit</string>
-    <string name="voice_cancel">Zrušit</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Smazat tuto nahrávku?</string>
-    <string name="voice_delete">Smazat</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Sdílet</string>
     <string name="voice_share_failed">Nahrávku se nepodařilo sdílet</string>
     <string name="voice_play">Přehrát</string>

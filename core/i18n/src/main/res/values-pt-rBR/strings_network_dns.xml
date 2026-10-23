@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">ID de configuração</string>
     <string name="net_dns_nextdns_device">Nome do dispositivo (opcional)</string>
     <string name="net_dns_nextdns_bad_id">Um ID de configuração tem de 4 a 12 letras e dígitos.</string>
-    <string name="net_dns_nextdns_add">Adicionar</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Provedor</string>
     <string name="net_dns_detail_protocol">Protocolo</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Usar este servidor</string>
     <string name="net_dns_action_test">Testar</string>
     <string name="net_dns_action_copy">Copiar como servidor personalizado</string>
-    <string name="net_dns_action_edit">Editar</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Remover</string>
-    <string name="net_dns_save">Salvar</string>
-    <string name="net_dns_cancel">Cancelar</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Testando…</string>
     <string name="net_dns_test_ok">Resposta em %1$d ms</string>
     <string name="net_dns_test_fail">O teste falhou: %1$s</string>

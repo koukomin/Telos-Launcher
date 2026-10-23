@@ -50,7 +50,7 @@
     <string name="departure_time_now">nüüd</string>
     <string name="disclaimer">Lahtiütlus</string>
     <string name="duplicate">Tee koopia</string>
-    <string name="edit">Muuda</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="edit_favorites_dialog_new_tag">Loo silt…</string>
     <string name="edit_favorites_dialog_tag_section_empty">Kinnitatud silte näidatakse siin</string>
     <string name="edit_favorites_dialog_tags">Sildid</string>
@@ -153,7 +153,7 @@
     <string name="menu_clear_cache">Tühjenda vahemälu</string>
     <string name="menu_contacts_open_externally">Ava kontaktide rakenduses</string>
     <string name="menu_customize">Kohanda</string>
-    <string name="menu_delete">Kustuta</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_dial">Helista</string>
     <string name="menu_edit_widgets">Muuda vidinaid</string>
     <string name="menu_favorites_pin">Kinnita lemmikutesse</string>
@@ -193,7 +193,7 @@
     <string name="note_widget_link_file">Link failile</string>
     <string name="notes_widget_action_dismiss">Eira</string>
     <string name="notes_widget_action_new">Uus märkus</string>
-    <string name="notes_widget_action_save">Salvesta</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_placeholder">Kirjuta märkus…</string>
     <string name="open_search_pull_down">Viipa alla</string>
     <string name="open_search_swipe_left">Viipa vasakule</string>
@@ -502,7 +502,7 @@
     <string name="provider_here">SIIN</string>
     <string name="provider_metno">MET Norra</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
-    <string name="save">Salvesta</string>
+    <string name="save">@string/hc_save</string>
     <string name="save_as_file">Salvesta failina</string>
     <string name="search_action_alarm">Lisa äratus</string>
     <string name="search_action_app">Rakendus</string>

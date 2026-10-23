@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Identificador de configuració</string>
     <string name="net_dns_nextdns_device">Nom del dispositiu (opcional)</string>
     <string name="net_dns_nextdns_bad_id">Un identificador de configuració consta de 4 a 12 lletres i xifres.</string>
-    <string name="net_dns_nextdns_add">Afegeix</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Proveïdor</string>
     <string name="net_dns_detail_protocol">Protocol</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Utilitza aquest servidor</string>
     <string name="net_dns_action_test">Prova</string>
     <string name="net_dns_action_copy">Copia com a servidor personalitzat</string>
-    <string name="net_dns_action_edit">Edita</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Elimina</string>
-    <string name="net_dns_save">Desa</string>
-    <string name="net_dns_cancel">Cancel·la</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">S’està provant…</string>
     <string name="net_dns_test_ok">Resposta en %1$d ms</string>
     <string name="net_dns_test_fail">La prova ha fallat: %1$s</string>

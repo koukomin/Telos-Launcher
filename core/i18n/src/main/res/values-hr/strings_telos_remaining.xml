@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Pomakni %1$s dolje</string>
     <string name="telos_files_toolbar_info">Odaberite do %1$d prečaca i promijenite njihov redoslijed. Navigacija, pretraživanje i izbornik ostaju dostupni. Sve radnje ostaju u izborniku.</string>
     <string name="telos_files_toolbar_reset">Vrati zadane postavke</string>
-    <string name="telos_files_toolbar_save">Spremi</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Prilagodi alatnu traku</string>
     <string name="telos_files_toolbar_up">Pomakni %1$s gore</string>
     <string name="telos_files_transfer_added">Dodano u red za prijenos datoteka</string>

@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Flytt %1$s ned</string>
     <string name="telos_files_toolbar_info">Velg opptil %1$d snarveier og endre rekkefølgen. Navigering, søk og menyen forblir tilgjengelige. Alle handlinger finnes fortsatt i menyen.</string>
     <string name="telos_files_toolbar_reset">Gjenopprett standardverdier</string>
-    <string name="telos_files_toolbar_save">Lagre</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Tilpass verktøylinje</string>
     <string name="telos_files_toolbar_up">Flytt %1$s opp</string>
     <string name="telos_files_transfer_added">Lagt til i filoverføringskøen</string>

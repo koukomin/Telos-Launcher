@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Nu a fost adăugat niciun fișier încă.</string>
     <string name="pdft_add_pdf">Adaugă PDF</string>
     <string name="pdft_add_images">Adaugă imagini</string>
-    <string name="pdft_add">Adaugă</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Organizare</string>
     <string name="pdft_group_optimize">Optimizare</string>
     <string name="pdft_group_security">Securitate</string>
-    <string name="pdft_group_edit">Editare</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Conversie</string>
     <string name="pdft_group_view">Vizualizare și comparare</string>
     <string name="pdft_tool_merge">Îmbină</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Înapoi</string>
     <string name="pdft_back_to_tools">Înapoi la instrumente</string>
     <string name="pdft_close">Închide</string>
-    <string name="pdft_cancel">Anulează</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Aplică</string>
     <string name="pdft_change">Schimbă</string>
     <string name="pdft_remove">Elimină</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Gata</string>
     <string name="pdft_compress_result">De la %1$s la %2$s (cu %3$d%% mai mic)</string>
     <string name="pdft_compress_no_gain">Rezultatul (%2$s) nu este mai mic decât originalul (%1$s). Fișierul conține în principal text și grafică vectorială.</string>
-    <string name="pdft_save">Salvează</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Salvează în %1$s</string>
     <string name="pdft_save_choose_folder">Alege un dosar…</string>
     <string name="pdft_save_as">Salvează ca…</string>

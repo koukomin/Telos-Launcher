@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Toque em Adicionar e cole uma ligação, ou partilhe uma ligação com o Telos Downloads.</string>
     <string name="dl_empty_filter_title">Nada aqui</string>
     <string name="dl_empty_filter_text">Nenhuma transferência corresponde a este filtro.</string>
-    <string name="dl_add">Adicionar</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Adicionar transferência</string>
     <string name="dl_links_hint">Ligações, uma por linha</string>
     <string name="dl_invalid_links">Nenhuma ligação válida. Só é possível transferir ligações http e https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Remover %1$s? A parte já transferida é eliminada.</string>
     <string name="dl_delete_with_file">Remover e eliminar ficheiro</string>
     <string name="dl_delete_keep_file">Remover, manter ficheiro</string>
-    <string name="dl_cancel">Cancelar</string>
-    <string name="dl_save">Guardar</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Nenhuma app consegue abrir este ficheiro</string>
     <string name="dl_pause_all">Pausar tudo</string>
     <string name="dl_resume_all">Retomar tudo</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Detetar ligações na área de transferência</string>
     <string name="dl_p3_detect_clipboard_sum">Ao abrir as Transferências, sugere uma ligação, um endereço de site de vídeo ou uma ligação magnet que tenha copiado. O Android pode avisar que a app leu a área de transferência.</string>
     <string name="dl_p3_clip_found">Na área de transferência: %1$s</string>
-    <string name="dl_p3_clip_add">Adicionar</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Agenda</string>
     <string name="dl_p3_schedule_enable">Transferir apenas a certas horas</string>
     <string name="dl_p3_schedule_sum">Fora do período definido, as transferências aguardam na fila.</string>

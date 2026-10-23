@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Messaġġi</string>
     <string name="web_app_preset_category_video">Vidjo u Mużika</string>
     <string name="web_app_preset_category_work">Produttività u Xogħol</string>
-    <string name="web_app_preset_add">Żid</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Żid %1$s</string>
     <string name="web_app_preset_dialog_summary">Agħżel il-web apps li trid iżżid. Jinħażnu bħal kull web app li toħloq int stess.</string>
     <string name="web_app_preset_exists">Diġà fil-web apps tiegħek, se terġa\' tintuża</string>

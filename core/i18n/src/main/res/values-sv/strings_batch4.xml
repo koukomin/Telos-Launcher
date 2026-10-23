@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Tryck på Lägg till och klistra in en länk, eller dela en länk till Telos Downloads.</string>
     <string name="dl_empty_filter_title">Inget här</string>
     <string name="dl_empty_filter_text">Inga nedladdningar matchar det här filtret.</string>
-    <string name="dl_add">Lägg till</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Lägg till nedladdning</string>
     <string name="dl_links_hint">Länkar, en per rad</string>
     <string name="dl_invalid_links">Ingen giltig länk. Endast http- och https-länkar kan laddas ned.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Ta bort %1$s? Den nedladdade delen raderas.</string>
     <string name="dl_delete_with_file">Ta bort och radera fil</string>
     <string name="dl_delete_keep_file">Ta bort, behåll fil</string>
-    <string name="dl_cancel">Avbryt</string>
-    <string name="dl_save">Spara</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Ingen app kan öppna den här filen</string>
     <string name="dl_pause_all">Pausa alla</string>
     <string name="dl_resume_all">Återuppta alla</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Upptäck länkar i urklipp</string>
     <string name="dl_p3_detect_clipboard_sum">När du öppnar Nedladdningar erbjuds en länk, en videowebbplatsadress eller en magnetlänk som du har kopierat. Android kan meddela att appen har läst urklipp.</string>
     <string name="dl_p3_clip_found">I urklipp: %1$s</string>
-    <string name="dl_p3_clip_add">Lägg till</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Schema</string>
     <string name="dl_p3_schedule_enable">Ladda bara ned vid vissa tider</string>
     <string name="dl_p3_schedule_sum">Utanför tidsfönstret väntar nedladdningar i kön.</string>

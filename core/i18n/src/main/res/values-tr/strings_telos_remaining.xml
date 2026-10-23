@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">%1$s öğesini aşağı taşı</string>
     <string name="telos_files_toolbar_info">En fazla %1$d kısayol seçip sıralarını değiştirin. Gezinme, arama ve menü kullanılabilir kalır. Tüm işlemler menüde kalır.</string>
     <string name="telos_files_toolbar_reset">Varsayılanları geri yükle</string>
-    <string name="telos_files_toolbar_save">Kaydet</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Araç çubuğunu özelleştir</string>
     <string name="telos_files_toolbar_up">%1$s öğesini yukarı taşı</string>
     <string name="telos_files_transfer_added">Dosya aktarım kuyruğuna eklendi</string>

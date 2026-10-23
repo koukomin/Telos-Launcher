@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Kol kas nepridėta jokių failų.</string>
     <string name="pdft_add_pdf">Pridėti PDF</string>
     <string name="pdft_add_images">Pridėti paveikslėlių</string>
-    <string name="pdft_add">Pridėti</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Tvarkymas</string>
     <string name="pdft_group_optimize">Optimizavimas</string>
     <string name="pdft_group_security">Sauga</string>
-    <string name="pdft_group_edit">Redagavimas</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Konvertavimas</string>
     <string name="pdft_group_view">Peržiūra ir palyginimas</string>
     <string name="pdft_tool_merge">Sujungti</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Atgal</string>
     <string name="pdft_back_to_tools">Atgal į įrankius</string>
     <string name="pdft_close">Uždaryti</string>
-    <string name="pdft_cancel">Atšaukti</string>
-    <string name="pdft_ok">Gerai</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Taikyti</string>
     <string name="pdft_change">Keisti</string>
     <string name="pdft_remove">Pašalinti</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Baigta</string>
     <string name="pdft_compress_result">Iš %1$s į %2$s (%3$d%% mažiau)</string>
     <string name="pdft_compress_no_gain">Rezultatas (%2$s) nėra mažesnis už originalą (%1$s). Failą daugiausia sudaro tekstas ir vektorinė grafika.</string>
-    <string name="pdft_save">Įrašyti</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Įrašyti į %1$s</string>
     <string name="pdft_save_choose_folder">Pasirinkti aplanką…</string>
     <string name="pdft_save_as">Įrašyti kaip…</string>

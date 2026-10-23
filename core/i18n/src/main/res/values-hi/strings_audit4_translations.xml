@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">पुष्टि करें</string>
-    <string name="au4_confirms_cancel">रद्द करें</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Nextcloud से साइन आउट करें?</string>
     <string name="au4_confirms_nc_message">आपका Nextcloud खाता इस लॉन्चर से हटा दिया जाएगा। आप कभी भी दोबारा साइन इन कर सकते हैं।</string>
     <string name="au4_confirms_oc_title">ownCloud से साइन आउट करें?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">%1$d ऐप्स की मोबाइल डेटा पहुँच ब्लॉक करें?</string>
     <string name="au4_noteslink_link_existing">मौजूदा फ़ाइल लिंक करें</string>
     <string name="au4_noteslink_create_new">नई फ़ाइल बनाएँ</string>
-    <string name="au4_noteslink_cancel">रद्द करें</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">पुनः डायल के प्रयास</string>
     <string name="au4_settingsnew1_redial_delay">प्रयासों के बीच विलंब</string>
     <string name="au4_settingsnew1_seconds">%1$d सेकंड</string>

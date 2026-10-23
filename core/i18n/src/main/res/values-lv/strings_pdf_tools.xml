@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Vēl nav pievienots neviens fails.</string>
     <string name="pdft_add_pdf">Pievienot PDF</string>
     <string name="pdft_add_images">Pievienot attēlus</string>
-    <string name="pdft_add">Pievienot</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Kārtošana</string>
     <string name="pdft_group_optimize">Optimizēšana</string>
     <string name="pdft_group_security">Drošība</string>
-    <string name="pdft_group_edit">Rediģēšana</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Pārveidošana</string>
     <string name="pdft_group_view">Skatīšana un salīdzināšana</string>
     <string name="pdft_tool_merge">Apvienot</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Atpakaļ</string>
     <string name="pdft_back_to_tools">Atpakaļ uz rīkiem</string>
     <string name="pdft_close">Aizvērt</string>
-    <string name="pdft_cancel">Atcelt</string>
-    <string name="pdft_ok">Labi</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Lietot</string>
     <string name="pdft_change">Mainīt</string>
     <string name="pdft_remove">Noņemt</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Gatavs</string>
     <string name="pdft_compress_result">No %1$s uz %2$s (par %3$d%% mazāk)</string>
     <string name="pdft_compress_no_gain">Rezultāts (%2$s) nav mazāks par oriģinālu (%1$s). Failā pārsvarā ir teksts un vektorgrafika.</string>
-    <string name="pdft_save">Saglabāt</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Saglabāt mapē %1$s</string>
     <string name="pdft_save_choose_folder">Izvēlēties mapi…</string>
     <string name="pdft_save_as">Saglabāt kā…</string>

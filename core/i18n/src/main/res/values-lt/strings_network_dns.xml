@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Konfigūracijos ID</string>
     <string name="net_dns_nextdns_device">Įrenginio pavadinimas (neprivaloma)</string>
     <string name="net_dns_nextdns_bad_id">Konfigūracijos ID sudarytas iš 4–12 raidžių ir skaitmenų.</string>
-    <string name="net_dns_nextdns_add">Pridėti</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Teikėjas</string>
     <string name="net_dns_detail_protocol">Protokolas</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Naudoti šį serverį</string>
     <string name="net_dns_action_test">Išbandyti</string>
     <string name="net_dns_action_copy">Kopijuoti kaip savo serverį</string>
-    <string name="net_dns_action_edit">Redaguoti</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Pašalinti</string>
-    <string name="net_dns_save">Išsaugoti</string>
-    <string name="net_dns_cancel">Atšaukti</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Bandoma…</string>
     <string name="net_dns_test_ok">Atsakyta per %1$d ms</string>
     <string name="net_dns_test_fail">Bandymas nepavyko: %1$s</string>

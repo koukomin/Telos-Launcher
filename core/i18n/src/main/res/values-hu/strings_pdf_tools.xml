@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Még nincs hozzáadott fájl.</string>
     <string name="pdft_add_pdf">PDF hozzáadása</string>
     <string name="pdft_add_images">Képek hozzáadása</string>
-    <string name="pdft_add">Hozzáadás</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Rendezés</string>
     <string name="pdft_group_optimize">Optimalizálás</string>
     <string name="pdft_group_security">Biztonság</string>
-    <string name="pdft_group_edit">Szerkesztés</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Átalakítás</string>
     <string name="pdft_group_view">Megtekintés és összehasonlítás</string>
     <string name="pdft_tool_merge">Egyesítés</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Vissza</string>
     <string name="pdft_back_to_tools">Vissza az eszközökhöz</string>
     <string name="pdft_close">Bezárás</string>
-    <string name="pdft_cancel">Mégse</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Alkalmaz</string>
     <string name="pdft_change">Csere</string>
     <string name="pdft_remove">Eltávolítás</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Kész</string>
     <string name="pdft_compress_result">%1$s helyett %2$s (%3$d%%-kal kisebb)</string>
     <string name="pdft_compress_no_gain">Az eredmény (%2$s) nem kisebb az eredetinél (%1$s). A fájl főként szöveget és vektorgrafikát tartalmaz.</string>
-    <string name="pdft_save">Mentés</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Mentés ide: %1$s</string>
     <string name="pdft_save_choose_folder">Mappa kiválasztása…</string>
     <string name="pdft_save_as">Mentés másként…</string>

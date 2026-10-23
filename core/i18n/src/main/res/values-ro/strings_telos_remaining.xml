@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Mută %1$s în jos</string>
     <string name="telos_files_toolbar_info">Alege până la %1$d scurtături și schimbă ordinea lor. Navigarea, căutarea și meniul rămân disponibile. Toate acțiunile rămân în meniu.</string>
     <string name="telos_files_toolbar_reset">Restabilește valorile implicite</string>
-    <string name="telos_files_toolbar_save">Salvează</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Personalizează bara de instrumente</string>
     <string name="telos_files_toolbar_up">Mută %1$s în sus</string>
     <string name="telos_files_transfer_added">Adăugat în coada transferurilor de fișiere</string>

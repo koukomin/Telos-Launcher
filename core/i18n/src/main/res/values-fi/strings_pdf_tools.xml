@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Tiedostoja ei ole vielä lisätty.</string>
     <string name="pdft_add_pdf">Lisää PDF</string>
     <string name="pdft_add_images">Lisää kuvia</string>
-    <string name="pdft_add">Lisää</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Järjestä</string>
     <string name="pdft_group_optimize">Optimoi</string>
     <string name="pdft_group_security">Tietoturva</string>
-    <string name="pdft_group_edit">Muokkaa</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Muunna</string>
     <string name="pdft_group_view">Katsele ja vertaile</string>
     <string name="pdft_tool_merge">Yhdistä</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Takaisin</string>
     <string name="pdft_back_to_tools">Takaisin työkaluihin</string>
     <string name="pdft_close">Sulje</string>
-    <string name="pdft_cancel">Peruuta</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Käytä</string>
     <string name="pdft_change">Vaihda</string>
     <string name="pdft_remove">Poista</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Valmis</string>
     <string name="pdft_compress_result">%1$s → %2$s (%3$d %% pienempi)</string>
     <string name="pdft_compress_no_gain">Tulos (%2$s) ei ole alkuperäistä (%1$s) pienempi. Tiedosto sisältää enimmäkseen tekstiä ja vektorigrafiikkaa.</string>
-    <string name="pdft_save">Tallenna</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Tallenna kansioon %1$s</string>
     <string name="pdft_save_choose_folder">Valitse kansio…</string>
     <string name="pdft_save_as">Tallenna nimellä…</string>

@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">पीयर हटाएँ</string>
     <string name="nwg_mobile_only">केवल मोबाइल डेटा पर</string>
     <string name="nwg_lockdown">टनल बंद होने पर ऐप्स को ब्लॉक करें</string>
-    <string name="nwg_save">सहेजें</string>
-    <string name="nwg_cancel">रद्द करें</string>
-    <string name="nwg_delete">हटाएँ</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">कॉन्फ़िगरेशन साझा करें</string>
     <string name="nwg_share_warning">निर्यात किए गए कॉन्फ़िगरेशन में निजी कुंजी शामिल है।</string>
     <string name="nwg_import">आयात करें</string>

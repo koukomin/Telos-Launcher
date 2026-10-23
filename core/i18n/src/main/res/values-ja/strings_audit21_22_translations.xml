@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">アーカイブを開けませんでした</string>
     <string name="au21_arch_pw_title">パスワードが必要です</string>
     <string name="au21_arch_pw_info">%1$s はパスワードで保護されています。開くか展開するには、パスワードを入力してください。パスワードはアーカイブ内にいる間のみメモリに保持され、保存されることはありません。</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">確認中…</string>
     <string name="au21_arch_show">表示</string>
     <string name="au21_arch_hide">非表示</string>

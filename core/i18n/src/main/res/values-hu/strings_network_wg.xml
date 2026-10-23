@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Peer eltávolítása</string>
     <string name="nwg_mobile_only">Csak mobiladattal</string>
     <string name="nwg_lockdown">Az alkalmazások tiltása, amíg az alagút nem működik</string>
-    <string name="nwg_save">Mentés</string>
-    <string name="nwg_cancel">Mégse</string>
-    <string name="nwg_delete">Törlés</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Konfiguráció megosztása</string>
     <string name="nwg_share_warning">Az exportált konfiguráció tartalmazza a privát kulcsot.</string>
     <string name="nwg_import">Importálás</string>

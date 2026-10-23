@@ -6,11 +6,11 @@
     <string name="pdft_no_files">अभी तक कोई फ़ाइल नहीं जोड़ी गई है।</string>
     <string name="pdft_add_pdf">PDF जोड़ें</string>
     <string name="pdft_add_images">चित्र जोड़ें</string>
-    <string name="pdft_add">जोड़ें</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">व्यवस्थित करें</string>
     <string name="pdft_group_optimize">अनुकूलित करें</string>
     <string name="pdft_group_security">सुरक्षा</string>
-    <string name="pdft_group_edit">संपादित करें</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">बदलें</string>
     <string name="pdft_group_view">देखें और तुलना करें</string>
     <string name="pdft_tool_merge">मर्ज करें</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">वापस</string>
     <string name="pdft_back_to_tools">टूल पर वापस जाएँ</string>
     <string name="pdft_close">बंद करें</string>
-    <string name="pdft_cancel">रद्द करें</string>
-    <string name="pdft_ok">ठीक है</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">लागू करें</string>
     <string name="pdft_change">बदलें</string>
     <string name="pdft_remove">हटाएँ</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">हो गया</string>
     <string name="pdft_compress_result">%1$s से %2$s (%3$d%% छोटा)</string>
     <string name="pdft_compress_no_gain">परिणाम (%2$s) मूल फ़ाइल (%1$s) से छोटा नहीं है। इस फ़ाइल में ज़्यादातर टेक्स्ट और वेक्टर ग्राफ़िक्स हैं।</string>
-    <string name="pdft_save">सहेजें</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">%1$s में सहेजें</string>
     <string name="pdft_save_choose_folder">फ़ोल्डर चुनें…</string>
     <string name="pdft_save_as">इस नाम से सहेजें…</string>

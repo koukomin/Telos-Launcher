@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Pārvietot %1$s lejup</string>
     <string name="telos_files_toolbar_info">Izvēlieties līdz %1$d saīsnēm un mainiet to secību. Navigācija, meklēšana un izvēlne paliek pieejama. Visas darbības saglabājas izvēlnē.</string>
     <string name="telos_files_toolbar_reset">Atjaunot noklusējumus</string>
-    <string name="telos_files_toolbar_save">Saglabāt</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Pielāgot rīkjoslu</string>
     <string name="telos_files_toolbar_up">Pārvietot %1$s augšup</string>
     <string name="telos_files_transfer_added">Pievienots failu pārsūtīšanas rindai</string>

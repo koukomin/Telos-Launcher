@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Tęsti žiūrėjimą</string>
     <string name="au22_stremio_no_results">Nieko nerasta</string>
     <string name="au22_stremio_library_empty">Tavo biblioteka tuščia. Atidaryk pavadinimą ir išsaugok jį čia.</string>
-    <string name="au22_stremio_save">Išsaugoti</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Išsaugota</string>
     <string name="au22_stremio_season">%d sezonas</string>
     <string name="au22_stremio_streams">Pasirink srautą</string>

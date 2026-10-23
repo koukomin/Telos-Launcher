@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Neħħi peer</string>
     <string name="nwg_mobile_only">Fuq data mobbli biss</string>
     <string name="nwg_lockdown">Imblokka l-applikazzjonijiet waqt li t-tunnel ma jaħdimx</string>
-    <string name="nwg_save">Salva</string>
-    <string name="nwg_cancel">Ikkanċella</string>
-    <string name="nwg_delete">Ħassar</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Aqsam il-konfigurazzjoni</string>
     <string name="nwg_share_warning">Il-konfigurazzjoni esportata fiha ċ-ċavetta privata.</string>
     <string name="nwg_import">Importa</string>

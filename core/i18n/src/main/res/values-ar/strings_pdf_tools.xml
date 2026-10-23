@@ -6,11 +6,11 @@
     <string name="pdft_no_files">لم تتم إضافة أي ملفات بعد.</string>
     <string name="pdft_add_pdf">إضافة PDF</string>
     <string name="pdft_add_images">إضافة صور</string>
-    <string name="pdft_add">إضافة</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">التنظيم</string>
     <string name="pdft_group_optimize">التحسين</string>
     <string name="pdft_group_security">الأمان</string>
-    <string name="pdft_group_edit">التحرير</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">التحويل</string>
     <string name="pdft_group_view">العرض والمقارنة</string>
     <string name="pdft_tool_merge">دمج</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">رجوع</string>
     <string name="pdft_back_to_tools">العودة إلى الأدوات</string>
     <string name="pdft_close">إغلاق</string>
-    <string name="pdft_cancel">إلغاء</string>
-    <string name="pdft_ok">حسنًا</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">تطبيق</string>
     <string name="pdft_change">تغيير</string>
     <string name="pdft_remove">إزالة</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">تم</string>
     <string name="pdft_compress_result">من %1$s إلى %2$s (أصغر بنسبة %3$d%%)</string>
     <string name="pdft_compress_no_gain">النتيجة (%2$s) ليست أصغر من الأصل (%1$s). يحتوي الملف في معظمه على نص ورسومات متجهية.</string>
-    <string name="pdft_save">حفظ</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">حفظ في %1$s</string>
     <string name="pdft_save_choose_folder">اختيار مجلد…</string>
     <string name="pdft_save_as">حفظ باسم…</string>

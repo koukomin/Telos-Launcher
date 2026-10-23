@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Tapnite Dodaj in prilepite povezavo ali delite povezavo z aplikacijo Telos Downloads.</string>
     <string name="dl_empty_filter_title">Tu ni ničesar</string>
     <string name="dl_empty_filter_text">Nobeden prenos ne ustreza temu filtru.</string>
-    <string name="dl_add">Dodaj</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Dodaj prenos</string>
     <string name="dl_links_hint">Povezave, ena na vrstico</string>
     <string name="dl_invalid_links">Ni veljavne povezave. Prenesete lahko samo povezave http in https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Odstranim %1$s? Preneseni del bo izbrisan.</string>
     <string name="dl_delete_with_file">Odstrani in izbriši datoteko</string>
     <string name="dl_delete_keep_file">Odstrani, obdrži datoteko</string>
-    <string name="dl_cancel">Prekliči</string>
-    <string name="dl_save">Shrani</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Nobena aplikacija ne more odpreti te datoteke</string>
     <string name="dl_pause_all">Začasno ustavi vse</string>
     <string name="dl_resume_all">Nadaljuj vse</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Zaznaj povezave v odložišču</string>
     <string name="dl_p3_detect_clipboard_sum">Ob odprtju Prenosov ponudi kopirano povezavo, naslov spletnega mesta z videom ali magnetno povezavo. Android vas lahko opozori, da je aplikacija prebrala odložišče.</string>
     <string name="dl_p3_clip_found">V odložišču: %1$s</string>
-    <string name="dl_p3_clip_add">Dodaj</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Urnik</string>
     <string name="dl_p3_schedule_enable">Prenašaj samo ob določenih urah</string>
     <string name="dl_p3_schedule_sum">Zunaj časovnega okna prenosi čakajo v čakalni vrsti.</string>

@@ -6,5 +6,5 @@
     <string name="au2_netsec_confirm_clear">Clear</string>
     <string name="au2_netsec_reset_message">The firewall rules of the %1$d apps currently shown will be reset to the defaults.</string>
     <string name="au2_netsec_confirm_reset">Reset</string>
-    <string name="au2_netsec_cancel">Cancel</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
 </resources>

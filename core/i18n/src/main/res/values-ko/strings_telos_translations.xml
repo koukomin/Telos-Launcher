@@ -172,10 +172,10 @@
     <string name="voice_start_failed">녹음을 시작하지 못했어요</string>
     <string name="voice_rename">이름 바꾸기</string>
     <string name="voice_rename_failed">이름이 비어 있거나 이미 사용 중이에요</string>
-    <string name="voice_save">저장</string>
-    <string name="voice_cancel">취소</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">이 녹음을 삭제할까요?</string>
-    <string name="voice_delete">삭제</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">공유</string>
     <string name="voice_share_failed">녹음을 공유하지 못했어요</string>
     <string name="voice_play">재생</string>
@@ -500,7 +500,7 @@
     <string name="preference_floating_launcher_tools">빠른 도구</string>
     <string name="preference_floating_launcher_tools_summary">패널에 스크린샷, 계산기, 빠른 설정 버튼을 표시해요. 스크린샷 버튼에는 접근성 서비스가 필요해요</string>
     <string name="floating_launcher_title">스마트 기능</string>
-    <string name="floating_launcher_edit">편집</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">최근 파일</string>
     <string name="floating_launcher_recent_files_empty">최근 파일이 없어요. 이를 위해 Telos가 파일에 접근할 수 있어야 하며, Telos Files를 열 때 허용할 수 있어요.</string>
     <string name="floating_launcher_recent_files_no_app">이 파일을 열 수 있는 앱이 없어요</string>
@@ -544,10 +544,10 @@
     <string name="floating_launcher_folder_name">폴더 이름</string>
     <string name="floating_launcher_folder_select_apps">묶을 앱을 2개 이상 선택하세요</string>
     <string name="floating_launcher_create">만들기</string>
-    <string name="floating_launcher_cancel">취소</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">폴더 이름 바꾸기</string>
     <string name="floating_launcher_delete_folder">폴더 삭제</string>
-    <string name="floating_launcher_save">저장</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">폴더 열기</string>
     <string name="floating_launcher_all_apps">모든 앱</string>
     <string name="floating_launcher_file_dock">파일 독</string>
@@ -1218,7 +1218,7 @@
     <string name="comms_unblock_number">번호 차단 해제</string>
     <string name="comms_no_previous_calls">이전 통화 없음</string>
     <string name="comms_clear_history">통화 기록을 삭제할까요?</string>
-    <string name="comms_clear_history_confirm">삭제</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">연동</string>
     <string name="filter_incoming">수신</string>
     <string name="filter_outgoing">발신</string>
@@ -1239,7 +1239,7 @@
     <string name="comms_answer">받기</string>
     <string name="comms_reject">거절</string>
     <string name="comms_hangup">끊기</string>
-    <string name="comms_add_call">추가</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">병합</string>
     <string name="comms_swap">전환</string>
     <string name="backup_choose_parts">무엇을 백업할까요?</string>
@@ -1326,9 +1326,9 @@
     <string name="cal_no_events">일정 없음</string>
     <string name="cal_no_title">(제목 없음)</string>
     <string name="cal_all_day">하루 종일</string>
-    <string name="cal_cancel">취소</string>
-    <string name="cal_delete">삭제</string>
-    <string name="cal_save">저장</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">제목</string>
     <string name="cal_location">위치</string>
     <string name="cal_description">설명</string>
@@ -1345,7 +1345,7 @@
     <string name="cal_series_note">변경과 삭제는 반복 일정 전체에 적용돼요.</string>
     <string name="cal_on_phone">이 휴대전화</string>
     <string name="cal_new_local">새 로컬 캘린더</string>
-    <string name="cal_ok">확인</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google, CalDAV(DAVx5), Exchange 캘린더는 계정을 통해 시스템에서 동기화해요. 로컬 캘린더는 휴대전화에만 저장되며 Telos 백업에 포함돼요.</string>
     <string name="cal_view_agenda">다음 30일</string>
     <string name="cal_view_month">월간 보기</string>
@@ -1368,8 +1368,8 @@
     <string name="notes_title_hint">제목</string>
     <string name="notes_body_hint">메모</string>
     <string name="notes_labels_hint">직장, 집</string>
-    <string name="notes_ok">확인</string>
-    <string name="notes_cancel">취소</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">메모 %d개를 가져왔어요</string>
     <string name="notes_synced">동기화 완료: %1$d개 전송, %2$d개 수신</string>
     <string name="notes_sync_failed">동기화 실패: %s</string>
@@ -1427,7 +1427,7 @@
     <string name="screenshot_cannot_open">사진을 열 수 없었어요</string>
     <string name="screenshot_notification_channel">스크린샷</string>
     <string name="screenshot_notification_text">탭하여 편집</string>
-    <string name="screenshot_edit">편집</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">스크린샷</string>
     <string name="screenshot_none">스크린샷이 아직 없어요</string>
     <string name="screenshot_undo">실행 취소</string>
@@ -1461,7 +1461,7 @@
     <string name="floating_launcher_section_widgets">위젯</string>
     <string name="floating_launcher_section_apps">앱</string>
     <string name="floating_launcher_done">완료</string>
-    <string name="floating_launcher_add">추가</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">플로팅 바</string>
     <string name="preference_category_sidebar_style">사이드바 스타일</string>
     <string name="preference_floating_launcher_side">화면 쪽</string>

@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Eemalda loend</string>
     <string name="blocklists_custom_name">Nimi</string>
     <string name="blocklists_custom_url">Aadress (https)</string>
-    <string name="blocklists_add">Lisa</string>
-    <string name="blocklists_cancel">Tühista</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Aktsepteeritakse ainult https-aadresse</string>
     <string name="blocklists_import_failed">Fail ei sisalda kasutatavaid kirjeid või seda ei saanud lugeda</string>
     <string name="blocklists_schedule">Automaatne uuendamine</string>

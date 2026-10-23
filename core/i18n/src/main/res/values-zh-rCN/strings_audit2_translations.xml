@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">清除</string>
     <string name="au2_netsec_reset_message">当前显示的 %1$d 个应用的防火墙规则将重置为默认值。</string>
     <string name="au2_netsec_confirm_reset">重置</string>
-    <string name="au2_netsec_cancel">取消</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">录制</string>
     <string name="au2_radio2_stop_recording">停止录制</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

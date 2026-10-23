@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Pieskaries Pievienot un ielīmē saiti vai kopīgo saiti ar Telos Downloads.</string>
     <string name="dl_empty_filter_title">Šeit nekā nav</string>
     <string name="dl_empty_filter_text">Neviena lejupielāde neatbilst šim filtram.</string>
-    <string name="dl_add">Pievienot</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Pievienot lejupielādi</string>
     <string name="dl_links_hint">Saites, katra savā rindā</string>
     <string name="dl_invalid_links">Nav derīgas saites. Lejupielādēt var tikai http un https saites.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Vai noņemt %1$s? Lejupielādētā daļa tiks dzēsta.</string>
     <string name="dl_delete_with_file">Noņemt un dzēst failu</string>
     <string name="dl_delete_keep_file">Noņemt, failu paturēt</string>
-    <string name="dl_cancel">Atcelt</string>
-    <string name="dl_save">Saglabāt</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Neviena lietotne nevar atvērt šo failu</string>
     <string name="dl_pause_all">Apturēt visas</string>
     <string name="dl_resume_all">Turpināt visas</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Noteikt saites starpliktuvē</string>
     <string name="dl_p3_detect_clipboard_sum">Atverot Lejupielādes, piedāvāt nokopētu saiti, video vietnes adresi vai magnēta saiti. Android var paziņot, ka lietotne nolasīja starpliktuvi.</string>
     <string name="dl_p3_clip_found">Starpliktuvē: %1$s</string>
-    <string name="dl_p3_clip_add">Pievienot</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Grafiks</string>
     <string name="dl_p3_schedule_enable">Lejupielādēt tikai noteiktos laikos</string>
     <string name="dl_p3_schedule_sum">Ārpus laika loga lejupielādes gaida rindā.</string>

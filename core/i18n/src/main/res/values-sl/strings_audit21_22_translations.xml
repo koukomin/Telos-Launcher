@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Arhiva ni bilo mogoče odpreti</string>
     <string name="au21_arch_pw_title">Potrebno je geslo</string>
     <string name="au21_arch_pw_info">%1$s je zaščiten z geslom. Vnesite geslo, da ga odprete ali razpakirate. Geslo se hrani v pomnilniku le, medtem ko ste v arhivu, in se nikoli ne shrani.</string>
-    <string name="au21_arch_ok">V redu</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Preverjanje …</string>
     <string name="au21_arch_show">Pokaži</string>
     <string name="au21_arch_hide">Skrij</string>

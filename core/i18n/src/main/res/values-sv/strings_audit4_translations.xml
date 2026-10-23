@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Bekräfta</string>
-    <string name="au4_confirms_cancel">Avbryt</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Logga ut från Nextcloud?</string>
     <string name="au4_confirms_nc_message">Ditt Nextcloud-konto tas bort från denna startskärm. Du kan logga in igen när som helst.</string>
     <string name="au4_confirms_oc_title">Logga ut från ownCloud?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Blockera åtkomst till mobildata för %1$d appar?</string>
     <string name="au4_noteslink_link_existing">Länka befintlig fil</string>
     <string name="au4_noteslink_create_new">Skapa ny fil</string>
-    <string name="au4_noteslink_cancel">Avbryt</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Omringningsförsök</string>
     <string name="au4_settingsnew1_redial_delay">Fördröjning mellan försök</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

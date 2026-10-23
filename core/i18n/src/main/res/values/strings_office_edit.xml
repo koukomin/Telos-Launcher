@@ -46,7 +46,7 @@
     <string name="od_cell_value">Value</string>
     <string name="od_cell_hint">Text, number, or formula starting with =</string>
     <string name="od_formula_replaced">This cell contains a formula (%1$s). A new value replaces it.</string>
-    <string name="od_ok">OK</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">Sheet %1$d</string>
     <string name="od_slide_of">Slide %1$d of %2$d</string>
     <string name="od_delete_slide">Delete slide</string>

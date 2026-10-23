@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Ukloni peer</string>
     <string name="nwg_mobile_only">Samo na mobilnim podacima</string>
     <string name="nwg_lockdown">Blokiraj aplikacije dok tunel ne radi</string>
-    <string name="nwg_save">Spremi</string>
-    <string name="nwg_cancel">Odustani</string>
-    <string name="nwg_delete">Izbriši</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Podijeli konfiguraciju</string>
     <string name="nwg_share_warning">Izvezena konfiguracija sadrži privatni ključ.</string>
     <string name="nwg_import">Uvezi</string>

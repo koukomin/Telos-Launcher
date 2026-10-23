@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">지우기</string>
     <string name="au2_netsec_reset_message">현재 표시된 앱 %1$d개의 방화벽 규칙이 기본값으로 초기화됩니다.</string>
     <string name="au2_netsec_confirm_reset">초기화</string>
-    <string name="au2_netsec_cancel">취소</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">녹음</string>
     <string name="au2_radio2_stop_recording">녹음 중지</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

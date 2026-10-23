@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">देखना जारी रखें</string>
     <string name="au22_stremio_no_results">कुछ नहीं मिला</string>
     <string name="au22_stremio_library_empty">आपकी लाइब्रेरी खाली है। कोई शीर्षक खोलें और उसे यहाँ सहेजें।</string>
-    <string name="au22_stremio_save">सहेजें</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">सहेजा गया</string>
     <string name="au22_stremio_season">सीज़न %d</string>
     <string name="au22_stremio_streams">स्ट्रीम चुनें</string>

@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Bakstelėkite Pridėti ir įklijuokite nuorodą arba bendrinkite nuorodą su Telos Downloads.</string>
     <string name="dl_empty_filter_title">Čia nieko nėra</string>
     <string name="dl_empty_filter_text">Joks atsisiuntimas neatitinka šio filtro.</string>
-    <string name="dl_add">Pridėti</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Pridėti atsisiuntimą</string>
     <string name="dl_links_hint">Nuorodos, po vieną eilutėje</string>
     <string name="dl_invalid_links">Nėra tinkamos nuorodos. Galima atsisiųsti tik http ir https nuorodas.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Pašalinti %1$s? Atsisiųsta dalis bus ištrinta.</string>
     <string name="dl_delete_with_file">Pašalinti ir ištrinti failą</string>
     <string name="dl_delete_keep_file">Pašalinti, failą palikti</string>
-    <string name="dl_cancel">Atšaukti</string>
-    <string name="dl_save">Išsaugoti</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Jokia programa negali atidaryti šio failo</string>
     <string name="dl_pause_all">Pristabdyti visus</string>
     <string name="dl_resume_all">Tęsti visus</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Aptikti nuorodas iškarpinėje</string>
     <string name="dl_p3_detect_clipboard_sum">Atidarius Atsisiuntimus, pasiūlyti nukopijuotą nuorodą, vaizdo svetainės adresą ar magnet nuorodą. „Android“ gali pranešti, kad programa perskaitė iškarpinę.</string>
     <string name="dl_p3_clip_found">Iškarpinėje: %1$s</string>
-    <string name="dl_p3_clip_add">Pridėti</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Tvarkaraštis</string>
     <string name="dl_p3_schedule_enable">Atsisiųsti tik tam tikru laiku</string>
     <string name="dl_p3_schedule_sum">Už laiko lango ribų atsisiuntimai laukia eilėje.</string>

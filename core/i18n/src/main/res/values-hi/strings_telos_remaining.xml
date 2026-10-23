@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">%1$s को नीचे ले जाएँ</string>
     <string name="telos_files_toolbar_info">अधिकतम %1$d शॉर्टकट चुनें और उनका क्रम बदलें। नेविगेशन, खोज और मेन्यू उपलब्ध रहते हैं। सभी कार्रवाइयाँ मेन्यू में रहती हैं।</string>
     <string name="telos_files_toolbar_reset">डिफ़ॉल्ट बहाल करें</string>
-    <string name="telos_files_toolbar_save">सहेजें</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">टूलबार को अनुकूलित करें</string>
     <string name="telos_files_toolbar_up">%1$s को ऊपर ले जाएँ</string>
     <string name="telos_files_transfer_added">फ़ाइल ट्रांसफ़र कतार में जोड़ा गया</string>

@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Neħħi l-lista</string>
     <string name="blocklists_custom_name">Isem</string>
     <string name="blocklists_custom_url">Indirizz (https)</string>
-    <string name="blocklists_add">Żid</string>
-    <string name="blocklists_cancel">Ikkanċella</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Jintlaqgħu biss indirizzi https</string>
     <string name="blocklists_import_failed">Il-fajl ma fih l-ebda entrata li tista\' tintuża jew ma setax jinqara</string>
     <string name="blocklists_schedule">Aġġornament awtomatiku</string>

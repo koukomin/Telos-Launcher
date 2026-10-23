@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Encara no s\'ha afegit cap fitxer.</string>
     <string name="pdft_add_pdf">Afegeix un PDF</string>
     <string name="pdft_add_images">Afegeix imatges</string>
-    <string name="pdft_add">Afegeix</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Organitza</string>
     <string name="pdft_group_optimize">Optimitza</string>
     <string name="pdft_group_security">Seguretat</string>
-    <string name="pdft_group_edit">Edita</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Converteix</string>
     <string name="pdft_group_view">Mostra i compara</string>
     <string name="pdft_tool_merge">Uneix</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Enrere</string>
     <string name="pdft_back_to_tools">Torna a les eines</string>
     <string name="pdft_close">Tanca</string>
-    <string name="pdft_cancel">Cancel·la</string>
-    <string name="pdft_ok">D\'acord</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Aplica</string>
     <string name="pdft_change">Canvia</string>
     <string name="pdft_remove">Treu</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Fet</string>
     <string name="pdft_compress_result">De %1$s a %2$s (%3$d%% més petit)</string>
     <string name="pdft_compress_no_gain">El resultat (%2$s) no és més petit que l\'original (%1$s). El fitxer conté sobretot text i gràfics vectorials.</string>
-    <string name="pdft_save">Desa</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Desa a %1$s</string>
     <string name="pdft_save_choose_folder">Tria una carpeta…</string>
     <string name="pdft_save_as">Desa com a…</string>

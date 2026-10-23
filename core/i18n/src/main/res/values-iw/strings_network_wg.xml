@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">הסרת עמית</string>
     <string name="nwg_mobile_only">בנתונים סלולריים בלבד</string>
     <string name="nwg_lockdown">חסימת היישומים כשהמנהרה מנותקת</string>
-    <string name="nwg_save">שמירה</string>
-    <string name="nwg_cancel">ביטול</string>
-    <string name="nwg_delete">מחיקה</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">שיתוף התצורה</string>
     <string name="nwg_share_warning">התצורה המיוצאת מכילה את המפתח הפרטי.</string>
     <string name="nwg_import">ייבוא</string>

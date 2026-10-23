@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">ID konfigurasi</string>
     <string name="net_dns_nextdns_device">Nama peranti (pilihan)</string>
     <string name="net_dns_nextdns_bad_id">ID konfigurasi terdiri daripada 4 hingga 12 huruf dan digit.</string>
-    <string name="net_dns_nextdns_add">Tambah</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Penyedia</string>
     <string name="net_dns_detail_protocol">Protokol</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Guna pelayan ini</string>
     <string name="net_dns_action_test">Uji</string>
     <string name="net_dns_action_copy">Salin sebagai pelayan tersuai</string>
-    <string name="net_dns_action_edit">Edit</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Alih keluar</string>
-    <string name="net_dns_save">Simpan</string>
-    <string name="net_dns_cancel">Batal</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Sedang menguji…</string>
     <string name="net_dns_test_ok">Dijawab dalam %1$d ms</string>
     <string name="net_dns_test_fail">Ujian gagal: %1$s</string>

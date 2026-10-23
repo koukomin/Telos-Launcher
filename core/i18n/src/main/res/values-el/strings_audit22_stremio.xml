@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Συνέχεια παρακολούθησης</string>
     <string name="au22_stremio_no_results">Δεν βρέθηκε τίποτα</string>
     <string name="au22_stremio_library_empty">Η βιβλιοθήκη σας είναι κενή. Ανοίξτε έναν τίτλο και αποθηκεύστε τον εδώ.</string>
-    <string name="au22_stremio_save">Αποθήκευση</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Αποθηκεύτηκε</string>
     <string name="au22_stremio_season">Κύκλος %d</string>
     <string name="au22_stremio_streams">Επιλέξτε ροή</string>

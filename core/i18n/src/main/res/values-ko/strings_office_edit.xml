@@ -46,7 +46,7 @@
     <string name="od_cell_value">값</string>
     <string name="od_cell_hint">텍스트, 숫자 또는 =로 시작하는 수식</string>
     <string name="od_formula_replaced">이 셀에는 수식(%1$s)이 있습니다. 새 값이 수식을 대체합니다.</string>
-    <string name="od_ok">확인</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">시트 %1$d</string>
     <string name="od_slide_of">슬라이드 %1$d/%2$d</string>
     <string name="od_delete_slide">슬라이드 삭제</string>

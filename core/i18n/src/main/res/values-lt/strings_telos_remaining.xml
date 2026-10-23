@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Perkelti %1$s žemyn</string>
     <string name="telos_files_toolbar_info">Pasirinkite iki %1$d nuorodų ir pakeiskite jų tvarką. Naršymas, paieška ir meniu lieka pasiekiami. Visi veiksmai lieka meniu.</string>
     <string name="telos_files_toolbar_reset">Atkurti numatytąsias reikšmes</string>
-    <string name="telos_files_toolbar_save">Išsaugoti</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Tinkinti įrankių juostą</string>
     <string name="telos_files_toolbar_up">Perkelti %1$s aukštyn</string>
     <string name="telos_files_transfer_added">Pridėta į failų perkėlimo eilę</string>

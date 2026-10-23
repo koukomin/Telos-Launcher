@@ -112,7 +112,7 @@
     <string name="telos_files_toolbar_down">Displaciar %1$s in basso</string>
     <string name="telos_files_toolbar_info">Selige usque a %1$d vias breve e cambia lor ordine. Navigation, recerca e menu remane disponibile. Tote actiones remane in le menu.</string>
     <string name="telos_files_toolbar_reset">Restaurar valores predefinite</string>
-    <string name="telos_files_toolbar_save">Salvar</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Personalisar barra de utensiles</string>
     <string name="telos_files_toolbar_up">Displaciar %1$s in alto</string>
     <string name="telos_files_transfer_added">Addite al cauda de transferentias de files</string>

@@ -46,7 +46,7 @@
     <string name="od_cell_value">ערך</string>
     <string name="od_cell_hint">טקסט, מספר או נוסחה שמתחילה ב-=</string>
     <string name="od_formula_replaced">התא הזה מכיל נוסחה (%1$s). ערך חדש יחליף אותה.</string>
-    <string name="od_ok">אישור</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">גיליון %1$d</string>
     <string name="od_slide_of">שקף %1$d מתוך %2$d</string>
     <string name="od_delete_slide">מחיקת שקף</string>

@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Konfiguratsiooni ID</string>
     <string name="net_dns_nextdns_device">Seadme nimi (valikuline)</string>
     <string name="net_dns_nextdns_bad_id">Konfiguratsiooni ID koosneb 4–12 tähest ja numbrist.</string>
-    <string name="net_dns_nextdns_add">Lisa</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Teenusepakkuja</string>
     <string name="net_dns_detail_protocol">Protokoll</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Kasuta seda serverit</string>
     <string name="net_dns_action_test">Testi</string>
     <string name="net_dns_action_copy">Kopeeri oma serveriks</string>
-    <string name="net_dns_action_edit">Muuda</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Eemalda</string>
-    <string name="net_dns_save">Salvesta</string>
-    <string name="net_dns_cancel">Tühista</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Testimine…</string>
     <string name="net_dns_test_ok">Vastus %1$d ms-ga</string>
     <string name="net_dns_test_fail">Test ebaõnnestus: %1$s</string>

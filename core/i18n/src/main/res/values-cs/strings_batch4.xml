@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Klepněte na Přidat a vložte odkaz, nebo sdílejte odkaz do Telos Downloads.</string>
     <string name="dl_empty_filter_title">Nic tu není</string>
     <string name="dl_empty_filter_text">Tomuto filtru neodpovídá žádné stahování.</string>
-    <string name="dl_add">Přidat</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Přidat stahování</string>
     <string name="dl_links_hint">Odkazy, jeden na řádek</string>
     <string name="dl_invalid_links">Žádný platný odkaz. Stahovat lze pouze odkazy http a https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Odebrat %1$s? Již stažená část bude smazána.</string>
     <string name="dl_delete_with_file">Odebrat a smazat soubor</string>
     <string name="dl_delete_keep_file">Odebrat, soubor ponechat</string>
-    <string name="dl_cancel">Zrušit</string>
-    <string name="dl_save">Uložit</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Tento soubor nemůže otevřít žádná aplikace</string>
     <string name="dl_pause_all">Pozastavit vše</string>
     <string name="dl_resume_all">Pokračovat ve všem</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Rozpoznávat odkazy ve schránce</string>
     <string name="dl_p3_detect_clipboard_sum">Při otevření Stahování nabídne zkopírovaný odkaz, adresu stránky s videem nebo magnet odkaz. Android vás může upozornit, že aplikace přečetla schránku.</string>
     <string name="dl_p3_clip_found">Ve schránce: %1$s</string>
-    <string name="dl_p3_clip_add">Přidat</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Plán</string>
     <string name="dl_p3_schedule_enable">Stahovat jen v určitou dobu</string>
     <string name="dl_p3_schedule_sum">Mimo časové okno stahování čekají ve frontě.</string>

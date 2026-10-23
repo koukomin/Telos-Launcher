@@ -46,7 +46,7 @@
     <string name="od_cell_value">القيمة</string>
     <string name="od_cell_hint">نص أو رقم أو صيغة تبدأ بالعلامة =</string>
     <string name="od_formula_replaced">تحتوي هذه الخلية على صيغة (%1$s). ستحل القيمة الجديدة محلها.</string>
-    <string name="od_ok">موافق</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">الورقة %1$d</string>
     <string name="od_slide_of">الشريحة %1$d من %2$d</string>
     <string name="od_delete_slide">حذف الشريحة</string>

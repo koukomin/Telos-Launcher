@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Vahvista</string>
-    <string name="au4_confirms_cancel">Peruuta</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Kirjaudutaanko ulos Nextcloudista?</string>
     <string name="au4_confirms_nc_message">Nextcloud-tilisi poistetaan tästä käynnistimestä. Voit kirjautua sisään uudelleen milloin tahansa.</string>
     <string name="au4_confirms_oc_title">Kirjaudutaanko ulos ownCloudista?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Estetäänkö mobiilidatayhteys %1$d sovellukselta?</string>
     <string name="au4_noteslink_link_existing">Yhdistä olemassa oleva tiedosto</string>
     <string name="au4_noteslink_create_new">Luo uusi tiedosto</string>
-    <string name="au4_noteslink_cancel">Peruuta</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Uudelleenyritykset</string>
     <string name="au4_settingsnew1_redial_delay">Viive yritysten välillä</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

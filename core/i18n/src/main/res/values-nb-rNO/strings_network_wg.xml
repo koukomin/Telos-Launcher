@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Fjern peer</string>
     <string name="nwg_mobile_only">Bare på mobildata</string>
     <string name="nwg_lockdown">Blokker appene mens tunnelen er nede</string>
-    <string name="nwg_save">Lagre</string>
-    <string name="nwg_cancel">Avbryt</string>
-    <string name="nwg_delete">Slett</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Del konfigurasjon</string>
     <string name="nwg_share_warning">Den eksporterte konfigurasjonen inneholder den private nøkkelen.</string>
     <string name="nwg_import">Importer</string>

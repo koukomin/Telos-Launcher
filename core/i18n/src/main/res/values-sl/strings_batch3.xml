@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Odstrani seznam</string>
     <string name="blocklists_custom_name">Ime</string>
     <string name="blocklists_custom_url">Naslov (https)</string>
-    <string name="blocklists_add">Dodaj</string>
-    <string name="blocklists_cancel">Prekliči</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Sprejeti so le naslovi https</string>
     <string name="blocklists_import_failed">Datoteka ne vsebuje uporabnih vnosov ali je ni bilo mogoče prebrati</string>
     <string name="blocklists_schedule">Samodejno posodabljanje</string>

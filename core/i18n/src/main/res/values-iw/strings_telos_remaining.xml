@@ -112,7 +112,7 @@
     <string name="telos_files_toolbar_down">הזזת %1$s למטה</string>
     <string name="telos_files_toolbar_info">אפשר לבחור עד %1$d קיצורי דרך ולשנות את הסדר שלהם. הניווט, החיפוש והתפריט נשארים זמינים. כל הפעולות נשארות בתפריט.</string>
     <string name="telos_files_toolbar_reset">שחזור ברירות המחדל</string>
-    <string name="telos_files_toolbar_save">שמירה</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">התאמה אישית של סרגל הכלים</string>
     <string name="telos_files_toolbar_up">הזזת %1$s למעלה</string>
     <string name="telos_files_transfer_added">נוסף לתור העברות הקבצים</string>

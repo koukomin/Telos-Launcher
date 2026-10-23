@@ -17,7 +17,7 @@
     <string name="au22_stremio_continue">Continue watching</string>
     <string name="au22_stremio_no_results">Nothing found</string>
     <string name="au22_stremio_library_empty">Your library is empty. Open a title and save it here.</string>
-    <string name="au22_stremio_save">Save</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Saved</string>
     <string name="au22_stremio_season">Season %d</string>
     <string name="au22_stremio_streams">Choose a stream</string>

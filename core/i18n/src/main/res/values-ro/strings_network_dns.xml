@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">ID configurație</string>
     <string name="net_dns_nextdns_device">Numele dispozitivului (opțional)</string>
     <string name="net_dns_nextdns_bad_id">ID-ul configurației are între 4 și 12 litere și cifre.</string>
-    <string name="net_dns_nextdns_add">Adaugă</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Furnizor</string>
     <string name="net_dns_detail_protocol">Protocol</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Folosește acest server</string>
     <string name="net_dns_action_test">Testează</string>
     <string name="net_dns_action_copy">Copiază ca server personalizat</string>
-    <string name="net_dns_action_edit">Editează</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Elimină</string>
-    <string name="net_dns_save">Salvează</string>
-    <string name="net_dns_cancel">Anulează</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Se testează…</string>
     <string name="net_dns_test_ok">Răspuns în %1$d ms</string>
     <string name="net_dns_test_fail">Testul a eșuat: %1$s</string>

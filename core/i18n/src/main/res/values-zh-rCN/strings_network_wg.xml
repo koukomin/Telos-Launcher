@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">移除对等端</string>
     <string name="nwg_mobile_only">仅使用移动数据时</string>
     <string name="nwg_lockdown">隧道断开时阻止这些应用联网</string>
-    <string name="nwg_save">保存</string>
-    <string name="nwg_cancel">取消</string>
-    <string name="nwg_delete">删除</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">分享配置</string>
     <string name="nwg_share_warning">导出的配置包含私钥。</string>
     <string name="nwg_import">导入</string>

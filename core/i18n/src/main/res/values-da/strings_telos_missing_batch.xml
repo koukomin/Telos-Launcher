@@ -24,7 +24,7 @@
     <string name="action_done">Færdig</string>
     <string name="action_more_actions">Flere handlinger</string>
     <string name="action_clear">Ryd</string>
-    <string name="menu_delete">Slet</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_remove">Fjern</string>
     <string name="menu_contacts_open_externally">Åbn i kontakter-app</string>
     <string name="menu_calendar_open_externally">Åbn i kalender-app</string>
@@ -111,15 +111,15 @@
     <string name="widget_removed">Widget fjernet</string>
     <string name="notes_widget_placeholder">Skriv en note…</string>
     <string name="notes_widget_action_new">Ny note</string>
-    <string name="notes_widget_action_save">Gem</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_export_filename">Note_%1$s</string>
     <string name="notes_widget_action_dismiss">Afvis</string>
     <string name="notes_widget_dismissed">Note afvist.</string>
     <string name="shortcut_summary">Af %1$s</string>
     <string name="close">Luk</string>
-    <string name="save">Gem</string>
+    <string name="save">@string/hc_save</string>
     <string name="duplicate">Duplikér</string>
-    <string name="edit">Redigér</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="skip">Spring over</string>
     <string name="action_next">Næste</string>
     <string name="turn_off">Slå fra</string>

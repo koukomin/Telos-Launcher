@@ -46,7 +46,7 @@
     <string name="od_cell_value">Værdi</string>
     <string name="od_cell_hint">Tekst, tal eller formel der starter med =</string>
     <string name="od_formula_replaced">Denne celle indeholder en formel (%1$s). En ny værdi erstatter den.</string>
-    <string name="od_ok">OK</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">Ark %1$d</string>
     <string name="od_slide_of">Slide %1$d af %2$d</string>
     <string name="od_delete_slide">Slet slide</string>

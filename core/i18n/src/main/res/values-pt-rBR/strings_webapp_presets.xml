@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Mensagens</string>
     <string name="web_app_preset_category_video">Vídeo e música</string>
     <string name="web_app_preset_category_work">Produtividade e trabalho</string>
-    <string name="web_app_preset_add">Adicionar</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Adicionar %1$s</string>
     <string name="web_app_preset_dialog_summary">Escolha os apps web a adicionar. Eles são salvos como qualquer app web que você criar.</string>
     <string name="web_app_preset_exists">Já está nos seus apps web, será reutilizado</string>

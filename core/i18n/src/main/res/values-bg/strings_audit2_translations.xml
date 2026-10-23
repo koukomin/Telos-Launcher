@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Изчистване</string>
     <string name="au2_netsec_reset_message">Правилата на защитната стена за %1$d показани в момента приложения ще бъдат нулирани до стандартните.</string>
     <string name="au2_netsec_confirm_reset">Нулиране</string>
-    <string name="au2_netsec_cancel">Отказ</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Запис</string>
     <string name="au2_radio2_stop_recording">Спиране на записа</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

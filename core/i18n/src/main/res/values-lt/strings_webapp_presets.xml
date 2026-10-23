@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Žinutės</string>
     <string name="web_app_preset_category_video">Vaizdo įrašai ir muzika</string>
     <string name="web_app_preset_category_work">Produktyvumas ir darbas</string>
-    <string name="web_app_preset_add">Pridėti</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">Pridėti: %1$s</string>
     <string name="web_app_preset_dialog_summary">Pasirinkite, kurias žiniatinklio programėles pridėti. Jos išsaugomos kaip ir pačių sukurtos žiniatinklio programėlės.</string>
     <string name="web_app_preset_exists">Jau yra jūsų žiniatinklio programėlėse, bus panaudota iš naujo</string>

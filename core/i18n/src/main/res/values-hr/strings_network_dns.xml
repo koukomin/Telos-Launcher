@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">ID konfiguracije</string>
     <string name="net_dns_nextdns_device">Naziv uređaja (neobavezno)</string>
     <string name="net_dns_nextdns_bad_id">ID konfiguracije sastoji se od 4 do 12 slova i znamenki.</string>
-    <string name="net_dns_nextdns_add">Dodaj</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Pružatelj</string>
     <string name="net_dns_detail_protocol">Protokol</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Koristi ovaj poslužitelj</string>
     <string name="net_dns_action_test">Testiraj</string>
     <string name="net_dns_action_copy">Kopiraj kao vlastiti poslužitelj</string>
-    <string name="net_dns_action_edit">Uredi</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Ukloni</string>
-    <string name="net_dns_save">Spremi</string>
-    <string name="net_dns_cancel">Odustani</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Testiranje…</string>
     <string name="net_dns_test_ok">Odgovor za %1$d ms</string>
     <string name="net_dns_test_fail">Test nije uspio: %1$s</string>

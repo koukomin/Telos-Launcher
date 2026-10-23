@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Lijst verwijderen</string>
     <string name="blocklists_custom_name">Naam</string>
     <string name="blocklists_custom_url">Adres (https)</string>
-    <string name="blocklists_add">Toevoegen</string>
-    <string name="blocklists_cancel">Annuleren</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Alleen https-adressen worden geaccepteerd</string>
     <string name="blocklists_import_failed">Het bestand bevat geen bruikbare items of kon niet worden gelezen</string>
     <string name="blocklists_schedule">Automatisch bijwerken</string>

@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Pokračovať v sledovaní</string>
     <string name="au22_stremio_no_results">Nič sa nenašlo</string>
     <string name="au22_stremio_library_empty">Vaša knižnica je prázdna. Otvorte titul a uložte ho sem.</string>
-    <string name="au22_stremio_save">Uložiť</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Uložené</string>
     <string name="au22_stremio_season">Séria %d</string>
     <string name="au22_stremio_streams">Vyberte stream</string>

@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Выдаліць піра</string>
     <string name="nwg_mobile_only">Толькі ў мабільнай сетцы</string>
     <string name="nwg_lockdown">Блакаваць праграмы, пакуль тунэль не працуе</string>
-    <string name="nwg_save">Захаваць</string>
-    <string name="nwg_cancel">Скасаваць</string>
-    <string name="nwg_delete">Выдаліць</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Падзяліцца канфігурацыяй</string>
     <string name="nwg_share_warning">Экспартаваная канфігурацыя змяшчае прыватны ключ.</string>
     <string name="nwg_import">Імпарт</string>

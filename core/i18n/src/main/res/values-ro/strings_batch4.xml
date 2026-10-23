@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Atingeți Adaugă și lipiți un link sau distribuiți un link către Telos Downloads.</string>
     <string name="dl_empty_filter_title">Nimic aici</string>
     <string name="dl_empty_filter_text">Nicio descărcare nu corespunde acestui filtru.</string>
-    <string name="dl_add">Adaugă</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Adaugă descărcare</string>
     <string name="dl_links_hint">Linkuri, câte unul pe linie</string>
     <string name="dl_invalid_links">Niciun link valid. Se pot descărca doar linkuri http și https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Eliminați %1$s? Partea descărcată va fi ștearsă.</string>
     <string name="dl_delete_with_file">Elimină și șterge fișierul</string>
     <string name="dl_delete_keep_file">Elimină, păstrează fișierul</string>
-    <string name="dl_cancel">Anulează</string>
-    <string name="dl_save">Salvează</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Nicio aplicație nu poate deschide acest fișier</string>
     <string name="dl_pause_all">Pauză pentru toate</string>
     <string name="dl_resume_all">Reia toate</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Detectează linkurile din clipboard</string>
     <string name="dl_p3_detect_clipboard_sum">Când deschideți Descărcări, propune un link, o adresă de site video sau un link magnet copiat. Android vă poate anunța că aplicația a citit clipboardul.</string>
     <string name="dl_p3_clip_found">În clipboard: %1$s</string>
-    <string name="dl_p3_clip_add">Adaugă</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Program</string>
     <string name="dl_p3_schedule_enable">Descarcă doar la anumite ore</string>
     <string name="dl_p3_schedule_sum">În afara intervalului orar, descărcările așteaptă în coadă.</string>

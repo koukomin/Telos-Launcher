@@ -74,8 +74,8 @@
     <string name="blocklists_remove">सूची हटाएँ</string>
     <string name="blocklists_custom_name">नाम</string>
     <string name="blocklists_custom_url">पता (https)</string>
-    <string name="blocklists_add">जोड़ें</string>
-    <string name="blocklists_cancel">रद्द करें</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">केवल https पते स्वीकार किए जाते हैं</string>
     <string name="blocklists_import_failed">फ़ाइल में कोई उपयोगी प्रविष्टि नहीं है या उसे पढ़ा नहीं जा सका</string>
     <string name="blocklists_schedule">अपने आप अपडेट</string>

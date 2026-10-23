@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Переместить %1$s вниз</string>
     <string name="telos_files_toolbar_info">Выберите до %1$d ярлыков и измените их порядок. Навигация, поиск и меню остаются доступны. Все действия остаются в меню.</string>
     <string name="telos_files_toolbar_reset">Восстановить настройки по умолчанию</string>
-    <string name="telos_files_toolbar_save">Сохранить</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Настроить панель инструментов</string>
     <string name="telos_files_toolbar_up">Переместить %1$s вверх</string>
     <string name="telos_files_transfer_added">Добавлено в очередь передачи файлов</string>

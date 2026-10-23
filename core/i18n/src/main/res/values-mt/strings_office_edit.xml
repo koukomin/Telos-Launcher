@@ -46,7 +46,7 @@
     <string name="od_cell_value">Valur</string>
     <string name="od_cell_hint">Test, numru jew formula li tibda bi =</string>
     <string name="od_formula_replaced">Din iċ-ċellola fiha formula (%1$s). Valur ġdid jissostitwiha.</string>
-    <string name="od_ok">OK</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">Folja %1$d</string>
     <string name="od_slide_of">Slajd %1$d minn %2$d</string>
     <string name="od_delete_slide">Ħassar is-slajd</string>

@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Não foi possível abrir o arquivo</string>
     <string name="au21_arch_pw_title">Palavra-passe necessária</string>
     <string name="au21_arch_pw_info">%1$s está protegido por palavra-passe. Introduza a palavra-passe para o abrir ou extrair. A palavra-passe só é mantida em memória enquanto estiver dentro do arquivo e nunca é guardada.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">A verificar…</string>
     <string name="au21_arch_show">Mostrar</string>
     <string name="au21_arch_hide">Ocultar</string>

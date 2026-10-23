@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Arkivet kunne ikke åbnes</string>
     <string name="au21_arch_pw_title">Adgangskode påkrævet</string>
     <string name="au21_arch_pw_info">%1$s er beskyttet med adgangskode. Indtast adgangskoden for at åbne eller udpakke det. Adgangskoden gemmes kun i hukommelsen, mens du er i arkivet, og bliver aldrig gemt permanent.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Kontrollerer…</string>
     <string name="au21_arch_show">Vis</string>
     <string name="au21_arch_hide">Skjul</string>

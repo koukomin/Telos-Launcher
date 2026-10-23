@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">No se pudo abrir el archivo comprimido</string>
     <string name="au21_arch_pw_title">Se requiere contraseña</string>
     <string name="au21_arch_pw_info">%1$s está protegido con contraseña. Introduce la contraseña para abrirlo o descomprimirlo. La contraseña solo se mantiene en memoria mientras estás dentro del archivo y nunca se guarda.</string>
-    <string name="au21_arch_ok">Aceptar</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Comprobando…</string>
     <string name="au21_arch_show">Mostrar</string>
     <string name="au21_arch_hide">Ocultar</string>

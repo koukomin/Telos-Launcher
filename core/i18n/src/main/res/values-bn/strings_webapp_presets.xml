@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">মেসেজিং</string>
     <string name="web_app_preset_category_video">ভিডিও ও সঙ্গীত</string>
     <string name="web_app_preset_category_work">প্রোডাক্টিভিটি ও কাজ</string>
-    <string name="web_app_preset_add">যোগ করুন</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">%1$s যোগ করুন</string>
     <string name="web_app_preset_dialog_summary">যে ওয়েব অ্যাপগুলো যোগ করতে চান সেগুলো বেছে নিন। আপনার নিজের তৈরি ওয়েব অ্যাপের মতোই এগুলো সংরক্ষিত হবে।</string>
     <string name="web_app_preset_exists">আপনার ওয়েব অ্যাপে আগে থেকেই আছে, আবার ব্যবহার করা হবে</string>

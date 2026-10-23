@@ -12,7 +12,7 @@
     <string name="dl_empty_text">जोड़ें पर टैप करके लिंक पेस्ट करें, या कोई लिंक Telos डाउनलोड पर शेयर करें।</string>
     <string name="dl_empty_filter_title">यहाँ कुछ नहीं है</string>
     <string name="dl_empty_filter_text">इस फ़िल्टर से कोई डाउनलोड मेल नहीं खाता।</string>
-    <string name="dl_add">जोड़ें</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">डाउनलोड जोड़ें</string>
     <string name="dl_links_hint">लिंक, प्रति पंक्ति एक</string>
     <string name="dl_invalid_links">कोई मान्य लिंक नहीं। केवल http और https लिंक डाउनलोड किए जा सकते हैं।</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">%1$s हटाएँ? जितना हिस्सा डाउनलोड हुआ है वह हटा दिया जाएगा।</string>
     <string name="dl_delete_with_file">हटाएँ और फ़ाइल मिटाएँ</string>
     <string name="dl_delete_keep_file">हटाएँ, फ़ाइल रखें</string>
-    <string name="dl_cancel">रद्द करें</string>
-    <string name="dl_save">सहेजें</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">कोई ऐप इस फ़ाइल को नहीं खोल सकता</string>
     <string name="dl_pause_all">सभी रोकें</string>
     <string name="dl_resume_all">सभी फिर से शुरू करें</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">क्लिपबोर्ड में लिंक पहचानें</string>
     <string name="dl_p3_detect_clipboard_sum">डाउनलोड खोलने पर, आपके कॉपी किए हुए लिंक, वीडियो साइट के पते या मैग्नेट लिंक का सुझाव दें। Android आपको बता सकता है कि ऐप ने क्लिपबोर्ड पढ़ा।</string>
     <string name="dl_p3_clip_found">क्लिपबोर्ड में: %1$s</string>
-    <string name="dl_p3_clip_add">जोड़ें</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">शेड्यूल</string>
     <string name="dl_p3_schedule_enable">केवल तय समय पर डाउनलोड करें</string>
     <string name="dl_p3_schedule_sum">समय-सीमा के बाहर डाउनलोड कतार में प्रतीक्षा करते हैं।</string>

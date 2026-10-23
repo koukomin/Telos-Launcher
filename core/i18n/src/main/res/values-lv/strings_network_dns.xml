@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Konfigurācijas ID</string>
     <string name="net_dns_nextdns_device">Ierīces nosaukums (nav obligāts)</string>
     <string name="net_dns_nextdns_bad_id">Konfigurācijas ID sastāv no 4 līdz 12 burtiem un cipariem.</string>
-    <string name="net_dns_nextdns_add">Pievienot</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Pakalpojumu sniedzējs</string>
     <string name="net_dns_detail_protocol">Protokols</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Izmantot šo serveri</string>
     <string name="net_dns_action_test">Pārbaudīt</string>
     <string name="net_dns_action_copy">Kopēt kā pielāgotu serveri</string>
-    <string name="net_dns_action_edit">Rediģēt</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Noņemt</string>
-    <string name="net_dns_save">Saglabāt</string>
-    <string name="net_dns_cancel">Atcelt</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Notiek pārbaude…</string>
     <string name="net_dns_test_ok">Atbilde %1$d ms laikā</string>
     <string name="net_dns_test_fail">Pārbaude neizdevās: %1$s</string>

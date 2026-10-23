@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Počisti</string>
     <string name="au2_netsec_reset_message">Požarni zid za %1$d trenutno prikazanih aplikacij bo ponastavljen na privzete vrednosti.</string>
     <string name="au2_netsec_confirm_reset">Ponastavi</string>
-    <string name="au2_netsec_cancel">Prekliči</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Snemaj</string>
     <string name="au2_radio2_stop_recording">Ustavi snemanje</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

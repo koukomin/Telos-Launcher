@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Belum ada berkas yang ditambahkan.</string>
     <string name="pdft_add_pdf">Tambah PDF</string>
     <string name="pdft_add_images">Tambah gambar</string>
-    <string name="pdft_add">Tambah</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Atur</string>
     <string name="pdft_group_optimize">Optimalkan</string>
     <string name="pdft_group_security">Keamanan</string>
-    <string name="pdft_group_edit">Edit</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Konversi</string>
     <string name="pdft_group_view">Lihat dan bandingkan</string>
     <string name="pdft_tool_merge">Gabungkan</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Kembali</string>
     <string name="pdft_back_to_tools">Kembali ke alat</string>
     <string name="pdft_close">Tutup</string>
-    <string name="pdft_cancel">Batal</string>
-    <string name="pdft_ok">OK</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Terapkan</string>
     <string name="pdft_change">Ganti</string>
     <string name="pdft_remove">Hapus</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Selesai</string>
     <string name="pdft_compress_result">Dari %1$s menjadi %2$s (%3$d%% lebih kecil)</string>
     <string name="pdft_compress_no_gain">Hasil (%2$s) tidak lebih kecil dari aslinya (%1$s). Berkas ini sebagian besar berisi teks dan grafik vektor.</string>
-    <string name="pdft_save">Simpan</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Simpan ke %1$s</string>
     <string name="pdft_save_choose_folder">Pilih folder…</string>
     <string name="pdft_save_as">Simpan sebagai…</string>

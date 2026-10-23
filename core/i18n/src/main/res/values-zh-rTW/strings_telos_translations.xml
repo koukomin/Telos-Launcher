@@ -280,7 +280,7 @@
     <string name="preference_floating_launcher_tools">快速工具</string>
     <string name="preference_floating_launcher_tools_summary">在面板中顯示螢幕截圖、計算機與快速設定按鈕。螢幕截圖按鈕需要無障礙服務</string>
     <string name="floating_launcher_title">智慧功能</string>
-    <string name="floating_launcher_edit">編輯</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">最近的檔案</string>
     <string name="floating_launcher_recent_files_empty">沒有最近的檔案。Telos 需要檔案存取權才能使用此功能，您可在開啟 Telos 檔案時允許。</string>
     <string name="floating_launcher_recent_files_no_app">沒有應用程式可以開啟此檔案</string>
@@ -324,10 +324,10 @@
     <string name="floating_launcher_folder_name">資料夾名稱</string>
     <string name="floating_launcher_folder_select_apps">請至少選擇 2 個應用程式進行群組</string>
     <string name="floating_launcher_create">建立</string>
-    <string name="floating_launcher_cancel">取消</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">重新命名資料夾</string>
     <string name="floating_launcher_delete_folder">刪除資料夾</string>
-    <string name="floating_launcher_save">儲存</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">開啟資料夾</string>
     <string name="floating_launcher_all_apps">所有應用程式</string>
     <string name="floating_launcher_file_dock">檔案暫存區</string>
@@ -694,7 +694,7 @@
     <string name="comms_unblock_number">解除封鎖號碼</string>
     <string name="comms_no_previous_calls">沒有先前的通話</string>
     <string name="comms_clear_history">要清除通話記錄嗎？</string>
-    <string name="comms_clear_history_confirm">刪除</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">整合</string>
     <string name="filter_incoming">來電</string>
     <string name="filter_outgoing">撥出</string>
@@ -715,7 +715,7 @@
     <string name="comms_answer">接聽</string>
     <string name="comms_reject">拒接</string>
     <string name="comms_hangup">掛斷</string>
-    <string name="comms_add_call">新增</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">合併</string>
     <string name="comms_swap">切換</string>
     <string name="backup_choose_parts">您要備份哪些內容？</string>
@@ -802,9 +802,9 @@
     <string name="cal_no_events">沒有活動</string>
     <string name="cal_no_title">（無標題）</string>
     <string name="cal_all_day">全天</string>
-    <string name="cal_cancel">取消</string>
-    <string name="cal_delete">刪除</string>
-    <string name="cal_save">儲存</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">標題</string>
     <string name="cal_location">地點</string>
     <string name="cal_description">說明</string>
@@ -821,7 +821,7 @@
     <string name="cal_series_note">變更與刪除會套用至整個系列。</string>
     <string name="cal_on_phone">在此手機上</string>
     <string name="cal_new_local">新增本機行事曆</string>
-    <string name="cal_ok">確定</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google、CalDAV (DAVx5) 與 Exchange 行事曆由系統透過其帳戶同步。本機行事曆會保留在手機上，並包含在 Telos 備份中。</string>
     <string name="cal_view_agenda">未來 30 天</string>
     <string name="cal_view_month">月檢視</string>
@@ -844,8 +844,8 @@
     <string name="notes_title_hint">標題</string>
     <string name="notes_body_hint">筆記</string>
     <string name="notes_labels_hint">工作、家庭</string>
-    <string name="notes_ok">確定</string>
-    <string name="notes_cancel">取消</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">已匯入 %d 則筆記</string>
     <string name="notes_synced">已同步：傳送 %1$d 則，接收 %2$d 則</string>
     <string name="notes_sync_failed">同步失敗：%s</string>
@@ -903,7 +903,7 @@
     <string name="screenshot_cannot_open">無法開啟圖片</string>
     <string name="screenshot_notification_channel">螢幕截圖</string>
     <string name="screenshot_notification_text">點一下以編輯</string>
-    <string name="screenshot_edit">編輯</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">螢幕截圖</string>
     <string name="screenshot_none">尚無螢幕截圖</string>
     <string name="screenshot_undo">復原</string>
@@ -937,7 +937,7 @@
     <string name="floating_launcher_section_widgets">小工具</string>
     <string name="floating_launcher_section_apps">應用程式</string>
     <string name="floating_launcher_done">完成</string>
-    <string name="floating_launcher_add">新增</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">浮動列</string>
     <string name="preference_category_sidebar_style">側邊欄樣式</string>
     <string name="preference_floating_launcher_side">螢幕側邊</string>
@@ -967,10 +967,10 @@
     <string name="voice_start_failed">無法開始錄音</string>
     <string name="voice_rename">重新命名</string>
     <string name="voice_rename_failed">名稱為空白或已被使用</string>
-    <string name="voice_save">儲存</string>
-    <string name="voice_cancel">取消</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">要刪除此錄音嗎？</string>
-    <string name="voice_delete">刪除</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">分享</string>
     <string name="voice_share_failed">無法分享錄音</string>
     <string name="voice_play">播放</string>

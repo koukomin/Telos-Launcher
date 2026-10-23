@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Notīrīt</string>
     <string name="au2_netsec_reset_message">Pašlaik rādīto %1$d lietotņu ugunsmūra noteikumi tiks atiestatīti uz noklusējuma vērtībām.</string>
     <string name="au2_netsec_confirm_reset">Atiestatīt</string>
-    <string name="au2_netsec_cancel">Atcelt</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Ierakstīt</string>
     <string name="au2_radio2_stop_recording">Apturēt ierakstīšanu</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

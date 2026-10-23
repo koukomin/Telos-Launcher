@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Törlés</string>
     <string name="au2_netsec_reset_message">A jelenleg megjelenített %1$d alkalmazás tűzfalszabályai visszaállnak az alapértelmezettre.</string>
     <string name="au2_netsec_confirm_reset">Visszaállítás</string>
-    <string name="au2_netsec_cancel">Mégse</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Felvétel</string>
     <string name="au2_radio2_stop_recording">Felvétel leállítása</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

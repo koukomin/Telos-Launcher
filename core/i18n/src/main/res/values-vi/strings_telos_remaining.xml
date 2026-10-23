@@ -112,7 +112,7 @@
     <string name="telos_files_toolbar_down">Di chuyển %1$s xuống</string>
     <string name="telos_files_toolbar_info">Chọn tối đa %1$d lối tắt và đổi thứ tự. Điều hướng, tìm kiếm và menu vẫn khả dụng. Mọi thao tác vẫn có trong menu.</string>
     <string name="telos_files_toolbar_reset">Khôi phục mặc định</string>
-    <string name="telos_files_toolbar_save">Lưu</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Tùy chỉnh thanh công cụ</string>
     <string name="telos_files_toolbar_up">Di chuyển %1$s lên</string>
     <string name="telos_files_transfer_added">Đã thêm vào hàng đợi truyền tệp</string>

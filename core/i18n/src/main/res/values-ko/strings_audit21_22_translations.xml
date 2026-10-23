@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">압축 파일을 열 수 없습니다</string>
     <string name="au21_arch_pw_title">비밀번호 필요</string>
     <string name="au21_arch_pw_info">%1$s은(는) 비밀번호로 보호되어 있습니다. 열거나 압축을 풀려면 비밀번호를 입력하세요. 비밀번호는 압축 파일 안에 있는 동안에만 메모리에 보관되며 저장되지 않습니다.</string>
-    <string name="au21_arch_ok">확인</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">확인 중…</string>
     <string name="au21_arch_show">표시</string>
     <string name="au21_arch_hide">숨기기</string>

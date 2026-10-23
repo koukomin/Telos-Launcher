@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Configuratie-ID</string>
     <string name="net_dns_nextdns_device">Apparaatnaam (optioneel)</string>
     <string name="net_dns_nextdns_bad_id">Een configuratie-ID bestaat uit 4 tot 12 letters en cijfers.</string>
-    <string name="net_dns_nextdns_add">Toevoegen</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Aanbieder</string>
     <string name="net_dns_detail_protocol">Protocol</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Deze server gebruiken</string>
     <string name="net_dns_action_test">Testen</string>
     <string name="net_dns_action_copy">Kopiëren als eigen server</string>
-    <string name="net_dns_action_edit">Bewerken</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Verwijderen</string>
-    <string name="net_dns_save">Opslaan</string>
-    <string name="net_dns_cancel">Annuleren</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Bezig met testen…</string>
     <string name="net_dns_test_ok">Antwoord binnen %1$d ms</string>
     <string name="net_dns_test_fail">Test mislukt: %1$s</string>

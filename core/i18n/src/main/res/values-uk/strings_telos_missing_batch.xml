@@ -25,7 +25,7 @@
     <string name="disclaimer">Застереження</string>
     <string name="disclaimer_currency_converter">Курси валют публікуються один раз на день Європейським центральним банком. Вся інформація надається «як є», без будь-яких гарантій. Ми не несемо відповідальності за цю інформацію.\n\nОстаннє оновлення: %1$s</string>
     <string name="duplicate">Дублювати</string>
-    <string name="edit">Редагувати</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="edit_favorites_dialog_empty_section">Перетягуйте значки сюди</string>
     <string name="edit_favorites_dialog_new_tag">Створити тег</string>
     <string name="edit_favorites_dialog_pinned_sorted">Закріплені – відсортовані вручну</string>
@@ -107,7 +107,7 @@
     <string name="menu_clear_cache">Очистити кеш</string>
     <string name="menu_contacts_open_externally">Відкрити у Контактах</string>
     <string name="menu_customize">Редагувати</string>
-    <string name="menu_delete">Видалити</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_edit_widgets">Налаштувати віджети</string>
     <string name="menu_favorites_pin">Зберегти до улюблених</string>
     <string name="menu_favorites_unpin">Видалити з улюблених</string>
@@ -151,7 +151,7 @@
     <string name="no_selection">Немає вибору</string>
     <string name="notes_widget_action_dismiss">Відхилити</string>
     <string name="notes_widget_action_new">Нова нотатка</string>
-    <string name="notes_widget_action_save">Зберегти</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_dismissed">Нотатку відхилено</string>
     <string name="notes_widget_export_filename">Нотатка_%1$s</string>
     <string name="notes_widget_placeholder">Напишіть нотатку...</string>
@@ -207,7 +207,7 @@
     <string name="preference_wallpaper_select_image_summary">Виберіть статичне зображення з фотографій</string>
     <string name="preference_wallpaper_select_video">Вибрати відео</string>
     <string name="preference_wallpaper_select_video_summary">Виберіть живі відеошпалери</string>
-    <string name="save">Зберегти</string>
+    <string name="save">@string/hc_save</string>
     <string name="save_as_file">Зберегти як файл</string>
     <string name="search_bar_placeholder">Пошук</string>
     <string name="settings">Налаштування</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="au4_confirms_confirm">Confirm</string>
-    <string name="au4_confirms_cancel">Cancel</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Sign out of Nextcloud?</string>
     <string name="au4_confirms_nc_message">Your Nextcloud account will be removed from this launcher. You can sign in again at any time.</string>
     <string name="au4_confirms_oc_title">Sign out of ownCloud?</string>

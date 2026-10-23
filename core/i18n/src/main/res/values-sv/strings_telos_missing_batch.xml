@@ -80,7 +80,7 @@
     <string name="menu_calendar_open_externally">Öppna i Kalender</string>
     <string name="menu_clear_cache">Rensa cache</string>
     <string name="menu_contacts_open_externally">Öppna i Kontakter</string>
-    <string name="menu_delete">Radera</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_edit_widgets">Redigera widgets</string>
     <string name="menu_favorites_pin">Fäst i favoriter</string>
     <string name="menu_favorites_unpin">Lossa</string>

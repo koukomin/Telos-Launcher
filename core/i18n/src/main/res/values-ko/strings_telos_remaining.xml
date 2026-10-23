@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">%1$s 아래로 이동</string>
     <string name="telos_files_toolbar_info">최대 %1$d개의 바로가기를 선택하고 순서를 변경하세요. 탐색, 검색 및 메뉴는 계속 사용할 수 있습니다. 모든 작업은 메뉴에도 남아 있습니다.</string>
     <string name="telos_files_toolbar_reset">기본값 복원</string>
-    <string name="telos_files_toolbar_save">저장</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">도구 모음 맞춤 설정</string>
     <string name="telos_files_toolbar_up">%1$s 위로 이동</string>
     <string name="telos_files_transfer_added">파일 전송 대기열에 추가되었습니다</string>

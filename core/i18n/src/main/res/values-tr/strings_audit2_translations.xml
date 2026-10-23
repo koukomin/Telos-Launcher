@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Temizle</string>
     <string name="au2_netsec_reset_message">Şu anda gösterilen %1$d uygulamanın güvenlik duvarı kuralları varsayılanlara sıfırlanacak.</string>
     <string name="au2_netsec_confirm_reset">Sıfırla</string>
-    <string name="au2_netsec_cancel">İptal</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Kaydet</string>
     <string name="au2_radio2_stop_recording">Kaydı durdur</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

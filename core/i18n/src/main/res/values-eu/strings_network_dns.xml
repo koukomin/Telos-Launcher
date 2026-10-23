@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Konfigurazio-IDa</string>
     <string name="net_dns_nextdns_device">Gailuaren izena (aukerakoa)</string>
     <string name="net_dns_nextdns_bad_id">Konfigurazio-ID batek 4 eta 12 arteko letra eta zifra ditu.</string>
-    <string name="net_dns_nextdns_add">Gehitu</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Hornitzailea</string>
     <string name="net_dns_detail_protocol">Protokoloa</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Erabili zerbitzari hau</string>
     <string name="net_dns_action_test">Probatu</string>
     <string name="net_dns_action_copy">Kopiatu zerbitzari pertsonalizatu gisa</string>
-    <string name="net_dns_action_edit">Editatu</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Kendu</string>
-    <string name="net_dns_save">Gorde</string>
-    <string name="net_dns_cancel">Utzi</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Probatzen…</string>
     <string name="net_dns_test_ok">%1$d ms-tan erantzun du</string>
     <string name="net_dns_test_fail">Probak huts egin du: %1$s</string>

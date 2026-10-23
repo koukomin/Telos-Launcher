@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Premakni %1$s navzdol</string>
     <string name="telos_files_toolbar_info">Izberite največ %1$d bližnjic in spremenite njihov vrstni red. Krmarjenje, iskanje in meni ostanejo na voljo. Vsa dejanja ostanejo v meniju.</string>
     <string name="telos_files_toolbar_reset">Obnovi privzete nastavitve</string>
-    <string name="telos_files_toolbar_save">Shrani</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Prilagodi orodno vrstico</string>
     <string name="telos_files_toolbar_up">Premakni %1$s navzgor</string>
     <string name="telos_files_transfer_added">Dodano v čakalno vrsto prenosov datotek</string>

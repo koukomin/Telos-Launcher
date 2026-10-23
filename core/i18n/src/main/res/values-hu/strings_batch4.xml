@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Koppintson a Hozzáadás gombra, és illesszen be egy linket, vagy ossza meg a linket a Telos Downloads alkalmazással.</string>
     <string name="dl_empty_filter_title">Itt nincs semmi</string>
     <string name="dl_empty_filter_text">Egy letöltés sem felel meg ennek a szűrőnek.</string>
-    <string name="dl_add">Hozzáadás</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Letöltés hozzáadása</string>
     <string name="dl_links_hint">Linkek, soronként egy</string>
     <string name="dl_invalid_links">Nincs érvényes link. Csak http és https linkek tölthetők le.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Eltávolítja a(z) %1$s elemet? A letöltött rész törlődik.</string>
     <string name="dl_delete_with_file">Eltávolítás és a fájl törlése</string>
     <string name="dl_delete_keep_file">Eltávolítás, fájl megtartása</string>
-    <string name="dl_cancel">Mégse</string>
-    <string name="dl_save">Mentés</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Egy alkalmazás sem tudja megnyitni ezt a fájlt</string>
     <string name="dl_pause_all">Összes szüneteltetése</string>
     <string name="dl_resume_all">Összes folytatása</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Linkek felismerése a vágólapon</string>
     <string name="dl_p3_detect_clipboard_sum">A Letöltések megnyitásakor felkínálja a másolt linket, videóoldal-címet vagy magnet linket. Az Android jelezheti, hogy az alkalmazás beolvasta a vágólapot.</string>
     <string name="dl_p3_clip_found">A vágólapon: %1$s</string>
-    <string name="dl_p3_clip_add">Hozzáadás</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Ütemezés</string>
     <string name="dl_p3_schedule_enable">Letöltés csak bizonyos időpontokban</string>
     <string name="dl_p3_schedule_sum">Az időablakon kívül a letöltések a sorban várakoznak.</string>

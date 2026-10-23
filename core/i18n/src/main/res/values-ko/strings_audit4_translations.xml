@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">확인</string>
-    <string name="au4_confirms_cancel">취소</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Nextcloud에서 로그아웃하시겠습니까?</string>
     <string name="au4_confirms_nc_message">Nextcloud 계정이 이 런처에서 제거됩니다. 언제든지 다시 로그인할 수 있습니다.</string>
     <string name="au4_confirms_oc_title">ownCloud에서 로그아웃하시겠습니까?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">앱 %1$d개의 모바일 데이터 접근을 차단하시겠습니까?</string>
     <string name="au4_noteslink_link_existing">기존 파일 연결</string>
     <string name="au4_noteslink_create_new">새 파일 만들기</string>
-    <string name="au4_noteslink_cancel">취소</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">재시도 횟수</string>
     <string name="au4_settingsnew1_redial_delay">시도 간 대기 시간</string>
     <string name="au4_settingsnew1_seconds">%1$d초</string>

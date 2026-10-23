@@ -6,11 +6,11 @@
     <string name="pdft_no_files">ยังไม่ได้เพิ่มไฟล์</string>
     <string name="pdft_add_pdf">เพิ่ม PDF</string>
     <string name="pdft_add_images">เพิ่มรูปภาพ</string>
-    <string name="pdft_add">เพิ่ม</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">จัดระเบียบ</string>
     <string name="pdft_group_optimize">ปรับให้เหมาะสม</string>
     <string name="pdft_group_security">ความปลอดภัย</string>
-    <string name="pdft_group_edit">แก้ไข</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">แปลง</string>
     <string name="pdft_group_view">ดูและเปรียบเทียบ</string>
     <string name="pdft_tool_merge">รวมไฟล์</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">กลับ</string>
     <string name="pdft_back_to_tools">กลับไปที่เครื่องมือ</string>
     <string name="pdft_close">ปิด</string>
-    <string name="pdft_cancel">ยกเลิก</string>
-    <string name="pdft_ok">ตกลง</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">ใช้</string>
     <string name="pdft_change">เปลี่ยน</string>
     <string name="pdft_remove">นำออก</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">เสร็จแล้ว</string>
     <string name="pdft_compress_result">จาก %1$s เหลือ %2$s (เล็กลง %3$d%%)</string>
     <string name="pdft_compress_no_gain">ผลลัพธ์ (%2$s) ไม่เล็กกว่าต้นฉบับ (%1$s) ไฟล์นี้ส่วนใหญ่เป็นข้อความและกราฟิกแบบเวกเตอร์</string>
-    <string name="pdft_save">บันทึก</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">บันทึกไปที่ %1$s</string>
     <string name="pdft_save_choose_folder">เลือกโฟลเดอร์…</string>
     <string name="pdft_save_as">บันทึกเป็น…</string>

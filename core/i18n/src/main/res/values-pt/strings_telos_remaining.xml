@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Mover %1$s para baixo</string>
     <string name="telos_files_toolbar_info">Escolha até %1$d atalhos e altere a sua ordem. A navegação, a pesquisa e o menu continuam disponíveis. Todas as ações permanecem no menu.</string>
     <string name="telos_files_toolbar_reset">Restaurar predefinições</string>
-    <string name="telos_files_toolbar_save">Guardar</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Personalizar barra de ferramentas</string>
     <string name="telos_files_toolbar_up">Mover %1$s para cima</string>
     <string name="telos_files_transfer_added">Adicionado à fila de transferências de ficheiros</string>

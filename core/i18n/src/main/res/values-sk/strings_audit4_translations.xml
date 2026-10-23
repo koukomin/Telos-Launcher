@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Potvrdiť</string>
-    <string name="au4_confirms_cancel">Zrušiť</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Odhlásiť sa z Nextcloudu?</string>
     <string name="au4_confirms_nc_message">Váš účet Nextcloud bude z tohto launchera odstránený. Kedykoľvek sa môžete prihlásiť znova.</string>
     <string name="au4_confirms_oc_title">Odhlásiť sa z ownCloudu?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Zablokovať prístup k mobilným dátam pre %1$d aplikácií?</string>
     <string name="au4_noteslink_link_existing">Prepojiť existujúci súbor</string>
     <string name="au4_noteslink_create_new">Vytvoriť nový súbor</string>
-    <string name="au4_noteslink_cancel">Zrušiť</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Počet pokusov o opätovné vytočenie</string>
     <string name="au4_settingsnew1_redial_delay">Oneskorenie medzi pokusmi</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

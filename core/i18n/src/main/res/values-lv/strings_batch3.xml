@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Noņemt sarakstu</string>
     <string name="blocklists_custom_name">Nosaukums</string>
     <string name="blocklists_custom_url">Adrese (https)</string>
-    <string name="blocklists_add">Pievienot</string>
-    <string name="blocklists_cancel">Atcelt</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Tiek pieņemtas tikai https adreses</string>
     <string name="blocklists_import_failed">Failā nav izmantojamu ierakstu vai to neizdevās nolasīt</string>
     <string name="blocklists_schedule">Automātiska atjaunināšana</string>

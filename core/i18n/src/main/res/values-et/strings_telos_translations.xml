@@ -503,7 +503,7 @@
     <string name="preference_floating_launcher_tools">Kiirtööriistad</string>
     <string name="preference_floating_launcher_tools_summary">Näita paneelis ekraanipildi, kalkulaatori ja kiirseadete nuppe. Ekraanipildi nupp vajab juurdepääsuteenust</string>
     <string name="floating_launcher_title">Nutikad funktsioonid</string>
-    <string name="floating_launcher_edit">Muuda</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Hiljutised failid</string>
     <string name="floating_launcher_recent_files_empty">Hiljutisi faile pole. Telos vajab selleks juurdepääsu failidele; saad selle lubada, kui avad Telos Filesi.</string>
     <string name="floating_launcher_recent_files_no_app">Ükski rakendus ei saa seda faili avada</string>
@@ -547,10 +547,10 @@
     <string name="floating_launcher_folder_name">Kausta nimi</string>
     <string name="floating_launcher_folder_select_apps">Vali rühmitamiseks vähemalt 2 rakendust</string>
     <string name="floating_launcher_create">Loo</string>
-    <string name="floating_launcher_cancel">Tühista</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Nimeta kaust ümber</string>
     <string name="floating_launcher_delete_folder">Kustuta kaust</string>
-    <string name="floating_launcher_save">Salvesta</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Ava kaust</string>
     <string name="floating_launcher_all_apps">Kõik rakendused</string>
     <string name="floating_launcher_file_dock">Failidokk</string>
@@ -1113,7 +1113,7 @@
     <string name="comms_unblock_number">Tühista numbri blokeering</string>
     <string name="comms_no_previous_calls">Varasemaid kõnesid pole</string>
     <string name="comms_clear_history">Kas tühjendada kõneajalugu?</string>
-    <string name="comms_clear_history_confirm">Kustuta</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Integratsioonid</string>
     <string name="filter_incoming">Sissetulevad</string>
     <string name="filter_outgoing">Väljaminevad</string>
@@ -1134,7 +1134,7 @@
     <string name="comms_answer">Vasta</string>
     <string name="comms_reject">Lükka tagasi</string>
     <string name="comms_hangup">Lõpeta kõne</string>
-    <string name="comms_add_call">Lisa</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Ühenda</string>
     <string name="comms_swap">Vaheta</string>
     <string name="backup_choose_parts">Mida soovid varundada?</string>
@@ -1221,9 +1221,9 @@
     <string name="cal_no_events">Sündmusi pole</string>
     <string name="cal_no_title">(pealkirjata)</string>
     <string name="cal_all_day">Terve päev</string>
-    <string name="cal_cancel">Tühista</string>
-    <string name="cal_delete">Kustuta</string>
-    <string name="cal_save">Salvesta</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Pealkiri</string>
     <string name="cal_location">Asukoht</string>
     <string name="cal_description">Kirjeldus</string>
@@ -1240,7 +1240,7 @@
     <string name="cal_series_note">Muudatused ja kustutamine kehtivad kogu seeriale.</string>
     <string name="cal_on_phone">Sellel telefonil</string>
     <string name="cal_new_local">Uus kohalik kalender</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google\'i, CalDAVi (DAVx5) ja Exchange\'i kalendreid sünkroonib süsteem nende konto kaudu. Kohalikud kalendrid jäävad telefoni ja sisalduvad Telose varukoopias.</string>
     <string name="cal_view_agenda">Järgmised 30 päeva</string>
     <string name="cal_view_month">Kuuvaade</string>
@@ -1263,8 +1263,8 @@
     <string name="notes_title_hint">Pealkiri</string>
     <string name="notes_body_hint">Märge</string>
     <string name="notes_labels_hint">töö, kodu</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">Tühista</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">%d märget imporditud</string>
     <string name="notes_synced">Sünkroonitud: %1$d saadetud, %2$d saadud</string>
     <string name="notes_sync_failed">Sünkroonimine ebaõnnestus: %s</string>
@@ -1322,7 +1322,7 @@
     <string name="screenshot_cannot_open">Pilti ei õnnestunud avada</string>
     <string name="screenshot_notification_channel">Ekraanipildid</string>
     <string name="screenshot_notification_text">Puuduta muutmiseks</string>
-    <string name="screenshot_edit">Muuda</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Ekraanipildid</string>
     <string name="screenshot_none">Ekraanipilte pole veel</string>
     <string name="screenshot_undo">Võta tagasi</string>
@@ -1356,7 +1356,7 @@
     <string name="floating_launcher_section_widgets">Vidinad</string>
     <string name="floating_launcher_section_apps">Rakendused</string>
     <string name="floating_launcher_done">Valmis</string>
-    <string name="floating_launcher_add">Lisa</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Ujuv riba</string>
     <string name="preference_category_sidebar_style">Külgriba stiil</string>
     <string name="preference_floating_launcher_side">Ekraani külg</string>
@@ -1386,10 +1386,10 @@
     <string name="voice_start_failed">Salvestust ei õnnestunud käivitada</string>
     <string name="voice_rename">Nimeta ümber</string>
     <string name="voice_rename_failed">Nimi on tühi või juba kasutusel</string>
-    <string name="voice_save">Salvesta</string>
-    <string name="voice_cancel">Tühista</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Kas kustutada see salvestus?</string>
-    <string name="voice_delete">Kustuta</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Jaga</string>
     <string name="voice_share_failed">Salvestust ei õnnestunud jagada</string>
     <string name="voice_play">Esita</string>

@@ -19,8 +19,8 @@
     <string name="notes_title_hint">Τίτλος</string>
     <string name="notes_body_hint">Σημείωση</string>
     <string name="notes_labels_hint">δουλειά, σπίτι</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">Άκυρο</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">Εισήχθησαν %d σημειώσεις</string>
     <string name="notes_synced">Συγχρονισμός: %1$d στάλθηκαν, %2$d ελήφθησαν</string>
     <string name="notes_sync_failed">Ο συγχρονισμός απέτυχε: %s</string>

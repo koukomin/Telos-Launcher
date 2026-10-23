@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Видалити піра</string>
     <string name="nwg_mobile_only">Лише в мобільній мережі</string>
     <string name="nwg_lockdown">Блокувати застосунки, поки тунель не працює</string>
-    <string name="nwg_save">Зберегти</string>
-    <string name="nwg_cancel">Скасувати</string>
-    <string name="nwg_delete">Видалити</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Поділитися конфігурацією</string>
     <string name="nwg_share_warning">Експортована конфігурація містить приватний ключ.</string>
     <string name="nwg_import">Імпорт</string>

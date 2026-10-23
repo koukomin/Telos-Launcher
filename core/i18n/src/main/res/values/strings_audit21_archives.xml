@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Could not open the archive</string>
     <string name="au21_arch_pw_title">Password required</string>
     <string name="au21_arch_pw_info">%1$s is password-protected. Enter its password to open or unpack it. The password is only kept in memory while you are inside the archive and is never saved.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Checking…</string>
     <string name="au21_arch_show">Show</string>
     <string name="au21_arch_hide">Hide</string>

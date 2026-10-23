@@ -6,11 +6,11 @@
     <string name="pdft_no_files">Još nije dodana nijedna datoteka.</string>
     <string name="pdft_add_pdf">Dodaj PDF</string>
     <string name="pdft_add_images">Dodaj slike</string>
-    <string name="pdft_add">Dodaj</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">Organizacija</string>
     <string name="pdft_group_optimize">Optimizacija</string>
     <string name="pdft_group_security">Sigurnost</string>
-    <string name="pdft_group_edit">Uređivanje</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">Pretvorba</string>
     <string name="pdft_group_view">Pregled i usporedba</string>
     <string name="pdft_tool_merge">Spoji</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">Natrag</string>
     <string name="pdft_back_to_tools">Natrag na alate</string>
     <string name="pdft_close">Zatvori</string>
-    <string name="pdft_cancel">Odustani</string>
-    <string name="pdft_ok">U redu</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">Primijeni</string>
     <string name="pdft_change">Promijeni</string>
     <string name="pdft_remove">Ukloni</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">Gotovo</string>
     <string name="pdft_compress_result">Sa %1$s na %2$s (manje za %3$d%%)</string>
     <string name="pdft_compress_no_gain">Rezultat (%2$s) nije manji od izvornika (%1$s). Datoteka većinom sadrži tekst i vektorsku grafiku.</string>
-    <string name="pdft_save">Spremi</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">Spremi u %1$s</string>
     <string name="pdft_save_choose_folder">Odaberi mapu…</string>
     <string name="pdft_save_as">Spremi kao…</string>

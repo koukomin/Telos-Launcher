@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">將 %1$s 下移</string>
     <string name="telos_files_toolbar_info">選擇最多 %1$d 個捷徑並調整順序。導航、搜尋和選單始終可用。所有操作仍可在選單中找到。</string>
     <string name="telos_files_toolbar_reset">恢復預設設定</string>
-    <string name="telos_files_toolbar_save">儲存</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">自訂工具列</string>
     <string name="telos_files_toolbar_up">將 %1$s 上移</string>
     <string name="telos_files_transfer_added">已加入檔案傳輸佇列</string>

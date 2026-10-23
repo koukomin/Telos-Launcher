@@ -24,7 +24,7 @@
     <string name="disclaimer">ডিসক্লেইমার</string>
     <string name="disclaimer_currency_converter">ইউরোপীয় সেন্ট্রাল ব্যাংক দ্বারা প্রতিদিন একবার প্রকাশিত বিনিময় হার। সমস্ত তথ্য কোন ধরনের গ্যারান্টি ছাড়াই \"যেমন আছে\" তেমন প্রদান করা হয়। এই তথ্যের জন্য কোন দায়বদ্ধতা ধরে নেয়া যাবে না।\n\n\n\nশেষ আপডেট: %1$s</string>
     <string name="duplicate">অনুলিপি তৈরি</string>
-    <string name="edit">সম্পাদনা</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="edit_favorites_dialog_empty_section">আইটেম এখানে টেনে আনুন</string>
     <string name="edit_favorites_dialog_new_tag">ট্যাগ তৈরি করুন…</string>
     <string name="edit_favorites_dialog_pinned_sorted">পিন করা - ম্যানুয়ালি সাজানো</string>
@@ -102,7 +102,7 @@
     <string name="menu_clear_cache">ক্যাশ মুছুন</string>
     <string name="menu_contacts_open_externally">ফোন নাম্বারের অ্যাপে খুলুন</string>
     <string name="menu_customize">কাস্টোমাইজ করুন</string>
-    <string name="menu_delete">মুছুন</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_edit_widgets">উইজেট সম্পাদনা করুন</string>
     <string name="menu_favorites_pin">প্রিয় তালিকায় পিন করুন</string>
     <string name="menu_favorites_unpin">পিন থেকে সরান</string>
@@ -142,7 +142,7 @@
     <string name="no_plugins_installed">কোনো সংযোজন ইনস্টল করা নেই</string>
     <string name="notes_widget_action_dismiss">বাদ দিন</string>
     <string name="notes_widget_action_new">নতুন নোট</string>
-    <string name="notes_widget_action_save">সংরক্ষণ করুন</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_dismissed">নোটটি বাদ দেয়া হয়েছে।</string>
     <string name="notes_widget_export_filename">নোট_%1$s</string>
     <string name="notes_widget_placeholder">একটি নোট লিখুন…</string>
@@ -238,7 +238,7 @@
     <string name="preference_wallpaper_select_image_summary">আপনার ছবি থেকে একটি স্থির ছবি বেছে নিন</string>
     <string name="preference_wallpaper_select_video">ভিডিও নির্বাচন</string>
     <string name="preference_wallpaper_select_video_summary">একটি লাইভ ভিডিও ওয়ালপেপার বেছে নিন</string>
-    <string name="save">সংরক্ষণ করুন</string>
+    <string name="save">@string/hc_save</string>
     <string name="search_bar_placeholder">খুঁজুন</string>
     <string name="settings">সেটিংস</string>
     <string name="shortcut_summary">%1$s এর শর্টকাট</string>

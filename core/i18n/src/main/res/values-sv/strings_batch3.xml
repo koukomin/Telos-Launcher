@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Ta bort lista</string>
     <string name="blocklists_custom_name">Namn</string>
     <string name="blocklists_custom_url">Adress (https)</string>
-    <string name="blocklists_add">Lägg till</string>
-    <string name="blocklists_cancel">Avbryt</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Endast https-adresser accepteras</string>
     <string name="blocklists_import_failed">Filen innehåller inga användbara poster eller kunde inte läsas</string>
     <string name="blocklists_schedule">Automatisk uppdatering</string>

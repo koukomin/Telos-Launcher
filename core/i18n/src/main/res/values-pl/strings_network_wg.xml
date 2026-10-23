@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Usuń peera</string>
     <string name="nwg_mobile_only">Tylko w sieci komórkowej</string>
     <string name="nwg_lockdown">Blokuj aplikacje, gdy tunel nie działa</string>
-    <string name="nwg_save">Zapisz</string>
-    <string name="nwg_cancel">Anuluj</string>
-    <string name="nwg_delete">Usuń</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Udostępnij konfigurację</string>
     <string name="nwg_share_warning">Wyeksportowana konfiguracja zawiera klucz prywatny.</string>
     <string name="nwg_import">Importuj</string>

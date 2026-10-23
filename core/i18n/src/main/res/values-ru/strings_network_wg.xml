@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Удалить пира</string>
     <string name="nwg_mobile_only">Только в мобильной сети</string>
     <string name="nwg_lockdown">Блокировать приложения, пока туннель не работает</string>
-    <string name="nwg_save">Сохранить</string>
-    <string name="nwg_cancel">Отмена</string>
-    <string name="nwg_delete">Удалить</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Поделиться конфигурацией</string>
     <string name="nwg_share_warning">Экспортированная конфигурация содержит закрытый ключ.</string>
     <string name="nwg_import">Импорт</string>

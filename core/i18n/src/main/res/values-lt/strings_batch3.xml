@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Pašalinti sąrašą</string>
     <string name="blocklists_custom_name">Pavadinimas</string>
     <string name="blocklists_custom_url">Adresas (https)</string>
-    <string name="blocklists_add">Pridėti</string>
-    <string name="blocklists_cancel">Atšaukti</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Priimami tik https adresai</string>
     <string name="blocklists_import_failed">Faile nėra tinkamų įrašų arba jo nepavyko nuskaityti</string>
     <string name="blocklists_schedule">Automatinis atnaujinimas</string>

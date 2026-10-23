@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Fortsæt med at se</string>
     <string name="au22_stremio_no_results">Intet fundet</string>
     <string name="au22_stremio_library_empty">Dit bibliotek er tomt. Åbn en titel, og gem den her.</string>
-    <string name="au22_stremio_save">Gem</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Gemt</string>
     <string name="au22_stremio_season">Sæson %d</string>
     <string name="au22_stremio_streams">Vælg en stream</string>

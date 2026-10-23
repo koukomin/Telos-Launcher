@@ -280,7 +280,7 @@
     <string name="preference_floating_launcher_tools">Gyorseszközök</string>
     <string name="preference_floating_launcher_tools_summary">Képernyőkép, számológép és gyorsbeállítások gombok megjelenítése a panelen. A képernyőkép gombhoz a kisegítő szolgáltatás szükséges</string>
     <string name="floating_launcher_title">Okos funkciók</string>
-    <string name="floating_launcher_edit">Szerkesztés</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Legutóbbi fájlok</string>
     <string name="floating_launcher_recent_files_empty">Nincsenek legutóbbi fájlok. A Telosnak ehhez fájlhozzáférésre van szüksége, amelyet a Telos Fájlok megnyitásakor engedélyezhetsz.</string>
     <string name="floating_launcher_recent_files_no_app">Egyetlen alkalmazás sem tudja megnyitni ezt a fájlt</string>
@@ -324,10 +324,10 @@
     <string name="floating_launcher_folder_name">Mappa neve</string>
     <string name="floating_launcher_folder_select_apps">Válassz legalább 2 alkalmazást a csoportosításhoz</string>
     <string name="floating_launcher_create">Létrehozás</string>
-    <string name="floating_launcher_cancel">Mégse</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Mappa átnevezése</string>
     <string name="floating_launcher_delete_folder">Mappa törlése</string>
-    <string name="floating_launcher_save">Mentés</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Mappa megnyitása</string>
     <string name="floating_launcher_all_apps">Összes alkalmazás</string>
     <string name="floating_launcher_file_dock">Fájldokk</string>
@@ -684,7 +684,7 @@
     <string name="comms_unblock_number">Szám tiltásának feloldása</string>
     <string name="comms_no_previous_calls">Nincsenek korábbi hívások</string>
     <string name="comms_clear_history">Törlöd a hívási előzményeket?</string>
-    <string name="comms_clear_history_confirm">Törlés</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Integrációk</string>
     <string name="filter_incoming">Bejövő</string>
     <string name="filter_outgoing">Kimenő</string>
@@ -705,7 +705,7 @@
     <string name="comms_answer">Fogadás</string>
     <string name="comms_reject">Elutasítás</string>
     <string name="comms_hangup">Letevés</string>
-    <string name="comms_add_call">Hozzáadás</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Összevonás</string>
     <string name="comms_swap">Váltás</string>
     <string name="backup_choose_parts">Mit szeretnél biztonsági másolatba menteni?</string>
@@ -792,9 +792,9 @@
     <string name="cal_no_events">Nincsenek események</string>
     <string name="cal_no_title">(nincs cím)</string>
     <string name="cal_all_day">Egész nap</string>
-    <string name="cal_cancel">Mégse</string>
-    <string name="cal_delete">Törlés</string>
-    <string name="cal_save">Mentés</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Cím</string>
     <string name="cal_location">Helyszín</string>
     <string name="cal_description">Leírás</string>
@@ -811,7 +811,7 @@
     <string name="cal_series_note">A módosítások és a törlés az egész sorozatra vonatkoznak.</string>
     <string name="cal_on_phone">Ezen a telefonon</string>
     <string name="cal_new_local">Új helyi naptár</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">A Google, CalDAV (DAVx5) és Exchange naptárakat a rendszer szinkronizálja a fiókjukon keresztül. A helyi naptárak a telefonon maradnak, és benne vannak a Telos biztonsági mentésében.</string>
     <string name="cal_view_agenda">Következő 30 nap</string>
     <string name="cal_view_month">Havi nézet</string>
@@ -834,8 +834,8 @@
     <string name="notes_title_hint">Cím</string>
     <string name="notes_body_hint">Jegyzet</string>
     <string name="notes_labels_hint">munka, otthon</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">Mégse</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">%d jegyzet importálva</string>
     <string name="notes_synced">Szinkronizálva: %1$d elküldve, %2$d fogadva</string>
     <string name="notes_sync_failed">A szinkronizálás sikertelen: %s</string>
@@ -893,7 +893,7 @@
     <string name="screenshot_cannot_open">A képet nem sikerült megnyitni</string>
     <string name="screenshot_notification_channel">Képernyőképek</string>
     <string name="screenshot_notification_text">Koppints a szerkesztéshez</string>
-    <string name="screenshot_edit">Szerkesztés</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Képernyőképek</string>
     <string name="screenshot_none">Még nincsenek képernyőképek</string>
     <string name="screenshot_undo">Visszavonás</string>
@@ -927,7 +927,7 @@
     <string name="floating_launcher_section_widgets">Widgetek</string>
     <string name="floating_launcher_section_apps">Alkalmazások</string>
     <string name="floating_launcher_done">Kész</string>
-    <string name="floating_launcher_add">Hozzáadás</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Lebegő sáv</string>
     <string name="preference_category_sidebar_style">Oldalsáv stílusa</string>
     <string name="preference_floating_launcher_side">Képernyő oldala</string>
@@ -957,10 +957,10 @@
     <string name="voice_start_failed">A felvételt nem sikerült elindítani</string>
     <string name="voice_rename">Átnevezés</string>
     <string name="voice_rename_failed">A név üres vagy már használatban van</string>
-    <string name="voice_save">Mentés</string>
-    <string name="voice_cancel">Mégse</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Törlöd ezt a felvételt?</string>
-    <string name="voice_delete">Törlés</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Megosztás</string>
     <string name="voice_share_failed">A felvételt nem sikerült megosztani</string>
     <string name="voice_play">Lejátszás</string>

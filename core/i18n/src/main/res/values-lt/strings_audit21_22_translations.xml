@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Nepavyko atidaryti archyvo</string>
     <string name="au21_arch_pw_title">Reikalingas slaptažodis</string>
     <string name="au21_arch_pw_info">%1$s apsaugotas slaptažodžiu. Įveskite slaptažodį, kad atidarytumėte arba išpakuotumėte. Slaptažodis laikomas tik atmintyje, kol esate archyve, ir niekada nesaugomas.</string>
-    <string name="au21_arch_ok">Gerai</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Tikrinama…</string>
     <string name="au21_arch_show">Rodyti</string>
     <string name="au21_arch_hide">Slėpti</string>

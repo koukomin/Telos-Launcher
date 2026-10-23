@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Przesuń %1$s w dół</string>
     <string name="telos_files_toolbar_info">Wybierz maksymalnie %1$d skrótów i zmień ich kolejność. Nawigacja, wyszukiwanie i menu pozostają dostępne. Wszystkie czynności nadal są w menu.</string>
     <string name="telos_files_toolbar_reset">Przywróć domyślne</string>
-    <string name="telos_files_toolbar_save">Zapisz</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Dostosuj pasek narzędzi</string>
     <string name="telos_files_toolbar_up">Przesuń %1$s w górę</string>
     <string name="telos_files_transfer_added">Dodano do kolejki transferu plików</string>

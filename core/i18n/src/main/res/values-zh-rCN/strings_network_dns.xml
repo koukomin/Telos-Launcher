@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">配置 ID</string>
     <string name="net_dns_nextdns_device">设备名称（可选）</string>
     <string name="net_dns_nextdns_bad_id">配置 ID 由 4 到 12 个字母和数字组成。</string>
-    <string name="net_dns_nextdns_add">添加</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">提供商</string>
     <string name="net_dns_detail_protocol">协议</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">使用此服务器</string>
     <string name="net_dns_action_test">测试</string>
     <string name="net_dns_action_copy">复制为自定义服务器</string>
-    <string name="net_dns_action_edit">编辑</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">移除</string>
-    <string name="net_dns_save">保存</string>
-    <string name="net_dns_cancel">取消</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">正在测试…</string>
     <string name="net_dns_test_ok">在 %1$d 毫秒内响应</string>
     <string name="net_dns_test_fail">测试失败：%1$s</string>

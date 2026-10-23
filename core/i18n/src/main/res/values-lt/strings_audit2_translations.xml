@@ -25,7 +25,7 @@
     <string name="au2_netsec_confirm_clear">Išvalyti</string>
     <string name="au2_netsec_reset_message">Šiuo metu rodomų %1$d programų užkardos taisyklės bus atkurtos į numatytąsias.</string>
     <string name="au2_netsec_confirm_reset">Atstatyti</string>
-    <string name="au2_netsec_cancel">Atšaukti</string>
+    <string name="au2_netsec_cancel">@string/hc_cancel</string>
     <string name="au2_radio2_record">Įrašyti</string>
     <string name="au2_radio2_stop_recording">Sustabdyti įrašymą</string>
     <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>

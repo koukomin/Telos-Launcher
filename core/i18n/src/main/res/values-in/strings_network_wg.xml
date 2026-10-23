@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Hapus peer</string>
     <string name="nwg_mobile_only">Hanya di data seluler</string>
     <string name="nwg_lockdown">Blokir aplikasi saat terowongan terputus</string>
-    <string name="nwg_save">Simpan</string>
-    <string name="nwg_cancel">Batal</string>
-    <string name="nwg_delete">Hapus</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Bagikan konfigurasi</string>
     <string name="nwg_share_warning">Konfigurasi yang diekspor berisi kunci pribadi.</string>
     <string name="nwg_import">Impor</string>

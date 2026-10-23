@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Asetustunniste</string>
     <string name="net_dns_nextdns_device">Laitteen nimi (valinnainen)</string>
     <string name="net_dns_nextdns_bad_id">Asetustunniste koostuu 4–12 kirjaimesta ja numerosta.</string>
-    <string name="net_dns_nextdns_add">Lisää</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Palveluntarjoaja</string>
     <string name="net_dns_detail_protocol">Protokolla</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Käytä tätä palvelinta</string>
     <string name="net_dns_action_test">Testaa</string>
     <string name="net_dns_action_copy">Kopioi omaksi palvelimeksi</string>
-    <string name="net_dns_action_edit">Muokkaa</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Poista</string>
-    <string name="net_dns_save">Tallenna</string>
-    <string name="net_dns_cancel">Peruuta</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Testataan…</string>
     <string name="net_dns_test_ok">Vastaus %1$d ms:ssa</string>
     <string name="net_dns_test_fail">Testi epäonnistui: %1$s</string>

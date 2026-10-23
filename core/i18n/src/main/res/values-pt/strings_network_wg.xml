@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Remover peer</string>
     <string name="nwg_mobile_only">Apenas com dados móveis</string>
     <string name="nwg_lockdown">Bloquear as aplicações enquanto o túnel estiver em baixo</string>
-    <string name="nwg_save">Guardar</string>
-    <string name="nwg_cancel">Cancelar</string>
-    <string name="nwg_delete">Eliminar</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Partilhar configuração</string>
     <string name="nwg_share_warning">A configuração exportada contém a chave privada.</string>
     <string name="nwg_import">Importar</string>

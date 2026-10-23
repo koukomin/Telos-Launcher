@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">מזהה תצורה</string>
     <string name="net_dns_nextdns_device">שם המכשיר (אופציונלי)</string>
     <string name="net_dns_nextdns_bad_id">מזהה תצורה כולל 4 עד 12 אותיות וספרות.</string>
-    <string name="net_dns_nextdns_add">הוספה</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">ספק</string>
     <string name="net_dns_detail_protocol">פרוטוקול</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">שימוש בשרת זה</string>
     <string name="net_dns_action_test">בדיקה</string>
     <string name="net_dns_action_copy">העתקה כשרת מותאם אישית</string>
-    <string name="net_dns_action_edit">עריכה</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">הסרה</string>
-    <string name="net_dns_save">שמירה</string>
-    <string name="net_dns_cancel">ביטול</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">בודק…</string>
     <string name="net_dns_test_ok">נענה תוך %1$d אלפיות שנייה</string>
     <string name="net_dns_test_fail">הבדיקה נכשלה: %1$s</string>

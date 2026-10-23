@@ -46,7 +46,7 @@
     <string name="od_cell_value">Luach</string>
     <string name="od_cell_hint">Téacs, uimhir nó foirmle a thosaíonn le =</string>
     <string name="od_formula_replaced">Tá foirmle sa chill seo (%1$s). Cuirfidh luach nua ina háit í.</string>
-    <string name="od_ok">Ceart go leor</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">Leathanach %1$d</string>
     <string name="od_slide_of">Sleamhnán %1$d de %2$d</string>
     <string name="od_delete_slide">Scrios an sleamhnán</string>

@@ -74,8 +74,8 @@
     <string name="blocklists_remove">إزالة القائمة</string>
     <string name="blocklists_custom_name">الاسم</string>
     <string name="blocklists_custom_url">العنوان (https)</string>
-    <string name="blocklists_add">إضافة</string>
-    <string name="blocklists_cancel">إلغاء</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">يتم قبول عناوين https فقط</string>
     <string name="blocklists_import_failed">لا يحتوي الملف على إدخالات صالحة أو تعذّرت قراءته</string>
     <string name="blocklists_schedule">التحديث التلقائي</string>

@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">معرّف الإعداد</string>
     <string name="net_dns_nextdns_device">اسم الجهاز (اختياري)</string>
     <string name="net_dns_nextdns_bad_id">يتكوّن معرّف الإعداد من 4 إلى 12 حرفًا ورقمًا.</string>
-    <string name="net_dns_nextdns_add">إضافة</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">المزوّد</string>
     <string name="net_dns_detail_protocol">البروتوكول</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">استخدام هذا الخادم</string>
     <string name="net_dns_action_test">اختبار</string>
     <string name="net_dns_action_copy">نسخ كخادم مخصص</string>
-    <string name="net_dns_action_edit">تعديل</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">إزالة</string>
-    <string name="net_dns_save">حفظ</string>
-    <string name="net_dns_cancel">إلغاء</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">جارٍ الاختبار…</string>
     <string name="net_dns_test_ok">تمت الاستجابة خلال %1$d مللي ثانية</string>
     <string name="net_dns_test_fail">فشل الاختبار: %1$s</string>

@@ -310,7 +310,7 @@
     <string name="preference_floating_launcher_tools">Hurtige værktøjer</string>
     <string name="preference_floating_launcher_tools_summary">Vis knapper til skærmbillede, lommeregner og hurtige indstillinger i panelet. Skærmbilledeknappen kræver tilgængelighedstjenesten</string>
     <string name="floating_launcher_title">Smarte funktioner</string>
-    <string name="floating_launcher_edit">Rediger</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Seneste filer</string>
     <string name="floating_launcher_recent_files_empty">Ingen seneste filer. Telos skal have adgang til filer for at gøre dette; du kan give den, når du åbner Telos Filer.</string>
     <string name="floating_launcher_recent_files_no_app">Ingen app kan åbne denne fil</string>
@@ -354,10 +354,10 @@
     <string name="floating_launcher_folder_name">Mappenavn</string>
     <string name="floating_launcher_folder_select_apps">Vælg mindst 2 apps at gruppere</string>
     <string name="floating_launcher_create">Opret</string>
-    <string name="floating_launcher_cancel">Annuller</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Omdøb mappe</string>
     <string name="floating_launcher_delete_folder">Slet mappe</string>
-    <string name="floating_launcher_save">Gem</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Åbn mappe</string>
     <string name="floating_launcher_all_apps">Alle apps</string>
     <string name="floating_launcher_file_dock">Fildock</string>
@@ -832,7 +832,7 @@
     <string name="comms_unblock_number">Fjern blokering af nummer</string>
     <string name="comms_no_previous_calls">Ingen tidligere opkald</string>
     <string name="comms_clear_history">Ryd opkaldshistorik?</string>
-    <string name="comms_clear_history_confirm">Slet</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Integrationer</string>
     <string name="filter_incoming">Indgående</string>
     <string name="filter_outgoing">Udgående</string>
@@ -853,7 +853,7 @@
     <string name="comms_answer">Besvar</string>
     <string name="comms_reject">Afvis</string>
     <string name="comms_hangup">Læg på</string>
-    <string name="comms_add_call">Tilføj</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Slå sammen</string>
     <string name="comms_swap">Skift</string>
     <string name="backup_choose_parts">Hvad vil du sikkerhedskopiere?</string>
@@ -940,9 +940,9 @@
     <string name="cal_no_events">Ingen begivenheder</string>
     <string name="cal_no_title">(ingen titel)</string>
     <string name="cal_all_day">Hele dagen</string>
-    <string name="cal_cancel">Annuller</string>
-    <string name="cal_delete">Slet</string>
-    <string name="cal_save">Gem</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Titel</string>
     <string name="cal_location">Sted</string>
     <string name="cal_description">Beskrivelse</string>
@@ -959,7 +959,7 @@
     <string name="cal_series_note">Ændringer og sletning gælder hele serien.</string>
     <string name="cal_on_phone">På denne telefon</string>
     <string name="cal_new_local">Ny lokal kalender</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google-, CalDAV- (DAVx5) og Exchange-kalendere synkroniseres af systemet via deres konto. Lokale kalendere forbliver på telefonen og er med i Telos-sikkerhedskopien.</string>
     <string name="cal_view_agenda">Næste 30 dage</string>
     <string name="cal_view_month">Månedsvisning</string>
@@ -982,8 +982,8 @@
     <string name="notes_title_hint">Titel</string>
     <string name="notes_body_hint">Note</string>
     <string name="notes_labels_hint">arbejde, hjem</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">Annuller</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">%d noter importeret</string>
     <string name="notes_synced">Synkroniseret: %1$d sendt, %2$d modtaget</string>
     <string name="notes_sync_failed">Synkronisering mislykkedes: %s</string>
@@ -1041,7 +1041,7 @@
     <string name="screenshot_cannot_open">Billedet kunne ikke åbnes</string>
     <string name="screenshot_notification_channel">Skærmbilleder</string>
     <string name="screenshot_notification_text">Tryk for at redigere</string>
-    <string name="screenshot_edit">Rediger</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Skærmbilleder</string>
     <string name="screenshot_none">Ingen skærmbilleder endnu</string>
     <string name="screenshot_undo">Fortryd</string>
@@ -1075,7 +1075,7 @@
     <string name="floating_launcher_section_widgets">Widgets</string>
     <string name="floating_launcher_section_apps">Apps</string>
     <string name="floating_launcher_done">Færdig</string>
-    <string name="floating_launcher_add">Tilføj</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Flydende bjælke</string>
     <string name="preference_category_sidebar_style">Sidebjælkens stil</string>
     <string name="preference_floating_launcher_side">Skærmens side</string>
@@ -1105,10 +1105,10 @@
     <string name="voice_start_failed">Optagelsen kunne ikke startes</string>
     <string name="voice_rename">Omdøb</string>
     <string name="voice_rename_failed">Navnet er tomt eller allerede i brug</string>
-    <string name="voice_save">Gem</string>
-    <string name="voice_cancel">Annuller</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Slet denne optagelse?</string>
-    <string name="voice_delete">Slet</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Del</string>
     <string name="voice_share_failed">Optagelsen kunne ikke deles</string>
     <string name="voice_play">Afspil</string>

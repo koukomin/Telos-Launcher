@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">Potrdi</string>
-    <string name="au4_confirms_cancel">Prekliči</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Odjava iz Nextclouda?</string>
     <string name="au4_confirms_nc_message">Vaš račun Nextcloud bo odstranjen iz tega zaganjalnika. Kadar koli se lahko znova prijavite.</string>
     <string name="au4_confirms_oc_title">Odjava iz ownClouda?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">Blokiram dostop do mobilnih podatkov za toliko aplikacij: %1$d?</string>
     <string name="au4_noteslink_link_existing">Poveži obstoječo datoteko</string>
     <string name="au4_noteslink_create_new">Ustvari novo datoteko</string>
-    <string name="au4_noteslink_cancel">Prekliči</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">Število poskusov ponovnega klica</string>
     <string name="au4_settingsnew1_redial_delay">Zamik med poskusi</string>
     <string name="au4_settingsnew1_seconds">%1$d s</string>

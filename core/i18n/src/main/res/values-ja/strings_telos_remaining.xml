@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">%1$sを下へ移動</string>
     <string name="telos_files_toolbar_info">最大%1$d個のショートカットを選び、順序を変更できます。ナビゲーション、検索、メニューは引き続き利用できます。すべての操作はメニューに残ります。</string>
     <string name="telos_files_toolbar_reset">既定値に戻す</string>
-    <string name="telos_files_toolbar_save">保存</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">ツールバーをカスタマイズ</string>
     <string name="telos_files_toolbar_up">%1$sを上へ移動</string>
     <string name="telos_files_transfer_added">ファイル転送キューに追加しました</string>

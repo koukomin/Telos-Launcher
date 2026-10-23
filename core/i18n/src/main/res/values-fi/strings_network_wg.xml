@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Poista peer</string>
     <string name="nwg_mobile_only">Vain mobiilidatalla</string>
     <string name="nwg_lockdown">Estä sovellukset, kun tunneli ei toimi</string>
-    <string name="nwg_save">Tallenna</string>
-    <string name="nwg_cancel">Peruuta</string>
-    <string name="nwg_delete">Poista</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Jaa asetukset</string>
     <string name="nwg_share_warning">Viedyt asetukset sisältävät yksityisen avaimen.</string>
     <string name="nwg_import">Tuo</string>

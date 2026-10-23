@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Arhivu nije moguće otvoriti</string>
     <string name="au21_arch_pw_title">Potrebna je lozinka</string>
     <string name="au21_arch_pw_info">%1$s je zaštićen lozinkom. Unesite lozinku da ga otvorite ili raspakirate. Lozinka se čuva u memoriji samo dok ste u arhivi i nikada se ne sprema.</string>
-    <string name="au21_arch_ok">U redu</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Provjera…</string>
     <string name="au21_arch_show">Prikaži</string>
     <string name="au21_arch_hide">Sakrij</string>

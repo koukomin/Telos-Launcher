@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Tryk på Tilføj og indsæt et link, eller del et link til Telos Downloads.</string>
     <string name="dl_empty_filter_title">Intet her</string>
     <string name="dl_empty_filter_text">Ingen downloads passer til dette filter.</string>
-    <string name="dl_add">Tilføj</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Tilføj download</string>
     <string name="dl_links_hint">Links, ét pr. linje</string>
     <string name="dl_invalid_links">Intet gyldigt link. Kun http- og https-links kan downloades.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Fjern %1$s? Den del, der er downloadet, slettes.</string>
     <string name="dl_delete_with_file">Fjern og slet fil</string>
     <string name="dl_delete_keep_file">Fjern, behold fil</string>
-    <string name="dl_cancel">Annuller</string>
-    <string name="dl_save">Gem</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Ingen app kan åbne denne fil</string>
     <string name="dl_pause_all">Sæt alle på pause</string>
     <string name="dl_resume_all">Genoptag alle</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Find links på udklipsholderen</string>
     <string name="dl_p3_detect_clipboard_sum">Når du åbner Downloads, tilbydes et link, en videosideadresse eller et magnetlink, som du har kopieret. Android kan fortælle dig, at appen har læst udklipsholderen.</string>
     <string name="dl_p3_clip_found">På udklipsholderen: %1$s</string>
-    <string name="dl_p3_clip_add">Tilføj</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Tidsplan</string>
     <string name="dl_p3_schedule_enable">Download kun på bestemte tidspunkter</string>
     <string name="dl_p3_schedule_sum">Uden for tidsvinduet venter downloads i køen.</string>

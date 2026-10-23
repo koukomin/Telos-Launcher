@@ -17,7 +17,7 @@
     <string name="screenshot_cannot_open">The picture could not be opened</string>
     <string name="screenshot_notification_channel">Screenshots</string>
     <string name="screenshot_notification_text">Tap to edit</string>
-    <string name="screenshot_edit">Edit</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Screenshots</string>
     <string name="screenshot_none">No screenshots yet</string>
     <string name="screenshot_undo">Undo</string>

@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">구성 ID</string>
     <string name="net_dns_nextdns_device">기기 이름(선택)</string>
     <string name="net_dns_nextdns_bad_id">구성 ID는 4~12자의 영문자와 숫자로 이루어집니다.</string>
-    <string name="net_dns_nextdns_add">추가</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">제공업체</string>
     <string name="net_dns_detail_protocol">프로토콜</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">이 서버 사용</string>
     <string name="net_dns_action_test">테스트</string>
     <string name="net_dns_action_copy">사용자 지정 서버로 복사</string>
-    <string name="net_dns_action_edit">편집</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">삭제</string>
-    <string name="net_dns_save">저장</string>
-    <string name="net_dns_cancel">취소</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">테스트 중…</string>
     <string name="net_dns_test_ok">%1$d ms 만에 응답</string>
     <string name="net_dns_test_fail">테스트 실패: %1$s</string>

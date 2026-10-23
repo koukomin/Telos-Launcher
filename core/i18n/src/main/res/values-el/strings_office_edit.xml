@@ -46,7 +46,7 @@
     <string name="od_cell_value">Τιμή</string>
     <string name="od_cell_hint">Κείμενο, αριθμός ή τύπος που αρχίζει με =</string>
     <string name="od_formula_replaced">Αυτό το κελί περιέχει έναν τύπο (%1$s). Μια νέα τιμή τον αντικαθιστά.</string>
-    <string name="od_ok">OK</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">Φύλλο %1$d</string>
     <string name="od_slide_of">Διαφάνεια %1$d από %2$d</string>
     <string name="od_delete_slide">Διαγραφή διαφάνειας</string>

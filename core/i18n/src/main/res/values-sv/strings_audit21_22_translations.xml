@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Det gick inte att öppna arkivet</string>
     <string name="au21_arch_pw_title">Lösenord krävs</string>
     <string name="au21_arch_pw_info">%1$s är lösenordsskyddat. Ange lösenordet för att öppna eller packa upp det. Lösenordet sparas bara i minnet medan du är i arkivet och sparas aldrig permanent.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Kontrollerar…</string>
     <string name="au21_arch_show">Visa</string>
     <string name="au21_arch_hide">Dölj</string>

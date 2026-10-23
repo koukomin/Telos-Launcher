@@ -28,7 +28,7 @@
     <string name="disclaimer">免責事項</string>
     <string name="disclaimer_currency_converter">ヨーロッパ中央銀行が1日1回公表する為替レートです。すべての情報は、いかなる保証もなく「そのまま」提供されます。これらの情報に対する責任は負いません。\n\n\n\n最終更新: %1$s</string>
     <string name="duplicate">複製</string>
-    <string name="edit">編集</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="edit_favorites_dialog_empty_section">ここにアイコンをドラッグアンドドロップ</string>
     <string name="edit_favorites_dialog_new_tag">タグを作成…</string>
     <string name="edit_favorites_dialog_pinned_sorted">ピン留め – 手動で並べ替え</string>
@@ -105,7 +105,7 @@
     <string name="menu_clear_cache">キャッシュを消去</string>
     <string name="menu_contacts_open_externally">連絡先アプリで開く</string>
     <string name="menu_customize">カスタマイズ</string>
-    <string name="menu_delete">削除</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_edit_widgets">ウィジェットを編集</string>
     <string name="menu_favorites_pin">お気に入りにピン留め</string>
     <string name="menu_favorites_unpin">ピン解除</string>
@@ -131,7 +131,7 @@
     <string name="nextcloud_server_url">Nextcloud サーバーの URL</string>
     <string name="notes_widget_action_dismiss">閉じる</string>
     <string name="notes_widget_action_new">新しいメモ</string>
-    <string name="notes_widget_action_save">保存</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_dismissed">メモは閉じられました。</string>
     <string name="notes_widget_export_filename">メモ_%1$s</string>
     <string name="notes_widget_placeholder">メモを書く…</string>
@@ -234,7 +234,7 @@
     <string name="profile_work_profile_state_locked">仕事用アプリは一時停止されています。</string>
     <string name="provider_here">HERE</string>
     <string name="restore_complete">バックアップが復元されました。</string>
-    <string name="save">保存</string>
+    <string name="save">@string/hc_save</string>
     <string name="search_action_email">メール</string>
     <string name="search_bar_placeholder">検索</string>
     <string name="settings">設定</string>

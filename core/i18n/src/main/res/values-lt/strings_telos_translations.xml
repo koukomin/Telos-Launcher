@@ -389,7 +389,7 @@
     <string name="preference_floating_launcher_tools">Greitieji įrankiai</string>
     <string name="preference_floating_launcher_tools_summary">Rodyti ekrano nuotraukos, skaičiuotuvo ir greitųjų nustatymų mygtukus skydelyje. Ekrano nuotraukos mygtukui reikalinga pritaikomumo paslauga</string>
     <string name="floating_launcher_title">Išmaniosios funkcijos</string>
-    <string name="floating_launcher_edit">Redaguoti</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Naujausi failai</string>
     <string name="floating_launcher_recent_files_empty">Nėra naujausių failų. Tam Telos reikia prieigos prie failų; galite ją leisti atidarę Telos Files.</string>
     <string name="floating_launcher_recent_files_no_app">Nėra programos, galinčios atidaryti šį failą</string>
@@ -433,10 +433,10 @@
     <string name="floating_launcher_folder_name">Aplanko pavadinimas</string>
     <string name="floating_launcher_folder_select_apps">Pasirinkite bent 2 programas grupavimui</string>
     <string name="floating_launcher_create">Sukurti</string>
-    <string name="floating_launcher_cancel">Atšaukti</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Pervadinti aplanką</string>
     <string name="floating_launcher_delete_folder">Ištrinti aplanką</string>
-    <string name="floating_launcher_save">Įrašyti</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Atidaryti aplanką</string>
     <string name="floating_launcher_all_apps">Visos programos</string>
     <string name="floating_launcher_file_dock">Failų dokas</string>
@@ -1093,7 +1093,7 @@
     <string name="comms_unblock_number">Atblokuoti numerį</string>
     <string name="comms_no_previous_calls">Nėra ankstesnių skambučių</string>
     <string name="comms_clear_history">Išvalyti skambučių istoriją?</string>
-    <string name="comms_clear_history_confirm">Ištrinti</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Integracijos</string>
     <string name="filter_incoming">Gaunami</string>
     <string name="filter_outgoing">Siunčiami</string>
@@ -1114,7 +1114,7 @@
     <string name="comms_answer">Atsiliepti</string>
     <string name="comms_reject">Atmesti</string>
     <string name="comms_hangup">Padėti ragelį</string>
-    <string name="comms_add_call">Pridėti</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Sujungti</string>
     <string name="comms_swap">Sukeisti</string>
     <string name="backup_choose_parts">Ką norite archyvuoti?</string>
@@ -1201,9 +1201,9 @@
     <string name="cal_no_events">Nėra įvykių</string>
     <string name="cal_no_title">(be pavadinimo)</string>
     <string name="cal_all_day">Visą dieną</string>
-    <string name="cal_cancel">Atšaukti</string>
-    <string name="cal_delete">Ištrinti</string>
-    <string name="cal_save">Įrašyti</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Pavadinimas</string>
     <string name="cal_location">Vieta</string>
     <string name="cal_description">Aprašas</string>
@@ -1220,7 +1220,7 @@
     <string name="cal_series_note">Pakeitimai ir ištrynimas taikomi visai serijai.</string>
     <string name="cal_on_phone">Šiame telefone</string>
     <string name="cal_new_local">Naujas vietinis kalendorius</string>
-    <string name="cal_ok">Gerai</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Google, CalDAV (DAVx5) ir Exchange kalendorius sistema sinchronizuoja per jų paskyrą. Vietiniai kalendoriai lieka telefone ir įtraukiami į Telos atsarginę kopiją.</string>
     <string name="cal_view_agenda">Kitos 30 dienų</string>
     <string name="cal_view_month">Mėnesio rodinys</string>
@@ -1243,8 +1243,8 @@
     <string name="notes_title_hint">Pavadinimas</string>
     <string name="notes_body_hint">Užrašas</string>
     <string name="notes_labels_hint">darbas, namai</string>
-    <string name="notes_ok">Gerai</string>
-    <string name="notes_cancel">Atšaukti</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">Importuota užrašų: %d</string>
     <string name="notes_synced">Sinchronizuota: išsiųsta %1$d, gauta %2$d</string>
     <string name="notes_sync_failed">Sinchronizuoti nepavyko: %s</string>
@@ -1302,7 +1302,7 @@
     <string name="screenshot_cannot_open">Nepavyko atidaryti paveikslėlio</string>
     <string name="screenshot_notification_channel">Ekrano nuotraukos</string>
     <string name="screenshot_notification_text">Bakstelėkite, kad redaguotumėte</string>
-    <string name="screenshot_edit">Redaguoti</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Ekrano nuotraukos</string>
     <string name="screenshot_none">Dar nėra ekrano nuotraukų</string>
     <string name="screenshot_undo">Atšaukti</string>
@@ -1336,7 +1336,7 @@
     <string name="floating_launcher_section_widgets">Valdikliai</string>
     <string name="floating_launcher_section_apps">Programos</string>
     <string name="floating_launcher_done">Atlikta</string>
-    <string name="floating_launcher_add">Pridėti</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Slankioji juosta</string>
     <string name="preference_category_sidebar_style">Šoninės juostos stilius</string>
     <string name="preference_floating_launcher_side">Ekrano pusė</string>
@@ -1366,10 +1366,10 @@
     <string name="voice_start_failed">Nepavyko pradėti įrašymo</string>
     <string name="voice_rename">Pervadinti</string>
     <string name="voice_rename_failed">Pavadinimas tuščias arba jau naudojamas</string>
-    <string name="voice_save">Įrašyti</string>
-    <string name="voice_cancel">Atšaukti</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Ištrinti šį įrašą?</string>
-    <string name="voice_delete">Ištrinti</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Bendrinti</string>
     <string name="voice_share_failed">Nepavyko bendrinti įrašo</string>
     <string name="voice_play">Groti</string>

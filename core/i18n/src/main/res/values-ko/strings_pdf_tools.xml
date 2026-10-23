@@ -6,11 +6,11 @@
     <string name="pdft_no_files">아직 추가한 파일이 없습니다.</string>
     <string name="pdft_add_pdf">PDF 추가</string>
     <string name="pdft_add_images">이미지 추가</string>
-    <string name="pdft_add">추가</string>
+    <string name="pdft_add">@string/hc_add</string>
     <string name="pdft_group_organize">정리</string>
     <string name="pdft_group_optimize">최적화</string>
     <string name="pdft_group_security">보안</string>
-    <string name="pdft_group_edit">편집</string>
+    <string name="pdft_group_edit">@string/hc_edit</string>
     <string name="pdft_group_convert">변환</string>
     <string name="pdft_group_view">보기 및 비교</string>
     <string name="pdft_tool_merge">병합</string>
@@ -58,8 +58,8 @@
     <string name="pdft_back">뒤로</string>
     <string name="pdft_back_to_tools">도구로 돌아가기</string>
     <string name="pdft_close">닫기</string>
-    <string name="pdft_cancel">취소</string>
-    <string name="pdft_ok">확인</string>
+    <string name="pdft_cancel">@string/hc_cancel</string>
+    <string name="pdft_ok">@android:string/ok</string>
     <string name="pdft_apply">적용</string>
     <string name="pdft_change">변경</string>
     <string name="pdft_remove">제거</string>
@@ -110,7 +110,7 @@
     <string name="pdft_done">완료</string>
     <string name="pdft_compress_result">%1$s에서 %2$s로 (%3$d%% 감소)</string>
     <string name="pdft_compress_no_gain">결과(%2$s)가 원본(%1$s)보다 작지 않습니다. 이 파일은 대부분 텍스트와 벡터 그래픽으로 되어 있습니다.</string>
-    <string name="pdft_save">저장</string>
+    <string name="pdft_save">@string/hc_save</string>
     <string name="pdft_save_to">%1$s에 저장</string>
     <string name="pdft_save_choose_folder">폴더 선택…</string>
     <string name="pdft_save_as">다른 이름으로 저장…</string>

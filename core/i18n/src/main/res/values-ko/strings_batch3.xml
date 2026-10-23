@@ -74,8 +74,8 @@
     <string name="blocklists_remove">목록 삭제</string>
     <string name="blocklists_custom_name">이름</string>
     <string name="blocklists_custom_url">주소(https)</string>
-    <string name="blocklists_add">추가</string>
-    <string name="blocklists_cancel">취소</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">https 주소만 사용할 수 있어요</string>
     <string name="blocklists_import_failed">파일에 사용할 수 있는 항목이 없거나 파일을 읽을 수 없어요</string>
     <string name="blocklists_schedule">자동 업데이트</string>

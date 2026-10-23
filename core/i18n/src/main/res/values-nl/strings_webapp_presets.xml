@@ -8,7 +8,7 @@
     <string name="web_app_preset_category_messaging">Berichten</string>
     <string name="web_app_preset_category_video">Video en muziek</string>
     <string name="web_app_preset_category_work">Productiviteit en werk</string>
-    <string name="web_app_preset_add">Toevoegen</string>
+    <string name="web_app_preset_add">@string/hc_add</string>
     <string name="web_app_preset_dialog_title">%1$s toevoegen</string>
     <string name="web_app_preset_dialog_summary">Kies de webapps die je wilt toevoegen. Ze worden opgeslagen zoals elke webapp die je zelf maakt.</string>
     <string name="web_app_preset_exists">Staat al in je webapps, wordt hergebruikt</string>

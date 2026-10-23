@@ -46,7 +46,7 @@
     <string name="od_cell_value">ค่า</string>
     <string name="od_cell_hint">ข้อความ ตัวเลข หรือสูตรที่ขึ้นต้นด้วย =</string>
     <string name="od_formula_replaced">เซลล์นี้มีสูตร (%1$s) ค่าใหม่จะแทนที่สูตรนั้น</string>
-    <string name="od_ok">ตกลง</string>
+    <string name="od_ok">@android:string/ok</string>
     <string name="od_sheet_n">ชีต %1$d</string>
     <string name="od_slide_of">สไลด์ %1$d จาก %2$d</string>
     <string name="od_delete_slide">ลบสไลด์</string>

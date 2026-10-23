@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Rimuovi lista</string>
     <string name="blocklists_custom_name">Nome</string>
     <string name="blocklists_custom_url">Indirizzo (https)</string>
-    <string name="blocklists_add">Aggiungi</string>
-    <string name="blocklists_cancel">Annulla</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Sono accettati solo indirizzi https</string>
     <string name="blocklists_import_failed">Il file non contiene voci utilizzabili o non è stato possibile leggerlo</string>
     <string name="blocklists_schedule">Aggiornamento automatico</string>

@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Agħfas Żid u waħħal link, jew ixxerja link ma\' Telos Downloads.</string>
     <string name="dl_empty_filter_title">Xejn hawn</string>
     <string name="dl_empty_filter_text">L-ebda download ma jaqbel ma\' dan il-filtru.</string>
-    <string name="dl_add">Żid</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Żid download</string>
     <string name="dl_links_hint">Links, wieħed f\'kull linja</string>
     <string name="dl_invalid_links">L-ebda link validu. Jistgħu jitniżżlu biss links http u https.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">Tneħħi %1$s? Il-parti li ssewwiet titħassar.</string>
     <string name="dl_delete_with_file">Neħħi u ħassar il-fajl</string>
     <string name="dl_delete_keep_file">Neħħi, żomm il-fajl</string>
-    <string name="dl_cancel">Ikkanċella</string>
-    <string name="dl_save">Issejvja</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">L-ebda app ma tista\' tiftaħ dan il-fajl</string>
     <string name="dl_pause_all">Waqqaf kollha</string>
     <string name="dl_resume_all">Kompli kollha</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Iskopri links fil-clipboard</string>
     <string name="dl_p3_detect_clipboard_sum">Meta tiftaħ Downloads, joffri link, indirizz ta\' sit tal-vidjows jew magnet link li kkopjajt. Android jista\' jgħidlek li l-app qrat il-clipboard.</string>
     <string name="dl_p3_clip_found">Fil-clipboard: %1$s</string>
-    <string name="dl_p3_clip_add">Żid</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Skeda</string>
     <string name="dl_p3_schedule_enable">Niżżel biss f\'ċerti ħinijiet</string>
     <string name="dl_p3_schedule_sum">Barra mit-tieqa tal-ħin id-downloads jistennew fil-kju.</string>

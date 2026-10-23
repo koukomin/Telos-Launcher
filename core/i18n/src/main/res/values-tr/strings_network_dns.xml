@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Yapılandırma kimliği</string>
     <string name="net_dns_nextdns_device">Cihaz adı (isteğe bağlı)</string>
     <string name="net_dns_nextdns_bad_id">Yapılandırma kimliği 4 ila 12 harf ve rakamdan oluşur.</string>
-    <string name="net_dns_nextdns_add">Ekle</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Sağlayıcı</string>
     <string name="net_dns_detail_protocol">Protokol</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Bu sunucuyu kullan</string>
     <string name="net_dns_action_test">Sına</string>
     <string name="net_dns_action_copy">Özel sunucu olarak kopyala</string>
-    <string name="net_dns_action_edit">Düzenle</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Kaldır</string>
-    <string name="net_dns_save">Kaydet</string>
-    <string name="net_dns_cancel">İptal</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Sınanıyor…</string>
     <string name="net_dns_test_ok">%1$d ms içinde yanıt verdi</string>
     <string name="net_dns_test_fail">Sınama başarısız: %1$s</string>

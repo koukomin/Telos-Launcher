@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="au4_confirms_confirm">নিশ্চিত করুন</string>
-    <string name="au4_confirms_cancel">বাতিল করুন</string>
+    <string name="au4_confirms_cancel">@string/hc_cancel</string>
     <string name="au4_confirms_nc_title">Nextcloud থেকে সাইন আউট করবেন?</string>
     <string name="au4_confirms_nc_message">আপনার Nextcloud অ্যাকাউন্ট এই লঞ্চার থেকে সরিয়ে ফেলা হবে। আপনি যেকোনো সময় আবার সাইন ইন করতে পারবেন।</string>
     <string name="au4_confirms_oc_title">ownCloud থেকে সাইন আউট করবেন?</string>
@@ -17,7 +17,7 @@
     <string name="au4_confirms_bulk_block_mobile">%1$d টি অ্যাপের মোবাইল ডেটা অ্যাক্সেস ব্লক করবেন?</string>
     <string name="au4_noteslink_link_existing">বিদ্যমান ফাইল লিঙ্ক করুন</string>
     <string name="au4_noteslink_create_new">নতুন ফাইল তৈরি করুন</string>
-    <string name="au4_noteslink_cancel">বাতিল করুন</string>
+    <string name="au4_noteslink_cancel">@string/hc_cancel</string>
     <string name="au4_settingsnew1_redial_attempts">পুনরায় ডায়াল করার চেষ্টা</string>
     <string name="au4_settingsnew1_redial_delay">চেষ্টার মধ্যে বিরতি</string>
     <string name="au4_settingsnew1_seconds">%1$d সে.</string>

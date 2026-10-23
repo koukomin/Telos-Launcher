@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Kendu peer-a</string>
     <string name="nwg_mobile_only">Datu mugikorretan soilik</string>
     <string name="nwg_lockdown">Blokeatu aplikazioak tunela erorita dagoen bitartean</string>
-    <string name="nwg_save">Gorde</string>
-    <string name="nwg_cancel">Utzi</string>
-    <string name="nwg_delete">Ezabatu</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Partekatu konfigurazioa</string>
     <string name="nwg_share_warning">Esportatutako konfigurazioak gako pribatua dauka.</string>
     <string name="nwg_import">Inportatu</string>

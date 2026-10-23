@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Tippe auf Hinzufügen und füge einen Link ein, oder teile einen Link mit Telos Downloads.</string>
     <string name="dl_empty_filter_title">Nichts hier</string>
     <string name="dl_empty_filter_text">Keine Downloads entsprechen diesem Filter.</string>
-    <string name="dl_add">Hinzufügen</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">Download hinzufügen</string>
     <string name="dl_links_hint">Links, einer pro Zeile</string>
     <string name="dl_invalid_links">Kein gültiger Link. Nur http- und https-Links können heruntergeladen werden.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">%1$s entfernen? Der bereits heruntergeladene Teil wird gelöscht.</string>
     <string name="dl_delete_with_file">Entfernen und Datei löschen</string>
     <string name="dl_delete_keep_file">Entfernen, Datei behalten</string>
-    <string name="dl_cancel">Abbrechen</string>
-    <string name="dl_save">Speichern</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Keine App kann diese Datei öffnen</string>
     <string name="dl_pause_all">Alle pausieren</string>
     <string name="dl_resume_all">Alle fortsetzen</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Links in der Zwischenablage erkennen</string>
     <string name="dl_p3_detect_clipboard_sum">Beim Öffnen von Downloads wird ein kopierter Link, eine Videoseiten-Adresse oder ein Magnet-Link angeboten. Android zeigt eventuell an, dass die App die Zwischenablage gelesen hat.</string>
     <string name="dl_p3_clip_found">In der Zwischenablage: %1$s</string>
-    <string name="dl_p3_clip_add">Hinzufügen</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Zeitplan</string>
     <string name="dl_p3_schedule_enable">Nur zu bestimmten Zeiten herunterladen</string>
     <string name="dl_p3_schedule_sum">Außerhalb des Zeitfensters warten Downloads in der Warteschlange.</string>

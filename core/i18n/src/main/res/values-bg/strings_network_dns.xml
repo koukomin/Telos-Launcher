@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">Идентификатор на конфигурацията</string>
     <string name="net_dns_nextdns_device">Име на устройството (по избор)</string>
     <string name="net_dns_nextdns_bad_id">Идентификаторът на конфигурацията се състои от 4 до 12 букви и цифри.</string>
-    <string name="net_dns_nextdns_add">Добавяне</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Доставчик</string>
     <string name="net_dns_detail_protocol">Протокол</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Използване на този сървър</string>
     <string name="net_dns_action_test">Тест</string>
     <string name="net_dns_action_copy">Копиране като собствен сървър</string>
-    <string name="net_dns_action_edit">Редактиране</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Премахване</string>
-    <string name="net_dns_save">Запазване</string>
-    <string name="net_dns_cancel">Отказ</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Тестване…</string>
     <string name="net_dns_test_ok">Отговор за %1$d ms</string>
     <string name="net_dns_test_fail">Тестът неуспешен: %1$s</string>

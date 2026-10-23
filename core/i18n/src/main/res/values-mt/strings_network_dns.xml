@@ -34,7 +34,7 @@
     <string name="net_dns_nextdns_id">ID tal-konfigurazzjoni</string>
     <string name="net_dns_nextdns_device">Isem tal-apparat (mhux obbligatorju)</string>
     <string name="net_dns_nextdns_bad_id">ID tal-konfigurazzjoni jikkonsisti minn 4 sa 12-il ittra u ċifra.</string>
-    <string name="net_dns_nextdns_add">Żid</string>
+    <string name="net_dns_nextdns_add">@string/hc_add</string>
     <string name="net_dns_nextdns_name">NextDNS %1$s</string>
     <string name="net_dns_detail_provider">Fornitur</string>
     <string name="net_dns_detail_protocol">Protokoll</string>
@@ -46,10 +46,10 @@
     <string name="net_dns_action_use">Uża dan is-server</string>
     <string name="net_dns_action_test">Ittestja</string>
     <string name="net_dns_action_copy">Ikkopja bħala server personalizzat</string>
-    <string name="net_dns_action_edit">Editja</string>
+    <string name="net_dns_action_edit">@string/hc_edit</string>
     <string name="net_dns_action_remove">Neħħi</string>
-    <string name="net_dns_save">Issejvja</string>
-    <string name="net_dns_cancel">Ikkanċella</string>
+    <string name="net_dns_save">@string/hc_save</string>
+    <string name="net_dns_cancel">@string/hc_cancel</string>
     <string name="net_dns_test_running">Qed jiġi ttestjat…</string>
     <string name="net_dns_test_ok">Wieġeb fi %1$d ms</string>
     <string name="net_dns_test_fail">It-test falla: %1$s</string>

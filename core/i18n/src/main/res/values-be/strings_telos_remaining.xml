@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">Перамясціць %1$s уніз</string>
     <string name="telos_files_toolbar_info">Выберыце да %1$d цэтлікаў і змяніце іх парадак. Навігацыя, пошук і меню застаюцца даступнымі. Усе дзеянні застаюцца ў меню.</string>
     <string name="telos_files_toolbar_reset">Аднавіць стандартныя налады</string>
-    <string name="telos_files_toolbar_save">Захаваць</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">Наладзіць панэль інструментаў</string>
     <string name="telos_files_toolbar_up">Перамясціць %1$s угору</string>
     <string name="telos_files_transfer_added">Дададзена ў чаргу перадачы файлаў</string>

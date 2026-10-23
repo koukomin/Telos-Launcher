@@ -150,10 +150,10 @@
     <string name="preference_location_breezy">Gestionează locația în Breezy Weather</string>
     <string name="preference_screen_freeze">Manager de înghețare</string>
     <string name="preference_screen_freeze_summary">Îngheață aplicațiile pentru a economisi bateria</string>
-    <string name="voice_save">Salvează</string>
-    <string name="voice_cancel">Anulează</string>
+    <string name="voice_save">@string/hc_save</string>
+    <string name="voice_cancel">@string/hc_cancel</string>
     <string name="voice_delete_title">Ștergi această înregistrare?</string>
-    <string name="voice_delete">Șterge</string>
+    <string name="voice_delete">@string/hc_delete</string>
     <string name="voice_share">Distribuie</string>
     <string name="voice_share_failed">Înregistrarea nu a putut fi distribuită</string>
     <string name="voice_play">Redă</string>
@@ -383,7 +383,7 @@
     <string name="preference_floating_launcher_tools">Instrumente rapide</string>
     <string name="preference_floating_launcher_tools_summary">Afișează în panou butoanele de captură de ecran, calculator și setări rapide. Butonul de captură de ecran necesită serviciul de accesibilitate</string>
     <string name="floating_launcher_title">Funcții inteligente</string>
-    <string name="floating_launcher_edit">Editează</string>
+    <string name="floating_launcher_edit">@string/hc_edit</string>
     <string name="floating_launcher_recent_files">Fișiere recente</string>
     <string name="floating_launcher_recent_files_empty">Niciun fișier recent. Telos are nevoie de acces la fișiere pentru aceasta; îl poți permite când deschizi Telos Files.</string>
     <string name="floating_launcher_recent_files_no_app">Nicio aplicație nu poate deschide acest fișier</string>
@@ -427,10 +427,10 @@
     <string name="floating_launcher_folder_name">Numele dosarului</string>
     <string name="floating_launcher_folder_select_apps">Alege cel puțin 2 aplicații de grupat</string>
     <string name="floating_launcher_create">Creează</string>
-    <string name="floating_launcher_cancel">Anulează</string>
+    <string name="floating_launcher_cancel">@string/hc_cancel</string>
     <string name="floating_launcher_rename_folder">Redenumește dosarul</string>
     <string name="floating_launcher_delete_folder">Șterge dosarul</string>
-    <string name="floating_launcher_save">Salvează</string>
+    <string name="floating_launcher_save">@string/hc_save</string>
     <string name="floating_launcher_open_folder">Deschide dosarul</string>
     <string name="floating_launcher_all_apps">Toate aplicațiile</string>
     <string name="floating_launcher_file_dock">Dock de fișiere</string>
@@ -1143,7 +1143,7 @@
     <string name="comms_unblock_number">Deblochează numărul</string>
     <string name="comms_no_previous_calls">Niciun apel anterior</string>
     <string name="comms_clear_history">Ștergi istoricul apelurilor?</string>
-    <string name="comms_clear_history_confirm">Șterge</string>
+    <string name="comms_clear_history_confirm">@string/hc_delete</string>
     <string name="comms_integrations">Integrări</string>
     <string name="filter_incoming">Primite</string>
     <string name="filter_outgoing">Efectuate</string>
@@ -1164,7 +1164,7 @@
     <string name="comms_answer">Răspunde</string>
     <string name="comms_reject">Respinge</string>
     <string name="comms_hangup">Închide</string>
-    <string name="comms_add_call">Adaugă</string>
+    <string name="comms_add_call">@string/hc_add</string>
     <string name="comms_merge">Îmbină</string>
     <string name="comms_swap">Comută</string>
     <string name="backup_choose_parts">Ce vrei să salvezi în copia de rezervă?</string>
@@ -1251,9 +1251,9 @@
     <string name="cal_no_events">Niciun eveniment</string>
     <string name="cal_no_title">(fără titlu)</string>
     <string name="cal_all_day">Toată ziua</string>
-    <string name="cal_cancel">Anulează</string>
-    <string name="cal_delete">Șterge</string>
-    <string name="cal_save">Salvează</string>
+    <string name="cal_cancel">@string/hc_cancel</string>
+    <string name="cal_delete">@string/hc_delete</string>
+    <string name="cal_save">@string/hc_save</string>
     <string name="cal_title">Titlu</string>
     <string name="cal_location">Locație</string>
     <string name="cal_description">Descriere</string>
@@ -1270,7 +1270,7 @@
     <string name="cal_series_note">Modificările și ștergerea se aplică întregii serii.</string>
     <string name="cal_on_phone">Pe acest telefon</string>
     <string name="cal_new_local">Calendar local nou</string>
-    <string name="cal_ok">OK</string>
+    <string name="cal_ok">@android:string/ok</string>
     <string name="cal_sync_note">Calendarele Google, CalDAV (DAVx5) și Exchange sunt sincronizate de sistem prin contul lor. Calendarele locale rămân pe telefon și sunt incluse în copia de rezervă Telos.</string>
     <string name="cal_view_agenda">Următoarele 30 de zile</string>
     <string name="cal_view_month">Vizualizare lunară</string>
@@ -1293,8 +1293,8 @@
     <string name="notes_title_hint">Titlu</string>
     <string name="notes_body_hint">Notiță</string>
     <string name="notes_labels_hint">serviciu, acasă</string>
-    <string name="notes_ok">OK</string>
-    <string name="notes_cancel">Anulează</string>
+    <string name="notes_ok">@android:string/ok</string>
+    <string name="notes_cancel">@string/hc_cancel</string>
     <string name="notes_imported">%d notițe importate</string>
     <string name="notes_synced">Sincronizat: %1$d trimise, %2$d primite</string>
     <string name="notes_sync_failed">Sincronizarea a eșuat: %s</string>
@@ -1352,7 +1352,7 @@
     <string name="screenshot_cannot_open">Imaginea nu a putut fi deschisă</string>
     <string name="screenshot_notification_channel">Capturi de ecran</string>
     <string name="screenshot_notification_text">Atinge pentru a edita</string>
-    <string name="screenshot_edit">Editează</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Capturi de ecran</string>
     <string name="screenshot_none">Nicio captură de ecran încă</string>
     <string name="screenshot_undo">Anulează acțiunea</string>
@@ -1386,7 +1386,7 @@
     <string name="floating_launcher_section_widgets">Widgeturi</string>
     <string name="floating_launcher_section_apps">Aplicații</string>
     <string name="floating_launcher_done">Gata</string>
-    <string name="floating_launcher_add">Adaugă</string>
+    <string name="floating_launcher_add">@string/hc_add</string>
     <string name="preference_category_floating_bar">Bară flotantă</string>
     <string name="preference_category_sidebar_style">Stilul barei laterale</string>
     <string name="preference_floating_launcher_side">Partea ecranului</string>

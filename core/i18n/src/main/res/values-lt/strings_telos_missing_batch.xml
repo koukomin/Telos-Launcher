@@ -35,7 +35,7 @@
     <string name="disclaimer">Atsisakymas</string>
     <string name="disclaimer_currency_converter">Mainų vertė yra paskelbta kasdien pagal Centrinį Europos banką.Visa informacija yra pateikiama\" kaip ir yra\" be jokios garantijos .Mes neatsakingi už šią informaciją.\n\n\n\nPaskutinis atnaujinimas: %1$s</string>
     <string name="duplicate">Duplikuoti</string>
-    <string name="edit">Keisti</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="edit_favorites_dialog_empty_section">Tempti daiktus čia</string>
     <string name="edit_favorites_dialog_new_tag">Sukurti žymą…</string>
     <string name="edit_favorites_dialog_pinned_sorted">Prisegta - rankiniu būdu surikuota</string>
@@ -131,7 +131,7 @@
     <string name="menu_clear_cache">Išvalyti talpyklą</string>
     <string name="menu_contacts_open_externally">Atidaryti kontaktus</string>
     <string name="menu_customize">Tinkinti</string>
-    <string name="menu_delete">Pašalinti</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_edit_widgets">Keisti valdiklius</string>
     <string name="menu_favorites_pin">Pridėti prie mėgstamų</string>
     <string name="menu_favorites_unpin">Pašalinti</string>
@@ -188,7 +188,7 @@
     <string name="note_widget_linked_file_summary">Nuoroda į %1$s</string>
     <string name="notes_widget_action_dismiss">Ignoruoti</string>
     <string name="notes_widget_action_new">Naujas ūžrašas</string>
-    <string name="notes_widget_action_save">Išsaugoti</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_dismissed">Išmestas ūžrašas.</string>
     <string name="notes_widget_export_filename">Ūžrašas_%1$s</string>
     <string name="notes_widget_placeholder">Parašyti ūžrašą…</string>
@@ -452,7 +452,7 @@
     <string name="restore_incompatible_file">Ši atsarginė kopija buvo sukurta %1$s versijoje ir ji negali būti atstatyta šioje versijoje.</string>
     <string name="restore_invalid_file">Pasirinktas failas atrodo ,kad nėra atsarginė kopija. Ar esate tikri ,kad čia teisingas failas?</string>
     <string name="restore_meta">Sukurta %1$s prietaise %2$s su %3$s.</string>
-    <string name="save">Išsaugoti</string>
+    <string name="save">@string/hc_save</string>
     <string name="search_action_alarm">Nustatyti perspėjima</string>
     <string name="search_action_app">Programa</string>
     <string name="search_action_call">Skambinti</string>

@@ -5,7 +5,7 @@
     <string name="au21_arch_failed">Kunne ikke åpne arkivet</string>
     <string name="au21_arch_pw_title">Passord kreves</string>
     <string name="au21_arch_pw_info">%1$s er passordbeskyttet. Skriv inn passordet for å åpne eller pakke det ut. Passordet beholdes bare i minnet mens du er i arkivet, og lagres aldri.</string>
-    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_ok">@android:string/ok</string>
     <string name="au21_arch_checking">Kontrollerer…</string>
     <string name="au21_arch_show">Vis</string>
     <string name="au21_arch_hide">Skjul</string>

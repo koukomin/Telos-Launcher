@@ -12,7 +12,7 @@
     <string name="dl_empty_text">Ekle’ye dokunup bir bağlantı yapıştırın veya bir bağlantıyı Telos Downloads ile paylaşın.</string>
     <string name="dl_empty_filter_title">Burada hiçbir şey yok</string>
     <string name="dl_empty_filter_text">Bu filtreyle eşleşen indirme yok.</string>
-    <string name="dl_add">Ekle</string>
+    <string name="dl_add">@string/hc_add</string>
     <string name="dl_add_title">İndirme ekle</string>
     <string name="dl_links_hint">Bağlantılar, her satıra bir tane</string>
     <string name="dl_invalid_links">Geçerli bağlantı yok. Yalnızca http ve https bağlantıları indirilebilir.</string>
@@ -64,8 +64,8 @@
     <string name="dl_delete_text_partial">%1$s kaldırılsın mı? İndirilen kısım silinir.</string>
     <string name="dl_delete_with_file">Kaldır ve dosyayı sil</string>
     <string name="dl_delete_keep_file">Kaldır, dosyayı sakla</string>
-    <string name="dl_cancel">İptal</string>
-    <string name="dl_save">Kaydet</string>
+    <string name="dl_cancel">@string/hc_cancel</string>
+    <string name="dl_save">@string/hc_save</string>
     <string name="dl_no_app">Bu dosyayı açabilecek uygulama yok</string>
     <string name="dl_pause_all">Tümünü duraklat</string>
     <string name="dl_resume_all">Tümünü sürdür</string>
@@ -311,7 +311,7 @@
     <string name="dl_p3_detect_clipboard">Panodaki bağlantıları algıla</string>
     <string name="dl_p3_detect_clipboard_sum">İndirmeler’i açtığınızda kopyaladığınız bir bağlantıyı, video sitesi adresini veya magnet bağlantısını önerir. Android, uygulamanın panoyu okuduğunu bildirebilir.</string>
     <string name="dl_p3_clip_found">Panoda: %1$s</string>
-    <string name="dl_p3_clip_add">Ekle</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Zamanlama</string>
     <string name="dl_p3_schedule_enable">Yalnızca belirli saatlerde indir</string>
     <string name="dl_p3_schedule_sum">Zaman aralığının dışında indirmeler sırada bekler.</string>

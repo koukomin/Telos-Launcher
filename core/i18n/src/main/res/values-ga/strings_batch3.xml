@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Bain an liosta</string>
     <string name="blocklists_custom_name">Ainm</string>
     <string name="blocklists_custom_url">Seoladh (https)</string>
-    <string name="blocklists_add">Cuir leis</string>
-    <string name="blocklists_cancel">Cealaigh</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Ní ghlactar ach le seoltaí https</string>
     <string name="blocklists_import_failed">Níl aon iontráil inúsáidte sa chomhad nó níorbh fhéidir é a léamh</string>
     <string name="blocklists_schedule">Nuashonrú uathoibríoch</string>

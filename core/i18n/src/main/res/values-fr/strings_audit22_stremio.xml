@@ -15,7 +15,7 @@
     <string name="au22_stremio_continue">Reprendre la lecture</string>
     <string name="au22_stremio_no_results">Aucun résultat</string>
     <string name="au22_stremio_library_empty">Votre bibliothèque est vide. Ouvrez un titre et enregistrez-le ici.</string>
-    <string name="au22_stremio_save">Enregistrer</string>
+    <string name="au22_stremio_save">@string/hc_save</string>
     <string name="au22_stremio_saved">Enregistré</string>
     <string name="au22_stremio_season">Saison %d</string>
     <string name="au22_stremio_streams">Choisir un flux</string>

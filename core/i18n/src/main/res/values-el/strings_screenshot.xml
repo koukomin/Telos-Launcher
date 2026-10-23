@@ -17,7 +17,7 @@
     <string name="screenshot_cannot_open">Η εικόνα δεν μπόρεσε να ανοιχτεί</string>
     <string name="screenshot_notification_channel">Στιγμιότυπα</string>
     <string name="screenshot_notification_text">Πατήστε για επεξεργασία</string>
-    <string name="screenshot_edit">Επεξεργασία</string>
+    <string name="screenshot_edit">@string/hc_edit</string>
     <string name="screenshot_screenshots">Στιγμιότυπα</string>
     <string name="screenshot_none">Δεν υπάρχουν ακόμα στιγμιότυπα</string>
     <string name="screenshot_undo">Αναίρεση</string>

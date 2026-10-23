@@ -54,7 +54,7 @@
     <string name="disclaimer">Ansvarsfraskrivelse</string>
     <string name="disclaimer_currency_converter">Valutakurser publiseres en gang om dagen av den europeiske sentralbanken. All informasjon gis «som den er» uten noen form for garanti. Vi fraskriver oss alt ansvar for denne informasjonen.\n\n\n\nSist oppdatert: %1$s</string>
     <string name="duplicate">Dupliser</string>
-    <string name="edit">Rediger</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="edit_favorites_dialog_empty_section">Dra elementer hit</string>
     <string name="edit_favorites_dialog_new_tag">Opprett merkelapp…</string>
     <string name="edit_favorites_dialog_pinned_sorted">Festet – manuelt sortert</string>
@@ -157,7 +157,7 @@
     <string name="menu_clear_cache">Tøm hurtigbuffer</string>
     <string name="menu_contacts_open_externally">Åpne i kontakt-app</string>
     <string name="menu_customize">Tilpass</string>
-    <string name="menu_delete">Slett</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_dial">Ring</string>
     <string name="menu_edit_widgets">Redigere widgets</string>
     <string name="menu_favorites_pin">Fest i favoritter</string>
@@ -215,7 +215,7 @@
     <string name="note_widget_linked_file_summary">Lenket med %1$s</string>
     <string name="notes_widget_action_dismiss">Avvis</string>
     <string name="notes_widget_action_new">Nytt notat</string>
-    <string name="notes_widget_action_save">Lagre</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_dismissed">Notat avvist</string>
     <string name="notes_widget_export_filename">Notat_%1$s</string>
     <string name="notes_widget_placeholder">Skriv et notat</string>
@@ -570,7 +570,7 @@
     <string name="restore_incompatible_file">Denne sikkerhetskopien ble opprettet med en annen versjon av %1$s og kan ikke gjenopprettes med denne versjonen.</string>
     <string name="restore_invalid_file">Den valgte filen ser ikke ut til å være en sikkerhetskopi. Har du valgt riktig fil?</string>
     <string name="restore_meta">Opprettet %1$s på %2$s med %3$s.</string>
-    <string name="save">Lagre</string>
+    <string name="save">@string/hc_save</string>
     <string name="search_action_alarm">Sett alarm</string>
     <string name="search_action_app">App</string>
     <string name="search_action_call">Ring</string>

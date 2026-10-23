@@ -78,7 +78,7 @@
     <string name="dl_p3_detect_clipboard">Detect links in the clipboard</string>
     <string name="dl_p3_detect_clipboard_sum">When you open Downloads, offer a link, a video site address or a magnet link that you copied. Android may tell you that the app read the clipboard.</string>
     <string name="dl_p3_clip_found">In the clipboard: %1$s</string>
-    <string name="dl_p3_clip_add">Add</string>
+    <string name="dl_p3_clip_add">@string/hc_add</string>
     <string name="dl_p3_schedule_title">Schedule</string>
     <string name="dl_p3_schedule_enable">Only download at certain times</string>
     <string name="dl_p3_schedule_sum">Outside the time window downloads wait in the queue.</string>

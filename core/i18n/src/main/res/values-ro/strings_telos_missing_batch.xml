@@ -34,7 +34,7 @@
     <string name="disclaimer">Atenționare</string>
     <string name="disclaimer_currency_converter">Cursurile de schimb sunt cele publicate o dată pe zi de Banca Centrală Europeană. Toate informațiile sunt furnizate \"ca atare\", fără niciun fel de garanție. Nu este asumată nicio răspundere pentru aceste informații.\n\n\n\nUltima actualizare: %1$s</string>
     <string name="duplicate">Duplicați</string>
-    <string name="edit">Editați</string>
+    <string name="edit">@string/hc_edit</string>
     <string name="edit_favorites_dialog_empty_section">Trageți elemente aici</string>
     <string name="edit_favorites_dialog_new_tag">Creați o etichetă…</string>
     <string name="edit_favorites_dialog_pinned_sorted">Fixate - sortate manual</string>
@@ -124,7 +124,7 @@
     <string name="menu_clear_cache">Golește memoria cache</string>
     <string name="menu_contacts_open_externally">Deschide în aplicația Contacte</string>
     <string name="menu_customize">Personalizează</string>
-    <string name="menu_delete">Șterge</string>
+    <string name="menu_delete">@string/hc_delete</string>
     <string name="menu_edit_widgets">Editează widget-uri</string>
     <string name="menu_favorites_pin">Adaugă la favorite</string>
     <string name="menu_favorites_unpin">Înlătură</string>
@@ -171,7 +171,7 @@
     <string name="no_selection">Nicio selecție</string>
     <string name="notes_widget_action_dismiss">Înlăturați</string>
     <string name="notes_widget_action_new">Notiță nouă</string>
-    <string name="notes_widget_action_save">Salvați</string>
+    <string name="notes_widget_action_save">@string/hc_save</string>
     <string name="notes_widget_dismissed">Notă înlăturată.</string>
     <string name="notes_widget_export_filename">Notiță_%1$s</string>
     <string name="notes_widget_placeholder">Scrieți o notiță…</string>
@@ -440,7 +440,7 @@
     <string name="provider_here">HERE</string>
     <string name="provider_metno">MET Norway</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
-    <string name="save">Salvați</string>
+    <string name="save">@string/hc_save</string>
     <string name="search_action_alarm">Setare alarma</string>
     <string name="search_action_contact">Contact nou</string>
     <string name="search_action_email">Email</string>

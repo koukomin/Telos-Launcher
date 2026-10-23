@@ -74,8 +74,8 @@
     <string name="blocklists_remove">Lista eltávolítása</string>
     <string name="blocklists_custom_name">Név</string>
     <string name="blocklists_custom_url">Cím (https)</string>
-    <string name="blocklists_add">Hozzáadás</string>
-    <string name="blocklists_cancel">Mégse</string>
+    <string name="blocklists_add">@string/hc_add</string>
+    <string name="blocklists_cancel">@string/hc_cancel</string>
     <string name="blocklists_invalid_url">Csak https címek fogadhatók el</string>
     <string name="blocklists_import_failed">A fájl nem tartalmaz használható bejegyzést, vagy nem olvasható</string>
     <string name="blocklists_schedule">Automatikus frissítés</string>

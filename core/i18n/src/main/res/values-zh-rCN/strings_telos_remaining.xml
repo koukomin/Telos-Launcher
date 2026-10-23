@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">将 %1$s 下移</string>
     <string name="telos_files_toolbar_info">选择最多 %1$d 个快捷方式并调整顺序。导航、搜索和菜单始终可用。所有操作仍可在菜单中找到。</string>
     <string name="telos_files_toolbar_reset">恢复默认设置</string>
-    <string name="telos_files_toolbar_save">保存</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">自定义工具栏</string>
     <string name="telos_files_toolbar_up">将 %1$s 上移</string>
     <string name="telos_files_transfer_added">已加入文件传输队列</string>

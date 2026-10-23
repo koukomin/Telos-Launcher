@@ -78,7 +78,7 @@
     <string name="telos_files_toolbar_down">نقل %1$s إلى أسفل</string>
     <string name="telos_files_toolbar_info">اختر ما يصل إلى %1$d اختصارًا وغيّر ترتيبها. يبقى التنقّل والبحث والقائمة متاحًا. تظل كل الإجراءات في القائمة.</string>
     <string name="telos_files_toolbar_reset">استعادة الإعدادات الافتراضية</string>
-    <string name="telos_files_toolbar_save">حفظ</string>
+    <string name="telos_files_toolbar_save">@string/hc_save</string>
     <string name="telos_files_toolbar_title">تخصيص شريط الأدوات</string>
     <string name="telos_files_toolbar_up">نقل %1$s إلى أعلى</string>
     <string name="telos_files_transfer_added">أُضيف إلى قائمة انتظار نقل الملفات</string>

@@ -42,9 +42,9 @@
     <string name="nwg_remove_peer">Премахване на пиър</string>
     <string name="nwg_mobile_only">Само при мобилни данни</string>
     <string name="nwg_lockdown">Блокиране на приложенията, докато тунелът не работи</string>
-    <string name="nwg_save">Запазване</string>
-    <string name="nwg_cancel">Отказ</string>
-    <string name="nwg_delete">Изтриване</string>
+    <string name="nwg_save">@string/hc_save</string>
+    <string name="nwg_cancel">@string/hc_cancel</string>
+    <string name="nwg_delete">@string/hc_delete</string>
     <string name="nwg_share">Споделяне на конфигурацията</string>
     <string name="nwg_share_warning">Експортираната конфигурация съдържа частния ключ.</string>
     <string name="nwg_import">Импортиране</string>
