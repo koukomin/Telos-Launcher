@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -129,9 +130,9 @@ fun DialpadScreen(initialNumber: String = "") {
     }
     androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
         val fontScale = LocalDensity.current.fontScale
-        val keySize = minOf(78.dp, (maxWidth - 24.dp) / 3).coerceAtLeast(48.dp)
-        val compact = maxHeight < 700.dp || fontScale > 1.15f
-
+        val isLandscape = maxWidth > maxHeight
+        val keySize = minOf(78.dp, (maxWidth - 24.dp) / (if (isLandscape) 6 else 3)).coerceAtLeast(48.dp)
+        
         val toneGenerator = remember {
             runCatching { ToneGenerator(AudioManager.STREAM_DTMF, 80) }.getOrNull()
         }
@@ -180,57 +181,8 @@ fun DialpadScreen(initialNumber: String = "") {
             }
         }
 
-        Column(
-            Modifier
-                .fillMaxSize()
-                .then(if (compact) Modifier.verticalScroll(rememberScrollState()) else Modifier),
-        ) {
-            Text(
-                text = input.ifEmpty { " " },
-                style = MaterialTheme.typography.headlineMedium.copy(fontSize = if (compact) 28.sp else 36.sp),
-                fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .horizontalScroll(rememberScrollState(), reverseScrolling = true)
-                    .heightIn(min = 56.dp)
-                    .combinedClickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                        onClick = {},
-                        onLongClick = {
-                            val clip = context.getSystemService(android.content.ClipboardManager::class.java)
-                                ?.primaryClip?.getItemAt(0)?.text?.toString().orEmpty()
-                            clip.filter { it.isDigit() || it == '+' || it == '*' || it == '#' }
-                                .forEach { viewModel.onKeyPressed(it) }
-                        },
-                    ),
-            )
-            if (input.isNotBlank()) {
-                Text(
-                    text = stringResource(R.string.search_action_contact),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .clip(RoundedCornerShape(12.dp))
-                        .clickable {
-                            val intent = Intent(Intent.ACTION_INSERT).apply {
-                                type = ContactsContract.RawContacts.CONTENT_TYPE
-                                putExtra(ContactsContract.Intents.Insert.PHONE, input)
-                            }
-                            context.tryStartActivity(intent)
-                        }
-                        .heightIn(min = 48.dp)
-                        .padding(horizontal = 12.dp, vertical = 8.dp),
-                )
-            }
-            Box(if (compact) Modifier.fillMaxWidth().heightIn(min = 96.dp, max = 200.dp) else Modifier.weight(1f).fillMaxWidth()) {
+        val resultsPanel: @Composable (Modifier) -> Unit = { modifier ->
+            Box(modifier) {
                 if (input.isBlank()) {
                     if (recents.isEmpty()) {
                         EmptyCommsTab(
@@ -278,11 +230,12 @@ fun DialpadScreen(initialNumber: String = "") {
                     }
                 }
             }
+        }
 
+        val dialpadPanel: @Composable (Modifier) -> Unit = { modifier ->
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                modifier = modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalArrangement = Arrangement.Bottom
             ) {
                 for (row in DIALPAD_KEYS.chunked(3)) {
                     Row(
@@ -397,6 +350,72 @@ fun DialpadScreen(initialNumber: String = "") {
                         }
                     }
                 }
+            }
+        }
+
+        val headerPanel: @Composable () -> Unit = {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = input.ifEmpty { " " },
+                    style = MaterialTheme.typography.headlineMedium.copy(fontSize = if (isLandscape) 28.sp else 36.sp),
+                    fontWeight = FontWeight.Normal,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .horizontalScroll(rememberScrollState(), reverseScrolling = true)
+                        .heightIn(min = 56.dp)
+                        .combinedClickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = {},
+                            onLongClick = {
+                                val clip = context.getSystemService(android.content.ClipboardManager::class.java)
+                                    ?.primaryClip?.getItemAt(0)?.text?.toString().orEmpty()
+                                clip.filter { it.isDigit() || it == '+' || it == '*' || it == '#' }
+                                    .forEach { viewModel.onKeyPressed(it) }
+                            },
+                        ),
+                )
+                if (input.isNotBlank()) {
+                    Text(
+                        text = stringResource(R.string.search_action_contact),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable {
+                                val intent = Intent(Intent.ACTION_INSERT).apply {
+                                    type = ContactsContract.RawContacts.CONTENT_TYPE
+                                    putExtra(ContactsContract.Intents.Insert.PHONE, input)
+                                }
+                                context.tryStartActivity(intent)
+                            }
+                            .heightIn(min = 48.dp)
+                            .padding(horizontal = 12.dp, vertical = 8.dp),
+                    )
+                }
+            }
+        }
+
+        if (isLandscape) {
+            Row(Modifier.fillMaxSize()) {
+                Column(Modifier.weight(1f).fillMaxHeight()) {
+                    headerPanel()
+                    resultsPanel(Modifier.weight(1f).fillMaxWidth())
+                }
+                dialpadPanel(Modifier.weight(1f).fillMaxHeight().verticalScroll(rememberScrollState()))
+            }
+        } else {
+            Column(Modifier.fillMaxSize()) {
+                headerPanel()
+                resultsPanel(Modifier.weight(1f).fillMaxWidth())
+                dialpadPanel(Modifier.fillMaxWidth())
             }
         }
     }
