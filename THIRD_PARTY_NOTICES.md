@@ -39,6 +39,7 @@ based on" table in `readme.md`.
 | [Dhizuku-API](https://github.com/iamr0s/Dhizuku-API) | MIT | Copyright (c) 2023 R0S. Device-owner delegation for freeze |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Copyright 2025 Kyant. Bundles TagLib (LGPL-2.1 / MPL-1.1 upstream) |
 | [PaperKnife+](https://github.com/potatameister/PaperKnifePlus) | GPL-3.0-or-later | Copyright (C) potatameister and PaperKnife+ contributors. PDF tools of Telos Viewer (feature set, tool logic) adapted from it |
+| [LibreCuts](https://github.com/tharunbirla/LibreCuts) | GPL-3.0 | Copyright (c) Tharun Birla. Video and audio trimming, speed control and clip editing features adapted from it |
 | [Open Camera](https://opencamera.org.uk/) | GPL-3.0 | Feature ideas only for Telos Camera; no source copied |
 | [Libre Camera](https://github.com/iakdis/librecamera) | GPL-3.0 | Feature ideas only; no source copied |
 | [CamX](https://github.com/uncannyRishabh/camx) | Apache-2.0 | Feature ideas only; no source copied |

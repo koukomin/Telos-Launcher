@@ -1245,6 +1245,7 @@ adapted, the original license is respected.
 | [baresip](https://github.com/baresip/baresip) and [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | SIP engine and its JNI bridge |
 | [LRCLIB](https://lrclib.net) | open API | Song lyrics for Telos Music |
 | [Next Player](https://github.com/anilbeesetti/nextplayer) and [NextLib](https://github.com/anilbeesetti/nextlib) | GPL-3.0 | Player gestures and features (design), FFmpeg decoders for Media3 (library, uses FFmpeg under LGPL-2.1) |
+| [LibreCuts](https://github.com/tharunbirla/LibreCuts) | GPL-3.0 | Video and audio trimming, speed control, audio extraction and clip editing features |
 | [mpv-android](https://github.com/mpv-android/mpv-android) and [mpvKt](https://github.com/abdallahmehiz/mpvKt) | MIT / Apache-2.0 | Ideas for gestures, speed presets and sleep timer (no code) |
 | [Nova Video Player](https://github.com/nova-video-player/aos-AVP) | Apache-2.0 | Feature inspiration for Telos Video: playing and scanning videos from network shares, library marks, subtitle search. Re-implemented with Media3, no code and none of its prebuilt binaries were copied |
 | [OpenSubtitles](https://www.opensubtitles.com) and [Podnapisi](https://www.podnapisi.net) | service terms | Subtitle search and download in Telos Video (old OpenSubtitles REST API without an account, the file hash algorithm is the published one) |
