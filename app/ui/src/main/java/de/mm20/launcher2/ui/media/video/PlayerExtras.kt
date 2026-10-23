@@ -196,8 +196,18 @@ internal fun PlaybackMenu(
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 Text(stringResource(R.string.hc_speed), style = MaterialTheme.typography.titleSmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
-                    listOf(0.5f, 0.75f, 1f, 1.25f, 1.5f, 2f).forEach { v ->
+                    listOf(0.25f, 0.5f, 0.75f, 1f, 1.25f, 1.5f, 2f, 3f, 4f).forEach { v ->
                         FilterChip(selected = speed == v, onClick = { onSpeed(v) }, label = { Text("${v}×".replace(".0×", "×")) })
+                    }
+                }
+
+                Text("Frame Stepping (NeriPlayer)", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(vertical = 4.dp)) {
+                    androidx.compose.material3.OutlinedButton(onClick = { player.seekTo((player.currentPosition - 41L).coerceAtLeast(0L)) }) {
+                        Text("⏮ -1 Frame")
+                    }
+                    androidx.compose.material3.OutlinedButton(onClick = { player.seekTo((player.currentPosition + 41L).coerceAtLeast(0L)) }) {
+                        Text("⏭ +1 Frame")
                     }
                 }
                 Text(stringResource(R.string.hc_picture), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))

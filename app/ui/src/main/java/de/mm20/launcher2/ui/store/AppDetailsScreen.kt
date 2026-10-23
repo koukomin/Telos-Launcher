@@ -229,6 +229,40 @@ fun AppDetailsScreen(itemId: String) {
                 }
             }
             item {
+                var inureData by remember(item.packageName) { mutableStateOf<de.mm20.launcher2.data.store.security.InureInspectionResult?>(null) }
+                LaunchedEffect(item.packageName) {
+                    withContext(Dispatchers.IO) {
+                        inureData = de.mm20.launcher2.data.store.security.AppInureInspector.inspectPackage(context, item.packageName)
+                    }
+                }
+
+                inureData?.let { data ->
+                    Card("Inure App Analytics & Security") {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Text("Trackers & Ad SDKs Detected (${data.detectedTrackers.size})", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                            if (data.detectedTrackers.isNotEmpty()) {
+                                data.detectedTrackers.forEach { tracker ->
+                                    Text("• $tracker", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+                                }
+                            } else {
+                                Text("✓ No known ad or analytics trackers detected", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                            }
+
+                            HorizontalDivider(Modifier.padding(vertical = 4.dp))
+                            Text("Certificate Fingerprints", fontWeight = FontWeight.Bold)
+                            if (data.certIssuer != null) Text("Issuer: ${data.certIssuer}", style = MaterialTheme.typography.bodySmall)
+                            Text("SHA-256: ${data.sha256Fingerprint.take(28)}...", style = MaterialTheme.typography.bodySmall)
+                            Text("SHA-1: ${data.sha1Fingerprint.take(28)}...", style = MaterialTheme.typography.bodySmall)
+
+                            HorizontalDivider(Modifier.padding(vertical = 4.dp))
+                            Text("Permissions Breakdown", fontWeight = FontWeight.Bold)
+                            Text("Dangerous Permissions: ${data.dangerousPermissions.size}", style = MaterialTheme.typography.bodySmall, color = if (data.dangerousPermissions.isNotEmpty()) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text("Normal Permissions: ${data.normalPermissions.size}", style = MaterialTheme.typography.bodySmall)
+                        }
+                    }
+                }
+            }
+            item {
                 Card(stringResource(R.string.hf_store_app_settings)) {
                     SwitchLine(
                         stringResource(R.string.store_check_updates_per_app),
