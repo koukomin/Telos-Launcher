@@ -2,9 +2,12 @@ package de.mm20.launcher2.ui.system
 
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
+import android.os.BatteryManager
 import android.os.Build
 import android.os.Process
 import android.os.SystemClock
@@ -18,6 +21,7 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,14 +39,19 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -173,6 +182,7 @@ fun SystemDashboardScreen() {
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
+                item { BatteryCard() }
                 item {
                     GlassCard {
                         Text("${Build.MANUFACTURER} ${Build.MODEL}", style = MaterialTheme.typography.titleMedium)
@@ -418,3 +428,108 @@ private fun hasWifiPassword(context: Context): Boolean = runCatching {
         android.net.wifi.WifiInfo.SECURITY_TYPE_WEP, android.net.wifi.WifiInfo.SECURITY_TYPE_WAPI_PSK,
     )
 }.getOrDefault(false)
+
+@Composable
+private fun BatteryCard() {
+    val context = LocalContext.current
+    var batteryInfo by remember { mutableStateOf<BatteryStats?>(null) }
+    var showDetails by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+            if (intent != null) {
+                val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+                val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+                val pct = if (level >= 0 && scale > 0) (level * 100) / scale else 0
+                val status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
+                val health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, -1)
+                val plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
+                val voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1)
+                val temp = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1)
+                val tech = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY) ?: "Li-ion"
+
+                val statusText = when (status) {
+                    BatteryManager.BATTERY_STATUS_CHARGING -> "Charging"
+                    BatteryManager.BATTERY_STATUS_DISCHARGING -> "Discharging"
+                    BatteryManager.BATTERY_STATUS_FULL -> "Full"
+                    BatteryManager.BATTERY_STATUS_NOT_CHARGING -> "Not Charging"
+                    else -> "Unknown"
+                }
+                val healthText = when (health) {
+                    BatteryManager.BATTERY_HEALTH_GOOD -> "Good"
+                    BatteryManager.BATTERY_HEALTH_OVERHEAT -> "Overheat"
+                    BatteryManager.BATTERY_HEALTH_DEAD -> "Dead"
+                    BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE -> "Over Voltage"
+                    BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE -> "Failure"
+                    else -> "Unknown"
+                }
+                val pluggedText = when (plugged) {
+                    BatteryManager.BATTERY_PLUGGED_AC -> "AC Charger"
+                    BatteryManager.BATTERY_PLUGGED_USB -> "USB Cable"
+                    BatteryManager.BATTERY_PLUGGED_WIRELESS -> "Wireless"
+                    else -> "Unplugged"
+                }
+
+                batteryInfo = BatteryStats(pct, statusText, healthText, pluggedText, voltage, temp, tech)
+            }
+        }
+    }
+
+    batteryInfo?.let { info ->
+        GlassCard {
+            Row(
+                Modifier.fillMaxWidth().clickable { showDetails = true },
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(Modifier.weight(1f)) {
+                    Text("Battery & Power Hub", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    Text("${info.percent}% · ${info.status} (${info.plugged})", style = MaterialTheme.typography.bodyMedium)
+                    Text("Health: ${info.health} · ${info.temp / 10f}°C · ${info.voltage} mV", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                CircularProgressIndicator(
+                    progress = { info.percent / 100f },
+                    modifier = Modifier.size(48.dp),
+                    strokeWidth = 5.dp,
+                )
+            }
+        }
+
+        if (showDetails) {
+            ModalBottomSheet(onDismissRequest = { showDetails = false }, sheetState = rememberModalBottomSheetState()) {
+                Column(Modifier.fillMaxWidth().padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text("Battery Details & Health", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                    InfoLine("Charge Level", "${info.percent}%")
+                    InfoLine("Status", info.status)
+                    InfoLine("Health", info.health)
+                    InfoLine("Power Source", info.plugged)
+                    InfoLine("Temperature", "${info.temp / 10f}°C (${(info.temp / 10f * 9/5 + 32)}°F)")
+                    InfoLine("Voltage", "${info.voltage} mV")
+                    InfoLine("Technology", info.tech)
+                    Button(onClick = { showDetails = false }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
+                        Text("Close")
+                    }
+                }
+            }
+        }
+    }
+}
+
+private data class BatteryStats(
+    val percent: Int,
+    val status: String,
+    val health: String,
+    val plugged: String,
+    val voltage: Int,
+    val temp: Int,
+    val tech: String,
+)
+
+@Composable
+private fun InfoLine(label: String, value: String) {
+    Row(Modifier.fillMaxWidth().padding(vertical = 2.dp)) {
+        Text(label, Modifier.weight(1f), color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(value, fontWeight = FontWeight.SemiBold)
+    }
+}

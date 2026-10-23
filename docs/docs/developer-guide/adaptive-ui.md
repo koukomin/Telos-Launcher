@@ -66,6 +66,11 @@ Use `BoxWithConstraints` at the component boundary, after parent padding/insets.
 sampling and launch transitions. System display metrics and orientation/device type are not
 content constraints. Display scaling changes available dp; do not apply it a second time.
 
+**CRITICAL RESPONSIVENESS MANDATES FOR VIRTUAL APPS:**
+1. **Never use hardcoded heights (`height(dp)`) for structural containers.** If a container holds dynamic text or scaling UI elements, use `heightIn(min = ...)` combined with `Modifier.weight(1f)` for flexible expansion. Hardcoding heights will cause vertical overflow and clipping when the user increases the font scale up to 2.0x.
+2. **Always handle Landscape properly (Side-by-Side).** Apps with a top content area (e.g., results, previews) and a bottom control area (e.g., dialpads, calculator keys, media controls) MUST switch to a `Row` (Side-by-Side) layout in landscape mode (`maxWidth > maxHeight`). Do not stack tall control panels vertically in landscape, as it forces unusable scrolling or glitches.
+3. **Use WindowInsets.safeDrawing universally.** Virtual app hosts must pad content with the full `WindowInsets.safeDrawing` (not just horizontal), so that system bars and navigation gestures never overlap with the app's interactive areas.
+
 `AdaptiveLayoutPolicy` centralizes only pure space decisions, not rendering or mutable state:
 
 - Grid columns fit the available width and minimum cell budget, with the supplied preferred
