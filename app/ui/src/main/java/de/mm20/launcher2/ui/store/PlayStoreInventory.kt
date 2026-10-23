@@ -101,27 +101,31 @@ object PlayStoreInventory {
     }
 
     fun openPlayApp(context: Context, packageName: String) {
-        val market = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")).setPackage(PLAY_PACKAGE)
-        market.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        if (!context.tryStartActivity(market)) {
-            val launchIntent = context.packageManager.getLaunchIntentForPackage(PLAY_PACKAGE)
-            if (launchIntent != null) {
-                launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                context.tryStartActivity(launchIntent)
-            }
+        val directPlayIntent = Intent(Intent.ACTION_MAIN)
+            .addCategory(Intent.CATEGORY_LAUNCHER)
+            .setPackage(PLAY_PACKAGE)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        if (!context.tryStartActivity(directPlayIntent)) {
+            val market = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName"))
+                .setPackage(PLAY_PACKAGE)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.tryStartActivity(market)
         }
     }
 
     fun openPlayUpdates(context: Context) {
-        val launchIntent = context.packageManager.getLaunchIntentForPackage(PLAY_PACKAGE)
-        if (launchIntent != null) {
-            launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            if (context.tryStartActivity(launchIntent)) return
-        }
+        val directPlayIntent = Intent(Intent.ACTION_MAIN)
+            .addCategory(Intent.CATEGORY_LAUNCHER)
+            .setPackage(PLAY_PACKAGE)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-        val market = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$PLAY_PACKAGE")).setPackage(PLAY_PACKAGE)
-        market.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.tryStartActivity(market)
+        if (!context.tryStartActivity(directPlayIntent)) {
+            val market = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$PLAY_PACKAGE"))
+                .setPackage(PLAY_PACKAGE)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.tryStartActivity(market)
+        }
     }
 
     private fun versionParts(value: String): List<Long> =
