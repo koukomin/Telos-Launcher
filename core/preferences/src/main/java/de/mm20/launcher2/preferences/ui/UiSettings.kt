@@ -717,4 +717,13 @@ class UiSettings internal constructor(
             )
         }
     }
+
+    val shizukuAutoStart
+        get() = launcherDataStore.data.map { it.misc.shizukuAutoStart }
+
+    fun setShizukuAutoStart(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(shizukuAutoStart = enabled))
+        }
+    }
 }

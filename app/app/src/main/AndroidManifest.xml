@@ -51,10 +51,16 @@
 
     <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_permissions === -->
     <uses-permission android:name="dev.rikka.shizuku.permission.API_V23" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_permissions === -->
+
+    <queries>
+        <package android:name="moe.shizuku.privileged.api" />
+    </queries>
 
     <application
         android:name=".LauncherApplication"

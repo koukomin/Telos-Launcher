@@ -357,6 +357,8 @@ data class MiscGroup(
     val easterEgg: Boolean = false,
     /** Local crash reporter switch. Mirrored into SharedPreferences for the crash handler. */
     val crashReporterEnabled: Boolean = true,
+    /** Automatically configure Wireless Debugging and wake Shizuku on boot. */
+    val shizukuAutoStart: Boolean = false,
 )
 
 @Serializable
