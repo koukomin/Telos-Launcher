@@ -337,6 +337,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.network.NetworkScanRoute> {
                 de.mm20.launcher2.ui.network.NetworkScanScreen()
             }
+            entry<de.mm20.launcher2.ui.settings.tweaks.TweaksSettingsRoute> {
+                de.mm20.launcher2.ui.settings.tweaks.TweaksSettingsScreen()
+            }
             entry<de.mm20.launcher2.ui.network.NetworkPrivacyRoute> {
                 de.mm20.launcher2.ui.network.NetworkPrivacyScreen()
             }
