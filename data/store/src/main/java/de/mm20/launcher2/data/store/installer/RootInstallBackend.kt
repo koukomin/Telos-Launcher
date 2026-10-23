@@ -27,13 +27,18 @@ internal class RootInstallBackend : InstallBackend {
 
     override suspend fun requestPermission(): Boolean = isAvailable()
 
-    override suspend fun install(apk: File, packageName: String): BackendInstallResult {
+    override suspend fun install(apk: File, packageName: String, allowDowngrade: Boolean): BackendInstallResult {
         if (!hasPermission()) {
             return BackendInstallResult.Failed("Root is not available")
         }
         return withContext(Dispatchers.IO) {
             try {
-                installPrivilegedSession(apk, android.os.Process.myUid() / 100000, android.os.Build.VERSION.SDK_INT >= 34) { command, input ->
+                installPrivilegedSession(
+                    apk = apk,
+                    userId = android.os.Process.myUid() / 100000,
+                    preserveEnabled = android.os.Build.VERSION.SDK_INT >= 34,
+                    allowDowngrade = allowDowngrade,
+                ) { command, input ->
                     // All arguments are generated internally (no paths or package names).
                     runInstallCommand(input, ProcessBuilder("su", "-c", command.joinToString(" ")).start())
                 }

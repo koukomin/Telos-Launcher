@@ -431,11 +431,3 @@ private fun DetailsActionButton(row: StoreRow, state: StoreInstallUiState, onCli
         StoreInstallUiState.Idle, StoreInstallUiState.Installed -> Button(onClick = onClick) { Text(row.actionLabel()) }
     }
 }
-
-private fun formatBytes(bytes: Long): String {
-    if (bytes < 1024) return "$bytes B"
-    val units = arrayOf("KB", "MB", "GB")
-    val exponent = (ln(bytes.toDouble()) / ln(1024.0)).toInt().coerceIn(1, units.size)
-    val value = bytes / 1024.0.pow(exponent)
-    return "%.1f %s".format(value, units[exponent - 1])
-}

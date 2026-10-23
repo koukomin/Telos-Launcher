@@ -18,7 +18,7 @@ internal interface InstallBackend {
     suspend fun requestPermission(): Boolean
 
     /** Installs [apk] silently (no system install confirmation UI). */
-    suspend fun install(apk: File, packageName: String): BackendInstallResult
+    suspend fun install(apk: File, packageName: String, allowDowngrade: Boolean = false): BackendInstallResult
 }
 
 internal sealed interface BackendInstallResult {

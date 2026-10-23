@@ -53,6 +53,8 @@ data class GlobalOptions(
     /** Raises the GitHub limit from 60 to 5000 requests per hour; optional */
     val githubToken: String = "",
     val lastCheckMillis: Long = 0,
+    /** Pass -d flag to allow version downgrades during Shizuku/Root installs (default false) */
+    val allowDowngrade: Boolean = false,
 )
 
 /**

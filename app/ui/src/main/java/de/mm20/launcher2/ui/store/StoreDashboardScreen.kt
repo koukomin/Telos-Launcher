@@ -442,6 +442,7 @@ private fun PlayStoreTab(
     }
 }
 
+
 @Composable
 private fun StoreSectionHeader(title: String) {
     Text(
@@ -488,6 +489,7 @@ private fun SwipePlayRow(app: PlayStoreApp, onOpen: (PlayStoreApp) -> Unit, onUp
         PlayStoreAppRow(app = app, onOpen = { onOpen(app) }, onUpdate = { onUpdate(app) })
     }
 }
+
 
 @Composable
 private fun PlayStoreAppRow(app: PlayStoreApp, onOpen: () -> Unit, onUpdate: () -> Unit) {
@@ -549,6 +551,7 @@ private fun PlayStoreAppRow(app: PlayStoreApp, onOpen: () -> Unit, onUpdate: () 
         }
     }
 }
+
 
 @Composable
 private fun AppsTab(
@@ -663,6 +666,7 @@ private fun AppsTab(
     }
 }
 
+
 /** Suggested free apps in four groups; "Add" puts one into the tracked apps (it is then installed and updated like any other) */
 @Composable
 private fun RecommendedTab(tracked: Set<String>, onAdd: (RecommendedApp, () -> Unit) -> Unit) {
@@ -723,6 +727,7 @@ private fun RecommendedTab(tracked: Set<String>, onAdd: (RecommendedApp, () -> U
     }
 }
 
+
 @Composable
 private fun EmptyMessage(title: String, text: String) {
     Column(
@@ -734,6 +739,7 @@ private fun EmptyMessage(title: String, text: String) {
         Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
+
 
 @Composable
 @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
@@ -763,7 +769,8 @@ internal fun StoreItemRow(
                     Text(item.displayName, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
                     Text(item.versionLine(row.updateAvailable), style = MaterialTheme.typography.bodySmall,
                         color = if (row.updateAvailable) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(listOfNotNull(item.source.summary(), row.options.category.ifBlank { null },
+                    val sizeText = item.latestRelease?.size?.let { formatBytes(it) }
+                    Text(listOfNotNull(item.source.summary(), sizeText, row.options.category.ifBlank { null },
                         if (row.options.trackOnly) stringResource(R.string.hf_store_track_only) else null,
                         if (row.options.pinned) stringResource(R.string.au_store_pinned) else null).joinToString(" · "),
                         style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -800,6 +807,7 @@ internal fun StoreItemRow(
     }
 }
 
+
 @Composable
 private fun StoreItem.versionLine(update: Boolean): String {
     val installed = installedVersionName ?: installedVersionCode?.toString()
@@ -811,6 +819,7 @@ private fun StoreItem.versionLine(update: Boolean): String {
         else -> "v$installed"
     }
 }
+
 
 /**
  * The icon of the installed app, drawn the way the launcher draws it (the icon pack and icon shape the
@@ -869,6 +878,7 @@ internal fun AppIcon(packageName: String, name: String, size: Int, installedVers
     }
 }
 
+
 @Composable
 internal fun StoreActionButton(row: StoreRow, state: StoreInstallUiState, onClick: () -> Unit) {
     val downloader: de.mm20.launcher2.store.installer.Downloader = org.koin.compose.koinInject()
@@ -895,6 +905,7 @@ internal fun StoreActionButton(row: StoreRow, state: StoreInstallUiState, onClic
         }
     }
 }
+
 
 /** "Install", "Update", "Open", or "Get" for apps that are only tracked (their page opens) */
 @Composable
@@ -1015,7 +1026,10 @@ private fun InstalledAppsTab(
                             Spacer(Modifier.width(12.dp))
                             Column(Modifier.weight(1f)) {
                                 Text(label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                                Text(app.packageName, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                val sizeBytes = runCatching { java.io.File(app.sourceDir).length() }.getOrDefault(0L)
+                                val sizeText = if (sizeBytes > 0) android.text.format.Formatter.formatFileSize(context, sizeBytes) else null
+                                val subtitle = listOfNotNull(app.packageName, sizeText).joinToString(" · ")
+                                Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                                     if (isFrozen) {
                                         Text("❄ Frozen", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
@@ -1044,6 +1058,7 @@ private fun InstalledAppsTab(
         }
     }
 }
+
 
 // ---------------------------------------------------------------------------------------------
 
@@ -1114,6 +1129,7 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
         }
     }
 }
+
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -1205,6 +1221,13 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
                 )
                 ToggleRow(stringResource(R.string.hf_store_auto_install), g.autoInstall) { v -> viewModel.setGlobal { it.copy(autoInstall = v) } }
+                ToggleRow("Allow Version Downgrades (-d)", g.allowDowngrade) { v -> viewModel.setGlobal { it.copy(allowDowngrade = v) } }
+                Text(
+                    "Allow installing updates even if the package version code is lower than installed (default: Disabled)",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
+                )
                 ToggleRow(stringResource(R.string.store_parallel_updates), g.parallelUpdates) { v ->
                     viewModel.setGlobal { it.copy(parallelUpdates = v) }
                 }
@@ -1239,6 +1262,7 @@ private fun ToggleRow(label: String, value: Boolean, onChange: (Boolean) -> Unit
         Switch(checked = value, onCheckedChange = onChange)
     }
 }
+
 
 @Composable
 private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit) {
@@ -1295,4 +1319,12 @@ private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
         },
         dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
     )
+}
+
+internal fun formatBytes(bytes: Long): String {
+    if (bytes <= 0) return ""
+    val units = arrayOf("B", "KB", "MB", "GB")
+    var digitGroups = (Math.log10(bytes.toDouble()) / Math.log10(1024.0)).toInt()
+    if (digitGroups >= units.size) digitGroups = units.size - 1
+    return String.format(java.util.Locale.US, "%.1f %s", bytes / Math.pow(1024.0, digitGroups.toDouble()), units[digitGroups])
 }

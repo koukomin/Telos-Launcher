@@ -24,7 +24,7 @@ internal class SessionApiInstallBackend(private val context: Context) : InstallB
     override suspend fun hasPermission(): Boolean = true
     override suspend fun requestPermission(): Boolean = true
 
-    override suspend fun install(apk: File, packageName: String): BackendInstallResult = install(apk, packageName, null)
+    override suspend fun install(apk: File, packageName: String, allowDowngrade: Boolean): BackendInstallResult = install(apk, packageName, null)
 
     suspend fun install(apk: File, packageName: String, freezeToken: String?): BackendInstallResult {
         return try {

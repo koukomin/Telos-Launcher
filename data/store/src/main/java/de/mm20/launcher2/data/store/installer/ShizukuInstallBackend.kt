@@ -56,7 +56,7 @@ internal class ShizukuInstallBackend : InstallBackend {
         }
     }
 
-    override suspend fun install(apk: File, packageName: String): BackendInstallResult =
+    override suspend fun install(apk: File, packageName: String, allowDowngrade: Boolean): BackendInstallResult =
         withContext(Dispatchers.IO) {
             if (!hasPermission()) {
                 return@withContext BackendInstallResult.Failed("Shizuku is not authorized")
@@ -69,7 +69,12 @@ internal class ShizukuInstallBackend : InstallBackend {
                     String::class.java,
                 )
                 method.isAccessible = true
-                installPrivilegedSession(apk, android.os.Process.myUid() / 100000, android.os.Build.VERSION.SDK_INT >= 34) { command, input ->
+                installPrivilegedSession(
+                    apk = apk,
+                    userId = android.os.Process.myUid() / 100000,
+                    preserveEnabled = android.os.Build.VERSION.SDK_INT >= 34,
+                    allowDowngrade = allowDowngrade,
+                ) { command, input ->
                     runInstallCommand(input, method.invoke(null, command.toTypedArray(), null, null) as Process)
                 }
             } catch (e: Exception) {
