@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">ছবি হিসেবে শেয়ার করুন</string>
+    <string name="morse_light">আলো</string>
+    <string name="morse_sound">শব্দ</string>
+    <string name="morse_light_sound">আলো ও শব্দ</string>
+    <string name="morse_language_help">গ্রিক মোর্স; অন্য লিপি নিচে লাতিন অক্ষরে প্রতিলিপি করা হয়। শব্দ মিডিয়া ভলিউম ব্যবহার করে।</string>
+    <string name="morse_unsupported">কিছু অক্ষর পাঠানো যায় না।</string>
+</resources>

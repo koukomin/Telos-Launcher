@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Comparteix com a imatge</string>
+    <string name="morse_light">Llum</string>
+    <string name="morse_sound">So</string>
+    <string name="morse_light_sound">Llum i so</string>
+    <string name="morse_language_help">Morse grec; les altres escriptures es transliteren al llatí a sota. El so utilitza el volum multimèdia.</string>
+    <string name="morse_unsupported">Alguns caràcters no es poden enviar.</string>
+</resources>

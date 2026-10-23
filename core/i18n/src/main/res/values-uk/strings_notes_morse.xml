@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Поділитися зображенням</string>
+    <string name="morse_light">Світло</string>
+    <string name="morse_sound">Звук</string>
+    <string name="morse_light_sound">Світло і звук</string>
+    <string name="morse_language_help">Грецька абетка Морзе; інші писемності транслітеруються латиницею нижче. Звук використовує гучність медіа.</string>
+    <string name="morse_unsupported">Деякі символи неможливо надіслати.</string>
+</resources>

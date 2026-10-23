@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Споделяне като изображение</string>
+    <string name="morse_light">Светлина</string>
+    <string name="morse_sound">Звук</string>
+    <string name="morse_light_sound">Светлина и звук</string>
+    <string name="morse_language_help">Гръцка морзова азбука; другите писмености се транслитерират на латиница по-долу. Звукът използва силата на мултимедията.</string>
+    <string name="morse_unsupported">Някои знаци не могат да се изпратят.</string>
+</resources>

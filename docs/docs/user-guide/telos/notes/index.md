@@ -83,3 +83,7 @@ To import Google Keep notes, export Keep with Google Takeout, then choose
 **Notes → overflow menu → Import** and select the ZIP or individual JSON files.
 This imports note text, checklists, labels and supported flags; it is not live
 Google Keep synchronization and does not import every attachment type.
+
+## Share a note
+
+Use Share in the editor, or long-press a note. Plain text includes both the title and body; Markdown remains available. **Share as image** renders readable PNG pages from the whole note, not a screenshot of the visible editor. Long notes produce multiple images in the Android share sheet. Images retain the note color (a light background for the default color). To bound memory, image export permits at most 100,000 characters and 32 pages; larger notes report failure and can still be shared as text or Markdown. Export files stay in the private share cache and are eligible for cleanup after 24 hours on a later image export.

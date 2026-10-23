@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Dela som bild</string>
+    <string name="morse_light">Ljus</string>
+    <string name="morse_sound">Ljud</string>
+    <string name="morse_light_sound">Ljus och ljud</string>
+    <string name="morse_language_help">Grekisk morse; andra skriftsystem translittereras till latinska bokstäver nedan. Ljudet använder medievolymen.</string>
+    <string name="morse_unsupported">Vissa tecken kan inte skickas.</string>
+</resources>

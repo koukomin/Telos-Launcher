@@ -121,3 +121,9 @@ Some features are new and not tested on every device. They are marked <Badge typ
 
 Telos builds on Kvaesitso and on ideas and code from several open source projects. The full list with
 licenses is in the project [readme](https://github.com/koukomin/Telos-Launcher#projects-telos-is-based-on).
+
+## Flashlight: multilingual Morse
+
+Enter text in any supported Telos language. Greek uses its radio Morse alphabet, including accented vowels and final sigma. Other scripts are romanized offline with AnyAscii into international Morse; the actual romanized text is shown before sending. This is **not** national Japanese Wabun, Korean SKATS, or the Chinese telegraph code. Romanization is character based and can differ from a word’s pronunciation. Unsupported symbols are reported; empty conversions cannot be sent. Messages are limited to 2,000 Unicode code points.
+
+Select **Light**, **Sound**, or **Light and sound**. The light source selector chooses camera flash, screen, or both. Sound uses media volume and sustained keyed tones; dots last 100 ms and dashes 300 ms, with 100/300/700 ms symbol/letter/word gaps. SOS repeats until stopped. During screen signaling, the lit color alternates with black; tap anywhere to stop. The screen stays awake while transmitting. Stop, leaving the app, or changing output clears signals and restores brightness. Camera availability, torch permissions and media volume still depend on the device.

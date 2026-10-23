@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Görsel olarak paylaş</string>
+    <string name="morse_light">Işık</string>
+    <string name="morse_sound">Ses</string>
+    <string name="morse_light_sound">Işık ve ses</string>
+    <string name="morse_language_help">Yunanca Mors; diğer alfabeler aşağıda Latin harflerine çevrilir. Ses, medya ses düzeyini kullanır.</string>
+    <string name="morse_unsupported">Bazı karakterler gönderilemiyor.</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Aqsam bħala immaġni</string>
+    <string name="morse_light">Dawl</string>
+    <string name="morse_sound">Ħoss</string>
+    <string name="morse_light_sound">Dawl u ħoss</string>
+    <string name="morse_language_help">Morse Grieg; kitbiet oħra jiġu traslitterati għal-Latin hawn taħt. Il-ħoss juża l-volum tal-midja.</string>
+    <string name="morse_unsupported">Xi karattri ma jistgħux jintbagħtu.</string>
+</resources>

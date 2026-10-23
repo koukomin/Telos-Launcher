@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Comhroinn mar íomhá</string>
+    <string name="morse_light">Solas</string>
+    <string name="morse_sound">Fuaim</string>
+    <string name="morse_light_sound">Solas agus fuaim</string>
+    <string name="morse_language_help">Cód Morse Gréigise; traslitrítear scripteanna eile go litreacha Laidine thíos. Úsáideann an fhuaim airde na meán.</string>
+    <string name="morse_unsupported">Ní féidir roinnt carachtar a sheoladh.</string>
+</resources>

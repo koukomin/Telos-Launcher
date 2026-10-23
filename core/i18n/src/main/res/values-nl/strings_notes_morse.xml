@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">Delen als afbeelding</string>
+    <string name="morse_light">Licht</string>
+    <string name="morse_sound">Geluid</string>
+    <string name="morse_light_sound">Licht en geluid</string>
+    <string name="morse_language_help">Griekse morse; andere schriften worden hieronder naar Latijnse letters omgezet. Geluid gebruikt het mediavolume.</string>
+    <string name="morse_unsupported">Sommige tekens kunnen niet worden verzonden.</string>
+</resources>

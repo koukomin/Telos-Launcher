@@ -233,6 +233,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.uitestjunit4)
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.uitestmanifest)
+    // Compact offline Unicode romanization; works on minSdk 26 without ICU API 29.
+    implementation("com.anyascii:anyascii:0.3.3")
     testImplementation(libs.bundles.tests)
     testImplementation("org.json:json:20260814")
 }

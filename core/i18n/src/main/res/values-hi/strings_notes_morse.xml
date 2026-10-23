@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">चित्र के रूप में साझा करें</string>
+    <string name="morse_light">प्रकाश</string>
+    <string name="morse_sound">ध्वनि</string>
+    <string name="morse_light_sound">प्रकाश और ध्वनि</string>
+    <string name="morse_language_help">ग्रीक मोर्स; अन्य लिपियों का नीचे लैटिन में लिप्यंतरण होता है। ध्वनि मीडिया वॉल्यूम का उपयोग करती है।</string>
+    <string name="morse_unsupported">कुछ अक्षर भेजे नहीं जा सकते।</string>
+</resources>

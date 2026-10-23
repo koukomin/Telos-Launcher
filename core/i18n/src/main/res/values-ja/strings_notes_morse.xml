@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">画像として共有</string>
+    <string name="morse_light">光</string>
+    <string name="morse_sound">音</string>
+    <string name="morse_light_sound">光と音</string>
+    <string name="morse_language_help">ギリシャ文字はギリシャ式モールス符号、その他の文字はラテン文字に転写します（下に表示）。音はメディア音量を使用します。</string>
+    <string name="morse_unsupported">送信できない文字があります。</string>
+</resources>

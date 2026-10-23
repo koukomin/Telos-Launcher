@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">مشاركة كصورة</string>
+    <string name="morse_light">ضوء</string>
+    <string name="morse_sound">صوت</string>
+    <string name="morse_light_sound">ضوء وصوت</string>
+    <string name="morse_language_help">مورس يوناني؛ تُنقل الكتابات الأخرى إلى حروف لاتينية أدناه. يستخدم الصوت مستوى صوت الوسائط.</string>
+    <string name="morse_unsupported">يتعذر إرسال بعض الأحرف.</string>
+</resources>

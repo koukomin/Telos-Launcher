@@ -151,3 +151,9 @@ identity on OEM launchers that fall back to ActivityInfo instead of dynamic
 TaskDescription metadata. Media and Viewer route aliases retain their existing
 shared task identities. Existing Android snapshots may retain old metadata until
 the old task is closed/reopened; no old task or unsaved editor is forcibly removed.
+
+## Notes export and Morse outputs
+
+Notes image export uses StaticLayout on IO, renders sequential 1080-pixel PNG pages, and recycles each bitmap before the next. It exports full title/body content, bounded to 100,000 characters and 32 pages, without retaining a bitmap list. FileProvider read grants and ClipData support ACTION_SEND or ACTION_SEND_MULTIPLE. PNG rendering is functional document content, not another app backdrop. The editor toolbar scrolls horizontally at large font sizes.
+
+MorseCodec uses the Greek radio alphabet directly and AnyAscii 0.3.3 for other Unicode scripts, with romanization and unsupported-character disclosure. The dependency is about 321 KiB compressed; its Unicode tables avoid the substantially larger ICU4J dependency and work on Android 8+. AnyAscii loads blocks relative to its class package; preserve the narrow keepnames rule and Java resources in release builds. Conversion runs on IO because those tables are lazily loaded. Playback runs in one UI-scoped coroutine using 1/3-unit marks and 1/3/7-unit gaps. ToneGenerator uses media volume and a sustained DTMF tone, explicitly stopped at every gap; the old fixed-duration beep shortened dashes. Generation guards prevent cancellation cleanup from disabling a newer output. Lifecycle stop/disposal clears hardware, screen, brightness and tones. Physical sound, camera/OEM response and full visual matrix require device verification.

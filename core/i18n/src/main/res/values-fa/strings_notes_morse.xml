@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notes_share_image">اشتراک‌گذاری به‌صورت تصویر</string>
+    <string name="morse_light">نور</string>
+    <string name="morse_sound">صدا</string>
+    <string name="morse_light_sound">نور و صدا</string>
+    <string name="morse_language_help">مورس یونانی؛ خط‌های دیگر در پایین به لاتین نویسه‌گردانی می‌شوند. صدا از بلندی رسانه استفاده می‌کند.</string>
+    <string name="morse_unsupported">برخی نویسه‌ها قابل ارسال نیستند.</string>
+</resources>
