@@ -1,6 +1,7 @@
 package de.mm20.launcher2.data.comms
 
 import android.content.ContentProviderOperation
+import android.content.ContentUris
 import android.content.Context
 import android.database.ContentObserver
 import android.os.Handler
@@ -93,14 +94,20 @@ internal class ContactDirectoryRepositoryImpl(
 
     override suspend fun deleteContact(id: Long): Boolean = withContext(Dispatchers.IO) {
         try {
-            val uri = ContactsContract.RawContacts.CONTENT_URI
-            val deleted = context.contentResolver.delete(
-                uri,
+            // Delete contact via official ContactsContract.Contacts CONTENT_URI
+            val contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id)
+            val rows = context.contentResolver.delete(contactUri, null, null)
+            if (rows > 0) return@withContext true
+
+            // Fallback: Delete raw contacts
+            val rawUri = ContactsContract.RawContacts.CONTENT_URI
+            val rawRows = context.contentResolver.delete(
+                rawUri,
                 "${ContactsContract.RawContacts.CONTACT_ID}=?",
                 arrayOf(id.toString()),
             )
-            deleted > 0
-        } catch (_: SecurityException) {
+            rawRows > 0
+        } catch (_: Exception) {
             false
         }
     }

@@ -40,8 +40,11 @@ internal class FreezeExclusionChecker(
         val notifications = notificationRepository.notifications.first()
             .filter { it.packageName == packageName && !it.isGroupSummary }
 
-        // Rule 2 & 4: skip if app has an ongoing notification or foreground service
-        if (notifications.any { it.flags and (Notification.FLAG_ONGOING_EVENT or Notification.FLAG_NO_CLEAR or Notification.FLAG_FOREGROUND_SERVICE) != 0 }) {
+        val candidates = settings.candidates.first()
+        val isExplicitCandidate = candidates.contains(packageName)
+
+        // Rule 2 & 4: skip if app has an ongoing notification or foreground service (unless explicitly added to candidates)
+        if (!isExplicitCandidate && notifications.any { it.flags and (Notification.FLAG_ONGOING_EVENT or Notification.FLAG_NO_CLEAR or Notification.FLAG_FOREGROUND_SERVICE) != 0 }) {
             return true
         }
 
