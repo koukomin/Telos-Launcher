@@ -617,10 +617,7 @@ private fun AppsTab(
                         StoreItemRow(
                             row = row,
                             installState = installStates[row.item.id] ?: StoreInstallUiState.Idle,
-                            onClick = {
-                                val url = row.item.source.projectPageUrl()
-                                runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))) }
-                            },
+                            onClick = { onOpen(row) },
                             onDetailsClick = { onOpen(row) },
                             onActionClick = { onAction(row) },
                         )
@@ -636,10 +633,7 @@ private fun AppsTab(
                         StoreItemRow(
                             row = row,
                             installState = installStates[row.item.id] ?: StoreInstallUiState.Idle,
-                            onClick = {
-                                val url = row.item.source.projectPageUrl()
-                                runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))) }
-                            },
+                            onClick = { onOpen(row) },
                             onDetailsClick = { onOpen(row) },
                             onActionClick = { onAction(row) },
                         )
