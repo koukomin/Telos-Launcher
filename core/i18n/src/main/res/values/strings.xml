@@ -1140,6 +1140,8 @@
     <string name="search_action_alarm">Set alarm</string>
     <string name="search_action_screentime">Screen time</string>
     <string name="search_action_ai">AI Search</string>
+    <string name="hc_high_volume_warning_title">High Volume Boost Warning</string>
+    <string name="hc_high_volume_warning_text">Boosting audio above 100% may cause sound distortion or potential speaker damage. Telos is not responsible for hardware damage. Use at your own risk.</string>
     <string name="store_tab_installed_apps">Installed Apps</string>
     <string name="store_show_system_apps">Show system apps</string>
     <string name="store_show_virtual_apps">Show virtual apps</string>

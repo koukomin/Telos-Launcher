@@ -1511,4 +1511,8 @@
     <string name="store_safety_caution">Πάγωμα με προσοχή</string>
     <string name="store_safety_unsafe">Μη ασφαλές για πάγωμα</string>
 
+
+    <string name="hc_high_volume_warning_title">Προειδοποίηση Ενίσχυσης Ήχου</string>
+    <string name="hc_high_volume_warning_text">Η ενίσχυση ήχου πάνω από 100% ενδέχεται να προκαλέσει παραμόρφωση ή βλάβη στα ηχεία της συσκευής. Το Telos δεν φέρει ευθύνη για τυχόν βλάβες. Χρήση με δική σας ευθύνη.</string>
+
 </resources>

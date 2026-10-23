@@ -27,6 +27,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
@@ -97,23 +98,46 @@ internal fun PlayerLevelControls(
                     light = next
                 },
             )
+            var showBoostWarning by remember { mutableStateOf(false) }
+            val volumeColor = when {
+                sound > 1.5f -> Color(0xFFF44336) // Red (>150%)
+                sound > 1.0f -> Color(0xFFFF9800) // Orange (>100%)
+                else -> Color.White // Normal
+            }
+
             LevelRail(
-                value = sound,
+                value = (sound / 2f).coerceIn(0f, 1f),
                 icon = if (sound == 0f) R.drawable.volume_off_24px else R.drawable.volume_up_24px,
                 label = stringResource(R.string.au_video_volume, (sound * 100).roundToInt()),
                 height = railHeight,
                 modifier = Modifier.align(Alignment.CenterEnd),
-                fill = Color.White,
+                fill = volumeColor,
                 onAdjusting = onAdjusting,
                 onDelta = { dy, h ->
                     val max = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-                    if (max > 0) {
-                        val next = (sound - dy / h).coerceIn(0f, 1f)
+                    val next = (sound - dy / h * 2f).coerceIn(0f, 2.0f)
+                    if (next > 1.0f && sound <= 1.0f) {
+                        showBoostWarning = true
+                    }
+                    sound = next
+                    if (next <= 1.0f && max > 0) {
                         runCatching { audio.setStreamVolume(AudioManager.STREAM_MUSIC, (next * max).roundToInt().coerceIn(0, max), 0) }
-                        sound = volume()
                     }
                 },
             )
+
+            if (showBoostWarning) {
+                androidx.compose.material3.AlertDialog(
+                    onDismissRequest = { showBoostWarning = false },
+                    title = { Text(stringResource(R.string.hc_high_volume_warning_title)) },
+                    text = { Text(stringResource(R.string.hc_high_volume_warning_text)) },
+                    confirmButton = {
+                        androidx.compose.material3.TextButton(onClick = { showBoostWarning = false }) {
+                            Text(stringResource(android.R.string.ok))
+                        }
+                    },
+                )
+            }
         }
     }
 }
