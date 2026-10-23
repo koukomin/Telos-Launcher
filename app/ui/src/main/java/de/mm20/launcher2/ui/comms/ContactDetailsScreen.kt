@@ -40,6 +40,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -287,6 +289,13 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
             blockedTick.value += 1
         }
     }
+
+    fun moveContactToAccount(contactId: Long, accountName: String?, accountType: String?, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val ok = contactDir.moveContactToAccount(contactId, accountName, accountType)
+            onResult(ok)
+        }
+    }
 }
 
 @Composable
@@ -309,6 +318,8 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     var showReminder by remember { mutableStateOf(false) }
     var showQr by remember { mutableStateOf(false) }
     var showSpeedDial by remember { mutableStateOf(false) }
+    var showMoveAccount by remember { mutableStateOf(false) }
+    val haptics = LocalHapticFeedback.current
 
     val contact = ui.contact
     val blocked = ui.blockStatus == ContactBlockStatus.Blocked
@@ -677,10 +688,44 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 }
             }
 
+            val currentContact = contact
+            if (currentContact != null && currentContact.id >= 0) {
+                item {
+                    CommsDetailCard(onClick = { showMoveAccount = true }) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Column(Modifier.weight(1f)) {
+                                Text(
+                                    text = stringResource(R.string.hc_account),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                                Spacer(Modifier.height(2.dp))
+                                val deviceAccountStr = stringResource(R.string.contacts_account_device)
+                                val accountSummary = if (currentContact.accounts.isEmpty()) {
+                                    deviceAccountStr
+                                } else {
+                                    currentContact.accounts.joinToString(", ") { it.name ?: deviceAccountStr }
+                                }
+                                Text(
+                                    text = accountSummary,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                )
+                            }
+                            Icon(
+                                painterResource(R.drawable.open_in_new_24px),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                            )
+                        }
+                    }
+                }
+            }
+
             if (primary.isNotEmpty()) {
                 item {
                     val sims = remember { de.mm20.launcher2.comms.telephony.TelosDialer.callCapableSims(context) }
-                    if (sims.size >= 2) {
+                    if (sims.size >= 2 && de.mm20.launcher2.comms.telephony.TelosDialer.hasDualActiveSims(context)) {
                         val sim1Key by viewModel.sim1Color.collectAsStateWithLifecycle()
                         val sim2Key by viewModel.sim2Color.collectAsStateWithLifecycle()
                         CommsDetailCard {
@@ -924,6 +969,50 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
             },
             confirmButton = {},
             dismissButton = { TextButton(onClick = { showSpeedDial = false }) { Text(stringResource(R.string.hc_cancel)) } },
+        )
+    }
+
+    if (showMoveAccount && contact != null) {
+        val accounts = remember { android.accounts.AccountManager.get(context).accounts }
+        AlertDialog(
+            onDismissRequest = { showMoveAccount = false },
+            title = { Text(stringResource(R.string.hc_account)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    TextButton(
+                        onClick = {
+                            showMoveAccount = false
+                            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                            scope.launch {
+                                viewModel.moveContactToAccount(contact.id, null, null) { ok ->
+                                    if (!ok) android.widget.Toast.makeText(context, R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text(stringResource(R.string.contacts_account_device))
+                    }
+                    accounts.forEach { acc ->
+                        TextButton(
+                            onClick = {
+                                showMoveAccount = false
+                                haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                                scope.launch {
+                                    viewModel.moveContactToAccount(contact.id, acc.name, acc.type) { ok ->
+                                        if (!ok) android.widget.Toast.makeText(context, R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            Text("${acc.name} (${acc.type})")
+                        }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = { TextButton(onClick = { showMoveAccount = false }) { Text(stringResource(R.string.hc_cancel)) } },
         )
     }
 

@@ -60,7 +60,8 @@ screenshot in the app) opens the editor:
 | Notification after a capture | On | The notification with share, edit and delete |
 
 Screenshots are saved in `Pictures/Screenshots` as `Screenshot_<date>_<time>_Telos.png`. The app lists the ones that
-Telos made.
+Telos made. Long-press a screenshot to select it; select more screenshots with additional taps, then use **Share**
+to send them together. The share action gives the receiving app temporary read access to staged copies.
 
 ## Limitations
 

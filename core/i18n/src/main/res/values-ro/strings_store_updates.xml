@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Verifică actualizările</string>
+    <string name="store_check_updates_per_app_summary">Dezactivează pentru a omite verificările automate și manuale ale actualizărilor acestei aplicații.</string>
+    <string name="store_parallel_updates">Actualizează mai multe aplicații în paralel</string>
+    <string name="store_parallel_updates_summary">Descarcă și instalează până la 3 aplicații simultan în timpul actualizărilor automate sau manuale. Telos Launcher se actualizează ultimul; Android poate afișa mai multe confirmări de instalare.</string>
+</resources>

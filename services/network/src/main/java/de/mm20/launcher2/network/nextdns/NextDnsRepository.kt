@@ -30,9 +30,42 @@ class NextDnsRepository(context: Context) {
         val credentials = credentials()
         api.logs(credentials.profileId, credentials.key, search, status, cursor)
     }
+    suspend fun loadSettings(page: NextDnsSettingsPage): NextDnsSettings = operation {
+        val credentials = credentials()
+        api.settings(credentials.profileId, credentials.key, page)
+    }
+    suspend fun loadAnalytics(
+        metric: NextDnsAnalyticsMetric,
+        period: NextDnsAnalyticsPeriod,
+        deviceId: String?,
+        cursor: String? = null,
+    ): NextDnsAnalyticsSnapshot = operation {
+        val credentials = credentials()
+        api.analytics(credentials.profileId, credentials.key, metric, period, deviceId, cursor)
+    }
+    suspend fun loadAnalyticsDevices(): List<NextDnsAnalyticsDevice> = operation {
+        val credentials = credentials()
+        api.analyticsDevices(credentials.profileId, credentials.key)
+    }
+    suspend fun updateSettings(page: NextDnsSettingsPage, values: kotlinx.serialization.json.JsonObject) = operation {
+        val credentials = credentials()
+        api.patchSettings(credentials.profileId, credentials.key, page, values)
+    }
     suspend fun loadRules(allow: Boolean): List<NextDnsRule> = operation {
         val credentials = credentials()
         api.rules(credentials.profileId, credentials.key, allow)
+    }
+    suspend fun loadRewrites(): List<NextDnsRewrite> = operation {
+        val credentials = credentials()
+        api.rewrites(credentials.profileId, credentials.key)
+    }
+    suspend fun createRewrite(name: String, content: String): NextDnsRewrite = operation {
+        val credentials = credentials()
+        api.createRewrite(credentials.profileId, credentials.key, name, content)
+    }
+    suspend fun deleteRewrite(rewriteId: String) = operation {
+        val credentials = credentials()
+        api.deleteRewrite(credentials.profileId, credentials.key, rewriteId)
     }
     suspend fun putRule(allow: Boolean, domain: String) = operation {
         val credentials = credentials()

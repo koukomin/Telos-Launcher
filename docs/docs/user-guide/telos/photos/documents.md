@@ -53,6 +53,10 @@ Encrypted Office files are not supported.
 | Content | A progress circle while loading, then the document, or a message |
 | Message line | "Saved", "Could not save", shown at the bottom for about 2.5 seconds |
 
+In the Documents library, long-press files to select them. The selection toolbar can share all
+selected documents together; Telos copies them into its private share cache and grants the
+receiving app temporary read access.
+
 ### Messages you can see
 
 | Message | Meaning |

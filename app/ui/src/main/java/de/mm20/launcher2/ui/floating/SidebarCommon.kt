@@ -576,17 +576,19 @@ internal fun FileDockOverlay(
                                             }
 
                                             is FileDockItem.MediaItem -> {
-                                                val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                                                    type = dockItem.mimeType ?: "*/*"
-                                                    putExtra(Intent.EXTRA_STREAM, dockItem.uri)
-                                                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                                }
-                                                context.startActivity(
-                                                    Intent.createChooser(shareIntent, dockItem.label).apply {
-                                                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                coroutineScope.launch {
+                                                    val shared = withContext(Dispatchers.IO) {
+                                                        de.mm20.launcher2.ui.common.share.ShareActions.shareUris(
+                                                            context,
+                                                            listOf(dockItem.uri),
+                                                            dockItem.mimeType,
+                                                            dockItem.label,
+                                                        )
                                                     }
-                                                )
+                                                    if (!shared) {
+                                                        Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                                                    }
+                                                }
                                             }
                                         }
                                     }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Controlla gli aggiornamenti</string>
+    <string name="store_check_updates_per_app_summary">Disattiva per saltare i controlli automatici e manuali degli aggiornamenti di questa app.</string>
+    <string name="store_parallel_updates">Aggiorna più app in parallelo</string>
+    <string name="store_parallel_updates_summary">Scarica e installa fino a 3 app alla volta durante gli aggiornamenti automatici o manuali. Telos Launcher viene aggiornato per ultimo; Android potrebbe mostrare più richieste di conferma.</string>
+</resources>

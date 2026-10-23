@@ -114,6 +114,16 @@ Automatic torrent continuation additionally requires a non-negative provider fil
 
 ## Utility and media readability
 
+File attachments from Telos apps use `ui.common.share.ShareActions` as the shared boundary.
+`shareUris`/`shareFile` stage files in the app's cache, choose MIME types, and attach read grants
+through `ClipData`; callers that copy or read content must dispatch that work off the main thread.
+Files, Viewer, Media, Screenshot, Voice Recorder, and Screen Recorder use this boundary for file
+shares. Multi-select recorder sharing must preserve the call-recording lock and decrypt call
+recordings only into the existing temporary readable-copy flow. New file-sharing surfaces should
+use this helper rather than construct their own `ACTION_SEND` intent.
+The chooser-intent builder is reserved for cases such as notification actions that need a prebuilt
+`PendingIntent`; its caller must supply a URI that is already safe to grant.
+
 The shared virtual-app palette now keeps every container role opaque, while the
 root backing retains wallpaper blur. Cleared root roles retain their RGB tone so
 legacy opacity adjustments do not accidentally become black. Radio inherits the launcher palette by default, and its scoped theme supplies

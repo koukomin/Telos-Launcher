@@ -1,21 +1,21 @@
 package de.mm20.launcher2.ui.settings.appearance
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.themes.colors.Colors
 import de.mm20.launcher2.themes.shapes.Shapes
 import de.mm20.launcher2.themes.ThemeBundle
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.transparencies.Transparencies
 import de.mm20.launcher2.themes.typography.Typography
+import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.share.ShareActions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -118,16 +118,12 @@ class ExportThemeSettingsScreenVM: ViewModel(), KoinComponent {
                     null
                 }
             } ?: return@launch
-            context.tryStartActivity(Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "application/json"
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(
-                    context,
-                    context.applicationContext.packageName + ".fileprovider",
-                    file
-                ))
-            }.let { Intent.createChooser(it, null) })
+            val shared = withContext(Dispatchers.IO) {
+                ShareActions.shareFile(context, file, "application/json")
+            }
+            if (!shared) {
+                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

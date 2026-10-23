@@ -328,6 +328,15 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.network.NetworkRoute> {
                 de.mm20.launcher2.ui.network.NetworkHomeScreen()
             }
+            entry<de.mm20.launcher2.ui.network.PrivateDnsRoute> {
+                de.mm20.launcher2.ui.network.PrivateDnsScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.NetworkSpeedTestRoute> {
+                de.mm20.launcher2.ui.network.NetworkSpeedTestScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.NetworkScanRoute> {
+                de.mm20.launcher2.ui.network.NetworkScanScreen()
+            }
             entry<de.mm20.launcher2.ui.network.NetworkPrivacyRoute> {
                 de.mm20.launcher2.ui.network.NetworkPrivacyScreen()
             }
@@ -705,7 +714,7 @@ open class SettingsActivity : BaseActivity() {
                         OverlayHost(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
+                                .windowInsetsPadding(WindowInsets.safeDrawing)
                                 .imePadding()
                                 .background(de.mm20.launcher2.ui.component.virtualAppSurface())
                         ) {
@@ -761,7 +770,8 @@ open class SettingsActivity : BaseActivity() {
             SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> "telos_youtube_music_app"
             ROUTE_PHOTOS, SettingsDeepLinkContract.ROUTE_VIEWER -> "telos_viewer_app"
             ROUTE_FILES -> "telos_files_app"
-            ROUTE_NETWORK -> "telos_network_app"
+            ROUTE_NETWORK, SettingsDeepLinkContract.ROUTE_NETWORK_SPEED_TEST,
+            SettingsDeepLinkContract.ROUTE_NETWORK_PRIVATE_DNS -> "telos_network_app"
             SettingsDeepLinkContract.ROUTE_SYSTEM -> "telos_system_app"
             SettingsDeepLinkContract.ROUTE_TRASH -> "telos_trash_app"
             ROUTE_CALCULATOR -> "telos_calculator_app"
@@ -877,6 +887,8 @@ open class SettingsActivity : BaseActivity() {
             "settings/magnifier" -> de.mm20.launcher2.ui.tools.MagnifierRoute
             "settings/flashlight" -> de.mm20.launcher2.ui.tools.FlashlightRoute
             ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute
+            SettingsDeepLinkContract.ROUTE_NETWORK_SPEED_TEST -> de.mm20.launcher2.ui.network.NetworkSpeedTestRoute
+            SettingsDeepLinkContract.ROUTE_NETWORK_PRIVATE_DNS -> de.mm20.launcher2.ui.network.PrivateDnsRoute
             SettingsDeepLinkContract.ROUTE_SYSTEM -> de.mm20.launcher2.ui.system.SystemDashboardRoute
             SettingsDeepLinkContract.ROUTE_TRASH -> de.mm20.launcher2.ui.trash.TrashUnlockRoute
             ROUTE_CALCULATOR -> de.mm20.launcher2.ui.calculator.CalculatorRoute

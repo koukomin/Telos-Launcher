@@ -38,11 +38,14 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -71,6 +74,7 @@ import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.media.MediaFrame
 import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.component.SearchEmptyState
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 private enum class Filter { All, Active, Queued, Completed, Failed, Torrents, Media }
@@ -91,6 +95,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
     val manager: DownloadManager = koinInject()
     val torrentController: TorrentController = koinInject()
     val backStack = LocalBackStack.current
+    val scope = rememberCoroutineScope()
     val tasks by manager.tasks.collectAsState()
     val settings by manager.settings.values.collectAsState()
     val blocked by manager.blockReason.collectAsState()
@@ -463,6 +468,7 @@ private fun togglePause(manager: DownloadManager, t: DownloadTask) {
 @Composable
 private fun TaskCard(task: DownloadTask, manager: DownloadManager, onOpenDetails: () -> Unit, onDelete: () -> Unit) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     var menu by remember { mutableStateOf(false) }
     val failed = task.state == DownloadState.Failed
     Surface(
@@ -533,7 +539,11 @@ private fun TaskCard(task: DownloadTask, manager: DownloadManager, onOpenDetails
                         })
                         DropdownMenuItem(text = { Text(stringResource(R.string.dl_share)) }, onClick = {
                             menu = false
-                            if (!shareDownload(context, task)) Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show()
+                            scope.launch {
+                                if (!shareDownload(context, task)) {
+                                    Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show()
+                                }
+                            }
                         })
                     }
                     if (task.state == DownloadState.Paused) DropdownMenuItem(text = { Text(stringResource(R.string.dl_resume)) }, onClick = { menu = false; manager.resume(task.id) })

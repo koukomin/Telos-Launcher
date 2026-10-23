@@ -64,7 +64,51 @@ data class NetworkSettingsValues(
     val logMaxEntries: Int = 5000,
     /** Entries older than this many days are dropped. 0 = keep until [logMaxEntries]. */
     val logRetentionDays: Int = 7,
+    /** Opt-in observer that applies system Private DNS when a saved Wi-Fi SSID is connected. */
+    val wifiDnsAutomationEnabled: Boolean = false,
+    /** Exact Wi-Fi SSID to system Private DNS settings mappings. */
+    val wifiDnsRules: List<WifiDnsRule> = emptyList(),
+    /** Original system setting to restore when the active Wi-Fi rule no longer applies. */
+    val wifiDnsBaseline: PrivateDnsState? = null,
+    /** Last setting written by the Wi-Fi observer; guards restoration against manual changes. */
+    val wifiDnsLastApplied: PrivateDnsState? = null,
 )
+
+@Serializable
+enum class PrivateDnsMode {
+    AUTOMATIC,
+    OFF,
+    PROVIDER,
+}
+
+@Serializable
+data class PrivateDnsState(
+    val mode: PrivateDnsMode,
+    val hostname: String? = null,
+)
+
+@Serializable
+data class WifiDnsRule(
+    val ssid: String,
+    val mode: PrivateDnsMode,
+    val hostname: String = "",
+)
+
+object WifiDnsRules {
+    fun normalizeSsid(value: String?): String? {
+        val ssid = value?.trim()?.removeSurrounding("\"")?.trim() ?: return null
+        if (ssid.isEmpty() || ssid == "<unknown ssid>" ||
+            ssid == "02:00:00:00:00:00" || ssid.any(Char::isISOControl)
+        ) return null
+        if (ssid.toByteArray(Charsets.UTF_8).size > 32) return null
+        return ssid
+    }
+
+    fun matching(rules: List<WifiDnsRule>, ssid: String?): WifiDnsRule? {
+        val normalized = normalizeSsid(ssid) ?: return null
+        return rules.firstOrNull { normalizeSsid(it.ssid) == normalized }
+    }
+}
 
 /**
  * Persistent settings of Telos Network. Implementations must be cheap to read from any thread:

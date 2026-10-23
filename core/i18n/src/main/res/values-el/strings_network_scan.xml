@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_scan_title">"Σάρωση Δικτύου &amp; Ping"</string>
+    <string name="net_scan_intro">"Σαρώστε το τοπικό δίκτυο (LAN) για ενεργές συσκευές και ανοιχτές θύρες, ή κάντε ping σε IP/domain."</string>
+    <string name="net_scan_subnet">"Σάρωση Τοπικού Δικτύου (Subnet)"</string>
+    <string name="net_scan_bypass_vpn">"Παράκαμψη VPN &amp; Tor για τοπικό δίκτυο (LAN)"</string>
+    <string name="net_scan_bypass_vpn_summary">"Απευθείας σύνδεση με τοπικές διευθύνσεις LAN χωρίς δρομολόγηση μέσω Telos VPN ή Tor"</string>
+    <string name="net_scan_start">"Έναρξη Σάρωσης Δικτύου"</string>
+    <string name="net_scan_stop">"Διακοπή Σάρωσης"</string>
+    <string name="net_scan_scanning">"Σάρωση τοπικού δικτύου (%1$d/%2$d)… Βρέθηκαν %3$d συσκευή(ές)"</string>
+    <string name="net_scan_found_devices">"Βρέθηκαν Συσκευές (%1$d)"</string>
+    <string name="net_scan_gateway">"Gateway (Δρομολογητής)"</string>
+    <string name="net_scan_open_ports">"Ανοιχτές θύρες: %1$s"</string>
+    <string name="net_ping_title">"Ping IP / Domain"</string>
+    <string name="net_ping_target_hint">"Εισάγετε IP ή domain (π.χ. 192.168.1.1, google.com)"</string>
+    <string name="net_ping_start">"Ping"</string>
+    <string name="net_ping_result">"Ping %1$s (%2$s): %3$d/%4$d πακέτα, Καθυστέρηση: ελάχ %5$dms, μέση %6$dms, μέγ %7$dms"</string>
+    <string name="net_ping_failed">"Το ping απέτυχε για το %1$s"</string>
+</resources>

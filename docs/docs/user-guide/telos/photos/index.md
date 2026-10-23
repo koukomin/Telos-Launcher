@@ -1,6 +1,6 @@
 # Telos Viewer: Photos and Documents
 
-**Telos Viewer** is one app with two tabs: **Photos** (the photo gallery: photos, albums, EXIF, editor) and **Documents** (a library with category chips (All, Documents, PDF, Spreadsheets, Presentations, E-books, Other), search, sort by date, name or size, a **Recent** shelf (up to 50 files you opened from it), **Open file…** and a long-press menu (Share, Open with, Info)). The tab you used last is remembered. Telos Photos used to be a separate app: there is no separate icon anymore, and a Photos icon that was on the home screen or in the dock opens the Viewer. To list the documents on the phone it needs the same **All files access** as Telos Files; without it, Recent and **Open file…** still work, and "Open with" from other apps always works. The sections below describe both tabs.
+**Telos Viewer** is one app with two tabs: **Photos** (the photo gallery: photos, albums, EXIF, editor) and **Documents** (a library with category chips (All, Documents, PDF, Spreadsheets, Presentations, E-books, Other), search, sort by date, name or size, a **Recent** shelf (up to 50 files you opened from it), **Open file…** and a long-press menu (Share, Open with, Info). Both tabs support sharing selected files together. Shared files are copied to Telos' private share cache and handed off with temporary read access. The tab you used last is remembered. Telos Photos used to be a separate app: there is no separate icon anymore, and a Photos icon that was on the home screen or in the dock opens the Viewer. To list the documents on the phone it needs the same **All files access** as Telos Files; without it, Recent and **Open file…** still work, and "Open with" from other apps always works. The sections below describe both tabs.
 
 A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document viewer in one app.
 
@@ -72,7 +72,7 @@ The screen has two tabs.
 
 | Tab | Details |
 | --- | --- |
-| **Photos** | Pictures and videos, newest first. Month headings, a stories strip (Recents, Screenshots, Favorites), pinch on the grid for 3–5 columns. Long-press to multi-select and share. Glass bars follow the launcher blur theme |
+| **Photos** | Pictures and videos, newest first. Month headings, a stories strip (Recents, Screenshots, Favorites), pinch on the grid for 3–5 columns. Long-press to multi-select and share one or more files together. Glass bars follow the launcher blur theme |
 | **Albums** | One album per folder (for example Camera or Screenshots), as 2 columns of cards with the picture count. Albums are sorted by how many pictures they hold. Pictures without a folder name go to "Other" |
 
 - The list comes from the system media library, ordered by the time Android added the picture. The heading date is
@@ -104,7 +104,7 @@ Telos Viewer has **no settings page of its own**. Its behavior depends on the sy
 | Network | None. The gallery, editor and document viewer run on the device |
 | Metadata | Removing it is done locally. Sharing sends only the clean copy you chose |
 | Documents | Opened files are copied into the app's private cache for reading and old copies are cleaned up |
-| Cache | A clean copy for sharing is written to the cache as a JPEG |
+| Cache | Files shared from Photos and Documents are copied to the app's private share cache and exposed through its FileProvider. **Share without metadata** separately creates a clean JPEG copy |
 | App lock | The editor follows your App Lock settings |
 
 ## Feature matrix

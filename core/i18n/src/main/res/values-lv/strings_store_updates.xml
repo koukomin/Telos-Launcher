@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Pārbaudīt atjauninājumus</string>
+    <string name="store_check_updates_per_app_summary">Izslēdziet, lai izlaistu šīs lietotnes automātisko un manuālo atjauninājumu pārbaudi.</string>
+    <string name="store_parallel_updates">Atjaunināt vairākas lietotnes paralēli</string>
+    <string name="store_parallel_updates_summary">Automātisko vai manuālo atjauninājumu laikā vienlaikus lejupielādē un instalē līdz 3 lietotnēm. Telos Launcher tiek atjaunināts pēdējais; Android var parādīt vairākus instalēšanas apstiprinājumus.</string>
+</resources>

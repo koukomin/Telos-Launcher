@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Snelheidstest</string>
+    <string name="nsp_intro">Voer een LibreSpeed-test uit met een server naar keuze. Resultaten worden alleen op dit scherm getoond.</string>
+    <string name="nsp_privacy">De gekozen server ziet je IP-adres en testverkeer. Telos verstuurt geen testresultaten of telemetrie. De openbare serverlijst wordt opgehaald bij librespeed.org; gebruik voor meer privacy je eigen server.</string>
+    <string name="nsp_server_url">Eigen HTTPS-server (optioneel)</string>
+    <string name="nsp_load_servers">Openbare servers zoeken</string>
+    <string name="nsp_select_server">Openbare server kiezen</string>
+    <string name="nsp_selected_server">Geselecteerd: %1$s</string>
+    <string name="nsp_run">Test starten</string>
+    <string name="nsp_cancel">Test annuleren</string>
+    <string name="nsp_invalid_url">Voer een geldige HTTPS-URL voor LibreSpeed in.</string>
+    <string name="nsp_error">Test mislukt. Controleer de server en verbinding en probeer het opnieuw.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Download</string>
+    <string name="nsp_upload">Upload</string>
+</resources>

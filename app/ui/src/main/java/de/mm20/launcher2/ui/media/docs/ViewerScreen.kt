@@ -441,6 +441,14 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
         }
     }
 
+    fun shareSelected() {
+        val uris = selected.map(Uri::parse)
+        scope.launch {
+            val ok = withContext(Dispatchers.IO) { ShareActions.shareUris(context, uris) }
+            if (!ok) Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     val surface = MaterialTheme.colorScheme.surface
     val primary = MaterialTheme.colorScheme.primary
     Box(
@@ -468,13 +476,25 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                 }
                 if (selected.isNotEmpty()) {
                     Text(selected.size.toString())
+                    IconButton(onClick = { shareSelected() }) {
+                        Icon(painterResource(R.drawable.share_24px), stringResource(R.string.hc_share))
+                    }
                     IconButton(onClick = { deleteSelected = true }) { Icon(painterResource(R.drawable.delete_24px), stringResource(R.string.hc_delete)) }
                     IconButton(onClick = { selected = emptyList() }) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.hc_cancel)) }
                 }
-                FilledTonalButton(onClick = { picker.launch(arrayOf("*/*")) }) {
-                    Icon(painterResource(R.drawable.folder_24px), contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.au20_viewer_open_file))
+                if (selected.isNotEmpty()) {
+                    IconButton(onClick = { picker.launch(arrayOf("*/*")) }) {
+                        Icon(
+                            painterResource(R.drawable.folder_24px),
+                            contentDescription = stringResource(R.string.au20_viewer_open_file),
+                        )
+                    }
+                } else {
+                    FilledTonalButton(onClick = { picker.launch(arrayOf("*/*")) }) {
+                        Icon(painterResource(R.drawable.folder_24px), contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text(stringResource(R.string.au20_viewer_open_file))
+                    }
                 }
             }
 

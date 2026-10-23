@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_wifi_dns_automation">Wi‑Fi-DNS-automatisering</string>
+    <string name="net_wifi_dns_automation_summary">Past de bijbehorende Android-regel voor privé-DNS op de achtergrond toe, ook wanneer de VPN van Telos Network uitstaat. Locatie- en meldingsmachtigingen zijn vereist.</string>
+    <string name="net_wifi_dns_permission_error">Monitoring inschakelen is mislukt. Geef Shizuku toestemming en sta locatie en meldingen toe.</string>
+    <string name="net_wifi_dns_invalid_rule">Voer een geldige Wi‑Fi-naam in en voor een providerregel een geldige DNS-hostnaam.</string>
+</resources>

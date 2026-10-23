@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Kiirustest</string>
+    <string name="nsp_intro">Käivita LibreSpeedi test enda valitud serveris. Tulemusi kuvatakse ainult sellel ekraanil.</string>
+    <string name="nsp_privacy">Valitud server näeb sinu IP-aadressi ja testiliiklust. Telos ei saada testitulemusi ega telemeetriat. Avalike serverite loendi laadimine võtab ühendust librespeed.org-iga; suurema privaatsuse jaoks kasuta enda serverit.</string>
+    <string name="nsp_server_url">Isiklik HTTPS-server (valikuline)</string>
+    <string name="nsp_load_servers">Otsi avalikke servereid</string>
+    <string name="nsp_select_server">Vali avalik server</string>
+    <string name="nsp_selected_server">Valitud: %1$s</string>
+    <string name="nsp_run">Alusta testi</string>
+    <string name="nsp_cancel">Tühista test</string>
+    <string name="nsp_invalid_url">Sisesta kehtiv LibreSpeedi HTTPS-aadress.</string>
+    <string name="nsp_error">Test nurjus. Kontrolli serverit ja ühendust ning proovi uuesti.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Allalaadimine</string>
+    <string name="nsp_upload">Üleslaadimine</string>
+</resources>

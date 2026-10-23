@@ -46,7 +46,7 @@ Long-press an item to **Share** it: songs (the audio file), albums and artists (
 (a copy of the file, with a confirmation above 50 MB, or the link or magnet of a web video). Contacts (vCard), notes (text or a
 Markdown file), files from Telos Files (network and cloud files are downloaded first, with a warning above 50 MB; vault files cannot be
 shared), documents in the viewer, and installed apps (an APK, or an `.apks` archive for split apps) have Share in their long-press or
-overflow menus too.
+overflow menus too. Files from Files, Viewer and Media use the same private share cache and temporary read grants.
 
 **Radio stations:** the shared text has the name, the address and a `telos-radio://add` link. If the receiver has Telos, opening it
 asks "Add station X to Telos Radio?" with the name and address editable. Nothing is played or fetched before the receiver confirms,

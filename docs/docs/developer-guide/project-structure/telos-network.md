@@ -24,6 +24,12 @@ must be updated with any new source.
 
 The UI only talks to the `api` package (injected with Koin) and to `NetworkEngine`. Replacing an implementation means changing one line in `Module.kt`.
 
+The NextDNS account editor is separate from the VPN DNS controller. `NextDnsRepository` owns the encrypted credential vault and bounded API operations; the UI never stores the API key in saved state. Analytics requests use a fixed metric registry, finite period enum, optional encoded device ID, validated cursor and bounded JSON parsing. Rewrite mutations validate both host and answer before using the fixed-origin API; profile settings are limited to boolean fields returned by the documented settings pages and are patched one nested field at a time. `PrivateDnsController` is a distinct, explicit Shizuku-backed integration for Android's global Private DNS settings; it validates provider hostnames and verifies writes rather than changing settings when a NextDNS profile is connected.
+
+`WifiDnsAutomationService` is an explicitly enabled, special-use foreground service. It watches Wi-Fi transport callbacks, reads the SSID only with location permission, and uses exact SSID matching against `NetworkSettingsValues.wifiDnsRules`. It persists the pre-rule and last-applied settings so it can safely restore on network change or explicit stop; restoration occurs only if the current value still matches the one Telos wrote. Unknown SSIDs do not trigger guessed rules. The opt-in service is restored after boot only when location and notification permissions are available; OEM behavior and Shizuku availability still need device testing.
+
+`PrivateDnsTileService` exposes Android's system Private DNS Automatic/Off toggle in Quick Settings. It reads the current system value before toggling, uses the same Shizuku-backed controller as the settings screen, and opens the settings screen when permission or command access is unavailable. It does not start or reconfigure Telos Network's VPN DNS.
+
 ## Engine
 
 `NetworkEngine.state` is a `StateFlow<NetState>`: `Off`, `Starting`, `On`, `Error(message)`, `NeedsPermission(intent)`. `start()` calls `VpnService.prepare()`; when Android needs
@@ -47,7 +53,7 @@ Create a `@Serializable data object ...Route : NavKey` and a parameterless `@Com
 
 ## Status
 
-The module and the screens were written without a compiler and have not been run on a device.
+On 2026-10-22, the Network unit tests and default debug UI Kotlin compilation passed for the Private DNS tile and Network changes. The tile has not been exercised from Android Quick Settings on a device; Shizuku permission flow and OEM tile behavior remain unverified.
 
 ## Tor and Web3
 

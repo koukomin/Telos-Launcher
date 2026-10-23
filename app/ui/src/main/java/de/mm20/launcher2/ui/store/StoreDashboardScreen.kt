@@ -1070,6 +1070,15 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
                 )
                 ToggleRow(stringResource(R.string.hf_store_auto_install), g.autoInstall) { v -> viewModel.setGlobal { it.copy(autoInstall = v) } }
+                ToggleRow(stringResource(R.string.store_parallel_updates), g.parallelUpdates) { v ->
+                    viewModel.setGlobal { it.copy(parallelUpdates = v) }
+                }
+                Text(
+                    stringResource(R.string.store_parallel_updates_summary),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
+                )
                 Text(
                     stringResource(R.string.freeze_backend_shizuku) + " / " + stringResource(R.string.freeze_backend_root) +
                         " / " + stringResource(R.string.freeze_backend_device_owner),

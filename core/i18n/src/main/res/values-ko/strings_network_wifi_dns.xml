@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_wifi_dns_automation">Wi‑Fi DNS 자동화</string>
+    <string name="net_wifi_dns_automation_summary">Telos Network VPN이 꺼져 있어도 연결된 Wi‑Fi에 맞는 Android 비공개 DNS 규칙을 백그라운드에서 적용합니다. 위치 및 알림 권한이 필요합니다.</string>
+    <string name="net_wifi_dns_permission_error">모니터링을 켤 수 없습니다. Shizuku 권한, 위치 액세스 및 알림을 허용하세요.</string>
+    <string name="net_wifi_dns_invalid_rule">유효한 Wi‑Fi 이름을 입력하고 제공업체 규칙에는 유효한 DNS 호스트 이름을 입력하세요.</string>
+</resources>

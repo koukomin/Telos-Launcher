@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">网速测试</string>
+    <string name="nsp_intro">使用你选择的服务器运行 LibreSpeed 测试。结果仅显示在此屏幕上。</string>
+    <string name="nsp_privacy">所选服务器会看到你的 IP 地址和测试流量。Telos 不会发送测试结果或遥测数据。加载公共服务器列表会连接 librespeed.org；如需更强隐私保护，请使用自托管服务器。</string>
+    <string name="nsp_server_url">自托管 HTTPS 服务器（可选）</string>
+    <string name="nsp_load_servers">查找公共服务器</string>
+    <string name="nsp_select_server">选择公共服务器</string>
+    <string name="nsp_selected_server">已选择：%1$s</string>
+    <string name="nsp_run">开始测试</string>
+    <string name="nsp_cancel">取消测试</string>
+    <string name="nsp_invalid_url">请输入有效的 LibreSpeed HTTPS 地址。</string>
+    <string name="nsp_error">测试失败。请检查服务器和网络连接后重试。</string>
+    <string name="nsp_ping">延迟</string>
+    <string name="nsp_jitter">抖动</string>
+    <string name="nsp_download">下载</string>
+    <string name="nsp_upload">上传</string>
+</resources>

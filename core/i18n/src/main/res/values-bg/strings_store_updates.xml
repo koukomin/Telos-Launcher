@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Проверявай за актуализации</string>
+    <string name="store_check_updates_per_app_summary">Изключете, за да пропускате автоматичните и ръчните проверки за актуализации на това приложение.</string>
+    <string name="store_parallel_updates">Актуализирай няколко приложения паралелно</string>
+    <string name="store_parallel_updates_summary">Изтегля и инсталира до 3 приложения едновременно при автоматични или ръчни актуализации. Telos Launcher се актуализира последен; Android може да покаже няколко потвърждения за инсталиране.</string>
+</resources>

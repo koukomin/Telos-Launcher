@@ -137,7 +137,8 @@ Compress to zip and extract are described in [Archives and vaults](./archives-va
 
 For a file Android's file provider cannot cover (or one only root can read), Telos copies it into its cache for the
 other app to read. **Share** sends the selected **files**; folders cannot be shared ("Folders cannot be shared.
-Compress them first."). One file uses a normal share, several use a multiple share.
+Compress them first."). Shared files are staged in Telos' private share cache and sent through the same Android
+share flow used by Viewer and Media. One file uses a normal share, several use a multiple share.
 
 ## Properties and checksums
 

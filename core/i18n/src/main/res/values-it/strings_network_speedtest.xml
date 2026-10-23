@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Test di velocità</string>
+    <string name="nsp_intro">Esegui un test LibreSpeed con il server che preferisci. I risultati sono mostrati solo in questa schermata.</string>
+    <string name="nsp_privacy">Il server scelto vede il tuo indirizzo IP e il traffico del test. Telos non invia risultati o telemetria. La ricerca di server pubblici contatta librespeed.org; per una maggiore privacy usa un server personale.</string>
+    <string name="nsp_server_url">Server HTTPS personale (facoltativo)</string>
+    <string name="nsp_load_servers">Cerca server pubblici</string>
+    <string name="nsp_select_server">Scegli un server pubblico</string>
+    <string name="nsp_selected_server">Selezionato: %1$s</string>
+    <string name="nsp_run">Avvia test</string>
+    <string name="nsp_cancel">Annulla test</string>
+    <string name="nsp_invalid_url">Inserisci un URL HTTPS LibreSpeed valido.</string>
+    <string name="nsp_error">Test non riuscito. Controlla il server e la connessione e riprova.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Download</string>
+    <string name="nsp_upload">Caricamento</string>
+</resources>

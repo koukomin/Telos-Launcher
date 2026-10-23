@@ -43,6 +43,7 @@ Open an app in the Store to change how it is tracked.
 | Track only | off | Tells you about new versions, never downloads or installs them. **Update all** skips it |
 | Stay on this version | off | No update is offered. The row shows "pinned" |
 | Skip this version | none | Ignores exactly one release. The next release is offered again. Undo with **Stop skipping** |
+| Check for updates | on | Turn off to skip both background and manual update checks for this app |
 | Exclude from background updates | off | The app is only checked and updated when you ask |
 | File name filter | empty | A regular expression that picks the right APK from the release, for example `arm64` or `universal`. Empty means the best match for this phone |
 | Include pre-releases | off | Pre-releases are considered (GitHub, GitLab and Gitea sources) |
@@ -60,14 +61,15 @@ does not parse as a regular expression is ignored.
 | Check for updates | 6 hours | Store settings | Never, 1 h, 3 h, 6 h, 12 h, Daily |
 | Only on Wi-Fi | on | Store settings | The check runs only on an unmetered connection |
 | Notify about updates | on | Store settings | A notification for new versions |
-| Install updates automatically | off | Store settings | Installs updates without asking, only when Shizuku or root allows it |
+| Install updates automatically | on | Store settings | Installs eligible non-Play updates without asking, only when Shizuku or root allows it. Telos itself is notification-only |
+| Update multiple apps in parallel | on | Store settings | Downloads and installs up to three apps at once. Telos Launcher is always updated last |
 | GitHub token (optional) | empty | Store settings | Raises GitHub's limit from 60 to 5000 requests per hour |
 
 ### How the background check works
 
 - It is a periodic background job of Android (not a permanent service). The interval you choose is the repeat time, and
   Android decides the exact moment. "Never" cancels the job.
-- Apps marked **Exclude from background updates** are skipped, and so are apps that are only a Play Store listing.
+- Apps with **Check for updates** off are skipped in every check. **Exclude from background updates** skips only background checks, and apps that are only a Play Store listing are not checked by Telos.
 - An app has an update when the release has a higher version code than the installed one, or, when the source gives no
   version code, when the version numbers in the version names are higher (so `v1.4.2` against `1.4.2` works).
 - Pinned apps and a skipped version are not reported.
@@ -77,7 +79,7 @@ does not parse as a regular expression is ignored.
 
 ### Telos updates itself
 
-The signed release build of Telos is in the Store list from the first start, with the project's GitHub releases as its source. It is checked together with the other apps (every 6 hours by default, see the table above) and you get a notification when a new version is out. The file for your phone's CPU is chosen by its name (`telos-arm64-v8a.apk` or `telos-armeabi-v7a.apk`). Debug and nightly builds and the F-Droid build do not do this: they have another update channel. You can stop it with **Exclude from background** on the Telos entry.
+The signed release build of Telos is in the Store list from the first start, with the project's GitHub releases as its source. It is checked together with the other apps (every 6 hours by default, see the table above) and you get a notification when a new version is out; Telos is never installed automatically. In a manual **Update all**, Telos is installed only after the other app updates finish. The file for your phone's CPU is chosen by its name (`telos-arm64-v8a.apk` or `telos-armeabi-v7a.apk`). Debug and nightly builds and the F-Droid build do not do this: they have another update channel. You can stop checking it with **Check for updates** on the Telos entry.
 
 ### Notifications
 
@@ -90,7 +92,7 @@ hours. Tapping it opens the Store. Notifications are not counted as announced wh
 - **Check for updates** on the dashboard checks everything. The message says "N update(s) available", "Up to date, N
   source(s) could not be reached" or "Everything is up to date".
 - **Check now** on an app page checks that app.
-- **Update all** installs every available update one by one.
+- **Update all** installs every available update except Track only apps. Telos Launcher is always last; with the default parallel setting, up to three other apps download/install at once and Telos waits for their installer results.
 
 ## Install and uninstall
 

@@ -229,6 +229,15 @@ fun NetworkHomeScreen() {
                     }
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) { NetworkRouteChooser() }
+                item {
+                    HubTile(
+                        title = stringResource(R.string.nsp_title),
+                        value = stringResource(R.string.nsp_intro),
+                        icon = Icons.speed_24px,
+                        card = card,
+                        onClick = { backStack.add(NetworkSpeedTestRoute) },
+                    )
+                }
                 item { HubTile(title = "NextDNS", value = stringResource(R.string.nd_title),
                     icon = Icons.edit_24px, card = card, onClick = { backStack.add(de.mm20.launcher2.ui.network.nextdns.NextDnsRoute) }) }
                 item { HubTile(title = "Tor", value = stringResource(R.string.nt_onion),
@@ -240,6 +249,15 @@ fun NetworkHomeScreen() {
                         icon = Icons.language_24px,
                         card = card,
                         onClick = { backStack.add(NetworkDnsRoute) },
+                    )
+                }
+                item {
+                    HubTile(
+                        title = stringResource(R.string.net_dns_system),
+                        value = stringResource(R.string.net_dns_group_system),
+                        icon = Icons.language_24px,
+                        card = card,
+                        onClick = { backStack.add(PrivateDnsRoute) },
                     )
                 }
                 item {
@@ -277,6 +295,24 @@ fun NetworkHomeScreen() {
                         icon = Icons.manage_search_24px,
                         card = card,
                         onClick = { backStack.add(NetworkLogsRoute) },
+                    )
+                }
+                item {
+                    HubTile(
+                        title = stringResource(R.string.net_scan_title),
+                        value = stringResource(R.string.net_scan_subnet),
+                        icon = Icons.manage_search_24px,
+                        card = card,
+                        onClick = { backStack.add(de.mm20.launcher2.ui.network.NetworkScanRoute) },
+                    )
+                }
+                item {
+                    HubTile(
+                        title = stringResource(R.string.nsp_title),
+                        value = stringResource(R.string.nsp_intro),
+                        icon = Icons.speed_24px,
+                        card = card,
+                        onClick = { backStack.add(de.mm20.launcher2.ui.network.NetworkSpeedTestRoute) },
                     )
                 }
                 item {

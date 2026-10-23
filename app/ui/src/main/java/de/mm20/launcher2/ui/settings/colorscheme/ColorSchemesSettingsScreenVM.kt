@@ -1,17 +1,16 @@
 package de.mm20.launcher2.ui.settings.colorscheme
 
 import android.content.Context
-import android.content.Intent
-import androidx.core.content.FileProvider
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.DefaultThemeId
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.colors.Colors
 import de.mm20.launcher2.themes.toLegacyJson
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.share.ShareActions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -63,17 +62,12 @@ class ColorSchemesSettingsScreenVM : ViewModel(), KoinComponent {
                 file.writeText(colors.toLegacyJson())
                 file
             }
-            context.tryStartActivity(Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "application/json"
-                putExtra(
-                    Intent.EXTRA_STREAM, FileProvider.getUriForFile(
-                        context,
-                        context.applicationContext.packageName + ".fileprovider",
-                        file
-                    )
-                )
-            }.let { Intent.createChooser(it, null) })
+            val shared = withContext(Dispatchers.IO) {
+                ShareActions.shareFile(context, file, "application/json")
+            }
+            if (!shared) {
+                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

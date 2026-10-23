@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_wifi_dns_automation">Wi‑Fi DNS 自动化</string>
+    <string name="net_wifi_dns_automation_summary">在后台应用匹配的 Android 私人 DNS 规则，即使 Telos Network VPN 已关闭也会生效。需要位置和通知权限。</string>
+    <string name="net_wifi_dns_permission_error">无法启用监控。请授予 Shizuku 权限，并允许位置访问和通知。</string>
+    <string name="net_wifi_dns_invalid_rule">请输入有效的 Wi‑Fi 名称；提供商规则还需要有效的 DNS 主机名。</string>
+</resources>

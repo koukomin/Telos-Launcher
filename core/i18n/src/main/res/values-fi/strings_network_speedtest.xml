@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Nopeustesti</string>
+    <string name="nsp_intro">Suorita LibreSpeed-testi valitsemallasi palvelimella. Tulokset näkyvät vain tällä näytöllä.</string>
+    <string name="nsp_privacy">Valittu palvelin näkee IP-osoitteesi ja testiliikenteen. Telos ei lähetä testituloksia tai telemetriaa. Julkisten palvelimien haku ottaa yhteyden librespeed.orgiin; käytä omaa palvelinta paremman yksityisyyden takaamiseksi.</string>
+    <string name="nsp_server_url">Oma HTTPS-palvelin (valinnainen)</string>
+    <string name="nsp_load_servers">Etsi julkisia palvelimia</string>
+    <string name="nsp_select_server">Valitse julkinen palvelin</string>
+    <string name="nsp_selected_server">Valittu: %1$s</string>
+    <string name="nsp_run">Aloita testi</string>
+    <string name="nsp_cancel">Peruuta testi</string>
+    <string name="nsp_invalid_url">Anna kelvollinen HTTPS-osoite LibreSpeed-palvelimelle.</string>
+    <string name="nsp_error">Testi epäonnistui. Tarkista palvelin ja yhteys ja yritä uudelleen.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Lataus</string>
+    <string name="nsp_upload">Lähetys</string>
+</resources>

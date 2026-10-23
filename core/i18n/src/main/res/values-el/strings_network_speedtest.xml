@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Έλεγχος ταχύτητας</string>
+    <string name="nsp_intro">Εκτελέστε έλεγχο LibreSpeed σε έναν διακομιστή της επιλογής σας. Τα αποτελέσματα εμφανίζονται μόνο σε αυτή την οθόνη.</string>
+    <string name="nsp_privacy">Ο επιλεγμένος διακομιστής βλέπει τη διεύθυνση IP και την κίνηση της δοκιμής. Το Telos δεν στέλνει αποτελέσματα ή τηλεμετρία. Η φόρτωση δημόσιων διακομιστών επικοινωνεί με το librespeed.org· για μεγαλύτερη ιδιωτικότητα χρησιμοποιήστε δικό σας διακομιστή.</string>
+    <string name="nsp_server_url">Δικός σας διακομιστής HTTPS (προαιρετικά)</string>
+    <string name="nsp_load_servers">Εύρεση δημόσιων διακομιστών</string>
+    <string name="nsp_select_server">Επιλογή δημόσιου διακομιστή</string>
+    <string name="nsp_selected_server">Επιλεγμένος: %1$s</string>
+    <string name="nsp_run">Έναρξη ελέγχου</string>
+    <string name="nsp_cancel">Ακύρωση ελέγχου</string>
+    <string name="nsp_invalid_url">Εισαγάγετε έγκυρη διεύθυνση HTTPS για LibreSpeed.</string>
+    <string name="nsp_error">Ο έλεγχος απέτυχε. Ελέγξτε τον διακομιστή και τη σύνδεση και δοκιμάστε ξανά.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Λήψη</string>
+    <string name="nsp_upload">Αποστολή</string>
+</resources>

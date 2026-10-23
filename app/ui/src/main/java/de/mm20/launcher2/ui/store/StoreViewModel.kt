@@ -23,7 +23,12 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.freeze.AutoFreezeController
 import de.mm20.launcher2.freeze.FreezeManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -32,6 +37,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
@@ -289,6 +296,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
 
     val pendingUpdates = MutableStateFlow<List<StoreItem>>(emptyList())
     private val activeInstalls = mutableSetOf<String>()
+    private val updateBatchMutex = Mutex()
 
     fun updateAll() {
         requestUpdates(
@@ -301,7 +309,10 @@ class StoreViewModel : ViewModel(), KoinComponent {
 
     private fun requestUpdates(targets: List<StoreItem>) {
         if (targets.isEmpty()) return
-        if (targets.any { !(options.item(it.id).autoUpdate ?: global.value.autoInstall) }) {
+        if (targets.any {
+                !it.isTelosLauncher(context.packageName) &&
+                    !(options.item(it.id).autoUpdate ?: global.value.autoInstall)
+            }) {
             pendingUpdates.value = targets
         } else performUpdates(targets)
     }
@@ -309,13 +320,42 @@ class StoreViewModel : ViewModel(), KoinComponent {
     fun confirmUpdates(automatic: Boolean) {
         val targets = pendingUpdates.value
         pendingUpdates.value = emptyList()
-        if (automatic) targets.forEach { item -> options.update(item.id) { it.copy(autoUpdate = true) } }
+        if (automatic) targets.filterNot { it.isTelosLauncher(context.packageName) }
+            .forEach { item -> options.update(item.id) { it.copy(autoUpdate = true) } }
         performUpdates(targets)
     }
 
     fun dismissUpdates() { pendingUpdates.value = emptyList() }
     private fun performUpdates(targets: List<StoreItem>) {
-        viewModelScope.launch { targets.forEach { installNow(it) } }
+        viewModelScope.launch {
+            updateBatchMutex.withLock {
+                val (launcher, otherApps) = targets
+                    .sortedWith(storeBulkUpdateOrder(context.packageName))
+                    .partition { it.isTelosLauncher(context.packageName) }
+                if (global.value.parallelUpdates) {
+                    otherApps.chunked(MAX_PARALLEL_UPDATE_INSTALLS).forEach { batch ->
+                        coroutineScope {
+                            batch.map { item -> async { installForBatch(item) } }.awaitAll()
+                        }
+                    }
+                } else {
+                    otherApps.forEach { installForBatch(it) }
+                }
+                launcher.forEach { installForBatch(it) }
+            }
+        }
+    }
+
+    private suspend fun installForBatch(item: StoreItem) = coroutineScope {
+        val completion = async(start = CoroutineStart.UNDISPATCHED) {
+            de.mm20.launcher2.store.installer.InstallEvents.events.first { it.packageName == item.packageName }
+        }
+        installNow(item)
+        if (_installStates.value[item.id] == StoreInstallUiState.Installing) {
+            completion.await()
+        } else {
+            completion.cancel()
+        }
     }
 
     /**
@@ -590,15 +630,23 @@ class StoreViewModel : ViewModel(), KoinComponent {
     private fun setState(id: String, state: StoreInstallUiState) {
         _installStates.value = _installStates.value + (id to state)
     }
+
+    private companion object {
+        const val MAX_PARALLEL_UPDATE_INSTALLS = 3
+    }
 }
 
 internal fun StoreRow.isTelosLauncher(launcherPackage: String): Boolean {
-    if (item.id == "telos-self") return true
-    if (item.packageName == launcherPackage) return true
-    val github = item.source as? AppSource.GitHub ?: return false
-    return github.owner.equals("koukomin", ignoreCase = true) &&
-        github.repo.equals("Telos-Launcher", ignoreCase = true)
+    return item.isTelosLauncher(launcherPackage)
 }
+
+internal fun StoreItem.isTelosLauncher(launcherPackage: String): Boolean {
+    return de.mm20.launcher2.store.updater.StoreUpdatePolicy.isTelosLauncher(this, launcherPackage)
+}
+
+internal fun storeBulkUpdateOrder(launcherPackage: String): Comparator<StoreItem> =
+    compareBy<StoreItem> { it.isTelosLauncher(launcherPackage) }
+        .thenBy { it.displayName.lowercase() }
 
 internal fun storeUpdateOrder(launcherPackage: String): Comparator<StoreRow> =
     compareByDescending<StoreRow> { it.updateAvailable && it.isTelosLauncher(launcherPackage) }

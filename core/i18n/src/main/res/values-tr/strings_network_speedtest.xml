@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Hız testi</string>
+    <string name="nsp_intro">Seçtiğiniz sunucuda LibreSpeed testi çalıştırın. Sonuçlar yalnızca bu ekranda gösterilir.</string>
+    <string name="nsp_privacy">Seçilen sunucu IP adresinizi ve test trafiğini görür. Telos test sonucu veya telemetri göndermez. Herkese açık sunucu listesi librespeed.org adresine bağlanır; daha fazla gizlilik için kendi sunucunuzu kullanın.</string>
+    <string name="nsp_server_url">Kendi HTTPS sunucunuz (isteğe bağlı)</string>
+    <string name="nsp_load_servers">Herkese açık sunucuları bul</string>
+    <string name="nsp_select_server">Herkese açık sunucu seç</string>
+    <string name="nsp_selected_server">Seçildi: %1$s</string>
+    <string name="nsp_run">Testi başlat</string>
+    <string name="nsp_cancel">Testi iptal et</string>
+    <string name="nsp_invalid_url">Geçerli bir HTTPS LibreSpeed adresi girin.</string>
+    <string name="nsp_error">Test başarısız. Sunucuyu ve bağlantıyı kontrol edip tekrar deneyin.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">İndirme</string>
+    <string name="nsp_upload">Yükleme</string>
+</resources>

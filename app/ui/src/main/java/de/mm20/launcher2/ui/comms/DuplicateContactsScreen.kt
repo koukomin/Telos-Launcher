@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
@@ -26,6 +27,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import android.widget.Toast
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -60,6 +63,12 @@ class DuplicateContactsViewModel : ViewModel(), KoinComponent {
     /** Returns the number of contacts that could not be deleted */
     suspend fun keepFirst(groups: List<List<DialerContact>>): Int =
         idsToDelete(groups).count { id -> !runCatching { repo.deleteContact(id) }.getOrDefault(false) }
+
+    suspend fun mergeGroup(group: List<DialerContact>): Boolean =
+        runCatching { repo.mergeContactGroup(group) }.getOrDefault(false)
+
+    suspend fun mergeAll(): Int =
+        runCatching { repo.mergeAllDuplicateGroups() }.getOrDefault(0)
 }
 
 @Composable
@@ -68,14 +77,16 @@ fun DuplicateContactsScreen() {
     val backStack = LocalBackStack.current
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val haptics = LocalHapticFeedback.current
     var groups by remember { mutableStateOf<List<List<DialerContact>>>(emptyList()) }
     var loaded by remember { mutableStateOf(false) }
-    // what is waiting for the user's confirmation: the groups whose extra contacts would be deleted
     var pending by remember { mutableStateOf<List<List<DialerContact>>?>(null) }
+
     LaunchedEffect(Unit) {
         groups = viewModel.load()
         loaded = true
     }
+
     pending?.let { toClean ->
         val count = viewModel.idsToDelete(toClean).size
         androidx.compose.material3.AlertDialog(
@@ -85,6 +96,7 @@ fun DuplicateContactsScreen() {
             confirmButton = {
                 TextButton(onClick = {
                     pending = null
+                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
                     scope.launch {
                         val failed = viewModel.keepFirst(toClean)
                         groups = viewModel.load()
@@ -97,6 +109,7 @@ fun DuplicateContactsScreen() {
             dismissButton = { TextButton(onClick = { pending = null }) { Text(stringResource(R.string.hc_cancel)) } },
         )
     }
+
     PreferenceScreen(title = { Text(stringResource(R.string.hc_duplicate_contacts)) }) {
         if (!loaded) {
             item {
@@ -115,38 +128,80 @@ fun DuplicateContactsScreen() {
         }
         groups.forEachIndexed { index, group ->
             item {
-                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Text(stringResource(R.string.hc_group_number_phone, index + 1, group.first().phoneNumbers.firstOrNull().orEmpty()))
-                    group.forEach { contact ->
-                        Text("${contact.displayName} · ${contact.phoneNumbers.joinToString()}")
-                        contact.accounts.forEach { account ->
-                            Text(
-                                "${account.name ?: stringResource(R.string.contacts_account_device)}${account.type?.let { " · $it" }.orEmpty()}",
-                                style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
-                                color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
+                androidx.compose.material3.Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 6.dp),
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+                    colors = androidx.compose.material3.CardDefaults.cardColors(
+                        containerColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceContainerLow
+                    ),
+                ) {
+                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text(
+                            stringResource(R.string.hc_group_number_phone, index + 1, group.first().phoneNumbers.firstOrNull().orEmpty()),
+                            style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
+                            color = androidx.compose.material3.MaterialTheme.colorScheme.primary,
+                        )
+                        group.forEach { contact ->
+                            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 2.dp)) {
+                                CommsAvatar(name = contact.displayName, photoUri = contact.photoUri, size = 32.dp)
+                                Spacer(Modifier.width(12.dp))
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text("${contact.displayName} · ${contact.phoneNumbers.joinToString()}")
+                                    contact.accounts.forEach { account ->
+                                        Text(
+                                            "${account.name ?: stringResource(R.string.contacts_account_device)}${account.type?.let { " · $it" }.orEmpty()}",
+                                            style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
+                                            color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        Spacer(Modifier.height(4.dp))
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                            OutlinedButton(
+                                onClick = { backStack.add(ContactDetailsRoute(contactId = group.first().id)) }
+                            ) { Text(stringResource(R.string.hc_open)) }
+                            OutlinedButton(
+                                onClick = {
+                                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    scope.launch {
+                                        val ok = viewModel.mergeGroup(group)
+                                        groups = viewModel.load()
+                                        if (!ok) {
+                                            Toast.makeText(context, R.string.au_phonea_action_failed, Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                }
+                            ) { Text(stringResource(R.string.comms_merge)) }
+                            Button(
+                                onClick = { pending = listOf(group) }
+                            ) { Text(stringResource(R.string.hc_keep_first_delete_extras)) }
                         }
                     }
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedButton(onClick = {
-                            backStack.add(ContactDetailsRoute(contactId = group.first().id))
-                        }) { Text(stringResource(R.string.hc_open)) }
-                        Button(onClick = {
-                            pending = listOf(group)
-                        }) { Text(stringResource(R.string.hc_keep_first_delete_extras)) }
-                    }
-                    Spacer(Modifier.height(8.dp))
                 }
             }
         }
         if (groups.isNotEmpty()) {
             item {
-                TextButton(
-                    onClick = {
-                        pending = groups
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                ) { Text(stringResource(R.string.hc_keep_first_in_every_group_delete_extras)) }
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(vertical = 12.dp)) {
+                    Button(
+                        onClick = {
+                            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                            scope.launch {
+                                viewModel.mergeAll()
+                                groups = viewModel.load()
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text(stringResource(R.string.comms_merge)) }
+                    TextButton(
+                        onClick = { pending = groups },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text(stringResource(R.string.hc_keep_first_in_every_group_delete_extras)) }
+                }
             }
         }
     }

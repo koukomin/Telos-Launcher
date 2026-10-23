@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Test tal-veloċità</string>
+    <string name="nsp_intro">Agħmel test LibreSpeed fuq server li tagħżel int. Ir-riżultati jidhru biss fuq dan l-iskrin.</string>
+    <string name="nsp_privacy">Is-server magħżul jara l-indirizz IP tiegħek u t-traffiku tat-test. Telos ma jibgħatx riżultati jew telemetrija. Il-lista tas-servers pubbliċi tikkuntattja lil librespeed.org; uża server tiegħek għal aktar privatezza.</string>
+    <string name="nsp_server_url">Server HTTPS tiegħek (mhux obbligatorju)</string>
+    <string name="nsp_load_servers">Sib servers pubbliċi</string>
+    <string name="nsp_select_server">Agħżel server pubbliku</string>
+    <string name="nsp_selected_server">Magħżul: %1$s</string>
+    <string name="nsp_run">Ibda t-test</string>
+    <string name="nsp_cancel">Ħassar it-test</string>
+    <string name="nsp_invalid_url">"Daħħal indirizz HTTPS validu ta' LibreSpeed."</string>
+    <string name="nsp_error">"It-test falla. Iċċekkja s-server u l-konnessjoni u erġa' pprova."</string>
+    <string name="nsp_ping">"Ping"</string>
+    <string name="nsp_jitter">"Jitter"</string>
+    <string name="nsp_download">"Niżżel"</string>
+    <string name="nsp_upload">"Tella'"</string>
+</resources>

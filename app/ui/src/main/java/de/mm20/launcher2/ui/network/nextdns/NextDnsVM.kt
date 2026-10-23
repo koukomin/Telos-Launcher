@@ -18,6 +18,13 @@ data class NextDnsEditorState(
     val profileId: String? = null, val connected: Boolean = false, val loading: Boolean = true,
     val logs: List<NextDnsLog> = emptyList(), val cursor: String? = null,
     val allowed: List<NextDnsRule> = emptyList(), val denied: List<NextDnsRule> = emptyList(),
+    val rewrites: List<NextDnsRewrite> = emptyList(),
+    val profileSettings: Map<NextDnsSettingsPage, NextDnsSettings> = emptyMap(),
+    val analyticsMetric: NextDnsAnalyticsMetric = NextDnsAnalyticsMetric.TRAFFIC,
+    val analyticsPeriod: NextDnsAnalyticsPeriod = NextDnsAnalyticsPeriod.HOURS_24,
+    val analyticsDeviceId: String? = null,
+    val analyticsDevices: List<NextDnsAnalyticsDevice> = emptyList(),
+    val analytics: NextDnsAnalyticsSnapshot? = null,
     val error: NextDnsErrorKind? = null, val dnsApplied: Boolean = false,
 )
 
@@ -82,6 +89,69 @@ class NextDnsVM : ViewModel(), KoinComponent {
     }
     fun toggle(allow: Boolean, domain: String, active: Boolean) = operation { repository.setRuleActive(allow, domain, active); refreshContent() }
     fun delete(allow: Boolean, domain: String) = operation { repository.deleteRule(allow, domain); refreshContent() }
+    fun loadRewrites() = operation {
+        val rewrites = repository.loadRewrites()
+        mutable.update { it.copy(rewrites = rewrites) }
+    }
+    fun addRewrite(name: String, content: String) = operation {
+        repository.createRewrite(name, content)
+        val rewrites = repository.loadRewrites()
+        mutable.update { it.copy(rewrites = rewrites) }
+    }
+    fun deleteRewrite(rewriteId: String) = operation {
+        repository.deleteRewrite(rewriteId)
+        val rewrites = repository.loadRewrites()
+        mutable.update { it.copy(rewrites = rewrites) }
+    }
+    fun loadSettings(page: NextDnsSettingsPage) = operation {
+        val settings = repository.loadSettings(page)
+        mutable.update { it.copy(profileSettings = it.profileSettings + (page to settings)) }
+    }
+    fun loadAnalytics(
+        metric: NextDnsAnalyticsMetric = mutable.value.analyticsMetric,
+        period: NextDnsAnalyticsPeriod = mutable.value.analyticsPeriod,
+        deviceId: String? = mutable.value.analyticsDeviceId,
+    ) = operation {
+        mutable.update {
+            it.copy(
+                analyticsMetric = metric,
+                analyticsPeriod = period,
+                analyticsDeviceId = deviceId,
+                analytics = null,
+            )
+        }
+        val devices = if (mutable.value.analyticsDevices.isEmpty()) {
+            repository.loadAnalyticsDevices()
+        } else {
+            mutable.value.analyticsDevices
+        }
+        val snapshot = repository.loadAnalytics(metric, period, deviceId)
+        mutable.update { it.copy(analyticsDevices = devices, analytics = snapshot) }
+    }
+    fun moreAnalytics() = operation {
+        val current = mutable.value.analytics ?: return@operation
+        val cursor = current.nextCursor ?: return@operation
+        if (current.rows.size >= 500) return@operation
+        val page = repository.loadAnalytics(
+            current.metric,
+            mutable.value.analyticsPeriod,
+            mutable.value.analyticsDeviceId,
+            cursor,
+        )
+        mutable.update {
+            it.copy(
+                analytics = current.copy(
+                    rows = (current.rows + page.rows).take(500),
+                    nextCursor = page.nextCursor,
+                ),
+            )
+        }
+    }
+    fun toggleSetting(page: NextDnsSettingsPage, setting: NextDnsBooleanSetting, value: Boolean) = operation {
+        repository.updateSettings(page, NextDnsSettingsValues.patch(setting.path, value))
+        val settings = repository.loadSettings(page)
+        mutable.update { it.copy(profileSettings = it.profileSettings + (page to settings)) }
+    }
     fun applyDns() = operation {
         val profile = mutable.value.profileId ?: return@operation
         val url = "https://dns.nextdns.io/$profile"

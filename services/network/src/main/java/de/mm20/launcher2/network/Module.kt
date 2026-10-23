@@ -25,6 +25,7 @@ import org.koin.dsl.module
  */
 val networkModule = module {
     single { de.mm20.launcher2.network.nextdns.NextDnsRepository(androidContext()) }
+    single { de.mm20.launcher2.network.privatedns.PrivateDnsController() }
     single { de.mm20.launcher2.network.tor.TorController(androidContext(), get()) }
     single<NetworkSettings> { DefaultNetworkSettings(androidContext()) }
     single<AppDirectory> { DefaultAppDirectory(androidContext()) }

@@ -534,6 +534,16 @@ class AutoFreezeController internal constructor(
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
 
+        val pm = context.packageManager
+        val appLabels = freezable.map { pkg ->
+            runCatching {
+                pm.getApplicationInfo(pkg, PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES)
+                    .loadLabel(pm).toString()
+            }.getOrDefault(pkg)
+        }.sorted()
+
+        val labelsSummary = appLabels.joinToString(", ")
+
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_lock_idle_lock)
             .setContentTitle(
@@ -541,13 +551,15 @@ class AutoFreezeController internal constructor(
                     R.plurals.freeze_ready_notification_title, freezable.size, freezable.size
                 )
             )
-            .setContentText(context.getString(R.string.freeze_ready_notification_text))
+            .setContentText(labelsSummary)
             .setStyle(NotificationCompat.InboxStyle().also { style ->
-                val pm = context.packageManager
-                freezable.map { pkg -> runCatching {
-                    pm.getApplicationInfo(pkg, PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES)
-                        .loadLabel(pm).toString()
-                }.getOrDefault(pkg) }.sorted().forEach { style.addLine(it) }
+                style.setBigContentTitle(
+                    context.resources.getQuantityString(
+                        R.plurals.freeze_ready_notification_title, freezable.size, freezable.size
+                    )
+                )
+                style.setSummaryText(context.getString(R.string.freeze_ready_notification_text))
+                appLabels.forEach { style.addLine(it) }
             })
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setContentIntent(freezeNowIntent)

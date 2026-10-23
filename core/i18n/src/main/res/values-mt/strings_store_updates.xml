@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Iċċekkja għal aġġornamenti</string>
+    <string name="store_check_updates_per_app_summary">Itfih biex taqbeż il-kontrolli awtomatiċi u manwali tal-aġġornamenti għal din l-app.</string>
+    <string name="store_parallel_updates">Aġġorna diversi apps b’mod parallel</string>
+    <string name="store_parallel_updates_summary">Iniżżel u jinstalla sa 3 apps f’daqqa waqt aġġornamenti awtomatiċi jew manwali. Telos Launcher jiġi aġġornat l-aħħar; Android jista’ juri diversi konfermi tal-installazzjoni.</string>
+</resources>

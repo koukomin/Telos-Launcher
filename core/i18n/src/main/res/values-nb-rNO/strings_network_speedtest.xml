@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Hastighetstest</string>
+    <string name="nsp_intro">Kjør en LibreSpeed-test mot en server du velger. Resultatene vises bare på denne skjermen.</string>
+    <string name="nsp_privacy">Den valgte serveren ser IP-adressen din og testtrafikken. Telos sender ingen testresultater eller telemetri. Listen over offentlige servere hentes fra librespeed.org; bruk din egen server for bedre personvern.</string>
+    <string name="nsp_server_url">Egen HTTPS-server (valgfritt)</string>
+    <string name="nsp_load_servers">Finn offentlige servere</string>
+    <string name="nsp_select_server">Velg offentlig server</string>
+    <string name="nsp_selected_server">Valgt: %1$s</string>
+    <string name="nsp_run">Start test</string>
+    <string name="nsp_cancel">Avbryt test</string>
+    <string name="nsp_invalid_url">Skriv inn en gyldig HTTPS-adresse for LibreSpeed.</string>
+    <string name="nsp_error">Testen mislyktes. Kontroller serveren og tilkoblingen, og prøv igjen.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Nedlasting</string>
+    <string name="nsp_upload">Opplasting</string>
+</resources>

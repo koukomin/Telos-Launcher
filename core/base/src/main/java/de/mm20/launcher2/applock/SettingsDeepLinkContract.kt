@@ -44,6 +44,8 @@ object SettingsDeepLinkContract {
     const val ROUTE_CALENDAR = "settings/calendar"
     const val ROUTE_DOWNLOADS = "settings/downloads"
     const val ROUTE_NETWORK = "settings/network"
+    const val ROUTE_NETWORK_SPEED_TEST = "settings/network/speedtest"
+    const val ROUTE_NETWORK_PRIVATE_DNS = "settings/network/private_dns"
     const val ROUTE_SYSTEM = "settings/system"
     const val ROUTE_TRASH = "settings/trash"
     /** Links (string array) to offer in the add sheet of Telos Downloads, from a share or an Open with */
@@ -55,7 +57,7 @@ object SettingsDeepLinkContract {
         ROUTE_PHOTOS, ROUTE_VIEWER -> "viewer"
         ROUTE_FILES -> "files"
         ROUTE_STORE -> "store"
-        ROUTE_NETWORK -> "network"
+        ROUTE_NETWORK, ROUTE_NETWORK_SPEED_TEST, ROUTE_NETWORK_PRIVATE_DNS -> "network"
         ROUTE_SYSTEM -> "system"
         ROUTE_TRASH -> "trash"
         ROUTE_CALCULATOR -> "calculator"

@@ -28,11 +28,11 @@ object TelosAppIcons {
         "telos_media_app" -> R.drawable.ic_app_media_full
         "telos_store_app" -> R.drawable.ic_app_store_full
         "telos_system_app" -> R.drawable.ic_app_system_full
-        "telos_trash_app" -> R.drawable.delete_24px
-        "telos_clock_app" -> R.drawable.schedule_24px
+        "telos_trash_app" -> R.drawable.ic_app_trash_full
+        "telos_clock_app" -> R.drawable.ic_app_clock_full
         "telos_akou_app" -> R.drawable.ic_app_youtube_music_full
-        "telos_magnifier_app" -> R.drawable.search_24px
-        "telos_flashlight_app" -> R.drawable.light_mode_24px
+        "telos_magnifier_app" -> R.drawable.ic_app_magnifier_full
+        "telos_flashlight_app" -> R.drawable.ic_app_flashlight_full
         else -> null
     }
 }

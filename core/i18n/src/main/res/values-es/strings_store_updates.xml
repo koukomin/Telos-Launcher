@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Buscar actualizaciones</string>
+    <string name="store_check_updates_per_app_summary">Desactívalo para omitir las búsquedas de actualizaciones automáticas y manuales de esta aplicación.</string>
+    <string name="store_parallel_updates">Actualizar varias aplicaciones en paralelo</string>
+    <string name="store_parallel_updates_summary">Descarga e instala hasta 3 aplicaciones a la vez durante las actualizaciones automáticas o manuales. Telos Launcher se actualiza al final; Android puede mostrar varias confirmaciones de instalación.</string>
+</resources>

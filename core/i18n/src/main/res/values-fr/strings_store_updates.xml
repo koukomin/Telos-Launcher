@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Rechercher des mises à jour</string>
+    <string name="store_check_updates_per_app_summary">Désactivez cette option pour ignorer les recherches de mises à jour automatiques et manuelles de cette application.</string>
+    <string name="store_parallel_updates">Mettre à jour plusieurs applications en parallèle</string>
+    <string name="store_parallel_updates_summary">Télécharge et installe jusqu’à 3 applications à la fois lors des mises à jour automatiques ou manuelles. Telos Launcher est mis à jour en dernier ; Android peut afficher plusieurs confirmations d’installation.</string>
+</resources>

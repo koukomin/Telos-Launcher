@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">स्पीड टेस्ट</string>
+    <string name="nsp_intro">अपनी पसंद के सर्वर पर LibreSpeed टेस्ट चलाएँ। नतीजे केवल इसी स्क्रीन पर दिखते हैं।</string>
+    <string name="nsp_privacy">चुना हुआ सर्वर आपका IP पता और टेस्ट ट्रैफ़िक देखता है। Telos नतीजे या टेलीमेट्री नहीं भेजता। सार्वजनिक सर्वर सूची लोड करने पर librespeed.org से संपर्क होता है; अधिक गोपनीयता के लिए अपना सर्वर इस्तेमाल करें।</string>
+    <string name="nsp_server_url">आपका HTTPS सर्वर (वैकल्पिक)</string>
+    <string name="nsp_load_servers">सार्वजनिक सर्वर खोजें</string>
+    <string name="nsp_select_server">सार्वजनिक सर्वर चुनें</string>
+    <string name="nsp_selected_server">चुना गया: %1$s</string>
+    <string name="nsp_run">टेस्ट शुरू करें</string>
+    <string name="nsp_cancel">टेस्ट रद्द करें</string>
+    <string name="nsp_invalid_url">मान्य LibreSpeed HTTPS पता दर्ज करें।</string>
+    <string name="nsp_error">टेस्ट विफल हुआ। सर्वर और कनेक्शन जाँचकर फिर कोशिश करें।</string>
+    <string name="nsp_ping">पिंग</string>
+    <string name="nsp_jitter">जिटर</string>
+    <string name="nsp_download">डाउनलोड</string>
+    <string name="nsp_upload">अपलोड</string>
+</resources>

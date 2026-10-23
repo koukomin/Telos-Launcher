@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_scan_title">Network Scanner &amp; Ping</string>
+    <string name="net_scan_intro">Scan your local network for active devices and open ports, or ping any IP/domain.</string>
+    <string name="net_scan_subnet">Scan Local Network (Subnet)</string>
+    <string name="net_scan_bypass_vpn">Bypass VPN &amp; Tor for LAN traffic</string>
+    <string name="net_scan_bypass_vpn_summary">Directly probe local network addresses without routing through Telos VPN or Tor</string>
+    <string name="net_scan_start">Start Subnet Scan</string>
+    <string name="net_scan_stop">Stop Scan</string>
+    <string name="net_scan_scanning">Scanning local network (%1$d/%2$d)… Found %3$d device(s)</string>
+    <string name="net_scan_found_devices">Found Devices (%1$d)</string>
+    <string name="net_scan_gateway">Gateway</string>
+    <string name="net_scan_open_ports">Open ports: %1$s</string>
+    <string name="net_ping_title">Ping IP / Domain</string>
+    <string name="net_ping_target_hint">Enter IP or domain (e.g. 192.168.1.1, google.com)</string>
+    <string name="net_ping_start">Ping</string>
+    <string name="net_ping_result">Ping %1$s (%2$s): %3$d/%4$d packets, Latency: min %5$dms, avg %6$dms, max %7$dms</string>
+    <string name="net_ping_failed">Ping failed for %1$s</string>
+</resources>

@@ -22,6 +22,9 @@ import de.mm20.launcher2.store.options.StoreOptions
 import de.mm20.launcher2.store.repository.StoreRepository
 import de.mm20.launcher2.store.updater.CheckSummary
 import de.mm20.launcher2.store.updater.StoreUpdater
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 
 /**
  * The Store's update check, the way Obtainium does it: ask every source for its newest release,
@@ -51,6 +54,7 @@ class StoreUpdaterImpl(
         for (item in items) {
             if (item.source is AppSource.AffiliatePlayStore) continue
             val o = options.item(item.id)
+            if (!de.mm20.launcher2.store.updater.StoreUpdatePolicy.checksUpdates(o)) continue
             if (background && o.excludeFromBackground) continue
             val refreshed = refresh(item)
             if (refreshed == null) {
@@ -64,7 +68,9 @@ class StoreUpdaterImpl(
         val installed = ArrayList<StoreItem>()
         val global = options.global.value
         if (background && updates.isNotEmpty() && installer.canInstallSilently()) {
+            val eligible = ArrayList<StoreItem>()
             for (item in updates.toList()) {
+                if (de.mm20.launcher2.store.updater.StoreUpdatePolicy.isTelosLauncher(item, context.packageName)) continue
                 // A tracked GitHub/F-Droid source must not take over a Play-managed install.
                 val playManaged = runCatching {
                     val pm = context.packageManager
@@ -74,8 +80,22 @@ class StoreUpdaterImpl(
                 }.getOrDefault(true)
                 if (playManaged) continue
                 val itemOptions = options.item(item.id)
-                if (!de.mm20.launcher2.store.updater.StoreUpdatePolicy.automatic(itemOptions, global.autoInstall, if (item.packageName == context.packageName) context else null)) continue
-                if (handler.install(item) is StoreAction.Installed) {
+                if (!de.mm20.launcher2.store.updater.StoreUpdatePolicy.automatic(itemOptions, global.autoInstall)) continue
+                eligible += item
+            }
+            val results = if (global.parallelUpdates) {
+                coroutineScope {
+                    eligible.chunked(MAX_PARALLEL_UPDATES).flatMap { batch ->
+                        batch.map { item ->
+                            async { item to installSilently(item) }
+                        }.awaitAll()
+                    }
+                }
+            } else {
+                eligible.map { item -> item to installSilently(item) }
+            }
+            for ((item, wasInstalled) in results) {
+                if (wasInstalled) {
                     installed += item
                     updates.remove(item)
                 }
@@ -83,6 +103,15 @@ class StoreUpdaterImpl(
         }
         if (background && global.notifyUpdates) notify(updates, installed)
         CheckSummary(updates, installed, failed)
+    }
+
+    private suspend fun installSilently(item: StoreItem): Boolean = try {
+        handler.install(item) is StoreAction.Installed
+    } catch (e: kotlinx.coroutines.CancellationException) {
+        throw e
+    } catch (e: Exception) {
+        de.mm20.launcher2.crashreporter.CrashReporter.logException(e)
+        false
     }
 
     /** Discover supported non-Play installs following the global automatic-update setting. */
@@ -114,7 +143,10 @@ class StoreUpdaterImpl(
         }
     }
 
-    override suspend fun checkOne(item: StoreItem): Boolean = refresh(item) != null
+    override suspend fun checkOne(item: StoreItem): Boolean {
+        if (!de.mm20.launcher2.store.updater.StoreUpdatePolicy.checksUpdates(options.item(item.id))) return false
+        return refresh(item) != null
+    }
 
     /** Asks the source and stores the answer; null when the source could not be reached. */
     private suspend fun refresh(item: StoreItem): StoreItem? {
@@ -190,6 +222,7 @@ class StoreUpdaterImpl(
     }.getOrNull()
 
     companion object {
+        private const val MAX_PARALLEL_UPDATES = 3
         private const val CHANNEL = "store_updates"
         private const val NOTIFICATION_ID = 7410
     }

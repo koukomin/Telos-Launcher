@@ -25,9 +25,15 @@ unchanged. See [THIRD_PARTY_NOTICES.md](https://github.com/koukomin/Telos-Launch
 | --- | --- |
 | START / STOP | A circular control in the middle. Green ring when Telos Network is on. Tap to start or stop. |
 | Live counts | Blocked DNS queries and blocked connections since logs were cleared |
-| Tiles | [DNS](dns.md), firewall, [WireGuard](wireguard.md), [blocklists](blocklists-bypass.md), [logs](logs-settings.md), [settings](logs-settings.md#settings) |
+| Tiles | [Speed test](#privacy-minded-speed-test), [DNS](dns.md), Android [system Private DNS and Wi-Fi rules](dns.md#android-system-private-dns), firewall, [WireGuard](wireguard.md), [blocklists](blocklists-bypass.md), [logs](logs-settings.md), [settings](logs-settings.md#settings) |
 
 The first time you turn it on, Android asks for your consent to set up a VPN. Without it Telos Network cannot start.
+
+## Privacy-minded speed test
+
+The Network home screen includes a LibreSpeed test for ping, jitter, download and upload. Choose a community server from the public directory or enter the HTTPS URL of a self-hosted LibreSpeed backend. The test runs only after you start it; results stay on screen and are not uploaded by Telos. Requests go directly from your device to the chosen server, which can see your IP address and test traffic. Loading the public directory contacts `librespeed.org`; using your own server avoids that directory request. Download data is bounded per sample, and you can cancel a running test.
+
+The System widget has a matching shortcut to the test. Its continuously sampled traffic rates remain device-wide counters and are not speed-test results.
 
 ## Safety
 
@@ -61,7 +67,7 @@ The first time you turn it on, Android asks for your consent to set up a VPN. Wi
 
 ## Home widget
 
-Add **Telos Network** from the built-in widget picker. It shows VPN state, the selected DNS server, blocked query/connection counts since logs were cleared, local interface addresses and sampled download/upload rates. Rates use device counters, including possible VPN interface overhead; they are not a tunnel speed test.
+Add **Telos Network** from the built-in widget picker. It shows VPN state, the selected DNS server, blocked query/connection counts since logs were cleared, local interface addresses and sampled download/upload rates. Rates use device counters, including possible VPN interface overhead; they are not a tunnel speed test. The **System** widget also has a shortcut to the on-demand [privacy-minded speed test](#privacy-minded-speed-test).
 
 WAN lookup runs only when tapped and contacts the displayed `api.ipify.org` endpoint. It shows the route used by Telos itself, which is normally excluded from its own VPN; it must not be interpreted as the exit IP of a selected WireGuard or Tor route.
 

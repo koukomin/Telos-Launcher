@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">গতি পরীক্ষা</string>
+    <string name="nsp_intro">আপনার বেছে নেওয়া সার্ভারে LibreSpeed পরীক্ষা চালান। ফলাফল শুধু এই পর্দায় দেখা যায়।</string>
+    <string name="nsp_privacy">নির্বাচিত সার্ভার আপনার IP ঠিকানা ও পরীক্ষার ট্র্যাফিক দেখতে পায়। Telos ফলাফল বা টেলিমেট্রি পাঠায় না। পাবলিক সার্ভারের তালিকা আনতে librespeed.org-এ সংযোগ করা হয়; বেশি গোপনীয়তার জন্য নিজের সার্ভার ব্যবহার করুন।</string>
+    <string name="nsp_server_url">নিজস্ব HTTPS সার্ভার (ঐচ্ছিক)</string>
+    <string name="nsp_load_servers">পাবলিক সার্ভার খুঁজুন</string>
+    <string name="nsp_select_server">পাবলিক সার্ভার বাছুন</string>
+    <string name="nsp_selected_server">নির্বাচিত: %1$s</string>
+    <string name="nsp_run">পরীক্ষা শুরু করুন</string>
+    <string name="nsp_cancel">পরীক্ষা বাতিল করুন</string>
+    <string name="nsp_invalid_url">একটি বৈধ LibreSpeed HTTPS ঠিকানা লিখুন।</string>
+    <string name="nsp_error">পরীক্ষা ব্যর্থ হয়েছে। সার্ভার ও সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।</string>
+    <string name="nsp_ping">পিং</string>
+    <string name="nsp_jitter">জিটার</string>
+    <string name="nsp_download">ডাউনলোড</string>
+    <string name="nsp_upload">আপলোড</string>
+</resources>

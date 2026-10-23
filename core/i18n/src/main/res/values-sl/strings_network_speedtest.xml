@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Preizkus hitrosti</string>
+    <string name="nsp_intro">Zaženite preizkus LibreSpeed na izbranem strežniku. Rezultati so prikazani samo na tem zaslonu.</string>
+    <string name="nsp_privacy">Izbrani strežnik vidi vaš naslov IP in promet preizkusa. Telos ne pošilja rezultatov ali telemetrije. Iskanje javnih strežnikov vzpostavi povezavo z librespeed.org; za več zasebnosti uporabite svoj strežnik.</string>
+    <string name="nsp_server_url">Lasten strežnik HTTPS (izbirno)</string>
+    <string name="nsp_load_servers">Poišči javne strežnike</string>
+    <string name="nsp_select_server">Izberi javni strežnik</string>
+    <string name="nsp_selected_server">Izbrano: %1$s</string>
+    <string name="nsp_run">Začni preizkus</string>
+    <string name="nsp_cancel">Prekliči preizkus</string>
+    <string name="nsp_invalid_url">Vnesite veljaven naslov HTTPS za LibreSpeed.</string>
+    <string name="nsp_error">Preizkus ni uspel. Preverite strežnik in povezavo ter poskusite znova.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Prenos</string>
+    <string name="nsp_upload">Pošiljanje</string>
+</resources>

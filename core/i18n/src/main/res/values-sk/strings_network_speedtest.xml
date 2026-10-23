@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Test rýchlosti</string>
+    <string name="nsp_intro">Spustite test LibreSpeed na vybranom serveri. Výsledky sa zobrazia iba na tejto obrazovke.</string>
+    <string name="nsp_privacy">Vybraný server vidí vašu IP adresu a testovaciu prevádzku. Telos neposiela výsledky ani telemetriu. Načítanie verejných serverov kontaktuje librespeed.org; pre väčšie súkromie použite vlastný server.</string>
+    <string name="nsp_server_url">Vlastný HTTPS server (voliteľné)</string>
+    <string name="nsp_load_servers">Nájsť verejné servery</string>
+    <string name="nsp_select_server">Vybrať verejný server</string>
+    <string name="nsp_selected_server">Vybrané: %1$s</string>
+    <string name="nsp_run">Spustiť test</string>
+    <string name="nsp_cancel">Zrušiť test</string>
+    <string name="nsp_invalid_url">Zadajte platnú HTTPS adresu LibreSpeed.</string>
+    <string name="nsp_error">Test zlyhal. Skontrolujte server a pripojenie a skúste to znova.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Sťahovanie</string>
+    <string name="nsp_upload">Odosielanie</string>
+</resources>

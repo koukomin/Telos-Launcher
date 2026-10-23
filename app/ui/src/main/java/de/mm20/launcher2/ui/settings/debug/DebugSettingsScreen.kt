@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.settings.debug
 
-import android.content.Intent
 import android.os.Debug
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,12 +13,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
-import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.share.ShareActions
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -103,20 +101,12 @@ fun DebugSettingsScreen() {
                                 ).show()
                                 return@launch
                             }
-                            context.tryStartActivity(
-                                Intent.createChooser(
-                                    Intent(Intent.ACTION_SEND).apply {
-                                        type = "application/octet-stream"
-                                        putExtra(
-                                            Intent.EXTRA_STREAM, FileProvider.getUriForFile(
-                                                context,
-                                                context.applicationContext.packageName + ".fileprovider",
-                                                File(path)
-                                            )
-                                        )
-                                    }, null
-                                )
-                            )
+                            val shared = withContext(Dispatchers.IO) {
+                                ShareActions.shareFile(context, File(path), "application/octet-stream")
+                            }
+                            if (!shared) {
+                                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                            }
                         }
 
                     }

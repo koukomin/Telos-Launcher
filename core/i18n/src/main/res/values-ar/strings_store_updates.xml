@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">التحقق من وجود تحديثات</string>
+    <string name="store_check_updates_per_app_summary">أوقف هذا الخيار لتخطي التحقق من تحديثات هذا التطبيق تلقائيًا ويدويًا.</string>
+    <string name="store_parallel_updates">تحديث عدة تطبيقات بالتوازي</string>
+    <string name="store_parallel_updates_summary">تنزيل وتثبيت ما يصل إلى 3 تطبيقات في الوقت نفسه أثناء التحديثات التلقائية أو اليدوية. يتم تحديث Telos Launcher أخيرًا؛ وقد يعرض Android عدة طلبات لتأكيد التثبيت.</string>
+</resources>

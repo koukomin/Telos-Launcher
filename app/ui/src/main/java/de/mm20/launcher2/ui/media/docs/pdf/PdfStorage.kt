@@ -94,25 +94,8 @@ object PdfStorage {
     fun cacheUri(context: Context, file: File): Uri =
         FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
 
-    fun share(context: Context, items: List<Pair<Uri, String>>) {
-        if (items.isEmpty()) return
-        val intent = if (items.size == 1) {
-            Intent(Intent.ACTION_SEND).apply {
-                type = items[0].second
-                putExtra(Intent.EXTRA_STREAM, items[0].first)
-            }
-        } else {
-            Intent(Intent.ACTION_SEND_MULTIPLE).apply {
-                type = if (items.all { it.second == items[0].second }) items[0].second else "*/*"
-                putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(items.map { it.first }))
-            }
-        }
-        val clip = ClipData.newRawUri(null, items[0].first)
-        for (i in 1 until items.size) clip.addItem(ClipData.Item(items[i].first))
-        intent.clipData = clip
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        context.startActivity(Intent.createChooser(intent, null))
-    }
+    fun share(context: Context, uris: List<Uri>): Boolean =
+        de.mm20.launcher2.ui.common.share.ShareActions.shareUris(context, uris)
 
     fun open(context: Context, uri: Uri, mime: String) {
         val intent = Intent(Intent.ACTION_VIEW).apply {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Test de viteză</string>
+    <string name="nsp_intro">Rulează un test LibreSpeed cu serverul ales de tine. Rezultatele sunt afișate doar pe acest ecran.</string>
+    <string name="nsp_privacy">Serverul ales vede adresa ta IP și traficul testului. Telos nu trimite rezultate sau telemetrie. Lista serverelor publice este încărcată de la librespeed.org; pentru mai multă confidențialitate folosește propriul server.</string>
+    <string name="nsp_server_url">Server HTTPS propriu (opțional)</string>
+    <string name="nsp_load_servers">Caută servere publice</string>
+    <string name="nsp_select_server">Alege un server public</string>
+    <string name="nsp_selected_server">Selectat: %1$s</string>
+    <string name="nsp_run">Pornește testul</string>
+    <string name="nsp_cancel">Anulează testul</string>
+    <string name="nsp_invalid_url">Introdu un URL HTTPS LibreSpeed valid.</string>
+    <string name="nsp_error">Testul a eșuat. Verifică serverul și conexiunea, apoi încearcă din nou.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Descărcare</string>
+    <string name="nsp_upload">Încărcare</string>
+</resources>

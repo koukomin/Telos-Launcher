@@ -23,7 +23,9 @@ recording indicator. Nothing is uploaded.
    same buttons are on the screen of the app.
 4. The video is saved to `Movies/Telos` (Android 10 and newer, in the phone's own movies folder of the app on older
    versions) and listed in the app. Tap it to play it, for example in [Telos Video](../video/). The menu of a recording
-   shares or deletes it.
+   shares or deletes it. Long-press a recording to select it, tap additional recordings, then use **Share** to send
+   the selected videos together. Shared videos are staged through the launcher's private share cache with temporary
+   read access for the receiving app.
 
 Starting the recording from the floating launcher while a recording runs stops it.
 

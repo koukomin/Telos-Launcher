@@ -296,6 +296,43 @@ fun SystemWidget(widget: SystemWidget) {
         }
 
         de.mm20.launcher2.ui.network.NetworkRouteChooser()
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clip(MaterialTheme.shapes.medium)
+                .background(scheme.surfaceContainerHigh)
+                .clickable {
+                    context.tryStartActivity(
+                        Intent(context, SettingsActivity::class.java)
+                            .putExtra(SettingsActivity.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_NETWORK_SPEED_TEST),
+                    )
+                }
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Box(
+                Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(scheme.primaryContainer),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    painterResource(R.drawable.speed_24px),
+                    contentDescription = null,
+                    tint = scheme.onPrimaryContainer,
+                )
+            }
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(stringResource(R.string.nsp_title), style = MaterialTheme.typography.titleSmall)
+                Text(
+                    stringResource(R.string.nsp_intro),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = scheme.onSurfaceVariant,
+                )
+            }
+        }
         Text(stringResource(R.string.telos_system_processes), style = MaterialTheme.typography.titleSmall)
         Column(Modifier.fillMaxWidth().heightIn(max = 200.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         processes.take(40).forEach { process ->

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_wifi_dns_automation">أتمتة DNS لشبكة Wi‑Fi</string>
+    <string name="net_wifi_dns_automation_summary">يطبّق قاعدة DNS خاصّة بنظام Android في الخلفية عند الاتصال بشبكة Wi‑Fi، حتى عند إيقاف VPN في Telos Network. يتطلب إذن الموقع والإشعارات.</string>
+    <string name="net_wifi_dns_permission_error">تعذر تفعيل المراقبة. امنح Shizuku إذنًا، واسمح بالوصول إلى الموقع والإشعارات.</string>
+    <string name="net_wifi_dns_invalid_rule">أدخل اسم Wi‑Fi صالحًا واسم مضيف DNS صالحًا لقاعدة المزوّد.</string>
+</resources>

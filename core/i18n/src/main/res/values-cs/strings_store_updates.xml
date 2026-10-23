@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Kontrolovat aktualizace</string>
+    <string name="store_check_updates_per_app_summary">Vypnutím přeskočíte automatickou i ruční kontrolu aktualizací této aplikace.</string>
+    <string name="store_parallel_updates">Aktualizovat více aplikací souběžně</string>
+    <string name="store_parallel_updates_summary">Při automatických i ručních aktualizacích stáhne a nainstaluje až 3 aplikace současně. Telos Launcher se aktualizuje jako poslední; Android může zobrazit několik potvrzení instalace.</string>
+</resources>

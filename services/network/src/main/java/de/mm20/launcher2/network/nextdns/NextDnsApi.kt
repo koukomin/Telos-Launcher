@@ -1,6 +1,7 @@
 package de.mm20.launcher2.network.nextdns
 
 import java.net.URLEncoder
+import java.time.ZoneId
 import kotlinx.serialization.json.*
 
 /** Implements https://nextdns.github.io/api/ without assuming HTTP 200 means application success. */
@@ -9,6 +10,61 @@ internal class NextDnsApi(private val transport: NextDnsTransport) {
         val id = NextDnsValidation.profileId(profile)
         val data = request("GET", "/profiles/$id", key).objectValue()
         return NextDnsProfile(id, data.string("name", 512) ?: id)
+    }
+    suspend fun settings(profile: String, key: String, page: NextDnsSettingsPage): NextDnsSettings {
+        val id = NextDnsValidation.profileId(profile)
+        val values = request("GET", "/profiles/$id/${page.apiPath}", key).objectValue()
+        return NextDnsSettings(page, values)
+    }
+    suspend fun analytics(
+        profile: String,
+        key: String,
+        metric: NextDnsAnalyticsMetric,
+        period: NextDnsAnalyticsPeriod,
+        deviceId: String? = null,
+        cursor: String? = null,
+    ): NextDnsAnalyticsSnapshot {
+        val id = NextDnsValidation.profileId(profile)
+        val device = deviceId?.takeIf { it.isNotBlank() }?.also {
+            if (it.length > 128 || it.any(Char::isISOControl)) throw NextDnsException(NextDnsErrorKind.INVALID)
+        }
+        val query = buildList {
+            add("from=${period.queryValue}")
+            add("alignment=start")
+            add("timezone=${encode(ZoneId.systemDefault().id)}")
+            device?.let { add("device=${encode(it)}") }
+            metric.filters.filterKeys { cursor == null || it != "limit" }
+                .forEach { (name, value) -> add("${encode(name)}=${encode(value)}") }
+            cursor?.let {
+                add("limit=100")
+                add("cursor=${encode(validCursor(it))}")
+            }
+        }.joinToString("&")
+        val suffix = if (metric.series) ";series" else ""
+        val response = request("GET", "/profiles/$id/analytics/${metric.feature}$suffix?$query", key)
+        val data = response.data
+        val root = when (data) {
+            is JsonObject -> data
+            is JsonArray -> buildJsonObject { put("data", data) }
+            else -> throw NextDnsException(NextDnsErrorKind.API)
+        }
+        return NextDnsAnalyticsParser.snapshot(metric, root, response.cursor())
+    }
+    suspend fun analyticsDevices(profile: String, key: String): List<NextDnsAnalyticsDevice> {
+        val id = NextDnsValidation.profileId(profile)
+        val data = request("GET", "/profiles/$id/analytics/devices?from=-3M&limit=200", key).data
+        val root = when (data) {
+            is JsonObject -> data
+            is JsonArray -> buildJsonObject { put("data", data) }
+            else -> throw NextDnsException(NextDnsErrorKind.API)
+        }
+        return NextDnsAnalyticsParser.devices(root)
+    }
+    suspend fun patchSettings(profile: String, key: String, page: NextDnsSettingsPage, values: JsonObject) {
+        val id = NextDnsValidation.profileId(profile)
+        if (values.isEmpty() || values.toString().toByteArray(Charsets.UTF_8).size > MAX_SETTINGS_BYTES)
+            throw NextDnsException(NextDnsErrorKind.INVALID)
+        request("PATCH", "/profiles/$id/${page.apiPath}", key, values.toString(), mutation = true)
     }
     suspend fun logs(profile: String, key: String, search: String, status: String?, cursor: String?): NextDnsPage<NextDnsLog> {
         val id = NextDnsValidation.profileId(profile)
@@ -50,6 +106,42 @@ internal class NextDnsApi(private val transport: NextDnsTransport) {
             if (cursor != null && !cursors.add(cursor)) malformed()
         } while (cursor != null)
         return result.distinctBy { it.id }
+    }
+    suspend fun rewrites(profile: String, key: String): List<NextDnsRewrite> {
+        val id = NextDnsValidation.profileId(profile)
+        val rows = request("GET", "/profiles/$id/rewrites", key).data.arrayValue()
+        if (rows.size > 500) malformed()
+        return rows.map { value ->
+            val row = value.objectValue()
+            NextDnsRewrite(
+                row.requiredString("id", 64),
+                row.requiredString("name", 253),
+                row.requiredString("type", 64),
+                row.requiredString("content", 253),
+            )
+        }
+    }
+    suspend fun createRewrite(profile: String, key: String, name: String, content: String): NextDnsRewrite {
+        val id = NextDnsValidation.profileId(profile)
+        val normalizedName = NextDnsRewriteValidation.name(name)
+        val normalizedContent = NextDnsRewriteValidation.content(content)
+        val body = buildJsonObject {
+            put("name", normalizedName)
+            put("content", normalizedContent)
+        }.toString()
+        val row = request("POST", "/profiles/$id/rewrites", key, body, mutation = true).objectValue()
+        return NextDnsRewrite(
+            row.requiredString("id", 64),
+            row.requiredString("name", 253),
+            row.requiredString("type", 64),
+            row.requiredString("content", 253),
+        )
+    }
+    suspend fun deleteRewrite(profile: String, key: String, rewriteId: String) {
+        val id = NextDnsValidation.profileId(profile)
+        val safeRewriteId = rewriteId.takeIf { rewriteIdPattern.matches(it) }
+            ?: throw NextDnsException(NextDnsErrorKind.INVALID)
+        request("DELETE", "/profiles/$id/rewrites/${encode(safeRewriteId)}", key, mutation = true)
     }
     suspend fun putRule(profile: String, key: String, allow: Boolean, domain: String) {
         val id = NextDnsValidation.profileId(profile)
@@ -101,6 +193,8 @@ internal class NextDnsApi(private val transport: NextDnsTransport) {
         }
     }
     private companion object {
+        const val MAX_SETTINGS_BYTES = 65_536
+        val rewriteIdPattern = Regex("[A-Za-z0-9_-]{1,64}")
         fun malformed(): Nothing = throw NextDnsException(NextDnsErrorKind.API)
         fun encode(value: String): String = URLEncoder.encode(value, "UTF-8")
         fun listName(allow: Boolean) = if (allow) "allowlist" else "denylist"

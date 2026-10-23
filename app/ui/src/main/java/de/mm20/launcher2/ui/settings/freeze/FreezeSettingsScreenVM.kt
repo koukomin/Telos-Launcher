@@ -59,20 +59,22 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
         freezeManager.restoreFrozenApps() + freezeManager.recoverFrozenUpdates()
     }
     private fun maintenanceAction(action: suspend () -> Int) {
-        viewModelScope.launch(kotlinx.coroutines.NonCancellable) {
-            maintenanceLock.lock()
-            try {
-                _maintenanceBusy.value = true
-                if (action() != 0) showPolicyError()
-                _frozenInventory.value = freezeManager.scanFrozenApps()
-                // Refresh iconless entries each time Settings is opened, including other freezers.
-                _iconlessApps.value = appRepository.findIconlessApps().sorted()
-            } catch (error: Exception) {
-                android.util.Log.e("FreezeSettings", "Maintenance operation failed", error)
-                showPolicyError()
-            } finally {
-                _maintenanceBusy.value = false
-                maintenanceLock.unlock()
+        viewModelScope.launch {
+            withContext(kotlinx.coroutines.NonCancellable) {
+                maintenanceLock.lock()
+                try {
+                    _maintenanceBusy.value = true
+                    if (action() != 0) showPolicyError()
+                    _frozenInventory.value = freezeManager.scanFrozenApps()
+                    // Refresh iconless entries each time Settings is opened, including other freezers.
+                    _iconlessApps.value = appRepository.findIconlessApps().sorted()
+                } catch (error: Exception) {
+                    android.util.Log.e("FreezeSettings", "Maintenance operation failed", error)
+                    showPolicyError()
+                } finally {
+                    _maintenanceBusy.value = false
+                    maintenanceLock.unlock()
+                }
             }
         }
     }

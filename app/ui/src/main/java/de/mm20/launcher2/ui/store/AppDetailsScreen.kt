@@ -96,7 +96,7 @@ fun AppDetailsScreen(itemId: String) {
             item {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     StoreActionButton(row, installStates[item.id] ?: StoreInstallUiState.Idle) { viewModel.onAppActionClicked(item) }
-                    OutlinedButton(onClick = { viewModel.checkOne(item) }, enabled = !checking) {
+                    OutlinedButton(onClick = { viewModel.checkOne(item) }, enabled = !checking && row.options.checkForUpdates) {
                         if (checking) CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp) else Text(stringResource(R.string.hc_check_now))
                     }
                 }
@@ -126,8 +126,15 @@ fun AppDetailsScreen(itemId: String) {
             }
             item {
                 Card(stringResource(R.string.hf_store_app_settings)) {
-                    SwitchLine(stringResource(R.string.telos_store_auto_title), stringResource(R.string.telos_store_auto_explanation), o.autoUpdate ?: viewModel.global.value.autoInstall) { v ->
-                        viewModel.setOptions(item.id) { it.copy(autoUpdate = v) }
+                    SwitchLine(
+                        stringResource(R.string.store_check_updates_per_app),
+                        stringResource(R.string.store_check_updates_per_app_summary),
+                        o.checkForUpdates,
+                    ) { v -> viewModel.setOptions(item.id) { it.copy(checkForUpdates = v) } }
+                    if (!item.isTelosLauncher(context.packageName)) {
+                        SwitchLine(stringResource(R.string.telos_store_auto_title), stringResource(R.string.telos_store_auto_explanation), o.autoUpdate ?: viewModel.global.value.autoInstall) { v ->
+                            viewModel.setOptions(item.id) { it.copy(autoUpdate = v) }
+                        }
                     }
                     SwitchLine(stringResource(R.string.hf_store_track_only), stringResource(R.string.hf_store_track_only_desc), o.trackOnly) { v ->
                         viewModel.setOptions(item.id) { it.copy(trackOnly = v) }

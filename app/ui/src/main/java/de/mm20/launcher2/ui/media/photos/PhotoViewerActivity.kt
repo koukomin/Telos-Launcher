@@ -53,7 +53,10 @@ import coil.compose.AsyncImage
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
+import de.mm20.launcher2.ui.common.share.ShareActions
 import de.mm20.launcher2.ui.theme.LauncherTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /** Full screen photo viewer with pinch zoom, EXIF editor and metadata-free sharing. */
 class PhotoViewerActivity : BaseActivity() {
@@ -276,16 +279,10 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     }
 
     fun share(uri: Uri) {
-        val type = context.contentResolver.getType(uri) ?: "image/*"
-        context.startActivity(
-            Intent.createChooser(
-                Intent(Intent.ACTION_SEND).apply {
-                    this.type = type
-                    putExtra(Intent.EXTRA_STREAM, uri)
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                }, null
-            )
-        )
+        wallpaperScope.launch {
+            val ok = withContext(Dispatchers.IO) { ShareActions.shareUris(context, listOf(uri)) }
+            if (!ok) Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+        }
     }
 
     Box(

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.share.ShareActions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -161,10 +162,7 @@ object ScreenshotController {
         )
         val share = PendingIntent.getActivity(
             context, id + 100000,
-            Intent.createChooser(
-                Intent(Intent.ACTION_SEND).setType("image/*").putExtra(Intent.EXTRA_STREAM, shareableUri(context, uri)).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
-                null,
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+            ShareActions.createChooserIntent(listOf(shareableUri(context, uri)), "image/*"),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         val delete = PendingIntent.getActivity(

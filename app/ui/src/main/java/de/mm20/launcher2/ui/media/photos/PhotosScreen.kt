@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -30,11 +31,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.share.ShareActions
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -171,6 +174,7 @@ fun PhotosScreen(embedded: Boolean = false) {
     val viewModel: PhotosViewModel = viewModel()
     // the guard of the whole app is set by Telos Viewer
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val items by viewModel.items.collectAsStateWithLifecycle()
 
     val permission = if (Build.VERSION.SDK_INT >= 33) Manifest.permission.READ_MEDIA_IMAGES
@@ -234,12 +238,18 @@ fun PhotosScreen(embedded: Boolean = false) {
                     NavigationBarItem(
                         selected = false,
                         onClick = {
-                            val send = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
-                                type = "*/*"
-                                putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(selected.toList()))
-                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            val selectedUris = items.asSequence()
+                                .filter { it.uri in selected }
+                                .map { it.uri }
+                                .toList()
+                            scope.launch {
+                                val ok = withContext(Dispatchers.IO) {
+                                    ShareActions.shareUris(context, selectedUris)
+                                }
+                                if (!ok) {
+                                    Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                                }
                             }
-                            context.startActivity(Intent.createChooser(send, null))
                         },
                         icon = { Icon(painterResource(R.drawable.share_24px), contentDescription = null) },
                         label = { Text(stringResource(R.string.hc_share)) },

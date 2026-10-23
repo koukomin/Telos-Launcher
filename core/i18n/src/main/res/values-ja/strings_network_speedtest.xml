@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">速度テスト</string>
+    <string name="nsp_intro">選択したサーバーで LibreSpeed テストを実行します。結果はこの画面にのみ表示されます。</string>
+    <string name="nsp_privacy">選択したサーバーには IP アドレスとテスト通信が送信されます。Telos は結果やテレメトリーを送信しません。公開サーバー一覧の取得時は librespeed.org に接続します。プライバシーを重視する場合は自分のサーバーを使用してください。</string>
+    <string name="nsp_server_url">自分の HTTPS サーバー（任意）</string>
+    <string name="nsp_load_servers">公開サーバーを検索</string>
+    <string name="nsp_select_server">公開サーバーを選択</string>
+    <string name="nsp_selected_server">選択中: %1$s</string>
+    <string name="nsp_run">テストを開始</string>
+    <string name="nsp_cancel">テストをキャンセル</string>
+    <string name="nsp_invalid_url">有効な LibreSpeed HTTPS URL を入力してください。</string>
+    <string name="nsp_error">テストに失敗しました。サーバーと接続を確認して、もう一度お試しください。</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">ジッター</string>
+    <string name="nsp_download">ダウンロード</string>
+    <string name="nsp_upload">アップロード</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_wifi_dns_automation">Wi‑Fi DNS-i automatiseerimine</string>
+    <string name="net_wifi_dns_automation_summary">Rakendab taustal sobivat Androidi privaatse DNS-i reeglit ka siis, kui Telos Networki VPN on välja lülitatud. Vajab asukoha- ja teavitusluba.</string>
+    <string name="net_wifi_dns_permission_error">Seiret ei saanud käivitada. Luba Shizuku, asukohajuurdepääs ja teavitused.</string>
+    <string name="net_wifi_dns_invalid_rule">Sisesta kehtiv Wi‑Fi nimi ja teenusepakkuja reegli jaoks kehtiv DNS-i hostinimi.</string>
+</resources>

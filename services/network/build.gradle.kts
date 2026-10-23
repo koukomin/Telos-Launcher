@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.androidx.work)
     implementation(libs.okhttp)
+    implementation(libs.shizuku.api)
     implementation("info.guardianproject:tor-android:0.4.9.14")
 
     // The Go network engine of Rethink DNS (MPL-2.0), used unmodified from Maven Central.

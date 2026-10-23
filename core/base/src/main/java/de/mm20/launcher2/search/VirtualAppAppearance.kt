@@ -41,6 +41,10 @@ object VirtualAppAppearance {
         "telos_media_app" -> R.drawable.ic_app_media_fg
         "telos_store_app" -> R.drawable.local_convenience_store_24px
         "telos_akou_app" -> R.drawable.ic_app_youtube_music_fg
+        "telos_trash_app" -> R.drawable.ic_app_trash_fg
+        "telos_clock_app" -> R.drawable.ic_app_clock_fg
+        "telos_magnifier_app" -> R.drawable.ic_app_magnifier_fg
+        "telos_flashlight_app" -> R.drawable.ic_app_flashlight_fg
         else -> TelosAppIcons.forDomain(domain)
     }
 

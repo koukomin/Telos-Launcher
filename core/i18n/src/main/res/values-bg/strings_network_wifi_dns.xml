@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_wifi_dns_automation">Автоматизация на DNS за Wi‑Fi</string>
+    <string name="net_wifi_dns_automation_summary">Прилага съответното правило за частен DNS на Android във фонов режим, дори когато VPN на Telos Network е изключен. Необходими са разрешения за местоположение и известия.</string>
+    <string name="net_wifi_dns_permission_error">Наблюдението не може да се включи. Разрешете достъп на Shizuku, местоположение и известия.</string>
+    <string name="net_wifi_dns_invalid_rule">Въведете валидно име на Wi‑Fi и валидно DNS име на хост за правило с доставчик.</string>
+</resources>

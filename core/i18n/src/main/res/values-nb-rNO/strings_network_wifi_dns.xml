@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_wifi_dns_automation">Automatisering av Wi‑Fi-DNS</string>
+    <string name="net_wifi_dns_automation_summary">Bruker den samsvarende regelen for privat DNS i Android i bakgrunnen, selv når Telos Network VPN er av. Krever tillatelser for posisjon og varsler.</string>
+    <string name="net_wifi_dns_permission_error">Kunne ikke aktivere overvåking. Gi Shizuku tillatelse, posisjonstilgang og varsler.</string>
+    <string name="net_wifi_dns_invalid_rule">Skriv inn et gyldig Wi‑Fi-navn og et gyldig DNS-vertsnavn for en leverandørregel.</string>
+</resources>

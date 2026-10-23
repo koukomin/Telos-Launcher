@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Preveri posodobitve</string>
+    <string name="store_check_updates_per_app_summary">Izklopite, da preskočite samodejno in ročno preverjanje posodobitev te aplikacije.</string>
+    <string name="store_parallel_updates">Vzporedno posodobi več aplikacij</string>
+    <string name="store_parallel_updates_summary">Med samodejnimi ali ročnimi posodobitvami hkrati prenese in namesti do 3 aplikacije. Telos Launcher se posodobi zadnji; Android lahko prikaže več potrditev namestitve.</string>
+</resources>

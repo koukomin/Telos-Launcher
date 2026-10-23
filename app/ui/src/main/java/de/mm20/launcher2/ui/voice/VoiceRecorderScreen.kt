@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.voice
 import de.mm20.launcher2.search.GreekFold
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioAttributes
 import android.media.MediaPlayer
@@ -11,10 +10,13 @@ import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,6 +37,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
@@ -54,6 +57,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -69,13 +73,14 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected as selectedSemantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.comms.recording.CallAudioRecorder
 import de.mm20.launcher2.comms.recording.RecordingCrypto
@@ -87,11 +92,13 @@ import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.common.share.ShareActions
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.comms.recording.RecordingQuality
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import java.io.File
@@ -196,10 +203,12 @@ private class VoicePlayer {
  * Telos Voice Recorder. The layout follows the Sound Recorder of OxygenOS (big title, search,
  * menu, filter chips, the list, a red record button) and the look follows the Telos theme.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun VoiceRecorderScreen() {
     val context = LocalContext.current
     val backStack = LocalBackStack.current
+    val scope = rememberCoroutineScope()
     val settings = remember { VoiceRecorderSettings(context) }
     val recorder by VoiceRecorderEngine.state.collectAsState()
     val player = remember { VoicePlayer() }
@@ -215,6 +224,9 @@ fun VoiceRecorderScreen() {
     var reload by remember { mutableStateOf(0) }
     var renaming by remember { mutableStateOf<RecordingItem?>(null) }
     var deleting by remember { mutableStateOf<RecordingItem?>(null) }
+    var selectedForShare by remember { mutableStateOf<Set<String>>(emptySet()) }
+    val shareSelecting = selectedForShare.isNotEmpty()
+    BackHandler(enabled = shareSelecting) { selectedForShare = emptySet() }
 
     val comms: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
     val lockCalls by comms.lockCallRecordings.collectAsStateWithLifecycle(true)
@@ -229,6 +241,28 @@ fun VoiceRecorderScreen() {
             }
             val hideLockedCalls = it.isCall && lockCalls && !recordingsUnlocked
             kind && !hideLockedCalls && (query.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.title))
+        }
+    }
+    LaunchedEffect(shown) {
+        val available = shown.mapTo(HashSet()) { it.file.absolutePath }
+        selectedForShare = selectedForShare.intersect(available)
+    }
+    fun shareSelected() {
+        val selectedItems = shown.filter { it.file.absolutePath in selectedForShare }
+        scope.launch {
+            val shared = withContext(Dispatchers.IO) {
+                val readableFiles = selectedItems.map { item ->
+                    if (item.isCall) {
+                        RecordingCrypto.readableCopy(context, item.file) ?: return@withContext false
+                    } else {
+                        item.file
+                    }
+                }
+                ShareActions.shareFiles(context, readableFiles)
+            }
+            if (!shared) {
+                Toast.makeText(context, R.string.voice_share_failed, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -374,6 +408,8 @@ fun VoiceRecorderScreen() {
                                 RecordingRow(
                                     item = item,
                                     selected = player.current?.name == item.file.name,
+                                    shareSelected = item.file.absolutePath in selectedForShare,
+                                    shareSelecting = shareSelecting,
                                     player = player,
                                     onClick = {
                                         if (player.current?.name == item.file.name) {
@@ -383,13 +419,38 @@ fun VoiceRecorderScreen() {
                                             if (readable != null) player.play(readable, speaker)
                                         }
                                     },
+                                    onToggleShareSelection = {
+                                        val key = item.file.absolutePath
+                                        selectedForShare = if (key in selectedForShare) selectedForShare - key else selectedForShare + key
+                                    },
                                     onRename = { renaming = item },
-                                    onShare = { shareRecording(context, item) },
+                                    onShare = { scope.launch { shareRecording(context, item) } },
                                     onDelete = { deleting = item },
                                 )
                             }
                         }
                     }
+                    }
+                }
+                if (shareSelecting) {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.surfaceContainer)
+                            .padding(horizontal = 12.dp, vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            stringResource(R.string.au_viewer_items, selectedForShare.size),
+                            modifier = Modifier.weight(1f).padding(start = 8.dp),
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                        IconButton(onClick = ::shareSelected) {
+                            Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.hc_share))
+                        }
+                        IconButton(onClick = { selectedForShare = emptySet() }) {
+                            Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_cancel))
+                        }
                     }
                 }
                 Box(Modifier.fillMaxWidth().padding(vertical = 20.dp), contentAlignment = Alignment.Center) {
@@ -493,11 +554,15 @@ private fun RecordButton(onClick: () -> Unit) {
 }
 
 @Composable
+@OptIn(ExperimentalFoundationApi::class)
 private fun RecordingRow(
     item: RecordingItem,
     selected: Boolean,
+    shareSelected: Boolean,
+    shareSelecting: Boolean,
     player: VoicePlayer,
     onClick: () -> Unit,
+    onToggleShareSelection: () -> Unit,
     onRename: () -> Unit,
     onShare: () -> Unit,
     onDelete: () -> Unit,
@@ -507,11 +572,24 @@ private fun RecordingRow(
     Column(
         Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .background(if (selected) MaterialTheme.colorScheme.surfaceContainer else Color.Transparent)
+            .combinedClickable(
+                onClick = { if (shareSelecting) onToggleShareSelection() else onClick() },
+                onLongClick = onToggleShareSelection,
+            )
+            .semantics { selectedSemantics = shareSelected }
+            .background(
+                when {
+                    shareSelected -> MaterialTheme.colorScheme.secondaryContainer
+                    selected -> MaterialTheme.colorScheme.surfaceContainer
+                    else -> Color.Transparent
+                },
+            )
             .padding(horizontal = 20.dp, vertical = 12.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
+            if (shareSelecting) {
+                Checkbox(checked = shareSelected, onCheckedChange = { onToggleShareSelection() })
+            }
             Column(Modifier.weight(1f)) {
                 Text(item.title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 val duration = if (item.durationMs > 0) formatDuration(item.durationMs) + " · " else ""
@@ -555,17 +633,14 @@ private fun RecordingRow(
     }
 }
 
-private fun shareRecording(context: Context, item: RecordingItem) {
-    runCatching {
-        val readable = if (item.isCall) RecordingCrypto.readableCopy(context, item.file)!! else item.file
-        val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", readable)
-        val send = Intent(Intent.ACTION_SEND).apply {
-            type = item.mime
-            putExtra(Intent.EXTRA_STREAM, uri)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
-        context.startActivity(Intent.createChooser(send, null).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-    }.onFailure { Toast.makeText(context, R.string.voice_share_failed, Toast.LENGTH_SHORT).show() }
+private suspend fun shareRecording(context: Context, item: RecordingItem) {
+    val shared = withContext(Dispatchers.IO) {
+        val readable = if (item.isCall) RecordingCrypto.readableCopy(context, item.file) ?: return@withContext false else item.file
+        ShareActions.shareFile(context, readable, item.mime, item.file.name)
+    }
+    if (!shared) {
+        Toast.makeText(context, R.string.voice_share_failed, Toast.LENGTH_SHORT).show()
+    }
 }
 
 @Composable

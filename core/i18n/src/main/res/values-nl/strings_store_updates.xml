@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Controleren op updates</string>
+    <string name="store_check_updates_per_app_summary">Schakel dit uit om automatische en handmatige updatecontroles voor deze app over te slaan.</string>
+    <string name="store_parallel_updates">Meerdere apps tegelijk bijwerken</string>
+    <string name="store_parallel_updates_summary">Downloadt en installeert maximaal 3 apps tegelijk bij automatische of handmatige updates. Telos Launcher wordt als laatste bijgewerkt; Android kan meerdere installatiebevestigingen tonen.</string>
+</resources>

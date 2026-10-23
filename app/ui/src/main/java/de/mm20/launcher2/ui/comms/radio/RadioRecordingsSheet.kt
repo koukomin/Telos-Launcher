@@ -129,7 +129,7 @@ fun RadioRecordingsEntry(showCard: Boolean = true, open: Boolean = false, onDism
                             RecordingRow(
                                 rec = rec,
                                 onOpen = { openRecording(context, rec) },
-                                onShare = { shareRecording(context, rec) },
+                                onShare = { shareRecording(context, scope, rec) },
                                 onDelete = { deleteTarget = rec },
                             )
                         }
@@ -182,14 +182,22 @@ private fun openRecording(context: Context, rec: RadioRecording) {
     }
 }
 
-private fun shareRecording(context: Context, rec: RadioRecording) {
-    val send = Intent(Intent.ACTION_SEND)
-        .setType(rec.mimeType)
-        .putExtra(Intent.EXTRA_STREAM, rec.uri)
-        .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    try {
-        context.startActivity(Intent.createChooser(send, rec.name).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-    } catch (e: ActivityNotFoundException) {
-        Toast.makeText(context, context.getString(R.string.au2_radio2_no_app), Toast.LENGTH_SHORT).show()
+private fun shareRecording(
+    context: Context,
+    scope: kotlinx.coroutines.CoroutineScope,
+    rec: RadioRecording,
+) {
+    scope.launch {
+        val shared = withContext(Dispatchers.IO) {
+            de.mm20.launcher2.ui.common.share.ShareActions.shareFile(
+                context,
+                rec.uri,
+                rec.mimeType,
+                rec.name,
+            )
+        }
+        if (!shared) {
+            Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+        }
     }
 }

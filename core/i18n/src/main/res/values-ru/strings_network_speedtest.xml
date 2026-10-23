@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Тест скорости</string>
+    <string name="nsp_intro">Запустите тест LibreSpeed на выбранном сервере. Результаты отображаются только на этом экране.</string>
+    <string name="nsp_privacy">Выбранный сервер видит ваш IP-адрес и тестовый трафик. Telos не отправляет результаты и телеметрию. Список публичных серверов загружается с librespeed.org; для большей приватности используйте свой сервер.</string>
+    <string name="nsp_server_url">Свой HTTPS-сервер (необязательно)</string>
+    <string name="nsp_load_servers">Найти публичные серверы</string>
+    <string name="nsp_select_server">Выбрать публичный сервер</string>
+    <string name="nsp_selected_server">Выбран: %1$s</string>
+    <string name="nsp_run">Начать тест</string>
+    <string name="nsp_cancel">Отменить тест</string>
+    <string name="nsp_invalid_url">Введите правильный HTTPS-адрес LibreSpeed.</string>
+    <string name="nsp_error">Не удалось выполнить тест. Проверьте сервер и подключение и повторите попытку.</string>
+    <string name="nsp_ping">Пинг</string>
+    <string name="nsp_jitter">Джиттер</string>
+    <string name="nsp_download">Загрузка</string>
+    <string name="nsp_upload">Отправка</string>
+</resources>

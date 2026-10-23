@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Sök efter uppdateringar</string>
+    <string name="store_check_updates_per_app_summary">Stäng av för att hoppa över automatiska och manuella uppdateringskontroller för den här appen.</string>
+    <string name="store_parallel_updates">Uppdatera flera appar parallellt</string>
+    <string name="store_parallel_updates_summary">Laddar ned och installerar upp till 3 appar samtidigt vid automatiska eller manuella uppdateringar. Telos Launcher uppdateras sist; Android kan visa flera installationsbekräftelser.</string>
+</resources>

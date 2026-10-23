@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Tarkista päivitykset</string>
+    <string name="store_check_updates_per_app_summary">Poista käytöstä, jos haluat ohittaa tämän sovelluksen automaattiset ja manuaaliset päivitystarkistukset.</string>
+    <string name="store_parallel_updates">Päivitä useita sovelluksia rinnakkain</string>
+    <string name="store_parallel_updates_summary">Lataa ja asentaa enintään 3 sovellusta kerralla automaattisten tai manuaalisten päivitysten aikana. Telos Launcher päivitetään viimeisenä; Android voi näyttää useita asennusvahvistuksia.</string>
+</resources>

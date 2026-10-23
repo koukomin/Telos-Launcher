@@ -10,5 +10,8 @@ interface ContactDirectoryRepository {
     suspend fun containsNumber(number: String): Boolean
     suspend fun findDuplicateGroups(): List<List<DialerContact>>
     suspend fun deleteContact(id: Long): Boolean
+    suspend fun moveContactToAccount(contactId: Long, accountName: String?, accountType: String?): Boolean
+    suspend fun mergeContactGroup(group: List<DialerContact>): Boolean
+    suspend fun mergeAllDuplicateGroups(): Int
     suspend fun importVcf(content: String): Int
 }

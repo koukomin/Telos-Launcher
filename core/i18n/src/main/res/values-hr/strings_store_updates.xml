@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Provjeravaj ažuriranja</string>
+    <string name="store_check_updates_per_app_summary">Isključite da biste preskočili automatsku i ručnu provjeru ažuriranja ove aplikacije.</string>
+    <string name="store_parallel_updates">Ažuriraj više aplikacija paralelno</string>
+    <string name="store_parallel_updates_summary">Preuzima i instalira do 3 aplikacije istodobno tijekom automatskih ili ručnih ažuriranja. Telos Launcher ažurira se posljednji; Android može prikazati više potvrda instalacije.</string>
+</resources>

@@ -289,6 +289,15 @@ class PdfToolsViewModel(app: Application) : AndroidViewModel(app) {
         save(results.take(1)) { PdfStorage.saveToDocument(appContext, target, it) }
     }
 
+    fun share(uris: List<Uri>) {
+        scope.launch {
+            val shared = withContext(Dispatchers.IO) {
+                PdfStorage.share(appContext, uris)
+            }
+            if (!shared) message = appContext.getString(R.string.pdft_error_open_other)
+        }
+    }
+
     /** Keeps access to the chosen folder or file so that history entries can still be opened later. */
     private fun persistGrant(uri: Uri) {
         runCatching {
@@ -619,8 +628,7 @@ private fun ResultScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                     FilledTonalButton(onClick = {
                         val items = if (vm.saved.isNotEmpty()) vm.saved.map { it.uri to it.mime }
                         else results.map { PdfStorage.cacheUri(context, it.file) to it.mime }
-                        runCatching { PdfStorage.share(context, items) }
-                            .onFailure { vm.message = context.getString(R.string.pdft_error_open_other) }
+                        vm.share(items.map { it.first })
                     }) { Text(stringResource(R.string.pdft_share)) }
                     if (results.size == 1) {
                         FilledTonalButton(onClick = {
@@ -779,8 +787,7 @@ private fun HistoryScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                                         }
                                     }) { Text(stringResource(R.string.pdft_open)) }
                                     TextButton(onClick = {
-                                        runCatching { PdfStorage.share(context, listOf(f.uri to f.mime)) }
-                                            .onFailure { vm.message = context.getString(R.string.pdft_error_open_other) }
+                                        vm.share(listOf(f.uri))
                                     }) { Text(stringResource(R.string.pdft_share)) }
                                 }
                             }

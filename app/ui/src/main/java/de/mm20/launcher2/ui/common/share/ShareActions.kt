@@ -3,8 +3,8 @@ package de.mm20.launcher2.ui.common.share
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
+import android.provider.OpenableColumns
 import android.webkit.MimeTypeMap
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.DropdownMenuItem
@@ -25,7 +25,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 /**
- * One place for handing things to other apps. Everything that is shared as a file is first copied into
+ * One place for handing things to other apps. Files shared through this helper are first copied into
  * `cache/share` (covered by the app's FileProvider), so the provider never exposes a private storage path.
  * Callers must not pass anything from a locked area (vault, locked app); this helper cannot know about it.
  */
@@ -35,19 +35,22 @@ object ShareActions {
     private const val MAX_AGE_MS = 24L * 60 * 60 * 1000
     const val MIME_APK = "application/vnd.android.package-archive"
     const val MIME_VCARD = "text/x-vcard"
+    private val INVALID_FILE_CHARS = Regex("[\\u0000-\\u001f:*?\"<>|]")
 
     private fun dir(context: Context): File = File(context.cacheDir, DIR).apply { mkdirs() }
 
     /** Removes what an earlier share left behind */
     private fun cleanup(context: Context) {
         val limit = System.currentTimeMillis() - MAX_AGE_MS
-        runCatching { dir(context).listFiles()?.forEach { if (it.lastModified() < limit) it.delete() } }
+        runCatching {
+            dir(context).listFiles()?.forEach { if (it.lastModified() < limit) it.deleteRecursively() }
+        }
     }
 
     /** A file name without path parts or characters that file systems dislike */
     fun safeName(name: String, fallback: String = "file"): String {
         val clean = name.substringAfterLast('/').substringAfterLast('\\')
-            .replace(Regex("[\\u0000-\\u001f:*?\"<>|]"), "_").trim().trim('.')
+            .replace(INVALID_FILE_CHARS, "_").trim().trim('.')
             .take(100)
         return clean.ifEmpty { fallback }
     }
@@ -58,9 +61,18 @@ object ShareActions {
     private fun uriOf(context: Context, file: File): Uri =
         FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
 
-    /** Starts the system share sheet for [uris], read permission is granted through the ClipData */
-    private fun send(context: Context, uris: List<Uri>, mime: String, subject: String?, text: String? = null): Boolean {
-        if (uris.isEmpty()) return false
+    /**
+     * Builds the chooser for already-readable URIs. File shares should normally use [shareUris],
+     * which stages their contents in the app's share cache before calling this.
+     */
+    fun createChooserIntent(
+        uris: List<Uri>,
+        mime: String,
+        chooserTitle: CharSequence? = null,
+        subject: String? = null,
+        text: String? = null,
+    ): Intent {
+        require(uris.isNotEmpty()) { "At least one URI is required" }
         val intent = if (uris.size == 1) {
             Intent(Intent.ACTION_SEND).putExtra(Intent.EXTRA_STREAM, uris[0])
         } else {
@@ -73,28 +85,112 @@ object ShareActions {
         for (i in 1 until uris.size) clip.addItem(ClipData.Item(uris[i]))
         intent.clipData = clip
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        return Intent.createChooser(intent, chooserTitle)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+
+    /** Starts the system share sheet for [uris], read permission is granted through the ClipData */
+    private fun send(
+        context: Context,
+        uris: List<Uri>,
+        mime: String,
+        subject: String?,
+        text: String? = null,
+        chooserTitle: CharSequence? = null,
+    ): Boolean {
+        if (uris.isEmpty()) return false
         return runCatching {
-            context.startActivity(Intent.createChooser(intent, null).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            context.startActivity(
+                createChooserIntent(uris, mime, chooserTitle, subject, text)
+            )
         }.isSuccess
     }
 
     /** Shares a copy of [file] as [name]. Blocking (copies the file), call it off the main thread for big files. */
-    fun shareFile(context: Context, file: File, mime: String? = null, name: String? = null): Boolean = runCatching {
+    fun shareFile(
+        context: Context,
+        file: File,
+        mime: String? = null,
+        name: String? = null,
+        chooserTitle: CharSequence? = null,
+        text: String? = null,
+    ): Boolean = runCatching {
         cleanup(context)
         val shown = safeName(name ?: file.name)
         val copy = File(File(dir(context), System.nanoTime().toString()).apply { mkdirs() }, shown)
         file.copyTo(copy, overwrite = true)
-        send(context, listOf(uriOf(context, copy)), mime ?: mimeOf(shown), shown)
+        send(context, listOf(uriOf(context, copy)), mime ?: mimeOf(shown), shown, text, chooserTitle)
     }.getOrDefault(false)
 
     /** Shares what [uri] points to (a content URI the app may read) as [name]. Blocking. */
-    fun shareFile(context: Context, uri: Uri, mime: String?, name: String): Boolean = runCatching {
+    fun shareFile(
+        context: Context,
+        uri: Uri,
+        mime: String?,
+        name: String,
+        chooserTitle: CharSequence? = null,
+        text: String? = null,
+    ): Boolean = runCatching {
         cleanup(context)
         val shown = safeName(name)
         val copy = File(File(dir(context), System.nanoTime().toString()).apply { mkdirs() }, shown)
-        val input = context.contentResolver.openInputStream(uri) ?: throw IOException("no stream")
+        val input = when (uri.scheme) {
+            "file" -> uri.path?.let(::File)?.inputStream()
+            else -> context.contentResolver.openInputStream(uri)
+        } ?: throw IOException("no stream")
         input.use { i -> copy.outputStream().use { o -> i.copyTo(o) } }
-        send(context, listOf(uriOf(context, copy)), mime ?: mimeOf(shown), shown)
+        send(context, listOf(uriOf(context, copy)), mime ?: mimeOf(shown), shown, text, chooserTitle)
+    }.getOrDefault(false)
+
+    /** Copies readable content URIs into the share cache, then shares them with explicit read grants. Blocking. */
+    fun shareUris(
+        context: Context,
+        uris: List<Uri>,
+        mimeType: String? = null,
+        chooserTitle: CharSequence? = null,
+    ): Boolean = runCatching {
+        if (uris.isEmpty()) return@runCatching false
+        cleanup(context)
+        val folder = File(dir(context), System.nanoTime().toString()).apply { mkdirs() }
+        try {
+            val used = HashSet<String>()
+            val copied = uris.mapIndexed { index, uri ->
+                val queriedName = runCatching {
+                    context.contentResolver.query(
+                        uri,
+                        arrayOf(OpenableColumns.DISPLAY_NAME),
+                        null,
+                        null,
+                        null,
+                    )?.use { cursor ->
+                        if (cursor.moveToFirst()) cursor.getString(0) else null
+                    }
+                }.getOrNull()
+                val sourceName = queriedName
+                    ?: uri.lastPathSegment?.substringAfterLast('/')
+                    ?: "file-${index + 1}"
+                var name = safeName(sourceName, "file-${index + 1}")
+                var suffix = 1
+                while (!used.add(name)) {
+                    name = "($suffix) ${safeName(sourceName, "file-${index + 1}")}"
+                    suffix++
+                }
+
+                val copy = File(folder, name)
+                val input = when (uri.scheme) {
+                    "file" -> uri.path?.let(::File)?.inputStream()
+                    else -> context.contentResolver.openInputStream(uri)
+                } ?: throw IOException("no stream")
+                input.use { source -> copy.outputStream().use { target -> source.copyTo(target) } }
+                uriOf(context, copy) to (runCatching { context.contentResolver.getType(uri) }.getOrNull() ?: mimeOf(name))
+            }
+            val sharedUris = copied.map { it.first }
+            val mimeTypes = copied.map { it.second }.distinct()
+            send(context, sharedUris, mimeType ?: mimeTypes.singleOrNull() ?: "*/*", null, chooserTitle = chooserTitle)
+        } catch (e: Exception) {
+            folder.deleteRecursively()
+            throw e
+        }
     }.getOrDefault(false)
 
     fun shareText(context: Context, text: String, subject: String? = null): Boolean {

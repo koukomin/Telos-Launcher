@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_wifi_dns_automation">Wi‑Fi DNS -automaatio</string>
+    <string name="net_wifi_dns_automation_summary">Ottaa käyttöön vastaavan Androidin yksityisen DNS:n säännön taustalla, vaikka Telos Networkin VPN olisi pois päältä. Vaatii sijainti- ja ilmoitusluvat.</string>
+    <string name="net_wifi_dns_permission_error">Valvontaa ei voitu ottaa käyttöön. Salli Shizukun käyttö, sijainti ja ilmoitukset.</string>
+    <string name="net_wifi_dns_invalid_rule">Anna kelvollinen Wi‑Fi-verkon nimi ja palvelinsäännölle kelvollinen DNS-isäntänimi.</string>
+</resources>

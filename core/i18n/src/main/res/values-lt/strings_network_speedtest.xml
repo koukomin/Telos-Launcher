@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Greičio testas</string>
+    <string name="nsp_intro">Paleiskite „LibreSpeed“ testą pasirinktame serveryje. Rezultatai rodomi tik šiame ekrane.</string>
+    <string name="nsp_privacy">Pasirinktas serveris mato jūsų IP adresą ir testo srautą. „Telos“ nesiunčia rezultatų ar telemetrijos. Viešųjų serverių sąrašo įkėlimas susisiekia su librespeed.org; didesniam privatumui naudokite savo serverį.</string>
+    <string name="nsp_server_url">Nuosavas HTTPS serveris (pasirinktinai)</string>
+    <string name="nsp_load_servers">Rasti viešuosius serverius</string>
+    <string name="nsp_select_server">Pasirinkti viešąjį serverį</string>
+    <string name="nsp_selected_server">Pasirinkta: %1$s</string>
+    <string name="nsp_run">Pradėti testą</string>
+    <string name="nsp_cancel">Atšaukti testą</string>
+    <string name="nsp_invalid_url">Įveskite tinkamą „LibreSpeed“ HTTPS adresą.</string>
+    <string name="nsp_error">Testas nepavyko. Patikrinkite serverį ir ryšį, tada bandykite dar kartą.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Dreba</string>
+    <string name="nsp_download">Atsisiuntimas</string>
+    <string name="nsp_upload">Įkėlimas</string>
+</resources>

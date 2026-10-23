@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_wifi_dns_automation">Automazione DNS Wi‑Fi</string>
+    <string name="net_wifi_dns_automation_summary">Applica in background la regola DNS privato di Android corrispondente, anche se la VPN di Telos Network è disattivata. Richiede i permessi di posizione e notifiche.</string>
+    <string name="net_wifi_dns_permission_error">Impossibile attivare il monitoraggio. Concedi i permessi a Shizuku, alla posizione e alle notifiche.</string>
+    <string name="net_wifi_dns_invalid_rule">Inserisci un nome Wi‑Fi valido e, per una regola del provider, un nome host DNS valido.</string>
+</resources>

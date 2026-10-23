@@ -23,6 +23,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -35,11 +36,13 @@ import de.mm20.launcher2.downloads.DownloadTask
 import de.mm20.launcher2.downloads.logic.ArchiveLogic
 import de.mm20.launcher2.downloads.logic.Formatting
 import de.mm20.launcher2.ui.R
+import kotlinx.coroutines.launch
 import java.util.Date
 
 @Composable
 internal fun TaskDetailSheet(task: DownloadTask, manager: DownloadManager, onDismiss: () -> Unit, onDelete: () -> Unit) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         Column(
             Modifier.verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).navigationBarsPadding(),
@@ -57,7 +60,13 @@ internal fun TaskDetailSheet(task: DownloadTask, manager: DownloadManager, onDis
                 when (task.state) {
                     DownloadState.Completed -> {
                         Button(onClick = { if (!openDownload(context, task)) Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show() }) { Text(stringResource(R.string.dl_open)) }
-                        OutlinedButton(onClick = { if (!shareDownload(context, task)) Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show() }) { Text(stringResource(R.string.dl_share)) }
+                        OutlinedButton(onClick = {
+                            scope.launch {
+                                if (!shareDownload(context, task)) {
+                                    Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }) { Text(stringResource(R.string.dl_share)) }
                     }
                     DownloadState.Paused -> Button(onClick = { manager.resume(task.id) }) { Text(stringResource(R.string.dl_resume)) }
                     DownloadState.Failed -> Button(onClick = { manager.resume(task.id) }) { Text(stringResource(R.string.dl_retry)) }

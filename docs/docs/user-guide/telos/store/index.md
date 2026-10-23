@@ -26,7 +26,8 @@ Telos Store is also where the built-in [Telos apps](../#how-the-built-in-apps-wo
 itself a Telos app, but it **cannot be removed**, otherwise there would be no way back.
 
 Available updates sit at the top of the Apps list (and of the Play tab). If a new Telos launcher
-build is among them, it is the first row.
+build is among them, it is the first row. Automatic checks notify about Telos updates but do not
+install them; manual **Update all** runs Telos after the other tracked apps.
 
 ## How to open it
 
@@ -58,7 +59,7 @@ build is among them, it is the first row.
 | Tabs **Apps**, **Telos apps**, **Recommended** and **Play Store** | Your tracked apps, the built-in Telos apps, suggested free apps, and (when Play Store is installed) every Play-installed app including frozen ones. Opening Store with Play installed lands on **Play Store**, filters to updates, and starts a scan |
 | Search field "Search apps" | Matches the name, the package name and the category |
 | Filter chips | **All**, **Updates (N)**, **Installed**, **Not installed**, **Track only**, and one chip per category |
-| **Update all (N)** | Installs every available update, except for apps set to Track only |
+| **Update all (N)** | Installs every available update, except for apps set to Track only; Telos Launcher runs last |
 | **Add app** button | Opens the Add dialog |
 | App rows | Name, source, the version state and a button: **Install**, **Update**, **Open** or **Retry**, and a progress text "Downloading" or "Installing" |
 

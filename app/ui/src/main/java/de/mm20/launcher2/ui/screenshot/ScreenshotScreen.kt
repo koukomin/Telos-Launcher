@@ -2,9 +2,14 @@ package de.mm20.launcher2.ui.screenshot
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.provider.Settings
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +38,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +48,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -48,8 +57,8 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import de.mm20.launcher2.globalactions.GlobalActionsService
-import androidx.compose.runtime.saveable.rememberSaveable
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.share.ShareActions
 import de.mm20.launcher2.ui.component.SearchEmptyState
 import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.component.preferences.ListPreference
@@ -60,6 +69,7 @@ import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
@@ -74,10 +84,12 @@ data object ScreenshotSettingsRoute : NavKey
  * Telos Screenshot: the three ways to take a screenshot, and the screenshots that Telos made.
  * Tapping one of them takes the picture of what was on screen, so the app steps aside first.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ScreenshotScreen() {
     val context = LocalContext.current
     val backStack = LocalBackStack.current
+    val scope = rememberCoroutineScope()
     val actions: GlobalActionsService = koinInject()
     var running by remember { mutableStateOf(actions.isAccessibilityRunning()) }
     var reload by remember { mutableStateOf(0) }
@@ -90,6 +102,9 @@ fun ScreenshotScreen() {
     }
 
     var shotQuery by rememberSaveable { mutableStateOf("") }
+    var selectedShots by remember { mutableStateOf<Set<Uri>>(emptySet()) }
+    val selecting = selectedShots.isNotEmpty()
+    BackHandler(enabled = selecting) { selectedShots = emptySet() }
     val shownShots = remember(shots, shotQuery) {
         val df = java.text.DateFormat.getDateTimeInstance(java.text.DateFormat.MEDIUM, java.text.DateFormat.SHORT)
         de.mm20.launcher2.comms.search.TelosSearch.filter(shots, shotQuery) { listOf(it.name, df.format(java.util.Date(it.modified))) }
@@ -101,14 +116,26 @@ fun ScreenshotScreen() {
         (context as? Activity)?.moveTaskToBack(true)
     }
 
+    fun shareSelected() {
+        val uris = shots.asSequence().map { it.uri }.filter { it in selectedShots }.toList()
+        scope.launch {
+            val shared = withContext(Dispatchers.IO) {
+                ShareActions.shareUris(context, uris, "image/*")
+            }
+            if (!shared) {
+                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     de.mm20.launcher2.ui.component.VirtualAppWindow {
-    Box(Modifier.fillMaxSize().systemBarsPadding()) {
+    Column(Modifier.fillMaxSize().systemBarsPadding()) {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(120.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale),
             contentPadding = PaddingValues(12.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.weight(1f),
         ) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -169,16 +196,65 @@ fun ScreenshotScreen() {
                 }
             }
             items(shownShots, key = { it.uri.toString() }) { shot ->
-                AsyncImage(
-                    model = shot.uri,
-                    contentDescription = shot.name,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
+                val isSelected = shot.uri in selectedShots
+                Box(
+                    Modifier
                         .aspectRatio(0.62f)
                         .clip(RoundedCornerShape(10.dp))
                         .background(MaterialTheme.colorScheme.surfaceContainerHigh)
-                        .clickable { ScreenshotEditorActivity.open(context, shot.uri) },
+                        .combinedClickable(
+                            onClick = {
+                                selectedShots = if (selecting) {
+                                    if (isSelected) selectedShots - shot.uri else selectedShots + shot.uri
+                                } else {
+                                    ScreenshotEditorActivity.open(context, shot.uri)
+                                    selectedShots
+                                }
+                            },
+                            onLongClick = {
+                                selectedShots = if (isSelected) selectedShots - shot.uri else selectedShots + shot.uri
+                            },
+                        )
+                        .semantics { selected = isSelected },
+                ) {
+                    AsyncImage(
+                        model = shot.uri,
+                        contentDescription = shot.name,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                    if (isSelected) {
+                        Box(
+                            Modifier
+                                .matchParentSize()
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.35f)),
+                            contentAlignment = Alignment.TopEnd,
+                        ) {
+                            Text("✓", color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(8.dp))
+                        }
+                    }
+                }
+            }
+        }
+        if (selecting) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.surfaceContainer)
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    stringResource(R.string.au_viewer_items, selectedShots.size),
+                    modifier = Modifier.weight(1f).padding(start = 8.dp),
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
+                IconButton(onClick = ::shareSelected) {
+                    Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.hc_share))
+                }
+                IconButton(onClick = { selectedShots = emptySet() }) {
+                    Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_cancel))
+                }
             }
         }
     }

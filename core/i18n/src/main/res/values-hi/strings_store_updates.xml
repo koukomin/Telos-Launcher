@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">अपडेट की जाँच करें</string>
+    <string name="store_check_updates_per_app_summary">इस ऐप के स्वचालित और मैन्युअल अपडेट जाँच छोड़ने के लिए इसे बंद करें।</string>
+    <string name="store_parallel_updates">कई ऐप एक साथ अपडेट करें</string>
+    <string name="store_parallel_updates_summary">स्वचालित या मैन्युअल अपडेट के दौरान एक बार में अधिकतम 3 ऐप डाउनलोड और इंस्टॉल करता है। Telos Launcher को सबसे अंत में अपडेट किया जाता है; Android कई इंस्टॉल पुष्टियाँ दिखा सकता है।</string>
+</resources>

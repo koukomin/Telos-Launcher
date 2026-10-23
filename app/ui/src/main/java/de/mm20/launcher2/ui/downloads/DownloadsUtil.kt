@@ -107,17 +107,15 @@ internal fun openDownload(context: Context, task: DownloadTask): Boolean {
     }
 }
 
-internal fun shareDownload(context: Context, task: DownloadTask): Boolean {
-    val uri = contentUri(context, task) ?: return false
-    val send = Intent(Intent.ACTION_SEND).setType(task.mimeType ?: "*/*").putExtra(Intent.EXTRA_STREAM, uri)
-        .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    return try {
-        context.startActivity(Intent.createChooser(send, null).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-        true
-    } catch (e: Exception) {
-        false
+internal suspend fun shareDownload(context: Context, task: DownloadTask): Boolean =
+    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+        val uri = contentUri(context, task) ?: return@withContext false
+        de.mm20.launcher2.ui.common.share.ShareActions.shareUris(
+            context,
+            listOf(uri),
+            task.mimeType,
+        )
     }
-}
 
 internal fun copyLink(context: Context, link: String) {
     val cm = context.getSystemService(ClipboardManager::class.java)

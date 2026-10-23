@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">檢查更新</string>
+    <string name="store_check_updates_per_app_summary">關閉後會略過此應用程式的背景與手動更新檢查。</string>
+    <string name="store_parallel_updates">平行更新多個應用程式</string>
+    <string name="store_parallel_updates_summary">自動或手動更新時，一次下載並安裝最多 3 個應用程式。Telos Launcher 最後更新；Android 可能會顯示多個安裝確認對話框。</string>
+</resources>

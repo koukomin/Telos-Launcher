@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_check_updates_per_app">Check for updates</string>
+    <string name="store_check_updates_per_app_summary">Turn off to skip both background and manual update checks for this app.</string>
+    <string name="store_parallel_updates">Update multiple apps in parallel</string>
+    <string name="store_parallel_updates_summary">Download and install up to 3 apps at once during automatic or manual updates. Telos Launcher updates last; Android may show several install confirmations.</string>
+</resources>

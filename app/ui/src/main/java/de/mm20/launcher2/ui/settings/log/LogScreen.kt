@@ -1,6 +1,6 @@
 package de.mm20.launcher2.ui.settings.log
 
-import android.content.Intent
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
@@ -32,16 +32,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.FileProvider
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.debug.DebugInformationDumper
-import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.share.ShareActions
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import java.io.File
 import java.io.IOException
@@ -107,20 +107,10 @@ fun LogScreen() {
             IconButton(onClick = {
                 scope.launch {
                     val path = DebugInformationDumper().dump(context)
-                    context.tryStartActivity(
-                        Intent.createChooser(
-                            Intent(Intent.ACTION_SEND).apply {
-                                type = "text/plain"
-                                putExtra(
-                                    Intent.EXTRA_STREAM, FileProvider.getUriForFile(
-                                        context,
-                                        context.applicationContext.packageName + ".fileprovider",
-                                        File(path)
-                                    )
-                                )
-                            }, null
-                        )
-                    )
+                    val shared = withContext(Dispatchers.IO) {
+                        ShareActions.shareFile(context, File(path), "text/plain")
+                    }
+                    if (!shared) Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
                 }
             }) {
                 Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.menu_share))

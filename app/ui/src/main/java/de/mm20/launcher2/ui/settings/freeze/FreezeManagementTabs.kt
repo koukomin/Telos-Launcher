@@ -12,7 +12,7 @@ import de.mm20.launcher2.ui.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun FreezeManagementTabs(selected: Int, select: (Int) -> Unit) {
-    ScrollableTabRow(selectedTabIndex = selected, edgePadding = 0.dp,
+    PrimaryScrollableTabRow(selectedTabIndex = selected, edgePadding = 0.dp,
         modifier = Modifier.fillMaxWidth(), containerColor = MaterialTheme.colorScheme.surfaceContainer) {
         listOf(R.string.preference_freeze_apps_category, R.string.preference_freeze_auto_category,
             R.string.settings).forEachIndexed { index, label ->

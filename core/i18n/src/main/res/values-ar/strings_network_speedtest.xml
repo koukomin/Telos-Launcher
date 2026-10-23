@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">اختبار السرعة</string>
+    <string name="nsp_intro">شغّل اختبار LibreSpeed على خادم تختاره. تظهر النتائج على هذه الشاشة فقط.</string>
+    <string name="nsp_privacy">يرى الخادم المختار عنوان IP وحركة الاختبار. لا يرسل Telos النتائج أو بيانات القياس عن بُعد. يؤدي تحميل قائمة الخوادم العامة إلى الاتصال بـ librespeed.org؛ استخدم خادمك الخاص لمزيد من الخصوصية.</string>
+    <string name="nsp_server_url">خادم HTTPS خاص بك (اختياري)</string>
+    <string name="nsp_load_servers">العثور على خوادم عامة</string>
+    <string name="nsp_select_server">اختيار خادم عام</string>
+    <string name="nsp_selected_server">المحدد: %1$s</string>
+    <string name="nsp_run">بدء الاختبار</string>
+    <string name="nsp_cancel">إلغاء الاختبار</string>
+    <string name="nsp_invalid_url">أدخل عنوان HTTPS صالحًا لخادم LibreSpeed.</string>
+    <string name="nsp_error">تعذّر إكمال الاختبار. تحقق من الخادم والاتصال ثم حاول مرة أخرى.</string>
+    <string name="nsp_ping">زمن الاستجابة</string>
+    <string name="nsp_jitter">التذبذب</string>
+    <string name="nsp_download">التنزيل</string>
+    <string name="nsp_upload">الرفع</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Sebességteszt</string>
+    <string name="nsp_intro">Futtass LibreSpeed-tesztet egy általad választott szerveren. Az eredmények csak ezen a képernyőn jelennek meg.</string>
+    <string name="nsp_privacy">A kiválasztott szerver látja az IP-címedet és a tesztforgalmat. A Telos nem küld eredményt vagy telemetriát. A nyilvános szerverlista betöltése kapcsolatba lép a librespeed.org oldallal; nagyobb adatvédelemhez használj saját szervert.</string>
+    <string name="nsp_server_url">Saját HTTPS-szerver (nem kötelező)</string>
+    <string name="nsp_load_servers">Nyilvános szerverek keresése</string>
+    <string name="nsp_select_server">Nyilvános szerver választása</string>
+    <string name="nsp_selected_server">Kiválasztva: %1$s</string>
+    <string name="nsp_run">Teszt indítása</string>
+    <string name="nsp_cancel">Teszt megszakítása</string>
+    <string name="nsp_invalid_url">Adj meg egy érvényes HTTPS LibreSpeed-címet.</string>
+    <string name="nsp_error">A teszt nem sikerült. Ellenőrizd a szervert és a kapcsolatot, majd próbáld újra.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Letöltés</string>
+    <string name="nsp_upload">Feltöltés</string>
+</resources>

@@ -18,6 +18,8 @@ data class ItemOptions(
     val skippedVersion: String? = null,
     /** Not checked and not updated by the background check */
     val excludeFromBackground: Boolean = false,
+    /** Do not look for updates, either in the background or when checking manually */
+    val checkForUpdates: Boolean = true,
     /** A label to group apps */
     val category: String = "",
     val note: String = "",
@@ -34,6 +36,8 @@ data class GlobalOptions(
     val notifyUpdates: Boolean = true,
     /** Install updates without asking when Shizuku or root allows it (never otherwise) */
     val autoInstall: Boolean = true,
+    /** Run up to three Store updates concurrently instead of one at a time */
+    val parallelUpdates: Boolean = true,
     val updateFrozenApps: Boolean = false,
     /** session, shizuku, root, or external:<package>. */
     val installer: String = "session",

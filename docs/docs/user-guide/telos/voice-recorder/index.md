@@ -30,7 +30,7 @@ features. Switching it off in [Telos Store](../store/) hides its icon.
 | Search (top right) | Filters the list by name |
 | Menu (three dots) | **Earpiece mode** or **Speaker mode** for playback, and **Settings** |
 | Chips | **All recordings**, **Voice memos**, or **Call recordings** (the recordings of [Telos Phone](../phone/recents-recording), which stay encrypted) |
-| A recording | Tap to play, tap again to pause. The row opens a seek bar. The three dots offer **Rename**, **Share** and **Delete** |
+| A recording | Tap to play, tap again to pause. The row opens a seek bar. Long-press to select recordings, tap others to add them, then use **Share** to send the selected files together. The three dots still offer **Rename**, **Share** and **Delete** for one recording |
 
 Recordings are named `Recording_<date>_<time>` and listed newest first with their length and date.
 
@@ -50,7 +50,8 @@ Recordings are named `Recording_<date>_<time>` and listed newest first with thei
 
 Recordings stay in the app's own storage (`files/VoiceRecordings`), nothing is uploaded. Other apps cannot read them
 unless you share a recording. Recordings of Telos Voice Recorder are not encrypted at rest, the call recordings of
-Telos Phone are (AES-256-GCM, Android Keystore).
+Telos Phone are (AES-256-GCM, Android Keystore). Sharing stages readable copies in the app cache and grants
+receiving apps temporary read access; call recordings are decrypted only for this sharing operation.
 
 ## Limitations
 

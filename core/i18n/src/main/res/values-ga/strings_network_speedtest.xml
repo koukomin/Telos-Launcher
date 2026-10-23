@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Tástáil luais</string>
+    <string name="nsp_intro">Rith tástáil LibreSpeed ar fhreastalaí a roghnaíonn tú. Ní thaispeántar na torthaí ach ar an scáileán seo.</string>
+    <string name="nsp_privacy">Feiceann an freastalaí roghnaithe do sheoladh IP agus trácht na tástála. Ní sheolann Telos torthaí ná teiliméadracht. Déanann liosta na bhfreastalaithe poiblí teagmháil le librespeed.org; bain úsáid as do fhreastalaí féin ar mhaithe le príobháideachas níos fearr.</string>
+    <string name="nsp_server_url">Freastalaí HTTPS féin (roghnach)</string>
+    <string name="nsp_load_servers">Aimsigh freastalaithe poiblí</string>
+    <string name="nsp_select_server">Roghnaigh freastalaí poiblí</string>
+    <string name="nsp_selected_server">Roghnaithe: %1$s</string>
+    <string name="nsp_run">Tosaigh an tástáil</string>
+    <string name="nsp_cancel">Cealaigh an tástáil</string>
+    <string name="nsp_invalid_url">Cuir isteach URL HTTPS bailí LibreSpeed.</string>
+    <string name="nsp_error">Theip ar an tástáil. Seiceáil an freastalaí agus an nasc, ansin bain triail eile as.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Íoslódáil</string>
+    <string name="nsp_upload">Uaslódáil</string>
+</resources>

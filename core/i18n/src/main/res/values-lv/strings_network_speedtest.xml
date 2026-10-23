@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nsp_title">Ātruma tests</string>
+    <string name="nsp_intro">Palaidiet LibreSpeed testu jūsu izvēlētā serverī. Rezultāti tiek rādīti tikai šajā ekrānā.</string>
+    <string name="nsp_privacy">Izvēlētais serveris redz jūsu IP adresi un testa datplūsmu. Telos nesūta rezultātus vai telemetriju. Publisko serveru ielāde sazinās ar librespeed.org; lielākai privātumam izmantojiet savu serveri.</string>
+    <string name="nsp_server_url">Jūsu HTTPS serveris (neobligāti)</string>
+    <string name="nsp_load_servers">Meklēt publiskos serverus</string>
+    <string name="nsp_select_server">Izvēlēties publisko serveri</string>
+    <string name="nsp_selected_server">Atlasīts: %1$s</string>
+    <string name="nsp_run">Sākt testu</string>
+    <string name="nsp_cancel">Atcelt testu</string>
+    <string name="nsp_invalid_url">Ievadiet derīgu LibreSpeed HTTPS adresi.</string>
+    <string name="nsp_error">Tests neizdevās. Pārbaudiet serveri un savienojumu un mēģiniet vēlreiz.</string>
+    <string name="nsp_ping">Ping</string>
+    <string name="nsp_jitter">Jitter</string>
+    <string name="nsp_download">Lejupielāde</string>
+    <string name="nsp_upload">Augšupielāde</string>
+</resources>

@@ -13,6 +13,9 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.background
@@ -32,6 +35,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -46,6 +50,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +61,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected as selectedSemantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -71,9 +78,11 @@ import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.common.share.ShareActions
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import java.io.File
@@ -129,13 +138,18 @@ private fun queryRecordings(context: Context): List<ScreenRecording> {
  * Telos Screen Recorder. The screen follows the Telos theme: a big red button to start, the state
  * of a running recording, and the list of your recordings.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ScreenRecorderScreen() {
     val context = LocalContext.current
     val backStack = LocalBackStack.current
+    val scope = rememberCoroutineScope()
     val state by ScreenRecorderState.state.collectAsState()
     var reload by remember { mutableStateOf(0) }
     var deleting by remember { mutableStateOf<ScreenRecording?>(null) }
+    var selectedForShare by remember { mutableStateOf<Set<Uri>>(emptySet()) }
+    val selecting = selectedForShare.isNotEmpty()
+    BackHandler(enabled = selecting) { selectedForShare = emptySet() }
     val recordings by produceState(emptyList<ScreenRecording>(), reload, state.status) {
         value = withContext(Dispatchers.IO) { runCatching { queryRecordings(context) }.getOrDefault(emptyList()) }
     }
@@ -144,6 +158,10 @@ fun ScreenRecorderScreen() {
     val shownRecordings = remember(recordings, recQuery) {
         val df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
         de.mm20.launcher2.comms.search.TelosSearch.filter(recordings, recQuery) { listOf(it.name, df.format(java.util.Date(it.modified))) }
+    }
+    LaunchedEffect(shownRecordings) {
+        val available = shownRecordings.mapTo(HashSet()) { it.uri }
+        selectedForShare = selectedForShare.intersect(available)
     }
 
     val micPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -154,13 +172,24 @@ fun ScreenRecorderScreen() {
             ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
         if (needsMic) micPermission.launch(Manifest.permission.RECORD_AUDIO) else ScreenRecorderRequestActivity.launch(context)
     }
+    fun shareSelected() {
+        val uris = recordings.asSequence().map { it.uri }.filter { it in selectedForShare }.toList()
+        scope.launch {
+            val shared = withContext(Dispatchers.IO) {
+                ShareActions.shareUris(context, uris, "video/mp4")
+            }
+            if (!shared) {
+                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     LaunchedEffect(state.error) {
         if (state.error) ScreenRecorderState.set(ScreenRecState())
     }
 
     de.mm20.launcher2.ui.component.VirtualAppWindow {
-    Box(Modifier.fillMaxSize().systemBarsPadding()) {
-        LazyColumn(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().systemBarsPadding()) {
+        LazyColumn(Modifier.weight(1f)) {
             item(key = "controls") {
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                 Spacer(Modifier.weight(1f))
@@ -231,8 +260,37 @@ fun ScreenRecorderScreen() {
                 item(key = "search") { TelosSearchBar(recQuery, { recQuery = it }, stringResource(R.string.tsp_search_recordings)) }
                 if (shownRecordings.isEmpty() && recQuery.isNotBlank()) item(key = "search-empty") { SearchEmptyState(recQuery) }
                     items(shownRecordings, key = { it.uri.toString() }) { rec ->
-                        RecordingRow(rec, onDelete = { deleting = rec })
+                        RecordingRow(
+                            rec,
+                            selected = rec.uri in selectedForShare,
+                            selecting = selecting,
+                            onToggleSelected = {
+                                selectedForShare = if (rec.uri in selectedForShare) selectedForShare - rec.uri else selectedForShare + rec.uri
+                            },
+                            onDelete = { deleting = rec },
+                        )
                     }
+            }
+        }
+        if (selecting) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.surfaceContainer)
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    stringResource(R.string.au_viewer_items, selectedForShare.size),
+                    modifier = Modifier.weight(1f).padding(start = 8.dp),
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                IconButton(onClick = ::shareSelected) {
+                    Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.hc_share))
+                }
+                IconButton(onClick = { selectedForShare = emptySet() }) {
+                    Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_cancel))
+                }
             }
         }
     }
@@ -246,23 +304,43 @@ fun ScreenRecorderScreen() {
 }
 
 @Composable
-private fun RecordingRow(rec: ScreenRecording, onDelete: () -> Unit) {
+@OptIn(ExperimentalFoundationApi::class)
+private fun RecordingRow(
+    rec: ScreenRecording,
+    selected: Boolean,
+    selecting: Boolean,
+    onToggleSelected: () -> Unit,
+    onDelete: () -> Unit,
+) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     var menu by remember { mutableStateOf(false) }
     val format = remember { DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT) }
     Row(
         Modifier
             .fillMaxWidth()
-            .clickable {
-                runCatching {
-                    context.startActivity(
-                        Intent(Intent.ACTION_VIEW).setDataAndType(rec.uri, "video/mp4").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    )
-                }.onFailure { Toast.makeText(context, R.string.screenrec_cannot_open, Toast.LENGTH_SHORT).show() }
-            }
+            .combinedClickable(
+                onClick = {
+                    if (selecting) {
+                        onToggleSelected()
+                    } else {
+                        runCatching {
+                            context.startActivity(
+                                Intent(Intent.ACTION_VIEW).setDataAndType(rec.uri, "video/mp4").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            )
+                        }.onFailure { Toast.makeText(context, R.string.screenrec_cannot_open, Toast.LENGTH_SHORT).show() }
+                    }
+                },
+                onLongClick = onToggleSelected,
+            )
+            .semantics { selectedSemantics = selected }
+            .background(if (selected) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent)
             .padding(horizontal = 20.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        if (selecting) {
+            Checkbox(checked = selected, onCheckedChange = { onToggleSelected() })
+        }
         Column(Modifier.weight(1f)) {
             Text(rec.name, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
             val duration = if (rec.durationMs > 0) formatDuration(rec.durationMs) + " · " else ""
@@ -279,13 +357,13 @@ private fun RecordingRow(rec: ScreenRecording, onDelete: () -> Unit) {
             DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                 DropdownMenuItem(text = { Text(stringResource(R.string.voice_share)) }, onClick = {
                     menu = false
-                    runCatching {
-                        context.startActivity(
-                            Intent.createChooser(
-                                Intent(Intent.ACTION_SEND).setType("video/mp4").putExtra(Intent.EXTRA_STREAM, de.mm20.launcher2.ui.screenshot.ScreenshotController.shareableUri(context, rec.uri)).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
-                                null,
-                            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        )
+                    scope.launch {
+                        val shared = withContext(Dispatchers.IO) {
+                            ShareActions.shareUris(context, listOf(rec.uri), "video/mp4")
+                        }
+                        if (!shared) {
+                            Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 })
                 DropdownMenuItem(text = { Text(stringResource(R.string.voice_delete)) }, onClick = { menu = false; onDelete() })

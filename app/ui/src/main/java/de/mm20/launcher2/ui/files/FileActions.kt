@@ -127,14 +127,18 @@ internal object FileActions {
             Toast.makeText(context, context.getString(R.string.hc_folders_cannot_be_shared_compress_them_f), Toast.LENGTH_SHORT).show()
             return
         }
-        val intent = if (uris.size == 1) {
-            Intent(Intent.ACTION_SEND).setType(mimeOf(files.first().name)).putExtra(Intent.EXTRA_STREAM, uris.first())
-        } else {
-            Intent(Intent.ACTION_SEND_MULTIPLE).setType("*/*").putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
-        }.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        // the grant for the receiver travels with the ClipData
-        intent.clipData = android.content.ClipData.newRawUri(null, uris[0]).also { clip -> for (i in 1 until uris.size) clip.addItem(android.content.ClipData.Item(uris[i])) }
-        runCatching { context.startActivity(Intent.createChooser(intent, context.getString(R.string.hc_share)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+        val shared = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            de.mm20.launcher2.ui.common.share.ShareActions.shareUris(context, uris)
+        }
+        if (!shared) {
+            Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    suspend fun trimMedia(context: Context, entry: FsEntry, rootMode: Boolean, shizukuMode: Boolean = false) {
+        val uri = uriFor(context, entry.path, rootMode, shizukuMode) ?: return
+        val isVideo = entry.kind == FileKind.Video || mimeOf(entry.name).startsWith("video/")
+        de.mm20.launcher2.ui.media.trim.MediaTrimmerActivity.start(context, uri, isVideo)
     }
 
     /** Folders where a careless change can break the phone, shown only in root mode */

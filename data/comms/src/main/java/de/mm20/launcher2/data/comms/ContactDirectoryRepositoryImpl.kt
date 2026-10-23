@@ -105,6 +105,150 @@ internal class ContactDirectoryRepositoryImpl(
         }
     }
 
+    override suspend fun moveContactToAccount(contactId: Long, accountName: String?, accountType: String?): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val rawContactIds = mutableListOf<Long>()
+            context.contentResolver.query(
+                ContactsContract.RawContacts.CONTENT_URI,
+                arrayOf(ContactsContract.RawContacts._ID),
+                "${ContactsContract.RawContacts.CONTACT_ID}=? AND ${ContactsContract.RawContacts.DELETED}=0",
+                arrayOf(contactId.toString()),
+                null,
+            )?.use { cursor ->
+                while (cursor.moveToNext()) {
+                    rawContactIds.add(cursor.getLong(0))
+                }
+            }
+            if (rawContactIds.isEmpty()) return@withContext false
+
+            val dataRows = mutableListOf<android.content.ContentValues>()
+            val selection = "${ContactsContract.Data.RAW_CONTACT_ID} IN (${rawContactIds.joinToString(",")})"
+            context.contentResolver.query(
+                ContactsContract.Data.CONTENT_URI,
+                arrayOf(
+                    ContactsContract.Data.MIMETYPE,
+                    ContactsContract.Data.DATA1, ContactsContract.Data.DATA2, ContactsContract.Data.DATA3,
+                    ContactsContract.Data.DATA4, ContactsContract.Data.DATA5, ContactsContract.Data.DATA6,
+                    ContactsContract.Data.DATA7, ContactsContract.Data.DATA8, ContactsContract.Data.DATA9,
+                    ContactsContract.Data.DATA10, ContactsContract.Data.DATA11, ContactsContract.Data.DATA12
+                ),
+                selection,
+                null,
+                null,
+            )?.use { cursor ->
+                val mimeCol = cursor.getColumnIndex(ContactsContract.Data.MIMETYPE)
+                while (cursor.moveToNext()) {
+                    val mime = cursor.getString(mimeCol) ?: continue
+                    val cv = android.content.ContentValues()
+                    cv.put(ContactsContract.Data.MIMETYPE, mime)
+                    for (i in 1..12) {
+                        val colName = "data$i"
+                        val idx = cursor.getColumnIndex(colName)
+                        if (idx >= 0) {
+                            cursor.getString(idx)?.let { cv.put(colName, it) }
+                        }
+                    }
+                    dataRows.add(cv)
+                }
+            }
+
+            val ops = ArrayList<ContentProviderOperation>()
+            ops += ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, accountName)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, accountType)
+                .build()
+
+            for (cv in dataRows) {
+                val mime = cv.getAsString(ContactsContract.Data.MIMETYPE) ?: continue
+                val builder = ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE, mime)
+                for (i in 1..12) {
+                    val colName = "data$i"
+                    cv.getAsString(colName)?.let { builder.withValue(colName, it) }
+                }
+                ops += builder.build()
+            }
+
+            for (oldRawId in rawContactIds) {
+                ops += ContentProviderOperation.newDelete(
+                    android.content.ContentUris.withAppendedId(ContactsContract.RawContacts.CONTENT_URI, oldRawId)
+                ).build()
+            }
+
+            val results = context.contentResolver.applyBatch(ContactsContract.AUTHORITY, ops)
+            results.isNotEmpty()
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun mergeContactGroup(group: List<DialerContact>): Boolean = withContext(Dispatchers.IO) {
+        if (group.size < 2) return@withContext true
+        val primary = group.first()
+        val extras = group.drop(1)
+        val allPhones = group.flatMap { it.phoneNumbers }.distinct()
+        val allEmails = group.flatMap { it.emails }.distinct()
+
+        try {
+            val primaryRawContactIds = mutableListOf<Long>()
+            context.contentResolver.query(
+                ContactsContract.RawContacts.CONTENT_URI,
+                arrayOf(ContactsContract.RawContacts._ID),
+                "${ContactsContract.RawContacts.CONTACT_ID}=?",
+                arrayOf(primary.id.toString()),
+                null,
+            )?.use { cursor ->
+                while (cursor.moveToNext()) {
+                    primaryRawContactIds.add(cursor.getLong(0))
+                }
+            }
+            val primaryRawId = primaryRawContactIds.firstOrNull() ?: return@withContext false
+
+            val ops = ArrayList<ContentProviderOperation>()
+            for (phone in allPhones) {
+                if (phone !in primary.phoneNumbers) {
+                    ops += ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                        .withValue(ContactsContract.Data.RAW_CONTACT_ID, primaryRawId)
+                        .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                        .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
+                        .build()
+                }
+            }
+            for (email in allEmails) {
+                if (email !in primary.emails) {
+                    ops += ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                        .withValue(ContactsContract.Data.RAW_CONTACT_ID, primaryRawId)
+                        .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                        .withValue(ContactsContract.CommonDataKinds.Email.ADDRESS, email)
+                        .build()
+                }
+            }
+
+            for (extra in extras) {
+                ops += ContentProviderOperation.newDelete(ContactsContract.RawContacts.CONTENT_URI)
+                    .withSelection("${ContactsContract.RawContacts.CONTACT_ID}=?", arrayOf(extra.id.toString()))
+                    .build()
+            }
+
+            if (ops.isNotEmpty()) {
+                context.contentResolver.applyBatch(ContactsContract.AUTHORITY, ops)
+            }
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun mergeAllDuplicateGroups(): Int = withContext(Dispatchers.IO) {
+        val groups = findDuplicateGroups()
+        var count = 0
+        for (group in groups) {
+            if (mergeContactGroup(group)) count++
+        }
+        count
+    }
+
     override suspend fun importVcf(content: String): Int = withContext(Dispatchers.IO) {
         val unfolded = content.replace(Regex("\r?\n[ \t]"), "")
         val cards = unfolded.split(Regex("(?i)BEGIN:VCARD"))

@@ -60,8 +60,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.core.content.FileProvider
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.share.ShareActions
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -170,15 +170,11 @@ private fun ScreenshotEditor(uri: Uri?, path: String?, partial: Boolean, onClose
                     if (saved == null) {
                         Toast.makeText(context, R.string.screenshot_save_failed, Toast.LENGTH_SHORT).show()
                     } else {
-                        runCatching {
-                            context.startActivity(
-                                Intent.createChooser(
-                                    Intent(Intent.ACTION_SEND).setType("image/*")
-                                        .putExtra(Intent.EXTRA_STREAM, ScreenshotController.shareableUri(context, saved))
-                                        .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
-                                    null,
-                                )
-                            )
+                        val shared = withContext(Dispatchers.IO) {
+                            ShareActions.shareUris(context, listOf(saved), "image/*")
+                        }
+                        if (!shared) {
+                            Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

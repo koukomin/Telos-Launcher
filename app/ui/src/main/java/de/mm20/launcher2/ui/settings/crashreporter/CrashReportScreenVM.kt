@@ -3,14 +3,19 @@ package de.mm20.launcher2.ui.settings.crashreporter
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.crashreporter.CrashReport
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.share.ShareActions
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.net.URLEncoder
 
@@ -66,20 +71,20 @@ class CrashReportScreenVM : ViewModel() {
     }
 
     fun shareCrashReport(context: Context, crashReport: CrashReport) {
-
-        val uri = FileProvider.getUriForFile(
-            context,
-            context.applicationContext.packageName + ".fileprovider",
-            File(crashReport.filePath)
-        )
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "*/*"
-        intent.putExtra(Intent.EXTRA_TEXT, CrashReporter.getDeviceInformation(context))
-        intent.putExtra(Intent.EXTRA_STREAM, uri)
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        context.tryStartActivity(
-            Intent.createChooser(intent, context.getString(R.string.au3_sysb_crash_share_via))
-        )
+        viewModelScope.launch {
+            val shared = withContext(Dispatchers.IO) {
+                ShareActions.shareFile(
+                    context,
+                    File(crashReport.filePath),
+                    "*/*",
+                    chooserTitle = context.getString(R.string.au3_sysb_crash_share_via),
+                    text = CrashReporter.getDeviceInformation(context),
+                )
+            }
+            if (!shared) {
+                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     /** Copies the whole report as text, for when saving or sharing the file does not work */

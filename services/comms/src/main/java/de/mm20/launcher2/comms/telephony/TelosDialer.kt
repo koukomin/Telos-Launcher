@@ -12,6 +12,7 @@ import android.telecom.TelecomManager
 import androidx.core.content.ContextCompat
 import android.Manifest
 import android.content.pm.PackageManager
+import android.telephony.SubscriptionManager
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
 
 object TelosDialer {
@@ -63,6 +64,19 @@ object TelosDialer {
             }
         } catch (_: SecurityException) {
             emptyList()
+        }
+    }
+
+    fun hasDualActiveSims(context: Context): Boolean {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) !=
+            PackageManager.PERMISSION_GRANTED
+        ) return false
+        return try {
+            val manager = context.getSystemService(SubscriptionManager::class.java) ?: return false
+            val list = manager.activeSubscriptionInfoList
+            (list?.size ?: 0) >= 2
+        } catch (_: Exception) {
+            false
         }
     }
 
