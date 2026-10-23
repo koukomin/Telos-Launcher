@@ -63,6 +63,13 @@ class TelosPackageInstaller(
 
     private suspend fun installOnIo(apk: File, packageName: String): InstallResult {
         if (freezeManager.hasPendingFrozenUpdate(packageName)) return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.hf_store_installing))
+        
+        // Run Antivirus & Malware Security Scan on APK before installation
+        val securityReport = de.mm20.launcher2.data.store.security.ApkSecurityScanner.scanApk(context, apk)
+        if (securityReport != null && securityReport.riskLevel == de.mm20.launcher2.data.store.security.ApkSecurityReport.RiskLevel.HIGH) {
+            android.util.Log.w("TelosPackageInstaller", "High security risk detected for package $packageName: ${securityReport.warnings.joinToString()}")
+        }
+
         val archive = context.packageManager.getPackageArchiveInfo(apk.path, 0)
             ?: return failed(IllegalArgumentException("Invalid APK"))
         if (archive?.packageName != packageName) return failed(IllegalArgumentException("APK package does not match the selected app"))
