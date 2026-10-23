@@ -32,9 +32,15 @@ Telos is not on the Play Store. You can install it with 1 click using [Obtainium
 
 If you use [Obtainium](https://obtainium.imranr.dev/), tap below to import Telos Launcher directly into Obtainium:
 
-<a href="obtainium://app/https://github.com/koukomin/Telos-Launcher">
-  <img src="https://raw.githubusercontent.com/ImranR62/Obtainium/main/assets/badge.png" height="48" alt="Add to Obtainium">
-</a>
+<p>
+  <a href="obtainium://app/https://github.com/koukomin/Telos-Launcher">
+    <img src="https://raw.githubusercontent.com/ImranR62/Obtainium/main/assets/badge.png" height="48" alt="Add to Obtainium">
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://github.com/koukomin/Telos-Launcher/releases">
+    <img src="https://img.shields.io/badge/Get_it_on-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" height="48" alt="Get it on GitHub">
+  </a>
+</p>
 
 ### Manual Installation
 
