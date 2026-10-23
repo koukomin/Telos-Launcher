@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.store
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
 import android.content.Intent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -34,12 +37,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
+import coil.compose.AsyncImage
+import de.mm20.launcher2.ui.media.photos.PhotoViewerActivity
 import de.mm20.launcher2.store.model.AppSource
 import de.mm20.launcher2.store.options.ItemOptions
 import de.mm20.launcher2.store.parser.StoreUrlParser
@@ -77,6 +84,14 @@ fun AppDetailsScreen(itemId: String) {
         var category by remember(item.id) { mutableStateOf(o.category) }
         var note by remember(item.id) { mutableStateOf(o.note) }
 
+        val screenshotUrls = remember(item.latestRelease?.changelog) {
+            val changelog = item.latestRelease?.changelog.orEmpty()
+            val regex = Regex("""(!\[.*?\]\((https?://\S+?\.(?:png|jpg|jpeg|webp|gif))\)|src=["'](https?://\S+?\.(?:png|jpg|jpeg|webp|gif))["']|https?://\S+?\.(?:png|jpg|jpeg|webp|gif))""", RegexOption.IGNORE_CASE)
+            regex.findAll(changelog).mapNotNull {
+                it.groups[2]?.value ?: it.groups[3]?.value ?: it.groups[1]?.value?.takeIf { u -> u.startsWith("http") }
+            }.distinct().toList()
+        }
+
         LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -90,6 +105,34 @@ fun AppDetailsScreen(itemId: String) {
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Text(item.source.summary(), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                    }
+                }
+            }
+            if (screenshotUrls.isNotEmpty()) {
+                item {
+                    Card("App Screenshots") {
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            contentPadding = PaddingValues(vertical = 4.dp),
+                        ) {
+                            items(screenshotUrls) { url ->
+                                AsyncImage(
+                                    model = url,
+                                    contentDescription = "App Screenshot",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .height(220.dp)
+                                        .clip(RoundedCornerShape(12.dp))
+                                        .clickable {
+                                            val intent = Intent(context, PhotoViewerActivity::class.java).apply {
+                                                putStringArrayListExtra(PhotoViewerActivity.EXTRA_URIS, arrayListOf(url))
+                                                putExtra(PhotoViewerActivity.EXTRA_INDEX, 0)
+                                            }
+                                            context.startActivity(intent)
+                                        },
+                                )
+                            }
+                        }
                     }
                 }
             }
