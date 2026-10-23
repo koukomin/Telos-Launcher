@@ -12,4 +12,17 @@
     <string name="radio_backup_images">Резервная копия ZIP с изображениями станций</string>
     <string name="radio_restore_replace_summary">Заменить текущую коллекцию станций этой копией? Текущая коллекция будет удалена.</string>
     <string name="radio_station_image_url">Адрес изображения станции</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

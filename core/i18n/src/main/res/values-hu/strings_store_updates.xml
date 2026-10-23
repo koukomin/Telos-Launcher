@@ -4,4 +4,17 @@
     <string name="store_check_updates_per_app_summary">Kapcsold ki az alkalmazás automatikus és kézi frissítéskeresésének kihagyásához.</string>
     <string name="store_parallel_updates">Több alkalmazás párhuzamos frissítése</string>
     <string name="store_parallel_updates_summary">Automatikus vagy kézi frissítéskor egyszerre legfeljebb 3 alkalmazást tölt le és telepít. A Telos Launcher frissül utoljára; az Android több telepítési megerősítést is megjeleníthet.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

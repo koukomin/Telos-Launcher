@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">Odpowiedź logowania nie pasowała do tego żądania i została zignorowana</string>
     <string name="au8_traktweb_expired">Logowanie trwało dłużej niż 10 minut. Spróbuj ponownie</string>
     <string name="au8_traktweb_no_browser">Nie znaleziono przeglądarki do otwarcia trakt.tv</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

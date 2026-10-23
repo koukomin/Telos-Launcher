@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">Die Anmeldeantwort passte nicht zu dieser Anfrage und wurde ignoriert</string>
     <string name="au8_traktweb_expired">Die Anmeldung hat länger als 10 Minuten gedauert. Versuche es erneut</string>
     <string name="au8_traktweb_no_browser">Kein Browser zum Öffnen von trakt.tv gefunden</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

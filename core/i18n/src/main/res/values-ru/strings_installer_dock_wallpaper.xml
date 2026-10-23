@@ -6,4 +6,17 @@
     <string name="freeze_exclude_foreground">Не замораживать приложение на переднем плане</string>
     <string name="freeze_exclude_foreground_summary">Требуется доступ к статистике использования. По умолчанию выключено.</string>
     <string name="wallpaper_animated_gif">Анимированные GIF-обои</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

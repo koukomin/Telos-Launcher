@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Neizdevās pārbaudīt servera sertifikātu.</string>
     <string name="ermis_error_generic">Darbība neizdevās. Pārbaudiet savienojumu un servera iestatījumus.</string>
     <string name="ermis_error_sent_copy">Ziņojums nosūtīts, bet kopija nav saglabāta nosūtītajos. Nesūtiet vēlreiz.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

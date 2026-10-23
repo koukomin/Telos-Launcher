@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">音声メモフォルダに.nomediaを書き、ギャラリーとTelosメディアがスキップするようにします。初期値はオフです。通話録音はすでに非公開ストレージにあり暗号化されているため、メディアは一覧に出しません。</string>
     <string name="call_recordings_hide_from_media">通話録音をメディアから隠す</string>
     <string name="call_recordings_hide_from_media_summary">通話録音フォルダに.nomediaを書き、ギャラリーとTelosメディアがスキップするようにします。初期値はオフです。録音はすでに非公開の暗号化ストレージにあります。これは追加の印です。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

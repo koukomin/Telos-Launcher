@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS avvisade åtgärden eller returnerade ett svar som inte stöds.</string>
     <string name="nd_error_unconfigured">Anslut en NextDNS-profil först.</string>
     <string name="nd_rule_title">Domänregel</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

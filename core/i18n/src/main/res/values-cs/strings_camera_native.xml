@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Snímat při detekci obličeje</string>
     <string name="camera_native_motion_trigger">Snímat při detekci pohybu</string>
     <string name="camera_native_trigger_hint">Pouze v popředí. Nejvýše jednou za 5 sekund. Pohyb vychází ze změn náhledu a může reagovat na změny osvětlení.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

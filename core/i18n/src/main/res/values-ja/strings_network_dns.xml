@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">このサーバーを削除しますか？</string>
     <string name="net_dns_remove_message">「%1$s」が削除されます。</string>
     <string name="net_dns_select_failed">DNS サーバーを切り替えられませんでした: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

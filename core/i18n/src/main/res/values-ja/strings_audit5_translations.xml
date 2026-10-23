@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">トレントは待機中:選択した WireGuard プロキシはオフです。</string>
     <string name="au5_wgtorrent_blocked_down">トレントは待機中:選択した WireGuard プロキシは接続されていません。</string>
     <string name="au5_wgtorrent_blocked_error">トレントは待機中:Telos Network がローカルプロキシを開けませんでした。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

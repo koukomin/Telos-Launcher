@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">A torrentek várakoznak: a kiválasztott WireGuard proxy ki van kapcsolva.</string>
     <string name="au5_wgtorrent_blocked_down">A torrentek várakoznak: a kiválasztott WireGuard proxy nem csatlakozik.</string>
     <string name="au5_wgtorrent_blocked_error">A torrentek várakoznak: a Telos Network nem tudta megnyitni a helyi proxyt.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

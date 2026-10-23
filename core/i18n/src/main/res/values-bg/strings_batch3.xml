@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Седмично</string>
     <string name="blocklists_wifi_only">Обновявай само през Wi-Fi</string>
     <string name="blocklists_schedule_info">Важи за всички списъци за блокиране, уеб приложения и торенти. Обновяванията само питат сървъра дали списъкът се е променил и се пропускат при слаба батерия.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

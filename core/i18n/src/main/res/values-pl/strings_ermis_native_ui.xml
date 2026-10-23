@@ -19,4 +19,17 @@
     <string name="ermis_google_help">Używa wybranego konta Android tylko wtedy, gdy jego usługa uwierzytelniania przyzna dostęp do poczty. W przeciwnym razie użyj hasła aplikacji.</string>
     <string name="ermis_google_unavailable">Dostawca konta nie przyznał dostępu do poczty. Użyj hasła aplikacji.</string>
     <string name="ermis_conversation_count">%1$d wiadomości w tej rozmowie</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

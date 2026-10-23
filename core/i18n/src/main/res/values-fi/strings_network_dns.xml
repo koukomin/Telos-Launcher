@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Poistetaanko tämä palvelin?</string>
     <string name="net_dns_remove_message">”%1$s” poistetaan.</string>
     <string name="net_dns_select_failed">DNS-palvelinta ei voitu vaihtaa: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

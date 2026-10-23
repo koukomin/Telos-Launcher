@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Не вдалося перевірити сертифікат сервера.</string>
     <string name="ermis_error_generic">Помилка операції. Перевірте з’єднання та налаштування сервера.</string>
     <string name="ermis_error_sent_copy">Лист надіслано, але копію не збережено в надісланих. Не надсилайте повторно.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

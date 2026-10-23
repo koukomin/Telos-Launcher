@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Iga nädal</string>
     <string name="blocklists_wifi_only">Uuenda ainult Wi-Fi kaudu</string>
     <string name="blocklists_schedule_info">Kehtib kõigile blokeerimisloenditele, veebirakendustele ja torrentitele. Uuendused küsivad serverilt vaid, kas loend on muutunud, ning jäetakse vahele, kui aku on tühjenemas.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

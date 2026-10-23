@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">無法驗證伺服器憑證。</string>
     <string name="ermis_error_generic">操作失敗。請檢查連線及伺服器設定。</string>
     <string name="ermis_error_sent_copy">郵件已寄出，但無法將副本儲存至寄件備份。請勿重寄。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

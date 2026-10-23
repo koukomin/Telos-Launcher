@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Vai noņemt šo serveri?</string>
     <string name="net_dns_remove_message">“%1$s” tiks dzēsts.</string>
     <string name="net_dns_select_failed">Neizdevās nomainīt DNS serveri: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

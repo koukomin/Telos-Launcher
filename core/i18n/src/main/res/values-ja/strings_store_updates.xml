@@ -4,4 +4,17 @@
     <string name="store_check_updates_per_app_summary">オフにすると、このアプリの自動および手動のアップデート確認をスキップします。</string>
     <string name="store_parallel_updates">複数のアプリを並行して更新</string>
     <string name="store_parallel_updates_summary">自動または手動の更新中に、最大3つのアプリを同時にダウンロードしてインストールします。Telos Launcherは最後に更新されます。Androidで複数のインストール確認が表示される場合があります。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

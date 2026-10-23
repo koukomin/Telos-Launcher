@@ -11,4 +11,17 @@
     <string name="nweb_intro">僅支援 ASCII 名稱。.eth 使用 ENS Ideas / eth.limo；其他名稱使用你的 UD 代理。提供者可見名稱/IP。網站透過 HTTPS 閘道開啟。</string>
     <string name="nweb_proxy">Unstoppable Domains 代理（HTTPS）</string>
     <string name="nweb_wallets">錢包位址</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -4,4 +4,17 @@
     <string name="store_check_updates_per_app_summary">Lülita välja, et jätta selle rakenduse automaatsed ja käsitsi värskenduste kontrollid vahele.</string>
     <string name="store_parallel_updates">Värskenda mitut rakendust paralleelselt</string>
     <string name="store_parallel_updates_summary">Laadib automaatsete või käsitsi värskenduste ajal korraga alla ja installib kuni 3 rakendust. Telos Launcher värskendatakse viimasena; Android võib kuvada mitu installimise kinnitust.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

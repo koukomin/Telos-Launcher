@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">顔を検出したら撮影</string>
     <string name="camera_native_motion_trigger">動きを検出したら撮影</string>
     <string name="camera_native_trigger_hint">前面表示中のみ。撮影は5秒に1回までです。プレビューの変化から動きを検出するため、照明の変化にも反応する場合があります。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTP nu este criptat. Se partajează doar acest dosar. Se oprește la închidere sau în fundal.</string>
     <string name="nf_ftp_uploads">Încărcare fișiere noi (până la 2 GiB; fără suprascriere)</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

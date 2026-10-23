@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Opnemen bij gezichtsdetectie</string>
     <string name="camera_native_motion_trigger">Opnemen bij bewegingsdetectie</string>
     <string name="camera_native_trigger_hint">Alleen op de voorgrond. Hoogstens eens per 5 seconden. Beweging gebruikt wijzigingen in het voorbeeld en kan op lichtveranderingen reageren.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

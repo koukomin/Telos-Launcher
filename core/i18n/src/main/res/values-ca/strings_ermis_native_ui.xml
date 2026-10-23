@@ -19,4 +19,17 @@
     <string name="ermis_google_help">Utilitza el compte Android seleccionat només si l’autenticador permet accedir al correu. Altrament, feu servir una contrasenya d’aplicació.</string>
     <string name="ermis_google_unavailable">El proveïdor del compte no ha permès accedir al correu. Feu servir una contrasenya d’aplicació.</string>
     <string name="ermis_conversation_count">%1$d missatges en aquesta conversa</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

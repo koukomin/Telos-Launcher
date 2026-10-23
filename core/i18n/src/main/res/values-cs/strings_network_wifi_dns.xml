@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Na pozadí použije odpovídající pravidlo soukromého DNS Androidu, i když je VPN Telos Network vypnutá. Vyžaduje oprávnění k poloze a oznámením.</string>
     <string name="net_wifi_dns_permission_error">Monitorování nelze zapnout. Povolte Shizuku, přístup k poloze a oznámení.</string>
     <string name="net_wifi_dns_invalid_rule">Zadejte platný název Wi‑Fi a pro pravidlo poskytovatele platný název DNS hostitele.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

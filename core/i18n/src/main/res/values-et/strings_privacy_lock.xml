@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Lisab .nomedia-faili häälememode kausta, et galeriid ja Telos Meedia selle vahele jätaksid. Vaikimisi väljas. Kõnesalvestused on juba privaatses salvestusruumis ja krüptitud, Meedia neid ei loetle.</string>
     <string name="call_recordings_hide_from_media">Peida kõnesalvestused Meedia eest</string>
     <string name="call_recordings_hide_from_media_summary">Lisab .nomedia-faili kõnesalvestuste kausta, et galeriid ja Telos Meedia selle vahele jätaksid. Vaikimisi väljas. Salvestused on juba privaatses krüptitud ruumis; see on lisamarker.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

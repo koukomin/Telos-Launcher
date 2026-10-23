@@ -39,4 +39,17 @@
     <string name="preference_weather_alerts_test_summary">Δείχνει πώς φαίνεται μια ειδοποίηση</string>
     <string name="preference_weather_alerts_test_failed">Η ειδοποίηση δεν μπόρεσε να εμφανιστεί. Ελέγξτε ότι οι ειδοποιήσεις επιτρέπονται για το Telos</string>
     <string name="preference_weather_alerts_hours_value">%1$d ώρες</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

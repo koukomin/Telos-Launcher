@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">La respuesta de inicio de sesión no coincidía con esta solicitud y se ignoró</string>
     <string name="au8_traktweb_expired">El inicio de sesión tardó más de 10 minutos. Inténtalo de nuevo</string>
     <string name="au8_traktweb_no_browser">No se encontró ningún navegador para abrir trakt.tv</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

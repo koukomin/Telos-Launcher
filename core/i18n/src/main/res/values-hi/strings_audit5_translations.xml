@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">टोरेंट प्रतीक्षा में: चुना गया WireGuard प्रॉक्सी बंद है।</string>
     <string name="au5_wgtorrent_blocked_down">टोरेंट प्रतीक्षा में: चुना गया WireGuard प्रॉक्सी कनेक्ट नहीं है।</string>
     <string name="au5_wgtorrent_blocked_error">टोरेंट प्रतीक्षा में: Telos Network स्थानीय प्रॉक्सी नहीं खोल सका।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

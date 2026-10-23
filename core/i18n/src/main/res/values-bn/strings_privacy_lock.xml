@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">ভয়েস মেমো ফোল্ডারে .nomedia যোগ করে যাতে গ্যালারি ও Telos মিডিয়া এড়িয়ে যায়। ডিফল্টে বন্ধ। কল রেকর্ডিং ইতিমধ্যেই ব্যক্তিগত স্টোরেজে এনক্রিপ্টেড, মিডিয়া সেগুলো তালিকা করে না।</string>
     <string name="call_recordings_hide_from_media">মিডিয়া থেকে কল রেকর্ডিং লুকান</string>
     <string name="call_recordings_hide_from_media_summary">কল রেকর্ডিং ফোল্ডারে .nomedia যোগ করে যাতে গ্যালারি ও Telos মিডিয়া এড়িয়ে যায়। ডিফল্টে বন্ধ। রেকর্ডিং ইতিমধ্যেই ব্যক্তিগত এনক্রিপ্টেড স্টোরেজে; এটি অতিরিক্ত চিহ্ন।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

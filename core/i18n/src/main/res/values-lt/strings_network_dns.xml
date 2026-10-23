@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Pašalinti šį serverį?</string>
     <string name="net_dns_remove_message">„%1$s“ bus ištrintas.</string>
     <string name="net_dns_select_failed">Nepavyko pakeisti DNS serverio: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

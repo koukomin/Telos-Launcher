@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">¿Quitar este servidor?</string>
     <string name="net_dns_remove_message">Se eliminará «%1$s».</string>
     <string name="net_dns_select_failed">No se pudo cambiar el servidor DNS: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

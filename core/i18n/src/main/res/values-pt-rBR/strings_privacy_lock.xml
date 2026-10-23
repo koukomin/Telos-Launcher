@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Adiciona um arquivo .nomedia na pasta dos memos de voz para galerias e Telos Mídia ignorarem. Desativado por padrão. As gravações de chamadas já estão no armazenamento privado e criptografadas, a Mídia não as lista.</string>
     <string name="call_recordings_hide_from_media">Ocultar gravações de chamadas da Mídia</string>
     <string name="call_recordings_hide_from_media_summary">Adiciona um arquivo .nomedia na pasta das gravações de chamadas para galerias e Telos Mídia ignorarem. Desativado por padrão. As gravações já estão no armazenamento privado criptografado; isto é uma marca extra.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

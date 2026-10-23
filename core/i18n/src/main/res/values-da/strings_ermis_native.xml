@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Servercertifikatet kunne ikke bekræftes.</string>
     <string name="ermis_error_generic">Handlingen mislykkedes. Kontrollér forbindelse og serverindstillinger.</string>
     <string name="ermis_error_sent_copy">Beskeden er sendt, men kopien blev ikke gemt i Sendt. Send ikke igen.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Dodaje datoteku .nomedia u mapu glasovnih bilješki da je galerije i Telos Mediji preskoče. Isključeno prema zadanim postavkama. Snimke poziva već su u privatnoj pohrani i šifrirane, Mediji ih ne prikazuju.</string>
     <string name="call_recordings_hide_from_media">Sakrij snimke poziva od Medija</string>
     <string name="call_recordings_hide_from_media_summary">Dodaje datoteku .nomedia u mapu snimki poziva da je galerije i Telos Mediji preskoče. Isključeno prema zadanim postavkama. Snimke su već u privatnoj šifriranoj pohrani; ovo je dodatna oznaka.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -3,4 +3,17 @@
     <string name="net_restore_summary">在 Android 允许时恢复此前启用的 VPN。手动停止后保持关闭。</string>
     <string name="netfw_u_unmetered">在不限流量网络上阻止</string>
     <string name="netfw_vpn_bypass">绕过 VPN</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

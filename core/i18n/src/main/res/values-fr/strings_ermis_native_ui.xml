@@ -19,4 +19,17 @@
     <string name="ermis_google_help">Utilise le compte Android sélectionné uniquement si son service d’authentification autorise l’accès au courrier. Sinon, utilisez un mot de passe d’application.</string>
     <string name="ermis_google_unavailable">Le fournisseur du compte n’a pas autorisé l’accès au courrier. Utilisez un mot de passe d’application.</string>
     <string name="ermis_conversation_count">%1$d messages dans cette conversation</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

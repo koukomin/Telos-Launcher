@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">Torrenter venter: den valgte WireGuard-proxyen er slått av.</string>
     <string name="au5_wgtorrent_blocked_down">Torrenter venter: den valgte WireGuard-proxyen er ikke tilkoblet.</string>
     <string name="au5_wgtorrent_blocked_error">Torrenter venter: Telos Network kunne ikke åpne den lokale proxyen.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">মুখ শনাক্ত হলে ছবি তুলুন</string>
     <string name="camera_native_motion_trigger">নড়াচড়া শনাক্ত হলে ছবি তুলুন</string>
     <string name="camera_native_trigger_hint">শুধু অগ্রভাগে। সর্বোচ্চ প্রতি ৫ সেকেন্ডে একবার। প্রিভিউয়ের পরিবর্তন থেকে নড়াচড়া শনাক্ত হয়, তাই আলোর পরিবর্তনেও সাড়া দিতে পারে।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

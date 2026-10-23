@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Certifikat poslužitelja nije se mogao provjeriti.</string>
     <string name="ermis_error_generic">Radnja nije uspjela. Provjerite vezu i postavke poslužitelja.</string>
     <string name="ermis_error_sent_copy">Poruka je poslana, ali kopija nije spremljena u Poslano. Ne šaljite ponovno.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

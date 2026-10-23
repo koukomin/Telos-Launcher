@@ -4,4 +4,17 @@
     <string name="au6_radio2_loading">Načítava sa %1$s</string>
     <string name="au6_webapps4_cookie_source_default">Všetko / predvolené</string>
     <string name="au6_wgvideo_route_not_ready">Torrent sa nepodarilo spustiť: je nastavený na použitie tunela WireGuard siete Telos Network a tento tunel nie je pripravený. Zapnite Telos Network a tunel alebo zmeňte nastavenie v Telos Downloads. Nič sa neodoslalo.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

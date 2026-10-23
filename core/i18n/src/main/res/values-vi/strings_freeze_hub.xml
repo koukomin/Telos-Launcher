@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">Đóng băng khi xóa khỏi ứng dụng gần đây</string>
     <string name="freeze_hub_recents_help">Đóng băng lại ứng dụng được quản lý hoặc đã được Telos rã đông sau khi tác vụ cuối bị xóa. Cần Shizuku và tuân thủ ngoại lệ sử dụng. Mặc định tắt.</string>
     <string name="freeze_hub_recents_unavailable">Không thể phát hiện ứng dụng gần đây. Khởi động Shizuku và cấp quyền.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

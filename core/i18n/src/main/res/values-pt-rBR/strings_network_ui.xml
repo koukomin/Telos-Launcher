@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">Não o torna anônimo. Os sites continuam a ver o seu endereço IP, a menos que use um túnel WireGuard de confiança.</string>
     <string name="net_settings_not_5">O Android permite uma VPN de cada vez. O Telos Network substitui outra VPN enquanto funciona; use antes o WireGuard dentro do Telos Network.</string>
     <string name="net_settings_not_6">É novo e ainda não foi testado em muitos dispositivos.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -4,4 +4,17 @@
     <string name="store_check_updates_per_app_summary">Vypnutím preskočíte automatickú aj manuálnu kontrolu aktualizácií tejto aplikácie.</string>
     <string name="store_parallel_updates">Aktualizovať viac aplikácií súbežne</string>
     <string name="store_parallel_updates_summary">Počas automatických aj manuálnych aktualizácií stiahne a nainštaluje až 3 aplikácie naraz. Telos Launcher sa aktualizuje ako posledný; Android môže zobraziť viacero potvrdení inštalácie.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

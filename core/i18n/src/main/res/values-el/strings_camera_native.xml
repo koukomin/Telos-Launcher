@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Λήψη όταν ανιχνεύεται πρόσωπο</string>
     <string name="camera_native_motion_trigger">Λήψη όταν ανιχνεύεται κίνηση</string>
     <string name="camera_native_trigger_hint">Μόνο στο προσκήνιο. Έως μία λήψη κάθε 5 δευτερόλεπτα. Η ανίχνευση κίνησης βασίζεται σε αλλαγές της προεπισκόπησης και μπορεί να αντιδράσει σε αλλαγές φωτισμού.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

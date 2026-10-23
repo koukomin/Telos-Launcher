@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">Торренты ожидают: выбранный WireGuard-прокси отключён.</string>
     <string name="au5_wgtorrent_blocked_down">Торренты ожидают: выбранный WireGuard-прокси не подключён.</string>
     <string name="au5_wgtorrent_blocked_error">Торренты ожидают: Telos Network не удалось открыть локальный прокси.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

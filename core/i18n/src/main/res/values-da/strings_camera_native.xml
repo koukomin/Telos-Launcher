@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Tag billede, når et ansigt registreres</string>
     <string name="camera_native_motion_trigger">Tag billede, når bevægelse registreres</string>
     <string name="camera_native_trigger_hint">Kun i forgrunden. Højst hvert 5. sekund. Bevægelse bygger på ændringer i forhåndsvisningen og kan reagere på lysændringer.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

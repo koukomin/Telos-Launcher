@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">להסיר את השרת הזה?</string>
     <string name="net_dns_remove_message">\"%1$s\" יימחק.</string>
     <string name="net_dns_select_failed">לא ניתן היה להחליף את שרת ה-DNS: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

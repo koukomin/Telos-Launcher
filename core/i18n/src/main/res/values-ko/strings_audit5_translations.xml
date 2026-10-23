@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">토렌트 대기 중: 선택한 WireGuard 프록시가 꺼져 있습니다.</string>
     <string name="au5_wgtorrent_blocked_down">토렌트 대기 중: 선택한 WireGuard 프록시가 연결되어 있지 않습니다.</string>
     <string name="au5_wgtorrent_blocked_error">토렌트 대기 중: Telos Network가 로컬 프록시를 열 수 없습니다.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">Nem tesz névtelenné. A weboldalak továbbra is látják az IP-címedet, hacsak nem használsz megbízható WireGuard-alagutat.</string>
     <string name="net_settings_not_5">Az Android egyszerre egy VPN-t enged. A Telos Network működés közben leváltja a másik VPN-t; használj inkább WireGuardot a Telos Networkön belül.</string>
     <string name="net_settings_not_6">Új, és még nem tesztelték sok eszközön.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

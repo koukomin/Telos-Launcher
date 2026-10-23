@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">Îngheață după eliminarea din recente</string>
     <string name="freeze_hub_recents_help">Reîngheață aplicațiile gestionate sau dezghețate de Telos după eliminarea ultimei sarcini. Necesită Shizuku și respectă excluderile de utilizare. Implicit dezactivat.</string>
     <string name="freeze_hub_recents_unavailable">Detectarea recentelor nu este disponibilă. Pornește Shizuku și acordă permisiunea.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

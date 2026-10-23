@@ -19,4 +19,17 @@
     <string name="ermis_google_help">仅在验证服务授予邮件访问权限时，才使用所选 Android 账户。否则请使用应用专用密码。</string>
     <string name="ermis_google_unavailable">账户提供商未授予邮件访问权限。请改用应用专用密码。</string>
     <string name="ermis_conversation_count">此会话中有 %1$d 封邮件</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

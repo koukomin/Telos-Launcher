@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Adaugă un fișier .nomedia în folderul notelor vocale ca galeriile și Telos Media să-l sară. Dezactivat implicit. Înregistrările apelurilor sunt deja în stocare privată și criptate, Media nu le listează.</string>
     <string name="call_recordings_hide_from_media">Ascunde înregistrările apelurilor de Media</string>
     <string name="call_recordings_hide_from_media_summary">Adaugă un fișier .nomedia în folderul înregistrărilor de apeluri ca galeriile și Telos Media să-l sară. Dezactivat implicit. Înregistrările sunt deja în stocare privată criptată; acesta este un marcaj extra.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

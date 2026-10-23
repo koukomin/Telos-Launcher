@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS işlemi reddetti veya desteklenmeyen bir yanıt döndürdü.</string>
     <string name="nd_error_unconfigured">Önce bir NextDNS profili bağlayın.</string>
     <string name="nd_rule_title">Alan adı kuralı</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

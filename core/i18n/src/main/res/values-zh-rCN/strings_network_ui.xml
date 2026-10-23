@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">它不会让您匿名。除非使用您信任的 WireGuard 隧道，否则网站仍能看到您的 IP 地址。</string>
     <string name="net_settings_not_5">Android 同一时间只允许一个 VPN。Telos Network 运行时会取代另一个 VPN；请改在 Telos Network 内使用 WireGuard。</string>
     <string name="net_settings_not_6">它是新功能，尚未在很多设备上测试。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

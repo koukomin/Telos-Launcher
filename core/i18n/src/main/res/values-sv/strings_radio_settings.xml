@@ -12,4 +12,17 @@
     <string name="radio_backup_images">ZIP-säkerhetskopia med stationsbilder</string>
     <string name="radio_restore_replace_summary">Ersätt den nuvarande stationssamlingen med denna säkerhetskopia? Den nuvarande samlingen tas bort.</string>
     <string name="radio_station_image_url">Adress till stationsbild</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

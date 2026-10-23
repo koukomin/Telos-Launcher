@@ -24,4 +24,17 @@
     <string name="nd_error_api">A NextDNS elutasította a műveletet, vagy nem támogatott választ adott.</string>
     <string name="nd_error_unconfigured">Először csatlakoztass egy NextDNS-profilt.</string>
     <string name="nd_rule_title">Domainszabály</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">لم تتطابق استجابة تسجيل الدخول مع هذا الطلب وتم تجاهلها</string>
     <string name="au8_traktweb_expired">استغرق تسجيل الدخول أكثر من 10 دقائق. حاول مرة أخرى</string>
     <string name="au8_traktweb_no_browser">لم يتم العثور على متصفح لفتح trakt.tv</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

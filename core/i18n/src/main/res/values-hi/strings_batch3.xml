@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">हर हफ़्ते</string>
     <string name="blocklists_wifi_only">केवल Wi-Fi पर अपडेट करें</string>
     <string name="blocklists_schedule_info">यह सभी ब्लॉक सूचियों पर लागू होता है, वेब ऐप्स और टोरेंट दोनों के लिए। अपडेट केवल सर्वर से पूछते हैं कि सूची बदली है या नहीं, और बैटरी कम होने पर छोड़ दिए जाते हैं।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

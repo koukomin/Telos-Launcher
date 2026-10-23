@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Certifikát servera sa nepodarilo overiť.</string>
     <string name="ermis_error_generic">Operácia zlyhala. Skontrolujte pripojenie a nastavenia servera.</string>
     <string name="ermis_error_sent_copy">Správa bola odoslaná, ale kópia sa neuložila do Odoslaných. Neposielajte ju znova.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

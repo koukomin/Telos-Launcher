@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">सर्वर प्रमाणपत्र सत्यापित नहीं हो सका।</string>
     <string name="ermis_error_generic">कार्रवाई विफल। कनेक्शन और सर्वर सेटिंग जाँचें।</string>
     <string name="ermis_error_sent_copy">संदेश भेजा गया लेकिन भेजे गए फ़ोल्डर में प्रति नहीं सहेजी जा सकी। दोबारा न भेजें।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

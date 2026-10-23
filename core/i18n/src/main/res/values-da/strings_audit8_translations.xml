@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">Svaret på login passede ikke til denne anmodning og blev ignoreret</string>
     <string name="au8_traktweb_expired">Login tog længere end 10 minutter. Prøv igen</string>
     <string name="au8_traktweb_no_browser">Ingen browser fundet til at åbne trakt.tv</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

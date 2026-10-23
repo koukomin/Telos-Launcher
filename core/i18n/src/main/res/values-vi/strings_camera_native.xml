@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Chụp khi phát hiện khuôn mặt</string>
     <string name="camera_native_motion_trigger">Chụp khi phát hiện chuyển động</string>
     <string name="camera_native_trigger_hint">Chỉ khi ở nền trước. Tối đa một lần mỗi 5 giây. Chuyển động dựa vào thay đổi của bản xem trước và có thể phản ứng với ánh sáng.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

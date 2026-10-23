@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">تعذر التحقق من شهادة الخادم.</string>
     <string name="ermis_error_generic">فشلت العملية. تحقق من الاتصال وإعدادات الخادم.</string>
     <string name="ermis_error_sent_copy">أُرسلت الرسالة لكن تعذر حفظ نسخة في المرسلة. لا تُعد إرسالها.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

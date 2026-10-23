@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Dodaje plik .nomedia w folderze notatek głosowych, aby galerie i Telos Media go pomijały. Domyślnie wyłączone. Nagrania rozmów są już w prywatnej pamięci i zaszyfrowane, Media ich nie listują.</string>
     <string name="call_recordings_hide_from_media">Ukryj nagrania rozmów przed Mediami</string>
     <string name="call_recordings_hide_from_media_summary">Dodaje plik .nomedia w folderze nagrań rozmów, aby galerie i Telos Media go pomijały. Domyślnie wyłączone. Nagrania są już w prywatnej zaszyfrowanej pamięci; to dodatkowy znacznik.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

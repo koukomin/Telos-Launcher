@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Lägger till en .nomedia-fil i mappen för röstanteckningar så gallerier och Telos Media hoppar över den. Av som standard. Samtalsinspelningar ligger redan i privat lagring och är krypterade, Media listar dem inte.</string>
     <string name="call_recordings_hide_from_media">Dölj samtalsinspelningar från Media</string>
     <string name="call_recordings_hide_from_media_summary">Lägger till en .nomedia-fil i mappen för samtalsinspelningar så gallerier och Telos Media hoppar över den. Av som standard. Inspelningarna ligger redan i privat krypterad lagring; detta är en extra markör.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

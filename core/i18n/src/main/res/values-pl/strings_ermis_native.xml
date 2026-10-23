@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Nie udało się zweryfikować certyfikatu serwera.</string>
     <string name="ermis_error_generic">Operacja nie powiodła się. Sprawdź połączenie i ustawienia serwera.</string>
     <string name="ermis_error_sent_copy">Wiadomość wysłana, ale kopia nie została zapisana w Wysłanych. Nie wysyłaj ponownie.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

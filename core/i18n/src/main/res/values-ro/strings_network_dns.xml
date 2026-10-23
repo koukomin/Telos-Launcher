@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Elimini acest server?</string>
     <string name="net_dns_remove_message">„%1$s” va fi șters.</string>
     <string name="net_dns_select_failed">Serverul DNS nu a putut fi schimbat: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

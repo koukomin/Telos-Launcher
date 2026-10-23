@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Zrób zdjęcie po wykryciu twarzy</string>
     <string name="camera_native_motion_trigger">Zrób zdjęcie po wykryciu ruchu</string>
     <string name="camera_native_trigger_hint">Tylko na pierwszym planie. Najwyżej co 5 sekund. Ruch jest wykrywany na podstawie zmian podglądu i może reagować na oświetlenie.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

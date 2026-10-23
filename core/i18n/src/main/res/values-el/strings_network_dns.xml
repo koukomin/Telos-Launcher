@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Αφαίρεση αυτού του διακομιστή;</string>
     <string name="net_dns_remove_message">Το «%1$s» θα διαγραφεί.</string>
     <string name="net_dns_select_failed">Δεν ήταν δυνατή η αλλαγή του διακομιστή DNS: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

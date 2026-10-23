@@ -8,4 +8,17 @@
     <string name="telos_files_find_duplicates">Εύρεση πανομοιότυπων αρχείων</string>
     <string name="telos_files_duplicates_count">%1$d ομάδες πανομοιότυπων αρχείων</string>
     <string name="telos_files_duplicates_hint">Τα αρχεία συγκρίνονται byte προς byte. Πατήστε μια διαδρομή για να ανοίξετε τον φάκελό της. Δεν διαγράφεται τίποτα αυτόματα. Εμφανίζονται έως 50 ομάδες.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

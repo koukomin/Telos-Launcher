@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">Torrents wachten: de geselecteerde WireGuard-proxy staat uit.</string>
     <string name="au5_wgtorrent_blocked_down">Torrents wachten: de geselecteerde WireGuard-proxy is niet verbonden.</string>
     <string name="au5_wgtorrent_blocked_error">Torrents wachten: Telos Network kon de lokale proxy niet openen.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

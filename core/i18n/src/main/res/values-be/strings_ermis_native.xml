@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Не ўдалося праверыць сертыфікат сервера.</string>
     <string name="ermis_error_generic">Памылка аперацыі. Праверце злучэнне і налады сервера.</string>
     <string name="ermis_error_sent_copy">Ліст адпраўлены, але копія не захавана ў Адпраўленых. Не адпраўляйце паўторна.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

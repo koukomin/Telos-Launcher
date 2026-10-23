@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS je zavrnil dejanje ali vrnil nepodprt odgovor.</string>
     <string name="nd_error_unconfigured">Najprej poveži profil NextDNS.</string>
     <string name="nd_rule_title">Pravilo domene</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS কাজটি প্রত্যাখ্যান করেছে বা অসমর্থিত উত্তর দিয়েছে।</string>
     <string name="nd_error_unconfigured">প্রথমে একটি NextDNS প্রোফাইল সংযুক্ত করুন।</string>
     <string name="nd_rule_title">ডোমেনের নিয়ম</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

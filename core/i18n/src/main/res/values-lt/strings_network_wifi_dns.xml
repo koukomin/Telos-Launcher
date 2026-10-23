@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Fone taiko atitinkamą „Android“ privataus DNS taisyklę net ir išjungus „Telos Network“ VPN. Reikia vietovės ir pranešimų leidimų.</string>
     <string name="net_wifi_dns_permission_error">Nepavyko įjungti stebėjimo. Suteikite „Shizuku“ leidimą, vietovės prieigą ir pranešimus.</string>
     <string name="net_wifi_dns_invalid_rule">Įveskite tinkamą „Wi‑Fi“ pavadinimą, o teikėjo taisyklei – tinkamą DNS pagrindinio kompiuterio vardą.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

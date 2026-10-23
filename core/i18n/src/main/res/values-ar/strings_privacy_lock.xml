@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">يضيف ملف .nomedia في مجلد المذكرات الصوتية حتى تتخطاه المعارض ووسائط Telos. معطّل افتراضيًا. تسجيلات المكالمات أصلًا في تخزين خاص ومشفّرة، والوسائط لا تعرضها.</string>
     <string name="call_recordings_hide_from_media">إخفاء تسجيلات المكالمات عن الوسائط</string>
     <string name="call_recordings_hide_from_media_summary">يضيف ملف .nomedia في مجلد تسجيلات المكالمات حتى تتخطاه المعارض ووسائط Telos. معطّل افتراضيًا. التسجيلات أصلًا في تخزين خاص مشفّر؛ هذه علامة إضافية.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

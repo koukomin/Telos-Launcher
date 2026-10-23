@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Pridá súbor .nomedia do priečinka hlasových poznámok, aby ho galérie a Telos Médiá preskočili. Predvolene vypnuté. Nahrávky hovorov sú už v súkromnom úložisku a šifrované, Médiá ich nezobrazujú.</string>
     <string name="call_recordings_hide_from_media">Skryť nahrávky hovorov pred Médiami</string>
     <string name="call_recordings_hide_from_media_summary">Pridá súbor .nomedia do priečinka nahrávok hovorov, aby ho galérie a Telos Médiá preskočili. Predvolene vypnuté. Nahrávky už sú v súkromnom šifrovanom úložisku; toto je ďalšia značka.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

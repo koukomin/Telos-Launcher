@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">Bevriezen na verwijderen uit recente apps</string>
     <string name="freeze_hub_recents_help">Bevriest beheerde of door Telos ontdooide apps opnieuw na verwijdering van hun laatste taak. Vereist Shizuku en respecteert gebruiksuitzonderingen. Standaard uit.</string>
     <string name="freeze_hub_recents_unavailable">Detectie van recente apps niet beschikbaar. Start Shizuku en verleen toestemming.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

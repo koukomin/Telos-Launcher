@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS hat den Vorgang abgelehnt oder eine nicht unterstützte Antwort zurückgegeben.</string>
     <string name="nd_error_unconfigured">Verbinde zuerst ein NextDNS-Profil.</string>
     <string name="nd_rule_title">Domainregel</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

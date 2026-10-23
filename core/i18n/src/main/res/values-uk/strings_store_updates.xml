@@ -4,4 +4,17 @@
     <string name="store_check_updates_per_app_summary">Вимкніть, щоб пропускати автоматичну й ручну перевірку оновлень цієї програми.</string>
     <string name="store_parallel_updates">Оновлювати кілька програм паралельно</string>
     <string name="store_parallel_updates_summary">Завантажує та встановлює до 3 програм одночасно під час автоматичних або ручних оновлень. Telos Launcher оновлюється останнім; Android може показати кілька запитів на підтвердження встановлення.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

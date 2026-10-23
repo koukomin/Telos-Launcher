@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">每週</string>
     <string name="blocklists_wifi_only">僅在 Wi-Fi 下更新</string>
     <string name="blocklists_schedule_info">適用於所有封鎖清單，包括網頁應用程式與種子。更新時只會向伺服器查詢清單是否有變動，電量不足時會略過更新。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

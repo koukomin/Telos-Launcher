@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Semanal</string>
     <string name="blocklists_wifi_only">Atualizar apenas por Wi-Fi</string>
     <string name="blocklists_schedule_info">Aplica-se a todas as listas de bloqueio, apps web e torrents. As atualizações só perguntam ao servidor se a lista mudou e são ignoradas quando a bateria está fraca.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

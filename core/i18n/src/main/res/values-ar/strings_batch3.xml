@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">أسبوعيًا</string>
     <string name="blocklists_wifi_only">التحديث عبر Wi-Fi فقط</string>
     <string name="blocklists_schedule_info">ينطبق على جميع قوائم الحظر، لتطبيقات الويب والتورنت. تسأل التحديثات الخادم فقط عمّا إذا كانت القائمة قد تغيّرت، وتُتخطى عند انخفاض البطارية.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

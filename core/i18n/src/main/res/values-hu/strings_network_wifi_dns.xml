@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">A megfelelő Android privát DNS-szabályt alkalmazza a háttérben akkor is, ha a Telos Network VPN ki van kapcsolva. Hely- és értesítési engedély szükséges.</string>
     <string name="net_wifi_dns_permission_error">A figyelés nem kapcsolható be. Engedélyezd a Shizukut, a helyhozzáférést és az értesítéseket.</string>
     <string name="net_wifi_dns_invalid_rule">Adj meg érvényes Wi‑Fi-nevet, szolgáltatói szabály esetén pedig érvényes DNS-gazdagépnevet.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Viikoittain</string>
     <string name="blocklists_wifi_only">Päivitä vain Wi-Fi-yhteydellä</string>
     <string name="blocklists_schedule_info">Koskee kaikkia estolistoja, verkkosovelluksia ja torrentteja. Päivitykset kysyvät palvelimelta vain, onko lista muuttunut, ja ohitetaan akun ollessa vähissä.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

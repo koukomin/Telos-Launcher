@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">偵測到人臉時拍攝</string>
     <string name="camera_native_motion_trigger">偵測到動作時拍攝</string>
     <string name="camera_native_trigger_hint">僅限前景。最多每 5 秒拍攝一次。動作偵測依據預覽的變化，也可能對光線變化作出反應。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

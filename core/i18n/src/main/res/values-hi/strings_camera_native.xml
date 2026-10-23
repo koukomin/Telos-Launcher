@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">चेहरा मिलने पर तस्वीर लें</string>
     <string name="camera_native_motion_trigger">हलचल मिलने पर तस्वीर लें</string>
     <string name="camera_native_trigger_hint">केवल अग्रभूमि में। अधिकतम हर 5 सेकंड में एक तस्वीर। हलचल का पता पूर्वावलोकन के बदलावों से चलता है और रोशनी बदलने पर भी प्रतिक्रिया हो सकती है।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

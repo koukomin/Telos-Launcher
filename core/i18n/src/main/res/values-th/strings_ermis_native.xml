@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">ตรวจสอบใบรับรองเซิร์ฟเวอร์ไม่ได้</string>
     <string name="ermis_error_generic">ดำเนินการไม่สำเร็จ ตรวจสอบการเชื่อมต่อและการตั้งค่าเซิร์ฟเวอร์</string>
     <string name="ermis_error_sent_copy">ส่งข้อความแล้วแต่บันทึกสำเนาในจดหมายที่ส่งไม่ได้ อย่าส่งซ้ำ</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

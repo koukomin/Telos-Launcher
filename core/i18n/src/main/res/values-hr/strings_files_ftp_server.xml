@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTP nije šifriran. Dijeli se samo ova mapa. Zaustavlja se pri zatvaranju ili u pozadini.</string>
     <string name="nf_ftp_uploads">Slanje novih datoteka (do 2 GiB; bez prepisivanja)</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

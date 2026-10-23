@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">Ní dhéanann sé gan ainm thú. Feiceann suíomhanna gréasáin do sheoladh IP fós, mura n-úsáideann tú tollán WireGuard a bhfuil muinín agat as.</string>
     <string name="net_settings_not_5">Ceadaíonn Android VPN amháin ag an am. Cuireann Telos Network VPN eile ina áit fad a bhíonn sé ag rith; úsáid WireGuard laistigh de Telos Network ina ionad.</string>
     <string name="net_settings_not_6">Is nua é agus níl sé tástáilte fós ar a lán feistí.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

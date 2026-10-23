@@ -24,4 +24,17 @@
     <string name="nd_error_api">O NextDNS rejeitou a operação ou devolveu uma resposta não suportada.</string>
     <string name="nd_error_unconfigured">Ligue primeiro um perfil NextDNS.</string>
     <string name="nd_rule_title">Regra de domínio</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

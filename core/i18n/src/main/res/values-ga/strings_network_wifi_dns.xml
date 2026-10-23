@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Cuireann sé riail DNS phríobháideach Android i bhfeidhm sa chúlra, fiú nuair atá VPN Telos Network múchta. Teastaíonn ceadanna suímh agus fógraí.</string>
     <string name="net_wifi_dns_permission_error">Níorbh fhéidir an mhonatóireacht a chumasú. Tabhair cead do Shizuku agus ceadaigh suíomh agus fógraí.</string>
     <string name="net_wifi_dns_invalid_rule">Cuir isteach ainm bailí Wi‑Fi agus óstainm DNS bailí do riail soláthraí.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

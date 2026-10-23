@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">Torrentit odottavat: valittu WireGuard-välityspalvelin on pois päältä.</string>
     <string name="au5_wgtorrent_blocked_down">Torrentit odottavat: valittu WireGuard-välityspalvelin ei ole yhdistetty.</string>
     <string name="au5_wgtorrent_blocked_error">Torrentit odottavat: Telos Network ei voinut avata paikallista välityspalvelinta.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

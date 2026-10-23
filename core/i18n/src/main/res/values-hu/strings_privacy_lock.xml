@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">.nomedia fájlt ír a hangjegyzetek mappájába, hogy a galériák és a Telos Média kihagyják. Alapból kikapcsolva. A hívásfelvételek már privát tárhelyen és titkosítva vannak, a Média nem listázza őket.</string>
     <string name="call_recordings_hide_from_media">Hívásfelvételek elrejtése a Médiától</string>
     <string name="call_recordings_hide_from_media_summary">.nomedia fájlt ír a hívásfelvételek mappájába, hogy a galériák és a Telos Média kihagyják. Alapból kikapcsolva. A felvételek már privát titkosított tárhelyen vannak; ez egy extra jelölő.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

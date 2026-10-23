@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Không thể xác minh chứng chỉ máy chủ.</string>
     <string name="ermis_error_generic">Thao tác thất bại. Kiểm tra kết nối và cài đặt máy chủ.</string>
     <string name="ermis_error_sent_copy">Đã gửi thư nhưng không lưu được bản sao vào thư đã gửi. Đừng gửi lại.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

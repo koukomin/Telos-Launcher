@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Еженедельно</string>
     <string name="blocklists_wifi_only">Обновлять только по Wi-Fi</string>
     <string name="blocklists_schedule_info">Относится ко всем спискам блокировки, веб-приложений и торрентов. При обновлении только запрашивается у сервера, изменился ли список; при низком заряде батареи обновление пропускается.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Xóa máy chủ này?</string>
     <string name="net_dns_remove_message">“%1$s” sẽ bị xóa.</string>
     <string name="net_dns_select_failed">Không thể đổi máy chủ DNS: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

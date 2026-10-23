@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">Torrentid ootavad: valitud WireGuardi puhverserver on välja lülitatud.</string>
     <string name="au5_wgtorrent_blocked_down">Torrentid ootavad: valitud WireGuardi puhverserver pole ühendatud.</string>
     <string name="au5_wgtorrent_blocked_error">Torrentid ootavad: Telos Network ei saanud kohalikku puhverserverit avada.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

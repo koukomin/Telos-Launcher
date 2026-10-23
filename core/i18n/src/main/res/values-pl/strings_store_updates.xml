@@ -4,4 +4,17 @@
     <string name="store_check_updates_per_app_summary">Wyłącz, aby pomijać automatyczne i ręczne sprawdzanie aktualizacji tej aplikacji.</string>
     <string name="store_parallel_updates">Aktualizuj kilka aplikacji równolegle</string>
     <string name="store_parallel_updates_summary">Pobiera i instaluje do 3 aplikacji jednocześnie podczas automatycznych lub ręcznych aktualizacji. Telos Launcher jest aktualizowany na końcu; Android może wyświetlić kilka próśb o potwierdzenie instalacji.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

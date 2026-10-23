@@ -12,4 +12,17 @@
     <string name="radio_backup_images">สำรองข้อมูล ZIP รวมรูปภาพสถานี</string>
     <string name="radio_restore_replace_summary">แทนที่รายการสถานีปัจจุบันด้วยข้อมูลสำรองนี้หรือไม่? รายการปัจจุบันจะถูกลบ</string>
     <string name="radio_station_image_url">ที่อยู่รูปภาพสถานี</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

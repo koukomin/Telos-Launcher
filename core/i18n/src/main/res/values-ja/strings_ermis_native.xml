@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">サーバー証明書を検証できませんでした。</string>
     <string name="ermis_error_generic">操作に失敗しました。接続とサーバー設定を確認してください。</string>
     <string name="ermis_error_sent_copy">メールは送信されましたが、送信済みにコピーを保存できませんでした。再送信しないでください。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

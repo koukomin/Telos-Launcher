@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTP ist unverschlüsselt. Nur dieser Ordner wird geteilt. Stoppt beim Schließen oder im Hintergrund.</string>
     <string name="nf_ftp_uploads">Neue Dateien hochladen (bis 2 GiB; kein Überschreiben)</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

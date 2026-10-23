@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Haftalık</string>
     <string name="blocklists_wifi_only">Yalnızca Wi-Fi\'de güncelle</string>
     <string name="blocklists_schedule_info">Tüm engelleme listeleri, web uygulamaları ve torrentler için geçerlidir. Güncellemeler yalnızca sunucuya listenin değişip değişmediğini sorar ve pil azaldığında atlanır.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

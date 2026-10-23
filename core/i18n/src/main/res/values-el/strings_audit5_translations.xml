@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">Τα torrents περιμένουν: ο επιλεγμένος διακομιστής μεσολάβησης WireGuard είναι απενεργοποιημένος.</string>
     <string name="au5_wgtorrent_blocked_down">Τα torrents περιμένουν: ο επιλεγμένος διακομιστής μεσολάβησης WireGuard δεν είναι συνδεδεμένος.</string>
     <string name="au5_wgtorrent_blocked_error">Τα torrents περιμένουν: το Telos Network δεν μπόρεσε να ανοίξει τον τοπικό διακομιστή μεσολάβησης.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

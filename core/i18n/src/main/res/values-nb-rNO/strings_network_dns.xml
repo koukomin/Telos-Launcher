@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Fjerne denne serveren?</string>
     <string name="net_dns_remove_message">«%1$s» blir slettet.</string>
     <string name="net_dns_select_failed">Kunne ikke bytte DNS-server: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

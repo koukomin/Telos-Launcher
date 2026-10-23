@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">Kirjautumisvastaus ei vastannut tätä pyyntöä, ja se ohitettiin</string>
     <string name="au8_traktweb_expired">Kirjautuminen kesti yli 10 minuuttia. Yritä uudelleen</string>
     <string name="au8_traktweb_no_browser">Selainta trakt.tv:n avaamiseen ei löytynyt</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

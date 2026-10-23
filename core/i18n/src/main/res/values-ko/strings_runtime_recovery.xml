@@ -3,4 +3,17 @@
     <string name="net_restore_summary">Android에서 허용하면 이전에 활성화된 VPN을 복원합니다. 수동으로 중지하면 꺼진 상태를 유지합니다.</string>
     <string name="netfw_u_unmetered">무제한 네트워크에서 차단</string>
     <string name="netfw_vpn_bypass">VPN 우회</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

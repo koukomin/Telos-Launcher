@@ -19,4 +19,17 @@
     <string name="ermis_google_help">ใช้บัญชี Android ที่เลือกเฉพาะเมื่อระบบยืนยันตัวตนอนุญาตให้เข้าถึงเมล มิฉะนั้นให้ใช้รหัสผ่านแอป</string>
     <string name="ermis_google_unavailable">ผู้ให้บริการบัญชีไม่อนุญาตให้เข้าถึงเมล ให้ใช้รหัสผ่านแอปแทน</string>
     <string name="ermis_conversation_count">%1$d ข้อความในการสนทนานี้</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">无法验证服务器证书。</string>
     <string name="ermis_error_generic">操作失败。请检查连接及服务器设置。</string>
     <string name="ermis_error_sent_copy">邮件已发送，但无法将副本保存至已发送文件夹。请勿重新发送。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Fonā lieto atbilstošo Android privātā DNS kārtulu arī tad, kad Telos Network VPN ir izslēgts. Nepieciešama atrašanās vietas un paziņojumu atļauja.</string>
     <string name="net_wifi_dns_permission_error">Nevarēja ieslēgt uzraudzību. Atļaujiet Shizuku, atrašanās vietas piekļuvi un paziņojumus.</string>
     <string name="net_wifi_dns_invalid_rule">Ievadiet derīgu Wi‑Fi nosaukumu un pakalpojumu sniedzēja kārtulai derīgu DNS resursdatora nosaukumu.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

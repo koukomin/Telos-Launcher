@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Serveri sertifikaati ei saanud kinnitada.</string>
     <string name="ermis_error_generic">Toiming ebaõnnestus. Kontrolli ühendust ja serveri sätteid.</string>
     <string name="ermis_error_sent_copy">Kiri saadeti, kuid koopiat ei salvestatud saadetud kirjadesse. Ära saada uuesti.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

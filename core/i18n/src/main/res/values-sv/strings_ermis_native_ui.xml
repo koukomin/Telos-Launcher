@@ -19,4 +19,17 @@
     <string name="ermis_google_help">Använder valt Android-konto endast om dess autentiseringstjänst ger e-poståtkomst. Använd annars ett applösenord.</string>
     <string name="ermis_google_unavailable">Kontoleverantören gav inte e-poståtkomst. Använd ett applösenord.</string>
     <string name="ermis_conversation_count">%1$d meddelanden i den här konversationen</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

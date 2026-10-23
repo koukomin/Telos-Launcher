@@ -4,4 +4,17 @@
     <string name="store_check_updates_per_app_summary">Bu uygulamanın otomatik ve manuel güncelleme kontrollerini atlamak için kapatın.</string>
     <string name="store_parallel_updates">Birden fazla uygulamayı paralel güncelle</string>
     <string name="store_parallel_updates_summary">Otomatik veya manuel güncellemelerde aynı anda en fazla 3 uygulamayı indirip yükler. Telos Launcher en son güncellenir; Android birden fazla yükleme onayı gösterebilir.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

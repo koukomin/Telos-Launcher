@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Ugentligt</string>
     <string name="blocklists_wifi_only">Opdater kun på Wi-Fi</string>
     <string name="blocklists_schedule_info">Gælder for alle blokeringslister, webapps og torrents. Opdateringer spørger kun serveren, om listen er ændret, og springes over, når batteriet er lavt.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

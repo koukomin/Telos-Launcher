@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Telos Network VPN kapalı olsa bile eşleşen Android Özel DNS kuralını arka planda uygular. Konum ve bildirim izinleri gerekir.</string>
     <string name="net_wifi_dns_permission_error">İzleme etkinleştirilemedi. Shizuku izni verin, konum erişimine ve bildirimlere izin verin.</string>
     <string name="net_wifi_dns_invalid_rule">Geçerli bir Wi‑Fi adı ve sağlayıcı kuralı için geçerli bir DNS ana bilgisayar adı girin.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Tilføjer en .nomedia-fil i mappen med stemmememoer, så gallerier og Telos Medier springer den over. Slået fra som standard. Opkaldsoptagelser ligger allerede i privat lager og er krypteret, Medier viser dem ikke.</string>
     <string name="call_recordings_hide_from_media">Skjul opkaldsoptagelser for Medier</string>
     <string name="call_recordings_hide_from_media_summary">Tilføjer en .nomedia-fil i mappen med opkaldsoptagelser, så gallerier og Telos Medier springer den over. Slået fra som standard. Optagelserne ligger allerede i privat krypteret lager; dette er et ekstra mærke.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

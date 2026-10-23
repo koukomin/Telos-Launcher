@@ -19,4 +19,17 @@
     <string name="ermis_google_help">चुने गए Android खाते का उपयोग तभी होता है जब उसका प्रमाणक मेल तक पहुँच देता है। अन्यथा ऐप पासवर्ड इस्तेमाल करें।</string>
     <string name="ermis_google_unavailable">खाता प्रदाता ने मेल तक पहुँच नहीं दी। ऐप पासवर्ड इस्तेमाल करें।</string>
     <string name="ermis_conversation_count">इस बातचीत में %1$d संदेश</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

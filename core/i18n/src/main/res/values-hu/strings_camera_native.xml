@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Felvétel arc észlelésekor</string>
     <string name="camera_native_motion_trigger">Felvétel mozgás észlelésekor</string>
     <string name="camera_native_trigger_hint">Csak előtérben. Legfeljebb 5 másodpercenként. A mozgás az előnézet változásain alapul, és a fényváltozásokra is reagálhat.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

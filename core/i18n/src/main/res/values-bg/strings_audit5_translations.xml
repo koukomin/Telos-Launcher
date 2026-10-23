@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">Торентите изчакват: избраното WireGuard прокси е изключено.</string>
     <string name="au5_wgtorrent_blocked_down">Торентите изчакват: избраното WireGuard прокси не е свързано.</string>
     <string name="au5_wgtorrent_blocked_error">Торентите изчакват: Telos Network не успя да отвори локалния прокси.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Server sertifikatı yoxlanıla bilmədi.</string>
     <string name="ermis_error_generic">Əməliyyat uğursuz oldu. Bağlantı və server ayarlarını yoxlayın.</string>
     <string name="ermis_error_sent_copy">Mesaj göndərildi, amma surəti Göndərilənlərdə saxlanılmadı. Yenidən göndərməyin.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

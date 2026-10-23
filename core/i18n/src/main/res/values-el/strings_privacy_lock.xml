@@ -12,4 +12,17 @@
     <string name="telos_files_lock_on_open_off">Χωρίς κωδικό στο άνοιγμα Αρχείων</string>
     <string name="call_recordings_hide_from_media">Απόκρυψη εγγραφών κλήσεων από τα Πολυμέσα</string>
     <string name="call_recordings_hide_from_media_summary">Προσθέτει αρχείο .nomedia στον φάκελο των εγγραφών κλήσεων ώστε οι συλλογές και τα Πολυμέσα Telos να τον αγνοούν. Απενεργοποιημένο από προεπιλογή. Οι εγγραφές κλήσεων είναι ήδη στον ιδιωτικό χώρο και κρυπτογραφημένες· αυτό είναι επιπλέον σήμανση.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

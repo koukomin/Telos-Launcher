@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Sertifikat server tidak dapat diverifikasi.</string>
     <string name="ermis_error_generic">Operasi gagal. Periksa koneksi dan pengaturan server.</string>
     <string name="ermis_error_sent_copy">Pesan terkirim, tetapi salinannya tidak tersimpan di Terkirim. Jangan kirim ulang.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

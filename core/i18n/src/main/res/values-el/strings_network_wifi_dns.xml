@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Εφαρμόζει στο παρασκήνιο τον αντίστοιχο κανόνα Ιδιωτικού DNS Android, ακόμη κι όταν το VPN του Telos Network είναι κλειστό. Απαιτούνται άδειες τοποθεσίας και ειδοποιήσεων.</string>
     <string name="net_wifi_dns_permission_error">Δεν ήταν δυνατή η ενεργοποίηση της παρακολούθησης. Δώσε άδεια στο Shizuku, πρόσβαση τοποθεσίας και ειδοποιήσεων.</string>
     <string name="net_wifi_dns_invalid_rule">Συμπλήρωσε έγκυρο όνομα Wi‑Fi και, για κανόνα παρόχου, έγκυρο όνομα DNS.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

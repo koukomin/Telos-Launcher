@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Ukentlig</string>
     <string name="blocklists_wifi_only">Oppdater bare på Wi-Fi</string>
     <string name="blocklists_schedule_info">Gjelder alle blokkeringslister, nettapper og torrenter. Oppdateringer spør bare tjeneren om listen er endret, og hoppes over når batteriet er lavt.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

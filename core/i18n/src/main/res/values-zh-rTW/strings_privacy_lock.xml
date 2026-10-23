@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">在語音備忘資料夾寫入 .nomedia，讓相簿與 Telos 媒體略過該資料夾。預設關閉。通話錄音已在私有儲存並加密，媒體不會列出它們。</string>
     <string name="call_recordings_hide_from_media">對媒體隱藏通話錄音</string>
     <string name="call_recordings_hide_from_media_summary">在通話錄音資料夾寫入 .nomedia，讓相簿與 Telos 媒體略過該資料夾。預設關閉。錄音已在私有加密儲存；這是額外標記。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

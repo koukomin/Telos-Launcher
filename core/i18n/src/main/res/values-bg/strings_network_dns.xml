@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Да се премахне ли този сървър?</string>
     <string name="net_dns_remove_message">„%1$s“ ще бъде изтрит.</string>
     <string name="net_dns_select_failed">DNS сървърът не можа да бъде сменен: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

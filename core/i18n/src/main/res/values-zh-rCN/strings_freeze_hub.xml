@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">从最近任务中移除后冻结</string>
     <string name="freeze_hub_recents_help">移除最后一个任务后，重新冻结受管理或由 Telos 解冻的应用。需要 Shizuku，并遵守使用排除规则。默认关闭。</string>
     <string name="freeze_hub_recents_unavailable">最近任务检测不可用。请启动 Shizuku 并授予权限。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

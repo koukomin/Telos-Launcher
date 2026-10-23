@@ -1498,4 +1498,17 @@
     <string name="telos_trash_unlock">Ξεκλείδωμα κάδου</string>
     <string name="telos_os_trash_unavailable">Δεν βρέθηκε κάδος του συστήματος σε αυτή τη συσκευή</string>
     <string name="telos_media_compact_list">Συμπαγής λίστα</string>
-<string name="telos_akou_app_label">Άκου</string><string name="telos_magnifier_app_label">Μεγεθυντικός φακός</string><string name="telos_flashlight_app_label">Φακός</string><string name="hf_freeze_disconnect">Αποσυνδέθηκε</string></resources>
+<string name="telos_akou_app_label">Άκου</string><string name="telos_magnifier_app_label">Μεγεθυντικός φακός</string><string name="telos_flashlight_app_label">Φακός</string><string name="hf_freeze_disconnect">Αποσυνδέθηκε</string>
+    <string name="store_tab_installed_apps">Εφαρμογές</string>
+    <string name="store_show_system_apps">Εμφάνιση εφαρμογών συστήματος</string>
+    <string name="store_show_virtual_apps">Εμφάνιση εικονικών εφαρμογών</string>
+    <string name="store_firewall_title">Telos Firewall</string>
+    <string name="store_firewall_wifi">Αποκλεισμός δεδομένων Wi-Fi</string>
+    <string name="store_firewall_mobile">Αποκλεισμός δεδομένων κινητής</string>
+    <string name="store_component_blocker">Μπλοκάρισμα Στοιχείων (Root)</string>
+    <string name="store_component_blocker_root_required">Απαιτείται πρόσβαση Root για απενεργοποίηση στοιχείων</string>
+    <string name="store_safety_safe">Ασφαλές για πάγωμα</string>
+    <string name="store_safety_caution">Πάγωμα με προσοχή</string>
+    <string name="store_safety_unsafe">Μη ασφαλές για πάγωμα</string>
+
+</resources>

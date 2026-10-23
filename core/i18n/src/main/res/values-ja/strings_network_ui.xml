@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">匿名にはなりません。信頼できる WireGuard トンネルを使わない限り、サイトにはあなたの IP アドレスが見えます。</string>
     <string name="net_settings_not_5">Android では同時に使える VPN は 1 つです。Telos Network は動作中、他の VPN に代わります。代わりに Telos Network 内で WireGuard を使ってください。</string>
     <string name="net_settings_not_6">新しい機能で、まだ多くの端末では試されていません。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

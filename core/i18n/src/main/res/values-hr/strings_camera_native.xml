@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Snimi kad se otkrije lice</string>
     <string name="camera_native_motion_trigger">Snimi kad se otkrije pokret</string>
     <string name="camera_native_trigger_hint">Samo u prvom planu. Najviše jednom svakih 5 sekundi. Pokret se određuje iz promjena pregleda i može reagirati na osvjetljenje.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

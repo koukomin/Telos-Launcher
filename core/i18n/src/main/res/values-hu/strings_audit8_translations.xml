@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">A bejelentkezési válasz nem egyezett ezzel a kéréssel, ezért figyelmen kívül lett hagyva</string>
     <string name="au8_traktweb_expired">A bejelentkezés több mint 10 percig tartott. Próbáld újra</string>
     <string name="au8_traktweb_no_browser">Nem található böngésző a trakt.tv megnyitásához</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

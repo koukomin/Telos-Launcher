@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Doda datoteko .nomedia v mapo glasovnih zapiskov, da jo galerije in Telos Mediji preskočijo. Privzeto izklopljeno. Posnetki klicev so že v zasebni shrambi in šifrirani, Mediji jih ne prikažejo.</string>
     <string name="call_recordings_hide_from_media">Skrij posnetke klicev pred Mediji</string>
     <string name="call_recordings_hide_from_media_summary">Doda datoteko .nomedia v mapo posnetkov klicev, da jo galerije in Telos Mediji preskočijo. Privzeto izklopljeno. Posnetki so že v zasebni šifrirani shrambi; to je dodatna oznaka.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

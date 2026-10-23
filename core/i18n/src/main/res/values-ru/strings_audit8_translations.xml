@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">Ответ при входе не соответствовал этому запросу и был проигнорирован</string>
     <string name="au8_traktweb_expired">Вход занял более 10 минут. Повторите попытку</string>
     <string name="au8_traktweb_no_browser">Не найден браузер для открытия trakt.tv</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

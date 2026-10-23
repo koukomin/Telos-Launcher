@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS hylkäsi toiminnon tai palautti vastauksen, jota ei tueta.</string>
     <string name="nd_error_unconfigured">Yhdistä ensin NextDNS-profiili.</string>
     <string name="nd_rule_title">Verkkotunnussääntö</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

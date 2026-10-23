@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">هل تريد إزالة هذا الخادم؟</string>
     <string name="net_dns_remove_message">سيتم حذف «%1$s».</string>
     <string name="net_dns_select_failed">تعذّر تبديل خادم DNS: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

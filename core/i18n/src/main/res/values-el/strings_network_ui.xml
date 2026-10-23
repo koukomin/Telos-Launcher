@@ -99,4 +99,17 @@
     <string name="net_settings_not_4">Δεν σας κάνει ανώνυμους. Οι ιστότοποι βλέπουν ακόμη τη διεύθυνση IP σας, εκτός αν χρησιμοποιείτε τούνελ WireGuard που εμπιστεύεστε.</string>
     <string name="net_settings_not_5">Το Android επιτρέπει ένα VPN τη φορά. Το Telos Network αντικαθιστά κάποιο άλλο VPN όσο λειτουργεί· χρησιμοποιήστε WireGuard μέσα στο Telos Network.</string>
     <string name="net_settings_not_6">Είναι καινούργιο και δεν έχει δοκιμαστεί ακόμη σε πολλές συσκευές.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

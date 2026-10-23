@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Japplika fl-isfond ir-regola xierqa tad-DNS privat ta’ Android, anki meta l-VPN ta’ Telos Network ikun mitfi. Jeħtieġ permessi tal-post u tan-notifiki.</string>
     <string name="net_wifi_dns_permission_error">Ma setgħetx tinxtegħel il-monitoraġġ. Agħti permess lil Shizuku u ppermetti l-post u n-notifiki.</string>
     <string name="net_wifi_dns_invalid_rule">Daħħal isem validu tal-Wi‑Fi u, għal regola tal-fornitur, isem validu tal-host DNS.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -19,4 +19,17 @@
     <string name="ermis_google_help">인증 서비스가 메일 접근을 허용한 경우에만 선택한 Android 계정을 사용합니다. 그렇지 않으면 앱 비밀번호를 사용하세요.</string>
     <string name="ermis_google_unavailable">계정 제공업체가 메일 접근을 허용하지 않았습니다. 앱 비밀번호를 사용하세요.</string>
     <string name="ermis_conversation_count">이 대화의 메시지 %1$d개</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

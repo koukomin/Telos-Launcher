@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTP 未加密。僅分享此資料夾。關閉視窗或進入背景時停止。</string>
     <string name="nf_ftp_uploads">允許上傳新檔案（最大 2 GiB；不覆寫現有檔案）</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

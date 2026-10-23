@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">Răspunsul de autentificare nu corespundea acestei cereri și a fost ignorat</string>
     <string name="au8_traktweb_expired">Autentificarea a durat mai mult de 10 minute. Încearcă din nou</string>
     <string name="au8_traktweb_no_browser">Nu s-a găsit niciun browser pentru deschiderea trakt.tv</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

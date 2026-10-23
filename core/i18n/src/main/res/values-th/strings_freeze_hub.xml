@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">แช่แข็งเมื่อนำออกจากแอปล่าสุด</string>
     <string name="freeze_hub_recents_help">แช่แข็งแอปที่จัดการหรือที่ Telos เลิกแช่แข็งอีกครั้งเมื่อนำงานสุดท้ายออก ต้องใช้ Shizuku และเคารพข้อยกเว้นการใช้งาน ปิดตามค่าเริ่มต้น</string>
     <string name="freeze_hub_recents_unavailable">ตรวจหาแอปล่าสุดไม่ได้ โปรดเปิด Shizuku และให้สิทธิ์</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

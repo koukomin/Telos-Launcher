@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Bei erkanntem Gesicht aufnehmen</string>
     <string name="camera_native_motion_trigger">Bei erkannter Bewegung aufnehmen</string>
     <string name="camera_native_trigger_hint">Nur im Vordergrund. Höchstens alle 5 Sekunden. Bewegung wird anhand von Vorschauänderungen erkannt und kann auf Lichtänderungen reagieren.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

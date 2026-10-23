@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">음성 메모 폴더에 .nomedia를 써서 갤러리와 Telos 미디어가 건너뛰게 합니다. 기본값은 꺼짐입니다. 통화 녹음은 이미 비공개 저장소에 있고 암호화되어 있어 미디어가 나열하지 않습니다.</string>
     <string name="call_recordings_hide_from_media">미디어에서 통화 녹음 숨기기</string>
     <string name="call_recordings_hide_from_media_summary">통화 녹음 폴더에 .nomedia를 써서 갤러리와 Telos 미디어가 건너뛰게 합니다. 기본값은 꺼짐입니다. 녹음은 이미 비공개 암호화 저장소에 있습니다. 이는 추가 표시입니다.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

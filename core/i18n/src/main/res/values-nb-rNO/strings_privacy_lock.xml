@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Legger til en .nomedia-fil i mappen for talenotater slik at gallerier og Telos Medier hopper over den. Av som standard. Samtaleopptak ligger allerede i privat lagring og er kryptert, Medier viser dem ikke.</string>
     <string name="call_recordings_hide_from_media">Skjul samtaleopptak fra Medier</string>
     <string name="call_recordings_hide_from_media_summary">Legger til en .nomedia-fil i mappen for samtaleopptak slik at gallerier og Telos Medier hopper over den. Av som standard. Opptakene ligger allerede i privat kryptert lagring; dette er en ekstra merker.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

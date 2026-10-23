@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS atmetė veiksmą arba pateikė nepalaikomą atsakymą.</string>
     <string name="nd_error_unconfigured">Pirmiausia prijunkite NextDNS profilį.</string>
     <string name="nd_rule_title">Domeno taisyklė</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

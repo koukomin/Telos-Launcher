@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Ses kayıtları klasörüne .nomedia dosyası ekler, galeriler ve Telos Medya klasörü atlar. Varsayılan olarak kapalı. Arama kayıtları zaten özel depolamada ve şifrelidir, Medya onları listelemez.</string>
     <string name="call_recordings_hide_from_media">Arama kayıtlarını Medya’dan gizle</string>
     <string name="call_recordings_hide_from_media_summary">Arama kayıtları klasörüne .nomedia dosyası ekler, galeriler ve Telos Medya klasörü atlar. Varsayılan olarak kapalı. Kayıtlar zaten özel şifreli depolamada; bu ek bir işaret.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

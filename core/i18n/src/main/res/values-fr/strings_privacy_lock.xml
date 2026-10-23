@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Ajoute un fichier .nomedia dans le dossier des mémos vocaux pour que les galeries et Telos Médias l’ignorent. Désactivé par défaut. Les enregistrements d’appels sont déjà en stockage privé et chiffrés, Médias ne les liste pas.</string>
     <string name="call_recordings_hide_from_media">Masquer les enregistrements d’appels de Médias</string>
     <string name="call_recordings_hide_from_media_summary">Ajoute un fichier .nomedia dans le dossier des enregistrements d’appels pour que les galeries et Telos Médias l’ignorent. Désactivé par défaut. Les enregistrements sont déjà en stockage privé chiffré ; c’est un marqueur supplémentaire.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Capturează la detectarea unei fețe</string>
     <string name="camera_native_motion_trigger">Capturează la detectarea mișcării</string>
     <string name="camera_native_trigger_hint">Doar în prim-plan. Cel mult o dată la 5 secunde. Mișcarea folosește schimbările previzualizării și poate reacționa la lumină.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

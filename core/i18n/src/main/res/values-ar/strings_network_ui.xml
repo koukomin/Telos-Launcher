@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">لا يجعلك مجهول الهوية. ما زالت المواقع ترى عنوان IP الخاص بك ما لم تستخدم نفق WireGuard تثق به.</string>
     <string name="net_settings_not_5">يسمح Android بـ VPN واحد في كل مرة. يحل Telos Network محل VPN آخر أثناء عمله؛ استخدم WireGuard داخل Telos Network بدلًا من ذلك.</string>
     <string name="net_settings_not_6">جديد ولم يُختبر بعد على أجهزة كثيرة.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

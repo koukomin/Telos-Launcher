@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">ลบเซิร์ฟเวอร์นี้หรือไม่</string>
     <string name="net_dns_remove_message">“%1$s” จะถูกลบ</string>
     <string name="net_dns_select_failed">ไม่สามารถเปลี่ยนเซิร์ฟเวอร์ DNS ได้: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

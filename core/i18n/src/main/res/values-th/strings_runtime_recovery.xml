@@ -11,4 +11,17 @@
     <string name="hc_settings">การตั้งค่า</string>
     <string name="preference_freeze_usage_access">การเข้าถึงข้อมูลการใช้งาน</string>
     <string name="preference_freeze_usage_access_summary_not_granted">ยังไม่ได้รับอนุญาต หากไม่มีสิทธิ์นี้ แอปอาจถูกแช่แข็งอัตโนมัติขณะใช้งาน แตะเพื่ออนุญาต</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

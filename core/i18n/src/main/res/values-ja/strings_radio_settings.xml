@@ -12,4 +12,17 @@
     <string name="radio_backup_images">放送局の画像を含むZIPバックアップ</string>
     <string name="radio_restore_replace_summary">現在の放送局コレクションをこのバックアップで置き換えますか？現在のコレクションは削除されます。</string>
     <string name="radio_station_image_url">放送局画像のアドレス</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

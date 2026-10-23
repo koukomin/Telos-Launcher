@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">Tidak membuat Anda anonim. Situs web tetap melihat alamat IP Anda, kecuali Anda memakai terowongan WireGuard yang Anda percaya.</string>
     <string name="net_settings_not_5">Android hanya mengizinkan satu VPN dalam satu waktu. Telos Network menggantikan VPN lain saat berjalan; gunakan WireGuard di dalam Telos Network sebagai gantinya.</string>
     <string name="net_settings_not_6">Baru dan belum diuji di banyak perangkat.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

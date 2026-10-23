@@ -27,4 +27,17 @@
     <string name="blocklists_schedule_weekly">Εβδομαδιαία</string>
     <string name="blocklists_wifi_only">Ενημέρωση μόνο μέσω Wi-Fi</string>
     <string name="blocklists_schedule_info">Ισχύει για όλες τις λίστες αποκλεισμού, web εφαρμογών και torrent. Οι ενημερώσεις ρωτούν μόνο τον διακομιστή αν η λίστα άλλαξε και παραλείπονται όταν η μπαταρία είναι χαμηλή.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

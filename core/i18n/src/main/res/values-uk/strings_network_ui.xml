@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">Він не робить вас анонімними. Сайти досі бачать вашу IP-адресу, якщо ви не використовуєте надійний тунель WireGuard.</string>
     <string name="net_settings_not_5">Android дозволяє один VPN одночасно. Telos Network замінює інший VPN, поки працює; натомість використовуйте WireGuard всередині Telos Network.</string>
     <string name="net_settings_not_6">Він новий і ще не перевірений на багатьох пристроях.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

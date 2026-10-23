@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTP şifrelenmez. Yalnızca bu klasör paylaşılır. Kapatıldığında veya arka planda durur.</string>
     <string name="nf_ftp_uploads">Yeni dosya yükleme (en çok 2 GiB; üzerine yazılmaz)</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

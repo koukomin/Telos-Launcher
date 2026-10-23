@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">সার্ভারের শংসাপত্র যাচাই করা যায়নি।</string>
     <string name="ermis_error_generic">কাজটি ব্যর্থ হয়েছে। সংযোগ ও সার্ভার সেটিং দেখুন।</string>
     <string name="ermis_error_sent_copy">বার্তা পাঠানো হয়েছে, কিন্তু প্রেরিত ফোল্ডারে কপি রাখা যায়নি। আবার পাঠাবেন না।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

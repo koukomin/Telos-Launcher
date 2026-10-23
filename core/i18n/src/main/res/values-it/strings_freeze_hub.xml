@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">Blocca dopo la rimozione dai recenti</string>
     <string name="freeze_hub_recents_help">Blocca di nuovo le app gestite o sbloccate da Telos alla rimozione dell’ultima attività. Richiede Shizuku e rispetta le esclusioni d’uso. Disattivato per impostazione predefinita.</string>
     <string name="freeze_hub_recents_unavailable">Rilevamento recenti non disponibile. Avvia Shizuku e concedi il permesso.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

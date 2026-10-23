@@ -19,4 +19,17 @@
     <string name="ermis_google_help">নির্বাচিত Android অ্যাকাউন্টের প্রমাণীকরণ ব্যবস্থা মেইলে প্রবেশাধিকার দিলেই সেটি ব্যবহার করে। অন্যথায় অ্যাপ পাসওয়ার্ড ব্যবহার করুন।</string>
     <string name="ermis_google_unavailable">অ্যাকাউন্ট প্রদানকারী মেইলে প্রবেশাধিকার দেয়নি। অ্যাপ পাসওয়ার্ড ব্যবহার করুন।</string>
     <string name="ermis_conversation_count">এই কথোপকথনে %1$dটি বার্তা</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

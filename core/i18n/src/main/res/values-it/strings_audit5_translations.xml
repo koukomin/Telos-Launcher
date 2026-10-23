@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">I torrent attendono: il proxy WireGuard selezionato è disattivato.</string>
     <string name="au5_wgtorrent_blocked_down">I torrent attendono: il proxy WireGuard selezionato non è connesso.</string>
     <string name="au5_wgtorrent_blocked_error">I torrent attendono: Telos Network non è riuscito ad aprire il proxy locale.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

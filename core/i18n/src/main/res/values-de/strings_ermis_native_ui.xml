@@ -19,4 +19,17 @@
     <string name="ermis_google_help">Verwendet das gewählte Android-Konto nur, wenn dessen Authentifizierungsdienst Mailzugriff gewährt. Andernfalls ein App-Passwort verwenden.</string>
     <string name="ermis_google_unavailable">Der Kontoanbieter hat keinen Mailzugriff gewährt. Stattdessen ein App-Passwort verwenden.</string>
     <string name="ermis_conversation_count">%1$d Nachrichten in dieser Unterhaltung</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

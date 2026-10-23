@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Certifikát serveru nelze ověřit.</string>
     <string name="ermis_error_generic">Operace selhala. Zkontrolujte připojení a nastavení serveru.</string>
     <string name="ermis_error_sent_copy">Zpráva byla odeslána, ale kopie nebyla uložena do Odeslaných. Neposílejte ji znovu.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

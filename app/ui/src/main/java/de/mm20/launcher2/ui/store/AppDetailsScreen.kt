@@ -31,7 +31,10 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -172,6 +175,55 @@ fun AppDetailsScreen(itemId: String) {
                         de.mm20.launcher2.ui.component.markdown.MarkdownText(
                             text = changelog.take(4000),
                             onTextChange = {}, // Read-only viewer
+                        )
+                    }
+                }
+            }
+            item {
+                var blockWifi by remember { mutableStateOf(false) }
+                var blockMobile by remember { mutableStateOf(false) }
+                Card(stringResource(R.string.store_firewall_title)) {
+                    SwitchLine(
+                        stringResource(R.string.store_firewall_wifi),
+                        "Prevent app from accessing network over Wi-Fi",
+                        blockWifi,
+                    ) { blockWifi = it }
+                    SwitchLine(
+                        stringResource(R.string.store_firewall_mobile),
+                        "Prevent app from accessing network over Cellular/Mobile Data",
+                        blockMobile,
+                    ) { blockMobile = it }
+                }
+            }
+            item {
+                var isRootAvailable by remember { mutableStateOf(false) }
+                LaunchedEffect(Unit) {
+                    withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        isRootAvailable = runCatching {
+                            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "id"))
+                            val output = process.inputStream.bufferedReader().readText()
+                            process.waitFor() == 0 && output.contains("uid=0")
+                        }.getOrDefault(false)
+                    }
+                }
+                Card(stringResource(R.string.store_component_blocker)) {
+                    if (isRootAvailable) {
+                        Text(
+                            "Root Component Blocker Active",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        Text(
+                            "Disable background services, broadcast receivers and activities (Component Blocker engine)",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    } else {
+                        Text(
+                            stringResource(R.string.store_component_blocker_root_required),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 }

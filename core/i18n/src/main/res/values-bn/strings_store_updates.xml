@@ -4,4 +4,17 @@
     <string name="store_check_updates_per_app_summary">এই অ্যাপের স্বয়ংক্রিয় ও ম্যানুয়াল আপডেট পরীক্ষা এড়াতে এটি বন্ধ করুন।</string>
     <string name="store_parallel_updates">একসঙ্গে একাধিক অ্যাপ আপডেট করুন</string>
     <string name="store_parallel_updates_summary">স্বয়ংক্রিয় বা ম্যানুয়াল আপডেটের সময় একসঙ্গে সর্বোচ্চ ৩টি অ্যাপ ডাউনলোড ও ইনস্টল করে। Telos Launcher সবশেষে আপডেট হয়; Android একাধিক ইনস্টল নিশ্চিতকরণ দেখাতে পারে।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

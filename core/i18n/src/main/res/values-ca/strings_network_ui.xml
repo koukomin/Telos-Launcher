@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">No et fa anònim. Els llocs web continuen veient la teva adreça IP, tret que usis un túnel WireGuard de confiança.</string>
     <string name="net_settings_not_5">Android permet una sola VPN alhora. Telos Network substitueix una altra VPN mentre funciona; usa millor WireGuard dins de Telos Network.</string>
     <string name="net_settings_not_6">És nou i encara no s\'ha provat en molts dispositius.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

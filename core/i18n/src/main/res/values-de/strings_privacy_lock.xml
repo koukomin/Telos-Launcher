@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Legt eine .nomedia-Datei im Ordner der Sprachaufnahmen an, damit Galerien und Telos Medien ihn überspringen. Standardmäßig aus. Anrufaufnahmen liegen bereits im privaten Speicher und sind verschlüsselt, Medien listen sie nicht.</string>
     <string name="call_recordings_hide_from_media">Anrufaufnahmen vor Medien verbergen</string>
     <string name="call_recordings_hide_from_media_summary">Legt eine .nomedia-Datei im Ordner der Anrufaufnahmen an, damit Galerien und Telos Medien ihn überspringen. Standardmäßig aus. Anrufaufnahmen liegen bereits im privaten, verschlüsselten Speicher; das ist ein zusätzliches Merkmal.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

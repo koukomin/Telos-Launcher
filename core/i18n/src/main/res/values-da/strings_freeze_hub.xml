@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">Frys efter fjernelse fra seneste apps</string>
     <string name="freeze_hub_recents_help">Fryser administrerede eller Telos-optøede apps igen, når sidste opgave fjernes. Kræver Shizuku og respekterer brugsundtagelser. Fra som standard.</string>
     <string name="freeze_hub_recents_unavailable">Registrering af seneste apps er utilgængelig. Start Shizuku og giv tilladelse.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

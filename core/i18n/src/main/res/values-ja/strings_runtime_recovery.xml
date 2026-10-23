@@ -3,4 +3,17 @@
     <string name="net_restore_summary">Android が許可する場合、以前有効だった VPN を復元します。手動で停止した場合は再開しません。</string>
     <string name="netfw_u_unmetered">従量制でないネットワークでブロック</string>
     <string name="netfw_vpn_bypass">VPN を迂回</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

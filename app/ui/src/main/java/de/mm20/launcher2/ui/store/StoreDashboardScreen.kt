@@ -237,10 +237,13 @@ fun StoreDashboardScreen(initialLink: String = "") {
                     )
                 }
                 // === TELOS_PENDING_REVIEW_END: store_micro_progress ===
+                val playTabIndex = if (playStoreInstalled) 4 else -1
+
                 PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 16.dp) {
                     Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.hc_apps), maxLines = 1) })
-                    Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.hc_telos_apps), maxLines = 1) })
-                    Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(R.string.recommendation_tab_label), maxLines = 1) })
+                    Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.store_tab_installed_apps), maxLines = 1) })
+                    Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(R.string.hc_telos_apps), maxLines = 1) })
+                    Tab(selected = tab == 3, onClick = { tab = 3 }, text = { Text(stringResource(R.string.recommendation_tab_label), maxLines = 1) })
                     if (playStoreInstalled) {
                         Tab(selected = tab == playTabIndex, onClick = { tab = playTabIndex }, text = { Text(stringResource(R.string.store_play_tab), maxLines = 1) })
                     }
@@ -263,6 +266,17 @@ fun StoreDashboardScreen(initialLink: String = "") {
                         onUpdateAll = { viewModel.updateAll() },
                         checking = checking,
                         onRefresh = { viewModel.checkAll() },
+                    )
+                } else if (tab == 1) {
+                    InstalledAppsTab(
+                        onOpenDetails = { pkgName: String ->
+                            val match = allRows.firstOrNull { it.item.packageName == pkgName }
+                            if (match != null) {
+                                backStack.add(AppDetailsRoute(itemId = match.item.id))
+                            } else {
+                                Toast.makeText(context, pkgName, Toast.LENGTH_SHORT).show()
+                            }
+                        },
                     )
                 } else if (tab == 2) {
                     RecommendedTab(
@@ -902,6 +916,129 @@ internal fun AppSource.summary(): String = when (this) {
     is AppSource.DirectApk -> stringResource(R.string.au_store_src_direct)
     is AppSource.AffiliatePlayStore -> stringResource(R.string.au_store_src_play)
     is AppSource.AffiliateDirect -> stringResource(R.string.au_store_src_direct)
+}
+
+@Composable
+private fun InstalledAppsTab(
+    onOpenDetails: (String) -> Unit,
+) {
+    val context = LocalContext.current
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    val freezeManager: de.mm20.launcher2.freeze.FreezeManager = org.koin.compose.koinInject()
+
+    var query by rememberSaveable { mutableStateOf("") }
+    var showSystem by rememberSaveable { mutableStateOf(false) }
+    var showVirtual by rememberSaveable { mutableStateOf(false) }
+    var frozenOnly by rememberSaveable { mutableStateOf(false) }
+
+    var installedApps by remember { mutableStateOf<List<android.content.pm.ApplicationInfo>>(emptyList()) }
+    var refreshTrigger by remember { mutableIntStateOf(0) }
+
+    LaunchedEffect(showSystem, showVirtual, refreshTrigger) {
+        withContext(kotlinx.coroutines.Dispatchers.IO) {
+            val pm = context.packageManager
+            val flags = android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS or android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES
+            val apps = pm.getInstalledApplications(flags)
+            val filtered = apps.filter { app ->
+                val isSystem = (app.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM) != 0
+                val isVirtual = app.packageName.startsWith(context.packageName)
+                (showSystem || !isSystem) && (showVirtual || !isVirtual)
+            }.sortedBy { pm.getApplicationLabel(it).toString().lowercase() }
+
+            installedApps = filtered
+        }
+    }
+
+    val visibleApps = remember(installedApps, query, frozenOnly, refreshTrigger) {
+        installedApps.filter { app ->
+            val label = context.packageManager.getApplicationLabel(app).toString()
+            val matchesQuery = query.isBlank() || label.contains(query.trim(), ignoreCase = true) || app.packageName.contains(query.trim(), ignoreCase = true)
+            val isFrozen = freezeManager.isFrozen(app.packageName)
+            val matchesFrozen = !frozenOnly || isFrozen
+            matchesQuery && matchesFrozen
+        }
+    }
+
+    Column(Modifier.fillMaxSize()) {
+        de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.hf_store_search))
+
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            FilterChip(
+                selected = frozenOnly,
+                onClick = { frozenOnly = !frozenOnly },
+                label = { Text("Frozen Only (❄)") },
+            )
+            FilterChip(
+                selected = showSystem,
+                onClick = { showSystem = !showSystem },
+                label = { Text(stringResource(R.string.store_show_system_apps)) },
+            )
+            FilterChip(
+                selected = showVirtual,
+                onClick = { showVirtual = !showVirtual },
+                label = { Text(stringResource(R.string.store_show_virtual_apps)) },
+            )
+        }
+
+        if (visibleApps.isEmpty()) {
+            EmptyMessage(
+                stringResource(R.string.hf_store_no_apps_match),
+                stringResource(R.string.hf_store_change_filter),
+            )
+        } else {
+            LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
+                items(visibleApps, key = { it.packageName }) { app ->
+                    val isFrozen = freezeManager.isFrozen(app.packageName)
+                    val pm = context.packageManager
+                    val label = pm.getApplicationLabel(app).toString()
+
+                    Surface(
+                        shape = RoundedCornerShape(20.dp),
+                        color = MaterialTheme.colorScheme.surfaceContainerLow,
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp).clickable {
+                            onOpenDetails(app.packageName)
+                        },
+                    ) {
+                        Row(
+                            Modifier.fillMaxWidth().padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            AppIcon(app.packageName, label, 48, source = null)
+                            Spacer(Modifier.width(12.dp))
+                            Column(Modifier.weight(1f)) {
+                                Text(label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                                Text(app.packageName, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
+                                    if (isFrozen) {
+                                        Text("❄ Frozen", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+                                    } else {
+                                        Text("Active", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
+                                    }
+                                }
+                            }
+                            OutlinedButton(
+                                onClick = {
+                                    scope.launch {
+                                        withContext(kotlinx.coroutines.Dispatchers.IO) {
+                                            if (isFrozen) freezeManager.unfreeze(app.packageName)
+                                            else freezeManager.freeze(app.packageName)
+                                            refreshTrigger++
+                                        }
+                                    }
+                                },
+                            ) {
+                                Text(if (isFrozen) "Thaw" else "Freeze")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 // ---------------------------------------------------------------------------------------------

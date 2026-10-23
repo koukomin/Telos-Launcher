@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS відхилив операцію або повернув непідтримувану відповідь.</string>
     <string name="nd_error_unconfigured">Спочатку підключіть профіль NextDNS.</string>
     <string name="nd_rule_title">Правило домену</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

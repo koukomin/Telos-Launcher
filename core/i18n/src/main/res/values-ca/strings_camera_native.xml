@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Captura en detectar una cara</string>
     <string name="camera_native_motion_trigger">Captura en detectar moviment</string>
     <string name="camera_native_trigger_hint">Només en primer pla. Com a màxim cada 5 segons. El moviment es detecta amb canvis de la previsualització i pot reaccionar a canvis de llum.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

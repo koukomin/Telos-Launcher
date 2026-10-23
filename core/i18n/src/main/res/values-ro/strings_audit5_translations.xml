@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">Torentele așteaptă: proxy-ul WireGuard selectat este dezactivat.</string>
     <string name="au5_wgtorrent_blocked_down">Torentele așteaptă: proxy-ul WireGuard selectat nu este conectat.</string>
     <string name="au5_wgtorrent_blocked_error">Torentele așteaptă: Telos Network nu a putut deschide proxy-ul local.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Palvelimen varmennetta ei voitu vahvistaa.</string>
     <string name="ermis_error_generic">Toiminto epäonnistui. Tarkista yhteys ja palvelinasetukset.</string>
     <string name="ermis_error_sent_copy">Viesti lähetettiin, mutta kopiota ei tallennettu Lähetetyt-kansioon. Älä lähetä uudelleen.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

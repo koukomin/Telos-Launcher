@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Ota kuva, kun kasvot havaitaan</string>
     <string name="camera_native_motion_trigger">Ota kuva, kun liike havaitaan</string>
     <string name="camera_native_trigger_hint">Vain etualalla. Enintään kerran 5 sekunnissa. Liike perustuu esikatselun muutoksiin ja voi reagoida valaistukseen.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

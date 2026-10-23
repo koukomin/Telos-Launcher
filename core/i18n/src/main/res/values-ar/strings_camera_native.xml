@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">التقاط عند اكتشاف وجه</string>
     <string name="camera_native_motion_trigger">التقاط عند اكتشاف حركة</string>
     <string name="camera_native_trigger_hint">في الواجهة فقط. لقطة واحدة كل 5 ثوانٍ كحد أقصى. تُكتشف الحركة من تغيرات المعاينة وقد تتأثر بتغير الإضاءة.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

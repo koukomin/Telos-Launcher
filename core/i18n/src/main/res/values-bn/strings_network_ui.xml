@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">এটি আপনাকে বেনামী করে না। বিশ্বাসযোগ্য WireGuard টানেল ব্যবহার না করলে ওয়েবসাইট আপনার IP ঠিকানা দেখতে পায়।</string>
     <string name="net_settings_not_5">Android একসাথে একটি VPN-ই অনুমতি দেয়। Telos Network চলার সময় অন্য VPN-এর জায়গা নেয়; এর বদলে Telos Network-এর ভেতরে WireGuard ব্যবহার করুন।</string>
     <string name="net_settings_not_6">এটি নতুন এবং এখনও অনেক ডিভাইসে পরীক্ষা করা হয়নি।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

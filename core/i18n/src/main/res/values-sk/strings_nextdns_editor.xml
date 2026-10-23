@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS odmietol operáciu alebo vrátil nepodporovanú odpoveď.</string>
     <string name="nd_error_unconfigured">Najprv pripojte profil NextDNS.</string>
     <string name="nd_rule_title">Pravidlo domény</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTP एन्क्रिप्टेड नहीं है। केवल यह फ़ोल्डर साझा होता है। बंद करने या पृष्ठभूमि में जाने पर रुकता है।</string>
     <string name="nf_ftp_uploads">नई फ़ाइलें अपलोड करें (अधिकतम 2 GiB; कोई ओवरराइट नहीं)</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

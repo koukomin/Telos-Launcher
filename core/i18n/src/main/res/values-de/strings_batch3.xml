@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Wöchentlich</string>
     <string name="blocklists_wifi_only">Nur über WLAN aktualisieren</string>
     <string name="blocklists_schedule_info">Gilt für alle Sperrlisten, Web-Apps und Torrents. Bei Aktualisierungen wird nur beim Server nachgefragt, ob sich die Liste geändert hat; bei niedrigem Akkustand werden sie übersprungen.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

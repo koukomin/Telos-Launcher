@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">No se pudo verificar el certificado del servidor.</string>
     <string name="ermis_error_generic">La operación falló. Revisa la conexión y los ajustes del servidor.</string>
     <string name="ermis_error_sent_copy">Mensaje enviado, pero no se guardó una copia en Enviados. No lo vuelvas a enviar.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">Det gør dig ikke anonym. Websteder ser stadig din IP-adresse, medmindre du bruger en WireGuard-tunnel, du stoler på.</string>
     <string name="net_settings_not_5">Android tillader én VPN ad gangen. Telos Network erstatter en anden VPN, mens det kører; brug i stedet WireGuard i Telos Network.</string>
     <string name="net_settings_not_6">Det er nyt og er endnu ikke testet på mange enheder.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

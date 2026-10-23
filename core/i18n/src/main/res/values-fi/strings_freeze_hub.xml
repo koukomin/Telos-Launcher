@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">Jäädytä viimeaikaisista poistamisen jälkeen</string>
     <string name="freeze_hub_recents_help">Jäädyttää hallitut tai Telosin sulattamat sovellukset, kun viimeinen tehtävä poistetaan. Vaatii Shizukun ja noudattaa käyttöpoikkeuksia. Oletuksena pois.</string>
     <string name="freeze_hub_recents_unavailable">Viimeaikaisten tunnistus ei ole saatavilla. Käynnistä Shizuku ja anna lupa.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

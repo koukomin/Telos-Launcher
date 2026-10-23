@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">Sizi anonim etmir. Etibar etdiyiniz WireGuard tunelindən istifadə etməsəniz, saytlar IP ünvanınızı görür.</string>
     <string name="net_settings_not_5">Android eyni anda bir VPN-ə icazə verir. Telos Network işləyərkən başqa VPN-i əvəz edir; bunun əvəzinə Telos Network daxilində WireGuard-dan istifadə edin.</string>
     <string name="net_settings_not_6">Yenidir və hələ çox cihazda sınaqdan keçməyib.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

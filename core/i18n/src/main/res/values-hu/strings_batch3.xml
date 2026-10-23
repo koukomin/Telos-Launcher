@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Hetente</string>
     <string name="blocklists_wifi_only">Frissítés csak Wi-Fin</string>
     <string name="blocklists_schedule_info">Minden tiltólistára vonatkozik, webalkalmazásokra és torrentekre egyaránt. A frissítések csak azt kérdezik meg a szervertől, változott-e a lista, és alacsony akkumulátorszint esetén kimaradnak.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

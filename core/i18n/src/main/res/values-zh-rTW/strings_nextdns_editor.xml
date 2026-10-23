@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS 拒絕了此操作或傳回不支援的回應。</string>
     <string name="nd_error_unconfigured">請先連線 NextDNS 設定檔。</string>
     <string name="nd_rule_title">網域規則</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">Nó không giúp bạn ẩn danh. Các trang web vẫn thấy địa chỉ IP của bạn, trừ khi bạn dùng đường hầm WireGuard mà bạn tin cậy.</string>
     <string name="net_settings_not_5">Android chỉ cho phép một VPN tại một thời điểm. Telos Network thay thế VPN khác khi đang chạy; hãy dùng WireGuard bên trong Telos Network.</string>
     <string name="net_settings_not_6">Nó còn mới và chưa được thử nghiệm trên nhiều thiết bị.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

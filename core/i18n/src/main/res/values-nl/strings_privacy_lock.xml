@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Voegt een .nomedia-bestand toe in de map met spraakopnamen zodat galerijen en Telos Media die overslaan. Standaard uit. Gespreksopnamen staan al in privéopslag en zijn versleuteld, Media toont ze niet.</string>
     <string name="call_recordings_hide_from_media">Gespreksopnamen verbergen voor Media</string>
     <string name="call_recordings_hide_from_media_summary">Voegt een .nomedia-bestand toe in de map met gespreksopnamen zodat galerijen en Telos Media die overslaan. Standaard uit. Opnamen staan al in privé versleutelde opslag; dit is een extra merker.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -16,4 +16,17 @@
     <string name="net_ping_start">"Ping"</string>
     <string name="net_ping_result">"Ping %1$s (%2$s): %3$d/%4$d πακέτα, Καθυστέρηση: ελάχ %5$dms, μέση %6$dms, μέγ %7$dms"</string>
     <string name="net_ping_failed">"Το ping απέτυχε για το %1$s"</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

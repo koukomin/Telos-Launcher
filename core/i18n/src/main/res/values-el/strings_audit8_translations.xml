@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">Η απάντηση σύνδεσης δεν ταίριαζε με αυτό το αίτημα και αγνοήθηκε</string>
     <string name="au8_traktweb_expired">Η σύνδεση διήρκεσε πάνω από 10 λεπτά. Δοκιμάστε ξανά</string>
     <string name="au8_traktweb_no_browser">Δεν βρέθηκε πρόγραμμα περιήγησης για το άνοιγμα του trakt.tv</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

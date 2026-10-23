@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Ukloniti ovaj poslužitelj?</string>
     <string name="net_dns_remove_message">„%1$s” bit će izbrisan.</string>
     <string name="net_dns_select_failed">Nije moguće promijeniti DNS poslužitelj: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

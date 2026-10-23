@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">이 서버를 삭제할까요?</string>
     <string name="net_dns_remove_message">“%1$s”이(가) 삭제됩니다.</string>
     <string name="net_dns_select_failed">DNS 서버를 전환할 수 없습니다: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

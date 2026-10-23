@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTP n’est pas chiffré. Seul ce dossier est partagé. Arrêt à la fermeture ou en arrière-plan.</string>
     <string name="nf_ftp_uploads">Envoyer de nouveaux fichiers (2 Gio maximum ; sans écrasement)</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

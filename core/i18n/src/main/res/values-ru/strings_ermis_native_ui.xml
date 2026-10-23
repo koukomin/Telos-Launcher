@@ -19,4 +19,17 @@
     <string name="ermis_google_help">Выбранный аккаунт Android используется, только если служба аутентификации разрешает доступ к почте. Иначе используйте пароль приложения.</string>
     <string name="ermis_google_unavailable">Поставщик аккаунта не разрешил доступ к почте. Используйте пароль приложения.</string>
     <string name="ermis_conversation_count">%1$d сообщений в этой переписке</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

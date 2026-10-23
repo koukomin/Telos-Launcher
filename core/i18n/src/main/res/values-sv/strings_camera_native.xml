@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Ta bild när ett ansikte upptäcks</string>
     <string name="camera_native_motion_trigger">Ta bild när rörelse upptäcks</string>
     <string name="camera_native_trigger_hint">Endast i förgrunden. Högst var 5:e sekund. Rörelse bygger på ändringar i förhandsvisningen och kan reagera på ljusförändringar.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

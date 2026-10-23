@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Знімати, коли виявлено обличчя</string>
     <string name="camera_native_motion_trigger">Знімати, коли виявлено рух</string>
     <string name="camera_native_trigger_hint">Лише на передньому плані. Не частіше ніж раз на 5 секунд. Рух визначається за змінами попереднього перегляду, зокрема освітлення.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

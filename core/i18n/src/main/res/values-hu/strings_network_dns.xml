@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Eltávolítod ezt a kiszolgálót?</string>
     <string name="net_dns_remove_message">A(z) „%1$s” törlődni fog.</string>
     <string name="net_dns_select_failed">Nem sikerült átváltani a DNS-kiszolgálót: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

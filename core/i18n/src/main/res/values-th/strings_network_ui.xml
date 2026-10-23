@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">ไม่ได้ทำให้คุณนิรนาม เว็บไซต์ยังเห็นที่อยู่ IP ของคุณ เว้นแต่คุณใช้อุโมงค์ WireGuard ที่เชื่อถือได้</string>
     <string name="net_settings_not_5">Android อนุญาตให้ใช้ VPN ได้ทีละหนึ่ง Telos Network จะแทนที่ VPN อื่นขณะทำงาน ให้ใช้ WireGuard ภายใน Telos Network แทน</string>
     <string name="net_settings_not_6">เป็นของใหม่และยังไม่ได้ทดสอบบนอุปกรณ์จำนวนมาก</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

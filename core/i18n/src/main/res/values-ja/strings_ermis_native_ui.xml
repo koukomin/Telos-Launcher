@@ -19,4 +19,17 @@
     <string name="ermis_google_help">認証サービスがメールへのアクセスを許可した場合のみ、選択した Android アカウントを使います。それ以外はアプリパスワードを使ってください。</string>
     <string name="ermis_google_unavailable">アカウント提供元がメールへのアクセスを許可しませんでした。アプリパスワードを使ってください。</string>
     <string name="ermis_conversation_count">このスレッドのメール数：%1$d 件</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

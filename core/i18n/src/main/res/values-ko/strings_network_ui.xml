@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">익명이 되지는 않습니다. 신뢰하는 WireGuard 터널을 쓰지 않는 한 웹사이트는 IP 주소를 볼 수 있습니다.</string>
     <string name="net_settings_not_5">Android는 한 번에 하나의 VPN만 허용합니다. Telos Network는 실행 중에 다른 VPN을 대체합니다. 대신 Telos Network 안에서 WireGuard를 사용하세요.</string>
     <string name="net_settings_not_6">새로운 기능이며 아직 많은 기기에서 테스트되지 않았습니다.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

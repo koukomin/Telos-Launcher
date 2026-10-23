@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS afviste handlingen eller returnerede et svar, der ikke understøttes.</string>
     <string name="nd_error_unconfigured">Forbind først en NextDNS-profil.</string>
     <string name="nd_rule_title">Domæneregel</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

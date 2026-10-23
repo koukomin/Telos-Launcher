@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">No s’ha pogut verificar el certificat del servidor.</string>
     <string name="ermis_error_generic">L’operació ha fallat. Comproveu la connexió i els ajusts del servidor.</string>
     <string name="ermis_error_sent_copy">Missatge enviat, però no s’ha desat la còpia a Enviats. No el torneu a enviar.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

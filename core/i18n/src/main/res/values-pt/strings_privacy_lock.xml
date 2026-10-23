@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Adiciona um ficheiro .nomedia na pasta dos memos de voz para galerias e Telos Multimédia a ignorarem. Desativado por predefinição. As gravações de chamadas já estão no armazenamento privado e encriptadas, a Multimédia não as lista.</string>
     <string name="call_recordings_hide_from_media">Ocultar gravações de chamadas da Multimédia</string>
     <string name="call_recordings_hide_from_media_summary">Adiciona um ficheiro .nomedia na pasta das gravações de chamadas para galerias e Telos Multimédia a ignorarem. Desativado por predefinição. As gravações já estão no armazenamento privado encriptado; isto é uma marca extra.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

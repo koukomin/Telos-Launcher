@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS가 작업을 거부했거나 지원하지 않는 응답을 반환했습니다.</string>
     <string name="nd_error_unconfigured">먼저 NextDNS 프로필을 연결하세요.</string>
     <string name="nd_rule_title">도메인 규칙</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

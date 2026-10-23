@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">检测到人脸时拍摄</string>
     <string name="camera_native_motion_trigger">检测到动作时拍摄</string>
     <string name="camera_native_trigger_hint">仅限前台。最多每 5 秒拍摄一次。动作检测依据预览的变化，也可能对光线变化作出反应。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

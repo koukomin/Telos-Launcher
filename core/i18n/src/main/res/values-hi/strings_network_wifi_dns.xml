@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Telos Network VPN बंद होने पर भी, कनेक्टेड Wi‑Fi के लिए Android का निजी DNS नियम बैकग्राउंड में लागू करता है। स्थान और सूचनाओं की अनुमतियाँ आवश्यक हैं।</string>
     <string name="net_wifi_dns_permission_error">निगरानी चालू नहीं हो सकी। Shizuku की अनुमति दें और स्थान तथा सूचनाओं की अनुमति दें।</string>
     <string name="net_wifi_dns_invalid_rule">मान्य Wi‑Fi नाम और प्रदाता नियम के लिए मान्य DNS होस्टनाम दर्ज करें।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

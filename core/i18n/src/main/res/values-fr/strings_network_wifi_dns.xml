@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Applique en arrière-plan la règle DNS privé Android correspondante, même si le VPN de Telos Network est désactivé. Les autorisations de localisation et de notifications sont requises.</string>
     <string name="net_wifi_dns_permission_error">Impossible d’activer la surveillance. Autorisez Shizuku, l’accès à la localisation et les notifications.</string>
     <string name="net_wifi_dns_invalid_rule">Saisissez un nom Wi‑Fi valide et un nom d’hôte DNS valide pour une règle de fournisseur.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">ถ่ายเมื่อพบใบหน้า</string>
     <string name="camera_native_motion_trigger">ถ่ายเมื่อตรวจพบการเคลื่อนไหว</string>
     <string name="camera_native_trigger_hint">ทำงานเฉพาะเบื้องหน้า ถ่ายได้สูงสุดทุก 5 วินาที การตรวจจับใช้ความเปลี่ยนแปลงในภาพตัวอย่างและอาจตอบสนองต่อแสงที่เปลี่ยนไป</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

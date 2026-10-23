@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">টরেন্ট অপেক্ষায়: নির্বাচিত WireGuard প্রক্সি বন্ধ আছে।</string>
     <string name="au5_wgtorrent_blocked_down">টরেন্ট অপেক্ষায়: নির্বাচিত WireGuard প্রক্সি সংযুক্ত নয়।</string>
     <string name="au5_wgtorrent_blocked_error">টরেন্ট অপেক্ষায়: Telos Network লোকাল প্রক্সি খুলতে পারেনি।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

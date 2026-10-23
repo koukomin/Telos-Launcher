@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Snímať pri zistení tváre</string>
     <string name="camera_native_motion_trigger">Snímať pri zistení pohybu</string>
     <string name="camera_native_trigger_hint">Len v popredí. Najviac raz za 5 sekúnd. Pohyb sa určuje zo zmien náhľadu a môže reagovať na zmeny osvetlenia.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS が操作を拒否したか、未対応の応答を返しました。</string>
     <string name="nd_error_unconfigured">先に NextDNS プロファイルを接続してください。</string>
     <string name="nd_rule_title">ドメインルール</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

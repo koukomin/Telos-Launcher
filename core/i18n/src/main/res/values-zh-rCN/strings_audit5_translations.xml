@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">种子等待中:所选的 WireGuard 代理已关闭。</string>
     <string name="au5_wgtorrent_blocked_down">种子等待中:所选的 WireGuard 代理未连接。</string>
     <string name="au5_wgtorrent_blocked_error">种子等待中:Telos Network 无法打开本地代理。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

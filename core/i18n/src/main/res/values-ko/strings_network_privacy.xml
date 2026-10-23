@@ -11,4 +11,17 @@
     <string name="nweb_intro">ASCII 이름만 지원합니다. .eth: ENS Ideas / eth.limo, 나머지: 사용자 UD 프록시. 제공업체에 이름/IP가 전달됩니다. 웹사이트는 HTTPS 게이트웨이를 사용합니다.</string>
     <string name="nweb_proxy">Unstoppable Domains 프록시 (HTTPS)</string>
     <string name="nweb_wallets">지갑 주소</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

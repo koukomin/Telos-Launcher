@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">Nach Entfernen aus der Übersicht einfrieren</string>
     <string name="freeze_hub_recents_help">Verwaltete oder von Telos aufgetaute Apps nach Entfernen ihrer letzten Aufgabe einfrieren. Benötigt Shizuku; Nutzungsausnahmen gelten weiter. Standardmäßig aus.</string>
     <string name="freeze_hub_recents_unavailable">Erkennung der Übersicht nicht verfügbar. Shizuku starten und Berechtigung erteilen.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

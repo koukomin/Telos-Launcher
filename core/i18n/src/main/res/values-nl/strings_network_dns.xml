@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Deze server verwijderen?</string>
     <string name="net_dns_remove_message">‘%1$s’ wordt verwijderd.</string>
     <string name="net_dns_select_failed">DNS-server kon niet worden gewijzigd: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

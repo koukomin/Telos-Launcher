@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Telos Network VPN がオフでも、接続中の Wi‑Fi に対応する Android のプライベート DNS ルールをバックグラウンドで適用します。位置情報と通知の権限が必要です。</string>
     <string name="net_wifi_dns_permission_error">監視を有効にできませんでした。Shizuku、位置情報へのアクセス、通知を許可してください。</string>
     <string name="net_wifi_dns_invalid_rule">有効な Wi‑Fi 名を入力してください。プロバイダー規則には有効な DNS ホスト名も必要です。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

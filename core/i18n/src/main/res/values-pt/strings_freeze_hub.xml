@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">Congelar após remover dos recentes</string>
     <string name="freeze_hub_recents_help">Volta a congelar apps geridas ou descongeladas pelo Telos após remover a última tarefa. Requer Shizuku e respeita exclusões de uso. Desativado por predefinição.</string>
     <string name="freeze_hub_recents_unavailable">Deteção dos recentes indisponível. Inicie Shizuku e conceda permissão.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

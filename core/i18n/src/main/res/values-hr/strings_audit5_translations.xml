@@ -22,4 +22,17 @@
     <string name="au5_wgtorrent_blocked_disabled">Torrenti čekaju: odabrani WireGuard proxy je isključen.</string>
     <string name="au5_wgtorrent_blocked_down">Torrenti čekaju: odabrani WireGuard proxy nije povezan.</string>
     <string name="au5_wgtorrent_blocked_error">Torrenti čekaju: Telos Network nije mogao otvoriti lokalni proxy.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

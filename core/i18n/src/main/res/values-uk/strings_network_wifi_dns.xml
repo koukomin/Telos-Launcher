@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Застосовує відповідне правило приватного DNS Android у фоновому режимі, навіть коли VPN Telos Network вимкнено. Потрібні дозволи на місцезнаходження та сповіщення.</string>
     <string name="net_wifi_dns_permission_error">Не вдалося ввімкнути моніторинг. Надайте дозвіл Shizuku, доступ до місцезнаходження та сповіщення.</string>
     <string name="net_wifi_dns_invalid_rule">Введіть дійсну назву Wi‑Fi, а для правила постачальника — дійсне ім’я хоста DNS.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

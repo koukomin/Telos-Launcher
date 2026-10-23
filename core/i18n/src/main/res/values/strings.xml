@@ -1140,6 +1140,17 @@
     <string name="search_action_alarm">Set alarm</string>
     <string name="search_action_screentime">Screen time</string>
     <string name="search_action_ai">AI Search</string>
+    <string name="store_tab_installed_apps">Installed Apps</string>
+    <string name="store_show_system_apps">Show system apps</string>
+    <string name="store_show_virtual_apps">Show virtual apps</string>
+    <string name="store_firewall_title">Telos Firewall</string>
+    <string name="store_firewall_wifi">Block Wi-Fi Data</string>
+    <string name="store_firewall_mobile">Block Mobile Data</string>
+    <string name="store_component_blocker">Component Blocker (Root)</string>
+    <string name="store_component_blocker_root_required">Requires Root access to disable components</string>
+    <string name="store_safety_safe">Safe to Freeze</string>
+    <string name="store_safety_caution">Freeze with Caution</string>
+    <string name="store_safety_unsafe">Unsafe to Freeze</string>
     <string name="search_action_timer">Start timer</string>
     <string name="search_action_share">Share</string>
     <string name="search_action_websearch">Web search</string>

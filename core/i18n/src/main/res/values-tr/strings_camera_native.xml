@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Yüz algılandığında çek</string>
     <string name="camera_native_motion_trigger">Hareket algılandığında çek</string>
     <string name="camera_native_trigger_hint">Yalnızca ön planda. En fazla 5 saniyede bir çeker. Hareket, önizleme değişikliklerine dayanır ve ışık değişimlerinden etkilenebilir.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

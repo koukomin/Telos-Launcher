@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Снимать при обнаружении лица</string>
     <string name="camera_native_motion_trigger">Снимать при обнаружении движения</string>
     <string name="camera_native_trigger_hint">Только на переднем плане. Не чаще раза в 5 секунд. Движение определяется по изменениям предпросмотра и может реагировать на освещение.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

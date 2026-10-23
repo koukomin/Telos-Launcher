@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Ta bort den här servern?</string>
     <string name="net_dns_remove_message">”%1$s” raderas.</string>
     <string name="net_dns_select_failed">Det gick inte att byta DNS-server: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

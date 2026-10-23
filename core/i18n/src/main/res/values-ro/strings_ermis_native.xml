@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Certificatul serverului nu a putut fi verificat.</string>
     <string name="ermis_error_generic">Operația a eșuat. Verifică conexiunea și setările serverului.</string>
     <string name="ermis_error_sent_copy">Mesaj trimis, dar copia nu a fost salvată în Trimise. Nu retrimite.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

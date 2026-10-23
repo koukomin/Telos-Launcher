@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">在语音备忘文件夹中写入 .nomedia，使图库和 Telos 媒体跳过该文件夹。默认关闭。通话录音已在私有存储中并加密，媒体不会列出它们。</string>
     <string name="call_recordings_hide_from_media">对媒体隐藏通话录音</string>
     <string name="call_recordings_hide_from_media_summary">在通话录音文件夹中写入 .nomedia，使图库和 Telos 媒体跳过该文件夹。默认关闭。录音已在私有加密存储中；这是额外标记。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -4,4 +4,17 @@
     <string name="au6_radio2_loading">Se încarcă %1$s</string>
     <string name="au6_webapps4_cookie_source_default">Toate / implicit</string>
     <string name="au6_wgvideo_route_not_ready">Torrentul nu a putut porni: este setat să folosească un tunel WireGuard din Telos Network, iar tunelul nu este pregătit. Activați Telos Network și tunelul sau modificați setarea în Telos Downloads. Nu s-a trimis nimic.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

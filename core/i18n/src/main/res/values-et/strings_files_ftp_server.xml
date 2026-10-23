@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTP pole krüpteeritud. Jagatakse ainult seda kausta. Peatub sulgemisel või taustal.</string>
     <string name="nf_ftp_uploads">Uute failide üleslaadimine (kuni 2 GiB; ei kirjuta üle)</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

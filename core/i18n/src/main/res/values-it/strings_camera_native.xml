@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Scatta quando viene rilevato un volto</string>
     <string name="camera_native_motion_trigger">Scatta quando viene rilevato movimento</string>
     <string name="camera_native_trigger_hint">Solo in primo piano. Al massimo ogni 5 secondi. Il movimento usa le variazioni dell’anteprima e può reagire ai cambiamenti di luce.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">サインインの応答がこのリクエストと一致しなかったため、無視されました</string>
     <string name="au8_traktweb_expired">サインインに 10 分以上かかりました。もう一度お試しください</string>
     <string name="au8_traktweb_no_browser">trakt.tv を開くブラウザが見つかりません</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

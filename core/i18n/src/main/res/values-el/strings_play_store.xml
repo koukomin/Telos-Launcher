@@ -24,4 +24,17 @@
 
     <string name="call_block_outgoing">Αποκλεισμός εξερχόμενων προς τη λίστα</string>
     <string name="call_block_outgoing_sum">Τερματισμός αμέσως όταν καλείς μπλοκαρισμένο αριθμό, πρόθεμα (800*) ή regex (re:μοτίβο). Με ή χωρίς root· ως προεπιλεγμένο dialer το Telos φιλτράρει πρώτο.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

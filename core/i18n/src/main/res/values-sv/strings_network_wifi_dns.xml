@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Tillämpar motsvarande Android-regel för privat DNS i bakgrunden, även när Telos Networks VPN är avstängt. Kräver plats- och aviseringsbehörighet.</string>
     <string name="net_wifi_dns_permission_error">Det gick inte att aktivera övervakningen. Ge Shizuku behörighet och tillåt platsåtkomst och aviseringar.</string>
     <string name="net_wifi_dns_invalid_rule">Ange ett giltigt Wi‑Fi-namn och ett giltigt DNS-värdnamn för en leverantörsregel.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

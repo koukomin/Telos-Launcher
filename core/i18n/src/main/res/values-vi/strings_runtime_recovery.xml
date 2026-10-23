@@ -11,4 +11,17 @@
     <string name="hc_settings">Cài đặt</string>
     <string name="preference_freeze_usage_access">Quyền truy cập dữ liệu sử dụng</string>
     <string name="preference_freeze_usage_access_summary_not_granted">Chưa được cấp. Nếu thiếu quyền này, ứng dụng có thể bị đóng băng tự động ngay cả khi đang sử dụng. Nhấn để cấp quyền.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Aggiunge un file .nomedia nella cartella dei memo vocali così gallerie e Telos Media la saltano. Disattivato per impostazione predefinita. Le registrazioni delle chiamate sono già in archivio privato e cifrate, Media non le elenca.</string>
     <string name="call_recordings_hide_from_media">Nascondi le registrazioni delle chiamate da Media</string>
     <string name="call_recordings_hide_from_media_summary">Aggiunge un file .nomedia nella cartella delle registrazioni delle chiamate così gallerie e Telos Media la saltano. Disattivato per impostazione predefinita. Le registrazioni sono già in archivio privato cifrato; questo è un segno extra.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

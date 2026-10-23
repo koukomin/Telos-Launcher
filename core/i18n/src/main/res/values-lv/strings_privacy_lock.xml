@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Pievieno .nomedia failu balss piezīmju mapei, lai galerijas un Telos Multivide to izlaistu. Pēc noklusējuma izslēgts. Zvanu ieraksti jau ir privātajā krātuvē un šifrēti, Multivide tos nerāda.</string>
     <string name="call_recordings_hide_from_media">Paslēpt zvanu ierakstus no Multivides</string>
     <string name="call_recordings_hide_from_media_summary">Pievieno .nomedia failu zvanu ierakstu mapei, lai galerijas un Telos Multivide to izlaistu. Pēc noklusējuma izslēgts. Ieraksti jau ir privātajā šifrētajā krātuvē; tas ir papildu marķējums.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

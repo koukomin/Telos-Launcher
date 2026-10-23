@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">移除此服务器？</string>
     <string name="net_dns_remove_message">“%1$s”将被删除。</string>
     <string name="net_dns_select_failed">无法切换 DNS 服务器：%1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

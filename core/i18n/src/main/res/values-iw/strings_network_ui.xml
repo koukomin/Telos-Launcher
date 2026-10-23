@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">הוא לא הופך אתכם לאנונימיים. אתרים עדיין רואים את כתובת ה-IP שלכם, אלא אם אתם משתמשים במנהרת WireGuard שאתם סומכים עליה.</string>
     <string name="net_settings_not_5">Android מאפשר VPN אחד בכל פעם. Telos Network מחליף VPN אחר כשהוא פועל; השתמשו במקום זאת ב-WireGuard בתוך Telos Network.</string>
     <string name="net_settings_not_6">הוא חדש וטרם נבדק בהרבה מכשירים.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

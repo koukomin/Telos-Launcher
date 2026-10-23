@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">Lisää .nomedia-tiedoston äänimuistioiden kansioon, jotta galleriat ja Telos Media ohittavat sen. Oletuksena pois. Puhelutallenteet ovat jo yksityisessä tallennuksessa ja salattuja, Media ei listaa niitä.</string>
     <string name="call_recordings_hide_from_media">Piilota puhelutallenteet Medialta</string>
     <string name="call_recordings_hide_from_media_summary">Lisää .nomedia-tiedoston puhelutallenteiden kansioon, jotta galleriat ja Telos Media ohittavat sen. Oletuksena pois. Tallenteet ovat jo yksityisessä salatussa tallennuksessa; tämä on lisämerkintä.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

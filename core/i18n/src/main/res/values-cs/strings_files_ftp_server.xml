@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTP není šifrované. Sdílí se pouze tato složka. Zastaví se při zavření nebo na pozadí.</string>
     <string name="nf_ftp_uploads">Nahrávat nové soubory (do 2 GiB; bez přepisování)</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

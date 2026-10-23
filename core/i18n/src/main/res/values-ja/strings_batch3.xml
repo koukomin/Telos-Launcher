@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">毎週</string>
     <string name="blocklists_wifi_only">Wi-Fi 接続時のみ更新</string>
     <string name="blocklists_schedule_info">すべてのブロックリスト（ウェブアプリとトレント）に適用されます。更新時はサーバーにリストが変更されたかを確認するだけで、バッテリー残量が少ないときはスキップされます。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

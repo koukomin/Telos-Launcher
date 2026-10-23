@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Servercertifikatet kunde inte verifieras.</string>
     <string name="ermis_error_generic">Åtgärden misslyckades. Kontrollera anslutning och serverinställningar.</string>
     <string name="ermis_error_sent_copy">Meddelandet är skickat men kopian sparades inte i Skickat. Skicka inte igen.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">Замораживать после удаления из недавних</string>
     <string name="freeze_hub_recents_help">Повторно замораживает управляемые или размороженные Telos приложения после удаления последней задачи. Нужен Shizuku; исключения использования сохраняются. По умолчанию выключено.</string>
     <string name="freeze_hub_recents_unavailable">Обнаружение недавних недоступно. Запустите Shizuku и дайте разрешение.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

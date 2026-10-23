@@ -43,4 +43,17 @@
     <string name="cal_sync_note">Τα ημερολόγια Google, CalDAV (DAVx5) και Exchange συγχρονίζονται από το σύστημα μέσω του λογαριασμού τους. Τα τοπικά ημερολόγια μένουν στο κινητό και μπαίνουν στο backup του Telos.</string>
     <string name="cal_view_agenda">Επόμενες 30 μέρες</string>
     <string name="cal_view_month">Μηνιαία προβολή</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

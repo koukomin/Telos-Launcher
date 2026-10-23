@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTP는 암호화되지 않습니다. 이 폴더만 공유합니다. 닫거나 백그라운드로 전환하면 중지됩니다.</string>
     <string name="nf_ftp_uploads">새 파일 업로드 허용 (최대 2 GiB, 덮어쓰기 불가)</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

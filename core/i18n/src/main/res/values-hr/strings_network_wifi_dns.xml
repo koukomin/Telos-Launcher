@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">U pozadini primjenjuje odgovarajuće Androidovo pravilo privatnog DNS-a, čak i kada je VPN Telos Networka isključen. Potrebne su dozvole za lokaciju i obavijesti.</string>
     <string name="net_wifi_dns_permission_error">Nadzor nije moguće uključiti. Dopustite Shizuku, pristup lokaciji i obavijesti.</string>
     <string name="net_wifi_dns_invalid_rule">Unesite valjan naziv Wi‑Fi mreže i valjan DNS naziv hosta za pravilo davatelja usluge.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

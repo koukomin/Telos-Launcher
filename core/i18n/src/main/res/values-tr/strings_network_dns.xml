@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Bu sunucu kaldırılsın mı?</string>
     <string name="net_dns_remove_message">“%1$s” silinecek.</string>
     <string name="net_dns_select_failed">DNS sunucusu değiştirilemedi: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

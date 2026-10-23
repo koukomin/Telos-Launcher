@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">La réponse de connexion ne correspondait pas à cette demande et a été ignorée</string>
     <string name="au8_traktweb_expired">La connexion a pris plus de 10 minutes. Réessayez</string>
     <string name="au8_traktweb_no_browser">Aucun navigateur trouvé pour ouvrir trakt.tv</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

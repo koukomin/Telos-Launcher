@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">Zamrzni nakon uklanjanja iz nedavnih</string>
     <string name="freeze_hub_recents_help">Ponovno zamrzava upravljane aplikacije ili one koje je Telos odmrznuo nakon uklanjanja zadnjeg zadatka. Zahtijeva Shizuku i poštuje iznimke uporabe. Zadano isključeno.</string>
     <string name="freeze_hub_recents_unavailable">Otkrivanje nedavnih nije dostupno. Pokrenite Shizuku i dajte dopuštenje.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

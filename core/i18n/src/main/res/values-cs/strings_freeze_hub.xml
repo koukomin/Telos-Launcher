@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">Zmrazit po odebrání z nedávných</string>
     <string name="freeze_hub_recents_help">Znovu zmrazí spravované nebo Telosem rozmrazené aplikace po odebrání poslední úlohy. Vyžaduje Shizuku a respektuje výjimky používání. Ve výchozím stavu vypnuto.</string>
     <string name="freeze_hub_recents_unavailable">Detekce nedávných není dostupná. Spusťte Shizuku a udělte oprávnění.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

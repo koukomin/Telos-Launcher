@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS odrzucił operację lub zwrócił nieobsługiwaną odpowiedź.</string>
     <string name="nd_error_unconfigured">Najpierw połącz profil NextDNS.</string>
     <string name="nd_rule_title">Reguła domeny</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

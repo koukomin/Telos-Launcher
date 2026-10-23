@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Sunucu sertifikası doğrulanamadı.</string>
     <string name="ermis_error_generic">İşlem başarısız. Bağlantıyı ve sunucu ayarlarını kontrol edin.</string>
     <string name="ermis_error_sent_copy">İleti gönderildi ancak Gönderilenler içine kopyası kaydedilemedi. Yeniden göndermeyin.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

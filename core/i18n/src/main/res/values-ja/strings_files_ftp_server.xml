@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTPは暗号化されません。このフォルダーのみ共有します。閉じるかバックグラウンドになると停止します。</string>
     <string name="nf_ftp_uploads">新しいファイルのアップロードを許可（最大2 GiB・上書き不可）</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

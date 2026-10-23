@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Не удалось проверить сертификат сервера.</string>
     <string name="ermis_error_generic">Ошибка операции. Проверьте соединение и настройки сервера.</string>
     <string name="ermis_error_sent_copy">Письмо отправлено, но копия не сохранена в Отправленных. Не отправляйте повторно.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

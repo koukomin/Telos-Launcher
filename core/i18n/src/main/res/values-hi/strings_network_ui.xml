@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">यह आपको गुमनाम नहीं बनाता। वेबसाइटें आपका IP पता तब भी देखती हैं, जब तक आप भरोसेमंद WireGuard टनल इस्तेमाल न करें।</string>
     <string name="net_settings_not_5">Android एक समय में एक ही VPN की अनुमति देता है। Telos Network चलते समय दूसरे VPN की जगह ले लेता है; इसके बजाय Telos Network के अंदर WireGuard इस्तेमाल करें।</string>
     <string name="net_settings_not_6">यह नया है और अभी कई डिवाइसों पर परखा नहीं गया है।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -19,4 +19,17 @@
     <string name="ermis_google_help">Usa la cuenta Android seleccionada solo si su autenticador permite acceder al correo. De lo contrario, usa una contraseña de aplicación.</string>
     <string name="ermis_google_unavailable">El proveedor de la cuenta no permitió acceder al correo. Usa una contraseña de aplicación.</string>
     <string name="ermis_conversation_count">%1$d mensajes en esta conversación</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

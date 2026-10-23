@@ -11,4 +11,17 @@
     <string name="nweb_intro">ASCII 名のみ。.eth は ENS Ideas / eth.limo、その他は指定した UD プロキシを使用します。提供元に名前/IP が送信されます。サイトは HTTPS ゲートウェイ経由で開きます。</string>
     <string name="nweb_proxy">Unstoppable Domains プロキシ（HTTPS）</string>
     <string name="nweb_wallets">ウォレットアドレス</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

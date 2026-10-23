@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">每周</string>
     <string name="blocklists_wifi_only">仅在 Wi-Fi 下更新</string>
     <string name="blocklists_schedule_info">适用于所有屏蔽列表，包括网页应用和种子。更新时只会向服务器查询列表是否有变化，电量低时会跳过更新。</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

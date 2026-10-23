@@ -11,4 +11,17 @@
     <string name="hc_settings">Configuració</string>
     <string name="preference_freeze_usage_access">Accés a les dades d’ús</string>
     <string name="preference_freeze_usage_access_summary_not_granted">No concedit. Sense aquest accés, una aplicació es pot congelar automàticament mentre la feu servir. Toqueu per concedir-lo.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

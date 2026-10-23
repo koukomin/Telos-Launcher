@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Aplică în fundal regula Android potrivită pentru DNS privat, chiar și când VPN-ul Telos Network este oprit. Necesită permisiuni pentru locație și notificări.</string>
     <string name="net_wifi_dns_permission_error">Monitorizarea nu a putut fi activată. Acordă permisiune pentru Shizuku, locație și notificări.</string>
     <string name="net_wifi_dns_invalid_rule">Introdu un nume Wi‑Fi valid și, pentru o regulă de furnizor, un nume DNS valid.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

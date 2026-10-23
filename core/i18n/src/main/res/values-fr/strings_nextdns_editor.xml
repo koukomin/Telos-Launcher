@@ -24,4 +24,17 @@
     <string name="nd_error_api">NextDNS a rejeté l’opération ou renvoyé une réponse non prise en charge.</string>
     <string name="nd_error_unconfigured">Connectez d’abord un profil NextDNS.</string>
     <string name="nd_rule_title">Règle de domaine</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Týdně</string>
     <string name="blocklists_wifi_only">Aktualizovat jen přes Wi-Fi</string>
     <string name="blocklists_schedule_info">Platí pro všechny blokovací seznamy, webové aplikace i torrenty. Aktualizace se jen ptá serveru, zda se seznam změnil, a při nízkém stavu baterie se přeskočí.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Das Serverzertifikat konnte nicht überprüft werden.</string>
     <string name="ermis_error_generic">Aktion fehlgeschlagen. Verbindung und Servereinstellungen prüfen.</string>
     <string name="ermis_error_sent_copy">Nachricht gesendet, aber keine Kopie unter Gesendet gespeichert. Nicht erneut senden.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

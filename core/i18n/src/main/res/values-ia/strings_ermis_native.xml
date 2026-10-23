@@ -7,4 +7,17 @@
     <string name="ermis_error_tls">Le certificato del servitor non poteva esser verificate.</string>
     <string name="ermis_error_generic">Operation fallite. Verifica le connexion e le parametros del servitor.</string>
     <string name="ermis_error_sent_copy">Message inviate, ma le copia non esseva salvate in Inviate. Non reinvia.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

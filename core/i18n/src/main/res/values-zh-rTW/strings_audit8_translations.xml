@@ -10,4 +10,17 @@
     <string name="au8_traktweb_state_mismatch">登入回應與此要求不符，已被忽略</string>
     <string name="au8_traktweb_expired">登入耗時超過 10 分鐘。請重試</string>
     <string name="au8_traktweb_no_browser">找不到可開啟 trakt.tv 的瀏覽器</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -14,4 +14,17 @@
     <string name="voice_hide_from_media_summary">वॉइस मेमो फ़ोल्डर में .nomedia जोड़ता है ताकि गैलरी और Telos मीडिया उसे छोड़ दें। डिफ़ॉल्ट रूप से बंद। कॉल रिकॉर्डिंग पहले से निजी स्टोरेज में एन्क्रिप्टेड हैं, मीडिया उन्हें सूचीबद्ध नहीं करता।</string>
     <string name="call_recordings_hide_from_media">मीडिया से कॉल रिकॉर्डिंग छिपाएँ</string>
     <string name="call_recordings_hide_from_media_summary">कॉल रिकॉर्डिंग फ़ोल्डर में .nomedia जोड़ता है ताकि गैलरी और Telos मीडिया उसे छोड़ दें। डिफ़ॉल्ट रूप से बंद। रिकॉर्डिंग पहले से निजी एन्क्रिप्टेड स्टोरेज में हैं; यह अतिरिक्त चिह्न है।</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

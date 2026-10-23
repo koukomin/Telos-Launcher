@@ -1,4 +1,17 @@
 <resources>
     <string name="nf_ftp_scope">FTP er ukryptert. Bare denne mappen deles. Stopper ved lukking eller i bakgrunnen.</string>
     <string name="nf_ftp_uploads">Last opp nye filer (opptil 2 GiB; ingen overskriving)</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

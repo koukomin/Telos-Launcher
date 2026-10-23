@@ -12,4 +12,17 @@
     <string name="radio_backup_images">包含电台图片的 ZIP 备份</string>
     <string name="radio_restore_replace_summary">用此备份替换当前电台收藏？当前收藏将被移除。</string>
     <string name="radio_station_image_url">电台图片地址</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Ta bilde når et ansikt oppdages</string>
     <string name="camera_native_motion_trigger">Ta bilde når bevegelse oppdages</string>
     <string name="camera_native_trigger_hint">Bare i forgrunnen. Høyst én gang hvert 5. sekund. Bevegelse bruker endringer i forhåndsvisningen og kan reagere på lysendringer.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

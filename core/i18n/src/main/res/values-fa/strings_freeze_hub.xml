@@ -18,4 +18,17 @@
     <string name="freeze_hub_recents">انجماد پس از حذف از برنامه‌های اخیر</string>
     <string name="freeze_hub_recents_help">پس از حذف آخرین کار، برنامه‌های مدیریت‌شده یا آزادشده با Telos را دوباره منجمد می‌کند. به Shizuku نیاز دارد و استثناهای استفاده رعایت می‌شوند. پیش‌فرض خاموش است.</string>
     <string name="freeze_hub_recents_unavailable">تشخیص برنامه‌های اخیر در دسترس نیست. Shizuku را اجرا کنید و مجوز دهید.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

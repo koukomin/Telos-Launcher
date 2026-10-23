@@ -92,4 +92,17 @@
     <string name="net_settings_not_4">شما را ناشناس نمی‌کند. وب‌سایت‌ها همچنان نشانی IP شما را می‌بینند، مگر اینکه از تونل WireGuard مورد اعتماد استفاده کنید.</string>
     <string name="net_settings_not_5">اندروید هم‌زمان فقط یک VPN را مجاز می‌کند. Telos Network هنگام اجرا جای VPN دیگر را می‌گیرد؛ به‌جای آن از WireGuard داخل Telos Network استفاده کنید.</string>
     <string name="net_settings_not_6">جدید است و هنوز روی دستگاه‌های زیادی آزمایش نشده است.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

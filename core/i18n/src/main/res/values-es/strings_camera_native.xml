@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Capturar al detectar un rostro</string>
     <string name="camera_native_motion_trigger">Capturar al detectar movimiento</string>
     <string name="camera_native_trigger_hint">Solo en primer plano. Como máximo cada 5 segundos. El movimiento se detecta mediante cambios en la vista previa y puede reaccionar a la iluminación.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

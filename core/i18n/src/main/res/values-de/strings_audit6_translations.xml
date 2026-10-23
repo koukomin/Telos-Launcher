@@ -4,4 +4,17 @@
     <string name="au6_radio2_loading">%1$s wird geladen</string>
     <string name="au6_webapps4_cookie_source_default">Alle / Standard</string>
     <string name="au6_wgvideo_route_not_ready">Der Torrent konnte nicht gestartet werden: Er ist für einen WireGuard-Tunnel von Telos Network konfiguriert, und dieser Tunnel ist nicht bereit. Aktiviere Telos Network und den Tunnel oder ändere die Einstellung in Telos Downloads. Es wurde nichts gesendet.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -71,4 +71,17 @@
     <string name="net_dns_remove_title">Želite odstraniti ta strežnik?</string>
     <string name="net_dns_remove_message">»%1$s« bo izbrisan.</string>
     <string name="net_dns_select_failed">Strežnika DNS ni bilo mogoče zamenjati: %1$s</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

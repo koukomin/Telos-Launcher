@@ -8,4 +8,17 @@
     <string name="telos_files_encryption_password">Κωδικός</string>
     <string name="telos_files_encryption_confirm">Επιβεβαίωση κωδικού</string>
     <string name="telos_files_encryption_failed">Η ενέργεια δεν ολοκληρώθηκε. Έλεγξε τον κωδικό, την ακεραιότητα του αρχείου, τον διαθέσιμο χώρο και την άδεια εγγραφής. Το αρχικό αρχείο διατηρήθηκε.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

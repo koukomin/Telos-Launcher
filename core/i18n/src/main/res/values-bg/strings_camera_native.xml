@@ -25,4 +25,17 @@
     <string name="camera_native_face_trigger">Снимай при открито лице</string>
     <string name="camera_native_motion_trigger">Снимай при открито движение</string>
     <string name="camera_native_trigger_hint">Само на преден план. Най-много веднъж на 5 секунди. Движението се определя от промени в прегледа и може да реагира на осветлението.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

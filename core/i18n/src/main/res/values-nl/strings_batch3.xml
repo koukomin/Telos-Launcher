@@ -84,4 +84,17 @@
     <string name="blocklists_schedule_weekly">Wekelijks</string>
     <string name="blocklists_wifi_only">Alleen bijwerken via wifi</string>
     <string name="blocklists_schedule_info">Geldt voor alle blokkeerlijsten, web-apps en torrents. Updates vragen alleen aan de server of de lijst is gewijzigd en worden overgeslagen als de batterij bijna leeg is.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

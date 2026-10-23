@@ -4,4 +4,17 @@
     <string name="net_wifi_dns_automation_summary">Aplica em segundo plano a regra de DNS privado do Android correspondente, mesmo com a VPN do Telos Network desligada. Requer permissões de localização e notificações.</string>
     <string name="net_wifi_dns_permission_error">Não foi possível ativar o monitoramento. Conceda permissão ao Shizuku e permita localização e notificações.</string>
     <string name="net_wifi_dns_invalid_rule">Digite um nome de Wi‑Fi válido e, para uma regra de provedor, um nome de host DNS válido.</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>
