@@ -3,7 +3,9 @@ package de.mm20.launcher2.ui.settings.advanced
 import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -76,29 +78,50 @@ fun AdvancedSettingsScreen() {
     ) {
         item {
             PreferenceCategory(title = "System Automation & Shizuku") {
-                val statusText = when {
-                    status?.hasWriteSecureSettings == true -> "Status: Ready (Permission Granted)"
-                    status?.isShizukuRunning == true -> "Status: Shizuku Active (Action Required: Grant Permission)"
-                    else -> "Status: Action Required (Missing WRITE_SECURE_SETTINGS)"
+                val currentStatus = status
+                val isInstalled = currentStatus?.isShizukuInstalled == true
+                val summaryText = if (isInstalled) {
+                    val statusText = when {
+                        currentStatus.hasWriteSecureSettings -> "Status: Ready (Permission Granted)"
+                        currentStatus.isShizukuRunning -> "Status: Shizuku Active (Action Required: Grant Permission)"
+                        else -> "Status: Action Required (Missing WRITE_SECURE_SETTINGS)"
+                    }
+                    "Automatically enables Android Wireless Debugging once Wi-Fi connects on boot and wakes the Shizuku daemon in the background without needing a PC.\n$statusText"
+                } else {
+                    "Requires Shizuku app to be installed. Tap here to find it in Telos Store."
                 }
 
-                SwitchPreference(
-                    title = "Shizuku Auto-Start",
-                    summary = "Automatically enables Android Wireless Debugging once Wi-Fi connects on boot and wakes the Shizuku daemon in the background without needing a PC.\n$statusText",
-                    value = shizukuAutoStart,
-                    onValueChanged = { enabled ->
-                        vm.setShizukuAutoStart(
-                            context = context,
-                            enabled = enabled,
-                            onVerified = {
-                                Toast.makeText(context, "Επιβεβαιώθηκε! Το Shizuku Auto-Start λειτουργεί κανονικά και ενεργοποιήθηκε.", Toast.LENGTH_LONG).show()
-                            },
-                            onFailed = {
-                                showDiagnosticDialog = true
-                            }
+                if (isInstalled) {
+                    SwitchPreference(
+                        title = "Shizuku Auto-Start",
+                        summary = summaryText,
+                        value = shizukuAutoStart,
+                        onValueChanged = { enabled ->
+                            vm.setShizukuAutoStart(
+                                context = context,
+                                enabled = enabled,
+                                onVerified = {
+                                    Toast.makeText(context, "Επιβεβαιώθηκε! Το Shizuku Auto-Start λειτουργεί κανονικά και ενεργοποιήθηκε.", Toast.LENGTH_LONG).show()
+                                },
+                                onFailed = {
+                                    showDiagnosticDialog = true
+                                }
+                            )
+                        }
+                    )
+                } else {
+                    Box(
+                        modifier = Modifier.fillMaxWidth().clickable {
+                            backStack.add(de.mm20.launcher2.ui.store.StoreDashboardRoute(initialQuery = "Shizuku"))
+                        }
+                    ) {
+                        Preference(
+                            title = "Shizuku Auto-Start",
+                            summary = summaryText,
+                            enabled = false,
                         )
                     }
-                )
+                }
 
                 Preference(
                     icon = R.drawable.settings_24px,

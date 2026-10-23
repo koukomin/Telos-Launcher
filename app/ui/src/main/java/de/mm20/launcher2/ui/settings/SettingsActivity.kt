@@ -279,7 +279,7 @@ open class SettingsActivity : BaseActivity() {
                 IconsSettingsScreen()
             }
             entry<StoreDashboardRoute> {
-                StoreDashboardScreen(it.addUrl)
+                StoreDashboardScreen(it.addUrl, it.initialQuery)
             }
             entry<ContactDetailsRoute> {
                 ContactDetailsScreen(it.contactId, it.phoneNumber)

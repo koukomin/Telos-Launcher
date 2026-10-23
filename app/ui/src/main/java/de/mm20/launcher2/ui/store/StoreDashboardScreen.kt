@@ -99,10 +99,10 @@ import kotlinx.serialization.Serializable
 
 /** [addUrl] is an address or obtainium:// link to add right away (from a link that opened the Store). */
 @Serializable
-data class StoreDashboardRoute(val addUrl: String = "") : NavKey
+data class StoreDashboardRoute(val addUrl: String = "", val initialQuery: String = "") : NavKey
 
 @Composable
-fun StoreDashboardScreen(initialLink: String = "") {
+fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
     val viewModel: StoreViewModel = viewModel()
     val backStack = LocalBackStack.current
     val context = LocalContext.current
@@ -146,12 +146,16 @@ fun StoreDashboardScreen(initialLink: String = "") {
             viewModel.checkPlayUpdates()
         }
     }
-    LaunchedEffect(initialLink) {
+    LaunchedEffect(initialLink, initialQuery) {
         if (linkHandled) return@LaunchedEffect
         linkHandled = true
-        viewModel.handleLink(initialLink) { url ->
-            addPrefill = url
-            showAdd = true
+        if (initialQuery.isNotBlank()) {
+            viewModel.query.value = initialQuery
+        } else {
+            viewModel.handleLink(initialLink) { url ->
+                addPrefill = url
+                showAdd = true
+            }
         }
     }
     LaunchedEffect(message) {
