@@ -20,6 +20,12 @@ data class TweaksState(
     val disableSafeVolume: Boolean = false,
     val forceAggressiveDoze: Boolean = false,
     val doubleTapSleep: Boolean = true,
+    val callVibrateConnect: Boolean = false,
+    val flashPulseCall: Boolean = false,
+    val pocketMode: Boolean = true,
+    val caffeinate: Boolean = false,
+    val mobileDataAlwaysOn: Boolean = false,
+    val alwaysOnDisplay: Boolean = false,
 )
 
 class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(application) {
@@ -82,6 +88,33 @@ class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(applic
 
     fun toggleDoubleTapSleep(enabled: Boolean) {
         _state.value = _state.value.copy(doubleTapSleep = enabled)
+    }
+
+    fun toggleCallVibrateConnect(enabled: Boolean) {
+        val cmd = "settings put system vibrate_on_call_connected ${if (enabled) 1 else 0}"
+        runCommand(cmd) { _state.value = _state.value.copy(callVibrateConnect = enabled) }
+    }
+
+    fun toggleFlashPulseCall(enabled: Boolean) {
+        _state.value = _state.value.copy(flashPulseCall = enabled)
+    }
+
+    fun togglePocketMode(enabled: Boolean) {
+        _state.value = _state.value.copy(pocketMode = enabled)
+    }
+
+    fun toggleCaffeinate(enabled: Boolean) {
+        _state.value = _state.value.copy(caffeinate = enabled)
+    }
+
+    fun toggleMobileDataAlwaysOn(enabled: Boolean) {
+        val cmd = "settings put global mobile_data_always_on ${if (enabled) 1 else 0}"
+        runCommand(cmd) { _state.value = _state.value.copy(mobileDataAlwaysOn = enabled) }
+    }
+
+    fun toggleAlwaysOnDisplay(enabled: Boolean) {
+        val cmd = "settings put secure doze_always_on ${if (enabled) 1 else 0}"
+        runCommand(cmd) { _state.value = _state.value.copy(alwaysOnDisplay = enabled) }
     }
 
     private fun runCommand(cmd: String, onSuccess: () -> Unit) {

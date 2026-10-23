@@ -45,7 +45,7 @@ fun TweaksSettingsScreen() {
     ) {
         item {
             Banner(
-                text = "System-level customizations and performance optimizations adapted from Essentials. $backendStatusSummary",
+                text = "Essential tools, mods and performance optimizations. $backendStatusSummary",
                 icon = R.drawable.settings_24px,
             )
         }
@@ -60,7 +60,7 @@ fun TweaksSettingsScreen() {
                     onValueChanged = { vm.toggleClockSeconds(it) },
                 )
                 SwitchPreference(
-                    title = "Hide Gesture Navigation Pill",
+                    title = "Hide Gesture Navigation Bar (Pill)",
                     summary = if (hasPrivilegedBackend) "Hides the bottom gesture bar for full screen experience" else "Requires Shizuku or Root",
                     value = state.hideNavPill,
                     enabled = hasPrivilegedBackend,
@@ -73,11 +73,18 @@ fun TweaksSettingsScreen() {
                     enabled = hasPrivilegedBackend,
                     onValueChanged = { vm.togglePeakRefresh120(it) },
                 )
+                SwitchPreference(
+                    title = "Always On Display (AOD)",
+                    summary = if (hasPrivilegedBackend) "Toggles Ambient / Always On Display mode" else "Requires Shizuku or Root",
+                    value = state.alwaysOnDisplay,
+                    enabled = hasPrivilegedBackend,
+                    onValueChanged = { vm.toggleAlwaysOnDisplay(it) },
+                )
             }
         }
 
         item {
-            PreferenceCategory(title = "Audio & Volume Tweaks") {
+            PreferenceCategory(title = "Sound & Haptics Tweaks") {
                 SwitchPreference(
                     title = "Extended 30-Step Volume Control",
                     summary = if (hasPrivilegedBackend) "Increases volume steps for fine-grained control" else "Requires Shizuku or Root",
@@ -86,23 +93,68 @@ fun TweaksSettingsScreen() {
                     onValueChanged = { vm.toggleVolume30Steps(it) },
                 )
                 SwitchPreference(
-                    title = "Disable Safe Volume Warning",
-                    summary = if (hasPrivilegedBackend) "Disables high volume hearing protection dialog" else "Requires Shizuku or Root",
+                    title = "Disable High Volume Hearing Protection",
+                    summary = if (hasPrivilegedBackend) "Disables high volume safety warning dialog" else "Requires Shizuku or Root",
                     value = state.disableSafeVolume,
                     enabled = hasPrivilegedBackend,
                     onValueChanged = { vm.toggleDisableSafeVolume(it) },
+                )
+                SwitchPreference(
+                    title = "Vibrate on Call Connected",
+                    summary = if (hasPrivilegedBackend) "Provides haptic vibration feedback when an outgoing call connects" else "Requires Shizuku or Root",
+                    value = state.callVibrateConnect,
+                    enabled = hasPrivilegedBackend,
+                    onValueChanged = { vm.toggleCallVibrateConnect(it) },
                 )
             }
         }
 
         item {
-            PreferenceCategory(title = "Battery & Performance Tweaks") {
+            PreferenceCategory(title = "Notifications & Torch Alerts") {
+                SwitchPreference(
+                    title = "Flashlight Pulse on Call Alert",
+                    summary = "Flashes LED torch on incoming phone call",
+                    value = state.flashPulseCall,
+                    enabled = true,
+                    onValueChanged = { vm.toggleFlashPulseCall(it) },
+                )
+            }
+        }
+
+        item {
+            PreferenceCategory(title = "Network & Connectivity") {
+                SwitchPreference(
+                    title = "Mobile Data Always Active",
+                    summary = if (hasPrivilegedBackend) "Keeps mobile data connected in background during Wi-Fi for fast switching" else "Requires Shizuku or Root",
+                    value = state.mobileDataAlwaysOn,
+                    enabled = hasPrivilegedBackend,
+                    onValueChanged = { vm.toggleMobileDataAlwaysOn(it) },
+                )
+            }
+        }
+
+        item {
+            PreferenceCategory(title = "Battery & Power Tweaks") {
                 SwitchPreference(
                     title = "Aggressive Doze Mode",
                     summary = if (hasPrivilegedBackend) "Forces immediate deep sleep idle mode when screen turns off" else "Requires Shizuku or Root",
                     value = state.forceAggressiveDoze,
                     enabled = hasPrivilegedBackend,
                     onValueChanged = { vm.toggleForceDoze(it) },
+                )
+                SwitchPreference(
+                    title = "Caffeinate (Keep Screen Awake)",
+                    summary = "Prevents screen from sleeping while using Telos",
+                    value = state.caffeinate,
+                    enabled = true,
+                    onValueChanged = { vm.toggleCaffeinate(it) },
+                )
+                SwitchPreference(
+                    title = "Pocket Mode",
+                    summary = "Prevents accidental touch events when proximity sensor detects pocket",
+                    value = state.pocketMode,
+                    enabled = true,
+                    onValueChanged = { vm.togglePocketMode(it) },
                 )
                 SwitchPreference(
                     title = "Double-Tap Status Bar to Sleep",
