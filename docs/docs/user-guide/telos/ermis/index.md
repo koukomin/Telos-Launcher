@@ -1,5 +1,8 @@
 # Ermis
 
+![Telos Ermis](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-19-ermis.webp)
+
+
 Ermis is a native Telos mail client, with an inbox inspired by Gmail and an IMAP/SMTP workflow inspired by FairEmail. It does not open a webmail provider to read or send mail.
 
 ## Connect an account

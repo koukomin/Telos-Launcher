@@ -1,5 +1,8 @@
 # Telos Phone
 
+![Telos Phone](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-13-phone.webp)
+
+
 Telos Phone is a complete phone app that lives inside the launcher: dialer, recents, contacts, favorites,
 in-call screens, call recording, call screening and a long list of call settings. Its layout follows the
 *Right Dialer* project; several privacy and power-user ideas come from *Secure Dialer* and *Ever Dialer*

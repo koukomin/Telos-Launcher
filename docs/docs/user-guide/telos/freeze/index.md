@@ -1,5 +1,8 @@
 # Smart Freeze
 
+![Telos Freeze](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-22-system.webp)
+
+
 Freeze or hide apps you do not need right now. A frozen app cannot run in the background until you unfreeze it, and it
 is launched again (and unfrozen) the next time you open it from the launcher.
 

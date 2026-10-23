@@ -1,5 +1,8 @@
 # Telos Screen Recorder
 
+![Telos Screen Recorder](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-28-screen-recorder.webp)
+
+
 Records the screen to a video, with the microphone if you want, and keeps the recordings in `Movies/Telos`.
 
 ::: tip At a glance

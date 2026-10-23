@@ -1,5 +1,8 @@
 # Akou — music recognition
 
+![Telos Akou](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-20-akou.webp)
+
+
 Tap **Record and recognize** and grant microphone permission. Akou listens for ten seconds only while this screen is open, computes a Shazam-compatible audio fingerprint on the phone, then asks Shazam to match that fingerprint. No account or API key is needed. The original microphone audio is never uploaded and is cleared from memory after the attempt. Leaving the screen cancels listening or the pending request.
 
 A successful match displays the returned title, artist and album when supplied. History is stored locally and can be cleared. **Find in YouTube Music** opens a search for that title and artist; a returned match does not guarantee a particular YouTube recording.

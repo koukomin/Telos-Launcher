@@ -1,5 +1,8 @@
 # Telos Radio
 
+![Telos Radio](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-15-radio.webp)
+
+
 
 Favorite stations can also be played straight from launcher search: switch on **Radio stations** in Settings > Search, then tap a matching result to play it with the same player and notification (tap again to pause). Station rows here and in search have a round play/pause button with a loading ring while the stream starts; live streams are paused, not stopped, and stations with the same name are all listed, told apart by logo and a host/type line.
 Internet radio with your own station collection. Its behavior and logic follow the

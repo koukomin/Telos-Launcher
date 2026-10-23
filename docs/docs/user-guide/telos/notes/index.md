@@ -1,5 +1,8 @@
 # Telos Notes
 
+![Telos Notes](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-09-notes.webp)
+
+
 A notes app that keeps your notes on the phone and can copy them to a folder of Markdown files or to Nextcloud Notes.
 
 ::: tip At a glance

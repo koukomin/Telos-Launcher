@@ -1,5 +1,8 @@
 # Telos Viewer: Photos and Documents
 
+![Telos Viewer](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-08-viewer.webp)
+
+
 **Telos Viewer** is one app with two tabs: **Photos** (the photo gallery: photos, albums, EXIF, editor) and **Documents** (a library with category chips (All, Documents, PDF, Spreadsheets, Presentations, E-books, Other), search, sort by date, name or size, a **Recent** shelf (up to 50 files you opened from it), **Open file…** and a long-press menu (Share, Open with, Info). Both tabs support sharing selected files together. Shared files are copied to Telos' private share cache and handed off with temporary read access. The tab you used last is remembered. Telos Photos used to be a separate app: there is no separate icon anymore, and a Photos icon that was on the home screen or in the dock opens the Viewer. To list the documents on the phone it needs the same **All files access** as Telos Files; without it, Recent and **Open file…** still work, and "Open with" from other apps always works. The sections below describe both tabs.
 
 A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document viewer in one app.

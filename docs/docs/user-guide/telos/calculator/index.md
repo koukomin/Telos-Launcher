@@ -1,5 +1,8 @@
 # Telos Calculator
 
+![Telos Calculator](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-11-calculator.webp)
+
+
 A calculator with round keys, a scientific keypad, a VAT page, a unit and currency converter and a history with
 date and time. The layout is modeled on the calculator of OxygenOS, the colors, shapes and fonts follow the Telos
 theme.

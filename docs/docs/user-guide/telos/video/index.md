@@ -1,5 +1,8 @@
 # Telos Video
 
+![Telos Video](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-17-video.webp)
+
+
 A video library and player. It plays the videos on your phone, web streams, and torrents while they download.
 
 ::: tip At a glance

@@ -1,5 +1,8 @@
 # The launcher
 
+![Telos Launcher](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-01-launcher.webp)
+
+
 The launcher is the foundation of Telos. It comes from [Kvaesitso](https://github.com/MM2-0/Kvaesitso) and
 is built around one idea: **search is the main way to reach things**. Telos keeps all of it and adds its
 own pieces on top (overlays, desktop mode, app lock, context profiles, video wallpapers and more).

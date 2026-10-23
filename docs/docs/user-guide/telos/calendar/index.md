@@ -1,5 +1,8 @@
 # Telos Calendar
 
+![Telos Calendar](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-10-calendar.webp)
+
+
 A month and agenda calendar on the calendars of your phone, with a local calendar and sync through your accounts.
 
 ::: tip At a glance

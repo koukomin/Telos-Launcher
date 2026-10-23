@@ -1,5 +1,8 @@
 # Telos Camera
 
+![Telos Camera](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-24-camera.webp)
+
+
 Camera opens a native Telos viewfinder. Photos and videos are captured inside Telos using CameraX; there is no external camera handoff. The dark, responsive control layout places the mode strip, zoom and capture action next to the preview in landscape and beneath it in portrait.
 
 ## Capture

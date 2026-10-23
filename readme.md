@@ -1,5 +1,11 @@
 <div align="center">
 
+<p align="center">
+  <a href="https://keepandroidopen.org/" target="_blank">
+    <img src="https://img.shields.io/badge/Keep%20Android%20Open-Software%20Freedom-1e3c72?style=for-the-badge&logo=android&logoColor=white" alt="Keep Android Open">
+  </a>
+</p>
+
 <img src="docs/public/icon.png" alt="Telos" width="128" height="128">
 
 # Telos Launcher
@@ -11,6 +17,12 @@ Telos is a personal fork of [Kvaesitso](https://github.com/MM2-0/Kvaesitso). It 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE.txt)
 [![Platform: Android](https://img.shields.io/badge/platform-Android-3DDC84.svg)](https://github.com/koukomin/Telos-Launcher/releases)
 [![Latest dev build](https://img.shields.io/badge/latest-dev%20build-orange.svg)](https://github.com/koukomin/Telos-Launcher/releases)
+
+<p align="center">
+  <a href="obtainium://app/https://github.com/koukomin/Telos-Launcher">
+    <img src="https://raw.githubusercontent.com/ImranR62/Obtainium/main/assets/badge.png" height="48" alt="Add to Obtainium">
+  </a>
+</p>
 
 [**Documentation**](https://koukomin.github.io/Telos-Launcher/) &nbsp;|&nbsp; [**Download**](https://github.com/koukomin/Telos-Launcher/releases) &nbsp;|&nbsp; [**The launcher**](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/) &nbsp;|&nbsp; [**Built-in apps**](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/) &nbsp;|&nbsp; [**Changelog**](CHANGELOG.md)
 

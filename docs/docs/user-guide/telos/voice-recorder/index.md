@@ -1,5 +1,8 @@
 # Telos Voice Recorder
 
+![Telos Voice Recorder](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-27-voice-recorder.webp)
+
+
 A voice recorder with a list of recordings, search, pause and a service that keeps recording with the screen off.
 The layout is modeled on the Sound Recorder of OxygenOS, the colors, shapes and fonts follow the Telos theme.
 

@@ -1,5 +1,8 @@
 # Telos Media
 
+![Telos Media](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-02-media-listen.webp)
+
+
 Telos Media combines local music, radio, YouTube Music, local video, YouTube, TV and Stremio Fork in one app.
 
 ## Switching spaces

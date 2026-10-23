@@ -1,5 +1,8 @@
 # Telos Store
 
+![Telos Store](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-07-store.webp)
+
+
 An app installer and updater that works like [Obtainium](https://github.com/ImranR98/Obtainium): it installs apps
 straight from the place where developers publish them, and tells you when a new version exists. It also manages the
 Telos apps.

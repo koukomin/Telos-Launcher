@@ -1,5 +1,8 @@
 # Telos Messages
 
+![Telos Messages](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-14-messages.webp)
+
+
 Telos Messages shows text messages (SMS) and picture messages (MMS) as conversations with a reply field. It is
 part of [Telos Phone](../phone/): open Phone and choose **Messages** from the three-dot menu at the top. Opening
 an `sms:` link, or sharing something to "Telos Messages", jumps straight to that tab.

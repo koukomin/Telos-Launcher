@@ -1,5 +1,8 @@
 # Telos Screenshot
 
+![Telos Screenshot](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-29-screenshot.webp)
+
+
 Takes full, partial and scrolling screenshots and edits them: crop, hide parts with pixelate or blur, and draw.
 
 ::: tip At a glance

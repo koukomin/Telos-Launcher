@@ -1,5 +1,8 @@
 # Telos Files
 
+![Telos Files](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-06-files.webp)
+
+
 A file manager for your phone, for network storages and for cloud storages. Its layout takes inspiration from
 Solid Explorer and MiXplorer (no code was copied).
 

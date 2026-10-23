@@ -1,5 +1,8 @@
 # Telos Downloads
 
+![Telos Downloads](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-12-downloads.webp)
+
+
 A download manager for links: several connections per file, resume, a queue and a folder of your choice.
 
 ::: tip At a glance

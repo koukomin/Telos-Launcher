@@ -26,8 +26,19 @@ download to a working setup. The rest of the guide describes every feature in de
 
 ## Install Telos
 
-Telos is not on the Play Store. Two kinds of build are published on the
-[releases page](https://github.com/koukomin/Telos-Launcher/releases):
+Telos is not on the Play Store. You can install it with 1 click using [Obtainium](https://obtainium.imranr.dev/), or download APKs directly from GitHub.
+
+### 1-Click Install via Obtainium
+
+If you use [Obtainium](https://obtainium.imranr.dev/), tap below to import Telos Launcher directly into Obtainium:
+
+<a href="obtainium://app/https://github.com/koukomin/Telos-Launcher">
+  <img src="https://raw.githubusercontent.com/ImranR62/Obtainium/main/assets/badge.png" height="48" alt="Add to Obtainium">
+</a>
+
+### Manual Installation
+
+Two kinds of build are published on the [releases page](https://github.com/koukomin/Telos-Launcher/releases):
 
 - **Stable releases** are signed with the Telos release key. This is the recommended download for everyday use. A new stable release is published automatically for every change that is merged into the main branch (changes to the documentation alone do not count), with the next patch number (for example `v1.40.3`). Telos Store notices it and offers the update.
 - **Development builds** are debug-signed pre-releases, published from every successful build of the development

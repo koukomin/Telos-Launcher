@@ -1,5 +1,8 @@
 # Telos Network
 
+![Telos Network](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-21-network.webp)
+
+
 A firewall and DNS filter for the whole phone, built on the engine of [RethinkDNS](https://github.com/celzero/rethink-app).
 
 ::: warning Early version
