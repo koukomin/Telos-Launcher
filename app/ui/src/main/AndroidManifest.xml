@@ -579,6 +579,21 @@
         </activity>
 
         <activity
+            android:name=".store.ApkInstallActivity"
+            android:exported="true"
+            android:label="InstallerX Package Installer"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.INSTALL_PACKAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="application/vnd.android.package-archive" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".media.trim.MediaTrimmerActivity"
             android:exported="false"
             android:label="LibreCuts Media Editor"

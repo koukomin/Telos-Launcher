@@ -210,6 +210,7 @@ dependencies {
     implementation(project(":services:applock"))
     implementation(project(":services:app-management"))
     implementation(project(":services:store"))
+    implementation(project(":data:store"))
     implementation(project(":services:comms"))
     implementation(project(":services:downloads"))
     implementation(project(":services:network"))
