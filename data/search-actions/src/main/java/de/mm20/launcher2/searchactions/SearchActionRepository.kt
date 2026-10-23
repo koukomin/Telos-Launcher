@@ -62,6 +62,8 @@ internal class SearchActionRepositoryImpl(
             OpenUrlActionBuilder(context),
             WebsearchActionBuilder(context),
             ShareActionBuilder(context),
+            de.mm20.launcher2.searchactions.builders.ScreenTimeActionBuilder(context),
+            de.mm20.launcher2.searchactions.builders.AiSearchActionBuilder(context),
             PrivateSpaceLockActionBuilder(context),
             WorkProfileLockActionBuilder(context),
         )

@@ -1138,6 +1138,8 @@
     <string name="search_action_message">Message</string>
     <string name="search_action_email">Email</string>
     <string name="search_action_alarm">Set alarm</string>
+    <string name="search_action_screentime">Screen time</string>
+    <string name="search_action_ai">AI Search</string>
     <string name="search_action_timer">Start timer</string>
     <string name="search_action_share">Share</string>
     <string name="search_action_websearch">Web search</string>

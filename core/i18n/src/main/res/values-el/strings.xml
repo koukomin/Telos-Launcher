@@ -949,6 +949,8 @@
     <string name="preference_search_tasks">Εργασίες</string>
     <string name="preference_search_tasks_summary">Αναζήτηση εργασιών στην εφαρμογή Tasks</string>
     <string name="search_action_alarm">Ορισμός ξυπνητηριού</string>
+    <string name="search_action_screentime">"Χρόνος οθόνης"</string>
+    <string name="search_action_ai">"Αναζήτηση AI"</string>
     <string name="search_action_contact">Προσθήκη στις επαφές</string>
     <string name="search_action_label">Όνομα</string>
     <string name="search_action_open_url">Προβολή ιστότοπου</string>

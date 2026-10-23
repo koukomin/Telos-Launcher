@@ -71,6 +71,8 @@ interface SearchActionBuilder {
                 "website" -> return OpenUrlActionBuilder(context)
                 "websearch" -> return WebsearchActionBuilder(context)
                 "share" -> return ShareActionBuilder(context)
+                "screentime" -> return ScreenTimeActionBuilder(context)
+                "ai_search" -> return AiSearchActionBuilder(context)
                 "private_space" -> return PrivateSpaceLockActionBuilder(context)
                 "work_profile" -> return WorkProfileLockActionBuilder(context)
                 else -> return null
