@@ -12,120 +12,120 @@ WebP previews below retain the captured dimensions. Original, unedited PNGs, UI 
 
 ## Launcher — home clock and search
 
-![Launcher — home clock and search](/img/telos-development-01-launcher.webp)
+![Launcher — home clock and search](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-01-launcher.webp)
 
 ## Media — local music
 
-![Media — local music](/img/telos-development-02-media-listen.webp)
+![Media — local music](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-02-media-listen.webp)
 
 ## YouTube Music
 
-![YouTube Music](/img/telos-development-03-youtube-music.webp)
+![YouTube Music](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-03-youtube-music.webp)
 
 ## YouTube video
 
-![YouTube video](/img/telos-development-04-youtube-video.webp)
+![YouTube video](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-04-youtube-video.webp)
 
 ## Stremio Fork — account sign-in
 
-![Stremio Fork — account sign-in](/img/telos-development-05-stremio-fork.webp)
+![Stremio Fork — account sign-in](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-05-stremio-fork.webp)
 
 ## Files
 
-![Files](/img/telos-development-06-files.webp)
+![Files](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-06-files.webp)
 
 ## Store
 
-![Store](/img/telos-development-07-store.webp)
+![Store](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-07-store.webp)
 
 ## Viewer
 
-![Viewer](/img/telos-development-08-viewer.webp)
+![Viewer](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-08-viewer.webp)
 
 ## Notes
 
-![Notes](/img/telos-development-09-notes.webp)
+![Notes](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-09-notes.webp)
 
 ## Calendar
 
-![Calendar](/img/telos-development-10-calendar.webp)
+![Calendar](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-10-calendar.webp)
 
 ## Calculator
 
-![Calculator](/img/telos-development-11-calculator.webp)
+![Calculator](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-11-calculator.webp)
 
 ## Downloads
 
-![Downloads](/img/telos-development-12-downloads.webp)
+![Downloads](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-12-downloads.webp)
 
 ## Phone
 
-![Phone](/img/telos-development-13-phone.webp)
+![Phone](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-13-phone.webp)
 
 ## Messages
 
-![Messages](/img/telos-development-14-messages.webp)
+![Messages](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-14-messages.webp)
 
 ## Radio
 
-![Radio](/img/telos-development-15-radio.webp)
+![Radio](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-15-radio.webp)
 
 ## TV
 
-![TV](/img/telos-development-16-tv.webp)
+![TV](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-16-tv.webp)
 
 ## Local video
 
-![Local video](/img/telos-development-17-video.webp)
+![Local video](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-17-video.webp)
 
 ## Clock
 
-![Clock](/img/telos-development-18-clock.webp)
+![Clock](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-18-clock.webp)
 
 ## Ermis — mail account setup
 
-![Ermis — mail account setup](/img/telos-development-19-ermis.webp)
+![Ermis — mail account setup](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-19-ermis.webp)
 
 ## Akou — music recognition
 
-![Akou — music recognition](/img/telos-development-20-akou.webp)
+![Akou — music recognition](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-20-akou.webp)
 
 ## Network
 
-![Network](/img/telos-development-21-network.webp)
+![Network](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-21-network.webp)
 
 ## System
 
-![System](/img/telos-development-22-system.webp)
+![System](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-22-system.webp)
 
 ## Trash
 
-![Trash](/img/telos-development-23-trash.webp)
+![Trash](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-23-trash.webp)
 
 ## Camera
 
-![Camera](/img/telos-development-24-camera.webp)
+![Camera](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-24-camera.webp)
 
 ## Magnifier
 
-![Magnifier](/img/telos-development-25-magnifier.webp)
+![Magnifier](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-25-magnifier.webp)
 
 ## Flashlight
 
-![Flashlight](/img/telos-development-26-flashlight.webp)
+![Flashlight](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-26-flashlight.webp)
 
 ## Voice recorder
 
-![Voice recorder](/img/telos-development-27-voice-recorder.webp)
+![Voice recorder](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-27-voice-recorder.webp)
 
 ## Screen recorder
 
-![Screen recorder](/img/telos-development-28-screen-recorder.webp)
+![Screen recorder](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-28-screen-recorder.webp)
 
 ## Screenshot
 
-![Screenshot](/img/telos-development-29-screenshot.webp)
+![Screenshot](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-29-screenshot.webp)
 
 ## Settings
 
-![Settings](/img/telos-development-30-settings.webp)
+![Settings](https://raw.githubusercontent.com/koukomin/Telos-Launcher/main/docs/public/img/telos-development-30-settings.webp)

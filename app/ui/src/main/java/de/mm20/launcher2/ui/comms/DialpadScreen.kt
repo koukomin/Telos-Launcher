@@ -131,7 +131,9 @@ fun DialpadScreen(initialNumber: String = "") {
     androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
         val fontScale = LocalDensity.current.fontScale
         val isLandscape = maxWidth > maxHeight
-        val keySize = minOf(78.dp, (maxWidth - 24.dp) / (if (isLandscape) 6 else 3)).coerceAtLeast(48.dp)
+        val availableHeight = if (isLandscape) (maxHeight - 64.dp) else (maxHeight * 0.55f)
+        val calculatedSize = (availableHeight / 5.2f).coerceIn(36.dp, 72.dp)
+        val keySize = if (isLandscape) minOf(calculatedSize, 52.dp) else minOf(78.dp, (maxWidth - 24.dp) / 3).coerceAtLeast(42.dp)
         
         val toneGenerator = remember {
             runCatching { ToneGenerator(AudioManager.STREAM_DTMF, 80) }.getOrNull()
@@ -430,6 +432,10 @@ private fun DialpadKey(
     onClick: () -> Unit,
     onLongClick: () -> Unit,
 ) {
+    val fontScale = LocalDensity.current.fontScale
+    val digitSp = (26f / fontScale.coerceAtLeast(1f)).coerceAtLeast(18f).sp
+    val sublabelSp = (11f / fontScale.coerceAtLeast(1f)).coerceAtLeast(8f).sp
+
     Box(
         modifier = Modifier
             .width(size)
@@ -440,16 +446,23 @@ private fun DialpadKey(
                 onClick = onClick,
                 onLongClick = onLongClick,
             )
-            .padding(vertical = 8.dp),
+            .padding(vertical = 2.dp),
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = digit,
-                fontSize = 28.sp,
+                fontSize = digitSp,
                 fontWeight = FontWeight.Normal,
-                lineHeight = 32.sp,
+                lineHeight = digitSp * 1.1f,
                 color = MaterialTheme.colorScheme.onSurface,
+            )
+            Text(
+                text = sublabel.ifEmpty { " " },
+                fontSize = sublabelSp,
+                lineHeight = sublabelSp * 1.15f,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                textAlign = TextAlign.Center,
             )
             Text(
                 text = sublabel.ifEmpty { " " },
