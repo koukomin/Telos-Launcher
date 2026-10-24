@@ -46,6 +46,9 @@ class MusicPlayerService : MediaSessionService() {
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
         player.addListener(object : Player.Listener {
+            override fun onAudioSessionIdChanged(audioSessionId: Int) {
+                MediaAudioFx.attachToSession(audioSessionId)
+            }
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 handler.removeCallbacks(idleStop)
                 if (!isPlaying) {

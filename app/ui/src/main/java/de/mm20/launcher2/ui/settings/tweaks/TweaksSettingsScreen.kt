@@ -41,17 +41,17 @@ fun TweaksSettingsScreen() {
     }
 
     PreferenceScreen(
-        title = { Text("Tweaks & Essentials Engine") },
+        title = { Text(stringResource(R.string.tweaks_title)) },
     ) {
         item {
             Banner(
-                text = "Essential tools, mods and performance optimizations. $backendStatusSummary",
+                text = stringResource(R.string.tweaks_banner) + " " + backendStatusSummary,
                 icon = R.drawable.settings_24px,
             )
         }
 
         item {
-            PreferenceCategory(title = "Status Bar & Display Tweaks") {
+            PreferenceCategory(title = stringResource(R.string.tweaks_cat_display)) {
                 SwitchPreference(
                     title = "Show Seconds in Status Bar Clock",
                     summary = if (hasPrivilegedBackend) "Displays seconds on the status bar clock" else "Requires Shizuku or Root",
@@ -84,7 +84,7 @@ fun TweaksSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Sound & Haptics Tweaks") {
+            PreferenceCategory(title = stringResource(R.string.tweaks_cat_sound)) {
                 SwitchPreference(
                     title = "Extended 30-Step Volume Control",
                     summary = if (hasPrivilegedBackend) "Increases volume steps for fine-grained control" else "Requires Shizuku or Root",
@@ -110,7 +110,7 @@ fun TweaksSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Notifications & Torch Alerts") {
+            PreferenceCategory(title = stringResource(R.string.tweaks_cat_notifications)) {
                 SwitchPreference(
                     title = "Flashlight Pulse on Call Alert",
                     summary = "Flashes LED torch on incoming phone call",
@@ -122,7 +122,7 @@ fun TweaksSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Network & Connectivity") {
+            PreferenceCategory(title = stringResource(R.string.tweaks_cat_network)) {
                 SwitchPreference(
                     title = "Mobile Data Always Active",
                     summary = if (hasPrivilegedBackend) "Keeps mobile data connected in background during Wi-Fi for fast switching" else "Requires Shizuku or Root",
@@ -134,7 +134,7 @@ fun TweaksSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Battery & Power Tweaks") {
+            PreferenceCategory(title = stringResource(R.string.tweaks_cat_battery)) {
                 SwitchPreference(
                     title = "Aggressive Doze Mode",
                     summary = if (hasPrivilegedBackend) "Forces immediate deep sleep idle mode when screen turns off" else "Requires Shizuku or Root",

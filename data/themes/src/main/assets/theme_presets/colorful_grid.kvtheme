@@ -33,6 +33,10 @@
     "searchBarStyle": "Solid",
     "fixedSearchBar": true,
     "reduceAnimations": false,
-    "animationSpeed": 1.15
+    "animationSpeed": 1.15,
+    "drawerBackgroundEnabled": false,
+    "drawerBackgroundBlur": 0,
+    "drawerBackgroundOpacity": 1.0,
+    "widgetsGlassBackground": false
   }
 }

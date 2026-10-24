@@ -77,7 +77,7 @@ fun AdvancedSettingsScreen() {
         title = { Text(stringResource(R.string.preference_screen_advanced)) },
     ) {
         item {
-            PreferenceCategory(title = "System Automation & Shizuku") {
+            PreferenceCategory(title = stringResource(R.string.settings_system_automation)) {
                 val currentStatus = status
                 val isInstalled = currentStatus?.isShizukuInstalled == true
                 val summaryText = if (isInstalled) {
@@ -93,7 +93,7 @@ fun AdvancedSettingsScreen() {
 
                 if (isInstalled) {
                     SwitchPreference(
-                        title = "Shizuku Auto-Start",
+                        title = stringResource(R.string.settings_shizuku_autostart),
                         summary = summaryText,
                         value = shizukuAutoStart,
                         onValueChanged = { enabled ->
@@ -116,7 +116,7 @@ fun AdvancedSettingsScreen() {
                         }
                     ) {
                         Preference(
-                            title = "Shizuku Auto-Start",
+                            title = stringResource(R.string.settings_shizuku_autostart),
                             summary = summaryText,
                             enabled = false,
                         )
@@ -125,8 +125,8 @@ fun AdvancedSettingsScreen() {
 
                 Preference(
                     icon = R.drawable.settings_24px,
-                    title = "Shizuku Diagnostics & Setup Instructions",
-                    summary = "Inspect live OS compatibility, self-grant permissions, and copy ADB commands",
+                    title = stringResource(R.string.settings_shizuku_diagnostics),
+                    summary = stringResource(R.string.settings_shizuku_diagnostics_summary),
                     onClick = { showDiagnosticDialog = true }
                 )
             }

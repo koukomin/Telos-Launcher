@@ -10,6 +10,7 @@ import org.schabi.newpipe.extractor.NewPipe
 import org.schabi.newpipe.extractor.ServiceList
 import org.schabi.newpipe.extractor.localization.ContentCountry
 import org.schabi.newpipe.extractor.localization.Localization
+import org.schabi.newpipe.extractor.playlist.PlaylistInfo
 import org.schabi.newpipe.extractor.search.SearchInfo
 import org.schabi.newpipe.extractor.stream.StreamInfo
 import org.schabi.newpipe.extractor.stream.StreamInfoItem
@@ -32,6 +33,16 @@ class YouTubeRepository {
 
     suspend fun genreRadio(genre: String): List<YouTubeEntry> = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
         search("$genre music radio", true)
+    }
+
+    suspend fun fetchPlaylist(url: String): Pair<String, List<YouTubeEntry>> = withContext(Dispatchers.IO) {
+        initialize()
+        val info = PlaylistInfo.getInfo(ServiceList.YouTube, url)
+        val name: String = info.name
+        val entries: List<YouTubeEntry> = info.relatedItems.filterIsInstance<StreamInfoItem>().map {
+            YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), it.thumbnails.lastOrNull()?.url, it.duration)
+        }
+        Pair(name, entries)
     }
 
     suspend fun search(query: String, music: Boolean): List<YouTubeEntry> = withContext(Dispatchers.IO) {

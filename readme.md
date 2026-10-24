@@ -19,12 +19,12 @@ Telos is a personal fork of [Kvaesitso](https://github.com/MM2-0/Kvaesitso). It 
 [![Latest dev build](https://img.shields.io/badge/latest-dev%20build-orange.svg)](https://github.com/koukomin/Telos-Launcher/releases)
 
 <p align="center">
-  <a href="obtainium://app/https://github.com/koukomin/Telos-Launcher">
-    <img src="https://raw.githubusercontent.com/ImranR62/Obtainium/main/assets/badge.png" height="48" alt="Add to Obtainium">
+  <a href="https://obtainium.imranr.dev/add?url=https://github.com/koukomin/Telos-Launcher">
+    <img src="https://img.shields.io/badge/Obtainium-Add%20App-7B2CBF?style=for-the-badge&logo=android&logoColor=white" height="38" alt="Add to Obtainium">
   </a>
   &nbsp;&nbsp;
   <a href="https://github.com/koukomin/Telos-Launcher/releases">
-    <img src="https://img.shields.io/badge/Get_it_on-GitHub-181717?style=for-the-badge&logo=github&logoColor=white" height="48" alt="Get it on GitHub">
+    <img src="https://img.shields.io/badge/GitHub-Releases-181717?style=for-the-badge&logo=github&logoColor=white" height="38" alt="Get it on GitHub">
   </a>
 </p>
 

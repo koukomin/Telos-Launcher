@@ -21,7 +21,7 @@ class ThemePresetsRepository(
             CrashReporter.logException(e)
             emptyArray()
         }
-        fileNames.sortedWith(compareByDescending<String> { it.equals("telos.kvtheme", ignoreCase = true) }.thenBy { it }).mapNotNull { fileName ->
+        fileNames.sortedWith(compareByDescending<String> { it.equals("colorful_grid.kvtheme", ignoreCase = true) }.thenBy { it }).mapNotNull { fileName ->
             try {
                 val json = context.assets.open("$ASSET_DIR/$fileName").bufferedReader()
                     .use { it.readText() }

@@ -274,11 +274,8 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                 } else if (tab == 1) {
                     InstalledAppsTab(
                         onOpenDetails = { pkgName: String ->
-                            val match = allRows.firstOrNull { it.item.packageName == pkgName }
-                            if (match != null) {
-                                backStack.add(AppDetailsRoute(itemId = match.item.id))
-                            } else {
-                                Toast.makeText(context, pkgName, Toast.LENGTH_SHORT).show()
+                            viewModel.getOrCreateItemForPackage(pkgName) { id ->
+                                backStack.add(AppDetailsRoute(itemId = id))
                             }
                         },
                     )

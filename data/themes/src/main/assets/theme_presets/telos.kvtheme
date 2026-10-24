@@ -1,10 +1,10 @@
 {
-  "name": "Telos",
+  "name": "Telos theme beta",
   "author": "Telos Launcher",
   "version": 2,
   "transparencies": {
     "id": "00000000-0000-0000-0000-0000000000a1",
-    "name": "Telos",
+    "name": "Telos theme beta",
     "background": 0.22,
     "surface": 0.48,
     "elevatedSurface": 0.62

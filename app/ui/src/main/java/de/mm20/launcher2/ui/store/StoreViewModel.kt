@@ -209,6 +209,33 @@ class StoreViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun getOrCreateItemForPackage(packageName: String, onReady: (String) -> Unit) {
+        val existing = rows.value.firstOrNull { it.item.packageName == packageName }
+        if (existing != null) {
+            onReady(existing.item.id)
+            return
+        }
+        viewModelScope.launch {
+            val label = runCatching {
+                val pm = context.packageManager
+                val info = pm.getApplicationInfo(packageName, 0)
+                pm.getApplicationLabel(info).toString()
+            }.getOrDefault(packageName)
+
+            val source = AppSource.DirectApk("https://play.google.com/store/apps/details?id=$packageName")
+            val id = runCatching {
+                tools.addSource(source, label, packageName).getOrNull()?.id
+            }.getOrNull()
+
+            if (id != null) {
+                onReady(id)
+            } else {
+                val idMatch = rows.value.firstOrNull { it.item.packageName == packageName }?.item?.id
+                if (idMatch != null) onReady(idMatch)
+            }
+        }
+    }
+
     /** Handles an address or an obtainium:// link that opened the Store; returns an address to prefill, if any */
     fun handleLink(link: String, onPrefill: (String) -> Unit) {
         if (link.isBlank()) return

@@ -134,8 +134,8 @@ fun MainSettingsScreen() {
                 // === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions ===
                 Preference(
                     icon = R.drawable.settings_24px,
-                    title = "Tweaks (Essentials Engine)",
-                    summary = "System-level customizations, refresh rate, and volume controls (Shizuku/Root)",
+                    title = stringResource(id = R.string.preference_screen_tweaks),
+                    summary = stringResource(id = R.string.preference_screen_tweaks_summary),
                     onClick = {
                         backStack.add(de.mm20.launcher2.ui.settings.tweaks.TweaksSettingsRoute)
                     }

@@ -51,6 +51,9 @@ class YouTubePlayerService : MediaSessionService(), KoinComponent {
             .setAudioAttributes(AudioAttributes.Builder().setUsage(C.USAGE_MEDIA).setContentType(C.AUDIO_CONTENT_TYPE_MUSIC).build(), true)
             .setHandleAudioBecomingNoisy(true).setWakeMode(C.WAKE_MODE_NETWORK).build()
         player.addListener(object : Player.Listener {
+            override fun onAudioSessionIdChanged(audioSessionId: Int) {
+                de.mm20.launcher2.comms.media.MediaAudioFx.attachToSession(audioSessionId)
+            }
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) { advance?.cancel() }
             override fun onPlaybackStateChanged(playbackState: Int) {
                 if (playbackState != Player.STATE_ENDED) return

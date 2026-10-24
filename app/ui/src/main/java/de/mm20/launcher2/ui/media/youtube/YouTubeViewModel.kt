@@ -103,12 +103,44 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
             finally { resolving.value = false }
         }
     }
+    fun importPlaylistUrl(url: String, onDone: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val pair = repository.fetchPlaylist(url)
+                val name = pair.first
+                val entries = pair.second
+                if (entries.isNotEmpty()) {
+                    entries.forEach { library.add(name, it) }
+                    onDone(true)
+                } else {
+                    onDone(false)
+                }
+            } catch (_: Exception) {
+                onDone(false)
+            }
+        }
+    }
+
     fun artistRadio(context: Context, entry: YouTubeEntry) {
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             searching.value = true; message.value = null
             try {
                 val tracks = repository.related(entry)
+                results.value = results.value + (true to tracks)
+                if (tracks.isNotEmpty()) play(context, tracks.first(), true, tracks)
+            } catch (e: CancellationException) { throw e }
+            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            finally { searching.value = false }
+        }
+    }
+
+    fun moodRadio(context: Context, entry: YouTubeEntry, mood: String) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            searching.value = true; message.value = null
+            try {
+                val tracks = repository.search("${entry.artist} $mood music", true)
                 results.value = results.value + (true to tracks)
                 if (tracks.isNotEmpty()) play(context, tracks.first(), true, tracks)
             } catch (e: CancellationException) { throw e }

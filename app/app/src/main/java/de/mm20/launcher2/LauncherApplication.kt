@@ -381,8 +381,20 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
             .components {
                 add(SvgDecoder.Factory())
             }
+            .memoryCache {
+                coil.memory.MemoryCache.Builder(applicationContext)
+                    .maxSizePercent(0.25)
+                    .build()
+            }
+            .diskCache {
+                coil.disk.DiskCache.Builder()
+                    .directory(cacheDir.resolve("image_cache"))
+                    .maxSizeBytes(64 * 1024 * 1024L)
+                    .build()
+            }
             .crossfade(true)
-            .crossfade(200)
+            .crossfade(150)
+            .allowHardware(true)
             .build()
     }
 }
