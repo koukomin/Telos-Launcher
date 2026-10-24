@@ -116,8 +116,8 @@ fun MainSettingsScreen() {
                 )
                 Preference(
                     icon = R.drawable.widgets_24px,
-                    title = stringResource(R.string.hc_floating_launcher),
-                    summary = stringResource(R.string.hc_floating_panel_with_quick_access_to_your),
+                    title = stringResource(R.string.preference_screen_floating_launcher),
+                    summary = stringResource(R.string.preference_screen_floating_launcher_summary),
                     onClick = {
                         backStack.add(FloatingLauncherSettingsRoute)
                     }
@@ -126,7 +126,7 @@ fun MainSettingsScreen() {
                 Preference(
                     icon = R.drawable.ac_unit_24px,
                     title = stringResource(R.string.preference_screen_freeze),
-                    summary = stringResource(R.string.hc_manage_frozen_apps_and_shizuku_status),
+                    summary = stringResource(R.string.preference_screen_freeze_summary),
                     onClick = {
                         backStack.add(SmartFreezeDashboardRoute)
                     }

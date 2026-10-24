@@ -73,6 +73,7 @@ fun FloatingLauncherSettingsScreen() {
     val handleY by viewModel.handleY.collectAsStateWithLifecycle(0.5f)
     val handleHeight by viewModel.handleHeight.collectAsStateWithLifecycle(72)
     val fileDock by viewModel.fileDock.collectAsStateWithLifecycle(true)
+    val zones by viewModel.zones.collectAsStateWithLifecycle(emptyMap<FloatingLauncherZone, Boolean>())
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_floating_launcher)) {
         item {
@@ -216,13 +217,44 @@ fun FloatingLauncherSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_behavior)) {
+            PreferenceCategory(
+                title = stringResource(R.string.preference_category_floating_launcher_zones),
+            ) {
+                Text(
+                    text = stringResource(R.string.preference_floating_launcher_zones_summary),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+                FloatingLauncherZone.entries.forEach { zone ->
+                    SwitchPreference(
+                        title = stringResource(zoneLabelRes(zone)),
+                        value = zones[zone] == true,
+                        onValueChanged = { viewModel.setZoneEnabled(zone, it) }
+                    )
+                }
+            }
+        }
+        item {
+            PreferenceCategory(
+                title = stringResource(R.string.preference_floating_launcher_tools),
+            ) {
+                Text(
+                    text = stringResource(R.string.preference_floating_launcher_tools_summary),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
                 SwitchPreference(
                     title = stringResource(R.string.preference_floating_launcher_file_dock),
                     summary = stringResource(R.string.preference_floating_launcher_file_dock_summary),
                     value = fileDock,
                     onValueChanged = { viewModel.setFileDock(it) },
                 )
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_behavior)) {
                 SwitchPreference(
                     title = stringResource(R.string.preference_floating_launcher_floating_windows),
                     summary = stringResource(R.string.preference_floating_launcher_floating_windows_summary),

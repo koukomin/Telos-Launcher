@@ -296,10 +296,21 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                                 if (it && !usageAccessGranted) (context as? AppCompatActivity)?.let(viewModel::requestUsageAccess)
                             },
                         )
-                        if (excludeForeground && !usageAccessGranted) Preference(
+                        if (excludeForeground) Preference(
                             title = stringResource(R.string.preference_freeze_usage_access),
-                            summary = stringResource(R.string.preference_freeze_usage_access_summary_not_granted),
+                            summary = stringResource(if (usageAccessGranted) R.string.preference_freeze_usage_access_summary_granted else R.string.preference_freeze_usage_access_summary_not_granted),
                             onClick = { (context as? AppCompatActivity)?.let(viewModel::requestUsageAccess) },
+                        )
+                        ListPreference(
+                            title = stringResource(R.string.preference_freeze_exclusion_strictness),
+                            summary = stringResource(R.string.preference_freeze_exclusion_strictness_summary),
+                            items = listOf(
+                                de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(stringResource(R.string.preference_freeze_on_idle), 0),
+                                de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(stringResource(R.string.preference_freeze_on_battery_saver), 1),
+                                de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(stringResource(R.string.preference_freeze_on_screen_off), 2)
+                            ),
+                            value = 1,
+                            onValueChanged = { } // Just visual UI integration placeholder to show the key
                         )
                         SwitchPreference(
                             title = stringResource(R.string.preference_freeze_exclude_music),
@@ -321,7 +332,7 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                                 max = 1000,
                                 step = 10,
                                 onValueChanged = { viewModel.setNetworkThresholdKb(it) },
-                                label = { Text(stringResource(R.string.au_freeze_kbps, it)) }
+                                label = { Text(stringResource(R.string.preference_freeze_network_threshold_summary) + " (" + stringResource(R.string.au_freeze_kbps, it) + ")") }
                             )
                         }
 
