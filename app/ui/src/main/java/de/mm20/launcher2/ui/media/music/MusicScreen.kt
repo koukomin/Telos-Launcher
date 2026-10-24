@@ -517,8 +517,13 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
     val sleepEndsAt by viewModel.sleepEndsAt.collectAsStateWithLifecycle()
     var showSleep by remember { mutableStateOf(false) }
     var showLyrics by remember { mutableStateOf(false) }
+    var showAudioFx by remember { mutableStateOf(false) }
     var dragging by remember { mutableStateOf<Float?>(null) }
     val duration = current.durationMs.coerceAtLeast(1L)
+
+    if (showAudioFx) {
+        AudioFxDialog(onDismiss = { showAudioFx = false })
+    }
 
     if (showSleep) {
         AlertDialog(
@@ -565,6 +570,7 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
     val shareFailed = stringResource(R.string.au9_share_failed)
     var sheet by remember { mutableStateOf(false) }
     var sheetTab by remember { mutableStateOf(0) }
+    var showLyricsSheet by remember { mutableStateOf(false) }
     val libTrack = remember(library, current.mediaId) { library.firstOrNull { it.id.toString() == current.mediaId } }
     val artUrl = libTrack?.albumArtUri?.toString() ?: current.artUri?.toString()
     val tint by rememberArtworkTint(artUrl, MaterialTheme.colorScheme.primaryContainer, reduceAnimations)
@@ -579,6 +585,15 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
             val genreMatch = library.filter { it.id != t.id && t.genre.isNotBlank() && it.genre == t.genre && it !in artistMatch }
             (artistMatch + genreMatch).take(40)
         }
+    }
+
+    if (showLyricsSheet && lyrics != null) {
+        SyncedLyricsSheet(
+            lyrics = lyrics,
+            currentPositionMs = position,
+            onSeekTo = { viewModel.seekTo(it) },
+            onDismiss = { showLyricsSheet = false }
+        )
     }
 
     if (sheet) {
@@ -640,6 +655,15 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                         Icon(painterResource(R.drawable.keyboard_arrow_down_24px), contentDescription = stringResource(R.string.hc_close))
                     }
                     Spacer(Modifier.weight(1f))
+                    IconButton(onClick = { showAudioFx = true }) {
+                        Icon(painterResource(R.drawable.settings_24px), contentDescription = "Audio Effects & Boost")
+                    }
+                    IconButton(onClick = { showSleep = true }) {
+                        Icon(painterResource(R.drawable.schedule_24px), contentDescription = stringResource(R.string.hc_sleep_timer))
+                    }
+                    IconButton(onClick = { showLyricsSheet = true }) {
+                        Icon(painterResource(R.drawable.music_note_24px), contentDescription = "Synced Lyrics")
+                    }
                     IconButton(onClick = { shareAudio(context, scope, current.uri, current.title, shareFailed) }) {
                         Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.menu_share))
                     }
@@ -886,6 +910,61 @@ private fun LyricsView(
             )
         }
     }
+}
+
+@Composable
+fun AudioFxDialog(onDismiss: () -> Unit) {
+    var boostPercent by remember { mutableStateOf(100f) }
+    var bassPercent by remember { mutableStateOf(0f) }
+    var spatialPercent by remember { mutableStateOf(0f) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Telos Audio Effects & 200% Boost") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Column {
+                    Text("Volume Boost (${boostPercent.toInt()}%)", style = MaterialTheme.typography.bodyMedium)
+                    Slider(
+                        value = boostPercent,
+                        onValueChange = {
+                            boostPercent = it
+                            val gainMb = ((it - 100f) / 100f * 2000f).toInt()
+                            de.mm20.launcher2.comms.media.MediaAudioFx.setLoudnessGain(gainMb)
+                        },
+                        valueRange = 100f..200f
+                    )
+                }
+                Column {
+                    Text("Bass Boost (${bassPercent.toInt()}%)", style = MaterialTheme.typography.bodyMedium)
+                    Slider(
+                        value = bassPercent,
+                        onValueChange = {
+                            bassPercent = it
+                            val strength = (it * 10f).toInt()
+                            de.mm20.launcher2.comms.media.MediaAudioFx.setBassBoostStrength(strength)
+                        },
+                        valueRange = 0f..100f
+                    )
+                }
+                Column {
+                    Text("3D Spatial Audio (${spatialPercent.toInt()}%)", style = MaterialTheme.typography.bodyMedium)
+                    Slider(
+                        value = spatialPercent,
+                        onValueChange = {
+                            spatialPercent = it
+                            val strength = (it * 10f).toInt()
+                            de.mm20.launcher2.comms.media.MediaAudioFx.setVirtualizerStrength(strength)
+                        },
+                        valueRange = 0f..100f
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) { Text("Apply") }
+        }
+    )
 }
 
 private fun formatDuration(ms: Long): String {

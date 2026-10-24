@@ -3,6 +3,8 @@
 // Source: Flow-Tube/Flow @ 4c93b64790c3d89eed57ba96abc997bb955c05f2
 package de.mm20.launcher2.comms.youtube.flow
 
+import android.content.Context
+import de.mm20.launcher2.comms.youtube.YouTubeAccountManager
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.schabi.newpipe.extractor.downloader.Downloader
@@ -13,7 +15,7 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 /** Flow's OkHttp adapter, with bounded extraction responses to avoid buffering media files. */
-internal class NewPipeDownloader : Downloader() {
+internal class NewPipeDownloader(private val context: Context) : Downloader() {
     private val client = OkHttpClient.Builder()
         .readTimeout(30, TimeUnit.SECONDS)
         .connectTimeout(30, TimeUnit.SECONDS)
@@ -26,6 +28,11 @@ internal class NewPipeDownloader : Downloader() {
         for ((key, values) in request.headers()) {
             builder.removeHeader(key)
             for (value in values) builder.addHeader(key, value)
+        }
+        if (url.contains("youtube.com")) {
+            YouTubeAccountManager.getCookie(context)?.let { cookie ->
+                builder.header("Cookie", cookie)
+            }
         }
         val method = request.httpMethod()
         val body = request.dataToSend()?.toRequestBody()

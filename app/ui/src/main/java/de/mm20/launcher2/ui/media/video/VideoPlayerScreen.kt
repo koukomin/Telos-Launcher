@@ -405,6 +405,10 @@ private fun PlayerContent(
     var playbackStage by remember(player) { mutableStateOf(player.playbackState) }
     DisposableEffect(player) {
         val errorListener = object : Player.Listener {
+            override fun onAudioSessionIdChanged(audioSessionId: Int) {
+                de.mm20.launcher2.comms.media.MediaAudioFx.attachToSession(audioSessionId)
+            }
+
             override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
                 playbackError = true
             }

@@ -25,54 +25,35 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-data class LrcLine(val timestampMs: Long, val text: String)
-
-object LrcParser {
-    fun parse(lrcText: String): List<LrcLine> {
-        val lines = mutableListOf<LrcLine>()
-        val regex = Regex("""\[(\d{2}):(\d{2})\.(\d{2,3})](.*)""")
-        for (rawLine in lrcText.lines()) {
-            val match = regex.find(rawLine.trim()) ?: continue
-            val min = match.groupValues[1].toLongOrNull() ?: 0L
-            val sec = match.groupValues[2].toLongOrNull() ?: 0L
-            val msPart = match.groupValues[3]
-            val ms = if (msPart.length == 2) msPart.toLong() * 10L else msPart.toLong()
-            val totalMs = (min * 60_000L) + (sec * 1000L) + ms
-            val text = match.groupValues[4].trim()
-            if (text.isNotBlank()) {
-                lines.add(LrcLine(totalMs, text))
-            }
-        }
-        return lines.sortedBy { it.timestampMs }
-    }
-}
+import de.mm20.launcher2.comms.media.Lyrics
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SyncedLyricsSheet(
-    lyricsText: String,
+    lyrics: Lyrics?,
     currentPositionMs: Long,
     onSeekTo: (Long) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val lrcLines = remember(lyricsText) { LrcParser.parse(lyricsText) }
     val listState = rememberLazyListState()
 
-    val activeIndex = remember(currentPositionMs, lrcLines) {
-        val idx = lrcLines.indexOfLast { it.timestampMs <= currentPositionMs }
-        if (idx >= 0) idx else 0
+    val activeIndex = remember(currentPositionMs, lyrics) {
+        if (lyrics?.synced.isNullOrEmpty()) 0
+        else {
+            val idx = lyrics!!.synced.indexOfLast { it.timeMs <= currentPositionMs }
+            if (idx >= 0) idx else 0
+        }
     }
 
     LaunchedEffect(activeIndex) {
-        if (lrcLines.isNotEmpty()) {
+        if (lyrics != null && lyrics.synced.isNotEmpty()) {
             listState.animateScrollToItem((activeIndex - 2).coerceAtLeast(0))
         }
     }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = rememberModalBottomSheetState()
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ) {
         Column(
             modifier = Modifier
@@ -88,10 +69,10 @@ fun SyncedLyricsSheet(
                 modifier = Modifier.padding(bottom = 12.dp)
             )
 
-            if (lrcLines.isEmpty()) {
+            if (lyrics == null || lyrics.synced.isEmpty()) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(
-                        text = lyricsText.ifBlank { "No synchronized lyrics available" },
+                        text = lyrics?.plain?.ifBlank { null } ?: "No synchronized lyrics available",
                         style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -104,7 +85,7 @@ fun SyncedLyricsSheet(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    itemsIndexed(lrcLines) { index, line ->
+                    itemsIndexed(lyrics.synced) { index, line ->
                         val isActive = index == activeIndex
                         Text(
                             text = line.text,
@@ -114,7 +95,7 @@ fun SyncedLyricsSheet(
                             textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { onSeekTo(line.timestampMs) }
+                                .clickable { onSeekTo(line.timeMs) }
                                 .padding(vertical = 4.dp)
                         )
                     }

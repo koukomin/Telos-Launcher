@@ -83,6 +83,11 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
             // keeps the CPU (and for a stream the Wi-Fi) awake while playing with the screen off
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
+        exo.addListener(object : Player.Listener {
+            override fun onAudioSessionIdChanged(audioSessionId: Int) {
+                de.mm20.launcher2.comms.media.MediaAudioFx.attachToSession(audioSessionId)
+            }
+        })
         player = exo
         restoreStation(exo)
 

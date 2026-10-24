@@ -21,6 +21,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.ui.res.painterResource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -244,6 +247,19 @@ internal fun PlaybackMenu(
                             de.mm20.launcher2.comms.media.video.VideoPrefs.setResumeAfterVideo(context, it)
                         },
                     )
+                }
+
+                var showAudioFx by remember { mutableStateOf(false) }
+                if (showAudioFx) {
+                    de.mm20.launcher2.ui.media.music.AudioFxDialog(onDismiss = { showAudioFx = false })
+                }
+                androidx.compose.material3.OutlinedButton(
+                    onClick = { showAudioFx = true },
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+                ) {
+                    Icon(painterResource(R.drawable.settings_24px), contentDescription = null)
+                    Spacer(Modifier.padding(horizontal = 4.dp))
+                    Text("Audio Effects & 200% Boost")
                 }
 
                 val audio = groups.filter { it.type == C.TRACK_TYPE_AUDIO }

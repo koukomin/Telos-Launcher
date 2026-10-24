@@ -259,6 +259,19 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
         )
     }
 
+    var loginPanel by rememberSaveable { mutableStateOf(false) }
+
+    if (loginPanel) {
+        YouTubeLoginDialog(
+            onDismiss = { loginPanel = false },
+            onSuccess = {
+                loginPanel = false
+                android.widget.Toast.makeText(context, "Successfully logged in to YouTube!", android.widget.Toast.LENGTH_SHORT).show()
+                vm.reconnect(context)
+            }
+        )
+    }
+
     if (accountPanel) {
         var importUrl by remember { mutableStateOf("") }
         var importing by remember { mutableStateOf(false) }
@@ -270,6 +283,14 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(stringResource(R.string.telos_youtube_browser_account_info))
                     Text(stringResource(R.string.telos_youtube_browser_native_limit), style = MaterialTheme.typography.bodySmall)
+
+                    Button(
+                        onClick = { loginPanel = true },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Sign In (Web Session)")
+                    }
+
                     if (browserUnavailable) {
                         Text(stringResource(R.string.telos_youtube_browser_unavailable), color = MaterialTheme.colorScheme.error)
                     }

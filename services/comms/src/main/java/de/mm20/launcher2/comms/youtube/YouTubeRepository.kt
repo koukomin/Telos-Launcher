@@ -1,5 +1,6 @@
 package de.mm20.launcher2.comms.youtube
 
+import android.content.Context
 import de.mm20.launcher2.comms.youtube.flow.AudioStreamSelector
 import de.mm20.launcher2.comms.youtube.flow.NewPipeDownloader
 import de.mm20.launcher2.comms.youtube.flow.YouTubeLink
@@ -21,11 +22,11 @@ data class YouTubePlayback(val entry: YouTubeEntry, val streamUrl: String, val a
 
 /** Extraction is lazy and always runs away from the main thread. No account is required. */
 
-class YouTubeRepository {
+class YouTubeRepository(private val context: Context) {
     private fun initialize() = synchronized(INIT_LOCK) {
         if (!initialized) {
             val locale = Locale.getDefault()
-            NewPipe.init(NewPipeDownloader(), Localization(locale.language, locale.country), ContentCountry(locale.country.ifBlank { "GR" }))
+            NewPipe.init(NewPipeDownloader(context), Localization(locale.language, locale.country), ContentCountry(locale.country.ifBlank { "GR" }))
             initialized = true
         }
     }
