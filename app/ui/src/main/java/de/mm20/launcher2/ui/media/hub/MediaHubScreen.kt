@@ -186,8 +186,15 @@ fun MediaHubScreen(initialSpace: String = "") {
         ?: if (MediaSpace.entries.none { it.id == space }) null else available.first()
     LaunchedEffect(current) { current?.let { settings.setMediaHubSpace(it.id) } }
 
-    val groupSelections = remember { mutableStateMapOf<String, MediaSpace>() }
-    LaunchedEffect(current) { current?.let { groupSelections[it.group] = it } }
+    var listenSelection by rememberSaveable { mutableStateOf(MediaSpace.Music.id) }
+    var watchSelection by rememberSaveable { mutableStateOf(MediaSpace.Video.id) }
+    LaunchedEffect(current) { current?.let {
+        if (it.group == "listen") listenSelection = it.id else watchSelection = it.id
+    } }
+    val groupSelections = remember(listenSelection, watchSelection) {
+        mapOf("listen" to (MediaSpace.entries.firstOrNull { it.id == listenSelection } ?: MediaSpace.Music),
+            "watch" to (MediaSpace.entries.firstOrNull { it.id == watchSelection } ?: MediaSpace.Video))
+    }
     val groupSpaces = available.distinctBy { it.group }.map { groupSelections[it.group] ?: it }
     val youtubeVm: de.mm20.launcher2.ui.media.youtube.YouTubeViewModel = viewModel()
     LaunchedEffect(current) { if (current == MediaSpace.YouTube || current == MediaSpace.YouTubeMusic) youtubeVm.reconnect(context) }
@@ -233,7 +240,7 @@ fun MediaHubScreen(initialSpace: String = "") {
     ) {
         androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
         val scale = LocalDensity.current.fontScale
-        val wide = maxWidth >= 840.dp * scale && maxHeight >= 480.dp * scale
+        val wide = useMediaRail(maxWidth.value, maxHeight.value, scale)
         Row(Modifier.fillMaxSize()) {
         if (wide && current != null) HubNavigationRail(current, groupSpaces) { dest ->
             space = (groupSelections[dest.group] ?: dest).id

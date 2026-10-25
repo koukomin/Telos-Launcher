@@ -9,4 +9,15 @@
     <string name="telos_youtube_tab_playlists">Indices reproductionis</string>
     <string name="vn_move_down">Deorsum movere</string>
     <string name="vn_move_up">Sursum movere</string>
+    <string name="action_import">Importare</string>
+    <string name="dl_detail_url">Nexus</string>
+    <string name="hc_account">Ratio</string>
+    <string name="hc_done">Perfectum</string>
+    <string name="hf_remote_sign_in">Inire</string>
+    <string name="hf_remote_sign_in_again">Iterum inire</string>
+    <string name="au10_music_up_next">Proxima</string>
+    <string name="au_music_pause">Pausa</string>
+    <string name="hc_next">Proximum</string>
+    <string name="hc_previous">Praecedens</string>
+    <string name="hc_stop">Sistere</string>
 </resources>

@@ -158,7 +158,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
                 library.remember(playback.entry, music)
                 val extras = Bundle().apply {
                     putBoolean("audioOnly", playback.audioOnly)
-                    putString(YouTubePlayerService.EXTRA_QUEUE, YouTubeQueue.encode(tracks))
+                    putString(YouTubePlayerService.EXTRA_QUEUE, withContext(Dispatchers.Default) { YouTubeQueue.encode(tracks) })
                     putInt(YouTubePlayerService.EXTRA_QUEUE_INDEX, tracks.indexOfFirst { it.url == entry.url })
                     playback.audioUrl?.let { putString(YouTubePlayerService.EXTRA_AUDIO_URL, it) }
                 }

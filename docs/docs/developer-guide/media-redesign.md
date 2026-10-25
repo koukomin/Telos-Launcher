@@ -9,7 +9,7 @@ The design groups sources by content rather than by backend. Listen contains mus
 | Local music | Library, albums/artists/genres, queue, playlists, lyrics, tags, AudioFx, sharing | Artwork shelves and listening filters |
 | Radio | Favorites, search, custom stations/imports, recordings, scheduling, history/settings | Listening artwork and track-like station rows |
 | Local video | Folders/movies/series, watched/resume/Trakt, share/delete, complete player tools | Thumbnail-led watch grid; episode rows retained |
-| YouTube Music | Shared session, search, favorites/playlists/import, moods/radio, downloads, background playback | Music home, artwork rows and library shelves |
+| YouTube Music | Shared session, search, favorites/playlists/import, moods/radio, background playback | Music home, artwork rows and library shelves |
 | YouTube | Search/links, video player, quality/queue/background, account/library actions | Home feed, account playlists and 16:9 cards |
 | TV | Sources/countries, custom streams/imports, favorites/ordering, EPG and player | Larger 16:9 channel cards |
 | Stremio | Account/library/add-ons, torrent/transport/cache, playback preferences and continuation | Watch navigation; source/player controls preserved |
@@ -21,3 +21,7 @@ Call callbacks retain their authoritative state; terminal calls cannot remain pr
 Recents handling uses system callbacks only. Removal-start metadata captures tasks before they disappear. Refresh notifications are coalesced separately from definitive removals; overflow forces reconnect rather than treating missing information as an empty task list. The opt-in, Shizuku permission requirement, last-task/profile checks and freeze exclusions remain.
 
 Validation includes parser/cookie fixtures, call-state/touch policy tests, actual call-button touch geometry and listening/watch screenshot cases. Root/Shizuku/OEM task callbacks, carrier calls, signed-in personal feeds and physical playback require device/account verification. Full visual acceptance is pending screenshot review; this document does not claim all device states tested.
+
+Account UI now distinguishes native session sign-in from the separate browser session in all supported base languages. Auto-playlist shelves use translated platform/favorites labels, and account playlists use artwork cards instead of duplicated chip rows. The last Listen and Watch source is saveable across recreation. Navigation-rail policy tests cover short landscape and enlarged fonts; screenshot fixtures cover compact/wide listening and watch cards.
+
+The YouTube Music mini player expands to an artwork-led player with position/seek controls, previous/next, stop and the existing queue. The current MediaController is the source of playback state; selecting a queue item uses the existing resolve/play path. Wide short windows use side-by-side artwork and controls; portrait content scrolls naturally at large fonts. No separate playback engine or service is introduced.

@@ -101,7 +101,7 @@ class RecentsFreezeMonitor internal constructor(
                         removing -> {
                             val info = data.readTypedObject(ActivityManager.RunningTaskInfo.CREATOR)
                             val pkg = info?.baseIntent?.component?.packageName ?: info?.baseActivity?.packageName
-                            if (info != null && pkg != null) offer(RecentsSignal(REFRESH, RecentsTask(info.taskId, pkg,
+                            if (info != null && pkg != null) offer(RecentsSignal(info.taskId, RecentsTask(info.taskId, pkg,
                                 runCatching { info.javaClass.getField("userId").getInt(info) }.getOrDefault(-1))))
                         }
                         changed -> offer(RecentsSignal(REFRESH))
@@ -170,12 +170,25 @@ class RecentsFreezeMonitor internal constructor(
             while (known.size > 1024) known.remove(known.keys.first())
             return
         }
-        val removed = known.remove(id) ?: return
-        delay(750) // Let usage/foreground state settle after the Recents animation.
+        val removed = known[id] ?: return
+        delay(750) // Wait for the Recents animation; a removal-start event is not absence yet.
         if (!settings.freezeOnRecentsRemoval.first()) return
-        val remaining = snapshot() ?: run { disconnect(); return } // Never treat failure as an empty list.
+        var remaining = snapshot() ?: run { disconnect(); return }
+        repeat(2) {
+            if (remaining.any { it.id == id && it.userId == removed.userId }) {
+                delay(500)
+                remaining = snapshot() ?: run { disconnect(); return }
+            }
+        }
         remaining.forEach { known[it.id] = it }
-        if (removedLastTask(removed, remaining, userId)) autoFreeze.freezeAfterRecentsRemoval(removed.packageName)
+        if (remaining.none { it.id == id && it.userId == removed.userId }) known.remove(id)
+        if (removedLastTask(removed, remaining, userId)) {
+            autoFreeze.freezeAfterRecentsRemoval(removed.packageName) {
+                // Exclusion checks may take time. A reopened app must not be frozen using an old snapshot.
+                val latest = snapshot() ?: return@freezeAfterRecentsRemoval false
+                latest.none { it.packageName == removed.packageName && it.userId == userId }
+            }
+        }
     }
 
     companion object {

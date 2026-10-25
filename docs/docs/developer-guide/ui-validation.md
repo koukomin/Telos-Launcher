@@ -105,3 +105,5 @@ Audio policy follow-up: System details now include translated focus/playback App
 ## Media redesign follow-up
 
 New instrumentation covers the actual call termination target at font scale 2 in a short window, media card play/radio actions and Listen/Watch card screenshots in light/dark at font scales 1/2. Evidence is collected through MediaStore in Pictures/TelosUiValidation and survives test-APK uninstall. Full seven-source account/library/device screenshots remain unverified until reviewed. See media-redesign.md for feature inventory and non-visual limitations.
+
+The expanded YouTube Music player has portrait/landscape, font 1/2 screenshot fixtures and callback tests for previous/next, pause, stop and queue selection. These are UI/controller-wiring checks; they do not establish live YouTube playback or OEM call/Recents behavior. The first media-card test passed; the initial call-touch test failed because its preferences DI fixture was missing, and that setup was corrected before rerunning.

@@ -9,4 +9,15 @@
     <string name="telos_youtube_tab_playlists">Κατάλογοι ἀναπαραγωγῆς</string>
     <string name="vn_move_down">Κάτω κινεῖν</string>
     <string name="vn_move_up">Ἄνω κινεῖν</string>
+    <string name="action_import">Εἰσάγειν</string>
+    <string name="dl_detail_url">Σύνδεσμος</string>
+    <string name="hc_account">Λογαριασμός</string>
+    <string name="hc_done">Ἐτελέσθη</string>
+    <string name="hf_remote_sign_in">Εἰσελθεῖν</string>
+    <string name="hf_remote_sign_in_again">Πάλιν εἰσελθεῖν</string>
+    <string name="au10_music_up_next">Ἑπόμενα</string>
+    <string name="au_music_pause">Παῦσις</string>
+    <string name="hc_next">Ἑπόμενον</string>
+    <string name="hc_previous">Προηγούμενον</string>
+    <string name="hc_stop">Παύειν</string>
 </resources>
