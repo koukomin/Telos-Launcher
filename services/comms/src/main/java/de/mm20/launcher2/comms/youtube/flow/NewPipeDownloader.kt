@@ -37,7 +37,7 @@ internal class NewPipeDownloader(private val context: Context) : Downloader() {
         if (YouTubeSessionPolicy.trusted(url)) {
             YouTubeAccountManager.getCookie(context)?.let { cookie ->
                 if (cookie.isNotBlank()) {
-                    builder.header("Cookie", YouTubeSessionPolicy.mergeCookies(builder.build().header("Cookie"), cookie))
+                    builder.header("Cookie", YouTubeSessionPolicy.mergeCookies(builder.build().headers("Cookie").joinToString("; "), cookie))
 
                     val origin = if (java.net.URI(url).host.equals("music.youtube.com", true)) {
                         "https://" + "music.youtube.com"

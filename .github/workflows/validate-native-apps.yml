@@ -83,9 +83,7 @@ jobs:
           script: |
             adb shell wm size 1440x1200
             adb shell wm density 160
-            ./gradlew :app:ui:connectedDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs=-Xmx2048m --stacktrace
-            mkdir -p app/ui/build/ui-screenshots
-            adb pull /sdcard/Pictures/TelosUiValidation/. app/ui/build/ui-screenshots/
+            bash tools/validation/run-ui-device-tests.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -54,6 +54,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val playlists by vm.library.playlists.collectAsStateWithLifecycle()
     val userPlaylists by vm.userPlaylists.collectAsStateWithLifecycle(emptyList<de.mm20.launcher2.comms.youtube.YouTubePlaylistSummary>())
     val sessionExpired by vm.sessionExpired.collectAsStateWithLifecycle()
+    val loadingAccount by vm.isLoadingPlaylists.collectAsStateWithLifecycle()
 
     LaunchedEffect(music) {
         vm.loadUserPlaylists(context)
@@ -223,7 +224,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                         }
                         if (shelf != "search" && entries.isNotEmpty()) {
                             Button(
-                                onClick = { vm.play(context, entries.first(), true, entries) },
+                                onClick = { vm.play(context, entries.first(), music, entries); if (!music) scope.launch { gridState.animateScrollToItem(0) } },
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(16.dp)
                             ) {
@@ -234,7 +235,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                         }
                     }
 
-                    if (music && shelf != "search") {
+                    if (shelf == "favorites" || shelf.startsWith("playlist:")) {
                         Text(
                             stringResource(R.string.telos_youtube_library_local),
                             style = MaterialTheme.typography.labelMedium,
@@ -243,10 +244,11 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                         )
                     }
 
-                    if (searching || resolving || buffering) {
+                    if (searching || resolving || buffering || loadingAccount) {
                         LinearProgressIndicator(Modifier.fillMaxWidth())
                         Text(
-                            stringResource(if (resolving || buffering) R.string.telos_youtube_preparing else R.string.telos_youtube_searching),
+                            stringResource(if (resolving || buffering) R.string.telos_youtube_preparing
+                                else if (loadingAccount && !searching) R.string.telos_youtube_tab_playlists else R.string.telos_youtube_searching),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary
                         )
