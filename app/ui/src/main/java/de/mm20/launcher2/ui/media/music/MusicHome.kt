@@ -22,6 +22,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -185,10 +186,10 @@ internal fun MusicHome(
                 LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     items(artists, key = { it.title }) { a ->
                         Column(
-                            Modifier.width(112.dp).pressScale(reduceAnimations, onClick = { onOpenGroup(a) }, onLongClick = { onShareGroup(a) }),
+                            Modifier.width(152.dp).pressScale(reduceAnimations, onClick = { onOpenGroup(a) }, onLongClick = { onShareGroup(a) }),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            ArtOrNote(a.tracks.first().albumArtUri.toString(), Modifier.size(112.dp).clip(CircleShape))
+                            ArtOrNote(a.tracks.first().albumArtUri.toString(), Modifier.size(152.dp).clip(CircleShape))
                             Text(a.title, style = MaterialTheme.typography.labelLarge, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 8.dp))
                         }
                     }
@@ -211,9 +212,9 @@ internal fun MusicHome(
                         val d = decades[i]
                         val (c1, c2) = pairs[i % pairs.size]
                         Box(
-                            Modifier.size(width = 156.dp, height = 96.dp)
+                            Modifier.width(176.dp).heightIn(min = 96.dp)
                                 .pressScale(reduceAnimations, onClick = { onOpenGroup(d) }, onLongClick = { onShareGroup(d) })
-                                .clip(RoundedCornerShape(20.dp))
+                                .clip(RoundedCornerShape(12.dp))
                                 .background(Brush.linearGradient(listOf(c1, c2)))
                                 .padding(14.dp),
                             contentAlignment = Alignment.BottomStart,
@@ -232,8 +233,8 @@ internal fun MusicHome(
 
 @Composable
 private fun ArtCard(url: String?, title: String, subtitle: String, reduce: Boolean, onClick: () -> Unit, onLongClick: (() -> Unit)? = null) {
-    Column(Modifier.width(112.dp).pressScale(reduce, onClick, onLongClick)) {
-        ArtOrNote(url, Modifier.size(112.dp).clip(RoundedCornerShape(8.dp)))
+    Column(Modifier.width(152.dp).pressScale(reduce, onClick, onLongClick)) {
+        ArtOrNote(url, Modifier.size(152.dp).clip(RoundedCornerShape(8.dp)))
         Text(title, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
         Text(subtitle, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
@@ -255,5 +256,5 @@ private fun GenrePill(label: String, selected: Boolean, reduce: Boolean, onClick
 
 @Composable
 private fun ShelfTitle(text: String) {
-    Text(text, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 16.dp))
+    Text(text, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 20.dp))
 }

@@ -1,0 +1,12 @@
+<resources>
+    <string name="au10_music_more">Πλείω</string>
+    <string name="au10_music_tab_home">Ἀρχή</string>
+    <string name="au_music_tab_artists">Καλλιτέχναι</string>
+    <string name="au_music_tab_songs">ᾌσματα</string>
+    <string name="hc_albums">Συλλογαί</string>
+    <string name="telos_youtube_radio_failed">Ἡ μῖξις οὐκ ἤρξατο· ἄλλο ᾆσμα πειρῶ.</string>
+    <string name="telos_youtube_search_failed">Ἡ ζήτησις ἀπέτυχεν· τὴν σύνδεσιν ἔλεγξον καὶ πάλιν πειρῶ.</string>
+    <string name="telos_youtube_tab_playlists">Κατάλογοι ἀναπαραγωγῆς</string>
+    <string name="vn_move_down">Κάτω κινεῖν</string>
+    <string name="vn_move_up">Ἄνω κινεῖν</string>
+</resources>

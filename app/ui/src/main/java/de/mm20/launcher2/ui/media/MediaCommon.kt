@@ -115,17 +115,8 @@ fun MediaSearchBar(
     placeholder: String,
     modifier: Modifier = Modifier,
 ) {
-    var expanded by rememberSaveable { mutableStateOf(value.isNotEmpty()) }
-    Column(modifier.fillMaxWidth()) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            IconButton(onClick = { expanded = !expanded; if (!expanded) onValueChange("") }) {
-                Icon(painterResource(if (expanded) R.drawable.close_24px else R.drawable.search_24px), placeholder)
-            }
-        }
-        AnimatedVisibility(expanded, enter = expandVertically() + fadeIn(), exit = shrinkVertically() + fadeOut()) {
-            de.mm20.launcher2.ui.component.TelosSearchBar(value, onValueChange, placeholder, autoFocus = true)
-        }
-    }
+    de.mm20.launcher2.ui.component.TelosSearchBar(value, onValueChange, placeholder,
+        modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp))
 }
 
 /** Playback notifications need the notification permission on Android 13 and newer. */

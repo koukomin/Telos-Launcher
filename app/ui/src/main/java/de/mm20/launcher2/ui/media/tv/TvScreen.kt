@@ -397,7 +397,7 @@ private fun TvFavoritesBody(
 
     val hero = recents.firstOrNull() ?: favorites.firstOrNull()
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(72.dp),
+        columns = GridCells.Adaptive(224.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale),
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 24.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -516,7 +516,7 @@ private fun TvHomeBody(
 
     Box(Modifier.fillMaxSize()) {
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(72.dp),
+            columns = GridCells.Adaptive(224.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale),
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = topHeight, bottom = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),

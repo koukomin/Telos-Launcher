@@ -536,20 +536,46 @@ internal fun VideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
         VideoEmptyState(R.drawable.movie_24px, stringResource(R.string.au10_video_nothing_here), "")
         return
     }
-    LazyColumn(contentPadding = PaddingValues(top = 4.dp, bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
-        items(list.size, key = { list[it].uri.toString() }) { index -> VideoRow(list[index]) { onPlay(index) } }
+    androidx.compose.foundation.lazy.grid.LazyVerticalGrid(
+        columns = androidx.compose.foundation.lazy.grid.GridCells.Adaptive(320.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale),
+        contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxSize()) {
+        items(list.size, key = { list[it].uri.toString() }) { index -> VideoRow(list[index], tile = true) { onPlay(index) } }
     }
 }
 
 /** A rounded card row: 16:9 thumbnail with progress, title, duration; long press opens the menu */
 @Composable
-internal fun VideoRow(video: VideoItem, number: Int? = null, onClick: () -> Unit) {
+internal fun VideoRow(video: VideoItem, number: Int? = null, tile: Boolean = false, onClick: () -> Unit) {
     val context = LocalContext.current
     val progress = remember(video.uri, libraryVersion.intValue) { ResumeStore.progress(context, video.uri) }
     var menu by remember { mutableStateOf(false) }
     val seen = remember(video.uri, libraryVersion.intValue) { ResumeStore.isWatched(context, video.uri) }
     val watched = seen || remember(video.uri, traktVersion.intValue) {
         de.mm20.launcher2.comms.media.video.trakt.Trakt.isWatched(context, EpisodeParser.parse(video.fileName, video.locationHint))
+    }
+    if (tile) {
+        Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.surfaceContainerLow).pressScale(onClick) { menu = true }) {
+            Box(Modifier.fillMaxWidth().aspectRatio(16f / 9f)) {
+                VideoThumb(video, Modifier.fillMaxSize())
+                if (progress > 0.02f) LinearProgressIndicator(progress = { progress.coerceAtMost(1f) },
+                    modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(3.dp))
+                if (watched) WatchedBadge(Modifier.align(Alignment.TopStart).padding(8.dp))
+            }
+            Row(Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(video.title, style = MaterialTheme.typography.titleMedium, maxLines = 3, overflow = TextOverflow.Ellipsis)
+                    Text(formatDuration(video.durationMs) + " · " + video.folder,
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                IconButton(onClick = { menu = true }) {
+                    Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.au10_music_more))
+                }
+            }
+            VideoMenu(video, menu, seen) { menu = false }
+        }
+        return
     }
     Row(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).fillMaxWidth().clip(RoundedCornerShape(20.dp))

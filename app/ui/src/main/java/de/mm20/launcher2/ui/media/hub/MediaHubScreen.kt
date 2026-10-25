@@ -139,9 +139,8 @@ private enum class MediaSpace(
 }
 
 private val MediaSpace.group: String get() = when (this) {
-    MediaSpace.Music, MediaSpace.YouTubeMusic -> "listen"
-    MediaSpace.Video, MediaSpace.YouTube, MediaSpace.Stremio -> "watch"
-    MediaSpace.Radio, MediaSpace.Tv -> "live"
+    MediaSpace.Music, MediaSpace.YouTubeMusic, MediaSpace.Radio -> "listen"
+    MediaSpace.Video, MediaSpace.YouTube, MediaSpace.Stremio, MediaSpace.Tv -> "watch"
 }
 private val MediaSpace.groupLabel: Int get() = when (group) {
     "listen" -> R.string.telos_media_listen
@@ -232,9 +231,17 @@ fun MediaHubScreen(initialSpace: String = "") {
         contentColor = scheme.onSurface,
         modifier = Modifier.fillMaxSize(),
     ) {
+        androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
+        val scale = LocalDensity.current.fontScale
+        val wide = maxWidth >= 840.dp * scale && maxHeight >= 480.dp * scale
+        Row(Modifier.fillMaxSize()) {
+        if (wide && current != null) HubNavigationRail(current, groupSpaces) { dest ->
+            space = (groupSelections[dest.group] ?: dest).id
+        }
         Column(
             Modifier
-                .fillMaxSize()
+                .weight(1f).fillMaxHeight()
+                .then(if (wide) Modifier.navigationBarsPadding() else Modifier)
                 .background(
                     Brush.verticalGradient(
                         listOf(
@@ -270,7 +277,7 @@ fun MediaHubScreen(initialSpace: String = "") {
                                         current = target, available = available, groupSpaces = groupSpaces,
                                         onSelect = { space = it.id },
                                         onReorder = { reordered ->
-                                            settings.setMediaHubOrder(reordered.flatMap { group -> available.filter { it.group == group.group }.map { it.id } })
+                                            settings.setMediaHubOrder(reordered.map { it.id })
                                         },
                                         reduceAnimations = reduceAnimations,
                                         onBack = { backStack.removeLastOrNull() },
@@ -316,7 +323,7 @@ fun MediaHubScreen(initialSpace: String = "") {
                         space = target.id
                     },
                 )
-                HubBottomBar(
+                if (!wide) HubBottomBar(
                     current = current,
                     groupSpaces = groupSpaces,
                     haze = hazeState,
@@ -328,6 +335,8 @@ fun MediaHubScreen(initialSpace: String = "") {
             }
         }
     }
+        }
+        }
 }
 
 /** Back, compact destination title, source chips, then the open screen's actions. */
@@ -344,169 +353,68 @@ private fun HubToolbar(
     haze: de.mm20.launcher2.ui.component.VirtualAppBlur,
     blurRadius: Int,
 ) {
-    val sources = available.filter { it.group == current.group }
+    val sources = remember(available, current.group) { available.filter { it.group == current.group } }
+    var menu by remember { mutableStateOf(false) }
     val t = MaterialTheme.transparency
     val glass = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .hubGlass(haze, blurRadius, glass)
-    ) {
-        Row(
-            Modifier.fillMaxWidth().padding(horizontal = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+    Column(Modifier.fillMaxWidth().hubGlass(haze, blurRadius, glass)) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) {
                 Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
             }
-            Text(
-                stringResource(current.groupLabel),
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f),
-            )
-            actions()
-        }
-        if (sources.size > 1) {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState())
-                    .padding(start = 16.dp, end = 16.dp, bottom = 6.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                sources.forEach { source ->
-                    FilterChip(
-                        selected = source == current,
-                        onClick = { onSelect(source) },
-                        label = {
-                            Text(stringResource(source.label), style = MaterialTheme.typography.labelSmall, maxLines = 1)
-                        },
-                        leadingIcon = {
-                            Icon(painterResource(source.icon), null, modifier = Modifier.size(16.dp))
-                        },
-                    )
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(current.groupLabel), style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(current.label), style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold)
+            }
+            Box {
+                IconButton(onClick = { menu = true }) {
+                    Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.au10_music_more))
                 }
-            }
-        }
-    }
-}
-
-/** Floating glass pill with four segments and a sliding tonal indicator; compact screens show the label of the selected segment only */
-@Composable
-private fun SpacePill(
-    spaces: List<MediaSpace>,
-    selected: MediaSpace,
-    onSelect: (MediaSpace) -> Unit,
-    onReorder: (List<MediaSpace>) -> Unit,
-    reduceAnimations: Boolean,
-    modifier: Modifier = Modifier,
-) {
-    // The selected space has a full-size title below the icon pill.
-    val currentSpaces by androidx.compose.runtime.rememberUpdatedState(spaces)
-    val currentOnReorder by androidx.compose.runtime.rememberUpdatedState(onReorder)
-    var dragItem by remember { mutableStateOf<MediaSpace?>(null) }
-    var dragDx by remember { mutableStateOf(0f) }
-    val haptic = LocalHapticFeedback.current
-    val scheme = MaterialTheme.colorScheme
-    val shape = RoundedCornerShape(28.dp)
-    val xs = remember { mutableStateMapOf<MediaSpace, Float>() }
-    val ws = remember { mutableStateMapOf<MediaSpace, Float>() }
-    val targetX = xs[selected] ?: 0f
-    val targetW = ws[selected] ?: 0f
-    val ix by animateFloatAsState(
-        targetX, if (reduceAnimations) snap() else spring(0.8f, 400f), label = "mediaHubIndicatorX",
-    )
-    val iw by animateFloatAsState(
-        targetW, if (reduceAnimations) snap() else spring(0.8f, 400f), label = "mediaHubIndicatorW",
-    )
-    val density = LocalDensity.current
-    Surface(
-        shape = shape,
-        color = scheme.surfaceContainerHigh.copy(alpha = 0.85f),
-        modifier = modifier.border(1.dp, scheme.outline.copy(alpha = 0.2f), shape),
-    ) {
-        Box(Modifier.padding(4.dp)) {
-            if (iw > 0f) {
-                Box(
-                    Modifier
-                        .offset(x = with(density) { ix.toDp() })
-                        .width(with(density) { iw.toDp() })
-                        .height(36.dp)
-                        .clip(CircleShape)
-                        .background(scheme.primaryContainer)
-                )
-            }
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-                for (item in spaces) key(item) {
-                    val isSelected = item == selected
-                    val content by animateColorAsState(
-                        if (isSelected) scheme.onPrimaryContainer else scheme.onSurfaceVariant,
-                        label = "mediaHubSegmentContent",
-                    )
-                    val label = stringResource(item.groupLabel)
-                    Row(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(36.dp)
-                            .onGloballyPositioned {
-                                xs[item] = it.positionInParent().x
-                                ws[item] = it.size.width.toFloat()
-                            }
-                            .graphicsLayer { translationX = if (dragItem == item) dragDx else 0f }
-                            .clip(CircleShape)
-                            .semantics { contentDescription = label; this.selected = isSelected }
-                            .clickable(role = Role.Tab) {
-                                if (!isSelected) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                                onSelect(item)
-                            }
-                            // long press and drag sideways to change the order
-                            .pointerInput(item) {
-                                detectDragGesturesAfterLongPress(
-                                    onDragStart = {
-                                        dragItem = item
-                                        dragDx = 0f
-                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                    },
-                                    onDrag = { change, amount ->
-                                        change.consume()
-                                        dragDx += amount.x
-                                        val list = currentSpaces
-                                        val i = list.indexOf(item)
-                                        val w = ws[item] ?: 0f
-                                        if (i >= 0 && w > 0f) {
-                                            if (dragDx > w / 2 && i < list.lastIndex) {
-                                                dragDx -= ws[list[i + 1]] ?: w
-                                                currentOnReorder(list.toMutableList().also { it.add(i + 1, it.removeAt(i)) })
-                                                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                                            } else if (dragDx < -w / 2 && i > 0) {
-                                                dragDx += ws[list[i - 1]] ?: w
-                                                currentOnReorder(list.toMutableList().also { it.add(i - 1, it.removeAt(i)) })
-                                                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                                            }
-                                        }
-                                    },
-                                    onDragEnd = { dragItem = null; dragDx = 0f },
-                                    onDragCancel = { dragItem = null; dragDx = 0f },
-                                )
-                            }
-                            .padding(horizontal = 8.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(
-                            painterResource(item.groupIcon),
-                            contentDescription = null,
-                            tint = content,
-                            modifier = Modifier.size(18.dp),
-                        )
-
+                androidx.compose.material3.DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                    available.forEach { source ->
+                        androidx.compose.material3.DropdownMenuItem(text = { Text(stringResource(source.label)) },
+                            leadingIcon = { Icon(painterResource(source.icon), null) },
+                            onClick = { onSelect(source); menu = false })
+                    }
+                    androidx.compose.material3.HorizontalDivider()
+                    listOf(-1 to R.string.vn_move_up, 1 to R.string.vn_move_down).forEach { (delta, label) ->
+                        val index = available.indexOf(current)
+                        androidx.compose.material3.DropdownMenuItem(text = { Text(stringResource(label)) },
+                            enabled = index + delta in available.indices,
+                            onClick = {
+                                onReorder(available.toMutableList().apply { removeAt(index); add(index + delta, current) })
+                                menu = false
+                            })
                     }
                 }
             }
+        }
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            sources.forEach { source ->
+                FilterChip(selected = source == current, onClick = { onSelect(source) },
+                    shape = RoundedCornerShape(if (current.group == "listen") 20.dp else 8.dp),
+                    label = { Text(stringResource(source.label)) })
+            }
+        }
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 8.dp),
+            horizontalArrangement = Arrangement.End, content = actions)
+    }
+}
+
+@Composable
+private fun HubNavigationRail(current: MediaSpace, spaces: List<MediaSpace>, onSelect: (MediaSpace) -> Unit) {
+    androidx.compose.material3.NavigationRail(
+        modifier = Modifier.statusBarsPadding().navigationBarsPadding(),
+        containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+    ) {
+        spaces.forEach { source ->
+            androidx.compose.material3.NavigationRailItem(selected = current.group == source.group,
+                onClick = { onSelect(source) },
+                icon = { Icon(painterResource(source.groupIcon), null) },
+                label = { Text(stringResource(source.groupLabel)) })
         }
     }
 }

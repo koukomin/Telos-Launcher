@@ -491,7 +491,7 @@ private fun StationRow(
         modifier = Modifier
             .fillMaxWidth()
             .pressScale(reduce, onClick = onClick, onLongClick = onLongClick)
-            .clip(RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(12.dp))
             .background(MaterialTheme.colorScheme.surfaceContainerLow)
     ) {
         Row(
@@ -501,7 +501,7 @@ private fun StationRow(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            RadioLogo(station, Modifier.size(56.dp), corner = 14.dp, pad = 6.dp)
+            RadioLogo(station, Modifier.size(64.dp), corner = 8.dp, pad = 6.dp)
 
             // Details
             Column(modifier = Modifier.weight(1f)) {

@@ -214,3 +214,9 @@ menu opens the information and its visibility switch again.
 YouTube native session cookies are Keystore protected. Cached library data is bounded and scoped to the session; logout clears Telos credentials/library data and YouTube cookies without clearing unrelated Web app sessions. Embedded login and private playlist endpoints remain provider-dependent, and current extraction does not promise every continuation page.
 
 Audio effects keep separate resources for live player sessions and release them with the player. Shared Telos effect settings apply across those sessions. A two-times amplitude boost is capped at about +6.02dB; native/vendor effect availability still varies. The unused extra service/mini player/timer additions were removed in favor of existing playback/session interfaces.
+
+## Listening and watching
+
+Listen groups local music, YouTube Music and radio. Watch groups local video, YouTube, TV and Stremio. Source chips and the source menu keep all seven sources reachable; the menu also reorders sources without resetting your saved order. Wide, tall windows use a navigation rail; compact or short windows use bottom navigation. Your Telos theme, wallpaper treatment and system font size remain in effect. Music emphasizes artwork shelves and track rows; watch sections use 16:9 thumbnails and growing metadata.
+
+YouTube and YouTube Music load home content on entry and expose account playlists in both modes. Use Home to refresh after signing in. Artist radio uses a Music mix seeded by the selected song. Local libraries, favorites, playlists, imports, downloads, queues, player tools, radio recording/settings, TV sources/EPG and Stremio settings remain available through their existing actions. Live account/provider availability and playback still depend on YouTube responses.

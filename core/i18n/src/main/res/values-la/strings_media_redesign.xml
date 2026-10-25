@@ -1,0 +1,12 @@
+<resources>
+    <string name="au10_music_more">Plura</string>
+    <string name="au10_music_tab_home">Initium</string>
+    <string name="au_music_tab_artists">Artifices</string>
+    <string name="au_music_tab_songs">Cantus</string>
+    <string name="hc_albums">Collectiones</string>
+    <string name="telos_youtube_radio_failed">Mixtura incipi non potuit; alium cantum tempta.</string>
+    <string name="telos_youtube_search_failed">Quaestio defecit; conexionem verifica et iterum tempta.</string>
+    <string name="telos_youtube_tab_playlists">Indices reproductionis</string>
+    <string name="vn_move_down">Deorsum movere</string>
+    <string name="vn_move_up">Sursum movere</string>
+</resources>

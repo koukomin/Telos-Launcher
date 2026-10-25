@@ -101,3 +101,7 @@ The unified SystemAppDetailsRoute is registered in both hosts. This change reuse
 The embedded host also registers the freeze hub, statistics and Device Owner setup destinations reached from System management. `python3 tools/validation/system_app_routes.py` guards these destination registrations in both hosts; it is a static navigation check, not a device interaction test. Dangerous manifest permission rows carry a warning glyph as well as color.
 
 Audio policy follow-up: System details now include translated focus/playback AppOps lists, with readback before displaying success. Parser tests cover Android shell defaults/history, wrong operation output, UID overrides and command injection. Physical root/Shizuku audio, OEM enforcement and changes to active playback remain unverified.
+
+## Media redesign follow-up
+
+New instrumentation covers the actual call termination target at font scale 2 in a short window, media card play/radio actions and Listen/Watch card screenshots in light/dark at font scales 1/2. Evidence is collected through MediaStore in Pictures/TelosUiValidation and survives test-APK uninstall. Full seven-source account/library/device screenshots remain unverified until reviewed. See media-redesign.md for feature inventory and non-visual limitations.

@@ -12,7 +12,6 @@ import android.os.Build
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -22,6 +21,8 @@ import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper
 import java.lang.reflect.Proxy
+
+private data class RecentsSignal(val id: Int, val task: RecentsTask? = null)
 
 internal data class RecentsTask(val id: Int, val packageName: String, val userId: Int)
 internal fun removedLastTask(removed: RecentsTask, remaining: List<RecentsTask>, userId: Int): Boolean =
@@ -36,7 +37,13 @@ class RecentsFreezeMonitor internal constructor(
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val _connected = MutableStateFlow(false)
     val connected = _connected.asStateFlow()
-    private val events = Channel<Int>(64, BufferOverflow.DROP_OLDEST)
+    private val events = Channel<RecentsSignal>(256)
+    private val refreshQueued = java.util.concurrent.atomic.AtomicBoolean(false)
+    private val overflowed = java.util.concurrent.atomic.AtomicBoolean(false)
+    private fun offer(signal: RecentsSignal) {
+        if (signal.id == REFRESH && signal.task == null && !refreshQueued.compareAndSet(false, true)) return
+        if (events.trySend(signal).isFailure) overflowed.set(true)
+    }
     private val known = linkedMapOf<Int, RecentsTask>()
     private var service: Any? = null
     private var listener: Any? = null
@@ -53,6 +60,7 @@ class RecentsFreezeMonitor internal constructor(
                             Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED }.getOrDefault(false)) {
                             disconnect()
                         } else if (!_connected.value) connect()
+                        if (overflowed.getAndSet(false)) disconnect()
                         if (_connected.value) {
                             val event = withTimeoutOrNull(5000) { events.receive() }
                             if (event != null) try { processEvent(event) }
@@ -80,6 +88,7 @@ class RecentsFreezeMonitor internal constructor(
             val removed = transaction("onTaskRemoved")
             val changed = transaction("onTaskStackChanged")
             val created = transaction("onTaskCreated")
+            val removing = runCatching { transaction("onTaskRemovalStarted") }.getOrNull()
             val callbackBinder = object : Binder() {
                 override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean {
                     if (code == INTERFACE_TRANSACTION) return super.onTransact(code, data, reply, flags)
@@ -87,8 +96,15 @@ class RecentsFreezeMonitor internal constructor(
                     if (Binder.getCallingUid() != SYSTEM_UID) return false
                     data.enforceInterface("android.app.ITaskStackListener")
                     when (code) {
-                        removed -> events.trySend(data.readInt())
-                        changed, created -> events.trySend(REFRESH)
+                        removed -> offer(RecentsSignal(data.readInt()))
+                        created -> offer(RecentsSignal(REFRESH))
+                        removing -> {
+                            val info = data.readTypedObject(ActivityManager.RunningTaskInfo.CREATOR)
+                            val pkg = info?.baseIntent?.component?.packageName ?: info?.baseActivity?.packageName
+                            if (info != null && pkg != null) offer(RecentsSignal(REFRESH, RecentsTask(info.taskId, pkg,
+                                runCatching { info.javaClass.getField("userId").getInt(info) }.getOrDefault(-1))))
+                        }
+                        changed -> offer(RecentsSignal(REFRESH))
                     }
                     return true
                 }
@@ -124,6 +140,8 @@ class RecentsFreezeMonitor internal constructor(
         _connected.value = false
         service = null; listener = null; binder = null
         known.clear()
+        refreshQueued.set(false)
+        overflowed.set(false)
         while (events.tryReceive().isSuccess) { /* discard old-session callbacks */ }
     }
 
@@ -135,14 +153,18 @@ class RecentsFreezeMonitor internal constructor(
         if (tasks.size >= 256) return null // A full page cannot prove another task is absent.
         tasks.map { value ->
             val task = value as? ActivityManager.RecentTaskInfo ?: return null
-            val pkg = task.baseIntent?.component?.packageName ?: return null
+            val pkg = task.baseIntent?.component?.packageName ?: task.baseActivity?.packageName
+                ?: task.baseIntent?.`package` ?: return null
             val owner = task.javaClass.getField("userId").getInt(task)
             RecentsTask(task.taskId, pkg, owner)
         }
     }.getOrNull()
 
-    private suspend fun processEvent(id: Int) {
+    private suspend fun processEvent(signal: RecentsSignal) {
+        val id = signal.id
+        signal.task?.let { if (it.userId == userId && it.id >= 0) known[it.id] = it }
         if (id == REFRESH) {
+            refreshQueued.set(false)
             val tasks = snapshot() ?: run { disconnect(); return }
             tasks.forEach { known[it.id] = it }
             while (known.size > 1024) known.remove(known.keys.first())

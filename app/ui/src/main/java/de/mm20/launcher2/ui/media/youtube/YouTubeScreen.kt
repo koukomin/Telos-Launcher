@@ -7,6 +7,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items as gridItems
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -47,15 +51,16 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val userPlaylists by vm.userPlaylists.collectAsStateWithLifecycle(emptyList<de.mm20.launcher2.comms.youtube.YouTubePlaylistSummary>())
     val sessionExpired by vm.sessionExpired.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(music) {
         vm.loadUserPlaylists(context)
+        vm.loadHome(context, music)
     }
 
     var shelf by rememberSaveable(music) { mutableStateOf("search") }
     var playlistTarget by remember { mutableStateOf<de.mm20.launcher2.comms.youtube.YouTubeEntry?>(null) }
     var playlistName by rememberSaveable { mutableStateOf("") }
     val entries = when {
-        !music || shelf == "search" || shelf.startsWith("online:") -> allEntries[music].orEmpty()
+        shelf == "search" || shelf.startsWith("online:") -> allEntries[music].orEmpty()
         shelf == "favorites" -> favorites
         else -> playlists[shelf.removePrefix("playlist:")].orEmpty()
     }
@@ -77,13 +82,15 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
             }
         },
     ) {
-        LazyColumn(
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive((if (music) 360.dp else 320.dp) * androidx.compose.ui.platform.LocalDensity.current.fontScale.coerceAtLeast(1f)),
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             if (sessionExpired) {
-                item {
+                item(span = { GridItemSpan(maxLineSpan) }) {
                     Card(
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
                         modifier = Modifier.fillMaxWidth()
@@ -112,7 +119,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                     }
                 }
             }
-            item {
+            item(span = { GridItemSpan(maxLineSpan) }) {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     de.mm20.launcher2.ui.component.TelosSearchTopBar(
                         query,
@@ -142,20 +149,25 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                     )
 
                     // YouTube Online Library Glass Cards
-                    if (music && userPlaylists.isNotEmpty()) {
+                    if (userPlaylists.isNotEmpty()) {
                         YouTubePlaylistChipsRow(
                             userPlaylists = userPlaylists,
                             selectedUrl = if (shelf.startsWith("online:")) shelf.removePrefix("online:") else null,
                             onSelectPlaylist = { pl ->
                                 shelf = "online:${pl.url}"
-                                vm.selectPlaylist(context, pl.url)
+                                vm.selectPlaylist(context, pl.url, music)
                             }
                         )
                     }
 
                     // Flow-style Navigation Filter Bar
-                    if (music) {
+                    run {
                         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            item {
+                                FilterChip(selected = shelf == "search" && query.isBlank(),
+                                    onClick = { shelf = "search"; query = ""; vm.loadHome(context, music, refresh = true) },
+                                    label = { Text(stringResource(R.string.au10_music_tab_home)) })
+                            }
                             item {
                                 FilterChip(
                                     selected = shelf == "search",
@@ -172,10 +184,10 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                             }
                             items(userPlaylists, key = { "online:${it.id}" }) { pl ->
                                 FilterChip(
-                                    selected = shelf == "online:${pl.id}",
+                                    selected = shelf == "online:${pl.url}",
                                     onClick = {
-                                        shelf = "online:${pl.id}"
-                                        vm.selectPlaylist(context, pl.url)
+                                        shelf = "online:${pl.url}"
+                                        vm.selectPlaylist(context, pl.url, music)
                                     },
                                     label = { Text("❤️ ${pl.title}") }
                                 )
@@ -256,7 +268,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
             }
 
             // Flow-style Media Cards
-            items(entries, key = { it.url }) { entry ->
+            gridItems(entries.distinctBy { it.url }, key = { it.url }) { entry ->
                 FlowMediaCard(
                     entry = entry,
                     music = music,
@@ -332,6 +344,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                 loginPanel = false
                 android.widget.Toast.makeText(context, "Successfully logged in to YouTube!", android.widget.Toast.LENGTH_SHORT).show()
                 vm.reconnect(context)
+                vm.loadHome(context, music, refresh = true)
             }
         )
     }
@@ -385,6 +398,8 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                             vm.userPlaylists.value = emptyList()
                             vm.selectedPlaylistTracks.value = null
                             vm.sessionExpired.value = false
+                            vm.results.value = emptyMap()
+                            vm.loadHome(context, music, refresh = true)
                         }
                     }) { Text(stringResource(R.string.hc_sign_out)) }
                     HorizontalDivider()
@@ -428,7 +443,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
 }
 
 @Composable
-private fun FlowMediaCard(
+internal fun FlowMediaCard(
     entry: de.mm20.launcher2.comms.youtube.YouTubeEntry,
     music: Boolean,
     isFavorite: Boolean,
@@ -443,62 +458,25 @@ private fun FlowMediaCard(
 
     Surface(
         onClick = onPlay,
-        shape = RoundedCornerShape(20.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        tonalElevation = 2.dp,
+        shape = RoundedCornerShape(if (music) 12.dp else 8.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(
-                modifier = Modifier
-                    .width(if (music || LocalConfiguration.current.fontScale > 1.3f) 72.dp else 120.dp)
-                    .height(72.dp)
-                    .clip(RoundedCornerShape(16.dp))
-            ) {
-                AsyncImage(
-                    model = entry.thumbnail,
-                    contentDescription = entry.title,
+        Column {
+            if (!music) {
+                AsyncImage(model = entry.thumbnail, contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            Brush.verticalGradient(
-                                listOf(Color.Transparent, Color.Black.copy(alpha = 0.4f))
-                            )
-                        )
-                )
+                    modifier = Modifier.fillMaxWidth().aspectRatio(16f / 9f).clip(RoundedCornerShape(8.dp)))
             }
-
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 14.dp)
-            ) {
-                Text(
-                    text = entry.title,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Spacer(Modifier.height(2.dp))
-                Text(
-                    text = entry.artist,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-
+            Row(Modifier.fillMaxWidth().padding(if (music) 10.dp else 12.dp), verticalAlignment = Alignment.CenterVertically) {
+                if (music) AsyncImage(model = entry.thumbnail, contentDescription = null,
+                    contentScale = ContentScale.Crop, modifier = Modifier.size(64.dp).clip(RoundedCornerShape(8.dp)))
+                Column(Modifier.weight(1f).padding(horizontal = if (music) 12.dp else 0.dp)) {
+                    Text(entry.title, style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold, maxLines = 3, overflow = TextOverflow.Ellipsis)
+                    Text(entry.artist, style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
             Box {
                 IconButton(onClick = { menuOpen = true }) {
                     Icon(
@@ -541,6 +519,7 @@ private fun FlowMediaCard(
             }
         }
     }
+    }
 }
 
 @Composable
@@ -554,7 +533,7 @@ fun YouTubePlaylistChipsRow(
 
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
-            text = "YouTube Online Library",
+            text = stringResource(R.string.telos_youtube_tab_playlists),
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
