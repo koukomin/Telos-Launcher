@@ -22,4 +22,6 @@
     <string name="hc_stop">Sistere</string>
     <string name="telos_youtube_preparing">Reproductio paratur…</string>
     <string name="telos_youtube_searching">Quaeritur…</string>
+    <string name="au22_stremio_home">Initium</string>
+    <string name="au22_stremio_library">Bibliotheca</string>
 </resources>

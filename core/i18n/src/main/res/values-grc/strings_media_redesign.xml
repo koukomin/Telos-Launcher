@@ -22,4 +22,6 @@
     <string name="hc_stop">Παύειν</string>
     <string name="telos_youtube_preparing">Ἡ ἀναπαραγωγὴ παρασκευάζεται…</string>
     <string name="telos_youtube_searching">Ἀναζήτησις…</string>
+    <string name="au22_stremio_home">Ἀρχή</string>
+    <string name="au22_stremio_library">Βιβλιοθήκη</string>
 </resources>
