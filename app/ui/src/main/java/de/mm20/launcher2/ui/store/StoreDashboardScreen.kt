@@ -241,15 +241,19 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                     )
                 }
                 // === TELOS_PENDING_REVIEW_END: store_micro_progress ===
-                val playTabIndex = if (playStoreInstalled) 4 else -1
+                                val playTabIndex = if (playStoreInstalled) 3 else -1
 
                 PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 16.dp) {
                     Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.hc_apps), maxLines = 1) })
-                    Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.store_tab_installed_apps), maxLines = 1) })
-                    Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(R.string.hc_telos_apps), maxLines = 1) })
-                    Tab(selected = tab == 3, onClick = { tab = 3 }, text = { Text(stringResource(R.string.recommendation_tab_label), maxLines = 1) })
+                    Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.hc_telos_apps), maxLines = 1) })
+                    Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(R.string.recommendation_tab_label), maxLines = 1) })
                     if (playStoreInstalled) {
-                        Tab(selected = tab == playTabIndex, onClick = { tab = playTabIndex }, text = { Text(stringResource(R.string.store_play_tab), maxLines = 1) })
+                        Tab(selected = tab == playTabIndex, onClick = { 
+                            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse("market://collection/updates")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            runCatching { context.startActivity(intent) }.onFailure {
+                                runCatching { context.packageManager.getLaunchIntentForPackage("com.android.vending")?.let { context.startActivity(it) } }
+                            }
+                        }, text = { Text(stringResource(R.string.store_play_tab), maxLines = 1) })
                     }
                 }
                 if (tab == 0) {
@@ -272,24 +276,6 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                         onRefresh = { viewModel.checkAll() },
                     )
                 } else if (tab == 1) {
-                    InstalledAppsTab(
-                        onOpenDetails = { pkgName: String ->
-                            viewModel.getOrCreateItemForPackage(pkgName) { id ->
-                                backStack.add(AppDetailsRoute(itemId = id))
-                            }
-                        },
-                    )
-                } else if (tab == 2) {
-                    RecommendedTab(
-                        tracked = trackedUrls,
-                        onAdd = { app, done ->
-                            viewModel.addRecommended(app) { error ->
-                                done()
-                                if (error != null) Toast.makeText(context, error, Toast.LENGTH_LONG).show()
-                            }
-                        },
-                    )
-                } else if (tab == 1) {
                     TelosAppsTab(
                         disabled = disabledTelos,
                         onToggle = { app, enabled -> viewModel.setTelosAppEnabled(app.key, enabled) },
@@ -302,21 +288,15 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                             )
                         },
                     )
-                } else if (playStoreInstalled && tab == playTabIndex) {
-                    PlayStoreTab(
-                        apps = playApps,
-                        totalCount = allPlayApps.size,
-                        updateCount = allPlayApps.count { it.updateAvailable == true },
-                        frozenCount = allPlayApps.count { it.frozen },
-                        query = playQuery,
-                        filterUpdates = playFilterUpdates,
-                        checking = playChecking,
-                        onQuery = { viewModel.playQuery.value = it },
-                        onFilterUpdates = { viewModel.playFilterUpdates.value = it },
-                        onCheck = { viewModel.checkPlayUpdates() },
-                        onUpdate = { viewModel.updatePlayApp(it.packageName) },
-                        onUpdateAll = { viewModel.updateAllPlayApps() },
-                        onOpen = { PlayStoreInventory.openPlayApp(context, it.packageName) },
+                } else if (tab == 2) {
+                    RecommendedTab(
+                        tracked = trackedUrls,
+                        onAdd = { app, done ->
+                            viewModel.addRecommended(app) { error ->
+                                done()
+                                if (error != null) Toast.makeText(context, error, Toast.LENGTH_LONG).show()
+                            }
+                        },
                     )
                 }
             }
