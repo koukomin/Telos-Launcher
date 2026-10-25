@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.store
 
+import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
 import android.app.Activity
 import android.content.Context
