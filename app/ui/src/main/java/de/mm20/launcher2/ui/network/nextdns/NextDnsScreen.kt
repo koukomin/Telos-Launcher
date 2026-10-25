@@ -113,6 +113,20 @@ fun NextDnsScreen() {
                         Text(stringResource(R.string.net_dns_vpn_only), style = MaterialTheme.typography.bodySmall)
                     }
                     if (!state.connected || settings) {
+                        var loginDialog by remember { mutableStateOf(false) }
+                        if (loginDialog) {
+                            NextDnsLoginDialog(
+                                onDismiss = { loginDialog = false },
+                                onSuccess = { pid, pkey ->
+                                    profile = pid
+                                    key = pkey
+                                    loginDialog = false
+                                    vm.connect(profile, key)
+                                    key = ""
+                                }
+                            )
+                        }
+                        
                         Text(stringResource(R.string.nd_help), style = MaterialTheme.typography.bodySmall)
                         OutlinedTextField(profile, { profile = it.trim().take(6) }, enabled = !state.loading,
                             label = { Text(stringResource(R.string.nd_profile)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
@@ -123,7 +137,9 @@ fun NextDnsScreen() {
                             Button(enabled = !state.loading && profile.length == 6 && key.isNotBlank(), onClick = { vm.connect(profile, key); key = "" }) {
                                 Text(stringResource(R.string.nd_connect))
                             }
-                            if (!state.connected) TextButton(enabled = !state.loading, onClick = { forget = true }) { Text(stringResource(R.string.nd_disconnect)) }
+                            if (!state.connected) {
+                                TextButton(enabled = !state.loading, onClick = { loginDialog = true }) { Text("Web Sign In") }
+                            }
                         }
                     }
                     if (state.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
