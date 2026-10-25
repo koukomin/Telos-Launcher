@@ -79,7 +79,31 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
         connectJob = deferred
         try { return deferred.await() } finally { connectJob = null }
     }
-    fun reconnect(context: Context) { viewModelScope.launch { runCatching { connect(context) } } }
+    val userPlaylists = MutableStateFlow<List<YouTubePlaylistSummary>>(emptyList())
+    val loadingPlaylists = MutableStateFlow(false)
+
+    fun loadUserPlaylists() {
+        viewModelScope.launch {
+            if (!repository.isLoggedIn()) {
+                userPlaylists.value = emptyList()
+                return@launch
+            }
+            loadingPlaylists.value = true
+            try {
+                userPlaylists.value = repository.fetchUserPlaylists()
+            } catch (_: Exception) {
+            } finally {
+                loadingPlaylists.value = false
+            }
+        }
+    }
+
+    fun reconnect(context: Context) { 
+        viewModelScope.launch { 
+            runCatching { connect(context) }
+            loadUserPlaylists()
+        } 
+    }
     fun play(context: Context, entry: YouTubeEntry, music: Boolean, tracks: List<YouTubeEntry> = listOf(entry)) {
         playJob?.cancel()
         playJob = viewModelScope.launch {
@@ -103,6 +127,19 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
             finally { resolving.value = false }
         }
     }
+    fun loadOnlinePlaylist(context: Context, url: String) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            searching.value = true; message.value = null
+            try {
+                val pair = repository.fetchPlaylist(url)
+                results.value = results.value + (true to pair.second)
+            } catch (e: CancellationException) { throw e }
+            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            finally { searching.value = false }
+        }
+    }
+
     fun importPlaylistUrl(url: String, onDone: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {

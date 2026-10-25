@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.mm20.launcher2.comms.youtube.YouTubePlaylistSummary
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ui.R
@@ -39,11 +40,17 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val allEntries by vm.results.collectAsStateWithLifecycle()
     val favorites by vm.library.favorites.collectAsStateWithLifecycle()
     val playlists by vm.library.playlists.collectAsStateWithLifecycle()
+    val onlinePlaylists by vm.userPlaylists.collectAsStateWithLifecycle(emptyList<de.mm20.launcher2.comms.youtube.YouTubePlaylistSummary>())
+
+    LaunchedEffect(Unit) {
+        vm.loadUserPlaylists()
+    }
+
     var shelf by rememberSaveable(music) { mutableStateOf("search") }
     var playlistTarget by remember { mutableStateOf<de.mm20.launcher2.comms.youtube.YouTubeEntry?>(null) }
     var playlistName by rememberSaveable { mutableStateOf("") }
     val entries = when {
-        !music || shelf == "search" -> allEntries[music].orEmpty()
+        !music || shelf == "search" || shelf.startsWith("online:") -> allEntries[music].orEmpty()
         shelf == "favorites" -> favorites
         else -> playlists[shelf.removePrefix("playlist:")].orEmpty()
     }
@@ -114,6 +121,16 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                                     selected = shelf == "favorites",
                                     onClick = { shelf = "favorites" },
                                     label = { Text(stringResource(R.string.hc_favorites)) }
+                                )
+                            }
+                            items(onlinePlaylists, key = { "online:${it.id}" }) { pl ->
+                                FilterChip(
+                                    selected = shelf == "online:${pl.id}",
+                                    onClick = {
+                                        shelf = "online:${pl.id}"
+                                        vm.loadOnlinePlaylist(context, pl.url)
+                                    },
+                                    label = { Text("❤️ ${pl.title}") }
                                 )
                             }
                             items(playlists.keys.toList(), key = { it }) { name ->
