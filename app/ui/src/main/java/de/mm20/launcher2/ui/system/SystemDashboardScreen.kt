@@ -189,11 +189,18 @@ fun SystemDashboardScreen() {
                     onClick = { currentTab = 1 },
                     text = { Text(stringResource(R.string.hc_apps)) }
                 )
+                androidx.compose.material3.Tab(
+                    selected = currentTab == 2,
+                    onClick = { currentTab = 2 },
+                    text = { Text(stringResource(R.string.preference_screen_tweaks)) }
+                )
             }
             if (currentTab == 1) {
                 SystemAppsTab(
                     onOpenDetails = { pkg -> backStack.add(de.mm20.launcher2.ui.store.AppDetailsRoute(pkg)) }
                 )
+            } else if (currentTab == 2) {
+                de.mm20.launcher2.ui.settings.tweaks.TweaksSettingsScreen()
             } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
