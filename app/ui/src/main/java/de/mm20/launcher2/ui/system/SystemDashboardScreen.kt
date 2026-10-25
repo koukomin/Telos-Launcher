@@ -192,7 +192,7 @@ fun SystemDashboardScreen() {
                 androidx.compose.material3.Tab(
                     selected = currentTab == 2,
                     onClick = { currentTab = 2 },
-                    text = { Text(stringResource(R.string.preference_screen_tweaks)) }
+                    text = { Text("Tweaks") }
                 )
             }
             if (currentTab == 1) {

@@ -79,6 +79,16 @@ class YouTubeRepository(private val context: Context) {
         Pair(name, entries)
     }
 
+    suspend fun fetchHomeFeed(): List<YouTubeEntry> = withContext(Dispatchers.IO) {
+        initialize()
+        runCatching {
+            org.schabi.newpipe.extractor.kiosk.KioskInfo.getInfo(ServiceList.YouTube, "https://www.youtube.com/feed/trending")
+                .relatedItems.filterIsInstance<StreamInfoItem>().map {
+                    YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), it.thumbnails.lastOrNull()?.url, it.duration)
+                }
+        }.getOrDefault(emptyList())
+    }
+
     /** Shortcut to fetch the logged-in user's "Liked Music" (LM) playlist. */
     suspend fun fetchLikedMusic(): Pair<String, List<YouTubeEntry>> {
         val lmUrl = "https://" + "www.youtube.com/playlist?list=LM"

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Ancient Greek (grc) Translations for Telos Launcher -->
+    <string name="settings">Ῥυθμίσεις</string>
+    <string name="telos_system_label">Σύστημα</string>
+    <string name="telos_youtube_label">Τέλος Bίντεο</string>
+    <string name="telos_youtube_music_label">Τέλος Μουσική</string>
+    <string name="hc_apps">Ἐφαρμογαί</string>
+    <string name="hc_search">Ζήτησις</string>
+    <string name="hc_favorites">Ἀγαπητά</string>
+    <string name="hc_play">Ἀναπαραγωγή</string>
+    <string name="hc_close">Κλεῖσον</string>
+    <string name="hc_back">Ὀπίσω</string>
+    <string name="preference_screen_tweaks">Tweaks</string>
+    <string name="preference_screen_appearance">Ἐμφάνισις</string>
+    <string name="preference_screen_homescreen">Κυρία 🌐</string>
+    <string name="preference_screen_icons">Εἰκονίδια</string>
+    <string name="preference_screen_advanced">Προηγμένα</string>
+    <string name="preference_screen_about">Περί</string>
+</resources>

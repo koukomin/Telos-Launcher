@@ -33,8 +33,8 @@ fun SystemAppsTab(
     val freezeManager: de.mm20.launcher2.freeze.FreezeManager = koinInject()
 
     var query by rememberSaveable { mutableStateOf("") }
-    var showSystem by rememberSaveable { mutableStateOf(false) }
-    var showVirtual by rememberSaveable { mutableStateOf(false) }
+    var showSystem by rememberSaveable { mutableStateOf(true) }
+    var showVirtual by rememberSaveable { mutableStateOf(true) }
     var frozenOnly by rememberSaveable { mutableStateOf(false) }
 
         var installedApps by remember { mutableStateOf<List<android.content.pm.ApplicationInfo>>(emptyList()) }
@@ -50,7 +50,6 @@ fun SystemAppsTab(
             val filtered = apps.filter { app ->
                 val isSystem = (app.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM) != 0
                 val isVirtual = app.packageName.startsWith(context.packageName)
-                if ((app.flags and android.content.pm.ApplicationInfo.FLAG_INSTALLED) == 0) return@filter false
                 if (app.packageName == context.packageName) return@filter false
                 (showSystem || !isSystem) && (showVirtual || !isVirtual)
             }.sortedBy { pm.getApplicationLabel(it).toString().lowercase() }

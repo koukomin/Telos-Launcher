@@ -51,6 +51,28 @@ fun TweaksSettingsScreen() {
         }
 
         item {
+            androidx.compose.material3.Surface(
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+                color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.8f),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp)
+            ) {
+                androidx.compose.foundation.layout.Column(modifier = Modifier.padding(12.dp)) {
+                    Text(
+                        text = "⚠️ Προειδοποίηση / Warning",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onErrorContainer
+                    )
+                    Text(
+                        text = "Οι ρυθμίσεις Tweaks τροποποιούν χαμηλού επιπέδου παραμέτρους του Android. Ορισμένες αλλαγές ενδέχεται να απαιτούν επανεκκίνηση ή να προκαλέσουν ασυμβατότητες σε ορισμένες συσκευές.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.9f)
+                    )
+                }
+            }
+        }
+
+        item {
             PreferenceCategory(title = stringResource(R.string.tweaks_cat_display)) {
                 SwitchPreference(
                     title = "Show Seconds in Status Bar Clock",

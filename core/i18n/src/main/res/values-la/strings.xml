@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Latin (la) Translations for Telos Launcher -->
+    <string name="settings">Optiones</string>
+    <string name="telos_system_label">Systema</string>
+    <string name="telos_youtube_label">Telos Media</string>
+    <string name="telos_youtube_music_label">Telos Musica</string>
+    <string name="hc_apps">Applicationes</string>
+    <string name="hc_search">Quaerere</string>
+    <string name="hc_favorites">Favorita</string>
+    <string name="hc_play">Ludere</string>
+    <string name="hc_close">Claudere</string>
+    <string name="hc_back">Retro</string>
+    <string name="preference_screen_tweaks">Tweaks</string>
+    <string name="preference_screen_appearance">Aspectus</string>
+    <string name="preference_screen_homescreen">Domus</string>
+    <string name="preference_screen_icons">Icones</string>
+    <string name="preference_screen_advanced">Provectus</string>
+    <string name="preference_screen_about">De</string>
+</resources>
