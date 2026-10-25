@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.first
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.freeze.BloatDescriptions
-import de.mm20.launcher2.preferences.FreezeSettings
+import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 
