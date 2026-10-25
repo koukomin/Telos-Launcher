@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.store
 
+import de.mm20.launcher2.ui.system.UadRepository
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
 import android.content.Intent
@@ -243,6 +244,22 @@ fun AppDetailsScreen(itemId: String) {
                 }
             }
             item {
+                                var uadInfo by remember { mutableStateOf<de.mm20.launcher2.ui.system.UadInfo?>(null) }
+                LaunchedEffect(item.packageName) {
+                    val map = UadRepository.getList(context)
+                    uadInfo = map[item.packageName]
+                }
+                uadInfo?.let { uad ->
+                    val uadColor = when(uad.removal) {
+                        "Safe", "Recommended" -> androidx.compose.ui.graphics.Color(0xFF4CAF50)
+                        "Unsafe" -> MaterialTheme.colorScheme.error
+                        else -> MaterialTheme.colorScheme.primary
+                    }
+                    Card("Universal Android Debloater (UAD)") {
+                        Text("${uad.removal} to freeze/remove", style = MaterialTheme.typography.titleSmall, color = uadColor, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 4.dp))
+                        Text(uad.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                }
                 var inureData by remember(item.packageName) { mutableStateOf<de.mm20.launcher2.data.store.security.InureInspectionResult?>(null) }
                 LaunchedEffect(item.packageName) {
                     withContext(Dispatchers.IO) {

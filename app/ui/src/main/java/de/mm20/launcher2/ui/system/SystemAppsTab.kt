@@ -20,6 +20,8 @@ import de.mm20.launcher2.ui.store.AppIcon
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import de.mm20.launcher2.ui.system.UadRepository
+import de.mm20.launcher2.ui.system.UadInfo
 import org.koin.compose.koinInject
 
 @Composable
@@ -35,17 +37,21 @@ fun SystemAppsTab(
     var showVirtual by rememberSaveable { mutableStateOf(false) }
     var frozenOnly by rememberSaveable { mutableStateOf(false) }
 
-    var installedApps by remember { mutableStateOf<List<android.content.pm.ApplicationInfo>>(emptyList()) }
+        var installedApps by remember { mutableStateOf<List<android.content.pm.ApplicationInfo>>(emptyList()) }
+    var uadList by remember { mutableStateOf<Map<String, UadInfo>>(emptyMap()) }
     var refreshTrigger by remember { mutableIntStateOf(0) }
 
-    LaunchedEffect(showSystem, showVirtual, refreshTrigger) {
+        LaunchedEffect(showSystem, showVirtual, refreshTrigger) {
         withContext(Dispatchers.IO) {
+            uadList = UadRepository.getList(context)
             val pm = context.packageManager
-            val flags = android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS or android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES
+            val flags = android.content.pm.PackageManager.GET_META_DATA or android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES
             val apps = pm.getInstalledApplications(flags)
             val filtered = apps.filter { app ->
                 val isSystem = (app.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM) != 0
                 val isVirtual = app.packageName.startsWith(context.packageName)
+                if ((app.flags and android.content.pm.ApplicationInfo.FLAG_INSTALLED) == 0) return@filter false
+                if (app.packageName == context.packageName) return@filter false
                 (showSystem || !isSystem) && (showVirtual || !isVirtual)
             }.sortedBy { pm.getApplicationLabel(it).toString().lowercase() }
 
@@ -124,6 +130,15 @@ fun SystemAppsTab(
                                         Text("❄ Frozen", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
                                     } else {
                                         Text("Active", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
+                                    }
+                                    uadList[app.packageName]?.let { uad ->
+                                        Text(" · ")
+                                        val uadColor = when(uad.removal) {
+                                            "Safe", "Recommended" -> androidx.compose.ui.graphics.Color(0xFF4CAF50)
+                                            "Unsafe" -> MaterialTheme.colorScheme.error
+                                            else -> MaterialTheme.colorScheme.primary
+                                        }
+                                        Text("${uad.removal} to freeze", style = MaterialTheme.typography.labelSmall, color = uadColor, fontWeight = FontWeight.Bold)
                                     }
                                 }
                             }
