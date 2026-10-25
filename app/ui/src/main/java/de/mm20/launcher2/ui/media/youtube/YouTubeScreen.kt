@@ -1,5 +1,8 @@
 package de.mm20.launcher2.ui.media.youtube
 
+import kotlinx.coroutines.launch
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -34,6 +37,7 @@ import de.mm20.launcher2.ui.R
 @Composable
 fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     var query by rememberSaveable(music) { mutableStateOf("") }
     var accountPanel by rememberSaveable { mutableStateOf(false) }
     var browserUnavailable by rememberSaveable { mutableStateOf(false) }
@@ -340,7 +344,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
             onDismissRequest = { accountPanel = false },
             title = { Text(stringResource(R.string.telos_youtube_browser_account)) },
             text = {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(stringResource(R.string.telos_youtube_browser_account_info))
                     Text(stringResource(R.string.telos_youtube_browser_native_limit), style = MaterialTheme.typography.bodySmall)
 
@@ -365,6 +369,24 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                         }
                     }
 
+                    TextButton(onClick = {
+                        val cookies = android.webkit.CookieManager.getInstance()
+                        listOf("https://youtube.com", "https://www.youtube.com", "https://music.youtube.com").forEach { origin ->
+                            cookies.getCookie(origin).orEmpty().split(';').map { it.substringBefore('=').trim() }.filter { it.isNotBlank() }.forEach { name ->
+                                cookies.setCookie(origin, "$name=; Max-Age=0; Path=/; Secure")
+                                cookies.setCookie(origin, "$name=; Max-Age=0; Path=/; Secure; Domain=.youtube.com")
+                            }
+                        }
+                        scope.launch {
+                            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                                de.mm20.launcher2.comms.youtube.YouTubeAccountManager.clear(context.applicationContext)
+                                cookies.flush()
+                            }
+                            vm.userPlaylists.value = emptyList()
+                            vm.selectedPlaylistTracks.value = null
+                            vm.sessionExpired.value = false
+                        }
+                    }) { Text(stringResource(R.string.hc_sign_out)) }
                     HorizontalDivider()
                     Text("1-Click Import YouTube Playlist", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
                     Text("Paste any public or unlisted YouTube playlist link to import all its tracks directly into Telos Media:", style = MaterialTheme.typography.bodySmall)
@@ -552,7 +574,7 @@ fun YouTubePlaylistChipsRow(
                         1.dp,
                         if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
                     ),
-                    modifier = Modifier.width(160.dp).height(64.dp)
+                    modifier = Modifier.width(160.dp).heightIn(min = 64.dp)
                 ) {
                     Row(
                         modifier = Modifier.padding(8.dp),

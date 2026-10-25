@@ -181,19 +181,8 @@ fun AppDetailsScreen(itemId: String) {
                 }
             }
             item {
-                var blockWifi by remember { mutableStateOf(false) }
-                var blockMobile by remember { mutableStateOf(false) }
                 Card(stringResource(R.string.store_firewall_title)) {
-                    SwitchLine(
-                        stringResource(R.string.store_firewall_wifi),
-                        "Prevent app from accessing network over Wi-Fi",
-                        blockWifi,
-                    ) { blockWifi = it }
-                    SwitchLine(
-                        stringResource(R.string.store_firewall_mobile),
-                        "Prevent app from accessing network over Cellular/Mobile Data",
-                        blockMobile,
-                    ) { blockMobile = it }
+                    Text(stringResource(R.string.virtual_telemetry_unavailable))
                 }
             }
             item {
@@ -201,46 +190,20 @@ fun AppDetailsScreen(itemId: String) {
                     SwitchLine(
                         stringResource(R.string.store_audio_focus_ignore_loss),
                         stringResource(R.string.store_audio_focus_ignore_loss_summary),
-                        o.ignoreAudioFocusLoss,
+                        false,
+                        enabled = false,
                     ) { v -> viewModel.setOptions(item.id) { it.copy(ignoreAudioFocusLoss = v) } }
                     SwitchLine(
                         stringResource(R.string.store_audio_focus_mute_app),
                         stringResource(R.string.store_audio_focus_mute_app_summary),
-                        o.muteAppAudio,
+                        false,
+                        enabled = false,
                     ) { v -> viewModel.setOptions(item.id) { it.copy(muteAppAudio = v) } }
                 }
             }
             item {
-                var isRootAvailable by remember { mutableStateOf(false) }
-                LaunchedEffect(Unit) {
-                    withContext(kotlinx.coroutines.Dispatchers.IO) {
-                        isRootAvailable = runCatching {
-                            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "id"))
-                            val output = process.inputStream.bufferedReader().readText()
-                            process.waitFor() == 0 && output.contains("uid=0")
-                        }.getOrDefault(false)
-                    }
-                }
                 Card(stringResource(R.string.store_component_blocker)) {
-                    if (isRootAvailable) {
-                        Text(
-                            "Root Component Blocker Active",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        Text(
-                            "Disable background services, broadcast receivers and activities (Component Blocker engine)",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    } else {
-                        Text(
-                            stringResource(R.string.store_component_blocker_root_required),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
+                    Text(stringResource(R.string.virtual_telemetry_unavailable))
                 }
             }
             item {
@@ -256,7 +219,8 @@ fun AppDetailsScreen(itemId: String) {
                         else -> MaterialTheme.colorScheme.primary
                     }
                     Card("Universal Android Debloater (UAD)") {
-                        Text("${uad.removal} to freeze/remove", style = MaterialTheme.typography.titleSmall, color = uadColor, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 4.dp))
+                        Text(uad.removal, style = MaterialTheme.typography.titleSmall, color = uadColor, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 4.dp))
+                        Text(stringResource(R.string.freeze_hub_uad_help), style = MaterialTheme.typography.bodySmall)
                         Text(uad.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
@@ -275,8 +239,6 @@ fun AppDetailsScreen(itemId: String) {
                                 data.detectedTrackers.forEach { tracker ->
                                     Text("• $tracker", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
                                 }
-                            } else {
-                                Text("✓ No known ad or analytics trackers detected", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                             }
 
                             HorizontalDivider(Modifier.padding(vertical = 4.dp))
@@ -298,13 +260,16 @@ fun AppDetailsScreen(itemId: String) {
                     Card("Shappky App Inspector") {
                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                             val pm = context.packageManager
-                            val info = runCatching { pm.getPackageInfo(item.packageName, 0) }.getOrNull()
+                            val infoState by produceState<android.content.pm.PackageInfo?>(null, item.packageName) {
+                                value = withContext(Dispatchers.IO) { runCatching { pm.getPackageInfo(item.packageName, 0) }.getOrNull() }
+                            }
+                            val info = infoState
                             if (info != null) {
                                 Text("Version: ${info.versionName} (${info.versionCode})", style = MaterialTheme.typography.bodyMedium)
                                 Text("Target SDK: ${info.applicationInfo?.targetSdkVersion ?: "Unknown"}", style = MaterialTheme.typography.bodyMedium)
-                                val installTime = java.text.DateFormat.getDateTimeInstance().format(java.util.Date(info.firstInstallTime))
+                                val installTime = remember(info.firstInstallTime) { java.text.DateFormat.getDateTimeInstance().format(java.util.Date(info.firstInstallTime)) }
                                 Text("Installed: $installTime", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                val updateTime = java.text.DateFormat.getDateTimeInstance().format(java.util.Date(info.lastUpdateTime))
+                                val updateTime = remember(info.lastUpdateTime) { java.text.DateFormat.getDateTimeInstance().format(java.util.Date(info.lastUpdateTime)) }
                                 Text("Last Updated: $updateTime", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
 
@@ -490,13 +455,13 @@ private fun InfoLine(label: String, value: String) {
 }
 
 @Composable
-private fun SwitchLine(label: String, description: String?, value: Boolean, onChange: (Boolean) -> Unit) {
+private fun SwitchLine(label: String, description: String?, value: Boolean, enabled: Boolean = true, onChange: (Boolean) -> Unit) {
     Row(Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) {
             Text(label)
             description?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
         }
-        Switch(checked = value, onCheckedChange = onChange)
+        Switch(checked = value, onCheckedChange = onChange, enabled = enabled)
     }
 }
 

@@ -234,7 +234,7 @@ object ShizukuBootManager {
         if (runCatching { Shizuku.pingBinder() }.getOrDefault(false)) {
             Result.success("Verified: Shizuku daemon started successfully!")
         } else {
-            Result.success("Verified: Wireless Debugging enabled successfully!")
+            Result.failure(Exception(context.getString(de.mm20.launcher2.i18n.R.string.desktop_mode_freeform_shizuku_unavailable)))
         }
     }
 }

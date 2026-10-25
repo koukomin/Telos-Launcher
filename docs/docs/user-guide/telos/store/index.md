@@ -252,3 +252,9 @@ Store cards wrap full app names and separate actions from the title for large sy
 Dock and shutter app pickers show applications only and start a fresh search on every opening. App picker names wrap at large font sizes, overflow action menus scroll, and Telos Media reserves the navigation-bar inset even when no mini player is visible. Other general item pickers retain their supported item types.
 
 Transfer network rules independently block Wi-Fi, mobile data, roaming and metered connections. Downloader has its own profile; torrents, Video and Stremio share a profile because the torrent session is shared. Downloader queues pause and resume as connectivity changes, torrent sessions pause on disallowed networks, and online video data sources check the policy before opening and reading. The player also stops loading on a blocked connection and prepares again when permitted. Existing Downloader Wi-Fi-only preferences and the mirrored Video Wi-Fi-only preference provide initial defaults. VPNs without an identifiable underlying transport are blocked when transport restrictions are active.
+
+## Implementation limits and app details
+
+The installed-package browser is in **System → Apps**. Tracked packages open their Store item ID; untracked packages open Android app settings. Frozen/system filters and UAD notes share the Freeze Manager’s validated offline data. UAD categories describe community removal recommendations, not guaranteed freezing safety.
+
+Per-app firewall/audio-focus and component-blocker additions currently lack enforcement engines, so those controls are unavailable. APK installation can inspect package permissions and certificates; this is not a malware verdict. Silent installation still depends on the selected backend. See the [implementation audit](../../../developer-guide/audits/2026-10-25-gemini-review) for the complete feature/UI inventory and remaining work.

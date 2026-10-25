@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -44,6 +46,29 @@ fun SavedWifiPasswordsPreference() {
     var loading by remember { mutableStateOf(false) }
     var query by remember { mutableStateOf("") }
     var selectedQrPayload by remember { mutableStateOf<String?>(null) }
+    var revealJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
+
+    val export = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+        if (uri != null) scope.launch {
+            // The document picker backgrounds this screen; re-authenticate instead of retaining credentials.
+            val allowed = activity != null && runCatching {
+                AuthManager().authenticateNative(activity, context.getString(R.string.telos_system_unlock_wifi))
+            }.getOrDefault(false)
+            val written = allowed && withContext(Dispatchers.IO) {
+                runCatching {
+                    val rows = readWifiStore()
+                    val array = JSONArray()
+                    rows.forEach { row -> array.put(JSONObject().apply { put("ssid", row.ssid); put("psk", row.psk ?: JSONObject.NULL) }) }
+                    context.contentResolver.openOutputStream(uri, "wt")?.bufferedWriter()?.use { it.write(array.toString(2)) }
+                        ?: error("No output stream")
+                }.isSuccess
+            }
+            if (!written) {
+                withContext(Dispatchers.IO) { runCatching { android.provider.DocumentsContract.deleteDocument(context.contentResolver, uri) } }
+                Toast.makeText(context, R.string.au9_share_failed, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
         scope.launch {
@@ -51,7 +76,10 @@ fun SavedWifiPasswordsPreference() {
         }
     }
     LifecycleEventEffect(Lifecycle.Event.ON_STOP) {
+        revealJob?.cancel()
         entries = null
+        selectedQrPayload = null
+        query = ""
     }
 
     Preference(
@@ -59,15 +87,15 @@ fun SavedWifiPasswordsPreference() {
         summary = stringResource(R.string.telos_system_wifi_need_root),
         enabled = enabled && !loading,
         onClick = {
-            scope.launch {
+            revealJob = scope.launch {
                 if (loading) return@launch
                 loading = true
                 try {
                     val authenticated = if (activity != null) {
                         runCatching {
                             AuthManager().authenticateNative(activity, context.getString(R.string.telos_system_unlock_wifi))
-                        }.getOrDefault(true)
-                    } else true
+                        }.getOrDefault(false)
+                    } else false
 
                     if (authenticated) {
                         entries = withContext(Dispatchers.IO) {
@@ -75,7 +103,7 @@ fun SavedWifiPasswordsPreference() {
                         }
                     }
                 } catch (e: Exception) {
-                    Toast.makeText(context, "Error reading Wi-Fi passwords", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.virtual_telemetry_unavailable, Toast.LENGTH_SHORT).show()
                 } finally {
                     loading = false
                 }
@@ -101,7 +129,7 @@ fun SavedWifiPasswordsPreference() {
                 ) {
                     Text(stringResource(R.string.telos_system_saved_wifi))
                     Text(
-                        text = "Total: ${networks.size}",
+                        text = networks.size.toString(),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -124,11 +152,11 @@ fun SavedWifiPasswordsPreference() {
                     ) {
                         OutlinedButton(
                             onClick = {
-                                exportWifiBackup(context, networks)
+                                export.launch("telos_wifi_backup.json")
                             },
                             modifier = Modifier.weight(1f)
                         ) {
-                            Text("Backup (JSON)")
+                            Text(stringResource(R.string.backup_create) + " (JSON)")
                         }
                     }
 
@@ -149,7 +177,7 @@ fun SavedWifiPasswordsPreference() {
                                     entry = entry,
                                     onShowQr = {
                                         val psk = entry.psk.orEmpty()
-                                        selectedQrPayload = "WIFI:T:WPA;S:${entry.ssid};P:$psk;;"
+                                        selectedQrPayload = wifiQrPayload(entry.ssid, psk)
                                     }
                                 )
                             }
@@ -169,18 +197,14 @@ fun SavedWifiPasswordsPreference() {
     selectedQrPayload?.let { payload ->
         AlertDialog(
             onDismissRequest = { selectedQrPayload = null },
-            title = { Text("Wi-Fi QR Code") },
+            title = { Text(stringResource(R.string.hc_qr_code)) },
             text = {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     ContactQrImage(payload, Modifier.size(220.dp).padding(12.dp))
-                    Text(
-                        text = "Scan to connect automatically",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+
                 }
             },
             confirmButton = {
@@ -218,7 +242,7 @@ private fun WifiNetworkCard(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = if (passwordVisible) entry.psk ?: "Open Network (No Password)" else "••••••••",
+                        text = if (passwordVisible) entry.psk ?: stringResource(R.string.virtual_telemetry_unavailable) else "••••••••",
                         style = MaterialTheme.typography.bodyMedium,
                         color = if (entry.psk.isNullOrBlank()) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary
                     )
@@ -226,7 +250,7 @@ private fun WifiNetworkCard(
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
                         painter = painterResource(if (passwordVisible) R.drawable.visibility_24px else R.drawable.visibility_off_24px),
-                        contentDescription = "Toggle Password"
+                        contentDescription = stringResource(R.string.hc_password)
                     )
                 }
             }
@@ -237,54 +261,37 @@ private fun WifiNetworkCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Copy
-                TextButton(onClick = {
+                TextButton(enabled = !entry.psk.isNullOrBlank(), onClick = {
                     val psk = entry.psk.orEmpty()
                     val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                    cm.setPrimaryClip(ClipData.newPlainText("Wi-Fi Password", psk))
-                    Toast.makeText(context, "Password copied!", Toast.LENGTH_SHORT).show()
+                    val clip = ClipData.newPlainText(context.getString(R.string.hc_password), psk)
+                    if (android.os.Build.VERSION.SDK_INT >= 33) clip.description.extras = android.os.PersistableBundle().apply {
+                        putBoolean(android.content.ClipDescription.EXTRA_IS_SENSITIVE, true)
+                    }
+                    cm.setPrimaryClip(clip)
+
                 }) {
-                    Text("Copy")
+                    Text(stringResource(R.string.hc_copy))
                 }
 
                 // Share
-                TextButton(onClick = {
+                TextButton(enabled = !entry.psk.isNullOrBlank(), onClick = {
                     val psk = entry.psk.orEmpty()
-                    val text = "Wi-Fi Network: ${entry.ssid}\nPassword: $psk"
+                    val text = "${entry.ssid}\n$psk"
                     val intent = Intent(Intent.ACTION_SEND).apply {
                         type = "text/plain"
                         putExtra(Intent.EXTRA_TEXT, text)
                     }
-                    context.startActivity(Intent.createChooser(intent, "Share Wi-Fi"))
+                    context.startActivity(Intent.createChooser(intent, null))
                 }) {
-                    Text("Share")
+                    Text(stringResource(R.string.menu_share))
                 }
 
                 // QR
-                TextButton(onClick = onShowQr) {
-                    Text("QR Code")
+                TextButton(enabled = !entry.psk.isNullOrBlank(), onClick = onShowQr) {
+                    Text(stringResource(R.string.hc_qr_code))
                 }
             }
         }
-    }
-}
-
-private fun exportWifiBackup(context: Context, networks: List<WifiEntry>) {
-    runCatching {
-        val array = JSONArray()
-        networks.forEach {
-            array.put(JSONObject().apply {
-                put("ssid", it.ssid)
-                put("psk", it.psk ?: "")
-            })
-        }
-        val text = array.toString(2)
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "application/json"
-            putExtra(Intent.EXTRA_TEXT, text)
-            putExtra(Intent.EXTRA_TITLE, "telos_wifi_backup.json")
-        }
-        context.startActivity(Intent.createChooser(intent, "Export Wi-Fi Backup"))
-    }.onFailure {
-        Toast.makeText(context, "Failed to export Wi-Fi backup", Toast.LENGTH_SHORT).show()
     }
 }

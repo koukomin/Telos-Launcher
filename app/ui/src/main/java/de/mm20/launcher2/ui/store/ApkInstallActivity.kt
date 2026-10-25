@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.store
 
+import androidx.compose.ui.res.stringResource
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -120,7 +121,7 @@ private fun ApkInstallerScreen(
 
         if (isScanning) {
             CircularProgressIndicator()
-            Text("Scanning APK with Antivirus Engine...")
+            Text(stringResource(R.string.hf_appinfo_permissions))
         } else {
             val report = reportState
             if (report != null) {
@@ -138,7 +139,7 @@ private fun ApkInstallerScreen(
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(report.packageName, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                         Text("Version: ${report.versionName ?: "Code " + report.versionCode}")
-                        Text("Security Status: ${report.riskLevel.name}", color = riskColor, fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.hf_appinfo_permissions) + ": ${report.dangerousPermissions.size}", color = riskColor, fontWeight = FontWeight.Bold)
                         Text("SHA-256: ${report.sha256.take(24)}...", style = MaterialTheme.typography.bodySmall)
 
                         if (report.dangerousPermissions.isNotEmpty()) {
@@ -152,7 +153,7 @@ private fun ApkInstallerScreen(
 
                 if (isInstalling) {
                     CircularProgressIndicator()
-                    Text("Installing package silently via Privileged Backend...")
+                    Text(stringResource(R.string.hf_store_installing_dots))
                 } else {
                     Button(
                         onClick = {

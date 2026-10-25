@@ -11,7 +11,7 @@ class AiSearchActionBuilder(
     override val label: String
 ) : SearchActionBuilder {
 
-    constructor(context: Context) : this(context.getString(R.string.search_action_ai))
+    constructor(context: Context) : this(context.getString(R.string.search_action_websearch))
 
     override val key: String
         get() = "ai_search"
@@ -24,7 +24,7 @@ class AiSearchActionBuilder(
             val q = query.substring(2).trim()
             if (q.isNotBlank()) {
                 return AiSearchAction(
-                    label = "AI Search: $q",
+                    label = "$label: $q",
                     query = q,
                 )
             }

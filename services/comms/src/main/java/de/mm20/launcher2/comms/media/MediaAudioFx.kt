@@ -1,65 +1,48 @@
 package de.mm20.launcher2.comms.media
 
+import android.media.audiofx.AudioEffect
 import android.media.audiofx.BassBoost
 import android.media.audiofx.Equalizer
 import android.media.audiofx.LoudnessEnhancer
 import android.media.audiofx.Virtualizer
-import android.util.Log
 
+/** Shared Telos effect settings, separate native resources for each live player session. */
 object MediaAudioFx {
-    private var equalizer: Equalizer? = null
-    private var bassBoost: BassBoost? = null
-    private var virtualizer: Virtualizer? = null
-    private var loudnessEnhancer: LoudnessEnhancer? = null
-    private var currentSessionId: Int = -1
-
-    fun attachToSession(audioSessionId: Int) {
-        if (audioSessionId == -1 || audioSessionId == currentSessionId) return
-        release()
-        currentSessionId = audioSessionId
-        runCatching {
-            equalizer = Equalizer(0, audioSessionId).apply { enabled = true }
-            bassBoost = BassBoost(0, audioSessionId).apply { enabled = true }
-            virtualizer = Virtualizer(0, audioSessionId).apply { enabled = true }
-            loudnessEnhancer = LoudnessEnhancer(audioSessionId).apply { enabled = true }
-        }.onFailure {
-            Log.w("MediaAudioFx", "Failed to initialize AudioFx: ${it.message}")
-        }
+    private data class Effects(val eq: Equalizer?, val bass: BassBoost?, val spatial: Virtualizer?, val loudness: LoudnessEnhancer?) {
+        fun close() { runCatching { eq?.release() }; runCatching { bass?.release() }; runCatching { spatial?.release() }; runCatching { loudness?.release() } }
     }
-
-    fun setBassBoostStrength(strength: Int) { // 0 - 1000
-        runCatching {
-            bassBoost?.setStrength(strength.toShort().coerceIn(0, 1000))
-        }
+    private val sessions = mutableMapOf<Int, Effects>()
+    private var bass = 0
+    private var spatial = 0
+    private var gain = 0
+    private fun <T : AudioEffect> create(factory: () -> T, configure: T.() -> Unit): T? {
+        val effect = runCatching(factory).getOrNull() ?: return null
+        return try { effect.configure(); effect } catch (_: Exception) { runCatching { effect.release() }; null }
     }
-
-    fun setVirtualizerStrength(strength: Int) { // 0 - 1000 (Spatial Audio 3D)
-        runCatching {
-            virtualizer?.setStrength(strength.toShort().coerceIn(0, 1000))
-        }
+    val loudnessGainMb: Int @Synchronized get() = gain
+    val bassStrength: Int @Synchronized get() = bass
+    val spatialStrength: Int @Synchronized get() = spatial
+    @Synchronized fun attachToSession(audioSessionId: Int) {
+        if (audioSessionId <= 0 || audioSessionId in sessions) return
+        val fx = Effects(create({ Equalizer(0, audioSessionId) }) { enabled = true },
+            create({ BassBoost(0, audioSessionId) }) { setStrength(bass.toShort()); enabled = bass > 0 },
+            create({ Virtualizer(0, audioSessionId) }) { setStrength(spatial.toShort()); enabled = spatial > 0 },
+            create({ LoudnessEnhancer(audioSessionId) }) { setTargetGain(gain); enabled = gain > 0 })
+        sessions[audioSessionId] = fx
     }
-
-    fun setLoudnessGain(gainMb: Int) { // 0 - 2000 (0 to +20dB)
-        runCatching {
-            loudnessEnhancer?.setTargetGain(gainMb.coerceIn(0, 2000))
-        }
+    @Synchronized fun detachFromSession(audioSessionId: Int) { sessions.remove(audioSessionId)?.close() }
+    @Synchronized fun setBassBoostStrength(strength: Int) {
+        bass = strength.coerceIn(0, 1000)
+        sessions.values.forEach { runCatching { it.bass?.apply { setStrength(bass.toShort()); enabled = bass > 0 } } }
     }
-
-    fun setBandLevel(band: Short, levelMb: Short) {
-        runCatching {
-            equalizer?.setBandLevel(band, levelMb)
-        }
+    @Synchronized fun setVirtualizerStrength(strength: Int) {
+        spatial = strength.coerceIn(0, 1000)
+        sessions.values.forEach { runCatching { it.spatial?.apply { setStrength(spatial.toShort()); enabled = spatial > 0 } } }
     }
-
-    fun release() {
-        runCatching { equalizer?.release() }
-        runCatching { bassBoost?.release() }
-        runCatching { virtualizer?.release() }
-        runCatching { loudnessEnhancer?.release() }
-        equalizer = null
-        bassBoost = null
-        virtualizer = null
-        loudnessEnhancer = null
-        currentSessionId = -1
+    @Synchronized fun setLoudnessGain(gainMb: Int) {
+        gain = gainMb.coerceIn(0, 602)
+        sessions.values.forEach { runCatching { it.loudness?.apply { setTargetGain(gain); enabled = gain > 0 } } }
     }
+    @Synchronized fun setBandLevel(band: Short, levelMb: Short) { sessions.values.forEach { runCatching { it.eq?.setBandLevel(band, levelMb) } } }
+    @Synchronized fun release() { sessions.values.forEach { it.close() }; sessions.clear() }
 }

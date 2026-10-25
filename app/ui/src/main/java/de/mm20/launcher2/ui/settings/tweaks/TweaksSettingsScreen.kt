@@ -53,7 +53,7 @@ fun TweaksSettingsScreen() {
         item {
             androidx.compose.material3.Surface(
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
-                color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.8f),
+                color = MaterialTheme.colorScheme.errorContainer,
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp)
             ) {
                 androidx.compose.foundation.layout.Column(modifier = Modifier.padding(12.dp)) {
@@ -83,9 +83,9 @@ fun TweaksSettingsScreen() {
                 )
                 SwitchPreference(
                     title = "Hide Gesture Navigation Bar (Pill)",
-                    summary = if (hasPrivilegedBackend) "Hides the bottom gesture bar for full screen experience" else "Requires Shizuku or Root",
-                    value = state.hideNavPill,
-                    enabled = hasPrivilegedBackend,
+                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    value = false,
+                    enabled = false,
                     onValueChanged = { vm.toggleHideNavPill(it) },
                 )
                 SwitchPreference(
@@ -109,9 +109,9 @@ fun TweaksSettingsScreen() {
             PreferenceCategory(title = stringResource(R.string.tweaks_cat_sound)) {
                 SwitchPreference(
                     title = "Extended 30-Step Volume Control",
-                    summary = if (hasPrivilegedBackend) "Increases volume steps for fine-grained control" else "Requires Shizuku or Root",
-                    value = state.volume30Steps,
-                    enabled = hasPrivilegedBackend,
+                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    value = false,
+                    enabled = false,
                     onValueChanged = { vm.toggleVolume30Steps(it) },
                 )
                 SwitchPreference(
@@ -135,9 +135,9 @@ fun TweaksSettingsScreen() {
             PreferenceCategory(title = stringResource(R.string.tweaks_cat_notifications)) {
                 SwitchPreference(
                     title = "Flashlight Pulse on Call Alert",
-                    summary = "Flashes LED torch on incoming phone call",
-                    value = state.flashPulseCall,
-                    enabled = true,
+                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    value = false,
+                    enabled = false,
                     onValueChanged = { vm.toggleFlashPulseCall(it) },
                 )
             }
@@ -159,30 +159,30 @@ fun TweaksSettingsScreen() {
             PreferenceCategory(title = stringResource(R.string.tweaks_cat_battery)) {
                 SwitchPreference(
                     title = "Aggressive Doze Mode",
-                    summary = if (hasPrivilegedBackend) "Forces immediate deep sleep idle mode when screen turns off" else "Requires Shizuku or Root",
-                    value = state.forceAggressiveDoze,
-                    enabled = hasPrivilegedBackend,
+                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    value = false,
+                    enabled = false,
                     onValueChanged = { vm.toggleForceDoze(it) },
                 )
                 SwitchPreference(
                     title = "Caffeinate (Keep Screen Awake)",
-                    summary = "Prevents screen from sleeping while using Telos",
-                    value = state.caffeinate,
-                    enabled = true,
+                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    value = false,
+                    enabled = false,
                     onValueChanged = { vm.toggleCaffeinate(it) },
                 )
                 SwitchPreference(
                     title = "Pocket Mode",
-                    summary = "Prevents accidental touch events when proximity sensor detects pocket",
-                    value = state.pocketMode,
-                    enabled = true,
+                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    value = false,
+                    enabled = false,
                     onValueChanged = { vm.togglePocketMode(it) },
                 )
                 SwitchPreference(
                     title = "Double-Tap Status Bar to Sleep",
-                    summary = "Double tap empty launcher/status bar space to lock screen",
-                    value = state.doubleTapSleep,
-                    enabled = true,
+                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    value = false,
+                    enabled = false,
                     onValueChanged = { vm.toggleDoubleTapSleep(it) },
                 )
             }

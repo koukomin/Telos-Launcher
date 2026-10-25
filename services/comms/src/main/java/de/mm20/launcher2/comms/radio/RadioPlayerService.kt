@@ -84,7 +84,10 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
         exo.addListener(object : Player.Listener {
+            private var effectSession = -1
             override fun onAudioSessionIdChanged(audioSessionId: Int) {
+                de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession(effectSession)
+                effectSession = audioSessionId
                 de.mm20.launcher2.comms.media.MediaAudioFx.attachToSession(audioSessionId)
             }
         })
@@ -275,7 +278,7 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
         RadioSleepTimer.onExpire = null
         scope.cancel()
         mediaSession?.run {
-            player.release()
+            de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession((player as? ExoPlayer)?.audioSessionId ?: -1); player.release()
             release()
             mediaSession = null
         }

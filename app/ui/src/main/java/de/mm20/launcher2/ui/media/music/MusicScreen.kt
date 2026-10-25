@@ -914,9 +914,9 @@ private fun LyricsView(
 
 @Composable
 fun AudioFxDialog(onDismiss: () -> Unit) {
-    var boostPercent by remember { mutableStateOf(100f) }
-    var bassPercent by remember { mutableStateOf(0f) }
-    var spatialPercent by remember { mutableStateOf(0f) }
+    var boostPercent by remember { mutableStateOf((Math.pow(10.0, de.mm20.launcher2.comms.media.MediaAudioFx.loudnessGainMb / 2000.0) * 100).toFloat().coerceIn(100f, 200f)) }
+    var bassPercent by remember { mutableStateOf(de.mm20.launcher2.comms.media.MediaAudioFx.bassStrength / 10f) }
+    var spatialPercent by remember { mutableStateOf(de.mm20.launcher2.comms.media.MediaAudioFx.spatialStrength / 10f) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -929,7 +929,7 @@ fun AudioFxDialog(onDismiss: () -> Unit) {
                         value = boostPercent,
                         onValueChange = {
                             boostPercent = it
-                            val gainMb = ((it - 100f) / 100f * 2000f).toInt()
+                            val gainMb = de.mm20.launcher2.comms.media.volumeGainMilliBel(it / 100f)
                             de.mm20.launcher2.comms.media.MediaAudioFx.setLoudnessGain(gainMb)
                         },
                         valueRange = 100f..200f

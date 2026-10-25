@@ -2,6 +2,7 @@ package de.mm20.launcher2.comms.youtube.flow
 
 import android.content.Context
 import de.mm20.launcher2.comms.youtube.YouTubeAccountManager
+import de.mm20.launcher2.comms.youtube.YouTubeSessionPolicy
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.schabi.newpipe.extractor.downloader.Downloader
@@ -14,6 +15,12 @@ import java.util.concurrent.TimeUnit
 
 internal class NewPipeDownloader(private val context: Context) : Downloader() {
     private val client = OkHttpClient.Builder()
+        .addNetworkInterceptor { chain ->
+            val request = chain.request()
+            val safe = if (YouTubeSessionPolicy.trusted(request.url.toString())) request else request.newBuilder()
+                .removeHeader("Cookie").removeHeader("Authorization").removeHeader("Origin").removeHeader("X-Origin").build()
+            chain.proceed(safe)
+        }
         .readTimeout(30, TimeUnit.SECONDS)
         .connectTimeout(30, TimeUnit.SECONDS)
         .writeTimeout(30, TimeUnit.SECONDS)
@@ -27,12 +34,12 @@ internal class NewPipeDownloader(private val context: Context) : Downloader() {
             for (value in values) builder.addHeader(key, value)
         }
 
-        if (url.contains("youtube.com")) {
+        if (YouTubeSessionPolicy.trusted(url)) {
             YouTubeAccountManager.getCookie(context)?.let { cookie ->
                 if (cookie.isNotBlank()) {
                     builder.header("Cookie", cookie)
 
-                    val origin = if (url.contains("music.youtube.com")) {
+                    val origin = if (java.net.URI(url).host.equals("music.youtube.com", true)) {
                         "https://" + "music.youtube.com"
                     } else {
                         "https://" + "www.youtube.com"
@@ -73,13 +80,7 @@ internal class NewPipeDownloader(private val context: Context) : Downloader() {
     }
 
     private fun extractSapisid(cookieHeader: String): String? {
-        val cookies = cookieHeader.split(";").associate { part ->
-            val trimmed = part.trim()
-            val idx = trimmed.indexOf('=')
-            if (idx > 0) trimmed.substring(0, idx).trim() to trimmed.substring(idx + 1).trim()
-            else "" to ""
-        }
-        return cookies["SAPISID"] ?: cookies["__Secure-3PAPISID"]
+        return YouTubeSessionPolicy.sapisid(cookieHeader)
     }
 
     private fun generateSapisidHash(sapisid: String, origin: String): String {

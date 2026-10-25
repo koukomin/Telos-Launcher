@@ -51,7 +51,10 @@ class YouTubePlayerService : MediaSessionService(), KoinComponent {
             .setAudioAttributes(AudioAttributes.Builder().setUsage(C.USAGE_MEDIA).setContentType(C.AUDIO_CONTENT_TYPE_MUSIC).build(), true)
             .setHandleAudioBecomingNoisy(true).setWakeMode(C.WAKE_MODE_NETWORK).build()
         player.addListener(object : Player.Listener {
+            private var effectSession = -1
             override fun onAudioSessionIdChanged(audioSessionId: Int) {
+                de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession(effectSession)
+                effectSession = audioSessionId
                 de.mm20.launcher2.comms.media.MediaAudioFx.attachToSession(audioSessionId)
             }
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) { advance?.cancel() }
@@ -104,7 +107,7 @@ class YouTubePlayerService : MediaSessionService(), KoinComponent {
         playbackScope.cancel()
         handler.removeCallbacksAndMessages(null)
         PlaybackCoordinator.unregister(KIND)
-        session?.run { player.release(); release() }; session = null
+        session?.run { de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession((player as? ExoPlayer)?.audioSessionId ?: -1); player.release(); release() }; session = null
         super.onDestroy()
     }
     companion object { const val EXTRA_QUEUE = "telos.youtube.queue"; const val EXTRA_QUEUE_INDEX = "telos.youtube.queue_index"; const val EXTRA_AUDIO_URL = "telos.youtube.audio_url"; const val KIND = "youtube" }

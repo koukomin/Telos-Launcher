@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import kotlinx.coroutines.launch
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -26,18 +27,20 @@ fun YouTubeLoginDialog(
     onDismiss: () -> Unit,
     onSuccess: () -> Unit,
 ) {
-    var loginCompleted = remember { false }
+    val loginCompleted = remember { java.util.concurrent.atomic.AtomicBoolean(false) }
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
 
     AlertDialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false),
         modifier = Modifier.fillMaxWidth(0.95f),
-        title = { Text("Sign in to YouTube") },
+        title = { Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.au7_trakt_sign_in) + " · YouTube") },
         text = {
             AndroidView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(560.dp),
+                onRelease = { it.stopLoading(); it.webViewClient = WebViewClient(); it.destroy() },
                 factory = { context ->
                     WebView(context).apply {
                         layoutParams = ViewGroup.LayoutParams(
@@ -53,8 +56,10 @@ fun YouTubeLoginDialog(
                             javaScriptEnabled = true
                             domStorageEnabled = true
                             databaseEnabled = true
-                            javaScriptCanOpenWindowsAutomatically = true
-                            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+                            javaScriptCanOpenWindowsAutomatically = false
+                            mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
+                            allowFileAccess = false
+                            allowContentAccess = false
 
                             // Strip WebView markers ("; wv" and "Version/x.x") from native Chromium UA
                             userAgentString = userAgentString
@@ -67,14 +72,16 @@ fun YouTubeLoginDialog(
                                 view: WebView,
                                 request: WebResourceRequest
                             ): Boolean {
-                                return false
+                                val uri = request.url
+                                val host = uri.host.orEmpty().lowercase(java.util.Locale.ROOT)
+                                return uri.scheme != "https" || !(host == "accounts.google.com" || host == "youtube.com" || host.endsWith(".youtube.com"))
                             }
 
                             override fun onPageFinished(view: WebView, url: String) {
                                 super.onPageFinished(view, url)
-                                if (loginCompleted) return
+                                if (loginCompleted.get()) return
 
-                                if (url.contains("youtube.com")) {
+                                if (android.net.Uri.parse(url).let { it.scheme == "https" && (it.host == "youtube.com" || it.host?.endsWith(".youtube.com") == true) }) {
                                     val ytBaseUrl = "https://" + "www.youtube.com"
                                     val ytMusicUrl = "https://" + "music.youtube.com"
                                     val ytCookies = cookieManager.getCookie(ytBaseUrl).orEmpty()
@@ -82,10 +89,14 @@ fun YouTubeLoginDialog(
                                     val mergedCookies = mergeCookieStrings(ytCookies, musicCookies)
 
                                     if (mergedCookies.contains("SAPISID")) {
-                                        loginCompleted = true
+                                        if (!loginCompleted.compareAndSet(false, true)) return
                                         cookieManager.flush()
-                                        YouTubeAccountManager.setCookie(context, mergedCookies)
-                                        onSuccess()
+                                        scope.launch {
+                                            val saved = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                                                runCatching { YouTubeAccountManager.setCookie(context.applicationContext, mergedCookies) }.isSuccess
+                                            }
+                                            if (saved) onSuccess() else loginCompleted.set(false)
+                                        }
                                     }
                                 }
                             }
@@ -98,7 +109,7 @@ fun YouTubeLoginDialog(
             )
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Close") }
+            TextButton(onClick = onDismiss) { Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.hc_close)) }
         }
     )
 }

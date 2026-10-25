@@ -1394,3 +1394,7 @@ masking it with copied English strings.
 
 Standalone virtual-app Recents tasks have static localized Android labels and
 icons as well as dynamic task metadata, including on OEM launchers.
+
+### October 2026 implementation audit
+
+[Source and UI audit](docs/docs/developer-guide/audits/2026-10-25-gemini-review.md): Wi-Fi parsing is tested on Android ICU, reveal fails closed, QR fields are escaped, and JSON backup uses Android’s document picker. System Apps uses IO snapshots and the existing validated UAD database. Unenforced firewall/focus/component/tweak controls are unavailable rather than indicating success. YouTube credentials use Keystore protection and an account-scoped cache. APK permission inspection is not antivirus scanning; partial Ancient Greek/Latin resource files are not complete language support.
