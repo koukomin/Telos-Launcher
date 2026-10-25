@@ -127,6 +127,7 @@ class YouTubeRepository(private val context: Context) {
         seenIds.add("LL")
 
         // 2. Query YouTube Music Innertube API for the user's saved/created playlists
+        val cacheFile = java.io.File(context.cacheDir, "user_playlists_cache.json")
         try {
             val endpoint = "https://" + "music.youtube.com/youtubei/v1/browse?prettyPrint=false"
             val locale = Locale.getDefault()
@@ -150,12 +151,24 @@ class YouTubeRepository(private val context: Context) {
             val request = Request("POST", endpoint, headers, payload, null, false)
             val response = NewPipe.getDownloader().execute(request)
 
-            if (response.responseCode() in 200..299 && response.responseBody().isNotBlank()) {
-                val root = JSONObject(response.responseBody())
+            val body = response.responseBody()
+            if (response.responseCode() in 400..403 || body.contains("UNAUTHENTICATED")) {
+                YouTubeAccountManager.markExpired(context, true)
+            } else if (response.responseCode() in 200..299 && body.isNotBlank()) {
+                runCatching { cacheFile.writeText(body) }
+                val root = JSONObject(body)
+                extractPlaylistsFromInnertubeJson(root, results, seenIds, ytPlaylistPrefix)
+            } else if (cacheFile.exists()) {
+                val root = JSONObject(cacheFile.readText())
                 extractPlaylistsFromInnertubeJson(root, results, seenIds, ytPlaylistPrefix)
             }
         } catch (_: Exception) {
-            // Even if Innertube parsing fails, LM and LL remain available.
+            if (cacheFile.exists()) {
+                runCatching {
+                    val root = JSONObject(cacheFile.readText())
+                    extractPlaylistsFromInnertubeJson(root, results, seenIds, ytPlaylistPrefix)
+                }
+            }
         }
 
         results

@@ -41,9 +41,10 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val favorites by vm.library.favorites.collectAsStateWithLifecycle()
     val playlists by vm.library.playlists.collectAsStateWithLifecycle()
     val userPlaylists by vm.userPlaylists.collectAsStateWithLifecycle(emptyList<de.mm20.launcher2.comms.youtube.YouTubePlaylistSummary>())
+    val sessionExpired by vm.sessionExpired.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        vm.loadUserPlaylists()
+        vm.loadUserPlaylists(context)
     }
 
     var shelf by rememberSaveable(music) { mutableStateOf("search") }
@@ -77,6 +78,36 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            if (sessionExpired) {
+                item {
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = "Η συνεδρία στο YouTube έληξε",
+                                    style = MaterialTheme.typography.titleSmall,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onErrorContainer
+                                )
+                                Text(
+                                    text = "Παρακαλώ συνδεθείτε ξανά για πρόσβαση στις λίστες σας.",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.8f)
+                                )
+                            }
+                            TextButton(onClick = { accountPanel = true }) {
+                                Text("Sign In", color = MaterialTheme.colorScheme.onErrorContainer, fontWeight = FontWeight.Bold)
+                            }
+                        }
+                    }
+                }
+            }
             item {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     de.mm20.launcher2.ui.component.TelosSearchTopBar(

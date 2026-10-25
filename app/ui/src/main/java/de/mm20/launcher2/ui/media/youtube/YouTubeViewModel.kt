@@ -82,9 +82,15 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
     val userPlaylists = MutableStateFlow<List<YouTubePlaylistSummary>>(emptyList())
     val selectedPlaylistTracks = MutableStateFlow<Pair<String, List<YouTubeEntry>>?>(null)
     val isLoadingPlaylists = MutableStateFlow(false)
+    val sessionExpired = MutableStateFlow(false)
 
-    fun loadUserPlaylists() {
+    fun loadUserPlaylists(context: Context) {
         viewModelScope.launch {
+            if (YouTubeAccountManager.isExpired(context)) {
+                sessionExpired.value = true
+                userPlaylists.value = emptyList()
+                return@launch
+            }
             if (!repository.isLoggedIn()) {
                 userPlaylists.value = emptyList()
                 return@launch
@@ -92,6 +98,9 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
             isLoadingPlaylists.value = true
             try {
                 userPlaylists.value = repository.fetchUserPlaylists()
+                if (YouTubeAccountManager.isExpired(context)) {
+                    sessionExpired.value = true
+                }
             } catch (_: Exception) {
             } finally {
                 isLoadingPlaylists.value = false
@@ -121,7 +130,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
     fun reconnect(context: Context) { 
         viewModelScope.launch { 
             runCatching { connect(context) }
-            loadUserPlaylists()
+            loadUserPlaylists(context)
         } 
     }
     fun play(context: Context, entry: YouTubeEntry, music: Boolean, tracks: List<YouTubeEntry> = listOf(entry)) {
