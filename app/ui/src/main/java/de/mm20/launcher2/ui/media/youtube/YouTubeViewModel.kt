@@ -80,7 +80,8 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
         try { return deferred.await() } finally { connectJob = null }
     }
     val userPlaylists = MutableStateFlow<List<YouTubePlaylistSummary>>(emptyList())
-    val loadingPlaylists = MutableStateFlow(false)
+    val selectedPlaylistTracks = MutableStateFlow<Pair<String, List<YouTubeEntry>>?>(null)
+    val isLoadingPlaylists = MutableStateFlow(false)
 
     fun loadUserPlaylists() {
         viewModelScope.launch {
@@ -88,12 +89,31 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
                 userPlaylists.value = emptyList()
                 return@launch
             }
-            loadingPlaylists.value = true
+            isLoadingPlaylists.value = true
             try {
                 userPlaylists.value = repository.fetchUserPlaylists()
             } catch (_: Exception) {
             } finally {
-                loadingPlaylists.value = false
+                isLoadingPlaylists.value = false
+            }
+        }
+    }
+
+    fun selectPlaylist(context: Context, url: String) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            searching.value = true
+            message.value = null
+            try {
+                val pair = repository.fetchPlaylist(url)
+                selectedPlaylistTracks.value = pair
+                results.value = results.value + (true to pair.second)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                message.value = context.getString(R.string.telos_youtube_search_failed)
+            } finally {
+                searching.value = false
             }
         }
     }

@@ -40,7 +40,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val allEntries by vm.results.collectAsStateWithLifecycle()
     val favorites by vm.library.favorites.collectAsStateWithLifecycle()
     val playlists by vm.library.playlists.collectAsStateWithLifecycle()
-    val onlinePlaylists by vm.userPlaylists.collectAsStateWithLifecycle(emptyList<de.mm20.launcher2.comms.youtube.YouTubePlaylistSummary>())
+    val userPlaylists by vm.userPlaylists.collectAsStateWithLifecycle(emptyList<de.mm20.launcher2.comms.youtube.YouTubePlaylistSummary>())
 
     LaunchedEffect(Unit) {
         vm.loadUserPlaylists()
@@ -106,6 +106,18 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                         },
                     )
 
+                    // YouTube Online Library Glass Cards
+                    if (music && userPlaylists.isNotEmpty()) {
+                        YouTubePlaylistChipsRow(
+                            userPlaylists = userPlaylists,
+                            selectedUrl = if (shelf.startsWith("online:")) shelf.removePrefix("online:") else null,
+                            onSelectPlaylist = { pl ->
+                                shelf = "online:${pl.url}"
+                                vm.selectPlaylist(context, pl.url)
+                            }
+                        )
+                    }
+
                     // Flow-style Navigation Filter Bar
                     if (music) {
                         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -123,12 +135,12 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                                     label = { Text(stringResource(R.string.hc_favorites)) }
                                 )
                             }
-                            items(onlinePlaylists, key = { "online:${it.id}" }) { pl ->
+                            items(userPlaylists, key = { "online:${it.id}" }) { pl ->
                                 FilterChip(
                                     selected = shelf == "online:${pl.id}",
                                     onClick = {
                                         shelf = "online:${pl.id}"
-                                        vm.loadOnlinePlaylist(context, pl.url)
+                                        vm.selectPlaylist(context, pl.url)
                                     },
                                     label = { Text("❤️ ${pl.title}") }
                                 )
@@ -472,6 +484,93 @@ private fun FlowMediaCard(
                         text = { Text(stringResource(R.string.hc_delete)) },
                         onClick = { onDeleteFromPlaylist(); menuOpen = false }
                     )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun YouTubePlaylistChipsRow(
+    userPlaylists: List<YouTubePlaylistSummary>,
+    selectedUrl: String?,
+    onSelectPlaylist: (YouTubePlaylistSummary) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    if (userPlaylists.isEmpty()) return
+
+    Column(modifier = modifier.fillMaxWidth()) {
+        Text(
+            text = "YouTube Online Library",
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(bottom = 6.dp)
+        )
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            contentPadding = PaddingValues(horizontal = 2.dp)
+        ) {
+            items(userPlaylists, key = { it.id }) { pl ->
+                val isSelected = selectedUrl == pl.url
+                Surface(
+                    onClick = { onSelectPlaylist(pl) },
+                    shape = RoundedCornerShape(16.dp),
+                    color = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerLow,
+                    border = androidx.compose.foundation.BorderStroke(
+                        1.dp,
+                        if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                    ),
+                    modifier = Modifier.width(160.dp).height(64.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (!pl.thumbnail.isNullOrBlank()) {
+                            AsyncImage(
+                                model = pl.thumbnail,
+                                contentDescription = pl.title,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                            )
+                        } else {
+                            Surface(
+                                shape = RoundedCornerShape(10.dp),
+                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                                modifier = Modifier.size(48.dp)
+                            ) {
+                                Box(contentAlignment = Alignment.Center) {
+                                    Icon(
+                                        painter = painterResource(R.drawable.music_note_24px),
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                            }
+                        }
+                        Spacer(Modifier.width(8.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = pl.title,
+                                style = MaterialTheme.typography.labelLarge,
+                                fontWeight = FontWeight.Bold,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface
+                            )
+                            Text(
+                                text = pl.subtitle,
+                                style = MaterialTheme.typography.bodySmall,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f) else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 }
             }
         }
