@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">অডিও ফোকাস</string>
+    <string name="system_audio_playback">অডিও চালানো</string>
+    <string name="system_audio_help">Root/Shizuku প্রয়োজন। ফোকাস বন্ধ করলে নতুন অনুরোধ আটকায়, ফোকাস হারানোর প্রতিক্রিয়া বদলায় না; কিছু অ্যাপ থামতে পারে। অডিও বন্ধ করলে অ্যাপ নীরব হয়। পরিবর্তনের পর অডিও আবার চালু করুন। ডিফল্ট সিস্টেম নীতি ফিরিয়ে আনে। সিস্টেম ও অ্যাপ অনুযায়ী সমর্থন ভিন্ন হয়।</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Fokus tal-awdjo</string>
+    <string name="system_audio_playback">Daqq tal-awdjo</string>
+    <string name="system_audio_help">Jeħtieġ root/Shizuku. It-tifi tal-fokus jimblokka talbiet ġodda u ma jbiddilx ir-reazzjoni għat-telf tal-fokus; xi apps jieqfu. It-tifi tad-daqq isikket l-app. Erġa’ ibda d-daqq wara bidliet. L-għażla awtomatika tirrestawra l-politika tas-sistema. L-appoġġ ivarja skont is-sistema u l-app.</string>
+</resources>

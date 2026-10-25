@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Audio fokuss</string>
+    <string name="system_audio_playback">Audio atskaņošana</string>
+    <string name="system_audio_help">Nepieciešams root/Shizuku. Fokusa izslēgšana bloķē jaunus pieprasījumus, nemaina reakciju uz fokusa zudumu; dažas lietotnes apstājas. Atskaņošanas izslēgšana apklusina lietotni. Pēc izmaiņām atsāciet atskaņošanu. Noklusējums atjauno sistēmas politiku. Atbalsts atšķiras atkarībā no sistēmas un lietotnes.</string>
+</resources>

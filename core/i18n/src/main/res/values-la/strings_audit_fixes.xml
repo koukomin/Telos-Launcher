@@ -43,4 +43,7 @@
     <string name="preference_freeze_auto_category">Congelatio automatica</string>
     <string name="preference_screen_freeze">Administratio congelationis</string>
     <string name="preference_search_apps_show_details">Notitias applicationis ostendere</string>
+    <string name="hf_freeze_disconnected">Disiunctum</string>
+    <string name="preference_category_enabled_plugins">Activum</string>
+    <string name="preference_value_disabled">Inactivum</string>
 </resources>

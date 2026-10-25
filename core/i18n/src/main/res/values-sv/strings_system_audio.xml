@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Ljudfokus</string>
+    <string name="system_audio_playback">Ljuduppspelning</string>
+    <string name="system_audio_help">Kräver root/Shizuku. Avstängt fokus blockerar nya begäranden, men ändrar inte hanteringen av förlorat fokus; vissa appar stannar. Avstängd uppspelning tystar appen. Starta om uppspelningen efter ändringar. Standard återställer systemets policy. Stödet varierar mellan system och appar.</string>
+</resources>

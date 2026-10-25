@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Fokus audio</string>
+    <string name="system_audio_playback">Pemutaran audio</string>
+    <string name="system_audio_help">Memerlukan root/Shizuku. Menonaktifkan fokus memblokir permintaan baru, bukan penanganan hilangnya fokus; beberapa aplikasi berhenti. Menonaktifkan pemutaran membisukan aplikasi. Mulai ulang pemutaran setelah perubahan. Default memulihkan kebijakan sistem. Dukungan berbeda menurut sistem dan aplikasi.</string>
+</resources>

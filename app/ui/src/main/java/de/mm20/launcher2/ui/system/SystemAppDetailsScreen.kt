@@ -41,7 +41,7 @@ data class SystemAppDetailsRoute(val packageName: String) : NavKey
 private data class ComponentRow(val name: ComponentName, val state: Int, val manifestEnabled: Boolean)
 private data class PackageDetails(val label: String, val version: String, val sdk: Int, val installed: String,
     val updated: String, val frozen: Boolean, val launch: Intent?, val inspection: InureInspectionResult?,
-    val components: List<ComponentRow>)
+    val components: List<ComponentRow>, val audioModes: Map<String, String?>)
 
 /** Every installed package uses this surface, without creating a Store tracking entry. */
 @Composable
@@ -84,7 +84,7 @@ fun SystemAppDetailsScreen(packageName: String) {
                 PackageDetails(app.loadLabel(pm).toString(), "${info.versionName.orEmpty()} (${androidx.core.content.pm.PackageInfoCompat.getLongVersionCode(info)})",
                     app.targetSdkVersion, date.format(java.util.Date(info.firstInstallTime)), date.format(java.util.Date(info.lastUpdateTime)),
                     freeze.isFrozen(packageName), pm.getLaunchIntentForPackage(packageName), AppInureInspector.inspectPackage(context, packageName),
-                    components)
+                    components, freeze.audioModes(packageName))
             }
         } catch (cancelled: CancellationException) { throw cancelled }
         catch (_: Exception) { details = null; outcome = context.getString(R.string.hc_failed_try_again) }
@@ -156,6 +156,22 @@ fun SystemAppDetailsScreen(packageName: String) {
                 items(inspector.dangerousPermissions + inspector.normalPermissions, key = { "permission:$it" }) { permission ->
                     Text(if (permission in inspector.dangerousPermissions) "⚠ $permission" else permission, style = MaterialTheme.typography.bodySmall,
                         color = if (permission in inspector.dangerousPermissions) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface)
+                }
+            }
+            item {
+                Text(stringResource(R.string.system_audio_title), style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(R.string.system_audio_help), style = MaterialTheme.typography.bodySmall)
+                for (op in listOf("TAKE_AUDIO_FOCUS", "PLAY_AUDIO")) {
+                    val mode = data.audioModes[op]
+                    de.mm20.launcher2.ui.component.preferences.ListPreference(
+                        title = stringResource(if (op == "TAKE_AUDIO_FOCUS") R.string.system_audio_title else R.string.system_audio_playback), value = mode,
+                        enabled = !busy && mode != null,
+                        items = listOf(stringResource(R.string.icon_picker_default_icon) to "default",
+                            stringResource(R.string.preference_category_enabled_plugins) to "allow",
+                            stringResource(R.string.preference_value_disabled) to "ignore") +
+                            if (mode != null && mode !in listOf("default", "allow", "ignore")) listOf(mode to mode) else emptyList(),
+                        onValueChanged = { value -> if (value != null && value != mode) action { freeze.setAudioMode(packageName, op, value) } })
+                    if (mode == null) Text(stringResource(R.string.hf_freeze_disconnected))
                 }
             }
             item {

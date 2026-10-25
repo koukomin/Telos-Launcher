@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Sonfokuso</string>
+    <string name="system_audio_playback">Sonludado</string>
+    <string name="system_audio_help">Postulas root/Shizuku. Malŝalti fokuson blokas novajn petojn, ne ŝanĝas traktadon de fokusperdo; iuj aplikaĵoj haltas. Malŝalti ludadon silentigas la aplikaĵon. Rekomencu ludadon post ŝanĝoj. Defaŭlto restarigas la sisteman politikon. Subteno varias laŭ sistemo kaj aplikaĵo.</string>
+</resources>

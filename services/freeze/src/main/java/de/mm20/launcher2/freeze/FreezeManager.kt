@@ -391,6 +391,61 @@ class FreezeManager internal constructor(
         return verified
     }
 
+    /** Read Android's actual per-package app-op state; no preference is treated as applied. */
+    suspend fun audioModes(packageName: String): Map<String, String?> = withContext(kotlinx.coroutines.Dispatchers.IO) {
+        operationMutex.withLock {
+            AudioOperation.entries.associate { op -> op.name to runAudioCommand(packageName, op)?.let { parseAudioMode(it, op) } }
+        }
+    }
+
+    suspend fun setAudioMode(packageName: String, operation: String, mode: String): Boolean =
+        withContext(NonCancellable + kotlinx.coroutines.Dispatchers.IO) {
+            operationMutex.withLock {
+                val op = AudioOperation.entries.firstOrNull { it.name == operation } ?: return@withLock false
+                if (packageName in PROTECTED_PACKAGES || packageName == "com.android.phone" ||
+                    mode !in setOf("allow", "ignore", "default")) return@withLock false
+                // Refuse writes unless this backend can read this app-op on this device.
+                val before = runAudioCommand(packageName, op)?.let { parseAudioMode(it, op) } ?: return@withLock false
+                if (before == mode) return@withLock true
+                if (runAudioCommand(packageName, op, mode) == null) return@withLock false
+                val after = runAudioCommand(packageName, op)?.let { parseAudioMode(it, op) }
+                if (after == mode) true else {
+                    // A shared-UID override may prevent the package setting from taking effect.
+                    runAudioCommand(packageName, op, before)
+                    false
+                }
+            }
+        }
+
+    private suspend fun runAudioCommand(pkg: String, op: AudioOperation, mode: String? = null): String? {
+        if (!VALID_PACKAGE_NAME.matches(pkg)) return null
+        val args = audioCommand(pkg, Process.myUid() / 100000, op, mode)
+        var process: java.lang.Process? = null
+        return try {
+            process = when (_activeBackend.value) {
+                FreezeBackendType.Root -> Runtime.getRuntime().exec(arrayOf("su", "-c", args.joinToString(" ")))
+                FreezeBackendType.Shizuku -> {
+                    if (!shizukuProvider.hasPermission()) return null
+                    val method = rikka.shizuku.Shizuku::class.java.getDeclaredMethod("newProcess",
+                        Array<String>::class.java, Array<String>::class.java, String::class.java)
+                    method.isAccessible = true
+                    method.invoke(null, args.toTypedArray(), null, null) as java.lang.Process
+                }
+                else -> return null
+            }
+            // These commands return one app-op record. A full pipe is bounded by the timeout.
+            val running = requireNotNull(process)
+            if (!running.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) || running.exitValue() != 0) null
+            else running.inputStream.bufferedReader().use { it.readText().takeIf { text -> text.length <= 8192 } }
+        } catch (_: Exception) { null }
+        finally {
+            process?.destroy()
+            runCatching { process?.inputStream?.close() }
+            runCatching { process?.errorStream?.close() }
+            runCatching { process?.outputStream?.close() }
+        }
+    }
+
     /** Explicit component edits; root only, scoped to this user's declared package components. */
     suspend fun setComponentState(component: ComponentName, state: Int): Boolean =
         withContext(kotlinx.coroutines.Dispatchers.IO) {

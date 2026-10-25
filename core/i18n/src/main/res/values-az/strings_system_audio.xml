@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Səs fokusu</string>
+    <string name="system_audio_playback">Səsin səsləndirilməsi</string>
+    <string name="system_audio_help">Root/Shizuku tələb olunur. Fokusun söndürülməsi yeni sorğuları bloklayır, fokus itkisinə reaksiyanı dəyişmir; bəzi tətbiqlər dayanır. Səsləndirməni söndürmək tətbiqi susdurur. Dəyişiklikdən sonra səsləndirməni yenidən başladın. Standart sistem qaydasını bərpa edir. Dəstək sistemə və tətbiqə görə dəyişir.</string>
+</resources>

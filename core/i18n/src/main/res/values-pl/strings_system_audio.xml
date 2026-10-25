@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Fokus dźwięku</string>
+    <string name="system_audio_playback">Odtwarzanie dźwięku</string>
+    <string name="system_audio_help">Wymaga root/Shizuku. Wyłączenie fokusu blokuje nowe żądania, nie zmienia reakcji na utratę fokusu; niektóre aplikacje zatrzymują się. Wyłączenie odtwarzania wycisza aplikację. Po zmianach uruchom odtwarzanie ponownie. Domyślne przywraca zasady systemu. Obsługa zależy od systemu i aplikacji.</string>
+</resources>

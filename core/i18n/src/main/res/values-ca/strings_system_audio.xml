@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Focus d’àudio</string>
+    <string name="system_audio_playback">Reproducció d’àudio</string>
+    <string name="system_audio_help">Requereix root/Shizuku. Desactivar el focus bloqueja noves peticions, no la resposta a la pèrdua de focus; algunes aplicacions s’aturen. Desactivar la reproducció silencia l’aplicació. Reinicia la reproducció després dels canvis. El valor predeterminat restaura la política del sistema. La compatibilitat varia segons el sistema i l’aplicació.</string>
+</resources>

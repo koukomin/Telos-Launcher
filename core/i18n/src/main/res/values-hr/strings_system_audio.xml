@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Audiofokus</string>
+    <string name="system_audio_playback">Reprodukcija zvuka</string>
+    <string name="system_audio_help">Zahtijeva root/Shizuku. Isključivanje fokusa blokira nove zahtjeve, ne mijenja reakciju na gubitak fokusa; neke se aplikacije zaustavljaju. Isključivanje reprodukcije utišava aplikaciju. Ponovno pokrenite reprodukciju nakon promjena. Zadano vraća pravila sustava. Podrška ovisi o sustavu i aplikaciji.</string>
+</resources>

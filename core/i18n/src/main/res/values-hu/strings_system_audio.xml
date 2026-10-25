@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Hangfókusz</string>
+    <string name="system_audio_playback">Hanglejátszás</string>
+    <string name="system_audio_help">Root/Shizuku szükséges. A fókusz kikapcsolása az új kérelmeket tiltja, a fókuszvesztés kezelését nem módosítja; egyes appok leállnak. A lejátszás kikapcsolása némítja az appot. Változtatás után indítsa újra a lejátszást. Az alapérték visszaállítja a rendszer szabályát. A támogatás rendszerenként és apponként eltér.</string>
+</resources>

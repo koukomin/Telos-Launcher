@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Helifookus</string>
+    <string name="system_audio_playback">Heli esitamine</string>
+    <string name="system_audio_help">Vajab root/Shizuku juurdepääsu. Fookuse keelamine blokeerib uued taotlused, mitte fookuse kaotuse käsitlemist; mõni rakendus peatub. Esitamise keelamine vaigistab rakenduse. Pärast muutmist taaskäivita esitus. Vaikeväärtus taastab süsteemi reegli. Tugi sõltub süsteemist ja rakendusest.</string>
+</resources>

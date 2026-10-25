@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Foco audio</string>
+    <string name="system_audio_playback">Reproduction audio</string>
+    <string name="system_audio_help">Require root/Shizuku. Disactivar le foco bloca nove requestas, non cambia le reaction al perdita de foco; certe apps se stoppa. Disactivar le reproduction rende le app mute. Reinitia le reproduction post cambios. Le predefinito restaura le politica del systema. Le supporto varia secundo le systema e le app.</string>
+</resources>

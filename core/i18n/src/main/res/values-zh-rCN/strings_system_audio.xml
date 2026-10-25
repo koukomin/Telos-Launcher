@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">音频焦点</string>
+    <string name="system_audio_playback">音频播放</string>
+    <string name="system_audio_help">需要 root/Shizuku。关闭焦点会阻止新请求，不会改变失去焦点时的处理；某些应用会停止。关闭播放会将应用静音。更改后请重新开始播放。默认选项恢复系统策略。 支持情况因系统和应用而异。</string>
+</resources>

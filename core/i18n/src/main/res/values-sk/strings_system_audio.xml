@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Zvukové zameranie</string>
+    <string name="system_audio_playback">Prehrávanie zvuku</string>
+    <string name="system_audio_help">Vyžaduje root/Shizuku. Vypnutie zamerania blokuje nové žiadosti, nemení reakciu na stratu zamerania; niektoré aplikácie sa zastavia. Vypnutie prehrávania stlmí aplikáciu. Po zmene reštartujte prehrávanie. Predvolené obnoví systémové pravidlá. Podpora závisí od systému a aplikácie.</string>
+</resources>

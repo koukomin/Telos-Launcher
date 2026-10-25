@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Zvukové zaměření</string>
+    <string name="system_audio_playback">Přehrávání zvuku</string>
+    <string name="system_audio_help">Vyžaduje root/Shizuku. Vypnutí zaměření blokuje nové žádosti, nemění reakci na ztrátu zaměření; některé aplikace se zastaví. Vypnutí přehrávání aplikaci ztlumí. Po změně přehrávání restartujte. Výchozí hodnota obnoví systémové zásady. Podpora závisí na systému a aplikaci.</string>
+</resources>

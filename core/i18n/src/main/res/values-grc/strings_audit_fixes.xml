@@ -43,4 +43,7 @@
     <string name="preference_freeze_auto_category">Αὐτόματον πάγωμα</string>
     <string name="preference_screen_freeze">Διαχείρισις παγώματος</string>
     <string name="preference_search_apps_show_details">Πληροφορίας ἐφαρμογῆς δεῖξαι</string>
+    <string name="hf_freeze_disconnected">Ἀσύνδετον</string>
+    <string name="preference_category_enabled_plugins">Ἐνεργόν</string>
+    <string name="preference_value_disabled">Ἀνενεργόν</string>
 </resources>
