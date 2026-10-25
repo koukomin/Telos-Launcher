@@ -31,7 +31,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Verify virtual-app Recents metadata
-        run: python tools/validation/virtual_app_manifest.py
+        run: |
+          python tools/validation/virtual_app_manifest.py
+          python tools/validation/system_app_routes.py
       - uses: actions/setup-java@v4
         with:
           java-version: '21'
@@ -55,7 +57,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Verify virtual-app Recents metadata
-        run: python tools/validation/virtual_app_manifest.py
+        run: |
+          python tools/validation/virtual_app_manifest.py
+          python tools/validation/system_app_routes.py
       - uses: actions/setup-java@v4
         with:
           java-version: '21'

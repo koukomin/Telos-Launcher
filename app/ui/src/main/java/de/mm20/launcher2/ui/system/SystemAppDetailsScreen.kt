@@ -154,7 +154,7 @@ fun SystemAppDetailsScreen(packageName: String) {
                     Text(stringResource(R.string.hf_appinfo_permissions), style = MaterialTheme.typography.titleSmall)
                 }
                 items(inspector.dangerousPermissions + inspector.normalPermissions, key = { "permission:$it" }) { permission ->
-                    Text(permission, style = MaterialTheme.typography.bodySmall,
+                    Text(if (permission in inspector.dangerousPermissions) "⚠ $permission" else permission, style = MaterialTheme.typography.bodySmall,
                         color = if (permission in inspector.dangerousPermissions) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface)
                 }
             }
