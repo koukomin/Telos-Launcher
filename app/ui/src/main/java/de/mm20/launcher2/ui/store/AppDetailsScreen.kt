@@ -276,6 +276,72 @@ fun AppDetailsScreen(itemId: String) {
                     }
                 }
             }
+            if (item.installedVersionCode != null) {
+                item {
+                    Card("Shappky App Inspector") {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            val pm = context.packageManager
+                            val info = runCatching { pm.getPackageInfo(item.packageName, 0) }.getOrNull()
+                            if (info != null) {
+                                Text("Version: ${info.versionName} (${info.versionCode})", style = MaterialTheme.typography.bodyMedium)
+                                Text("Target SDK: ${info.applicationInfo?.targetSdkVersion ?: "Unknown"}", style = MaterialTheme.typography.bodyMedium)
+                                val installTime = java.text.DateFormat.getDateTimeInstance().format(java.util.Date(info.firstInstallTime))
+                                Text("Installed: $installTime", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                val updateTime = java.text.DateFormat.getDateTimeInstance().format(java.util.Date(info.lastUpdateTime))
+                                Text("Last Updated: $updateTime", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+
+                            HorizontalDivider(Modifier.padding(vertical = 4.dp))
+                            OutlinedButton(onClick = {
+                                val intent = android.content.Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                    data = android.net.Uri.parse("package:${item.packageName}")
+                                    addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                                }
+                                runCatching { context.startActivity(intent) }
+                            }, modifier = Modifier.fillMaxWidth()) {
+                                Text("Open OS App Settings")
+                            }
+                            OutlinedButton(onClick = {
+                                val intent = pm.getLaunchIntentForPackage(item.packageName)
+                                if (intent != null) {
+                                    runCatching { context.startActivity(intent) }
+                                } else {
+                                    android.widget.Toast.makeText(context, "No launchable activity found", android.widget.Toast.LENGTH_SHORT).show()
+                                }
+                            }, modifier = Modifier.fillMaxWidth()) {
+                                Text("Launch App")
+                            }
+                            OutlinedButton(onClick = {
+                                runCatching {
+                                    val apkPath = pm.getApplicationInfo(item.packageName, 0).publicSourceDir
+                                    val apkFile = java.io.File(apkPath)
+                                    val uri = androidx.core.content.FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", apkFile)
+                                    val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                                        type = "application/vnd.android.package-archive"
+                                        putExtra(android.content.Intent.EXTRA_STREAM, uri)
+                                        addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                    }
+                                    context.startActivity(android.content.Intent.createChooser(shareIntent, "Share APK"))
+                                }.onFailure {
+                                    android.widget.Toast.makeText(context, "Failed to share APK", android.widget.Toast.LENGTH_SHORT).show()
+                                }
+                            }, modifier = Modifier.fillMaxWidth()) {
+                                Text("Extract & Share APK")
+                            }
+                            OutlinedButton(onClick = {
+                                val link = "https://play.google.com/store/apps/details?id=${item.packageName}"
+                                val sendIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                                    putExtra(android.content.Intent.EXTRA_TEXT, link)
+                                    type = "text/plain"
+                                }
+                                runCatching { context.startActivity(android.content.Intent.createChooser(sendIntent, "Share App Link")) }
+                            }, modifier = Modifier.fillMaxWidth()) {
+                                Text("Share Play Store Link")
+                            }
+                        }
+                    }
+                }
+            }
             item {
                 Card(stringResource(R.string.hf_store_app_settings)) {
                     SwitchLine(

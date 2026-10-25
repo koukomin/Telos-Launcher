@@ -130,6 +130,7 @@ fun SystemDashboardScreen() {
     val netStats by logs.stats.collectAsState()
     val dnsServer by dns.selected.collectAsState()
     var liveRenderer by remember { mutableStateOf(HwuiRenderer.MODE_DEFAULT) }
+    var currentTab by remember { mutableStateOf(0) }
     val pulse = rememberInfiniteTransition(label = "sysPulse")
     val t by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(2400, easing = LinearEasing), RepeatMode.Restart), label = "t")
 
@@ -177,6 +178,23 @@ fun SystemDashboardScreen() {
                 }
                 Text(stringResource(R.string.telos_system_label), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
             }
+            androidx.compose.material3.TabRow(selectedTabIndex = currentTab, containerColor = Color.Transparent) {
+                androidx.compose.material3.Tab(
+                    selected = currentTab == 0,
+                    onClick = { currentTab = 0 },
+                    text = { Text(stringResource(R.string.telos_system_label)) }
+                )
+                androidx.compose.material3.Tab(
+                    selected = currentTab == 1,
+                    onClick = { currentTab = 1 },
+                    text = { Text(stringResource(R.string.hc_apps)) }
+                )
+            }
+            if (currentTab == 1) {
+                SystemAppsTab(
+                    onOpenDetails = { pkg -> backStack.add(de.mm20.launcher2.ui.store.AppDetailsRoute(pkg)) }
+                )
+            } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
@@ -302,6 +320,7 @@ fun SystemDashboardScreen() {
                         Text(p.ramKb?.let { Formatter.formatFileSize(context, it * 1024) } ?: "—")
                     }
                 }
+            }
             }
         }
     }

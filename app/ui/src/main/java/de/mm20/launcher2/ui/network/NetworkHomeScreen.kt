@@ -126,7 +126,12 @@ fun NetworkHomeScreen() {
     val card = MaterialTheme.colorScheme.surface.copy(alpha = t.surface)
     val bar = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
     val ring by animateColorAsState(
-        if (on) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+        when (state) {
+            is NetState.On -> Color.Green
+            is NetState.Starting -> Color.Yellow
+            is NetState.Error, is NetState.NeedsPermission -> Color.Red
+            else -> MaterialTheme.colorScheme.outline
+        },
         label = "ring",
     )
 

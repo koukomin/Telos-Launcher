@@ -726,7 +726,7 @@ private fun RecommendedTab(tracked: Set<String>, onAdd: (RecommendedApp, () -> U
 
 
 @Composable
-private fun EmptyMessage(title: String, text: String) {
+internal fun EmptyMessage(title: String, text: String) {
     Column(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
