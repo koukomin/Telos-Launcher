@@ -65,7 +65,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
         de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.hf_store_search))
         FlowRow(Modifier.padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             FilterChip(frozenOnly, { frozenOnly = !frozenOnly }, { Text(stringResource(R.string.hf_freeze_frozen_apps)) })
-            FilterChip(showSystem, { showSystem = !showSystem }, { Text(stringResource(R.string.store_show_system_apps)) })
+            FilterChip(showSystem, { showSystem = !showSystem }, { Text(stringResource(R.string.preference_freeze_show_system_apps)) })
         }
         outcome?.let { Text(it, Modifier.padding(horizontal = 16.dp)) }
         if (loading) LinearProgressIndicator(Modifier.fillMaxWidth())
