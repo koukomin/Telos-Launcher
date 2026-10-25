@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">コンポーネントのブロック（Root）</string>
+    <string name="store_component_blocker_root_required">コンポーネントの無効化にはRoot権限が必要です</string>
+</resources>

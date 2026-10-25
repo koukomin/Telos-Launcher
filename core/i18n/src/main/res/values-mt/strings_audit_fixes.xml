@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Imblukkar tal-komponenti (Root)</string>
+    <string name="store_component_blocker_root_required">Huwa meħtieġ aċċess Root biex tiddiżattiva komponenti</string>
+</resources>

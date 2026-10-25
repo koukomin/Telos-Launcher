@@ -47,7 +47,8 @@ internal class RootProvider : PrivilegedAccessProvider {
             enabledAction(state)?.let { runAsRoot("pm $it --user $userId '$packageName'") } ?: false
 
     override suspend fun setComponentSetting(component: String, state: Int, userId: Int): Boolean =
-        setEnabledSetting(component, state, userId)
+        if (!component.matches(Regex("[A-Za-z0-9_.$/]+"))) false else
+            enabledAction(state)?.let { runAsRoot("pm $it --user $userId '$component'", 10) } ?: false
 
     override suspend fun setHidden(packageName: String, hidden: Boolean, userId: Int): Boolean =
         runAsRoot("pm ${if (hidden) "hide" else "unhide"} --user $userId $packageName")
@@ -62,7 +63,7 @@ internal class RootProvider : PrivilegedAccessProvider {
     }
     // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
-    private suspend fun runAsRoot(command: String): Boolean = withContext(Dispatchers.IO) {
+    private suspend fun runAsRoot(command: String, timeoutSeconds: Long? = null): Boolean = withContext(Dispatchers.IO) {
         var process: Process? = null
         try {
             process = Runtime.getRuntime().exec("su")
@@ -71,7 +72,8 @@ internal class RootProvider : PrivilegedAccessProvider {
                 stdin.writeBytes("exit\n")
                 stdin.flush()
             }
-            process.waitFor() == 0
+            if (timeoutSeconds == null) process.waitFor() == 0
+            else process.waitFor(timeoutSeconds, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0
         } catch (e: Exception) {
             false
         } finally {

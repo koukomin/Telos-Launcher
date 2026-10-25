@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Osagaien blokeatzailea (Root)</string>
+    <string name="store_component_blocker_root_required">Osagaiak desgaitzeko Root sarbidea behar da</string>
+</resources>

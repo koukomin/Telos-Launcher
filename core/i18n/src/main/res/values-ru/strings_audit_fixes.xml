@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Блокировка компонентов (Root)</string>
+    <string name="store_component_blocker_root_required">Для отключения компонентов необходим Root-доступ</string>
+</resources>

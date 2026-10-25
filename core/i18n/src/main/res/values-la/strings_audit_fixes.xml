@@ -25,4 +25,22 @@
     <string name="net_hub_title">Telos Rete</string>
     <string name="net_hub_state_on">Activum</string>
     <string name="net_hub_summary_off">Activa ut nexus et quaestiones DNS in hoc instrumento filtres.</string>
+    <string name="store_component_blocker">Interclusio partium (Root)</string>
+    <string name="store_component_blocker_root_required">Ad partes inactivandas potestas Root requiritur</string>
+    <string name="au_video_open_settings">Aperire configurationem applicationis</string>
+    <string name="dl_t_tab_trackers">Indagatores</string>
+    <string name="file_meta_app_version">Versio: %1$s</string>
+    <string name="freeze_hub_unknown">Ignotum</string>
+    <string name="gesture_action_launch_app">Applicationem aperire</string>
+    <string name="hc_apply">Applicare</string>
+    <string name="hc_export_failed">Exportatio defecit</string>
+    <string name="hc_failed_try_again">Defecit; iterum tempta</string>
+    <string name="hc_share">Communicare</string>
+    <string name="hc_share_link">Nexum communicare</string>
+    <string name="hf_files_prop_modified">Mutatum</string>
+    <string name="hf_store_installed">Installatum</string>
+    <string name="icon_picker_default_icon">Praedefinitum</string>
+    <string name="preference_freeze_auto_category">Congelatio automatica</string>
+    <string name="preference_screen_freeze">Administratio congelationis</string>
+    <string name="preference_search_apps_show_details">Notitias applicationis ostendere</string>
 </resources>

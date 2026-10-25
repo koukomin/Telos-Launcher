@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Bileşen engelleyici (Root)</string>
+    <string name="store_component_blocker_root_required">Bileşenleri devre dışı bırakmak için Root erişimi gerekir</string>
+</resources>

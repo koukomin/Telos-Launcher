@@ -16,7 +16,7 @@ The supplied 1.42.11 crash identifies `SavedWifiParser`'s static initializer. An
 | Installed apps | Virtual-app filter operated on host package prefixes, not virtual apps | Remove that ineffective filter; real installed-package enumeration retains disabled/system apps |
 | Freeze buttons | No operation outcome | Report successful package membership from the actual freeze result, refresh snapshot |
 | Firewall / per-app audio focus | System/Store firewall booleans were disconnected from the existing Network engine; audio-focus preferences have no enforcement consumer | Link installed-app and Store details to an exact-package scope of the real Network firewall; keep audio-focus controls unavailable |
-| Component blocker | Root probe displayed “Active” without any component mutation UI/engine | Remove root probe and false active claim; mark unavailable |
+| Component blocker | Root probe displayed “Active” without any component mutation UI/engine | Remove root probe and false active claim; provide explicit root-only edits in System package details |
 | Tweaks | Seven controls were no-ops, non-portable properties, or a gesture-nav overlay unrelated to hiding the pill | Disable those controls with unavailable summaries, retain implemented settings separately |
 | Tweaks executor | “Shizuku” path actually launched the ordinary app shell; unbounded raw threads and default-only states | Real Shizuku process, ViewModel coroutine serialization, timeout/stream cleanup, read existing supported settings |
 | YouTube credentials | Plaintext shared preferences; substring URL matching; redirects could forward Cookie to another host | Keystore encryption/migration; HTTPS/domain boundary checks; redirect-hop credential stripping |
@@ -37,7 +37,7 @@ The supplied 1.42.11 crash identifies `SavedWifiParser`'s static initializer. An
 | --- | --- | --- |
 | Notes image sharing and multilingual Morse (`876719bcef`) | PR #64 merged; Morse/Notes sources unchanged by subsequent commits | Greek radio code plus visible romanization for other scripts; physical speaker/torch response still requires device verification |
 | Wi-Fi manager (`6e224cff4f`) | Reveal, search, copy, QR and real JSON export are reachable | Root/Shizuku and OEM store permissions still required; legacy parsing does not decode every possible supplicant/key format |
-| System Apps migration (`96c9214a11`, `64bdfe3a6b`) | Search/system/frozen filters, app actions and UAD notes wired | Nontracked packages use native OS settings; this is not a complete Inure replacement |
+| System Apps migration (`96c9214a11`, `64bdfe3a6b`) | Search/system/frozen filters, app actions and UAD notes wired | All packages now use SystemAppDetailsRoute; Store tracking is not required. This is not a complete Inure replacement |
 | UAD integration (`e2868fa05e`) | Shared offline descriptions and existing safety gate | Community *removal* categories are not guarantees that freezing is safe |
 | System battery hub (`363c055cbc`) | Card/detail sheet present | Snapshot-only sticky-broadcast read, not continuous live battery telemetry; several labels remain hardcoded |
 | Tweaks (`d22f9e81de`, `9a4e0a5466`, `e603f1be1c`) | UI exists; only actual setting-backed controls remain active | OEMs may ignore particular settings; pill, volume-step, scheduled-doze, general pocket/call-flash/caffeinate/status-bar-gesture controls are unavailable |
@@ -46,7 +46,7 @@ The supplied 1.42.11 crash identifies `SavedWifiParser`'s static initializer. An
 | AudioFx/200% (`4225a9ca63`, `64c12f80bf`) | Music dialog and video extra/rail controls invoke native effects | Actual vendor effect support, output distortion and concurrent playback need physical-device testing; radio/YouTube have shared backend settings but no dedicated AudioFx dialog |
 | Sleep timer, new audio service/mini player (`905b90040a`) | Existing Music/Video timers and session UIs were already implemented | The added unused equivalents did not constitute a new user-facing integration; removed |
 | Frame stepping (`a746e1e5c9`) | Video buttons seek by a nominal frame interval | Not decoder-accurate frame-by-frame output for variable-rate/inter-frame codecs |
-| Per-app firewall, focus and component blocking (`f569cd1466`, `2094081cee`) | Firewall now opens the existing per-UID Network rules, scoped to the selected package in both standalone/embedded hosts. Audio-focus/component controls remain unavailable | Firewall enforcement requires Telos Network VPN on, and shared-UID packages share rules. Audio routing and component selection/mutation remain unimplemented |
+| Per-app firewall, focus and component blocking (`f569cd1466`, `2094081cee`) | Firewall now opens the existing per-UID Network rules, scoped to the selected package in both standalone/embedded hosts. Audio-focus controls remain unavailable; System details now provide explicit root component edits | Firewall enforcement requires Telos Network VPN on, and shared-UID packages share rules. Audio routing remains unimplemented. Component changes are declared-package scoped, protect critical packages and apply the UAD risk gate on disable; success requires reading back the requested state |
 | APK installer/security (`a7e2530727`, `60a61ac43c`, `a746e1e5c9`) | Installer UI and manifest/permission/certificate inspection connected | Heuristics are not an antivirus engine or complete tracker/dex analysis. Session backend may require Android confirmation; only actual privileged backends can install silently |
 | Store screenshots (`a85d6c0fd3`) | Changelog-image carousel connected | Not a real provider screenshots API; markup parsing misses some plain image links |
 | Store parallel updates/downgrades (`7a193045af` and merged updates) | Settings and execution paths exist; parallel batches bounded to three | Actual downgrade authorization is platform/backend-dependent, not universally guaranteed |
@@ -61,3 +61,15 @@ The supplied 1.42.11 crash identifies `SavedWifiParser`'s static initializer. An
 ## Validation
 
 Added Android ICU initialization/network-boundary/QR tests, host/cookie/expiry policy JVM regressions, and millibel gain tests. Existing Notes/Morse tests are retained. Full Gradle cannot download its distribution in the local environment; GitHub CI is the Android build/test gate. Account, root/Shizuku/OEM effects and the complete visual matrix are not claimed device-verified. CI results for the final PR head are recorded in the pull request.
+
+## Unified System package management
+
+System Apps now routes all installed packages, including iconless/disabled entries, to the same serializable SystemAppDetailsRoute in both hosts. No Store row is manufactured. The package policy dialog accepts a package and user directly, retaining method, delay override, companion rules and Expert approval for iconless apps. The list links to the existing bulk freeze/settings hub.
+
+Debloating is **freeze/unfreeze only**, as requested; this change adds no package uninstall, install-existing or data-clearing operation. Community UAD categories remain removal notes rather than safety guarantees. The list observes the shared validated database and checks updates on entry unless the existing default-on setting is disabled.
+
+System details expose version/target SDK/install-update dates, launch, OS settings, shared Network firewall, full certificate fingerprints, manifest permission names and bounded known-prefix manifest tracker matches. Empty matches say unknown, never clean. APK sharing stages a cache copy, retains every split in a ZIP, and rechecks package metadata before granting the file. A missing split fails instead of exporting an incomplete package.
+
+Component switches enumerate declared activities, services, receivers and providers. Mutations require the Root backend, user confirmation, valid package/class names, protected-package and UAD checks, then a successful state readback. Default restores the manifest setting. System app freezing still uses FreezeManager safety gates. Audio-focus override controls remain unavailable: the Gemini preferences had no execution backend.
+
+Validation for this follow-up: translation coverage and diff checks; Gradle cannot download its distribution in the local environment, so the pushed CI build is authoritative. Physical root mutations, installed-app sharing, VPN enforcement and the complete visual matrix remain device-unverified.

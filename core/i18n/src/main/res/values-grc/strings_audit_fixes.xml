@@ -25,4 +25,22 @@
     <string name="net_hub_title">Τέλος Δίκτυον</string>
     <string name="net_hub_state_on">Ἐνεργόν</string>
     <string name="net_hub_summary_off">Ἐνεργοποίησον ἵνα αἱ συνδέσεις καὶ αἱ ζητήσεις DNS ἐν τῇ συσκευῇ διηθῶνται.</string>
+    <string name="store_component_blocker">Κώλυσις μερῶν (Root)</string>
+    <string name="store_component_blocker_root_required">Ἡ ἀπενεργοποίησις μερῶν ἐξουσίαν Root ἀπαιτεῖ</string>
+    <string name="au_video_open_settings">Ρυθμίσεις ἐφαρμογῆς ἀνοῖξαι</string>
+    <string name="dl_t_tab_trackers">Ἰχνηλάται</string>
+    <string name="file_meta_app_version">Ἔκδοσις: %1$s</string>
+    <string name="freeze_hub_unknown">Ἄγνωστον</string>
+    <string name="gesture_action_launch_app">Ἐφαρμογὴν ἐκκινῆσαι</string>
+    <string name="hc_apply">Ἐφαρμόσαι</string>
+    <string name="hc_export_failed">Ἡ ἐξαγωγὴ ἀπέτυχεν</string>
+    <string name="hc_failed_try_again">Ἀποτυχία· πάλιν πειρῶ</string>
+    <string name="hc_share">Μεταδοῦναι</string>
+    <string name="hc_share_link">Σύνδεσμον μεταδοῦναι</string>
+    <string name="hf_files_prop_modified">Μεταβεβλημένον</string>
+    <string name="hf_store_installed">Ἐγκατεστημένον</string>
+    <string name="icon_picker_default_icon">Προεπιλογή</string>
+    <string name="preference_freeze_auto_category">Αὐτόματον πάγωμα</string>
+    <string name="preference_screen_freeze">Διαχείρισις παγώματος</string>
+    <string name="preference_search_apps_show_details">Πληροφορίας ἐφαρμογῆς δεῖξαι</string>
 </resources>

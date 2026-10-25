@@ -1505,8 +1505,8 @@
     <string name="store_firewall_title">Telos Firewall</string>
     <string name="store_firewall_wifi">Αποκλεισμός δεδομένων Wi-Fi</string>
     <string name="store_firewall_mobile">Αποκλεισμός δεδομένων κινητής</string>
-    <string name="store_component_blocker">Μπλοκάρισμα Στοιχείων (Root)</string>
-    <string name="store_component_blocker_root_required">Απαιτείται πρόσβαση Root για απενεργοποίηση στοιχείων</string>
+    <string name="store_component_blocker">Αποκλεισμός στοιχείων (Root)</string>
+    <string name="store_component_blocker_root_required">Η απενεργοποίηση στοιχείων απαιτεί πρόσβαση Root</string>
     <string name="store_safety_safe">Ασφαλές για πάγωμα</string>
     <string name="store_safety_caution">Πάγωμα με προσοχή</string>
     <string name="store_safety_unsafe">Μη ασφαλές για πάγωμα</string>

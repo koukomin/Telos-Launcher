@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Chặn thành phần (Root)</string>
+    <string name="store_component_blocker_root_required">Cần quyền Root để tắt các thành phần</string>
+</resources>

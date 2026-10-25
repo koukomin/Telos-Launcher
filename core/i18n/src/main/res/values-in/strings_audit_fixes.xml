@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Pemblokir komponen (Root)</string>
+    <string name="store_component_blocker_root_required">Akses Root diperlukan untuk menonaktifkan komponen</string>
+</resources>

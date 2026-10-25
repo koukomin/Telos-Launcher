@@ -391,6 +391,27 @@ class FreezeManager internal constructor(
         return verified
     }
 
+    /** Explicit component edits; root only, scoped to this user's declared package components. */
+    suspend fun setComponentState(component: ComponentName, state: Int): Boolean =
+        withContext(kotlinx.coroutines.Dispatchers.IO) {
+            operationMutex.withLock {
+                val pkg = component.packageName
+                if (!validComponentEdit(pkg, component.className, state, PROTECTED_PACKAGES)) return@withLock false
+                if (_activeBackend.value != FreezeBackendType.Root || !rootProvider.hasPermission()) return@withLock false
+                val pm = context.packageManager
+                val info = runCatching { pm.getPackageInfo(pkg, PackageManager.GET_ACTIVITIES or
+                    PackageManager.GET_RECEIVERS or PackageManager.GET_SERVICES or PackageManager.GET_PROVIDERS or
+                    PackageManager.MATCH_DISABLED_COMPONENTS) }.getOrNull() ?: return@withLock false
+                val declared = info.activities.orEmpty().map { it.name } + info.receivers.orEmpty().map { it.name } +
+                    info.services.orEmpty().map { it.name } + info.providers.orEmpty().map { it.name }
+                if (component.className !in declared) return@withLock false
+                if (state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED &&
+                    !descriptions.allowsFreeze(pkg, pkg in settings.systemRiskApproved.first(), Process.myUid() / 100000)) return@withLock false
+                if (!rootProvider.setComponentSetting(component.flattenToString(), state, Process.myUid() / 100000)) return@withLock false
+                runCatching { pm.getComponentEnabledSetting(component) == state }.getOrDefault(false)
+            }
+        }
+
     suspend fun forceStop(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {
         // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
         if (PROTECTED_PACKAGES.contains(packageName) || !VALID_PACKAGE_NAME.matches(packageName)) return false

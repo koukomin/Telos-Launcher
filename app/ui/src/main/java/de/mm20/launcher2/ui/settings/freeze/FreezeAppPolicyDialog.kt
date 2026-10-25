@@ -21,8 +21,13 @@ import de.mm20.launcher2.ui.component.preferences.*
 
 @Composable
 internal fun FreezeAppPolicyDialog(app: Application, vm: FreezeSettingsScreenVM, close: () -> Unit) {
-    val pkg = app.componentName.packageName
-    val currentUser = app.user == Process.myUserHandle()
+    FreezePackagePolicyDialog(app.componentName.packageName, app.label, app.user, vm, close)
+}
+
+@Composable
+internal fun FreezePackagePolicyDialog(pkg: String, label: String, user: android.os.UserHandle,
+    vm: FreezeSettingsScreenVM, close: () -> Unit) {
+    val currentUser = user == Process.myUserHandle()
     val candidates by vm.candidates.collectAsStateWithLifecycle()
     val never by vm.neverFreezeApps.collectAsStateWithLifecycle()
     val methods by vm.freezeMethods.collectAsStateWithLifecycle()
@@ -41,7 +46,7 @@ internal fun FreezeAppPolicyDialog(app: Application, vm: FreezeSettingsScreenVM,
     val state = appFreezeState(pkg, candidates, never)
     val method = appFreezeMethod(pkg, methods)
     val description = descriptions[pkg]
-    AlertDialog(onDismissRequest = close, title = { Text(app.label) },
+    AlertDialog(onDismissRequest = close, title = { Text(label) },
         confirmButton = { TextButton(onClick = close) { Text(stringResource(android.R.string.ok)) } },
         text = {
             Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -52,7 +57,7 @@ internal fun FreezeAppPolicyDialog(app: Application, vm: FreezeSettingsScreenVM,
                     items = listOf(R.string.freeze_app_state_none, R.string.freeze_app_state_candidate_suspend,
                         R.string.freeze_app_state_candidate_disable, R.string.freeze_app_state_never).mapIndexed { i, res -> stringResource(res) to i },
                     enabled = currentUser,
-                    onValueChanged = { choice -> if (choice != null) vm.setAppFreezeState(app,
+                    onValueChanged = { choice -> if (choice != null) vm.setPackageFreezeState(pkg, user,
                         when (choice) { 1, 2 -> AppFreezeState.Candidate; 3 -> AppFreezeState.NeverFreeze; else -> AppFreezeState.None },
                         if (choice == 2) FreezeMethod.Disable else FreezeMethod.Suspend) })
                 Text(stringResource(R.string.freeze_hub_delay_help), style = MaterialTheme.typography.bodySmall)
@@ -70,7 +75,7 @@ internal fun FreezeAppPolicyDialog(app: Application, vm: FreezeSettingsScreenVM,
                     summary = selected.joinToString("\n") { dep -> choices.firstOrNull { it.first == dep }?.second ?: dep },
                     enabled = currentUser, onClick = { picker = true })
                 if (pkg == "com.google.android.apps.bard" && selected.contains("com.google.android.googlequicksearchbox")) {
-                    Text("${app.label} → ${choices.firstOrNull { it.first == "com.google.android.googlequicksearchbox" }?.second.orEmpty()}",
+                    Text("${label} → ${choices.firstOrNull { it.first == "com.google.android.googlequicksearchbox" }?.second.orEmpty()}",
                         style = MaterialTheme.typography.bodySmall)
                 }
                 HorizontalDivider()

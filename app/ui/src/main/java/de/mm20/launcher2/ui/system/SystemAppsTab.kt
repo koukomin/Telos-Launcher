@@ -22,6 +22,10 @@ import de.mm20.launcher2.ui.store.AppIcon
 import de.mm20.launcher2.ui.store.EmptyMessage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.mm20.launcher2.freeze.BloatDescriptions
+import de.mm20.launcher2.preferences.FreezeSettings
 import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 
@@ -37,16 +41,22 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
     var showSystem by rememberSaveable { mutableStateOf(true) }
     var frozenOnly by rememberSaveable { mutableStateOf(false) }
     var apps by remember { mutableStateOf<List<InstalledSystemRow>>(emptyList()) }
-    var uad by remember { mutableStateOf<Map<String, UadInfo>>(emptyMap()) }
+    val descriptions: BloatDescriptions = koinInject()
+    val settings: FreezeSettings = koinInject()
+    val uad by descriptions.data.collectAsStateWithLifecycle()
     var revision by remember { mutableIntStateOf(0) }
     var loading by remember { mutableStateOf(true) }
     var busy by remember { mutableStateOf(false) }
     var outcome by remember { mutableStateOf<String?>(null) }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { revision++ }
-    LaunchedEffect(Unit) { uad = UadRepository.getList(context) }
+    LaunchedEffect(Unit) {
+        descriptions.entries()
+        if (settings.bloatAutoUpdate.first()) descriptions.refresh()
+    }
     LaunchedEffect(showSystem, revision) {
         loading = true
         apps = withContext(Dispatchers.IO) {
+            freeze.refreshBackendState()
             val pm = context.packageManager
             pm.getInstalledApplications(PackageManager.MATCH_DISABLED_COMPONENTS)
                 .filter { it.packageName != context.packageName && (showSystem || it.flags and ApplicationInfo.FLAG_SYSTEM == 0) }
@@ -68,6 +78,9 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
             FilterChip(frozenOnly, { frozenOnly = !frozenOnly }, { Text(stringResource(R.string.hf_freeze_frozen_apps)) })
             FilterChip(showSystem, { showSystem = !showSystem }, { Text(stringResource(R.string.preference_freeze_show_system_apps)) })
         }
+        TextButton(onClick = { backStack.add(de.mm20.launcher2.ui.settings.freeze.FreezeSettingsRoute) }) {
+            Text(stringResource(R.string.preference_screen_freeze))
+        }
         outcome?.let { Text(it, Modifier.padding(horizontal = 16.dp)) }
         if (loading) LinearProgressIndicator(Modifier.fillMaxWidth())
         if (!loading && visible.isEmpty()) EmptyMessage(stringResource(R.string.hf_store_no_apps_match), stringResource(R.string.hf_store_change_filter))
@@ -86,7 +99,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                         }
                         uad[app.pkg]?.let { info ->
                             Text(stringResource(R.string.freeze_hub_uad_help), style = MaterialTheme.typography.labelSmall)
-                            Text(info.removal, style = MaterialTheme.typography.labelMedium)
+                            Text(info.recommendation, style = MaterialTheme.typography.labelMedium)
                             Text(info.description, maxLines = 4, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, style = MaterialTheme.typography.bodySmall)
                         }
                         OutlinedButton(enabled = !busy, onClick = {

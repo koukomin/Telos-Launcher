@@ -253,10 +253,13 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     fun setHideFromLauncher(hide: Boolean) = freezeSettings.setHideFromLauncher(hide)
 
     fun setAppFreezeState(app: Application, state: AppFreezeState, method: FreezeMethod? = null) {
-        val packageName = app.componentName.packageName
+        setPackageFreezeState(app.componentName.packageName, app.user, state, method)
+    }
+
+    fun setPackageFreezeState(packageName: String, user: android.os.UserHandle, state: AppFreezeState, method: FreezeMethod? = null) {
         viewModelScope.launch {
             try {
-                val changed = freezeManager.updateAppPolicy(packageName, app.user,
+                val changed = freezeManager.updateAppPolicy(packageName, user,
                     state == AppFreezeState.Candidate, state == AppFreezeState.NeverFreeze, method)
                 if (!changed) showPolicyError()
             } catch (cancelled: kotlinx.coroutines.CancellationException) {

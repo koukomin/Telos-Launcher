@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Komponenttien esto (Root)</string>
+    <string name="store_component_blocker_root_required">Komponenttien poistaminen käytöstä vaatii Root-oikeudet</string>
+</resources>

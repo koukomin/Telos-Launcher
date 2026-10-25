@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Componenten blokkeren (Root)</string>
+    <string name="store_component_blocker_root_required">Root-toegang is vereist om componenten uit te schakelen</string>
+</resources>

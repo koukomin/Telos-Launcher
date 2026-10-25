@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Komponentu bloķēšana (Root)</string>
+    <string name="store_component_blocker_root_required">Komponentu atspējošanai nepieciešama Root piekļuve</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Komponentų blokavimas (Root)</string>
+    <string name="store_component_blocker_root_required">Komponentams išjungti reikia Root prieigos</string>
+</resources>

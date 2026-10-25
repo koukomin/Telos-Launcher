@@ -199,14 +199,7 @@ fun SystemDashboardScreen() {
                 )
             }
             if (currentTab == 1) {
-                SystemAppsTab(
-                    onOpenDetails = { pkg ->
-                        val tracked = storeVm.rows.value.firstOrNull { it.item.packageName == pkg }
-                        if (tracked != null) backStack.add(de.mm20.launcher2.ui.store.AppDetailsRoute(tracked.item.id))
-                        else runCatching { context.startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                            android.net.Uri.parse("package:$pkg"))) }
-                    }
-                )
+                SystemAppsTab(onOpenDetails = { pkg -> backStack.add(SystemAppDetailsRoute(pkg)) })
             } else if (currentTab == 2) {
                 de.mm20.launcher2.ui.settings.tweaks.TweaksSettingsScreen()
             } else {
