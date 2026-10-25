@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -57,6 +58,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -245,9 +247,9 @@ private fun StremioHome(vm: StremioViewModel) {
     var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("stremio.tab", 0)
 
     Column(Modifier.fillMaxSize()) {
-        TabRow(selectedTabIndex = tab, containerColor = Color.Transparent) {
-            Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.au22_stremio_home)) })
-            Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.au22_stremio_library)) })
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(selected = tab == 0, onClick = { tab = 0 }, label = { Text(stringResource(R.string.au22_stremio_home)) }, shape = RoundedCornerShape(8.dp))
+            FilterChip(selected = tab == 1, onClick = { tab = 1 }, label = { Text(stringResource(R.string.au22_stremio_library)) }, shape = RoundedCornerShape(8.dp))
         }
         if (tab == 0) {
             TelosSearchBar(query, { vm.setQuery(it) }, stringResource(R.string.au22_stremio_search_hint))
@@ -284,7 +286,7 @@ private fun StremioHome(vm: StremioViewModel) {
                 Text(stringResource(R.string.au22_stremio_library_empty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(16.dp))
             } else {
                 LazyVerticalGrid(
-                    columns = GridCells.Adaptive(112.dp),
+                    columns = GridCells.Adaptive(156.dp * LocalDensity.current.fontScale),
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 112.dp),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalArrangement = Arrangement.spacedBy(14.dp),
@@ -298,7 +300,7 @@ private fun StremioHome(vm: StremioViewModel) {
 
 @Composable
 private fun RowTitle(text: String) {
-    Text(text, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(horizontal = 16.dp))
+    Text(text, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 16.dp))
 }
 
 @Composable
@@ -309,13 +311,13 @@ private fun Poster(vm: StremioViewModel, item: MetaPreview, onClick: () -> Unit,
         else -> 0.675f
     }
     Column(
-        (if (fillWidth) Modifier.fillMaxWidth() else Modifier.width(if (ratio > 1f) 176.dp else 116.dp)).clickable(onClick = onClick),
+        (if (fillWidth) Modifier.fillMaxWidth() else Modifier.width((if (ratio > 1f) 288.dp else 156.dp) * LocalDensity.current.fontScale)).clickable(onClick = onClick),
     ) {
         Box(Modifier.fillMaxWidth().aspectRatio(ratio).clip(RoundedCornerShape(8.dp)).background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
             AsyncImage(model = item.poster, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
         }
         if (item.type == "movie") WatchMark(vm, item.id)
-        Text(item.name, style = MaterialTheme.typography.labelLarge, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
+        Text(item.name, style = MaterialTheme.typography.titleSmall, maxLines = 3, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
         if (caption != null) Text(caption, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
         else if (item.releaseInfo != null) Text(item.releaseInfo!!, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
     }

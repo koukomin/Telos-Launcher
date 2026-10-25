@@ -12,7 +12,7 @@ The design groups sources by content rather than by backend. Listen contains mus
 | YouTube Music | Shared session, search, favorites/playlists/import, moods/radio, background playback | Music home, artwork rows and library shelves |
 | YouTube | Search/links, video player, quality/queue/background, account/library actions | Home feed, account playlists and 16:9 cards |
 | TV | Sources/countries, custom streams/imports, favorites/ordering, EPG and player | Larger 16:9 channel cards |
-| Stremio | Account/library/add-ons, torrent/transport/cache, playback preferences and continuation | Watch navigation; source/player controls preserved |
+| Stremio | Account/library/add-ons, torrent/transport/cache, playback preferences and continuation | Watch filters, larger poster shelves and font-aware library grid; source/player controls preserved |
 
 Home parsing is bounded and handles classic video renderers, modern lockup view models and music song rows. Client versions come from the current Music page rather than a fixed January version. Downloader merges extractor visitor cookies with account credentials so mix requests retain their visitor identity. Feed errors surface instead of silently yielding an empty screen. This is not a guarantee that private provider endpoints or account sign-in always work.
 
