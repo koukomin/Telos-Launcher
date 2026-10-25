@@ -20,4 +20,6 @@
     <string name="hc_next">Proximum</string>
     <string name="hc_previous">Praecedens</string>
     <string name="hc_stop">Sistere</string>
+    <string name="telos_youtube_preparing">Reproductio paratur…</string>
+    <string name="telos_youtube_searching">Quaeritur…</string>
 </resources>
