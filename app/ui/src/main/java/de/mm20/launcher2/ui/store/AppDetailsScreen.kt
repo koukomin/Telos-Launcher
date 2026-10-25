@@ -183,7 +183,9 @@ fun AppDetailsScreen(itemId: String) {
             }
             item {
                 Card(stringResource(R.string.store_firewall_title)) {
-                    Text(stringResource(R.string.virtual_telemetry_unavailable))
+                    OutlinedButton(onClick = { backStack.add(de.mm20.launcher2.ui.network.firewall.NetworkPackageFirewallRoute(item.packageName)) }) {
+                        Text(stringResource(R.string.netfw_title))
+                    }
                 }
             }
             item {

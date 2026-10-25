@@ -31,6 +31,7 @@ private data class InstalledSystemRow(val pkg: String, val label: String, val si
 fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
     val freeze: FreezeManager = koinInject()
     var query by rememberSaveable { mutableStateOf("") }
     var showSystem by rememberSaveable { mutableStateOf(true) }
@@ -98,6 +99,9 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                                 } finally { busy = false }
                             }
                         }) { Text(stringResource(if (app.frozen) R.string.freeze_hub_unfreeze else R.string.freeze_widget_freeze_now)) }
+                        OutlinedButton(onClick = {
+                            backStack.add(de.mm20.launcher2.ui.network.firewall.NetworkPackageFirewallRoute(app.pkg))
+                        }) { Text(stringResource(R.string.netfw_title)) }
                     }
                 }
             }

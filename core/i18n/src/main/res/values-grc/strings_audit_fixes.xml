@@ -21,4 +21,8 @@
     <string name="preference_freeze_show_system_apps">Δεῖξον τὰς τοῦ συστήματος ἐφαρμογάς</string>
     <string name="telos_system_unlock_wifi">Λῦσον τὰ συνθήματα Wi-Fi</string>
     <string name="virtual_telemetry_unavailable">Ἐν τῇδε τῇ συσκευῇ οὐ πάρεστιν</string>
+    <string name="netfw_title">Φραγμὸς τοῦ δικτύου</string>
+    <string name="net_hub_title">Τέλος Δίκτυον</string>
+    <string name="net_hub_state_on">Ἐνεργόν</string>
+    <string name="net_hub_summary_off">Ἐνεργοποίησον ἵνα αἱ συνδέσεις καὶ αἱ ζητήσεις DNS ἐν τῇ συσκευῇ διηθῶνται.</string>
 </resources>

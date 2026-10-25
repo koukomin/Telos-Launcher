@@ -73,6 +73,9 @@ private typealias IconsNetworkFirewallScreen = de.mm20.launcher2.base.R.drawable
 @Serializable
 data object NetworkFirewallRoute : NavKey
 
+@Serializable
+data class NetworkPackageFirewallRoute(val packageName: String) : NavKey
+
 private const val FILTER_ALL = 0
 private const val FILTER_USER = 1
 private const val FILTER_SYSTEM = 2
@@ -82,12 +85,13 @@ private const val FILTER_BLOCKED = 5
 
 /** Per app firewall: switches for every connection type, bulk actions, and the way to the rule pages. */
 @Composable
-fun NetworkFirewallScreen() {
+fun NetworkFirewallScreen(packageName: String? = null) {
     val fw: FirewallController = koinInject()
     val directory: AppDirectory = koinInject()
     val engine: de.mm20.launcher2.network.NetworkEngine = koinInject()
     val networkSettings: de.mm20.launcher2.network.api.NetworkSettings = koinInject()
     val netConfig by networkSettings.values.collectAsState()
+    val engineState by engine.state.collectAsState()
     val ipRules by fw.ipRules.collectAsState()
     val domainRules by fw.domainRules.collectAsState()
     val wg: de.mm20.launcher2.network.api.WireguardController = koinInject()
@@ -122,10 +126,10 @@ fun NetworkFirewallScreen() {
         onDispose { lifecycle.removeObserver(observer) }
     }
 
-    val shown = remember(apps, rules, query, filter) {
+    val shown = remember(apps, rules, query, filter, packageName) {
         apps.filter { app ->
-            app.hasInternet &&
-                de.mm20.launcher2.comms.search.TelosSearch.matches(query, app.label, app.packageName) &&
+            app.hasInternet && (packageName == null || packageName in app.packages) &&
+                de.mm20.launcher2.comms.search.TelosSearch.matches(query, app.label, app.packages.joinToString(" ")) &&
                 when (filter) {
                     FILTER_USER -> !app.isSystem
                     FILTER_SYSTEM -> app.isSystem
@@ -210,6 +214,11 @@ fun NetworkFirewallScreen() {
             }
         },
     ) {
+        item {
+            Preference(title = stringResource(R.string.net_hub_title),
+                summary = stringResource(if (engineState is de.mm20.launcher2.network.NetState.On) R.string.net_hub_state_on else R.string.net_hub_summary_off),
+                onClick = { backStack.add(de.mm20.launcher2.ui.network.NetworkRoute) })
+        }
         item {
             PreferenceCategory {
                 Preference(

@@ -21,4 +21,8 @@
     <string name="preference_freeze_show_system_apps">Applicationes systematis monstra</string>
     <string name="telos_system_unlock_wifi">Tesseras Wi-Fi resera</string>
     <string name="virtual_telemetry_unavailable">In hoc instrumento praesto non est</string>
+    <string name="netfw_title">Interclusor retis</string>
+    <string name="net_hub_title">Telos Rete</string>
+    <string name="net_hub_state_on">Activum</string>
+    <string name="net_hub_summary_off">Activa ut nexus et quaestiones DNS in hoc instrumento filtres.</string>
 </resources>
