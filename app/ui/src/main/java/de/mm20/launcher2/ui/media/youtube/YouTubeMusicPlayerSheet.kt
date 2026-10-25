@@ -82,6 +82,7 @@ internal fun YouTubeMusicPlayerContent(
     modifier: Modifier = Modifier,
 ) {
     var dragging by remember(entry.url) { mutableStateOf<Float?>(null) }
+    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
     val artwork: @Composable () -> Unit = {
         Box(Modifier.fillMaxWidth().padding(24.dp), contentAlignment = Alignment.Center) {
             AsyncImage(entry.thumbnail, null, contentScale = ContentScale.Crop,
@@ -132,4 +133,5 @@ internal fun YouTubeMusicPlayerContent(
             }
         }
     }
+}
 }
