@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">元件封鎖器（Root）</string>
+    <string name="store_component_blocker_root_required">停用元件需要 Root 權限</string>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Komponent bloklayıcısı (Root)</string>
+    <string name="store_component_blocker_root_required">Komponentləri söndürmək üçün Root icazəsi lazımdır</string>
+</resources>

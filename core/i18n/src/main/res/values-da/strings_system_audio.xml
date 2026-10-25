@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Lydfokus</string>
+    <string name="system_audio_playback">Lydafspilning</string>
+    <string name="system_audio_help">Kræver root/Shizuku. Slået fra blokerer fokus nye anmodninger, men ændrer ikke håndtering af fokustab; nogle apps stopper. Afspilning slået fra gør appen lydløs. Genstart afspilning efter ændringer. Standard gendanner systemets politik. Understøttelsen varierer efter system og app.</string>
+</resources>

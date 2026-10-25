@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">โฟกัสเสียง</string>
+    <string name="system_audio_playback">การเล่นเสียง</string>
+    <string name="system_audio_help">ต้องใช้ root/Shizuku การปิดโฟกัสจะบล็อกคำขอใหม่ ไม่เปลี่ยนการตอบสนองเมื่อเสียโฟกัส บางแอปอาจหยุด การปิดการเล่นจะปิดเสียงแอป เริ่มเล่นใหม่หลังเปลี่ยนค่า ค่าเริ่มต้นจะคืนค่านโยบายระบบ การรองรับแตกต่างกันตามระบบและแอป</string>
+</resources>

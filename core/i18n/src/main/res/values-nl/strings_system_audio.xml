@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Audiofocus</string>
+    <string name="system_audio_playback">Audioweergave</string>
+    <string name="system_audio_help">Vereist root/Shizuku. Focus uitschakelen blokkeert nieuwe aanvragen, maar verandert de reactie op focusverlies niet; sommige apps stoppen. Weergave uitschakelen dempt de app. Herstart weergave na wijzigingen. Standaard herstelt het systeembeleid. Ondersteuning verschilt per systeem en app.</string>
+</resources>

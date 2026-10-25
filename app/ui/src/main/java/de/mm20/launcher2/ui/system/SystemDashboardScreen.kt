@@ -130,7 +130,9 @@ fun SystemDashboardScreen() {
     val netStats by logs.stats.collectAsState()
     val dnsServer by dns.selected.collectAsState()
     var liveRenderer by remember { mutableStateOf(HwuiRenderer.MODE_DEFAULT) }
-    var currentTab by remember { mutableStateOf(0) }
+    val storeVm: de.mm20.launcher2.ui.store.StoreViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    var currentTab by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(0) }
+    var wifiReadJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
     val pulse = rememberInfiniteTransition(label = "sysPulse")
     val t by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(2400, easing = LinearEasing), RepeatMode.Restart), label = "t")
 
@@ -138,6 +140,7 @@ fun SystemDashboardScreen() {
         scope.launch { privilegedWifi = HwuiRenderer.privilegedAvailable() }
     }
     androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_STOP) {
+        wifiReadJob?.cancel()
         wifiPsk = null; showPsk = false; networks = emptyList()
     }
     LaunchedEffect(Unit) {
@@ -196,9 +199,7 @@ fun SystemDashboardScreen() {
                 )
             }
             if (currentTab == 1) {
-                SystemAppsTab(
-                    onOpenDetails = { pkg -> backStack.add(de.mm20.launcher2.ui.store.AppDetailsRoute(pkg)) }
-                )
+                SystemAppsTab(onOpenDetails = { pkg -> backStack.add(SystemAppDetailsRoute(pkg)) })
             } else if (currentTab == 2) {
                 de.mm20.launcher2.ui.settings.tweaks.TweaksSettingsScreen()
             } else {
@@ -291,16 +292,19 @@ fun SystemDashboardScreen() {
                         ips.forEach { Text(it) }
                         if (showPsk && wifiPsk != null) {
                             Text("PSK: $wifiPsk")
-                            val payload = "WIFI:T:WPA;S:${wifiSsid.orEmpty()};P:${wifiPsk.orEmpty()};;"
+                            val payload = wifiQrPayload(wifiSsid.orEmpty(), wifiPsk.orEmpty())
                             ContactQrImage(payload, Modifier.padding(top = 8.dp))
                         }
                         if (wifiSsid != null && secureWifi) FilledTonalButton(enabled = privilegedWifi, onClick = {
-                            scope.launch {
+                            wifiReadJob?.cancel()
+                            wifiReadJob = scope.launch {
                                 val act = activity ?: return@launch
                                 val ok = AuthManager().authenticateNative(act, context.getString(R.string.telos_system_unlock_wifi))
                                 if (!ok) return@launch
                                 status = context.getString(R.string.telos_system_reading_wifi)
-                                val list = withContext(Dispatchers.IO) { readWifiStore() }
+                                val list = try { withContext(Dispatchers.IO) { readWifiStore() } }
+                                catch (e: kotlinx.coroutines.CancellationException) { throw e }
+                                catch (_: Exception) { status = context.getString(R.string.virtual_telemetry_unavailable); return@launch }
                                 networks = list
                                 wifiPsk = list.firstOrNull { it.ssid == wifiSsid }?.psk
                                 showPsk = true

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">تركيز الصوت</string>
+    <string name="system_audio_playback">تشغيل الصوت</string>
+    <string name="system_audio_help">يتطلب root/Shizuku. إيقاف التركيز يمنع الطلبات الجديدة ولا يغير معالجة فقدان التركيز؛ قد تتوقف بعض التطبيقات. إيقاف التشغيل يكتم التطبيق. أعد بدء التشغيل بعد التغيير. الافتراضي يستعيد سياسة النظام. يختلف الدعم حسب النظام والتطبيق.</string>
+</resources>

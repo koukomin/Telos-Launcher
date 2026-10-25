@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">オーディオフォーカス</string>
+    <string name="system_audio_playback">音声の再生</string>
+    <string name="system_audio_help">root/Shizukuが必要です。フォーカスを無効にすると新しい要求をブロックしますが、フォーカス喪失時の処理は変えません。一部のアプリは停止します。再生を無効にするとアプリを消音します。変更後は再生を再開してください。既定値でシステムの方針に戻ります。 対応状況はシステムとアプリによって異なります。</string>
+</resources>

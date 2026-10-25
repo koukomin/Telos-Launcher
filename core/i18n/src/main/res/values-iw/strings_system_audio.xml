@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">מיקוד שמע</string>
+    <string name="system_audio_playback">השמעת שמע</string>
+    <string name="system_audio_help">נדרש root/Shizuku. כיבוי מיקוד חוסם בקשות חדשות ואינו משנה תגובה לאובדן מיקוד; יישומים מסוימים נעצרים. כיבוי השמעה משתיק את היישום. יש להפעיל מחדש את ההשמעה לאחר שינוי. ברירת המחדל משחזרת את מדיניות המערכת. התמיכה משתנה לפי המערכת והיישום.</string>
+</resources>

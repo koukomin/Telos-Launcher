@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">حظر المكونات (Root)</string>
+    <string name="store_component_blocker_root_required">يتطلب تعطيل المكونات صلاحية Root</string>
+</resources>

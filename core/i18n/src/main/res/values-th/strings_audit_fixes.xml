@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">ตัวบล็อกคอมโพเนนต์ (Root)</string>
+    <string name="store_component_blocker_root_required">ต้องมีสิทธิ์ Root เพื่อปิดใช้งานคอมโพเนนต์</string>
+</resources>

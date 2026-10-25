@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Ses odağı</string>
+    <string name="system_audio_playback">Ses çalma</string>
+    <string name="system_audio_help">Root/Shizuku gerektirir. Odağı kapatmak yeni istekleri engeller, odak kaybına tepkiyi değiştirmez; bazı uygulamalar durur. Çalmayı kapatmak uygulamayı sessize alır. Değişiklikten sonra çalmayı yeniden başlatın. Varsayılan sistem politikasını geri yükler. Destek sisteme ve uygulamaya göre değişir.</string>
+</resources>

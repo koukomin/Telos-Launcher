@@ -392,6 +392,7 @@ private fun PlayerContent(
             scrobble("stop")
             player.removeListener(listener)
             reconnector?.release()
+            de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession(player.audioSessionId)
             player.release()
             videoState("stopped")
         }
@@ -405,7 +406,10 @@ private fun PlayerContent(
     var playbackStage by remember(player) { mutableStateOf(player.playbackState) }
     DisposableEffect(player) {
         val errorListener = object : Player.Listener {
+            private var effectSession = -1
             override fun onAudioSessionIdChanged(audioSessionId: Int) {
+                de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession(effectSession)
+                effectSession = audioSessionId
                 de.mm20.launcher2.comms.media.MediaAudioFx.attachToSession(audioSessionId)
             }
 
@@ -685,6 +689,10 @@ private fun PlayerContent(
             window = context.findActivity()?.window,
             brightnessOverride = gestureBrightness,
             volumeOverride = gestureVolume,
+            onVolumeBoost = { ratio ->
+                de.mm20.launcher2.comms.media.MediaAudioFx.attachToSession(player.audioSessionId)
+                de.mm20.launcher2.comms.media.MediaAudioFx.setLoudnessGain(de.mm20.launcher2.comms.media.volumeGainMilliBel(ratio))
+            },
             onAdjusting = { adjusting ->
                 playerView?.let { view ->
                     view.controllerShowTimeoutMs = if (adjusting) 0 else 3000

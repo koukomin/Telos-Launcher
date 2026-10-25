@@ -2,6 +2,7 @@ name: Validate native Telos apps
 on:
   pull_request:
     paths:
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/system/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/tools/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/notes/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/common/share/**'
@@ -30,7 +31,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Verify virtual-app Recents metadata
-        run: python tools/validation/virtual_app_manifest.py
+        run: |
+          python tools/validation/virtual_app_manifest.py
+          python tools/validation/system_app_routes.py
       - uses: actions/setup-java@v4
         with:
           java-version: '21'
@@ -54,7 +57,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Verify virtual-app Recents metadata
-        run: python tools/validation/virtual_app_manifest.py
+        run: |
+          python tools/validation/virtual_app_manifest.py
+          python tools/validation/system_app_routes.py
       - uses: actions/setup-java@v4
         with:
           java-version: '21'

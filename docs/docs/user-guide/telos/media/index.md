@@ -208,3 +208,9 @@ or fails to load. Formats or codecs unsupported by Android retain a file-type ic
 
 In Άκου, hide the recording information with “Do not show again”. The top-right
 menu opens the information and its visibility switch again.
+
+## Account and audio implementation limits
+
+YouTube native session cookies are Keystore protected. Cached library data is bounded and scoped to the session; logout clears Telos credentials/library data and YouTube cookies without clearing unrelated Web app sessions. Embedded login and private playlist endpoints remain provider-dependent, and current extraction does not promise every continuation page.
+
+Audio effects keep separate resources for live player sessions and release them with the player. Shared Telos effect settings apply across those sessions. A two-times amplitude boost is capped at about +6.02dB; native/vendor effect availability still varies. The unused extra service/mini player/timer additions were removed in favor of existing playback/session interfaces.

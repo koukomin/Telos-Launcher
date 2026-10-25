@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Audio focus</string>
+    <string name="system_audio_playback">Audio playback</string>
+    <string name="system_audio_help">Requires root/Shizuku. Focus off blocks new focus requests, not focus-loss handling; some apps stop. Playback off mutes this app. Restart playback after changes. Default restores system policy. Support varies by system and app.</string>
+</resources>

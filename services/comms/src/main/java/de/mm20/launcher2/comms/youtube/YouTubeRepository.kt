@@ -59,7 +59,7 @@ class YouTubeRepository(private val context: Context) {
 
     fun isLoggedIn(): Boolean {
         val cookie = YouTubeAccountManager.getCookie(context)
-        return !cookie.isNullOrBlank() && cookie.contains("SAPISID")
+        return cookie != null && YouTubeSessionPolicy.sapisid(cookie) != null
     }
 
     suspend fun artistRadio(entry: YouTubeEntry): List<YouTubeEntry> = related(entry)
@@ -137,7 +137,10 @@ class YouTubeRepository(private val context: Context) {
         seenIds.add("LL")
 
         // 2. Query YouTube Music Innertube API for the user's saved/created playlists
-        val cacheFile = java.io.File(context.cacheDir, "user_playlists_cache.json")
+        val account = requireNotNull(YouTubeAccountManager.getCookie(context))
+        val accountHash = java.security.MessageDigest.getInstance("SHA-256").digest(account.toByteArray())
+            .joinToString("") { "%02x".format(it) }
+        val cacheFile = java.io.File(context.cacheDir, "user_playlists_cache-$accountHash.json")
         try {
             val endpoint = "https://" + "music.youtube.com/youtubei/v1/browse?prettyPrint=false"
             val locale = Locale.getDefault()
@@ -162,18 +165,25 @@ class YouTubeRepository(private val context: Context) {
             val response = NewPipe.getDownloader().execute(request)
 
             val body = response.responseBody()
-            if (response.responseCode() in 400..403 || body.contains("UNAUTHENTICATED")) {
+            if (YouTubeAccountManager.getCookie(context) != account) return@withContext emptyList()
+            if (YouTubeSessionPolicy.expired(response.responseCode(), body) || body.contains("UNAUTHENTICATED")) {
                 YouTubeAccountManager.markExpired(context, true)
+                return@withContext emptyList()
             } else if (response.responseCode() in 200..299 && body.isNotBlank()) {
-                runCatching { cacheFile.writeText(body) }
                 val root = JSONObject(body)
+                runCatching {
+                    val atomic = android.util.AtomicFile(cacheFile)
+                    val stream = atomic.startWrite()
+                    try { stream.write(body.toByteArray()); atomic.finishWrite(stream) }
+                    catch (e: Exception) { atomic.failWrite(stream); throw e }
+                }
                 extractPlaylistsFromInnertubeJson(root, results, seenIds, ytPlaylistPrefix)
-            } else if (cacheFile.exists()) {
+            } else if (cacheFile.exists() && cacheFile.length() <= 8 * 1024 * 1024) {
                 val root = JSONObject(cacheFile.readText())
                 extractPlaylistsFromInnertubeJson(root, results, seenIds, ytPlaylistPrefix)
             }
-        } catch (_: Exception) {
-            if (cacheFile.exists()) {
+        } catch (e: kotlinx.coroutines.CancellationException) { throw e } catch (_: Exception) {
+            if (cacheFile.exists() && cacheFile.length() <= 8 * 1024 * 1024) {
                 runCatching {
                     val root = JSONObject(cacheFile.readText())
                     extractPlaylistsFromInnertubeJson(root, results, seenIds, ytPlaylistPrefix)
@@ -181,15 +191,17 @@ class YouTubeRepository(private val context: Context) {
             }
         }
 
-        results
+        if (YouTubeAccountManager.getCookie(context) == account) results else emptyList()
     }
 
     private fun extractPlaylistsFromInnertubeJson(
         node: Any?,
         out: MutableList<YouTubePlaylistSummary>,
         seenIds: HashSet<String>,
-        urlPrefix: String
+        urlPrefix: String,
+        depth: Int = 0
     ) {
+        if (depth > 64 || out.size >= 1000) return
         when (node) {
             is JSONObject -> {
                 if (node.has("musicTwoRowItemRenderer")) {
@@ -200,13 +212,13 @@ class YouTubeRepository(private val context: Context) {
                     val keys = node.keys()
                     while (keys.hasNext()) {
                         val key = keys.next()
-                        extractPlaylistsFromInnertubeJson(node.opt(key), out, seenIds, urlPrefix)
+                        extractPlaylistsFromInnertubeJson(node.opt(key), out, seenIds, urlPrefix, depth + 1)
                     }
                 }
             }
             is JSONArray -> {
                 for (i in 0 until node.length()) {
-                    extractPlaylistsFromInnertubeJson(node.opt(i), out, seenIds, urlPrefix)
+                    extractPlaylistsFromInnertubeJson(node.opt(i), out, seenIds, urlPrefix, depth + 1)
                 }
             }
         }

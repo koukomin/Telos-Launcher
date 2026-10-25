@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Blokiranje komponent (Root)</string>
+    <string name="store_component_blocker_root_required">Za onemogočanje komponent je potreben dostop Root</string>
+</resources>

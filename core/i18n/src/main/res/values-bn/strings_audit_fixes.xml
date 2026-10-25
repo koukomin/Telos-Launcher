@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">কম্পোনেন্ট ব্লকার (Root)</string>
+    <string name="store_component_blocker_root_required">কম্পোনেন্ট বন্ধ করতে Root অনুমতি প্রয়োজন</string>
+</resources>

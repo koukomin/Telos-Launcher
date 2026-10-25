@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Priorité audio</string>
+    <string name="system_audio_playback">Lecture audio</string>
+    <string name="system_audio_help">Nécessite root/Shizuku. Désactiver la priorité bloque les nouvelles demandes, sans modifier la réaction à sa perte ; certaines applis s’arrêtent. Désactiver la lecture coupe le son de l’appli. Relancez la lecture après modification. Par défaut rétablit la règle système. La prise en charge dépend du système et de l’appli.</string>
+</resources>

@@ -21,7 +21,7 @@ data class InureInspectionResult(
 object AppInureInspector {
 
     private val KNOWN_TRACKERS = mapOf(
-        "com.google.firebase" to "Google Firebase Analytics",
+        "com.google.firebase.analytics" to "Google Firebase Analytics",
         "com.google.android.gms.ads" to "Google AdMob / Ads",
         "com.facebook.sdk" to "Facebook SDK",
         "com.facebook.appevents" to "Facebook App Events",
@@ -35,7 +35,7 @@ object AppInureInspector {
 
     fun inspectPackage(context: Context, packageName: String): InureInspectionResult? {
         val pm = context.packageManager
-        val flags = PackageManager.GET_PERMISSIONS or PackageManager.GET_SERVICES or PackageManager.GET_RECEIVERS or PackageManager.GET_ACTIVITIES or PackageManager.GET_SIGNATURES
+        val flags = PackageManager.GET_PERMISSIONS or PackageManager.GET_SERVICES or PackageManager.GET_RECEIVERS or PackageManager.GET_ACTIVITIES or (if (android.os.Build.VERSION.SDK_INT >= 28) PackageManager.GET_SIGNING_CERTIFICATES else PackageManager.GET_SIGNATURES)
         val info = runCatching { pm.getPackageInfo(packageName, flags) }.getOrNull() ?: return null
 
         // Detect Trackers
@@ -56,7 +56,7 @@ object AppInureInspector {
         var issuer: String? = null
 
         @Suppress("DEPRECATION")
-        val signatures = info.signatures
+        val signatures = if (android.os.Build.VERSION.SDK_INT >= 28) info.signingInfo?.apkContentsSigners else info.signatures
         if (!signatures.isNullOrEmpty()) {
             val certBytes = signatures[0].toByteArray()
             sha256 = hashBytes(certBytes, "SHA-256")
@@ -76,7 +76,7 @@ object AppInureInspector {
 
         for (perm in requested) {
             val pInfo = runCatching { pm.getPermissionInfo(perm, 0) }.getOrNull()
-            if (pInfo != null && (pInfo.protectionLevel and android.content.pm.PermissionInfo.PROTECTION_DANGEROUS) != 0) {
+            if (pInfo != null && (pInfo.protectionLevel and android.content.pm.PermissionInfo.PROTECTION_MASK_BASE) == android.content.pm.PermissionInfo.PROTECTION_DANGEROUS) {
                 dangerous.add(perm)
             } else {
                 normal.add(perm)

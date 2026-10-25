@@ -91,15 +91,17 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
                 userPlaylists.value = emptyList()
                 return@launch
             }
-            if (!repository.isLoggedIn()) {
+            if (!kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { repository.isLoggedIn() }) {
                 userPlaylists.value = emptyList()
                 return@launch
             }
+            sessionExpired.value = false
             isLoadingPlaylists.value = true
             try {
                 userPlaylists.value = repository.fetchUserPlaylists()
                 if (YouTubeAccountManager.isExpired(context)) {
                     sessionExpired.value = true
+                    userPlaylists.value = emptyList()
                 }
             } catch (_: Exception) {
             } finally {

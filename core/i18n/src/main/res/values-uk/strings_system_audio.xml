@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Аудіофокус</string>
+    <string name="system_audio_playback">Відтворення звуку</string>
+    <string name="system_audio_help">Потрібен root/Shizuku. Вимкнення фокусу блокує нові запити, але не змінює реакцію на втрату фокусу; деякі програми зупиняються. Вимкнення відтворення приглушує програму. Після змін перезапустіть відтворення. Типове значення відновлює політику системи. Підтримка залежить від системи та програми.</string>
+</resources>

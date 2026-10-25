@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">오디오 포커스</string>
+    <string name="system_audio_playback">오디오 재생</string>
+    <string name="system_audio_help">root/Shizuku가 필요합니다. 포커스를 끄면 새 요청을 차단하며 포커스 상실 처리는 바뀌지 않습니다. 일부 앱은 멈춥니다. 재생을 끄면 앱이 음소거됩니다. 변경 후 재생을 다시 시작하세요. 기본값은 시스템 정책을 복원합니다. 지원 여부는 시스템과 앱에 따라 다릅니다.</string>
+</resources>

@@ -54,6 +54,7 @@ internal fun PlayerLevelControls(
     onAdjusting: (Boolean) -> Unit = {},
     brightnessOverride: Float? = null,
     volumeOverride: Float? = null,
+    onVolumeBoost: ((Float) -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val audio = remember(context) { context.getSystemService(Context.AUDIO_SERVICE) as AudioManager }
@@ -76,7 +77,9 @@ internal fun PlayerLevelControls(
     }
     LaunchedEffect(visible, window, brightnessOverride, volumeOverride) {
         while (visible) {
-            sound = volumeOverride ?: volume()
+            val systemVolume = volumeOverride ?: volume()
+            if (sound > 1f && systemVolume < 0.99f) onVolumeBoost?.invoke(1f)
+            if (sound <= 1f || systemVolume < 0.99f) sound = systemVolume
             light = (brightnessOverride ?: brightness()).coerceIn(0.02f, 1f)
             delay(50)
         }
@@ -106,7 +109,7 @@ internal fun PlayerLevelControls(
             }
 
             LevelRail(
-                value = (sound / 2f).coerceIn(0f, 1f),
+                value = (sound / (if (onVolumeBoost != null) 2f else 1f)).coerceIn(0f, 1f),
                 icon = if (sound == 0f) R.drawable.volume_off_24px else R.drawable.volume_up_24px,
                 label = stringResource(R.string.au_video_volume, (sound * 100).roundToInt()),
                 height = railHeight,
@@ -115,13 +118,14 @@ internal fun PlayerLevelControls(
                 onAdjusting = onAdjusting,
                 onDelta = { dy, h ->
                     val max = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-                    val next = (sound - dy / h * 2f).coerceIn(0f, 2.0f)
+                    val next = (sound - dy / h * (if (onVolumeBoost != null) 2f else 1f)).coerceIn(0f, if (onVolumeBoost != null) 2f else 1f)
                     if (next > 1.0f && sound <= 1.0f) {
                         showBoostWarning = true
                     }
                     sound = next
-                    if (next <= 1.0f && max > 0) {
-                        runCatching { audio.setStreamVolume(AudioManager.STREAM_MUSIC, (next * max).roundToInt().coerceIn(0, max), 0) }
+                    onVolumeBoost?.invoke(next.coerceAtLeast(1f))
+                    if (max > 0) {
+                        runCatching { audio.setStreamVolume(AudioManager.STREAM_MUSIC, (next.coerceAtMost(1f) * max).roundToInt().coerceIn(0, max), 0) }
                     }
                 },
             )

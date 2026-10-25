@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Fokus audio</string>
+    <string name="system_audio_playback">Main balik audio</string>
+    <string name="system_audio_help">Memerlukan root/Shizuku. Mematikan fokus menyekat permintaan baharu, bukan pengendalian kehilangan fokus; sesetengah aplikasi berhenti. Mematikan main balik membisukan aplikasi. Mulakan semula main balik selepas perubahan. Lalai memulihkan dasar sistem. Sokongan berbeza mengikut sistem dan aplikasi.</string>
+</resources>

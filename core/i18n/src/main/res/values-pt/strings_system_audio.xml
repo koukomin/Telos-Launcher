@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Foco de áudio</string>
+    <string name="system_audio_playback">Reprodução de áudio</string>
+    <string name="system_audio_help">Requer root/Shizuku. Desativar o foco bloqueia novos pedidos, não altera a reação à perda de foco; algumas apps param. Desativar a reprodução silencia a app. Reinicie a reprodução após alterações. Predefinido repõe a política do sistema. O suporte varia conforme o sistema e a app.</string>
+</resources>

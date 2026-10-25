@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">تمرکز صدا</string>
+    <string name="system_audio_playback">پخش صدا</string>
+    <string name="system_audio_help">به root/Shizuku نیاز دارد. خاموش کردن تمرکز، درخواست‌های جدید را مسدود می‌کند و واکنش به از دست رفتن تمرکز را تغییر نمی‌دهد؛ برخی برنامه‌ها متوقف می‌شوند. خاموش کردن پخش، برنامه را بی‌صدا می‌کند. پس از تغییر، پخش را دوباره شروع کنید. پیش‌فرض سیاست سیستم را برمی‌گرداند. پشتیبانی بسته به سیستم و برنامه متفاوت است.</string>
+</resources>

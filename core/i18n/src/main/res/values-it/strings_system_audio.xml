@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Focus audio</string>
+    <string name="system_audio_playback">Riproduzione audio</string>
+    <string name="system_audio_help">Richiede root/Shizuku. Disattivare il focus blocca nuove richieste, non modifica la reazione alla sua perdita; alcune app si fermano. Disattivare la riproduzione silenzia l’app. Riavvia la riproduzione dopo le modifiche. Predefinito ripristina la regola di sistema. Il supporto varia in base al sistema e all’app.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">音訊焦點</string>
+    <string name="system_audio_playback">音訊播放</string>
+    <string name="system_audio_help">需要 root/Shizuku。關閉焦點會阻止新請求，不會改變失去焦點時的處理；某些應用程式會停止。關閉播放會將應用程式靜音。變更後請重新開始播放。預設選項恢復系統政策。 支援情況因系統和應用程式而異。</string>
+</resources>

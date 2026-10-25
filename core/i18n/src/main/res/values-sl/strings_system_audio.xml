@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Zvočna pozornost</string>
+    <string name="system_audio_playback">Predvajanje zvoka</string>
+    <string name="system_audio_help">Zahteva root/Shizuku. Izklop pozornosti blokira nove zahteve, ne spremeni odziva na izgubo pozornosti; nekatere aplikacije se ustavijo. Izklop predvajanja utiša aplikacijo. Po spremembah znova zaženite predvajanje. Privzeto obnovi sistemska pravila. Podpora je odvisna od sistema in aplikacije.</string>
+</resources>

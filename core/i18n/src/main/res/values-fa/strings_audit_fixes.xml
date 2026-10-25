@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">مسدودکننده مؤلفه‌ها (Root)</string>
+    <string name="store_component_blocker_root_required">غیرفعال کردن مؤلفه‌ها به دسترسی Root نیاز دارد</string>
+</resources>

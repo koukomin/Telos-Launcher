@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Focalizare audio</string>
+    <string name="system_audio_playback">Redare audio</string>
+    <string name="system_audio_help">Necesită root/Shizuku. Dezactivarea focalizării blochează cererile noi, nu schimbă reacția la pierderea focalizării; unele aplicații se opresc. Dezactivarea redării amuțește aplicația. Reporniți redarea după modificări. Implicit restabilește politica sistemului. Suportul diferă în funcție de sistem și aplicație.</string>
+</resources>

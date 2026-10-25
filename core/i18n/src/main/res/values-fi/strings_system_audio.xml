@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Äänikohdistus</string>
+    <string name="system_audio_playback">Äänentoisto</string>
+    <string name="system_audio_help">Vaatii root/Shizuku-oikeudet. Kohdistuksen poisto estää uudet pyynnöt, ei muuta kohdistuksen menetyksen käsittelyä; osa sovelluksista pysähtyy. Toiston poisto mykistää sovelluksen. Käynnistä toisto uudelleen muutosten jälkeen. Oletus palauttaa järjestelmän käytännön. Tuki vaihtelee järjestelmän ja sovelluksen mukaan.</string>
+</resources>

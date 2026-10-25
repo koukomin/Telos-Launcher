@@ -93,3 +93,11 @@ Local validation on 2026-10-22: all 50 base-locale XML sets parse with six trans
 The first emulator execution passed both PNG export tests and all eight shared adaptive UI tests. Its Morse UI test lost the Compose hierarchy because the flashlight’s portrait lock recreated the test Activity before assertions; the test now settles portrait orientation before installing content. This initial run does not establish a passing Morse screen test.
 
 The Morse screen fixture also runs with RTL layout direction and asserts an explicitly LTR Morse preview, so Arabic/Hebrew UI direction cannot reorder the displayed signal. Romanized previews use LTR as well.
+
+## System package management follow-up (2026-10-25)
+
+The unified SystemAppDetailsRoute is registered in both hosts. This change reuses PreferenceScreen, flowing action rows, a lazy permission/component list and opaque semantic containers. Navigation and component search are saveable; confirmation is transient. Local Gradle is blocked by distribution network access. Translation/diff/manifest checks run locally; CI compilation and regression jobs must be checked on the pushed head. Root component changes, shared APK consumption, installed-list interactions, VPN enforcement and the full wallpaper/font/window screenshot matrix have not been verified on a physical device. No icon assets changed.
+
+The embedded host also registers the freeze hub, statistics and Device Owner setup destinations reached from System management. `python3 tools/validation/system_app_routes.py` guards these destination registrations in both hosts; it is a static navigation check, not a device interaction test. Dangerous manifest permission rows carry a warning glyph as well as color.
+
+Audio policy follow-up: System details now include translated focus/playback AppOps lists, with readback before displaying success. Parser tests cover Android shell defaults/history, wrong operation output, UID overrides and command injection. Physical root/Shizuku audio, OEM enforcement and changes to active playback remain unverified.

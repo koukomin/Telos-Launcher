@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">ऑडियो फ़ोकस</string>
+    <string name="system_audio_playback">ऑडियो प्लेबैक</string>
+    <string name="system_audio_help">Root/Shizuku चाहिए। फ़ोकस बंद करना नए अनुरोध रोकता है, फ़ोकस खोने की प्रतिक्रिया नहीं बदलता; कुछ ऐप रुकते हैं। प्लेबैक बंद करना ऐप को म्यूट करता है। बदलाव के बाद प्लेबैक फिर शुरू करें। डिफ़ॉल्ट सिस्टम नीति बहाल करता है। समर्थन सिस्टम और ऐप के अनुसार बदलता है।</string>
+</resources>

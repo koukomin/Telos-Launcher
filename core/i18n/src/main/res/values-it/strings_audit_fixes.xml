@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Blocco componenti (Root)</string>
+    <string name="store_component_blocker_root_required">Per disattivare i componenti è necessario l’accesso Root</string>
+</resources>

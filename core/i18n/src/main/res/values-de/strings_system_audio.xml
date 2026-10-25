@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Audiofokus</string>
+    <string name="system_audio_playback">Audiowiedergabe</string>
+    <string name="system_audio_help">Erfordert root/Shizuku. Deaktivierter Fokus blockiert neue Anfragen, ändert aber nicht die Reaktion auf Fokusverlust; manche Apps stoppen. Deaktivierte Wiedergabe schaltet die App stumm. Wiedergabe nach Änderungen neu starten. Standard stellt die Systemrichtlinie wieder her. Die Unterstützung hängt vom System und der App ab.</string>
+</resources>

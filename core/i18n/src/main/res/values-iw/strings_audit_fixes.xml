@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">חסימת רכיבים (Root)</string>
+    <string name="store_component_blocker_root_required">נדרשת גישת Root להשבתת רכיבים</string>
+</resources>

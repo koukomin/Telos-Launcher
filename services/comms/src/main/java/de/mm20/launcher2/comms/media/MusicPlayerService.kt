@@ -46,7 +46,10 @@ class MusicPlayerService : MediaSessionService() {
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
         player.addListener(object : Player.Listener {
+            private var effectSession = -1
             override fun onAudioSessionIdChanged(audioSessionId: Int) {
+                de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession(effectSession)
+                effectSession = audioSessionId
                 MediaAudioFx.attachToSession(audioSessionId)
             }
             override fun onIsPlayingChanged(isPlaying: Boolean) {
@@ -167,7 +170,7 @@ class MusicPlayerService : MediaSessionService() {
         MusicSleepTimer.onExpire = null
         MusicSleepTimer.cancel() // no timer without a player to stop
         mediaSession?.run {
-            player.release()
+            de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession((player as? ExoPlayer)?.audioSessionId ?: -1); player.release()
             release()
             mediaSession = null
         }

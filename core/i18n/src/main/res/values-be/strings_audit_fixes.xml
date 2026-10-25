@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Блакіроўка кампанентаў (Root)</string>
+    <string name="store_component_blocker_root_required">Для адключэння кампанентаў патрэбны Root</string>
+</resources>

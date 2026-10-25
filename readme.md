@@ -1394,3 +1394,9 @@ masking it with copied English strings.
 
 Standalone virtual-app Recents tasks have static localized Android labels and
 icons as well as dynamic task metadata, including on OEM launchers.
+
+### October 2026 implementation audit
+
+[Source and UI audit](docs/docs/developer-guide/audits/2026-10-25-gemini-review.md): Wi-Fi parsing is tested on Android ICU, reveal fails closed, QR fields are escaped, and JSON backup uses Android’s document picker. System Apps uses IO snapshots and the existing validated UAD database. System/Store app rows open the existing real Network firewall rules for that package; enforcement requires Telos Network VPN on. Unenforced focus/component/tweak controls are unavailable rather than indicating success. YouTube credentials use Keystore protection and an account-scoped cache. APK permission inspection is not antivirus scanning; partial Ancient Greek/Latin resource files are not complete language support.
+
+System → Apps now opens the same installed-package details for every app, without Store tracking. Debloating uses freeze/unfreeze only. The screen exposes UAD removal notes, per-package Network firewall rules, freeze policies, certificates/manifest permissions, split-aware APK sharing and explicit root component edits. Per-app audio-focus request and playback policies are controlled through Android AppOps with root/Shizuku, readback and a system-default option. Focus-request blocking does not override another app’s focus-loss handling.

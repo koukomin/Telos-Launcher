@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Audio-fokua</string>
+    <string name="system_audio_playback">Audio-erreprodukzioa</string>
+    <string name="system_audio_help">Root/Shizuku behar da. Fokua desgaitzeak eskaera berriak blokeatzen ditu, ez foku-galeraren kudeaketa; aplikazio batzuk gelditzen dira. Erreprodukzioa desgaitzeak aplikazioa isilarazten du. Aldaketen ondoren berrabiarazi erreprodukzioa. Lehenetsiak sistemaren politika leheneratzen du. Bateragarritasuna sistemaren eta aplikazioaren araberakoa da.</string>
+</resources>

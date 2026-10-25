@@ -234,27 +234,24 @@ object ShareActions {
     fun shareApk(context: Context, packageName: String): Boolean = runCatching {
         cleanup(context)
         val pm = context.packageManager
-        val info = pm.getApplicationInfo(packageName, 0)
-        val version = runCatching { pm.getPackageInfo(packageName, 0).versionName }.getOrNull()
-        val base = "${safeName(packageName)}${if (version != null) "-" + safeName(version) else ""}"
+        val initial = pm.getPackageInfo(packageName, 0)
+        val info = requireNotNull(initial.applicationInfo)
+        val paths = listOf(info.publicSourceDir) + info.splitPublicSourceDirs.orEmpty().sorted()
+        val base = safeName(packageName)
         val folder = File(dir(context), System.nanoTime().toString()).apply { mkdirs() }
-        val parts = listOf(info.publicSourceDir) + (info.splitPublicSourceDirs?.toList() ?: emptyList())
-        val files = parts.filterNotNull().map { File(it) }.filter { it.isFile && it.canRead() }
-        if (files.isEmpty()) return@runCatching false
-        if (files.size == 1) {
-            val copy = File(folder, "$base.apk")
-            files[0].copyTo(copy, overwrite = true)
-            send(context, listOf(uriOf(context, copy)), MIME_APK, null)
-        } else {
-            val copy = File(folder, "$base.apks")
-            ZipOutputStream(copy.outputStream().buffered()).use { zip ->
-                files.forEach { f ->
-                    zip.putNextEntry(ZipEntry(f.name))
-                    f.inputStream().use { it.copyTo(zip) }
-                    zip.closeEntry()
-                }
+        val copy = File(folder, base + if (paths.size > 1) ".zip" else ".apk")
+        try {
+            copy.outputStream().buffered().use { output ->
+                de.mm20.launcher2.helper.InstalledApkExport.write(paths.map(::File), output)
             }
-            send(context, listOf(uriOf(context, copy)), "application/zip", null)
+            val after = pm.getPackageInfo(packageName, 0)
+            val current = requireNotNull(after.applicationInfo)
+            require(initial.lastUpdateTime == after.lastUpdateTime &&
+                paths == listOf(current.publicSourceDir) + current.splitPublicSourceDirs.orEmpty().sorted())
+            send(context, listOf(uriOf(context, copy)), if (paths.size > 1) "application/zip" else MIME_APK, null)
+        } catch (error: Exception) {
+            copy.delete()
+            throw error
         }
     }.getOrDefault(false)
 

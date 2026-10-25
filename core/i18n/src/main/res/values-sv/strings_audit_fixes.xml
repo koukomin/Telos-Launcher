@@ -1,0 +1,4 @@
+<resources>
+    <string name="store_component_blocker">Komponentblockering (Root)</string>
+    <string name="store_component_blocker_root_required">Inaktivering av komponenter kräver Root-åtkomst</string>
+</resources>

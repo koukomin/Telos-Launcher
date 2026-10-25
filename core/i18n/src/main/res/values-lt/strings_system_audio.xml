@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Garso prioritetas</string>
+    <string name="system_audio_playback">Garso atkūrimas</string>
+    <string name="system_audio_help">Reikia root/Shizuku. Išjungus prioritetą blokuojamos naujos užklausos, nekeičiamas reagavimas į jo praradimą; kai kurios programos sustoja. Išjungus atkūrimą programa nutildoma. Po pakeitimų paleiskite atkūrimą iš naujo. Numatytoji reikšmė atkuria sistemos taisyklę. Palaikymas priklauso nuo sistemos ir programos.</string>
+</resources>

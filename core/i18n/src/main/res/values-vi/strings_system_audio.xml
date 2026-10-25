@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Tiêu điểm âm thanh</string>
+    <string name="system_audio_playback">Phát âm thanh</string>
+    <string name="system_audio_help">Cần root/Shizuku. Tắt tiêu điểm chặn yêu cầu mới, không đổi cách xử lý mất tiêu điểm; một số ứng dụng dừng. Tắt phát sẽ tắt tiếng ứng dụng. Bắt đầu phát lại sau khi thay đổi. Mặc định khôi phục chính sách hệ thống. Mức hỗ trợ tùy thuộc hệ thống và ứng dụng.</string>
+</resources>

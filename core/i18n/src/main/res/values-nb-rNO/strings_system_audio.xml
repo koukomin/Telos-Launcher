@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_audio_title">Lydfokus</string>
+    <string name="system_audio_playback">Lydavspilling</string>
+    <string name="system_audio_help">Krever root/Shizuku. Avslått fokus blokkerer nye forespørsler, men endrer ikke håndtering av fokustap; noen apper stopper. Avslått avspilling demper appen. Start avspilling på nytt etter endringer. Standard gjenoppretter systemets regler. Støtten varierer med system og app.</string>
+</resources>
