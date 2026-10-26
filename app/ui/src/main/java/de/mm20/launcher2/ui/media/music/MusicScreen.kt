@@ -134,6 +134,7 @@ fun MusicScreen(
     }
     var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("music.tab", 0)
     var query by rememberSaveable { mutableStateOf("") }
+    var searchExpanded by rememberSaveable { mutableStateOf(false) }
     var group by remember { mutableStateOf<TrackGroup?>(null) }
     var showNowPlaying by rememberSaveable { mutableStateOf(false) }
 
@@ -167,6 +168,10 @@ fun MusicScreen(
 
     val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
     de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.au_music_title), askNotifications = true, guardKey = "telos_music_app://music", actions = {
+        if (hasPermission && group == null && !showNowPlaying) de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, query.isNotBlank()) {
+            if (searchExpanded) query = ""
+            searchExpanded = !searchExpanded
+        }
         IconButton(onClick = { backStack.add(de.mm20.launcher2.ui.settings.comms.ScrobbleSettingsRoute) }) {
             Icon(painterResource(R.drawable.settings_24px), contentDescription = stringResource(R.string.hc_scrobbling))
         }
@@ -186,7 +191,8 @@ fun MusicScreen(
                     ) { Text(stringResource(R.string.hc_allow)) }
                 }
             } else {
-                de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_music))
+                if (group == null && !showNowPlaying) de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_music),
+                    expanded = searchExpanded, onClose = { query = ""; searchExpanded = false })
                 val current = group
                 if (current != null) {
                     GroupPage(

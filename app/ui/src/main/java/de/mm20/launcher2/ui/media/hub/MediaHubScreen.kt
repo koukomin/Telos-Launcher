@@ -365,20 +365,10 @@ private fun HubToolbar(
     val t = MaterialTheme.transparency
     val glass = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
     Column(Modifier.fillMaxWidth().hubGlass(haze, blurRadius, glass)) {
-        Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onBack) {
-                Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
-            }
-            Column(Modifier.weight(1f)) {
-                Text(stringResource(current.groupLabel), style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary)
-                Text(stringResource(current.label), style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold)
-            }
-            Box {
-                IconButton(onClick = { menu = true }) {
-                    Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.au10_music_more))
-                }
+        MediaToolbarHeader(
+            title = stringResource(current.label), onBack = onBack,
+            onOpenSources = { menu = true }, actions = actions,
+            sourceMenu = {
                 androidx.compose.material3.DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     available.forEach { source ->
                         androidx.compose.material3.DropdownMenuItem(text = { Text(stringResource(source.label)) },
@@ -396,19 +386,25 @@ private fun HubToolbar(
                             })
                     }
                 }
-            }
+            },
+        )
+        val chipState = androidx.compose.foundation.lazy.rememberLazyListState()
+        val selectedIndex = remember(sources, current) { sources.indexOf(current).coerceAtLeast(0) }
+        LaunchedEffect(selectedIndex, reduceAnimations) {
+            if (reduceAnimations) chipState.scrollToItem(selectedIndex) else chipState.animateScrollToItem(selectedIndex)
         }
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp),
+        androidx.compose.foundation.lazy.LazyRow(state = chipState,
+            modifier = Modifier.fillMaxWidth(), contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            sources.forEach { source ->
+            items(sources.size, key = { sources[it].id }) { index ->
+                val source = sources[index]
                 FilterChip(selected = source == current, onClick = { onSelect(source) },
-                    shape = RoundedCornerShape(if (current.group == "listen") 20.dp else 8.dp),
+                    shape = MaterialTheme.shapes.large,
                     label = { Text(stringResource(source.label)) })
             }
         }
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 8.dp),
-            horizontalArrangement = Arrangement.End, content = actions)
     }
+
 }
 
 @Composable

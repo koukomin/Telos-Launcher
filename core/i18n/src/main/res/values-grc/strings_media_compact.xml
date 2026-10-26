@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au22_stremio_search_hint">Ζήτει τίτλους</string>
+    <string name="telos_youtube_search">Ζήτει ἐν YouTube</string>
+    <string name="tsm_search_music">Ζήτει μουσικήν</string>
+    <string name="tsm_search_my_stations">Ζήτει τοὺς ἐμοὺς σταθμούς</string>
+    <string name="tsm_search_photos">Ζήτει εἰκόνας</string>
+    <string name="tsm_search_radio_browser">Ζήτει ῥαδιοφωνικοὺς σταθμούς</string>
+    <string name="tsm_search_videos">Ζήτει κινουμένας εἰκόνας</string>
+</resources>

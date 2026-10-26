@@ -247,14 +247,11 @@ private fun StremioHome(vm: StremioViewModel) {
     val watching by vm.watching.collectAsStateWithLifecycle()
     val saved by vm.saved.collectAsStateWithLifecycle()
     var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("stremio.tab", 0)
+    var searchExpanded by rememberSaveable { mutableStateOf(false) }
 
     Column(Modifier.fillMaxSize()) {
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            FilterChip(selected = tab == 0, onClick = { tab = 0 }, label = { Text(stringResource(R.string.au22_stremio_home)) }, shape = RoundedCornerShape(8.dp))
-            FilterChip(selected = tab == 1, onClick = { tab = 1 }, label = { Text(stringResource(R.string.au22_stremio_library)) }, shape = RoundedCornerShape(8.dp))
-        }
+        StremioBrowseControls(tab, { tab = it }, query, vm::setQuery, searchExpanded, { searchExpanded = it })
         if (tab == 0) {
-            TelosSearchBar(query, { vm.setQuery(it) }, stringResource(R.string.au22_stremio_search_hint))
             val shown = if (query.isBlank()) rows else searchRows
             LazyColumn(contentPadding = PaddingValues(bottom = 112.dp), verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxSize()) {
                 if (query.isBlank() && watching.isNotEmpty()) item(key = "continue") {
@@ -288,7 +285,7 @@ private fun StremioHome(vm: StremioViewModel) {
                 Text(stringResource(R.string.au22_stremio_library_empty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(16.dp))
             } else {
                 LazyVerticalGrid(
-                    columns = GridCells.Adaptive(156.dp * LocalDensity.current.fontScale),
+                    columns = GridCells.Adaptive(164.dp),
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 112.dp),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalArrangement = Arrangement.spacedBy(14.dp),
@@ -300,9 +297,31 @@ private fun StremioHome(vm: StremioViewModel) {
     }
 }
 
+/** Home/Library and search share one row, even with large fonts and narrow windows. */
+@Composable
+internal fun StremioBrowseControls(
+    tab: Int, onTab: (Int) -> Unit, query: String, onQuery: (String) -> Unit,
+    searchExpanded: Boolean, onSearchExpanded: (Boolean) -> Unit,
+) {
+    Column {
+        Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+            Row(Modifier.weight(1f).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilterChip(selected = tab == 0, onClick = { onTab(0) }, label = { Text(stringResource(R.string.au22_stremio_home)) }, shape = MaterialTheme.shapes.large)
+                FilterChip(selected = tab == 1, onClick = { onTab(1) }, label = { Text(stringResource(R.string.au22_stremio_library)) }, shape = MaterialTheme.shapes.large)
+            }
+            if (tab == 0) de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, query.isNotBlank()) {
+                if (searchExpanded) onQuery("")
+                onSearchExpanded(!searchExpanded)
+            }
+        }
+        if (tab == 0) de.mm20.launcher2.ui.media.MediaSearchBar(query, onQuery, stringResource(R.string.au22_stremio_search_hint),
+            expanded = searchExpanded, onClose = { onQuery(""); onSearchExpanded(false) })
+    }
+}
+
 @Composable
 private fun RowTitle(text: String) {
-    Text(text, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 16.dp))
+    Text(text, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 16.dp))
 }
 
 @Composable
@@ -313,14 +332,14 @@ private fun Poster(vm: StremioViewModel, item: MetaPreview, onClick: () -> Unit,
         else -> 0.675f
     }
     Column(
-        (if (fillWidth) Modifier.fillMaxWidth() else Modifier.width((if (ratio > 1f) 288.dp else 156.dp) * LocalDensity.current.fontScale)).clickable(onClick = onClick),
+        (if (fillWidth) Modifier.fillMaxWidth() else Modifier.width(if (ratio > 1f) 272.dp else 156.dp)).clickable(onClick = onClick),
     ) {
-        Box(Modifier.fillMaxWidth().aspectRatio(ratio).clip(RoundedCornerShape(8.dp)).background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
+        Box(Modifier.fillMaxWidth().aspectRatio(ratio).clip(MaterialTheme.shapes.medium).background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
             AsyncImage(model = item.poster, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
         }
         if (item.type == "movie") WatchMark(vm, item.id)
         Text(item.name, style = MaterialTheme.typography.titleSmall, maxLines = 3, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
-        if (caption != null) Text(caption, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        if (caption != null) Text(caption, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
         else if (item.releaseInfo != null) Text(item.releaseInfo!!, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
     }
 }

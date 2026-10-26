@@ -191,3 +191,9 @@ The supplied OnePlus Android 16 stack trace shows NotificationManager rejecting 
 Posting checks the live session token and phase so delayed settings/identity emissions cannot resurrect ended or replaced calls. Unbind, service destruction and an empty-session service restart explicitly clear notification 7201. Notification construction is separated from posting so Android tests can reproduce the policy constraint and post/cancel a synthetic ongoing call without a carrier call.
 
 Launcher startup also reconciles an orphan from a previous process crash: Telecom is queried on IO and the notification is removed on Main only when Telecom explicitly reports no call and the local session is still idle. Denied/unknown Telecom state leaves notifications untouched.
+
+## Compact Media chrome
+
+MediaToolbarHeader hosts one horizontally scrollable, width-bounded action strip beside a source-title button. Hub source/reorder entries remain in a popup anchored to that button; no hub overflow icon or second action row is emitted. Source chips use a keyed LazyRow and scroll to the selected source, respecting reduced-animation preference. Title text uses titleLarge with two-line toolbar overflow; its full text remains in semantics and in the source menu.
+
+MediaSearchAction and MediaSearchBar separate the icon from the controlled search field; nested panels can use self-contained search. Expansion is saveable, Back closes the field, existing query owners and YouTube submission callbacks remain authoritative. TelosSearchBar supplies the single padding layer, focus, IME search, query clear and optional submit/close actions. StremioBrowseControls keeps tabs and search in one bounded row; poster widths stay independent of font size while captions grow. TV filter chrome uses an opaque container instead of overlapping translucent text.

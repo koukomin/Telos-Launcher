@@ -73,6 +73,8 @@ private fun RadioDashboardContent(
     val isRecording = recordingState is de.mm20.launcher2.comms.radio.RadioRecorder.State.Recording
 
     var selectedTabIndex by de.mm20.launcher2.ui.component.rememberPersistentUiState("radio.tab", 0)
+    var searchExpanded by rememberSaveable { mutableStateOf(false) }
+    var collectionQuery by rememberSaveable { mutableStateOf("") }
     val tabs = listOf(
         stringResource(R.string.au_radio_tab_collection),
         stringResource(R.string.hc_search),
@@ -127,6 +129,13 @@ private fun RadioDashboardContent(
     }
 
     de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.hc_radio), askNotifications = true, guardKey = "telos_radio_app://radio", actions = {
+        if (selectedTabIndex == 1 || (selectedTabIndex == 0 && favorites.isNotEmpty())) de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded,
+            (if (selectedTabIndex == 0) collectionQuery else searchQuery).isNotBlank()) {
+            if (searchExpanded) {
+                if (selectedTabIndex == 0) collectionQuery = "" else viewModel.updateSearchQuery("")
+            }
+            searchExpanded = !searchExpanded
+        }
         IconButton(onClick = { showAdd = true }) {
             Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.hc_add_station))
         }
@@ -212,14 +221,14 @@ private fun RadioDashboardContent(
 
         when (selectedTabIndex) {
             0 -> {
-                var collectionQuery by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf("") }
                 val shownFavorites = androidx.compose.runtime.remember(favorites, collectionQuery) {
                     de.mm20.launcher2.comms.search.TelosSearch.filter(favorites, collectionQuery) { listOf(it.name) }
                 }
                 Column(modifier = Modifier.fillMaxSize()) {
                 if (favorites.isNotEmpty()) {
                     de.mm20.launcher2.ui.media.MediaSearchBar(
-                        collectionQuery, { collectionQuery = it }, stringResource(R.string.tsm_search_my_stations)
+                        collectionQuery, { collectionQuery = it }, stringResource(R.string.tsm_search_my_stations),
+                        expanded = searchExpanded, onClose = { collectionQuery = ""; searchExpanded = false },
                     )
                 }
                 var chip by rememberSaveable { mutableStateOf(RadioChip.All) }
@@ -248,7 +257,8 @@ private fun RadioDashboardContent(
             1 -> {
                 Column(modifier = Modifier.fillMaxSize()) {
                     de.mm20.launcher2.ui.media.MediaSearchBar(
-                        searchQuery, { viewModel.updateSearchQuery(it) }, stringResource(R.string.tsm_search_radio_browser)
+                        searchQuery, { viewModel.updateSearchQuery(it) }, stringResource(R.string.tsm_search_radio_browser),
+                        expanded = searchExpanded, onClose = { viewModel.updateSearchQuery(""); searchExpanded = false },
                     )
                     val reduceAnim by org.koin.compose.koinInject<de.mm20.launcher2.preferences.ui.PerformanceSettings>().reduceAnimations.collectAsState(false)
                     if (isSearching && searchResults.isEmpty()) {

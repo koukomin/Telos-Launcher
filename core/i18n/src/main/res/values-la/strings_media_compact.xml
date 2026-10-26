@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au22_stremio_search_hint">Titulos quaere</string>
+    <string name="telos_youtube_search">Quaere in YouTube</string>
+    <string name="tsm_search_music">Musicam quaere</string>
+    <string name="tsm_search_my_stations">Stationes meas quaere</string>
+    <string name="tsm_search_photos">Imagines quaere</string>
+    <string name="tsm_search_radio_browser">Stationes per interrete quaere</string>
+    <string name="tsm_search_videos">Pelliculas quaere</string>
+</resources>

@@ -200,7 +200,7 @@ fun PhotosScreen(embedded: Boolean = false) {
     val blur = rememberVirtualAppBlur()
     val bar = virtualAppElevated()
 
-    var query by remember { mutableStateOf("") }
+    var query by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
     val filteredItems = remember(items, query) {
         de.mm20.launcher2.comms.search.TelosSearch.filter(items, query) {
             listOf(
@@ -302,7 +302,7 @@ fun PhotosScreen(embedded: Boolean = false) {
             }
 
             if (hasPermission && items.isNotEmpty()) {
-                de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.tsm_search_photos))
+                de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_photos))
             }
             if (hasPermission && query.isNotBlank() && shown.isEmpty()) {
                 de.mm20.launcher2.ui.component.SearchEmptyState(query)
