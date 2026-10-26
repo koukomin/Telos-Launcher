@@ -274,6 +274,7 @@ internal fun CallScreenContent(
     incomingActions: @Composable () -> Unit = {},
     activeControls: @Composable () -> Unit = {},
 ) {
+    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
     BoxWithConstraints(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainerLowest)
         .windowInsetsPadding(WindowInsets.safeDrawing).testTag("call-scene")) {
         val sideBySide = maxWidth >= 560.dp && maxWidth > maxHeight
@@ -331,6 +332,7 @@ internal fun CallScreenContent(
             } else Column(Modifier.weight(0.48f).fillMaxWidth(), content = actions)
         }
     }
+}
 }
 
 @Composable
