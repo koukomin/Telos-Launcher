@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -107,16 +110,56 @@ fun MediaFrame(
     }
 }
 
-/** Rounded search field with readable text in light and dark mode (see [TelosSearchBar]). */
+/** Search occupies a touch-sized icon until explicitly expanded; existing query owners are unchanged. */
+@Composable
+fun MediaSearchAction(expanded: Boolean, hasQuery: Boolean = false, onClick: () -> Unit) {
+    IconButton(onClick = onClick, modifier = Modifier.size(48.dp).semantics { selected = expanded || hasQuery }) {
+        Icon(painterResource(R.drawable.search_24px),
+            contentDescription = stringResource(R.string.hc_search),
+            tint = if (expanded || hasQuery) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface)
+    }
+}
+
+/** Null [expanded] provides a self-contained icon for nested media filter panels. */
 @Composable
 fun MediaSearchBar(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
     modifier: Modifier = Modifier,
+    expanded: Boolean? = null,
+    onClose: (() -> Unit)? = null,
+    onSearch: (() -> Unit)? = null,
+    searchEnabled: Boolean = true,
 ) {
-    de.mm20.launcher2.ui.component.TelosSearchBar(value, onValueChange, placeholder,
-        modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp))
+    var localExpanded by rememberSaveable { mutableStateOf(false) }
+    val open = expanded ?: localExpanded
+    val keyboard = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
+    val focus = androidx.compose.ui.platform.LocalFocusManager.current
+    val close: () -> Unit = {
+        keyboard?.hide()
+        focus.clearFocus()
+        onClose?.invoke() ?: run { onValueChange(""); localExpanded = false }
+    }
+    androidx.activity.compose.BackHandler(enabled = open) { close() }
+    Column(modifier.fillMaxWidth()) {
+        if (expanded == null && !open) Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), horizontalArrangement = Arrangement.End) {
+            MediaSearchAction(false, value.isNotBlank()) { localExpanded = true }
+        }
+        if (open) {
+            de.mm20.launcher2.ui.component.TelosSearchBar(value, onValueChange, placeholder, autoFocus = true,
+                onSearch = onSearch,
+                leading = {
+                    IconButton(onClick = close, modifier = Modifier.size(48.dp)) {
+                        Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close))
+                    }
+                }, trailing = {
+                    if (onSearch != null) IconButton(onClick = { keyboard?.hide(); focus.clearFocus(); onSearch() }, enabled = value.isNotBlank() && searchEnabled) {
+                        Icon(painterResource(R.drawable.search_24px), stringResource(R.string.hc_search))
+                    }
+                })
+        }
+    }
 }
 
 /** Playback notifications need the notification permission on Android 13 and newer. */

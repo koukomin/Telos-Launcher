@@ -415,9 +415,11 @@ internal fun RecentCallRow(
                 Column(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
                 ) {
+                    val callerLabel = if (call.callerNameSuggested && !call.displayName.isNullOrBlank())
+                        stringResource(R.string.caller_suggested_name, call.displayName!!) else call.displayName?.ifBlank { null } ?: call.phoneNumber
                     Text(
                         text = buildString {
-                            append(call.displayName?.ifBlank { null } ?: call.phoneNumber)
+                            append(callerLabel)
                             if (count > 1) append(" ($count)")
                         },
                         style = MaterialTheme.typography.bodyLarge,

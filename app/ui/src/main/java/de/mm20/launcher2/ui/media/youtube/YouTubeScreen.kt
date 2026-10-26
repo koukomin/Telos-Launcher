@@ -47,6 +47,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val scope = rememberCoroutineScope()
     val gridState = rememberLazyGridState()
     var query by rememberSaveable(music) { mutableStateOf("") }
+    var searchExpanded by rememberSaveable(music) { mutableStateOf(false) }
     var accountPanel by rememberSaveable { mutableStateOf(false) }
     var browserUnavailable by rememberSaveable { mutableStateOf(false) }
     val allEntries by vm.results.collectAsStateWithLifecycle()
@@ -79,6 +80,10 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     de.mm20.launcher2.ui.media.MediaFrame(
         stringResource(if (music) R.string.telos_youtube_music_label else R.string.telos_youtube_label),
         actions = {
+            de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, query.isNotBlank()) {
+                searchExpanded = !searchExpanded
+                if (searchExpanded) scope.launch { gridState.animateScrollToItem(0) }
+            }
             IconButton(onClick = { accountPanel = true }) {
                 Icon(
                     painterResource(R.drawable.person_24px),
@@ -141,29 +146,13 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    de.mm20.launcher2.ui.component.TelosSearchTopBar(
-                        query,
-                        { query = it },
-                        stringResource(R.string.telos_youtube_search),
-                        modifier = Modifier.padding(vertical = 4.dp),
+                    de.mm20.launcher2.ui.media.MediaSearchBar(
+                        query, { query = it }, stringResource(R.string.telos_youtube_search),
+                        expanded = searchExpanded, onClose = { searchExpanded = false }, searchEnabled = !searching,
                         onSearch = {
                             if (query.isNotBlank() && !searching) {
                                 shelf = "search"
                                 vm.search(context, query, music)
-                            }
-                        },
-                        trailing = {
-                            IconButton(
-                                onClick = {
-                                    shelf = "search"
-                                    vm.search(context, query, music)
-                                },
-                                enabled = query.isNotBlank() && !searching
-                            ) {
-                                Icon(
-                                    painterResource(R.drawable.search_24px),
-                                    stringResource(R.string.telos_youtube_search)
-                                )
                             }
                         },
                     )

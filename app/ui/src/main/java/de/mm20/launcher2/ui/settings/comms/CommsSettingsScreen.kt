@@ -85,7 +85,6 @@ fun CommsSettingsScreen() {
     val secureCallScreen by viewModel.secureCallScreen.collectAsStateWithLifecycle()
     val sim1Color by viewModel.sim1Color.collectAsStateWithLifecycle()
     val sim2Color by viewModel.sim2Color.collectAsStateWithLifecycle()
-    val fullScreenCallerPhoto by viewModel.fullScreenCallerPhoto.collectAsStateWithLifecycle()
     val simNames by viewModel.simNames.collectAsStateWithLifecycle()
     val answerStyle by viewModel.answerStyle.collectAsStateWithLifecycle()
     val recordingAutoDeleteDays by viewModel.recordingAutoDeleteDays.collectAsStateWithLifecycle()
@@ -231,12 +230,6 @@ fun CommsSettingsScreen() {
         item {
             PreferenceCategory(title = stringResource(R.string.hc_incoming_call)) {
                 Preference(title = stringResource(R.string.caller_privacy_title), onClick = { backStack.add(CallerPrivacyRoute) })
-                SwitchPreference(
-                    title = stringResource(R.string.call_photo_background),
-                    summary = stringResource(R.string.call_photo_background_summary),
-                    value = fullScreenCallerPhoto,
-                    onValueChanged = { viewModel.setFullScreenCallerPhoto(it) },
-                )
                 ListPreference(
                     title = stringResource(R.string.hc_answer_style),
                     items = listOf(

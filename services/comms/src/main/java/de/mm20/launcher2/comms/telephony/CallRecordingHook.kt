@@ -21,6 +21,7 @@ internal object CallRecordingHook : KoinComponent {
     fun onActive(context: Context, call: Call) {
         if (CallAudioRecorder.isRecording.value) return
         val number = call.details?.handle?.schemeSpecificPart.orEmpty()
+        val token = System.identityHashCode(call).toLong()
         scope.launch {
             val auto = commsSettings.autoRecordCalls.first()
             val mode = commsSettings.autoRecordMode.first()
@@ -34,6 +35,8 @@ internal object CallRecordingHook : KoinComponent {
                 else -> auto
             }
             if (!should) return@launch
+            val current = TelosCallSession.ui.value
+            if (!current.active || current.actionToken != token) return@launch
             val quality = RecordingQuality.fromKey(commsSettings.recordingQuality.first())
             RecordingCoordinator.start(context, number, quality)
         }

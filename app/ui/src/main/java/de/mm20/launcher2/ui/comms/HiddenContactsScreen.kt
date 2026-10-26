@@ -8,6 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import kotlinx.coroutines.flow.catch
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -25,6 +27,20 @@ data object HiddenContactsRoute : NavKey
 fun HiddenContactsScreen() {
     val commsSettings: CommsSettings = koinInject()
     val hidden by commsSettings.hiddenNumbers.collectAsStateWithLifecycle(emptyMap())
+    val directory: de.mm20.launcher2.comms.repository.ContactDirectoryRepository = koinInject()
+    val contacts by remember(directory) { directory.observeContacts().catch { emit(emptyList()) } }
+        .collectAsStateWithLifecycle(emptyList())
+    val groups = remember(hidden, contacts) {
+        hidden.keys.groupBy { number ->
+            contacts.firstOrNull { contact -> contact.phoneNumbers.any {
+                de.mm20.launcher2.ktx.PhoneNumberKey.matches(it, number)
+            } }?.id?.toString() ?: "number:$number"
+        }.map { (id, aliases) ->
+            val contact = contacts.firstOrNull { it.id.toString() == id }
+            Triple(id, contact?.displayName?.takeIf(String::isNotBlank) ?: aliases.first(),
+                (contact?.phoneNumbers.orEmpty() + aliases).distinct())
+        }
+    }
     val backStack = LocalBackStack.current
     PreferenceScreen(title = { Text(stringResource(R.string.hc_hidden_contacts)) }) {
         if (hidden.isEmpty()) {
@@ -35,12 +51,13 @@ fun HiddenContactsScreen() {
                 )
             }
         }
-        hidden.keys.forEach { number ->
-            item {
+        groups.forEach { (key, name, numbers) ->
+            item(key = key) {
                 ListItem(
-                    headlineContent = { Text(number) },
+                    headlineContent = { Text(name) },
+                    supportingContent = { Text(numbers.joinToString(" · ")) },
                     trailingContent = {
-                        TextButton(onClick = { commsSettings.setHiddenNumber(number, false) }) {
+                        TextButton(onClick = { commsSettings.setHiddenNumbers(numbers, false) }) {
                             Text(stringResource(R.string.hc_unhide))
                         }
                     },

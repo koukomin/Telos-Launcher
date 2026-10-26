@@ -605,7 +605,7 @@ private fun TvHomeBody(
         Column(
             Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.88f))
+                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .onSizeChanged { topHeight = with(density) { it.height.toDp() } }
                 .padding(top = 4.dp, bottom = 4.dp),
         ) {
@@ -613,7 +613,7 @@ private fun TvHomeBody(
                 value = query,
                 onValueChange = { vm.setQuery(it) },
                 placeholder = stringResource(R.string.au12_tvui_search_hint),
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),
+                modifier = Modifier.fillMaxWidth(),
             )
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),

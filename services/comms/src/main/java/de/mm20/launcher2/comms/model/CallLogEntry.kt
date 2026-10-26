@@ -20,4 +20,6 @@ data class CallLogEntry(
     val simLabel: String? = null,
     val simAccountId: String? = null,
     val numberLabel: String? = null,
+    val callerNameSuggested: Boolean = false,
+    val callerSourceUrl: String? = null,
 )

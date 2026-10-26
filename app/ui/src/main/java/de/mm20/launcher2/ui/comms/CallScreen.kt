@@ -1,154 +1,101 @@
 package de.mm20.launcher2.ui.comms
 
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.boundsInWindow
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.draw.blur
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.gestures.draggable
 import android.Manifest
-import android.widget.Toast
-import androidx.compose.foundation.layout.systemBarsPadding
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.provider.ContactsContract
-import androidx.core.content.ContextCompat
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
+import coil.request.ImageRequest
 import de.mm20.launcher2.comms.recording.CallAudioRecorder
 import de.mm20.launcher2.comms.recording.RecordingCoordinator
 import de.mm20.launcher2.comms.recording.RecordingQuality
+import de.mm20.launcher2.comms.telephony.InCallUiState
 import de.mm20.launcher2.comms.telephony.TelosCallSession
-import de.mm20.launcher2.preferences.comms.CommsSettings
-import org.koin.compose.koinInject
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.theme.transparency.transparency
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import org.koin.compose.koinInject
 
 @Composable
-fun CallScreen(onFinished: () -> Unit,
+fun CallScreen(
+    onFinished: () -> Unit,
     onTerminationBounds: (androidx.compose.ui.geometry.Rect?) -> Unit = {},
-    stateSource: kotlinx.coroutines.flow.StateFlow<de.mm20.launcher2.comms.telephony.InCallUiState> = TelosCallSession.ui,
+    stateSource: kotlinx.coroutines.flow.StateFlow<InCallUiState> = TelosCallSession.ui,
     onHangup: () -> Unit = { TelosCallSession.hangup() },
 ) {
     val state by stateSource.collectAsStateWithLifecycle()
     DisposableEffect(state.incoming) { onDispose { onTerminationBounds(null) } }
-    val recording by CallAudioRecorder.isRecording.collectAsStateWithLifecycle()
     val commsSettings: CommsSettings = koinInject()
-    val autoRecord by commsSettings.autoRecordCalls.collectAsStateWithLifecycle(false)
-    val autoRecordMode by commsSettings.autoRecordMode.collectAsStateWithLifecycle("ALL_EXCEPT_EXCEPTIONS")
-    val prohibitedNumbers by commsSettings.recordProhibitedNumbers.collectAsStateWithLifecycle(emptySet())
-    val mandatoryNumbers by commsSettings.recordMandatoryNumbers.collectAsStateWithLifecycle(emptySet())
-
-    fun shouldRecordCall(number: String): Boolean {
-        val clean = number.filter { it.isDigit() || it == '+' }
-        if (clean.isNotEmpty() && clean in prohibitedNumbers) return false
-        if (clean.isNotEmpty() && clean in mandatoryNumbers) return true
-        return when (autoRecordMode) {
-            "ALL_EXCEPT_EXCEPTIONS" -> autoRecord
-            "EXCEPTIONS_ONLY" -> false
-            else -> false
-        }
-    }
+    val recording by CallAudioRecorder.isRecording.collectAsStateWithLifecycle()
     val qualityKey by commsSettings.recordingQuality.collectAsStateWithLifecycle("BALANCED")
     val rejectSms by commsSettings.rejectSmsTemplate.collectAsStateWithLifecycle("")
     val notesEnabled by commsSettings.inCallNotes.collectAsStateWithLifecycle(true)
     val notesMap by commsSettings.callerNotes.collectAsStateWithLifecycle(emptyMap())
+    val answerStyle by commsSettings.answerStyle.collectAsStateWithLifecycle("buttons")
+    val directory: de.mm20.launcher2.comms.repository.ContactDirectoryRepository = koinInject()
+    val hiddenMap by remember(commsSettings, directory) {
+        kotlinx.coroutines.flow.combine(commsSettings.hiddenNumbers, directory.observeContacts().catch { emit(emptyList()) }) { hidden, contacts ->
+            de.mm20.launcher2.comms.privacy.HiddenContacts.expanded(hidden, contacts)
+        }
+    }.collectAsStateWithLifecycle(emptyMap())
+    val maskHidden by commsSettings.maskHiddenIncoming.collectAsStateWithLifecycle(true)
     val context = LocalContext.current
     val recordScope = rememberCoroutineScope()
-    var showKeypad by remember { mutableStateOf(false) }
-    var showNotes by remember { mutableStateOf(false) }
+    var showKeypad by rememberSaveable { mutableStateOf(false) }
+    var showNotes by rememberSaveable { mutableStateOf(false) }
     var elapsed by remember { mutableLongStateOf(0L) }
-
-    LaunchedEffect(state.active, autoRecord, qualityKey) {
-        val hasMic = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
-            PackageManager.PERMISSION_GRANTED
-        if (state.active && shouldRecordCall(state.number) && hasMic && !CallAudioRecorder.isRecording.value) {
-            RecordingCoordinator.start(context, state.number, RecordingQuality.fromKey(qualityKey))
-        }
-    }
-    LaunchedEffect(state.hasCall) {
-        if (!state.hasCall) {
-            RecordingCoordinator.stop()
-            onFinished()
-        }
-    }
+    LaunchedEffect(state.hasCall) { if (!state.hasCall) onFinished() }
+    // The InCallService owns automatic recording, including calls answered from notifications.
+    // Composing/changing this screen must not race a second recording start on answer.
     LaunchedEffect(state.connectedAtEpochMs, state.active) {
-        while (true) {
-            val current = TelosCallSession.ui.value
-            if (!current.active || current.connectedAtEpochMs == null) {
-                elapsed = 0L
-                break
-            }
-            elapsed = (System.currentTimeMillis() - current.connectedAtEpochMs!!) / 1000
-            delay(500)
+        while (state.active && state.connectedAtEpochMs != null) {
+            elapsed = ((System.currentTimeMillis() - state.connectedAtEpochMs!!) / 1000).coerceAtLeast(0)
+            delay(1000)
         }
     }
-
-    val fullScreenPhoto by commsSettings.fullScreenCallerPhoto.collectAsStateWithLifecycle(false)
-    val answerStyle by commsSettings.answerStyle.collectAsStateWithLifecycle("buttons")
-    val hiddenMap by commsSettings.hiddenNumbers.collectAsStateWithLifecycle(emptyMap())
-    val maskHidden by commsSettings.maskHiddenIncoming.collectAsStateWithLifecycle(true)
-    val hiddenIncoming = state.incoming && maskHidden &&
-        de.mm20.launcher2.comms.privacy.HiddenContacts.matches(state.number, hiddenMap)
-    val privateLabel = stringResource(R.string.au_phoneb_private_caller)
-    val unknownLabel = stringResource(R.string.widget_name_unknown)
-    val displayName = if (hiddenIncoming) privateLabel
-    else if (state.callerNameSuggested && state.name != null) stringResource(R.string.caller_suggested_name, state.name!!)
-    else state.name ?: state.number.ifEmpty { unknownLabel }
+    val hiddenIncoming = maskHidden && de.mm20.launcher2.comms.privacy.HiddenContacts.matches(state.number, hiddenMap)
+    val publicState = if (hiddenIncoming) state.copy(
+        name = stringResource(R.string.au_phoneb_private_caller), number = "", photoUri = null,
+        callerNameSuggested = false, likelySpam = false, callerSourceUrl = null,
+    ) else state
+    val displayName = when {
+        publicState.callerNameSuggested && !publicState.name.isNullOrBlank() -> stringResource(R.string.caller_suggested_name, publicState.name!!)
+        !publicState.name.isNullOrBlank() -> publicState.name!!
+        publicState.number.isNotBlank() -> publicState.number
+        else -> stringResource(R.string.widget_name_unknown)
+    }
     val status = when {
         state.incoming -> stringResource(R.string.comms_incoming_call)
         state.connecting -> stringResource(R.string.comms_calling)
@@ -156,76 +103,13 @@ fun CallScreen(onFinished: () -> Unit,
         state.active -> formatElapsed(elapsed)
         else -> ""
     }
-
-    val photo = state.photoUri.takeUnless { hiddenIncoming }
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
-        if (!photo.isNullOrBlank()) {
-            AsyncImage(
-                model = photo,
-                contentDescription = null,
-                modifier = if (state.incoming && fullScreenPhoto) {
-                    Modifier.fillMaxSize()
-                } else {
-                    Modifier.fillMaxSize().blur(32.dp).alpha(0.35f)
-                },
-                contentScale = ContentScale.Crop,
-            )
-        }
-        if (state.incoming) {
-            IncomingCallLayout(
-                displayName = displayName,
-                number = if (!hiddenIncoming && !state.name.isNullOrBlank() && state.number.isNotBlank()) state.number else null,
-                status = status,
-                photoUri = photo.takeIf { fullScreenPhoto },
-                likelySpam = state.likelySpam && !hiddenIncoming,
-                rejectSms = rejectSms,
-                answerStyle = answerStyle,
-                onTerminationBounds = onTerminationBounds,
-            )
-        } else {
-        androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
-        val compact = maxWidth > maxHeight || maxHeight < 620.dp * LocalDensity.current.fontScale
-        val avatarSize = minOf(maxWidth * 0.62f, maxHeight * 0.32f, 240.dp).coerceAtLeast(96.dp)
-        Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .systemBarsPadding()
-            .padding(if (compact) 12.dp else 24.dp)
-            ,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
-            Spacer(Modifier.height(if (compact) 8.dp else 48.dp))
-            CommsAvatar(name = displayName, photoUri = state.photoUri, size = avatarSize)
-            Spacer(Modifier.height(if (compact) 8.dp else 20.dp))
-        Text(
-            text = displayName,
-            style = MaterialTheme.typography.headlineSmall.copy(fontSize = 26.sp),
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
-        if (!hiddenIncoming && !state.name.isNullOrBlank() && state.number.isNotBlank()) {
-            Text(
-                text = state.number,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        Spacer(Modifier.height(8.dp))
-        Text(
-            text = status,
-            style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp),
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-        )
-
-        Spacer(Modifier.height(12.dp))
-
-        if (showKeypad && !state.incoming) {
-            InCallKeypad(onDigit = { TelosCallSession.playDtmf(it) })
-            // the controls are hidden while the keypad is open: this is the way back to them
-            TextButton(onClick = { showKeypad = false }) { Text(stringResource(R.string.hc_close)) }
-            Spacer(Modifier.height(8.dp))
-        } else if (!state.incoming) {
+    CallScreenContent(publicState, displayName, status, onHangup, onTerminationBounds,
+        incomingActions = { IncomingCallActions(rejectSms, answerStyle, onTerminationBounds) },
+        activeControls = {
+            if (showKeypad) {
+                InCallKeypad { TelosCallSession.playDtmf(it) }
+                TextButton(onClick = { showKeypad = false }) { Text(stringResource(R.string.hc_close)) }
+            } else {
             val muteLabel = stringResource(R.string.comms_mute)
             val keypadLabel = stringResource(R.string.comms_keypad)
             val speakerLabel = stringResource(R.string.comms_speaker)
@@ -240,7 +124,9 @@ fun CallScreen(onFinished: () -> Unit,
             val noteLabel = stringResource(R.string.hc_note)
             val micNeeded = stringResource(R.string.au_phoneb_mic_needed)
             val recordFailed = stringResource(R.string.au_phoneb_record_failed)
-            val controls = buildList {
+            val controls = remember(state, recording, showKeypad, showNotes, notesEnabled, qualityKey,
+                muteLabel, keypadLabel, speakerLabel, bluetoothLabel, holdLabel, recordLabel, addLabel,
+                mergeLabel, swapLabel, noteLabel, micNeeded, recordFailed) { buildList {
                 add(
                     CallControlSpec(
                         icon = if (state.muted) R.drawable.rd_ic_microphone_off_vector else R.drawable.mic_24px,
@@ -341,32 +227,14 @@ fun CallScreen(onFinished: () -> Unit,
                         )
                     )
                 }
-            }
-            // four per row: six 56 dp buttons in one row do not fit on a 360 dp wide screen
-            controls.chunked(4).forEach { rowItems ->
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-                ) {
-                    rowItems.forEach { c ->
-                        Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                            CallControl(c.icon, c.label, c.selected, c.onClick)
-                        }
-                    }
-                    repeat(4 - rowItems.size) { Spacer(Modifier.weight(1f)) }
-                }
+            } }
+            CallControls(controls)
             }
             if (state.canSwap && state.secondNumber.isNotBlank()) {
-                Text(
-                    text = (state.secondName ?: state.secondNumber) +
-                        if (state.conferenceCount > 1) " · ${state.conferenceCount}" else "",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(top = 8.dp),
-                )
+                Text(state.secondName ?: state.secondNumber, style = MaterialTheme.typography.bodyMedium)
             }
-            Spacer(Modifier.height(24.dp))
-        }
-
+        },
+    )
         if (showNotes) {
             var draft by remember(state.number) {
                 mutableStateOf(notesMap[state.number].orEmpty())
@@ -393,237 +261,166 @@ fun CallScreen(onFinished: () -> Unit,
             )
         }
 
-        } // scroll content; disconnect remains visible
-            FloatingActionButton(
-                onClick = onHangup,
-                containerColor = RdRedCall,
-                contentColor = Color.White,
-                modifier = Modifier
-                    .size(76.dp)
-                    .onGloballyPositioned { onTerminationBounds(it.boundsInWindow()) }
-                    .padding(bottom = 8.dp),
-                shape = CircleShape,
-            ) {
-                Icon(painterResource(R.drawable.rd_ic_call_end), contentDescription = stringResource(R.string.comms_hangup))
+}
+
+/** Stateless call scene: rendering a ringing -> active transition never invokes Telecom or capture. */
+@Composable
+internal fun CallScreenContent(
+    state: InCallUiState,
+    displayName: String,
+    status: String,
+    onHangup: () -> Unit,
+    onTerminationBounds: (androidx.compose.ui.geometry.Rect?) -> Unit = {},
+    incomingActions: @Composable () -> Unit = {},
+    activeControls: @Composable () -> Unit = {},
+) {
+    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
+    BoxWithConstraints(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainerLowest)
+        .windowInsetsPadding(WindowInsets.safeDrawing).testTag("call-scene")) {
+        val sideBySide = maxWidth >= 560.dp && maxWidth > maxHeight
+        val identity: @Composable ColumnScope.() -> Unit = {
+            Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())
+                .padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(displayName, style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface)
+                if (state.number.isNotBlank() && state.number != displayName) {
+                    Text(state.number, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                Text(status, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 12.dp))
+                CallerPhoto(displayName, state.photoUri, Modifier.fillMaxWidth().aspectRatio(if (sideBySide) 1.2f else 0.95f))
+                if (state.likelySpam) Text(stringResource(R.string.caller_likely_spam), color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(top = 8.dp))
+                state.callerSourceUrl?.let { url ->
+                    val context = LocalContext.current
+                    TextButton(onClick = { context.tryStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }) {
+                        Text("white-pages.gr")
+                    }
+                }
             }
-            Spacer(Modifier.height(24.dp))
         }
+        val actions: @Composable ColumnScope.() -> Unit = {
+            if (!state.incoming) {
+                Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).padding(16.dp)) {
+                    activeControls()
+                }
+            } else Spacer(Modifier.weight(0.001f))
+            Surface(color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                shape = RoundedCornerShape(32.dp), modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+                Column(Modifier.fillMaxWidth().padding(12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    if (state.incoming) incomingActions() else {
+                        FloatingActionButton(onClick = onHangup, containerColor = RdRedCall, contentColor = Color.White,
+                            shape = RoundedCornerShape(24.dp), modifier = Modifier.size(width = 96.dp, height = 64.dp)
+                                .onGloballyPositioned { onTerminationBounds(it.boundsInWindow()) }) {
+                            Icon(painterResource(R.drawable.rd_ic_call_end), stringResource(R.string.comms_hangup))
+                        }
+                    }
+                }
+            }
         }
+        if (sideBySide) Row(Modifier.fillMaxSize()) {
+            Column(Modifier.weight(1f).fillMaxHeight(), content = identity)
+            Column(Modifier.weight(1f).fillMaxHeight(), content = actions)
+        } else Column(Modifier.fillMaxSize()) {
+            Column(Modifier.weight(if (state.incoming) 1f else 0.52f).fillMaxWidth(), content = identity)
+            if (state.incoming) {
+                // Incoming critical actions grow naturally rather than occupying a weighted, clipped pane.
+                Surface(color = MaterialTheme.colorScheme.surfaceContainerHigh, shape = RoundedCornerShape(32.dp),
+                    modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+                    Column(Modifier.padding(12.dp), horizontalAlignment = Alignment.CenterHorizontally) { incomingActions() }
+                }
+            } else Column(Modifier.weight(0.48f).fillMaxWidth(), content = actions)
+        }
+    }
+}
+}
+
+@Composable
+private fun CallerPhoto(name: String, photoUri: String?, modifier: Modifier) {
+    val context = LocalContext.current
+    val request = remember(context, photoUri) {
+        ImageRequest.Builder(context).data(photoUri).size(1280, 1280).crossfade(true).build()
+    }
+    val fallback: @Composable () -> Unit = {
+        Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
+            val initials = remember(name) { name.trim().split(' ').filter(String::isNotBlank).take(2)
+                .mapNotNull { it.firstOrNull()?.uppercaseChar() }.joinToString("").ifBlank { "?" } }
+            Text(initials, style = MaterialTheme.typography.displayLarge, color = MaterialTheme.colorScheme.onSecondaryContainer)
+        }
+    }
+    Box(modifier.clip(RoundedCornerShape(32.dp)).testTag("caller-photo")) {
+        if (photoUri.isNullOrBlank()) fallback() else {
+            SubcomposeAsyncImage(model = request, contentDescription = null, modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Fit, loading = { fallback() }, error = { fallback() },
+                success = { SubcomposeAsyncImageContent(Modifier.testTag("caller-photo-loaded")) })
         }
     }
 }
 
 @Composable
-private fun IncomingCallLayout(
-    displayName: String,
-    number: String?,
-    status: String,
-    photoUri: String?,
-    likelySpam: Boolean,
-    rejectSms: String,
-    answerStyle: String,
-    onTerminationBounds: (androidx.compose.ui.geometry.Rect?) -> Unit,
+private fun CallControls(controls: List<CallControlSpec>) {
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val columns = (maxWidth / (80.dp * LocalDensity.current.fontScale)).toInt().coerceIn(1, 4)
+        val rows = remember(controls, columns) { controls.chunked(columns) }
+        Column { rows.forEach { row ->
+            Row(Modifier.fillMaxWidth().padding(bottom = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                row.forEach { control ->
+                    Box(Modifier.weight(1f)) { CallControl(control.icon, control.label, control.selected, control.onClick) }
+                }
+                repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
+            }
+        } }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+internal fun IncomingCallActions(rejectSms: String, answerStyle: String,
+    onTerminationBounds: (androidx.compose.ui.geometry.Rect?) -> Unit = {},
+    onAnswer: () -> Unit = { TelosCallSession.answer() },
+    onReject: () -> Unit = { TelosCallSession.reject() },
 ) {
     val context = LocalContext.current
-    val overlay = Color.Black.copy(alpha = 0.45f)
-    var sheetExtraPx by remember { mutableFloatStateOf(0f) }
-    val density = LocalDensity.current
-    val peekPx = with(density) { 56.dp.toPx() }
-    val extraMaxPx = with(density) { 184.dp.toPx() }
     var remindOpen by remember { mutableStateOf(false) }
-    val onWhite = Color.White
-    val onWhiteMuted = Color.White.copy(alpha = 0.78f)
-
-    Box(Modifier.fillMaxSize()) {
-        Box(
-            Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        0f to Color.Black.copy(alpha = 0.55f),
-                        0.35f to Color.Transparent,
-                        0.65f to Color.Transparent,
-                        1f to Color.Black.copy(alpha = 0.72f),
-                    )
-                ),
-        )
-        if (photoUri.isNullOrBlank()) {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CommsAvatar(name = displayName, photoUri = null, size = 160.dp)
-            }
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .systemBarsPadding()
-                .padding(horizontal = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
-            Spacer(Modifier.height(12.dp))
-            Text(
-                text = displayName,
-                style = MaterialTheme.typography.displaySmall,
-                fontWeight = FontWeight.SemiBold,
-                color = onWhite,
-            )
-            if (number != null) {
-                Spacer(Modifier.height(6.dp))
-                Text(text = number, style = MaterialTheme.typography.bodyLarge, color = onWhiteMuted)
-            }
-            Spacer(Modifier.height(8.dp))
-            if (likelySpam) Text(stringResource(R.string.caller_likely_spam), color = MaterialTheme.colorScheme.errorContainer)
-            Text(text = status, style = MaterialTheme.typography.titleMedium, color = onWhiteMuted)
-            Spacer(Modifier.height(12.dp))
-
-            val sheetHeight = with(density) { (peekPx + sheetExtraPx).toDp() }
-            val expanded = sheetExtraPx > extraMaxPx * 0.4f
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(sheetHeight)
-                    .draggable(
-                        orientation = androidx.compose.foundation.gestures.Orientation.Vertical,
-                        state = androidx.compose.foundation.gestures.rememberDraggableState { delta ->
-                            sheetExtraPx = (sheetExtraPx - delta).coerceIn(0f, extraMaxPx)
-                        },
-                        onDragStopped = {
-                            sheetExtraPx = if (sheetExtraPx > extraMaxPx * 0.4f) extraMaxPx else 0f
-                        },
-                    )
-                    .clickable {
-                        sheetExtraPx = if (sheetExtraPx > extraMaxPx * 0.4f) 0f else extraMaxPx
-                    },
-                shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
-                color = overlay,
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Box(
-                        Modifier
-                            .size(width = 36.dp, height = 4.dp)
-                            .clip(RoundedCornerShape(2.dp))
-                            .background(Color.White.copy(alpha = 0.45f)),
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            painterResource(R.drawable.keyboard_arrow_up_24px),
-                            contentDescription = null,
-                            tint = onWhiteMuted,
-                            modifier = Modifier.size(18.dp),
-                        )
-                        Spacer(Modifier.size(6.dp))
-                        Text(
-                            stringResource(R.string.comms_swipe_up_actions),
-                            style = MaterialTheme.typography.labelLarge,
-                            color = onWhiteMuted,
-                        )
+    if (answerStyle == "swipe") SwipeAnswer(onAnswer, onReject) else {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            listOf(false, true).forEach { answer ->
+                Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
+                    FloatingActionButton(onClick = { if (answer) onAnswer() else onReject() },
+                        containerColor = if (answer) RdCallGreen else RdRedCall, contentColor = Color.White,
+                        shape = RoundedCornerShape(24.dp), modifier = Modifier.size(72.dp).then(
+                            if (answer) Modifier else Modifier.onGloballyPositioned { onTerminationBounds(it.boundsInWindow()) })) {
+                        Icon(painterResource(if (answer) R.drawable.rd_ic_call_accept else R.drawable.rd_ic_call_end),
+                            stringResource(if (answer) R.string.comms_answer else R.string.comms_reject))
                     }
-                    if (expanded) {
-                        Spacer(Modifier.height(12.dp))
-                        TextButton(onClick = { remindOpen = true }) {
-                            Text(stringResource(R.string.hc_remind_me), color = onWhite)
-                        }
-                        if (rejectSms.isNotBlank()) {
-                            TextButton(onClick = {
-                                val n = TelosCallSession.ui.value.number
-                                TelosCallSession.reject()
-                                de.mm20.launcher2.comms.sms.QuickSms.send(context, n, rejectSms)
-                            }) {
-                                Text(stringResource(R.string.hc_reject_sms), color = onWhite)
-                            }
-                        }
-                    }
+                    Text(stringResource(if (answer) R.string.comms_answer else R.string.comms_reject),
+                        modifier = Modifier.padding(top = 8.dp), style = MaterialTheme.typography.labelLarge)
                 }
             }
-
-            if (remindOpen) {
-                AlertDialog(
-                    onDismissRequest = { remindOpen = false },
-                    title = { Text(stringResource(R.string.hc_remind_me_to_call_back)) },
-                    text = {
-                        Column {
-                            listOf(5, 15, 30, 60).forEach { minutes ->
-                                TextButton(onClick = {
-                                    de.mm20.launcher2.comms.reminder.CallbackReminder.schedule(
-                                        context,
-                                        TelosCallSession.ui.value.number,
-                                        TelosCallSession.ui.value.name,
-                                        minutes,
-                                    )
-                                    remindOpen = false
-                                    TelosCallSession.reject()
-                                }) { Text(stringResource(R.string.hc_in_minutes, minutes)) }
-                            }
-                        }
-                    },
-                    confirmButton = {},
-                    dismissButton = {
-                        TextButton(onClick = { remindOpen = false }) { Text(stringResource(R.string.hc_cancel)) }
-                    },
-                )
-            }
-
-            }
-            Spacer(Modifier.height(8.dp))
-            if (answerStyle == "swipe") {
-                SwipeAnswer(
-                    onAnswer = { TelosCallSession.answer() },
-                    onReject = { TelosCallSession.reject() },
-                )
-            } else {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        FloatingActionButton(
-                            onClick = { TelosCallSession.reject() },
-                            containerColor = RdRedCall,
-                            contentColor = Color.White,
-                            modifier = Modifier.size(72.dp).onGloballyPositioned { onTerminationBounds(it.boundsInWindow()) },
-                            shape = CircleShape,
-                        ) {
-                            Icon(
-                                painterResource(R.drawable.rd_ic_call_end),
-                                contentDescription = stringResource(R.string.comms_reject),
-                            )
-                        }
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            stringResource(R.string.comms_reject),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = onWhite,
-                        )
-                    }
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        FloatingActionButton(
-                            onClick = { TelosCallSession.answer() },
-                            containerColor = RdCallGreen,
-                            contentColor = Color.White,
-                            modifier = Modifier.size(72.dp),
-                            shape = CircleShape,
-                        ) {
-                            Icon(
-                                painterResource(R.drawable.rd_ic_call_accept),
-                                contentDescription = stringResource(R.string.comms_answer),
-                            )
-                        }
-                        Spacer(Modifier.height(8.dp))
-                        Text(
-                            stringResource(R.string.comms_answer),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = onWhite,
-                        )
-                    }
-                }
-            }
-            Spacer(Modifier.height(20.dp))
         }
     }
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        TextButton(onClick = { remindOpen = true }) { Text(stringResource(R.string.hc_remind_me)) }
+        if (rejectSms.isNotBlank()) TextButton(onClick = {
+            val number = TelosCallSession.ui.value.number
+            TelosCallSession.reject()
+            de.mm20.launcher2.comms.sms.QuickSms.send(context, number, rejectSms)
+        }) { Text(stringResource(R.string.hc_reject_sms)) }
+    }
+    if (remindOpen) AlertDialog(onDismissRequest = { remindOpen = false },
+        title = { Text(stringResource(R.string.hc_remind_me_to_call_back)) },
+        text = { Column(Modifier.verticalScroll(rememberScrollState())) {
+            listOf(5, 15, 30, 60).forEach { minutes ->
+                TextButton(onClick = {
+                    val state = TelosCallSession.ui.value
+                    de.mm20.launcher2.comms.reminder.CallbackReminder.schedule(context, state.number, state.name, minutes)
+                    remindOpen = false
+                    TelosCallSession.reject()
+                }) { Text(stringResource(R.string.hc_in_minutes, minutes)) }
+            }
+        } }, confirmButton = {}, dismissButton = {
+            TextButton(onClick = { remindOpen = false }) { Text(stringResource(R.string.hc_cancel)) }
+        })
 }
 
 private class CallControlSpec(
@@ -635,7 +432,7 @@ private class CallControlSpec(
 
 @Composable
 private fun CallControl(icon: Int, label: String, selected: Boolean, onClick: () -> Unit) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Surface(
             shape = CircleShape,
             color = if (selected) MaterialTheme.colorScheme.primaryContainer
@@ -702,7 +499,7 @@ private fun SwipeAnswer(onAnswer: () -> Unit, onReject: () -> Unit) {
             .background(MaterialTheme.colorScheme.surfaceContainerHighest),
         contentAlignment = Alignment.Center,
     ) {
-        val maxPx = with(density) { ((maxWidth - thumb) / 2).toPx() }
+        val maxPx = with(density) { ((maxWidth - thumb).coerceAtLeast(0.dp) / 2).toPx() }
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,

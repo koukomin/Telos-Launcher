@@ -129,7 +129,7 @@ root backing retains wallpaper blur. Cleared root roles retain their RGB tone so
 legacy opacity adjustments do not accidentally become black. Radio inherits the launcher palette by default, and its scoped theme supplies
 its own content color, so a light Radio palette cannot inherit white text from a dark
 launcher. Compact station rows use fixed-size logos and adaptive columns. Media
-search opens from an icon with an expand/fade animation. Drawer width leaves an
+search opens from an icon without adding a custom expansion animation. Drawer width leaves an
 outside dismissal area even on narrow windows with large fonts.
 
 Clock suggestions appear on focused empty search, starting with Athens unless
@@ -171,3 +171,31 @@ MorseCodec uses the Greek radio alphabet directly and AnyAscii 0.3.3 for other U
 ## October 25 implementation review
 
 See [the feature/UI audit](./audits/2026-10-25-gemini-review) for the reviewed main baseline, fixes, UI/backend inventory and explicit limitations. Wi-Fi regex regressions must run on Android ICU as well as the desktop JVM. Authentication failure cannot reveal keys; backgrounding clears both credential lists and QR content. JSON export writes only to an explicitly chosen document after fresh authentication. System app snapshots are built on IO and use the existing BloatDescriptions provider.
+
+## Overlay readability correction
+
+Stremio keeps its catalog composed to preserve its scroll/navigation state; the detail surface and hero gradient use opaque surfaceContainerLow to obscure it. Play/Save actions wrap onto additional rows at narrow widths and large fonts. The shared VirtualAppTheme root keeps the existing wallpaper blur, but requests an opaque base-surface fallback when no valid blurred frame exists (including loading, denied pixels and video readback failure). Inner chrome does not request that fallback. surfaceBright, surfaceDim and surfaceVariant retain opaque theme tones for settings rows and legacy controls in both palettes.
+
+## Phone call stability and privacy follow-up
+
+CallScreenContent is a stateless photo/identity/control scene. Photo decoding is bounded to 1280 pixels per edge and uses Fit with loading/error initials. The real window width and height select portrait or two panes after safe-drawing insets; critical call actions stay outside the scrolling controls. Incoming, outgoing and active states share the large photo. The obsolete photo-background switch is removed; stored preferences remain readable.
+
+CallUiVisibility uses owner tokens without Activity references. InCallService cancels the small call notification while the full-screen host is resumed, and restores it when backgrounded without replaying the same full-screen intent. Answer commands re-resolve the current ringing Telecom call; missing OEM details do not dereference null. Automatic capture is owned solely by the service, serialized with manual starts, dispatched on IO and guarded against stop/start races and optional capture exceptions. The subsequently provided Android 16 crash trace identifies an unqualified ongoing CallStyle notification; the notification policy below addresses that confirmed cause.
+
+PhoneNumberKey supplies conservative Greek/international canonical keys without arbitrary suffix matching. Hide Contact writes all numbers in one preference update and locks the hider; live contact-directory expansion protects contacts hidden by earlier versions in Recents, T9 history and the home Recents widget. Existing visibility switches and authenticated unlock still apply. Caller lookup remains explicit opt-in, excludes saved/hidden callers from automatic submission, never scans history over the network, follows only one same-origin number-page redirect, bounds responses/cache, and labels community names as suggestions with source links. Unknown-number details expose the switch and result.
+
+## Confirmed Android 16 CallStyle failure
+
+The supplied OnePlus Android 16 stack trace shows NotificationManager rejecting notification 7201 after answer: this bound InCallService is not a foreground service. Only the first incoming alert uses CallStyle, always with its real full-screen intent. Ongoing/held/outgoing and restored incoming notifications use ordinary CATEGORY_CALL notifications with explicit Hang up or Answer/Reject actions; they never borrow a fake foreground-service flag or an ongoing full-screen intent. OEM presentation rejection falls back to ordinary actions.
+
+Posting checks the live session token and phase so delayed settings/identity emissions cannot resurrect ended or replaced calls. Unbind, service destruction and an empty-session service restart explicitly clear notification 7201. Notification construction is separated from posting so Android tests can reproduce the policy constraint and post/cancel a synthetic ongoing call without a carrier call.
+
+Launcher startup also reconciles an orphan from a previous process crash: Telecom is queried on IO and the notification is removed on Main only when Telecom explicitly reports no call and the local session is still idle. Denied/unknown Telecom state leaves notifications untouched.
+
+## Compact Media chrome
+
+MediaToolbarHeader hosts one horizontally scrollable, width-bounded action strip beside a source-title button. Hub source/reorder entries remain in a popup anchored to that button; no hub overflow icon or second action row is emitted. Source chips use a keyed LazyRow and scroll to the selected source, respecting reduced-animation preference. Title text uses titleLarge with two-line toolbar overflow; its full text remains in semantics and in the source menu.
+
+MediaSearchAction and MediaSearchBar separate the icon from the controlled search field; nested panels can use self-contained search. Expansion is saveable, Back closes the field, existing query owners and YouTube submission callbacks remain authoritative. TelosSearchBar supplies the single padding layer, focus, IME search, query clear and optional submit/close actions. StremioBrowseControls keeps tabs and search in one bounded row; poster widths stay independent of font size while captions grow. TV filter chrome uses an opaque container instead of overlapping translucent text.
+
+Compact search expansion is immediate, avoiding extra motion and intermediate layouts at large fonts. YouTube submit remains disabled while a request is running, preserving its prior enabled-state behavior.

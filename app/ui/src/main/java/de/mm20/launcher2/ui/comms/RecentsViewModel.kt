@@ -37,7 +37,9 @@ class RecentsViewModel : ViewModel(), KoinComponent {
         commsSettings.hiddenNumbers,
         commsSettings.hideFromRecents,
         PrivacySession.hiderUnlocked,
-    ) { list, hidden, hide, unlocked ->
+        contactDirectory.observeContacts(),
+    ) { list, storedHidden, hide, unlocked, directory ->
+        val hidden = HiddenContacts.expanded(storedHidden, directory)
         val visible = if (!hide || unlocked) list
         else list.filter { !HiddenContacts.matches(it.phoneNumber, hidden) }
         visible.map { call ->
@@ -48,7 +50,7 @@ class RecentsViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    val recents: StateFlow<List<CallLogEntry>> = combine(
+    private val identifiedRecents = combine(
         visibleRecents, contactDirectory.observeContacts(),
     ) { calls, contacts ->
         calls.map { call ->
@@ -59,6 +61,15 @@ class RecentsViewModel : ViewModel(), KoinComponent {
                 displayName = contact.displayName.takeIf { it.isNotBlank() } ?: call.displayName,
                 photoUri = contact.photoUri ?: call.photoUri,
             )
+        }
+    }
+    private val callerLookup: de.mm20.launcher2.comms.callerid.CallerLookup by inject()
+    val recents: StateFlow<List<CallLogEntry>> = combine(identifiedRecents, callerLookup.results, commsSettings.onlineCallerLookup) { calls, results, enabled ->
+        calls.map { call ->
+            val result = if (enabled && call.displayName.isNullOrBlank())
+                results[de.mm20.launcher2.comms.callerid.CallerLookupParser.greekNumber(call.phoneNumber)] else null
+            if (result?.suggestedName.isNullOrBlank()) call else call.copy(displayName = result!!.suggestedName,
+                callerNameSuggested = true, callerSourceUrl = result.sourceUrl)
         }
     }.flowOn(kotlinx.coroutines.Dispatchers.Default)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())

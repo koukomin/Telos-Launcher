@@ -222,3 +222,15 @@ Listen groups local music, YouTube Music and radio. Watch groups local video, Yo
 YouTube and YouTube Music load home content on entry and expose account playlists in both modes. Use Home to refresh after signing in. Artist radio uses a Music mix seeded by the selected song. Local libraries, favorites, playlists, imports, downloads, queues, player tools, radio recording/settings, TV sources/EPG and Stremio settings remain available through their existing actions. Live account/provider availability and playback still depend on YouTube responses.
 
 Tap the active YouTube Music mini player to open its artwork player and queue. Seek, previous/next, pause and stop use the existing session; no second player is started. On video play, the watch page scrolls to the inline player. Account help distinguishes sign-in inside Telos from the separate browser session.
+
+## Detail readability
+
+Stremio film and series details cover the catalog with a readable theme surface. Play and Save wrap onto separate rows when space is limited. Settings and app backgrounds retain shared wallpaper blur when available and fall back to a solid theme background when blurred wallpaper pixels are unavailable.
+
+## Compact navigation and search
+
+Tap the source title and its arrow to open all Media spaces and Move up/down ordering. The top-right actions belong to the open space; there is no second hub overflow menu or separate actions row. Source chips scroll to the selected space automatically.
+
+Music, local Video, Radio and YouTube/YouTube Music expose search through a toolbar icon; Stremio Home places it beside Home/Library. TV filters and Photos use an icon in their own panel. Opening the icon reveals the search field; closing it or using Back folds it away. Local filters clear when closed; YouTube keeps submitted results/query and uses the keyboard Search action or search button to submit. No search request is triggered just by opening the field.
+
+Stremio poster images keep a stable width rather than growing with the system font size. Names and captions wrap below them, section headings use the theme’s title hierarchy, and Home/Library scroll horizontally when larger labels need space. All source/account/settings/player actions remain available.

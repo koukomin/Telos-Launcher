@@ -63,6 +63,7 @@ import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -255,8 +256,9 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun setHidden(number: String, hidden: Boolean) {
-        commsSettings.setHiddenNumber(number, hidden)
+    fun setHidden(numbers: List<String>, hidden: Boolean) {
+        commsSettings.setHiddenNumbers(numbers, hidden)
+        if (hidden) de.mm20.launcher2.comms.privacy.PrivacySession.lockHider()
     }
 
     fun setCallProtected(number: String, protected: Boolean) {
@@ -373,8 +375,8 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     IconButton(onClick = { ContactActions.edit(context, contact.id) }) {
                         Icon(painterResource(R.drawable.edit_24px), contentDescription = stringResource(R.string.net_dns_action_edit))
                     }
-                    IconButton(onClick = { deleteContact = contact }) {
-                        Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+                    IconButton(onClick = { confirmDelete = true }, enabled = ui.recents.isNotEmpty()) {
+                        Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.comms_clear_history))
                     }
                 }
                 val starred = starOverride ?: (contact?.starred == true)
@@ -410,15 +412,18 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                         tint = MaterialTheme.colorScheme.onSurface,
                     )
                 }
-                IconButton(
-                    onClick = { confirmDelete = true },
-                    enabled = contact != null && ui.recents.isNotEmpty(),
-                ) {
-                    Icon(
-                        painterResource(R.drawable.delete_24px),
-                        contentDescription = stringResource(R.string.comms_clear_history_confirm),
-                        tint = MaterialTheme.colorScheme.onSurface,
-                    )
+                var more by remember { mutableStateOf(false) }
+                Box {
+                    IconButton(onClick = { more = true }) {
+                        Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+                    }
+                    androidx.compose.material3.DropdownMenu(expanded = more, onDismissRequest = { more = false }) {
+                        androidx.compose.material3.DropdownMenuItem(
+                            text = { Text(stringResource(R.string.hc_delete)) },
+                            enabled = contact != null && contact.id >= 0,
+                            onClick = { more = false; deleteContact = contact },
+                        )
+                    }
                 }
             }
         },
@@ -442,6 +447,9 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
             ),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            if (contact.id < 0 && primary.isNotBlank()) item {
+                CallerLookupCard(primary, hiddenNumbers)
+            }
             item {
                 Column(
                     modifier = Modifier
@@ -850,8 +858,8 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     }
                 }
                 item {
-                    val hidden = de.mm20.launcher2.comms.privacy.HiddenContacts.matches(primary, hiddenNumbers)
-                    CommsDetailCard(onClick = { viewModel.setHidden(primary, !hidden) }) {
+                    val hidden = de.mm20.launcher2.comms.privacy.HiddenContacts.contactHidden(contact, hiddenNumbers)
+                    CommsDetailCard(onClick = { viewModel.setHidden(contact.phoneNumbers, !hidden) }) {
                         Text(
                             text = stringResource(if (hidden) R.string.au_phonea_unhide_contact else R.string.au_phonea_hide_contact),
                             style = MaterialTheme.typography.titleMedium,
@@ -1016,7 +1024,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
         )
     }
 
-    deleteContact?.let { DeleteContactDialog(it) { deleteContact = null } }
+    deleteContact?.let { DeleteContactDialog(it, onDeleted = { backStack.removeLastOrNull() }) { deleteContact = null } }
     if (editingNote && contact != null && primary.isNotEmpty()) {
         var draft by remember(primary) { mutableStateOf(notes[primary].orEmpty()) }
         AlertDialog(
@@ -1132,5 +1140,54 @@ private fun MessengerButton(icon: Int, description: String, onClick: () -> Unit)
             modifier = Modifier.size(20.dp),
             tint = MaterialTheme.colorScheme.primary,
         )
+    }
+}
+
+
+/** A visible opt-in and source link instead of a silent, unexplained missing caller result. */
+@Composable
+private fun CallerLookupCard(number: String, hidden: Map<String, String>) {
+    val settings: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
+    val lookup: de.mm20.launcher2.comms.callerid.CallerLookup = org.koin.compose.koinInject()
+    val enabled by settings.onlineCallerLookup.collectAsStateWithLifecycle(false)
+    val results by lookup.results.collectAsStateWithLifecycle()
+    val key = remember(number) { de.mm20.launcher2.comms.callerid.CallerLookupParser.greekNumber(number) }
+    val isHidden = remember(number, hidden) { de.mm20.launcher2.comms.privacy.HiddenContacts.matches(number, hidden) }
+    var loading by remember(number) { mutableStateOf(false) }
+    val context = LocalContext.current
+    androidx.compose.runtime.LaunchedEffect(number, enabled, isHidden) {
+        if (enabled && !isHidden && key != null) {
+            loading = true
+            try {
+                // Initial UI defaults are not proof that the number is public or unknown.
+                val privacy = settings.snapshot.first()
+                val canRead = androidx.core.content.ContextCompat.checkSelfPermission(context,
+                    android.Manifest.permission.READ_CONTACTS) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                val directory: de.mm20.launcher2.comms.repository.ContactDirectoryRepository =
+                    org.koin.mp.KoinPlatform.getKoin().get()
+                val saved = if (!canRead) true else try { directory.containsNumber(number) }
+                    catch (e: kotlinx.coroutines.CancellationException) { throw e }
+                    catch (_: Exception) { true }
+                if (canRead && !saved && privacy.onlineCallerLookup &&
+                    !de.mm20.launcher2.comms.privacy.HiddenContacts.matches(number, privacy.hiddenNumbers)) lookup.lookup(number)
+            } finally { loading = false }
+        }
+    }
+    if (key == null || isHidden) return
+    CommsDetailCard {
+        de.mm20.launcher2.ui.component.preferences.SwitchPreference(
+            title = stringResource(R.string.caller_online_lookup),
+            summary = stringResource(R.string.caller_online_disclosure),
+            value = enabled, onValueChanged = settings::setOnlineCallerLookup,
+        )
+        val result = results[key].takeIf { enabled }
+        if (loading) androidx.compose.material3.CircularProgressIndicator(Modifier.size(24.dp))
+        else if (result != null) {
+            result.suggestedName?.let { Text(stringResource(R.string.caller_suggested_name, it)) }
+            if (result.likelySpam) Text(stringResource(R.string.caller_likely_spam), color = MaterialTheme.colorScheme.error)
+            TextButton(onClick = { context.tryStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(result.sourceUrl))) }) {
+                Text("white-pages.gr")
+            }
+        } else if (enabled) Text(stringResource(R.string.shortcut_label_unavailable), color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }

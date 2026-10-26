@@ -39,7 +39,20 @@ class MediaRedesignTest {
         compose.setContent {
             org.koin.compose.KoinApplication(application = {
                 androidContext(context)
-                modules(de.mm20.launcher2.preferences.preferencesModule)
+                modules(de.mm20.launcher2.preferences.preferencesModule, org.koin.dsl.module {
+                    single<de.mm20.launcher2.comms.repository.ContactDirectoryRepository> {
+                        object : de.mm20.launcher2.comms.repository.ContactDirectoryRepository {
+                            override fun observeContacts() = kotlinx.coroutines.flow.flowOf(emptyList<de.mm20.launcher2.comms.model.DialerContact>())
+                            override suspend fun containsNumber(number: String) = false
+                            override suspend fun findDuplicateGroups() = emptyList<List<de.mm20.launcher2.comms.model.DialerContact>>()
+                            override suspend fun deleteContact(id: Long) = false
+                            override suspend fun moveContactToAccount(contactId: Long, accountName: String?, accountType: String?) = false
+                            override suspend fun mergeContactGroup(group: List<de.mm20.launcher2.comms.model.DialerContact>) = false
+                            override suspend fun mergeAllDuplicateGroups() = 0
+                            override suspend fun importVcf(content: String) = 0
+                        }
+                    }
+                })
             }) {
             val density = LocalDensity.current
             CompositionLocalProvider(LocalDensity provides Density(density.density, 2f)) {

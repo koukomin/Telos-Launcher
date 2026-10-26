@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_phonea_action_failed">Actio perfici non potuit</string>
+    <string name="au_phoneb_private_caller">Privatum</string>
+    <string name="caller_likely_spam">Probabiliter molestum · white-pages.gr</string>
+    <string name="caller_online_disclosure">Numeri ignoti vocationum advenientium ad white-pages.gr mittuntur ut nomen a communitate propositum et aestimationes accipiantur. Initio inactivum; vocationes automatice non impedit.</string>
+    <string name="caller_online_lookup">Cognitio vocantis per interrete</string>
+    <string name="caller_suggested_name">Nomen propositum: %1$s</string>
+    <string name="comms_answer">Responde</string>
+    <string name="comms_clear_history">Historiam vocationum delere?</string>
+    <string name="comms_hangup">Vocationem fini</string>
+    <string name="comms_reject">Reice</string>
+    <string name="hc_cancel">Revoca</string>
+    <string name="hc_delete">Dele</string>
+    <string name="hc_in_minutes">Post %1$d min</string>
+    <string name="hc_more">Plura</string>
+    <string name="hc_reject_sms">Reice et SMS mitte</string>
+    <string name="hc_remind_me">Admone me</string>
+    <string name="hc_remind_me_to_call_back">Admone me ut revocem</string>
+    <string name="shortcut_label_unavailable">Non praesto</string>
+    <string name="widget_name_unknown">Ignotum</string>
+</resources>

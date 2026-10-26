@@ -18,18 +18,22 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class TelosInCallService : InCallService(), KoinComponent {
     private val commsSettings: CommsSettings by inject()
+    private val contacts: de.mm20.launcher2.comms.repository.ContactDirectoryRepository by inject()
     private val callerLookup: de.mm20.launcher2.comms.callerid.CallerLookup by inject()
 
     private val callScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     override fun onCreate() {
         super.onCreate()
+        // A process crash can leave the old non-foreground notification behind.
+        if (!TelosCallSession.ui.value.hasCall) CallNotification.cancel(this)
         // Resolve in the service so notifications work even when the call activity cannot open.
         callScope.launch {
             TelosCallSession.ui.map { setOf(it.number, it.secondNumber).filter(String::isNotBlank).toSet() }
@@ -43,19 +47,21 @@ class TelosInCallService : InCallService(), KoinComponent {
                         if (shouldLookupCaller(identity, de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(number), hidden)) {
                             callerLookup.lookup(number)?.let { result ->
                                 TelosCallSession.setIdentity(number, identity.copy(suggestedName = result.suggestedName,
-                                    likelySpam = result.likelySpam))
+                                    likelySpam = result.likelySpam, sourceUrl = result.sourceUrl))
                             }
                         }
                     }
                 }
         }
         callScope.launch {
-            combine(TelosCallSession.ui, commsSettings.snapshot) { state, settings ->
-                val masked = state.incoming && settings.maskHiddenIncoming &&
-                    de.mm20.launcher2.comms.privacy.HiddenContacts.matches(state.number, settings.hiddenNumbers)
-                if (masked) state.copy(name = getString(de.mm20.launcher2.i18n.R.string.au_phoneb_private_caller),
-                    number = "", photoUri = null, callerNameSuggested = false, likelySpam = false) else state
-            }.collect { CallNotification.show(this@TelosInCallService, it) }
+            combine(TelosCallSession.ui, commsSettings.snapshot, CallUiVisibility.visible, contacts.observeContacts().catch { emit(emptyList()) }) { state, settings, visible, directory ->
+                val hidden = de.mm20.launcher2.comms.privacy.HiddenContacts.expanded(settings.hiddenNumbers, directory)
+                val masked = settings.maskHiddenIncoming &&
+                    de.mm20.launcher2.comms.privacy.HiddenContacts.matches(state.number, hidden)
+                val publicState = if (masked) state.copy(name = getString(de.mm20.launcher2.i18n.R.string.au_phoneb_private_caller),
+                    number = "", photoUri = null, callerNameSuggested = false, likelySpam = false, callerSourceUrl = null) else state
+                publicState to visible
+            }.collect { (state, visible) -> CallNotification.show(this@TelosInCallService, state, visible) }
         }
     }
 
@@ -63,16 +69,31 @@ class TelosInCallService : InCallService(), KoinComponent {
         val uri = android.net.Uri.withAppendedPath(android.provider.ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
             android.net.Uri.encode(number))
         contentResolver.query(uri, arrayOf(android.provider.ContactsContract.PhoneLookup.DISPLAY_NAME,
-            android.provider.ContactsContract.PhoneLookup.PHOTO_URI), null, null, null)?.use { cursor ->
-            if (cursor.moveToFirst()) CallerIdentity(cursor.getString(0), cursor.getString(1), localContactFound = true, localLookupComplete = true) else CallerIdentity(localLookupComplete = true)
+            android.provider.ContactsContract.PhoneLookup.PHOTO_URI,
+            android.provider.ContactsContract.PhoneLookup.PHOTO_THUMBNAIL_URI), null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) CallerIdentity(cursor.getString(0), cursor.getString(1)?.takeIf(String::isNotBlank) ?: cursor.getString(2)?.takeIf(String::isNotBlank), localContactFound = true, localLookupComplete = true) else CallerIdentity(localLookupComplete = true)
         } ?: CallerIdentity()
     } catch (_: SecurityException) { CallerIdentity() }
       catch (_: IllegalArgumentException) { CallerIdentity() }
       catch (_: android.database.sqlite.SQLiteException) { CallerIdentity() }
 
-    override fun onDestroy() {
+    private fun releaseCallState() {
+        val ownsSession = TelosCallSession.inCallService === this || !TelosCallSession.ui.value.hasCall
         TelosCallSession.onServiceDestroyed(this)
-        callScope.cancel()
+        if (ownsSession) {
+            RecordingCoordinator.stop()
+            CallNotification.cancel(this)
+        }
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        releaseCallState()
+        return super.onUnbind(intent)
+    }
+
+    override fun onDestroy() {
+        callScope.cancel() // Stop producers before final notification cleanup.
+        releaseCallState()
         super.onDestroy()
     }
 

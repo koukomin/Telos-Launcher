@@ -126,6 +126,7 @@ fun VideoScreen() {
 
     var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("video.tab", 0)
     var query by rememberSaveable { mutableStateOf("") }
+    var searchExpanded by rememberSaveable { mutableStateOf(false) }
     var group by remember { mutableStateOf<VideoGroup?>(null) }
     BackHandler(enabled = group != null) { group = null }
 
@@ -286,6 +287,10 @@ fun VideoScreen() {
 
     var showLibraryActions by remember { mutableStateOf(false) }
     de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.au_video_title), guardKey = "telos_video_app://video", actions = {
+        if (hasPermission && group == null) de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, query.isNotBlank()) {
+            if (searchExpanded) query = ""
+            searchExpanded = !searchExpanded
+        }
         Box {
             IconButton(onClick = { showLibraryActions = true }) {
                 Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.hc_more))
@@ -335,7 +340,8 @@ fun VideoScreen() {
         val current = group
         // inside a series or folder the search field would have no effect
         if (current == null) {
-            de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_videos))
+            de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_videos),
+                    expanded = searchExpanded, onClose = { query = ""; searchExpanded = false })
         }
         if (current != null) {
             // videos deleted in the meantime drop out of the open group

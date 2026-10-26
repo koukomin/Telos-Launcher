@@ -148,7 +148,14 @@ object TelosCallSession {
     }
 
     fun answer() {
-        call?.answer(VideoProfile.STATE_AUDIO_ONLY)
+        val selected = pickPrimary() ?: return
+        if (stateOf(selected) != Call.STATE_RINGING) return
+        try {
+            selected.answer(VideoProfile.STATE_AUDIO_ONLY)
+        } catch (e: RuntimeException) {
+            // A stale/disconnected OEM Telecom adapter must not crash the launcher process.
+            android.util.Log.w("TelosCallSession", "Telecom could not answer the current call", e)
+        }
     }
 
     fun reject() = hangup()
@@ -254,8 +261,9 @@ object TelosCallSession {
         }
         val other = otherCall(current)
         val state = stateOf(current)
-        val number = current.details.handle?.schemeSpecificPart.orEmpty()
-        val name = callerName(identities[number]?.name, current.details.callerDisplayName,
+        val details = current.details ?: return // OEM updates can temporarily omit call details.
+        val number = details.handle?.schemeSpecificPart.orEmpty()
+        val name = callerName(identities[number]?.name, details.callerDisplayName,
             de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(number))
         if (state == Call.STATE_ACTIVE) connectedAt.getOrPut(current) { System.currentTimeMillis() }
         val connectedAtMs = connectedAt[current]
@@ -274,6 +282,7 @@ object TelosCallSession {
             callerNameSuggested = name == null && !identities[number]?.suggestedName.isNullOrBlank(),
             likelySpam = identities[number]?.likelySpam == true,
             photoUri = identities[number]?.photoUri,
+            callerSourceUrl = identities[number]?.sourceUrl,
             connectedAtEpochMs = connectedAtMs,
             secondNumber = other?.details?.handle?.schemeSpecificPart.orEmpty(),
             secondName = other?.details?.handle?.schemeSpecificPart?.let { second ->
@@ -281,7 +290,7 @@ object TelosCallSession {
                     de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(second))
             },
             canMerge = current.conferenceableCalls.isNotEmpty() ||
-                (current.details.callCapabilities and Call.Details.CAPABILITY_MERGE_CONFERENCE) != 0,
+                (details.callCapabilities and Call.Details.CAPABILITY_MERGE_CONFERENCE) != 0,
             canSwap = other != null,
             conferenceCount = current.children.size.coerceAtLeast(if (isConference(current)) calls.size else 0),
         )

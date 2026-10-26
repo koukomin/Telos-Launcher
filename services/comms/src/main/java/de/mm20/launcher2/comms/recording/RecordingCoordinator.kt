@@ -34,6 +34,9 @@ object RecordingCoordinator : KoinComponent {
     private val _backend = MutableStateFlow("none")
     val activeBackend = _backend.asStateFlow()
 
+    private val startMutex = kotlinx.coroutines.sync.Mutex()
+    private val generation = java.util.concurrent.atomic.AtomicLong()
+
     /** Deletes recordings older than the configured retention (0 = keep forever). */
     suspend fun purgeOld(context: Context) {
         val days = commsSettings.recordingAutoDeleteDays.first()
@@ -52,40 +55,63 @@ object RecordingCoordinator : KoinComponent {
         phoneNumber: String,
         quality: RecordingQuality,
     ): Boolean {
-        if (CallAudioRecorder.isRecording.value) return true
-        CallAudioRecorder.applyNomedia(context, commsSettings.hideCallRecordingsFromMedia.first())
-        purgeOld(context)
-        val pref = commsSettings.recordingBackend.first()
-        val order = when (pref) {
-            "unprivileged" -> listOf("unprivileged")
-            "shizuku" -> listOf("shizuku", "unprivileged")
-            "root" -> listOf("root", "unprivileged")
-            else -> listOf("shizuku", "root", "unprivileged")
-        }
-        for (backend in order) {
-            val ok = when (backend) {
-                "shizuku" -> tryShizuku(context, phoneNumber, quality)
-                "root" -> tryRoot(context, phoneNumber, quality)
-                else -> CallAudioRecorder.start(
-                    context,
-                    phoneNumber,
-                    quality,
-                    privilegedCapture = false,
-                    bluetooth = TelosCallSession.ui.value.bluetooth,
-                )
+        val appContext = context.applicationContext
+        val requestedGeneration = generation.get()
+        startMutex.lock()
+        try {
+            return withContext(Dispatchers.IO) {
+                try {
+                    if (CallAudioRecorder.isRecording.value) return@withContext true
+                    CallAudioRecorder.applyNomedia(appContext, commsSettings.hideCallRecordingsFromMedia.first())
+                    purgeOld(appContext)
+                    val pref = commsSettings.recordingBackend.first()
+                    val order = when (pref) {
+                        "unprivileged" -> listOf("unprivileged")
+                        "shizuku" -> listOf("shizuku", "unprivileged")
+                        "root" -> listOf("root", "unprivileged")
+                        else -> listOf("shizuku", "root", "unprivileged")
+                    }
+                    for (backend in order) {
+                        if (generation.get() != requestedGeneration) return@withContext false
+                        val ok = when (backend) {
+                            "shizuku" -> tryShizuku(appContext, phoneNumber, quality)
+                            "root" -> tryRoot(appContext, phoneNumber, quality)
+                            else -> CallAudioRecorder.start(
+                                appContext,
+                                phoneNumber,
+                                quality,
+                                privilegedCapture = false,
+                                bluetooth = TelosCallSession.ui.value.bluetooth,
+                            )
+                        }
+                        if (ok) {
+                            if (generation.get() != requestedGeneration) {
+                                CallAudioRecorder.stop()
+                                return@withContext false
+                            }
+                            _backend.value = backend
+                            Log.i(TAG, "Recording started via $backend")
+                            return@withContext true
+                        }
+                        CallAudioRecorder.stop()
+                    }
+                    _backend.value = "none"
+                    return@withContext false
+                } catch (e: kotlinx.coroutines.CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Log.w(TAG, "Optional call recording could not start", e)
+                    _backend.value = "none"
+                    false
+                }
             }
-            if (ok) {
-                _backend.value = backend
-                Log.i(TAG, "Recording started via $backend")
-                return true
-            }
-            CallAudioRecorder.stop()
+        } finally {
+            startMutex.unlock()
         }
-        _backend.value = "none"
-        return false
     }
 
     fun stop(): File? {
+        generation.incrementAndGet()
         _backend.value = "none"
         return CallAudioRecorder.stop()
     }
