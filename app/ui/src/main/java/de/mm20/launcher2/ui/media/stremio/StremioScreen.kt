@@ -161,7 +161,6 @@ fun StremioScreen() {
                 }
                 !accepted -> NoticeCard(onAccept = { vm.acceptNotice() })
                 addons.isEmpty() -> EmptyAddons(vm)
-                detail != null -> Unit // Detail owns this viewport; do not draw the catalog beneath it.
                 else -> StremioHome(vm)
             }
             detail?.let { d ->
