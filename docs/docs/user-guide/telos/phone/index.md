@@ -179,3 +179,5 @@ Calls show a large contact photograph without cropping the original; initials ap
 Hide Contact protects every listed number, including +30, 0030 and Greek national forms. Contacts hidden by older releases also protect the remaining numbers in history. Existing hide-from-history and authenticated-unlock settings still apply. The toolbar trash clears call history; use the labelled overflow action to delete the contact itself.
 
 Online caller identification is optional: enable it in Phone settings → caller identification/privacy, or in an unknown number’s details. It currently uses Greek community pages from white-pages.gr; a result is a suggestion, not a verified identity, and links to its source. No result is guaranteed for an unlisted number or an unavailable provider. Saved and hidden callers are excluded from automatic online lookup.
+
+Deleting a contact requests Android write permission when needed, keeps the confirmation open if deletion fails, and returns from the deleted contact on success. Read-only contacts may still require changes in their source account.

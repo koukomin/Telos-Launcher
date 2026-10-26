@@ -86,32 +86,44 @@ internal object ContactActions {
 }
 
 @androidx.compose.runtime.Composable
-internal fun DeleteContactDialog(contact: de.mm20.launcher2.comms.model.DialerContact, onDismiss: () -> Unit) {
+internal fun DeleteContactDialog(
+    contact: de.mm20.launcher2.comms.model.DialerContact,
+    onDeleted: () -> Unit = {},
+    onDismiss: () -> Unit,
+) {
     val repo: de.mm20.launcher2.comms.repository.ContactDirectoryRepository = org.koin.compose.koinInject()
     val context = androidx.compose.ui.platform.LocalContext.current
     val scope = androidx.compose.runtime.rememberCoroutineScope()
     val deleting = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    fun failed() {
+        android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.au_phonea_action_failed,
+            android.widget.Toast.LENGTH_LONG).show()
+    }
+    fun delete() {
+        deleting.value = true
+        scope.launch {
+            val deleted = try { repo.deleteContact(contact.id) }
+                catch (e: kotlinx.coroutines.CancellationException) { throw e }
+                catch (_: Exception) { false }
+            deleting.value = false
+            if (deleted) { onDeleted(); onDismiss() } else failed()
+        }
+    }
+    val permission = androidx.activity.compose.rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
+    ) { granted ->
+        deleting.value = false
+        if (granted) delete() else failed()
+    }
     androidx.compose.material3.AlertDialog(
         onDismissRequest = { if (!deleting.value) onDismiss() },
         title = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.hc_delete)) },
         text = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.contacts_delete_confirm, contact.displayName)) },
         confirmButton = {
             androidx.compose.material3.TextButton(enabled = !deleting.value, onClick = {
-                deleting.value = true
-                scope.launch {
-                    val deleted = try {
-                        repo.deleteContact(contact.id)
-                    } catch (e: kotlinx.coroutines.CancellationException) {
-                        throw e
-                    } catch (_: Exception) {
-                        false
-                    }
-                    deleting.value = false
-                    if (!deleted) {
-                        android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_LONG).show()
-                    }
-                    onDismiss()
-                }
+                if (androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_CONTACTS) ==
+                    android.content.pm.PackageManager.PERMISSION_GRANTED) delete()
+                else { deleting.value = true; permission.launch(android.Manifest.permission.WRITE_CONTACTS) }
             }) { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.hc_delete)) }
         },
         dismissButton = {

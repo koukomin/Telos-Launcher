@@ -1024,7 +1024,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
         )
     }
 
-    deleteContact?.let { DeleteContactDialog(it) { deleteContact = null } }
+    deleteContact?.let { DeleteContactDialog(it, onDeleted = { backStack.removeLastOrNull() }) { deleteContact = null } }
     if (editingNote && contact != null && primary.isNotEmpty()) {
         var draft by remember(primary) { mutableStateOf(notes[primary].orEmpty()) }
         AlertDialog(
