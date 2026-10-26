@@ -63,7 +63,12 @@ fun CallScreen(
     val notesEnabled by commsSettings.inCallNotes.collectAsStateWithLifecycle(true)
     val notesMap by commsSettings.callerNotes.collectAsStateWithLifecycle(emptyMap())
     val answerStyle by commsSettings.answerStyle.collectAsStateWithLifecycle("buttons")
-    val hiddenMap by commsSettings.hiddenNumbers.collectAsStateWithLifecycle(emptyMap())
+    val directory: de.mm20.launcher2.comms.repository.ContactDirectoryRepository = koinInject()
+    val hiddenMap by remember(commsSettings, directory) {
+        kotlinx.coroutines.flow.combine(commsSettings.hiddenNumbers, directory.observeContacts()) { hidden, contacts ->
+            de.mm20.launcher2.comms.privacy.HiddenContacts.expanded(hidden, contacts)
+        }
+    }.collectAsStateWithLifecycle(emptyMap())
     val maskHidden by commsSettings.maskHiddenIncoming.collectAsStateWithLifecycle(true)
     val context = LocalContext.current
     val recordScope = rememberCoroutineScope()
@@ -344,7 +349,7 @@ private fun CallerPhoto(name: String, photoUri: String?, modifier: Modifier) {
         if (photoUri.isNullOrBlank()) fallback() else {
             SubcomposeAsyncImage(model = request, contentDescription = null, modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Fit, loading = { fallback() }, error = { fallback() },
-                success = { SubcomposeAsyncImageContent() })
+                success = { SubcomposeAsyncImageContent(Modifier.testTag("caller-photo-loaded")) })
         }
     }
 }
@@ -367,15 +372,18 @@ private fun CallControls(controls: List<CallControlSpec>) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun IncomingCallActions(rejectSms: String, answerStyle: String,
-    onTerminationBounds: (androidx.compose.ui.geometry.Rect?) -> Unit) {
+internal fun IncomingCallActions(rejectSms: String, answerStyle: String,
+    onTerminationBounds: (androidx.compose.ui.geometry.Rect?) -> Unit = {},
+    onAnswer: () -> Unit = { TelosCallSession.answer() },
+    onReject: () -> Unit = { TelosCallSession.reject() },
+) {
     val context = LocalContext.current
     var remindOpen by remember { mutableStateOf(false) }
-    if (answerStyle == "swipe") SwipeAnswer({ TelosCallSession.answer() }, { TelosCallSession.reject() }) else {
+    if (answerStyle == "swipe") SwipeAnswer(onAnswer, onReject) else {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             listOf(false, true).forEach { answer ->
                 Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-                    FloatingActionButton(onClick = { if (answer) TelosCallSession.answer() else TelosCallSession.reject() },
+                    FloatingActionButton(onClick = { if (answer) onAnswer() else onReject() },
                         containerColor = if (answer) RdCallGreen else RdRedCall, contentColor = Color.White,
                         shape = RoundedCornerShape(24.dp), modifier = Modifier.size(72.dp).then(
                             if (answer) Modifier else Modifier.onGloballyPositioned { onTerminationBounds(it.boundsInWindow()) })) {

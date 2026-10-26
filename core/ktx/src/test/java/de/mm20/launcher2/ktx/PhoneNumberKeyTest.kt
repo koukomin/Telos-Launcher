@@ -7,8 +7,7 @@ class PhoneNumberKeyTest {
     @Test fun greekLandlineAndMobileAliasesHaveTheSameIdentity() {
         for (number in listOf("2100000000", "6900000000")) {
             val aliases = listOf(number, "+30 $number", "0030$number", "(+30) $number")
-            // Parentheses around a + prefix are deliberately not accepted; normal Greek formats are.
-            aliases.take(3).forEach { a -> aliases.take(3).forEach { b -> assertTrue(PhoneNumberKey.matches(a, b)) } }
+            aliases.forEach { a -> aliases.forEach { b -> assertTrue(PhoneNumberKey.matches(a, b)) } }
         }
     }
     @Test fun unrelatedCountryShortNumberAndExtensionCannotMatchBySuffix() {

@@ -98,15 +98,9 @@ object CallerLookupParser {
     private val riskPattern = Regex("Βαθμός του κινδύνου:\\s*(\\d{1,3})\\s*%")
     private val ratingsPattern = Regex("Αριθμός αξιολογήσεων:\\s*(\\d+)\\s*×")
     fun greekNumber(raw: String): String? {
-        if (raw.any { !(it.isDigit() || it in "+ -().") }) return null
-        val digits = raw.filter(Char::isDigit)
-        val local = when {
-            raw.trim().startsWith("+30") && digits.length == 12 -> digits.drop(2)
-            digits.startsWith("0030") && digits.length == 14 -> digits.drop(4)
-            !raw.trim().startsWith('+') && digits.length == 10 -> digits
-            else -> return null
-        }
-        return local.takeIf { it.length == 10 && (it.startsWith('2') || it.startsWith('6')) }
+        val key = de.mm20.launcher2.ktx.PhoneNumberKey.of(raw)
+        if (!key.startsWith("+30") || key.length != 13) return null
+        return key.drop(3).takeIf { it.startsWith('2') || it.startsWith('6') }
     }
 
     fun parse(number: String, html: String, sourceUrl: String): CallerLookupResult? {
@@ -114,7 +108,7 @@ object CallerLookupParser {
         val heading = document.selectFirst("h1")?.text() ?: return null
         if (!heading.startsWith("Αριθμός τηλεφώνου:") || greekNumber(heading.substringAfter(':')) != number) return null
         // Exclude free-form comments and recommended articles from every decision.
-        val text = document.body().text().substringBefore("Προσθήκη ενός σχολίου")
+        val text = document.body().text().substringBefore("Σχόλια για τον αριθμό").substringBefore("Προσθήκη ενός σχολίου")
         val risk = riskPattern.find(text)?.groupValues?.get(1)?.toIntOrNull()
         val ratings = ratingsPattern.find(text)?.groupValues?.get(1)?.toIntOrNull()
         val name = document.selectFirst("h3")?.text()?.takeIf {

@@ -24,6 +24,7 @@ import org.koin.core.component.inject
 
 class TelosInCallService : InCallService(), KoinComponent {
     private val commsSettings: CommsSettings by inject()
+    private val contacts: de.mm20.launcher2.comms.repository.ContactDirectoryRepository by inject()
     private val callerLookup: de.mm20.launcher2.comms.callerid.CallerLookup by inject()
 
     private val callScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -50,9 +51,10 @@ class TelosInCallService : InCallService(), KoinComponent {
                 }
         }
         callScope.launch {
-            combine(TelosCallSession.ui, commsSettings.snapshot, CallUiVisibility.visible) { state, settings, visible ->
-                val masked = state.incoming && settings.maskHiddenIncoming &&
-                    de.mm20.launcher2.comms.privacy.HiddenContacts.matches(state.number, settings.hiddenNumbers)
+            combine(TelosCallSession.ui, commsSettings.snapshot, CallUiVisibility.visible, contacts.observeContacts()) { state, settings, visible, directory ->
+                val hidden = de.mm20.launcher2.comms.privacy.HiddenContacts.expanded(settings.hiddenNumbers, directory)
+                val masked = settings.maskHiddenIncoming &&
+                    de.mm20.launcher2.comms.privacy.HiddenContacts.matches(state.number, hidden)
                 val publicState = if (masked) state.copy(name = getString(de.mm20.launcher2.i18n.R.string.au_phoneb_private_caller),
                     number = "", photoUri = null, callerNameSuggested = false, likelySpam = false, callerSourceUrl = null) else state
                 publicState to visible

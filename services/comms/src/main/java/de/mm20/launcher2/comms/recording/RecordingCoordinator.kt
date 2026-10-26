@@ -85,7 +85,10 @@ object RecordingCoordinator : KoinComponent {
                             )
                         }
                         if (ok) {
-                        if (generation.get() != requestedGeneration) { CallAudioRecorder.stop(); return@withContext false }
+                            if (generation.get() != requestedGeneration) {
+                                CallAudioRecorder.stop()
+                                return@withContext false
+                            }
                             _backend.value = backend
                             Log.i(TAG, "Recording started via $backend")
                             return@withContext true
