@@ -5,6 +5,11 @@ on:
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/FrostedGlass.kt'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/VirtualAppBlur.kt'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/media/stremio/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/comms/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/**'
+      - 'services/comms/**'
+      - 'core/ktx/**'
+      - 'core/preferences/**'
       - 'app/ui/src/test/java/de/mm20/launcher2/ui/component/FrostedTintTest.kt'
       - '.github/workflows/validate-theme-overlays.yml'
 permissions:
@@ -22,11 +27,14 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: chmod +x gradlew
       - name: Compile and test UI
-        run: ./gradlew :app:ui:testDefaultDebugUnitTest :app:app:assembleDefaultDebug --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace
+        run: ./gradlew :core:ktx:testDebugUnitTest :core:preferences:testDebugUnitTest :services:comms:testDebugUnitTest :app:ui:testDefaultDebugUnitTest :app:app:assembleDefaultDebug --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: theme-overlay-validation
           path: |
             app/ui/build/reports/tests/
+            services/comms/build/reports/tests/
+            core/ktx/build/reports/tests/
+            core/preferences/build/reports/tests/
             app/app/build/outputs/apk/default/debug/*.apk

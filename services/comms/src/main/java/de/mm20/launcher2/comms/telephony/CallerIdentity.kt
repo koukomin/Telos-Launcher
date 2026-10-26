@@ -7,6 +7,7 @@ data class CallerIdentity(
     val localLookupComplete: Boolean = false,
     val suggestedName: String? = null,
     val likelySpam: Boolean = false,
+    val sourceUrl: String? = null,
 )
 
 /** Prefer the user's address book over carrier text; never show an empty caller label. */

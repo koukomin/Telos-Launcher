@@ -15,6 +15,7 @@ data class InCallUiState(
     val photoUri: String? = null,
     val callerNameSuggested: Boolean = false,
     val likelySpam: Boolean = false,
+    val callerSourceUrl: String? = null,
     val connectedAtEpochMs: Long? = null,
     val secondNumber: String = "",
     val secondName: String? = null,

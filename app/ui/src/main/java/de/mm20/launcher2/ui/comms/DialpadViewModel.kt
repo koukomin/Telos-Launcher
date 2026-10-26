@@ -57,7 +57,9 @@ class DialpadViewModel : ViewModel(), KoinComponent {
         commsSettings.hiddenNumbers,
         commsSettings.hideFromRecents,
         PrivacySession.hiderUnlocked,
-    ) { list, hidden, hide, unlocked ->
+        contactDirectory.observeContacts(),
+    ) { list, storedHidden, hide, unlocked, directory ->
+        val hidden = HiddenContacts.expanded(storedHidden, directory)
         if (!hide || unlocked) list
         else list.filter { !HiddenContacts.matches(it.phoneNumber, hidden) }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())

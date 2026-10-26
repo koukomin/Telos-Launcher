@@ -27,6 +27,7 @@ import org.koin.android.ext.android.inject
 
 class CallActivity : BaseActivity(), SensorEventListener {
     private val commsSettings: CommsSettings by inject()
+    private val visibilityOwner = Any()
     private var inCallNotes = true
     private var pocketMode = false
     private var proximitySpeaker = false
@@ -87,6 +88,23 @@ class CallActivity : BaseActivity(), SensorEventListener {
             // keeps the value up to date, so that onStop does not have to wait for the datastore
             commsSettings.inCallNotes.collect { inCallNotes = it }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        de.mm20.launcher2.comms.telephony.CallUiVisibility.setVisible(visibilityOwner, true)
+        // Returning from another app must not leave a notes overlay above the full call controls.
+        stopService(Intent(this, FloatingNotesService::class.java))
+    }
+
+    override fun onPause() {
+        de.mm20.launcher2.comms.telephony.CallUiVisibility.setVisible(visibilityOwner, false)
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        de.mm20.launcher2.comms.telephony.CallUiVisibility.setVisible(visibilityOwner, false)
+        super.onDestroy()
     }
 
     override fun onStart() {

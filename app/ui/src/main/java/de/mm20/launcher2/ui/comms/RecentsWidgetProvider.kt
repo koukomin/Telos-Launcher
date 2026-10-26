@@ -22,6 +22,7 @@ import org.koin.core.component.inject
 class RecentsWidgetProvider : AppWidgetProvider(), KoinComponent {
 
     private val commsSettings: CommsSettings by inject()
+    private val contacts: de.mm20.launcher2.comms.repository.ContactDirectoryRepository by inject()
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         val pending = goAsync()
@@ -57,7 +58,7 @@ class RecentsWidgetProvider : AppWidgetProvider(), KoinComponent {
         // numbers the user hid from the recents must not show up on the home screen either
         val hidden = runCatching {
             if (commsSettings.hideFromRecents.first() && !PrivacySession.hiderUnlocked.value) {
-                commsSettings.hiddenNumbers.first()
+                HiddenContacts.expanded(commsSettings.hiddenNumbers.first(), contacts.observeContacts().first())
             } else emptyMap()
         }.getOrDefault(emptyMap())
         return try {

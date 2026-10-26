@@ -379,11 +379,17 @@ class CommsSettings internal constructor(
 
     val hiddenNumbers
         get() = dataStore.data.map { it.comms.hiddenNumbers }
-    fun setHiddenNumber(number: String, hidden: Boolean) {
+    fun setHiddenNumber(number: String, hidden: Boolean) = setHiddenNumbers(listOf(number), hidden)
+
+    /** A contact is one privacy action: persist every number atomically, including legacy aliases. */
+    fun setHiddenNumbers(numbers: List<String>, hidden: Boolean) {
+        val keys = numbers.map(de.mm20.launcher2.ktx.PhoneNumberKey::of).filter(String::isNotEmpty).toSet()
+        if (keys.isEmpty()) return
         dataStore.update { data ->
-            val map = data.comms.hiddenNumbers.toMutableMap()
-            val key = number.filter { it.isDigit() || it == '+' }
-            if (!hidden || key.isBlank()) map.remove(key) else map[key] = "1"
+            val map = data.comms.hiddenNumbers.filterKeys {
+                de.mm20.launcher2.ktx.PhoneNumberKey.of(it) !in keys
+            }.toMutableMap()
+            if (hidden) keys.forEach { map[it] = "1" }
             data.copy(comms = data.comms.copy(hiddenNumbers = map))
         }
     }

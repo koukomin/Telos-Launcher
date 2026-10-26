@@ -13,8 +13,12 @@ object CallNotification {
     private const val CHANNEL_ID = "telos_incall"
     private const val NOTIFICATION_ID = 7201
 
-    fun show(context: Context, state: InCallUiState) {
-        if (!state.hasCall) {
+    private var alertedIncomingToken = 0L
+
+    fun show(context: Context, state: InCallUiState, fullScreenVisible: Boolean = false) {
+        if (!showCallNotification(state.hasCall, fullScreenVisible)) {
+            if (state.incoming) alertedIncomingToken = state.actionToken
+            if (!state.hasCall) alertedIncomingToken = 0L
             cancel(context)
             return
         }
@@ -64,8 +68,17 @@ object CallNotification {
             .setStyle(style)
             .setOnlyAlertOnce(true)
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-        if (state.incoming) builder.setFullScreenIntent(pending, true)
-        manager.notify(NOTIFICATION_ID, de.mm20.launcher2.search.VirtualAppAppearance.decorate(builder, context, "telos_phone_app").build())
+        if (state.incoming && alertedIncomingToken != state.actionToken) {
+            builder.setFullScreenIntent(pending, true)
+            alertedIncomingToken = state.actionToken
+        }
+        try {
+            manager.notify(NOTIFICATION_ID, de.mm20.launcher2.search.VirtualAppAppearance.decorate(builder, context, "telos_phone_app").build())
+        } catch (e: SecurityException) {
+            android.util.Log.w("TelosCallNotification", "Call notification permission unavailable", e)
+        } catch (e: IllegalArgumentException) {
+            android.util.Log.w("TelosCallNotification", "Call notification rejected by system", e)
+        }
     }
 
     fun cancel(context: Context) {

@@ -46,7 +46,19 @@ object PrivacySession {
 object HiddenContacts {
     fun matches(number: String, hidden: Map<String, String>): Boolean {
         if (number.isBlank() || hidden.isEmpty()) return false
-        return hidden.keys.any { PhoneNumbers.match(it, number) }
+        return hidden.keys.any { de.mm20.launcher2.ktx.PhoneNumberKey.matches(it, number) }
+    }
+
+    /** Also protect the other numbers of contacts hidden by older releases (which saved only one). */
+    fun expanded(hidden: Map<String, String>, contacts: List<DialerContact>): Map<String, String> {
+        if (hidden.isEmpty()) return hidden
+        val result = hidden.toMutableMap()
+        contacts.filter { contactHidden(it, hidden) }.forEach { contact ->
+            contact.phoneNumbers.forEach { number ->
+                de.mm20.launcher2.ktx.PhoneNumberKey.of(number).takeIf(String::isNotEmpty)?.let { result[it] = "1" }
+            }
+        }
+        return result
     }
 
     fun contactHidden(contact: DialerContact, hidden: Map<String, String>): Boolean =
