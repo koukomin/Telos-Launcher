@@ -103,14 +103,15 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
                     sessionExpired.value = true
                     userPlaylists.value = emptyList()
                 }
-            } catch (_: Exception) {
-            } finally {
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            finally {
                 isLoadingPlaylists.value = false
             }
         }
     }
 
-    fun selectPlaylist(context: Context, url: String) {
+    fun selectPlaylist(context: Context, url: String, music: Boolean = true) {
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             searching.value = true
@@ -118,7 +119,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
             try {
                 val pair = repository.fetchPlaylist(url)
                 selectedPlaylistTracks.value = pair
-                results.value = results.value + (true to pair.second)
+                results.value = results.value + (music to pair.second)
             } catch (e: CancellationException) {
                 throw e
             } catch (_: Exception) {
@@ -126,6 +127,18 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
             } finally {
                 searching.value = false
             }
+        }
+    }
+
+    fun loadHome(context: Context, music: Boolean = false, refresh: Boolean = false) {
+        if (!refresh && results.value[music]?.isNotEmpty() == true) return
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            searching.value = true; message.value = null
+            try { results.value = results.value + (music to if (music) repository.fetchMusicHome() else repository.fetchHomeFeed()) }
+            catch (cancelled: CancellationException) { throw cancelled }
+            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            finally { searching.value = false }
         }
     }
 
@@ -145,7 +158,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
                 library.remember(playback.entry, music)
                 val extras = Bundle().apply {
                     putBoolean("audioOnly", playback.audioOnly)
-                    putString(YouTubePlayerService.EXTRA_QUEUE, YouTubeQueue.encode(tracks))
+                    putString(YouTubePlayerService.EXTRA_QUEUE, withContext(Dispatchers.Default) { YouTubeQueue.encode(tracks) })
                     putInt(YouTubePlayerService.EXTRA_QUEUE_INDEX, tracks.indexOfFirst { it.url == entry.url })
                     playback.audioUrl?.let { putString(YouTubePlayerService.EXTRA_AUDIO_URL, it) }
                 }
@@ -194,11 +207,11 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
         searchJob = viewModelScope.launch {
             searching.value = true; message.value = null
             try {
-                val tracks = repository.related(entry)
+                val tracks = repository.artistRadio(entry)
                 results.value = results.value + (true to tracks)
                 if (tracks.isNotEmpty()) play(context, tracks.first(), true, tracks)
             } catch (e: CancellationException) { throw e }
-            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_radio_failed) }
             finally { searching.value = false }
         }
     }

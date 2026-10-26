@@ -174,11 +174,11 @@ fun RadioStationCard(
     Row(
         modifier
             .pressScale(reduce, onClick = { if (uiSettings.tapPlays) player.toggleStation(station) else onLongClick() }, onLongClick = onLongClick)
-            .clip(RoundedCornerShape(24.dp))
+            .clip(RoundedCornerShape(12.dp))
             .background(Brush.verticalGradient(listOf(tint.compositeOver(low), low)))
             .padding(12.dp),
     ) {
-        RadioLogo(station, Modifier.size(52.dp), corner = 12.dp, pad = 6.dp)
+        RadioLogo(station, Modifier.size(64.dp), corner = 8.dp, pad = 6.dp)
         Column(Modifier.weight(1f).padding(start = 10.dp)) {
         Row(Modifier.padding(top = 2.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             if (playing) RadioEqualizer(!reduce, MaterialTheme.colorScheme.primary)

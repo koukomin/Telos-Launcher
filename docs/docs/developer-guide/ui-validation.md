@@ -101,3 +101,13 @@ The unified SystemAppDetailsRoute is registered in both hosts. This change reuse
 The embedded host also registers the freeze hub, statistics and Device Owner setup destinations reached from System management. `python3 tools/validation/system_app_routes.py` guards these destination registrations in both hosts; it is a static navigation check, not a device interaction test. Dangerous manifest permission rows carry a warning glyph as well as color.
 
 Audio policy follow-up: System details now include translated focus/playback AppOps lists, with readback before displaying success. Parser tests cover Android shell defaults/history, wrong operation output, UID overrides and command injection. Physical root/Shizuku audio, OEM enforcement and changes to active playback remain unverified.
+
+## Media redesign follow-up
+
+New instrumentation covers the actual call termination target at font scale 2 in a short window, media card play/radio actions and Listen/Watch card screenshots in light/dark at font scales 1/2. Evidence is collected through MediaStore in Pictures/TelosUiValidation and survives test-APK uninstall. Full seven-source account/library/device screenshots remain unverified until reviewed. See media-redesign.md for feature inventory and non-visual limitations.
+
+The expanded YouTube Music player has portrait/landscape, font 1/2 screenshot fixtures and callback tests for previous/next, pause, stop and queue selection. These are UI/controller-wiring checks; they do not establish live YouTube playback or OEM call/Recents behavior. The first media-card test passed; the initial call-touch test failed because its preferences DI fixture was missing, and that setup was corrected before rerunning.
+
+`tools/validation/run-ui-device-tests.sh` preserves the test exit status while collecting MediaStore screenshots even after an assertion failure. A successful test run also requires successful evidence retrieval. The emulator workflow invokes the wrapper as a single shell command so exit-status variables survive the action’s per-line script execution.
+
+The first successful Media component screenshot run exposed a missing explicit content-color scope in the expanded music player fixture. The player now provides the theme on-surface role for headings, transport icons and position text, including when hosted without an enclosing Surface. Final screenshot verification must use this correction.

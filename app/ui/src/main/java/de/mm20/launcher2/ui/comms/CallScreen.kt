@@ -1,5 +1,8 @@
 package de.mm20.launcher2.ui.comms
 
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.sp
@@ -76,8 +79,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Composable
-fun CallScreen(onFinished: () -> Unit) {
-    val state by TelosCallSession.ui.collectAsStateWithLifecycle()
+fun CallScreen(onFinished: () -> Unit,
+    onTerminationBounds: (androidx.compose.ui.geometry.Rect?) -> Unit = {},
+    stateSource: kotlinx.coroutines.flow.StateFlow<de.mm20.launcher2.comms.telephony.InCallUiState> = TelosCallSession.ui,
+    onHangup: () -> Unit = { TelosCallSession.hangup() },
+) {
+    val state by stateSource.collectAsStateWithLifecycle()
+    DisposableEffect(state.incoming) { onDispose { onTerminationBounds(null) } }
     val recording by CallAudioRecorder.isRecording.collectAsStateWithLifecycle()
     val commsSettings: CommsSettings = koinInject()
     val autoRecord by commsSettings.autoRecordCalls.collectAsStateWithLifecycle(false)
@@ -172,10 +180,12 @@ fun CallScreen(onFinished: () -> Unit) {
                 likelySpam = state.likelySpam && !hiddenIncoming,
                 rejectSms = rejectSms,
                 answerStyle = answerStyle,
+                onTerminationBounds = onTerminationBounds,
             )
         } else {
-        val landscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
-        val compact = landscape || LocalDensity.current.fontScale > 1.15f
+        androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
+        val compact = maxWidth > maxHeight || maxHeight < 620.dp * LocalDensity.current.fontScale
+        val avatarSize = minOf(maxWidth * 0.62f, maxHeight * 0.32f, 240.dp).coerceAtLeast(96.dp)
         Column(
         modifier = Modifier
             .fillMaxSize()
@@ -186,7 +196,7 @@ fun CallScreen(onFinished: () -> Unit) {
     ) {
         Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(Modifier.height(if (compact) 8.dp else 48.dp))
-            CommsAvatar(name = displayName, photoUri = state.photoUri, size = if (compact) 72.dp else 100.dp)
+            CommsAvatar(name = displayName, photoUri = state.photoUri, size = avatarSize)
             Spacer(Modifier.height(if (compact) 8.dp else 20.dp))
         Text(
             text = displayName,
@@ -385,17 +395,19 @@ fun CallScreen(onFinished: () -> Unit) {
 
         } // scroll content; disconnect remains visible
             FloatingActionButton(
-                onClick = { TelosCallSession.hangup() },
+                onClick = onHangup,
                 containerColor = RdRedCall,
                 contentColor = Color.White,
                 modifier = Modifier
                     .size(76.dp)
+                    .onGloballyPositioned { onTerminationBounds(it.boundsInWindow()) }
                     .padding(bottom = 8.dp),
                 shape = CircleShape,
             ) {
                 Icon(painterResource(R.drawable.rd_ic_call_end), contentDescription = stringResource(R.string.comms_hangup))
             }
             Spacer(Modifier.height(24.dp))
+        }
         }
         }
     }
@@ -410,6 +422,7 @@ private fun IncomingCallLayout(
     likelySpam: Boolean,
     rejectSms: String,
     answerStyle: String,
+    onTerminationBounds: (androidx.compose.ui.geometry.Rect?) -> Unit,
 ) {
     val context = LocalContext.current
     val overlay = Color.Black.copy(alpha = 0.45f)
@@ -571,7 +584,7 @@ private fun IncomingCallLayout(
                             onClick = { TelosCallSession.reject() },
                             containerColor = RdRedCall,
                             contentColor = Color.White,
-                            modifier = Modifier.size(72.dp),
+                            modifier = Modifier.size(72.dp).onGloballyPositioned { onTerminationBounds(it.boundsInWindow()) },
                             shape = CircleShape,
                         ) {
                             Icon(

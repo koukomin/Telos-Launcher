@@ -17,6 +17,7 @@ object TelosCallSession {
 
     private val calls = mutableListOf<Call>()
     private val identities = mutableMapOf<String, CallerIdentity>()
+    private val states = mutableMapOf<Call, Int>()
     private val callbacks = mutableMapOf<Call, Call.Callback>()
     // when each call became active, kept over hold/unhold so that the call timer does not restart
     private val connectedAt = mutableMapOf<Call, Long>()
@@ -40,8 +41,13 @@ object TelosCallSession {
     fun onCallAdded(newCall: Call) {
         if (newCall in calls) return
         calls.add(newCall)
+        @Suppress("DEPRECATION")
+        val initialState = newCall.state
+        states[newCall] = initialState
         val callback = object : Call.Callback() {
             override fun onStateChanged(call: Call, state: Int) {
+                if (call !in calls) return
+                states[call] = state
                 publish()
                 when (state) {
                     Call.STATE_RINGING -> {
@@ -102,6 +108,7 @@ object TelosCallSession {
 
     fun onCallRemoved(removed: Call) {
         callbacks.remove(removed)?.let { removed.unregisterCallback(it) }
+        states.remove(removed)
         connectedAt.remove(removed)
         pendingOutgoing.remove(removed)
         calls.remove(removed)
@@ -144,24 +151,41 @@ object TelosCallSession {
         call?.answer(VideoProfile.STATE_AUDIO_ONLY)
     }
 
-    fun reject() {
-        val current = call ?: return
-        try {
-            current.reject(false, "")
-        } catch (_: Exception) {
-            current.disconnect()
-        }
-    }
+    fun reject() = hangup()
 
     fun hangup() {
-        val current = call ?: return
-        val state = stateOf(current)
-        if (state == Call.STATE_RINGING) {
-            reject()
-        } else {
-            current.disconnect()
+        // Re-resolve against live Telecom calls rather than a cached/disconnected primary.
+        val selected = pickPrimary() ?: return
+        val current = selected.parent ?: selected
+        try {
+            if (stateOf(current) == Call.STATE_RINGING) current.reject(false, "")
+            else current.disconnect()
+        } catch (_: Exception) {
+            runCatching { current.disconnect() }
         }
+        Handler(Looper.getMainLooper()).postDelayed({
+            val service = inCallService ?: return@postDelayed
+            // Some OEM Telecom adapters ignore the first Call command. Never end a replacement
+            // call, call-waiting call or conference through the global fallback.
+            val live = calls.filter { isLive(it) }
+            if (live.singleOrNull() !== current || service.calls.none { it === current }) return@postDelayed
+            if (Build.VERSION.SDK_INT >= 28) runCatching {
+                @Suppress("DEPRECATION")
+                service.getSystemService(android.telecom.TelecomManager::class.java)?.endCall()
+            }
+        }, 2000)
     }
+
+    fun onServiceDestroyed(service: InCallService) {
+        if (inCallService !== service) return
+        callbacks.forEach { (call, callback) -> runCatching { call.unregisterCallback(callback) } }
+        callbacks.clear(); states.clear(); calls.clear(); connectedAt.clear(); pendingOutgoing.clear()
+        call = null; inCallService = null
+        publish()
+    }
+
+    private fun isLive(call: Call): Boolean = stateOf(call) !in
+        setOf(Call.STATE_DISCONNECTED, Call.STATE_DISCONNECTING)
 
     fun merge() {
         val current = call ?: return
@@ -264,10 +288,9 @@ object TelosCallSession {
     }
 
     private fun pickPrimary(): Call? {
-        return calls.find { stateOf(it) == Call.STATE_RINGING }
-            ?: calls.find { stateOf(it) == Call.STATE_ACTIVE }
-            ?: calls.find { stateOf(it) == Call.STATE_DIALING || stateOf(it) == Call.STATE_CONNECTING }
-            ?: calls.firstOrNull()
+        val live = calls.filter(::isLive)
+        val roots = live.filter { it.parent == null }.ifEmpty { live }
+        return roots.minByOrNull { callPriority(stateOf(it)) }
     }
 
     private fun otherCall(primary: Call): Call? =
@@ -276,12 +299,8 @@ object TelosCallSession {
     private fun isConference(call: Call): Boolean =
         call.details.hasProperty(Call.Details.PROPERTY_CONFERENCE) || call.children.isNotEmpty()
 
-    private fun stateOf(call: Call): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            call.details.state
-        } else {
-            @Suppress("DEPRECATION")
-            call.state
-        }
+    private fun stateOf(call: Call): Int = states[call] ?: run {
+        @Suppress("DEPRECATION")
+        call.state
     }
 }

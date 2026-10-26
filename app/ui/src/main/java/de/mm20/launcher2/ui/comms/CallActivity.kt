@@ -31,6 +31,8 @@ class CallActivity : BaseActivity(), SensorEventListener {
     private var pocketMode = false
     private var proximitySpeaker = false
     private var proximityNear = false
+    private var terminationBounds: androidx.compose.ui.geometry.Rect? = null
+    private var terminationGesture = false
     private var sensorManager: SensorManager? = null
     private var gestures: CallGestureTracker? = null
 
@@ -73,7 +75,7 @@ class CallActivity : BaseActivity(), SensorEventListener {
             setContent {
                 ProvideCompositionLocals {
                     LauncherTheme {
-                        CallScreen(onFinished = {
+                        CallScreen(onTerminationBounds = { terminationBounds = it }, onFinished = {
                             CallNotification.cancel(this@CallActivity)
                             finish()
                         })
@@ -109,6 +111,8 @@ class CallActivity : BaseActivity(), SensorEventListener {
     }
 
     override fun onStop() {
+        proximityNear = false
+        terminationGesture = false
         sensorManager?.unregisterListener(this)
         val notesOn = inCallNotes
         // not while the screen is only rotating
@@ -128,10 +132,14 @@ class CallActivity : BaseActivity(), SensorEventListener {
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        if (pocketMode && proximityNear && TelosCallSession.ui.value.incoming) {
-            return true
+        if (ev == null) return super.dispatchTouchEvent(ev)
+        if (ev.actionMasked == MotionEvent.ACTION_DOWN) {
+            terminationGesture = terminationBounds?.contains(androidx.compose.ui.geometry.Offset(ev.x, ev.y)) == true
         }
-        return super.dispatchTouchEvent(ev)
+        val blocked = blockPocketTouch(pocketMode, proximityNear, TelosCallSession.ui.value.incoming, terminationGesture)
+        val result = if (blocked) true else super.dispatchTouchEvent(ev)
+        if (ev.actionMasked == MotionEvent.ACTION_UP || ev.actionMasked == MotionEvent.ACTION_CANCEL) terminationGesture = false
+        return result
     }
 
     override fun onSensorChanged(event: SensorEvent?) {

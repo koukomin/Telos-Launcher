@@ -201,9 +201,12 @@ fun MusicScreen(
                         onShareTrack = { shareTrack(it) },
                     )
                 } else {
-                    ScrollableTabRow(selectedTabIndex = tab, containerColor = Color.Transparent, edgePadding = 16.dp, divider = {}) {
-                        listOf(stringResource(R.string.au10_music_tab_home), stringResource(R.string.au_music_tab_songs), stringResource(R.string.hc_albums), stringResource(R.string.au_music_tab_artists)).forEachIndexed { i, title ->
-                            Tab(selected = tab == i, onClick = { tab = i }, text = { Text(title, fontWeight = if (tab == i) FontWeight.SemiBold else FontWeight.Normal) })
+                    androidx.compose.foundation.lazy.LazyRow(contentPadding = PaddingValues(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        val labels = listOf(R.string.au10_music_tab_home, R.string.au_music_tab_songs, R.string.hc_albums, R.string.au_music_tab_artists)
+                        items(labels.size) { i ->
+                            FilterChip(selected = tab == i, onClick = { tab = i },
+                                label = { Text(stringResource(labels[i])) }, shape = RoundedCornerShape(20.dp))
                         }
                     }
                     when {
@@ -234,7 +237,7 @@ fun MusicScreen(
                         ) {
                             gridItems(albums, key = { it.tracks.first().albumId }) { album ->
                                 Column(Modifier.pressScale(reduceAnimations, onClick = { group = album }, onLongClick = { shareGroup(album) })) {
-                                    Cover(album.tracks.first(), Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(20.dp)))
+                                    Cover(album.tracks.first(), Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(8.dp)))
                                     Text(album.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 8.dp))
                                     Text(album.subtitle, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                 }
@@ -350,7 +353,7 @@ private fun TrackRow(
     )
     Row(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 2.dp)
-            .clip(RoundedCornerShape(20.dp)).background(bg)
+            .clip(RoundedCornerShape(8.dp)).background(bg)
             .combinedClickable(
                 onLongClick = { haptic.performHapticFeedback(HapticFeedbackType.LongPress); menu = true },
                 onClick = { onPlay(index) },

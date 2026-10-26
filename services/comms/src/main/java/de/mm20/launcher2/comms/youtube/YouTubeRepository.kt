@@ -5,6 +5,7 @@ import de.mm20.launcher2.comms.youtube.flow.AudioStreamSelector
 import de.mm20.launcher2.comms.youtube.flow.NewPipeDownloader
 import de.mm20.launcher2.comms.youtube.flow.YouTubeLink
 import de.mm20.launcher2.comms.youtube.flow.parseYouTubeLink
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
@@ -45,6 +46,32 @@ data class YouTubePlayback(
 
 class YouTubeRepository(private val context: Context) {
 
+    private val musicVersionLock = kotlinx.coroutines.sync.Mutex()
+    @Volatile private var musicVersion: Pair<Long, String>? = null
+    private suspend fun musicClientVersion(): String = musicVersionLock.withLock {
+        val now = android.os.SystemClock.elapsedRealtime()
+        musicVersion?.takeIf { now - it.first < 3_600_000 }?.let { return@withLock it.second }
+        val response = NewPipe.getDownloader().execute(Request("GET", "https://music.youtube.com/", emptyMap(), null, null, false))
+        require(response.responseCode() in 200..299)
+        val value = musicClientVersionFromPage(response.responseBody()) ?: error("Music client unavailable")
+        musicVersion = now to value
+        value
+    }
+
+    suspend fun fetchMusicHome(): List<YouTubeEntry> = withContext(Dispatchers.IO) {
+        initialize()
+        val account = YouTubeAccountManager.getCookie(context)
+        val payload = JSONObject().put("browseId", "FEmusic_home").put("context", JSONObject().put("client",
+            JSONObject().put("clientName", "WEB_REMIX").put("clientVersion", musicClientVersion())
+                .put("hl", Locale.getDefault().language).put("gl", Locale.getDefault().country.ifBlank { "GR" })))
+        val response = NewPipe.getDownloader().execute(Request("POST", "https://music.youtube.com/youtubei/v1/browse?prettyPrint=false",
+            mapOf("Content-Type" to listOf("application/json"), "Origin" to listOf("https://music.youtube.com")),
+            payload.toString().toByteArray(), null, false))
+        require(response.responseCode() in 200..299) { "Music home unavailable" }
+        if (YouTubeAccountManager.getCookie(context) != account) return@withContext emptyList()
+        homeVideoEntries(response.responseBody())
+    }
+
     private fun initialize() = synchronized(INIT_LOCK) {
         if (!initialized) {
             val locale = Locale.getDefault()
@@ -62,7 +89,16 @@ class YouTubeRepository(private val context: Context) {
         return cookie != null && YouTubeSessionPolicy.sapisid(cookie) != null
     }
 
-    suspend fun artistRadio(entry: YouTubeEntry): List<YouTubeEntry> = related(entry)
+    suspend fun artistRadio(entry: YouTubeEntry): List<YouTubeEntry> = withContext(Dispatchers.IO) {
+        val id = when (val link = parseYouTubeLink(entry.url)) {
+            is YouTubeLink.Video -> link.id
+            is YouTubeLink.Short -> link.id
+            else -> error("A video seed is required")
+        }
+        val tracks = fetchPlaylist("https://www.youtube.com/watch?v=$id&list=RDAMVM$id").second.distinctBy { it.url }
+        require(tracks.isNotEmpty()) { "Empty artist radio" }
+        tracks
+    }
 
     suspend fun genreRadio(genre: String): List<YouTubeEntry> = withContext(Dispatchers.IO) {
         search("$genre music radio", true)
@@ -81,12 +117,20 @@ class YouTubeRepository(private val context: Context) {
 
     suspend fun fetchHomeFeed(): List<YouTubeEntry> = withContext(Dispatchers.IO) {
         initialize()
-        runCatching {
+        val account = YouTubeAccountManager.getCookie(context)
+        val page = NewPipe.getDownloader().execute(Request("GET", "https://www.youtube.com/",
+            mapOf("Accept-Language" to listOf(Locale.getDefault().toLanguageTag())), null, null, false))
+        require(page.responseCode() in 200..299) { "Home feed unavailable" }
+        if (YouTubeAccountManager.getCookie(context) != account) return@withContext emptyList()
+        val data = initialYouTubeData(page.responseBody()) ?: error("Home data unavailable")
+        val entries = homeVideoEntries(data)
+        if (entries.isNotEmpty()) entries else {
+            // A history-disabled account may legitimately have no recommendations.
             org.schabi.newpipe.extractor.kiosk.KioskInfo.getInfo(ServiceList.YouTube, "https://www.youtube.com/feed/trending")
                 .relatedItems.filterIsInstance<StreamInfoItem>().map {
                     YouTubeEntry(it.url, it.name, it.uploaderName.orEmpty(), it.thumbnails.lastOrNull()?.url, it.duration)
                 }
-        }.getOrDefault(emptyList())
+        }
     }
 
     /** Shortcut to fetch the logged-in user's "Liked Music" (LM) playlist. */
@@ -149,7 +193,7 @@ class YouTubeRepository(private val context: Context) {
                 put("context", JSONObject().apply {
                     put("client", JSONObject().apply {
                         put("clientName", "WEB_REMIX")
-                        put("clientVersion", "1.20260101.01.00")
+                        put("clientVersion", musicClientVersion())
                         put("hl", locale.language.ifBlank { "el" })
                         put("gl", locale.country.ifBlank { "GR" })
                     })

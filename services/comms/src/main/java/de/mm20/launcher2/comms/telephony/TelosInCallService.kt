@@ -71,6 +71,7 @@ class TelosInCallService : InCallService(), KoinComponent {
       catch (_: android.database.sqlite.SQLiteException) { CallerIdentity() }
 
     override fun onDestroy() {
+        TelosCallSession.onServiceDestroyed(this)
         callScope.cancel()
         super.onDestroy()
     }

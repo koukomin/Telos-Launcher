@@ -43,7 +43,7 @@ jobs:
       - name: Compile native app screens and run communication tests
         run: ./gradlew :services:comms:testDebugUnitTest :services:network:testDebugUnitTest :app:ui:compileDefaultDebugKotlin --continue --stacktrace
       - name: Test camera bounds, telemetry, magnifier and Files exclusions
-        run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests '*CameraImageSizingTest' --tests '*CpuTelemetryTest' --tests '*MagnifierFilterTest' --tests '*StorageExclusionsTest' --tests '*SavedWifiParserTest' --tests '*MorseCodecTest' --stacktrace
+        run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests '*CameraImageSizingTest' --tests '*CpuTelemetryTest' --tests '*MagnifierFilterTest' --tests '*StorageExclusionsTest' --tests '*SavedWifiParserTest' --tests '*MorseCodecTest' --tests '*CallTouchPolicyTest' --tests '*MediaLayoutPolicyTest' --stacktrace
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -83,9 +83,7 @@ jobs:
           script: |
             adb shell wm size 1440x1200
             adb shell wm density 160
-            ./gradlew :app:ui:connectedDefaultDebugAndroidTest --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Dorg.gradle.jvmargs=-Xmx2048m --stacktrace
-            mkdir -p app/ui/build/ui-screenshots
-            adb pull /sdcard/Pictures/TelosUiValidation/. app/ui/build/ui-screenshots/
+            bash tools/validation/run-ui-device-tests.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:

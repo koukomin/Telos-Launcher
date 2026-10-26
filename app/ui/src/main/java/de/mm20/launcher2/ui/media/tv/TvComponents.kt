@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -159,7 +161,7 @@ fun TvChannelCard(
 ) {
     var menu by remember { mutableStateOf(false) }
     val pressSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
-    val cardShape = RoundedCornerShape(20.dp)
+    val cardShape = RoundedCornerShape(8.dp)
     val info = LocalTvCardInfo.current
     val nowTitle = remember(info.key, channel.id) { info.nowNext(channel.id)?.current?.title }
     val offline = remember(info.badUrls, channel.id) {
@@ -170,7 +172,7 @@ fun TvChannelCard(
             Modifier
                 .fillMaxWidth()
                 .tvPressScale(pressSource, reduceAnimations)
-                .shadow(2.dp, cardShape)
+
                 .clip(cardShape)
                 .background(MaterialTheme.colorScheme.surfaceContainerLow)
                 .combinedClickable(
@@ -181,7 +183,7 @@ fun TvChannelCard(
                 )
                 .padding(6.dp),
         ) {
-            Box(Modifier.fillMaxWidth().height(logoHeight)) {
+            Box(Modifier.fillMaxWidth().aspectRatio(16f / 9f).heightIn(min = logoHeight)) {
                 TvLogo(channel, Modifier.fillMaxSize())
                 if (offline) {
                     TvStaticMini(Modifier.fillMaxSize().clip(RoundedCornerShape(16.dp)).alpha(0.6f))
@@ -207,7 +209,7 @@ fun TvChannelCard(
                 }
                 IconButton(
                     onClick = { actions.onFavorite(!favorite) },
-                    modifier = Modifier.align(Alignment.TopEnd).size(32.dp),
+                    modifier = Modifier.align(Alignment.TopEnd).size(48.dp),
                 ) {
                     Icon(
                         painterResource(if (favorite) R.drawable.star_24px_filled else R.drawable.star_24px_outlined),
@@ -221,11 +223,11 @@ fun TvChannelCard(
             }
             Text(
                 channel.name,
-                style = MaterialTheme.typography.labelMedium,
-                maxLines = 2,
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 3,
                 minLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Start,
                 modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
             )
             if (nowTitle != null) {
@@ -235,7 +237,7 @@ fun TvChannelCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
