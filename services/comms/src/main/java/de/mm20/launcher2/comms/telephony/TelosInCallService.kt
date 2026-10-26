@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -51,7 +52,7 @@ class TelosInCallService : InCallService(), KoinComponent {
                 }
         }
         callScope.launch {
-            combine(TelosCallSession.ui, commsSettings.snapshot, CallUiVisibility.visible, contacts.observeContacts()) { state, settings, visible, directory ->
+            combine(TelosCallSession.ui, commsSettings.snapshot, CallUiVisibility.visible, contacts.observeContacts().catch { emit(emptyList()) }) { state, settings, visible, directory ->
                 val hidden = de.mm20.launcher2.comms.privacy.HiddenContacts.expanded(settings.hiddenNumbers, directory)
                 val masked = settings.maskHiddenIncoming &&
                     de.mm20.launcher2.comms.privacy.HiddenContacts.matches(state.number, hidden)

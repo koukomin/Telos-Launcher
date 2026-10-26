@@ -25,3 +25,11 @@ private fun ActiveCallPreview() {
             activeControls = { Text("Κλήση σε εξέλιξη") })
     }
 }
+
+@Preview(widthDp = 360, heightDp = 800, name = "Outgoing")
+@Composable
+private fun OutgoingCallPreview() {
+    MaterialTheme(colorScheme = darkColorScheme()) {
+        CallScreenContent(InCallUiState(hasCall = true, connecting = true), "Δοκιμή επαφής", "Κλήση…", {})
+    }
+}

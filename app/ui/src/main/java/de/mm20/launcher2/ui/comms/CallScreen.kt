@@ -44,6 +44,7 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -65,7 +66,7 @@ fun CallScreen(
     val answerStyle by commsSettings.answerStyle.collectAsStateWithLifecycle("buttons")
     val directory: de.mm20.launcher2.comms.repository.ContactDirectoryRepository = koinInject()
     val hiddenMap by remember(commsSettings, directory) {
-        kotlinx.coroutines.flow.combine(commsSettings.hiddenNumbers, directory.observeContacts()) { hidden, contacts ->
+        kotlinx.coroutines.flow.combine(commsSettings.hiddenNumbers, directory.observeContacts().catch { emit(emptyList()) }) { hidden, contacts ->
             de.mm20.launcher2.comms.privacy.HiddenContacts.expanded(hidden, contacts)
         }
     }.collectAsStateWithLifecycle(emptyMap())

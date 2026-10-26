@@ -14,7 +14,7 @@ object PhoneNumberKey {
             digits.startsWith("00") -> digits.drop(2)
             else -> null
         }
-        if (international != null) return "+$international"
+        if (international != null) return if (international.isNotEmpty()) "+$international" else ""
         return if (digits.length == 10 && (digits.startsWith('2') || digits.startsWith('6'))) "+30$digits" else digits
     }
 

@@ -63,6 +63,7 @@ import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -1157,7 +1158,19 @@ private fun CallerLookupCard(number: String, hidden: Map<String, String>) {
     androidx.compose.runtime.LaunchedEffect(number, enabled, isHidden) {
         if (enabled && !isHidden && key != null) {
             loading = true
-            try { lookup.lookup(number) } finally { loading = false }
+            try {
+                // Initial UI defaults are not proof that the number is public or unknown.
+                val privacy = settings.snapshot.first()
+                val canRead = androidx.core.content.ContextCompat.checkSelfPermission(context,
+                    android.Manifest.permission.READ_CONTACTS) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                val directory: de.mm20.launcher2.comms.repository.ContactDirectoryRepository =
+                    org.koin.mp.KoinPlatform.getKoin().get()
+                val saved = if (!canRead) true else try { directory.containsNumber(number) }
+                    catch (e: kotlinx.coroutines.CancellationException) { throw e }
+                    catch (_: Exception) { true }
+                if (canRead && !saved && privacy.onlineCallerLookup &&
+                    !de.mm20.launcher2.comms.privacy.HiddenContacts.matches(number, privacy.hiddenNumbers)) lookup.lookup(number)
+            } finally { loading = false }
         }
     }
     if (key == null || isHidden) return
