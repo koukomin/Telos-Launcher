@@ -148,12 +148,14 @@ fun MediaSearchBar(
         }
         if (open) {
             de.mm20.launcher2.ui.component.TelosSearchBar(value, onValueChange, placeholder, autoFocus = true,
-                onSearch = onSearch, trailing = {
+                onSearch = onSearch,
+                leading = {
+                    IconButton(onClick = close, modifier = Modifier.size(48.dp)) {
+                        Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close))
+                    }
+                }, trailing = {
                     if (onSearch != null) IconButton(onClick = { keyboard?.hide(); focus.clearFocus(); onSearch() }, enabled = value.isNotBlank() && searchEnabled) {
                         Icon(painterResource(R.drawable.search_24px), stringResource(R.string.hc_search))
-                    }
-                    IconButton(onClick = { close() }) {
-                        Icon(painterResource(R.drawable.close_24px), stringResource(R.string.hc_close))
                     }
                 })
         }

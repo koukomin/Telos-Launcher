@@ -4,6 +4,7 @@ on:
     paths:
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/FrostedGlass.kt'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/VirtualAppBlur.kt'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/TelosSearchBar.kt'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/media/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/comms/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/comms/**'

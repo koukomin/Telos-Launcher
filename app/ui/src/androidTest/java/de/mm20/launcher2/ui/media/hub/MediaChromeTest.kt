@@ -68,6 +68,11 @@ class MediaChromeTest {
         compose.onNodeWithContentDescription(context.getString(R.string.hc_search)).performClick()
         compose.onNodeWithContentDescription(hint).assertIsDisplayed().performTextInput("Δοκιμή")
         compose.runOnIdle { assertEquals("Δοκιμή", query) }
+        compose.onAllNodesWithContentDescription(context.getString(R.string.hc_close)).assertCountEquals(1)
+        val closeBounds = compose.onNodeWithContentDescription(context.getString(R.string.hc_close)).fetchSemanticsNode().boundsInRoot
+        val inputBounds = compose.onNodeWithContentDescription(hint).fetchSemanticsNode().boundsInRoot
+        assertTrue("Close must lead the input, not duplicate its clear action", closeBounds.right <= inputBounds.left + 1f)
+        compose.onNodeWithContentDescription(context.getString(R.string.ts_clear)).assertIsDisplayed()
         compose.onAllNodesWithContentDescription(context.getString(R.string.hc_close)).onFirst().performClick()
         compose.waitForIdle()
         compose.onNodeWithContentDescription(hint).assertDoesNotExist()

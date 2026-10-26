@@ -175,7 +175,7 @@ private fun SearchPill(
             Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(Modifier.size(40.dp), contentAlignment = Alignment.Center) {
+            Box(Modifier.size(if (leading != null) de.mm20.launcher2.ui.layout.UiSpacing.TouchTarget else 40.dp), contentAlignment = Alignment.Center) {
                 if (leading != null) leading() else Icon(
                     painterResource(R.drawable.search_24px),
                     contentDescription = null,
