@@ -133,3 +133,5 @@ The earlier daa5722 emulator run 40349140550 completed 17 Android tests with zer
 ## Compact Media follow-up
 
 MediaChromeTest checks one overflow, source-title switching, search expansion/input/close and selector/action geometry on 320/720dp widths, short landscape, font 1/2 and light/dark palettes, exporting collapsed/expanded search screenshots. Production components are used without network accounts. Execution and visual review of this final change remain pending; no full app/account or IME/device certification is claimed. The user has now authorized merge and release after implementation and successful checks; earlier no-merge notes describe the previous authorization state.
+
+The Media header fixture also exercises three simultaneous 48dp toolbar actions at 320dp, guarding against a partially clipped overflow icon. Search submit/close explicitly hides the IME and clears focus. Documentation build completed locally with VitePress; existing Sass/chunk-size warnings were non-fatal.

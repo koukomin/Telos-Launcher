@@ -133,7 +133,13 @@ fun MediaSearchBar(
 ) {
     var localExpanded by rememberSaveable { mutableStateOf(false) }
     val open = expanded ?: localExpanded
-    val close = { onClose?.invoke() ?: run { onValueChange(""); localExpanded = false } }
+    val keyboard = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
+    val focus = androidx.compose.ui.platform.LocalFocusManager.current
+    val close: () -> Unit = {
+        keyboard?.hide()
+        focus.clearFocus()
+        onClose?.invoke() ?: run { onValueChange(""); localExpanded = false }
+    }
     androidx.activity.compose.BackHandler(enabled = open) { close() }
     Column(modifier.fillMaxWidth()) {
         if (expanded == null && !open) Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), horizontalArrangement = Arrangement.End) {
@@ -142,7 +148,7 @@ fun MediaSearchBar(
         AnimatedVisibility(open, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
             de.mm20.launcher2.ui.component.TelosSearchBar(value, onValueChange, placeholder, autoFocus = true,
                 onSearch = onSearch, trailing = {
-                    if (onSearch != null) IconButton(onClick = onSearch, enabled = value.isNotBlank()) {
+                    if (onSearch != null) IconButton(onClick = { keyboard?.hide(); focus.clearFocus(); onSearch() }, enabled = value.isNotBlank()) {
                         Icon(painterResource(R.drawable.search_24px), stringResource(R.string.hc_search))
                     }
                     IconButton(onClick = { close() }) {

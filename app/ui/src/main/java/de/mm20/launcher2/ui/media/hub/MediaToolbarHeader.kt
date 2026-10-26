@@ -29,7 +29,7 @@ internal fun MediaToolbarHeader(
 ) {
     CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
         BoxWithConstraints(Modifier.fillMaxWidth()) {
-            val actionsWidth = (maxWidth * 0.42f).coerceAtLeast(48.dp)
+            val actionsWidth = minOf(144.dp, (maxWidth - 112.dp).coerceAtLeast(48.dp))
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onBack) {
                     Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))

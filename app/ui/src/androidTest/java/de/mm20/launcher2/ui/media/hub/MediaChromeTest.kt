@@ -42,6 +42,8 @@ class MediaChromeTest {
                     Surface(Modifier.requiredSize(if (wide) 720.dp else 320.dp, if (wide) 420.dp else 800.dp).testTag("media-chrome")) {
                         Column {
                             MediaToolbarHeader(source, {}, { sourceMenu = true }, actions = {
+                                IconButton(onClick = {}) { Icon(painterResource(R.drawable.autorenew_24px), context.getString(R.string.hc_refresh)) }
+                                IconButton(onClick = {}) { Icon(painterResource(R.drawable.settings_24px), context.getString(R.string.settings)) }
                                 IconButton(onClick = { more = true }) {
                                     Icon(painterResource(R.drawable.more_vert_24px), context.getString(R.string.hc_more))
                                 }
@@ -82,6 +84,8 @@ class MediaChromeTest {
             val action = compose.onNodeWithContentDescription(context.getString(R.string.hc_more)).fetchSemanticsNode().boundsInRoot
             assertTrue("Source selector overlaps overflow", selector.right <= action.left + 1f)
             compose.onNodeWithContentDescription(context.getString(R.string.hc_search)).assertIsDisplayed()
+            compose.onNodeWithContentDescription(context.getString(R.string.hc_refresh)).assertIsDisplayed()
+            compose.onNodeWithContentDescription(context.getString(R.string.settings)).assertIsDisplayed()
             screenshot("media-chrome-font${if (font2) 2 else 1}-${if (isLight) "light" else "dark"}-${if (landscape) "wide" else "portrait"}.png")
             compose.onNodeWithContentDescription(context.getString(R.string.hc_search)).performClick()
             compose.onNodeWithContentDescription(hint).assertIsDisplayed().performTextInput("Σύντομη αναζήτηση")
