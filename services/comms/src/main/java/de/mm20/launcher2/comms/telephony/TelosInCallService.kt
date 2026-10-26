@@ -32,6 +32,8 @@ class TelosInCallService : InCallService(), KoinComponent {
 
     override fun onCreate() {
         super.onCreate()
+        // A process crash can leave the old non-foreground notification behind.
+        if (!TelosCallSession.ui.value.hasCall) CallNotification.cancel(this)
         // Resolve in the service so notifications work even when the call activity cannot open.
         callScope.launch {
             TelosCallSession.ui.map { setOf(it.number, it.secondNumber).filter(String::isNotBlank).toSet() }
@@ -75,9 +77,23 @@ class TelosInCallService : InCallService(), KoinComponent {
       catch (_: IllegalArgumentException) { CallerIdentity() }
       catch (_: android.database.sqlite.SQLiteException) { CallerIdentity() }
 
-    override fun onDestroy() {
+    private fun releaseCallState() {
+        val ownsSession = TelosCallSession.inCallService === this || !TelosCallSession.ui.value.hasCall
         TelosCallSession.onServiceDestroyed(this)
-        callScope.cancel()
+        if (ownsSession) {
+            RecordingCoordinator.stop()
+            CallNotification.cancel(this)
+        }
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        releaseCallState()
+        return super.onUnbind(intent)
+    }
+
+    override fun onDestroy() {
+        callScope.cancel() // Stop producers before final notification cleanup.
+        releaseCallState()
         super.onDestroy()
     }
 

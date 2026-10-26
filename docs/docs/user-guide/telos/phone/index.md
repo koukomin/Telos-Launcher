@@ -181,3 +181,5 @@ Hide Contact protects every listed number, including +30, 0030 and Greek nationa
 Online caller identification is optional: enable it in Phone settings → caller identification/privacy, or in an unknown number’s details. It currently uses Greek community pages from white-pages.gr; a result is a suggestion, not a verified identity, and links to its source. No result is guaranteed for an unlisted number or an unavailable provider. Saved and hidden callers are excluded from automatic online lookup.
 
 Deleting a contact requests Android write permission when needed, keeps the confirmation open if deletion fails, and returns from the deleted contact on success. Read-only contacts may still require changes in their source account.
+
+After answer, the background call notification keeps a Hang up action without reopening the full-screen call screen. It is removed when the live call ends or the phone service disconnects; delayed caller-info updates cannot restore an ended call’s notification.

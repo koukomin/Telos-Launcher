@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_phonea_action_failed">Ἡ πρᾶξις οὐκ ἐτελέσθη</string>
+    <string name="au_phoneb_private_caller">Ἀπόρρητον</string>
+    <string name="caller_likely_spam">Πιθανῶς ὀχληρόν · white-pages.gr</string>
+    <string name="caller_online_disclosure">Οἱ ἄγνωστοι ἀριθμοὶ τῶν εἰσιουσῶν κλήσεων πέμπονται πρὸς white-pages.gr πρὸς λῆψιν ὀνόματος ὑπὸ τῆς κοινότητος προτεινομένου καὶ κρίσεων. Ἐξ ἀρχῆς ἀνενεργόν· οὐκ ἀποκλείει κλήσεις αὐτομάτως.</string>
+    <string name="caller_online_lookup">Ἀναγνώρισις τοῦ καλοῦντος διὰ διαδικτύου</string>
+    <string name="caller_suggested_name">Προτεινόμενον ὄνομα: %1$s</string>
+    <string name="comms_answer">Ἀπόκριναι</string>
+    <string name="comms_clear_history">Ἀπαλεῖψαι τὸ τῶν κλήσεων ἱστορικόν;</string>
+    <string name="comms_hangup">Παῦσον τὴν κλῆσιν</string>
+    <string name="comms_reject">Ἀπόρριψον</string>
+    <string name="hc_cancel">Ἀκύρωσον</string>
+    <string name="hc_delete">Ἀπάλειψον</string>
+    <string name="hc_in_minutes">Μετὰ %1$d λεπτά</string>
+    <string name="hc_more">Πλείονα</string>
+    <string name="hc_reject_sms">Ἀπόρριψον καὶ πέμψον SMS</string>
+    <string name="hc_remind_me">Ὑπόμνησόν με</string>
+    <string name="hc_remind_me_to_call_back">Ὑπόμνησόν με αὖθις καλέσαι</string>
+    <string name="shortcut_label_unavailable">Οὐ διαθέσιμον</string>
+    <string name="widget_name_unknown">Ἄγνωστον</string>
+</resources>

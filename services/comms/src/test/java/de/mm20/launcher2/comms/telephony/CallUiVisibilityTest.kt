@@ -23,4 +23,24 @@ class CallUiVisibilityTest {
             CallUiVisibility.setVisible(replacement, false)
         }
     }
+
+    @Test fun answerTransitionNeverNeedsAnOngoingCallStyleOrFullScreenIntent() {
+        val ringing = InCallUiState(hasCall = true, incoming = true, actionToken = 7)
+        assertEquals(CallNotificationKind.IncomingFullScreen, callNotificationKind(ringing, false, true))
+        assertEquals(CallNotificationKind.IncomingActions, callNotificationKind(ringing, false, false))
+        val active = ringing.copy(incoming = false, active = true)
+        assertEquals(CallNotificationKind.OngoingActions, callNotificationKind(active, false, true))
+        assertEquals(CallNotificationKind.None, callNotificationKind(active, true, false))
+        assertFalse(currentNotificationState(ringing, active))
+        assertFalse(currentNotificationState(active, InCallUiState()))
+        assertFalse(currentNotificationState(active, active.copy(actionToken = 8)))
+        assertTrue(currentNotificationState(active, active))
+    }
+
+    @Test fun startupCleanupRequiresBothTelecomAndLocalSessionToBeIdle() {
+        assertTrue(clearOrphanCallNotification(false, false))
+        assertFalse(clearOrphanCallNotification(true, false))
+        assertFalse(clearOrphanCallNotification(false, true))
+        assertFalse(clearOrphanCallNotification(null, false))
+    }
 }

@@ -174,6 +174,9 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
             )
         }
 
+        // Reconcile an old call notification after a process crash; Telecom is queried off Main.
+        launch { de.mm20.launcher2.comms.telephony.CallNotification.clearOrphaned(this@LauncherApplication) }
+
         // Restore persisted renderer intent on process startup too; do not block first frame.
         launch(Dispatchers.IO) {
             runCatching {
