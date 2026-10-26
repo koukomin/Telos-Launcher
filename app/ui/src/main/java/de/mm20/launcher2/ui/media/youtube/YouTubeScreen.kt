@@ -148,7 +148,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     de.mm20.launcher2.ui.media.MediaSearchBar(
                         query, { query = it }, stringResource(R.string.telos_youtube_search),
-                        expanded = searchExpanded, onClose = { searchExpanded = false },
+                        expanded = searchExpanded, onClose = { searchExpanded = false }, searchEnabled = !searching,
                         onSearch = {
                             if (query.isNotBlank() && !searching) {
                                 shelf = "search"

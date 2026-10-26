@@ -130,6 +130,7 @@ fun MediaSearchBar(
     expanded: Boolean? = null,
     onClose: (() -> Unit)? = null,
     onSearch: (() -> Unit)? = null,
+    searchEnabled: Boolean = true,
 ) {
     var localExpanded by rememberSaveable { mutableStateOf(false) }
     val open = expanded ?: localExpanded
@@ -145,10 +146,10 @@ fun MediaSearchBar(
         if (expanded == null && !open) Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), horizontalArrangement = Arrangement.End) {
             MediaSearchAction(false, value.isNotBlank()) { localExpanded = true }
         }
-        AnimatedVisibility(open, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
+        if (open) {
             de.mm20.launcher2.ui.component.TelosSearchBar(value, onValueChange, placeholder, autoFocus = true,
                 onSearch = onSearch, trailing = {
-                    if (onSearch != null) IconButton(onClick = { keyboard?.hide(); focus.clearFocus(); onSearch() }, enabled = value.isNotBlank()) {
+                    if (onSearch != null) IconButton(onClick = { keyboard?.hide(); focus.clearFocus(); onSearch() }, enabled = value.isNotBlank() && searchEnabled) {
                         Icon(painterResource(R.drawable.search_24px), stringResource(R.string.hc_search))
                     }
                     IconButton(onClick = { close() }) {

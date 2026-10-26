@@ -129,7 +129,7 @@ root backing retains wallpaper blur. Cleared root roles retain their RGB tone so
 legacy opacity adjustments do not accidentally become black. Radio inherits the launcher palette by default, and its scoped theme supplies
 its own content color, so a light Radio palette cannot inherit white text from a dark
 launcher. Compact station rows use fixed-size logos and adaptive columns. Media
-search opens from an icon with an expand/fade animation. Drawer width leaves an
+search opens from an icon without adding a custom expansion animation. Drawer width leaves an
 outside dismissal area even on narrow windows with large fonts.
 
 Clock suggestions appear on focused empty search, starting with Athens unless
@@ -197,3 +197,5 @@ Launcher startup also reconciles an orphan from a previous process crash: Teleco
 MediaToolbarHeader hosts one horizontally scrollable, width-bounded action strip beside a source-title button. Hub source/reorder entries remain in a popup anchored to that button; no hub overflow icon or second action row is emitted. Source chips use a keyed LazyRow and scroll to the selected source, respecting reduced-animation preference. Title text uses titleLarge with two-line toolbar overflow; its full text remains in semantics and in the source menu.
 
 MediaSearchAction and MediaSearchBar separate the icon from the controlled search field; nested panels can use self-contained search. Expansion is saveable, Back closes the field, existing query owners and YouTube submission callbacks remain authoritative. TelosSearchBar supplies the single padding layer, focus, IME search, query clear and optional submit/close actions. StremioBrowseControls keeps tabs and search in one bounded row; poster widths stay independent of font size while captions grow. TV filter chrome uses an opaque container instead of overlapping translucent text.
+
+Compact search expansion is immediate, avoiding extra motion and intermediate layouts at large fonts. YouTube submit remains disabled while a request is running, preserving its prior enabled-state behavior.
