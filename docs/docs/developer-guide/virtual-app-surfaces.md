@@ -171,3 +171,7 @@ MorseCodec uses the Greek radio alphabet directly and AnyAscii 0.3.3 for other U
 ## October 25 implementation review
 
 See [the feature/UI audit](./audits/2026-10-25-gemini-review) for the reviewed main baseline, fixes, UI/backend inventory and explicit limitations. Wi-Fi regex regressions must run on Android ICU as well as the desktop JVM. Authentication failure cannot reveal keys; backgrounding clears both credential lists and QR content. JSON export writes only to an explicitly chosen document after fresh authentication. System app snapshots are built on IO and use the existing BloatDescriptions provider.
+
+## Overlay readability correction
+
+Stremio removes its catalog from composition while a detail page is open; the detail surface and hero gradient use opaque surfaceContainerLow. Play/Save actions wrap onto additional rows at narrow widths and large fonts. The shared VirtualAppTheme root keeps the existing wallpaper blur, but requests an opaque base-surface fallback when no valid blurred frame exists (including loading, denied pixels and video readback failure). Inner chrome does not request that fallback. surfaceBright, surfaceDim and surfaceVariant retain opaque theme tones for settings rows and legacy controls in both palettes.

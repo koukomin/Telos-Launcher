@@ -41,10 +41,13 @@ fun Modifier.virtualAppGlass(blur: VirtualAppBlur, color: Color): Modifier = fro
         surfaceContainerLow = base.surfaceContainerLow.copy(alpha = 1f),
         surfaceContainerHigh = base.surfaceContainerHigh.copy(alpha = 1f),
         surfaceContainerHighest = base.surfaceContainerHighest.copy(alpha = 1f),
+        surfaceBright = base.surfaceBright.copy(alpha = 1f),
+        surfaceDim = base.surfaceDim.copy(alpha = 1f),
+        surfaceVariant = base.surfaceVariant.copy(alpha = 1f),
     ) }
     CompositionLocalProvider(LocalVirtualAppBlur provides token, LocalGlassSurface provides true, androidx.compose.material3.LocalContentColor provides colors.onSurface) {
         MaterialTheme(colorScheme = colors, typography = MaterialTheme.typography, shapes = MaterialTheme.shapes) {
-            Box(Modifier.fillMaxSize().frostedGlass(backing)) { content() }
+            Box(Modifier.fillMaxSize().frostedGlass(backing, fallbackColor = base.surface)) { content() }
         }
     }
 }

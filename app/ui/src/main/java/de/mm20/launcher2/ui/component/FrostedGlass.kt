@@ -92,7 +92,7 @@ fun FrostedGlassProvider(content: @Composable () -> Unit) {
 
 /** The tint is drawn exactly once. Every panel samples the same viewport-aligned snapshot. */
 fun Modifier.frostedGlass(color: Color, shape: Shape = RectangleShape, enabled: Boolean = true,
-    wholeWallpaper: Boolean = false): Modifier = composed {
+    wholeWallpaper: Boolean = false, fallbackColor: Color? = null): Modifier = composed {
     val frame = LocalFrostedBackdrop.current
     val view = LocalView.current
     var position by remember { mutableStateOf(Offset.Zero) }
@@ -103,6 +103,8 @@ fun Modifier.frostedGlass(color: Color, shape: Shape = RectangleShape, enabled: 
         viewport = IntSize(view.rootView.width, view.rootView.height)
     }.clip(shape).drawWithCache {
         val image = if (!enabled) null else if (wholeWallpaper) frame?.value?.wholeWallpaper else frame?.value?.image
+        // A missing/stale wallpaper frame must not expose sharp pixels behind app text.
+        val tint = frostedTint(resolved, image != null, fallbackColor)
         val crop = image?.let { FrostedGeometry.crop(it.width, it.height, viewport.width, viewport.height) }
         val destination = crop?.let { IntOffset((it.left - position.x).roundToInt(), (it.top - position.y).roundToInt()) }
         val outline = shape.createOutline(size, layoutDirection, this)
@@ -111,11 +113,15 @@ fun Modifier.frostedGlass(color: Color, shape: Shape = RectangleShape, enabled: 
             if (image != null && crop != null && destination != null && resolved.alpha < 1f) {
                 drawImage(image, dstOffset = destination, dstSize = IntSize(crop.width, crop.height), filterQuality = FilterQuality.Low)
             }
-            drawRect(resolved)
-            if (enabled && resolved.alpha > 0f && resolved.alpha < 1f) {
+            drawRect(tint)
+            if (enabled && tint.alpha > 0f && tint.alpha < 1f) {
                 drawRect(highlight)
                 drawOutline(outline, Color.White.copy(alpha = .12f * (1f - resolved.alpha)), style = Stroke(1f))
             }
         }
     }
 }
+
+/** Root-only fallback; inner transparent chrome keeps its existing behavior. */
+internal fun frostedTint(requested: Color, hasBackdrop: Boolean, fallback: Color?): Color =
+    if (!hasBackdrop && fallback != null) fallback.copy(alpha = 1f) else requested

@@ -111,3 +111,7 @@ The expanded YouTube Music player has portrait/landscape, font 1/2 screenshot fi
 `tools/validation/run-ui-device-tests.sh` preserves the test exit status while collecting MediaStore screenshots even after an assertion failure. A successful test run also requires successful evidence retrieval. The emulator workflow invokes the wrapper as a single shell command so exit-status variables survive the action’s per-line script execution.
 
 The first successful Media component screenshot run exposed a missing explicit content-color scope in the expanded music player fixture. The player now provides the theme on-surface role for headings, transport icons and position text, including when hosted without an enclosing Surface. Final screenshot verification must use this correction.
+
+## Theme overlay readability (October 26)
+
+Source changes remove the catalog behind Stremio details, use opaque theme detail/gradient colors, wrap primary actions, and give shared app/settings roots an opaque fallback when no blurred wallpaper frame is available. Additional non-root surface roles remain opaque. FrostedTintTest covers light/dark fallback, requested transparency with a valid frame, and transparent chrome without a fallback. The execution environment was unavailable: no local build, unit-test run or device/visual verification is claimed. Verify both Telos themes, Greek labels, large fonts, details/Back, settings transitions, menus, static/video wallpaper, and unavailable wallpaper pixels before accepting visual completion. No merge or release is authorized.

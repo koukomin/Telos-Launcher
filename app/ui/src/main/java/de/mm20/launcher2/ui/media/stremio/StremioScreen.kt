@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -159,6 +161,7 @@ fun StremioScreen() {
                 }
                 !accepted -> NoticeCard(onAccept = { vm.acceptNotice() })
                 addons.isEmpty() -> EmptyAddons(vm)
+                detail != null -> Unit // Detail owns this viewport; do not draw the catalog beneath it.
                 else -> StremioHome(vm)
             }
             detail?.let { d ->
@@ -325,13 +328,14 @@ private fun Poster(vm: StremioViewModel, item: MetaPreview, onClick: () -> Unit,
 
 // ---------------------------------------------------------------------------------------------
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DetailPage(vm: StremioViewModel, d: DetailState) {
     BackHandler { vm.closeDetail() }
     val meta = d.meta
     val preview = d.preview
     val saved by vm.saved.collectAsStateWithLifecycle()
-    Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
+    Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surfaceContainerLow, contentColor = MaterialTheme.colorScheme.onSurface) {
         Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
             Box(Modifier.fillMaxWidth().height(240.dp)) {
                 AsyncImage(
@@ -340,7 +344,7 @@ private fun DetailPage(vm: StremioViewModel, d: DetailState) {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize(),
                 )
-                Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color.Black.copy(alpha = 0.25f), MaterialTheme.colorScheme.surface))))
+                Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color.Black.copy(alpha = 0.25f), MaterialTheme.colorScheme.surfaceContainerLow))))
                 IconButton(onClick = { vm.closeDetail() }, modifier = Modifier.align(Alignment.TopStart).padding(8.dp)) {
                     Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back), tint = Color.White)
                 }
@@ -353,7 +357,7 @@ private fun DetailPage(vm: StremioViewModel, d: DetailState) {
                 } else {
                     val facts = listOfNotNull(meta.releaseInfo, meta.runtime, meta.imdbRating?.let { "★ $it" }, meta.genres.take(3).joinToString(", ").takeIf { it.isNotBlank() })
                     if (facts.isNotEmpty()) Text(facts.joinToString("  ·  "), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         if (!meta.isSeries) {
                             Button(onClick = { vm.showStreams(meta, null) }) {
                                 Icon(painterResource(R.drawable.play_arrow_24px), contentDescription = null, modifier = Modifier.size(18.dp))

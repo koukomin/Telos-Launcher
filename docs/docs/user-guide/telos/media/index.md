@@ -222,3 +222,7 @@ Listen groups local music, YouTube Music and radio. Watch groups local video, Yo
 YouTube and YouTube Music load home content on entry and expose account playlists in both modes. Use Home to refresh after signing in. Artist radio uses a Music mix seeded by the selected song. Local libraries, favorites, playlists, imports, downloads, queues, player tools, radio recording/settings, TV sources/EPG and Stremio settings remain available through their existing actions. Live account/provider availability and playback still depend on YouTube responses.
 
 Tap the active YouTube Music mini player to open its artwork player and queue. Seek, previous/next, pause and stop use the existing session; no second player is started. On video play, the watch page scrolls to the inline player. Account help distinguishes sign-in inside Telos from the separate browser session.
+
+## Detail readability
+
+Stremio film and series details cover the catalog with a readable theme surface. Play and Save wrap onto separate rows when space is limited. Settings and app backgrounds retain shared wallpaper blur when available and fall back to a solid theme background when blurred wallpaper pixels are unavailable.
