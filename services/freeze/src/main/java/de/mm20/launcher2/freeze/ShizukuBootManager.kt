@@ -91,14 +91,10 @@ object ShizukuBootManager {
         val pkg = context.packageName
         val cmd = arrayOf("pm", "grant", pkg, "android.permission.WRITE_SECURE_SETTINGS")
         runCatching {
-            val processFactory = Shizuku::class.java.getDeclaredMethod(
-                "newProcess",
-                Array<String>::class.java,
-                Array<String>::class.java,
-                String::class.java,
-            )
-            val process = processFactory.invoke(null, cmd, null, null) as Process
-            process.waitFor()
+
+            val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(cmd)
+            try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) }
+            finally { process.destroy() }
         }
         ContextCompat.checkSelfPermission(
             context,

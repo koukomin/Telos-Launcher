@@ -97,6 +97,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
+        de.mm20.launcher2.ktx.ShizukuProcesses.init(this)
 
         // The video player's own process needs none of the launcher
         if (ProcessInfo.init(this)) return

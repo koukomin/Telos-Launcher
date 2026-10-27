@@ -35,7 +35,10 @@ fun GraphicsApiPreferenceCategory() {
     val hwuiWidgetSwitch by comms.hwuiWidgetSwitch.collectAsStateWithLifecycle(false)
     var liveRenderer by remember { mutableStateOf<String?>(null) }
     var privileged by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) {
+    var backendRevision by remember { mutableStateOf(0) }
+    de.mm20.launcher2.ui.component.PrivilegedConnectionEffect { backendRevision++ }
+    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) { backendRevision++ }
+    LaunchedEffect(backendRevision) {
         liveRenderer = withContext(Dispatchers.IO) { HwuiRenderer.current() }
         privileged = HwuiRenderer.privilegedAvailable()
     }

@@ -5,4 +5,6 @@
     <string name="freeze_hub_recents_help">Applicationes administratae iterum gelantur post ultimum opus e recentibus remotum. Shizuku vel Root requiritur; exceptiones manent. Initio inactivum.</string>
     <string name="freeze_hub_recents_unavailable">Detectio recentium non praesto est. Shizuku vel Root activa et veniam concede.</string>
     <string name="stremio_http_cache">Memoria temporaria HTTP</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
 </resources>

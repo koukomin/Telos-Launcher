@@ -21,7 +21,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.data.store.security.AppInureInspector
 import de.mm20.launcher2.data.store.security.InureInspectionResult
-import de.mm20.launcher2.freeze.FreezeBackendType
 import de.mm20.launcher2.freeze.FreezeManager
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.share.ShareActions
@@ -41,7 +40,7 @@ data class SystemAppDetailsRoute(val packageName: String) : NavKey
 private data class ComponentRow(val name: ComponentName, val state: Int, val manifestEnabled: Boolean)
 private data class PackageDetails(val label: String, val version: String, val sdk: Int, val installed: String,
     val updated: String, val frozen: Boolean, val launch: Intent?, val inspection: InureInspectionResult?,
-    val components: List<ComponentRow>, val audioModes: Map<String, String?>)
+    val components: List<ComponentRow>, val audioModes: Map<String, String?>, val rootAvailable: Boolean)
 
 /** Every installed package uses this surface, without creating a Store tracking entry. */
 @Composable
@@ -53,7 +52,6 @@ fun SystemAppDetailsScreen(packageName: String) {
     val policy: FreezeSettingsScreenVM = viewModel()
     val descriptions: de.mm20.launcher2.freeze.BloatDescriptions = koinInject()
     val uad by descriptions.data.collectAsStateWithLifecycle()
-    val backend by freeze.activeBackend.collectAsStateWithLifecycle()
     var revision by remember { mutableIntStateOf(0) }
     var details by remember(packageName) { mutableStateOf<PackageDetails?>(null) }
     var loading by remember(packageName) { mutableStateOf(true) }
@@ -65,6 +63,7 @@ fun SystemAppDetailsScreen(packageName: String) {
     var pending by remember { mutableStateOf<Pair<ComponentName, Int>?>(null) }
     LaunchedEffect(packageName) { policy.enterFreezeManagement() }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { revision++ }
+    de.mm20.launcher2.ui.component.PrivilegedConnectionEffect { revision++ }
     LaunchedEffect(packageName, revision) {
         loading = true
         try {
@@ -84,7 +83,7 @@ fun SystemAppDetailsScreen(packageName: String) {
                 PackageDetails(app.loadLabel(pm).toString(), "${info.versionName.orEmpty()} (${androidx.core.content.pm.PackageInfoCompat.getLongVersionCode(info)})",
                     app.targetSdkVersion, date.format(java.util.Date(info.firstInstallTime)), date.format(java.util.Date(info.lastUpdateTime)),
                     freeze.isFrozen(packageName), pm.getLaunchIntentForPackage(packageName), AppInureInspector.inspectPackage(context, packageName),
-                    components, freeze.audioModes(packageName))
+                    components, freeze.audioModes(packageName), freeze.canEditComponents())
             }
         } catch (cancelled: CancellationException) { throw cancelled }
         catch (_: Exception) { details = null; outcome = context.getString(R.string.hc_failed_try_again) }
@@ -127,6 +126,7 @@ fun SystemAppDetailsScreen(packageName: String) {
                         OutlinedButton(onClick = { showPolicy = true }) { Text(stringResource(R.string.preference_freeze_auto_category)) }
                         OutlinedButton(onClick = { backStack.add(FreezeSettingsRoute) }) { Text(stringResource(R.string.preference_screen_freeze)) }
                         OutlinedButton(onClick = { backStack.add(NetworkPackageFirewallRoute(packageName)) }) { Text(stringResource(R.string.netfw_title)) }
+                        AppOpsNextButton()
                     }
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         OutlinedButton(enabled = data.launch != null && !data.frozen, onClick = {
@@ -190,11 +190,11 @@ fun SystemAppDetailsScreen(packageName: String) {
                 Column {
                     de.mm20.launcher2.ui.component.preferences.SwitchPreference(
                         title = component.name.className, value = enabled,
-                        enabled = !busy && backend == FreezeBackendType.Root,
+                        enabled = !busy && data.rootAvailable,
                         onValueChanged = { value -> pending = component.name to if (value)
                             PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED })
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        TextButton(enabled = !busy && backend == FreezeBackendType.Root && component.state != PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
+                        TextButton(enabled = !busy && data.rootAvailable && component.state != PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
                             onClick = { pending = component.name to PackageManager.COMPONENT_ENABLED_STATE_DEFAULT }) { Text(stringResource(R.string.icon_picker_default_icon)) }
                     }
                 }

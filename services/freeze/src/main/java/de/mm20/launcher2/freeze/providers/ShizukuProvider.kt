@@ -143,10 +143,9 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
         withContext(Dispatchers.IO) { runPackageCommand(if (hidden) "hide" else "unhide", packageName, userId) }
 
     private fun runPackageCommand(action: String, packageName: String, userId: Int): Boolean = runCatching {
-        val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
-        method.isAccessible = true
-        val process = method.invoke(null, arrayOf("pm", action, "--user", userId.toString(), packageName), null, null) as java.lang.Process
-        try { process.waitFor() == 0 }
+
+        val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(arrayOf("pm", action, "--user", userId.toString(), packageName))
+        try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0 }
         finally { process.destroy() }
     }.getOrDefault(false)
 

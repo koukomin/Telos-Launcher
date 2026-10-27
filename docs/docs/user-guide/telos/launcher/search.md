@@ -261,3 +261,6 @@ Each item can be shown in the *app grid and search results*, in *search results*
 
 - Each source returns a limited number of hits (about 10 local files, about 15 contacts).
 - Search is a name match. There is no search inside file contents.
+
+
+Keyboard Enter uses the same protected launcher path as tapping the result, including application lock, companion unfreezing, verified thaw/launch and usage reporting. It no longer calls a frozen application directly.

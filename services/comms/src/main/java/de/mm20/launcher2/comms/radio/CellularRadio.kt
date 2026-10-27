@@ -64,15 +64,10 @@ object CellularRadio : KoinComponent {
     private suspend fun shizuku(cmd: String): Boolean = withContext(Dispatchers.IO) {
         if (!shizukuReady()) return@withContext false
         try {
-            val method = Shizuku::class.java.getDeclaredMethod(
-                "newProcess",
-                Array<String>::class.java,
-                Array<String>::class.java,
-                String::class.java,
-            )
-            method.isAccessible = true
-            val process = method.invoke(null, arrayOf("sh", "-c", cmd), null, null) ?: return@withContext false
-            (process::class.java.getMethod("waitFor").invoke(process) as Int) == 0
+
+            val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(arrayOf("sh", "-c", cmd))
+            try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0 }
+            finally { process.destroy() }
         } catch (e: Exception) {
             Log.w(TAG, "Shizuku network cmd failed", e)
             false
@@ -86,7 +81,8 @@ object CellularRadio : KoinComponent {
                 stdin.writeBytes("$cmd\nexit\n")
                 stdin.flush()
             }
-            process.waitFor() == 0
+            try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0 }
+            finally { process.destroy() }
         } catch (e: Exception) {
             Log.w(TAG, "Root network cmd failed", e)
             false

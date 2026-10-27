@@ -62,20 +62,14 @@ internal class ShizukuInstallBackend : InstallBackend {
                 return@withContext BackendInstallResult.Failed("Shizuku is not authorized")
             }
             try {
-                val method = Shizuku::class.java.getDeclaredMethod(
-                    "newProcess",
-                    Array<String>::class.java,
-                    Array<String>::class.java,
-                    String::class.java,
-                )
-                method.isAccessible = true
+
                 installPrivilegedSession(
                     apk = apk,
                     userId = android.os.Process.myUid() / 100000,
                     preserveEnabled = android.os.Build.VERSION.SDK_INT >= 34,
                     allowDowngrade = allowDowngrade,
                 ) { command, input ->
-                    runInstallCommand(input, method.invoke(null, command.toTypedArray(), null, null) as Process)
+                    runInstallCommand(input, de.mm20.launcher2.ktx.ShizukuProcesses.start(command.toTypedArray()))
                 }
             } catch (e: Exception) {
                 Log.w(TAG, "Shizuku install failed for $packageName", e)

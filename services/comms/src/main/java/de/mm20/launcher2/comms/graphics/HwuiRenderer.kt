@@ -54,31 +54,12 @@ object HwuiRenderer {
     }
 
     suspend fun privilegedAvailable(): Boolean = withContext(Dispatchers.IO) {
-        privilegedShell("echo ok")?.contains("ok") == true
+        de.mm20.launcher2.ktx.PrivilegedShell.available()
     }
 
-    private fun privilegedShell(cmd: String): String? {
-        runCatching {
-            val p = Runtime.getRuntime().exec(arrayOf("su", "-c", cmd))
-            if (!p.waitFor(5, java.util.concurrent.TimeUnit.SECONDS)) { p.destroy(); return@runCatching }
-            val text = p.inputStream.bufferedReader().use { it.readText() }
-            if (p.exitValue() == 0) return text
-        }
-        return runCatching {
-            val shizuku = Class.forName("rikka.shizuku.Shizuku")
-            if (shizuku.getMethod("pingBinder").invoke(null) != true) return@runCatching null
-            if (shizuku.getMethod("checkSelfPermission").invoke(null) as Int != 0) return@runCatching null
-            val method = shizuku.getDeclaredMethod(
-                "newProcess",
-                Array<String>::class.java,
-                Array<String>::class.java,
-                String::class.java,
-            )
-            method.isAccessible = true
-            val proc = method.invoke(null, arrayOf("sh", "-c", cmd), null, null) ?: return@runCatching null
-            val getIn = proc.javaClass.methods.first { it.name == "getInputStream" }
-            (getIn.invoke(proc) as java.io.InputStream).bufferedReader().readText()
-        }.getOrNull()
+    private suspend fun privilegedShell(cmd: String): String? {
+        val result = de.mm20.launcher2.ktx.PrivilegedShell.run(cmd) ?: return null
+        return result.output.takeIf { result.exitCode == 0 }
     }
 
     private const val TAG = "HwuiRenderer"

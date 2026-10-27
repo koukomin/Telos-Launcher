@@ -376,3 +376,8 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
+
+
+## AppOpsNext companion integration
+
+[AppOpsNext](https://github.com/1zumiii/AppOpsNext), by 1zumiii, GPL-3.0. Telos provides a launch/install entry to the upstream application; no upstream AppOpsNext source, binary or artwork is redistributed in the Telos APK. The installed companion retains its own permissions, storage, updates and feature compatibility.

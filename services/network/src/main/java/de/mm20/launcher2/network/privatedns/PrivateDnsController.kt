@@ -170,13 +170,8 @@ private object ShizukuPrivateDnsAccess : PrivateDnsAccess {
 
 private object ShizukuPrivateDnsCommandRunner : PrivateDnsCommandRunner {
     override fun execute(arguments: Array<out String>): PrivateDnsCommandResult? = try {
-        val processFactory = Shizuku::class.java.getDeclaredMethod(
-            "newProcess",
-            Array<String>::class.java,
-            Array<String>::class.java,
-            String::class.java,
-        )
-        val process = processFactory.invoke(null, arguments, null, null) as Process
+
+        val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(arguments.toList().toTypedArray())
         try {
             if (!process.waitFor(COMMAND_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
                 process.destroyForcibly()
