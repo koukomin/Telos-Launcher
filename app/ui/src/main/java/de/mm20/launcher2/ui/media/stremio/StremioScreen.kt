@@ -92,6 +92,8 @@ fun StremioScreen() {
     val addons by vm.addons.collectAsStateWithLifecycle()
     val detail by vm.detail.collectAsStateWithLifecycle()
     val streams by vm.streams.collectAsStateWithLifecycle()
+    var showCacheSettings by remember { mutableStateOf(false) }
+    if (showCacheSettings) StremioPlaybackSheet(cacheOnly = true) { showCacheSettings = false }
     var showPlaybackSettings by remember { mutableStateOf(false) }
     if (showPlaybackSettings) StremioPlaybackSheet { showPlaybackSettings = false }
     var showActions by remember { mutableStateOf(false) }
@@ -133,6 +135,10 @@ fun StremioScreen() {
                 androidx.compose.material3.DropdownMenuItem(
                     text = { Text(stringResource(R.string.settings)) },
                     onClick = { showActions = false; showPlaybackSettings = true },
+                )
+                androidx.compose.material3.DropdownMenuItem(
+                    text = { Text(stringResource(R.string.stremio_http_cache)) },
+                    onClick = { showActions = false; showCacheSettings = true },
                 )
                 androidx.compose.material3.DropdownMenuItem(
                     text = { Text(stringResource(R.string.dl_settings_rules)) },

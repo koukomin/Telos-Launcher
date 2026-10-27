@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">בודק עדכוני UAD-NG בכל פתיחה של מנהל ההקפאה. פעיל כברירת מחדל.</string>
     <string name="freeze_hub_update_failed">העדכון נכשל. מסד הנתונים התקין האחרון נשמר.</string>
     <string name="freeze_hub_recents">הקפאה לאחר הסרה מהאחרונים</string>
-    <string name="freeze_hub_recents_help">מקפיא מחדש יישומים מנוהלים או שהופשרו ב־Telos לאחר הסרת המשימה האחרונה. נדרש Shizuku והחרגות שימוש נשמרות. כבוי כברירת מחדל.</string>
-    <string name="freeze_hub_recents_unavailable">זיהוי האחרונים אינו זמין. הפעילו Shizuku ותנו הרשאה.</string>
+    <string name="freeze_hub_recents_help">מקפיא מחדש יישומים מנוהלים או שהופשרו ב־Telos לאחר הסרת המשימה האחרונה. נדרש Shizuku / Root והחרגות שימוש נשמרות. כבוי כברירת מחדל.</string>
+    <string name="freeze_hub_recents_unavailable">זיהוי האחרונים אינו זמין. הפעילו Shizuku / Root ותנו הרשאה.</string>
 
     
     

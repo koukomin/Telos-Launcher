@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Controleert UAD-NG bij het openen van de bevriesbeheerder. Standaard aan.</string>
     <string name="freeze_hub_update_failed">Bijwerken mislukt. Laatste geldige database behouden.</string>
     <string name="freeze_hub_recents">Bevriezen na verwijderen uit recente apps</string>
-    <string name="freeze_hub_recents_help">Bevriest beheerde of door Telos ontdooide apps opnieuw na verwijdering van hun laatste taak. Vereist Shizuku en respecteert gebruiksuitzonderingen. Standaard uit.</string>
-    <string name="freeze_hub_recents_unavailable">Detectie van recente apps niet beschikbaar. Start Shizuku en verleen toestemming.</string>
+    <string name="freeze_hub_recents_help">Bevriest beheerde of door Telos ontdooide apps opnieuw na verwijdering van hun laatste taak. Vereist Shizuku / Root en respecteert gebruiksuitzonderingen. Standaard uit.</string>
+    <string name="freeze_hub_recents_unavailable">Detectie van recente apps niet beschikbaar. Start Shizuku / Root en verleen toestemming.</string>
 
     
     

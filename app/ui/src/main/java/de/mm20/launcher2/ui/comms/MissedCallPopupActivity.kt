@@ -42,11 +42,16 @@ class MissedCallPopupActivity : BaseActivity() {
         setContent {
             ProvideCompositionLocals {
                 LauncherTheme {
+                    val resolvedName by androidx.compose.runtime.produceState(name, number) {
+                        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            de.mm20.launcher2.comms.remote.DeviceContactsResolver.lookup(applicationContext, number).first
+                        }?.takeIf { it.isNotBlank() } ?: name
+                    }
                     val template by commsSettings.rejectSmsTemplate.collectAsStateWithLifecycle("")
                     Surface(tonalElevation = 6.dp) {
                         Column(Modifier.padding(20.dp).fillMaxWidth()) {
                             Text(
-                                text = name?.ifBlank { null } ?: number.ifBlank { stringResource(R.string.widget_name_unknown) },
+                                text = resolvedName?.ifBlank { null } ?: number.ifBlank { stringResource(R.string.widget_name_unknown) },
                                 style = MaterialTheme.typography.titleLarge,
                             )
                             if (ringMs > 0) {
@@ -56,7 +61,7 @@ class MissedCallPopupActivity : BaseActivity() {
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
-                            if (!name.isNullOrBlank() && number.isNotBlank()) {
+                            if (!resolvedName.isNullOrBlank() && number.isNotBlank()) {
                                 Text(number, style = MaterialTheme.typography.bodyMedium)
                             }
                             Row(

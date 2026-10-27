@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Vérifie UAD-NG à chaque ouverture du gestionnaire de gel. Activé par défaut.</string>
     <string name="freeze_hub_update_failed">Échec de la mise à jour. Dernière base valide conservée.</string>
     <string name="freeze_hub_recents">Geler après retrait des applications récentes</string>
-    <string name="freeze_hub_recents_help">Regèle les applis gérées ou dégelées par Telos au retrait de leur dernière tâche. Nécessite Shizuku ; respecte les exclusions d’utilisation. Désactivé par défaut.</string>
-    <string name="freeze_hub_recents_unavailable">Détection des applis récentes indisponible. Démarrez Shizuku et accordez l’autorisation.</string>
+    <string name="freeze_hub_recents_help">Regèle les applis gérées ou dégelées par Telos au retrait de leur dernière tâche. Nécessite Shizuku / Root ; respecte les exclusions d’utilisation. Désactivé par défaut.</string>
+    <string name="freeze_hub_recents_unavailable">Détection des applis récentes indisponible. Démarrez Shizuku / Root et accordez l’autorisation.</string>
 
     
     

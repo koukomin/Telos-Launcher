@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Dondurma Yöneticisi her açıldığında UAD-NG güncellemelerini denetler. Varsayılan olarak açık.</string>
     <string name="freeze_hub_update_failed">Güncelleme başarısız. Son geçerli veritabanı korunuyor.</string>
     <string name="freeze_hub_recents">Son kullanılanlardan kaldırılınca dondur</string>
-    <string name="freeze_hub_recents_help">Son görevi kaldırılınca yönetilen veya Telos ile çözülmüş uygulamaları yeniden dondurur. Shizuku gerektirir; kullanım istisnaları geçerlidir. Varsayılan olarak kapalı.</string>
-    <string name="freeze_hub_recents_unavailable">Son kullanılanlar algılanamıyor. Shizuku uygulamasını başlatıp izin verin.</string>
+    <string name="freeze_hub_recents_help">Son görevi kaldırılınca yönetilen veya Telos ile çözülmüş uygulamaları yeniden dondurur. Shizuku / Root gerektirir; kullanım istisnaları geçerlidir. Varsayılan olarak kapalı.</string>
+    <string name="freeze_hub_recents_unavailable">Son kullanılanlar algılanamıyor. Shizuku / Root uygulamasını başlatıp izin verin.</string>
 
     
     

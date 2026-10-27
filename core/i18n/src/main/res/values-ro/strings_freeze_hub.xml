@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Verifică UAD-NG la fiecare deschidere a gestionarului de înghețare. Implicit activat.</string>
     <string name="freeze_hub_update_failed">Actualizarea a eșuat. Se păstrează ultima bază validă.</string>
     <string name="freeze_hub_recents">Îngheață după eliminarea din recente</string>
-    <string name="freeze_hub_recents_help">Reîngheață aplicațiile gestionate sau dezghețate de Telos după eliminarea ultimei sarcini. Necesită Shizuku și respectă excluderile de utilizare. Implicit dezactivat.</string>
-    <string name="freeze_hub_recents_unavailable">Detectarea recentelor nu este disponibilă. Pornește Shizuku și acordă permisiunea.</string>
+    <string name="freeze_hub_recents_help">Reîngheață aplicațiile gestionate sau dezghețate de Telos după eliminarea ultimei sarcini. Necesită Shizuku / Root și respectă excluderile de utilizare. Implicit dezactivat.</string>
+    <string name="freeze_hub_recents_unavailable">Detectarea recentelor nu este disponibilă. Pornește Shizuku / Root și acordă permisiunea.</string>
 
     
     

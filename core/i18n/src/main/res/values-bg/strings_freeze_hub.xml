@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Проверява UAD-NG при всяко отваряне на управлението на замразяване. Включено по подразбиране.</string>
     <string name="freeze_hub_update_failed">Неуспешно обновяване. Запазва последната валидна база.</string>
     <string name="freeze_hub_recents">Замразяване след премахване от скорошни</string>
-    <string name="freeze_hub_recents_help">Замразява отново управлявани или размразени от Telos приложения след премахване на последната задача. Изисква Shizuku и спазва изключенията за употреба. Изключено по подразбиране.</string>
-    <string name="freeze_hub_recents_unavailable">Откриването на скорошни е недостъпно. Стартирайте Shizuku и дайте разрешение.</string>
+    <string name="freeze_hub_recents_help">Замразява отново управлявани или размразени от Telos приложения след премахване на последната задача. Изисква Shizuku / Root и спазва изключенията за употреба. Изключено по подразбиране.</string>
+    <string name="freeze_hub_recents_unavailable">Откриването на скорошни е недостъпно. Стартирайте Shizuku / Root и дайте разрешение.</string>
 
     
     

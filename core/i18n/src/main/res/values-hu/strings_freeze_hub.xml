@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">UAD-NG-frissítést keres a fagyasztáskezelő minden megnyitásakor. Alapból bekapcsolva.</string>
     <string name="freeze_hub_update_failed">A frissítés sikertelen. Az utolsó érvényes adatbázis megmarad.</string>
     <string name="freeze_hub_recents">Fagyasztás az előzményekből eltávolítás után</string>
-    <string name="freeze_hub_recents_help">Újrafagyasztja a kezelt vagy Telos által feloldott alkalmazásokat az utolsó feladat eltávolítása után. Shizuku szükséges, a használati kivételek megmaradnak. Alapból kikapcsolva.</string>
-    <string name="freeze_hub_recents_unavailable">Az előzmények felismerése nem érhető el. Indítsd el a Shizukut és adj engedélyt.</string>
+    <string name="freeze_hub_recents_help">Újrafagyasztja a kezelt vagy Telos által feloldott alkalmazásokat az utolsó feladat eltávolítása után. Shizuku / Root szükséges, a használati kivételek megmaradnak. Alapból kikapcsolva.</string>
+    <string name="freeze_hub_recents_unavailable">Az előzmények felismerése nem érhető el. Indítsd el a Shizuku / Roott és adj engedélyt.</string>
 
     
     

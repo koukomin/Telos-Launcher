@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Правярае UAD-NG пры кожным адкрыцці кіравання замарожваннем. Першапачаткова ўключана.</string>
     <string name="freeze_hub_update_failed">Абнаўленне не ўдалося. Захавана апошняя дзейная база.</string>
     <string name="freeze_hub_recents">Замарожваць пасля выдалення з нядаўніх</string>
-    <string name="freeze_hub_recents_help">Зноў замарожвае кіраваныя або размарожаныя Telos праграмы пасля выдалення апошняй задачы. Патрэбны Shizuku; выключэнні выкарыстання дзейнічаюць. Першапачаткова выключана.</string>
-    <string name="freeze_hub_recents_unavailable">Выяўленне нядаўніх недаступнае. Запусціце Shizuku і дайце дазвол.</string>
+    <string name="freeze_hub_recents_help">Зноў замарожвае кіраваныя або размарожаныя Telos праграмы пасля выдалення апошняй задачы. Патрэбны Shizuku / Root; выключэнні выкарыстання дзейнічаюць. Першапачаткова выключана.</string>
+    <string name="freeze_hub_recents_unavailable">Выяўленне нядаўніх недаступнае. Запусціце Shizuku / Root і дайце дазвол.</string>
 
     
     

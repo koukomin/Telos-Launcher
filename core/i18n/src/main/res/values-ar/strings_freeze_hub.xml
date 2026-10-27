@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">يفحص UAD-NG عند كل فتح لمدير التجميد. مفعّل افتراضيًا.</string>
     <string name="freeze_hub_update_failed">فشل التحديث. يتم الاحتفاظ بآخر قاعدة صالحة.</string>
     <string name="freeze_hub_recents">التجميد بعد الإزالة من التطبيقات الأخيرة</string>
-    <string name="freeze_hub_recents_help">يعيد تجميد التطبيقات المدارة أو التي ألغى Telos تجميدها عند إزالة آخر مهمة. يتطلب Shizuku ويحترم استثناءات الاستخدام. معطّل افتراضيًا.</string>
-    <string name="freeze_hub_recents_unavailable">كشف التطبيقات الأخيرة غير متاح. شغّل Shizuku وامنح الإذن.</string>
+    <string name="freeze_hub_recents_help">يعيد تجميد التطبيقات المدارة أو التي ألغى Telos تجميدها عند إزالة آخر مهمة. يتطلب Shizuku / Root ويحترم استثناءات الاستخدام. معطّل افتراضيًا.</string>
+    <string name="freeze_hub_recents_unavailable">كشف التطبيقات الأخيرة غير متاح. شغّل Shizuku / Root وامنح الإذن.</string>
 
     
     

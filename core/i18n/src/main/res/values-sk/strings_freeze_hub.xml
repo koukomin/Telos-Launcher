@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Kontroluje UAD-NG pri každom otvorení správcu zmrazovania. Predvolene zapnuté.</string>
     <string name="freeze_hub_update_failed">Aktualizácia zlyhala. Zachovaná posledná platná databáza.</string>
     <string name="freeze_hub_recents">Zmraziť po odstránení z nedávnych</string>
-    <string name="freeze_hub_recents_help">Znova zmrazí spravované alebo Telosom rozmrazené aplikácie po odstránení poslednej úlohy. Vyžaduje Shizuku a rešpektuje výnimky používania. Predvolene vypnuté.</string>
-    <string name="freeze_hub_recents_unavailable">Detekcia nedávnych nie je dostupná. Spustite Shizuku a udeľte povolenie.</string>
+    <string name="freeze_hub_recents_help">Znova zmrazí spravované alebo Telosom rozmrazené aplikácie po odstránení poslednej úlohy. Vyžaduje Shizuku / Root a rešpektuje výnimky používania. Predvolene vypnuté.</string>
+    <string name="freeze_hub_recents_unavailable">Detekcia nedávnych nie je dostupná. Spustite Shizuku / Root a udeľte povolenie.</string>
 
     
     

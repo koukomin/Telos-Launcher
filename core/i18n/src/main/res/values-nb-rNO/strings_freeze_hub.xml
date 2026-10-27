@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Sjekk UAD-NG hver gang frysehåndtering åpnes. På som standard.</string>
     <string name="freeze_hub_update_failed">Oppdatering mislyktes. Siste gyldige database beholdes.</string>
     <string name="freeze_hub_recents">Frys etter fjerning fra nylige apper</string>
-    <string name="freeze_hub_recents_help">Fryser administrerte eller Telos-opptinte apper igjen når siste oppgave fjernes. Krever Shizuku og følger bruksunntak. Av som standard.</string>
-    <string name="freeze_hub_recents_unavailable">Registrering av nylige apper er utilgjengelig. Start Shizuku og gi tillatelse.</string>
+    <string name="freeze_hub_recents_help">Fryser administrerte eller Telos-opptinte apper igjen når siste oppgave fjernes. Krever Shizuku / Root og følger bruksunntak. Av som standard.</string>
+    <string name="freeze_hub_recents_unavailable">Registrering av nylige apper er utilgjengelig. Start Shizuku / Root og gi tillatelse.</string>
 
     
     

@@ -32,8 +32,8 @@ internal fun RadioAppearance(values: RadioSettings.Values, content: @Composable 
         else -> lightColorScheme()
     }
     val scheme = if (values.translucent) colors.copy(
-        background = Color.Transparent,
-        surface = Color.Transparent,
+        background = colors.background.copy(alpha = 0f),
+        surface = colors.surface.copy(alpha = 0f),
         surfaceContainerLow = colors.surfaceContainerLow,
         surfaceContainer = colors.surfaceContainer,
     ) else colors

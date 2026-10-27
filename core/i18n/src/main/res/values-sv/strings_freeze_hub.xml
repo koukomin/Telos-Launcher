@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Kontrollera UAD-NG varje gång fryshanteraren öppnas. På som standard.</string>
     <string name="freeze_hub_update_failed">Uppdateringen misslyckades. Senaste giltiga databas behålls.</string>
     <string name="freeze_hub_recents">Frys efter borttagning från senaste appar</string>
-    <string name="freeze_hub_recents_help">Fryser hanterade eller av Telos upptinade appar igen när sista uppgiften tas bort. Kräver Shizuku och följer användningsundantag. Av som standard.</string>
-    <string name="freeze_hub_recents_unavailable">Identifiering av senaste appar saknas. Starta Shizuku och ge behörighet.</string>
+    <string name="freeze_hub_recents_help">Fryser hanterade eller av Telos upptinade appar igen när sista uppgiften tas bort. Kräver Shizuku / Root och följer användningsundantag. Av som standard.</string>
+    <string name="freeze_hub_recents_unavailable">Identifiering av senaste appar saknas. Starta Shizuku / Root och ge behörighet.</string>
 
     
     

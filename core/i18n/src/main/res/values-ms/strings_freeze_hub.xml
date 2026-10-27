@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Semak UAD-NG setiap kali Pengurus Pembekuan dibuka. Aktif secara lalai.</string>
     <string name="freeze_hub_update_failed">Kemas kini gagal. Pangkalan data sah terakhir dikekalkan.</string>
     <string name="freeze_hub_recents">Bekukan selepas dibuang daripada aplikasi terkini</string>
-    <string name="freeze_hub_recents_help">Membekukan semula aplikasi terurus atau dinyahbeku oleh Telos selepas tugas terakhir dibuang. Memerlukan Shizuku dan mematuhi pengecualian penggunaan. Dimatikan secara lalai.</string>
-    <string name="freeze_hub_recents_unavailable">Pengesanan aplikasi terkini tidak tersedia. Mulakan Shizuku dan beri kebenaran.</string>
+    <string name="freeze_hub_recents_help">Membekukan semula aplikasi terurus atau dinyahbeku oleh Telos selepas tugas terakhir dibuang. Memerlukan Shizuku / Root dan mematuhi pengecualian penggunaan. Dimatikan secara lalai.</string>
+    <string name="freeze_hub_recents_unavailable">Pengesanan aplikasi terkini tidak tersedia. Mulakan Shizuku / Root dan beri kebenaran.</string>
 
     
     

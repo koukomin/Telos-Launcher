@@ -183,3 +183,6 @@ Online caller identification is optional: enable it in Phone settings → caller
 Deleting a contact requests Android write permission when needed, keeps the confirmation open if deletion fails, and returns from the deleted contact on success. Read-only contacts may still require changes in their source account.
 
 After answer, the background call notification keeps a Hang up action without reopening the full-screen call screen. It is removed when the live call ends or the phone service disconnects; delayed caller-info updates cannot restore an ended call’s notification.
+
+
+Missed-call popups resolve the current saved contact name even when a short ringing call ends before the in-call lookup completes. Recordings display saved names above their numbers and support name search; legacy filenames that stripped the international plus sign match only complete international numbers. The history-clear trash action sits immediately beside the overflow menu.

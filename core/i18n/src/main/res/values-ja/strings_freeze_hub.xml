@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">凍結管理を開くたびに UAD-NG の更新を確認します。初期設定はオンです。</string>
     <string name="freeze_hub_update_failed">更新に失敗しました。最後の有効なデータベースを保持します。</string>
     <string name="freeze_hub_recents">履歴から削除した後に凍結</string>
-    <string name="freeze_hub_recents_help">最後のタスク削除後、管理対象または Telos が解除したアプリを再凍結します。Shizuku が必要で、使用中の除外設定も適用します。初期設定はオフです。</string>
-    <string name="freeze_hub_recents_unavailable">履歴の検出を利用できません。Shizuku を起動し権限を許可してください。</string>
+    <string name="freeze_hub_recents_help">最後のタスク削除後、管理対象または Telos が解除したアプリを再凍結します。Shizuku / Root が必要で、使用中の除外設定も適用します。初期設定はオフです。</string>
+    <string name="freeze_hub_recents_unavailable">履歴の検出を利用できません。Shizuku / Root を起動し権限を許可してください。</string>
 
     
     

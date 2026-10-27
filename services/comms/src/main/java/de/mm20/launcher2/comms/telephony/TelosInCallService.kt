@@ -151,9 +151,15 @@ class TelosInCallService : InCallService(), KoinComponent {
             // a missed call needs the missed call popup, any other call the post-call popup
             if (missed && !snap.missedCallPopup) return@launch
             if (!missed && !snap.postCallPopup) return@launch
+            val resolvedName = withContext(Dispatchers.IO) {
+                de.mm20.launcher2.comms.remote.DeviceContactsResolver.lookup(context, number).first
+            }?.takeIf { it.isNotBlank() } ?: name
+            val hidden = de.mm20.launcher2.comms.privacy.HiddenContacts.expanded(snap.hiddenNumbers,
+                contacts.observeContacts().first())
+            if (snap.maskHiddenIncoming && de.mm20.launcher2.comms.privacy.HiddenContacts.matches(number, hidden)) return@launch
             val popup = Intent().setClassName(context.packageName, "de.mm20.launcher2.ui.comms.MissedCallPopupActivity")
             popup.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            popup.putExtra(CallOverlayIntents.EXTRA_NAME, name)
+            popup.putExtra(CallOverlayIntents.EXTRA_NAME, resolvedName)
             popup.putExtra(CallOverlayIntents.EXTRA_NUMBER, number)
             popup.putExtra(CallOverlayIntents.EXTRA_RING_MS, ringMs)
             try {

@@ -375,9 +375,6 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     IconButton(onClick = { ContactActions.edit(context, contact.id) }) {
                         Icon(painterResource(R.drawable.edit_24px), contentDescription = stringResource(R.string.net_dns_action_edit))
                     }
-                    IconButton(onClick = { confirmDelete = true }, enabled = ui.recents.isNotEmpty()) {
-                        Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.comms_clear_history))
-                    }
                 }
                 val starred = starOverride ?: (contact?.starred == true)
                 IconButton(
@@ -411,6 +408,11 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                         contentDescription = stringResource(R.string.search_action_share),
                         tint = MaterialTheme.colorScheme.onSurface,
                     )
+                }
+                if (contact != null && contact.id >= 0) {
+                    IconButton(onClick = { confirmDelete = true }, enabled = ui.recents.isNotEmpty()) {
+                        Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.comms_clear_history))
+                    }
                 }
                 var more by remember { mutableStateOf(false) }
                 Box {

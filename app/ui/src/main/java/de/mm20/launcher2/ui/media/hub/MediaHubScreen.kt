@@ -398,9 +398,10 @@ private fun HubToolbar(
             horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             items(sources.size, key = { sources[it].id }) { index ->
                 val source = sources[index]
-                FilterChip(selected = source == current, onClick = { onSelect(source) },
-                    shape = MaterialTheme.shapes.large,
-                    label = { Text(stringResource(source.label)) })
+                de.mm20.launcher2.ui.media.MediaFilterButton(
+                    selected = source == current, onClick = { onSelect(source) },
+                    label = stringResource(source.label), icon = source.icon,
+                )
             }
         }
     }

@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Seiceáil UAD-NG gach uair a osclaítear an bainisteoir reo. Cumasaithe de réir réamhshocraithe.</string>
     <string name="freeze_hub_update_failed">Theip ar an nuashonrú. Coinnítear an bunachar bailí deireanach.</string>
     <string name="freeze_hub_recents">Reo tar éis baint ó aipeanna le déanaí</string>
-    <string name="freeze_hub_recents_help">Athreoitear aipeanna bainistithe nó díreoite ag Telos nuair a bhaintear an tasc deireanach. Teastaíonn Shizuku; cloítear le heisceachtaí úsáide. Múchta de réir réamhshocraithe.</string>
-    <string name="freeze_hub_recents_unavailable">Níl braith aipeanna le déanaí ar fáil. Tosaigh Shizuku agus tabhair cead.</string>
+    <string name="freeze_hub_recents_help">Athreoitear aipeanna bainistithe nó díreoite ag Telos nuair a bhaintear an tasc deireanach. Teastaíonn Shizuku / Root; cloítear le heisceachtaí úsáide. Múchta de réir réamhshocraithe.</string>
+    <string name="freeze_hub_recents_unavailable">Níl braith aipeanna le déanaí ar fáil. Tosaigh Shizuku / Root agus tabhair cead.</string>
 
     
     

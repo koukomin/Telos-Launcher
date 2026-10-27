@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Verifica atualizações UAD-NG ao abrir o gerenciador de congelamento. Ativo por padrão.</string>
     <string name="freeze_hub_update_failed">Falha na atualização. Mantém a última base válida.</string>
     <string name="freeze_hub_recents">Congelar ao remover dos recentes</string>
-    <string name="freeze_hub_recents_help">Recongela apps gerenciados ou descongelados pelo Telos após remover a última tarefa. Exige Shizuku e respeita exclusões de uso. Desativado por padrão.</string>
-    <string name="freeze_hub_recents_unavailable">Detecção dos recentes indisponível. Inicie Shizuku e conceda permissão.</string>
+    <string name="freeze_hub_recents_help">Recongela apps gerenciados ou descongelados pelo Telos após remover a última tarefa. Exige Shizuku / Root e respeita exclusões de uso. Desativado por padrão.</string>
+    <string name="freeze_hub_recents_unavailable">Detecção dos recentes indisponível. Inicie Shizuku / Root e conceda permissão.</string>
 
     
     

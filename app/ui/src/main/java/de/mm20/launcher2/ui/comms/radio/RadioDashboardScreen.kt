@@ -75,11 +75,12 @@ private fun RadioDashboardContent(
     var selectedTabIndex by de.mm20.launcher2.ui.component.rememberPersistentUiState("radio.tab", 0)
     var searchExpanded by rememberSaveable { mutableStateOf(false) }
     var collectionQuery by rememberSaveable { mutableStateOf("") }
-    val tabs = listOf(
-        stringResource(R.string.au_radio_tab_collection),
-        stringResource(R.string.hc_search),
-        stringResource(R.string.au_radio_tab_history),
-    )
+    var collectionSearchExpanded by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(Unit) { if (selectedTabIndex == 1) selectedTabIndex = 0 }
+    androidx.activity.compose.BackHandler(searchExpanded) {
+        searchExpanded = false
+        viewModel.updateSearchQuery("")
+    }
 
     var showSettings by rememberSaveable { mutableStateOf(false) }
     var pendingRestore by remember { mutableStateOf<android.net.Uri?>(null) }
@@ -129,12 +130,9 @@ private fun RadioDashboardContent(
     }
 
     de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.hc_radio), askNotifications = true, guardKey = "telos_radio_app://radio", actions = {
-        if (selectedTabIndex == 1 || (selectedTabIndex == 0 && favorites.isNotEmpty())) de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded,
-            (if (selectedTabIndex == 0) collectionQuery else searchQuery).isNotBlank()) {
-            if (searchExpanded) {
-                if (selectedTabIndex == 0) collectionQuery = "" else viewModel.updateSearchQuery("")
-            }
+        de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, searchQuery.isNotBlank()) {
             searchExpanded = !searchExpanded
+            if (!searchExpanded) viewModel.updateSearchQuery("")
         }
         IconButton(onClick = { showAdd = true }) {
             Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.hc_add_station))
@@ -144,6 +142,9 @@ private fun RadioDashboardContent(
                 Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
             }
             DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                DropdownMenuItem(text = { Text(stringResource(R.string.tsm_search_my_stations)) },
+                    leadingIcon = { Icon(painterResource(R.drawable.search_24px), null) },
+                    onClick = { menuOpen = false; searchExpanded = false; selectedTabIndex = 0; collectionSearchExpanded = true })
                 DropdownMenuItem(text = { Text(stringResource(R.string.hc_settings)) },
                     leadingIcon = { Icon(painterResource(R.drawable.settings_24px), null) },
                     onClick = { menuOpen = false; showSettings = true })
@@ -209,17 +210,20 @@ private fun RadioDashboardContent(
     }) {
     Column(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.weight(1f).fillMaxWidth()) {
-        ScrollableTabRow(selectedTabIndex = selectedTabIndex, containerColor = Color.Transparent, edgePadding = 16.dp, divider = {}) {
-            tabs.forEachIndexed { index, title ->
-                Tab(
-                    selected = selectedTabIndex == index,
-                    onClick = { selectedTabIndex = index },
-                    text = { Text(title) }
-                )
+        androidx.compose.foundation.lazy.LazyRow(
+            contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            item {
+                de.mm20.launcher2.ui.media.MediaFilterButton(selectedTabIndex == 0 && !searchExpanded,
+                    { selectedTabIndex = 0; searchExpanded = false }, stringResource(R.string.au_radio_tab_collection))
+            }
+            item {
+                de.mm20.launcher2.ui.media.MediaFilterButton(selectedTabIndex == 2 && !searchExpanded,
+                    { selectedTabIndex = 2; searchExpanded = false }, stringResource(R.string.au_radio_tab_history))
             }
         }
 
-        when (selectedTabIndex) {
+        when (if (searchExpanded) 1 else selectedTabIndex) {
             0 -> {
                 val shownFavorites = androidx.compose.runtime.remember(favorites, collectionQuery) {
                     de.mm20.launcher2.comms.search.TelosSearch.filter(favorites, collectionQuery) { listOf(it.name) }
@@ -228,7 +232,7 @@ private fun RadioDashboardContent(
                 if (favorites.isNotEmpty()) {
                     de.mm20.launcher2.ui.media.MediaSearchBar(
                         collectionQuery, { collectionQuery = it }, stringResource(R.string.tsm_search_my_stations),
-                        expanded = searchExpanded, onClose = { collectionQuery = ""; searchExpanded = false },
+                        expanded = collectionSearchExpanded, onClose = { collectionQuery = ""; collectionSearchExpanded = false },
                     )
                 }
                 var chip by rememberSaveable { mutableStateOf(RadioChip.All) }

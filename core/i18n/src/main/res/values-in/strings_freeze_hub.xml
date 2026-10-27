@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Periksa UAD-NG setiap kali Pengelola Pembekuan dibuka. Aktif secara bawaan.</string>
     <string name="freeze_hub_update_failed">Pembaruan gagal. Database valid terakhir dipertahankan.</string>
     <string name="freeze_hub_recents">Bekukan setelah dihapus dari aplikasi terbaru</string>
-    <string name="freeze_hub_recents_help">Membekukan kembali aplikasi terkelola atau yang dicairkan Telos setelah tugas terakhir dihapus. Memerlukan Shizuku dan mematuhi pengecualian penggunaan. Nonaktif secara bawaan.</string>
-    <string name="freeze_hub_recents_unavailable">Deteksi aplikasi terbaru tidak tersedia. Jalankan Shizuku dan berikan izin.</string>
+    <string name="freeze_hub_recents_help">Membekukan kembali aplikasi terkelola atau yang dicairkan Telos setelah tugas terakhir dihapus. Memerlukan Shizuku / Root dan mematuhi pengecualian penggunaan. Nonaktif secara bawaan.</string>
+    <string name="freeze_hub_recents_unavailable">Deteksi aplikasi terbaru tidak tersedia. Jalankan Shizuku / Root dan berikan izin.</string>
 
     
     

@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">每次開啟凍結管理員時檢查 UAD-NG 更新。預設開啟。</string>
     <string name="freeze_hub_update_failed">更新失敗，保留最後有效的資料庫。</string>
     <string name="freeze_hub_recents">從最近任務移除後凍結</string>
-    <string name="freeze_hub_recents_help">移除最後一個任務後，重新凍結受管理或由 Telos 解凍的應用程式。需要 Shizuku，並遵守使用排除規則。預設關閉。</string>
-    <string name="freeze_hub_recents_unavailable">最近任務偵測無法使用。請啟動 Shizuku 並授予權限。</string>
+    <string name="freeze_hub_recents_help">移除最後一個任務後，重新凍結受管理或由 Telos 解凍的應用程式。需要 Shizuku / Root，並遵守使用排除規則。預設關閉。</string>
+    <string name="freeze_hub_recents_unavailable">最近任務偵測無法使用。請啟動 Shizuku / Root 並授予權限。</string>
 
     
     

@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">फ्रीज़ मैनेजर खुलने पर हर बार UAD-NG अपडेट जाँचता है। डिफ़ॉल्ट रूप से चालू।</string>
     <string name="freeze_hub_update_failed">अपडेट विफल। अंतिम मान्य डेटाबेस रखा गया है।</string>
     <string name="freeze_hub_recents">हाल के ऐप से हटाने पर फ्रीज़ करें</string>
-    <string name="freeze_hub_recents_help">अंतिम कार्य हटने पर प्रबंधित या Telos से मुक्त किए ऐप फिर फ्रीज़ करता है। Shizuku चाहिए; उपयोग अपवाद लागू रहते हैं। डिफ़ॉल्ट रूप से बंद।</string>
-    <string name="freeze_hub_recents_unavailable">हाल के ऐप की पहचान उपलब्ध नहीं। Shizuku शुरू करके अनुमति दें।</string>
+    <string name="freeze_hub_recents_help">अंतिम कार्य हटने पर प्रबंधित या Telos से मुक्त किए ऐप फिर फ्रीज़ करता है। Shizuku / Root चाहिए; उपयोग अपवाद लागू रहते हैं। डिफ़ॉल्ट रूप से बंद।</string>
+    <string name="freeze_hub_recents_unavailable">हाल के ऐप की पहचान उपलब्ध नहीं। Shizuku / Root शुरू करके अनुमति दें।</string>
 
     
     

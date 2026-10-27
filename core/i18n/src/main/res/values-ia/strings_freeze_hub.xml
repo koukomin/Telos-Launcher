@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Verifica UAD-NG cata vice que le gestor de congelation se aperi. Activate per defecto.</string>
     <string name="freeze_hub_update_failed">Actualisation fallite. Le ultime base valide es conservate.</string>
     <string name="freeze_hub_recents">Congelar post remotion del recentes</string>
-    <string name="freeze_hub_recents_help">Recongela applicationes gerite o disgelate per Telos post remotion del ultime carga. Require Shizuku e respecta exclusiones de uso. Disactivate per defecto.</string>
-    <string name="freeze_hub_recents_unavailable">Detection de recentes indisponibile. Initia Shizuku e concede permission.</string>
+    <string name="freeze_hub_recents_help">Recongela applicationes gerite o disgelate per Telos post remotion del ultime carga. Require Shizuku / Root e respecta exclusiones de uso. Disactivate per defecto.</string>
+    <string name="freeze_hub_recents_unavailable">Detection de recentes indisponibile. Initia Shizuku / Root e concede permission.</string>
 
     
     

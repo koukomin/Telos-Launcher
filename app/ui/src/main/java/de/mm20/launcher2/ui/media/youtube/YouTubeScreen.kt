@@ -173,26 +173,20 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                     run {
                         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             item {
-                                FilterChip(selected = shelf == "search" && query.isBlank(),
+                                de.mm20.launcher2.ui.media.MediaFilterButton(
+                                    selected = shelf == "search" && query.isBlank(),
                                     onClick = { shelf = "search"; query = ""; vm.loadHome(context, music, refresh = true) },
-                                    label = { Text(stringResource(R.string.au10_music_tab_home)) })
+                                    label = stringResource(R.string.au10_music_tab_home))
                             }
                             item {
-                                FilterChip(
-                                    selected = shelf == "search",
-                                    onClick = { shelf = "search" },
-                                    label = { Text(stringResource(R.string.telos_youtube_search)) }
-                                )
-                            }
-                            item {
-                                FilterChip(
+                                de.mm20.launcher2.ui.media.MediaFilterButton(
                                     selected = shelf == "favorites",
-                                    onClick = { shelf = "favorites" },
-                                    label = { Text(stringResource(R.string.hc_favorites)) }
-                                )
+                                    onClick = { shelf = "favorites" }, label = stringResource(R.string.hc_favorites))
                             }
                             items(playlists.keys.toList(), key = { it }) { name ->
                                 InputChip(
+                                    modifier = Modifier.heightIn(min = 48.dp),
+                                    shape = RoundedCornerShape(10.dp),
                                     selected = shelf == "playlist:$name",
                                     onClick = { shelf = "playlist:$name" },
                                     label = { Text(name) },

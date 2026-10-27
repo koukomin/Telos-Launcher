@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Preveri UAD-NG ob vsakem odprtju upravljanja zamrzovanja. Privzeto vklopljeno.</string>
     <string name="freeze_hub_update_failed">Posodobitev ni uspela. Ohranjena je zadnja veljavna zbirka.</string>
     <string name="freeze_hub_recents">Zamrzni po odstranitvi iz nedavnih</string>
-    <string name="freeze_hub_recents_help">Ponovno zamrzne upravljane ali s Telosom odmrznjene aplikacije po odstranitvi zadnje naloge. Zahteva Shizuku in upošteva izjeme uporabe. Privzeto izklopljeno.</string>
-    <string name="freeze_hub_recents_unavailable">Zaznavanje nedavnih ni na voljo. Zaženite Shizuku in dovolite dostop.</string>
+    <string name="freeze_hub_recents_help">Ponovno zamrzne upravljane ali s Telosom odmrznjene aplikacije po odstranitvi zadnje naloge. Zahteva Shizuku / Root in upošteva izjeme uporabe. Privzeto izklopljeno.</string>
+    <string name="freeze_hub_recents_unavailable">Zaznavanje nedavnih ni na voljo. Zaženite Shizuku / Root in dovolite dostop.</string>
 
     
     

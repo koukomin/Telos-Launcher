@@ -55,6 +55,11 @@ class MediaChromeTest {
                                     DropdownMenuItem(text = { Text("TV") }, onClick = { source = "TV"; sourceMenu = false })
                                 }
                             })
+                            androidx.compose.foundation.lazy.LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                item { de.mm20.launcher2.ui.media.MediaFilterButton(true, {}, context.getString(R.string.au9_mediahub_space_music), R.drawable.music_note_24px) }
+                                item { de.mm20.launcher2.ui.media.MediaFilterButton(false, {}, context.getString(R.string.hc_radio), R.drawable.ic_glyph_radio) }
+                                item { de.mm20.launcher2.ui.media.MediaFilterButton(false, {}, context.getString(R.string.telos_youtube_music_label), R.drawable.play_arrow_24px) }
+                            }
                             StremioBrowseControls(tab, { tab = it }, query, { query = it }, expanded, { expanded = it })
                             Text("Συνέχεια παρακολούθησης", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(16.dp))
                         }

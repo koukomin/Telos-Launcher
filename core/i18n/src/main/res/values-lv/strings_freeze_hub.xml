@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Pārbauda UAD-NG katrā iesaldēšanas pārvaldnieka atvēršanā. Pēc noklusējuma ieslēgts.</string>
     <string name="freeze_hub_update_failed">Atjaunināšana neizdevās. Saglabāta pēdējā derīgā datubāze.</string>
     <string name="freeze_hub_recents">Iesaldēt pēc noņemšanas no nesenajām</string>
-    <string name="freeze_hub_recents_help">Atkārtoti iesaldē pārvaldītās vai Telos atkausētās lietotnes pēc pēdējā uzdevuma noņemšanas. Vajag Shizuku un tiek ievēroti lietošanas izņēmumi. Pēc noklusējuma izslēgts.</string>
-    <string name="freeze_hub_recents_unavailable">Neseno lietotņu noteikšana nav pieejama. Palaidiet Shizuku un dodiet atļauju.</string>
+    <string name="freeze_hub_recents_help">Atkārtoti iesaldē pārvaldītās vai Telos atkausētās lietotnes pēc pēdējā uzdevuma noņemšanas. Vajag Shizuku / Root un tiek ievēroti lietošanas izņēmumi. Pēc noklusējuma izslēgts.</string>
+    <string name="freeze_hub_recents_unavailable">Neseno lietotņu noteikšana nav pieejama. Palaidiet Shizuku / Root un dodiet atļauju.</string>
 
     
     

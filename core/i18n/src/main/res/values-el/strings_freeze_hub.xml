@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Ελέγχει τη βάση UAD-NG σε κάθε άνοιγμα της διαχείρισης παγώματος. Ενεργό από προεπιλογή.</string>
     <string name="freeze_hub_update_failed">Η ενημέρωση απέτυχε. Διατηρείται η τελευταία έγκυρη βάση.</string>
     <string name="freeze_hub_recents">Πάγωμα μετά την αφαίρεση από τα Recents</string>
-    <string name="freeze_hub_recents_help">Ξαναπαγώνει διαχειριζόμενες εφαρμογές ή όσες ξεπάγωσε το Telos όταν αφαιρεθεί η τελευταία κάρτα τους. Απαιτεί Shizuku και σέβεται τις εξαιρέσεις χρήσης. Αρχικά ανενεργό.</string>
-    <string name="freeze_hub_recents_unavailable">Η ανίχνευση Recents δεν είναι διαθέσιμη. Εκκίνησε το Shizuku και παραχώρησε άδεια.</string>
+    <string name="freeze_hub_recents_help">Ξαναπαγώνει διαχειριζόμενες εφαρμογές ή όσες ξεπάγωσε το Telos όταν αφαιρεθεί η τελευταία κάρτα τους. Απαιτεί Shizuku / Root και σέβεται τις εξαιρέσεις χρήσης. Αρχικά ανενεργό.</string>
+    <string name="freeze_hub_recents_unavailable">Η ανίχνευση Recents δεν είναι διαθέσιμη. Εκκίνησε το Shizuku / Root και παραχώρησε άδεια.</string>
 
     
     
