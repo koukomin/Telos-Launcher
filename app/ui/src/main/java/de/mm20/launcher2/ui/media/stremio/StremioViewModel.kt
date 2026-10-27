@@ -27,6 +27,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
@@ -67,7 +70,9 @@ class StremioViewModel : ViewModel(), KoinComponent {
     val addons: StateFlow<List<Addon>> get() = store.addons
     val noticeAccepted: StateFlow<Boolean> get() = store.noticeAccepted
     val saved: StateFlow<List<LibraryEntry>> get() = library.library
-    val watching: StateFlow<List<WatchProgress>> get() = library.continueWatching
+    val progressHistory: StateFlow<List<WatchProgress>> get() = library.continueWatching
+    val watching: StateFlow<List<WatchProgress>> = library.continueWatching.map { entries -> entries.filterNot { it.completed } }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     fun acceptNotice() = store.acceptNotice()
 
@@ -246,12 +251,14 @@ class StremioViewModel : ViewModel(), KoinComponent {
     fun isSaved(id: String): Boolean = library.isSaved(id)
 
     fun toggleSaved(meta: Meta) {
-        library.toggle(meta.type, meta.id, meta.name, meta.poster)
-        val removed = !library.isSaved(meta.id)
-        viewModelScope.launch { account.saveChanged(meta.type, meta.id, meta.name, meta.poster, removed) }
+        viewModelScope.launch {
+            library.toggle(meta.type, meta.id, meta.name, meta.poster)
+            val removed = !library.isSaved(meta.id)
+            account.saveChanged(meta.type, meta.id, meta.name, meta.poster, removed)
+        }
     }
 
-    fun removeProgress(id: String) = library.removeProgress(id)
+    fun removeProgress(id: String) { viewModelScope.launch { library.removeProgress(id) } }
 
     // ---- streams ----
 
@@ -304,7 +311,20 @@ class StremioViewModel : ViewModel(), KoinComponent {
             val remaining = de.mm20.launcher2.comms.stremio.StremioEpisodeQueue.after(
                 state.type, _detail.value?.meta?.videos.orEmpty(), state.videoId,
             )
+            val storedProgress = library.continueWatching.value.firstOrNull { it.id == state.metaId && it.videoId == state.videoId && !it.completed }
+            val episodeOrder = de.mm20.launcher2.comms.stremio.StremioProgressState.orderedVideoIds(_detail.value?.meta?.videos.orEmpty())
+                .takeIf { it.size <= 10_000 && it.sumOf(String::length) <= 64_000 }.orEmpty()
             fun withSubtitles(intent: Intent): Intent = intent
+                .putExtra("stremio_meta_id", state.metaId)
+                .putExtra("stremio_video_id", state.videoId)
+                .putExtra("stremio_meta_name", state.name.take(512))
+                .putExtra("stremio_meta_poster", state.poster?.take(4096))
+                .putExtra("stremio_video_title", state.title.take(512))
+                .putExtra("stremio_stream_key", stream.streamKey().take(4096))
+                .putExtra("stremio_session", account.playbackSession)
+                .putExtra("stremio_resume_ms", storedProgress?.positionMs ?: 0L)
+                .putExtra("stremio_watched_ms", storedProgress?.timeWatchedMs ?: 0L)
+                .putStringArrayListExtra("stremio_episode_order", ArrayList(episodeOrder))
                 .putStringArrayListExtra("stremio_next_ids", ArrayList(remaining.map { it.id }))
                 .putStringArrayListExtra("stremio_next_titles", ArrayList(remaining.map { it.title }))
                 .putExtra("stremio_type", state.type)
@@ -349,11 +369,6 @@ class StremioViewModel : ViewModel(), KoinComponent {
                     true
                 }
                 StreamItem.Kind.Unsupported -> false
-            }
-            if (opened) {
-                val progress = WatchProgress(state.type, state.metaId, state.name, state.poster, state.videoId, state.title, System.currentTimeMillis(), stream.streamKey())
-                library.markWatched(progress)
-                launch { account.played(progress) }
             }
             _streams.update { it?.copy(loading = false) }
             onDone(opened)

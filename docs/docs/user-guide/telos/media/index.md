@@ -242,3 +242,7 @@ Music, Radio and YouTube Music source buttons use labeled icons and filled round
 Stremio Fork’s overflow menu exposes the HTTP cache budget directly: 1, 2, 5, 10 or 20 GB. This is the existing per-player-process LRU HTTP cache, not a total torrent quota. Another Stremio installation’s private cache is not opened or modified; Android storage isolation and different cache formats prevent safe direct sharing.
 
 The shared Music/Radio/TV mini player uses a compact opaque tonal bar and plain playback glyphs, retaining artwork, progress, next/record/stop actions and the tap-to-open player.
+
+## Stremio playback-state integration checkpoint
+
+The player now records real millisecond positions and durations through the main-process bridge, including isolated playback. Library files are separated by Stremio account; anonymous or another account's entries are not automatically uploaded on login. Updates are saved atomically off Main and pending progress is retried on synchronization. A launch attempt is no longer treated as a watched title. Watch evidence uses the Stremio core's actual-watch-time threshold (70%), separately from its credits/resume threshold (90%); setting one episode preserves other watched bits. This implementation is undergoing integration validation. Trakt watchlist/resume synchronization and genuine shared-server cache support remain in progress; they are not certified by this checkpoint.
