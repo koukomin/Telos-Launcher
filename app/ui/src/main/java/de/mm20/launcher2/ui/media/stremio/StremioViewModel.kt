@@ -28,6 +28,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.launch
@@ -69,10 +71,14 @@ class StremioViewModel : ViewModel(), KoinComponent {
 
     val addons: StateFlow<List<Addon>> get() = store.addons
     val noticeAccepted: StateFlow<Boolean> get() = store.noticeAccepted
-    val saved: StateFlow<List<LibraryEntry>> get() = library.library
+    val saved: StateFlow<List<LibraryEntry>> = combine(library.library, de.mm20.launcher2.comms.media.video.trakt.Trakt.libraryState) { local, trakt ->
+        (local + trakt.library).groupBy { it.type to it.id }.values.map { it.maxBy { e -> e.addedAt } }.sortedByDescending { it.addedAt }
+    }.flowOn(kotlinx.coroutines.Dispatchers.Default).stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
     val progressHistory: StateFlow<List<WatchProgress>> get() = library.continueWatching
-    val watching: StateFlow<List<WatchProgress>> = library.continueWatching.map { entries -> entries.filterNot { it.completed } }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    val watching: StateFlow<List<WatchProgress>> = combine(library.continueWatching, de.mm20.launcher2.comms.media.video.trakt.Trakt.libraryState) { local, trakt ->
+        (local + trakt.watching).groupBy { it.type to it.id }.values.map { it.maxBy { e -> e.watchedAt } }
+            .filterNot { it.completed }.sortedByDescending { it.watchedAt }
+    }.flowOn(kotlinx.coroutines.Dispatchers.Default).stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     fun acceptNotice() = store.acceptNotice()
 
@@ -99,15 +105,13 @@ class StremioViewModel : ViewModel(), KoinComponent {
     val accountEmail: StateFlow<String?> get() = account.email
     val accountBusy: StateFlow<Boolean> get() = account.busy
     val accountWatched get() = account.watched
-    private val _traktVersion = MutableStateFlow(0)
-    val traktVersion: StateFlow<Int> get() = _traktVersion
+    val traktVersion: StateFlow<Int> get() = de.mm20.launcher2.comms.media.video.trakt.Trakt.watchedVersion
 
     fun refreshAccounts(context: Context, force: Boolean = false) {
         viewModelScope.launch {
             launch { if (account.signedIn) account.syncAll() }
             launch {
-                de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshWatched(context, force)
-                _traktVersion.value++
+                de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshLibrary(appContext, force)
             }
         }
     }
@@ -130,8 +134,7 @@ class StremioViewModel : ViewModel(), KoinComponent {
     fun syncNow(onResult: (String?) -> Unit) {
         viewModelScope.launch {
             account.syncAll().onSuccess { onResult(null) }.onFailure { onResult(it.message ?: "Failed") }
-            de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshWatched(appContext, force = true)
-            _traktVersion.value++
+            de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshLibrary(appContext, force = true)
         }
     }
 
@@ -248,13 +251,18 @@ class StremioViewModel : ViewModel(), KoinComponent {
         _detail.value = null
     }
 
-    fun isSaved(id: String): Boolean = library.isSaved(id)
+    fun isSaved(id: String): Boolean = saved.value.any { it.id == id }
 
     fun toggleSaved(meta: Meta) {
+        val desired = !isSaved(meta.id)
+        val traktSession = de.mm20.launcher2.comms.media.video.trakt.Trakt.session(appContext)
         viewModelScope.launch {
-            library.toggle(meta.type, meta.id, meta.name, meta.poster)
-            val removed = !library.isSaved(meta.id)
-            account.saveChanged(meta.type, meta.id, meta.name, meta.poster, removed)
+            library.setSaved(meta.type, meta.id, meta.name, meta.poster, desired)
+            launch { account.saveChanged(meta.type, meta.id, meta.name, meta.poster, !desired) }
+            val updated = de.mm20.launcher2.comms.media.video.trakt.Trakt.setWatchlistId(appContext, meta.type, meta.id, meta.name, desired, traktSession)
+            if (updated == false) android.widget.Toast.makeText(appContext,
+                appContext.getString(de.mm20.launcher2.ui.R.string.au7_trakt_title) + " · " + appContext.getString(de.mm20.launcher2.ui.R.string.pdft_error_title),
+                android.widget.Toast.LENGTH_LONG).show()
         }
     }
 
@@ -265,6 +273,7 @@ class StremioViewModel : ViewModel(), KoinComponent {
     private val _streams = MutableStateFlow<StreamsState?>(null)
     val streams: StateFlow<StreamsState?> get() = _streams
 
+    private var playJob: Job? = null
     private var streamsJob: Job? = null
 
     /** Asks all stream add-ons for [video] (or for the movie itself when [video] is null) */
@@ -287,6 +296,7 @@ class StremioViewModel : ViewModel(), KoinComponent {
     }
 
     fun closeStreams() {
+        playJob?.cancel()
         streamsJob?.cancel()
         _streams.value = null
     }
@@ -301,7 +311,11 @@ class StremioViewModel : ViewModel(), KoinComponent {
             return
         }
         _streams.update { it?.copy(loading = true) }
-        viewModelScope.launch {
+        playJob?.cancel()
+        playJob = viewModelScope.launch {
+            // Wait for any in-flight login sync before selecting a resume point.
+            de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshLibrary(appContext)
+            if (_streams.value?.videoId != state.videoId) return@launch
             val needsPlayer = stream.kind == StreamItem.Kind.Web || stream.kind == StreamItem.Kind.Torrent
             val subtitles = if (!needsPlayer) emptyList() else {
                 val extra = stream.filename?.let { mapOf("filename" to it) }.orEmpty()
@@ -311,22 +325,34 @@ class StremioViewModel : ViewModel(), KoinComponent {
             val remaining = de.mm20.launcher2.comms.stremio.StremioEpisodeQueue.after(
                 state.type, _detail.value?.meta?.videos.orEmpty(), state.videoId,
             )
-            val storedProgress = library.continueWatching.value.firstOrNull { it.id == state.metaId && it.videoId == state.videoId && !it.completed }
-            val episodeOrder = de.mm20.launcher2.comms.stremio.StremioProgressState.orderedVideoIds(_detail.value?.meta?.videos.orEmpty())
-                .takeIf { it.size <= 10_000 && it.sumOf(String::length) <= 64_000 }.orEmpty()
+            val storedProgress = (library.continueWatching.value + de.mm20.launcher2.comms.media.video.trakt.Trakt.libraryState.value.watching)
+                .filter { it.id == state.metaId && it.videoId == state.videoId && !it.completed }.maxByOrNull { it.watchedAt }
+            val selectedVideo = _detail.value?.meta?.videos?.firstOrNull { it.id == state.videoId }
+            val episodeOrder = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                de.mm20.launcher2.comms.stremio.StremioProgressState.orderedVideoIds(_detail.value?.meta?.videos.orEmpty())
+                    .takeIf { it.size <= 10_000 && it.sumOf(String::length) <= 64_000 }.orEmpty()
+            }
             fun withSubtitles(intent: Intent): Intent = intent
+                .putExtra("trakt_session", de.mm20.launcher2.comms.media.video.trakt.Trakt.session(appContext))
+                .apply { selectedVideo?.season?.let { putExtra("trakt_season", it) }; selectedVideo?.episode?.let { putExtra("trakt_episode", it) } }
                 .putExtra("stremio_meta_id", state.metaId)
                 .putExtra("stremio_video_id", state.videoId)
+                .putExtra("stremio_next_video_id", remaining.firstOrNull()?.takeIf { video ->
+                    video.released == null || runCatching { java.time.Instant.parse(video.released).toEpochMilli() <= System.currentTimeMillis() }.getOrDefault(false)
+                }?.id)
                 .putExtra("stremio_meta_name", state.name.take(512))
                 .putExtra("stremio_meta_poster", state.poster?.take(4096))
                 .putExtra("stremio_video_title", state.title.take(512))
                 .putExtra("stremio_stream_key", stream.streamKey().take(4096))
                 .putExtra("stremio_session", account.playbackSession)
                 .putExtra("stremio_resume_ms", storedProgress?.positionMs ?: 0L)
+                .putExtra("stremio_resume_percent", storedProgress?.resumePercent ?: Double.NaN)
                 .putExtra("stremio_watched_ms", storedProgress?.timeWatchedMs ?: 0L)
                 .putStringArrayListExtra("stremio_episode_order", ArrayList(episodeOrder))
                 .putStringArrayListExtra("stremio_next_ids", ArrayList(remaining.map { it.id }))
                 .putStringArrayListExtra("stremio_next_titles", ArrayList(remaining.map { it.title }))
+                .putIntegerArrayListExtra("stremio_next_seasons", ArrayList(remaining.map { it.season ?: -1 }))
+                .putIntegerArrayListExtra("stremio_next_episodes", ArrayList(remaining.map { it.episode ?: -1 }))
                 .putExtra("stremio_type", state.type)
                 .putExtra("stremio_addon", stream.addonName)
                 .putExtra("stremio_kind", stream.kind.name)

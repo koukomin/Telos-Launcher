@@ -16,6 +16,8 @@ internal object StremioEpisodeContinuation {
             if (!preferences.autoNextEpisode) return@withContext null
             val ids = current.getStringArrayListExtra("stremio_next_ids").orEmpty()
             val titles = current.getStringArrayListExtra("stremio_next_titles").orEmpty()
+            val seasons = current.getIntegerArrayListExtra("stremio_next_seasons").orEmpty()
+            val episodes = current.getIntegerArrayListExtra("stremio_next_episodes").orEmpty()
             val nextId = ids.firstOrNull() ?: return@withContext null
             val type = current.getStringExtra("stremio_type") ?: return@withContext null
             val addonName = current.getStringExtra("stremio_addon") ?: return@withContext null
@@ -36,9 +38,17 @@ internal object StremioEpisodeContinuation {
                 removeExtra(VideoPlayerActivity.EXTRA_URIS)
                 removeExtra(VideoPlayerActivity.EXTRA_TITLES)
                 putExtra("stremio_video_id", nextId)
+                // A later episode's availability is not established by the cached queue alone.
+                removeExtra("stremio_next_video_id")
                 putExtra("stremio_video_title", title)
                 putExtra("stremio_resume_ms", 0L)
                 putExtra("stremio_watched_ms", 0L)
+                putExtra("stremio_resume_percent", Double.NaN)
+                removeExtra("trakt_season"); removeExtra("trakt_episode")
+                seasons.firstOrNull()?.takeIf { it >= 0 }?.let { putExtra("trakt_season", it) }
+                episodes.firstOrNull()?.takeIf { it > 0 }?.let { putExtra("trakt_episode", it) }
+                putIntegerArrayListExtra("stremio_next_seasons", ArrayList(seasons.drop(1)))
+                putIntegerArrayListExtra("stremio_next_episodes", ArrayList(episodes.drop(1)))
                 putExtra("stremio_stream_key", stream.streamKey().take(4096))
                 putStringArrayListExtra("stremio_next_ids", ArrayList(ids.drop(1)))
                 putStringArrayListExtra("stremio_next_titles", ArrayList(titles.drop(1)))

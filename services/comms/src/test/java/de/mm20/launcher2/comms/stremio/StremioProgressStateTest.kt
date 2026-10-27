@@ -75,4 +75,17 @@ class StremioProgressStateTest {
         assertTrue(ids[0] in StremioWatched(videos = state.getString("watched")).episodes(ids))
     }
 
+    @Test fun completedEpisodeAdvancesOnlyToAValidatedFollowingVideo() {
+        val ids = listOf("tt1:1:1", "tt1:1:2")
+        val p = progress(position = 10000, time = 10000, completed = true).copy(type = "series", videoId = ids[0], videoIds = ids, nextVideoId = ids[1])
+        val state = StremioProgressState.update(JSONObject(), p)!!.getJSONObject("state")
+        assertEquals(ids[1], state.getString("video_id"))
+        assertEquals(1L, state.getLong("timeOffset"))
+        assertEquals(0L, state.getLong("duration"))
+        assertTrue(ids[0] in StremioWatched(videos = state.getString("watched")).episodes(ids))
+        val invalid = StremioProgressState.update(JSONObject(), p.copy(nextVideoId = "unknown"))!!.getJSONObject("state")
+        assertEquals(ids[0], invalid.getString("video_id"))
+        assertEquals(0L, invalid.getLong("timeOffset"))
+    }
+
 }

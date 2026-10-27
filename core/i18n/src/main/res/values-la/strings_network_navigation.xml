@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_hub_logs">Acta</string>
+    <string name="net_hub_settings">Optiones</string>
+    <string name="net_hub_start">INCIPE</string>
+    <string name="net_hub_state_error">Intermissum</string>
+    <string name="net_hub_state_off">Inactivum</string>
+    <string name="net_hub_state_permission">Permissio requiritur</string>
+    <string name="net_hub_state_starting">Incipitur…</string>
+    <string name="net_hub_stop">SISTE</string>
+    <string name="netfw_blocked">Interclusa</string>
+    <string name="netfw_l_apps">Applicationes</string>
+    <string name="netfw_t_mobile">Data mobilia</string>
+    <string name="netfw_t_wifi">Wi-Fi</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="ermis_loading">Oneratur…</string>
+    <string name="hc_sync_now">Nunc synchroniza</string>
+    <string name="pdft_error_title">Aliquid erravit</string>
+</resources>

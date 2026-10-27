@@ -310,6 +310,19 @@ private fun PlayerContent(
         val progress = if (finished || duration <= 0) 100f else (player.currentPosition * 100f / duration).coerceIn(0f, 100f)
         traktState[0] = action
         traktState[1] = item.mediaId
+        if (stremio && stremioIntent != null) {
+            de.mm20.launcher2.comms.media.video.PlayerBridge.send(context.applicationContext,
+                de.mm20.launcher2.comms.media.video.PlayerBridge.ACTION_SCROBBLE) {
+                putString("action", action); putFloat("progress", progress)
+                putString("id", stremioIntent.getStringExtra("stremio_meta_id"))
+                putString("trakt_session", stremioIntent.getStringExtra("trakt_session"))
+                putInt("season", stremioIntent.getIntExtra("trakt_season", -1))
+                putInt("episode", stremioIntent.getIntExtra("trakt_episode", -1))
+                putBoolean("series", stremioIntent.getStringExtra("stremio_type") == "series")
+                putLong("event_time", System.currentTimeMillis())
+            }
+            return
+        }
         val name = item.mediaMetadata.title?.toString().orEmpty()
         val parsedName = cleanTitle(name) + ".x"
         val appContext = context.applicationContext
@@ -350,6 +363,7 @@ private fun PlayerContent(
                     putString("session", stremioIntent.getStringExtra("stremio_session"))
                     putString("meta_id", stremioIntent.getStringExtra("stremio_meta_id"))
                     putString("video_id", stremioIntent.getStringExtra("stremio_video_id"))
+                    putString("next_video_id", stremioIntent.getStringExtra("stremio_next_video_id"))
                     putString("type", stremioIntent.getStringExtra("stremio_type"))
                     putString("name", stremioIntent.getStringExtra("stremio_meta_name"))
                     putString("poster", stremioIntent.getStringExtra("stremio_meta_poster"))
@@ -375,6 +389,7 @@ private fun PlayerContent(
         onDispose { VideoSession.detach(context, player) }
     }
 
+    var percentResumeApplied by remember(player) { mutableStateOf(false) }
     val continuationScope = rememberCoroutineScope()
     var continuationRequested by remember(player) { mutableStateOf(false) }
     DisposableEffect(player) {
@@ -388,6 +403,13 @@ private fun PlayerContent(
             }
 
             override fun onPlaybackStateChanged(playbackState: Int) {
+                if (playbackState == Player.STATE_READY && !percentResumeApplied) {
+                    percentResumeApplied = true
+                    val percent = stremioIntent?.getDoubleExtra("stremio_resume_percent", Double.NaN) ?: Double.NaN
+                    if (stremio && percent.isFinite() && percent in 0.0..<100.0 && player.duration > 0) {
+                        player.seekTo((player.duration * percent / 100).toLong())
+                    }
+                }
                 if (playbackState == Player.STATE_ENDED) {
                     saveProgress(ended = true)
                     scrobble("stop", finished = true)

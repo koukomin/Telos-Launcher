@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_hub_logs">Ὑπομνήματα</string>
+    <string name="net_hub_settings">Ῥυθμίσεις</string>
+    <string name="net_hub_start">ἌΡΞΑΙ</string>
+    <string name="net_hub_state_error">Πέπαυται</string>
+    <string name="net_hub_state_off">Ἀνενεργόν</string>
+    <string name="net_hub_state_permission">Ἀδείας δεῖ</string>
+    <string name="net_hub_state_starting">Ἄρχεται…</string>
+    <string name="net_hub_stop">ΠΑῦΣΟΝ</string>
+    <string name="netfw_blocked">Ἀποκεκλεισμένον</string>
+    <string name="netfw_l_apps">Ἐφαρμογαί</string>
+    <string name="netfw_t_mobile">Δεδομένα κινητῆς</string>
+    <string name="netfw_t_wifi">Wi-Fi</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="ermis_loading">Φορτίζεται…</string>
+    <string name="hc_sync_now">Συγχρόνισον νῦν</string>
+    <string name="pdft_error_title">Σφάλμα ἐγένετο</string>
+</resources>

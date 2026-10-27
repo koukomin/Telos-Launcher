@@ -41,8 +41,10 @@ val buildNativeDaemon by tasks.registering(Exec::class) {
     environment("GOARCH", "arm64")
     environment("CGO_ENABLED", "0")
     commandLine("go", "build", "-trimpath", "-buildvcs=false", "-buildmode=pie", "-ldflags=-s -w -buildid=", "-o", nativeOutput.get().asFile.absolutePath, "./cmd/appopsnextd")
-    doFirst { nativeOutput.get().asFile.parentFile.mkdirs() }
-    onlyIf { providers.gradleProperty("telos.abi").orNull != "armeabi-v7a" }
+    val outputDirectory = nativeOutput.get().asFile.parentFile
+    val buildForArm64 = providers.gradleProperty("telos.abi").orNull != "armeabi-v7a"
+    doFirst { outputDirectory.mkdirs() }
+    onlyIf { buildForArm64 }
 }
 tasks.configureEach {
     if (name.startsWith("merge") && name.endsWith("Assets")) dependsOn(buildNativeDaemon)

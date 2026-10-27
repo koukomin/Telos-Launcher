@@ -4,6 +4,13 @@ import android.content.Context
 import de.mm20.launcher2.comms.media.video.ParsedName
 import de.mm20.launcher2.comms.media.video.VideoMetadata
 import de.mm20.launcher2.comms.remote.SecretBox
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -30,6 +37,21 @@ object Trakt {
     private const val PREFS = "trakt"
 
     private fun prefs(context: Context) = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+
+    private val syncScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val syncMutex = Mutex()
+    private val scrobbleWriteMutex = Mutex()
+    private val accountMonitor = Any()
+    private val _libraryState = MutableStateFlow(TraktLibraryState())
+    val libraryState: StateFlow<TraktLibraryState> get() = _libraryState
+    private val _syncing = MutableStateFlow(false)
+    val syncing: StateFlow<Boolean> get() = _syncing
+    private val _syncFailed = MutableStateFlow(false)
+    val syncFailed: StateFlow<Boolean> get() = _syncFailed
+    private val _watchedVersion = MutableStateFlow(0)
+    val watchedVersion: StateFlow<Int> get() = _watchedVersion
+    @Volatile private var hydratedSession: String? = null
+    fun session(context: Context): String = prefs(context).getString("session_id", "legacy").orEmpty()
 
     // ---- stored login ----
 
@@ -68,8 +90,23 @@ object Trakt {
     }
 
     fun signOut(context: Context) {
-        prefs(context).edit().remove("access").remove("refresh").remove("expires").remove("watched").remove("watched_at").remove("queue").apply()
-        watchedCache = null
+        synchronized(accountMonitor) {
+            prefs(context).edit().remove("access").remove("refresh").remove("expires").remove("watched").remove("watched_at").remove("queue").remove("pending_state").remove("pending_until")
+                .putString("session_id", java.util.UUID.randomUUID().toString()).apply()
+            watchedCache = null; _libraryState.value = TraktLibraryState(); hydratedSession = null; _watchedVersion.value++; _syncFailed.value = false
+        }
+    }
+
+    private fun saveFreshTokens(context: Context, json: JSONObject) {
+        synchronized(accountMonitor) {
+            prefs(context).edit().remove("watched").remove("watched_at").remove("queue").remove("pending_state").remove("pending_until")
+                .putString("session_id", java.util.UUID.randomUUID().toString()).apply()
+            watchedCache = null; _libraryState.value = TraktLibraryState(); hydratedSession = null; _watchedVersion.value++; _syncFailed.value = false
+            saveTokens(context, json)
+        }
+        val app = context.applicationContext
+        val authorizedSession = session(context)
+        syncScope.launch { refreshLibrary(app, force = true, expectedSession = authorizedSession) }
     }
 
     private fun saveTokens(context: Context, json: JSONObject) {
@@ -82,7 +119,7 @@ object Trakt {
 
     // ---- http ----
 
-    private class HttpResult(val code: Int, val body: String)
+    private class HttpResult(val code: Int, val body: String, val pageCount: Int? = null)
 
     private fun request(
         context: Context?,
@@ -109,8 +146,20 @@ object Trakt {
                 c.outputStream.use { it.write(body.toString().toByteArray()) }
             }
             val code = c.responseCode
-            val text = (if (code in 200..299) c.inputStream else c.errorStream)?.bufferedReader()?.use { it.readText() }.orEmpty()
-            return HttpResult(code, text)
+            val maxBytes = if (path.startsWith("/sync/watched/")) 16 * 1024 * 1024 else 4 * 1024 * 1024
+            check(c.contentLengthLong <= maxBytes || c.contentLengthLong < 0) { "Trakt response is too large" }
+            val text = (if (code in 200..299) c.inputStream else c.errorStream)?.use { input ->
+                val out = java.io.ByteArrayOutputStream()
+                val bytes = ByteArray(8192)
+                while (true) {
+                    val count = input.read(bytes)
+                    if (count < 0) break
+                    check(out.size() + count <= maxBytes) { "Trakt response is too large" }
+                    out.write(bytes, 0, count)
+                }
+                out.toString("UTF-8")
+            }.orEmpty()
+            return HttpResult(code, text, c.getHeaderField("X-Pagination-Page-Count")?.toIntOrNull())
         } finally {
             c.disconnect()
         }
@@ -164,6 +213,7 @@ object Trakt {
         if (code.isNullOrBlank()) return WebResult.Failed
         val l = login(context)
         if (l.clientId.isBlank() || l.clientSecret.isBlank()) return WebResult.Failed
+        val currentSession = session(context)
         val r = runCatching {
             request(
                 context, "POST", "/oauth/token",
@@ -173,7 +223,12 @@ object Trakt {
             )
         }.getOrNull()
         if (r == null || r.code != 200) return WebResult.Failed
-        return runCatching { saveTokens(context, JSONObject(r.body)); WebResult.Connected }.getOrDefault(WebResult.Failed)
+        return runCatching {
+            synchronized(accountMonitor) {
+                if (session(context) != currentSession) WebResult.Failed
+                else { saveFreshTokens(context, JSONObject(r.body)); WebResult.Connected }
+            }
+        }.getOrDefault(WebResult.Failed)
     }
 
     // ---- sign in with the device code ----
@@ -193,9 +248,11 @@ object Trakt {
 
     /** Waits until the user entered the code on trakt.tv; throws when it expired or was refused. */
     suspend fun finishDeviceLogin(context: Context, clientId: String, clientSecret: String, code: TraktDeviceCode) {
+        val currentSession = session(context)
         var waited = 0
         var interval = code.intervalSeconds.coerceAtLeast(1)
         while (waited < code.expiresInSeconds) {
+            check(session(context) == currentSession) { "Trakt account changed" }
             delay(interval * 1000L)
             waited += interval
             val r = withContext(Dispatchers.IO) {
@@ -207,7 +264,10 @@ object Trakt {
             }
             when (r.code) {
                 200 -> {
-                    withContext(Dispatchers.IO) { saveTokens(context, JSONObject(r.body)) }
+                    withContext(Dispatchers.IO) { synchronized(accountMonitor) {
+                        check(session(context) == currentSession) { "Trakt account changed" }
+                        saveFreshTokens(context, JSONObject(r.body))
+                    } }
                     return
                 }
                 400 -> Unit // still waiting
@@ -222,21 +282,26 @@ object Trakt {
     }
 
     /** A valid access token, refreshed when it is about to expire; null when not signed in. */
-    private fun token(context: Context): String? {
-        val l = login(context)
+    private fun token(context: Context, expectedSession: String? = null): String? {
+        val currentSession = expectedSession ?: session(context)
+        val l = synchronized(accountMonitor) {
+            if (session(context) != currentSession) return null
+            login(context)
+        }
         if (!l.connected) return null
         val now = System.currentTimeMillis() / 1000
-        if (l.expiresAtSeconds - now > 3600 || l.refreshToken.isBlank()) return l.accessToken
-        val r = request(
-            context, "POST", "/oauth/token",
-            JSONObject().put("refresh_token", l.refreshToken).put("client_id", l.clientId)
-                .put("client_secret", l.clientSecret).put("redirect_uri", "urn:ietf:wg:oauth:2.0:oob")
-                .put("grant_type", "refresh_token"),
-            l.clientId,
-        )
-        if (r.code != 200) return l.accessToken
-        saveTokens(context, JSONObject(r.body))
-        return login(context).accessToken
+        if (l.expiresAtSeconds - now > 3600 || l.refreshToken.isBlank()) return synchronized(accountMonitor) {
+            l.accessToken.takeIf { session(context) == currentSession }
+        }
+        val r = request(context, "POST", "/oauth/token",
+            JSONObject().put("refresh_token", l.refreshToken).put("client_id", l.clientId).put("client_secret", l.clientSecret)
+                .put("redirect_uri", "urn:ietf:wg:oauth:2.0:oob").put("grant_type", "refresh_token"), l.clientId)
+        synchronized(accountMonitor) {
+            if (session(context) != currentSession) return null
+            if (r.code != 200) return l.accessToken
+            saveTokens(context, JSONObject(r.body))
+            return login(context).accessToken
+        }
     }
 
     // ---- scrobbling ----
@@ -275,24 +340,61 @@ object Trakt {
      */
     suspend fun scrobble(context: Context, action: String, parsed: ParsedName, progressPercent: Float): Boolean =
         withContext(Dispatchers.IO) {
+            scrobbleWriteMutex.withLock {
+            val currentSession = session(context)
             val l = login(context)
+            if (action !in setOf("start", "pause", "stop") || !progressPercent.isFinite()) return@withContext false
             if (!l.enabled || !l.connected || !isRecognized(parsed)) return@withContext false
-            val token = token(context) ?: return@withContext false
+            val token = token(context, currentSession) ?: return@withContext false
             val media = media(context, parsed)
             val body = JSONObject(media.toString()).put("progress", progressPercent.coerceIn(0f, 100f).toDouble())
             val r = runCatching { request(context, "POST", "/scrobble/$action", body, l.clientId, token) }.getOrNull()
             // 409: Trakt already has this scrobble, nothing to retry
+            if (session(context) != currentSession) return@withContext false
             val ok = r != null && (r.code in 200..299 || r.code == 409)
-            if (ok && action == "stop" && progressPercent >= 80f) markWatchedLocally(context, parsed)
+            if (ok && action == "stop" && progressPercent >= 80f) synchronized(accountMonitor) {
+                if (session(context) == currentSession) { markWatchedLocally(context, parsed); _watchedVersion.value++ }
+            }
             if (action == "stop" && progressPercent >= 80f) {
                 if (!ok && (r == null || r.code >= 500 || r.code == 429 || r.code == 401)) {
-                    enqueue(context, media)
+                    synchronized(accountMonitor) { if (session(context) == currentSession) enqueue(context, media) }
                 } else if (ok) {
-                    flushQueue(context)
+                    flushQueueInternal(context)
                 }
             }
             ok
+            }
         }
+
+    suspend fun scrobbleId(context: Context, action: String, id: String, season: Int?, episode: Int?, progressPercent: Float, expectedSession: String): Boolean = withContext(Dispatchers.IO) {
+        scrobbleWriteMutex.withLock {
+        if (action !in setOf("start", "pause", "stop") || !progressPercent.isFinite() || session(context) != expectedSession) return@withContext false
+        val l = login(context)
+        if (!l.enabled || !l.connected) return@withContext false
+        val ids = TraktLibraryParser.identifiers(id) ?: return@withContext false
+        val access = token(context, expectedSession) ?: return@withContext false
+        val media = if (season != null && episode != null) {
+            if (season < 0 || episode <= 0) return@withContext false
+            JSONObject().put("show", JSONObject().put("ids", ids)).put("episode", JSONObject().put("season", season).put("number", episode))
+        } else JSONObject().put("movie", JSONObject().put("ids", ids))
+        val body = JSONObject(media.toString()).put("progress", progressPercent.coerceIn(0f, 100f).toDouble())
+        val result = runCatching { request(context, "POST", "/scrobble/$action", body, l.clientId, access) }.getOrNull()
+        if (session(context) != expectedSession) return@withContext false
+        val success = result != null && (result.code in 200..299 || result.code == 409)
+        if (action == "stop" && progressPercent >= 80) {
+            synchronized(accountMonitor) {
+                if (session(context) == expectedSession) {
+                    if (success) {
+                        val key = "catalog:$id" + if (season != null && episode != null) ":$season:$episode" else ""
+                        val set = watchedSet(context).also { it += key }
+                        prefs(context).edit().putStringSet("watched", set).apply(); watchedCache = set; _watchedVersion.value++
+                    } // Canonical updates are retried by WorkManager, not by the legacy title-based history queue.
+                }
+            }
+        }
+        success
+        }
+    }
 
     // ---- queue of stops that could not be sent (offline) ----
 
@@ -327,13 +429,19 @@ object Trakt {
 
     /** Sends the kept stops as history entries (with the time they were watched). Stops at the first failure. */
     suspend fun flushQueue(context: Context) = withContext(Dispatchers.IO) {
+        scrobbleWriteMutex.withLock { flushQueueInternal(context) }
+    }
+
+    private suspend fun flushQueueInternal(context: Context) = withContext(Dispatchers.IO) {
+        val currentSession = session(context)
         val l = login(context)
         if (!l.connected) return@withContext
         val queue = readQueue(context)
         if (queue.length() == 0) return@withContext
-        val token = token(context) ?: return@withContext
+        val token = token(context, currentSession) ?: return@withContext
         var sent = 0
         for (i in 0 until queue.length()) {
+            if (session(context) != currentSession) return@withContext
             val entry = queue.optJSONObject(i)
             val media = entry?.optJSONObject("media")
             if (entry == null || media == null) { sent++; continue }
@@ -355,19 +463,19 @@ object Trakt {
         if (sent > 0) {
             val rest = JSONArray()
             for (i in sent until queue.length()) rest.put(queue.get(i))
-            writeQueue(context, rest)
+            synchronized(accountMonitor) { if (session(context) == currentSession) writeQueue(context, rest) }
         }
     }
 
     // ---- watched marks ----
 
-    private fun normalize(s: String) = s.lowercase().replace(Regex("[^\\p{L}\\p{N}]+"), " ").trim()
+    private val normalizationPattern = Regex("[^\\p{L}\\p{N}]+")
+    private fun normalize(s: String) = s.lowercase(java.util.Locale.ROOT).replace(normalizationPattern, " ").trim()
 
     private fun watchedKeyMovie(title: String, year: Int?) = "m:" + normalize(title) + (year?.let { ":$it" } ?: "")
     private fun watchedKeyEpisode(show: String, season: Int, episode: Int) = "e:" + normalize(show) + ":$season:$episode"
 
-    @Volatile
-    private var watchedCache: Set<String>? = null
+    @Volatile private var watchedCache: Set<String>? = null
 
     @Synchronized
     private fun watchedSet(context: Context): MutableSet<String> =
@@ -393,55 +501,161 @@ object Trakt {
 
     /** Exact provider IDs avoid confusing different titles with the same name. */
     fun isWatchedId(context: Context, imdb: String, season: Int? = null, episode: Int? = null): Boolean {
-        if (prefs(context).getString("access", "").isNullOrBlank()) return false
-        val key = if (season != null && episode != null) "imdb:$imdb:$season:$episode" else "imdb:$imdb"
-        return key in cachedWatched(context)
+        val set = cachedWatched(context)
+        val suffix = if (season != null && episode != null) ":$season:$episode" else ""
+        return "catalog:$imdb$suffix" in set || "imdb:$imdb$suffix" in set
     }
 
     /** Downloads what the user already watched, so it can be marked in the library. At most once an hour. */
-    suspend fun refreshWatched(context: Context, force: Boolean = false) = withContext(Dispatchers.IO) {
+    suspend fun refreshWatched(context: Context, force: Boolean = false): Result<Unit> = withContext(Dispatchers.IO) {
+        val currentSession = session(context)
         val l = login(context)
-        if (!l.connected) return@withContext
+        if (!l.connected) return@withContext Result.success(Unit)
         val last = prefs(context).getLong("watched_at", 0)
-        if (!force && System.currentTimeMillis() - last < 3_600_000) return@withContext
-        val token = token(context) ?: return@withContext
+        if (!force && System.currentTimeMillis() - last < 3_600_000) return@withContext Result.success(Unit)
         runCatching {
+            val access = token(context, currentSession) ?: error("Not signed in")
             val set = HashSet<String>()
-            val movies = request(context, "GET", "/sync/watched/movies", null, l.clientId, token)
-            if (movies.code == 200) {
-                val a = JSONArray(movies.body)
-                for (i in 0 until a.length()) {
-                    val m = a.getJSONObject(i).optJSONObject("movie") ?: continue
-                    m.optJSONObject("ids")?.optString("imdb")?.takeIf { it.isNotBlank() }?.let { set += "imdb:$it" }
-                    val title = m.optString("title")
-                    set += watchedKeyMovie(title, m.optInt("year").takeIf { it > 0 })
-                    set += watchedKeyMovie(title, null)
-                }
+            val movies = request(context, "GET", "/sync/watched/movies", null, l.clientId, access)
+            check(movies.code == 200) { "Trakt answered ${movies.code}" }
+            val movieItems = JSONArray(movies.body)
+            for (i in 0 until movieItems.length()) {
+                val m = movieItems.getJSONObject(i).optJSONObject("movie") ?: continue
+                val ids = m.optJSONObject("ids")
+                ids?.optString("imdb")?.takeIf { it.isNotBlank() }?.let { set += "imdb:$it" }
+                TraktLibraryParser.identity(ids)?.let { set += "catalog:$it" }
+                val title = m.optString("title")
+                set += watchedKeyMovie(title, m.optInt("year").takeIf { it > 0 })
+                set += watchedKeyMovie(title, null)
             }
-            val full = request(context, "GET", "/sync/watched/shows", null, l.clientId, token)
-            if (full.code == 200) {
-                val a = JSONArray(full.body)
-                for (i in 0 until a.length()) {
-                    val o = a.getJSONObject(i)
-                    val show = o.optJSONObject("show")?.optString("title") ?: continue
-                    val imdb = o.optJSONObject("show")?.optJSONObject("ids")?.optString("imdb")?.takeIf { it.isNotBlank() }
-                    val seasons = o.optJSONArray("seasons") ?: continue
-                    for (s in 0 until seasons.length()) {
-                        val season = seasons.getJSONObject(s)
-                        val sn = season.optInt("number")
-                        val eps = season.optJSONArray("episodes") ?: continue
-                        for (e in 0 until eps.length()) {
-                            val number = eps.getJSONObject(e).optInt("number")
-                            set += watchedKeyEpisode(show, sn, number)
-                            if (imdb != null) set += "imdb:$imdb:$sn:$number"
-                        }
+            check(session(context) == currentSession) { "Trakt account changed" }
+            val shows = request(context, "GET", "/sync/watched/shows", null, l.clientId, access)
+            check(shows.code == 200) { "Trakt answered ${shows.code}" }
+            val showItems = JSONArray(shows.body)
+            for (i in 0 until showItems.length()) {
+                val o = showItems.getJSONObject(i)
+                val show = o.optJSONObject("show") ?: continue
+                val title = show.optString("title")
+                val ids = show.optJSONObject("ids")
+                val imdb = ids?.optString("imdb")?.takeIf { it.isNotBlank() }
+                val identity = TraktLibraryParser.identity(ids)
+                val reset = runCatching { java.time.Instant.parse(o.optString("reset_at")).toEpochMilli() }.getOrDefault(0)
+                val seasons = o.optJSONArray("seasons") ?: continue
+                for (j in 0 until seasons.length()) {
+                    val season = seasons.getJSONObject(j)
+                    val sn = season.optInt("number")
+                    val episodes = season.optJSONArray("episodes") ?: continue
+                    for (k in 0 until episodes.length()) {
+                        val episode = episodes.getJSONObject(k)
+                        val at = runCatching { java.time.Instant.parse(episode.optString("last_watched_at")).toEpochMilli() }.getOrDefault(0)
+                        if (reset > 0 && at < reset) continue
+                        val number = episode.optInt("number")
+                        set += watchedKeyEpisode(title, sn, number)
+                        if (imdb != null) set += "imdb:$imdb:$sn:$number"
+                        if (identity != null) set += "catalog:$identity:$sn:$number"
                     }
                 }
             }
-            if (movies.code == 200 && full.code == 200) {
+            synchronized(accountMonitor) {
+                check(session(context) == currentSession) { "Trakt account changed" }
                 prefs(context).edit().putStringSet("watched", set).putLong("watched_at", System.currentTimeMillis()).apply()
-                watchedCache = set
+                watchedCache = set; _watchedVersion.value++
             }
+            Unit
+        }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
+    }
+
+    private fun snapshotFile(context: Context) = android.util.AtomicFile(java.io.File(context.noBackupFilesDir, "trakt-library-sync.json"))
+
+    private fun persistLibrary(context: Context, value: TraktLibraryState, expectedSession: String) {
+        val data = TraktLibraryParser.encode(value, expectedSession).toByteArray()
+        check(data.size <= 4 * 1024 * 1024)
+        val file = snapshotFile(context)
+        val output = file.startWrite()
+        try { output.write(data); file.finishWrite(output) } catch (error: Throwable) { file.failWrite(output); throw error }
+        synchronized(accountMonitor) {
+            if (session(context) == expectedSession) { _libraryState.value = value; hydratedSession = expectedSession }
+        }
+    }
+
+    /** Refresh all three user-facing groups on every successful authorization. */
+    suspend fun refreshLibrary(context: Context, force: Boolean = false, expectedSession: String? = null): Result<Unit> = withContext(Dispatchers.IO) {
+        syncMutex.withLock {
+            val currentSession = expectedSession ?: session(context)
+            if (session(context) != currentSession) return@withLock Result.success(Unit)
+            _syncing.value = true
+            try {
+            val result = runCatching {
+                val l = login(context)
+                if (!l.connected) return@runCatching Unit
+                if (hydratedSession != currentSession) {
+                    val cached = runCatching {
+                        val file = snapshotFile(context)
+                        check(file.baseFile.length() <= 4 * 1024 * 1024)
+                        TraktLibraryParser.decode(file.readFully().toString(Charsets.UTF_8), currentSession)
+                    }.getOrNull()
+                    synchronized(accountMonitor) {
+                        if (session(context) == currentSession) { _libraryState.value = cached ?: TraktLibraryState(); hydratedSession = currentSession }
+                    }
+                }
+                if (!force && System.currentTimeMillis() - _libraryState.value.refreshedAt < 60_000) return@runCatching Unit
+                val access = token(context, currentSession) ?: error("Not signed in")
+                fun pages(path: String): List<String> {
+                    val results = ArrayList<String>()
+                    var characters = 0
+                    var page = 1
+                    var lastPage = 1
+                    do {
+                        check(session(context) == currentSession) { "Trakt account changed" }
+                        val result = request(context, "GET", "$path" + (if ('?' in path) "&" else "?") + "page=$page&limit=100", null, l.clientId, access)
+                        check(result.code == 200) { "Trakt answered ${result.code}" }
+                        characters += result.body.length
+                        check(characters <= 8 * 1024 * 1024) { "Trakt list is too large" }
+                        results += result.body
+                        lastPage = result.pageCount ?: 1
+                        check(lastPage in 1..100) { "Trakt list is too large" }
+                        page++
+                    } while (page <= lastPage)
+                    return results
+                }
+                flushQueue(context)
+                refreshWatched(context, force = true).getOrThrow()
+                val movies = pages("/sync/watchlist/movies").flatMap { TraktLibraryParser.watchlist(it, "movie") }
+                val shows = pages("/sync/watchlist/shows").flatMap { TraktLibraryParser.watchlist(it, "series") }
+                val playback = pages("/sync/playback?extended=full").flatMap(TraktLibraryParser::playback)
+                check(movies.size + shows.size <= 10_000 && playback.size <= 10_000)
+                if (session(context) == currentSession) persistLibrary(context,
+                    TraktLibraryState((movies + shows).distinctBy { it.type to it.id }, playback.distinctBy { it.type to it.videoId }, System.currentTimeMillis()), currentSession)
+                Unit
+            }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
+            synchronized(accountMonitor) { if (session(context) == currentSession) _syncFailed.value = result.isFailure }
+            result
+            } finally { _syncing.value = false }
+        }
+    }
+
+    /** Uses catalog IDs; a similarly named title can never become the write target. Null means not connected. */
+    suspend fun setWatchlistId(context: Context, type: String, id: String, name: String, saved: Boolean, expectedSession: String? = null): Boolean? = withContext(Dispatchers.IO) {
+        syncMutex.withLock {
+            val currentSession = expectedSession ?: session(context)
+            if (session(context) != currentSession) return@withLock false
+            val l = login(context)
+            if (!l.connected) return@withLock null
+            val ids = TraktLibraryParser.identifiers(id) ?: return@withLock false
+            val access = token(context, currentSession) ?: return@withLock false
+            if (type != "movie" && type != "series") return@withLock false
+            runCatching {
+                val body = JSONObject().put(if (type == "movie") "movies" else "shows", JSONArray().put(JSONObject().put("ids", ids)))
+                val result = request(context, "POST", if (saved) "/sync/watchlist" else "/sync/watchlist/remove", body, l.clientId, access)
+                if (session(context) != currentSession || result.code !in 200..299) return@runCatching false
+                val missing = result.body.takeIf(String::isNotBlank)?.let { JSONObject(it).optJSONObject("not_found") }
+                if ((missing?.optJSONArray(if (type == "movie") "movies" else "shows")?.length() ?: 0) > 0) return@runCatching false
+                val current = _libraryState.value
+                val retained = current.library.filterNot { it.id == id && it.type == type }
+                val next = if (saved) retained + de.mm20.launcher2.comms.stremio.LibraryEntry(type, id, name.take(512), null, System.currentTimeMillis()) else retained
+                persistLibrary(context, current.copy(library = next), currentSession)
+                true
+            }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }.getOrDefault(false)
         }
     }
 
@@ -450,9 +664,10 @@ object Trakt {
     /** Adds a movie or a series to the Trakt watchlist. */
     suspend fun addToWatchlist(context: Context, title: String, year: Int?, series: Boolean): Boolean =
         withContext(Dispatchers.IO) {
+            val currentSession = session(context)
             val l = login(context)
             if (!l.connected) return@withContext false
-            val token = token(context) ?: return@withContext false
+            val token = token(context, currentSession) ?: return@withContext false
             val item = JSONObject().put("title", title).apply { year?.let { put("year", it) } }
             val body = JSONObject().put(if (series) "shows" else "movies", JSONArray().put(item))
             val r = runCatching { request(context, "POST", "/sync/watchlist", body, l.clientId, token) }.getOrNull()

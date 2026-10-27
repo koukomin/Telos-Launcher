@@ -63,6 +63,17 @@ class PlayerBridgeReceiver : BroadcastReceiver() {
                 }
             }
             PlayerBridge.ACTION_SCROBBLE -> {
+                if (intent.hasExtra("id")) {
+                    val app = context.applicationContext
+                    val pending = goAsync()
+                    containedScope(Dispatchers.IO).launch {
+                        try {
+                            de.mm20.launcher2.comms.media.video.trakt.TraktScrobbleWorker.enqueue(app, intent).result.get(5, java.util.concurrent.TimeUnit.SECONDS)
+                        } catch (error: Exception) { android.util.Log.w("TraktSync", "Could not queue playback: ${error.javaClass.simpleName}") }
+                        finally { pending.finish() }
+                    }
+                    return
+                }
                 val action = intent.getStringExtra("action") ?: return
                 val name = intent.getStringExtra("name") ?: return
                 val progress = intent.getFloatExtra("progress", 0f)

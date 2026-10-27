@@ -12,10 +12,10 @@ object StremioProgressState {
     const val WATCHED_THRESHOLD = 0.7
     const val CREDITS_THRESHOLD = 0.9
 
-    fun orderedVideoIds(videos: List<Video>): List<String> = videos.sortedWith(compareBy<Video>(
-        { it.season ?: Int.MIN_VALUE }, { it.episode ?: Int.MIN_VALUE },
-        { runCatching { Instant.parse(it.released).toEpochMilli() }.getOrDefault(Long.MIN_VALUE) },
-    )).map { it.id }.distinct()
+    fun orderedVideoIds(videos: List<Video>): List<String> = videos.map { video ->
+        video to (video.released?.let { runCatching { Instant.parse(it).toEpochMilli() }.getOrNull() } ?: Long.MIN_VALUE)
+    }.sortedWith(compareBy<Pair<Video, Long>>({ it.first.season ?: Int.MIN_VALUE }, { it.first.episode ?: Int.MIN_VALUE }, { it.second }))
+        .map { it.first.id }.distinct()
 
     /** Returns null for a stale update. Preserve all server fields not explicitly changed. */
     fun update(item: JSONObject, progress: WatchProgress): JSONObject? {
@@ -53,6 +53,11 @@ object StremioProgressState {
         if (nowFlagged && progress.type == "series") {
             markEpisode(state.optString("watched").takeIf { it.isNotBlank() && it != "null" }, progress.videoIds, progress.videoId)
                 ?.let { state.put("watched", it) }
+        }
+        val next = progress.nextVideoId
+        if (progress.completed && progress.type == "series" && next != null && progress.videoIds.indexOf(progress.videoId) >= 0 &&
+            progress.videoIds.indexOf(next) > progress.videoIds.indexOf(progress.videoId)) {
+            state.put("video_id", next).put("timeOffset", 1).put("duration", 0).put("timeWatched", 0).put("flaggedWatched", 0)
         }
         result.put("_mtime", Instant.ofEpochMilli(progress.watchedAt).toString())
         return result

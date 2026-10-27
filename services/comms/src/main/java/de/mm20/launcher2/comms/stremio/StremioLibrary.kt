@@ -21,7 +21,7 @@ data class WatchProgress(
     val videoTitle: String, val watchedAt: Long, val stream: String?,
     val positionMs: Long = 0, val durationMs: Long = 0, val timeWatchedMs: Long = 0,
     val completed: Boolean = false, val videoIds: List<String> = emptyList(),
-    val resumePercent: Double? = null,
+    val resumePercent: Double? = null, val nextVideoId: String? = null,
 )
 
 fun StreamItem.streamKey(): String = "$addonName|${url ?: infoHash ?: ytId ?: externalUrl.orEmpty()}"
@@ -109,7 +109,7 @@ class StremioLibrary(context: Context) {
                 it.optString("video"), it.optString("videoTitle"), it.optLong("at"), it.optString("stream").takeIf(String::isNotBlank),
                 it.optLong("position"), it.optLong("duration"), it.optLong("timeWatched"), it.optBoolean("completed"),
                 videoIds,
-                it.optDouble("percent", Double.NaN).takeIf(Double::isFinite))
+                it.optDouble("percent", Double.NaN).takeIf(Double::isFinite), it.optString("nextVideo").takeIf(String::isNotBlank))
         }
         _watching.value = root.optJSONArray("watching").objects().take(MAX_HISTORY).map(::decodeProgress)
         _pending.value = root.optJSONArray("pending").objects().take(MAX_PENDING).map(::decodeProgress)
@@ -119,7 +119,7 @@ class StremioLibrary(context: Context) {
         fun encodeProgress(it: WatchProgress) = JSONObject().put("type", it.type).put("id", it.id).put("name", it.name).put("poster", it.poster.orEmpty())
             .put("video", it.videoId).put("videoTitle", it.videoTitle).put("at", it.watchedAt).put("stream", it.stream.orEmpty())
             .put("position", it.positionMs).put("duration", it.durationMs).put("timeWatched", it.timeWatchedMs)
-            .put("completed", it.completed).put("percent", it.resumePercent ?: JSONObject.NULL)
+            .put("completed", it.completed).put("percent", it.resumePercent ?: JSONObject.NULL).put("nextVideo", it.nextVideoId ?: JSONObject.NULL)
         val orders = JSONObject()
         (_watching.value + _pending.value).forEach {
             if (it.videoIds.isNotEmpty()) orders.put(it.type + ":" + it.id, JSONArray(it.videoIds))
@@ -189,7 +189,7 @@ class StremioLibrary(context: Context) {
         for (w in watching) {
             val i = merged.indexOfFirst { it.id == w.id }
             if (i < 0) merged += w
-            else if (w.watchedAt > merged[i].watchedAt) merged[i] = w.copy(stream = merged[i].stream.takeIf { merged[i].videoId == w.videoId })
+            else if (w.watchedAt > merged[i].watchedAt || (w.watchedAt == merged[i].watchedAt && merged[i].completed && !w.completed && w.videoId != merged[i].videoId)) merged[i] = w.copy(stream = merged[i].stream.takeIf { merged[i].videoId == w.videoId })
         }
         _watching.value = merged.sortedByDescending { it.watchedAt }.take(MAX_HISTORY)
     }

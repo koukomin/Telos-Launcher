@@ -23,6 +23,7 @@ object StremioPlaybackBridge : KoinComponent {
             time, intent.getStringExtra("stream")?.take(4096), position, duration,
             intent.getLongExtra("time_watched", 0).coerceIn(0, duration * 100),
             intent.getBooleanExtra("completed", false), safeIds,
+            nextVideoId = intent.getStringExtra("next_video_id")?.takeIf { it.length in 1..512 && it in safeIds },
         ) to session
     }
 
