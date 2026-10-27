@@ -35,6 +35,7 @@ data class CallRecordingFile(
     val file: File,
     val number: String,
     val durationHintSeconds: Long,
+    val modifiedAtMillis: Long,
 )
 
 object CallAudioRecorder {
@@ -210,7 +211,7 @@ object CallAudioRecorder {
             ?.sortedByDescending { it.lastModified() }
             ?.map { file ->
                 val digits = file.nameWithoutExtension.removePrefix("REC_").split("_").firstOrNull().orEmpty()
-                CallRecordingFile(file, digits.ifBlank { "Unknown" }, 0L)
+                CallRecordingFile(file, digits.ifBlank { "Unknown" }, 0L, file.lastModified())
             }
             .orEmpty()
     }

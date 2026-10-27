@@ -53,11 +53,13 @@ class MissedCallPopupActivity : BaseActivity() {
                     val name = source.getStringExtra(CallOverlayIntents.EXTRA_NAME)
                     val number = source.getStringExtra(CallOverlayIntents.EXTRA_NUMBER).orEmpty()
                     val ringMs = source.getLongExtra(CallOverlayIntents.EXTRA_RING_MS, 0L)
-                    val resolvedName by androidx.compose.runtime.produceState(name, number) {
-                        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    val identity by androidx.compose.runtime.produceState(number to name, number, name) {
+                        val found = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                             de.mm20.launcher2.comms.remote.DeviceContactsResolver.lookup(applicationContext, number).first
                         }?.takeIf { it.isNotBlank() } ?: name
+                        value = number to found
                     }
+                    val resolvedName = if (identity.first == number) identity.second else name
                     val template by commsSettings.rejectSmsTemplate.collectAsStateWithLifecycle("")
                     Surface(tonalElevation = 6.dp) {
                         Column(Modifier.padding(20.dp).fillMaxWidth()) {

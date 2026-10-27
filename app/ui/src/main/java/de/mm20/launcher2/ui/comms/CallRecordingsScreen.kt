@@ -84,11 +84,13 @@ fun CallRecordingsList(
     }
     val directory: de.mm20.launcher2.comms.repository.ContactDirectoryRepository = org.koin.compose.koinInject()
     val contacts by remember(directory) { directory.observeContacts() }.collectAsStateWithLifecycle(emptyList())
-    val names = remember(files, contacts) {
-        files.associate { rec ->
-            rec.file.absolutePath to contacts.firstOrNull { person -> person.phoneNumbers.any {
-                de.mm20.launcher2.comms.recording.recordingNumberMatches(it, rec.number)
-            } }?.displayName?.takeIf { it.isNotBlank() }
+    val names by androidx.compose.runtime.produceState(emptyMap<String, String?>(), files, contacts) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+            files.associate { rec ->
+                rec.file.absolutePath to contacts.firstOrNull { person -> person.phoneNumbers.any {
+                    de.mm20.launcher2.comms.recording.recordingNumberMatches(it, rec.number)
+                } }?.displayName?.takeIf { it.isNotBlank() }
+            }
         }
     }
     var recQuery by remember { mutableStateOf("") }
@@ -96,7 +98,7 @@ fun CallRecordingsList(
     val dateFormat = remember { SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault()) }
     val shownFiles = remember(files, query, names) {
         de.mm20.launcher2.comms.search.TelosSearch.filter(files, query) {
-            listOf(it.number, names[it.file.absolutePath].orEmpty(), dateFormat.format(Date(it.file.lastModified())))
+            listOf(it.number, names[it.file.absolutePath].orEmpty(), dateFormat.format(Date(it.modifiedAtMillis)))
         }
     }
     Column(
@@ -124,7 +126,7 @@ private fun RecordingRow(rec: CallRecordingFile, contactName: String?, onChanged
     val context = LocalContext.current
     val scope = androidx.compose.runtime.rememberCoroutineScope()
     var confirmDelete by remember { mutableStateOf(false) }
-    val whenStr = remember(rec.file) { SimpleDateFormat("d MMM HH:mm", Locale.getDefault()).format(Date(rec.file.lastModified())) }
+    val whenStr = remember(rec.file) { SimpleDateFormat("d MMM HH:mm", Locale.getDefault()).format(Date(rec.modifiedAtMillis)) }
     // the recorder names a recording without a number "Unknown"
     val title = contactName ?: if (rec.number == "Unknown") stringResource(R.string.widget_name_unknown) else rec.number
     ListItem(
