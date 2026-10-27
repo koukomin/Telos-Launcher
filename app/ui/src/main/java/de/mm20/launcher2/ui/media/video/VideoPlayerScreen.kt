@@ -189,6 +189,7 @@ private fun PlayerContent(
         if (stremio) value = withContext(Dispatchers.IO) {
             val settings = de.mm20.launcher2.comms.stremio.StremioPlaybackSettings.load(context)
             val factory = runCatching<androidx.media3.datasource.DataSource.Factory> {
+                if (stremioIntent?.getBooleanExtra("stremio_shared_server", false) == true) return@runCatching RemoteRoutingDataSource.factory(context)
                 val cache = de.mm20.launcher2.ui.media.stremio.StremioStreamCache.obtain(context, settings.cacheBytes)
                 androidx.media3.datasource.cache.CacheDataSource.Factory()
                     .setCache(cache).setUpstreamDataSourceFactory(RemoteRoutingDataSource.factory(context))

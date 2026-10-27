@@ -16,6 +16,8 @@ import de.mm20.launcher2.comms.stremio.StreamItem
 import de.mm20.launcher2.comms.stremio.StremioAddons
 import de.mm20.launcher2.comms.stremio.StremioClient
 import de.mm20.launcher2.comms.stremio.StremioLibrary
+import de.mm20.launcher2.comms.stremio.StremioPlaybackSettings
+import de.mm20.launcher2.comms.stremio.StremioStreamingServer
 import de.mm20.launcher2.comms.stremio.StremioProtocol
 import de.mm20.launcher2.comms.stremio.Video
 import de.mm20.launcher2.comms.stremio.WatchProgress
@@ -316,6 +318,19 @@ class StremioViewModel : ViewModel(), KoinComponent {
             // Wait for any in-flight login sync before selecting a resume point.
             de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshLibrary(appContext)
             if (_streams.value?.videoId != state.videoId) return@launch
+            val playbackSettings = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { StremioPlaybackSettings.load(appContext) }
+            val sharedTorrent = if (stream.kind == StreamItem.Kind.Torrent && playbackSettings.sharedServer) {
+                try {
+                    StremioStreamingServer.settings(playbackSettings.streamingServer)
+                    StremioStreamingServer.streamingUrl(playbackSettings.streamingServer, stream) ?: error("Unsupported torrent")
+                } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                catch (_: Exception) {
+                    _streams.update { it?.copy(loading = false) }
+                    android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.stremio_shared_unavailable, android.widget.Toast.LENGTH_LONG).show()
+                    onDone(false)
+                    return@launch
+                }
+            } else null
             val needsPlayer = stream.kind == StreamItem.Kind.Web || stream.kind == StreamItem.Kind.Torrent
             val subtitles = if (!needsPlayer) emptyList() else {
                 val extra = stream.filename?.let { mapOf("filename" to it) }.orEmpty()
@@ -357,6 +372,7 @@ class StremioViewModel : ViewModel(), KoinComponent {
                 .putExtra("stremio_addon", stream.addonName)
                 .putExtra("stremio_kind", stream.kind.name)
                 .putExtra("stremio_playback", true)
+                .putExtra("stremio_shared_server", sharedTorrent != null)
                 .putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_URLS, ArrayList(subtitles.map { it.url }))
                 .putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_LANGS, ArrayList(subtitles.map { it.lang }))
                 .putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_LABELS, ArrayList(subtitles.map { it.label.orEmpty() }))
@@ -373,7 +389,12 @@ class StremioViewModel : ViewModel(), KoinComponent {
                 }
                 StreamItem.Kind.Torrent -> {
                     val magnet = StremioProtocol.magnet(stream, state.title)
-                    if (magnet == null) false else {
+                    if (sharedTorrent != null) {
+                        context.startActivity(withSubtitles(Intent(context, PlayerChoice.playerClass(context))
+                            .putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, arrayListOf(sharedTorrent))
+                            .putStringArrayListExtra(VideoPlayerActivity.EXTRA_TITLES, arrayListOf(state.title))))
+                        true
+                    } else if (magnet == null) false else {
                         // the torrent player opens the torrent (finding peers), then plays the file the add-on named, or the biggest
                         // video; the torrent route and Wi-Fi rules of Telos Video apply
                         context.startActivity(

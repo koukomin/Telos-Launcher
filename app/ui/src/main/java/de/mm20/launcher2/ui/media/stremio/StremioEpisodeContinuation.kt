@@ -33,6 +33,7 @@ internal object StremioEpisodeContinuation {
             val intent = Intent(current).apply {
                 data = null
                 putExtra("stremio_auto_continuation", true)
+                removeExtra("stremio_shared_server")
                 removeExtra(VideoPlayerActivity.EXTRA_SOURCE)
                 removeExtra(VideoPlayerActivity.EXTRA_FILE_IDX)
                 removeExtra(VideoPlayerActivity.EXTRA_URIS)
@@ -57,9 +58,18 @@ internal object StremioEpisodeContinuation {
             if (stream.kind == StreamItem.Kind.Web) {
                 intent.putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, arrayListOf(stream.url!!))
             } else {
-                val magnet = StremioProtocol.magnet(stream, title) ?: return@withContext null
-                intent.putExtra(VideoPlayerActivity.EXTRA_SOURCE, magnet)
-                stream.fileIdx?.let { intent.putExtra(VideoPlayerActivity.EXTRA_FILE_IDX, it) }
+                if (preferences.sharedServer) {
+                    try { StremioStreamingServer.settings(preferences.streamingServer) }
+                    catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                    catch (_: Exception) { return@withContext null }
+                    val url = StremioStreamingServer.streamingUrl(preferences.streamingServer, stream) ?: return@withContext null
+                    intent.putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, arrayListOf(url))
+                    intent.putExtra("stremio_shared_server", true)
+                } else {
+                    val magnet = StremioProtocol.magnet(stream, title) ?: return@withContext null
+                    intent.putExtra(VideoPlayerActivity.EXTRA_SOURCE, magnet)
+                    stream.fileIdx?.let { intent.putExtra(VideoPlayerActivity.EXTRA_FILE_IDX, it) }
+                }
             }
             val subtitles = (stream.subtitles + client.allSubtitles(addons, type, nextId)).distinctBy { it.url }.take(15)
             intent.putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_URLS, ArrayList(subtitles.map { it.url }))

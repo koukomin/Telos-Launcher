@@ -244,11 +244,13 @@ internal class NativeCamera(private val context: Context, private val owner: Lif
     fun captureDocument(destination: File, onDone: () -> Unit, onError: (String) -> Unit) {
         val capture = photo ?: run { onError("Camera not ready"); return }
         capture.targetRotation = viewfinder?.display?.rotation ?: android.view.Surface.ROTATION_0
-        capture.takePicture(ImageCapture.OutputFileOptions.Builder(destination).build(), executor,
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(output: ImageCapture.OutputFileResults) { main.execute(onDone) }
-                override fun onError(error: ImageCaptureException) { main.execute { onError(error.message.orEmpty()) } }
-            })
+        try {
+            capture.takePicture(ImageCapture.OutputFileOptions.Builder(destination).build(), executor,
+                object : ImageCapture.OnImageSavedCallback {
+                    override fun onImageSaved(output: ImageCapture.OutputFileResults) { main.execute(onDone) }
+                    override fun onError(error: ImageCaptureException) { main.execute { onError(error.message.orEmpty()) } }
+                })
+        } catch (error: Exception) { onError(error.message.orEmpty()) }
     }
 
     @Suppress("MissingPermission")
