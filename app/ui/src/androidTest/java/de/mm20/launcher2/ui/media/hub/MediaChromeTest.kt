@@ -105,6 +105,30 @@ class MediaChromeTest {
         }
     }
 
+    @Test fun translucentRadioRetainsTheParentToneAndContentColor() {
+        val parent = androidx.compose.ui.graphics.Color(0.85f, 0.75f, 0.65f)
+        var actual = androidx.compose.ui.graphics.Color.Unspecified
+        var content = androidx.compose.ui.graphics.Color.Unspecified
+        compose.setContent {
+            MaterialTheme(colorScheme = lightColorScheme(surface = parent)) {
+                de.mm20.launcher2.ui.comms.radio.RadioAppearance(
+                    de.mm20.launcher2.comms.radio.RadioSettings.Values(theme = "system", translucent = true),
+                ) {
+                    actual = MaterialTheme.colorScheme.surface
+                    content = LocalContentColor.current
+                    Text("Radio")
+                }
+            }
+        }
+        compose.runOnIdle {
+            assertEquals(parent.red, actual.red, 0.001f)
+            assertEquals(parent.green, actual.green, 0.001f)
+            assertEquals(parent.blue, actual.blue, 0.001f)
+            assertEquals(0f, actual.alpha, 0.001f)
+            assertEquals(lightColorScheme().onSurface, content)
+        }
+    }
+
     private fun screenshot(name: String) {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val bitmap = compose.onNodeWithTag("media-chrome").captureToImage().asAndroidBitmap()

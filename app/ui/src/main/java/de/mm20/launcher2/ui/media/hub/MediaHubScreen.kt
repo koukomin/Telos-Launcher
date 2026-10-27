@@ -528,32 +528,25 @@ private fun HubMiniPlayer(
 
         val scheme = MaterialTheme.colorScheme
         val artUrl = if (isMusic) musicNow?.artUri?.toString() else null
-        val fallbackTint = if (isMusic) scheme.primary else if (isTv) scheme.secondary else scheme.tertiary
-        val tint by rememberArtworkTint(artUrl, fallbackTint, reduceAnimations)
-        val cardShape = RoundedCornerShape(14.dp)
+        val cardShape = RoundedCornerShape(8.dp)
         val haptic = LocalHapticFeedback.current
         val duration = musicNow?.durationMs ?: 0L
 
-        val glass = scheme.surfaceContainerHigh.copy(alpha = MaterialTheme.transparency.elevatedSurface)
         Surface(
             shape = cardShape,
-            color = Color.Transparent,
+            color = scheme.surfaceContainerHigh,
+            contentColor = scheme.onSurface,
             tonalElevation = 0.dp,
             shadowElevation = 0.dp,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp, vertical = 4.dp)
                 .clip(cardShape)
-                .hubGlass(haze, blurRadius, glass)
                 .clickable(onClickLabel = stringResource(R.string.au9_mediahub_open_player)) { onOpen(display) },
         ) {
-            Box(
-                Modifier.background(
-                    Brush.horizontalGradient(listOf(tint.copy(alpha = 0.28f), tint.copy(alpha = 0.06f)))
-                )
-            ) {
+            Box {
             Row(
-                Modifier.padding(start = 10.dp, end = 10.dp, top = 10.dp, bottom = 12.dp),
+                Modifier.padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Box(
@@ -599,8 +592,8 @@ private fun HubMiniPlayer(
                         }
                     },
                     shape = CircleShape,
-                    color = scheme.primaryContainer,
-                    contentColor = scheme.onPrimaryContainer,
+                    color = Color.Transparent,
+                    contentColor = scheme.onSurface,
                     modifier = Modifier.size(48.dp),
                 ) {
                     Box(contentAlignment = Alignment.Center) {

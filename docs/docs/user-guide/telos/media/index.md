@@ -240,3 +240,5 @@ Music, Radio and YouTube Music source buttons use labeled icons and filled round
 
 
 Stremio Fork’s overflow menu exposes the HTTP cache budget directly: 1, 2, 5, 10 or 20 GB. This is the existing per-player-process LRU HTTP cache, not a total torrent quota. Another Stremio installation’s private cache is not opened or modified; Android storage isolation and different cache formats prevent safe direct sharing.
+
+The shared Music/Radio/TV mini player uses a compact opaque tonal bar and plain playback glyphs, retaining artwork, progress, next/record/stop actions and the tap-to-open player.
