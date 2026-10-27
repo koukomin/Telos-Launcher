@@ -56,6 +56,11 @@ internal class NativeCamera(private val context: Context, private val owner: Lif
     var faceAvailable = false; private set
     @Volatile var onFace: (() -> Unit)? = null
     @Volatile var onMotion: (() -> Unit)? = null
+    @Volatile var onCode: ((CameraCode) -> Unit)? = null
+    private val codeDecoder = CameraCodeDecoder()
+    private var lastCodeScan = 0L
+    private var lastCodeText: String? = null
+    private var lastCodeAt = 0L
     private var lastAutomaticCapture = 0L
     private fun trigger(face: Boolean) {
         val callback = if (face) onFace else onMotion
@@ -105,6 +110,17 @@ internal class NativeCamera(private val context: Context, private val owner: Lif
                         analysis.setAnalyzer(executor) { image ->
                             try {
                                 val time = android.os.SystemClock.elapsedRealtime()
+                                if (onCode != null && time - lastCodeScan >= 700) {
+                                    lastCodeScan = time
+                                    val plane = image.planes[0]
+                                    val result = codeDecoder.decode(plane.buffer, image.width, image.height, plane.rowStride, plane.pixelStride)
+                                    if (result != null && (result.text != lastCodeText || time - lastCodeAt > 10_000)) {
+                                        lastCodeText = result.text; lastCodeAt = time
+                                        main.execute {
+                                            if (!closed && token == generation && owner.lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)) onCode?.invoke(result)
+                                        }
+                                    }
+                                }
                                 if (time - lastHistogram > 350) {
                                     lastHistogram = time
                                     val plane = image.planes[0]; val buffer = plane.buffer; val bins = FloatArray(32)
@@ -225,6 +241,16 @@ internal class NativeCamera(private val context: Context, private val owner: Lif
             override fun onError(error: ImageCaptureException) { temporary.delete(); main.execute { onError(error.message.orEmpty()) } }
         })
     }
+    fun captureDocument(destination: File, onDone: () -> Unit, onError: (String) -> Unit) {
+        val capture = photo ?: run { onError("Camera not ready"); return }
+        capture.targetRotation = viewfinder?.display?.rotation ?: android.view.Surface.ROTATION_0
+        capture.takePicture(ImageCapture.OutputFileOptions.Builder(destination).build(), executor,
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) { main.execute(onDone) }
+                override fun onError(error: ImageCaptureException) { main.execute { onError(error.message.orEmpty()) } }
+            })
+    }
+
     @Suppress("MissingPermission")
     fun startVideo(audio: Boolean, flash: Boolean, onStarted: () -> Unit, onDone: (Uri?) -> Unit, onError: (String) -> Unit) {
         video?.targetRotation = viewfinder?.display?.rotation ?: android.view.Surface.ROTATION_0

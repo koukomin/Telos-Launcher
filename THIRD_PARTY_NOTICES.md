@@ -381,3 +381,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ## AppOpsNext embedded component
 
 [AppOpsNext](https://github.com/1zumiii/AppOpsNext), by 1zumiii, GPL-3.0. The complete upstream application source, tests and native daemon are adapted under `libs/appops-next`; the exact source commit and version are recorded in its `UPSTREAM.md`, with the full GPL license retained. The source is embedded in Telos rather than depending on an installed companion. Its Phosphor icon license is retained in `src/main/assets/licenses/phosphor-icons.txt`. Telos-specific changes include host-owned lifecycle/storage, internal per-package navigation, shared Shizuku UserService process transport and inherited Telos typography. The native ARM64 daemon is built from source; other ABIs retain the UserService backend. Integration validation and additional locale coverage are in progress; this notice is not a device-validation claim.
+
+## Camera recognition and searchable PDF
+
+- [Tesseract4Android 4.9.0](https://github.com/adaptech-cz/Tesseract4Android/tree/4.9.0), Copyright Adaptech s.r.o., Robert Pösel, Google Inc., Robert Theis and contributors, Apache-2.0. Used as a pinned Android dependency for local OCR and searchable PDF rendering. Its Tesseract/Leptonica and image-codec native components retain their upstream licenses in the distributed dependency.
+- [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast/tree/87416418657359cb625c412a48b6e1d6d41c29bd), Tesseract contributors, Apache-2.0. Language models are optional verified downloads, not bundled APK assets. The glyphless PDF font comes from [tessconfigs](https://github.com/tesseract-ocr/tessconfigs/tree/3decf1c8252ba6dbeef0bf908f4b0aab7f18d113), under its upstream Apache-2.0 distribution.
+- [ZXing 3.5.4](https://github.com/zxing/zxing), Copyright ZXing authors, Apache-2.0. The existing dependency is reused for CameraX QR/linear/matrix-code decoding.

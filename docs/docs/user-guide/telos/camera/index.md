@@ -31,3 +31,13 @@ Optional geotagging adds an available recent location fix to JPEG EXIF only (up 
 Hidden album saves still images under Telos’s app-specific external Pictures/TelosHidden directory with a .nomedia marker. The gallery does not index it; app uninstallation removes it. RAW and video continue to use their normal destinations. Panorama originals remain in the normal gallery.
 
 Foreground automatic capture can be enabled explicitly for camera-reported face detection (only if supported) or preview luminance changes. Both have a five-second cooldown and stop outside the foreground. Motion detection can react to lighting changes. Android device policy can also impose shutter behavior. No option claims to bypass those restrictions.
+
+## QR, barcodes and document scans (development draft)
+
+Standard Photo mode recognizes QR, Aztec, Data Matrix, PDF417 and common retail/linear barcodes when the camera supports an analysis stream. Recognition pauses outside the foreground and while a result is open. Copy a result or explicitly open an HTTP(S) address; scanning never executes a payload automatically.
+
+Choose **Scan to PDF** to capture pages privately, or use the document button to import images. The review screen supports up to 30 pages, reordering, removal, quarter-turn rotation, grayscale and symmetrical horizontal/vertical edge trimming. The crop sliders do not perform perspective correction. Export uses Android’s Save as picker and processes one image at a time at a bounded resolution.
+
+Select **Searchable text (OCR)** for a searchable PDF, or choose an image-only PDF. Up to three recognition languages can be combined, including Greek and English. Pinned Tesseract fast language models download on first use after selection; documents stay on the device. Network access is required for the initial model download. Models are checked against pinned upstream Git blob hashes before use. OCR quality depends on lighting, focus and document layout. Temporary scan sessions are private cache data and may be removed by Android; export important scans promptly. Sessions older than seven days or exceeding the retained-session budget are pruned.
+
+This draft is awaiting build, emulator PDF/OCR and real-camera validation, plus final translations.

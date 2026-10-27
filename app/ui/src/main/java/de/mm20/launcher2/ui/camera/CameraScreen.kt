@@ -51,6 +51,11 @@ import kotlinx.serialization.Serializable
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CameraScreen() {
+    val scanner: DocumentScannerViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    val scanPages by scanner.pages.collectAsState()
+    val scanBusy by scanner.busy.collectAsState()
+    var scanMode by remember { mutableStateOf(false) }
+    var reviewScan by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val owner = LocalLifecycleOwner.current
     val backStack = LocalBackStack.current
@@ -93,6 +98,7 @@ fun CameraScreen() {
     var webcamUrl by remember { mutableStateOf<String?>(null) }
     var webcamStarting by remember { mutableStateOf(false) }
     var message by remember { mutableStateOf<String?>(null) }
+    var detectedCode by remember { mutableStateOf<CameraCode?>(null) }
     val preview = remember { PreviewView(context).apply { implementationMode = PreviewView.ImplementationMode.COMPATIBLE } }
     val camera = remember(owner) { NativeCamera(context, owner) }
     var webcam by remember { mutableStateOf<CameraWebcam?>(null) }
@@ -134,6 +140,20 @@ fun CameraScreen() {
         if (Build.VERSION.SDK_INT <= 28 && !hidden && !raw && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermission(); return
         }
+        if (scanMode) {
+            if (scanBusy) return
+            scanner.prepareCapture { file ->
+                if (!scanMode || mode != NativeCamera.MODE_PHOTO || !owner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                    scanner.failedCapture(file)
+                    return@prepareCapture
+                }
+                busy = true
+                camera.captureDocument(file, onDone = {
+                    scanner.acceptCapture(file); busy = false; reviewScan = true
+                }, onError = { scanner.failedCapture(file); error(it) })
+            }
+            return
+        }
         if (mode == NativeCamera.MODE_VIDEO) {
             if (recording) { camera.recording?.stop(); return }
             if (audio && ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -162,14 +182,47 @@ fun CameraScreen() {
         }
     }
     SideEffect {
-        val permitted = owner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) && !busy && !recording && ready && mode == NativeCamera.MODE_PHOTO && !raw && !panorama
+        val permitted = owner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) && !busy && !recording && ready && mode == NativeCamera.MODE_PHOTO && !raw && !panorama && !scanMode && !reviewScan
+        camera.onCode = if (permitted && detectedCode == null && !settings) ({ detectedCode = it }) else null
         camera.onFace = if (faceTrigger && permitted) ({ capture() }) else null
         camera.onMotion = if (motionTrigger && permitted) ({ capture() }) else null
+    }
+    if (reviewScan) DocumentScannerDialog(scanner, onDismiss = { reviewScan = false }, onCapture = {
+        scanMode = true; raw = false; panorama = false; mode = NativeCamera.MODE_PHOTO; reviewScan = false
+    })
+    detectedCode?.let { code ->
+        val webAddress = remember(code.text) {
+            runCatching { android.net.Uri.parse(code.text) }.getOrNull()?.takeIf {
+                it.scheme?.lowercase(java.util.Locale.ROOT) in setOf("https", "http") && !it.host.isNullOrBlank()
+            }
+        }
+        AlertDialog(onDismissRequest = { detectedCode = null },
+            title = { Text(stringResource(R.string.camera_scan_code)) },
+            text = { androidx.compose.foundation.text.selection.SelectionContainer {
+                Text(code.text, Modifier.heightIn(max = 280.dp).verticalScroll(rememberScrollState()))
+            } },
+            confirmButton = { TextButton(onClick = {
+                context.getSystemService(android.content.ClipboardManager::class.java).setPrimaryClip(android.content.ClipData.newPlainText(code.format.name, code.text))
+                detectedCode = null
+            }) { Text(stringResource(R.string.hc_copy)) } },
+            dismissButton = { Row {
+                if (webAddress != null) TextButton(onClick = {
+                    runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, webAddress)) }
+                        .onFailure { message = context.getString(R.string.pdft_error_title) }
+                    detectedCode = null
+                }) { Text(stringResource(R.string.hc_open)) }
+                TextButton(onClick = { detectedCode = null }) { Text(stringResource(R.string.hc_close)) }
+            } })
     }
     Scaffold(containerColor = Color.Black, contentColor = Color.White, topBar = {
         TopAppBar(title = { Text("TELOS", color = Color.White) }, navigationIcon = {
             IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back), tint = Color.White) }
         }, actions = {
+            IconButton(onClick = { reviewScan = true }, enabled = !busy && !recording) {
+                BadgedBox(badge = { if (scanPages.isNotEmpty()) Badge { Text(scanPages.size.toString()) } }) {
+                    Icon(painterResource(R.drawable.description_24px), stringResource(R.string.camera_scan_pdf), tint = Color.White)
+                }
+            }
             IconButton(onClick = { settings = true }) { Icon(painterResource(R.drawable.settings_24px), stringResource(R.string.camera_native_settings), tint = Color.White) }
         }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Black))
     }) { padding ->
@@ -213,7 +266,8 @@ fun CameraScreen() {
                             if (ExtensionMode.BOKEH in supported) add(ExtensionMode.BOKEH to R.string.camera_mode_portrait)
                             if (ExtensionMode.NIGHT in supported) add(ExtensionMode.NIGHT to R.string.camera_mode_night)
                         }
-                        modes.forEach { (value, label) -> FilterChip(selected = mode == value, onClick = { if (!recording && !busy) { message = null; mode = value } }, label = { Text(stringResource(label)) }) }
+                        FilterChip(selected = scanMode, onClick = { if (!recording && !busy) { scanMode = !scanMode; raw = false; panorama = false; mode = NativeCamera.MODE_PHOTO } }, label = { Text(stringResource(R.string.camera_scan_pdf)) })
+                        modes.forEach { (value, label) -> FilterChip(selected = mode == value && !scanMode, onClick = { if (!recording && !busy) { message = null; scanMode = false; mode = value } }, label = { Text(stringResource(label)) }) }
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                         Text("${"%.1f".format(zoom)}×", color = Color.White)
