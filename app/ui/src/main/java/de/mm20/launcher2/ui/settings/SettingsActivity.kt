@@ -377,6 +377,7 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsRoute> {
                 de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsScreen()
             }
+            entry<de.mm20.launcher2.ui.network.NetworkStatsRoute> { de.mm20.launcher2.ui.network.NetworkStatsScreen() }
             entry<de.mm20.launcher2.ui.network.logs.NetworkLogsRoute> {
                 de.mm20.launcher2.ui.network.logs.NetworkLogsScreen()
             }

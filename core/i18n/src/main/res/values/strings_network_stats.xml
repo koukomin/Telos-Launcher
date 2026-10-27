@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="netstats_title">Statistics</string>
+    <string name="netstats_day">24 hours</string>
+    <string name="netstats_unmetered">Unmetered</string>
+    <string name="netstats_metered">Metered</string>
+    <string name="netstats_total">Total</string>
+    <string name="netstats_unknown">Unknown metering</string>
+    <string name="netstats_note">Totals use retained connection logs, grouped by connection start time. Byte counts arrive when a connection closes. Logging settings and retention limits affect the totals; these are not system-wide data-usage counters.</string>
+</resources>

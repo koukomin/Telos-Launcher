@@ -37,7 +37,8 @@ class DocumentScanEngineTest {
                 val progress = ArrayList<Int>()
                 val output = DocumentScanEngine.export(context, listOf(imported, edited), emptySet(), directory) { progress += it }
                 ParcelFileDescriptor.open(output, ParcelFileDescriptor.MODE_READ_ONLY).use { descriptor ->
-                    PdfRenderer(descriptor).use { assertEquals(2, it.pageCount) }
+                    val renderer = PdfRenderer(descriptor)
+                    try { assertEquals(2, renderer.pageCount) } finally { renderer.close() }
                 }
                 assertEquals(listOf(1,2), progress)
             } finally { directory.deleteRecursively() }

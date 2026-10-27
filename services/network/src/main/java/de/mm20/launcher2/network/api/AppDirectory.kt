@@ -17,6 +17,8 @@ data class AppEntry(
     val hasInternet: Boolean = true,
     /** Epoch millis of first install, used for "newly installed" rules. */
     val installedAtMs: Long = 0L,
+    /** Android application category; -1 when absent or mixed across a shared UID. */
+    val category: Int = -1,
 )
 
 /**

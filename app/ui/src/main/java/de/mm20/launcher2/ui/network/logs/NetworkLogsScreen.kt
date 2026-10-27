@@ -182,6 +182,7 @@ fun NetworkLogsScreen() {
     }
 
     PreferenceScreen(
+        bottomBar = { de.mm20.launcher2.ui.network.NetworkNavigationBar(de.mm20.launcher2.ui.network.NetworkSection.Logs) },
         title = stringResource(R.string.netfw_l_title),
         topBarActions = {
             Box {

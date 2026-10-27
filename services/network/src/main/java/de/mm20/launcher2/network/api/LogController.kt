@@ -28,6 +28,8 @@ data class ConnectionLogEntry(
     val bytesReceived: Long = 0,
     val bytesSent: Long = 0,
     val durationMs: Long = 0,
+    /** Unknown for records written before metering was stamped. */
+    val metered: Boolean? = null,
 )
 
 /** A DNS question and its answer in the log. */

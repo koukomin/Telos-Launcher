@@ -97,7 +97,8 @@ internal object DocumentScanEngine {
         val output = File(directory, "scan-${UUID.randomUUID()}.pdf")
         try {
             if (languages.isEmpty()) {
-                PdfDocument().use { pdf ->
+                val pdf = PdfDocument()
+                try {
                     for ((index, page) in pages.withIndex()) {
                         coroutineContext.ensureActive()
                         val bitmap = render(page)
@@ -111,7 +112,7 @@ internal object DocumentScanEngine {
                         progress(index + 1)
                     }
                     output.outputStream().use(pdf::writeTo)
-                }
+                } finally { pdf.close() }
             } else {
                 val data = CameraOcrModels.prepare(context, languages)
                 val api = TessBaseAPI()

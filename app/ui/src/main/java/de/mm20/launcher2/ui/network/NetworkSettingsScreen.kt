@@ -54,7 +54,7 @@ fun NetworkSettingsScreen() {
 
     val mtuLabelAuto = stringResource(R.string.net_settings_mtu_auto)
 
-    PreferenceScreen(title = { Text(stringResource(R.string.net_settings_title), modifier = Modifier.padding(horizontal = 16.dp)) }) {
+    PreferenceScreen(title = { Text(stringResource(R.string.net_settings_title), modifier = Modifier.padding(horizontal = 16.dp)) }, bottomBar = { NetworkNavigationBar(NetworkSection.Settings) }) {
         item {
             PreferenceCategory(title = stringResource(R.string.net_settings_cat_start)) {
                 SwitchPreference(

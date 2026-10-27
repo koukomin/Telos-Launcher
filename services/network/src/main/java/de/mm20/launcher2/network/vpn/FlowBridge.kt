@@ -279,6 +279,7 @@ internal class FlowBridge(
                 ruleId = ruleId,
                 proxyId = proxyId,
                 network = info.environment.network,
+                metered = info.environment.metered,
                 blocklists = info.blocklists,
             )
         )

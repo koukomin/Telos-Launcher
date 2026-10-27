@@ -114,6 +114,7 @@ internal class DefaultAppDirectory(private val context: Context) : AppDirectory 
                     isSystem = (app.flags and ApplicationInfo.FLAG_SYSTEM) != 0,
                     hasInternet = hasInternet,
                     installedAtMs = group.minOf { it.first.firstInstallTime },
+                    category = group.map { it.second.category }.distinct().singleOrNull() ?: ApplicationInfo.CATEGORY_UNDEFINED,
                 )
             }
             .sortedBy { it.label.lowercase() }

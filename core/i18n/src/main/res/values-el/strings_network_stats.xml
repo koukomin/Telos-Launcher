@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="netstats_title">Στατιστικά</string>
+    <string name="netstats_day">24 ώρες</string>
+    <string name="netstats_unmetered">Χωρίς χρέωση</string>
+    <string name="netstats_metered">Με χρέωση</string>
+    <string name="netstats_total">Σύνολο</string>
+    <string name="netstats_unknown">Άγνωστη χρέωση</string>
+    <string name="netstats_note">Τα σύνολα προκύπτουν από τα αποθηκευμένα logs, με βάση την έναρξη κάθε σύνδεσης. Τα bytes ενημερώνονται όταν κλείσει η σύνδεση. Οι ρυθμίσεις και τα όρια διατήρησης logs επηρεάζουν τα σύνολα· δεν πρόκειται για μετρητές συνολικής χρήσης δεδομένων της συσκευής.</string>
+</resources>

@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 internal fun NetworkRuleToggle(label: Int, allowed: Boolean, enabled: Boolean, icon: Int, blockedIcon: Int, onAllowed: (Boolean) -> Unit) {
     IconToggleButton(checked = allowed, enabled = enabled, onCheckedChange = onAllowed,
         modifier = Modifier.sizeIn(minWidth = 48.dp, minHeight = 48.dp)
-            .background(if (allowed) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.errorContainer, MaterialTheme.shapes.medium)) {
+            .background(if (!enabled) MaterialTheme.colorScheme.surfaceContainerHighest else if (allowed) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.errorContainer, MaterialTheme.shapes.medium)) {
         Icon(painterResource(if (allowed) icon else blockedIcon), stringResource(label),
-            tint = if (allowed) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onErrorContainer)
+            tint = if (!enabled) MaterialTheme.colorScheme.onSurfaceVariant else if (allowed) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onErrorContainer)
     }
 }

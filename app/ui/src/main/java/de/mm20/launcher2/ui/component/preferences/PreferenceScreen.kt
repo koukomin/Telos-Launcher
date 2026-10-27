@@ -61,6 +61,7 @@ fun PreferenceScreen(
     helpUrl: String? = null,
     lazyColumnState: LazyListState = rememberLazyListState(),
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(12.dp),
+    bottomBar: @Composable () -> Unit = {},
     content: LazyListScope.() -> Unit,
 ) {
     PreferenceScreen(
@@ -76,6 +77,7 @@ fun PreferenceScreen(
         helpUrl = helpUrl,
         lazyColumnState = lazyColumnState,
         verticalArrangement = verticalArrangement,
+        bottomBar = bottomBar,
         content = content
     )
 }
@@ -87,6 +89,7 @@ fun PreferenceScreen(
     helpUrl: String? = null,
     lazyColumnState: LazyListState = rememberLazyListState(),
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(12.dp),
+    bottomBar: @Composable () -> Unit = {},
     content: LazyListScope.() -> Unit,
 ) {
 
@@ -104,6 +107,7 @@ fun PreferenceScreen(
                 scrollBehavior = scrollBehavior,
             )
         },
+        bottomBar = bottomBar,
         containerColor = Color.Transparent
     ) { insets ->
         BoxWithConstraints(Modifier.fillMaxSize()) {
