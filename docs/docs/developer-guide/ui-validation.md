@@ -140,3 +140,5 @@ The first Media emulator pass (40376277544, head 180155f) completed 20 tests wit
 
 
 Follow-up to v1.42.14: compact filled media filters/source icons, Radio directory search action and transparent RGB fix, contact names for ended calls/recordings, direct Stremio cache setting, and Root task-listener bridge. Validation of this follow-up is pending CI and screenshot review; earlier screenshots do not certify it. The helper instrumentation uses Android shell privileges to validate registration and complete snapshot protocol, not a physical OnePlus root grant or OEM freeze outcome.
+
+The follow-up also refreshes a reused singleTop missed-call popup on new intents and keeps the Recents parcel reader compatible below API 33. New/changed labels reuse existing translations; Latin and Ancient Greek receive the previously missing Radio/cache labels and Root observation text.

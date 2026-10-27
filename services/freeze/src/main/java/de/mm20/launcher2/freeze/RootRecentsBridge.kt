@@ -38,7 +38,7 @@ object RootRecentsBridge {
                     removed -> emit("R ${data.readInt()}")
                     created, changed -> emit("C")
                     removing -> {
-                        val info = data.readTypedObject(ActivityManager.RunningTaskInfo.CREATOR)
+                        val info = if (data.readInt() != 0) ActivityManager.RunningTaskInfo.CREATOR.createFromParcel(data) else null
                         val pkg = info?.baseIntent?.component?.packageName ?: info?.baseActivity?.packageName
                         if (info != null && pkg != null) emit("R ${info.taskId} $pkg ${info.javaClass.getField("userId").getInt(info)}")
                     }

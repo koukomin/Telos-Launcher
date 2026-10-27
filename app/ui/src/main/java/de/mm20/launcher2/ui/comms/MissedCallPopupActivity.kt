@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -34,14 +35,24 @@ import org.koin.android.ext.android.inject
 class MissedCallPopupActivity : BaseActivity() {
     private val commsSettings: CommsSettings by inject()
 
+    private var callIntent by androidx.compose.runtime.mutableStateOf<android.content.Intent?>(null)
+
+    override fun onNewIntent(intent: android.content.Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        callIntent = intent
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val name = intent.getStringExtra(CallOverlayIntents.EXTRA_NAME)
-        val number = intent.getStringExtra(CallOverlayIntents.EXTRA_NUMBER).orEmpty()
-        val ringMs = intent.getLongExtra(CallOverlayIntents.EXTRA_RING_MS, 0L)
+        callIntent = intent
         setContent {
             ProvideCompositionLocals {
                 LauncherTheme {
+                    val source = callIntent ?: intent
+                    val name = source.getStringExtra(CallOverlayIntents.EXTRA_NAME)
+                    val number = source.getStringExtra(CallOverlayIntents.EXTRA_NUMBER).orEmpty()
+                    val ringMs = source.getLongExtra(CallOverlayIntents.EXTRA_RING_MS, 0L)
                     val resolvedName by androidx.compose.runtime.produceState(name, number) {
                         value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                             de.mm20.launcher2.comms.remote.DeviceContactsResolver.lookup(applicationContext, number).first

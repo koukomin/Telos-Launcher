@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_radio_tab_collection">Collectio</string>
+    <string name="au_radio_tab_history">Historia</string>
+    <string name="freeze_hub_recents_help">Applicationes administratae iterum gelantur post ultimum opus e recentibus remotum. Shizuku vel Root requiritur; exceptiones manent. Initio inactivum.</string>
+    <string name="freeze_hub_recents_unavailable">Detectio recentium non praesto est. Shizuku vel Root activa et veniam concede.</string>
+    <string name="stremio_http_cache">Memoria temporaria HTTP</string>
+</resources>

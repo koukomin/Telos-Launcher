@@ -106,7 +106,7 @@ class RecentsFreezeMonitor internal constructor(
                         removed -> offer(RecentsSignal(data.readInt()))
                         created -> offer(RecentsSignal(REFRESH))
                         removing -> {
-                            val info = data.readTypedObject(ActivityManager.RunningTaskInfo.CREATOR)
+                            val info = if (data.readInt() != 0) ActivityManager.RunningTaskInfo.CREATOR.createFromParcel(data) else null
                             val pkg = info?.baseIntent?.component?.packageName ?: info?.baseActivity?.packageName
                             if (info != null && pkg != null) offer(RecentsSignal(info.taskId, RecentsTask(info.taskId, pkg,
                                 runCatching { info.javaClass.getField("userId").getInt(info) }.getOrDefault(-1))))
