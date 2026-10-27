@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
@@ -32,7 +32,7 @@ internal fun AppOpsNextButton() {
     val context = LocalContext.current
     val backStack = LocalBackStack.current
     val repository: AppRepository = koinInject()
-    val launcher: SearchableItemVM = viewModel(key = "system-appopsnext-launch")
+    val launcher: SearchableItemVM = listItemViewModel(key = "system-appopsnext-launch")
     val scope = rememberCoroutineScope()
     var busy by remember { mutableStateOf(false) }
     OutlinedButton(enabled = Build.VERSION.SDK_INT >= 35 && !busy, onClick = {

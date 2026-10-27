@@ -65,10 +65,9 @@ import org.koin.core.component.inject
 
 class SearchVM : ViewModel(), KoinComponent {
 
-    private val keyboardLaunchStore = androidx.lifecycle.ViewModelStore()
+    private val keyboardLaunchStore = ListItemViewModelStore()
     private val keyboardLauncher by lazy {
-        androidx.lifecycle.ViewModelProvider(keyboardLaunchStore, androidx.lifecycle.ViewModelProvider.NewInstanceFactory())
-            .get(de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM::class.java)
+        keyboardLaunchStore.get<de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM>("keyboard-launch")
     }
 
     override fun onCleared() {
