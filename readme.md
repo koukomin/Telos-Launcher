@@ -1416,3 +1416,5 @@ Media source buttons now include relevant glyphs and compact filled filters. Rad
 
 
 Keyboard Enter now uses the same app-lock, companion-thaw and verified frozen-app launch path as tapping an icon. All legacy reflected Shizuku process factories are replaced by a shared supported UserService with Binder-owned pipes, timeouts and cleanup. System audio operations and Tweaks detect live authorization independently of the freeze backend. System Apps exposes the complete external [AppOpsNext](https://github.com/1zumiii/AppOpsNext) companion (GPL-3.0, Android 15+), opening its official Store source when absent; no AppOpsNext code or APK is bundled.
+
+Development checkpoint: the external AppOpsNext entry is being replaced with an embedded GPL-3.0 source component under `libs/appops-next`, with per-package System entry points. Network logs link app icons to the existing package firewall editor. The System/Network/Stremio/camera integration and remaining verification are tracked in [the development checkpoint](docs/docs/developer-guide/system-network-integration-work.md); this is not a completed-release claim.

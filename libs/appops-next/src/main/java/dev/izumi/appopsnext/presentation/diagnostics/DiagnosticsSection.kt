@@ -1,0 +1,426 @@
+package dev.izumi.appopsnext.presentation.diagnostics
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import dev.izumi.appopsnext.R
+import dev.izumi.appopsnext.presentation.components.StatusGlyph
+import dev.izumi.appopsnext.presentation.components.StatusVisual
+import dev.izumi.appopsnext.appops.model.AppOpsReadFailureReason
+import dev.izumi.appopsnext.appops.model.AppOpsReadState
+import dev.izumi.appopsnext.shizuku.model.PrivilegedBackendType
+import dev.izumi.appopsnext.shizuku.model.PrivilegedServiceState
+import dev.izumi.appopsnext.shizuku.model.PrivilegedServiceFailureReason
+import dev.izumi.appopsnext.shizuku.model.ShizukuFailureReason
+import dev.izumi.appopsnext.shizuku.model.ShizukuState
+
+@Composable
+fun DiagnosticsSection(
+    uiState: DiagnosticsUiState,
+    onShizukuAction: () -> Unit,
+    onPrivilegedServiceRetry: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        DiagnosticStatusItem(
+            title = stringResource(R.string.appopsnext_status_device_title),
+            value = stringResource(
+                R.string.appopsnext_status_device_value,
+                uiState.device.manufacturer,
+                uiState.device.model,
+            ),
+            detail = stringResource(
+                R.string.appopsnext_status_device_detail,
+                uiState.device.androidVersion,
+                uiState.device.apiLevel,
+            ),
+            level = DiagnosticStatusLevel.NEUTRAL,
+        )
+        Spacer(Modifier.height(8.dp))
+        ShizukuStatusCard(
+            state = uiState.shizukuState,
+            onAction = onShizukuAction,
+        )
+        Spacer(Modifier.height(8.dp))
+        RuntimeModeStatusItem(
+            serviceState = uiState.privilegedServiceState,
+        )
+        Spacer(Modifier.height(8.dp))
+        PrivilegedServiceStatusCard(
+            serviceState = uiState.privilegedServiceState,
+            readState = uiState.appOpsReadState,
+            canRetry = uiState.shizukuState is ShizukuState.Ready,
+            onRetry = onPrivilegedServiceRetry,
+        )
+    }
+}
+
+@Composable
+private fun RuntimeModeStatusItem(
+    serviceState: PrivilegedServiceState,
+) {
+    val presentation = when (serviceState) {
+        PrivilegedServiceState.Disconnected -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_runtime_mode_pending),
+            detail = stringResource(R.string.appopsnext_status_runtime_mode_pending_detail),
+            level = DiagnosticStatusLevel.NEUTRAL,
+        )
+
+        is PrivilegedServiceState.Connecting ->
+            runtimeModePresentation(
+                backendType = serviceState.backendType,
+                isConnecting = true,
+            )
+
+        is PrivilegedServiceState.Connected ->
+            runtimeModePresentation(
+                backendType = serviceState.info.backendType,
+                isConnecting = false,
+            )
+
+        is PrivilegedServiceState.Failure -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_runtime_mode_fallback_failed),
+            detail = stringResource(
+                R.string.appopsnext_status_runtime_mode_fallback_failed_detail,
+            ),
+            level = DiagnosticStatusLevel.ERROR,
+        )
+    }
+
+    DiagnosticStatusItem(
+        title = stringResource(R.string.appopsnext_status_runtime_mode_title),
+        value = presentation.value,
+        detail = presentation.detail,
+        level = presentation.level,
+    )
+}
+
+@Composable
+private fun runtimeModePresentation(
+    backendType: PrivilegedBackendType,
+    isConnecting: Boolean,
+): StatusPresentation =
+    when (backendType) {
+        PrivilegedBackendType.NATIVE_DAEMON -> StatusPresentation(
+            value = stringResource(
+                if (isConnecting) {
+                    R.string.appopsnext_status_runtime_mode_native_connecting
+                } else {
+                    R.string.appopsnext_status_runtime_mode_native
+                },
+            ),
+            detail = stringResource(
+                R.string.appopsnext_status_runtime_mode_native_detail,
+            ),
+            level = if (isConnecting) {
+                DiagnosticStatusLevel.NEUTRAL
+            } else {
+                DiagnosticStatusLevel.SUCCESS
+            },
+        )
+
+        PrivilegedBackendType.USER_SERVICE -> StatusPresentation(
+            value = stringResource(
+                if (isConnecting) {
+                    R.string.appopsnext_status_runtime_mode_user_service_connecting
+                } else {
+                    R.string.appopsnext_status_runtime_mode_user_service
+                },
+            ),
+            detail = stringResource(
+                R.string.appopsnext_status_runtime_mode_user_service_detail,
+            ),
+            level = DiagnosticStatusLevel.WARNING,
+        )
+    }
+
+@Composable
+private fun ShizukuStatusCard(
+    state: ShizukuState,
+    onAction: () -> Unit,
+) {
+    val presentation = when (state) {
+        ShizukuState.Checking -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_checking),
+            detail = stringResource(R.string.appopsnext_status_shizuku_checking_detail),
+            level = DiagnosticStatusLevel.NEUTRAL,
+        )
+
+        is ShizukuState.Unavailable -> StatusPresentation(
+            value = stringResource(
+                if (state.isInstalled) {
+                    R.string.appopsnext_status_shizuku_not_running
+                } else {
+                    R.string.appopsnext_status_shizuku_not_installed
+                },
+            ),
+            detail = stringResource(R.string.appopsnext_status_shizuku_unavailable_detail),
+            actionLabel = stringResource(R.string.appopsnext_action_retry),
+            level = DiagnosticStatusLevel.ERROR,
+        )
+
+        ShizukuState.Unsupported -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_unsupported),
+            detail = stringResource(R.string.appopsnext_status_shizuku_unsupported_detail),
+            level = DiagnosticStatusLevel.ERROR,
+        )
+
+        ShizukuState.PermissionRequired -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_permission_required),
+            detail = stringResource(R.string.appopsnext_status_shizuku_permission_detail),
+            actionLabel = stringResource(R.string.appopsnext_action_grant_shizuku),
+            level = DiagnosticStatusLevel.WARNING,
+        )
+
+        ShizukuState.PermissionDenied -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_permission_denied),
+            detail = stringResource(R.string.appopsnext_status_shizuku_denied_detail),
+            actionLabel = stringResource(R.string.appopsnext_action_request_again),
+            level = DiagnosticStatusLevel.ERROR,
+        )
+
+        is ShizukuState.Ready -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_ready),
+            detail = stringResource(
+                R.string.appopsnext_status_shizuku_ready_detail,
+                state.serverVersion,
+                state.serverUid,
+            ),
+            level = DiagnosticStatusLevel.SUCCESS,
+        )
+
+        is ShizukuState.Failure -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_error),
+            detail = stringResource(
+                when (state.reason) {
+                    ShizukuFailureReason.STATE_READ_FAILED ->
+                        R.string.appopsnext_status_shizuku_read_failed_detail
+
+                    ShizukuFailureReason.PERMISSION_REQUEST_FAILED ->
+                        R.string.appopsnext_status_shizuku_permission_failed_detail
+                },
+            ),
+            actionLabel = stringResource(R.string.appopsnext_action_retry),
+            level = DiagnosticStatusLevel.ERROR,
+        )
+    }
+
+    DiagnosticStatusItem(
+        title = stringResource(R.string.appopsnext_status_shizuku_title),
+        value = presentation.value,
+        detail = presentation.detail,
+        level = presentation.level,
+        actionLabel = presentation.actionLabel,
+        onAction = presentation.actionLabel?.let { onAction },
+    )
+}
+
+@Composable
+private fun PrivilegedServiceStatusCard(
+    serviceState: PrivilegedServiceState,
+    readState: AppOpsReadState,
+    canRetry: Boolean,
+    onRetry: () -> Unit,
+) {
+    val presentation = when (serviceState) {
+        PrivilegedServiceState.Disconnected -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_disconnected),
+            detail = stringResource(R.string.appopsnext_status_appops_disconnected_detail),
+            actionLabel = if (canRetry) {
+                stringResource(R.string.appopsnext_action_retry)
+            } else {
+                null
+            },
+            level = DiagnosticStatusLevel.WARNING,
+        )
+
+        is PrivilegedServiceState.Connecting -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_connecting),
+            detail = stringResource(
+                when (serviceState.backendType) {
+                    PrivilegedBackendType.NATIVE_DAEMON ->
+                        R.string.appopsnext_status_native_daemon_connecting_detail
+
+                    PrivilegedBackendType.USER_SERVICE ->
+                        R.string.appopsnext_status_user_service_connecting_detail
+                },
+            ),
+            level = DiagnosticStatusLevel.NEUTRAL,
+        )
+
+        is PrivilegedServiceState.Connected ->
+            appOpsReadPresentation(serviceState, readState)
+
+        is PrivilegedServiceState.Failure -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_error),
+            detail = stringResource(
+                when (serviceState.reason) {
+                    PrivilegedServiceFailureReason.EMPTY_BINDER ->
+                        R.string.appopsnext_status_user_service_empty_binder_detail
+
+                    PrivilegedServiceFailureReason.INITIALIZATION_FAILED ->
+                        R.string.appopsnext_status_user_service_initialization_failed_detail
+
+                    PrivilegedServiceFailureReason.BIND_FAILED ->
+                        R.string.appopsnext_status_user_service_bind_failed_detail
+
+                    PrivilegedServiceFailureReason.BIND_TIMED_OUT ->
+                        R.string.appopsnext_status_user_service_bind_timeout_detail
+                },
+            ),
+            actionLabel = if (canRetry) {
+                stringResource(R.string.appopsnext_action_retry)
+            } else {
+                null
+            },
+            level = DiagnosticStatusLevel.ERROR,
+        )
+    }
+
+    DiagnosticStatusItem(
+        title = stringResource(R.string.appopsnext_status_appops_title),
+        value = presentation.value,
+        detail = presentation.detail,
+        level = presentation.level,
+        actionLabel = presentation.actionLabel,
+        onAction = presentation.actionLabel?.let { onRetry },
+    )
+}
+
+@Composable
+private fun appOpsReadPresentation(
+    serviceState: PrivilegedServiceState.Connected,
+    readState: AppOpsReadState,
+): StatusPresentation =
+    when (readState) {
+        AppOpsReadState.WaitingForBackend,
+        AppOpsReadState.Reading,
+        -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_appops_reading),
+            detail = stringResource(
+                when (serviceState.info.backendType) {
+                    PrivilegedBackendType.NATIVE_DAEMON ->
+                        R.string.appopsnext_status_native_daemon_connected_detail
+
+                    PrivilegedBackendType.USER_SERVICE ->
+                        R.string.appopsnext_status_user_service_connected_detail
+                },
+                serviceState.info.uid,
+                serviceState.info.pid,
+                serviceState.info.apiLevel,
+            ),
+            level = DiagnosticStatusLevel.NEUTRAL,
+        )
+
+        is AppOpsReadState.Ready -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_appops_read_success),
+            detail = stringResource(
+                R.string.appopsnext_status_appops_read_success_detail,
+                readState.operationCount,
+                serviceState.info.uid,
+            ),
+            level = DiagnosticStatusLevel.SUCCESS,
+        )
+
+        is AppOpsReadState.Failure -> StatusPresentation(
+            value = stringResource(R.string.appopsnext_status_appops_read_failed),
+            detail = stringResource(
+                when (readState.reason) {
+                    AppOpsReadFailureReason.BACKEND_UNAVAILABLE ->
+                        R.string.appopsnext_status_appops_backend_unavailable_detail
+
+                    AppOpsReadFailureReason.COMMAND_FAILED ->
+                        R.string.appopsnext_status_appops_command_failed_detail
+
+                    AppOpsReadFailureReason.COMMAND_TIMED_OUT ->
+                        R.string.appopsnext_status_appops_command_timed_out_detail
+                },
+            ),
+            level = DiagnosticStatusLevel.ERROR,
+        )
+    }
+
+private data class StatusPresentation(
+    val value: String,
+    val detail: String,
+    val actionLabel: String? = null,
+    val level: DiagnosticStatusLevel,
+)
+
+@Composable
+private fun DiagnosticStatusItem(
+    title: String,
+    value: String,
+    detail: String,
+    level: DiagnosticStatusLevel,
+    modifier: Modifier = Modifier,
+    actionLabel: String? = null,
+    onAction: (() -> Unit)? = null,
+) {
+    ListItem(
+        modifier = modifier.fillMaxWidth(),
+        leadingContent = {
+            StatusGlyph(
+                status = when (level) {
+                    DiagnosticStatusLevel.NEUTRAL -> StatusVisual.NEUTRAL
+                    DiagnosticStatusLevel.SUCCESS -> StatusVisual.SUCCESS
+                    DiagnosticStatusLevel.WARNING -> StatusVisual.WARNING
+                    DiagnosticStatusLevel.ERROR -> StatusVisual.ERROR
+                },
+            )
+        },
+        headlineContent = {
+            Text(
+                text = title,
+                fontWeight = FontWeight.Medium,
+            )
+        },
+        supportingContent = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(3.dp),
+            ) {
+                Text(
+                    text = value,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(text = detail)
+                if (actionLabel != null && onAction != null) {
+                    TextButton(
+                        onClick = onAction,
+                        contentPadding = PaddingValues(0.dp),
+                    ) {
+                        Text(text = actionLabel)
+                    }
+                }
+            }
+        },
+        colors = ListItemDefaults.colors(
+            containerColor = Color.Transparent,
+        ),
+    )
+}
+
+private enum class DiagnosticStatusLevel {
+    NEUTRAL,
+    SUCCESS,
+    WARNING,
+    ERROR,
+}

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- The embedded AppOps component is entered only behind an API-35 guard. -->
+    <uses-sdk tools:overrideLibrary="dev.izumi.appopsnext" />
     <queries>
         <package android:name="com.termux" />
         <package android:name="ai.x.grok" />
@@ -44,6 +46,7 @@
     <uses-sdk tools:overrideLibrary="com.kieronquinn.app.smartspacer.sdk,com.kieronquinn.app.smartspacer.sdk.client" />
 
     <application>
+        <activity android:name="de.mm20.launcher2.ui.system.AppOpsActivity" android:exported="false" />
         <activity android:name=".trash.FileDeleteActivity" android:exported="false" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
         <activity

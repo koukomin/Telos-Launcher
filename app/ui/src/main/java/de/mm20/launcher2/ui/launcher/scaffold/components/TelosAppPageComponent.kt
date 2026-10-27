@@ -136,6 +136,7 @@ internal object TelosPages {
         entry<de.mm20.launcher2.ui.settings.freeze.SmartFreezeDashboardRoute> { de.mm20.launcher2.ui.settings.freeze.FreezeSettingsScreen() }
         entry<de.mm20.launcher2.ui.settings.freeze.FreezeDashboardRoute> { de.mm20.launcher2.ui.settings.freeze.FreezeDashboardScreen() }
         entry<de.mm20.launcher2.ui.settings.freeze.DeviceOwnerSetupRoute> { de.mm20.launcher2.ui.settings.freeze.DeviceOwnerSetupScreen() }
+        entry<de.mm20.launcher2.ui.system.SystemAppOpsRoute> { key -> de.mm20.launcher2.ui.system.SystemAppOpsScreen(key.packageName) }
         entry<de.mm20.launcher2.ui.system.SystemAppDetailsRoute> { key -> de.mm20.launcher2.ui.system.SystemAppDetailsScreen(key.packageName) }
         entry<de.mm20.launcher2.ui.network.firewall.NetworkPackageFirewallRoute> { key -> de.mm20.launcher2.ui.network.firewall.NetworkFirewallScreen(key.packageName) }
         entry<de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesRoute> { de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesScreen() }

@@ -123,13 +123,13 @@ fun NetworkHomeScreen() {
     val wgUp = wgConfigs.count { wgStatus[it.id] == WgStatus.Up }
     val on = state is NetState.On
     val t = MaterialTheme.transparency
-    val card = MaterialTheme.colorScheme.surface.copy(alpha = t.surface)
-    val bar = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
+    val card = MaterialTheme.colorScheme.surfaceContainerLow
+    val bar = MaterialTheme.colorScheme.surfaceContainer
     val ring by animateColorAsState(
         when (state) {
-            is NetState.On -> Color.Green
-            is NetState.Starting -> Color.Yellow
-            is NetState.Error, is NetState.NeedsPermission -> Color.Red
+            is NetState.On -> MaterialTheme.colorScheme.primary
+            is NetState.Starting -> MaterialTheme.colorScheme.tertiary
+            is NetState.Error, is NetState.NeedsPermission -> MaterialTheme.colorScheme.error
             else -> MaterialTheme.colorScheme.outline
         },
         label = "ring",
@@ -137,14 +137,11 @@ fun NetworkHomeScreen() {
 
     de.mm20.launcher2.ui.component.VirtualAppWindow {
     Box(Modifier.fillMaxSize()) {
-        Box(
-            Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background.copy(alpha = t.background))
-                .blur(32.dp),
-        )
         Scaffold(
             containerColor = Color.Transparent,
+            bottomBar = {
+                NetworkNavigationBar(NetworkSection.Home)
+            },
             topBar = {
                 TopAppBar(
                     title = { Text(stringResource(R.string.net_hub_title), fontWeight = FontWeight.Medium) },
@@ -165,59 +162,27 @@ fun NetworkHomeScreen() {
             ) {
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Column(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Box(
-                            Modifier
-                                .widthIn(min = 168.dp).heightIn(min = 168.dp)
-                                .background(ring.copy(alpha = if (on) 0.18f else 0.08f), CircleShape)
-                                .clickable(enabled = state !is NetState.Starting) {
-                                    if (on || state is NetState.Starting) engine.stop()
-                                    else {
-                                        requested = true
-                                        engine.start()
-                                    }
-                                },
-                            contentAlignment = Alignment.Center,
+                        Text(
+                            stringResource(when (state) {
+                                is NetState.On -> R.string.net_hub_state_on
+                                is NetState.Starting -> R.string.net_hub_state_starting
+                                is NetState.Error -> R.string.net_hub_state_error
+                                is NetState.NeedsPermission -> R.string.net_hub_state_permission
+                                else -> R.string.net_hub_state_off
+                            }),
+                            color = ring,
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                        )
+                        androidx.compose.material3.FilledTonalButton(
+                            onClick = {
+                                if (on) engine.stop() else { requested = true; engine.start() }
+                            },
+                            enabled = state !is NetState.Starting,
+                            modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp),
                         ) {
-                            Box(
-                                Modifier
-                                    .widthIn(min = 132.dp).heightIn(min = 132.dp).padding(16.dp)
-                                    .background(card, CircleShape),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Icon(
-                                        painterResource(Icons.ic_glyph_network),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(36.dp),
-                                        tint = ring,
-                                    )
-                                    Text(
-                                        text = stringResource(
-                                            when (state) {
-                                                is NetState.On -> R.string.net_hub_stop
-                                                is NetState.Starting -> R.string.net_hub_state_starting
-                                                else -> R.string.net_hub_start
-                                            }
-                                        ),
-                                        fontWeight = FontWeight.Bold,
-                                        letterSpacing = 2.sp,
-                                        modifier = Modifier.padding(top = 8.dp),
-                                    )
-                                    Text(
-                                        stringResource(
-                                            when (state) {
-                                                is NetState.Off -> R.string.net_hub_state_off
-                                                is NetState.Starting -> R.string.net_hub_state_starting
-                                                is NetState.On -> R.string.net_hub_state_on
-                                                is NetState.Error -> R.string.net_hub_state_error
-                                                is NetState.NeedsPermission -> R.string.net_hub_state_permission
-                                            }
-                                        ),
-                                        style = MaterialTheme.typography.labelMedium,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
-                                }
-                            }
+                            Text(stringResource(if (on) R.string.net_hub_stop else R.string.net_hub_start),
+                                style = MaterialTheme.typography.titleLarge)
                         }
                         if (state is NetState.Error) {
                             Text((state as NetState.Error).message, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 12.dp))
@@ -313,15 +278,6 @@ fun NetworkHomeScreen() {
                 }
                 item {
                     HubTile(
-                        title = stringResource(R.string.nsp_title),
-                        value = stringResource(R.string.nsp_intro),
-                        icon = Icons.speed_24px,
-                        card = card,
-                        onClick = { backStack.add(de.mm20.launcher2.ui.network.NetworkSpeedTestRoute) },
-                    )
-                }
-                item {
-                    HubTile(
                         title = stringResource(R.string.net_hub_settings),
                         value = stringResource(R.string.net_hub_settings_sum_short),
                         icon = Icons.settings_24px,
@@ -364,7 +320,7 @@ private fun HubTile(title: String, value: String, icon: Int, card: Color, onClic
     Column(
         Modifier
             .fillMaxWidth()
-            .heightIn(min = 160.dp)
+            .heightIn(min = 112.dp)
             .clip(MaterialTheme.shapes.medium)
             .background(card)
             .clickable(onClick = onClick)

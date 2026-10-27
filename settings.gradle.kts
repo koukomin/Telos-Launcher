@@ -86,3 +86,5 @@ include(":data:store")
 include(":services:comms")
 include(":data:comms")
 include(":services:downloads")
+
+include(":libs:appops-next")

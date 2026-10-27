@@ -1,0 +1,382 @@
+package dev.izumi.appopsnext.presentation.app_detail
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import dev.izumi.appopsnext.AppOpsNextApplication
+import dev.izumi.appopsnext.appops.AdaptiveScopeModeChangeExecutor
+import dev.izumi.appopsnext.appops.AppOpRuntimePermissionCatalog
+import dev.izumi.appopsnext.appops.RevokedCompatRetry
+import dev.izumi.appopsnext.appops.command.AppOpMode
+import dev.izumi.appopsnext.appops.model.AppOpIdentifier
+import dev.izumi.appopsnext.appops.model.AppOpModeChangeResult
+import dev.izumi.appopsnext.appops.model.AppOpScope
+import dev.izumi.appopsnext.appops.model.AppOpsRestorationStatus
+import dev.izumi.appopsnext.appops.model.PackageOpsLoadResult
+import dev.izumi.appopsnext.apps.model.InstalledApp
+import dev.izumi.appopsnext.shizuku.model.PrivilegedServiceState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+
+class AppDetailViewModel(
+    application: Application,
+) : AndroidViewModel(application) {
+    private val privilegedServiceClient =
+        AppOpsNextApplication.get(getApplication()).privilegedServiceClient
+    private val userSettingsRepository =
+        AppOpsNextApplication.get(getApplication()).userSettingsRepository
+    private val repository = AppOpsNextApplication.get(getApplication()).appOpsRepository
+    private val adaptiveScopeExecutor =
+        AdaptiveScopeModeChangeExecutor(
+            writeMemory = AppOpsNextApplication.get(getApplication()).revokedCompatWriteMemory,
+            packagesForUid = ::packagesForUid,
+        )
+    private val selectedApp = MutableStateFlow<InstalledApp?>(null)
+    private val mutableUiState =
+        MutableStateFlow<AppDetailUiState>(AppDetailUiState.Idle)
+    val uiState: StateFlow<AppDetailUiState> = mutableUiState.asStateFlow()
+    private val mutableModeChangeState =
+        MutableStateFlow<AppOpModeChangeUiState>(AppOpModeChangeUiState.Idle)
+    val modeChangeState: StateFlow<AppOpModeChangeUiState> =
+        mutableModeChangeState.asStateFlow()
+    private val mutableSearchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = mutableSearchQuery.asStateFlow()
+    private var loadJob: Job? = null
+    private var modeChangeJob: Job? = null
+
+    init {
+        viewModelScope.launch {
+            privilegedServiceClient.state.collectLatest {
+                loadSelectedApp()
+            }
+        }
+    }
+
+    fun selectApp(app: InstalledApp) {
+        if (selectedApp.value == app && uiState.value is AppDetailUiState.Ready) {
+            return
+        }
+        if (selectedApp.value != app) {
+            modeChangeJob?.cancel()
+            mutableModeChangeState.value = AppOpModeChangeUiState.Idle
+            mutableSearchQuery.value = ""
+        }
+        selectedApp.value = app
+        loadSelectedApp()
+    }
+
+    fun refresh() {
+        loadSelectedApp()
+    }
+
+    fun refreshIfReady() {
+        if (
+            selectedApp.value != null &&
+            privilegedServiceClient.state.value is
+                PrivilegedServiceState.Connected
+        ) {
+            loadSelectedApp()
+        }
+    }
+
+    fun requestModeChange(
+        operationName: String,
+        scope: AppOpScope,
+        originalMode: AppOpMode,
+        requestedMode: AppOpMode,
+    ) {
+        val app = selectedApp.value ?: return
+        if (originalMode == requestedMode) return
+        if (mutableModeChangeState.value is AppOpModeChangeUiState.Applying) return
+
+        mutableModeChangeState.value = AppOpModeChangeUiState.Confirming(
+            AppOpModeChangeRequest(
+                packageName = app.packageName,
+                operationName = operationName,
+                scope = scope,
+                originalMode = originalMode,
+                requestedMode = requestedMode,
+                affectedPackages = affectedPackages(app, scope),
+                runtimePermissionDenied = isRuntimePermissionDenied(
+                    packageName = app.packageName,
+                    operationName = operationName,
+                ),
+            ),
+        )
+    }
+
+    fun updateSearchQuery(query: String) {
+        mutableSearchQuery.value = query
+    }
+
+    fun confirmModeChange() {
+        val request =
+            (mutableModeChangeState.value as? AppOpModeChangeUiState.Confirming)
+                ?.request
+                ?: return
+        if (selectedApp.value?.packageName != request.packageName) return
+
+        mutableModeChangeState.value = AppOpModeChangeUiState.Applying(request)
+        modeChangeJob = viewModelScope.launch {
+            val app = selectedApp.value
+                ?.takeIf { it.packageName == request.packageName }
+                ?: return@launch
+            val operation = AppOpIdentifier(
+                stableName = request.operationName,
+                shellName = request.operationName,
+            )
+            var appliedScope = request.scope
+            var permissionFlagApplied = false
+            var restrictionBlocked = false
+            val outcome = repository.withWriteTransaction { transaction ->
+                DenyFallbackModeChangeExecutor {
+                        requestedMode ->
+                    val scopeOutcome = adaptiveScopeExecutor.execute(
+                        packageName = request.packageName,
+                        uid = app.uid,
+                        preferredScope = request.scope,
+                        requestedMode = requestedMode,
+                        readMode = { scope ->
+                            repository.readMode(
+                                packageName = request.packageName,
+                                operation = operation,
+                                scope = scope,
+                            )
+                        },
+                        revokedCompatRetry = RevokedCompatRetry(
+                            operationName = request.operationName,
+                        ) { permissionName ->
+                            transaction.applyRevokedCompat(
+                                packageName = request.packageName,
+                                uid = app.uid,
+                                operation = operation,
+                                permissionName = permissionName,
+                                requestedMode = requestedMode,
+                            )
+                        },
+                    ) { scope ->
+                        if (scope == request.scope) {
+                            transaction.changeMode(
+                                packageName = request.packageName,
+                                operation = operation,
+                                scope = scope,
+                                expectedOriginalMode = request.originalMode,
+                                requestedMode = requestedMode,
+                            )
+                        } else {
+                            transaction.applyMode(
+                                packageName = request.packageName,
+                                operation = operation,
+                                scope = scope,
+                                requestedMode = requestedMode,
+                            )
+                        }
+                    }
+                    permissionFlagApplied = scopeOutcome.permissionFlagApplied
+                    restrictionBlocked = scopeOutcome.restrictionBlocked
+                    appliedScope = scopeOutcome.appliedScope
+                    scopeOutcome.result
+                }.execute(request.requestedMode)
+            }
+            val result = outcome.result
+            val resolvedRequest = request.copy(
+                scope = appliedScope,
+                affectedPackages = affectedPackages(app, appliedScope),
+            )
+
+            updateDisplayedMode(resolvedRequest, result)
+            mutableModeChangeState.value = when (result) {
+                is AppOpModeChangeResult.Success -> {
+                    val settings = userSettingsRepository.settings.first()
+                    val shouldShowFlagNotice =
+                        permissionFlagApplied &&
+                            result.appliedMode == AppOpMode.IGNORE &&
+                            !settings.suppressPermissionFlagNotice
+                    val shouldShowFallbackNotice =
+                        outcome.denyFallbackAttempted &&
+                            !settings.suppressDenyFallbackNotice
+                    if (shouldShowFlagNotice) {
+                        AppOpModeChangeUiState.PermissionFlagApplied(
+                            request = resolvedRequest,
+                            denyFallbackAttempted =
+                                outcome.denyFallbackAttempted,
+                        )
+                    } else if (shouldShowFallbackNotice) {
+                        AppOpModeChangeUiState.DenyFallbackApplied(
+                            resolvedRequest,
+                        )
+                    } else {
+                        AppOpModeChangeUiState.Idle
+                    }
+                }
+
+                is AppOpModeChangeResult.Failure ->
+                    AppOpModeChangeUiState.Failure(
+                        request = resolvedRequest,
+                        result = result,
+                        denyFallbackAttempted =
+                            outcome.denyFallbackAttempted,
+                        runtimePermissionManaged = restrictionBlocked,
+                    )
+            }
+        }
+    }
+
+    fun dismissDenyFallbackNotice(dontShowAgain: Boolean) {
+        if (
+            mutableModeChangeState.value
+            !is AppOpModeChangeUiState.DenyFallbackApplied
+        ) {
+            return
+        }
+        mutableModeChangeState.value = AppOpModeChangeUiState.Idle
+        if (dontShowAgain) {
+            viewModelScope.launch {
+                userSettingsRepository
+                    .setDenyFallbackNoticeSuppressed(true)
+            }
+        }
+    }
+
+    fun dismissPermissionFlagNotice(dontShowAgain: Boolean) {
+        if (
+            mutableModeChangeState.value
+            !is AppOpModeChangeUiState.PermissionFlagApplied
+        ) {
+            return
+        }
+        mutableModeChangeState.value = AppOpModeChangeUiState.Idle
+        if (dontShowAgain) {
+            viewModelScope.launch {
+                userSettingsRepository
+                    .setPermissionFlagNoticeSuppressed(true)
+            }
+        }
+    }
+
+    fun requestForegroundAlternative() {
+        val failure =
+            mutableModeChangeState.value as?
+                AppOpModeChangeUiState.Failure
+                ?: return
+        if (
+            !ModeChangeAlternativePolicy.canTryForeground(
+                request = failure.request,
+                result = failure.result,
+            )
+        ) {
+            return
+        }
+        mutableModeChangeState.value = AppOpModeChangeUiState.Confirming(
+            failure.request.copy(requestedMode = AppOpMode.FOREGROUND),
+        )
+    }
+
+    fun dismissModeChange() {
+        if (mutableModeChangeState.value !is AppOpModeChangeUiState.Applying) {
+            mutableModeChangeState.value = AppOpModeChangeUiState.Idle
+        }
+    }
+
+    private fun packagesForUid(uid: Int): List<String> =
+        getApplication<Application>().packageManager
+            .getPackagesForUid(uid)
+            ?.toList()
+            .orEmpty()
+
+    private fun affectedPackages(
+        app: InstalledApp,
+        scope: AppOpScope,
+    ): List<String> =
+        when (scope) {
+            AppOpScope.PACKAGE -> listOf(app.packageName)
+            AppOpScope.UID ->
+                AppOpsNextApplication.get(getApplication())
+                    .packageManager
+                    .getPackagesForUid(app.uid)
+                    ?.toList()
+                    ?.sorted()
+                    ?.ifEmpty { listOf(app.packageName) }
+                    ?: listOf(app.packageName)
+        }
+
+    private fun isRuntimePermissionDenied(
+        packageName: String,
+        operationName: String,
+    ): Boolean {
+        val permission = AppOpRuntimePermissionCatalog.requiredPermission(
+            operationName,
+        ) ?: return false
+        return getApplication<Application>().packageManager.checkPermission(
+            permission,
+            packageName,
+        ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun updateDisplayedMode(
+        request: AppOpModeChangeRequest,
+        result: AppOpModeChangeResult,
+    ) {
+        val mode = when (result) {
+            is AppOpModeChangeResult.Success -> result.appliedMode
+            is AppOpModeChangeResult.Failure ->
+                when (result.restorationStatus) {
+                    AppOpsRestorationStatus.NOT_REQUIRED ->
+                        result.observedMode ?: result.originalMode
+
+                    AppOpsRestorationStatus.SUCCEEDED -> result.originalMode
+                    AppOpsRestorationStatus.FAILED -> null
+                }
+        } ?: return
+
+        val readyState = mutableUiState.value as? AppDetailUiState.Ready
+            ?: return
+        if (readyState.app.packageName != request.packageName) return
+
+        mutableUiState.value = readyState.copy(
+            snapshot = AppOpSnapshotUpdater.updateMode(
+                snapshot = readyState.snapshot,
+                operationName = request.operationName,
+                scope = request.scope,
+                mode = mode,
+            ),
+        )
+    }
+
+    private fun loadSelectedApp() {
+        loadJob?.cancel()
+        val app = selectedApp.value ?: run {
+            mutableUiState.value = AppDetailUiState.Idle
+            return
+        }
+        if (privilegedServiceClient.state.value !is PrivilegedServiceState.Connected) {
+            mutableUiState.value = AppDetailUiState.WaitingForBackend(app)
+            return
+        }
+
+        mutableUiState.value = AppDetailUiState.Loading(app)
+        loadJob = viewModelScope.launch {
+            mutableUiState.value = when (
+                val result = repository.loadPackageOps(
+                    packageName = app.packageName,
+                    uid = app.uid,
+                )
+            ) {
+                is PackageOpsLoadResult.Success -> AppDetailUiState.Ready(
+                    app = app,
+                    snapshot = result.snapshot,
+                )
+
+                is PackageOpsLoadResult.Failure -> AppDetailUiState.Failure(
+                    app = app,
+                    reason = result.reason,
+                )
+            }
+        }
+    }
+}

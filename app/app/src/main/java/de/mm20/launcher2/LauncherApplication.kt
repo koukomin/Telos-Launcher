@@ -102,6 +102,8 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         // The video player's own process needs none of the launcher
         if (ProcessInfo.init(this)) return
 
+        launch(Dispatchers.IO) { de.mm20.launcher2.ui.system.restoreSystemAppOps(this@LauncherApplication) }
+
         if (BuildConfig.BUILD_TYPE == "debug") initDebugMode()
 
         // Crash guard: blame a crash on the media app that was open, so that an app that keeps

@@ -126,7 +126,7 @@ fun SystemAppDetailsScreen(packageName: String) {
                         OutlinedButton(onClick = { showPolicy = true }) { Text(stringResource(R.string.preference_freeze_auto_category)) }
                         OutlinedButton(onClick = { backStack.add(FreezeSettingsRoute) }) { Text(stringResource(R.string.preference_screen_freeze)) }
                         OutlinedButton(onClick = { backStack.add(NetworkPackageFirewallRoute(packageName)) }) { Text(stringResource(R.string.netfw_title)) }
-                        AppOpsNextButton()
+                        AppOpsNextButton(packageName)
                     }
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         OutlinedButton(enabled = data.launch != null && !data.frozen, onClick = {

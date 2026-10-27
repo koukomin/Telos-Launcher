@@ -1,0 +1,36 @@
+name: Validate embedded AppOps
+on:
+  pull_request:
+    paths:
+      - 'libs/appops-next/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/system/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/network/**'
+      - '.github/workflows/validate-appops.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  embedded-appops:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: temurin
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: libs/appops-next/daemon/go.mod
+          cache-dependency-path: libs/appops-next/daemon/go.mod
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Native daemon protocol tests
+        working-directory: libs/appops-next/daemon
+        run: go test ./...
+      - name: Compile embedded suite and test AppOps transactions, parsers, templates and history
+        run: bash ./gradlew :libs:appops-next:testDebugUnitTest :app:ui:compileDefaultDebugKotlin --no-daemon --max-workers=1 -Dorg.gradle.parallel=false -Pkotlin.compiler.execution.strategy=in-process -Dorg.gradle.jvmargs=-Xmx3072m --stacktrace
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: embedded-appops-test-results
+          path: libs/appops-next/build/reports/tests/

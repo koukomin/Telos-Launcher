@@ -1,0 +1,230 @@
+package dev.izumi.appopsnext.appops.command
+
+object AppOpsCommands {
+    fun getOpStates(operationName: String): List<String> {
+        validateOperationName(operationName)
+        return listOf(DUMPSYS_BINARY, APP_OPS_SERVICE, OPERATION_OPTION, operationName)
+    }
+
+    /** Ask the service to omit access history instead of truncating a full dump. */
+    fun getWatchers(): List<String> =
+        listOf(DUMPSYS_BINARY, APP_OPS_SERVICE, "--watchers")
+
+    fun getPackageOps(packageName: String): List<String> {
+        validatePackageName(packageName)
+
+        return listOf(
+            COMMAND_BINARY,
+            APP_OPS_SERVICE,
+            GET_COMMAND,
+            packageName,
+        )
+    }
+
+    fun getPackageOp(
+        packageName: String,
+        operationName: String,
+    ): List<String> {
+        validatePackageName(packageName)
+        validateOperationName(operationName)
+
+        return listOf(
+            COMMAND_BINARY,
+            APP_OPS_SERVICE,
+            GET_COMMAND,
+            packageName,
+            operationName,
+        )
+    }
+
+    fun getUidOps(uid: Int): List<String> {
+        require(uid >= 0) { "Invalid Android UID" }
+
+        return listOf(
+            COMMAND_BINARY,
+            APP_OPS_SERVICE,
+            GET_COMMAND,
+            uid.toString(),
+        )
+    }
+
+    /**
+     * The process state of every UID that carries this package.
+     *
+     * Scoped to one package because the unfiltered dump runs to tens of
+     * thousands of lines, which is not something to run while events arrive.
+     */
+    fun getUidStates(packageName: String): List<String> {
+        validatePackageName(packageName)
+
+        return listOf(
+            DUMPSYS_BINARY,
+            APP_OPS_SERVICE,
+            PACKAGE_OPTION,
+            packageName,
+        )
+    }
+
+    fun getHistory(operationName: String): List<String> {
+        validateOperationName(operationName)
+
+        return listOf(
+            DUMPSYS_BINARY,
+            APP_OPS_SERVICE,
+            HISTORY_OPTION,
+            INCLUDE_DISCRETE_OPTION,
+            NO_DISCRETE_LIMIT,
+            OPERATION_OPTION,
+            operationName,
+        )
+    }
+
+    fun setPackageOpMode(
+        packageName: String,
+        operationName: String,
+        mode: AppOpMode,
+    ): List<String> {
+        validatePackageName(packageName)
+        validateOperationName(operationName)
+
+        return listOf(
+            COMMAND_BINARY,
+            APP_OPS_SERVICE,
+            SET_COMMAND,
+            packageName,
+            operationName,
+            mode.shellValue,
+        )
+    }
+
+    fun setUidOpMode(
+        packageName: String,
+        operationName: String,
+        mode: AppOpMode,
+    ): List<String> {
+        validatePackageName(packageName)
+        validateOperationName(operationName)
+
+        return listOf(
+            COMMAND_BINARY,
+            APP_OPS_SERVICE,
+            SET_COMMAND,
+            UID_OPTION,
+            packageName,
+            operationName,
+            mode.shellValue,
+        )
+    }
+
+    /** The package dump carries each user's runtime permission grants and flags. */
+    fun getPackagePermissions(packageName: String): List<String> {
+        validatePackageName(packageName)
+
+        return listOf(DUMPSYS_BINARY, PACKAGE_SERVICE, packageName)
+    }
+
+    /**
+     * Sets or clears `REVOKED_COMPAT`, which makes Android derive `ignore` for
+     * the permission's app op while the permission itself stays granted.
+     */
+    fun setRevokedCompat(
+        userId: Int,
+        packageName: String,
+        permissionName: String,
+        revoked: Boolean,
+    ): List<String> {
+        require(userId >= 0) { "Invalid Android user" }
+        validatePackageName(packageName)
+        require(PermissionNameValidator.isValid(permissionName)) {
+            "Invalid Android permission name"
+        }
+
+        return listOf(
+            COMMAND_BINARY,
+            PACKAGE_SERVICE,
+            if (revoked) SET_PERMISSION_FLAGS else CLEAR_PERMISSION_FLAGS,
+            USER_OPTION,
+            userId.toString(),
+            packageName,
+            permissionName,
+            REVOKED_COMPAT_FLAG,
+        )
+    }
+
+    private fun validatePackageName(packageName: String) {
+        require(PackageNameValidator.isValid(packageName)) {
+            "Invalid Android package name"
+        }
+    }
+
+    private fun validateOperationName(operationName: String) {
+        require(OperationNameValidator.isValid(operationName)) {
+            "Invalid AppOps operation name"
+        }
+    }
+
+    private const val COMMAND_BINARY = "/system/bin/cmd"
+    private const val DUMPSYS_BINARY = "/system/bin/dumpsys"
+    private const val APP_OPS_SERVICE = "appops"
+    private const val PACKAGE_SERVICE = "package"
+    private const val SET_PERMISSION_FLAGS = "set-permission-flags"
+    private const val CLEAR_PERMISSION_FLAGS = "clear-permission-flags"
+    private const val USER_OPTION = "--user"
+    private const val REVOKED_COMPAT_FLAG = "revoked-compat"
+    private const val GET_COMMAND = "get"
+    private const val SET_COMMAND = "set"
+    private const val UID_OPTION = "--uid"
+    private const val PACKAGE_OPTION = "--package"
+    private const val HISTORY_OPTION = "--history"
+    private const val INCLUDE_DISCRETE_OPTION = "--include-discrete"
+    private const val NO_DISCRETE_LIMIT = "0"
+    private const val OPERATION_OPTION = "--op"
+}
+
+enum class AppOpMode(
+    val shellValue: String,
+) {
+    ALLOW("allow"),
+    IGNORE("ignore"),
+    DENY("deny"),
+    DEFAULT("default"),
+    FOREGROUND("foreground"),
+    ;
+
+    companion object {
+        fun fromShellValue(value: String): AppOpMode? =
+            entries.firstOrNull { it.shellValue == value }
+    }
+}
+
+internal object PackageNameValidator {
+    private val packageNamePattern =
+        Regex("""[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)*""")
+
+    fun isValid(value: String): Boolean =
+        value.length in 1..MAX_PACKAGE_NAME_LENGTH &&
+            packageNamePattern.matches(value)
+
+    private const val MAX_PACKAGE_NAME_LENGTH = 255
+}
+
+internal object PermissionNameValidator {
+    // Only platform runtime permissions are backed by app ops.
+    private val permissionNamePattern = Regex("""android\.permission\.[A-Z0-9_]+""")
+
+    fun isValid(value: String): Boolean =
+        value.length <= MAX_PERMISSION_NAME_LENGTH &&
+            permissionNamePattern.matches(value)
+
+    private const val MAX_PERMISSION_NAME_LENGTH = 255
+}
+
+internal object OperationNameValidator {
+    private val operationNamePattern = Regex("""[A-Za-z0-9_.:-]+""")
+
+    fun isValid(value: String): Boolean =
+        value.length in 1..MAX_OPERATION_NAME_LENGTH &&
+            operationNamePattern.matches(value)
+
+    private const val MAX_OPERATION_NAME_LENGTH = 128
+}

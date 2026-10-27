@@ -90,6 +90,7 @@ android {
 
 
 dependencies {
+    implementation(project(":libs:appops-next"))
     // CameraX
     implementation("androidx.camera:camera-core:1.6.2")
     implementation("androidx.camera:camera-camera2:1.6.2")

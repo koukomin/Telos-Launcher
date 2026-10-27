@@ -27,3 +27,7 @@ DNS queries off.
 | Battery optimisation | Opens the Android list, in case Android stops Telos Network in the background |
 
 Network settings apply the next time Telos Network starts; **Restart now** applies them at once.
+
+## App rules from a log entry
+
+Tap an installed application's icon in connection logs, DNS logs or app totals to open that package's full firewall editor. The editor opens expanded, including scoped IP/domain rules and temporary allowances (15 minutes, one hour or eight hours). Tapping the surrounding connection/DNS row retains its detail dialog and destination actions. Unknown/system entries without a resolvable package retain log details without an app-rule shortcut.

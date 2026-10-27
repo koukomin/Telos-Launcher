@@ -378,6 +378,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
 
-## AppOpsNext companion integration
+## AppOpsNext embedded component
 
-[AppOpsNext](https://github.com/1zumiii/AppOpsNext), by 1zumiii, GPL-3.0. Telos provides a launch/install entry to the upstream application; no upstream AppOpsNext source, binary or artwork is redistributed in the Telos APK. The installed companion retains its own permissions, storage, updates and feature compatibility.
+[AppOpsNext](https://github.com/1zumiii/AppOpsNext), by 1zumiii, GPL-3.0. The complete upstream application source, tests and native daemon are adapted under `libs/appops-next`; the exact source commit and version are recorded in its `UPSTREAM.md`, with the full GPL license retained. The source is embedded in Telos rather than depending on an installed companion. Its Phosphor icon license is retained in `src/main/assets/licenses/phosphor-icons.txt`. Telos-specific changes include host-owned lifecycle/storage, internal per-package navigation, shared Shizuku UserService process transport and inherited Telos typography. The native ARM64 daemon is built from source; other ABIs retain the UserService backend. Integration validation and additional locale coverage are in progress; this notice is not a device-validation claim.

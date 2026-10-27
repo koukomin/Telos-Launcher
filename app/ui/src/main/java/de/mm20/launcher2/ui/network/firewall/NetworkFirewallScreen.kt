@@ -34,6 +34,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -115,6 +116,12 @@ fun NetworkFirewallScreen(packageName: String? = null) {
     var menu by remember { mutableStateOf(false) }
     var confirmReset by remember { mutableStateOf(false) }
     var pendingBulk by remember { mutableStateOf<Int?>(null) }
+
+    LaunchedEffect(packageName, apps) {
+        if (packageName != null) {
+            apps.firstOrNull { packageName in it.packages }?.let { expanded = it.appId }
+        }
+    }
 
     // the usage access permission is granted in the Android settings: look again when coming back
     val lifecycle = LocalLifecycleOwner.current.lifecycle
@@ -289,7 +296,7 @@ fun NetworkFirewallScreen(packageName: String? = null) {
                 newAppBlocked = newBlocked,
                 backgroundDetection = detection,
                 expanded = expanded == app.appId,
-                onToggleExpanded = { expanded = if (expanded == app.appId) null else app.appId },
+                onToggleExpanded = { if (packageName == null) backStack.add(NetworkPackageFirewallRoute(app.packageName)) else expanded = if (expanded == app.appId) null else app.appId },
                 onRule = { next -> scope.launch {
                     fw.setAppRule(next)
                     if (next.blockLan && !rule.blockLan && !netConfig.routeLan) {
@@ -377,10 +384,16 @@ private fun AppRuleRow(
             icon = { NetAppIcon(app.packageName) },
             onClick = onToggleExpanded,
             controls = {
-                Switch(checked = rule.blockAll, onCheckedChange = { onRule(rule.copy(blockAll = it)) })
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    val editable = !rule.blockAll && !rule.bypassFirewall && !rule.excludeFromVpn
+                    NetworkRuleToggle(R.string.netfw_t_wifi, !rule.blockWifi, editable,
+                        IconsNetworkFirewallScreen.wifi_24px, IconsNetworkFirewallScreen.wifi_off_24px) { onRule(rule.copy(blockWifi = !it)) }
+                    NetworkRuleToggle(R.string.netfw_t_mobile, !rule.blockMobile, editable,
+                        IconsNetworkFirewallScreen.signal_cellular_alt_24px, IconsNetworkFirewallScreen.signal_cellular_off_24px) { onRule(rule.copy(blockMobile = !it)) }
+                }
             },
         )
-        FlowRow(Modifier.fillMaxWidth().padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        if (expanded) FlowRow(Modifier.fillMaxWidth().padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             @Composable fun AllowChip(label: Int, blocked: Boolean, change: () -> Unit, enabled: Boolean = !rule.blockAll && !rule.bypassFirewall && !rule.excludeFromVpn) {
                 FilterChip(selected = !blocked, onClick = change, enabled = enabled, label = { Text(stringResource(label)) })
             }
@@ -393,6 +406,8 @@ private fun AppRuleRow(
         }
         AnimatedVisibility(visible = expanded) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                SwitchPreference(title = stringResource(R.string.netfw_blocked), value = rule.blockAll,
+                    onValueChanged = { onRule(rule.copy(blockAll = it)) })
                 if (newAppBlocked) {
                     Preference(
                         title = stringResource(R.string.netfw_new_app_allow),

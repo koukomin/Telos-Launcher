@@ -1,0 +1,42 @@
+package dev.izumi.appopsnext.settings
+
+object UserSettingsDefaults {
+    const val HIDE_SYSTEM_APPS = true
+    const val SUPPRESS_DENY_FALLBACK_NOTICE = false
+    const val SUPPRESS_PERMISSION_FLAG_NOTICE = false
+    const val AUTO_APPLY_NEW_APP_TEMPLATE = false
+    const val BACKGROUND_MONITOR = false
+    const val MONITOR_HEADS_UP = false
+    const val SUPPRESS_BATTERY_NOTICE = false
+    const val SHOW_ALL_MONITOR_OPERATIONS = false
+    const val SUPPRESS_ALL_OPERATIONS_WARNING = false
+    const val SAVE_INDIVIDUAL_HISTORY = false
+}
+
+data class UserSettings(
+    val hideSystemApps: Boolean = UserSettingsDefaults.HIDE_SYSTEM_APPS,
+    val suppressDenyFallbackNotice: Boolean =
+        UserSettingsDefaults.SUPPRESS_DENY_FALLBACK_NOTICE,
+    val suppressPermissionFlagNotice: Boolean =
+        UserSettingsDefaults.SUPPRESS_PERMISSION_FLAG_NOTICE,
+    val autoApplyNewAppTemplate: Boolean =
+        UserSettingsDefaults.AUTO_APPLY_NEW_APP_TEMPLATE,
+    val backgroundMonitor: Boolean =
+        UserSettingsDefaults.BACKGROUND_MONITOR,
+    val monitorHeadsUp: Boolean =
+        UserSettingsDefaults.MONITOR_HEADS_UP,
+    val suppressBatteryNotice: Boolean =
+        UserSettingsDefaults.SUPPRESS_BATTERY_NOTICE,
+    val showAllMonitorOperations: Boolean =
+        UserSettingsDefaults.SHOW_ALL_MONITOR_OPERATIONS,
+    val suppressAllOperationsWarning: Boolean =
+        UserSettingsDefaults.SUPPRESS_ALL_OPERATIONS_WARNING,
+    /** Keeps individual history records past the system's seven days. */
+    val saveIndividualHistory: Boolean =
+        UserSettingsDefaults.SAVE_INDIVIDUAL_HISTORY,
+    /**
+     * Operations whose individual records are saved. Null until first chosen,
+     * which copies the history page's selection once.
+     */
+    val savedHistoryOperations: Set<String>? = null,
+)
