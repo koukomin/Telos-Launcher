@@ -410,8 +410,8 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     )
                 }
                 if (contact != null && contact.id >= 0) {
-                    IconButton(onClick = { confirmDelete = true }, enabled = ui.recents.isNotEmpty()) {
-                        Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.comms_clear_history))
+                    IconButton(onClick = { deleteContact = contact }) {
+                        Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.hc_delete))
                     }
                 }
                 var more by remember { mutableStateOf(false) }
@@ -421,9 +421,9 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     }
                     androidx.compose.material3.DropdownMenu(expanded = more, onDismissRequest = { more = false }) {
                         androidx.compose.material3.DropdownMenuItem(
-                            text = { Text(stringResource(R.string.hc_delete)) },
-                            enabled = contact != null && contact.id >= 0,
-                            onClick = { more = false; deleteContact = contact },
+                            text = { Text(stringResource(R.string.comms_clear_history)) },
+                            enabled = contact != null && ui.recents.isNotEmpty(),
+                            onClick = { more = false; confirmDelete = true },
                         )
                     }
                 }
