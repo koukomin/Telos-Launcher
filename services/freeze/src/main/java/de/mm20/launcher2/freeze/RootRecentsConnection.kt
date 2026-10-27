@@ -29,6 +29,10 @@ internal class RootRecentsConnection(context: Context, userId: Int, onEvent: (In
                     line.startsWith("S ") -> replies.offer(line.substring(2))
                 }
             } }
+        } catch (_: java.io.IOException) {
+            // Permission loss/process shutdown closes the pipe; never crash the launcher reader thread.
+        } catch (_: RuntimeException) {
+            // Malformed or OEM-specific callback data invalidates this observation session.
         } finally { alive = false; ready.countDown(); replies.offer("null") }
     }, "TelosRootRecents").apply { isDaemon = true; start() }
     init {
