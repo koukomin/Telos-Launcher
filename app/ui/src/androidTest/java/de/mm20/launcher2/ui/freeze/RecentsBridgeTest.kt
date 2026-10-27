@@ -14,6 +14,9 @@ import java.util.concurrent.TimeUnit
 class RecentsBridgeTest {
     @Test(timeout = 25000) fun privilegedHelperRegistersAndReturnsACompleteSnapshot() {
         assumeTrue(Build.VERSION.SDK_INT >= 31)
+        val scenario = androidx.test.core.app.ActivityScenario.launch(androidx.activity.ComponentActivity::class.java)
+        var taskId = -1
+        scenario.onActivity { taskId = it.taskId }
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val apk = instrumentation.targetContext.applicationInfo.sourceDir.replace("'", "'\\''")
         val user = android.os.Process.myUid() / 100000
@@ -36,14 +39,27 @@ class RecentsBridgeTest {
             output.write("snapshot\n".toByteArray()); output.flush()
             val tasks = JSONArray(await("S ").removePrefix("S "))
             assertTrue(tasks.length() < 256)
+            assertTrue("Snapshot must include the actual test task", (0 until tasks.length()).any { tasks.getJSONObject(it).getInt("id") == taskId })
             repeat(tasks.length()) { index ->
                 val task = tasks.getJSONObject(index)
                 assertTrue(task.getInt("id") >= 0)
                 assertTrue(task.getString("package").isNotBlank())
                 assertTrue(task.getInt("user") >= 0)
             }
+            scenario.onActivity { it.finishAndRemoveTask() }
+            await("R $taskId")
+            var absent = false
+            repeat(20) {
+                if (!absent) {
+                    output.write("snapshot\n".toByteArray()); output.flush()
+                    val after = JSONArray(await("S ").removePrefix("S "))
+                    absent = (0 until after.length()).none { after.getJSONObject(it).getInt("id") == taskId }
+                    if (!absent) Thread.sleep(100)
+                }
+            }
+            assertTrue("A fresh snapshot must prove final task removal", absent)
         } finally {
-            output.close(); input.close(); reader.interrupt()
+            output.close(); input.close(); reader.interrupt(); scenario.close()
         }
     }
 }
