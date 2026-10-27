@@ -342,8 +342,7 @@ private fun DenyFallbackAppliedDialog(
                     )
                     Text(
                         text = stringResource(
-                            R.string
-                                .app_detail_mode_deny_fallback_dont_show,
+                            R.string.appopsnext_app_detail_mode_deny_fallback_dont_show,
                         ),
                         style = MaterialTheme.typography.bodyMedium,
                     )
@@ -407,8 +406,7 @@ private fun PermissionFlagAppliedDialog(
                     )
                     Text(
                         text = stringResource(
-                            R.string
-                                .app_detail_mode_permission_flag_dont_show,
+                            R.string.appopsnext_app_detail_mode_permission_flag_dont_show,
                         ),
                         style = MaterialTheme.typography.bodyMedium,
                     )
@@ -503,8 +501,7 @@ private fun ModeChangeFailureDialog(
                 if (canTryForeground) {
                     Text(
                         text = stringResource(
-                            R.string
-                                .app_detail_mode_allow_foreground_hint,
+                            R.string.appopsnext_app_detail_mode_allow_foreground_hint,
                         ),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.bodySmall,
@@ -531,8 +528,7 @@ private fun ModeChangeFailureDialog(
                 Text(
                     text = stringResource(
                         if (canTryForeground) {
-                            R.string
-                                .app_detail_mode_try_foreground
+                            R.string.appopsnext_app_detail_mode_try_foreground
                         } else {
                             R.string.appopsnext_action_dismiss
                         },

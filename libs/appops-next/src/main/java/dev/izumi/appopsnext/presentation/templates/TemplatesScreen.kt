@@ -181,8 +181,7 @@ fun TemplatesScreen(
                                     R.drawable.appopsnext_ic_ph_info,
                                 ),
                                 contentDescription = stringResource(
-                                    R.string
-                                        .template_new_app_policy_information,
+                                    R.string.appopsnext_template_new_app_policy_information,
                                 ),
                             )
                         }
