@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Controlla UAD-NG a ogni apertura del gestore blocco. Attivo per impostazione predefinita.</string>
     <string name="freeze_hub_update_failed">Aggiornamento non riuscito. Ultimo database valido mantenuto.</string>
     <string name="freeze_hub_recents">Blocca dopo la rimozione dai recenti</string>
-    <string name="freeze_hub_recents_help">Blocca di nuovo le app gestite o sbloccate da Telos alla rimozione dell’ultima attività. Richiede Shizuku e rispetta le esclusioni d’uso. Disattivato per impostazione predefinita.</string>
-    <string name="freeze_hub_recents_unavailable">Rilevamento recenti non disponibile. Avvia Shizuku e concedi il permesso.</string>
+    <string name="freeze_hub_recents_help">Blocca di nuovo le app gestite o sbloccate da Telos alla rimozione dell’ultima attività. Richiede Shizuku / Root e rispetta le esclusioni d’uso. Disattivato per impostazione predefinita.</string>
+    <string name="freeze_hub_recents_unavailable">Rilevamento recenti non disponibile. Avvia Shizuku / Root e concedi il permesso.</string>
 
     
     

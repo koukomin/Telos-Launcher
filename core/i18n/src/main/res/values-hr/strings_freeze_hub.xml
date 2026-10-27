@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Provjerava UAD-NG pri svakom otvaranju upravitelja zamrzavanja. Zadano uključeno.</string>
     <string name="freeze_hub_update_failed">Ažuriranje nije uspjelo. Zadržana je zadnja valjana baza.</string>
     <string name="freeze_hub_recents">Zamrzni nakon uklanjanja iz nedavnih</string>
-    <string name="freeze_hub_recents_help">Ponovno zamrzava upravljane aplikacije ili one koje je Telos odmrznuo nakon uklanjanja zadnjeg zadatka. Zahtijeva Shizuku i poštuje iznimke uporabe. Zadano isključeno.</string>
-    <string name="freeze_hub_recents_unavailable">Otkrivanje nedavnih nije dostupno. Pokrenite Shizuku i dajte dopuštenje.</string>
+    <string name="freeze_hub_recents_help">Ponovno zamrzava upravljane aplikacije ili one koje je Telos odmrznuo nakon uklanjanja zadnjeg zadatka. Zahtijeva Shizuku / Root i poštuje iznimke uporabe. Zadano isključeno.</string>
+    <string name="freeze_hub_recents_unavailable">Otkrivanje nedavnih nije dostupno. Pokrenite Shizuku / Root i dajte dopuštenje.</string>
 
     
     

@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Comprova UAD-NG cada vegada que s’obre el gestor de congelació. Activat per defecte.</string>
     <string name="freeze_hub_update_failed">Ha fallat l’actualització. Es conserva l’última base vàlida.</string>
     <string name="freeze_hub_recents">Congela en treure de les recents</string>
-    <string name="freeze_hub_recents_help">Torna a congelar aplicacions gestionades o descongelades per Telos en treure l’última tasca. Requereix Shizuku i respecta les exclusions d’ús. Desactivat per defecte.</string>
-    <string name="freeze_hub_recents_unavailable">Detecció de recents no disponible. Inicia Shizuku i concedeix permís.</string>
+    <string name="freeze_hub_recents_help">Torna a congelar aplicacions gestionades o descongelades per Telos en treure l’última tasca. Requereix Shizuku / Root i respecta les exclusions d’ús. Desactivat per defecte.</string>
+    <string name="freeze_hub_recents_unavailable">Detecció de recents no disponible. Inicia Shizuku / Root i concedeix permís.</string>
 
     
     

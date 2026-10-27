@@ -176,10 +176,13 @@ The bottom navigation includes Messages. To make Telos the default SMS app, use 
 
 Calls show a large contact photograph without cropping the original; initials appear if no accessible photo is available. Answer/Reject and Hang up remain separate from scrolling controls, including in landscape. The small call notification returns when you leave the full-screen call view.
 
-Hide Contact protects every listed number, including +30, 0030 and Greek national forms. Contacts hidden by older releases also protect the remaining numbers in history. Existing hide-from-history and authenticated-unlock settings still apply. The toolbar trash clears call history; use the labelled overflow action to delete the contact itself.
+Hide Contact protects every listed number, including +30, 0030 and Greek national forms. Contacts hidden by older releases also protect the remaining numbers in history. Existing hide-from-history and authenticated-unlock settings still apply. The toolbar trash beside overflow deletes the contact; use the labelled overflow action to clear its call history.
 
 Online caller identification is optional: enable it in Phone settings → caller identification/privacy, or in an unknown number’s details. It currently uses Greek community pages from white-pages.gr; a result is a suggestion, not a verified identity, and links to its source. No result is guaranteed for an unlisted number or an unavailable provider. Saved and hidden callers are excluded from automatic online lookup.
 
 Deleting a contact requests Android write permission when needed, keeps the confirmation open if deletion fails, and returns from the deleted contact on success. Read-only contacts may still require changes in their source account.
 
 After answer, the background call notification keeps a Hang up action without reopening the full-screen call screen. It is removed when the live call ends or the phone service disconnects; delayed caller-info updates cannot restore an ended call’s notification.
+
+
+Missed-call popups resolve the current saved contact name even when a short ringing call ends before the in-call lookup completes. Recordings display saved names above their numbers and support name search; legacy filenames that stripped the international plus sign match only complete international numbers. The contact-delete trash action sits immediately beside the overflow menu and uses the existing permission-aware confirmation. Clear history is a separate labeled overflow action, available when history exists.

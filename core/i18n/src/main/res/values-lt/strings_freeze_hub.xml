@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Tikrina UAD-NG kiekvieną kartą atidarius užšaldymo tvarkyklę. Pagal numatymą įjungta.</string>
     <string name="freeze_hub_update_failed">Atnaujinti nepavyko. Išsaugota paskutinė tinkama duomenų bazė.</string>
     <string name="freeze_hub_recents">Užšaldyti pašalinus iš naujausių</string>
-    <string name="freeze_hub_recents_help">Iš naujo užšaldo valdomas ar Telos atšildytas programėles pašalinus paskutinę užduotį. Reikia Shizuku, naudojimo išimtys galioja. Pagal numatymą išjungta.</string>
-    <string name="freeze_hub_recents_unavailable">Naujausių aptikimas neprieinamas. Paleiskite Shizuku ir suteikite leidimą.</string>
+    <string name="freeze_hub_recents_help">Iš naujo užšaldo valdomas ar Telos atšildytas programėles pašalinus paskutinę užduotį. Reikia Shizuku / Root, naudojimo išimtys galioja. Pagal numatymą išjungta.</string>
+    <string name="freeze_hub_recents_unavailable">Naujausių aptikimas neprieinamas. Paleiskite Shizuku / Root ir suteikite leidimą.</string>
 
     
     

@@ -33,6 +33,7 @@ class RecentsFreezeMonitor internal constructor(
     private val context: Context,
     private val settings: FreezeSettings,
     private val autoFreeze: AutoFreezeController,
+    private val freezeManager: FreezeManager,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val _connected = MutableStateFlow(false)
@@ -45,6 +46,7 @@ class RecentsFreezeMonitor internal constructor(
         if (events.trySend(signal).isFailure) overflowed.set(true)
     }
     private val known = linkedMapOf<Int, RecentsTask>()
+    private var root: RootRecentsConnection? = null
     private var service: Any? = null
     private var listener: Any? = null
     private var binder: IBinder? = null
@@ -55,11 +57,16 @@ class RecentsFreezeMonitor internal constructor(
             settings.freezeOnRecentsRemoval.collectLatest { enabled ->
                 if (!enabled || Build.VERSION.SDK_INT < 29) { disconnect(); return@collectLatest }
                 try {
+                    freezeManager.refreshBackendState()
                     while (isActive) {
-                        if (!runCatching { Shizuku.pingBinder() &&
-                            Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED }.getOrDefault(false)) {
-                            disconnect()
-                        } else if (!_connected.value) connect()
+                        val shizukuReady = runCatching { Shizuku.pingBinder() &&
+                            Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED }.getOrDefault(false)
+                        if (_connected.value && root?.alive == false) disconnect()
+                        if (_connected.value && root == null && !shizukuReady) disconnect()
+                        if (!_connected.value) {
+                            if (shizukuReady) connect()
+                            if (!_connected.value && freezeManager.activeBackend.value == FreezeBackendType.Root) connectRoot()
+                        }
                         if (overflowed.getAndSet(false)) disconnect()
                         if (_connected.value) {
                             val event = withTimeoutOrNull(5000) { events.receive() }
@@ -99,7 +106,7 @@ class RecentsFreezeMonitor internal constructor(
                         removed -> offer(RecentsSignal(data.readInt()))
                         created -> offer(RecentsSignal(REFRESH))
                         removing -> {
-                            val info = data.readTypedObject(ActivityManager.RunningTaskInfo.CREATOR)
+                            val info = if (data.readInt() != 0) ActivityManager.RunningTaskInfo.CREATOR.createFromParcel(data) else null
                             val pkg = info?.baseIntent?.component?.packageName ?: info?.baseActivity?.packageName
                             if (info != null && pkg != null) offer(RecentsSignal(info.taskId, RecentsTask(info.taskId, pkg,
                                 runCatching { info.javaClass.getField("userId").getInt(info) }.getOrDefault(-1))))
@@ -131,7 +138,22 @@ class RecentsFreezeMonitor internal constructor(
         }
     }
 
+    private fun connectRoot() {
+        try {
+            val connection = RootRecentsConnection(context, userId) { id, task -> offer(RecentsSignal(id, task)) }
+            root = connection
+            check(connection.awaitReady()) { "Root task listener unavailable" }
+            val initial = connection.snapshot() ?: error("Root task snapshot unavailable")
+            known.clear(); initial.forEach { known[it.id] = it }
+            _connected.value = true
+        } catch (error: Exception) {
+            android.util.Log.w("RecentsFreeze", "Root task removal detection unavailable", error)
+            disconnect()
+        }
+    }
+
     private fun disconnect() {
+        root?.close(); root = null
         val api = service
         val callback = listener
         if (api != null && callback != null) runCatching {
@@ -147,6 +169,7 @@ class RecentsFreezeMonitor internal constructor(
 
     private fun snapshot(): List<RecentsTask>? = runCatching {
         if (Build.VERSION.SDK_INT < 29) return null
+        root?.let { return it.snapshot() }
         val api = service ?: return null
         val slice = HiddenApiBypass.invoke(api.javaClass, api, "getRecentTasks", 256, 0, userId) ?: return null
         val tasks = slice.javaClass.getMethod("getList").invoke(slice) as? List<*> ?: return null

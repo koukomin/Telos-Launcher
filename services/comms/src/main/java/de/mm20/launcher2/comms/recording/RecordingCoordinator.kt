@@ -180,15 +180,10 @@ object RecordingCoordinator : KoinComponent {
 
     private fun runShizuku(command: Array<String>): Boolean {
         return try {
-            val method = Shizuku::class.java.getDeclaredMethod(
-                "newProcess",
-                Array<String>::class.java,
-                Array<String>::class.java,
-                String::class.java,
-            )
-            method.isAccessible = true
-            val process = method.invoke(null, command, null, null) ?: return false
-            (process::class.java.getMethod("waitFor").invoke(process) as Int) == 0
+
+            val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(command)
+            try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0 }
+            finally { process.destroy() }
         } catch (e: Exception) {
             Log.w(TAG, "Shizuku appops failed", e)
             false

@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Jiċċekkja UAD-NG kull darba li tiftaħ il-maniġer tal-iffriżar. Attiv awtomatikament.</string>
     <string name="freeze_hub_update_failed">L-aġġornament falla. Tinżamm l-aħħar bażi valida.</string>
     <string name="freeze_hub_recents">Iffriża wara t-tneħħija mir-reċenti</string>
-    <string name="freeze_hub_recents_help">Jerġa’ jiffriża apps ġestiti jew imneħħija mill-iffriżar minn Telos wara t-tneħħija tal-aħħar kompitu. Jeħtieġ Shizuku u josserva l-eċċezzjonijiet tal-użu. Mitfi awtomatikament.</string>
-    <string name="freeze_hub_recents_unavailable">Is-sejbien tar-reċenti mhux disponibbli. Ibda Shizuku u agħti permess.</string>
+    <string name="freeze_hub_recents_help">Jerġa’ jiffriża apps ġestiti jew imneħħija mill-iffriżar minn Telos wara t-tneħħija tal-aħħar kompitu. Jeħtieġ Shizuku / Root u josserva l-eċċezzjonijiet tal-użu. Mitfi awtomatikament.</string>
+    <string name="freeze_hub_recents_unavailable">Is-sejbien tar-reċenti mhux disponibbli. Ibda Shizuku / Root u agħti permess.</string>
 
     
     

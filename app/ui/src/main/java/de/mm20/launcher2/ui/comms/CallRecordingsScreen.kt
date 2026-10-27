@@ -82,10 +82,24 @@ fun CallRecordingsList(
         kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { RecordingCrypto.clearSharedCopies(context) }
         files = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { CallAudioRecorder.list(context) }
     }
+    val directory: de.mm20.launcher2.comms.repository.ContactDirectoryRepository = org.koin.compose.koinInject()
+    val contacts by remember(directory) { directory.observeContacts() }.collectAsStateWithLifecycle(emptyList())
+    val names by androidx.compose.runtime.produceState(emptyMap<String, String?>(), files, contacts) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+            files.associate { rec ->
+                rec.file.absolutePath to contacts.firstOrNull { person -> person.phoneNumbers.any {
+                    de.mm20.launcher2.comms.recording.recordingNumberMatches(it, rec.number)
+                } }?.displayName?.takeIf { it.isNotBlank() }
+            }
+        }
+    }
     var recQuery by remember { mutableStateOf("") }
     val query = searchQuery ?: recQuery
-    val shownFiles = de.mm20.launcher2.comms.search.TelosSearch.filter(files, query) {
-        listOf(it.number, SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault()).format(Date(it.file.lastModified())))
+    val dateFormat = remember { SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault()) }
+    val shownFiles = remember(files, query, names) {
+        de.mm20.launcher2.comms.search.TelosSearch.filter(files, query) {
+            listOf(it.number, names[it.file.absolutePath].orEmpty(), dateFormat.format(Date(it.modifiedAtMillis)))
+        }
     }
     Column(
         Modifier
@@ -101,23 +115,28 @@ fun CallRecordingsList(
             Text(stringResource(R.string.hc_no_recordings_yet), modifier = Modifier.padding(16.dp))
         } else {
             shownFiles.forEach { rec ->
-                RecordingRow(rec, onChanged = reload)
+                RecordingRow(rec, names[rec.file.absolutePath], onChanged = reload)
             }
         }
     }
 }
 
 @Composable
-private fun RecordingRow(rec: CallRecordingFile, onChanged: () -> Unit) {
+private fun RecordingRow(rec: CallRecordingFile, contactName: String?, onChanged: () -> Unit) {
     val context = LocalContext.current
     val scope = androidx.compose.runtime.rememberCoroutineScope()
     var confirmDelete by remember { mutableStateOf(false) }
-    val whenStr = SimpleDateFormat("d MMM HH:mm", Locale.getDefault()).format(Date(rec.file.lastModified()))
+    val whenStr = remember(rec.file) { SimpleDateFormat("d MMM HH:mm", Locale.getDefault()).format(Date(rec.modifiedAtMillis)) }
     // the recorder names a recording without a number "Unknown"
-    val title = if (rec.number == "Unknown") stringResource(R.string.widget_name_unknown) else rec.number
+    val title = contactName ?: if (rec.number == "Unknown") stringResource(R.string.widget_name_unknown) else rec.number
     ListItem(
         headlineContent = { Text(title) },
-        supportingContent = { Text("$whenStr · ${rec.file.length() / 1024} KB") },
+        supportingContent = {
+            Column {
+                if (contactName != null) Text(rec.number)
+                Text(whenStr)
+            }
+        },
         modifier = Modifier
             .fillMaxWidth()
             .clickable {

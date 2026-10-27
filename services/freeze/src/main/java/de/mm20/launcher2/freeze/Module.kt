@@ -6,7 +6,7 @@ import org.koin.dsl.module
 val freezeModule = module {
     single { BloatDescriptions(androidContext()) }
     single { FreezeManager(androidContext(), get(), get(), get()) }
-    single(createdAtStart = true) { RecentsFreezeMonitor(androidContext(), get(), get()) }
+    single(createdAtStart = true) { RecentsFreezeMonitor(androidContext(), get(), get(), get()) }
     single { FreezeProfileManager(get(), get()) }
     single { AppUsageStatsProvider(androidContext(), get()) }
     single { FreezeExclusionChecker(androidContext(), get(), get(), get(), get()) }

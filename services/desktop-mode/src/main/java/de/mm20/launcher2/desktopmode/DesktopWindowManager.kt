@@ -25,11 +25,10 @@ class DesktopWindowManager {
         }
         try {
             val command = "cmd activity task resize $taskId ${bounds.left} ${bounds.top} ${bounds.right} ${bounds.bottom}"
-            val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
-            method.isAccessible = true
-            val process = method.invoke(null, arrayOf("sh", "-c", command), null, null)
-            val waitForMethod = process::class.java.getMethod("waitFor")
-            waitForMethod.invoke(process) == 0
+
+            val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(arrayOf("sh", "-c", command))
+            try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0 }
+            finally { process.destroy() }
         } catch (e: Exception) {
             Log.e("DesktopWindowManager", "Failed to resize task $taskId", e)
             false
@@ -46,11 +45,10 @@ class DesktopWindowManager {
             // On recent Android versions, 'am task rm <taskId>' might remove the task.
             // Using 'cmd activity remove-task <taskId>' is more reliable.
             val command = "cmd activity remove-task $taskId"
-            val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
-            method.isAccessible = true
-            val process = method.invoke(null, arrayOf("sh", "-c", command), null, null)
-            val waitForMethod = process::class.java.getMethod("waitFor")
-            waitForMethod.invoke(process) == 0
+
+            val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(arrayOf("sh", "-c", command))
+            try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0 }
+            finally { process.destroy() }
         } catch (e: Exception) {
             Log.e("DesktopWindowManager", "Failed to close task $taskId", e)
             false

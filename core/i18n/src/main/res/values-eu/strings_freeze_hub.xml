@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Izozte-kudeatzailea irekitzean UAD-NG eguneraketak egiaztatzen ditu. Berez gaituta.</string>
     <string name="freeze_hub_update_failed">Eguneratzeak huts egin du. Azken baliozko datu-basea mantenduko da.</string>
     <string name="freeze_hub_recents">Izoztu azkenetatik kendu ondoren</string>
-    <string name="freeze_hub_recents_help">Kudeatutako edo Telosek desizoztutako aplikazioak berriz izozten ditu azken zeregina kentzean. Shizuku behar du eta erabilera-salbuespenak errespetatzen ditu. Berez itzalita.</string>
-    <string name="freeze_hub_recents_unavailable">Azken aplikazioen hautematea ez dago erabilgarri. Abiarazi Shizuku eta eman baimena.</string>
+    <string name="freeze_hub_recents_help">Kudeatutako edo Telosek desizoztutako aplikazioak berriz izozten ditu azken zeregina kentzean. Shizuku / Root behar du eta erabilera-salbuespenak errespetatzen ditu. Berez itzalita.</string>
+    <string name="freeze_hub_recents_unavailable">Azken aplikazioen hautematea ez dago erabilgarri. Abiarazi Shizuku / Root eta eman baimena.</string>
 
     
     

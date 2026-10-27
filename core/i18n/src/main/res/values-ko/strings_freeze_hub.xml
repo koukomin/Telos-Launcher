@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">동결 관리자를 열 때마다 UAD-NG 업데이트를 확인합니다. 기본값은 켜짐입니다.</string>
     <string name="freeze_hub_update_failed">업데이트 실패. 마지막 유효한 데이터베이스를 유지합니다.</string>
     <string name="freeze_hub_recents">최근 앱에서 제거한 후 동결</string>
-    <string name="freeze_hub_recents_help">마지막 작업을 제거하면 관리 대상 또는 Telos가 해제한 앱을 다시 동결합니다. Shizuku가 필요하며 사용 제외 규칙을 따릅니다. 기본값은 꺼짐입니다.</string>
-    <string name="freeze_hub_recents_unavailable">최근 앱 감지를 사용할 수 없습니다. Shizuku를 시작하고 권한을 허용하세요.</string>
+    <string name="freeze_hub_recents_help">마지막 작업을 제거하면 관리 대상 또는 Telos가 해제한 앱을 다시 동결합니다. Shizuku / Root가 필요하며 사용 제외 규칙을 따릅니다. 기본값은 꺼짐입니다.</string>
+    <string name="freeze_hub_recents_unavailable">최근 앱 감지를 사용할 수 없습니다. Shizuku / Root를 시작하고 권한을 허용하세요.</string>
 
     
     

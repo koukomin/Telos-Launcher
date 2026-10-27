@@ -420,31 +420,13 @@ class FreezeManager internal constructor(
     private suspend fun runAudioCommand(pkg: String, op: AudioOperation, mode: String? = null): String? {
         if (!VALID_PACKAGE_NAME.matches(pkg)) return null
         val args = audioCommand(pkg, Process.myUid() / 100000, op, mode)
-        var process: java.lang.Process? = null
-        return try {
-            process = when (_activeBackend.value) {
-                FreezeBackendType.Root -> Runtime.getRuntime().exec(arrayOf("su", "-c", args.joinToString(" ")))
-                FreezeBackendType.Shizuku -> {
-                    if (!shizukuProvider.hasPermission()) return null
-                    val method = rikka.shizuku.Shizuku::class.java.getDeclaredMethod("newProcess",
-                        Array<String>::class.java, Array<String>::class.java, String::class.java)
-                    method.isAccessible = true
-                    method.invoke(null, args.toTypedArray(), null, null) as java.lang.Process
-                }
-                else -> return null
-            }
-            // These commands return one app-op record. A full pipe is bounded by the timeout.
-            val running = requireNotNull(process)
-            if (!running.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) || running.exitValue() != 0) null
-            else running.inputStream.bufferedReader().use { it.readText().takeIf { text -> text.length <= 8192 } }
-        } catch (_: Exception) { null }
-        finally {
-            process?.destroy()
-            runCatching { process?.inputStream?.close() }
-            runCatching { process?.errorStream?.close() }
-            runCatching { process?.outputStream?.close() }
-        }
+        val command = args.joinToString(" ") { "'" + it.replace("'", "'\\''") + "'" }
+        val result = de.mm20.launcher2.ktx.PrivilegedShell.run(command) ?: return null
+        return result.output.takeIf { result.exitCode == 0 && it.length <= 8192 }
     }
+
+    /** Root capability is independent of the provider selected for ordinary freezing. */
+    suspend fun canEditComponents(): Boolean = withContext(kotlinx.coroutines.Dispatchers.IO) { rootProvider.hasPermission() }
 
     /** Explicit component edits; root only, scoped to this user's declared package components. */
     suspend fun setComponentState(component: ComponentName, state: Int): Boolean =
@@ -452,7 +434,7 @@ class FreezeManager internal constructor(
             operationMutex.withLock {
                 val pkg = component.packageName
                 if (!validComponentEdit(pkg, component.className, state, PROTECTED_PACKAGES)) return@withLock false
-                if (_activeBackend.value != FreezeBackendType.Root || !rootProvider.hasPermission()) return@withLock false
+                if (!rootProvider.hasPermission()) return@withLock false
                 val pm = context.packageManager
                 val info = runCatching { pm.getPackageInfo(pkg, PackageManager.GET_ACTIVITIES or
                     PackageManager.GET_RECEIVERS or PackageManager.GET_SERVICES or PackageManager.GET_PROVIDERS or

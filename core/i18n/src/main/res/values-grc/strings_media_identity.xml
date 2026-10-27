@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_radio_tab_collection">Συλλογή</string>
+    <string name="au_radio_tab_history">Ἱστορία</string>
+    <string name="freeze_hub_recents_help">Τὰ τεταγμένα προγράμματα πάλιν πηγνύεται ὅταν τὸ ὕστατον ἔργον ἐκ τῶν προσφάτων ἀφαιρεθῇ. Shizuku ἢ Root δεῖ· αἱ ἐξαιρέσεις μένουσιν. Κατὰ τὴν ἀρχὴν ἀνενεργόν.</string>
+    <string name="freeze_hub_recents_unavailable">Ἡ τῶν προσφάτων ἀναγνώρισις οὐ διαθέσιμος. Shizuku ἢ Root ἐνεργοποίησον καὶ ἄδειαν δός.</string>
+    <string name="stremio_http_cache">Πρόσκαιρος μνήμη HTTP</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
+</resources>

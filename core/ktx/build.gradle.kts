@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    buildFeatures { aidl = true }
     compileSdk {
         version = release(libs.versions.compileSdk.get().toInt()) {
             minorApiLevel = libs.versions.compileSdkMinor.get().toInt()
@@ -42,6 +43,8 @@ android {
 
 dependencies {
     implementation(libs.bundles.kotlin)
+    implementation(libs.shizuku.api)
+    implementation(libs.shizuku.provider)
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)

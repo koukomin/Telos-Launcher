@@ -161,7 +161,7 @@ class DiskCleaner(private val context: Context) {
     private fun installedPackages(): Set<String> =
         context.packageManager.getInstalledPackages(0).map { it.packageName }.toSet()
 
-    private fun scanCorpses(): List<File> {
+    private suspend fun scanCorpses(): List<File> {
         val installed = installedPackages()
         val out = ArrayList<File>()
         val listing = privilegedShell("ls -1 /sdcard/Android/data 2>/dev/null; ls -1 /sdcard/Android/obb 2>/dev/null")
@@ -174,24 +174,8 @@ class DiskCleaner(private val context: Context) {
         return out
     }
 
-    fun privilegedAvailable(): Boolean =
-        privilegedShell("echo ok")?.contains("ok") == true
+    suspend fun privilegedAvailable(): Boolean = de.mm20.launcher2.ktx.PrivilegedShell.available()
 
-    private fun privilegedShell(cmd: String): String? {
-        runCatching {
-            val p = Runtime.getRuntime().exec(arrayOf("su", "-c", cmd))
-            val text = p.inputStream.bufferedReader().readText()
-            if (p.waitFor() == 0) return text
-        }
-        return runCatching {
-            val shizuku = Class.forName("rikka.shizuku.Shizuku")
-            if (shizuku.getMethod("pingBinder").invoke(null) != true) return@runCatching null
-            if (shizuku.getMethod("checkSelfPermission").invoke(null) as Int != 0) return@runCatching null
-            val method = shizuku.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
-            method.isAccessible = true
-            val proc = method.invoke(null, arrayOf("sh", "-c", cmd), null, null) ?: return@runCatching null
-            val getIn = proc.javaClass.methods.first { it.name == "getInputStream" }
-            (getIn.invoke(proc) as java.io.InputStream).bufferedReader().readText()
-        }.getOrNull()
-    }
+    private suspend fun privilegedShell(cmd: String): String? =
+        de.mm20.launcher2.ktx.PrivilegedShell.run(cmd)?.let { result -> result.output.takeIf { result.exitCode == 0 } }
 }

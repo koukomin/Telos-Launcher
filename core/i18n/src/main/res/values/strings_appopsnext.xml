@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Upstream product name and its documented Android requirement; proper nouns are not translated. -->
+    <string name="system_appopsnext_name" translatable="false">AppOpsNext · Android 15+</string>
+</resources>

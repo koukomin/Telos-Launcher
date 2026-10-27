@@ -70,6 +70,9 @@ fun SavedWifiPasswordsPreference() {
         }
     }
 
+    de.mm20.launcher2.ui.component.PrivilegedConnectionEffect {
+        scope.launch { enabled = runCatching { HwuiRenderer.privilegedAvailable() }.getOrDefault(false) }
+    }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
         scope.launch {
             enabled = runCatching { HwuiRenderer.privilegedAvailable() }.getOrDefault(false)

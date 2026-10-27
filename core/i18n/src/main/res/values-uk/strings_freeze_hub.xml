@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Перевіряти UAD-NG під час кожного відкриття керування заморожуванням. Типово ввімкнено.</string>
     <string name="freeze_hub_update_failed">Оновлення не вдалося. Збережено останню дійсну базу.</string>
     <string name="freeze_hub_recents">Заморожувати після видалення з недавніх</string>
-    <string name="freeze_hub_recents_help">Повторно заморожує керовані або розморожені Telos застосунки після видалення останнього завдання. Потрібен Shizuku; винятки використання діють. Типово вимкнено.</string>
-    <string name="freeze_hub_recents_unavailable">Виявлення недавніх недоступне. Запустіть Shizuku й надайте дозвіл.</string>
+    <string name="freeze_hub_recents_help">Повторно заморожує керовані або розморожені Telos застосунки після видалення останнього завдання. Потрібен Shizuku / Root; винятки використання діють. Типово вимкнено.</string>
+    <string name="freeze_hub_recents_unavailable">Виявлення недавніх недоступне. Запустіть Shizuku / Root й надайте дозвіл.</string>
 
     
     

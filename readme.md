@@ -1410,3 +1410,9 @@ Phone call screens now use a large, fitted contact photo with an initials fallba
 Android 16 call notifications use full-screen CallStyle only for the first incoming alert and ordinary actionable notifications while ongoing. Live-session token/phase checks and service cleanup prevent ended call notifications from being reposted.
 
 Media now has a single contextual action strip: tap the source title to switch/reorder spaces, and use the search icon to reveal search only when needed. Source chips keep the selected space visible. Stremio uses compact Home/Library controls, smaller section headings and fixed-width poster shelves with wrapping captions at large fonts.
+
+
+Media source buttons now include relevant glyphs and compact filled filters. Radio preserves the theme RGB under transparency and opens directory search from its toolbar instead of a permanent Search tab. Missed-call popups resolve local names independently of call lifetime; recordings resolve live contact names, including older international filenames. Stremio exposes its existing 1/2/5/10/20 GB HTTP cache budget directly. Recents-removal freeze observation supports the selected Root backend as well as Shizuku.
+
+
+Keyboard Enter now uses the same app-lock, companion-thaw and verified frozen-app launch path as tapping an icon. All legacy reflected Shizuku process factories are replaced by a shared supported UserService with Binder-owned pipes, timeouts and cleanup. System audio operations and Tweaks detect live authorization independently of the freeze backend. System Apps exposes the complete external [AppOpsNext](https://github.com/1zumiii/AppOpsNext) companion (GPL-3.0, Android 15+), opening its official Store source when absent; no AppOpsNext code or APK is bundled.

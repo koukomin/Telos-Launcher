@@ -198,29 +198,8 @@ fun RadioStationCard(
 /** Pill filter chip with an animated selection colour */
 @Composable
 private fun RadioPill(selected: Boolean, label: String, reduce: Boolean, onClick: () -> Unit) {
-    val haptics = LocalHapticFeedback.current
-    val bg by animateColorAsState(
-        if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHigh,
-        animationSpec = if (reduce) snap() else tween(200), label = "pillBg",
-    )
-    val fg by animateColorAsState(
-        if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
-        animationSpec = if (reduce) snap() else tween(200), label = "pillFg",
-    )
-    Box(
-        Modifier
-            .heightIn(min = 40.dp)
-            .clip(CircleShape)
-            .background(bg)
-            .clickable {
-                haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                onClick()
-            }
-            .padding(horizontal = 18.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(label, style = MaterialTheme.typography.labelLarge, color = fg, maxLines = 1)
-    }
+    de.mm20.launcher2.ui.media.MediaFilterButton(selected, onClick, label)
+
 }
 
 /** Home of the collection: pill chips, a shelf of recently played stations and a two column grid */

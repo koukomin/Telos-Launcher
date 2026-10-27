@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Kontrollib UAD-NG-d külmutushalduri igal avamisel. Vaikimisi sees.</string>
     <string name="freeze_hub_update_failed">Uuendamine ebaõnnestus. Viimane kehtiv andmebaas säilitatakse.</string>
     <string name="freeze_hub_recents">Külmuta pärast hiljutistest eemaldamist</string>
-    <string name="freeze_hub_recents_help">Külmutab hallatud või Telose sulatatud rakendused pärast viimase ülesande eemaldamist. Vajab Shizukut ja järgib kasutuserandeid. Vaikimisi väljas.</string>
-    <string name="freeze_hub_recents_unavailable">Hiljutiste tuvastus pole saadaval. Käivita Shizuku ja anna luba.</string>
+    <string name="freeze_hub_recents_help">Külmutab hallatud või Telose sulatatud rakendused pärast viimase ülesande eemaldamist. Vajab Shizuku / Roott ja järgib kasutuserandeid. Vaikimisi väljas.</string>
+    <string name="freeze_hub_recents_unavailable">Hiljutiste tuvastus pole saadaval. Käivita Shizuku / Root ja anna luba.</string>
 
     
     

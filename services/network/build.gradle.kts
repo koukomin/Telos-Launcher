@@ -54,6 +54,7 @@ dependencies {
     // This is the exact version Rethink pins in its gradle.properties (firestackCommit).
     api("com.celzero:firestack:${libs.versions.firestack.get()}@aar")
 
+    implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))
     implementation(project(":core:base"))
 

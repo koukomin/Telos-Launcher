@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Dondurma meneceri hər açıldıqda UAD-NG yeniləmələrini yoxlayır. Standart olaraq aktivdir.</string>
     <string name="freeze_hub_update_failed">Yeniləmə alınmadı. Son etibarlı baza saxlanılır.</string>
     <string name="freeze_hub_recents">Son tətbiqlərdən silindikdə dondur</string>
-    <string name="freeze_hub_recents_help">Son tapşırıq silindikdə idarə olunan və ya Telosun açdığı tətbiqləri yenidən dondurur. Shizuku tələb olunur; istifadə istisnaları qüvvədədir. Standart olaraq sönülüdür.</string>
-    <string name="freeze_hub_recents_unavailable">Son tətbiqlərin aşkarlanması əlçatan deyil. Shizukunu başladın və icazə verin.</string>
+    <string name="freeze_hub_recents_help">Son tapşırıq silindikdə idarə olunan və ya Telosun açdığı tətbiqləri yenidən dondurur. Shizuku / Root tələb olunur; istifadə istisnaları qüvvədədir. Standart olaraq sönülüdür.</string>
+    <string name="freeze_hub_recents_unavailable">Son tətbiqlərin aşkarlanması əlçatan deyil. Shizuku / Rootnu başladın və icazə verin.</string>
 
     
     

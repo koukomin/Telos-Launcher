@@ -37,11 +37,13 @@ class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(applic
 
     suspend fun refreshBackendState() {
         withContext(Dispatchers.IO) {
+            commands.lock()
+            try {
             val shizuku = try {
                 Shizuku.pingBinder() && Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED
             } catch (_: Exception) { false }
 
-            val root = runCatching { collectProcess(ProcessBuilder("su", "-c", "id").redirectErrorStream(true).start())?.contains("uid=0") == true }.getOrDefault(false)
+            val root = de.mm20.launcher2.ktx.PrivilegedShell.rootAvailable()
 
             _state.value = _state.value.copy(
                 isShizukuAvailable = shizuku,
@@ -55,6 +57,7 @@ class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(applic
                 callVibrateConnect = execute("settings get system vibrate_on_call_connected")?.trim() == "1",
                 peakRefresh120 = execute("settings get system peak_refresh_rate")?.trim()?.toFloatOrNull()?.let { it >= 120f } == true,
             )
+            } finally { commands.unlock() }
         }
     }
 
@@ -133,25 +136,6 @@ class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(applic
             } finally { commands.unlock() }
         }
     }
-    private fun execute(cmd: String): String? = runCatching {
-        val backend = _state.value
-        val process = when {
-            backend.isRootAvailable -> ProcessBuilder("su", "-c", cmd).redirectErrorStream(true).start()
-            backend.isShizukuAvailable -> {
-                val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
-                method.isAccessible = true
-                method.invoke(null, arrayOf("sh", "-c", cmd), null, null) as java.lang.Process
-            }
-            else -> return@runCatching null
-        }
-        collectProcess(process)
-    }.getOrNull()
-    private fun collectProcess(process: java.lang.Process): String? = try {
-        process.outputStream.close()
-        if (!process.waitFor(5, java.util.concurrent.TimeUnit.SECONDS)) null
-        else if (process.exitValue() != 0) null
-        else process.inputStream.bufferedReader().use { it.readText().take(4096) }
-    } finally {
-        process.inputStream.close(); process.errorStream.close(); process.destroy()
-    }
+    private suspend fun execute(cmd: String): String? =
+        de.mm20.launcher2.ktx.PrivilegedShell.run(cmd)?.let { result -> result.output.takeIf { result.exitCode == 0 } }
 }

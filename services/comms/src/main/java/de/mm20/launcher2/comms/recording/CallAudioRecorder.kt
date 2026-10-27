@@ -35,6 +35,7 @@ data class CallRecordingFile(
     val file: File,
     val number: String,
     val durationHintSeconds: Long,
+    val modifiedAtMillis: Long,
 )
 
 object CallAudioRecorder {
@@ -68,7 +69,7 @@ object CallAudioRecorder {
                 if (!bluetooth) am?.mode = android.media.AudioManager.MODE_IN_CALL
             }
             val dir = recordingsDir(context)
-            val digits = phoneNumber.filter { it.isDigit() }.ifEmpty { "Unknown" }
+            val digits = de.mm20.launcher2.ktx.PhoneNumberKey.of(phoneNumber).ifEmpty { "Unknown" }
             val stamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
             val file = File(dir, "REC_${digits}_$stamp.m4a")
             // Default dialer can often open VOICE_CALL without CAPTURE_AUDIO_OUTPUT (Skvalex unrooted path).
@@ -210,7 +211,7 @@ object CallAudioRecorder {
             ?.sortedByDescending { it.lastModified() }
             ?.map { file ->
                 val digits = file.nameWithoutExtension.removePrefix("REC_").split("_").firstOrNull().orEmpty()
-                CallRecordingFile(file, digits.ifBlank { "Unknown" }, 0L)
+                CallRecordingFile(file, digits.ifBlank { "Unknown" }, 0L, file.lastModified())
             }
             .orEmpty()
     }

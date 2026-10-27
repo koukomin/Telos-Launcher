@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">در هر بار بازشدن مدیریت انجماد، به‌روزرسانی UAD-NG بررسی می‌شود. پیش‌فرض روشن است.</string>
     <string name="freeze_hub_update_failed">به‌روزرسانی ناموفق بود. آخرین پایگاه معتبر حفظ می‌شود.</string>
     <string name="freeze_hub_recents">انجماد پس از حذف از برنامه‌های اخیر</string>
-    <string name="freeze_hub_recents_help">پس از حذف آخرین کار، برنامه‌های مدیریت‌شده یا آزادشده با Telos را دوباره منجمد می‌کند. به Shizuku نیاز دارد و استثناهای استفاده رعایت می‌شوند. پیش‌فرض خاموش است.</string>
-    <string name="freeze_hub_recents_unavailable">تشخیص برنامه‌های اخیر در دسترس نیست. Shizuku را اجرا کنید و مجوز دهید.</string>
+    <string name="freeze_hub_recents_help">پس از حذف آخرین کار، برنامه‌های مدیریت‌شده یا آزادشده با Telos را دوباره منجمد می‌کند. به Shizuku / Root نیاز دارد و استثناهای استفاده رعایت می‌شوند. پیش‌فرض خاموش است.</string>
+    <string name="freeze_hub_recents_unavailable">تشخیص برنامه‌های اخیر در دسترس نیست. Shizuku / Root را اجرا کنید و مجوز دهید.</string>
 
     
     

@@ -211,8 +211,9 @@ fun MusicScreen(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         val labels = listOf(R.string.au10_music_tab_home, R.string.au_music_tab_songs, R.string.hc_albums, R.string.au_music_tab_artists)
                         items(labels.size) { i ->
-                            FilterChip(selected = tab == i, onClick = { tab = i },
-                                label = { Text(stringResource(labels[i])) }, shape = RoundedCornerShape(20.dp))
+                            de.mm20.launcher2.ui.media.MediaFilterButton(
+                                selected = tab == i, onClick = { tab = i }, label = stringResource(labels[i]),
+                            )
                         }
                     }
                     when {

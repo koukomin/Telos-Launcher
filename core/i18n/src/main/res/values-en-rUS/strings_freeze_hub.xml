@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Check UAD-NG for updates whenever Freeze Manager opens. Enabled by default.</string>
     <string name="freeze_hub_update_failed">Update failed. Keeping the last valid database.</string>
     <string name="freeze_hub_recents">Freeze after removal from Recents</string>
-    <string name="freeze_hub_recents_help">Refreeze managed or Telos-thawed apps after their last task is removed. Requires Shizuku; usage exclusions still apply. Off by default.</string>
-    <string name="freeze_hub_recents_unavailable">Recents detection unavailable. Start Shizuku and grant permission.</string>
+    <string name="freeze_hub_recents_help">Refreeze managed or Telos-thawed apps after their last task is removed. Requires Shizuku / Root; usage exclusions still apply. Off by default.</string>
+    <string name="freeze_hub_recents_unavailable">Recents detection unavailable. Start Shizuku / Root and grant permission.</string>
 
     
     

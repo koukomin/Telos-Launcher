@@ -65,6 +65,16 @@ import org.koin.core.component.inject
 
 class SearchVM : ViewModel(), KoinComponent {
 
+    private val keyboardLaunchStore = ListItemViewModelStore()
+    private val keyboardLauncher by lazy {
+        keyboardLaunchStore.get<de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM>("keyboard-launch")
+    }
+
+    override fun onCleared() {
+        keyboardLaunchStore.clear()
+        super.onCleared()
+    }
+
     private val favoritesService: FavoritesService by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
@@ -231,8 +241,7 @@ class SearchVM : ViewModel(), KoinComponent {
         }
         val bestMatch = bestMatch.value
         if (bestMatch is SavableSearchable) {
-            bestMatch.launch(context, null)
-            favoritesService.reportLaunch(bestMatch)
+            keyboardLauncher.launchTarget(context, bestMatch)
             return
         } else if (bestMatch is SearchAction) {
             bestMatch.start(context)

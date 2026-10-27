@@ -22,7 +22,7 @@ import de.mm20.launcher2.ui.downloads.torrentSettingsItems
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun StremioPlaybackSheet(onDismiss: () -> Unit) {
+internal fun StremioPlaybackSheet(cacheOnly: Boolean = false, onDismiss: () -> Unit) {
     val context = LocalContext.current
     var settings by remember { mutableStateOf<StremioPlaybackSettings?>(null) }
     LaunchedEffect(Unit) {
@@ -40,6 +40,11 @@ internal fun StremioPlaybackSheet(onDismiss: () -> Unit) {
             item { Text(stringResource(R.string.settings), Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge) }
             settings?.let { s ->
                 item {
+                    ListPreference(title = stringResource(R.string.stremio_http_cache), value = s.cacheGb,
+                        items = StremioPlaybackSettings.cacheChoices.map { ListPreferenceItem("$it GB", it) },
+                        onValueChanged = { settings = s.copy(cacheGb = it) })
+                }
+                if (!cacheOnly) item {
                     val choices = listOf(ListPreferenceItem(stringResource(R.string.dl_t_select_none), "")) +
                         languages.map { ListPreferenceItem(it.second, it.first) }
                     ListPreference(title = stringResource(R.string.dl_category_audio) + " · " + stringResource(R.string.au3_appearance_cs_primary), value = s.audio,
@@ -62,12 +67,10 @@ internal fun StremioPlaybackSheet(onDismiss: () -> Unit) {
                         }, onValueChanged = { settings = s.copy(maxSizeGb = it) })
                     SwitchPreference(title = stringResource(R.string.stremio_hide_screeners), value = s.hideScreeners,
                         onValueChanged = { settings = s.copy(hideScreeners = it) })
-                    ListPreference(title = stringResource(R.string.stremio_http_cache), value = s.cacheGb,
-                        items = StremioPlaybackSettings.cacheChoices.map { ListPreferenceItem("$it GB", it) },
-                        onValueChanged = { settings = s.copy(cacheGb = it) })
+
                 }
             }
-            torrentSettingsItems()
+            if (!cacheOnly) torrentSettingsItems()
         }
     }
 }

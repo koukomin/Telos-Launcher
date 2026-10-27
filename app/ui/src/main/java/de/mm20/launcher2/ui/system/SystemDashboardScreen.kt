@@ -136,6 +136,9 @@ fun SystemDashboardScreen() {
     val pulse = rememberInfiniteTransition(label = "sysPulse")
     val t by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(2400, easing = LinearEasing), RepeatMode.Restart), label = "t")
 
+    de.mm20.launcher2.ui.component.PrivilegedConnectionEffect {
+        scope.launch { privilegedWifi = HwuiRenderer.privilegedAvailable() }
+    }
     androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
         scope.launch { privilegedWifi = HwuiRenderer.privilegedAvailable() }
     }
@@ -406,38 +409,10 @@ internal fun runningProcs(context: Context): List<ProcRow> {
     }.sortedBy { it.name }
 }
 
-private fun privileged(cmd: String): String? {
-    val attempts = listOf(
-        arrayOf("su", "-c", cmd),
-        arrayOf("sh", "-c", cmd),
-    )
-    for (args in attempts) {
-        val out = runCatching {
-            val p = Runtime.getRuntime().exec(args)
-            val text = p.inputStream.bufferedReader().readText()
-            p.waitFor()
-            text
-        }.getOrNull()
-        if (!out.isNullOrBlank()) return out
-    }
-    return shizuku(cmd)
-}
+private suspend fun privileged(cmd: String): String? =
+    de.mm20.launcher2.ktx.PrivilegedShell.run(cmd)?.let { result -> result.output.takeIf { result.exitCode == 0 } }
 
-private fun shizuku(cmd: String): String? = runCatching {
-    val shizuku = Class.forName("rikka.shizuku.Shizuku")
-    val ping = shizuku.getMethod("pingBinder").invoke(null) as Boolean
-    if (!ping) return null
-    val perm = shizuku.getMethod("checkSelfPermission").invoke(null) as Int
-    if (perm != 0) return null
-    val method = shizuku.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
-    method.isAccessible = true
-    val proc = method.invoke(null, arrayOf("sh", "-c", cmd), null, null) ?: return null
-    val getIn = proc.javaClass.methods.firstOrNull { it.name == "getInputStream" } ?: return null
-    val stream = getIn.invoke(proc) as java.io.InputStream
-    stream.bufferedReader().readText()
-}.getOrNull()
-
-internal fun readWifiStore(): List<WifiEntry> {
+internal suspend fun readWifiStore(): List<WifiEntry> {
     val files = listOf(
         "/data/misc/apexdata/com.android.wifi/WifiConfigStore.xml",
         "/data/misc/wifi/WifiConfigStore.xml",

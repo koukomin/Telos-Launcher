@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">Kiểm tra UAD-NG mỗi khi mở trình quản lý đóng băng. Mặc định bật.</string>
     <string name="freeze_hub_update_failed">Cập nhật thất bại. Giữ lại cơ sở dữ liệu hợp lệ gần nhất.</string>
     <string name="freeze_hub_recents">Đóng băng khi xóa khỏi ứng dụng gần đây</string>
-    <string name="freeze_hub_recents_help">Đóng băng lại ứng dụng được quản lý hoặc đã được Telos rã đông sau khi tác vụ cuối bị xóa. Cần Shizuku và tuân thủ ngoại lệ sử dụng. Mặc định tắt.</string>
-    <string name="freeze_hub_recents_unavailable">Không thể phát hiện ứng dụng gần đây. Khởi động Shizuku và cấp quyền.</string>
+    <string name="freeze_hub_recents_help">Đóng băng lại ứng dụng được quản lý hoặc đã được Telos rã đông sau khi tác vụ cuối bị xóa. Cần Shizuku / Root và tuân thủ ngoại lệ sử dụng. Mặc định tắt.</string>
+    <string name="freeze_hub_recents_unavailable">Không thể phát hiện ứng dụng gần đây. Khởi động Shizuku / Root và cấp quyền.</string>
 
     
     

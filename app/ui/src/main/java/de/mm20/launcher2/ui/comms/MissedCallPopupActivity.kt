@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -34,19 +35,36 @@ import org.koin.android.ext.android.inject
 class MissedCallPopupActivity : BaseActivity() {
     private val commsSettings: CommsSettings by inject()
 
+    private var callIntent by androidx.compose.runtime.mutableStateOf<android.content.Intent?>(null)
+
+    override fun onNewIntent(intent: android.content.Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        callIntent = intent
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val name = intent.getStringExtra(CallOverlayIntents.EXTRA_NAME)
-        val number = intent.getStringExtra(CallOverlayIntents.EXTRA_NUMBER).orEmpty()
-        val ringMs = intent.getLongExtra(CallOverlayIntents.EXTRA_RING_MS, 0L)
+        callIntent = intent
         setContent {
             ProvideCompositionLocals {
                 LauncherTheme {
+                    val source = callIntent ?: intent
+                    val name = source.getStringExtra(CallOverlayIntents.EXTRA_NAME)
+                    val number = source.getStringExtra(CallOverlayIntents.EXTRA_NUMBER).orEmpty()
+                    val ringMs = source.getLongExtra(CallOverlayIntents.EXTRA_RING_MS, 0L)
+                    val identity by androidx.compose.runtime.produceState(number to name, number, name) {
+                        val found = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            de.mm20.launcher2.comms.remote.DeviceContactsResolver.lookup(applicationContext, number).first
+                        }?.takeIf { it.isNotBlank() } ?: name
+                        value = number to found
+                    }
+                    val resolvedName = if (identity.first == number) identity.second else name
                     val template by commsSettings.rejectSmsTemplate.collectAsStateWithLifecycle("")
                     Surface(tonalElevation = 6.dp) {
                         Column(Modifier.padding(20.dp).fillMaxWidth()) {
                             Text(
-                                text = name?.ifBlank { null } ?: number.ifBlank { stringResource(R.string.widget_name_unknown) },
+                                text = resolvedName?.ifBlank { null } ?: number.ifBlank { stringResource(R.string.widget_name_unknown) },
                                 style = MaterialTheme.typography.titleLarge,
                             )
                             if (ringMs > 0) {
@@ -56,7 +74,7 @@ class MissedCallPopupActivity : BaseActivity() {
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
-                            if (!name.isNullOrBlank() && number.isNotBlank()) {
+                            if (!resolvedName.isNullOrBlank() && number.isNotBlank()) {
                                 Text(number, style = MaterialTheme.typography.bodyMedium)
                             }
                             Row(

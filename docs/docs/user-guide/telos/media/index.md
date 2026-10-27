@@ -234,3 +234,11 @@ Tap the source title and its arrow to open all Media spaces and Move up/down ord
 Music, local Video, Radio and YouTube/YouTube Music expose search through a toolbar icon; Stremio Home places it beside Home/Library. TV filters and Photos use an icon in their own panel. Opening the icon reveals the search field; closing it or using Back folds it away. Local filters clear when closed; YouTube keeps submitted results/query and uses the keyboard Search action or search button to submit. No search request is triggered just by opening the field.
 
 Stremio poster images keep a stable width rather than growing with the system font size. Names and captions wrap below them, section headings use the theme’s title hierarchy, and Home/Library scroll horizontally when larger labels need space. All source/account/settings/player actions remain available.
+
+
+Music, Radio and YouTube Music source buttons use labeled icons and filled rounded rectangles. Music library and online music filters share the compact button style. Radio keeps Collection and History buttons; its toolbar magnifier opens online station search. Collection filtering remains in the overflow menu. The radio transparent header retains the active theme tone rather than restoring transparent black.
+
+
+Stremio Fork’s overflow menu exposes the HTTP cache budget directly: 1, 2, 5, 10 or 20 GB. This is the existing per-player-process LRU HTTP cache, not a total torrent quota. Another Stremio installation’s private cache is not opened or modified; Android storage isolation and different cache formats prevent safe direct sharing.
+
+The shared Music/Radio/TV mini player uses a compact opaque tonal bar and plain playback glyphs, retaining artwork, progress, next/record/stop actions and the tap-to-open player.

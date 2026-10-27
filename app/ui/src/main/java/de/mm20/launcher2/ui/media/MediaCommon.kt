@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.selected
@@ -199,6 +200,24 @@ fun VirtualAppGuardEffect(guardKey: String) {
         onDispose {
             lifecycle.removeObserver(observer)
             de.mm20.launcher2.base.VirtualAppGuard.leave(context, guardKey)
+        }
+    }
+}
+
+/** Compact filled media filters inspired by music players; selection is also exposed to accessibility. */
+@Composable
+fun MediaFilterButton(selected: Boolean, onClick: () -> Unit, label: String, icon: Int? = null) {
+    androidx.compose.material3.Surface(
+        onClick = onClick,
+        modifier = Modifier.padding(vertical = 4.dp).semantics { this.selected = selected },
+        shape = RoundedCornerShape(10.dp),
+        color = if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface,
+    ) {
+        Row(Modifier.heightIn(min = 48.dp).padding(horizontal = 14.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            if (icon != null) Icon(painterResource(icon), null, Modifier.size(22.dp))
+            Text(label, style = MaterialTheme.typography.labelLarge)
         }
     }
 }

@@ -55,6 +55,11 @@ class MediaChromeTest {
                                     DropdownMenuItem(text = { Text("TV") }, onClick = { source = "TV"; sourceMenu = false })
                                 }
                             })
+                            androidx.compose.foundation.lazy.LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                item { de.mm20.launcher2.ui.media.MediaFilterButton(true, {}, context.getString(R.string.au9_mediahub_space_music), R.drawable.music_note_24px) }
+                                item { de.mm20.launcher2.ui.media.MediaFilterButton(false, {}, context.getString(R.string.hc_radio), R.drawable.ic_glyph_radio) }
+                                item { de.mm20.launcher2.ui.media.MediaFilterButton(false, {}, context.getString(R.string.telos_youtube_music_label), R.drawable.play_arrow_24px) }
+                            }
                             StremioBrowseControls(tab, { tab = it }, query, { query = it }, expanded, { expanded = it })
                             Text("Συνέχεια παρακολούθησης", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(16.dp))
                         }
@@ -97,6 +102,30 @@ class MediaChromeTest {
             screenshot("media-chrome-search-font${if (font2) 2 else 1}-${if (isLight) "light" else "dark"}-${if (landscape) "wide" else "portrait"}.png")
             compose.onAllNodesWithContentDescription(context.getString(R.string.hc_close)).onFirst().performClick()
             compose.waitForIdle()
+        }
+    }
+
+    @Test fun translucentRadioRetainsTheParentToneAndContentColor() {
+        val parent = androidx.compose.ui.graphics.Color(0.85f, 0.75f, 0.65f)
+        var actual = androidx.compose.ui.graphics.Color.Unspecified
+        var content = androidx.compose.ui.graphics.Color.Unspecified
+        compose.setContent {
+            MaterialTheme(colorScheme = lightColorScheme(surface = parent)) {
+                de.mm20.launcher2.ui.comms.radio.RadioAppearance(
+                    de.mm20.launcher2.comms.radio.RadioSettings.Values(theme = "system", translucent = true),
+                ) {
+                    actual = MaterialTheme.colorScheme.surface
+                    content = LocalContentColor.current
+                    Text("Radio")
+                }
+            }
+        }
+        compose.runOnIdle {
+            assertEquals(parent.red, actual.red, 0.001f)
+            assertEquals(parent.green, actual.green, 0.001f)
+            assertEquals(parent.blue, actual.blue, 0.001f)
+            assertEquals(0f, actual.alpha, 0.001f)
+            assertEquals(lightColorScheme().onSurface, content)
         }
     }
 

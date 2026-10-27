@@ -16,8 +16,8 @@
     <string name="freeze_hub_auto_update_help">ফ্রিজ ম্যানেজার খোলার সময় প্রতিবার UAD-NG আপডেট পরীক্ষা করে। ডিফল্টে চালু।</string>
     <string name="freeze_hub_update_failed">আপডেট ব্যর্থ। সর্বশেষ বৈধ ডেটাবেস রাখা হয়েছে।</string>
     <string name="freeze_hub_recents">সাম্প্রতিক অ্যাপ থেকে সরালে ফ্রিজ করুন</string>
-    <string name="freeze_hub_recents_help">শেষ টাস্ক সরালে পরিচালিত বা Telos দ্বারা মুক্ত করা অ্যাপ আবার ফ্রিজ করে। Shizuku প্রয়োজন এবং ব্যবহার সংক্রান্ত ব্যতিক্রম মানা হয়। ডিফল্টে বন্ধ।</string>
-    <string name="freeze_hub_recents_unavailable">সাম্প্রতিক অ্যাপ শনাক্তকরণ নেই। Shizuku চালু করে অনুমতি দিন।</string>
+    <string name="freeze_hub_recents_help">শেষ টাস্ক সরালে পরিচালিত বা Telos দ্বারা মুক্ত করা অ্যাপ আবার ফ্রিজ করে। Shizuku / Root প্রয়োজন এবং ব্যবহার সংক্রান্ত ব্যতিক্রম মানা হয়। ডিফল্টে বন্ধ।</string>
+    <string name="freeze_hub_recents_unavailable">সাম্প্রতিক অ্যাপ শনাক্তকরণ নেই। Shizuku / Root চালু করে অনুমতি দিন।</string>
 
     
     

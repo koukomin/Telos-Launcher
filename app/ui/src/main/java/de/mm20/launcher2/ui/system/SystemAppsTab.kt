@@ -78,8 +78,11 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
             FilterChip(frozenOnly, { frozenOnly = !frozenOnly }, { Text(stringResource(R.string.hf_freeze_frozen_apps)) })
             FilterChip(showSystem, { showSystem = !showSystem }, { Text(stringResource(R.string.preference_freeze_show_system_apps)) })
         }
-        TextButton(onClick = { backStack.add(de.mm20.launcher2.ui.settings.freeze.FreezeSettingsRoute) }) {
-            Text(stringResource(R.string.preference_screen_freeze))
+        FlowRow(Modifier.padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            TextButton(onClick = { backStack.add(de.mm20.launcher2.ui.settings.freeze.FreezeSettingsRoute) }) {
+                Text(stringResource(R.string.preference_screen_freeze))
+            }
+            AppOpsNextButton()
         }
         outcome?.let { Text(it, Modifier.padding(horizontal = 16.dp)) }
         if (loading) LinearProgressIndicator(Modifier.fillMaxWidth())

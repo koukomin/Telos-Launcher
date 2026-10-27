@@ -20,6 +20,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import kotlinx.serialization.Serializable
+import kotlinx.coroutines.launch
 
 @Serializable
 data object TweaksSettingsRoute : NavKey
@@ -29,15 +30,20 @@ fun TweaksSettingsScreen() {
     val vm: TweaksSettingsScreenVM = viewModel()
     val state by vm.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        vm.refreshBackendState()
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+        scope.launch { vm.refreshBackendState() }
+    }
+    de.mm20.launcher2.ui.component.PrivilegedConnectionEffect {
+        scope.launch { vm.refreshBackendState() }
     }
 
     val hasPrivilegedBackend = state.isShizukuAvailable || state.isRootAvailable
     val backendStatusSummary = when {
-        state.isRootAvailable -> "✓ Root Backend Active"
-        state.isShizukuAvailable -> "✓ Shizuku Backend Active"
-        else -> "🔒 Requires Shizuku or Root permission (Backend Disabled)"
+        state.isRootAvailable && state.isShizukuAvailable -> stringResource(R.string.freeze_backend_root) + " · " + stringResource(R.string.freeze_backend_shizuku)
+        state.isRootAvailable -> stringResource(R.string.freeze_backend_root)
+        state.isShizukuAvailable -> stringResource(R.string.freeze_backend_shizuku)
+        else -> stringResource(R.string.hf_freeze_disconnected)
     }
 
     PreferenceScreen(
