@@ -19,8 +19,14 @@ android {
     buildFeatures { aidl = true; compose = true; buildConfig = true }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_11; targetCompatibility = JavaVersion.VERSION_11 }
     kotlin { compilerOptions { jvmTarget.set(JvmTarget.JVM_11) } }
-    if (providers.gradleProperty("telos.abi").orNull != "armeabi-v7a") {
-        sourceSets.getByName("main").assets.srcDir(layout.buildDirectory.dir("native-daemon/main"))
+
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        if (providers.gradleProperty("telos.abi").orNull != "armeabi-v7a") {
+            variant.sources.assets?.addStaticSourceDirectory(layout.buildDirectory.dir("native-daemon/main").get().asFile.absolutePath)
+        }
     }
 }
 
