@@ -18,22 +18,25 @@ class RecentsBridgeTest {
         var taskId = -1
         scenario.onActivity { taskId = it.taskId }
         val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val apk = instrumentation.targetContext.applicationInfo.sourceDir.replace("'", "'\\''")
+        val apk = instrumentation.targetContext.applicationInfo.sourceDir
+        check(apk.none { it.isWhitespace() })
         val user = android.os.Process.myUid() / 100000
         val fds = instrumentation.uiAutomation.executeShellCommandRw(
-            "CLASSPATH='$apk' /system/bin/app_process /system/bin de.mm20.launcher2.freeze.RootRecentsBridge $user")
+            "/system/bin/env CLASSPATH=$apk /system/bin/app_process /system/bin de.mm20.launcher2.freeze.RootRecentsBridge $user")
         val lines = LinkedBlockingQueue<String>()
         val input = ParcelFileDescriptor.AutoCloseInputStream(fds[0])
         val output = ParcelFileDescriptor.AutoCloseOutputStream(fds[1])
         val reader = Thread({ runCatching { input.bufferedReader().useLines { stream -> stream.forEach { lines.offer(it) } } } }).apply { isDaemon = true; start() }
         try {
             fun await(prefix: String): String {
+                val unexpected = mutableListOf<String>()
                 val deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(8)
                 while (System.nanoTime() < deadline) {
                     val line = lines.poll(500, TimeUnit.MILLISECONDS) ?: continue
                     if (line.startsWith(prefix)) return line
+                    if (unexpected.size < 12) unexpected.add(line)
                 }
-                error("No $prefix response from the production task listener")
+                error("No $prefix response from the production task listener: $unexpected")
             }
             assertEquals("READY", await("READY"))
             output.write("snapshot\n".toByteArray()); output.flush()
