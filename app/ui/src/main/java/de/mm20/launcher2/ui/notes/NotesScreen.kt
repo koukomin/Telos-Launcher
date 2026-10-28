@@ -30,6 +30,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
@@ -193,6 +198,27 @@ fun NotesScreen() {
         }
         if (showSync) SyncDialog(vm) { showSync = false }
     }
+    }
+}
+
+
+private val mdBold = Regex("""\*\*(.*?)\*\*""")
+private val mdItalic = Regex("""\*(.*?)\*""")
+private val mdStrike = Regex("~~(.*?)~~")
+
+@Composable
+private fun renderMarkdown(text: String): androidx.compose.ui.text.AnnotatedString {
+    return buildAnnotatedString {
+        append(text)
+        mdBold.findAll(text).forEach { match ->
+            addStyle(SpanStyle(fontWeight = FontWeight.Bold), match.range.first, match.range.last + 1)
+        }
+        mdItalic.findAll(text).forEach { match ->
+            addStyle(SpanStyle(fontStyle = FontStyle.Italic), match.range.first, match.range.last + 1)
+        }
+        mdStrike.findAll(text).forEach { match ->
+            addStyle(SpanStyle(textDecoration = TextDecoration.LineThrough), match.range.first, match.range.last + 1)
+        }
     }
 }
 
