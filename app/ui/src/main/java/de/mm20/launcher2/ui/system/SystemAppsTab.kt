@@ -3,6 +3,10 @@ package de.mm20.launcher2.ui.system
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -73,16 +77,52 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
         apps.filter { (!frozenOnly || it.frozen) && (term.isBlank() || it.label.contains(term, true) || it.pkg.contains(term, true)) }
     }
     Column(Modifier.fillMaxSize()) {
-        de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.hf_store_search))
-        FlowRow(Modifier.padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            FilterChip(frozenOnly, { frozenOnly = !frozenOnly }, { Text(stringResource(R.string.hf_freeze_frozen_apps)) })
-            FilterChip(showSystem, { showSystem = !showSystem }, { Text(stringResource(R.string.preference_freeze_show_system_apps)) })
-        }
-        FlowRow(Modifier.padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TextButton(onClick = { backStack.add(de.mm20.launcher2.ui.settings.freeze.FreezeSettingsRoute) }) {
-                Text(stringResource(R.string.preference_screen_freeze))
+        // Search and Toolbar - Google Apps 2026 Style
+        var searchExpanded by remember { mutableStateOf(false) }
+        Surface(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            shape = MaterialTheme.shapes.extraLarge,
+            color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.94f),
+            tonalElevation = 2.dp
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp)
+            ) {
+                if (searchExpanded) {
+                    OutlinedTextField(
+                        value = query,
+                        onValueChange = { query = it },
+                        modifier = Modifier.weight(1f).height(56.dp),
+                        placeholder = { Text(stringResource(R.string.hc_search)) },
+                        singleLine = true,
+                        shape = MaterialTheme.shapes.extraLarge,
+                        trailingIcon = {
+                            IconButton(onClick = { query = ""; searchExpanded = false }) {
+                                Icon(Icons.Default.Close, contentDescription = "Close Search")
+                            }
+                        }
+                    )
+                } else {
+                    Text(
+                        text = stringResource(R.string.hc_apps),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                        modifier = Modifier.weight(1f).padding(start = 8.dp)
+                    )
+                    IconButton(onClick = { searchExpanded = true }) {
+                        Icon(Icons.Default.Search, contentDescription = stringResource(R.string.hc_search))
+                    }
+                    IconButton(onClick = { showSystem = !showSystem }) {
+                        Icon(
+                            painter = androidx.compose.ui.res.painterResource(if (showSystem) R.drawable.visibility_24px else R.drawable.visibility_off_24px),
+                            contentDescription = "System Apps"
+                        )
+                    }
+                    // Global AppOps Next Button (Only in top bar)
+                    AppOpsNextButton()
+                }
             }
-            AppOpsNextButton()
         }
         outcome?.let { Text(it, Modifier.padding(horizontal = 16.dp)) }
         if (loading) LinearProgressIndicator(Modifier.fillMaxWidth())
@@ -100,25 +140,47 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                                 if (app.frozen) Text(stringResource(R.string.hf_freeze_frozen), color = MaterialTheme.colorScheme.primary)
                             }
                         }
-                        AppOpsNextButton(app.pkg)
                         uad[app.pkg]?.let { info ->
-                            Text(stringResource(R.string.freeze_hub_uad_help), style = MaterialTheme.typography.labelSmall)
-                            Text(info.recommendation, style = MaterialTheme.typography.labelMedium)
-                            Text(info.description, maxLines = 4, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, style = MaterialTheme.typography.bodySmall)
-                        }
-                        OutlinedButton(enabled = !busy, onClick = {
-                            busy = true
-                            scope.launch {
-                                try {
-                                    val ok = withContext(Dispatchers.IO) { if (app.frozen) freeze.unfreeze(app.pkg) else freeze.freeze(app.pkg) }
-                                    outcome = context.getString(R.string.freeze_hub_result, if (app.pkg in ok) 1 else 0, 1)
-                                    revision++
-                                } finally { busy = false }
+                            Spacer(Modifier.height(8.dp))
+                            Surface(color = MaterialTheme.colorScheme.surfaceContainerHighest, shape = MaterialTheme.shapes.small) {
+                                Column(Modifier.padding(8.dp)) {
+                                    Text(stringResource(R.string.freeze_hub_uad_help), style = MaterialTheme.typography.labelSmall)
+                                    Text(info.recommendation, style = MaterialTheme.typography.labelMedium)
+                                    Text(info.description, maxLines = 4, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, style = MaterialTheme.typography.bodySmall)
+                                }
                             }
-                        }) { Text(stringResource(if (app.frozen) R.string.freeze_hub_unfreeze else R.string.freeze_widget_freeze_now)) }
-                        OutlinedButton(onClick = {
-                            backStack.add(de.mm20.launcher2.ui.network.firewall.NetworkPackageFirewallRoute(app.pkg))
-                        }) { Text(stringResource(R.string.netfw_title)) }
+                        }
+                        Row(
+                            Modifier.fillMaxWidth().padding(top = 8.dp),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            IconButton(
+                                onClick = {
+                                    backStack.add(de.mm20.launcher2.ui.network.firewall.NetworkPackageFirewallRoute(app.pkg))
+                                }
+                            ) {
+                                Icon(androidx.compose.ui.res.painterResource(de.mm20.launcher2.base.R.drawable.lock_24px), contentDescription = "Firewall")
+                            }
+                            IconButton(
+                                onClick = {
+                                    busy = true
+                                    scope.launch {
+                                        try {
+                                            val ok = withContext(Dispatchers.IO) { if (app.frozen) freeze.unfreeze(app.pkg) else freeze.freeze(app.pkg) }
+                                            outcome = context.getString(R.string.freeze_hub_result, if (app.pkg in ok) 1 else 0, 1)
+                                            revision++
+                                        } finally { busy = false }
+                                    }
+                                },
+                                enabled = !busy
+                            ) {
+                                Icon(
+                                    androidx.compose.ui.res.painterResource(if (app.frozen) R.drawable.play_arrow_24px else R.drawable.ac_unit_24px),
+                                    contentDescription = "Freeze/Unfreeze",
+                                    tint = if (app.frozen) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
                     }
                 }
             }
