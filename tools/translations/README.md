@@ -8,11 +8,11 @@ Inference uses Google's Apache-2.0 MADLAD-400 3B model at pinned revision `fa184
 
 Before copying generated resources into `core/i18n/src/main/res`, review meaning (especially delete/restore, permissions and account security), preserve any newer hand-written translations, check all placeholders against English, and run the Android build. A successful inference run proves syntax and token preservation, not semantic accuracy. Translation remains the final development step.
 
-## Completed translations
+## Validation
 
-The new feature strings have been translated directly by parallel Codex assistants for every supported base locale. Run `python tools/translations/validate.py` to check coverage, XML, duplicate IDs, Android quoting and format tokens. English regional variants and gender variants inherit their base resources. Native-speaker and device layout review remain useful; automated checks cannot prove stylistic quality. The optional model workflow writes artifacts only and does not replace these reviewed repository resources.
+Run `python tools/translations/validate.py` to check coverage, XML, duplicate IDs, Android quoting and format tokens. English regional variants and gender variants inherit their base resources. Generated artifacts still require semantic review and merging; a running generation job does not mean resource coverage is complete.
 
-CI checks changed strings against the pull request base (`TELOS_TRANSLATION_BASE`), plus resource syntax across locales. This keeps new changes accountable without treating unrelated translation debt added on main as part of every PR. Without the environment variable, the historical full-audit baseline is retained.
+CI checks changed strings against the pull request base (`TELOS_TRANSLATION_BASE`), plus resource syntax across locales. Without the environment variable, the historical full-audit baseline is retained.
 
 ## Embedded AppOps coverage
 
