@@ -93,3 +93,9 @@ Home, Statistics, Logs, Apps and Settings share one bottom navigation bar. Switc
 Apps can be searched by name, package or app ID, and filtered by Android-declared category in the menu. A category selection also constrains confirmed bulk actions. Shared UIDs with mixed categories remain uncategorized.
 
 Statistics offers 1-hour, 24-hour and 7-day windows, metered/unmetered totals and per-app upload/download totals. These use retained connection logs grouped by connection opening time; byte counts become available when flows close. Retention and logging switches affect the results. Older records have unknown metering, shown separately. These are not device-wide or per-second traffic-meter totals.
+
+### User-configured proxies (development draft)
+
+Settings → Proxies adds SOCKS5 and HTTP CONNECT endpoints with optional authentication. Endpoint addresses and credentials are encrypted in Android Keystore-backed private storage; UI summaries never include credentials. Select a default endpoint or assign one in an app’s firewall editor. Explicit per-app proxy/direct selections override other routing; otherwise a selected WireGuard tunnel takes priority over the default proxy. HTTP CONNECT supports TCP only; other protocols are blocked for apps assigned to it. DNS continues to use the selected Telos resolver.
+
+Disabled, missing and unregistered assigned endpoints block affected apps. Removing an endpoint preserves its assignments so removal cannot silently switch those apps to direct access; choose another route explicitly. Editing requires entering authentication again, with empty credentials removing authentication. A registered indicator means the native VPN registry contains the endpoint, not that a remote server has passed a reachability test. The endpoints require your own server; no paid RPN account is created. Native routing and device interoperability are pending validation.

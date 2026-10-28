@@ -33,13 +33,14 @@ val networkModule = module {
     single<BlocklistController> { DefaultBlocklistController(androidContext()) }
     single<FirewallController> { DefaultFirewallController(androidContext(), get(), get()) }
     single<DnsController> { DefaultDnsController(androidContext()) }
+    single<de.mm20.launcher2.network.api.ProxyController> { de.mm20.launcher2.network.impl.DefaultProxyController(androidContext()) }
     single<WireguardController> { DefaultWireguardController(androidContext()) }
     single<WireguardLocalProxy> { DefaultWireguardLocalProxy(get()) }
     single {
         NetworkEngine(
             context = androidContext(),
             settings = get(),
-            components = listOf(get<DnsController>(), get<WireguardController>(), get<BlocklistController>(), get<WireguardLocalProxy>(), get<de.mm20.launcher2.network.tor.TorController>()),
+            components = listOf(get<DnsController>(), get<WireguardController>(), get<BlocklistController>(), get<WireguardLocalProxy>(), get<de.mm20.launcher2.network.tor.TorController>(), get<de.mm20.launcher2.network.api.ProxyController>()),
         )
     }
 }

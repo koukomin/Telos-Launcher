@@ -457,6 +457,7 @@ private fun AppRuleRow(
                 }
                 if (!detail) SwitchPreference(title = stringResource(R.string.netfw_u_metered), value = rule.blockMetered, onValueChanged = { onRule(rule.copy(blockMetered = it)) })
                 if (!detail) SwitchPreference(title = stringResource(R.string.netfw_u_unmetered), value = rule.blockUnmetered, onValueChanged = { onRule(rule.copy(blockUnmetered = it)) })
+                de.mm20.launcher2.ui.network.NetworkProxyAssignmentPreference(app.appId)
                 SwitchPreference(title = stringResource(R.string.nwg_direct), value = direct, onValueChanged = onDirect)
                 FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     TextButton(onClick = onCustomRules) { Text("$ipCount · " + stringResource(R.string.netfw_r_ip)) }

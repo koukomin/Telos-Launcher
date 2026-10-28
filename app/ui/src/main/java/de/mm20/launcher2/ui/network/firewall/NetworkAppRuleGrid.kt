@@ -24,7 +24,7 @@ internal fun NetworkAppRuleGrid(rule: AppRule, allowExclusion: Boolean, onRule: 
     val density = LocalDensity.current
     BoxWithConstraints(Modifier.fillMaxWidth().padding(12.dp)) {
         val columns = (maxWidth / (100 * density.fontScale.coerceAtLeast(1f)).dp).toInt().coerceIn(1, 3)
-        val width = (maxWidth - (columns - 1) * 8.dp) / columns
+        val width = (maxWidth - 8.dp * (columns - 1)) / columns
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             @Composable fun Tile(label: Int, icon: Int, active: Boolean, enabled: Boolean = true, action: () -> Unit) {
                 val colors = MaterialTheme.colorScheme
