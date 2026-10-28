@@ -266,7 +266,7 @@ fun IconsSettingsScreen() {
                         }
                     }
                 )
-                AnimatedVisibility(override) {
+                AnimatedVisibility(override || !drawerFullWidth) {
                     Column {
                         SliderPreference(
                             title = stringResource(R.string.preference_grid_column_count),
@@ -275,6 +275,10 @@ fun IconsSettingsScreen() {
                             max = 12,
                             onValueChanged = { viewModel.setDrawerGridColumnCount(it) }
                         )
+                    }
+                }
+                AnimatedVisibility(override) {
+                    Column {
                         SliderPreference(
                             title = stringResource(R.string.preference_grid_icon_size),
                             value = drawerGrid.iconSize,
