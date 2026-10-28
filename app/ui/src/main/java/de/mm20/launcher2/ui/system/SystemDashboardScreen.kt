@@ -211,6 +211,7 @@ fun SystemDashboardScreen() {
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
+                item { de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "system") }
                 item { BatteryCard() }
                 item {
                     GlassCard {
