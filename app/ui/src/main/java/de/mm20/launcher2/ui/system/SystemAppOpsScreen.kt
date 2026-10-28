@@ -21,7 +21,9 @@ data class SystemAppOpsRoute(val packageName: String? = null) : NavKey
 fun SystemAppOpsScreen(packageName: String? = null) {
     val backStack = LocalBackStack.current
     Column(Modifier.fillMaxSize()) {
-        TextButton(onClick = { backStack.removeLastOrNull() }) { Text(stringResource(R.string.system_appopsnext_name)) }
+        androidx.compose.material3.IconButton(onClick = { backStack.removeLastOrNull() }) {
+            androidx.compose.material3.Icon(androidx.compose.ui.res.painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
+        }
         if (Build.VERSION.SDK_INT >= 35) {
             Box(Modifier.weight(1f)) { dev.izumi.appopsnext.EmbeddedAppOpsScreen(packageName) }
         }

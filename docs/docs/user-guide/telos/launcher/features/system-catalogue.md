@@ -499,3 +499,7 @@ Because `feed` and `smartspacerIntegration` test only for `release`, nightly bui
 - Several features are wrapped in `TELOS_PENDING_REVIEW` markers (Sandbox, Work Mode toggle, Smart
   Freeze). Their wording here may change after review.
 - The Wikipedia image switch exists as a stored setting but has no toggle on the Wikipedia page.
+
+## Embedded application operations
+
+Open **Telos System → Apps → an application → AppOps** on Android 15 or later. This is the embedded AppOpsNext interface, not a link or companion installation. It includes package/UID operation modes, templates and batch edits, new-install policies, history/archive, experimental access monitoring and diagnostics. Choose a supported Root or Shizuku backend and explicitly grant authorization; an installed Shizuku application alone does not grant access. OEM restrictions can prevent individual operations. The language chooser changes the language of all Telos screens. Bottom navigation and sheet actions wrap at large font sizes.

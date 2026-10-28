@@ -25,7 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Composable
-internal fun DocumentScannerDialog(vm: DocumentScannerViewModel, onDismiss: () -> Unit, onCapture: () -> Unit) {
+internal fun DocumentScannerDialog(vm: DocumentScannerViewModel, onDismiss: () -> Unit, onCapture: () -> Unit, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val pages by vm.pages.collectAsState()
     val busy by vm.busy.collectAsState()
@@ -43,7 +43,9 @@ internal fun DocumentScannerDialog(vm: DocumentScannerViewModel, onDismiss: () -
     LaunchedEffect(saved) { if (saved > previousSaved) Toast.makeText(context, R.string.camera_native_saved, Toast.LENGTH_SHORT).show(); previousSaved = saved }
 
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
-        Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surfaceContainer, contentColor = MaterialTheme.colorScheme.onSurface) {
+        Surface(modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surfaceContainer, contentColor = MaterialTheme.colorScheme.onSurface) {
+            BoxWithConstraints(Modifier.fillMaxSize()) {
+            val compactActions = maxHeight < 520.dp || maxWidth < 400.dp && androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.5f
             Column(Modifier.fillMaxSize().safeDrawingPadding().imePadding()) {
                 Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back)) }
@@ -100,11 +102,24 @@ internal fun DocumentScannerDialog(vm: DocumentScannerViewModel, onDismiss: () -
                         }
                     }
                 }
-                FlowRow(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                if (compactActions) {
+                    Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
+                        FilledTonalIconButton(onClick = onCapture, enabled = !busy && pages.size < DocumentScanEngine.MAX_PAGES) {
+                            Icon(painterResource(R.drawable.add_24px), stringResource(R.string.camera_scan_add_page))
+                        }
+                        FilledTonalIconButton(onClick = { images.launch(arrayOf("image/*")) }, enabled = !busy && pages.size < DocumentScanEngine.MAX_PAGES) {
+                            Icon(painterResource(R.drawable.photo_24px), stringResource(R.string.pdft_add_images))
+                        }
+                        FilledIconButton(onClick = vm::createPdf, enabled = !busy && pages.isNotEmpty()) {
+                            Icon(painterResource(R.drawable.save_24px), stringResource(R.string.pdft_save_as))
+                        }
+                    }
+                } else FlowRow(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     OutlinedButton(onClick = onCapture, enabled = !busy && pages.size < DocumentScanEngine.MAX_PAGES) { Text(stringResource(R.string.camera_scan_add_page)) }
                     OutlinedButton(onClick = { images.launch(arrayOf("image/*")) }, enabled = !busy && pages.size < DocumentScanEngine.MAX_PAGES) { Text(stringResource(R.string.pdft_add_images)) }
                     Button(onClick = vm::createPdf, enabled = !busy && pages.isNotEmpty()) { Text(stringResource(R.string.pdft_save_as)) }
                 }
+            }
             }
         }
     }

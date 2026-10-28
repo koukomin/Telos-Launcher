@@ -32,7 +32,7 @@ Hidden album saves still images under Telos’s app-specific external Pictures/T
 
 Foreground automatic capture can be enabled explicitly for camera-reported face detection (only if supported) or preview luminance changes. Both have a five-second cooldown and stop outside the foreground. Motion detection can react to lighting changes. Android device policy can also impose shutter behavior. No option claims to bypass those restrictions.
 
-## QR, barcodes and document scans (development draft)
+## QR, barcodes and document scans
 
 Standard Photo mode recognizes QR, Aztec, Data Matrix, PDF417 and common retail/linear barcodes when the camera supports an analysis stream. Recognition pauses outside the foreground and while a result is open. Copy a result or explicitly open an HTTP(S) address; scanning never executes a payload automatically.
 
@@ -40,4 +40,4 @@ Choose **Scan to PDF** to capture pages privately, or use the document button to
 
 Select **Searchable text (OCR)** for a searchable PDF, or choose an image-only PDF. Up to three recognition languages can be combined, including Greek and English. Pinned Tesseract fast language models download on first use after selection; documents stay on the device. Network access is required for the initial model download. Models are checked against pinned upstream Git blob hashes before use. OCR quality depends on lighting, focus and document layout. Temporary scan sessions are private cache data and may be removed by Android; export important scans promptly. Sessions older than seven days or exceeding the retained-session budget are pruned.
 
-This draft is awaiting build, emulator PDF/OCR and real-camera validation, plus final translations.
+Compilation and emulator tests for image-only multipage PDF and Greek/English searchable PDF passed. Physical camera/OEM behavior has not been verified. At large font sizes or short window heights, capture, import and save use compact labeled icon controls.
