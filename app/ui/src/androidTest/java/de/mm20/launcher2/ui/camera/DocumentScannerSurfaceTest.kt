@@ -53,6 +53,10 @@ class DocumentScannerSurfaceTest {
                 }
             }
             val context = instrumentation.targetContext
+            val title = context.getString(R.string.camera_scan_pdf)
+            val layouts = mutableListOf<androidx.compose.ui.text.TextLayoutResult>()
+            compose.onNodeWithText(title).performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.GetTextLayoutResult) { it(layouts) }
+            assertEquals(2f, layouts.single().layoutInput.density.fontScale, 0.01f)
             val capture = context.getString(R.string.camera_scan_add_page)
             val save = context.getString(R.string.pdft_save_as)
             val page = context.getString(R.string.hc_page_number,1)

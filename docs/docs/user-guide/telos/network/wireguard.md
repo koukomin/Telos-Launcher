@@ -32,8 +32,8 @@ In Settings > Downloads > Network > Proxy, **Torrents through Telos Network Wire
 
 A VPN does not make you anonymous: the provider of the tunnel sees your traffic. Only use configurations from providers you trust.
 
-## Two-hop tunnels (development draft)
+## Two-hop tunnels
 
 The tunnel editor can choose an entry tunnel for an exit tunnel. Traffic is routed through the entry first, then exits through the edited tunnel. The entry must be another single-hop WireGuard configuration with both `0.0.0.0/0` and `::/0` routes. Keep both configurations enabled. Self-links, loops and chains longer than two configurations are rejected.
 
-Telos calls the pinned native engine’s TestHop/Hop API and checks its resulting router before publishing the route. A missing, disabled or unverified entry blocks the configured exit route instead of selecting its direct single-hop path. This Telos-specific link is stored with encrypted-key tunnel settings; standard wg-quick exports do not include it. Compilation and native two-server interoperability remain pending validation.
+Telos calls the pinned native engine’s TestHop/Hop API and checks its resulting router before publishing the route. A missing, disabled or unverified entry blocks the configured exit route instead of selecting its direct single-hop path. This Telos-specific link is stored with encrypted-key tunnel settings; standard wg-quick exports do not include it. Compilation and graph-policy unit tests passed. Live native two-server interoperability has not been verified.

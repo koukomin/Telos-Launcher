@@ -27,6 +27,8 @@ import kotlinx.coroutines.withContext
 @Composable
 internal fun DocumentScannerDialog(vm: DocumentScannerViewModel, onDismiss: () -> Unit, onCapture: () -> Unit, modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    // Dialog owns a separate window; retain the host's user font density there.
+    val hostDensity = androidx.compose.ui.platform.LocalDensity.current
     val pages by vm.pages.collectAsState()
     val busy by vm.busy.collectAsState()
     val error by vm.error.collectAsState()
@@ -43,6 +45,7 @@ internal fun DocumentScannerDialog(vm: DocumentScannerViewModel, onDismiss: () -
     LaunchedEffect(saved) { if (saved > previousSaved) Toast.makeText(context, R.string.camera_native_saved, Toast.LENGTH_SHORT).show(); previousSaved = saved }
 
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
+        CompositionLocalProvider(androidx.compose.ui.platform.LocalDensity provides hostDensity) {
         Surface(modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surfaceContainer, contentColor = MaterialTheme.colorScheme.onSurface) {
             BoxWithConstraints(Modifier.fillMaxSize()) {
             val compactActions = maxHeight < 520.dp || maxWidth < 400.dp && androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.5f
@@ -122,6 +125,7 @@ internal fun DocumentScannerDialog(vm: DocumentScannerViewModel, onDismiss: () -
             }
             }
         }
+    }
     }
     if (languagePicker) {
         var search by remember { mutableStateOf("") }

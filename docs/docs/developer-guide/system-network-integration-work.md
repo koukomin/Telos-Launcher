@@ -26,3 +26,7 @@ No physical OnePlus/Android 16 call, Shizuku/root grant, native proxy/two-server
 ### Signed-build producer dependency
 
 The first ARM64 signed preflight (`40652059373`) exposed a Gradle implicit dependency: release lint reads generated daemon assets independently of the asset merge task. Lint model writer tasks now explicitly depend on the same daemon producer. This keeps release lint enabled and preserves ARM32's existing UserService fallback. The corrected signed builds must pass before APK delivery. An initial set of 112 Greek AppOps resources has also been manually reviewed, including shared-UID warnings, allow/ignore/deny/foreground modes and write/restore confirmations; later machine artifacts must preserve these reviewed entries.
+
+### Visual review correction
+
+Run `40652059321` passed 32 Android tests. Retrieved AppOps/scanner screenshots nevertheless exposed broken narrow tab/navigation words and a scanner font-density fixture gap. Responsive navigation, scrolling tabs, inherited Dialog density and a font-scale assertion address those findings; replacement screenshots must be inspected before visual completion is claimed.

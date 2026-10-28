@@ -86,7 +86,7 @@ after a recoverable service restart or package update. Resume requires the
 existing Android VPN consent; reboot follows Start on boot. Force-stop and
 revoking VPN consent can prevent automatic recovery.
 
-## Network navigation and statistics (development draft)
+## Network navigation and statistics
 
 Home, Statistics, Logs, Apps and Settings share one bottom navigation bar. Switching destinations reuses the Network root. App icons inside logs open the same package firewall editor as the Apps list. The app editor has a large identity section and adaptive rule tiles for unmetered/metered access, full blocking, firewall bypass, universal-rule bypass and VPN exclusion. Additional controls retain Wi-Fi/mobile/LAN/VPN, background/screen/roaming rules, proxy assignment, IP/domain rules, notes and temporary allowance. The 15-minute allowance remains available.
 
@@ -94,8 +94,8 @@ Apps can be searched by name, package or app ID, and filtered by Android-declare
 
 Statistics offers 1-hour, 24-hour and 7-day windows, metered/unmetered totals and per-app upload/download totals. These use retained connection logs grouped by connection opening time; byte counts become available when flows close. Retention and logging switches affect the results. Older records have unknown metering, shown separately. These are not device-wide or per-second traffic-meter totals.
 
-### User-configured proxies (development draft)
+### User-configured proxies
 
 Settings → Proxies adds SOCKS5 and HTTP CONNECT endpoints with optional authentication. Endpoint addresses and credentials are encrypted in Android Keystore-backed private storage; UI summaries never include credentials. Select a default endpoint or assign one in an app’s firewall editor. Explicit per-app proxy/direct selections override other routing; otherwise a selected WireGuard tunnel takes priority over the default proxy. HTTP CONNECT supports TCP only; other protocols are blocked for apps assigned to it. DNS continues to use the selected Telos resolver.
 
-Disabled, missing and unregistered assigned endpoints block affected apps. Removing an endpoint preserves its assignments so removal cannot silently switch those apps to direct access; choose another route explicitly. Editing requires entering authentication again, with empty credentials removing authentication. A registered indicator means the native VPN registry contains the endpoint, not that a remote server has passed a reachability test. The endpoints require your own server; no paid RPN account is created. Native routing and device interoperability are pending validation.
+Disabled, missing and unregistered assigned endpoints block affected apps. Removing an endpoint preserves its assignments so removal cannot silently switch those apps to direct access; choose another route explicitly. Editing requires entering authentication again, with empty credentials removing authentication. A registered indicator means the native VPN registry contains the endpoint, not that a remote server has passed a reachability test. The endpoints require your own server; no paid RPN account is created. Compilation and routing-policy unit tests passed; live native routing and device interoperability have not been verified.

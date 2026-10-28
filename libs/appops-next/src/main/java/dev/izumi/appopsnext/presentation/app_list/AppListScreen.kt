@@ -24,7 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -142,18 +142,18 @@ fun AppListScreen(
         bottomBar = bottomBar,
     ) { contentPadding ->
         Column(modifier = Modifier.fillMaxSize().padding(contentPadding)) {
-            TabRow(selectedTabIndex = if (permissionTab) 1 else 0) {
+            ScrollableTabRow(selectedTabIndex = if (permissionTab) 1 else 0, edgePadding = 0.dp) {
                 Tab(
                     selected = !permissionTab,
                     onClick = { onPermissionTabChange(false) },
                     unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    text = { Text(stringResource(R.string.appopsnext_browse_by_app)) },
+                    text = { Text(stringResource(R.string.appopsnext_browse_by_app), softWrap = false) },
                 )
                 Tab(
                     selected = permissionTab,
                     onClick = { onPermissionTabChange(true) },
                     unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    text = { Text(stringResource(R.string.appopsnext_browse_by_permission)) },
+                    text = { Text(stringResource(R.string.appopsnext_browse_by_permission), softWrap = false) },
                 )
             }
             if (permissionTab) {

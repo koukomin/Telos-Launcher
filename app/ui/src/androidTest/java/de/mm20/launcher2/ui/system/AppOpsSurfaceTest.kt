@@ -36,6 +36,8 @@ class AppOpsSurfaceTest {
         val context = androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext
         val browse = context.getString(dev.izumi.appopsnext.R.string.appopsnext_browse_by_app)
         compose.waitUntil(30_000) { compose.onAllNodesWithText(browse).fetchSemanticsNodes().isNotEmpty() }
+        val search = context.getString(dev.izumi.appopsnext.R.string.appopsnext_app_list_search_label)
+        compose.waitUntil(30_000) { compose.onAllNodesWithText(search).fetchSemanticsNodes().isNotEmpty() }
         for (isLight in listOf(false,true)) for (isWide in listOf(false,true)) {
             compose.runOnIdle { light.value = isLight; wide.value = isWide }
             compose.waitForIdle()
