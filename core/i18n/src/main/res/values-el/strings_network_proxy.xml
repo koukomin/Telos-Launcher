@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="netproxy_title">Proxy</string>
+    <string name="netproxy_hint">Ρύθμισε δικό σου SOCKS5 ή HTTP CONNECT endpoint. Τα διαπιστευτήρια κρυπτογραφούνται στη συσκευή. Οι εφαρμογές που του ανατίθενται μπλοκάρονται όσο ο proxy είναι ανενεργός, λείπει ή δεν έχει καταχωριστεί. Το HTTP CONNECT υποστηρίζει μόνο TCP· το DNS διατηρεί τον επιλεγμένο resolver του Telos. Οι ρητές επιλογές proxy εφαρμογής έχουν προτεραιότητα· τα ανατεθειμένα WireGuard tunnels προηγούνται του προεπιλεγμένου proxy.</string>
+    <string name="netproxy_default">Προεπιλεγμένος proxy</string>
+    <string name="netproxy_registered">Καταχωρίστηκε στο ενεργό VPN</string>
+    <string name="netproxy_not_registered">Δεν έχει καταχωριστεί σε ενεργό VPN</string>
+    <string name="netproxy_remove_hint">Οι εφαρμογές που έχουν ανατεθεί σε αυτόν τον proxy παραμένουν μπλοκαρισμένες μετά την αφαίρεση. Επίλεξε άλλο endpoint ή απευθείας σύνδεση για να επανασυνδεθούν.</string>
+    <string name="netproxy_missing">Μη διαθέσιμος proxy (%1$d)</string>
+    <string name="netproxy_name">Όνομα</string>
+    <string name="netproxy_host">Κεντρικός υπολογιστής</string>
+    <string name="netproxy_port">Θύρα</string>
+    <string name="netproxy_username">Όνομα χρήστη (προαιρετικό)</string>
+    <string name="netproxy_password">Κωδικός πρόσβασης</string>
+    <string name="netproxy_follow_default">Ακολούθηση WireGuard και προεπιλεγμένου proxy</string>
+    <string name="netproxy_direct">Παράκαμψη όλων των proxy</string>
+    <string name="netproxy_reenter_credentials">Πληκτρολόγησε ξανά τα διαπιστευτήρια κατά την επεξεργασία. Κενά διαπιστευτήρια αφαιρούν τον έλεγχο ταυτότητας του proxy.</string>
+</resources>

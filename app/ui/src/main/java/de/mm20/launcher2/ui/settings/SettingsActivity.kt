@@ -368,6 +368,7 @@ open class SettingsActivity : BaseActivity() {
                 de.mm20.launcher2.ui.network.firewall.NetworkUniversalRulesScreen()
             }
             entry<de.mm20.launcher2.ui.network.firewall.NetworkAppRulesRoute> { key -> de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesScreen(key.appId) }
+        entry<de.mm20.launcher2.ui.system.SystemAppOpsRoute> { key -> de.mm20.launcher2.ui.system.SystemAppOpsScreen(key.packageName) }
         entry<de.mm20.launcher2.ui.system.SystemAppDetailsRoute> { key -> de.mm20.launcher2.ui.system.SystemAppDetailsScreen(key.packageName) }
         entry<de.mm20.launcher2.ui.network.firewall.NetworkPackageFirewallRoute> { key -> de.mm20.launcher2.ui.network.firewall.NetworkFirewallScreen(key.packageName) }
             entry<de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesRoute> {
@@ -376,6 +377,8 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsRoute> {
                 de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsScreen()
             }
+            entry<de.mm20.launcher2.ui.network.NetworkProxiesRoute> { de.mm20.launcher2.ui.network.NetworkProxiesScreen() }
+        entry<de.mm20.launcher2.ui.network.NetworkStatsRoute> { de.mm20.launcher2.ui.network.NetworkStatsScreen() }
             entry<de.mm20.launcher2.ui.network.logs.NetworkLogsRoute> {
                 de.mm20.launcher2.ui.network.logs.NetworkLogsScreen()
             }

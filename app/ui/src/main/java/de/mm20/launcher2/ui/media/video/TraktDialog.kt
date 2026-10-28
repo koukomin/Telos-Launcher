@@ -17,6 +17,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -48,6 +50,8 @@ import kotlinx.coroutines.withContext
 internal fun TraktDialog(onDismiss: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val syncing by Trakt.syncing.collectAsStateWithLifecycle()
+    val syncFailed by Trakt.syncFailed.collectAsStateWithLifecycle()
     var login by remember { mutableStateOf<Trakt.Login?>(null) }
     var queue by remember { mutableIntStateOf(0) }
     var clientId by remember { mutableStateOf("") }
@@ -93,6 +97,14 @@ internal fun TraktDialog(onDismiss: () -> Unit) {
                 Text(stringResource(R.string.au7_trakt_privacy), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 if (l.connected) {
                     Text(stringResource(R.string.au7_trakt_signed_in), style = MaterialTheme.typography.titleSmall)
+                    if (syncing) {
+                        LinearProgressIndicator(Modifier.fillMaxWidth())
+                        Text(stringResource(R.string.ermis_loading))
+                    }
+                    if (syncFailed) Text(stringResource(R.string.pdft_error_title), color = MaterialTheme.colorScheme.error)
+                    TextButton(enabled = !syncing, onClick = { scope.launch { Trakt.refreshLibrary(context.applicationContext, force = true); reload() } }) {
+                        Text(stringResource(R.string.hc_sync_now))
+                    }
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(stringResource(R.string.au7_trakt_switch), modifier = Modifier.weight(1f))
                         Switch(checked = l.enabled, onCheckedChange = { on ->

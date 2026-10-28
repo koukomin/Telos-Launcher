@@ -54,7 +54,9 @@ fun NetworkSettingsScreen() {
 
     val mtuLabelAuto = stringResource(R.string.net_settings_mtu_auto)
 
-    PreferenceScreen(title = { Text(stringResource(R.string.net_settings_title), modifier = Modifier.padding(horizontal = 16.dp)) }) {
+    val networkBackStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
+    PreferenceScreen(title = { Text(stringResource(R.string.net_settings_title), modifier = Modifier.padding(horizontal = 16.dp)) }, bottomBar = { NetworkNavigationBar(NetworkSection.Settings) }) {
+        item { de.mm20.launcher2.ui.component.preferences.Preference(title = stringResource(R.string.netproxy_title), onClick = { networkBackStack.add(NetworkProxiesRoute) }) }
         item {
             PreferenceCategory(title = stringResource(R.string.net_settings_cat_start)) {
                 SwitchPreference(

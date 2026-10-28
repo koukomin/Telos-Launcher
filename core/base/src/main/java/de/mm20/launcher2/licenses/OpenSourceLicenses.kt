@@ -4,6 +4,20 @@ import de.mm20.launcher2.base.R
 
 val OpenSourceLicenses = arrayOf(
     OpenSourceLibrary(
+        name = "AppOpsNext",
+        licenseName = R.string.gpl3_name,
+        licenseText = R.raw.license_gpl_3,
+        copyrightNote = "Copyright 1zumiii and contributors",
+        url = "https://github.com/1zumiii/AppOpsNext",
+    ),
+    OpenSourceLibrary(
+        name = "Tesseract4Android / Tesseract / tessdata_fast",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        copyrightNote = "Copyright Adaptech s.r.o., Robert Pösel, Google Inc., Robert Theis and contributors; native notices: assets/licenses/tesseract4android-4.9.0-NOTICES.txt",
+        url = "https://github.com/adaptech-cz/Tesseract4Android",
+    ),
+    OpenSourceLibrary(
         name = "Tor Android / Tor",
         licenseName = R.string.bsd_3clause_name,
         licenseText = R.raw.license_tor_android,

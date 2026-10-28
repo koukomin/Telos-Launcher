@@ -44,6 +44,7 @@ internal fun StremioPlaybackSheet(cacheOnly: Boolean = false, onDismiss: () -> U
                         items = StremioPlaybackSettings.cacheChoices.map { ListPreferenceItem("$it GB", it) },
                         onValueChanged = { settings = s.copy(cacheGb = it) })
                 }
+                item { StremioSharedCacheControls(s) { settings = it } }
                 if (!cacheOnly) item {
                     val choices = listOf(ListPreferenceItem(stringResource(R.string.dl_t_select_none), "")) +
                         languages.map { ListPreferenceItem(it.second, it.first) }

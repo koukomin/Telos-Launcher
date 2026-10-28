@@ -147,3 +147,9 @@ Follow-up local checks: `TELOS_TRANSLATION_BASE=d081761 python -B tools/translat
 
 
 The implementation scope expanded before merge: repository-wide Shizuku private-factory removal, a shared supported UserService/process adapter, live System/Tweaks/graphics privilege refresh, Enter launch routing, and an external full-suite AppOpsNext button. New Android tests exercise production UserService pipes (stdin EOF, stdout, stderr, nonzero exit, timeout/destruction) without modifying permissions. They do not certify real Shizuku authorization or OEM audio enforcement. The prior helper callback/snapshot emulator workflow 40530150502 passed; final expanded-head compilation and tests remain required.
+
+## Embedded AppOps and document scanner (2026-10-28)
+
+Native run `40652059321` at `2d80bdc22ba4bbbd2de32589984c0f0d0674fef8` passed compilation/unit checks and 32 Android tests with no failures/errors/skips. Artifact `12800199089` (SHA-256 `570e7356e42ea2bb1828c90ea24142965f9d9f4d26105b7eb9c6feafb6e975c9`) contains the AppOps and scanner light/dark compact/wide screenshots. Inspection found poor mid-word wrapping in narrow AppOps navigation/tabs and showed that the scanner Dialog fixture did not inherit the test's font density. Passing assertions alone therefore did not establish large-font completion.
+
+AppOps navigation now uses two rows when narrow and tall, or accessible compact icons when narrow and short, while wide windows retain labels in one row. Browse tabs scroll instead of breaking words. Scanner retains the caller's actual font density across its separate Dialog window; a text-layout assertion verifies fontScale 2. The AppOps fixture waits for the loaded search surface before capturing. These corrections require a fresh instrumented run and screenshot inspection. No physical camera, root/Shizuku grant or live account behavior is inferred from these tests.

@@ -1,0 +1,90 @@
+package dev.izumi.appopsnext.presentation.batch
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import dev.izumi.appopsnext.R
+import dev.izumi.appopsnext.presentation.components.AppBottomSheet
+import dev.izumi.appopsnext.templates.model.PermissionTemplate
+import dev.izumi.appopsnext.presentation.templates.templateDisplayName
+
+@Composable
+fun TemplatePickerDialog(
+    templates: List<PermissionTemplate>,
+    onSelect: (PermissionTemplate) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    AppBottomSheet(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(text = stringResource(R.string.appopsnext_batch_choose_template))
+        },
+        text = {
+            if (templates.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.appopsnext_batch_no_templates),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 420.dp),
+                ) {
+                    items(
+                        items = templates,
+                        key = PermissionTemplate::id,
+                    ) { template ->
+                        ListItem(
+                            modifier = Modifier.clickable(enabled = template.rules.isNotEmpty()) {
+                                onSelect(template)
+                            },
+                            headlineContent = {
+                                Text(
+                                    text = templateDisplayName(template),
+                                    fontWeight = FontWeight.Medium,
+                                    color = if (template.rules.isEmpty()) {
+                                        MaterialTheme.colorScheme.onSurfaceVariant
+                                    } else {
+                                        MaterialTheme.colorScheme.onSurface
+                                    },
+                                )
+                            },
+                            supportingContent = {
+                                Text(
+                                    text = if (template.rules.isEmpty()) {
+                                        stringResource(R.string.appopsnext_template_no_permissions)
+                                    } else {
+                                        stringResource(R.string.appopsnext_template_rule_count, template.rules.size)
+                                    },
+                                )
+                            },
+                            colors = ListItemDefaults.colors(
+                                containerColor = Color.Transparent,
+                            ),
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            Button(onClick = onDismiss) {
+                Text(text = stringResource(R.string.appopsnext_action_cancel))
+            }
+        },
+    )
+}

@@ -100,6 +100,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                                 if (app.frozen) Text(stringResource(R.string.hf_freeze_frozen), color = MaterialTheme.colorScheme.primary)
                             }
                         }
+                        AppOpsNextButton(app.pkg)
                         uad[app.pkg]?.let { info ->
                             Text(stringResource(R.string.freeze_hub_uad_help), style = MaterialTheme.typography.labelSmall)
                             Text(info.recommendation, style = MaterialTheme.typography.labelMedium)

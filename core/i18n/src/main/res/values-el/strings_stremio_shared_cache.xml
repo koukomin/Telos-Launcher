@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_shared_cache">Χρήση κοινής cache του Stremio</string>
+    <string name="stremio_shared_hint">Αναπαραγωγή torrents μέσω του ίδιου ενεργού streaming server του Stremio, με κοινούς φακέλους και cache. Κράτησε το Stremio ή τον server του σε λειτουργία. Τα ιδιωτικά αρχεία εφαρμογών δεν μοιράζονται απευθείας.</string>
+    <string name="stremio_server_address">Διεύθυνση streaming server του Stremio</string>
+    <string name="stremio_server_connect">Σύνδεση και ανάγνωση υπάρχουσας cache</string>
+    <string name="stremio_shared_unavailable">Ο streaming server του Stremio δεν είναι διαθέσιμος ή συμβατός. Έλεγξε τη διεύθυνσή του και κράτησέ τον σε λειτουργία.</string>
+    <string name="stremio_server_cache_folder">Φάκελος cache στον server</string>
+    <string name="stremio_server_cache_hint">Αυτή είναι διαδρομή στον server. Το επιλεγμένο μέγεθος και ο φάκελος ισχύουν και για τις δύο εφαρμογές. Ο server διαχειρίζεται το δίκτυο των torrents και την εκκαθάριση cache.</string>
+    <string name="stremio_server_apply_cache">Εφαρμογή μεγέθους και φακέλου cache στον server</string>
+</resources>

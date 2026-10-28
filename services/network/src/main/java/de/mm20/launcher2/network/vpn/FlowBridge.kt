@@ -62,6 +62,7 @@ internal class FlowBridge(
     private val apps: AppDirectory,
     private val tor: de.mm20.launcher2.network.tor.TorController,
     private val onFault: (String) -> Unit,
+    private val proxies: de.mm20.launcher2.network.api.ProxyController? = null,
 ) : Bridge {
 
     private val faultCount = AtomicInteger(0)
@@ -172,7 +173,8 @@ internal class FlowBridge(
             var verdict = decision.verdict
             var reason = decision.reason
             if (decision.verdict == Verdict.Allow) {
-                when (val route = safeRoute(info)) {
+                val wgRoute = safeRoute(info)
+                when (val route = proxies?.routeFor(info, wgRoute) ?: wgRoute) {
                     WgRoute.Direct -> {}
                     WgRoute.Block -> {
                         verdict = Verdict.Block
@@ -201,7 +203,7 @@ internal class FlowBridge(
             return mark(proxy, cid, owner)
         } catch (t: Throwable) {
             fault("flow", t)
-            return mark(if (torRestrictions()) Backend.Block else Backend.Exit, cid, uid)
+            return mark(if (torRestrictions() || proxies?.failClosedFor(uid) == true) Backend.Block else Backend.Exit, cid, uid)
         }
     }
 
@@ -237,7 +239,7 @@ internal class FlowBridge(
             return mark(if (decision.blocked) Backend.Block else Backend.Ingress, cid, owner)
         } catch (t: Throwable) {
             fault("inflow", t)
-            return mark(if (torRestrictions()) Backend.Block else Backend.Ingress, cid, recvdUid)
+            return mark(if (torRestrictions() || proxies?.failClosedFor(recvdUid) == true) Backend.Block else Backend.Ingress, cid, recvdUid)
         }
     }
 
@@ -279,6 +281,7 @@ internal class FlowBridge(
                 ruleId = ruleId,
                 proxyId = proxyId,
                 network = info.environment.network,
+                metered = info.environment.metered,
                 blocklists = info.blocklists,
             )
         )
@@ -429,7 +432,7 @@ internal class FlowBridge(
         }
         if (faultCount.incrementAndGet() > MAX_FAULTS_IN_WINDOW) {
             faultCount.set(0)
-            if (!torRestrictions()) onFault("$where: ${t.javaClass.simpleName}: ${t.message}")
+            if (!torRestrictions() && proxies?.hasPolicies != true) onFault("$where: ${t.javaClass.simpleName}: ${t.message}")
         }
     }
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stremio_shared_cache">Use shared Stremio cache</string>
+    <string name="stremio_shared_hint">Play torrents through the same running Stremio streaming server to reuse its folders and cache. Keep Stremio or its server running. Private app files cannot be shared directly.</string>
+    <string name="stremio_server_address">Stremio streaming server address</string>
+    <string name="stremio_server_connect">Connect and read existing cache</string>
+    <string name="stremio_shared_unavailable">The Stremio streaming server is unavailable or incompatible. Check its address and keep it running.</string>
+    <string name="stremio_server_cache_folder">Cache folder on the server</string>
+    <string name="stremio_server_cache_hint">This is a path on the server. Applying the selected size and folder affects both clients. Torrent network and eviction policies belong to that server.</string>
+    <string name="stremio_server_apply_cache">Apply cache size and folder to server</string>
+</resources>

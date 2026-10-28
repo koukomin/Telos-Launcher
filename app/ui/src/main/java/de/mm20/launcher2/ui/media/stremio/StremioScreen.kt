@@ -408,6 +408,7 @@ private fun DetailPage(vm: StremioViewModel, d: DetailState) {
 
 @Composable
 private fun Episodes(vm: StremioViewModel, meta: Meta) {
+    val videoOrder = remember(meta.videos) { de.mm20.launcher2.comms.stremio.StremioProgressState.orderedVideoIds(meta.videos) }
     val seasons = remember(meta) { meta.videos.mapNotNull { it.season }.distinct().sortedBy { if (it == 0) Int.MAX_VALUE else it } }
     var season by rememberSaveable(meta.id) { mutableIntStateOf(seasons.firstOrNull { it != 0 } ?: seasons.firstOrNull() ?: 1) }
     if (seasons.size > 1) {
@@ -430,7 +431,7 @@ private fun Episodes(vm: StremioViewModel, meta: Meta) {
                 }
                 Column(Modifier.weight(1f)) {
                     Text(listOfNotNull(v.episode?.toString(), v.title).joinToString(". "), style = MaterialTheme.typography.bodyLarge, maxLines = 2, overflow = TextOverflow.Ellipsis)
-                    WatchMark(vm, meta.id, v.id, meta.videos.map { it.id }, v.season, v.episode)
+                    WatchMark(vm, meta.id, v.id, videoOrder, v.season, v.episode)
                     v.overview?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis) }
                 }
             }
@@ -663,8 +664,11 @@ private fun WatchMark(vm: StremioViewModel, id: String, videoId: String? = null,
     val version by vm.traktVersion.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val state = states[id]
-    val stremio = remember(state, videoId, videoIds) {
-        if (videoId == null) state?.movie == true else videoId in state?.episodes(videoIds).orEmpty()
+    val progress by vm.progressHistory.collectAsStateWithLifecycle()
+    val stremio = remember(state, videoId, videoIds, progress, id) {
+        val local = progress.any { it.id == id && (videoId == null || it.videoId == videoId) && it.durationMs > 0 &&
+            it.timeWatchedMs.toDouble() > it.durationMs * de.mm20.launcher2.comms.stremio.StremioProgressState.WATCHED_THRESHOLD }
+        local || if (videoId == null) state?.movie == true else videoId in state?.episodes(videoIds).orEmpty()
     }
     val trakt = remember(id, season, episode, version) {
         de.mm20.launcher2.comms.media.video.trakt.Trakt.isWatchedId(context, id, season, episode)

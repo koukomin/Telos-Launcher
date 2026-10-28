@@ -1,0 +1,652 @@
+package dev.izumi.appopsnext.presentation.app_detail
+
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import dev.izumi.appopsnext.R
+import dev.izumi.appopsnext.presentation.components.AppBottomSheet
+import dev.izumi.appopsnext.presentation.components.PermissionEntryIcon
+import dev.izumi.appopsnext.appops.command.AppOpMode
+import dev.izumi.appopsnext.appops.model.AppOpModeChangePhase
+import dev.izumi.appopsnext.appops.model.AppOpsRestorationStatus
+import dev.izumi.appopsnext.appops.model.AppOpScope
+
+@Composable
+internal fun AppOpListItem(
+    item: AppOpDisplayItem,
+    isApplying: Boolean,
+    editEnabled: Boolean,
+    selectedForBatch: Boolean? = null,
+    onBatchSelectionChange: (Boolean) -> Unit = {},
+    onModeSelected: (AppOpMode, AppOpMode) -> Unit,
+) {
+    val currentMode = AppOpMode.fromShellValue(item.mode)
+    val context = LocalContext.current
+    val usageDetails = AppOpUsageDetailsFormatter.format(
+        rawDetails = item.details,
+        stringResolver = { resourceId, arguments ->
+            context.getString(resourceId, *arguments.toTypedArray())
+        },
+    )
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(18.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                if (selectedForBatch != null) {
+                    Checkbox(
+                        checked = selectedForBatch,
+                        onCheckedChange = onBatchSelectionChange,
+                    )
+                } else {
+                    PermissionEntryIcon(item.operationName)
+                }
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = item.labelRes?.let { stringResource(it) }
+                            ?: item.operationName,
+                        fontWeight = FontWeight.Medium,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    if (item.labelRes != null) {
+                        Text(
+                            text = item.operationName,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
+                if (isApplying) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(20.dp),
+                            strokeWidth = 2.dp,
+                        )
+                        Text(
+                            text = stringResource(R.string.appopsnext_app_detail_mode_item_applying),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.labelSmall,
+                        )
+                    }
+                } else if (currentMode != null && selectedForBatch == null) {
+                    EditableModeMenu(
+                        currentMode = currentMode,
+                        enabled = editEnabled,
+                        onModeSelected = onModeSelected,
+                    )
+                } else {
+                    Text(
+                        text = currentMode?.let { modeLabel(it) } ?: item.mode,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                }
+            }
+            if (item.isImplicitDefault) {
+                Text(
+                    text = stringResource(R.string.appopsnext_app_detail_implicit_default_hint),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.labelSmall,
+                )
+            }
+            usageDetails?.let { details ->
+                Text(
+                    text = details,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.labelSmall,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+internal fun EditableModeMenu(
+    currentMode: AppOpMode,
+    enabled: Boolean,
+    onModeSelected: (AppOpMode, AppOpMode) -> Unit,
+    /** Replaces the spoken mode where the button picks a target, not a current value. */
+    contentDescription: String? = null,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    Box {
+        TextButton(
+            onClick = { expanded = true },
+            enabled = enabled,
+            modifier = if (contentDescription != null) {
+                Modifier.semantics { this.contentDescription = contentDescription }
+            } else {
+                Modifier
+            },
+            contentPadding = PaddingValues(0.dp),
+        ) {
+            Text(
+                text = stringResource(
+                    R.string.appopsnext_app_detail_mode_button,
+                    modeLabel(currentMode),
+                ),
+                fontWeight = FontWeight.SemiBold,
+            )
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+        ) {
+            AppOpMode.entries.forEach { mode ->
+                DropdownMenuItem(
+                    text = { Text(text = modeLabel(mode)) },
+                    enabled = mode != currentMode,
+                    onClick = {
+                        expanded = false
+                        onModeSelected(currentMode, mode)
+                    },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+internal fun ModeChangeDialog(
+    state: AppOpModeChangeUiState,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+    onDenyFallbackNoticeDismiss: (Boolean) -> Unit,
+    onPermissionFlagNoticeDismiss: (Boolean) -> Unit,
+    onForegroundAlternativeRequested: () -> Unit,
+    /** The permission page lists many apps, so its confirmation names the package. */
+    showPackageName: Boolean = false,
+) {
+    when (state) {
+        is AppOpModeChangeUiState.Confirming -> AppBottomSheet(
+            onDismissRequest = onDismiss,
+            title = {
+                Text(text = stringResource(R.string.appopsnext_app_detail_mode_confirm_title))
+            },
+            text = {
+                Column(
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    Text(
+                        text = stringResource(
+                            R.string.appopsnext_app_detail_mode_confirm_operation,
+                            state.request.operationName,
+                        ),
+                    )
+                    if (showPackageName) {
+                        Text(
+                            text = stringResource(
+                                R.string.appopsnext_app_detail_mode_confirm_package,
+                                state.request.packageName,
+                            ),
+                        )
+                    }
+                    if (
+                        state.request.scope == AppOpScope.UID &&
+                        state.request.affectedPackages.size > 1
+                    ) {
+                        Text(
+                            text = stringResource(
+                                R.string.appopsnext_app_detail_mode_shared_uid_warning,
+                                state.request.affectedPackages.joinToString(
+                                    separator = "\n",
+                                ),
+                            ),
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    }
+                    Text(
+                        text = stringResource(
+                            R.string.appopsnext_app_detail_mode_transition,
+                            modeLabel(state.request.originalMode),
+                            modeLabel(state.request.requestedMode),
+                        ),
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    Text(
+                        text = stringResource(
+                            R.string.appopsnext_app_detail_mode_confirm_warning,
+                        ),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    if (state.request.requestedMode == AppOpMode.DENY) {
+                        Text(
+                            text = stringResource(
+                                R.string.appopsnext_app_detail_mode_deny_fallback_notice,
+                            ),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                Button(onClick = onConfirm) {
+                    Text(text = stringResource(R.string.appopsnext_action_apply))
+                }
+            },
+            dismissButton = {
+                OutlinedButton(onClick = onDismiss) {
+                    Text(text = stringResource(R.string.appopsnext_action_cancel))
+                }
+            },
+        )
+
+        is AppOpModeChangeUiState.Failure -> ModeChangeFailureDialog(
+            state = state,
+            onDismiss = onDismiss,
+            onForegroundAlternativeRequested =
+                onForegroundAlternativeRequested,
+        )
+
+        is AppOpModeChangeUiState.DenyFallbackApplied ->
+            DenyFallbackAppliedDialog(
+                state = state,
+                onDismiss = onDenyFallbackNoticeDismiss,
+            )
+
+        is AppOpModeChangeUiState.PermissionFlagApplied ->
+            PermissionFlagAppliedDialog(
+                state = state,
+                onDismiss = onPermissionFlagNoticeDismiss,
+            )
+
+        else -> Unit
+    }
+}
+
+@Composable
+private fun DenyFallbackAppliedDialog(
+    state: AppOpModeChangeUiState.DenyFallbackApplied,
+    onDismiss: (Boolean) -> Unit,
+) {
+    var dontShowAgain by remember(state.request) {
+        mutableStateOf(false)
+    }
+    val dismiss = { onDismiss(dontShowAgain) }
+    AppBottomSheet(
+        onDismissRequest = dismiss,
+        title = {
+            Text(
+                text = stringResource(
+                    R.string.appopsnext_app_detail_mode_deny_fallback_applied_title,
+                ),
+            )
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    text = stringResource(
+                        R.string.appopsnext_app_detail_mode_deny_fallback_applied,
+                    ),
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Checkbox(
+                        checked = dontShowAgain,
+                        onCheckedChange = { dontShowAgain = it },
+                    )
+                    Text(
+                        text = stringResource(
+                            R.string.appopsnext_app_detail_mode_deny_fallback_dont_show,
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Button(onClick = dismiss) {
+                Text(text = stringResource(R.string.appopsnext_action_dismiss))
+            }
+        },
+    )
+}
+
+@Composable
+private fun PermissionFlagAppliedDialog(
+    state: AppOpModeChangeUiState.PermissionFlagApplied,
+    onDismiss: (Boolean) -> Unit,
+) {
+    var dontShowAgain by remember(state.request) {
+        mutableStateOf(false)
+    }
+    val dismiss = { onDismiss(dontShowAgain) }
+    AppBottomSheet(
+        onDismissRequest = dismiss,
+        title = {
+            Text(
+                text = stringResource(
+                    R.string.appopsnext_app_detail_mode_permission_flag_title,
+                ),
+            )
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (state.denyFallbackAttempted) {
+                    Text(
+                        text = stringResource(
+                            R.string.appopsnext_app_detail_mode_permission_flag_deny,
+                        ),
+                    )
+                }
+                Text(
+                    text = stringResource(
+                        R.string.appopsnext_app_detail_mode_permission_flag_applied,
+                    ),
+                )
+                Text(
+                    text = stringResource(
+                        R.string.appopsnext_app_detail_mode_permission_flag_settings,
+                    ),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Checkbox(
+                        checked = dontShowAgain,
+                        onCheckedChange = { dontShowAgain = it },
+                    )
+                    Text(
+                        text = stringResource(
+                            R.string.appopsnext_app_detail_mode_permission_flag_dont_show,
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Button(onClick = dismiss) {
+                Text(text = stringResource(R.string.appopsnext_action_dismiss))
+            }
+        },
+    )
+}
+
+@Composable
+private fun ModeChangeFailureDialog(
+    state: AppOpModeChangeUiState.Failure,
+    onDismiss: () -> Unit,
+    onForegroundAlternativeRequested: () -> Unit,
+) {
+    val runtimePermissionBlocksGrant =
+        state.request.runtimePermissionDenied &&
+            state.request.requestedMode in setOf(
+                AppOpMode.ALLOW,
+                AppOpMode.FOREGROUND,
+            )
+    if (runtimePermissionBlocksGrant) {
+        RuntimePermissionRequiredDialog(
+            packageName = state.request.packageName,
+            onDismiss = onDismiss,
+        )
+        return
+    }
+    val canTryForeground =
+        ModeChangeAlternativePolicy.canTryForeground(
+            request = state.request,
+            result = state.result,
+        )
+    AppBottomSheet(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(
+                    R.string.appopsnext_app_detail_mode_change_failure,
+                ),
+                color = MaterialTheme.colorScheme.error,
+                fontWeight = FontWeight.SemiBold,
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                if (state.denyFallbackAttempted) {
+                    Text(
+                        text = stringResource(
+                            R.string.appopsnext_app_detail_mode_deny_fallback_failed,
+                        ),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Text(
+                    text = stringResource(
+                        R.string.appopsnext_app_detail_mode_change_failure_detail,
+                        modeChangePhaseLabel(state.result.phase),
+                        restorationStatusLabel(
+                            state.result.restorationStatus,
+                        ),
+                    ),
+                )
+                if (state.runtimePermissionManaged) {
+                    Text(
+                        text = stringResource(
+                            R.string.appopsnext_app_detail_mode_runtime_managed_hint,
+                        ),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                } else if (
+                    state.result.phase ==
+                    AppOpModeChangePhase.VERIFY_REQUESTED
+                ) {
+                    Text(
+                        text = stringResource(
+                            R.string.appopsnext_app_detail_mode_change_rejected_hint,
+                        ),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+                if (canTryForeground) {
+                    Text(
+                        text = stringResource(
+                            R.string.appopsnext_app_detail_mode_allow_foreground_hint,
+                        ),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+                state.result.observedMode?.let { observedMode ->
+                    Text(
+                        text = stringResource(
+                            R.string.appopsnext_app_detail_mode_observed,
+                            modeLabel(observedMode),
+                        ),
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = if (canTryForeground) {
+                    onForegroundAlternativeRequested
+                } else {
+                    onDismiss
+                },
+            ) {
+                Text(
+                    text = stringResource(
+                        if (canTryForeground) {
+                            R.string.appopsnext_app_detail_mode_try_foreground
+                        } else {
+                            R.string.appopsnext_action_dismiss
+                        },
+                    ),
+                )
+            }
+        },
+        dismissButton = if (canTryForeground) {
+            {
+                OutlinedButton(onClick = onDismiss) {
+                    Text(text = stringResource(R.string.appopsnext_action_dismiss))
+                }
+            }
+        } else {
+            null
+        },
+    )
+}
+
+@Composable
+private fun RuntimePermissionRequiredDialog(
+    packageName: String,
+    onDismiss: () -> Unit,
+) {
+    val context = LocalContext.current
+    AppBottomSheet(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(
+                    R.string.appopsnext_app_detail_runtime_permission_required_title,
+                ),
+                fontWeight = FontWeight.SemiBold,
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(
+                    R.string.appopsnext_app_detail_runtime_permission_required_detail,
+                ),
+            )
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    context.startActivity(
+                        Intent(
+                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            Uri.fromParts("package", packageName, null),
+                        ),
+                    )
+                    onDismiss()
+                },
+            ) {
+                Text(
+                    text = stringResource(
+                        R.string.appopsnext_action_open_app_settings,
+                    ),
+                )
+            }
+        },
+        dismissButton = {
+            OutlinedButton(onClick = onDismiss) {
+                Text(text = stringResource(R.string.appopsnext_action_cancel))
+            }
+        },
+    )
+}
+
+@Composable
+internal fun modeLabel(mode: AppOpMode): String =
+    stringResource(
+        when (mode) {
+            AppOpMode.ALLOW -> R.string.appopsnext_app_op_mode_allow
+            AppOpMode.IGNORE -> R.string.appopsnext_app_op_mode_ignore
+            AppOpMode.DENY -> R.string.appopsnext_app_op_mode_deny
+            AppOpMode.DEFAULT -> R.string.appopsnext_app_op_mode_default
+            AppOpMode.FOREGROUND -> R.string.appopsnext_app_op_mode_foreground
+        },
+    )
+
+@Composable
+private fun modeChangePhaseLabel(phase: AppOpModeChangePhase): String =
+    stringResource(
+        when (phase) {
+            AppOpModeChangePhase.READ_ORIGINAL ->
+                R.string.appopsnext_app_detail_mode_phase_read_original
+
+            AppOpModeChangePhase.CHECK_ORIGINAL ->
+                R.string.appopsnext_app_detail_mode_phase_check_original
+
+            AppOpModeChangePhase.APPLY_REQUESTED ->
+                R.string.appopsnext_app_detail_mode_phase_apply
+
+            AppOpModeChangePhase.VERIFY_REQUESTED ->
+                R.string.appopsnext_app_detail_mode_phase_verify
+
+            AppOpModeChangePhase.RESTORE_ORIGINAL ->
+                R.string.appopsnext_app_detail_mode_phase_restore
+
+            AppOpModeChangePhase.VERIFY_RESTORED ->
+                R.string.appopsnext_app_detail_mode_phase_verify_restored
+        },
+    )
+
+@Composable
+private fun restorationStatusLabel(
+    status: AppOpsRestorationStatus,
+): String =
+    stringResource(
+        when (status) {
+            AppOpsRestorationStatus.NOT_REQUIRED ->
+                R.string.appopsnext_app_detail_mode_restore_not_required
+
+            AppOpsRestorationStatus.SUCCEEDED ->
+                R.string.appopsnext_app_detail_mode_restored
+
+            AppOpsRestorationStatus.FAILED ->
+                R.string.appopsnext_app_detail_mode_restore_failed
+        },
+    )

@@ -20,3 +20,6 @@
 -dontwarn org.mozilla.javascript.tools.**
 -dontwarn javax.script.**
 -dontwarn jdk.dynalink.**
+
+# WorkManager persists this worker's class name across launcher updates.
+-keep class de.mm20.launcher2.comms.media.video.trakt.TraktScrobbleWorker { public <init>(android.content.Context, androidx.work.WorkerParameters); }

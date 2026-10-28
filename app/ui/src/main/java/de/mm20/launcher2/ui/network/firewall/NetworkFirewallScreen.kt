@@ -34,6 +34,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -111,10 +112,18 @@ fun NetworkFirewallScreen(packageName: String? = null) {
 
     var query by rememberSaveable { mutableStateOf("") }
     var filter by rememberSaveable { mutableIntStateOf(FILTER_ALL) }
+    var category by rememberSaveable { mutableStateOf<Int?>(null) }
+    val categories = remember(apps, context) { apps.map { it.category }.distinct().filter { it >= 0 }.sorted().mapNotNull { value -> android.content.pm.ApplicationInfo.getCategoryTitle(context, value)?.let { value to it.toString() } } }
     var expanded by rememberSaveable { mutableStateOf<Int?>(null) }
     var menu by remember { mutableStateOf(false) }
     var confirmReset by remember { mutableStateOf(false) }
     var pendingBulk by remember { mutableStateOf<Int?>(null) }
+
+    LaunchedEffect(packageName, apps) {
+        if (packageName != null) {
+            apps.firstOrNull { packageName in it.packages }?.let { expanded = it.appId }
+        }
+    }
 
     // the usage access permission is granted in the Android settings: look again when coming back
     val lifecycle = LocalLifecycleOwner.current.lifecycle
@@ -126,10 +135,11 @@ fun NetworkFirewallScreen(packageName: String? = null) {
         onDispose { lifecycle.removeObserver(observer) }
     }
 
-    val shown = remember(apps, rules, query, filter, packageName) {
+    val shown = remember(apps, rules, query, filter, category, packageName) {
         apps.filter { app ->
             app.hasInternet && (packageName == null || packageName in app.packages) &&
-                de.mm20.launcher2.comms.search.TelosSearch.matches(query, app.label, app.packages.joinToString(" ")) &&
+                (category == null || category == app.category) &&
+                de.mm20.launcher2.comms.search.TelosSearch.matches(query, app.label, app.packages.joinToString(" "), app.appId.toString()) &&
                 when (filter) {
                     FILTER_USER -> !app.isSystem
                     FILTER_SYSTEM -> app.isSystem
@@ -189,6 +199,7 @@ fun NetworkFirewallScreen(packageName: String? = null) {
     }
 
     PreferenceScreen(
+        bottomBar = { de.mm20.launcher2.ui.network.NetworkNavigationBar(de.mm20.launcher2.ui.network.NetworkSection.Apps) },
         title = stringResource(R.string.netfw_title),
         topBarActions = {
             Box {
@@ -196,6 +207,13 @@ fun NetworkFirewallScreen(packageName: String? = null) {
                     Icon(painterResource(IconsNetworkFirewallScreen.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                 }
                 DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                    if (packageName == null) {
+                        DropdownMenuItem(text = { Text(stringResource(R.string.netfw_filter_all)) }, onClick = { category = null; menu = false })
+                        categories.forEach { (value, label) ->
+                            DropdownMenuItem(text = { Text(label) }, onClick = { category = value; menu = false },
+                                trailingIcon = { if (category == value) Icon(painterResource(IconsNetworkFirewallScreen.check_circle_24px), null) })
+                        }
+                    }
                     Text(
                         stringResource(R.string.netfw_bulk),
                         style = MaterialTheme.typography.labelMedium,
@@ -214,6 +232,7 @@ fun NetworkFirewallScreen(packageName: String? = null) {
             }
         },
     ) {
+        if (packageName == null) {
         item {
             Preference(title = stringResource(R.string.net_hub_title),
                 summary = stringResource(if (engineState is de.mm20.launcher2.network.NetState.On) R.string.net_hub_state_on else R.string.net_hub_summary_off),
@@ -255,6 +274,7 @@ fun NetworkFirewallScreen(packageName: String? = null) {
                 }
             }
         }
+        }
         if (shown.isEmpty() && query.isNotBlank()) {
             item { de.mm20.launcher2.ui.component.SearchEmptyState(query.trim()) }
         } else if (shown.isEmpty() && apps.isEmpty()) {
@@ -288,8 +308,9 @@ fun NetworkFirewallScreen(packageName: String? = null) {
                 tempUntilMs = temp[app.appId]?.takeIf { it > System.currentTimeMillis() },
                 newAppBlocked = newBlocked,
                 backgroundDetection = detection,
-                expanded = expanded == app.appId,
-                onToggleExpanded = { expanded = if (expanded == app.appId) null else app.appId },
+                detail = packageName != null,
+                expanded = packageName != null || expanded == app.appId,
+                onToggleExpanded = { if (packageName == null) backStack.add(NetworkPackageFirewallRoute(app.packageName)) else expanded = if (expanded == app.appId) null else app.appId },
                 onRule = { next -> scope.launch {
                     fw.setAppRule(next)
                     if (next.blockLan && !rule.blockLan && !netConfig.routeLan) {
@@ -331,6 +352,7 @@ private fun AppRuleRow(
     tempUntilMs: Long?,
     newAppBlocked: Boolean,
     backgroundDetection: Boolean,
+    detail: Boolean,
     expanded: Boolean,
     onToggleExpanded: () -> Unit,
     onRule: (AppRule) -> Unit,
@@ -371,16 +393,33 @@ private fun AppRuleRow(
             .background(MaterialTheme.colorScheme.surfaceBright),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
-        Preference(
+        if (detail) {
+            Row(Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                NetAppIcon(app.packageName, size = 80.dp)
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(app.label, style = MaterialTheme.typography.headlineSmall)
+                    Text(app.packages.joinToString("\n") + " (" + app.appId + ")", style = MaterialTheme.typography.bodySmall)
+                    Text(summary, style = MaterialTheme.typography.bodyMedium)
+                    Text(android.text.format.Formatter.formatShortFileSize(context, traffic), style = MaterialTheme.typography.labelLarge)
+                }
+            }
+            NetworkAppRuleGrid(rule, allowVpnExclusion, onRule)
+        } else Preference(
             title = { Text(app.label) },
             summary = { Text(summary + "\n" + app.packages.joinToString(" · ") + " (" + app.appId + ")\n" + android.text.format.Formatter.formatShortFileSize(context, traffic)) },
             icon = { NetAppIcon(app.packageName) },
             onClick = onToggleExpanded,
             controls = {
-                Switch(checked = rule.blockAll, onCheckedChange = { onRule(rule.copy(blockAll = it)) })
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    val editable = !rule.blockAll && !rule.bypassFirewall && !rule.excludeFromVpn
+                    NetworkRuleToggle(R.string.netfw_t_wifi, !rule.blockWifi, editable,
+                        IconsNetworkFirewallScreen.wifi_24px, IconsNetworkFirewallScreen.wifi_off_24px) { onRule(rule.copy(blockWifi = !it)) }
+                    NetworkRuleToggle(R.string.netfw_t_mobile, !rule.blockMobile, editable,
+                        IconsNetworkFirewallScreen.signal_cellular_alt_24px, IconsNetworkFirewallScreen.signal_cellular_off_24px) { onRule(rule.copy(blockMobile = !it)) }
+                }
             },
         )
-        FlowRow(Modifier.fillMaxWidth().padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        if (expanded && !detail) FlowRow(Modifier.fillMaxWidth().padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             @Composable fun AllowChip(label: Int, blocked: Boolean, change: () -> Unit, enabled: Boolean = !rule.blockAll && !rule.bypassFirewall && !rule.excludeFromVpn) {
                 FilterChip(selected = !blocked, onClick = change, enabled = enabled, label = { Text(stringResource(label)) })
             }
@@ -393,11 +432,19 @@ private fun AppRuleRow(
         }
         AnimatedVisibility(visible = expanded) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_blocked), value = rule.blockAll,
+                    onValueChanged = { onRule(rule.copy(blockAll = it)) })
                 if (newAppBlocked) {
                     Preference(
                         title = stringResource(R.string.netfw_new_app_allow),
                         onClick = onAllowNew,
                     )
+                }
+                if (detail) {
+                    SwitchPreference(title = stringResource(R.string.netfw_t_wifi), value = !rule.blockWifi, onValueChanged = { onRule(rule.copy(blockWifi = !it)) })
+                    SwitchPreference(title = stringResource(R.string.netfw_t_mobile), value = !rule.blockMobile, onValueChanged = { onRule(rule.copy(blockMobile = !it)) })
+                    SwitchPreference(title = stringResource(R.string.netfw_t_lan), value = !rule.blockLan, onValueChanged = { onRule(rule.copy(blockLan = !it)) })
+                    SwitchPreference(title = stringResource(R.string.netfw_t_vpn), value = !rule.blockVpn, onValueChanged = { onRule(rule.copy(blockVpn = !it)) })
                 }
                 SwitchPreference(title = stringResource(R.string.netfw_block_roaming), icon = IconsNetworkFirewallScreen.public_24px, value = rule.blockRoaming, onValueChanged = { onRule(rule.copy(blockRoaming = it)) })
                 SwitchPreference(title = stringResource(R.string.netfw_block_background), icon = IconsNetworkFirewallScreen.pause_24px, value = rule.blockBackground, onValueChanged = { onRule(rule.copy(blockBackground = it)) })
@@ -408,10 +455,11 @@ private fun AppRuleRow(
                         controls = { TextButton(onClick = onGrantUsageAccess) { Text(stringResource(R.string.netfw_usage_grant)) } },
                     )
                 }
-                SwitchPreference(title = stringResource(R.string.netfw_u_metered), value = rule.blockMetered, onValueChanged = { onRule(rule.copy(blockMetered = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_u_unmetered), value = rule.blockUnmetered, onValueChanged = { onRule(rule.copy(blockUnmetered = it)) })
+                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_u_metered), value = rule.blockMetered, onValueChanged = { onRule(rule.copy(blockMetered = it)) })
+                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_u_unmetered), value = rule.blockUnmetered, onValueChanged = { onRule(rule.copy(blockUnmetered = it)) })
+                de.mm20.launcher2.ui.network.NetworkProxyAssignmentPreference(app.appId)
                 SwitchPreference(title = stringResource(R.string.nwg_direct), value = direct, onValueChanged = onDirect)
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     TextButton(onClick = onCustomRules) { Text("$ipCount · " + stringResource(R.string.netfw_r_ip)) }
                     TextButton(onClick = onCustomRules) { Text("$domainCount · " + stringResource(R.string.netfw_r_domain)) }
                 }
@@ -425,9 +473,9 @@ private fun AppRuleRow(
                         confirmButton = { TextButton(onClick = { onRule(rule.copy(note = note.trim())); editNote = false }) { Text(stringResource(R.string.hc_save)) } },
                         dismissButton = { TextButton(onClick = { editNote = false }) { Text(stringResource(R.string.hc_cancel)) } })
                 }
-                SwitchPreference(title = stringResource(R.string.netfw_ignore_universal), value = rule.ignoreUniversalRules, onValueChanged = { onRule(rule.copy(ignoreUniversalRules = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_bypass_firewall), value = rule.bypassFirewall, onValueChanged = { onRule(rule.copy(bypassFirewall = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_exclude_vpn), enabled = allowVpnExclusion, value = rule.excludeFromVpn, onValueChanged = { onRule(rule.copy(excludeFromVpn = it)) })
+                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_ignore_universal), value = rule.ignoreUniversalRules, onValueChanged = { onRule(rule.copy(ignoreUniversalRules = it)) })
+                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_bypass_firewall), value = rule.bypassFirewall, onValueChanged = { onRule(rule.copy(bypassFirewall = it)) })
+                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_exclude_vpn), enabled = allowVpnExclusion, value = rule.excludeFromVpn, onValueChanged = { onRule(rule.copy(excludeFromVpn = it)) })
                 if (tempUntilMs != null) {
                     Preference(
                         title = stringResource(R.string.netfw_temp_allowed_until, formatClock(context, tempUntilMs)),

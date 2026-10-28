@@ -73,6 +73,7 @@ class TelosVpnService : VpnService(), KoinComponent {
     private val blocklists: BlocklistController by inject()
     private val logs: LogController by inject()
     private val apps: AppDirectory by inject()
+    private val proxies: de.mm20.launcher2.network.api.ProxyController by inject()
     private val tor: de.mm20.launcher2.network.tor.TorController by inject()
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -200,6 +201,7 @@ class TelosVpnService : VpnService(), KoinComponent {
                 settings = settings,
                 apps = apps,
                 tor = tor,
+                proxies = proxies,
                 onFault = { why -> requestStop(StopReason.Failure, why) },
             )
             val t = Intra.connect(

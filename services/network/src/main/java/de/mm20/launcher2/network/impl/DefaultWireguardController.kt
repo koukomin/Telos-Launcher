@@ -106,6 +106,7 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
     @Volatile
     private var tunnel: Tunnel? = null
     private var pollJob: Job? = null
+    private val hopsReady = ConcurrentHashMap.newKeySet<Int>()
 
     init {
         state = load(store.value)
@@ -196,6 +197,7 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
         var created: WireguardConfig? = null
         val result = mutate { s ->
             val c = WgValidator.normalize(config).copy(id = s.nextId)
+            de.mm20.launcher2.network.impl.wg.WgHopPolicy.validate(c, s.configs + c)
             created = c
             s.copy(configs = s.configs + c, nextId = s.nextId + 1)
         }
@@ -210,6 +212,9 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
         val result = mutate { s ->
             if (s.configs.none { it.id == config.id }) throw WgConfigException(WgConfigError.NotFound)
             val c = WgValidator.normalize(config)
+            de.mm20.launcher2.network.impl.wg.WgHopPolicy.validate(c, s.configs.map { if (it.id == c.id) c else it })
+            hopsReady.remove(c.id)
+            state.configs.filter { it.hopVia == c.id }.forEach { hopsReady.remove(it.id) }
             updated = c
             s.copy(configs = s.configs.map { if (it.id == c.id) c else it })
         }
@@ -221,6 +226,8 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
     }
 
     override suspend fun remove(id: Int) {
+        hopsReady.remove(id)
+        state.configs.filter { it.hopVia == id }.forEach { hopsReady.remove(it.id) }
         mutate { s ->
             s.copy(
                 configs = s.configs.filterNot { it.id == id },
@@ -305,16 +312,23 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
                 WgAssignment.SystemDefault -> s.systemDefault ?: return WgRoute.Direct
             }
             val config = s.configs.firstOrNull { it.id == configId } ?: return WgRoute.Direct
-            if (!config.enabled) return WgRoute.Direct
-            if (config.mobileOnly && flow.environment.network != ConnectionType.Mobile) return WgRoute.Direct
+            val via = config.hopVia?.let { viaId ->
+                val entry = s.configs.firstOrNull { it.id == viaId }
+                if (entry == null || !entry.enabled || configId !in hopsReady ||
+                    (_status.value[viaId] != WgStatus.Up && _status.value[viaId] != WgStatus.Connecting) ||
+                    entry.mobileOnly && flow.environment.network != ConnectionType.Mobile) return WgRoute.Block
+                entry
+            }
+            if (!config.enabled) return if (via != null) WgRoute.Block else WgRoute.Direct
+            if (config.mobileOnly && flow.environment.network != ConnectionType.Mobile) return if (via != null) WgRoute.Block else WgRoute.Direct
             val st = _status.value[configId] ?: WgStatus.Off
             return when {
                 st == WgStatus.Up || st == WgStatus.Connecting -> WgRoute.Via(config.proxyId)
-                config.lockdown -> WgRoute.Block
+                config.lockdown || via != null -> WgRoute.Block
                 else -> WgRoute.Direct
             }
         } catch (e: Throwable) {
-            return WgRoute.Direct
+            return if (state.configs.any { it.hopVia != null }) WgRoute.Block else WgRoute.Direct
         }
     }
 
@@ -322,6 +336,7 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
 
     override suspend fun onTunnelConnected(tunnel: Tunnel) {
         this.tunnel = tunnel
+        hopsReady.clear()
         _status.value = emptyMap()
         _stats.value = emptyMap()
         state.configs.filter { it.enabled }.forEach { applyToTunnel(it) }
@@ -338,6 +353,7 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
         pollJob?.cancel()
         pollJob = null
         tunnel = null
+        hopsReady.clear()
         _status.value = emptyMap()
         _stats.value = emptyMap()
     }
@@ -354,6 +370,8 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
                     newStatus[c.id] = read.first
                     read.second?.let { newStats[c.id] = it }
                 }
+                configureHops(t)
+                state.configs.filter { it.enabled && it.hopVia != null && it.id !in hopsReady }.forEach { newStatus[it.id] = WgStatus.Error }
                 _status.value = newStatus
                 _stats.value = newStats
             }
@@ -365,7 +383,10 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
         return try {
             val proxies = t.getProxies()
             if (!proxies.hasProxy(c.proxyId)) {
+                hopsReady.remove(c.id)
+                state.configs.filter { it.hopVia == c.id }.forEach { hopsReady.remove(it.id) }
                 proxies.addProxy(c.proxyId, WgConfParser.toUserspace(c))
+                configureHops(t)
             }
             val proxy = proxies.getProxy(c.proxyId)
             val rs = try {
@@ -381,7 +402,7 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
                 lastError = rs?.lastErr.orEmpty(),
             )
             val st = mapStatus(proxy.status(), stats)
-            if (st == WgStatus.Connecting || st == WgStatus.Down) {
+            if ((st == WgStatus.Connecting || st == WgStatus.Down) && (c.hopVia == null || c.id in hopsReady)) {
                 // a WireGuard peer only answers after traffic; probe so that the tunnel can recover
                 try {
                     proxy.ping()
@@ -423,12 +444,39 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
                     WgStatus.Error
                 }
                 _status.value = _status.value + (config.id to result)
+                configureHops(t)
+                if (config.hopVia != null && config.id !in hopsReady) _status.value = _status.value + (config.id to WgStatus.Error)
             }
+        }
+    }
+
+    /** Called only on IO while engineLock is held. No route is published until native Hop succeeds. */
+    private fun configureHops(t: Tunnel) {
+        val configs = state.configs
+        for (config in configs) {
+            val viaId = config.hopVia ?: continue
+            try {
+                val via = configs.firstOrNull { it.id == viaId }
+                if (!config.enabled || via?.enabled != true) { hopsReady.remove(config.id); continue }
+                de.mm20.launcher2.network.impl.wg.WgHopPolicy.validate(config, configs)
+                val proxies = t.proxies
+                if (!proxies.hasProxy(config.proxyId) || !proxies.hasProxy(via.proxyId)) { hopsReady.remove(config.id); continue }
+                val current = runCatching { proxies.getProxy(config.proxyId).router().via().id() }.getOrNull()
+                if (current != via.proxyId) {
+                    hopsReady.remove(config.id)
+                    check(proxies.testHop(via.proxyId, config.proxyId).isNullOrEmpty())
+                    proxies.hop(via.proxyId, config.proxyId)
+                }
+                check(proxies.getProxy(config.proxyId).router().via().id() == via.proxyId)
+                hopsReady.add(config.id)
+            } catch (_: Exception) { hopsReady.remove(config.id) }
         }
     }
 
     private suspend fun removeFromTunnel(id: Int) {
         engineLock.withLock {
+            hopsReady.remove(id)
+            state.configs.filter { it.hopVia == id }.forEach { hopsReady.remove(it.id) }
             _status.value = _status.value - id
             _stats.value = _stats.value - id
             val t = tunnel ?: return

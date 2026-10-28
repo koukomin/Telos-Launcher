@@ -1,0 +1,55 @@
+package dev.izumi.appopsnext.appops
+
+import dev.izumi.appopsnext.appops.command.AppOpMode
+import dev.izumi.appopsnext.appops.model.ShellCommandResult
+
+interface PrivilegedAppOpsGateway {
+    suspend fun getPackageOps(packageName: String): ShellCommandResult
+
+    suspend fun getPackageOp(
+        packageName: String,
+        operationName: String,
+    ): ShellCommandResult
+
+    suspend fun getUidOps(uid: Int): ShellCommandResult =
+        error("UID-scoped reads are not implemented by this gateway")
+
+    suspend fun getUidStates(packageName: String): ShellCommandResult =
+        error("UID state reads are not implemented by this gateway")
+
+    suspend fun getOpStates(operationName: String): ShellCommandResult =
+        error("Operation state reads are not implemented by this gateway")
+
+    suspend fun getWatchers(): ShellCommandResult =
+        error("AppOps watcher reads are not implemented by this gateway")
+
+    suspend fun getHistory(
+        operationName: String,
+    ): ShellCommandResult =
+        error("AppOps history is not implemented by this gateway")
+
+    suspend fun getPackagePermissions(
+        packageName: String,
+    ): ShellCommandResult =
+        error("Permission state reads are not implemented by this gateway")
+
+    suspend fun setRevokedCompat(
+        userId: Int,
+        packageName: String,
+        permissionName: String,
+        revoked: Boolean,
+    ): ShellCommandResult =
+        error("Permission flag writes are not implemented by this gateway")
+
+    suspend fun setPackageOpMode(
+        packageName: String,
+        operationName: String,
+        mode: AppOpMode,
+    ): ShellCommandResult
+
+    suspend fun setUidOpMode(
+        packageName: String,
+        operationName: String,
+        mode: AppOpMode,
+    ): ShellCommandResult
+}

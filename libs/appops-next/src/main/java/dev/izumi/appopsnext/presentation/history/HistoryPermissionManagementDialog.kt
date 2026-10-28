@@ -1,0 +1,167 @@
+package dev.izumi.appopsnext.presentation.history
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import dev.izumi.appopsnext.presentation.batch.StringSelectionSaver
+import dev.izumi.appopsnext.presentation.batch.selectedFirstOrdering
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import dev.izumi.appopsnext.R
+import dev.izumi.appopsnext.presentation.components.AppBottomSheet
+import dev.izumi.appopsnext.presentation.components.CompactSearchField
+import dev.izumi.appopsnext.history.model.HistoryPermission
+
+@Composable
+fun HistoryPermissionManagementDialog(
+    availablePermissions: List<HistoryPermission>,
+    selectedPermissions: Set<String>,
+    onApply: (List<String>) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    var query by rememberSaveable { mutableStateOf("") }
+    var draftSelection by rememberSaveable(selectedPermissions, stateSaver = StringSelectionSaver) {
+        mutableStateOf(selectedPermissions)
+    }
+    val initialSelection by rememberSaveable(stateSaver = StringSelectionSaver) {
+        mutableStateOf(selectedPermissions)
+    }
+    val orderedPermissions = remember(availablePermissions, initialSelection) {
+        selectedFirstOrdering(availablePermissions, initialSelection, HistoryPermission::shellOperationName)
+    }
+    val context = LocalContext.current
+    val options = orderedPermissions.filter { permission ->
+        val localizedName = permission.labelResource()
+            ?.let(context::getString)
+            ?: permission.systemOperationName()
+        query.isBlank() ||
+            permission.shellOperationName.contains(
+                query,
+                ignoreCase = true,
+            ) ||
+            permission.systemOperationName().contains(
+                query,
+                ignoreCase = true,
+            ) ||
+            localizedName.contains(query, ignoreCase = true)
+    }
+
+    AppBottomSheet(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(text = stringResource(R.string.appopsnext_history_manage_permissions))
+        },
+        text = {
+            Column {
+                Text(
+                    text = stringResource(
+                        R.string.appopsnext_history_management_selected_count,
+                        draftSelection.size,
+                    ),
+                )
+                CompactSearchField(
+                    value = query,
+                    onValueChange = { query = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    label = stringResource(R.string.appopsnext_history_permission_search),
+                )
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 420.dp)
+                        .padding(top = 8.dp),
+                ) {
+                    if (options.isEmpty()) {
+                        item {
+                            Text(
+                                text = stringResource(
+                                    R.string.appopsnext_history_no_matching_permissions,
+                                ),
+                                modifier = Modifier.padding(16.dp),
+                            )
+                        }
+                    }
+                    items(
+                        items = options,
+                        key = HistoryPermission::shellOperationName,
+                    ) { permission ->
+                        val operationName =
+                            permission.shellOperationName
+                        val selected = operationName in draftSelection
+                        ListItem(
+                            modifier = Modifier.clickable {
+                                draftSelection = draftSelection.toggle(
+                                    operationName,
+                                )
+                            },
+                            headlineContent = {
+                                Text(text = permission.displayName())
+                            },
+                            supportingContent = {
+                                Text(
+                                    text = permission.systemOperationName(),
+                                )
+                            },
+                            trailingContent = {
+                                Checkbox(
+                                    checked = selected,
+                                    onCheckedChange = {
+                                        draftSelection =
+                                            draftSelection.toggle(
+                                                operationName,
+                                            )
+                                    },
+                                )
+                            },
+                            colors = ListItemDefaults.colors(
+                                containerColor = Color.Transparent,
+                            ),
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    onApply(
+                        availablePermissions
+                            .map(HistoryPermission::shellOperationName)
+                            .filter(draftSelection::contains),
+                    )
+                },
+            ) {
+                Text(text = stringResource(R.string.appopsnext_action_apply))
+            }
+        },
+        dismissButton = {
+            OutlinedButton(onClick = onDismiss) {
+                Text(text = stringResource(R.string.appopsnext_action_cancel))
+            }
+        },
+    )
+}
+
+private fun Set<String>.toggle(value: String): Set<String> =
+    if (value in this) this - value else this + value

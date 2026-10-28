@@ -47,6 +47,8 @@ data class WireguardConfig(
     val onlySsids: List<String> = emptyList(),
     /** When the tunnel is down, block the apps that use it instead of letting them go direct. */
     val lockdown: Boolean = false,
+    /** Exit tunnel dials through this entry tunnel; null means a single hop. */
+    val hopVia: Int? = null,
 ) {
     /** The id of the proxy in the Go engine. */
     val proxyId: String get() = "wg$id"
@@ -97,6 +99,7 @@ enum class WgConfigError {
     /** MTU, port or keepalive out of range. */
     InvalidNumber,
     InvalidName,
+    InvalidHop,
 
     /** The text is too large to be a config. */
     TooLarge,

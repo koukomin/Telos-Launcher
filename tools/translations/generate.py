@@ -4,7 +4,7 @@ import hashlib, json, os, pathlib, re, xml.etree.ElementTree as ET
 MODEL='google/madlad400-3b-mt'
 REVISION='fa184c675da0b5c9e1c8694fccd4e12e2d422094'
 OUTPUT=pathlib.Path('translation-artifact')
-TOKEN=re.compile(r'%(?:\d+\$)?[-#+ 0,(]*\d*(?:\.\d+)?[a-zA-Z%]|\{(?:name|ext|n(?::\d+)?)\}|\\[ntr\'"\\]|YouTube Music|YouTube|Stremio Fork|Stremio|Telos|Trakt(?:\.tv)?|Obtainium|IMDb|APK|KiB|YYYY-MM-DD|https?://[^\s<>]+')
+TOKEN=re.compile(r'@[a-zA-Z][\w:.]*/[A-Za-z0-9_]+|<[^>]+>|AppOpsNext|Shizuku|WireGuard|SOCKS5|HTTP CONNECT|UID|DNSCrypt|IPv4|IPv6|ODoH|DoH|TCP|UDP|DNS|RPN|%(?:\d+\$)?[-#+ 0,(]*\d*(?:\.\d+)?[a-zA-Z%]|\{(?:name|ext|n(?::\d+)?)\}|\\[ntr\'"\\]|YouTube Music|YouTube|Stremio Fork|Stremio|Telos|Trakt(?:\.tv)?|Obtainium|IMDb|APK|KiB|YYYY-MM-DD|https?://[^\s<>]+')
 LANG={'in':'id','iw':'he','nb-rNO':'no','pt-rBR':'pt','zh-rCN':'zh','zh-rTW':'zh'}
 
 def protect(text):
@@ -48,15 +48,19 @@ def main():
     assert 0 <= partition < partitions
     for number,(locale,records) in enumerate(inventory['locales'].items()):
         if number % partitions != partition:continue
-        root=ET.Element('resources');translated=0
+        roots={};translated=0
         for name,record in records.items():
             source=human(record['text']);key=hashlib.sha256((locale+'\0'+name+'\0'+source).encode()).hexdigest()
             try:
                 node=ET.fromstring(record['xml'])
                 if len(node):raise ValueError('Styled resource needs manual translation preserving markup')
+                if 'reuse_text' in record:
+                    node.text=record['reuse_text']
+                    roots.setdefault(record.get('module','core'),ET.Element('resources')).append(node);translated+=1
+                    continue
                 if key not in cache:
                     guarded,values=protect(source)
-                    if TOKEN.fullmatch(source): text=source
+                    if TOKEN.fullmatch(source) or not any(c.isalpha() for c in TOKEN.sub('',source)): text=source
                     else:
                         try:text=restore(translate(guarded,LANG.get(locale,locale)),values)
                         except ValueError:
@@ -74,12 +78,14 @@ def main():
                     if sorted(TOKEN.findall(source))!=sorted(TOKEN.findall(text)):raise ValueError('Changed format or brand tokens')
                     cache[key]=text
                     tmp=cache_path.with_suffix('.tmp');tmp.write_text(json.dumps(cache,ensure_ascii=False,indent=2));tmp.replace(cache_path)
-                node.text=android(cache[key]);root.append(node);translated+=1
+                node.text=android(cache[key]);roots.setdefault(record.get('module','core'),ET.Element('resources')).append(node);translated+=1
             except Exception as error:
                 failures.append({'locale':locale,'key':name,'error':str(error)})
-        ET.indent(root)
-        path=OUTPUT/'res'/('values-'+locale)/'strings_telos_remaining.xml';path.parent.mkdir(parents=True,exist_ok=True)
-        ET.ElementTree(root).write(path,encoding='utf-8',xml_declaration=True)
+        for module,root in roots.items():
+            ET.indent(root)
+            folder=('values-b+zh+Hans' if locale=='zh-rCN' else 'values-b+zh+Hant') if module=='appops' and locale in {'zh-rCN','zh-rTW'} else 'values-'+locale
+            path=OUTPUT/('appops-res' if module=='appops' else 'res')/folder/'strings_telos_remaining.xml';path.parent.mkdir(parents=True,exist_ok=True)
+            ET.ElementTree(root).write(path,encoding='utf-8',xml_declaration=True)
         print(locale,translated,'/',len(records),flush=True)
         (OUTPUT/'failures.json').write_text(json.dumps(failures,ensure_ascii=False,indent=2))
     (OUTPUT/'provenance.json').write_text(json.dumps({'model':MODEL,'revision':REVISION,'license':'Apache-2.0','source_commit':inventory['source_commit'],'base':inventory['base'],'partition':partition,'partitions':partitions,'review':'Machine-generated. Human semantic review and Android resource validation required before commit.'},indent=2))

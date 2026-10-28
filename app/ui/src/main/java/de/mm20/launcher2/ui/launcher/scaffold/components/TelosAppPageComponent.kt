@@ -136,10 +136,13 @@ internal object TelosPages {
         entry<de.mm20.launcher2.ui.settings.freeze.SmartFreezeDashboardRoute> { de.mm20.launcher2.ui.settings.freeze.FreezeSettingsScreen() }
         entry<de.mm20.launcher2.ui.settings.freeze.FreezeDashboardRoute> { de.mm20.launcher2.ui.settings.freeze.FreezeDashboardScreen() }
         entry<de.mm20.launcher2.ui.settings.freeze.DeviceOwnerSetupRoute> { de.mm20.launcher2.ui.settings.freeze.DeviceOwnerSetupScreen() }
+        entry<de.mm20.launcher2.ui.system.SystemAppOpsRoute> { key -> de.mm20.launcher2.ui.system.SystemAppOpsScreen(key.packageName) }
         entry<de.mm20.launcher2.ui.system.SystemAppDetailsRoute> { key -> de.mm20.launcher2.ui.system.SystemAppDetailsScreen(key.packageName) }
         entry<de.mm20.launcher2.ui.network.firewall.NetworkPackageFirewallRoute> { key -> de.mm20.launcher2.ui.network.firewall.NetworkFirewallScreen(key.packageName) }
         entry<de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesRoute> { de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesScreen() }
         entry<de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsRoute> { de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsScreen() }
+        entry<de.mm20.launcher2.ui.network.NetworkProxiesRoute> { de.mm20.launcher2.ui.network.NetworkProxiesScreen() }
+        entry<de.mm20.launcher2.ui.network.NetworkStatsRoute> { de.mm20.launcher2.ui.network.NetworkStatsScreen() }
         entry<de.mm20.launcher2.ui.network.logs.NetworkLogsRoute> { de.mm20.launcher2.ui.network.logs.NetworkLogsScreen() }
         entry<de.mm20.launcher2.ui.system.SystemDashboardRoute> { de.mm20.launcher2.ui.system.SystemDashboardScreen() }
         entry<de.mm20.launcher2.ui.trash.TrashUnlockRoute> { de.mm20.launcher2.ui.trash.TrashUnlockScreen() }

@@ -16,6 +16,8 @@ internal object StremioEpisodeContinuation {
             if (!preferences.autoNextEpisode) return@withContext null
             val ids = current.getStringArrayListExtra("stremio_next_ids").orEmpty()
             val titles = current.getStringArrayListExtra("stremio_next_titles").orEmpty()
+            val seasons = current.getIntegerArrayListExtra("stremio_next_seasons").orEmpty()
+            val episodes = current.getIntegerArrayListExtra("stremio_next_episodes").orEmpty()
             val nextId = ids.firstOrNull() ?: return@withContext null
             val type = current.getStringExtra("stremio_type") ?: return@withContext null
             val addonName = current.getStringExtra("stremio_addon") ?: return@withContext null
@@ -31,10 +33,24 @@ internal object StremioEpisodeContinuation {
             val intent = Intent(current).apply {
                 data = null
                 putExtra("stremio_auto_continuation", true)
+                removeExtra("stremio_shared_server")
                 removeExtra(VideoPlayerActivity.EXTRA_SOURCE)
                 removeExtra(VideoPlayerActivity.EXTRA_FILE_IDX)
                 removeExtra(VideoPlayerActivity.EXTRA_URIS)
                 removeExtra(VideoPlayerActivity.EXTRA_TITLES)
+                putExtra("stremio_video_id", nextId)
+                // A later episode's availability is not established by the cached queue alone.
+                removeExtra("stremio_next_video_id")
+                putExtra("stremio_video_title", title)
+                putExtra("stremio_resume_ms", 0L)
+                putExtra("stremio_watched_ms", 0L)
+                putExtra("stremio_resume_percent", Double.NaN)
+                removeExtra("trakt_season"); removeExtra("trakt_episode")
+                seasons.firstOrNull()?.takeIf { it >= 0 }?.let { putExtra("trakt_season", it) }
+                episodes.firstOrNull()?.takeIf { it > 0 }?.let { putExtra("trakt_episode", it) }
+                putIntegerArrayListExtra("stremio_next_seasons", ArrayList(seasons.drop(1)))
+                putIntegerArrayListExtra("stremio_next_episodes", ArrayList(episodes.drop(1)))
+                putExtra("stremio_stream_key", stream.streamKey().take(4096))
                 putStringArrayListExtra("stremio_next_ids", ArrayList(ids.drop(1)))
                 putStringArrayListExtra("stremio_next_titles", ArrayList(titles.drop(1)))
                 putStringArrayListExtra(VideoPlayerActivity.EXTRA_TITLES, arrayListOf(title))
@@ -42,9 +58,18 @@ internal object StremioEpisodeContinuation {
             if (stream.kind == StreamItem.Kind.Web) {
                 intent.putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, arrayListOf(stream.url!!))
             } else {
-                val magnet = StremioProtocol.magnet(stream, title) ?: return@withContext null
-                intent.putExtra(VideoPlayerActivity.EXTRA_SOURCE, magnet)
-                stream.fileIdx?.let { intent.putExtra(VideoPlayerActivity.EXTRA_FILE_IDX, it) }
+                if (preferences.sharedServer) {
+                    try { StremioStreamingServer.settings(preferences.streamingServer) }
+                    catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                    catch (_: Exception) { return@withContext null }
+                    val url = StremioStreamingServer.streamingUrl(preferences.streamingServer, stream) ?: return@withContext null
+                    intent.putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, arrayListOf(url))
+                    intent.putExtra("stremio_shared_server", true)
+                } else {
+                    val magnet = StremioProtocol.magnet(stream, title) ?: return@withContext null
+                    intent.putExtra(VideoPlayerActivity.EXTRA_SOURCE, magnet)
+                    stream.fileIdx?.let { intent.putExtra(VideoPlayerActivity.EXTRA_FILE_IDX, it) }
+                }
             }
             val subtitles = (stream.subtitles + client.allSubtitles(addons, type, nextId)).distinctBy { it.url }.take(15)
             intent.putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_URLS, ArrayList(subtitles.map { it.url }))

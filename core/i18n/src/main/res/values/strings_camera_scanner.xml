@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="camera_scan_code">QR / barcode</string>
+    <string name="camera_scan_pdf">Scan to PDF</string>
+    <string name="camera_scan_processing">Processing page %1$d of %2$d…</string>
+    <string name="camera_scan_ocr">Searchable text (OCR)</string>
+    <string name="camera_scan_hint">Capture or import up to 30 pages. Rotate, crop, reorder and save them as one PDF.</string>
+    <string name="camera_scan_no_ocr">Image-only PDF</string>
+    <string name="camera_scan_crop_width">Trim left and right edges</string>
+    <string name="camera_scan_crop_height">Trim top and bottom edges</string>
+    <string name="camera_scan_add_page">Capture page</string>
+    <string name="camera_scan_ocr_hint">Choose up to three languages. Selected recognition models download on first use. Text recognition runs on this device; photos are never uploaded.</string>
+</resources>

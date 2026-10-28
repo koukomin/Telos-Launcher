@@ -183,11 +183,13 @@ private fun PlayerContent(
 
     val networkGate = remember { de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "torrent") }
     val managedNetwork = isTorrent || uris.any { it.scheme in setOf("http", "https") && it.host !in setOf("127.0.0.1", "localhost", "::1", "[::1]") }
-    val stremio = context.findActivity()?.intent?.getBooleanExtra("stremio_playback", false) == true
+    val stremioIntent = remember(context) { context.findActivity()?.intent?.let { android.content.Intent(it) } }
+    val stremio = stremioIntent?.getBooleanExtra("stremio_playback", false) == true
     val playbackRuntime by produceState<Pair<de.mm20.launcher2.comms.stremio.StremioPlaybackSettings, androidx.media3.datasource.DataSource.Factory>?>(null, stremio) {
         if (stremio) value = withContext(Dispatchers.IO) {
             val settings = de.mm20.launcher2.comms.stremio.StremioPlaybackSettings.load(context)
             val factory = runCatching<androidx.media3.datasource.DataSource.Factory> {
+                if (stremioIntent?.getBooleanExtra("stremio_shared_server", false) == true) return@runCatching RemoteRoutingDataSource.factory(context)
                 val cache = de.mm20.launcher2.ui.media.stremio.StremioStreamCache.obtain(context, settings.cacheBytes)
                 androidx.media3.datasource.cache.CacheDataSource.Factory()
                     .setCache(cache).setUpstreamDataSourceFactory(RemoteRoutingDataSource.factory(context))
@@ -257,7 +259,8 @@ private fun PlayerContent(
             }
             val resumeKey = Uri.parse(media.mediaIds[startIndex])
             val progress = ResumeStore.progress(context, resumeKey)
-            val resumeAt = if (progress in 0.02f..0.95f) ResumeStore.position(context, resumeKey) else 0L
+            val resumeAt = if (stremio) stremioIntent?.getLongExtra("stremio_resume_ms", 0L)?.coerceAtLeast(0L) ?: 0L
+                else if (progress in 0.02f..0.95f) ResumeStore.position(context, resumeKey) else 0L
             setMediaItems(items, startIndex, resumeAt)
             if (!managedNetwork || networkGate.allowed.value) prepare()
             playWhenReady = true
@@ -308,6 +311,19 @@ private fun PlayerContent(
         val progress = if (finished || duration <= 0) 100f else (player.currentPosition * 100f / duration).coerceIn(0f, 100f)
         traktState[0] = action
         traktState[1] = item.mediaId
+        if (stremio && stremioIntent != null) {
+            de.mm20.launcher2.comms.media.video.PlayerBridge.send(context.applicationContext,
+                de.mm20.launcher2.comms.media.video.PlayerBridge.ACTION_SCROBBLE) {
+                putString("action", action); putFloat("progress", progress)
+                putString("id", stremioIntent.getStringExtra("stremio_meta_id"))
+                putString("trakt_session", stremioIntent.getStringExtra("trakt_session"))
+                putInt("season", stremioIntent.getIntExtra("trakt_season", -1))
+                putInt("episode", stremioIntent.getIntExtra("trakt_episode", -1))
+                putBoolean("series", stremioIntent.getStringExtra("stremio_type") == "series")
+                putLong("event_time", System.currentTimeMillis())
+            }
+            return
+        }
         val name = item.mediaMetadata.title?.toString().orEmpty()
         val parsedName = cleanTitle(name) + ".x"
         val appContext = context.applicationContext
@@ -326,14 +342,46 @@ private fun PlayerContent(
     var lastSavedId by remember { mutableStateOf<String?>(null) }
     var lastSavedDuration by remember { mutableStateOf(0L) }
 
-    fun saveProgress() {
+    var watchSampleAt by remember(player) { mutableStateOf(android.os.SystemClock.elapsedRealtime()) }
+    var watchWasPlaying by remember(player) { mutableStateOf(false) }
+    var watchedTimeMs by remember(player) { mutableStateOf(stremioIntent?.getLongExtra("stremio_watched_ms", 0L)?.coerceAtLeast(0L) ?: 0L) }
+
+    fun saveProgress(force: Boolean = true, ended: Boolean = false) {
         val item = player.currentMediaItem ?: return
+        val now = android.os.SystemClock.elapsedRealtime()
+        if (watchWasPlaying) watchedTimeMs += ((now - watchSampleAt).coerceIn(0, 15_000) * player.playbackParameters.speed).toLong()
+        watchSampleAt = now
+        watchWasPlaying = player.isPlaying
         val duration = player.duration
         if (duration > 0) {
-            ResumeStore.save(context, Uri.parse(item.mediaId), player.currentPosition, duration)
+            val position = player.currentPosition.coerceIn(0L, duration)
+            ResumeStore.save(context, Uri.parse(item.mediaId), position, duration)
             lastSavedId = item.mediaId
             lastSavedDuration = duration
+            if (stremio && stremioIntent != null) {
+                de.mm20.launcher2.comms.media.video.PlayerBridge.send(context.applicationContext,
+                    de.mm20.launcher2.comms.media.video.PlayerBridge.ACTION_STREMIO_PROGRESS) {
+                    putString("session", stremioIntent.getStringExtra("stremio_session"))
+                    putString("meta_id", stremioIntent.getStringExtra("stremio_meta_id"))
+                    putString("video_id", stremioIntent.getStringExtra("stremio_video_id"))
+                    putString("next_video_id", stremioIntent.getStringExtra("stremio_next_video_id"))
+                    putString("type", stremioIntent.getStringExtra("stremio_type"))
+                    putString("name", stremioIntent.getStringExtra("stremio_meta_name"))
+                    putString("poster", stremioIntent.getStringExtra("stremio_meta_poster"))
+                    putString("video_title", stremioIntent.getStringExtra("stremio_video_title"))
+                    putString("stream", stremioIntent.getStringExtra("stremio_stream_key"))
+                    putStringArrayList("video_ids", stremioIntent.getStringArrayListExtra("stremio_episode_order"))
+                    putLong("position", position); putLong("duration", duration); putLong("time_watched", watchedTimeMs)
+                    putLong("watched_at", System.currentTimeMillis())
+                    putBoolean("completed", ended || position.toDouble() > duration * de.mm20.launcher2.comms.stremio.StremioProgressState.CREDITS_THRESHOLD)
+                    putBoolean("force", force)
+                }
+            }
         }
+    }
+
+    LaunchedEffect(player) {
+        while (true) { delay(5_000); if (player.isPlaying) saveProgress(force = false) }
     }
 
     // notification with play / pause / previous / next (also on the lock screen and Bluetooth)
@@ -342,11 +390,13 @@ private fun PlayerContent(
         onDispose { VideoSession.detach(context, player) }
     }
 
+    var percentResumeApplied by remember(player) { mutableStateOf(false) }
     val continuationScope = rememberCoroutineScope()
     var continuationRequested by remember(player) { mutableStateOf(false) }
     DisposableEffect(player) {
         val listener = object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {
+                saveProgress(force = !isPlaying)
                 onPlayingChanged(isPlaying)
                 if (isPlaying) videoState("started")
                 // the pause while the connection is restored is not a pause by the user
@@ -354,7 +404,15 @@ private fun PlayerContent(
             }
 
             override fun onPlaybackStateChanged(playbackState: Int) {
+                if (playbackState == Player.STATE_READY && !percentResumeApplied) {
+                    percentResumeApplied = true
+                    val percent = stremioIntent?.getDoubleExtra("stremio_resume_percent", Double.NaN) ?: Double.NaN
+                    if (stremio && percent.isFinite() && percent in 0.0..<100.0 && player.duration > 0) {
+                        player.seekTo((player.duration * percent / 100).toLong())
+                    }
+                }
                 if (playbackState == Player.STATE_ENDED) {
+                    saveProgress(ended = true)
                     scrobble("stop", finished = true)
                     if (stremio && playbackRuntime?.first?.autoNextEpisode == true && !continuationRequested && networkGate.allowed.value) {
                         continuationRequested = true

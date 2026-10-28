@@ -33,6 +33,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -60,6 +62,8 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.network.firewall.NetworkPackageFirewallRoute
 import de.mm20.launcher2.ui.network.firewall.NetAppIcon
 import de.mm20.launcher2.ui.network.firewall.formatClock
 import de.mm20.launcher2.ui.network.firewall.formatDateTime
@@ -90,6 +94,7 @@ fun NetworkLogsScreen() {
     val blocklists: BlocklistController = koinInject()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
 
     var tab by de.mm20.launcher2.ui.component.rememberPersistentUiState("network.logs.tab", TAB_CONNECTIONS)
     var query by rememberSaveable { mutableStateOf("") }
@@ -177,6 +182,7 @@ fun NetworkLogsScreen() {
     }
 
     PreferenceScreen(
+        bottomBar = { de.mm20.launcher2.ui.network.NetworkNavigationBar(de.mm20.launcher2.ui.network.NetworkSection.Logs) },
         title = stringResource(R.string.netfw_l_title),
         topBarActions = {
             Box {
@@ -279,7 +285,7 @@ fun NetworkLogsScreen() {
                                 maxLines = 2,
                             )
                         },
-                        icon = { NetAppIcon(directory.byUid(e.uid)?.packageName) },
+                        icon = { LogAppIcon(directory.byUid(e.uid)?.packageName) { backStack.add(NetworkPackageFirewallRoute(it)) } },
                         controls = { VerdictIcon(blocked) },
                         onClick = { connDetail = e },
                     )
@@ -298,7 +304,7 @@ fun NetworkLogsScreen() {
                                 maxLines = 2,
                             )
                         },
-                        icon = { NetAppIcon(directory.byUid(e.uid)?.packageName) },
+                        icon = { LogAppIcon(directory.byUid(e.uid)?.packageName) { backStack.add(NetworkPackageFirewallRoute(it)) } },
                         controls = { VerdictIcon(e.blocked) },
                         onClick = { dnsDetail = e },
                     )
@@ -317,7 +323,7 @@ fun NetworkLogsScreen() {
                                     if (s.bytes > 0) " · " + Formatter.formatShortFileSize(context, s.bytes) else ""
                             )
                         },
-                        icon = { NetAppIcon(directory.byUid(s.appId)?.packageName) },
+                        icon = { LogAppIcon(directory.byUid(s.appId)?.packageName) { backStack.add(NetworkPackageFirewallRoute(it)) } },
                         onClick = {
                             appFilter = if (s.appId >= 0) s.appId else null
                             tab = TAB_CONNECTIONS
@@ -522,4 +528,14 @@ private fun dnsActions(
         }
     }
     return actions
+}
+
+/** The icon edits app rules; the surrounding row retains the connection details. */
+@Composable
+internal fun LogAppIcon(packageName: String?, openRules: (String) -> Unit) {
+    val rulesLabel = stringResource(R.string.netfw_title)
+    IconButton(enabled = packageName != null, onClick = { packageName?.let(openRules) },
+        modifier = Modifier.semantics { contentDescription = rulesLabel }) {
+        NetAppIcon(packageName)
+    }
 }

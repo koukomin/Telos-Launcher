@@ -4,6 +4,10 @@ import android.content.Context
 import de.mm20.launcher2.comms.media.video.Http
 import de.mm20.launcher2.comms.remote.SecretBox
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.sync.Mutex
@@ -25,10 +29,14 @@ class StremioAccount(
     private val addons: StremioAddons,
     private val library: StremioLibrary,
 ) {
-    private val prefs = context.applicationContext.getSharedPreferences("stremio_account", Context.MODE_PRIVATE)
+    private val app = context.applicationContext
+    private val prefs by lazy { app.getSharedPreferences("stremio_account", Context.MODE_PRIVATE) }
+    private val initialized = CompletableDeferred<Unit>()
+    @Volatile private var keyCache: String? = null
+    @Volatile private var sessionCache = "anonymous"
     private val mutex = Mutex()
 
-    private val _email = MutableStateFlow(prefs.getString("email", null)?.takeIf { authKey() != null })
+    private val _email = MutableStateFlow<String?>(null)
     /** The email of the account that is signed in, or null */
     val email: StateFlow<String?> get() = _email
 
@@ -38,10 +46,22 @@ class StremioAccount(
     private val _watched = MutableStateFlow<Map<String, StremioWatched>>(emptyMap())
     val watched: StateFlow<Map<String, StremioWatched>> get() = _watched
 
-    private fun authKey(): String? =
-        prefs.getString("key", null)?.let { runCatching { SecretBox.decrypt(it) }.getOrNull() }?.takeIf { it.isNotBlank() }
-
-    val signedIn: Boolean get() = authKey() != null
+    init {
+        CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
+            try {
+                val key = prefs.getString("key", null)?.let { runCatching { SecretBox.decrypt(it) }.getOrNull() }?.takeIf { it.isNotBlank() }
+                val email = prefs.getString("email", null)?.takeIf { key != null }
+                val session = if (email == null) "anonymous" else prefs.getString("playback_session", "legacy").orEmpty()
+                library.activateAccount(email, session)
+                sessionCache = session; keyCache = key; _email.value = email
+            } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (_: Exception) { keyCache = null; _email.value = null }
+            finally { initialized.complete(Unit) }
+        }
+    }
+    suspend fun awaitReady() { initialized.await() }
+    private suspend fun authKey(): String? { initialized.await(); return keyCache }
+    val signedIn: Boolean get() = keyCache != null
 
     // ---- requests ----
 
@@ -56,24 +76,39 @@ class StremioAccount(
         answer
     }
 
-    suspend fun signIn(email: String, password: String): Result<Unit> = runCatching {
-        val answer = post("login", JSONObject().put("type", "Login").put("email", email.trim()).put("password", password).put("facebook", false))
-        val key = answer.optJSONObject("result")?.optString("authKey").orEmpty()
-        check(key.isNotBlank()) { "Stremio sent no session" }
-        prefs.edit().putString("key", SecretBox.encrypt(key)).putString("email", email.trim()).apply()
-        _email.value = email.trim()
+    /** An opaque generation prevents a player started under one login from writing into another. */
+    val playbackSession: String get() = sessionCache
+    private val lastPush = LinkedHashMap<Triple<String, String, String>, Long>()
+    private val lastSent = LinkedHashMap<Triple<String, String, String>, WatchProgress>()
+
+    suspend fun signIn(email: String, password: String): Result<Unit> = withContext(Dispatchers.IO) {
+        initialized.await()
+        runCatching {
+            val answer = post("login", JSONObject().put("type", "Login").put("email", email.trim()).put("password", password).put("facebook", false))
+            val key = answer.optJSONObject("result")?.optString("authKey").orEmpty()
+            check(key.isNotBlank()) { "Stremio sent no session" }
+            mutex.withLock {
+                val session = java.util.UUID.randomUUID().toString()
+                library.activateAccount(email.trim(), session)
+                prefs.edit().putString("key", SecretBox.encrypt(key)).putString("email", email.trim())
+                    .putString("playback_session", session).apply()
+                keyCache = key; sessionCache = session
+                _email.value = email.trim(); _watched.value = emptyMap(); lastPush.clear(); lastSent.clear()
+            }
+        }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
     }
 
-    suspend fun signOut() {
+    suspend fun signOut() = withContext(Dispatchers.IO) {
+        initialized.await()
         val key = mutex.withLock {
             val currentKey = authKey()
-            prefs.edit().clear().apply()
-            _email.value = null
-            _watched.value = emptyMap()
+            try { library.activateAccount(null) } finally {
+                prefs.edit().clear().apply(); keyCache = null; sessionCache = "anonymous"; _email.value = null; _watched.value = emptyMap(); lastPush.clear(); lastSent.clear()
+            }
             currentKey
         }
-        // ends the session on the server too; failing to do so changes nothing here
         if (key != null) runCatching { post("logout", JSONObject().put("type", "Logout").put("authKey", key)) }
+        Unit
     }
 
     // ---- add-ons ----
@@ -142,7 +177,7 @@ class StremioAccount(
 
     private suspend fun remoteLibrary(key: String, ids: List<String> = emptyList()): List<JSONObject> {
         val body = JSONObject().put("authKey", key).put("collection", "libraryItem").put("ids", JSONArray(ids)).put("all", ids.isEmpty())
-        val arr = post("datastoreGet", body).optJSONArray("result") ?: return emptyList()
+        val arr = requireNotNull(post("datastoreGet", body).optJSONArray("result")) { "Invalid Stremio library response" }
         return (0 until arr.length()).mapNotNull { arr.optJSONObject(it) }
     }
 
@@ -176,22 +211,38 @@ class StremioAccount(
                 watching += WatchProgress(
                     type, id, o.optString("name"), poster, video, video.takeIf { it != id }.orEmpty(),
                     millis(nullIfBlank(state?.optString("lastWatched"))).takeIf { it > 0 } ?: mtime, null,
+                    positionMs = state?.optLong("timeOffset")?.coerceAtLeast(0) ?: 0,
+                    durationMs = state?.optLong("duration")?.coerceAtLeast(0) ?: 0,
+                    timeWatchedMs = state?.optLong("timeWatched")?.coerceAtLeast(0) ?: 0,
+                    completed = (state?.optLong("duration") ?: 0) > 0 && (state?.optLong("timeOffset") ?: 0).toDouble() > (state?.optLong("duration") ?: 0) * StremioProgressState.CREDITS_THRESHOLD,
                 )
             }
         }
         library.mergeRemote(saved, watching, removed)
         _watched.value = watched
+        // Retry newer locally recorded positions after an offline/failed write. Never copy a previous account's data.
+        val pending = library.pendingProgress.value
+        val queued = (pending + library.continueWatching.value).groupBy { Triple(it.type, it.id, it.videoId) }
+            .values.map { it.maxBy { p -> p.watchedAt } }.sortedBy { it.watchedAt }
+        for (progress in queued) {
+            val remote = items.firstOrNull { it.optString("_id") == progress.id }
+            val remoteTime = millis(remote?.optJSONObject("state")?.optString("lastWatched"))
+            if (progress.durationMs > 0 && (progress.watchedAt > remoteTime || pending.any { it.type == progress.type && it.id == progress.id && it.videoId == progress.videoId })) {
+                putProgress(key, progress)
+                library.acknowledge(progress)
+            }
+        }
         // titles saved only here go to the account
         val remoteIds = items.map { it.optString("_id") }.toSet()
         library.library.value.filter { it.id !in remoteIds }.forEach { e ->
-            runCatching { putItem(key, e.type, e.id, e.name, e.poster, removed = false, videoId = null, watched = false, ctime = e.addedAt) }
+            runCatching { putItem(key, e.type, e.id, e.name, e.poster, removed = false, ctime = e.addedAt) }
         }
     }
 
     /** Writes one title to the account's library, changing only what changed: the rest of an existing item is kept */
     private suspend fun putItem(
         key: String, type: String, id: String, name: String, poster: String?,
-        removed: Boolean, videoId: String?, watched: Boolean, ctime: Long? = null,
+        removed: Boolean, ctime: Long? = null,
     ) {
         val now = Instant.now().toString()
         val item = remoteLibrary(key, listOf(id)).firstOrNull() ?: JSONObject()
@@ -201,46 +252,88 @@ class StremioAccount(
                 .put("timesWatched", 0).put("flaggedWatched", 0).put("duration", 0).put("video_id", JSONObject.NULL).put("watched", JSONObject.NULL).put("noNotif", false))
             .put("behaviorHints", JSONObject().put("defaultVideoId", JSONObject.NULL).put("featuredVideoId", JSONObject.NULL).put("hasScheduledVideos", false))
         item.put("removed", removed).put("_mtime", now)
-        if (watched) {
-            val state = item.optJSONObject("state") ?: JSONObject().also { item.put("state", it) }
-            state.put("lastWatched", now)
-            // Stremio shows a title in continue watching when its offset is more than zero; the real position is not known here
-            if (state.optLong("timeOffset") <= 0L) state.put("timeOffset", 1)
-            if (videoId != null) state.put("video_id", videoId)
-            item.put("removed", false)
-        }
         post("datastorePut", JSONObject().put("authKey", key).put("collection", "libraryItem").put("changes", JSONArray().put(item)))
     }
 
     /** After the user saved or removed a title here */
-    suspend fun saveChanged(type: String, id: String, name: String, poster: String?, removed: Boolean) {
-        val key = authKey() ?: return
-        mutex.withLock { runCatching { putItem(key, type, id, name, poster, removed, null, false) } }
+    suspend fun saveChanged(type: String, id: String, name: String, poster: String?, removed: Boolean) = withContext(Dispatchers.IO) {
+        mutex.withLock {
+            val key = authKey() ?: return@withLock
+            runCatching { putItem(key, type, id, name, poster, removed) }
+                .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
+        }
+        Unit
     }
 
-    /** After something was played here */
-    suspend fun played(p: WatchProgress) {
-        val key = authKey() ?: return
-        mutex.withLock { runCatching { putItem(key, p.type, p.id, p.name, p.poster, false, p.videoId, true) } }
+    /** Persist before finishing BroadcastReceiver.goAsync; network work must not hold its deadline. */
+    suspend fun recordPlayback(progress: WatchProgress, session: String): Boolean { initialized.await(); return library.markWatched(progress, session) }
+
+    /** Upload an already persisted position; failures remain available for the next sync. */
+    suspend fun playbackProgress(progress: WatchProgress, session: String, force: Boolean) = withContext(Dispatchers.IO) {
+        mutex.withLock {
+            if (session != playbackSession) return@withLock
+            val key = authKey() ?: return@withLock
+            val identity = Triple(progress.type, progress.id, progress.videoId)
+            val now = android.os.SystemClock.elapsedRealtime()
+            if (!force && now - (lastPush[identity] ?: Long.MIN_VALUE / 2) < 30_000) return@withLock
+            if (force && lastSent[identity]?.copy(watchedAt = progress.watchedAt) == progress) return@withLock
+            lastPush[identity] = now
+            if (lastPush.size > StremioLibrary.MAX_HISTORY) lastPush.remove(lastPush.keys.first())
+            runCatching { putProgress(key, progress); library.acknowledge(progress); lastSent[identity] = progress
+                if (lastSent.size > StremioLibrary.MAX_HISTORY) lastSent.remove(lastSent.keys.first())
+            }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
+        }
+    }
+
+    private suspend fun putProgress(key: String, progress: WatchProgress, existing: JSONObject? = null) {
+        val item = existing ?: remoteLibrary(key, listOf(progress.id)).firstOrNull() ?: JSONObject()
+            .put("_id", progress.id).put("type", progress.type).put("name", progress.name)
+            .put("poster", progress.poster ?: JSONObject.NULL).put("posterShape", "poster")
+            .put("removed", !library.isSaved(progress.id)).put("temp", !library.isSaved(progress.id))
+            .put("_ctime", Instant.ofEpochMilli(progress.watchedAt).toString())
+        var current = progress
+        if (progress.type == "series" && progress.timeWatchedMs.toDouble() > progress.durationMs * StremioProgressState.WATCHED_THRESHOLD) {
+            val field = item.optJSONObject("state")?.optString("watched")?.takeIf { it.isNotBlank() && it != "null" }
+            val anchor = field?.substringBeforeLast(':')?.substringBeforeLast(':')
+            if (progress.videoId !in progress.videoIds || (anchor != null && anchor !in progress.videoIds)) {
+                val client = StremioClient()
+                var order: List<String>? = null
+                for (addon in addons.addons.value.take(10)) {
+                    val meta = client.meta(addon, progress.type, progress.id) ?: continue
+                    val ids = StremioProgressState.orderedVideoIds(meta.videos)
+                    if (progress.videoId in ids && (anchor == null || anchor in ids) && ids.size <= 10_000 && ids.sumOf(String::length) <= 64_000) {
+                        order = ids; break
+                    }
+                }
+                current = progress.copy(videoIds = checkNotNull(order) { "Episode metadata is needed to synchronize watched history" })
+            }
+        }
+        val update = StremioProgressState.update(item, current) ?: return
+        post("datastorePut", JSONObject().put("authKey", key).put("collection", "libraryItem").put("changes", JSONArray().put(update)))
+        val state = update.getJSONObject("state")
+        _watched.value = _watched.value + (progress.id to StremioWatched(
+            movie = progress.type == "movie" && (state.optInt("timesWatched") > 0 || state.optInt("flaggedWatched") > 0),
+            videos = nullIfBlank(state.optString("watched")),
+        ))
     }
 
     // ---- all of it ----
 
     /** Brings add-ons, library and continue watching in step with the account; the result tells how many add-ons were new here */
-    suspend fun syncAll(): Result<Int> {
-        val key = authKey() ?: return Result.failure(IllegalStateException("Not signed in"))
+    suspend fun syncAll(): Result<Int> = withContext(Dispatchers.IO) {
         _busy.value = true
-        return try {
+        try {
             mutex.withLock {
                 runCatching {
-                    val added = syncAddons(key)
+                    val key = authKey() ?: error("Not signed in")
+                    library.activateAccount(_email.value, playbackSession)
+                    // An add-on failure must not prevent watch state from being refreshed.
+                    val addonResult = runCatching { syncAddons(key) }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
                     syncLibrary(key)
-                    added
-                }
+                    addonResult.getOrThrow()
+                }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
             }
-        } finally {
-            _busy.value = false
-        }
+        } finally { _busy.value = false }
     }
 
     companion object {

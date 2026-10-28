@@ -11,7 +11,7 @@ dependencyResolutionManagement {
         maven("https://raw.githubusercontent.com/guardianproject/gpmaven/master") {
             content { includeGroup("info.guardianproject") }
         }
-        maven("https://jitpack.io") { content { includeGroup("com.github.TeamNewPipe") } }
+        maven("https://jitpack.io") { content { includeGroup("com.github.TeamNewPipe"); includeGroup("cz.adaptech.tesseract4android") } }
         google()
         mavenCentral()
     }
@@ -86,3 +86,5 @@ include(":data:store")
 include(":services:comms")
 include(":data:comms")
 include(":services:downloads")
+
+include(":libs:appops-next")

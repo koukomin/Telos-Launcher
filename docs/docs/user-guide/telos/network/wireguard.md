@@ -31,3 +31,9 @@ The tunnel is used only after the firewall allowed a connection. DNS questions o
 In Settings > Downloads > Network > Proxy, **Torrents through Telos Network WireGuard** lets Telos Downloads and Telos Video send torrent traffic through one of your configs. Telos opens a local HTTP proxy bridged to that config; it exists only while Telos Network is on and the config is connected, otherwise torrents wait and nothing connects directly. It carries TCP only (no DHT or uTP), and other apps on the device could use the local proxy while it runs.
 
 A VPN does not make you anonymous: the provider of the tunnel sees your traffic. Only use configurations from providers you trust.
+
+## Two-hop tunnels
+
+The tunnel editor can choose an entry tunnel for an exit tunnel. Traffic is routed through the entry first, then exits through the edited tunnel. The entry must be another single-hop WireGuard configuration with both `0.0.0.0/0` and `::/0` routes. Keep both configurations enabled. Self-links, loops and chains longer than two configurations are rejected.
+
+Telos calls the pinned native engine’s TestHop/Hop API and checks its resulting router before publishing the route. A missing, disabled or unverified entry blocks the configured exit route instead of selecting its direct single-hop path. This Telos-specific link is stored with encrypted-key tunnel settings; standard wg-quick exports do not include it. Compilation and graph-policy unit tests passed. Live native two-server interoperability has not been verified.

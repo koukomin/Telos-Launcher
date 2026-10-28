@@ -1,0 +1,251 @@
+package main
+
+import (
+	"bufio"
+	"errors"
+	"io"
+	"reflect"
+	"strings"
+	"testing"
+)
+
+var errReadFailure = errors.New("read failure")
+
+func TestParseWatcherQuery(t *testing.T) {
+	actual, err := parseCommand("GET_WATCHERS")
+	expected := []string{"/system/bin/dumpsys", "appops", "--watchers"}
+	if err != nil || !reflect.DeepEqual(actual.arguments, expected) {
+		t.Fatalf("command = %#v, error = %v", actual, err)
+	}
+}
+
+func TestParseRejectsWatcherArguments(t *testing.T) {
+	for _, request := range []string{"GET_WATCHERS extra", "GET_WATCHERS ;id", "GET_WATCHERS --package android", "GET_WATCHERS;id"} {
+		if _, err := parseCommand(request); err == nil {
+			t.Fatalf("accepted malformed request %q", request)
+		}
+	}
+}
+
+type failingReader struct{}
+
+func (failingReader) Read([]byte) (int, error) {
+	return 0, errReadFailure
+}
+
+func TestParsePackageOperationQuery(t *testing.T) {
+	actual, err := parseCommand(
+		"GET_PACKAGE_OP dev.izumi.appopsnext android:camera",
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := []string{
+		"/system/bin/cmd",
+		"appops",
+		"get",
+		"dev.izumi.appopsnext",
+		"android:camera",
+	}
+	if !reflect.DeepEqual(actual.arguments, expected) {
+		t.Fatalf("arguments = %#v, want %#v", actual.arguments, expected)
+	}
+}
+
+func TestParseRejectsShellInjection(t *testing.T) {
+	_, err := parseCommand(
+		"GET_PACKAGE_OP dev.izumi.appopsnext android:camera;id",
+	)
+	if err == nil {
+		t.Fatal("expected operation injection to be rejected")
+	}
+}
+
+func TestParseRejectsUnsupportedMode(t *testing.T) {
+	_, err := parseCommand(
+		"SET_PACKAGE dev.izumi.appopsnext android:camera surprise",
+	)
+	if err == nil {
+		t.Fatal("expected unsupported mode to be rejected")
+	}
+}
+
+func TestReadRequestStripsTheDelimiter(t *testing.T) {
+	reader := bufio.NewReader(strings.NewReader("PING\n"))
+	request, err := readRequest(reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if request != "PING" {
+		t.Fatalf("request = %q, want %q", request, "PING")
+	}
+}
+
+func TestReadRequestAcceptsTheLongestAllowedLine(t *testing.T) {
+	line := strings.Repeat("A", maxRequestLength-1) + "\n"
+	reader := bufio.NewReader(strings.NewReader(line))
+	request, err := readRequest(reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(request) != maxRequestLength-1 {
+		t.Fatalf("length = %d, want %d", len(request), maxRequestLength-1)
+	}
+}
+
+func TestReadRequestContinuesAfterBufferFull(t *testing.T) {
+	line := strings.Repeat("A", 64) + "\n"
+	reader := bufio.NewReaderSize(strings.NewReader(line), 16)
+	request, err := readRequest(reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if request != strings.TrimSuffix(line, "\n") {
+		t.Fatalf("request = %q, want %q", request, strings.TrimSuffix(line, "\n"))
+	}
+}
+
+func TestReadRequestRejectsAnOversizedLine(t *testing.T) {
+	line := strings.Repeat("A", maxRequestLength) + "\n"
+	reader := bufio.NewReader(strings.NewReader(line))
+	if _, err := readRequest(reader); err == nil {
+		t.Fatal("expected an oversized request to be rejected")
+	}
+}
+
+func TestReadRequestRejectsAnOversizedUnterminatedLine(t *testing.T) {
+	line := strings.Repeat("A", maxRequestLength+16)
+	reader := bufio.NewReaderSize(strings.NewReader(line), 16)
+	if _, err := readRequest(reader); err == nil {
+		t.Fatal("expected an oversized unterminated request to be rejected")
+	}
+}
+
+func TestReadRequestReportsEndOfStream(t *testing.T) {
+	reader := bufio.NewReader(strings.NewReader(""))
+	if _, err := readRequest(reader); !errors.Is(err, io.EOF) {
+		t.Fatalf("err = %v, want %v", err, io.EOF)
+	}
+}
+
+func TestReadRequestDiscardsPartialLineAtEndOfStream(t *testing.T) {
+	reader := bufio.NewReader(strings.NewReader("PING"))
+	if _, err := readRequest(reader); !errors.Is(err, io.EOF) {
+		t.Fatalf("err = %v, want %v", err, io.EOF)
+	}
+}
+
+func TestReadRequestLeavesFollowingLinesForTheNextCall(t *testing.T) {
+	reader := bufio.NewReaderSize(strings.NewReader("PING\nEXIT\n"), 16)
+	for _, want := range []string{"PING", "EXIT"} {
+		request, err := readRequest(reader)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if request != want {
+			t.Fatalf("request = %q, want %q", request, want)
+		}
+	}
+}
+
+func TestReadRequestWrapsReaderFailures(t *testing.T) {
+	reader := bufio.NewReader(failingReader{})
+	if _, err := readRequest(reader); !errors.Is(err, errReadFailure) {
+		t.Fatalf("err = %v, want wrapped %v", err, errReadFailure)
+	}
+}
+
+// The unfiltered dump runs to tens of thousands of lines, so the query the
+// monitor uses to read process state has to stay scoped to one package.
+func TestParseOpStatesQuery(t *testing.T) {
+	actual, err := parseCommand("GET_OP_STATES CAMERA")
+	expected := []string{"/system/bin/dumpsys", "appops", "--op", "CAMERA"}
+	if err != nil || !reflect.DeepEqual(actual.arguments, expected) {
+		t.Fatalf("command = %#v, error = %v", actual, err)
+	}
+	for _, request := range []string{"GET_OP_STATES", "GET_OP_STATES CAMERA extra", "GET_OP_STATES CAMERA;id", "GET_OP_STATES ../../bad"} {
+		if _, err := parseCommand(request); err == nil {
+			t.Fatalf("expected %q to be rejected", request)
+		}
+	}
+}
+
+func TestParseUidStateQueryIsScopedToOnePackage(t *testing.T) {
+	actual, err := parseCommand("GET_UID_STATES dev.izumi.appopsnext")
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := []string{
+		"/system/bin/dumpsys",
+		"appops",
+		"--package",
+		"dev.izumi.appopsnext",
+	}
+	if !reflect.DeepEqual(actual.arguments, expected) {
+		t.Fatalf("arguments = %#v, want %#v", actual.arguments, expected)
+	}
+}
+
+func TestParseRejectsMalformedUidStateQuery(t *testing.T) {
+	for _, request := range []string{
+		"GET_UID_STATES",
+		"GET_UID_STATES dev.izumi.appopsnext extra",
+		"GET_UID_STATES dev.izumi.appopsnext;id",
+		"GET_UID_STATES ../../etc/passwd",
+	} {
+		if _, err := parseCommand(request); err == nil {
+			t.Fatalf("expected %q to be rejected", request)
+		}
+	}
+}
+
+func TestParsePackagePermissionsQuery(t *testing.T) {
+	actual, err := parseCommand("GET_PACKAGE_PERMISSIONS dev.izumi.appopsnext")
+	expected := []string{"/system/bin/dumpsys", "package", "dev.izumi.appopsnext"}
+	if err != nil || !reflect.DeepEqual(actual.arguments, expected) {
+		t.Fatalf("command = %#v, error = %v", actual, err)
+	}
+}
+
+func TestParseRevokedCompatRequests(t *testing.T) {
+	for verb, action := range map[string]string{
+		"SET_REVOKED_COMPAT":   "set-permission-flags",
+		"CLEAR_REVOKED_COMPAT": "clear-permission-flags",
+	} {
+		actual, err := parseCommand(
+			verb + " 0 dev.izumi.appopsnext android.permission.RECORD_AUDIO",
+		)
+		expected := []string{
+			"/system/bin/cmd",
+			"package",
+			action,
+			"--user",
+			"0",
+			"dev.izumi.appopsnext",
+			"android.permission.RECORD_AUDIO",
+			"revoked-compat",
+		}
+		if err != nil || !reflect.DeepEqual(actual.arguments, expected) {
+			t.Fatalf("%s command = %#v, error = %v", verb, actual, err)
+		}
+	}
+}
+
+func TestParseRejectsMalformedRevokedCompatRequests(t *testing.T) {
+	for _, request := range []string{
+		"SET_REVOKED_COMPAT 0 dev.izumi.appopsnext",
+		"SET_REVOKED_COMPAT -1 dev.izumi.appopsnext android.permission.CAMERA",
+		"SET_REVOKED_COMPAT 00 dev.izumi.appopsnext android.permission.CAMERA",
+		"SET_REVOKED_COMPAT all dev.izumi.appopsnext android.permission.CAMERA",
+		"SET_REVOKED_COMPAT 0 dev.izumi.appopsnext com.example.permission.CAMERA",
+		"SET_REVOKED_COMPAT 0 dev.izumi.appopsnext android.permission.CAMERA;id",
+		"SET_REVOKED_COMPAT 0 dev.izumi.appopsnext android.permission.CAMERA user-fixed",
+		"CLEAR_REVOKED_COMPAT 0 --user android.permission.CAMERA",
+		"GET_PACKAGE_PERMISSIONS",
+		"GET_PACKAGE_PERMISSIONS dev.izumi.appopsnext extra",
+	} {
+		if _, err := parseCommand(request); err == nil {
+			t.Fatalf("accepted malformed request %q", request)
+		}
+	}
+}

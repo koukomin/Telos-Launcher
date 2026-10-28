@@ -1,0 +1,130 @@
+package dev.izumi.appopsnext.presentation.app_list
+
+import android.app.Application
+import android.os.SystemClock
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import dev.izumi.appopsnext.apps.AppListFilter
+import dev.izumi.appopsnext.apps.model.InstalledApp
+import dev.izumi.appopsnext.AppOpsNextApplication
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+class AppListViewModel(
+    application: Application,
+) : AndroidViewModel(application) {
+    private val repository = AppOpsNextApplication.get(getApplication()).installedAppsRepository
+    private val settingsRepository =
+        AppOpsNextApplication.get(getApplication()).userSettingsRepository
+    private val diagnosticLog =
+        AppOpsNextApplication.get(getApplication()).diagnosticLogRepository
+    private val installedApps = MutableStateFlow<List<InstalledApp>>(emptyList())
+    private val searchQuery = MutableStateFlow("")
+    private val isLoading = MutableStateFlow(true)
+    private val loadFailed = MutableStateFlow(false)
+    private var loadJob: Job? = null
+
+    val uiState = combine(
+        installedApps,
+        searchQuery,
+        isLoading,
+        loadFailed,
+        settingsRepository.settings,
+    ) { apps, query, loading, failed, settings ->
+        val eligibleApps = if (settings.hideSystemApps) {
+            apps.filterNot(InstalledApp::isSystemApp)
+        } else {
+            apps
+        }
+        AppListUiState(
+            searchQuery = query,
+            totalAppCount = apps.size,
+            allApps = eligibleApps,
+            visibleApps = AppListFilter.apply(
+                apps = eligibleApps,
+                query = query,
+            ),
+            isLoading = loading,
+            loadFailed = failed,
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = AppListUiState(),
+    )
+
+    init {
+        load(forceRefresh = true, holdIndicator = false)
+    }
+
+    fun updateSearchQuery(query: String) {
+        searchQuery.value = query
+    }
+
+    fun refresh() = load(forceRefresh = true, holdIndicator = true)
+
+    /**
+     * Installed packages rarely change while the user is away, so a resume reuses
+     * the repository cache instead of enumerating and labelling every package again.
+     */
+    fun refreshAfterResume() {
+        if (installedApps.value.isNotEmpty()) {
+            load(forceRefresh = false, holdIndicator = false)
+        }
+    }
+
+    /**
+     * A pull-to-refresh indicator hides only when it sees loading change. A
+     * cached reload can finish within one frame, so a user refresh keeps the
+     * loading state visible for a moment.
+     */
+    private fun load(forceRefresh: Boolean, holdIndicator: Boolean) {
+        if (loadJob?.isActive == true) return
+
+        loadJob = viewModelScope.launch {
+            isLoading.value = true
+            loadFailed.value = false
+            val startedAt = SystemClock.elapsedRealtime()
+            diagnosticLog.info(
+                source = LOG_SOURCE,
+                message = "Loading installed applications.",
+            )
+            runCatching {
+                repository.loadInstalledApps(forceRefresh = forceRefresh)
+            }.onSuccess { apps ->
+                installedApps.value = apps
+                diagnosticLog.info(
+                    source = LOG_SOURCE,
+                    message =
+                        "Installed applications loaded. count=${apps.size}, " +
+                            "durationMs=" +
+                            (SystemClock.elapsedRealtime() - startedAt),
+                )
+            }.onFailure { error ->
+                loadFailed.value = true
+                diagnosticLog.error(
+                    source = LOG_SOURCE,
+                    message =
+                        "Unable to load installed applications. durationMs=" +
+                            (SystemClock.elapsedRealtime() - startedAt),
+                    error = error,
+                )
+            }
+            if (holdIndicator) {
+                val elapsed = SystemClock.elapsedRealtime() - startedAt
+                delay((MIN_REFRESH_INDICATOR_MILLIS - elapsed).coerceAtLeast(0))
+            }
+            isLoading.value = false
+        }
+    }
+
+    private companion object {
+        const val LOG_SOURCE = "AppList"
+        const val MIN_REFRESH_INDICATOR_MILLIS = 400L
+    }
+}
