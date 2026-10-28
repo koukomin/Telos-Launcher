@@ -1428,3 +1428,5 @@ Stremio and Trakt refresh watchlists, watched movie/episode identities and resum
 Camera recognizes QR and common barcodes and offers private multipage PDF scans with ordering, rotation, edge trimming and grayscale. Optional Tesseract OCR combines up to three recognition languages, including Greek, using integrity-checked downloaded models; documents remain local. Perspective correction is not implemented.
 
 Release validation and device/account limitations are recorded in [the integration record](docs/docs/developer-guide/system-network-integration-work.md). The current PR is not a published release.
+
+Translation status for the upcoming AppOps release: Greek has complete inventoried changed-string coverage. Other locales retain existing translations and use English fallback for missing new strings, as explicitly authorized by the user. See the [partial translation report](docs/docs/developer-guide/partial-translations-2026-10-28.md). Live Shizuku/root and Stremio/Trakt account interoperability remain device-unverified.
