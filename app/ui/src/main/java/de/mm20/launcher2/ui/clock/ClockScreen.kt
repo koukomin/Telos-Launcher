@@ -255,11 +255,12 @@ private fun AlarmEditor(initial: ClockAlarm, onDismiss: () -> Unit, onSave: (Clo
         }
     }
     Dialog(onDismissRequest = onDismiss) {
-        Surface(
-            shape = RoundedCornerShape(24.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
-            tonalElevation = 6.dp
-        ) {
+        CompositionLocalProvider(de.mm20.launcher2.ui.component.LocalGlassSurface provides false) {
+            Surface(
+                shape = RoundedCornerShape(24.dp),
+                color = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 1f),
+                tonalElevation = 16.dp
+            ) {
             Column(Modifier.heightIn(max = (LocalConfiguration.current.screenHeightDp * .85f).dp).verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(stringResource(R.string.clock_alarm), style = MaterialTheme.typography.titleLarge)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -281,6 +282,7 @@ private fun AlarmEditor(initial: ClockAlarm, onDismiss: () -> Unit, onSave: (Clo
                 TextButton(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.hc_cancel)) }
             }
         }
+      }
     }
 }
 @Composable

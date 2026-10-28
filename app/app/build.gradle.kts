@@ -64,7 +64,7 @@ android {
         applicationId = "com.dimitris.telos"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026103000
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026110500
         // release builds get the version of their tag (v1.41.0 -> 1.41.0), otherwise the update check would always find the tag newer
         versionName = System.getenv("VERSION_NAME_OVERRIDE")?.takeIf { it.isNotBlank() } ?: "1.41.89"
         signingConfig = signingConfigs.getByName("debug")
