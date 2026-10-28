@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_hop_via">Tunnel εισόδου (WireGuard δύο hops)</string>
+    <string name="nwg_hop_hint">Η κίνηση περνά πρώτα από το tunnel εισόδου και μετά από αυτό το tunnel εξόδου. Η είσοδος πρέπει να δρομολογεί και 0.0.0.0/0 και ::/0. Κράτησε και τα δύο tunnels ενεργά. Ένα hop που λείπει ή δεν έχει επαληθευτεί μπλοκάρει αυτή τη διαδρομή. Η τυπική εξαγωγή WireGuard δεν περιλαμβάνει αυτή τη ρύθμιση του Telos.</string>
+    <string name="nwg_err_invalid_hop">Επίλεξε διαφορετικό tunnel εισόδου ενός hop με πλήρεις διαδρομές IPv4 και IPv6. Δεν υποστηρίζονται βρόχοι ή αλυσίδες με περισσότερα από δύο tunnels.</string>
+</resources>

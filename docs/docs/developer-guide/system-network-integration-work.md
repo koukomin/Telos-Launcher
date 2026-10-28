@@ -39,3 +39,7 @@ The official Rethink README was reviewed against the current APIs. Existing Telo
 ### General proxy checkpoint
 
 An encrypted endpoint registry now integrates the existing firestack AddProxy API for SOCKS5/HTTP CONNECT, with global and per-app routing, endpoint editing/removal, explicit direct bypass, and protocol-aware fail-closed decisions. Credentials stay out of public state flows and are encrypted before atomic persistence. Removed endpoints retain assignments to prevent accidental direct fallback. Native registration is tracked separately from reachability. Unit tests validate origin/credential encoding and unavailable/unsupported-protocol routing. This code has not yet passed compilation/device validation. WireGuard multi-hop and RPN provisioning are still unresolved; no parity-complete claim is made.
+
+### Two-hop checkpoint
+
+WireGuard configurations now support an optional entry-tunnel ID. Policy validation rejects missing/self/triple-hop links and requires full IPv4/IPv6 entry routes. Runtime routing remains blocked until the native router reports the expected hop; updates, removals and re-registration invalidate cached bindings. The editor and error handling expose this capability. Pure tests cover accepted pairs and invalid graphs. The implementation follows the already pinned firestack `Proxies.TestHop/Hop` contract and still needs build and real-tunnel verification. RPN subscription provisioning is an external service capability and has not been implemented.

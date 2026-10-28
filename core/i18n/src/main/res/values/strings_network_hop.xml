@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_hop_via">Entry tunnel (two-hop WireGuard)</string>
+    <string name="nwg_hop_hint">Traffic uses the entry tunnel first and then this exit tunnel. The entry must route both 0.0.0.0/0 and ::/0. Keep both tunnels enabled. A missing or unverified hop blocks this route. Standard WireGuard exports do not include this Telos setting.</string>
+    <string name="nwg_err_invalid_hop">Choose another single-hop entry tunnel with full IPv4 and IPv6 routes. Loops and chains longer than two tunnels are not supported.</string>
+</resources>

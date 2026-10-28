@@ -1430,3 +1430,5 @@ Shared-cache development draft: Stremio cache settings can connect to a compatib
 Network development draft: primary screens now share Rethink-style navigation, adaptive per-app rule tiles, UID/category filtering and 1h/24h/7d retained-log traffic summaries with metering stamps. Log icons open the same app editor, preserving temporary access. Generic proxy/multi-hop parity, translations and final visual/device checks remain open.
 
 Proxy development draft: Telos Network can configure user-owned SOCKS5/HTTP CONNECT endpoints, encrypted authentication, per-app/default routes and explicit direct bypass. Disabled or removed assigned endpoints remain blocked. This checkpoint also fixes the new Network rule-grid dimension calculation; compilation, native routing checks and complete translations are still pending.
+
+WireGuard development draft: the editor can link an exit tunnel through another full-route entry tunnel using firestack’s two-hop API. Invalid graphs are rejected and unverified/missing hops block the selected route. Unit coverage is added; native interoperability, full translations and final release checks remain pending.

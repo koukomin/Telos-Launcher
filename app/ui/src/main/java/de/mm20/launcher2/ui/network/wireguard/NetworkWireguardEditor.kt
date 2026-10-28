@@ -15,6 +15,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -70,6 +71,8 @@ internal fun WireguardEditor(initial: WireguardConfig, isNew: Boolean, wg: Wireg
     var mtu by remember { mutableStateOf(if (initial.wgInterface.mtu > 0) initial.wgInterface.mtu.toString() else "") }
     var mobileOnly by remember { mutableStateOf(initial.mobileOnly) }
     var lockdown by remember { mutableStateOf(initial.lockdown) }
+    var hopVia by remember { mutableStateOf(initial.hopVia) }
+    val configurations by wg.configs.collectAsState()
     val peers = remember { mutableStateListOf<PeerDraft>().also { l -> initial.peers.forEach { l.add(PeerDraft(it)) } } }
     var confirmDelete by remember { mutableStateOf(false) }
 
@@ -87,6 +90,7 @@ internal fun WireguardEditor(initial: WireguardConfig, isNew: Boolean, wg: Wireg
         peers = peers.map { it.toPeer() },
         mobileOnly = mobileOnly,
         lockdown = lockdown,
+        hopVia = hopVia,
     )
 
     AlertDialog(
@@ -120,6 +124,10 @@ internal fun WireguardEditor(initial: WireguardConfig, isNew: Boolean, wg: Wireg
                     peers.add(PeerDraft(WgPeer(publicKey = "", allowedIps = listOf("0.0.0.0/0", "::/0"), persistentKeepalive = 25)))
                 }) { Text(stringResource(R.string.nwg_add_peer)) }
                 HorizontalDivider()
+                val hopOptions = listOf(de.mm20.launcher2.ui.component.preferences.ListPreferenceItem<Int?>(stringResource(R.string.dl_t_select_none), null)) +
+                    configurations.filter { it.id != initial.id && it.hopVia == null }.map { de.mm20.launcher2.ui.component.preferences.ListPreferenceItem<Int?>(it.name, it.id) }
+                de.mm20.launcher2.ui.component.preferences.ListPreference(title = stringResource(R.string.nwg_hop_via), items = hopOptions, value = hopVia, onValueChanged = { hopVia = it })
+                Text(stringResource(R.string.nwg_hop_hint), style = MaterialTheme.typography.bodySmall)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(stringResource(R.string.nwg_mobile_only), Modifier.weight(1f))
                     Switch(checked = mobileOnly, onCheckedChange = { mobileOnly = it })

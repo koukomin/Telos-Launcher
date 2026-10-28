@@ -277,6 +277,7 @@ internal fun errorText(context: Context, t: Throwable): String {
         WgConfigError.InvalidKey -> context.getString(R.string.nwg_err_invalid_key, d)
         WgConfigError.InvalidAddress, WgConfigError.InvalidDns, WgConfigError.InvalidAllowedIps,
         WgConfigError.InvalidEndpoint, WgConfigError.InvalidNumber -> context.getString(R.string.nwg_err_invalid_value, d)
+        WgConfigError.InvalidHop -> context.getString(R.string.nwg_err_invalid_hop)
         WgConfigError.InvalidName -> context.getString(R.string.nwg_err_invalid_name)
         WgConfigError.NotFound -> context.getString(R.string.nwg_err_not_found)
         WgConfigError.Storage -> context.getString(R.string.nwg_err_storage, d)
