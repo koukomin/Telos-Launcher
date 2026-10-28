@@ -43,7 +43,11 @@ val buildNativeDaemon by tasks.registering(NativeDaemonAssetTask::class) {
     val outputDirectory = executable.parentFile
     val buildForArm64 = providers.gradleProperty("telos.abi").orNull != "armeabi-v7a"
     doFirst { outputDirectory.mkdirs() }
-    onlyIf { buildForArm64 }
+    onlyIf {
+        buildForArm64 && runCatching {
+            ProcessBuilder("go", "version").start().waitFor() == 0
+        }.getOrDefault(false)
+    }
 }
 
 androidComponents {
