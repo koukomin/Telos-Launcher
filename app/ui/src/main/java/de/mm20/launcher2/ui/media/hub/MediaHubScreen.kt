@@ -533,20 +533,20 @@ private fun HubMiniPlayer(
         val duration = musicNow?.durationMs ?: 0L
 
         Surface(
-            shape = cardShape,
-            color = scheme.surfaceContainerHigh,
+            shape = RoundedCornerShape(24.dp),
+            color = scheme.surfaceContainerHigh.copy(alpha = 0.94f),
             contentColor = scheme.onSurface,
-            tonalElevation = 0.dp,
-            shadowElevation = 0.dp,
+            tonalElevation = 2.dp,
+            shadowElevation = 8.dp,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 4.dp)
-                .clip(cardShape)
+                .padding(horizontal = 12.dp, vertical = 6.dp)
+                .clip(RoundedCornerShape(24.dp))
                 .clickable(onClickLabel = stringResource(R.string.au9_mediahub_open_player)) { onOpen(display) },
         ) {
             Box {
             Row(
-                Modifier.padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 8.dp),
+                Modifier.padding(start = 6.dp, end = 6.dp, top = 6.dp, bottom = 6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Box(

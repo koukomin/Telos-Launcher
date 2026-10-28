@@ -105,7 +105,7 @@ fun MediaFrame(
             )
         },
     ) { padding ->
-        Box(Modifier.fillMaxSize().padding(padding).background(virtualAppSurface())) {
+        Box(Modifier.fillMaxSize().padding(top = padding.calculateTopPadding(), bottom = 8.dp).background(virtualAppSurface())) {
             content()
         }
     }

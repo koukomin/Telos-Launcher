@@ -215,18 +215,7 @@ private fun RadioDashboardContent(
     }) {
     Column(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.weight(1f).fillMaxWidth()) {
-        androidx.compose.foundation.lazy.LazyRow(
-            contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            item {
-                de.mm20.launcher2.ui.media.MediaFilterButton(selectedTabIndex == 0 && !searchExpanded,
-                    { selectedTabIndex = 0; searchExpanded = false }, stringResource(R.string.au_radio_tab_collection))
-            }
-            item {
-                de.mm20.launcher2.ui.media.MediaFilterButton(selectedTabIndex == 2 && !searchExpanded,
-                    { selectedTabIndex = 2; searchExpanded = false }, stringResource(R.string.au_radio_tab_history))
-            }
-        }
+
 
         when (if (searchExpanded) 1 else selectedTabIndex) {
             0 -> {
