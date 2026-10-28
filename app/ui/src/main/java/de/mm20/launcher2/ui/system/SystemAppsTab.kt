@@ -113,6 +113,13 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                     IconButton(onClick = { searchExpanded = true }) {
                         Icon(Icons.Default.Search, contentDescription = stringResource(R.string.hc_search))
                     }
+                    IconButton(onClick = { frozenOnly = !frozenOnly }) {
+                        Icon(
+                            painter = androidx.compose.ui.res.painterResource(if (frozenOnly) R.drawable.ac_unit_24px else R.drawable.apps_24px),
+                            contentDescription = "Frozen Only",
+                            tint = if (frozenOnly) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                        )
+                    }
                     IconButton(onClick = { showSystem = !showSystem }) {
                         Icon(
                             painter = androidx.compose.ui.res.painterResource(if (showSystem) R.drawable.visibility_24px else R.drawable.visibility_off_24px),
