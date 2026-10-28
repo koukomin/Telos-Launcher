@@ -148,11 +148,22 @@ fun CalculatorScreen() {
 
 @Composable
 private fun TopBar(title: String, onBack: () -> Unit, actions: @Composable () -> Unit = {}) {
+    var showFontDialog by remember { mutableStateOf(false) }
+    if (showFontDialog) {
+        de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
+            appKey = "calculator",
+            appName = "Telos Calculator",
+            onDismiss = { showFontDialog = false }
+        )
+    }
     Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = onBack) {
             Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.calculator_back))
         }
         Text(title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f).padding(start = 4.dp), maxLines = 1, overflow = TextOverflow.Ellipsis)
+        IconButton(onClick = { showFontDialog = true }) {
+            Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
+        }
         actions()
     }
 }
