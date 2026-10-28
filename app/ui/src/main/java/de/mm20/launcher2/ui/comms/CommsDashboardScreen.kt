@@ -117,6 +117,14 @@ fun CommsDashboardScreen(
     }
 
     de.mm20.launcher2.ui.component.VirtualAppWindow {
+    var showFontDialog by remember { mutableStateOf(false) }
+    if (showFontDialog) {
+        de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
+            appKey = "comms",
+            appName = "Telos Phone & SMS",
+            onDismiss = { showFontDialog = false }
+        )
+    }
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -154,6 +162,15 @@ fun CommsDashboardScreen(
                     onClick = {
                         coroutineScope.launch { drawerState.close() }
                         backStack.add(CommsSettingsRoute)
+                    },
+                )
+                NavigationDrawerItem(
+                    icon = { Icon(painterResource(R.drawable.text_fields_24px), contentDescription = null) },
+                    label = { Text("Font Size / Γραμματοσειρά") },
+                    selected = false,
+                    onClick = {
+                        coroutineScope.launch { drawerState.close() }
+                        showFontDialog = true
                     },
                 )
                 NavigationDrawerItem(
