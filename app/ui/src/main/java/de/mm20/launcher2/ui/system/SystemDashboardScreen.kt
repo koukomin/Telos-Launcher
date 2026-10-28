@@ -170,6 +170,14 @@ fun SystemDashboardScreen() {
     }
 
     de.mm20.launcher2.ui.component.VirtualAppWindow {
+    var showFontDialog by remember { mutableStateOf(false) }
+    if (showFontDialog) {
+        de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
+            appKey = "system",
+            appName = "Telos System",
+            onDismiss = { showFontDialog = false }
+        )
+    }
     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(scheme.primary.copy(alpha = 0.22f * MaterialTheme.transparency.surface), Color.Transparent)))) {
         Canvas(Modifier.fillMaxSize()) {
             val r = size.minDimension * (0.18f + 0.04f * sin(t * Math.PI * 2).toFloat())
@@ -183,6 +191,9 @@ fun SystemDashboardScreen() {
                     Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
                 }
                 Text(stringResource(R.string.telos_system_label), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                IconButton(onClick = { showFontDialog = true }) {
+                    Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
+                }
             }
             androidx.compose.material3.TabRow(selectedTabIndex = currentTab, containerColor = Color.Transparent) {
                 androidx.compose.material3.Tab(

@@ -107,25 +107,6 @@ fun AppearanceSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = "Per-App Font Sizes / Μέγεθος Γραμματοσειράς ανά Εφαρμογή") {
-                Text(
-                    text = "Ρυθμίστε ανεξάρτητα το μέγεθος γραμματοσειράς για κάθε Telos App με ζωντανή προεπισκόπηση.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-                )
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "system", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "media", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "store", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "files", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "network", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "clock", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "calculator", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "notes", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "camera", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-            }
-        }
-        item {
             PreferenceCategory {
                 // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 Preference(
@@ -180,25 +161,6 @@ fun AppearanceSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = "Per-App Font Sizes / Μέγεθος Γραμματοσειράς ανά Εφαρμογή") {
-                Text(
-                    text = "Ρυθμίστε ανεξάρτητα το μέγεθος γραμματοσειράς για κάθε Telos App με ζωντανή προεπισκόπηση.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-                )
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "system", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "media", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "store", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "files", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "network", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "clock", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "calculator", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "notes", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "camera", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-            }
-        }
-        item {
             PreferenceCategory {
                 Preference(
                     title = stringResource(id = R.string.preference_screen_presets),
@@ -207,25 +169,6 @@ fun AppearanceSettingsScreen() {
                     },
                     icon = R.drawable.auto_awesome_24dp,
                 )
-            }
-        }
-        item {
-            PreferenceCategory(title = "Per-App Font Sizes / Μέγεθος Γραμματοσειράς ανά Εφαρμογή") {
-                Text(
-                    text = "Ρυθμίστε ανεξάρτητα το μέγεθος γραμματοσειράς για κάθε Telos App με ζωντανή προεπισκόπηση.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-                )
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "system", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "media", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "store", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "files", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "network", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "clock", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "calculator", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "notes", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "camera", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
             }
         }
         item {
@@ -272,25 +215,6 @@ fun AppearanceSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = "Per-App Font Sizes / Μέγεθος Γραμματοσειράς ανά Εφαρμογή") {
-                Text(
-                    text = "Ρυθμίστε ανεξάρτητα το μέγεθος γραμματοσειράς για κάθε Telos App με ζωντανή προεπισκόπηση.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-                )
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "system", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "media", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "store", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "files", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "network", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "clock", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "calculator", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "notes", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "camera", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-            }
-        }
-        item {
             PreferenceCategory {
                 val committedFontScale by viewModel.fontScale.collectAsStateWithLifecycle(1f)
                 var liveFontScale by remember(committedFontScale) { mutableFloatStateOf(committedFontScale) }
@@ -308,25 +232,6 @@ fun AppearanceSettingsScreen() {
             }
         }
 
-        item {
-            PreferenceCategory(title = "Per-App Font Sizes / Μέγεθος Γραμματοσειράς ανά Εφαρμογή") {
-                Text(
-                    text = "Ρυθμίστε ανεξάρτητα το μέγεθος γραμματοσειράς για κάθε Telos App με ζωντανή προεπισκόπηση.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-                )
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "system", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "media", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "store", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "files", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "network", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "clock", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "calculator", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "notes", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-                de.mm20.launcher2.ui.component.PerAppFontScaleSetting(appKey = "camera", modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
-            }
-        }
         item {
             PreferenceCategory {
                 Preference(
