@@ -13,6 +13,10 @@ on:
       - 'core/preferences/**'
       - 'app/ui/src/test/java/de/mm20/launcher2/ui/component/FrostedTintTest.kt'
       - '.github/workflows/validate-theme-overlays.yml'
+# Keep only the newest checks for this PR; published releases use their own workflow.
+concurrency:
+  group: theme-overlays-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

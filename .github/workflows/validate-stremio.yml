@@ -44,6 +44,10 @@ on:
       - 'core/i18n/src/main/res/**'
       - '.github/workflows/validate-stremio.yml'
   workflow_dispatch:
+# Keep only the newest checks for this PR; published releases use their own workflow.
+concurrency:
+  group: stremio-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

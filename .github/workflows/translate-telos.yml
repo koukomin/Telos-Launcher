@@ -16,14 +16,11 @@ on:
 permissions:
   contents: read
 jobs:
-  translations:
+  request:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
-    strategy:
-      fail-fast: false
-      max-parallel: 16
-      matrix:
-        partition: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    outputs:
+      generate: ${{ steps.activation.outputs.generate }}
+      partitions: ${{ steps.partitions.outputs.value }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,16 +35,42 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           MANUAL_GENERATE: ${{ inputs.generate }}
         run: python tools/translations/activate.py
+      - id: partitions
+        env:
+          GENERATE: ${{ steps.activation.outputs.generate }}
+        run: |
+          if [ "$GENERATE" = true ]; then
+            echo 'value=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]' >> "$GITHUB_OUTPUT"
+          else
+            echo 'value=[0]' >> "$GITHUB_OUTPUT"
+          fi
+  translations:
+    needs: request
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 16
+      matrix:
+        partition: ${{ fromJSON(needs.request.outputs.partitions) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || inputs.source_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
       - name: Inventory all supported base locales
         run: python tools/translations/prepare.py
       - name: Install translation runtime
-        if: steps.activation.outputs.generate == 'true'
+        if: needs.request.outputs.generate == 'true'
         run: |
           python -c "import os; assert os.sysconf('SC_PAGE_SIZE') * os.sysconf('SC_PHYS_PAGES') >= 12 * 1024**3, 'Translation requires at least 12 GiB RAM'"
           pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
           pip install transformers==4.57.6 sentencepiece==0.2.1 accelerate==1.12.0 opencc-python-reimplemented==0.1.7
       - name: Generate bounded batches, preserving format tokens
-        if: steps.activation.outputs.generate == 'true'
+        if: needs.request.outputs.generate == 'true'
         env:
           TOKENIZERS_PARALLELISM: 'false'
           DNNL_PRIMITIVE_CACHE_CAPACITY: '0'

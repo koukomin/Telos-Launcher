@@ -30,3 +30,9 @@ The first ARM64 signed preflight (`40652059373`) exposed a Gradle implicit depen
 ### Visual review correction
 
 Run `40652059321` passed 32 Android tests. Retrieved AppOps/scanner screenshots nevertheless exposed broken narrow tab/navigation words and a scanner font-density fixture gap. Responsive navigation, scrolling tabs, inherited Dialog density and a font-scale assertion address those findings; replacement screenshots must be inspected before visual completion is claimed.
+
+### Greek review and CI queue control
+
+All 557 translatable embedded AppOps resources now have reviewed Greek wording, including privacy, history deletion, shared UID effects, batches and monitoring limitations. Technical names and formatting-only literals are retained intentionally. Final generation artifacts must not overwrite these reviewed resources.
+
+PR preflight release builds now have a separate concurrency group from serialized main/tag publication, and superseded checks cancel within each PR workflow. Inventory-only translation runs use one partition rather than reserving sixteen runners; actual explicitly activated generation still uses sixteen. The already-running final generation is not canceled by these changes. These adjustments reduce repeated CI backlog without bypassing tests or release signing.

@@ -7,6 +7,10 @@ on:
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/network/**'
       - '.github/workflows/validate-appops.yml'
   workflow_dispatch:
+# Keep only the newest checks for this PR; published releases use their own workflow.
+concurrency:
+  group: embedded-appops-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

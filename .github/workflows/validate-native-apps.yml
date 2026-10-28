@@ -22,6 +22,10 @@ on:
       - 'app/ui/src/androidTest/**'
       - '.github/workflows/validate-native-apps.yml'
   workflow_dispatch:
+# Keep only the newest checks for this PR; published releases use their own workflow.
+concurrency:
+  group: native-apps-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

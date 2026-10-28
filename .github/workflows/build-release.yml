@@ -45,8 +45,9 @@ on:
 
 # Ένα release κάθε φορά: δύο γρήγορα merge δεν πρέπει να πάρουν το ίδιο νούμερο έκδοσης
 concurrency:
-  group: build-release
-  cancel-in-progress: false
+  # Publishing remains serialized; superseded PR preflights must not hold it up.
+  group: ${{ github.event_name == 'pull_request' && format('build-release-pr-{0}', github.event.pull_request.number) || 'build-release' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 # Δικαίωμα για δημιουργία GitHub Release
 permissions:
