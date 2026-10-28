@@ -60,6 +60,7 @@ android {
             minorApiLevel = libs.versions.compileSdkMinor.get().toInt()
         }
     }
+    ndkVersion = "27.0.12077973"
     defaultConfig {
         applicationId = "com.dimitris.telos"
         minSdk = libs.versions.minSdk.get().toInt()
