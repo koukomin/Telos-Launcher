@@ -1436,3 +1436,5 @@ WireGuard development draft: the editor can link an exit tunnel through another 
 Integration hardening draft: delayed Trakt events preserve watch times and avoid replacing newer remote progress; Stremio credential initialization runs off Main. Embedded AppOps uses opaque sheets/headers/search surfaces and the complete Telos language chooser, with explicit host-wide scope. Full resource coverage and final device/visual checks remain pending.
 
 Translation preparation now audits embedded AppOps together with host UI across all 49 base locales, reusing existing matching translations and preserving separate module resources. Full translated-resource coverage and final Android/visual verification are still release gates; this tooling checkpoint does not publish a release.
+
+Release preparation: RPN subscription/provisioning is excluded by user instruction. The implemented System, Network, synchronization, shared-cache and scanner changes are entering final translation generation and validation; no new release has been published by this checkpoint.

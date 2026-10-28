@@ -21,8 +21,9 @@ jobs:
     timeout-minutes: 360
     strategy:
       fail-fast: false
+      max-parallel: 16
       matrix:
-        partition: [0, 1, 2, 3]
+        partition: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -53,7 +54,7 @@ jobs:
           OMP_NUM_THREADS: '2'
           MKL_NUM_THREADS: '2'
           TRANSLATION_PARTITION: ${{ matrix.partition }}
-          TRANSLATION_PARTITIONS: '4'
+          TRANSLATION_PARTITIONS: '16'
         run: python tools/translations/generate.py
       - uses: actions/upload-artifact@v4
         if: always()

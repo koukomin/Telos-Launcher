@@ -53,3 +53,7 @@ AppOps language selection now covers all shipped Telos locales, preserves Greek 
 ### Translation inventory checkpoint
 
 The preparation/validation tools now include all embedded AppOps strings instead of checking only host resources. Current inventory contains 652 changed/exposed string IDs across 49 base locales, including 557 translatable AppOps entries. Existing host translations can supply 2,834 exact-match entries. Generated host and embedded-module resources are kept separate, with format/resource/brand tokens protected. Heavy inference is not activated by this tooling checkpoint; final translations still need generation, semantic review and Android validation.
+
+### Release scope confirmation
+
+The user explicitly excluded RPN on 2026-10-28 and requested completion and release of the remaining work. RPN subscription/provisioning is therefore outside this release. The final translation source is frozen for generation across sixteen independent locale partitions. Compilation, tests, translated-resource review, visual inspection and signed dual-ABI release verification remain required before publishing.
