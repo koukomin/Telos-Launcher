@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.layout.BottomReversed
 
+import androidx.compose.material3.Surface
+
 @Composable
 fun SearchResultList(
     items: List<SavableSearchable>,
@@ -28,25 +30,33 @@ fun SearchResultList(
     highlightedItem: SavableSearchable? = null
 ) {
     var selectedIndex by remember { mutableIntStateOf(-1) }
-    Column(
-        modifier = modifier
-            .clip(MaterialTheme.shapes.small)
-            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, MaterialTheme.shapes.small),
-        verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.extraLarge,
+        color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.94f),
+        tonalElevation = 4.dp,
+        shadowElevation = 8.dp
     ) {
-        for ((i, item) in items.withIndex()) {
-            key(item.key) {
-                if (i != 0) {
-                    HorizontalDivider()
+        Column(
+            modifier = Modifier.padding(vertical = 4.dp),
+            verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
+        ) {
+            for ((i, item) in items.withIndex()) {
+                key(item.key) {
+                    if (i != 0) {
+                        HorizontalDivider(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f)
+                        )
+                    }
+                    ListItem(
+                        modifier = Modifier.fillMaxWidth(),
+                        item = item,
+                        highlight = item.key == highlightedItem?.key,
+                        showDetails = selectedIndex == i,
+                        onShowDetails = { selectedIndex = if (it) i else -1 }
+                    )
                 }
-                ListItem(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    item = item,
-                    highlight = item.key == highlightedItem?.key,
-                    showDetails = selectedIndex == i,
-                    onShowDetails = { selectedIndex = if (it) i else -1}
-                )
             }
         }
     }
