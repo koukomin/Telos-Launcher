@@ -5,31 +5,26 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.SurfaceTexture
 import android.hardware.camera2.*
 import android.os.Build
 import android.view.Surface
 import android.view.TextureView
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -105,11 +100,20 @@ fun MagnifierScreen() {
             modifier = Modifier.fillMaxSize().background(Color.Black),
             contentAlignment = Alignment.Center
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(stringResource(R.string.virtual_magnifier_permission), color = Color.White, style = MaterialTheme.typography.titleMedium)
-                Spacer(Modifier.height(16.dp))
-                Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
-                    Text(stringResource(R.string.hc_allow))
+            Surface(
+                shape = RoundedCornerShape(24.dp),
+                color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                modifier = Modifier.padding(24.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(stringResource(R.string.virtual_magnifier_permission), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    Spacer(Modifier.height(16.dp))
+                    Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
+                        Text(stringResource(R.string.hc_allow))
+                    }
                 }
             }
         }
@@ -157,22 +161,9 @@ fun MagnifierScreen() {
         }
     }
 
-    BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-            .statusBarsPadding()
-            .navigationBarsPadding()
-    ) {
-        // Camera Preview
-        if (cameraActive) AndroidView(
-            modifier = Modifier
-                .fillMaxSize()
-                .graphicsLayer {
-                    colorFilter = currentFilter.matrix?.let {
-                        ColorFilter.colorMatrix(androidx.compose.ui.graphics.ColorMatrix(it))
-                    }
-                },
+    Box(Modifier.fillMaxSize().background(Color.Black)) {
+        AndroidView(
+            modifier = Modifier.fillMaxSize(),
             factory = { ctx ->
                 TextureView(ctx).apply {
                     layoutParams = ViewGroup.LayoutParams(
@@ -181,59 +172,63 @@ fun MagnifierScreen() {
                     )
                     surfaceTextureListener = object : TextureView.SurfaceTextureListener {
                         override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture, width: Int, height: Int) {
-                            val cameraManager = ctx.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-                            try {
-                                val cameraId = cameraManager.cameraIdList.firstOrNull { id ->
-                                    val chars = cameraManager.getCameraCharacteristics(id)
-                                    chars.get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_BACK
-                                } ?: cameraManager.cameraIdList.first()
+                            if (!cameraActive) return
+                            val manager = ctx.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+                            val cameraId = manager.cameraIdList.firstOrNull { id ->
+                                manager.getCameraCharacteristics(id).get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_BACK
+                            } ?: manager.cameraIdList.firstOrNull() ?: return
 
-                                val characteristics = cameraManager.getCameraCharacteristics(cameraId)
-                                hasFlash = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
-                                sensorRect = characteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE)
-                                val ratioRange = if (Build.VERSION.SDK_INT >= 30) characteristics.get(CameraCharacteristics.CONTROL_ZOOM_RATIO_RANGE) else null
-                                val maximum = ratioRange?.upper ?: characteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1f
-                                zoomRange = 1f..maximum.coerceAtLeast(1f)
-                                zoomLevel = zoomLevel.coerceIn(zoomRange)
-                                val outputSize = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
-                                    ?.getOutputSizes(SurfaceTexture::class.java)?.minByOrNull {
-                                        kotlin.math.abs(it.width.toLong() * it.height - width.toLong() * height)
-                                    }
-                                outputSize?.let { surfaceTexture.setDefaultBufferSize(it.width, it.height) }
-                                cameraManager.openCamera(cameraId, object : CameraDevice.StateCallback() {
-                                    override fun onOpened(camera: CameraDevice) {
-                                        if (!cameraActive) { camera.close(); return }
-                                        cameraDevice = camera
-                                        val surface = Surface(surfaceTexture)
-                                        previewSurface = surface
-                                        val builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
-                                        builder.addTarget(surface)
-                                        builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
+                            val characteristics = manager.getCameraCharacteristics(cameraId)
+                            hasFlash = characteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+                            sensorRect = characteristics.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE)
+                            val maxZoom = characteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1f
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                val ratios = characteristics.get(CameraCharacteristics.CONTROL_ZOOM_RATIO_RANGE)
+                                if (ratios != null) {
+                                    zoomRange = ratios.lower..ratios.upper
+                                }
+                            } else {
+                                zoomRange = 1f..maxZoom
+                            }
+
+                            if (ContextCompat.checkSelfPermission(ctx, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) return
+
+                            manager.openCamera(cameraId, object : CameraDevice.StateCallback() {
+                                override fun onOpened(camera: CameraDevice) {
+                                    cameraDevice = camera
+                                    surfaceTexture.setDefaultBufferSize(1920, 1080)
+                                    val surface = Surface(surfaceTexture)
+                                    previewSurface = surface
+                                    try {
+                                        val builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW).apply {
+                                            addTarget(surface)
+                                            set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO)
+                                        }
                                         previewRequestBuilder = builder
-
                                         camera.createCaptureSession(listOf(surface), object : CameraCaptureSession.StateCallback() {
                                             override fun onConfigured(session: CameraCaptureSession) {
-                                                if (!cameraActive || cameraDevice !== camera) { session.close(); surface.release(); return }
                                                 captureSession = session
                                                 try {
                                                     session.setRepeatingRequest(builder.build(), null, null)
                                                 } catch (_: Exception) {}
                                             }
-                                            override fun onConfigureFailed(session: CameraCaptureSession) { session.close(); surface.release() }
+                                            override fun onConfigureFailed(session: CameraCaptureSession) {
+                                                Toast.makeText(ctx, "Camera config failed", Toast.LENGTH_SHORT).show()
+                                            }
                                         }, null)
-                                    }
+                                    } catch (_: Exception) {}
+                                }
 
-                                    override fun onDisconnected(camera: CameraDevice) {
-                                        camera.close()
-                                        cameraDevice = null
-                                    }
+                                override fun onDisconnected(camera: CameraDevice) {
+                                    camera.close()
+                                    cameraDevice = null
+                                }
 
-                                    override fun onError(camera: CameraDevice, error: Int) {
-                                        camera.close()
-                                        cameraDevice = null
-                                    }
-                                }, null)
-                            } catch (_: Exception) {}
+                                override fun onError(camera: CameraDevice, error: Int) {
+                                    camera.close()
+                                    cameraDevice = null
+                                }
+                            }, null)
                         }
 
                         override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {}
@@ -244,126 +239,177 @@ fun MagnifierScreen() {
                         override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
                     }
                 }
+            },
+            update = { view ->
+                if (currentFilter.matrix != null) {
+                    val paint = Paint().apply {
+                        colorFilter = ColorMatrixColorFilter(ColorMatrix(currentFilter.matrix))
+                    }
+                    view.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
+                } else {
+                    view.setLayerType(View.LAYER_TYPE_NONE, null)
+                }
             }
         )
 
-        // Overlay Controls (Glassmorphism M3 2026 UI)
-        Column(
+        // Google Apps 2026 Material 3 Expressive Floating Control Bar
+        Surface(
+            shape = RoundedCornerShape(32.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.94f),
+            tonalElevation = 8.dp,
+            shadowElevation = 12.dp,
             modifier = Modifier
-                .fillMaxWidth(if (maxWidth >= 480.dp && maxHeight < 400.dp) 0.6f else 1f)
-                .align(Alignment.BottomEnd)
-                .padding(8.dp)
-                .background(Color.Black.copy(alpha = 0.75f), RoundedCornerShape(24.dp))
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxWidth(0.92f)
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 24.dp)
         ) {
-            // Zoom Slider
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
+            Column(
+                modifier = Modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Icon(painterResource(R.drawable.search_24px), contentDescription = stringResource(R.string.au_video_zoom), tint = Color.White)
-                Spacer(Modifier.width(8.dp))
-                Slider(
-                    value = zoomLevel,
-                    onValueChange = { level ->
-                        val builder = previewRequestBuilder ?: return@Slider
-                        val session = captureSession ?: return@Slider
-                        try {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                builder.set(CaptureRequest.CONTROL_ZOOM_RATIO, level)
-                            } else sensorRect?.let { sensor ->
-                                val width = (sensor.width() / level).toInt().coerceAtLeast(1)
-                                val height = (sensor.height() / level).toInt().coerceAtLeast(1)
-                                val left = sensor.centerX() - width / 2
-                                val top = sensor.centerY() - height / 2
-                                builder.set(CaptureRequest.SCALER_CROP_REGION, Rect(left, top, left + width, top + height))
-                            }
-                            session.setRepeatingRequest(builder.build(), null, null)
-                            zoomLevel = level
-                        } catch (_: Exception) {}
-                    },
-                    enabled = zoomRange.endInclusive > 1f && !isFrozen && captureSession != null,
-                    valueRange = 1f..zoomRange.endInclusive.coerceAtLeast(1.001f),
-                    modifier = Modifier.weight(1f)
-                )
-                Spacer(Modifier.width(8.dp))
-                Text("${"%.1f".format(zoomLevel)}x", color = Color.White, fontWeight = FontWeight.Bold)
-            }
-
-            // Action Buttons (Torch & Freeze Frame)
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Box {
-                    IconButton(onClick = { filterMenu = true }) {
-                        Icon(painterResource(R.drawable.palette_24px), stringResource(when (currentFilter) {
-                            MagnifierFilter.Normal -> R.string.vn_size_normal
-                            MagnifierFilter.Inverted -> R.string.au3_appearance_cs_inverse_colors
-                            MagnifierFilter.Monochrome -> R.string.au3_searchset_icon_monochrome
-                            MagnifierFilter.YellowOnBlack -> R.string.app_polish_yellow_black
-                            MagnifierFilter.BlueOnYellow -> R.string.app_polish_blue_yellow
-                        }), tint = Color.White)
-                    }
-                    DropdownMenu(filterMenu, { filterMenu = false }) {
-                        MagnifierFilter.entries.forEach { filter ->
-                            DropdownMenuItem(text = { Text(stringResource(when (filter) {
-                                MagnifierFilter.Normal -> R.string.vn_size_normal
-                                MagnifierFilter.Inverted -> R.string.au3_appearance_cs_inverse_colors
-                                MagnifierFilter.Monochrome -> R.string.au3_searchset_icon_monochrome
-                                MagnifierFilter.YellowOnBlack -> R.string.app_polish_yellow_black
-                                MagnifierFilter.BlueOnYellow -> R.string.app_polish_blue_yellow
-                            })) }, onClick = { currentFilter = filter; filterMenu = false })
-                        }
-                    }
-                }
-                IconButton(
-                    onClick = {
-                        val builder = previewRequestBuilder ?: return@IconButton
-                        val session = captureSession ?: return@IconButton
-                        try {
-                            builder.set(
-                                CaptureRequest.FLASH_MODE,
-                                if (!torchOn) CaptureRequest.FLASH_MODE_TORCH else CaptureRequest.FLASH_MODE_OFF
-                            )
-                            session.setRepeatingRequest(builder.build(), null, null)
-                            torchOn = !torchOn
-                        } catch (_: Exception) {}
-                    },
-                    enabled = hasFlash && !isFrozen && captureSession != null,
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
-                        .background(if (torchOn) MaterialTheme.colorScheme.primary else Color.DarkGray)
+                // Zoom Slider & Badge
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp)
                 ) {
                     Icon(
-                        painterResource(R.drawable.light_mode_24px),
-                        contentDescription = stringResource(R.string.telos_flashlight_app_label),
-                        tint = if (torchOn) MaterialTheme.colorScheme.onPrimary else Color.White
+                        painter = painterResource(R.drawable.search_24px),
+                        contentDescription = stringResource(R.string.au_video_zoom),
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(20.dp)
                     )
+                    Spacer(Modifier.width(12.dp))
+                    Slider(
+                        value = zoomLevel,
+                        onValueChange = { level ->
+                            val builder = previewRequestBuilder ?: return@Slider
+                            val session = captureSession ?: return@Slider
+                            try {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                    builder.set(CaptureRequest.CONTROL_ZOOM_RATIO, level)
+                                } else sensorRect?.let { sensor ->
+                                    val width = (sensor.width() / level).toInt().coerceAtLeast(1)
+                                    val height = (sensor.height() / level).toInt().coerceAtLeast(1)
+                                    val left = sensor.centerX() - width / 2
+                                    val top = sensor.centerY() - height / 2
+                                    builder.set(CaptureRequest.SCALER_CROP_REGION, Rect(left, top, left + width, top + height))
+                                }
+                                session.setRepeatingRequest(builder.build(), null, null)
+                                zoomLevel = level
+                            } catch (_: Exception) {}
+                        },
+                        enabled = zoomRange.endInclusive > 1f && !isFrozen && captureSession != null,
+                        valueRange = 1f..zoomRange.endInclusive.coerceAtLeast(1.001f),
+                        modifier = Modifier.weight(1f)
+                    )
+                    Spacer(Modifier.width(12.dp))
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        modifier = Modifier.padding(start = 4.dp)
+                    ) {
+                        Text(
+                            text = "${"%.1f".format(zoomLevel)}x",
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
+                        )
+                    }
                 }
 
-                IconButton(
-                    onClick = {
-                        val session = captureSession ?: return@IconButton
-                        try {
-                            if (!isFrozen) session.stopRepeating()
-                            else {
-                                val builder = previewRequestBuilder ?: return@IconButton
-                                session.setRepeatingRequest(builder.build(), null, null)
-                            }
-                            isFrozen = !isFrozen
-                        } catch (_: Exception) {}
-                    },
-                    enabled = captureSession != null,
-                    modifier = Modifier.size(48.dp).clip(CircleShape).background(
-                        if (isFrozen) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary
-                    )
+                // Action Buttons (Filter, Torch, Freeze) - Google Apps 2026 Expressive Style
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Icon(painterResource(if (isFrozen) R.drawable.play_arrow_24px else R.drawable.pause_24px),
-                        stringResource(if (isFrozen) R.string.virtual_magnifier_resume else R.string.virtual_magnifier_freeze),
-                        tint = if (isFrozen) MaterialTheme.colorScheme.onTertiary else MaterialTheme.colorScheme.onSecondary)
+                    // Filter Menu Pill
+                    Box {
+                        FilledTonalButton(
+                            onClick = { filterMenu = true },
+                            shape = RoundedCornerShape(20.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.palette_24px),
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Spacer(Modifier.width(6.dp))
+                            Text(currentFilter.label)
+                        }
+                        DropdownMenu(
+                            expanded = filterMenu,
+                            onDismissRequest = { filterMenu = false },
+                            shape = RoundedCornerShape(20.dp)
+                        ) {
+                            MagnifierFilter.entries.forEach { filter ->
+                                DropdownMenuItem(
+                                    text = { Text(filter.label) },
+                                    onClick = { currentFilter = filter; filterMenu = false }
+                                )
+                            }
+                        }
+                    }
+
+                    // Torch Button
+                    FilledTonalButton(
+                        onClick = {
+                            val builder = previewRequestBuilder ?: return@FilledTonalButton
+                            val session = captureSession ?: return@FilledTonalButton
+                            try {
+                                builder.set(
+                                    CaptureRequest.FLASH_MODE,
+                                    if (!torchOn) CaptureRequest.FLASH_MODE_TORCH else CaptureRequest.FLASH_MODE_OFF
+                                )
+                                session.setRepeatingRequest(builder.build(), null, null)
+                                torchOn = !torchOn
+                            } catch (_: Exception) {}
+                        },
+                        enabled = hasFlash && !isFrozen && captureSession != null,
+                        shape = RoundedCornerShape(20.dp),
+                        colors = ButtonDefaults.filledTonalButtonColors(
+                            containerColor = if (torchOn) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHighest,
+                            contentColor = if (torchOn) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
+                        )
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.light_mode_24px),
+                            contentDescription = stringResource(R.string.telos_flashlight_app_label),
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        Text(if (torchOn) "Flash On" else "Flash")
+                    }
+
+                    // Freeze Frame Button
+                    Button(
+                        onClick = {
+                            val session = captureSession ?: return@Button
+                            try {
+                                if (!isFrozen) session.stopRepeating()
+                                else {
+                                    val builder = previewRequestBuilder ?: return@Button
+                                    session.setRepeatingRequest(builder.build(), null, null)
+                                }
+                                isFrozen = !isFrozen
+                            } catch (_: Exception) {}
+                        },
+                        enabled = captureSession != null,
+                        shape = RoundedCornerShape(20.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (isFrozen) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary,
+                            contentColor = if (isFrozen) MaterialTheme.colorScheme.onTertiary else MaterialTheme.colorScheme.onSecondary
+                        )
+                    ) {
+                        Icon(
+                            painter = painterResource(if (isFrozen) R.drawable.play_arrow_24px else R.drawable.pause_24px),
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        Text(if (isFrozen) "Resume" else "Freeze")
+                    }
                 }
             }
         }
