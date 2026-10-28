@@ -1419,7 +1419,7 @@ Media source buttons now include relevant glyphs and compact filled filters. Rad
 
 Keyboard Enter uses the same app-lock, companion-thaw and verified frozen-app launch path as tapping an icon. Legacy reflected Shizuku process factories are replaced by the shared supported UserService transport. System audio operations and Tweaks detect live authorization independently of the freeze backend.
 
-System → Apps → an application → **AppOps** opens embedded [AppOpsNext](https://github.com/1zumiii/AppOpsNext) on Android 15+, including package/UID operations, templates, batches, new-app policies, history/archive, access monitoring and diagnostics. No companion APK is required. Root/Shizuku authorization and OEM restrictions still apply.
+System → Apps → an application → **AppOps** opens embedded [AppOpsNext](https://github.com/1zumiii/AppOpsNext) on Android 15+, including package/UID operations, templates, batches, new-app policies, history/archive, access monitoring and diagnostics. No companion APK is required. Shizuku must be running and authorized (shell or root identity); OEM restrictions still apply.
 
 Network log app icons open the full per-app firewall editor, including temporary access. Home/Statistics/Logs/Apps/Settings share responsive navigation and Rethink-inspired rule tiles using Telos colors. Statistics summarize retained logs, not exact system traffic counters. User-configured SOCKS5/HTTP CONNECT endpoints support encrypted authentication and per-app/default/direct routing; unavailable assigned endpoints block traffic. WireGuard can use a verified two-tunnel entry/exit chain. RPN is excluded.
 

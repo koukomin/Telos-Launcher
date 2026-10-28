@@ -36,3 +36,7 @@ Run `40652059321` passed 32 Android tests. Retrieved AppOps/scanner screenshots 
 All 557 translatable embedded AppOps resources now have reviewed Greek wording, including privacy, history deletion, shared UID effects, batches and monitoring limitations. Technical names and formatting-only literals are retained intentionally. Final generation artifacts must not overwrite these reviewed resources.
 
 PR preflight release builds now have a separate concurrency group from serialized main/tag publication, and superseded checks cancel within each PR workflow. Inventory-only translation runs use one partition rather than reserving sixteen runners; actual explicitly activated generation still uses sixteen. The already-running final generation is not canceled by these changes. These adjustments reduce repeated CI backlog without bypassing tests or release signing.
+
+### Complete generated-asset wiring
+
+Signed preflight `40656397962` exposed another independent consumer, `lintVitalAnalyzeRelease`. The initial lint-model dependency alone was insufficient. The daemon task now declares its output as a `DirectoryProperty` annotated `OutputDirectory`, and AGP registers it through `addGeneratedSourceDirectory` rather than a static source folder. This carries the producer to all asset consumers and removes the task-name workaround. ARM32 still does not register the ARM64 asset. The corrected signed preflight remains required; no APK from the failed run is a deliverable.
