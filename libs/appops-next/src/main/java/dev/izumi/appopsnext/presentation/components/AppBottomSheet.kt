@@ -47,7 +47,8 @@ fun AppBottomSheet(
         onDismissRequest = { if (canDismiss) onDismissRequest() },
         sheetState = sheetState,
         sheetMaxWidth = Dp.Unspecified,
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        contentColor = MaterialTheme.colorScheme.onSurface,
         dragHandle = if (dismissible) {
             { BottomSheetDefaults.DragHandle() }
         } else {

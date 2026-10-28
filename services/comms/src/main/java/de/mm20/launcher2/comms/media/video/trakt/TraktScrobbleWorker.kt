@@ -23,6 +23,7 @@ class TraktScrobbleWorker(context: Context, parameters: WorkerParameters) : Coro
         if (TraktLibraryParser.identifiers(id) == null) return Result.success()
         val action = inputData.getString("action") ?: return Result.success()
         val at = inputData.getLong("at", 0)
+        if (action !in setOf("start", "pause", "stop") || at <= 0 || at > System.currentTimeMillis() + 300_000) return Result.success()
         // A delayed start must not claim that a closed player is still playing.
         if (action == "start" && System.currentTimeMillis() - at > 30_000) return Result.success()
         val login = Trakt.login(applicationContext)
@@ -32,7 +33,7 @@ class TraktScrobbleWorker(context: Context, parameters: WorkerParameters) : Coro
         if (inputData.getBoolean("series", false) && (season == null || episode == null)) return Result.success()
         val progress = inputData.getFloat("progress", 0f)
         return try {
-            if (Trakt.scrobbleId(applicationContext, action, id, season, episode, progress, session)) Result.success()
+            if (Trakt.scrobbleId(applicationContext, action, id, season, episode, progress, session, at)) Result.success()
             else if (runAttemptCount < 5) Result.retry() else Result.failure()
         } catch (error: kotlinx.coroutines.CancellationException) { throw error }
         catch (_: Exception) { if (runAttemptCount < 5) Result.retry() else Result.failure() }

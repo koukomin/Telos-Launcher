@@ -28,7 +28,12 @@ class AppLanguageTest {
     fun `unsupported explicit locale fails back to system selection`() {
         assertEquals(
             AppLanguage.SYSTEM,
-            AppLanguage.fromLanguageTags("ja-JP"),
+            AppLanguage.fromLanguageTags("zz-ZZ"),
         )
+    }
+    @org.junit.Test fun hostGreekAndTraditionalChineseArePreserved() {
+        org.junit.Assert.assertEquals(AppLanguage.GREEK, AppLanguage.fromLanguageTags("el-GR"))
+        org.junit.Assert.assertEquals(AppLanguage.TRADITIONAL_CHINESE, AppLanguage.fromLanguageTags("zh-TW"))
+        org.junit.Assert.assertEquals(AppLanguage.TRADITIONAL_CHINESE, AppLanguage.fromLanguageTags("zh-Hant"))
     }
 }

@@ -111,7 +111,7 @@ class StremioViewModel : ViewModel(), KoinComponent {
 
     fun refreshAccounts(context: Context, force: Boolean = false) {
         viewModelScope.launch {
-            launch { if (account.signedIn) account.syncAll() }
+            launch { account.awaitReady(); if (account.signedIn) account.syncAll() }
             launch {
                 de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshLibrary(appContext, force)
             }
@@ -315,6 +315,7 @@ class StremioViewModel : ViewModel(), KoinComponent {
         _streams.update { it?.copy(loading = true) }
         playJob?.cancel()
         playJob = viewModelScope.launch {
+            account.awaitReady()
             // Wait for any in-flight login sync before selecting a resume point.
             de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshLibrary(appContext)
             if (_streams.value?.videoId != state.videoId) return@launch

@@ -366,21 +366,52 @@ object Trakt {
             }
         }
 
-    suspend fun scrobbleId(context: Context, action: String, id: String, season: Int?, episode: Int?, progressPercent: Float, expectedSession: String): Boolean = withContext(Dispatchers.IO) {
+    suspend fun scrobbleId(context: Context, action: String, id: String, season: Int?, episode: Int?, progressPercent: Float, expectedSession: String, eventAt: Long): Boolean = withContext(Dispatchers.IO) {
         scrobbleWriteMutex.withLock {
         if (action !in setOf("start", "pause", "stop") || !progressPercent.isFinite() || session(context) != expectedSession) return@withContext false
         val l = login(context)
         if (!l.enabled || !l.connected) return@withContext false
         val ids = TraktLibraryParser.identifiers(id) ?: return@withContext false
         val access = token(context, expectedSession) ?: return@withContext false
+        if ((season == null) != (episode == null) || eventAt <= 0 || eventAt > System.currentTimeMillis() + 300_000) return@withContext false
         val media = if (season != null && episode != null) {
             if (season < 0 || episode <= 0) return@withContext false
             JSONObject().put("show", JSONObject().put("ids", ids)).put("episode", JSONObject().put("season", season).put("number", episode))
         } else JSONObject().put("movie", JSONObject().put("ids", ids))
+        val delayed = System.currentTimeMillis() - eventAt > 30_000
+        if (delayed) {
+            val watched = request(context, "GET", if (season == null) "/sync/watched/movies" else "/sync/watched/shows", null, l.clientId, access)
+            if (watched.code != 200 || session(context) != expectedSession) return@withContext false
+            val latest = TraktReplayPolicy.latestWatchedAt(watched.body, id, season, episode)
+            if (latest > 0 && latest >= eventAt - 1000) return@withContext true
+            if (action != "stop" || progressPercent < 80f) {
+                val playback = request(context, "GET", "/sync/playback?extended=full", null, l.clientId, access)
+                if (playback.code != 200 || session(context) != expectedSession) return@withContext false
+                if (TraktReplayPolicy.newerPlayback(playback.body, id, season, eventAt)) return@withContext true
+            }
+        }
         val body = JSONObject(media.toString()).put("progress", progressPercent.coerceIn(0f, 100f).toDouble())
-        val result = runCatching { request(context, "POST", "/scrobble/$action", body, l.clientId, access) }.getOrNull()
+        val result = runCatching {
+            if (delayed && action == "stop" && progressPercent >= 80f) {
+                val history = JSONObject()
+                val watchedAt = java.time.Instant.ofEpochMilli(eventAt).toString()
+                val item = JSONObject().put("ids", ids)
+                if (season == null) {
+                    history.put("movies", JSONArray().put(item.put("watched_at", watchedAt)))
+                } else {
+                    val watchedEpisode = JSONObject().put("number", episode).put("watched_at", watchedAt)
+                    val watchedSeason = JSONObject().put("number", season).put("episodes", JSONArray().put(watchedEpisode))
+                    history.put("shows", JSONArray().put(item.put("seasons", JSONArray().put(watchedSeason))))
+                }
+                request(context, "POST", "/sync/history", history, l.clientId, access)
+            } else request(context, "POST", "/scrobble/$action", body, l.clientId, access)
+        }.getOrNull()
         if (session(context) != expectedSession) return@withContext false
-        val success = result != null && (result.code in 200..299 || result.code == 409)
+        val success = result != null && (result.code in 200..299 || result.code == 409) &&
+            (!delayed || action != "stop" || progressPercent < 80f || runCatching {
+                val missing = JSONObject(result.body).optJSONObject("not_found")
+                (missing?.optJSONArray(if (season == null) "movies" else "shows")?.length() ?: 0) == 0
+            }.getOrDefault(false))
         if (action == "stop" && progressPercent >= 80) {
             synchronized(accountMonitor) {
                 if (session(context) == expectedSession) {

@@ -43,3 +43,9 @@ An encrypted endpoint registry now integrates the existing firestack AddProxy AP
 ### Two-hop checkpoint
 
 WireGuard configurations now support an optional entry-tunnel ID. Policy validation rejects missing/self/triple-hop links and requires full IPv4/IPv6 entry routes. Runtime routing remains blocked until the native router reports the expected hop; updates, removals and re-registration invalidate cached bindings. The editor and error handling expose this capability. Pure tests cover accepted pairs and invalid graphs. The implementation follows the already pinned firestack `Proxies.TestHop/Hop` contract and still needs build and real-tunnel verification. RPN subscription provisioning is an external service capability and has not been implemented.
+
+### Synchronization and embedded-language hardening
+
+The draft now checks delayed Trakt updates against exact remote watched IDs and newer playback timestamps. Delayed completions retain their original watched_at through history upload; duplicates and newer resumes supersede queued older events. Additional parser/replay tests cover ID namespaces and episode identity. Stremio credential hydration and account-file activation now happen on IO, and playback waits for initialization instead of decrypting credentials from UI getters.
+
+AppOps language selection now covers all shipped Telos locales, preserves Greek and Traditional Chinese, and explicitly says it changes every Telos screen. The picker is lazy/scrollable. Imported AppOps sheets, search fields and headers use opaque semantic container roles; no additional wallpaper blur is introduced. Remaining translations and final screen/device verification remain open.

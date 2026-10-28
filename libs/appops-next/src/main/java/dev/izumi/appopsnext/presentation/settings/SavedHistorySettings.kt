@@ -529,7 +529,7 @@ private fun SavedHistoryDatePicker(
                 state = state,
                 modifier = Modifier.fillMaxWidth(),
                 colors = DatePickerDefaults.colors(
-                    containerColor = MaterialTheme.colorScheme.surface,
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
                 ),
             )
         },

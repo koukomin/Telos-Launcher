@@ -64,7 +64,7 @@ fun CompactTextField(
     Surface(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.surface,
+        color = MaterialTheme.colorScheme.surfaceContainer,
         border = BorderStroke(
             1.dp,
             if (focused) MaterialTheme.colorScheme.primary

@@ -4,6 +4,10 @@ import android.content.Context
 import de.mm20.launcher2.comms.media.video.Http
 import de.mm20.launcher2.comms.remote.SecretBox
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.sync.Mutex
@@ -25,10 +29,14 @@ class StremioAccount(
     private val addons: StremioAddons,
     private val library: StremioLibrary,
 ) {
-    private val prefs = context.applicationContext.getSharedPreferences("stremio_account", Context.MODE_PRIVATE)
+    private val app = context.applicationContext
+    private val prefs by lazy { app.getSharedPreferences("stremio_account", Context.MODE_PRIVATE) }
+    private val initialized = CompletableDeferred<Unit>()
+    @Volatile private var keyCache: String? = null
+    @Volatile private var sessionCache = "anonymous"
     private val mutex = Mutex()
 
-    private val _email = MutableStateFlow(prefs.getString("email", null)?.takeIf { authKey() != null })
+    private val _email = MutableStateFlow<String?>(null)
     /** The email of the account that is signed in, or null */
     val email: StateFlow<String?> get() = _email
 
@@ -38,10 +46,22 @@ class StremioAccount(
     private val _watched = MutableStateFlow<Map<String, StremioWatched>>(emptyMap())
     val watched: StateFlow<Map<String, StremioWatched>> get() = _watched
 
-    private fun authKey(): String? =
-        prefs.getString("key", null)?.let { runCatching { SecretBox.decrypt(it) }.getOrNull() }?.takeIf { it.isNotBlank() }
-
-    val signedIn: Boolean get() = authKey() != null
+    init {
+        CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
+            try {
+                val key = prefs.getString("key", null)?.let { runCatching { SecretBox.decrypt(it) }.getOrNull() }?.takeIf { it.isNotBlank() }
+                val email = prefs.getString("email", null)?.takeIf { key != null }
+                val session = if (email == null) "anonymous" else prefs.getString("playback_session", "legacy").orEmpty()
+                library.activateAccount(email, session)
+                sessionCache = session; keyCache = key; _email.value = email
+            } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (_: Exception) { keyCache = null; _email.value = null }
+            finally { initialized.complete(Unit) }
+        }
+    }
+    suspend fun awaitReady() { initialized.await() }
+    private suspend fun authKey(): String? { initialized.await(); return keyCache }
+    val signedIn: Boolean get() = keyCache != null
 
     // ---- requests ----
 
@@ -57,11 +77,12 @@ class StremioAccount(
     }
 
     /** An opaque generation prevents a player started under one login from writing into another. */
-    val playbackSession: String get() = prefs.getString("playback_session", if (_email.value == null) "anonymous" else "legacy").orEmpty()
+    val playbackSession: String get() = sessionCache
     private val lastPush = LinkedHashMap<Triple<String, String, String>, Long>()
     private val lastSent = LinkedHashMap<Triple<String, String, String>, WatchProgress>()
 
     suspend fun signIn(email: String, password: String): Result<Unit> = withContext(Dispatchers.IO) {
+        initialized.await()
         runCatching {
             val answer = post("login", JSONObject().put("type", "Login").put("email", email.trim()).put("password", password).put("facebook", false))
             val key = answer.optJSONObject("result")?.optString("authKey").orEmpty()
@@ -71,16 +92,18 @@ class StremioAccount(
                 library.activateAccount(email.trim(), session)
                 prefs.edit().putString("key", SecretBox.encrypt(key)).putString("email", email.trim())
                     .putString("playback_session", session).apply()
+                keyCache = key; sessionCache = session
                 _email.value = email.trim(); _watched.value = emptyMap(); lastPush.clear(); lastSent.clear()
             }
         }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
     }
 
     suspend fun signOut() = withContext(Dispatchers.IO) {
+        initialized.await()
         val key = mutex.withLock {
             val currentKey = authKey()
             try { library.activateAccount(null) } finally {
-                prefs.edit().clear().apply(); _email.value = null; _watched.value = emptyMap(); lastPush.clear(); lastSent.clear()
+                prefs.edit().clear().apply(); keyCache = null; sessionCache = "anonymous"; _email.value = null; _watched.value = emptyMap(); lastPush.clear(); lastSent.clear()
             }
             currentKey
         }
@@ -243,7 +266,7 @@ class StremioAccount(
     }
 
     /** Persist before finishing BroadcastReceiver.goAsync; network work must not hold its deadline. */
-    suspend fun recordPlayback(progress: WatchProgress, session: String): Boolean = library.markWatched(progress, session)
+    suspend fun recordPlayback(progress: WatchProgress, session: String): Boolean { initialized.await(); return library.markWatched(progress, session) }
 
     /** Upload an already persisted position; failures remain available for the next sync. */
     suspend fun playbackProgress(progress: WatchProgress, session: String, force: Boolean) = withContext(Dispatchers.IO) {

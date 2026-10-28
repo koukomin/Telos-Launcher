@@ -146,7 +146,7 @@
     <string name="appopsnext_settings_preferences">Display and language</string>
     <string name="appopsnext_settings_hide_system_apps">Hide system apps</string>
     <string name="appopsnext_settings_hide_system_apps_detail">Show only user-installed apps in the app list and in history.</string>
-    <string name="appopsnext_settings_language">App language</string>
+    <string name="appopsnext_settings_language">Telos language (all screens)</string>
     <string name="appopsnext_settings_language_system">Follow system</string>
     <string name="appopsnext_settings_language_chinese" translatable="false">中文</string>
     <string name="appopsnext_settings_language_english" translatable="false">English</string>

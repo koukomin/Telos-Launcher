@@ -88,7 +88,7 @@ fun SettingsScreen(
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
                 ),
             )
         },
@@ -306,8 +306,9 @@ fun SettingsScreen(
                 Text(text = stringResource(R.string.appopsnext_settings_language))
             },
             text = {
-                Column {
-                    AppLanguage.entries.forEach { language ->
+                LazyColumn {
+                    items(AppLanguage.entries.size, key = { AppLanguage.entries[it].name }) { index ->
+                        val language = AppLanguage.entries[index]
                         ListItem(
                             modifier = Modifier.clickable {
                                 showLanguageDialog = false
@@ -400,12 +401,7 @@ private fun SettingsGroupDivider() {
 
 @Composable
 private fun appLanguageLabel(language: AppLanguage): String =
-    stringResource(
-        when (language) {
-            AppLanguage.SYSTEM -> R.string.appopsnext_settings_language_system
-            AppLanguage.SIMPLIFIED_CHINESE ->
-                R.string.appopsnext_settings_language_chinese
-
-            AppLanguage.ENGLISH -> R.string.appopsnext_settings_language_english
-        },
-    )
+    if (language == AppLanguage.SYSTEM) stringResource(R.string.appopsnext_settings_language_system)
+    else androidx.compose.runtime.remember(language) {
+        java.util.Locale.forLanguageTag(language.languageTags).let { it.getDisplayName(it) }
+    }
