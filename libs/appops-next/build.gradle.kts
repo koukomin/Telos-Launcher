@@ -47,7 +47,12 @@ val buildNativeDaemon by tasks.registering(Exec::class) {
     onlyIf { buildForArm64 }
 }
 tasks.configureEach {
-    if (name.startsWith("merge") && name.endsWith("Assets")) dependsOn(buildNativeDaemon)
+    // Assets are also read directly by release lint model writers. Ordering only the
+    // merge task leaves those readers without a producer dependency in Gradle 9.
+    if ((name.startsWith("merge") && name.endsWith("Assets")) ||
+        (name.startsWith("generate") && name.contains("Lint") && name.endsWith("Model"))) {
+        dependsOn(buildNativeDaemon)
+    }
 }
 
 dependencies {

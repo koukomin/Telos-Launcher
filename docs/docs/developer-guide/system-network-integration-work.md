@@ -22,3 +22,7 @@ The final AppOps/scanner layout changes require their new instrumented surface t
 ## Validation limits
 
 No physical OnePlus/Android 16 call, Shizuku/root grant, native proxy/two-server WireGuard, live Stremio/Trakt account, installed Stremio server or camera-hardware interoperability has been verified by these emulator tests. Do not infer those outcomes from compilation or screenshots. The PR remains unreleased until final resource, UI and signed-build checks pass.
+
+### Signed-build producer dependency
+
+The first ARM64 signed preflight (`40652059373`) exposed a Gradle implicit dependency: release lint reads generated daemon assets independently of the asset merge task. Lint model writer tasks now explicitly depend on the same daemon producer. This keeps release lint enabled and preserves ARM32's existing UserService fallback. The corrected signed builds must pass before APK delivery. An initial set of 112 Greek AppOps resources has also been manually reviewed, including shared-UID warnings, allow/ignore/deny/foreground modes and write/restore confirmations; later machine artifacts must preserve these reviewed entries.
