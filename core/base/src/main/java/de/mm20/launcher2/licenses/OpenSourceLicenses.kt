@@ -327,6 +327,14 @@ val OpenSourceLicenses = arrayOf(
         url = "https://github.com/RikkaApps/Shizuku-API",
     ),
     OpenSourceLibrary(
+        name = "WiFi Password Manager",
+        description = "Privileged Wi-Fi password list, notes, import/export and Shizuku or root access",
+        licenseName = R.string.mit_license_name,
+        licenseText = R.raw.license_mit,
+        copyrightNote = "Copyright (c) 2025-2026 Khh-vu",
+        url = "https://github.com/Khh-vu/wifi-password-manager",
+    ),
+    OpenSourceLibrary(
         name = "libtorrent4j",
         description = "Java and Android bindings for libtorrent",
         licenseName = R.string.mit_license_name,

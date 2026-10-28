@@ -1084,4 +1084,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Shizuku of root is nodig. Schakel er een in om wachtwoorden te tonen.</string>
+    <string name="telos_system_wifi_privilege_root">Root-toegang is actief. Opgeslagen wachtwoorden kunnen worden gelezen.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku is gemachtigd. Opgeslagen wachtwoorden kunnen worden gelezen.</string>
+    <string name="telos_system_wifi_enable_shizuku">Installeer of open Shizuku en geef Telos toegang</string>
+    <string name="telos_system_wifi_open_shizuku">Open Shizuku en start de service</string>
+    <string name="telos_system_wifi_grant_shizuku">Geef Telos Shizuku-toestemming</string>
+    <string name="telos_system_wifi_connected">Verbonden</string>
+    <string name="telos_system_wifi_connect">Verbinden</string>
+    <string name="telos_system_wifi_disconnect">Verbreken</string>
+    <string name="telos_system_wifi_forget">Vergeten</string>
+    <string name="telos_system_wifi_forget_all">Alles vergeten</string>
+    <string name="telos_system_wifi_forget_confirm">%1$s op dit apparaat vergeten? Het wachtwoord blijft in Telos.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Alle opgeslagen netwerken van het apparaat verwijderen? Wachtwoorden blijven in Telos.</string>
+    <string name="telos_system_wifi_note">Notitie</string>
+    <string name="telos_system_wifi_note_save">Notitie opslaan</string>
+    <string name="telos_system_wifi_filter_all">Alles</string>
+    <string name="telos_system_wifi_filter_device">Op apparaat</string>
+    <string name="telos_system_wifi_filter_app">Alleen in Telos</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Tijdelijke netwerken opslaan</string>
+    <string name="telos_system_wifi_auto_persist">Tijdelijke netwerken automatisch bewaren</string>
+    <string name="telos_system_wifi_auto_persist_tile">Wi-Fi bewaren</string>
+    <string name="telos_system_wifi_export">JSON exporteren</string>
+    <string name="telos_system_wifi_export_gzip">GZip exporteren</string>
+    <string name="telos_system_wifi_export_encrypt">Versleuteld exporteren</string>
+    <string name="telos_system_wifi_export_password">Exportwachtwoord</string>
+    <string name="telos_system_wifi_import">Importeren</string>
+    <string name="telos_system_wifi_security_open">Open</string>
+    <string name="telos_system_wifi_empty">Geen opgeslagen netwerken</string>
+    <string name="telos_system_wifi_persisted">%1$d tijdelijke netwerken opgeslagen</string>
 </resources>

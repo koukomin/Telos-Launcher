@@ -146,8 +146,10 @@ Viewer selection reuses the shared URI delete/trash flow for multiple files.
 HWUI startup restoration is asynchronous and honors the existing opt-in. OpenGL
 uses skiagl. The selected property is not proof of the renderer in an already
 running process: Android locks that pipeline at initialization. The notice is
-on by default and configurable. Saved Wi-Fi reveal is authenticated and disabled
-without root/Shizuku; parsing cannot cross network blocks, and backgrounding clears
+on by default and configurable. Saved Wi-Fi reveal is authenticated. Telos reads
+configured networks through privileged `IWifiManager` (Shizuku or root) and falls
+back to the config store files. It detects Shizuku/root automatically and prompts
+to enable them. Parsing cannot cross network blocks, and backgrounding clears
 revealed credentials. OEM/SELinux restrictions may still prevent reading the store.
 
 Use the [adaptive UI contract](./adaptive-ui) for shared tokens, preference/navigation components,

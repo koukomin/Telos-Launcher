@@ -1611,4 +1611,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Este nevoie de Shizuku sau root. Activează unul pentru a afișa parolele.</string>
+    <string name="telos_system_wifi_privilege_root">Accesul root este activ. Parolele salvate pot fi citite.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku este autorizat. Parolele salvate pot fi citite.</string>
+    <string name="telos_system_wifi_enable_shizuku">Instalează sau deschide Shizuku și acordă acces Telos</string>
+    <string name="telos_system_wifi_open_shizuku">Deschide Shizuku și pornește serviciul</string>
+    <string name="telos_system_wifi_grant_shizuku">Acordă Telos permisiunea Shizuku</string>
+    <string name="telos_system_wifi_connected">Conectat</string>
+    <string name="telos_system_wifi_connect">Conectează</string>
+    <string name="telos_system_wifi_disconnect">Deconectează</string>
+    <string name="telos_system_wifi_forget">Uită</string>
+    <string name="telos_system_wifi_forget_all">Uită toate</string>
+    <string name="telos_system_wifi_forget_confirm">Uiți %1$s pe acest dispozitiv? Parola rămâne în Telos.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Elimini toate rețelele salvate de pe dispozitiv? Parolele rămân în Telos.</string>
+    <string name="telos_system_wifi_note">Notă</string>
+    <string name="telos_system_wifi_note_save">Salvează nota</string>
+    <string name="telos_system_wifi_filter_all">Toate</string>
+    <string name="telos_system_wifi_filter_device">Pe dispozitiv</string>
+    <string name="telos_system_wifi_filter_app">Doar în Telos</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Salvează rețelele temporare</string>
+    <string name="telos_system_wifi_auto_persist">Păstrează automat rețelele temporare</string>
+    <string name="telos_system_wifi_auto_persist_tile">Păstrează Wi-Fi</string>
+    <string name="telos_system_wifi_export">Exportă JSON</string>
+    <string name="telos_system_wifi_export_gzip">Exportă GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Exportă criptat</string>
+    <string name="telos_system_wifi_export_password">Parolă de export</string>
+    <string name="telos_system_wifi_import">Importă</string>
+    <string name="telos_system_wifi_security_open">Deschisă</string>
+    <string name="telos_system_wifi_empty">Nu există rețele salvate</string>
+    <string name="telos_system_wifi_persisted">S-au salvat %1$d rețele temporare</string>
 </resources>

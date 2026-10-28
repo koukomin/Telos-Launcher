@@ -1,6 +1,16 @@
 package de.mm20.launcher2.ui.system
 
-internal data class WifiEntry(val ssid: String, val psk: String?)
+internal data class WifiEntry(
+    val ssid: String,
+    val psk: String?,
+    val networkId: Int = -1,
+    val security: String = "",
+    val hidden: Boolean = false,
+    val autoJoin: Boolean = true,
+    val existInSystem: Boolean = true,
+    val ephemeral: Boolean = false,
+    val note: String? = null,
+)
 
 /** Never associate a later network's key with an earlier open network. */
 internal object SavedWifiParser {

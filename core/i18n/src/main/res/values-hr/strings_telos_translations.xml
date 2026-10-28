@@ -2517,4 +2517,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Potreban je Shizuku ili root. Uključite jedno da se lozinke prikažu.</string>
+    <string name="telos_system_wifi_privilege_root">Root je aktivan. Spremljene lozinke mogu se pročitati.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku je ovlašten. Spremljene lozinke mogu se pročitati.</string>
+    <string name="telos_system_wifi_enable_shizuku">Instalirajte ili otvorite Shizuku i dajte Telosu pristup</string>
+    <string name="telos_system_wifi_open_shizuku">Otvorite Shizuku i pokrenite uslugu</string>
+    <string name="telos_system_wifi_grant_shizuku">Dodijelite Telosu Shizuku dopuštenje</string>
+    <string name="telos_system_wifi_connected">Povezano</string>
+    <string name="telos_system_wifi_connect">Poveži</string>
+    <string name="telos_system_wifi_disconnect">Prekini</string>
+    <string name="telos_system_wifi_forget">Zaboravi</string>
+    <string name="telos_system_wifi_forget_all">Zaboravi sve</string>
+    <string name="telos_system_wifi_forget_confirm">Zaboraviti %1$s na ovom uređaju? Lozinka ostaje u Telosu.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Ukloniti sve spremljene mreže s uređaja? Lozinke ostaju u Telosu.</string>
+    <string name="telos_system_wifi_note">Bilješka</string>
+    <string name="telos_system_wifi_note_save">Spremi bilješku</string>
+    <string name="telos_system_wifi_filter_all">Sve</string>
+    <string name="telos_system_wifi_filter_device">Na uređaju</string>
+    <string name="telos_system_wifi_filter_app">Samo u Telosu</string>
+    <string name="telos_system_wifi_sort_az">A–Ž</string>
+    <string name="telos_system_wifi_sort_za">Ž–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Spremi privremene mreže</string>
+    <string name="telos_system_wifi_auto_persist">Automatski zadrži privremene mreže</string>
+    <string name="telos_system_wifi_auto_persist_tile">Zadrži Wi-Fi</string>
+    <string name="telos_system_wifi_export">Izvezi JSON</string>
+    <string name="telos_system_wifi_export_gzip">Izvezi GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Izvezi šifrirano</string>
+    <string name="telos_system_wifi_export_password">Lozinka izvoza</string>
+    <string name="telos_system_wifi_import">Uvezi</string>
+    <string name="telos_system_wifi_security_open">Otvorena</string>
+    <string name="telos_system_wifi_empty">Nema spremljenih mreža</string>
+    <string name="telos_system_wifi_persisted">Spremljeno %1$d privremenih mreža</string>
 </resources>

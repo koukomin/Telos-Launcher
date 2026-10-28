@@ -1156,4 +1156,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">يلزم Shizuku أو root. فعّل أحدهما لإظهار كلمات المرور.</string>
+    <string name="telos_system_wifi_privilege_root">صلاحية root نشطة. يمكن قراءة كلمات المرور المحفوظة.</string>
+    <string name="telos_system_wifi_privilege_shizuku">تم تفويض Shizuku. يمكن قراءة كلمات المرور المحفوظة.</string>
+    <string name="telos_system_wifi_enable_shizuku">ثبّت Shizuku أو افتحه ثم امنح Telos الإذن</string>
+    <string name="telos_system_wifi_open_shizuku">افتح Shizuku وشغّل الخدمة</string>
+    <string name="telos_system_wifi_grant_shizuku">امنح Telos إذن Shizuku</string>
+    <string name="telos_system_wifi_connected">متصل</string>
+    <string name="telos_system_wifi_connect">اتصال</string>
+    <string name="telos_system_wifi_disconnect">قطع الاتصال</string>
+    <string name="telos_system_wifi_forget">نسيان</string>
+    <string name="telos_system_wifi_forget_all">نسيان الكل</string>
+    <string name="telos_system_wifi_forget_confirm">هل نسيت %1$s على هذا الجهاز؟ تبقى كلمة المرور في Telos.</string>
+    <string name="telos_system_wifi_forget_all_confirm">هل تريد إزالة كل الشبكات المحفوظة من الجهاز؟ تبقى كلمات المرور في Telos.</string>
+    <string name="telos_system_wifi_note">ملاحظة</string>
+    <string name="telos_system_wifi_note_save">حفظ الملاحظة</string>
+    <string name="telos_system_wifi_filter_all">الكل</string>
+    <string name="telos_system_wifi_filter_device">على الجهاز</string>
+    <string name="telos_system_wifi_filter_app">في Telos فقط</string>
+    <string name="telos_system_wifi_sort_az">أ–ي</string>
+    <string name="telos_system_wifi_sort_za">ي–أ</string>
+    <string name="telos_system_wifi_persist_ephemeral">حفظ الشبكات المؤقتة</string>
+    <string name="telos_system_wifi_auto_persist">الاحتفاظ تلقائيًا بالشبكات المؤقتة</string>
+    <string name="telos_system_wifi_auto_persist_tile">الاحتفاظ بـ Wi-Fi</string>
+    <string name="telos_system_wifi_export">تصدير JSON</string>
+    <string name="telos_system_wifi_export_gzip">تصدير GZip</string>
+    <string name="telos_system_wifi_export_encrypt">تصدير مشفّر</string>
+    <string name="telos_system_wifi_export_password">كلمة مرور التصدير</string>
+    <string name="telos_system_wifi_import">استيراد</string>
+    <string name="telos_system_wifi_security_open">مفتوحة</string>
+    <string name="telos_system_wifi_empty">لا توجد شبكات محفوظة</string>
+    <string name="telos_system_wifi_persisted">تم حفظ %1$d شبكة مؤقتة</string>
 </resources>

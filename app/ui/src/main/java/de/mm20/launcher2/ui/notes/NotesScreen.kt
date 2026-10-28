@@ -130,8 +130,19 @@ fun NotesScreen() {
                             NotesFilter.Notes -> R.string.notes_title; NotesFilter.Archive -> R.string.notes_archive; NotesFilter.Trash -> R.string.notes_trash
                         }), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.weight(1f))
                     }
+                    var showFontDialog by remember { mutableStateOf(false) }
+                    if (showFontDialog) {
+                        de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
+                            appKey = "notes",
+                            appName = "Telos Notes",
+                            onDismiss = { showFontDialog = false }
+                        )
+                    }
                     IconButton(onClick = { searching = !searching; if (!searching) vm.query.value = "" }) {
                         Icon(painterResource(if (searching) R.drawable.close_24px else R.drawable.search_24px), stringResource(R.string.notes_search))
+                    }
+                    IconButton(onClick = { showFontDialog = true }) {
+                        Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
                     }
                     if (syncing) CircularProgressIndicator(Modifier.size(24.dp)) else Box {
                         IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.notes_title)) }

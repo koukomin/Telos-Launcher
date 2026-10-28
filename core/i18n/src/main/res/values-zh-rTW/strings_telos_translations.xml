@@ -1089,4 +1089,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">需要 Shizuku 或 root。啟用其中一項以顯示密碼。</string>
+    <string name="telos_system_wifi_privilege_root">已取得 root。可以讀取已儲存的密碼。</string>
+    <string name="telos_system_wifi_privilege_shizuku">已授權 Shizuku。可以讀取已儲存的密碼。</string>
+    <string name="telos_system_wifi_enable_shizuku">安裝或開啟 Shizuku，然後授權給 Telos</string>
+    <string name="telos_system_wifi_open_shizuku">開啟 Shizuku 並啟動服務</string>
+    <string name="telos_system_wifi_grant_shizuku">向 Telos 授予 Shizuku 權限</string>
+    <string name="telos_system_wifi_connected">已連線</string>
+    <string name="telos_system_wifi_connect">連線</string>
+    <string name="telos_system_wifi_disconnect">中斷</string>
+    <string name="telos_system_wifi_forget">忘記</string>
+    <string name="telos_system_wifi_forget_all">全部忘記</string>
+    <string name="telos_system_wifi_forget_confirm">從此裝置忘記 %1$s？密碼仍保留在 Telos 中。</string>
+    <string name="telos_system_wifi_forget_all_confirm">從裝置移除所有已儲存網路？密碼仍保留在 Telos 中。</string>
+    <string name="telos_system_wifi_note">備註</string>
+    <string name="telos_system_wifi_note_save">儲存備註</string>
+    <string name="telos_system_wifi_filter_all">全部</string>
+    <string name="telos_system_wifi_filter_device">裝置上</string>
+    <string name="telos_system_wifi_filter_app">僅在 Telos</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">儲存臨時網路</string>
+    <string name="telos_system_wifi_auto_persist">自動保留臨時網路</string>
+    <string name="telos_system_wifi_auto_persist_tile">保留 Wi-Fi</string>
+    <string name="telos_system_wifi_export">匯出 JSON</string>
+    <string name="telos_system_wifi_export_gzip">匯出 GZip</string>
+    <string name="telos_system_wifi_export_encrypt">加密匯出</string>
+    <string name="telos_system_wifi_export_password">匯出密碼</string>
+    <string name="telos_system_wifi_import">匯入</string>
+    <string name="telos_system_wifi_security_open">開放</string>
+    <string name="telos_system_wifi_empty">沒有已儲存的網路</string>
+    <string name="telos_system_wifi_persisted">已儲存 %1$d 個臨時網路</string>
 </resources>

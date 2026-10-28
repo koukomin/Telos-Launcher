@@ -335,9 +335,20 @@ fun VoiceRecorderScreen() {
                             Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.close))
                         }
                     } else {
+                        var showFontDialog by remember { mutableStateOf(false) }
+                        if (showFontDialog) {
+                            de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
+                                appKey = "voice",
+                                appName = "Telos Voice Recorder",
+                                onDismiss = { showFontDialog = false }
+                            )
+                        }
                         Spacer(Modifier.weight(1f))
                         IconButton(onClick = { searching = true }) {
                             Icon(painterResource(R.drawable.search_24px), contentDescription = stringResource(R.string.voice_search))
+                        }
+                        IconButton(onClick = { showFontDialog = true }) {
+                            Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
                         }
                         Box {
                             IconButton(onClick = { menu = true }) {

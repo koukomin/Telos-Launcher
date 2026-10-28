@@ -1105,4 +1105,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Shizuku veya root gerekir. Parolaları göstermek için birini etkinleştirin.</string>
+    <string name="telos_system_wifi_privilege_root">Root erişimi etkin. Kayıtlı parolalar okunabilir.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku yetkilendirildi. Kayıtlı parolalar okunabilir.</string>
+    <string name="telos_system_wifi_enable_shizuku">Shizuku’yu kurun veya açın, ardından Telos’a izin verin</string>
+    <string name="telos_system_wifi_open_shizuku">Shizuku’yu açın ve hizmeti başlatın</string>
+    <string name="telos_system_wifi_grant_shizuku">Telos’a Shizuku izni ver</string>
+    <string name="telos_system_wifi_connected">Bağlı</string>
+    <string name="telos_system_wifi_connect">Bağlan</string>
+    <string name="telos_system_wifi_disconnect">Bağlantıyı kes</string>
+    <string name="telos_system_wifi_forget">Unut</string>
+    <string name="telos_system_wifi_forget_all">Tümünü unut</string>
+    <string name="telos_system_wifi_forget_confirm">Bu cihazda %1$s unutulsun mu? Parola Telos’ta kalır.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Kayıtlı tüm ağlar cihazdan kaldırılsın mı? Parolalar Telos’ta kalır.</string>
+    <string name="telos_system_wifi_note">Not</string>
+    <string name="telos_system_wifi_note_save">Notu kaydet</string>
+    <string name="telos_system_wifi_filter_all">Tümü</string>
+    <string name="telos_system_wifi_filter_device">Cihazda</string>
+    <string name="telos_system_wifi_filter_app">Yalnızca Telos’ta</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Geçici ağları kaydet</string>
+    <string name="telos_system_wifi_auto_persist">Geçici ağları otomatik tut</string>
+    <string name="telos_system_wifi_auto_persist_tile">Wi-Fi’yi tut</string>
+    <string name="telos_system_wifi_export">JSON dışa aktar</string>
+    <string name="telos_system_wifi_export_gzip">GZip dışa aktar</string>
+    <string name="telos_system_wifi_export_encrypt">Şifreli dışa aktar</string>
+    <string name="telos_system_wifi_export_password">Dışa aktarma parolası</string>
+    <string name="telos_system_wifi_import">İçe aktar</string>
+    <string name="telos_system_wifi_security_open">Açık</string>
+    <string name="telos_system_wifi_empty">Kayıtlı ağ yok</string>
+    <string name="telos_system_wifi_persisted">%1$d geçici ağ kaydedildi</string>
 </resources>

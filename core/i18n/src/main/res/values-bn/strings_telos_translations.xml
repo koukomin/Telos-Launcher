@@ -2063,4 +2063,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">পাসওয়ার্ড দেখাতে Shizuku বা root লাগবে।</string>
+    <string name="telos_system_wifi_privilege_root">রুট সক্রিয়। সংরক্ষিত পাসওয়ার্ড পড়া যাবে।</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku অনুমোদিত। সংরক্ষিত পাসওয়ার্ড পড়া যাবে।</string>
+    <string name="telos_system_wifi_enable_shizuku">Shizuku ইনস্টল বা খুলুন, তারপর Telos-কে অনুমতি দিন</string>
+    <string name="telos_system_wifi_open_shizuku">Shizuku খুলুন এবং সার্ভিস চালু করুন</string>
+    <string name="telos_system_wifi_grant_shizuku">Telos-কে Shizuku অনুমতি দিন</string>
+    <string name="telos_system_wifi_connected">সংযুক্ত</string>
+    <string name="telos_system_wifi_connect">সংযোগ</string>
+    <string name="telos_system_wifi_disconnect">সংযোগ ছাড়ুন</string>
+    <string name="telos_system_wifi_forget">ভুলে যান</string>
+    <string name="telos_system_wifi_forget_all">সব ভুলে যান</string>
+    <string name="telos_system_wifi_forget_confirm">এই ডিভাইস থেকে %1$s ভুলে যাবেন? পাসওয়ার্ড Telos-এ থাকবে।</string>
+    <string name="telos_system_wifi_forget_all_confirm">ডিভাইস থেকে সব সংরক্ষিত নেটওয়ার্ক সরবে? পাসওয়ার্ড Telos-এ থাকবে।</string>
+    <string name="telos_system_wifi_note">নোট</string>
+    <string name="telos_system_wifi_note_save">নোট সংরক্ষণ</string>
+    <string name="telos_system_wifi_filter_all">সব</string>
+    <string name="telos_system_wifi_filter_device">ডিভাইসে</string>
+    <string name="telos_system_wifi_filter_app">শুধু Telos-এ</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">অস্থায়ী নেটওয়ার্ক সংরক্ষণ</string>
+    <string name="telos_system_wifi_auto_persist">অস্থায়ী নেটওয়ার্ক স্বয়ংক্রিয়ভাবে রাখুন</string>
+    <string name="telos_system_wifi_auto_persist_tile">ওয়াই-ফাই রাখুন</string>
+    <string name="telos_system_wifi_export">JSON রপ্তানি</string>
+    <string name="telos_system_wifi_export_gzip">GZip রপ্তানি</string>
+    <string name="telos_system_wifi_export_encrypt">এনক্রিপ্ট করে রপ্তানি</string>
+    <string name="telos_system_wifi_export_password">রপ্তানি পাসওয়ার্ড</string>
+    <string name="telos_system_wifi_import">আমদানি</string>
+    <string name="telos_system_wifi_security_open">খোলা</string>
+    <string name="telos_system_wifi_empty">কোনো সংরক্ষিত নেটওয়ার্ক নেই</string>
+    <string name="telos_system_wifi_persisted">%1$dটি অস্থায়ী নেটওয়ার্ক সংরক্ষিত</string>
 </resources>

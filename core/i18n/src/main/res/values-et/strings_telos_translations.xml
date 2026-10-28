@@ -1827,4 +1827,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Vaja on Shizuku või root. Luba üks neist paroolide kuvamiseks.</string>
+    <string name="telos_system_wifi_privilege_root">Root on aktiivne. Salvestatud paroole saab lugeda.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku on volitatud. Salvestatud paroole saab lugeda.</string>
+    <string name="telos_system_wifi_enable_shizuku">Paigalda või ava Shizuku ja anna Telosele juurdepääs</string>
+    <string name="telos_system_wifi_open_shizuku">Ava Shizuku ja käivita teenus</string>
+    <string name="telos_system_wifi_grant_shizuku">Anna Telosele Shizuku luba</string>
+    <string name="telos_system_wifi_connected">Ühendatud</string>
+    <string name="telos_system_wifi_connect">Ühenda</string>
+    <string name="telos_system_wifi_disconnect">Katkesta</string>
+    <string name="telos_system_wifi_forget">Unusta</string>
+    <string name="telos_system_wifi_forget_all">Unusta kõik</string>
+    <string name="telos_system_wifi_forget_confirm">Unusta %1$s sellel seadmel? Parool jääb Telosesse.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Eemalda kõik salvestatud võrgud seadmelt? Paroolid jäävad Telosesse.</string>
+    <string name="telos_system_wifi_note">Märkus</string>
+    <string name="telos_system_wifi_note_save">Salvesta märkus</string>
+    <string name="telos_system_wifi_filter_all">Kõik</string>
+    <string name="telos_system_wifi_filter_device">Seadmel</string>
+    <string name="telos_system_wifi_filter_app">Ainult Teloses</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Salvesta ajutised võrgud</string>
+    <string name="telos_system_wifi_auto_persist">Säilita ajutised võrgud automaatselt</string>
+    <string name="telos_system_wifi_auto_persist_tile">Säilita Wi-Fi</string>
+    <string name="telos_system_wifi_export">Ekspordi JSON</string>
+    <string name="telos_system_wifi_export_gzip">Ekspordi GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Ekspordi krüpteeritult</string>
+    <string name="telos_system_wifi_export_password">Ekspordiparool</string>
+    <string name="telos_system_wifi_import">Impordi</string>
+    <string name="telos_system_wifi_security_open">Avatud</string>
+    <string name="telos_system_wifi_empty">Salvestatud võrke pole</string>
+    <string name="telos_system_wifi_persisted">Salvestati %1$d ajutist võrku</string>
 </resources>

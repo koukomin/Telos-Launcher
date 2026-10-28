@@ -204,8 +204,19 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
         askNotifications = true,
         guardKey = "telos_downloads_app://downloads",
         actions = {
+            var showFontDialog by remember { mutableStateOf(false) }
+            if (showFontDialog) {
+                de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
+                    appKey = "downloader",
+                    appName = "Telos Downloader",
+                    onDismiss = { showFontDialog = false }
+                )
+            }
             IconButton(onClick = { searching = !searching; if (!searching) query = "" }) {
                 Icon(painterResource(R.drawable.search_24px), stringResource(R.string.dl_search))
+            }
+            IconButton(onClick = { showFontDialog = true }) {
+                Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
             }
             IconButton(onClick = { menu = true }) {
                 Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))

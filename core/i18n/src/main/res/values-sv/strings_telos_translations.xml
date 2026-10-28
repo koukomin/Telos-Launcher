@@ -1812,4 +1812,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Shizuku eller root krävs. Aktivera en av dem för att visa lösenord.</string>
+    <string name="telos_system_wifi_privilege_root">Root-åtkomst är aktiv. Sparade lösenord kan läsas.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku är behörigt. Sparade lösenord kan läsas.</string>
+    <string name="telos_system_wifi_enable_shizuku">Installera eller öppna Shizuku och ge Telos åtkomst</string>
+    <string name="telos_system_wifi_open_shizuku">Öppna Shizuku och starta tjänsten</string>
+    <string name="telos_system_wifi_grant_shizuku">Ge Telos Shizuku-behörighet</string>
+    <string name="telos_system_wifi_connected">Ansluten</string>
+    <string name="telos_system_wifi_connect">Anslut</string>
+    <string name="telos_system_wifi_disconnect">Koppla från</string>
+    <string name="telos_system_wifi_forget">Glöm</string>
+    <string name="telos_system_wifi_forget_all">Glöm alla</string>
+    <string name="telos_system_wifi_forget_confirm">Glöm %1$s på den här enheten? Lösenordet stannar i Telos.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Ta bort alla sparade nätverk från enheten? Lösenorden stannar i Telos.</string>
+    <string name="telos_system_wifi_note">Anteckning</string>
+    <string name="telos_system_wifi_note_save">Spara anteckning</string>
+    <string name="telos_system_wifi_filter_all">Alla</string>
+    <string name="telos_system_wifi_filter_device">På enheten</string>
+    <string name="telos_system_wifi_filter_app">Endast i Telos</string>
+    <string name="telos_system_wifi_sort_az">A–Ö</string>
+    <string name="telos_system_wifi_sort_za">Ö–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Spara tillfälliga nätverk</string>
+    <string name="telos_system_wifi_auto_persist">Behåll tillfälliga nätverk automatiskt</string>
+    <string name="telos_system_wifi_auto_persist_tile">Behåll Wi-Fi</string>
+    <string name="telos_system_wifi_export">Exportera JSON</string>
+    <string name="telos_system_wifi_export_gzip">Exportera GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Exportera krypterat</string>
+    <string name="telos_system_wifi_export_password">Exportlösenord</string>
+    <string name="telos_system_wifi_import">Importera</string>
+    <string name="telos_system_wifi_security_open">Öppet</string>
+    <string name="telos_system_wifi_empty">Inga sparade nätverk</string>
+    <string name="telos_system_wifi_persisted">%1$d tillfälliga nätverk sparade</string>
 </resources>

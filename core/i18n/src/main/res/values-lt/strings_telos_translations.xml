@@ -1625,4 +1625,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Reikia Shizuku arba root. Įjunkite vieną, kad būtų rodomi slaptažodžiai.</string>
+    <string name="telos_system_wifi_privilege_root">Root yra aktyvus. Įrašytus slaptažodžius galima skaityti.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku yra autorizuotas. Įrašytus slaptažodžius galima skaityti.</string>
+    <string name="telos_system_wifi_enable_shizuku">Įdiekite arba atidarykite Shizuku ir suteikite Telos prieigą</string>
+    <string name="telos_system_wifi_open_shizuku">Atidarykite Shizuku ir paleiskite tarnybą</string>
+    <string name="telos_system_wifi_grant_shizuku">Suteikite Telos Shizuku leidimą</string>
+    <string name="telos_system_wifi_connected">Prisijungta</string>
+    <string name="telos_system_wifi_connect">Prisijungti</string>
+    <string name="telos_system_wifi_disconnect">Atsijungti</string>
+    <string name="telos_system_wifi_forget">Pamiršti</string>
+    <string name="telos_system_wifi_forget_all">Pamiršti visus</string>
+    <string name="telos_system_wifi_forget_confirm">Pamiršti %1$s šiame įrenginyje? Slaptažodis lieka Telos.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Pašalinti visus įrašytus tinklus iš įrenginio? Slaptažodžiai lieka Telos.</string>
+    <string name="telos_system_wifi_note">Pastaba</string>
+    <string name="telos_system_wifi_note_save">Išsaugoti pastabą</string>
+    <string name="telos_system_wifi_filter_all">Visi</string>
+    <string name="telos_system_wifi_filter_device">Įrenginyje</string>
+    <string name="telos_system_wifi_filter_app">Tik Telos</string>
+    <string name="telos_system_wifi_sort_az">A–Ž</string>
+    <string name="telos_system_wifi_sort_za">Ž–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Išsaugoti laikinus tinklus</string>
+    <string name="telos_system_wifi_auto_persist">Automatiškai palikti laikinus tinklus</string>
+    <string name="telos_system_wifi_auto_persist_tile">Palikti Wi-Fi</string>
+    <string name="telos_system_wifi_export">Eksportuoti JSON</string>
+    <string name="telos_system_wifi_export_gzip">Eksportuoti GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Eksportuoti šifruotai</string>
+    <string name="telos_system_wifi_export_password">Eksporto slaptažodis</string>
+    <string name="telos_system_wifi_import">Importuoti</string>
+    <string name="telos_system_wifi_security_open">Atvira</string>
+    <string name="telos_system_wifi_empty">Nėra įrašytų tinklų</string>
+    <string name="telos_system_wifi_persisted">Išsaugota %1$d laikinų tinklų</string>
 </resources>

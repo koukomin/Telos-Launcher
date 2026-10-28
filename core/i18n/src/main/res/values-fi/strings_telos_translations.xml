@@ -1562,4 +1562,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Shizuku tai root tarvitaan. Ota toinen käyttöön salasanojen näyttämiseksi.</string>
+    <string name="telos_system_wifi_privilege_root">Root-käyttöoikeus on käytössä. Tallennetut salasanat voidaan lukea.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku on valtuutettu. Tallennetut salasanat voidaan lukea.</string>
+    <string name="telos_system_wifi_enable_shizuku">Asenna tai avaa Shizuku ja myönnä Telosille käyttöoikeus</string>
+    <string name="telos_system_wifi_open_shizuku">Avaa Shizuku ja käynnistä palvelu</string>
+    <string name="telos_system_wifi_grant_shizuku">Myönnä Telosille Shizuku-lupa</string>
+    <string name="telos_system_wifi_connected">Yhdistetty</string>
+    <string name="telos_system_wifi_connect">Yhdistä</string>
+    <string name="telos_system_wifi_disconnect">Katkaise</string>
+    <string name="telos_system_wifi_forget">Unohda</string>
+    <string name="telos_system_wifi_forget_all">Unohda kaikki</string>
+    <string name="telos_system_wifi_forget_confirm">Unohdetaanko %1$s tältä laitteelta? Salasana jää Telosiin.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Poistetaanko kaikki tallennetut verkot laitteelta? Salasanat jäävät Telosiin.</string>
+    <string name="telos_system_wifi_note">Muistiinpano</string>
+    <string name="telos_system_wifi_note_save">Tallenna muistiinpano</string>
+    <string name="telos_system_wifi_filter_all">Kaikki</string>
+    <string name="telos_system_wifi_filter_device">Laitteella</string>
+    <string name="telos_system_wifi_filter_app">Vain Telosissa</string>
+    <string name="telos_system_wifi_sort_az">A–Ö</string>
+    <string name="telos_system_wifi_sort_za">Ö–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Tallenna tilapäiset verkot</string>
+    <string name="telos_system_wifi_auto_persist">Säilytä tilapäiset verkot automaattisesti</string>
+    <string name="telos_system_wifi_auto_persist_tile">Säilytä Wi-Fi</string>
+    <string name="telos_system_wifi_export">Vie JSON</string>
+    <string name="telos_system_wifi_export_gzip">Vie GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Vie salattuna</string>
+    <string name="telos_system_wifi_export_password">Vientisalasana</string>
+    <string name="telos_system_wifi_import">Tuo</string>
+    <string name="telos_system_wifi_security_open">Avoin</string>
+    <string name="telos_system_wifi_empty">Ei tallennettuja verkkoja</string>
+    <string name="telos_system_wifi_persisted">%1$d tilapäistä verkkoa tallennettu</string>
 </resources>

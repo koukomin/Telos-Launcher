@@ -1084,4 +1084,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Shizuku vagy root kell. Kapcsolja be az egyiket a jelszavak megjelenítéséhez.</string>
+    <string name="telos_system_wifi_privilege_root">A root hozzáférés aktív. A mentett jelszavak olvashatók.</string>
+    <string name="telos_system_wifi_privilege_shizuku">A Shizuku engedélyezve van. A mentett jelszavak olvashatók.</string>
+    <string name="telos_system_wifi_enable_shizuku">Telepítse vagy nyissa meg a Shizukut, majd adjon hozzáférést a Telosnak</string>
+    <string name="telos_system_wifi_open_shizuku">Nyissa meg a Shizukut és indítsa el a szolgáltatást</string>
+    <string name="telos_system_wifi_grant_shizuku">Adjon Shizuku engedélyt a Telosnak</string>
+    <string name="telos_system_wifi_connected">Csatlakozva</string>
+    <string name="telos_system_wifi_connect">Csatlakozás</string>
+    <string name="telos_system_wifi_disconnect">Leválasztás</string>
+    <string name="telos_system_wifi_forget">Elfelejtés</string>
+    <string name="telos_system_wifi_forget_all">Összes elfelejtése</string>
+    <string name="telos_system_wifi_forget_confirm">Elfelejti a(z) %1$s hálózatot ezen az eszközön? A jelszó a Telosban marad.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Eltávolítja az összes mentett hálózatot az eszközről? A jelszavak a Telosban maradnak.</string>
+    <string name="telos_system_wifi_note">Jegyzet</string>
+    <string name="telos_system_wifi_note_save">Jegyzet mentése</string>
+    <string name="telos_system_wifi_filter_all">Összes</string>
+    <string name="telos_system_wifi_filter_device">Az eszközön</string>
+    <string name="telos_system_wifi_filter_app">Csak a Telosban</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Ideiglenes hálózatok mentése</string>
+    <string name="telos_system_wifi_auto_persist">Ideiglenes hálózatok automatikus megtartása</string>
+    <string name="telos_system_wifi_auto_persist_tile">Wi-Fi megtartása</string>
+    <string name="telos_system_wifi_export">JSON exportálása</string>
+    <string name="telos_system_wifi_export_gzip">GZip exportálása</string>
+    <string name="telos_system_wifi_export_encrypt">Titkosított export</string>
+    <string name="telos_system_wifi_export_password">Exportjelszó</string>
+    <string name="telos_system_wifi_import">Importálás</string>
+    <string name="telos_system_wifi_security_open">Nyílt</string>
+    <string name="telos_system_wifi_empty">Nincsenek mentett hálózatok</string>
+    <string name="telos_system_wifi_persisted">%1$d ideiglenes hálózat mentve</string>
 </resources>

@@ -137,10 +137,10 @@ fun SystemDashboardScreen() {
     val t by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(2400, easing = LinearEasing), RepeatMode.Restart), label = "t")
 
     de.mm20.launcher2.ui.component.PrivilegedConnectionEffect {
-        scope.launch { privilegedWifi = HwuiRenderer.privilegedAvailable() }
+        scope.launch { privilegedWifi = PrivilegedWifiStore.detect(context).privilege != WifiPrivilege.None }
     }
     androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
-        scope.launch { privilegedWifi = HwuiRenderer.privilegedAvailable() }
+        scope.launch { privilegedWifi = PrivilegedWifiStore.detect(context).privilege != WifiPrivilege.None }
     }
     androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_STOP) {
         wifiReadJob?.cancel()
@@ -158,7 +158,7 @@ fun SystemDashboardScreen() {
             ramUsed = mi.totalMem - mi.availMem
             ramTotal = mi.totalMem
             ips = localIps()
-            val connectedSsid = currentSsid(context)
+            val connectedSsid = currentSsidSystemDash(context)
             if (connectedSsid != wifiSsid) { wifiPsk = null; showPsk = false; networks = emptyList() }
             wifiSsid = connectedSsid
             secureWifi = hasWifiPassword(context)
@@ -317,7 +317,7 @@ fun SystemDashboardScreen() {
                                 val ok = AuthManager().authenticateNative(act, context.getString(R.string.telos_system_unlock_wifi))
                                 if (!ok) return@launch
                                 status = context.getString(R.string.telos_system_reading_wifi)
-                                val list = try { withContext(Dispatchers.IO) { readWifiStore() } }
+                                val list = try { withContext(Dispatchers.IO) { readWifiStore(context) } }
                                 catch (e: kotlinx.coroutines.CancellationException) { throw e }
                                 catch (_: Exception) { status = context.getString(R.string.virtual_telemetry_unavailable); return@launch }
                                 networks = list
@@ -382,7 +382,7 @@ private fun localIps(): List<String> = buildList {
 }
 
 @Suppress("DEPRECATION")
-private fun currentSsid(context: Context): String? {
+private fun currentSsidSystemDash(context: Context): String? {
     val cm = context.getSystemService<ConnectivityManager>() ?: return null
     if (cm.allNetworks.none { cm.getNetworkCapabilities(it)?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true }) return null
     val wm = context.getSystemService<WifiManager>() ?: return null
@@ -421,21 +421,8 @@ internal fun runningProcs(context: Context): List<ProcRow> {
     }.sortedBy { it.name }
 }
 
-private suspend fun privileged(cmd: String): String? =
-    de.mm20.launcher2.ktx.PrivilegedShell.run(cmd)?.let { result -> result.output.takeIf { result.exitCode == 0 } }
-
-internal suspend fun readWifiStore(): List<WifiEntry> {
-    val files = listOf(
-        "/data/misc/apexdata/com.android.wifi/WifiConfigStore.xml",
-        "/data/misc/wifi/WifiConfigStore.xml",
-        "/data/misc/wifi/wpa_supplicant.conf",
-    )
-    // User credential stores can be separate from the system-wide store.
-    val raw = files.mapNotNull { privileged("cat $it 2>/dev/null") } + listOfNotNull(
-        privileged("cat /data/misc_ce/*/wifi/WifiConfigStore.xml /data/misc_ce/*/apexdata/com.android.wifi/WifiConfigStore.xml 2>/dev/null")
-    )
-    return raw.flatMap(SavedWifiParser::parse).distinctBy { it.ssid }
-}
+internal suspend fun readWifiStore(context: Context): List<WifiEntry> =
+    PrivilegedWifiStore.load(context.applicationContext)
 
 private fun hasWifiPassword(context: Context): Boolean = runCatching {
     if (currentSsid(context) == null || Build.VERSION.SDK_INT < 31) return false

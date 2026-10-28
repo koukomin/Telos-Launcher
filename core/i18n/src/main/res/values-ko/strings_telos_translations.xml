@@ -1605,4 +1605,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">비밀번호를 보려면 Shizuku 또는 루트가 필요합니다.</string>
+    <string name="telos_system_wifi_privilege_root">루트가 활성입니다. 저장된 비밀번호를 읽을 수 있습니다.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku가 허용되었습니다. 저장된 비밀번호를 읽을 수 있습니다.</string>
+    <string name="telos_system_wifi_enable_shizuku">Shizuku를 설치하거나 연 뒤 Telos에 권한을 주세요</string>
+    <string name="telos_system_wifi_open_shizuku">Shizuku를 열고 서비스를 시작하세요</string>
+    <string name="telos_system_wifi_grant_shizuku">Telos에 Shizuku 권한 부여</string>
+    <string name="telos_system_wifi_connected">연결됨</string>
+    <string name="telos_system_wifi_connect">연결</string>
+    <string name="telos_system_wifi_disconnect">연결 해제</string>
+    <string name="telos_system_wifi_forget">삭제</string>
+    <string name="telos_system_wifi_forget_all">모두 삭제</string>
+    <string name="telos_system_wifi_forget_confirm">이 기기에서 %1$s을(를) 삭제할까요? 비밀번호는 Telos에 남습니다.</string>
+    <string name="telos_system_wifi_forget_all_confirm">기기에서 저장된 네트워크를 모두 제거할까요? 비밀번호는 Telos에 남습니다.</string>
+    <string name="telos_system_wifi_note">메모</string>
+    <string name="telos_system_wifi_note_save">메모 저장</string>
+    <string name="telos_system_wifi_filter_all">전체</string>
+    <string name="telos_system_wifi_filter_device">기기</string>
+    <string name="telos_system_wifi_filter_app">Telos에만</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">임시 네트워크 저장</string>
+    <string name="telos_system_wifi_auto_persist">임시 네트워크 자동 유지</string>
+    <string name="telos_system_wifi_auto_persist_tile">Wi-Fi 유지</string>
+    <string name="telos_system_wifi_export">JSON 내보내기</string>
+    <string name="telos_system_wifi_export_gzip">GZip 내보내기</string>
+    <string name="telos_system_wifi_export_encrypt">암호화하여 내보내기</string>
+    <string name="telos_system_wifi_export_password">내보내기 비밀번호</string>
+    <string name="telos_system_wifi_import">가져오기</string>
+    <string name="telos_system_wifi_security_open">개방</string>
+    <string name="telos_system_wifi_empty">저장된 네트워크가 없습니다</string>
+    <string name="telos_system_wifi_persisted">임시 네트워크 %1$d개를 저장했습니다</string>
 </resources>

@@ -1346,4 +1346,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Shizuku eller root er påkrævet. Aktivér en af dem for at vise adgangskoder.</string>
+    <string name="telos_system_wifi_privilege_root">Root-adgang er aktiv. Gemte adgangskoder kan læses.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku er godkendt. Gemte adgangskoder kan læses.</string>
+    <string name="telos_system_wifi_enable_shizuku">Installer eller åbn Shizuku, og giv Telos adgang</string>
+    <string name="telos_system_wifi_open_shizuku">Åbn Shizuku og start tjenesten</string>
+    <string name="telos_system_wifi_grant_shizuku">Giv Telos Shizuku-tilladelse</string>
+    <string name="telos_system_wifi_connected">Forbundet</string>
+    <string name="telos_system_wifi_connect">Opret forbindelse</string>
+    <string name="telos_system_wifi_disconnect">Afbryd</string>
+    <string name="telos_system_wifi_forget">Glem</string>
+    <string name="telos_system_wifi_forget_all">Glem alle</string>
+    <string name="telos_system_wifi_forget_confirm">Glem %1$s på denne enhed? Adgangskoden bliver i Telos.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Fjern alle gemte netværk fra enheden? Adgangskoder bliver i Telos.</string>
+    <string name="telos_system_wifi_note">Note</string>
+    <string name="telos_system_wifi_note_save">Gem note</string>
+    <string name="telos_system_wifi_filter_all">Alle</string>
+    <string name="telos_system_wifi_filter_device">På enheden</string>
+    <string name="telos_system_wifi_filter_app">Kun i Telos</string>
+    <string name="telos_system_wifi_sort_az">A–Å</string>
+    <string name="telos_system_wifi_sort_za">Å–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Gem midlertidige netværk</string>
+    <string name="telos_system_wifi_auto_persist">Behold midlertidige netværk automatisk</string>
+    <string name="telos_system_wifi_auto_persist_tile">Behold Wi-Fi</string>
+    <string name="telos_system_wifi_export">Eksportér JSON</string>
+    <string name="telos_system_wifi_export_gzip">Eksportér GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Eksportér krypteret</string>
+    <string name="telos_system_wifi_export_password">Eksportadgangskode</string>
+    <string name="telos_system_wifi_import">Importér</string>
+    <string name="telos_system_wifi_security_open">Åbent</string>
+    <string name="telos_system_wifi_empty">Ingen gemte netværk</string>
+    <string name="telos_system_wifi_persisted">%1$d midlertidige netværk gemt</string>
 </resources>

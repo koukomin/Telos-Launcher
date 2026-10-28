@@ -194,6 +194,16 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+        <service
+            android:name=".system.WifiAutoPersistTileService"
+            android:exported="true"
+            android:icon="@drawable/wifi_24px"
+            android:label="@string/telos_system_wifi_auto_persist_tile"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".comms.FakeCallActivity"

@@ -2517,4 +2517,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Nepieciešams Shizuku vai root. Iespējojiet vienu, lai rādītu paroles.</string>
+    <string name="telos_system_wifi_privilege_root">Root ir aktīvs. Saglabātās paroles var nolasīt.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku ir autorizēts. Saglabātās paroles var nolasīt.</string>
+    <string name="telos_system_wifi_enable_shizuku">Instalējiet vai atveriet Shizuku un piešķiriet Telos piekļuvi</string>
+    <string name="telos_system_wifi_open_shizuku">Atveriet Shizuku un palaidiet pakalpojumu</string>
+    <string name="telos_system_wifi_grant_shizuku">Piešķiriet Telos Shizuku atļauju</string>
+    <string name="telos_system_wifi_connected">Savienots</string>
+    <string name="telos_system_wifi_connect">Savienot</string>
+    <string name="telos_system_wifi_disconnect">Atvienot</string>
+    <string name="telos_system_wifi_forget">Aizmirst</string>
+    <string name="telos_system_wifi_forget_all">Aizmirst visus</string>
+    <string name="telos_system_wifi_forget_confirm">Aizmirst %1$s šajā ierīcē? Parole paliek Telos.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Noņemt visus saglabātos tīklus no ierīces? Paroles paliek Telos.</string>
+    <string name="telos_system_wifi_note">Piezīme</string>
+    <string name="telos_system_wifi_note_save">Saglabāt piezīmi</string>
+    <string name="telos_system_wifi_filter_all">Visi</string>
+    <string name="telos_system_wifi_filter_device">Ierīcē</string>
+    <string name="telos_system_wifi_filter_app">Tikai Telos</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Saglabāt pagaidu tīklus</string>
+    <string name="telos_system_wifi_auto_persist">Automātiski saglabāt pagaidu tīklus</string>
+    <string name="telos_system_wifi_auto_persist_tile">Saglabāt Wi-Fi</string>
+    <string name="telos_system_wifi_export">Eksportēt JSON</string>
+    <string name="telos_system_wifi_export_gzip">Eksportēt GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Eksportēt šifrēti</string>
+    <string name="telos_system_wifi_export_password">Eksporta parole</string>
+    <string name="telos_system_wifi_import">Importēt</string>
+    <string name="telos_system_wifi_security_open">Atvērts</string>
+    <string name="telos_system_wifi_empty">Nav saglabātu tīklu</string>
+    <string name="telos_system_wifi_persisted">Saglabāti %1$d pagaidu tīkli</string>
 </resources>

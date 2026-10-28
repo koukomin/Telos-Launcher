@@ -271,8 +271,19 @@ private fun CalendarContent(vm: CalendarViewModel) {
                     modifier = Modifier.weight(1f).clickable { pickMonth = true }, textAlign = TextAlign.Center)
                 IconButton(onClick = { vm.go(month.plusMonths(1)) }) { Icon(painterResource(R.drawable.chevron_forward_24px), stringResource(R.string.cal_next)) }
                 IconButton(onClick = { vm.selected.value = LocalDate.now(); vm.go(YearMonth.now()) }) { Icon(painterResource(R.drawable.today_24px), stringResource(R.string.cal_today)) }
+                var showFontDialog by remember { mutableStateOf(false) }
+                if (showFontDialog) {
+                    de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
+                        appKey = "calendar",
+                        appName = "Telos Calendar",
+                        onDismiss = { showFontDialog = false }
+                    )
+                }
                 IconButton(onClick = { searching = !searching; if (!searching) calQuery = "" }) {
                     Icon(painterResource(if (searching) R.drawable.close_24px else R.drawable.search_24px), stringResource(R.string.ts_search))
+                }
+                IconButton(onClick = { showFontDialog = true }) {
+                    Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
                 }
                 Box {
                     IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), null) }

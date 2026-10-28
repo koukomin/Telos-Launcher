@@ -37,6 +37,7 @@ based on" table in `readme.md`.
 | [TagLib](https://github.com/taglib/taglib) | LGPL-2.1 / MPL-1.1 | Audio tag library bundled by the Kyant0 wrapper below |
 | [SQLCipher](https://github.com/sqlcipher/sqlcipher) | BSD-style (Zetetic) | Copyright (c) 2025 ZETETIC LLC. Encrypted database for Telos Phone data, using [SQLCipher for Android](https://github.com/sqlcipher/sqlcipher-android) |
 | [Dhizuku-API](https://github.com/iamr0s/Dhizuku-API) | MIT | Copyright (c) 2023 R0S. Device-owner delegation for freeze |
+| [WiFi Password Manager](https://github.com/Khh-vu/wifi-password-manager) | MIT | Copyright (c) 2025-2026 Khh-vu. Privileged Wi-Fi management approach used in Telos System |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Copyright 2025 Kyant. Bundles TagLib (LGPL-2.1 / MPL-1.1 upstream) |
 | [PaperKnife+](https://github.com/potatameister/PaperKnifePlus) | GPL-3.0-or-later | Copyright (C) potatameister and PaperKnife+ contributors. PDF tools of Telos Viewer (feature set, tool logic) adapted from it |
 | [LibreCuts](https://github.com/tharunbirla/LibreCuts) | GPL-3.0 | Copyright (c) Tharun Birla. Video and audio trimming, speed control and clip editing features adapted from it |

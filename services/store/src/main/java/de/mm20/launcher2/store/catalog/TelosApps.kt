@@ -243,7 +243,7 @@ object TelosApps {
             key = "telos_system_app://system",
             name = "System",
             description = "Live OS status: CPU, RAM, IPs, running processes, and saved Wi-Fi passwords (root or Shizuku) with QR share.",
-            features = listOf("CPU and RAM meters", "Local IPs", "Saved Wi-Fi list", "Password reveal with lock, root or Shizuku", "QR share"),
+            features = listOf("CPU and RAM meters", "Local IPs", "Saved Wi-Fi manager", "Password reveal with lock, root or Shizuku", "Notes, import/export, connect and forget", "QR share"),
             iconRes = de.mm20.launcher2.base.R.drawable.ic_app_network_full,
             route = SettingsDeepLinkContract.ROUTE_SYSTEM,
         ),

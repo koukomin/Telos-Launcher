@@ -2833,4 +2833,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Hemm bżonn Shizuku jew root. Attiva wieħed biex jidhru l-passwords.</string>
+    <string name="telos_system_wifi_privilege_root">L-aċċess root huwa attiv. Il-passwords salvati jistgħu jinqraw.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku huwa awtorizzat. Il-passwords salvati jistgħu jinqraw.</string>
+    <string name="telos_system_wifi_enable_shizuku">Installa jew iftaħ Shizuku, imbagħad agħti aċċess lil Telos</string>
+    <string name="telos_system_wifi_open_shizuku">Iftaħ Shizuku u ibda s-servizz</string>
+    <string name="telos_system_wifi_grant_shizuku">Agħti permess Shizuku lil Telos</string>
+    <string name="telos_system_wifi_connected">Konness</string>
+    <string name="telos_system_wifi_connect">Qabbad</string>
+    <string name="telos_system_wifi_disconnect">Skonnetta</string>
+    <string name="telos_system_wifi_forget">Insa</string>
+    <string name="telos_system_wifi_forget_all">Insa kollox</string>
+    <string name="telos_system_wifi_forget_confirm">Tinsa %1$s fuq dan l-apparat? Il-password tibqa’ f’Telos.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Neħħi kull network salvat mill-apparat? Il-passwords jibqgħu f’Telos.</string>
+    <string name="telos_system_wifi_note">Nota</string>
+    <string name="telos_system_wifi_note_save">Issejvja n-nota</string>
+    <string name="telos_system_wifi_filter_all">Kollha</string>
+    <string name="telos_system_wifi_filter_device">Fuq l-apparat</string>
+    <string name="telos_system_wifi_filter_app">F’Telos biss</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Issejvja networks temporanji</string>
+    <string name="telos_system_wifi_auto_persist">Żomm awtomatikament networks temporanji</string>
+    <string name="telos_system_wifi_auto_persist_tile">Żomm Wi-Fi</string>
+    <string name="telos_system_wifi_export">Esporta JSON</string>
+    <string name="telos_system_wifi_export_gzip">Esporta GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Esporta kriptat</string>
+    <string name="telos_system_wifi_export_password">Password tal-esportazzjoni</string>
+    <string name="telos_system_wifi_import">Importa</string>
+    <string name="telos_system_wifi_security_open">Miftuħ</string>
+    <string name="telos_system_wifi_empty">L-ebda network salvat</string>
+    <string name="telos_system_wifi_persisted">issejvjati %1$d networks temporanji</string>
 </resources>

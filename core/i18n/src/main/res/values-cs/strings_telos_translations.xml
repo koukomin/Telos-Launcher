@@ -1094,4 +1094,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Je potřeba Shizuku nebo root. Zapněte jedno z nich, aby se hesla zobrazila.</string>
+    <string name="telos_system_wifi_privilege_root">Root je aktivní. Uložená hesla lze číst.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku je autorizováno. Uložená hesla lze číst.</string>
+    <string name="telos_system_wifi_enable_shizuku">Nainstalujte nebo otevřete Shizuku a udělte Telos přístup</string>
+    <string name="telos_system_wifi_open_shizuku">Otevřete Shizuku a spusťte službu</string>
+    <string name="telos_system_wifi_grant_shizuku">Udělte Telos oprávnění Shizuku</string>
+    <string name="telos_system_wifi_connected">Připojeno</string>
+    <string name="telos_system_wifi_connect">Připojit</string>
+    <string name="telos_system_wifi_disconnect">Odpojit</string>
+    <string name="telos_system_wifi_forget">Zapomenout</string>
+    <string name="telos_system_wifi_forget_all">Zapomenout vše</string>
+    <string name="telos_system_wifi_forget_confirm">Zapomenout %1$s na tomto zařízení? Heslo zůstane v Telos.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Odebrat všechny uložené sítě ze zařízení? Hesla zůstanou v Telos.</string>
+    <string name="telos_system_wifi_note">Poznámka</string>
+    <string name="telos_system_wifi_note_save">Uložit poznámku</string>
+    <string name="telos_system_wifi_filter_all">Vše</string>
+    <string name="telos_system_wifi_filter_device">V zařízení</string>
+    <string name="telos_system_wifi_filter_app">Jen v Telos</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Uložit dočasné sítě</string>
+    <string name="telos_system_wifi_auto_persist">Dočasné sítě automaticky uchovat</string>
+    <string name="telos_system_wifi_auto_persist_tile">Ponechat Wi-Fi</string>
+    <string name="telos_system_wifi_export">Exportovat JSON</string>
+    <string name="telos_system_wifi_export_gzip">Exportovat GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Exportovat šifrovaně</string>
+    <string name="telos_system_wifi_export_password">Heslo exportu</string>
+    <string name="telos_system_wifi_import">Importovat</string>
+    <string name="telos_system_wifi_security_open">Otevřená</string>
+    <string name="telos_system_wifi_empty">Žádné uložené sítě</string>
+    <string name="telos_system_wifi_persisted">Uloženo %1$d dočasných sítí</string>
 </resources>

@@ -1089,4 +1089,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Servono Shizuku o root. Attivane uno per mostrare le password.</string>
+    <string name="telos_system_wifi_privilege_root">L’accesso root è attivo. Le password salvate possono essere lette.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Shizuku è autorizzato. Le password salvate possono essere lette.</string>
+    <string name="telos_system_wifi_enable_shizuku">Installa o apri Shizuku e concedi l’accesso a Telos</string>
+    <string name="telos_system_wifi_open_shizuku">Apri Shizuku e avvia il servizio</string>
+    <string name="telos_system_wifi_grant_shizuku">Concedi a Telos l’autorizzazione Shizuku</string>
+    <string name="telos_system_wifi_connected">Connesso</string>
+    <string name="telos_system_wifi_connect">Connetti</string>
+    <string name="telos_system_wifi_disconnect">Disconnetti</string>
+    <string name="telos_system_wifi_forget">Dimentica</string>
+    <string name="telos_system_wifi_forget_all">Dimentica tutte</string>
+    <string name="telos_system_wifi_forget_confirm">Dimenticare %1$s su questo dispositivo? La password resta in Telos.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Rimuovere tutte le reti salvate dal dispositivo? Le password restano in Telos.</string>
+    <string name="telos_system_wifi_note">Nota</string>
+    <string name="telos_system_wifi_note_save">Salva nota</string>
+    <string name="telos_system_wifi_filter_all">Tutte</string>
+    <string name="telos_system_wifi_filter_device">Sul dispositivo</string>
+    <string name="telos_system_wifi_filter_app">Solo in Telos</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Salva reti temporanee</string>
+    <string name="telos_system_wifi_auto_persist">Mantieni automaticamente le reti temporanee</string>
+    <string name="telos_system_wifi_auto_persist_tile">Mantieni Wi-Fi</string>
+    <string name="telos_system_wifi_export">Esporta JSON</string>
+    <string name="telos_system_wifi_export_gzip">Esporta GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Esporta cifrato</string>
+    <string name="telos_system_wifi_export_password">Password di esportazione</string>
+    <string name="telos_system_wifi_import">Importa</string>
+    <string name="telos_system_wifi_security_open">Aperta</string>
+    <string name="telos_system_wifi_empty">Nessuna rete salvata</string>
+    <string name="telos_system_wifi_persisted">Salvate %1$d reti temporanee</string>
 </resources>

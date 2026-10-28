@@ -2833,4 +2833,35 @@
     
     
 
+    <string name="telos_system_wifi_privilege_missing">Tá Shizuku nó root ag teastáil. Cumasaigh ceann acu chun pasfhocail a thaispeáint.</string>
+    <string name="telos_system_wifi_privilege_root">Tá rochtain root gníomhach. Is féidir pasfhocail shábháilte a léamh.</string>
+    <string name="telos_system_wifi_privilege_shizuku">Tá Shizuku údaraithe. Is féidir pasfhocail shábháilte a léamh.</string>
+    <string name="telos_system_wifi_enable_shizuku">Suiteáil nó oscail Shizuku, ansin tabhair rochtain do Telos</string>
+    <string name="telos_system_wifi_open_shizuku">Oscail Shizuku agus tosaigh an tseirbhís</string>
+    <string name="telos_system_wifi_grant_shizuku">Tabhair cead Shizuku do Telos</string>
+    <string name="telos_system_wifi_connected">Ceangailte</string>
+    <string name="telos_system_wifi_connect">Ceangail</string>
+    <string name="telos_system_wifi_disconnect">Dícheangail</string>
+    <string name="telos_system_wifi_forget">Déan dearmad</string>
+    <string name="telos_system_wifi_forget_all">Déan dearmad ar gach ceann</string>
+    <string name="telos_system_wifi_forget_confirm">Dearmad a dhéanamh ar %1$s ar an ngléas seo? Fanann an pasfhocal i Telos.</string>
+    <string name="telos_system_wifi_forget_all_confirm">Bain gach líonra sábháilte den ghléas? Fanann pasfhocail i Telos.</string>
+    <string name="telos_system_wifi_note">Nóta</string>
+    <string name="telos_system_wifi_note_save">Sábháil an nóta</string>
+    <string name="telos_system_wifi_filter_all">Gach</string>
+    <string name="telos_system_wifi_filter_device">Ar an ngléas</string>
+    <string name="telos_system_wifi_filter_app">I Telos amháin</string>
+    <string name="telos_system_wifi_sort_az">A–Z</string>
+    <string name="telos_system_wifi_sort_za">Z–A</string>
+    <string name="telos_system_wifi_persist_ephemeral">Sábháil líonraí sealadacha</string>
+    <string name="telos_system_wifi_auto_persist">Coinnigh líonraí sealadacha go huathoibríoch</string>
+    <string name="telos_system_wifi_auto_persist_tile">Coinnigh Wi-Fi</string>
+    <string name="telos_system_wifi_export">Easpórtáil JSON</string>
+    <string name="telos_system_wifi_export_gzip">Easpórtáil GZip</string>
+    <string name="telos_system_wifi_export_encrypt">Easpórtáil criptithe</string>
+    <string name="telos_system_wifi_export_password">Pasfhocal easpórtála</string>
+    <string name="telos_system_wifi_import">Iompórtáil</string>
+    <string name="telos_system_wifi_security_open">Oscailte</string>
+    <string name="telos_system_wifi_empty">Níl aon líonra sábháilte</string>
+    <string name="telos_system_wifi_persisted">Sábháladh %1$d líonra sealadach</string>
 </resources>

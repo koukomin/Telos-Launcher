@@ -167,6 +167,7 @@ dependencies {
 
     implementation(project(":core:base"))
     implementation(libs.shizuku.api)
+    implementation(libs.hiddenapibypass)
     implementation(project(":core:i18n"))
     implementation(project(":core:compat"))
     implementation(project(":core:ktx"))
