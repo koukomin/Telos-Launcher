@@ -25,6 +25,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -507,17 +508,25 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
 
 @Composable
 private fun MailPage(onDismiss: () -> Unit, title: String, action: @Composable () -> Unit, content: @Composable () -> Unit) {
+    val isWide = LocalConfiguration.current.screenWidthDp >= 600
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
         CompositionLocalProvider(de.mm20.launcher2.ui.component.LocalGlassSurface provides false) {
             de.mm20.launcher2.ui.component.VirtualAppTheme {
-                Scaffold(containerColor = androidx.compose.ui.graphics.Color.Transparent, topBar = {
-                    Row(Modifier.statusBarsPadding().fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                        IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close)) }
-                        Text(title, Modifier.weight(1f), maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, style = MaterialTheme.typography.titleMedium)
-                        action()
+                Surface(
+                    modifier = if (isWide) Modifier.fillMaxWidth(0.75f).fillMaxHeight(0.88f) else Modifier.fillMaxSize(),
+                    shape = if (isWide) RoundedCornerShape(28.dp) else androidx.compose.ui.graphics.RectangleShape,
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.98f),
+                    tonalElevation = 6.dp
+                ) {
+                    Scaffold(containerColor = androidx.compose.ui.graphics.Color.Transparent, topBar = {
+                        Row(Modifier.statusBarsPadding().fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                            IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close)) }
+                            Text(title, Modifier.weight(1f), maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, style = MaterialTheme.typography.titleMedium)
+                            action()
+                        }
+                    }) { padding ->
+                        Box(Modifier.fillMaxSize().padding(padding).imePadding().padding(horizontal = 20.dp)) { content() }
                     }
-                }) { padding ->
-                    Box(Modifier.fillMaxSize().padding(padding).imePadding().padding(horizontal = 20.dp)) { content() }
                 }
             }
         }
