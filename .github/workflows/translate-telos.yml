@@ -12,7 +12,7 @@ on:
         default: false
       source_ref:
         description: Branch or commit to translate
-        default: codex/stremio-account-watched
+        default: codex/system-appops-network
 permissions:
   contents: read
 jobs:

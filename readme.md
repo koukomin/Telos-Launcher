@@ -1434,3 +1434,5 @@ Proxy development draft: Telos Network can configure user-owned SOCKS5/HTTP CONN
 WireGuard development draft: the editor can link an exit tunnel through another full-route entry tunnel using firestack’s two-hop API. Invalid graphs are rejected and unverified/missing hops block the selected route. Unit coverage is added; native interoperability, full translations and final release checks remain pending.
 
 Integration hardening draft: delayed Trakt events preserve watch times and avoid replacing newer remote progress; Stremio credential initialization runs off Main. Embedded AppOps uses opaque sheets/headers/search surfaces and the complete Telos language chooser, with explicit host-wide scope. Full resource coverage and final device/visual checks remain pending.
+
+Translation preparation now audits embedded AppOps together with host UI across all 49 base locales, reusing existing matching translations and preserving separate module resources. Full translated-resource coverage and final Android/visual verification are still release gates; this tooling checkpoint does not publish a release.

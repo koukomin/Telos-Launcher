@@ -49,3 +49,7 @@ WireGuard configurations now support an optional entry-tunnel ID. Policy validat
 The draft now checks delayed Trakt updates against exact remote watched IDs and newer playback timestamps. Delayed completions retain their original watched_at through history upload; duplicates and newer resumes supersede queued older events. Additional parser/replay tests cover ID namespaces and episode identity. Stremio credential hydration and account-file activation now happen on IO, and playback waits for initialization instead of decrypting credentials from UI getters.
 
 AppOps language selection now covers all shipped Telos locales, preserves Greek and Traditional Chinese, and explicitly says it changes every Telos screen. The picker is lazy/scrollable. Imported AppOps sheets, search fields and headers use opaque semantic container roles; no additional wallpaper blur is introduced. Remaining translations and final screen/device verification remain open.
+
+### Translation inventory checkpoint
+
+The preparation/validation tools now include all embedded AppOps strings instead of checking only host resources. Current inventory contains 652 changed/exposed string IDs across 49 base locales, including 557 translatable AppOps entries. Existing host translations can supply 2,834 exact-match entries. Generated host and embedded-module resources are kept separate, with format/resource/brand tokens protected. Heavy inference is not activated by this tooling checkpoint; final translations still need generation, semantic review and Android validation.

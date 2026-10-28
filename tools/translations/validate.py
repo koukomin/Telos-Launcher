@@ -3,18 +3,19 @@
 import re
 import os
 import xml.etree.ElementTree as ET
-from prepare import RES, inventory, records
+from prepare import RES, RESOURCE_MODULES, inventory, records, BASE
 
 TOKEN = re.compile(r'%(?:\d+\$)?[-#+ 0,(]*\d*(?:\.\d+)?[a-zA-Z%]|\{(?:name|ext|n(?::\d+)?)\}')
 
 def main():
-    data = inventory(os.environ.get('TELOS_TRANSLATION_BASE', '71262e1e52c1bbb34da722d0ff5e213da665916f'))
+    data = inventory(os.environ.get('TELOS_TRANSLATION_BASE', BASE))
     missing = {locale: list(rows) for locale, rows in data['locales'].items() if rows}
     if missing:
-        raise SystemExit('Missing or stale translations: ' + repr(missing))
-    sources = records(RES.glob('values/*.xml'), lambda p: p.read_text())
+        raise SystemExit('Missing or stale translations: ' + repr({locale: {'count': len(keys), 'examples': keys[:8]} for locale,keys in missing.items()}))
+    sources = {}
+    for root in RESOURCE_MODULES.values(): sources.update(records((root/'values').glob('*.xml'),lambda p:p.read_text()))
     checked = 0
-    for directory in RES.glob('values-*'):
+    for directory in [p for root in RESOURCE_MODULES.values() for p in root.glob('values-*')]:
         names = set()
         for path in directory.glob('*.xml'):
             for node in ET.parse(path).getroot():

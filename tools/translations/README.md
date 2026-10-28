@@ -13,3 +13,9 @@ Before copying generated resources into `core/i18n/src/main/res`, review meaning
 The new feature strings have been translated directly by parallel Codex assistants for every supported base locale. Run `python tools/translations/validate.py` to check coverage, XML, duplicate IDs, Android quoting and format tokens. English regional variants and gender variants inherit their base resources. Native-speaker and device layout review remain useful; automated checks cannot prove stylistic quality. The optional model workflow writes artifacts only and does not replace these reviewed repository resources.
 
 CI checks changed strings against the pull request base (`TELOS_TRANSLATION_BASE`), plus resource syntax across locales. This keeps new changes accountable without treating unrelated translation debt added on main as part of every PR. Without the environment variable, the historical full-audit baseline is retained.
+
+## Embedded AppOps coverage
+
+The inventory and final validation now cover both `core/i18n` and `libs/appops-next`, using the current release merge (`af228c22344bd1bd214db65d8bb16c502d654113`) as the default comparison base. All 49 host base locales are included, with Greek first. The original Simplified Chinese AppOps resources use their script-qualified folder; generated Traditional Chinese resources use `values-b+zh+Hant`.
+
+Generation keeps module output separate: `translation-artifact/res` contains host resources and `translation-artifact/appops-res` contains embedded AppOps resources. Existing exact English matches can reuse already localized host wording without model inference. Placeholders, resource references, markup tokens and technical names are protected. The same explicit final-source activation gate remains required; no heavy inference runs merely because inventory support changed. Review and copy each module’s artifacts into its own resource root, then run coverage validation and Android builds.
