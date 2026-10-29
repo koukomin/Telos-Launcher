@@ -414,8 +414,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     .maxSizeBytes(64 * 1024 * 1024L)
                     .build()
             }
-            .crossfade(true)
-            .crossfade(150)
+            .crossfade(false) // Disabled for 120Hz scroll performance (prevents GPU alpha blending jank)
             .allowHardware(true)
             .build()
     }
