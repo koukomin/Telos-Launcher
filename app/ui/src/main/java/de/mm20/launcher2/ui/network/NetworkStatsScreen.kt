@@ -52,7 +52,11 @@ fun NetworkStatsScreen() {
             }
         }
         item {
-            OutlinedCard(Modifier.fillMaxWidth(), colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)) {
+            OutlinedCard(
+                modifier = Modifier.fillMaxWidth(),
+                border = androidx.compose.foundation.BorderStroke(1.dp, androidx.compose.ui.graphics.Color(0xFF00F2FE).copy(alpha = 0.5f)),
+                colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+            ) {
                 FlowRow(Modifier.fillMaxWidth().padding(16.dp), horizontalArrangement = Arrangement.spacedBy(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     @Composable fun Total(label: Int, bytes: Long) {
                         Column(Modifier.widthIn(min = 100.dp)) {

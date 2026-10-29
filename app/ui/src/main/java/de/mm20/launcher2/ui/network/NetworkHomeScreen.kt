@@ -26,6 +26,8 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -161,34 +163,58 @@ fun NetworkHomeScreen() {
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 item(span = { GridItemSpan(maxLineSpan) }) {
-                    Column(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 12.dp, bottom = 8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // Rethink DNS Status Banner: Vibrant Neon status text
                         Text(
-                            stringResource(when (state) {
-                                is NetState.On -> R.string.net_hub_state_on
-                                is NetState.Starting -> R.string.net_hub_state_starting
-                                is NetState.Error -> R.string.net_hub_state_error
-                                is NetState.NeedsPermission -> R.string.net_hub_state_permission
-                                else -> R.string.net_hub_state_off
-                            }),
-                            color = ring,
+                            text = if (on) "ΠΡΟΣΤΑΤΕΥΕΤΑΙ" else "ΔΕΝ ΠΡΟΣΤΑΤΕΥΕΤΑΙ",
+                            color = if (on) Color(0xFF00F2FE) else Color(0xFFFF007F),
                             style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                            fontWeight = FontWeight.Black,
+                            letterSpacing = 1.2.sp,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 12.dp)
                         )
-                        androidx.compose.material3.FilledTonalButton(
+
+                        // Prominent Rethink DNS Capsule START / STOP Button
+                        Button(
                             onClick = {
                                 if (on) engine.stop() else { requested = true; engine.start() }
                             },
                             enabled = state !is NetState.Starting,
-                            modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp),
+                            shape = RoundedCornerShape(32.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (on) MaterialTheme.colorScheme.errorContainer else Color(0xFF38BDF8),
+                                contentColor = if (on) MaterialTheme.colorScheme.onErrorContainer else Color.Black
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .heightIn(min = 60.dp)
+                                .padding(vertical = 4.dp),
                         ) {
-                            Text(stringResource(if (on) R.string.net_hub_stop else R.string.net_hub_start),
-                                style = MaterialTheme.typography.titleLarge)
+                            Text(
+                                text = if (on) "STOP" else "START",
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                letterSpacing = 2.sp
+                            )
                         }
+
                         if (state is NetState.Error) {
                             Text((state as NetState.Error).message, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 12.dp))
                             TextButton(onClick = { engine.acknowledgeError() }) { Text(stringResource(R.string.net_hub_dismiss)) }
                         }
-                        FlowRow(Modifier.padding(top = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+
+                        FlowRow(
+                            modifier = Modifier.padding(top = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
                             StatChip(stringResource(R.string.net_hub_stat_blocked_dns), number.format(stats.dnsBlocked), card) {
                                 backStack.add(NetworkLogsRoute)
                             }
@@ -317,18 +343,20 @@ private fun StatChip(label: String, value: String, card: Color, onClick: () -> U
 
 @Composable
 private fun HubTile(title: String, value: String, icon: Int, card: Color, onClick: () -> Unit) {
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .heightIn(min = 112.dp)
-            .clip(MaterialTheme.shapes.medium)
-            .background(card)
-            .clickable(onClick = onClick)
-            .padding(16.dp),
+    androidx.compose.material3.Surface(
+        onClick = onClick,
+        shape = RoundedCornerShape(16.dp),
+        color = card,
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f)),
+        modifier = Modifier.fillMaxWidth().heightIn(min = 108.dp)
     ) {
-        Icon(painterResource(icon), contentDescription = null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
-        Spacer(Modifier.height(16.dp))
-        Text(title, fontWeight = FontWeight.SemiBold)
-        Text(value, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Icon(painterResource(icon), contentDescription = null, modifier = Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary)
+            Spacer(Modifier.height(14.dp))
+            Text(title, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium)
+            Text(value, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
     }
 }
