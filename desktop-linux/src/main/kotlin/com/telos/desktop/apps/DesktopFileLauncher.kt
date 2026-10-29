@@ -29,6 +29,10 @@ object DesktopFileLauncher {
                 val wd = File(dir)
                 if (wd.isDirectory) pb.directory(wd)
             }
+            
+            // Integrate KsshaskpassManager env injection
+            com.telos.desktop.security.KsshaskpassManager().injectAskPassEnv(pb)
+            
             pb.redirectErrorStream(true)
             pb.redirectOutput(ProcessBuilder.Redirect.DISCARD)
             pb.start()

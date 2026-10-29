@@ -1,0 +1,153 @@
+package com.telos.desktop.panel
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Slider
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.telos.desktop.monitor.LinuxSystemTelemetryEngine
+import com.telos.desktop.overlay.TelosClipboardManager
+import com.telos.desktop.overlay.TelosNotificationCenter
+import com.telos.desktop.overlay.SessionPower
+import com.telos.desktop.overlay.TelosCaptureTool
+import com.telos.desktop.quake.TelosQuake
+import com.telos.desktop.ui.TelosColors
+import com.telos.desktop.wm.TelosWindowManager
+import kotlinx.coroutines.delay
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+enum class PanelPopup { None, Clock, Audio, Network, Power, Tray }
+
+@Composable
+fun TelosTopPanel(
+    wm: TelosWindowManager,
+    engine: LinuxSystemTelemetryEngine,
+    onLauncher: () -> Unit,
+    onOpenMonitor: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var clock by remember { mutableStateOf(LocalDateTime.now()) }
+    var popup by remember { mutableStateOf(PanelPopup.None) }
+    var audio by remember { mutableStateOf(AudioControlManager.snapshot()) }
+    var net by remember { mutableStateOf(ConnectivityManager.snapshot()) }
+    var power by remember { mutableStateOf(LaptopPowerManager.snapshot()) }
+    var tray by remember { mutableStateOf(SystemTrayManager.snapshot()) }
+    var cpuPill by remember { mutableStateOf("CPU --") }
+    LaunchedEffect(Unit) {
+        while (true) {
+            clock = LocalDateTime.now()
+            audio = AudioControlManager.snapshot()
+            net = ConnectivityManager.snapshot()
+            power = LaptopPowerManager.snapshot()
+            tray = SystemTrayManager.snapshot()
+            val s = engine.overviewHistory.lastOrNull() ?: engine.poll()
+            cpuPill = "CPU ${s.cpu.totalPercent.toInt()}%  RAM ${(s.mem.usedKb / 1048576.0).toInt()}G"
+            delay(2000)
+        }
+    }
+    Box(modifier.fillMaxWidth().height(36.dp).background(TelosColors.surfaceContainer)) {
+        Row(Modifier.fillMaxWidth().height(36.dp).padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text("Telos", color = TelosColors.secondary, modifier = Modifier.clickable { onLauncher() })
+                (0 until wm.workspaceCount).forEach { i ->
+                    val active = wm.currentWorkspace == i
+                    val dots = wm.windows.count { it.workspace == i }
+                    Text(
+                        "${i + 1}${if (dots > 0) "·$dots" else ""}",
+                        color = if (active) TelosColors.primary else TelosColors.onSurface,
+                        fontSize = 12.sp,
+                        modifier = Modifier.clickable { wm.switchWorkspace(i) },
+                    )
+                }
+                Text(wm.windows.find { it.id == wm.focusedId }?.title ?: "Desktop", color = TelosColors.onSurface, fontSize = 12.sp)
+            }
+            Text(
+                clock.format(DateTimeFormatter.ofPattern("EEE d MMM  HH:mm")),
+                color = TelosColors.onSurface,
+                modifier = Modifier.clickable { popup = if (popup == PanelPopup.Clock) PanelPopup.None else PanelPopup.Clock },
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text(">_", color = TelosColors.secondary, modifier = Modifier.clickable { TelosQuake.toggle() })
+                Text(cpuPill, fontSize = 11.sp, color = TelosColors.secondary, modifier = Modifier.clickable { onOpenMonitor() })
+                Text(if (audio.muted) "Mute" else "♪ ${audio.volume.toInt()}%", fontSize = 11.sp, color = TelosColors.onSurface, modifier = Modifier.clickable { popup = PanelPopup.Audio })
+                Text(net.activeSsid ?: "Net", fontSize = 11.sp, color = TelosColors.onSurface, modifier = Modifier.clickable { popup = PanelPopup.Network })
+                Text(
+                    if (power.battery.present) "BAT ${power.battery.percent}%" else "AC",
+                    fontSize = 11.sp,
+                    color = TelosColors.onSurface,
+                    modifier = Modifier.clickable { popup = PanelPopup.Power },
+                )
+                Text("Tray", fontSize = 11.sp, modifier = Modifier.clickable { popup = PanelPopup.Tray }, color = TelosColors.onSurface)
+                Text("Clip", fontSize = 11.sp, modifier = Modifier.clickable { TelosClipboardManager.popup = !TelosClipboardManager.popup }, color = TelosColors.onSurface)
+                Text("Bell", fontSize = 11.sp, modifier = Modifier.clickable { TelosNotificationCenter.open.value = !TelosNotificationCenter.open.value }, color = TelosColors.onSurface)
+                Text("Shot", fontSize = 11.sp, modifier = Modifier.clickable { TelosCaptureTool.fullscreen() }, color = TelosColors.onSurface)
+                Text("⏻", modifier = Modifier.clickable { SessionPower.open.value = true }, color = TelosColors.primary)
+            }
+        }
+        if (popup != PanelPopup.None) {
+            Box(Modifier.fillMaxWidth().padding(top = 36.dp), contentAlignment = Alignment.TopEnd) {
+                Column(Modifier.width(320.dp).background(TelosColors.surface).padding(12.dp)) {
+                    when (popup) {
+                        PanelPopup.Clock -> {
+                            val s = engine.overviewHistory.lastOrNull()
+                            Text(clock.format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")), color = TelosColors.onSurface)
+                            Text("CPU ${s?.cpu?.totalPercent?.toInt() ?: 0}%  RAM ${s?.mem?.usedKb?.div(1024) ?: 0} MiB", color = TelosColors.secondary, fontSize = 12.sp)
+                            Text("GPU ${s?.cpu?.tempC?.toInt() ?: 0}°C package  vault ${s?.mounts?.firstOrNull { it.fstype == "luks" }?.let { it.usedBytes / 1_000_000 } ?: 0} MB", fontSize = 12.sp, color = TelosColors.onSurface)
+                            Text("Open System Monitor", color = TelosColors.primary, modifier = Modifier.clickable { onOpenMonitor(); popup = PanelPopup.None }.padding(8.dp))
+                        }
+                        PanelPopup.Audio -> {
+                            Text(audio.track.ifBlank { "No media" }, color = TelosColors.onSurface, fontSize = 12.sp)
+                            Slider(audio.volume.toFloat() / 100f, { AudioControlManager.setVolume(it * 100.0) })
+                            Text(if (audio.muted) "Unmute" else "Mute", modifier = Modifier.clickable { AudioControlManager.toggleMute() })
+                            Text(if (audio.micMuted) "Mic muted" else "Mic live", modifier = Modifier.clickable { AudioControlManager.toggleMic() })
+                            Text("⏯", modifier = Modifier.clickable { AudioControlManager.playPause() })
+                            Text("⏭", modifier = Modifier.clickable { AudioControlManager.next() })
+                            audio.sinks.forEach { Text(it, fontSize = 11.sp, modifier = Modifier.clickable { AudioControlManager.setSink(it) }) }
+                        }
+                        PanelPopup.Network -> {
+                            Text("Wi-Fi ${if (net.wifiOn) "on" else "off"}  VPN ${net.vpn ?: "—"}", color = TelosColors.onSurface)
+                            net.aps.take(8).forEach {
+                                Text("${it.ssid}  ${it.signal}% ${if (it.connected) "•" else ""}", fontSize = 12.sp, modifier = Modifier.clickable { ConnectivityManager.wifiConnect(it.ssid) })
+                            }
+                            Text("Bluetooth ${if (net.btOn) "on" else "off"}", modifier = Modifier.clickable { ConnectivityManager.btPower(!net.btOn) })
+                            net.btDevices.forEach {
+                                Text("${it.name} ${it.battery?.let { b -> "$b%" } ?: ""}", fontSize = 12.sp, modifier = Modifier.clickable { ConnectivityManager.btConnect(it.mac) })
+                            }
+                        }
+                        PanelPopup.Power -> {
+                            Text("Battery ${power.battery.percent}% ${if (power.battery.charging) "charging" else ""} ${power.battery.watts?.let { "%.1f W".format(it) } ?: ""}", color = TelosColors.onSurface)
+                            power.profiles.forEach { Text(it, color = if (it == power.profile) TelosColors.secondary else TelosColors.onSurface, modifier = Modifier.clickable { LaptopPowerManager.setProfile(it) }) }
+                            power.gpuModes.forEach { Text("GPU $it", fontSize = 12.sp, modifier = Modifier.clickable { LaptopPowerManager.setGpuMode(it) }) }
+                            Text("Screen ${power.screenBrightness}%")
+                            Slider(power.screenBrightness / 100f, { LaptopPowerManager.setScreenBrightness((it * 100).toInt()) })
+                            Text("Keyboard ${power.kbdBrightness}%")
+                            Slider(power.kbdBrightness / 100f, { LaptopPowerManager.setKbdBrightness((it * 100).toInt()) })
+                        }
+                        PanelPopup.Tray -> tray.forEach {
+                            Text("${it.name} ${if (it.running) "●" else "○"}", modifier = Modifier.clickable { SystemTrayManager.launch(it) })
+                        }
+                        else -> {}
+                    }
+                }
+            }
+        }
+    }
+}

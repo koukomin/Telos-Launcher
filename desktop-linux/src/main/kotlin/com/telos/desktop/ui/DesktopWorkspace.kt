@@ -122,35 +122,56 @@ fun DesktopWorkspace(
                 )
             }
         }
+        
         Row(
             Modifier
-                .align(Alignment.BottomCenter)
+                .align(Alignment.TopCenter)
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(44.dp)
                 .background(TelosColors.surfaceContainer),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                " Applications",
-                color = TelosColors.secondary,
-                modifier = Modifier.clickable { showDrawer = !showDrawer }.padding(16.dp),
+                " \uD83D\uDD34 Telos",
+                color = TelosColors.primary,
+                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                modifier = Modifier.clickable { showDrawer = !showDrawer }.padding(12.dp),
             )
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.padding(end = 16.dp)) {
-                XdgUserDirsManager.shortcuts(dirs).take(6).forEach { (label, file) ->
-                    Text(
-                        label,
-                        color = TelosColors.onSurface,
-                        fontSize = 12.sp,
-                        modifier = Modifier.clickable {
-                            runCatching { java.awt.Desktop.getDesktop().open(file) }
-                        },
-                    )
-                }
-                Text("Settings", color = TelosColors.secondary, modifier = Modifier.clickable {
+            
+            // KDE Plasma 6.5 Top Panel Layout & Language Indicator
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(end = 12.dp)) {
+                val keyboardManager = remember { com.telos.desktop.panel.SystemTrayManager.keyboardManager }
+                var activeLang by remember { mutableStateOf(keyboardManager.activeLayout.uppercase()) }
+                
+                // Active language indicator in tray
+                Text(
+                    text = activeLang,
+                    color = TelosColors.onSurface,
+                    fontSize = 13.sp,
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
+                    modifier = Modifier
+                        .clickable { 
+                            keyboardManager.toggleNextLayout()
+                            activeLang = keyboardManager.activeLayout.uppercase()
+                        }
+                        .padding(horizontal = 12.dp, vertical = 8.dp)
+                )
+
+                Text("Settings", color = TelosColors.secondary, fontSize = 13.sp, modifier = Modifier.clickable {
                     showSettings = true
                     wm.open("Settings")
-                })
+                }.padding(8.dp))
+                
+                // Clock
+                var time by remember { mutableStateOf(java.time.LocalTime.now().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"))) }
+                LaunchedEffect(Unit) {
+                    while (true) {
+                        kotlinx.coroutines.delay(1000)
+                        time = java.time.LocalTime.now().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"))
+                    }
+                }
+                Text(time, color = TelosColors.onSurface, fontSize = 13.sp, modifier = Modifier.padding(8.dp))
             }
         }
         toast?.let {
@@ -165,6 +186,6 @@ fun DesktopWorkspace(
 }
 
 @Composable
-private fun keyRefresh(key: Int, content: @Composable () -> Unit) {
-    androidx.compose.runtime.key(key, content)
+private fun keyRefresh(refreshKey: Int, content: @Composable () -> Unit) {
+    androidx.compose.runtime.key(refreshKey) { content() }
 }
