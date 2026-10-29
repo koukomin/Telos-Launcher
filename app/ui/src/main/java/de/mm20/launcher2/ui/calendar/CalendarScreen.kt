@@ -315,14 +315,14 @@ private fun CalendarContent(vm: CalendarViewModel) {
                 if (showQuickAdd) {
                     AlertDialog(
                         onDismissRequest = { showQuickAdd = false },
-                        title = { Text("Quick Event (Natural Language)") },
+                        title = { Text(stringResource(R.string.quick_event_title)) },
                         text = {
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Text("Type in plain text (e.g. 'Συνάντηση αύριο στις 5' or 'Lunch with Alex at 2pm')", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Text(stringResource(R.string.quick_event_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 OutlinedTextField(
                                     value = quickText,
                                     onValueChange = { quickText = it },
-                                    placeholder = { Text("e.g. Καφές αύριο στις 6") },
+                                    placeholder = { Text(stringResource(R.string.quick_event_hint)) },
                                     singleLine = true,
                                     modifier = Modifier.fillMaxWidth()
                                 )
@@ -336,7 +336,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
                                     draft = parseNaturalLanguageEvent(quickText, defaultId, selected)
                                     showQuickAdd = false
                                 }
-                            ) { Text("Create Event") }
+                            ) { Text(stringResource(R.string.quick_event_create)) }
                         },
                         dismissButton = {
                             TextButton(onClick = { showQuickAdd = false }) { Text(stringResource(R.string.cal_cancel)) }

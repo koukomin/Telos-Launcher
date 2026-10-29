@@ -496,7 +496,7 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(painterResource(R.drawable.auto_awesome_20dp), contentDescription = null, modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(6.dp))
-                            Text("AI Summary (TL;DR)", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+                            Text(stringResource(R.string.ai_summary_title), style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
                         }
                         Text(summary!!, style = MaterialTheme.typography.bodyMedium)
                     }
@@ -517,7 +517,7 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
                 ) {
                     Icon(painterResource(R.drawable.auto_awesome_20dp), contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text(if (summarizing) "Summarizing..." else "AI Summarize (TL;DR)")
+                    Text(if (summarizing) stringResource(R.string.ai_summarizing) else stringResource(R.string.ai_summarize))
                 }
             }
 

@@ -55,7 +55,7 @@ fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(Modifier.width(8.dp))
-                Text("Telos Drop (Wi-Fi P2P)", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.telos_drop_title), fontWeight = FontWeight.Bold)
             }
         },
         text = {
@@ -65,7 +65,7 @@ fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Text(
-                    text = "Scan QR code or open URL on any device connected to the same Wi-Fi network to download this file.",
+                    text = stringResource(R.string.telos_drop_desc),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -126,7 +126,7 @@ fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
                     onClick = { server?.close(); server = null },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.errorContainer, contentColor = MaterialTheme.colorScheme.onErrorContainer)
                 ) {
-                    Text("Stop Sharing")
+                    Text(stringResource(R.string.telos_drop_stop))
                 }
             } else {
                 Button(
@@ -148,7 +148,7 @@ fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
                         }
                     }
                 ) {
-                    Text("Start Telos Drop")
+                    Text(stringResource(R.string.telos_drop_start))
                 }
             }
         },

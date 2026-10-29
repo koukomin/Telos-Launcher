@@ -1888,4 +1888,21 @@
     <string name="work_profile_status_active">Active</string>
     <string name="work_profile_status_not_set_up">Not set up</string>
     <string name="work_profile_status_title">Status</string>
+
+    <string name="telos_drop_title">Telos Drop (Wi-Fi P2P)</string>
+    <string name="telos_drop_desc">Σαρώστε τον κωδικό QR ή ανοίξτε το URL σε οποιαδήποτε συσκευή συνδεδεμένη στο ίδιο δίκτυο Wi-Fi για λήψη αυτού του αρχείου.</string>
+    <string name="telos_drop_stop">Διακοπή Κοινοποίησης</string>
+    <string name="telos_drop_start">Έναρξη Telos Drop</string>
+    <string name="ocr_title">Αναγνώριση Κειμένου (OCR)</string>
+    <string name="ocr_scanning">Σάρωση εικόνας για κείμενο...</string>
+    <string name="ocr_empty">Δεν βρέθηκε κείμενο σε αυτήν την εικόνα.</string>
+    <string name="ocr_copy">Αντιγραφή Κειμένου</string>
+    <string name="ocr_copied">Το κείμενο αντιγράφηκε στο πρόχειρο!</string>
+    <string name="ai_summary_title">Σύνοψη AI (TL;DR)</string>
+    <string name="ai_summarize">Σύνοψη με AI (TL;DR)</string>
+    <string name="ai_summarizing">Σύνταξη σύνοψης...</string>
+    <string name="quick_event_title">Γρήγορο Συμβάν (Φυσική Γλώσσα)</string>
+    <string name="quick_event_desc">Πληκτρολογήστε σε απλό κείμενο (π.χ. Συνάντηση αύριο στις 5)</string>
+    <string name="quick_event_hint">π.χ. Καφές αύριο στις 6</string>
+    <string name="quick_event_create">Δημιουργία Συμβάντος</string>
 </resources>

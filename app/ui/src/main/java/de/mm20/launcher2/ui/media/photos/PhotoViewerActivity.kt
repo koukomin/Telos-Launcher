@@ -505,12 +505,12 @@ private fun OcrSheet(uri: Uri, onDismiss: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text("Live Text Recognition (OCR)", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.ocr_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             if (loading) {
                 LinearProgressIndicator(Modifier.fillMaxWidth())
-                Text("Scanning image for text...", style = MaterialTheme.typography.bodyMedium)
+                Text(stringResource(R.string.ocr_scanning), style = MaterialTheme.typography.bodyMedium)
             } else if (extractedText.isNullOrBlank()) {
-                Text("No text found in this image.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.ocr_empty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             } else {
                 androidx.compose.foundation.text.selection.SelectionContainer {
                     Text(extractedText!!, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.fillMaxWidth().heightIn(max = 300.dp).verticalScroll(rememberScrollState()))
@@ -519,14 +519,14 @@ private fun OcrSheet(uri: Uri, onDismiss: () -> Unit) {
                     onClick = {
                         @Suppress("DEPRECATION")
                         clipboard.setText(androidx.compose.ui.text.AnnotatedString(extractedText!!))
-                        Toast.makeText(context, "Text copied to clipboard!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, stringResource(R.string.ocr_copied), Toast.LENGTH_SHORT).show()
                         onDismiss()
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Icon(painterResource(R.drawable.content_copy_24px), contentDescription = null)
                     Spacer(Modifier.width(8.dp))
-                    Text("Copy Text")
+                    Text(stringResource(R.string.ocr_copy))
                 }
             }
         }

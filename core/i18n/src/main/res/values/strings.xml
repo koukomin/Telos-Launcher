@@ -1991,4 +1991,21 @@
     <string name="telos_trash_unlock">Unlock trash</string>
     <string name="telos_os_trash_unavailable">No system recycle bin was found on this device</string>
     <string name="telos_media_compact_list">Compact list</string>
-<string name="telos_akou_app_label">Άκου</string><string name="telos_magnifier_app_label">Magnifier</string><string name="telos_flashlight_app_label">Flashlight</string><string name="hf_freeze_disconnect">Disconnected</string></resources>
+<string name="telos_akou_app_label">Άκου</string><string name="telos_magnifier_app_label">Magnifier</string><string name="telos_flashlight_app_label">Flashlight</string><string name="hf_freeze_disconnect">Disconnected</string>
+    <string name="telos_drop_title">Telos Drop (Wi-Fi P2P)</string>
+    <string name="telos_drop_desc">Scan QR code or open URL on any device connected to the same Wi-Fi network to download this file.</string>
+    <string name="telos_drop_stop">Stop Sharing</string>
+    <string name="telos_drop_start">Start Telos Drop</string>
+    <string name="ocr_title">Live Text Recognition (OCR)</string>
+    <string name="ocr_scanning">Scanning image for text...</string>
+    <string name="ocr_empty">No text found in this image.</string>
+    <string name="ocr_copy">Copy Text</string>
+    <string name="ocr_copied">Text copied to clipboard!</string>
+    <string name="ai_summary_title">AI Summary (TL;DR)</string>
+    <string name="ai_summarize">AI Summarize (TL;DR)</string>
+    <string name="ai_summarizing">Summarizing...</string>
+    <string name="quick_event_title">Quick Event (Natural Language)</string>
+    <string name="quick_event_desc">Type in plain text (e.g. Meeting tomorrow at 5pm)</string>
+    <string name="quick_event_hint">e.g. Καφές αύριο στις 6</string>
+    <string name="quick_event_create">Create Event</string>
+</resources>
