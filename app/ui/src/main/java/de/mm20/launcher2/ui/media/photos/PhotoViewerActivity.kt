@@ -47,6 +47,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import coil.compose.AsyncImage
@@ -228,6 +229,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     val pager = rememberPagerState(initialPage = start) { uris.size }
     var chrome by remember { mutableStateOf(true) }
     var showInfo by remember { mutableStateOf(false) }
+    var showOcr by remember { mutableStateOf(false) }
     var confirmDelete by remember { mutableStateOf(false) }
     var more by remember { mutableStateOf(false) }
     var starred by remember { mutableStateOf(false) }
@@ -349,6 +351,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                     ViewerAction(R.drawable.tune_24px, stringResource(R.string.hc_edit)) {
                         context.startActivity(Intent(context, PhotoEditorActivity::class.java).setData(current))
                     }
+                    ViewerAction(R.drawable.text_fields_24px, "OCR") { showOcr = true }
                 }
                 ViewerAction(R.drawable.info_24px, stringResource(R.string.hc_details)) { showInfo = true }
                 ViewerAction(
@@ -375,6 +378,9 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                 }
             },
         )
+    }
+    if (showOcr) {
+        OcrSheet(current) { showOcr = false }
     }
 }
 
@@ -476,4 +482,53 @@ private fun ExifDialog(
             }
         },
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun OcrSheet(uri: Uri, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    var extractedText by remember { mutableStateOf<String?>(null) }
+    var loading by remember { mutableStateOf(true) }
+    @Suppress("DEPRECATION")
+    val clipboard = androidx.compose.ui.platform.LocalClipboardManager.current
+
+    LaunchedEffect(uri) {
+        loading = true
+        extractedText = de.mm20.launcher2.ui.camera.DocumentScanEngine.recognizeText(context, uri)
+        loading = false
+    }
+
+    ModalBottomSheet(onDismissRequest = onDismiss, containerColor = MaterialTheme.colorScheme.surfaceContainerHigh) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text("Live Text Recognition (OCR)", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+            if (loading) {
+                LinearProgressIndicator(Modifier.fillMaxWidth())
+                Text("Scanning image for text...", style = MaterialTheme.typography.bodyMedium)
+            } else if (extractedText.isNullOrBlank()) {
+                Text("No text found in this image.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            } else {
+                androidx.compose.foundation.text.selection.SelectionContainer {
+                    Text(extractedText!!, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.fillMaxWidth().heightIn(max = 300.dp).verticalScroll(rememberScrollState()))
+                }
+                Button(
+                    onClick = {
+                        @Suppress("DEPRECATION")
+                        clipboard.setText(androidx.compose.ui.text.AnnotatedString(extractedText!!))
+                        Toast.makeText(context, "Text copied to clipboard!", Toast.LENGTH_SHORT).show()
+                        onDismiss()
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(painterResource(R.drawable.content_copy_24px), contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
+                    Text("Copy Text")
+                }
+            }
+        }
+    }
 }

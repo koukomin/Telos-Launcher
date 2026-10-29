@@ -142,4 +142,30 @@ internal object DocumentScanEngine {
             output
         } catch (error: Throwable) { output.delete(); throw error }
     }
+
+    suspend fun recognizeText(context: Context, uri: Uri, languages: Set<String> = setOf("eng", "ell")): String = withContext(Dispatchers.IO) {
+        val data = runCatching { CameraOcrModels.prepare(context, languages) }.getOrNull() ?: return@withContext ""
+        val tempDir = context.cacheDir
+        val page = runCatching { import(context, uri, tempDir) }.getOrNull() ?: return@withContext ""
+        try {
+            val bitmap = render(page)
+            try {
+                val api = TessBaseAPI()
+                try {
+                    if (!api.init(data.path + "/", languages.sorted().joinToString("+"), TessBaseAPI.OEM_LSTM_ONLY)) return@withContext ""
+                    api.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO)
+                    api.setImage(bitmap)
+                    val text = runCatching { api.utF8Text }.getOrNull().orEmpty()
+                    api.clear()
+                    text
+                } finally {
+                    api.recycle()
+                }
+            } finally {
+                bitmap.recycle()
+            }
+        } finally {
+            page.file.delete()
+        }
+    }
 }
