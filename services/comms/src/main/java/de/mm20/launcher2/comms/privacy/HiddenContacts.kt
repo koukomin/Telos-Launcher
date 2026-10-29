@@ -38,6 +38,17 @@ object PrivacySession {
         _recordingsUnlocked.value = false
     }
 
+    private val _incognitoSession = MutableStateFlow(false)
+    val incognitoSession = _incognitoSession.asStateFlow()
+
+    fun toggleIncognitoSession() {
+        _incognitoSession.value = !_incognitoSession.value
+    }
+
+    fun setIncognitoSession(active: Boolean) {
+        _incognitoSession.value = active
+    }
+
     fun unlockFiles() {
         _filesUnlocked.value = true
     }
