@@ -55,7 +55,10 @@ import org.koin.compose.koinInject
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
+internal fun DesktopWorkspace(
+    modifier: Modifier = Modifier,
+    onOpenThemeSettings: () -> Unit = {}
+) {
     val context = LocalContext.current
     val viewModel: DesktopWorkspaceVM = viewModel()
     val desktopManager = koinInject<DesktopModeManager>()
@@ -221,6 +224,14 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
                             // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
                         },
                         leadingIcon = { Icon(painterResource(R.drawable.settings_24px), null) }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Window Theme & Sweet Cursors") },
+                        onClick = {
+                            showContextMenu = false
+                            onOpenThemeSettings()
+                        },
+                        leadingIcon = { Icon(painterResource(R.drawable.palette_24px), null) }
                     )
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.telos_add_shortcut)) },
