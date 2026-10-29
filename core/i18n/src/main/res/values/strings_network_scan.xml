@@ -13,7 +13,7 @@
     <string name="net_scan_open_ports">Open ports: %1$s</string>
     <string name="net_ping_title">Ping IP / Domain</string>
     <string name="net_ping_target_hint">Enter IP or domain (e.g. 192.168.1.1, google.com)</string>
-    <string name="net_ping_start">Ping</string>
+    <string name="net_ping_start" translatable="false">@string/nsp_ping</string>
     <string name="net_ping_result">Ping %1$s (%2$s): %3$d/%4$d packets, Latency: min %5$dms, avg %6$dms, max %7$dms</string>
     <string name="net_ping_failed">Ping failed for %1$s</string>
 </resources>

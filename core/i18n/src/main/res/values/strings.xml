@@ -1139,7 +1139,7 @@
     <string name="search_action_email">Email</string>
     <string name="search_action_alarm">Set alarm</string>
     <string name="search_action_screentime">Screen time</string>
-    <string name="search_action_ai">Web search</string>
+    <string name="search_action_ai" translatable="false">@string/search_action_websearch</string>
     <string name="hc_high_volume_warning_title">High Volume Boost Warning</string>
     <string name="hc_high_volume_warning_text">Boosting audio above 100% may cause sound distortion or potential speaker damage. Telos is not responsible for hardware damage. Use at your own risk.</string>
     <string name="store_audio_focus_title">Audio Focus Mixer</string>
@@ -1148,7 +1148,7 @@
     <string name="store_audio_focus_mute_app">Mute App Audio</string>
     <string name="store_audio_focus_mute_app_summary">Completely silences all audio output from this application</string>
     <string name="store_tab_installed_apps">Installed Apps</string>
-    <string name="store_show_system_apps">Show system apps</string>
+    <string name="store_show_system_apps" translatable="false">@string/preference_freeze_show_system_apps</string>
     <string name="store_show_virtual_apps">Show virtual apps</string>
     <string name="preference_screen_tweaks">Tweaks</string>
     <string name="preference_screen_tweaks_summary">System-level customizations, refresh rate, and volume controls (Shizuku/Root)</string>
@@ -1164,7 +1164,7 @@
     <string name="settings_shizuku_step2_title">Step 2 (Manual via ADB / Termux):</string>
     <string name="settings_shizuku_copy_adb">Copy ADB Command</string>
     <string name="settings_shizuku_step3_title">Step 3 (Preventing OS Background Killing):</string>
-    <string name="tweaks_title">Tweaks</string>
+    <string name="tweaks_title" translatable="false">@string/preference_screen_tweaks</string>
     <string name="tweaks_banner">Essential tools, mods and performance optimizations.</string>
     <string name="tweaks_cat_display">Status Bar &amp; Display Tweaks</string>
     <string name="tweaks_cat_sound">Sound &amp; Haptics Tweaks</string>
@@ -1177,12 +1177,12 @@
     <string name="inure_permissions_breakdown">Permissions Breakdown</string>
     <string name="installerx_title">Package installer</string>
     <string name="installerx_scanning">Inspecting APK permissions and signatures…</string>
-    <string name="installerx_install_btn">Install</string>
+    <string name="installerx_install_btn" translatable="false">@string/action_install</string>
     <string name="installerx_fallback_btn">Use system installer</string>
     <string name="flow_tab_discover">Discover</string>
-    <string name="flow_tab_music">Music</string>
-    <string name="flow_tab_videos">Videos</string>
-    <string name="flow_tab_library">Library</string>
+    <string name="flow_tab_music" translatable="false">@string/file_search_type_music</string>
+    <string name="flow_tab_videos" translatable="false">@string/file_search_type_videos</string>
+    <string name="flow_tab_library" translatable="false">@string/au_video_tab_library</string>
     <string name="flow_trending">Trending &amp; Charts</string>
     <string name="flow_download_audio">Download Audio (M4A)</string>
     <string name="flow_download_video">Download Video (MP4)</string>

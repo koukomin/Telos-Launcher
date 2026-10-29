@@ -108,11 +108,11 @@ fun CommsDashboardScreen(
         if (initialNumber.isNotEmpty() && initialTab.lowercase() != "messages") selectedTab = CommsTab.Keypad
     }
 
-    if (selectedTab == CommsTab.Keypad || selectedTab == CommsTab.Messages) {
+    if (selectedTab == CommsTab.Keypad) {
         BackHandler { selectedTab = CommsTab.Recents }
     }
 
-    val inSubScreen = selectedTab == CommsTab.Keypad || selectedTab == CommsTab.Messages
+    val inSubScreen = selectedTab == CommsTab.Keypad
 
     val messengers = remember {
         de.mm20.launcher2.comms.intent.MessengerApps.listLaunchers(context)
@@ -257,6 +257,7 @@ fun CommsDashboardScreen(
                                 when (selectedTab) {
                                     CommsTab.Recents -> R.string.tsp_search_calls
                                     CommsTab.Recordings -> R.string.tsp_search_call_recordings
+                                    CommsTab.Messages -> R.string.tsp_search_messages
                                     else -> R.string.tsp_search_contacts
                                 }
                             ),
@@ -333,6 +334,7 @@ fun CommsDashboardScreen(
                     )
                     CommsTab.Keypad -> Box(Modifier.fillMaxSize()) // Rendered in overlay below
                     CommsTab.Messages -> MessagesScreen(
+                        searchQuery = searchQuery,
                         initialNumber = if (initialTab.lowercase() == "messages") initialNumber else "",
                         initialBody = initialBody,
                         initialAttachments = initialAttachments,

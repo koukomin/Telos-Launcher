@@ -90,6 +90,7 @@ import java.util.Date
  */
 @Composable
 fun MessagesScreen(
+    searchQuery: String = "",
     initialNumber: String = "",
     initialBody: String = "",
     initialAttachments: List<String> = emptyList(),
@@ -178,7 +179,7 @@ fun MessagesScreen(
     fun convKey(address: String) = address.filter { it.isDigit() || it == ',' }
     fun isArchived(c: SmsConversation) = archived.containsKey(convKey(c.address))
     fun isPinned(c: SmsConversation) = pinned.containsKey(convKey(c.address))
-    var listQuery by remember { mutableStateOf("") }
+    val listQuery = searchQuery
     // message texts per thread, loaded in the background while a search is active
     val bodies = remember { androidx.compose.runtime.mutableStateMapOf<Long, List<String>>() }
     LaunchedEffect(listQuery.isNotBlank(), all) {
@@ -246,12 +247,6 @@ fun MessagesScreen(
                 }
             }
         }
-        TelosSearchBar(
-            value = listQuery,
-            onValueChange = { listQuery = it },
-            placeholder = stringResource(R.string.tsp_search_messages),
-
-        )
         androidx.compose.material3.FilledTonalButton(
             onClick = { newMessage = true },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),

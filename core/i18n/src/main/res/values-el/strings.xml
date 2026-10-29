@@ -950,7 +950,7 @@
     <string name="preference_search_tasks_summary">Αναζήτηση εργασιών στην εφαρμογή Tasks</string>
     <string name="search_action_alarm">Ορισμός ξυπνητηριού</string>
     <string name="search_action_screentime">"Χρόνος οθόνης"</string>
-    <string name="search_action_ai">"Αναζήτηση ιστού"</string>
+
     <string name="search_action_contact">Προσθήκη στις επαφές</string>
     <string name="search_action_label">Όνομα</string>
     <string name="search_action_open_url">Προβολή ιστότοπου</string>
@@ -1531,7 +1531,7 @@
     <string name="telos_media_compact_list">Συμπαγής λίστα</string>
 <string name="telos_akou_app_label">Άκου</string><string name="telos_magnifier_app_label">Μεγεθυντικός φακός</string><string name="telos_flashlight_app_label">Φακός</string><string name="hf_freeze_disconnect">Αποσυνδέθηκε</string>
     <string name="store_tab_installed_apps">Εφαρμογές</string>
-    <string name="store_show_system_apps">Εμφάνιση εφαρμογών συστήματος</string>
+
     <string name="store_show_virtual_apps">Εμφάνιση εικονικών εφαρμογών</string>
     <string name="store_firewall_title">Telos Firewall</string>
     <string name="store_firewall_wifi">Αποκλεισμός δεδομένων Wi-Fi</string>
@@ -1568,7 +1568,7 @@
     <string name="settings_shizuku_step2_title">Βήμα 2 (Χειροκίνητα μέσω ADB / Termux):</string>
     <string name="settings_shizuku_copy_adb">Αντιγραφή Εντολής ADB</string>
     <string name="settings_shizuku_step3_title">Βήμα 3 (Αποτροπή τερματισμού στο παρασκήνιο):</string>
-    <string name="tweaks_title">Ρυθμίσεις συστήματος</string>
+
     <string name="tweaks_banner">Βασικά εργαλεία, τροποποιήσεις και βελτιστοποιήσεις απόδοσης.</string>
     <string name="tweaks_cat_display">Ρυθμίσεις Μπάρας Κατάστασης &amp; Οθόνης</string>
     <string name="tweaks_cat_sound">Ρυθμίσεις Ήχου &amp; Δόνησης</string>
@@ -1581,14 +1581,12 @@
     <string name="inure_permissions_breakdown">Ανάλυση Δικαιωμάτων</string>
     <string name="installerx_title">Εγκαταστάτης πακέτων</string>
     <string name="installerx_scanning">Έλεγχος δικαιωμάτων και υπογραφών APK…</string>
-    <string name="installerx_install_btn">Εγκατάσταση</string>
+
     <string name="installerx_fallback_btn">Χρήση εγκαταστάτη συστήματος</string>
 
 
     <string name="flow_tab_discover">Ανακάλυψη</string>
-    <string name="flow_tab_music">Μουσική</string>
-    <string name="flow_tab_videos">Βίντεο</string>
-    <string name="flow_tab_library">Βιβλιοθήκη</string>
+
     <string name="flow_trending">Δημοφιλή &amp; Charts</string>
     <string name="flow_download_audio">Λήψη Ήχου (M4A)</string>
     <string name="flow_download_video">Λήψη Βίντεο (MP4)</string>

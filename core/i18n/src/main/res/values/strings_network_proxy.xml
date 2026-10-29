@@ -7,11 +7,11 @@
     <string name="netproxy_not_registered">Not registered in an active VPN</string>
     <string name="netproxy_remove_hint">Apps assigned to this proxy remain blocked after removal. Choose another endpoint or a direct route to reconnect them.</string>
     <string name="netproxy_missing">Unavailable proxy (%1$d)</string>
-    <string name="netproxy_name">Name</string>
-    <string name="netproxy_host">Host</string>
-    <string name="netproxy_port">Port</string>
+    <string name="netproxy_name" translatable="false">@string/net_dns_field_name</string>
+    <string name="netproxy_host" translatable="false">@string/dl_proxy_host</string>
+    <string name="netproxy_port" translatable="false">@string/dl_proxy_port</string>
     <string name="netproxy_username">Username (optional)</string>
-    <string name="netproxy_password">Password</string>
+    <string name="netproxy_password" translatable="false">@string/hc_password</string>
     <string name="netproxy_follow_default">Follow WireGuard and default proxy</string>
     <string name="netproxy_direct">Bypass all proxies</string>
     <string name="netproxy_reenter_credentials">Enter credentials again when editing. Empty credentials remove proxy authentication.</string>
