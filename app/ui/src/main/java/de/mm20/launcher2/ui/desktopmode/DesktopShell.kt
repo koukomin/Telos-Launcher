@@ -53,11 +53,10 @@ fun DesktopShell() {
         }
 
         // === TELOS_PENDING_REVIEW_START: desktop_grid_and_context_menu ===
-        DesktopWorkspace(modifier = Modifier.fillMaxSize().padding(bottom = DesktopTaskbarHeight))
-        // === TELOS_PENDING_REVIEW_END: desktop_grid_and_context_menu ===
+        DesktopWorkspace(modifier = Modifier.fillMaxSize().padding(top = DesktopTaskbarHeight))
 
         DesktopTaskbar(
-            modifier = Modifier.align(Alignment.BottomStart),
+            modifier = Modifier.align(Alignment.TopStart),
             startMenuOpen = showStartMenu,
             onToggleStartMenu = { showStartMenu = !showStartMenu },
         )
