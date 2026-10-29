@@ -102,6 +102,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             val instance = _instance
                 ?: Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "room")
+                    .setJournalMode(RoomDatabase.JournalMode.WRITE_AHEAD_LOGGING)
                     // Unify Thread Pool: Use the same Dispatchers.IO executor to reduce context switches
                     .setQueryExecutor(kotlinx.coroutines.Dispatchers.IO.asExecutor())
                     //.fallbackToDestructiveMigration()

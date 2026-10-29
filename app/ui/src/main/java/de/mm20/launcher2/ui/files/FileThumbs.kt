@@ -48,7 +48,8 @@ internal object FileThumbs {
     private const val MAX_ENTRY_BYTES = 4 * 1024 * 1024
 
     private val cache = object : LruCache<String, Bitmap>(
-        (Runtime.getRuntime().maxMemory() / 16).toInt().coerceIn(8 * 1024 * 1024, 48 * 1024 * 1024)
+        // Strict cap at 15MB-20MB for File Thumbnails to prevent Out Of Memory crashes
+        (Runtime.getRuntime().maxMemory() / 32).toInt().coerceIn(8 * 1024 * 1024, 20 * 1024 * 1024)
     ) {
         override fun sizeOf(key: String, value: Bitmap): Int = value.allocationByteCount
     }
