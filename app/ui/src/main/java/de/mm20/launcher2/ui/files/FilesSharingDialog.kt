@@ -1,24 +1,31 @@
 package de.mm20.launcher2.ui.files
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import de.mm20.launcher2.comms.files.FilesSharingServer
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.comms.encodeQr
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 
-/** Visible-session sharing; leaving the foreground closes all sockets immediately. */
+/** Telos Drop: P2P Wi-Fi File Transfer with instant QR code scanning and direct web download. */
 @Composable
 fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
     var server by remember { mutableStateOf<FilesSharingServer?>(null) }
@@ -28,6 +35,7 @@ fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
     val pending = remember { java.util.concurrent.atomic.AtomicReference<FilesSharingServer?>(null) }
     val scope = rememberCoroutineScope()
     val lifecycle = LocalLifecycleOwner.current.lifecycle
+
     DisposableEffect(lifecycle) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_STOP) { server?.close(); server = null }
@@ -35,34 +43,119 @@ fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
         lifecycle.addObserver(observer)
         onDispose { disposed.set(true); pending.getAndSet(null)?.close(); lifecycle.removeObserver(observer); server?.close(); server = null }
     }
-    AlertDialog(onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.telos_files_sharing_title)) },
-        text = { Column {
-            Text(stringResource(R.string.telos_files_sharing_description))
-            Text(path, Modifier.padding(top = 8.dp))
-            server?.let { sharing -> SelectionContainer { Text(sharing.url, Modifier.padding(top = 12.dp)) } }
-            if (failed) Text(stringResource(R.string.telos_files_sharing_failed), color = MaterialTheme.colorScheme.error)
-            if (busy) LinearProgressIndicator()
-        } },
-        confirmButton = {
-            if (server != null) TextButton(onClick = { server?.close(); server = null }) { Text(stringResource(R.string.telos_files_sharing_stop)) }
-            else TextButton(enabled = !busy, onClick = {
-                busy = true; failed = false
-                scope.launch {
-                    val opened = withContext(Dispatchers.IO) { runCatching {
-                        val address = FilesSharingServer.lanAddresses().firstOrNull() ?: error("No LAN")
-                        FilesSharingServer(File(path), address).also { created ->
-                            pending.set(created)
-                            if (disposed.get()) pending.getAndSet(null)?.close()
-                        }
-                    }.getOrNull() }
-                    pending.compareAndSet(opened, null)
-                    if (disposed.get() || !lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) opened?.close()
-                    else { server = opened; failed = opened == null }
-                    busy = false
-                }
-            }) { Text(stringResource(R.string.telos_files_sharing_start)) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    painter = painterResource(R.drawable.share_24px),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(Modifier.width(8.dp))
+                Text("Telos Drop (Wi-Fi P2P)", fontWeight = FontWeight.Bold)
+            }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.telos_files_sharing_close)) } },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Text(
+                    text = "Scan QR code or open URL on any device connected to the same Wi-Fi network to download this file.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = File(path).name,
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(12.dp)
+                    )
+                }
+
+                server?.let { sharing ->
+                    val qrBitmap = remember(sharing.url) { encodeQr(sharing.url, 512) }
+                    if (qrBitmap != null) {
+                        Surface(
+                            shape = RoundedCornerShape(16.dp),
+                            color = androidx.compose.ui.graphics.Color.White,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        ) {
+                            Image(
+                                bitmap = qrBitmap.asImageBitmap(),
+                                contentDescription = "Telos Drop QR Code",
+                                modifier = Modifier.size(180.dp).padding(12.dp)
+                            )
+                        }
+                    }
+                    SelectionContainer {
+                        Text(
+                            text = sharing.url,
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+
+                if (failed) {
+                    Text(
+                        stringResource(R.string.telos_files_sharing_failed),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+                if (busy) {
+                    LinearProgressIndicator(Modifier.fillMaxWidth())
+                }
+            }
+        },
+        confirmButton = {
+            if (server != null) {
+                Button(
+                    onClick = { server?.close(); server = null },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.errorContainer, contentColor = MaterialTheme.colorScheme.onErrorContainer)
+                ) {
+                    Text("Stop Sharing")
+                }
+            } else {
+                Button(
+                    enabled = !busy,
+                    onClick = {
+                        busy = true; failed = false
+                        scope.launch {
+                            val opened = withContext(Dispatchers.IO) { runCatching {
+                                val address = FilesSharingServer.lanAddresses().firstOrNull() ?: error("No LAN")
+                                FilesSharingServer(File(path), address).also { created ->
+                                    pending.set(created)
+                                    if (disposed.get()) pending.getAndSet(null)?.close()
+                                }
+                            }.getOrNull() }
+                            pending.compareAndSet(opened, null)
+                            if (disposed.get() || !lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) opened?.close()
+                            else { server = opened; failed = opened == null }
+                            busy = false
+                        }
+                    }
+                ) {
+                    Text("Start Telos Drop")
+                }
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.telos_files_sharing_close))
+            }
+        }
     )
 }
