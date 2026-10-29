@@ -90,7 +90,7 @@ fun FreezeDashboardScreen() {
             Preference(
                 title = row.app.label,
                 icon = { ShapedLauncherIcon(size = 32.dp, icon = { icon }) },
-                summary = stringResource(R.string.freeze_dashboard_frozen_badge),
+                summary = "❄ " + stringResource(R.string.freeze_dashboard_frozen_badge),
             )
         }
         item {
