@@ -39,84 +39,84 @@ class HomescreenSettingsScreenVM(
 
 
     val statusBarIcons = uiSettings.statusBarColor
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setLightStatusBar(statusBarColor: SystemBarColors) {
         uiSettings.setStatusBarColor(statusBarColor)
     }
 
     val navBarIcons = uiSettings.navigationBarColor
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setLightNavBar(navBarColors: SystemBarColors) {
         uiSettings.setNavigationBarColor(navBarColors)
     }
 
     val hideStatusBar = uiSettings.hideStatusBar
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setHideStatusBar(hideStatusBar: Boolean) {
         uiSettings.setHideStatusBar(hideStatusBar)
     }
 
     val hideNavBar = uiSettings.hideNavigationBar
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setHideNavBar(hideNavBar: Boolean) {
         uiSettings.setHideNavigationBar(hideNavBar)
     }
 
     val searchBarColor = uiSettings.searchBarColor
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setSearchBarColor(color: SearchBarColors) {
         uiSettings.setSearchBarColor(color)
     }
 
     val searchBarColorDrawer = uiSettings.searchBarColorDrawer
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setSearchBarColorDrawer(color: SearchBarColors?) {
         uiSettings.setSearchBarColorDrawer(color)
     }
 
     val rememberScrollPosition = uiSettings.rememberScrollPosition
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setRememberScrollPosition(remember: Boolean) {
         uiSettings.setRememberScrollPosition(remember)
     }
 
     val searchBarStyle = uiSettings.searchBarStyle
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setSearchBarStyle(searchBarStyle: SearchBarStyle) {
         uiSettings.setSearchBarStyle(searchBarStyle)
     }
 
     val fixedSearchBar = uiSettings.fixedSearchBar
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setFixedSearchBar(fixedSearchBar: Boolean) {
         uiSettings.setFixedSearchBar(fixedSearchBar)
     }
 
     val bottomSearchBar = uiSettings.bottomSearchBar
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setBottomSearchBar(bottomSearchBar: Boolean) {
         uiSettings.setBottomSearchBar(bottomSearchBar)
     }
 
     val fixedRotation = uiSettings.orientation.map { it != ScreenOrientation.Auto }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setFixedRotation(fixedRotation: Boolean) {
         uiSettings.setOrientation(if (fixedRotation) ScreenOrientation.Portrait else ScreenOrientation.Auto)
     }
 
     val widgetEditButton = uiSettings.widgetEditButton
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setWidgetEditButton(editButton: Boolean) {
         uiSettings.setWidgetEditButton(editButton)
@@ -127,28 +127,28 @@ class HomescreenSettingsScreenVM(
     }
 
     val chargingAnimation = uiSettings.chargingAnimation
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setChargingAnimation(chargingAnimation: Boolean) {
         uiSettings.setChargingAnimation(chargingAnimation)
     }
 
     val widgetsOnHomeScreen = uiSettings.homeScreenWidgets
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setWidgetsOnHomeScreen(widgetsOnHomeScreen: Boolean) {
         uiSettings.setHomeScreenWidgets(widgetsOnHomeScreen)
     }
 
     val homeScreenPageCount = uiSettings.homeScreenPageCount
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setHomeScreenPageCount(count: Int) {
         uiSettings.setHomeScreenPageCount(count)
     }
 
     val desktopLocked = uiSettings.desktopLocked
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setDesktopLocked(locked: Boolean) = uiSettings.setDesktopLocked(locked)
 

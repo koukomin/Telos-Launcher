@@ -42,54 +42,54 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
     private val panelManager: WebAppsPanelManager by inject()
 
     val embeddedEngine = browsingSettings.engine
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "ironewolf")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "ironewolf")
 
     fun setEmbeddedEngine(engine: String) = browsingSettings.setEngine(engine)
 
     val adBlockEnabled = browsingSettings.adBlockEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
 
     fun setAdBlockEnabled(enabled: Boolean) = browsingSettings.setAdBlockEnabled(enabled)
 
     val zoomControlsEnabled = browsingSettings.zoomControlsEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
 
     fun setZoomControlsEnabled(enabled: Boolean) = browsingSettings.setZoomControlsEnabled(enabled)
 
     val trackingParamStrippingEnabled = browsingSettings.trackingParamStrippingEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
 
     fun setTrackingParamStrippingEnabled(enabled: Boolean) =
         browsingSettings.setTrackingParamStrippingEnabled(enabled)
 
     val topBarAtBottom = browsingSettings.topBarAtBottom
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setTopBarAtBottom(atBottom: Boolean) = browsingSettings.setTopBarAtBottom(atBottom)
 
     val swipeToSwitchEnabled = browsingSettings.swipeToSwitchEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
 
     fun setSwipeToSwitchEnabled(enabled: Boolean) = browsingSettings.setSwipeToSwitchEnabled(enabled)
 
     val userAgentMode = browsingSettings.userAgentMode
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "default")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "default")
 
     fun setUserAgentMode(mode: String) = browsingSettings.setUserAgentMode(mode)
 
     val customUserAgent = browsingSettings.customUserAgent
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
 
     fun setCustomUserAgent(userAgent: String) =
         browsingSettings.setCustomUserAgent(WebAppUserAgents.sanitize(userAgent))
 
     val cookiesEnabled = browsingSettings.cookiesEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
 
     fun setCookiesEnabled(enabled: Boolean) = browsingSettings.setCookiesEnabled(enabled)
 
     val thirdPartyCookiesEnabled = browsingSettings.thirdPartyCookiesEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setThirdPartyCookiesEnabled(enabled: Boolean) =
         browsingSettings.setThirdPartyCookiesEnabled(enabled)
@@ -100,12 +100,12 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val groupsEnabled = browsingSettings.groupsEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setGroupsEnabled(enabled: Boolean) = browsingSettings.setGroupsEnabled(enabled)
 
     val groups = browsingSettings.groups
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun createGroup(name: String) {
         viewModelScope.launch {
@@ -202,7 +202,7 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
 
     val shortcuts = webAppShortcutRepository.search("", false)
         .map { it.sortedBy { s -> s.label.lowercase() } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val direction = combine(
         gestureSettings.swipeLeft,
@@ -213,7 +213,7 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
             right is GestureAction.WebAppsPanel -> PanelDirection.Right
             else -> null
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setEnabled(enabled: Boolean) {
         if (enabled) {

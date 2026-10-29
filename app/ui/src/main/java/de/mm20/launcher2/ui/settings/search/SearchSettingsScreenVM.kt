@@ -45,44 +45,44 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
 
     val favorites = searchUiSettings.favorites
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setFavorites(favorites: Boolean) {
         searchUiSettings.setFavorites(favorites)
     }
 
     val radioStationsInSearch = searchUiSettings.radioStationsInSearch
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setRadioStationsInSearch(enabled: Boolean) {
         searchUiSettings.setRadioStationsInSearch(enabled)
     }
 
     val tvChannelsInSearch = searchUiSettings.tvChannelsInSearch
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setTvChannelsInSearch(enabled: Boolean) {
         searchUiSettings.setTvChannelsInSearch(enabled)
     }
 
     val allApps = searchUiSettings.allApps
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setAllApps(allApps: Boolean) {
         searchUiSettings.setAllApps(allApps)
     }
 
     val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val calendarSearch = calendarSearchSettings.isProviderEnabled("local")
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setCalendarSearch(enabled: Boolean) {
         calendarSearchSettings.setProviderEnabled("local", enabled)
     }
 
     val remindersSearch = searchFilterSettings.defaultFilter.map { it.reminders }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setRemindersSearch(enabled: Boolean) {
         viewModelScope.launch {
             val filters = searchFilterSettings.defaultFilter.first()
@@ -91,18 +91,18 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val hasContactsPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val contacts = contactSearchSettings.isProviderEnabled("local")
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setContacts(contacts: Boolean) {
         contactSearchSettings.setProviderEnabled("local", contacts)
     }
 
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val placesSearch = locationSearchSettings.osmLocations
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setPlacesSearch(enabled: Boolean) {
         locationSearchSettings.setOsmLocations(enabled)
     }
@@ -120,28 +120,28 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val calculator = calculatorSearchSettings.enabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setCalculator(calculator: Boolean) {
         calculatorSearchSettings.setEnabled(calculator)
     }
 
     val unitConverter = unitConverterSettings.enabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setUnitConverter(unitConverter: Boolean) {
         unitConverterSettings.setEnabled(unitConverter)
     }
 
     val wikipedia = wikipediaSearchSettings.enabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setWikipedia(wikipedia: Boolean) {
         wikipediaSearchSettings.setEnabled(wikipedia)
     }
 
     val websites = websiteSearchSettings.enabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setWebsites(websites: Boolean) {
         websiteSearchSettings.setEnabled(websites)
@@ -154,30 +154,30 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val launchOnEnter = searchUiSettings.launchOnEnter
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setLaunchOnEnter(launchOnEnter: Boolean) {
         searchUiSettings.setLaunchOnEnter(launchOnEnter)
     }
 
     val privateKeyboard = searchUiSettings.privateKeyboard
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setPrivateKeyboard(privateKeyboard: Boolean) {
         searchUiSettings.setPrivateKeyboard(privateKeyboard)
     }
 
     val hasAppShortcutPermission = permissionsManager.hasPermission(PermissionGroup.AppShortcuts)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val appShortcuts = shortcutSearchSettings.enabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setAppShortcuts(appShortcuts: Boolean) {
         shortcutSearchSettings.setEnabled(appShortcuts)
     }
 
     val reverseSearchResults = searchUiSettings.reversedResults
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setReverseSearchResults(reverseSearchResults: Boolean) {
         searchUiSettings.setReversedResults(reverseSearchResults)
@@ -188,23 +188,23 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val filterBar = searchFilterSettings.filterBar
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setFilterBar(filterBar: Boolean) {
         searchFilterSettings.setFilterBar(filterBar)
     }
 
     val searchFilters = searchFilterSettings.defaultFilter
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SearchFilters())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), SearchFilters())
 
     fun setSearchFilters(searchFilters: SearchFilters) {
         searchFilterSettings.setDefaultFilter(searchFilters)
     }
 
     val plugins = pluginService.getPluginsWithState(enabled = true)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val isTasksAppInstalled = appRepository.findOne("org.tasks", Process.myUserHandle())
         .map { it != null }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 }

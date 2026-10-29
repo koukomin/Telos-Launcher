@@ -98,9 +98,13 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
     override fun onCreate() {
         super.onCreate()
         de.mm20.launcher2.ktx.ShizukuProcesses.init(this)
+        de.mm20.launcher2.memory.TelosMemoryTrimmer.init(this)
 
         // The video player's own process needs none of the launcher
         if (ProcessInfo.init(this)) return
+
+        // Self-optimize Telos bytecode via ART speed profile in background if updated
+        de.mm20.launcher2.art.TelosSelfOptimizer.checkAndSelfCompileAsync(this, this)
 
         launch(Dispatchers.IO) { de.mm20.launcher2.ui.system.restoreSystemAppOps(this@LauncherApplication) }
 
@@ -114,31 +118,42 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
             previousHandler?.uncaughtException(thread, throwable)
         }
 
+        // Delay non-critical Koin modules to Dispatchers.Default for faster App Startup
         startKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@LauncherApplication)
             modules(
                 listOf(
+                    baseModule,
+                    searchableModule,
+                    preferencesModule,
+                    searchModule,
+                    filesModule,
+                    appManagementModule,
+                    i18nDataModule,
+                    databaseModule
+                )
+            )
+        }
+
+        launch(Dispatchers.Default) {
+            val koin = org.koin.core.context.GlobalContext.get()
+            koin.loadModules(
+                listOf(
                     accountsModule,
                     applicationsModule,
                     appShortcutsModule,
-                    baseModule,
                     calculatorModule,
                     badgesModule,
                     calendarModule,
                     contactsModule,
                     customAttrsModule,
-                    databaseModule,
                     favoritesModule,
-                    searchableModule,
-                    filesModule,
                     globalActionsModule,
                     iconsModule,
                     musicModule,
                     notificationsModule,
                     permissionsModule,
-                    preferencesModule,
-                    searchModule,
                     searchActionsModule,
                     themesModule,
                     unitConverterModule,
@@ -155,7 +170,6 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     backupModule,
                     devicePoseModule,
                     profilesModule,
-                    i18nDataModule,
                     feedModule,
                     freezeModule,
                     wallpapersModule,
@@ -166,7 +180,6 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     telosCalendarModule,
                     webAppsPanelModule,
                     appLockModule,
-                    appManagementModule,
                     storeModule,
                     dataStoreModule,
                     commsModule,
@@ -384,12 +397,15 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
 
     override fun newImageLoader(): ImageLoader {
         return ImageLoader.Builder(applicationContext)
+            .callFactory { de.mm20.launcher2.ktx.TelosNetworkClient.getInstance(this) }
             .components {
                 add(SvgDecoder.Factory())
             }
             .memoryCache {
+                // Aggressive memory saving for Launcher: 5% of RAM instead of default 25%.
+                // Protects against LMK (Low Memory Killer) when user launches heavy games.
                 coil.memory.MemoryCache.Builder(applicationContext)
-                    .maxSizePercent(0.25)
+                    .maxSizePercent(0.05)
                     .build()
             }
             .diskCache {

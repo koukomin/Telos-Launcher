@@ -20,6 +20,10 @@ import kotlinx.coroutines.launch
  * UI finishes - previously that state had no way to resolve if the screen/process that started
  * the install wasn't still around to observe a one-shot callback.
  */
+import de.mm20.launcher2.appmanagement.art.TelosArtOptimizer
+import de.mm20.launcher2.preferences.ui.UiSettings
+import kotlinx.coroutines.flow.first
+
 class InstallResultReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -59,6 +63,11 @@ class InstallResultReceiver : BroadcastReceiver() {
                 val versionCode = resolveInstalledVersionCode(appContext, packageName)
                 AppDatabase.getInstance(appContext).storeItemDao()
                     .updateInstalledVersion(packageName, versionCode)
+
+                val uiSettings = runCatching { org.koin.core.context.GlobalContext.get().get<UiSettings>() }.getOrNull()
+                if (uiSettings != null && uiSettings.artOptimizationStorePostInstall.first()) {
+                    TelosArtOptimizer.optimizePackage(appContext, packageName, profile = TelosArtOptimizer.PROFILE_SPEED)
+                }
             } catch (e: Exception) {
                 CrashReporter.logException(e)
             } finally {

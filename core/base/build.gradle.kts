@@ -57,8 +57,9 @@ dependencies {
 
     implementation(libs.koin.android)
     implementation(libs.androidx.palette)
-    runtimeOnly(libs.androidx.compose.ui)
-    runtimeOnly(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.uigraphics)
+    implementation(libs.androidx.compose.runtime)
 
     implementation(libs.stringsimilarity)
     implementation(libs.zip4j)

@@ -40,7 +40,7 @@ class NotesWidgetVM(
 
     val isLastNoteWidget = widgetsService.countWidgets(NotesWidget.Type).map {
         it == 1
-    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     fun updateWidget(context: Context, widget: NotesWidget) {
         val oldId = this.widget.value?.id

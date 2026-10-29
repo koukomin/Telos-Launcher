@@ -94,21 +94,21 @@ class SearchVM : ViewModel(), KoinComponent {
     private val agentSettings: AgentSettings by inject()
 
     val searchBarVoice = agentSettings.searchBarVoice
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
     val agentsEnabled = agentSettings.enabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     val agentId = agentSettings.agentId
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "grok")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "grok")
     val agentTransport = agentSettings.transport
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "auto")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "auto")
     val agentsSendSentences = agentSettings.sendSentences
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
 
     val pendingUpdates = fossUpdateRepository.pendingUpdates
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
 
     val launchOnEnter = searchUiSettings.launchOnEnter
-        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     private val searchService: SearchService by inject()
 
@@ -119,18 +119,18 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val profiles = profileManager.profiles.shareIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(),
+        SharingStarted.WhileSubscribed(5000),
         replay = 1
     )
     val profileStates = profiles.flatMapLatest {
         combine(it.map { profileManager.getProfileState(it) }) {
             it.toList()
         }
-    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
+    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), replay = 1)
 
     val visibleProfiles = combine(profiles, profileStates) { profs, states ->
         profs.filterIndexed { i, _ -> states.getOrNull(i)?.hidden != true }
-    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
+    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), replay = 1)
 
     val hasProfilesPermission = permissionsManager.hasPermission(PermissionGroup.ManageProfiles)
 
@@ -198,7 +198,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     private val defaultFilters = searchFilterSettings.defaultFilter.stateIn(
         viewModelScope,
-        SharingStarted.Eagerly,
+        SharingStarted.WhileSubscribed(5000),
         SearchFilters()
     )
     val filters = mutableStateOf(defaultFilters.value)

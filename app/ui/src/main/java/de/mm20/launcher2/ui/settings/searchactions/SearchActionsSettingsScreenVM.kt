@@ -19,11 +19,11 @@ class SearchActionsSettingsScreenVM : ViewModel(), KoinComponent {
 
     val searchActions = searchActionService
         .getSearchActionBuilders()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val disabledActions = searchActionService
         .getDisabledActionBuilders()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun addAction(searchAction: SearchActionBuilder) {
         val actions =

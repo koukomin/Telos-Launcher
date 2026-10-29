@@ -82,13 +82,13 @@ class TvViewModel : ViewModel(), KoinComponent {
     /** Greece is selected, or nothing is selected yet and home country / locale / language is Greek (extras apply) */
     val greeceSelected: StateFlow<Boolean> = combine(settings.selectedCountries, homeHint) { c, h ->
         TvSettings.greeceActive(c, h, Locale.getDefault())
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, settings.greeceSelected())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), settings.greeceSelected())
 
     private val homeIsGreece = MutableStateFlow(false)
 
     /** Greece is selected, or is the home country that will be selected after accepting (first run) */
     val disclaimerGreece: StateFlow<Boolean> = combine(greeceSelected, homeIsGreece) { a, b -> a || b }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     init {
         viewModelScope.launch {

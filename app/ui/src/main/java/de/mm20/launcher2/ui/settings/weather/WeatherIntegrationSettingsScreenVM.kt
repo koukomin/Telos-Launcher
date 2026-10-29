@@ -30,7 +30,7 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     val availableProviders = repository.getProviders()
 
     val alerts = weatherSettings.alerts
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), WeatherAlertConfig())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), WeatherAlertConfig())
 
     fun updateAlerts(block: (WeatherAlertConfig) -> WeatherAlertConfig) {
         weatherSettings.updateAlerts(block)
@@ -42,7 +42,7 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val weatherProvider = weatherSettings.providerId
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setWeatherProvider(provider: String) {
         weatherSettings.setProvider(provider)
@@ -50,10 +50,10 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
 
     val weatherProviderPluginState = weatherProvider.flatMapLatest {
         it?.let { pluginService.getPluginWithState(it) } ?: flowOf(null)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val autoLocation = weatherSettings.autoLocation
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setAutoLocation(autoLocation: Boolean) {
         weatherSettings.setAutoLocation(autoLocation)
@@ -65,10 +65,10 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
         } else {
             weatherSettings.location.map { it?.name }
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun requestLocationPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Location)

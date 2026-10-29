@@ -12,18 +12,18 @@ class PerformanceSettingsScreenVM : ViewModel(), KoinComponent {
     private val settings: PerformanceSettings by inject()
 
     val reduceAnimations = settings.reduceAnimations
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val animationSpeed = settings.animationSpeed
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val searchDebounceMs = settings.searchDebounceMs
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val iconCacheSize = settings.iconCacheSize
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     // Exposed as a 0-100 "bounciness" percentage (0 = no bounce, 100 = max bounce), converted
     // to/from the underlying Spring dampingRatio (1f = no bounce, 0.3f = max bounce we allow).
     val bouncePhysics = settings.bouncePhysics
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setReduceAnimations(reduce: Boolean) = settings.setReduceAnimations(reduce)
     fun setAnimationSpeed(speed: Float) = settings.setAnimationSpeed(speed)

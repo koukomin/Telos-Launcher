@@ -28,7 +28,7 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val pluginService: PluginService by inject()
 
     val hasFilePermission = permissionsManager.hasPermission(PermissionGroup.ExternalStorage)
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val loading = mutableStateOf(true)
     val nextcloudAccount = mutableStateOf<Account?>(null)
@@ -53,25 +53,25 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val localFiles = fileSearchSettings.localFiles
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setLocalFiles(localFiles: Boolean) {
         fileSearchSettings.setLocalFiles(localFiles)
     }
 
     val nextcloud = fileSearchSettings.nextcloudFiles
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setNextcloud(nextcloud: Boolean) {
         fileSearchSettings.setNextcloudFiles(nextcloud)
     }
 
     val gdrive = fileSearchSettings.gdriveFiles
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setGdrive(gdrive: Boolean) {
         fileSearchSettings.setGdriveFiles(gdrive)
     }
 
     val owncloud = fileSearchSettings.owncloudFiles
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setOwncloud(owncloud: Boolean) {
         fileSearchSettings.setOwncloudFiles(owncloud)
     }
@@ -89,7 +89,7 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val typeFilters = fileSearchSettings.typeFilters
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setDocuments(enabled: Boolean) = fileSearchSettings.setDocuments(enabled)
     fun setImages(enabled: Boolean) = fileSearchSettings.setImages(enabled)
@@ -98,7 +98,7 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
     fun setOther(enabled: Boolean) = fileSearchSettings.setOther(enabled)
 
     val excludedFolders = fileSearchSettings.excludedFolders
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
 
     /**
      * Resolves an ACTION_OPEN_DOCUMENT_TREE uri to a filesystem path that can be matched

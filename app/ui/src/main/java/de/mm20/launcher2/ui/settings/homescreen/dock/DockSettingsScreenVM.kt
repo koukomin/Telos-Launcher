@@ -29,43 +29,43 @@ class DockSettingsScreenVM : ViewModel(), KoinComponent {
     private val appRepository: AppRepository by inject()
     private val iconService: IconService by inject()
 
-    val dockPages = uiSettings.dockPages.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
-    val dockRows = uiSettings.dockRows.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
-    val dockColumns = uiSettings.dockColumns.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 5)
-    val defaultPage = uiSettings.dockDefaultPage.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
-    val gridSettings = uiSettings.gridSettings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val dockGrid = uiSettings.dockGridSettings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val dockPages = uiSettings.dockPages.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val dockRows = uiSettings.dockRows.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
+    val dockColumns = uiSettings.dockColumns.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 5)
+    val defaultPage = uiSettings.dockDefaultPage.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    val gridSettings = uiSettings.gridSettings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+    val dockGrid = uiSettings.dockGridSettings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setDockGridColumnCount(columnCount: Int?) = uiSettings.setDockGridColumnCount(columnCount)
     fun setDockGridIconSize(iconSize: Int?) = uiSettings.setDockGridIconSize(iconSize)
 
     val dockBackgroundEnabled = uiSettings.dockBackgroundEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setDockBackgroundEnabled(enabled: Boolean) = uiSettings.setDockBackgroundEnabled(enabled)
 
     val dockBackgroundColor = uiSettings.dockBackgroundColor
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setDockBackgroundColor(color: Int?) = uiSettings.setDockBackgroundColor(color)
 
     val dockBackgroundOpacity = uiSettings.dockBackgroundOpacity
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0.3f)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.3f)
 
     fun setDockBackgroundOpacity(opacity: Float) = uiSettings.setDockBackgroundOpacity(opacity)
 
     val dockBackgroundShadow = uiSettings.dockBackgroundShadow
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     fun setDockBackgroundShadow(elevation: Int) = uiSettings.setDockBackgroundShadow(elevation)
 
     val dockPageIndicatorEnabled = uiSettings.dockPageIndicatorEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
 
     fun setDockPageIndicatorEnabled(enabled: Boolean) = uiSettings.setDockPageIndicatorEnabled(enabled)
 
     val dockPageIndicatorColor = uiSettings.dockPageIndicatorColor
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setDockPageIndicatorColor(color: Int?) = uiSettings.setDockPageIndicatorColor(color)
 

@@ -180,7 +180,7 @@ class IconsSettingsScreenVM(
             includeTypes = listOf("app"),
             limit = grid.columnCount,
         )
-    }.shareIn(viewModelScope, started = SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(viewModelScope, started = SharingStarted.WhileSubscribed(5000), 1)
 
     fun getPreviewIcons(size: Int): Flow<List<LauncherIcon>> {
         return previewItems.flatMapLatest { apps ->

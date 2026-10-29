@@ -12,10 +12,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.art.ArtOptimizerRoute
 import kotlinx.serialization.Serializable
 import kotlin.math.roundToInt
 
@@ -34,6 +37,7 @@ private fun SettingHint(text: String) {
 
 @Composable
 fun PerformanceSettingsScreen() {
+    val backStack = LocalBackStack.current
     val viewModel: PerformanceSettingsScreenVM = viewModel()
 
     val reduceAnimations by viewModel.reduceAnimations.collectAsStateWithLifecycle()
@@ -43,6 +47,16 @@ fun PerformanceSettingsScreen() {
     val bouncePhysics by viewModel.bouncePhysics.collectAsStateWithLifecycle()
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_performance)) {
+        item {
+            PreferenceCategory {
+                Preference(
+                    icon = R.drawable.bolt_24px,
+                    title = stringResource(R.string.art_optimizer_title),
+                    summary = stringResource(R.string.art_optimizer_summary),
+                    onClick = { backStack.add(ArtOptimizerRoute) },
+                )
+            }
+        }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_performance_category_animations)) {
                 SwitchPreference(

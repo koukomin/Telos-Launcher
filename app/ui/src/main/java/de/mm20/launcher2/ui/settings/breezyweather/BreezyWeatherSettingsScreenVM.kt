@@ -23,15 +23,15 @@ class BreezyWeatherSettingsScreenVM: ViewModel(), KoinComponent {
     private val weatherSettings: WeatherSettings by inject()
 
     private val breezyWeatherApp = appRepository.findOne("org.breezyweather", Process.myUserHandle())
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     val isBreezyInstalled = breezyWeatherApp
         .map { it != null }
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     val isBreezySetAsWeatherProvider = weatherSettings.providerId
         .map { it == BreezyWeatherProvider.Id }
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     fun setBreezyAsWeatherProvider() {
         weatherSettings.setProvider(BreezyWeatherProvider.Id)

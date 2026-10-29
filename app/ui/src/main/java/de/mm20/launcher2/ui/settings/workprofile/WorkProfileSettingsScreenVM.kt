@@ -22,11 +22,11 @@ class WorkProfileSettingsScreenVM : ViewModel(), KoinComponent {
 
     val workProfile = profileManager.profiles
         .map { profiles -> profiles.find { it.type == Profile.Type.Work } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val workProfileState = workProfile
         .flatMapLatest { profileManager.getProfileState(it) }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setWorkProfilePaused(paused: Boolean) {
         if (android.os.Build.VERSION.SDK_INT < 28) return
@@ -35,17 +35,17 @@ class WorkProfileSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val hasManageProfilesPermission = permissionsManager.hasPermission(PermissionGroup.ManageProfiles)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun requestManageProfilesPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.ManageProfiles)
     }
 
     val lockWorkProfileToggle = appLockSettings.lockWorkProfileToggle
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setLockWorkProfileToggle(locked: Boolean) = appLockSettings.setLockWorkProfileToggle(locked)
 
     val lockMethod = appLockSettings.lockMethod
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 }

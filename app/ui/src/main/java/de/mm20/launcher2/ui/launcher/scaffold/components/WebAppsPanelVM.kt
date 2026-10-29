@@ -25,7 +25,7 @@ class WebAppsPanelVM : ViewModel(), KoinComponent {
     private val manager: WebAppsPanelManager by inject()
     private val browsingSettings: WebAppBrowsingSettings by inject()
 
-    val items = manager.items.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    val items = manager.items.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     /** [items] split into per-group sections, in the same order as the Web Apps settings screen's
      * group list, for display in the panel grid - mirrors the grouping WebAppActivity already
@@ -46,11 +46,11 @@ class WebAppsPanelVM : ViewModel(), KoinComponent {
         val ungrouped = allItems.filterNot { grouped.contains(it.key) }
         if (ungrouped.isNotEmpty()) sections.add(WebAppPanelSection(null, ungrouped))
         sections
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     /** Registered web apps not on the panel yet, offered by the edit mode for adding. */
     val availableToAdd =
-        manager.availableToAdd.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        manager.availableToAdd.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun moveItem(from: Int, to: Int) {
         val current = items.value.toMutableList()

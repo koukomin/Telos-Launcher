@@ -69,7 +69,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val freezeManager: FreezeManager by inject()
     private val freezeSettings: de.mm20.launcher2.preferences.freeze.FreezeSettings by inject()
     private val companionRuleEnabled =
-        freezeSettings.companionEnabled.stateIn(viewModelScope, SharingStarted.Eagerly, emptySet())
+        freezeSettings.companionEnabled.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
     private val appLockManager: de.mm20.launcher2.applock.AppLockManager by inject()
     private val appLockSettings: de.mm20.launcher2.preferences.applock.AppLockSettings by inject()
     private val searchableRepository: de.mm20.launcher2.searchable.SavableSearchableRepository by inject()
@@ -87,7 +87,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     }
 
     val advancedFeaturesEnabled = freezeSettings.advancedFeaturesEnabled
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val isPinned = searchable.flatMapLatest {
         if (it == null) emptyFlow() else favoritesService.isPinned(it)
@@ -103,15 +103,15 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
 
     val badge = searchable.flatMapLatest {
         if (it == null) emptyFlow() else badgeService.getBadge(it)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val dockBadge = searchable.flatMapLatest {
         if (it == null) emptyFlow() else badgeService.getBadge(it, includeFrozen = false)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val icon = searchable.combine(iconSize) { sh, sz -> sh to sz }.flatMapLatest { (s, size) ->
         if (s == null || size == 0) emptyFlow() else iconService.getIcon(s, size)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val tags = searchable.flatMapLatest {
         if (it == null) emptyFlow() else tagsService.getTags(it)
@@ -134,7 +134,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             .map { it?.isSuspended == true || (searchable.user == android.os.Process.myUserHandle() &&
                 freezeManager.isFrozen(searchable.componentName.packageName)) }
             .distinctUntilChanged()
-    }.stateIn(viewModelScope, SharingStarted.Lazily, false)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val children = searchable.flatMapLatest {
         when (it) {
@@ -433,20 +433,20 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     }
 
     val measurementSystem = locationSearchSettings.measurementSystem
-        .stateIn(viewModelScope, SharingStarted.Lazily, MeasurementSystem.Metric)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MeasurementSystem.Metric)
 
     val showMap = locationSearchSettings.showMap
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val applyMapTheming = locationSearchSettings.themeMap
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val mapTileServerUrl = locationSearchSettings.tileServer
         .map { it ?: LocationSearchSettings.DefaultTileServerUrl }
-        .stateIn(viewModelScope, SharingStarted.Lazily, "")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
 
     val callOnTap = contactSearchSettings.callOnTap
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun reportUsage(searchable: SavableSearchable) {
         favoritesService.reportLaunch(searchable)

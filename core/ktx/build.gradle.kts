@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.shizuku.api)
     implementation(libs.shizuku.provider)
 
+    implementation(libs.okhttp)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.bundles.androidx.lifecycle)

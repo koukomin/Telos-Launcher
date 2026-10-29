@@ -22,6 +22,14 @@ Applying it needs **Shizuku**, **root**, or the **ADB** command on the screen (c
 | Bounce physics | Same | No bounce | 0 to 100 percent | How much gesture release animations overshoot before settling |
 | Search delay | Performance > Search | Off (0 ms) | 0 to 500 ms (steps of 50) | Wait this long after the last keystroke before searching |
 | Icon cache size | Performance > Caching | 200 | 50 to 500 (steps of 50) | Number of icons kept in memory |
+| **ART App Optimizer** | Performance > ART App Optimizer | Off | On or off | Pre-compiles Android apps using Shizuku or root (`cmd package compile -m speed -f`) |
+| • Profile mode | Same | `speed-profile` | `speed-profile`, `speed`, `everything`, `--reset` | Target AOT compilation level |
+| • Differential Audit | Same | Live scan | Auto | Categorizes apps into Up-to-Date, Needs Optimization, and Degraded |
+| • Smart Optimization | Same | Default action | Button | Compiles only degraded and unoptimized apps to minimize time and NAND wear |
+| • Skip & Strip Frozen Apps | Same | Off (`false`) | Off / Skip / Strip | Off keeps frozen apps compiled for instant launch; On can strip `--reset` binaries |
+| • Profile Diagnostic | Same | Auto | Auto | Detects Baseline/Cloud profiles; auto-upgrades empty profiles to full `speed` |
+| • Cold-Start Benchmark | Same | Per app | Button | Tests cold startup latency (`am force-stop` + `am start -W`) before and after |
+| • SQLite Maintenance | Same | Off | Button | Executes `VACUUM; REINDEX;` to defragment internal SQLite databases |
 
 Reading the table:
 

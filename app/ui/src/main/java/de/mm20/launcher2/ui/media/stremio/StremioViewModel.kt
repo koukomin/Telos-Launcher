@@ -75,12 +75,12 @@ class StremioViewModel : ViewModel(), KoinComponent {
     val noticeAccepted: StateFlow<Boolean> get() = store.noticeAccepted
     val saved: StateFlow<List<LibraryEntry>> = combine(library.library, de.mm20.launcher2.comms.media.video.trakt.Trakt.libraryState) { local, trakt ->
         (local + trakt.library).groupBy { it.type to it.id }.values.map { it.maxBy { e -> e.addedAt } }.sortedByDescending { it.addedAt }
-    }.flowOn(kotlinx.coroutines.Dispatchers.Default).stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    }.flowOn(kotlinx.coroutines.Dispatchers.Default).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val progressHistory: StateFlow<List<WatchProgress>> get() = library.continueWatching
     val watching: StateFlow<List<WatchProgress>> = combine(library.continueWatching, de.mm20.launcher2.comms.media.video.trakt.Trakt.libraryState) { local, trakt ->
         (local + trakt.watching).groupBy { it.type to it.id }.values.map { it.maxBy { e -> e.watchedAt } }
             .filterNot { it.completed }.sortedByDescending { it.watchedAt }
-    }.flowOn(kotlinx.coroutines.Dispatchers.Default).stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    }.flowOn(kotlinx.coroutines.Dispatchers.Default).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun acceptNotice() = store.acceptNotice()
 

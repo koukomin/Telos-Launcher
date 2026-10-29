@@ -149,7 +149,7 @@ internal class SearchServiceImpl(
                         locations = locations,
                         searchActions = searchActions,
                     )
-                }.shareIn(this, SharingStarted.WhileSubscribed(), 1)
+                }.shareIn(this, SharingStarted.WhileSubscribed(5000), 1)
 
             launch {
                 searchActionService.search(query)

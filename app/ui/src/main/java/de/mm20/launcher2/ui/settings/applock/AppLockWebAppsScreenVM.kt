@@ -23,10 +23,10 @@ class AppLockWebAppsScreenVM : ViewModel(), KoinComponent {
 
     val shortcuts = webAppShortcutRepository.search("", false)
         .map { shortcuts -> withContext(Dispatchers.Default) { shortcuts.sortedBy { it.label.lowercase() } } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val lockedShortcuts = appLockSettings.lockedWebAppShortcuts
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
 
     fun setLocked(key: String, locked: Boolean) =
         appLockSettings.setWebAppShortcutLocked(key, locked)

@@ -14,7 +14,7 @@ class EasterEggSettingsScreenVM: ViewModel(), KoinComponent {
     private val settings: UiSettings by inject()
 
     val easterEgg = settings.iconShape.map { it == IconShape.EasterEgg }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     fun setEasterEgg(easterEgg: Boolean) {
         settings.setIconShape(if (easterEgg) IconShape.EasterEgg else IconShape.PlatformDefault)
     }

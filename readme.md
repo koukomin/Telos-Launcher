@@ -601,9 +601,9 @@ Full catalogues: [Dynamic Island, web apps and weather](https://koukomin.github.
 
 </details>
 
-### Performance
+### Performance and ART App Optimizer
 
-Telos stays light by doing little at startup and by disabling what you do not use. No measured numbers are published, and the baseline profile is hand-written, not measured on a device.
+Telos stays light by doing little at startup and by disabling what you do not use. It also includes an advanced **ART App Optimizer (Dex2Oat)** under Settings > Advanced > Performance to pre-compile installed apps into native AOT machine code using Shizuku or root.
 
 | Setting (Settings > Advanced > Performance) | Default | Range |
 | --- | --- | --- |
@@ -612,11 +612,19 @@ Telos stays light by doing little at startup and by disabling what you do not us
 | Bounce physics | No bounce | 0 to 100 percent |
 | Search delay | Off (0 ms) | 0 to 500 ms |
 | Icon cache size | 200 | 50 to 500 |
+| **ART App Optimizer (Dex2Oat)** | Off | On or off (requires Shizuku or root) |
+| • Pre-compilation profiles | `speed-profile` | `speed-profile`, `speed`, `everything` |
+| • Startup Differential Audit | Live | Categorizes apps into Up-to-Date, Needs Optimization, and Degraded |
+| • Smart Optimization | Action | Only re-compiles degraded and unoptimized apps, saving time and NAND flash wear |
+| • Frozen Apps Synergy | Disabled (`false`) | Keeps frozen apps compiled for instant unfreeze-to-launch (optional Skip / Strip `--reset`) |
+| • Profile Diagnostic | Auto-fallback | Detects Baseline/Cloud profiles; auto-upgrades empty profiles to full `speed` |
+| • Cold-Start Benchmark | On demand | Measures real-world cold startup time (`am start -W`) before & after |
+| • SQLite Maintenance | Off (manual) | Executes `VACUUM; REINDEX;` to defragment and shrink app databases |
 
 <details>
 <summary><b>What costs something, how startup works, APK size choices, low-end checklist</b></summary>
 
-- **Settings that cost something:** video wallpaper (pause in Battery Saver and on overheating are on by default), blur wallpaper, the three overlay services, online results as default filter, many enabled search sources, notification badges.
+- **Settings that cost something:** video wallpaper (pause in Battery Saver and on overheating are on by default), blur wallpaper, the three overlay services, online results as default filter, many enabled search sources, notification badges, full AOT compilation with ART Optimizer (increases app storage footprint by 15–30 GB+ system-wide).
 - **Startup:** starts the dependency injection container with all feature modules, installs the crash guard, restarts overlays you switched on, schedules the Store update check as one unique periodic job, and runs the virtual app guard off the main thread. Decoders, the torrent engine and the SIP stack are created on first use.
 - **Search work:** app names are normalized once and cached, local file search stops after ten matches or 500 scanned rows, contact search at about fifteen, and slow sources are delayed so results arrive as they finish.
 - **APK size choices:** one release APK per CPU type (`telos-arm64-v8a.apk` and `telos-armeabi-v7a.apk`, each with only its own native libraries; local and debug builds have both), R8 minification and resource shrinking in release and nightly builds, `Log.v` and `Log.d` stripped in release, R8 obfuscation (class and member renaming) on, with the mapping file of every release and nightly build kept as a CI artifact to read crash stack traces, one APK with two flavors (`default` and `fdroid`), minimum Android 8.0 (API 26).

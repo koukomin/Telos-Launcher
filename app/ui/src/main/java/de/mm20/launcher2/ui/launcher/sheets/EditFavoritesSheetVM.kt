@@ -254,13 +254,13 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     }
 
     val enableFrequentlyUsed = favoritesSettings.frequentlyUsed
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setFrequentlyUsed(frequentlyUsed: Boolean) {
         favoritesSettings.setFrequentlyUsed(frequentlyUsed)
     }
 
     val frequentlyUsedRows = favoritesSettings.frequentlyUsedRows
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
     fun setFrequentlyUsedRows(frequentlyUsedRows: Int) {
         favoritesSettings.setFrequentlyUsedRows(frequentlyUsedRows)
     }

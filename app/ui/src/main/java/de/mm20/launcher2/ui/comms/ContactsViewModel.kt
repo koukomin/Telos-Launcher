@@ -38,10 +38,10 @@ class ContactsViewModel : ViewModel(), KoinComponent {
         else list.filter { !HiddenContacts.contactHidden(it, hidden) }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val clirPrefix = commsSettings.clirPrefix.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
-    val clirEnabled = commsSettings.clirEnabled.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
-    val tapToCall = commsSettings.tapToCall.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
-    val confirmBeforeCall = commsSettings.confirmBeforeCall.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val clirPrefix = commsSettings.clirPrefix.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
+    val clirEnabled = commsSettings.clirEnabled.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+    val tapToCall = commsSettings.tapToCall.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
+    val confirmBeforeCall = commsSettings.confirmBeforeCall.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun dial(context: Context, phoneNumber: String) {
         if (phoneNumber.isEmpty()) return

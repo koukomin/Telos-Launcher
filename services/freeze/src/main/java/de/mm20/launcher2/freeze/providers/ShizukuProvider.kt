@@ -142,12 +142,12 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
     override suspend fun setHidden(packageName: String, hidden: Boolean, userId: Int): Boolean =
         withContext(Dispatchers.IO) { runPackageCommand(if (hidden) "hide" else "unhide", packageName, userId) }
 
-    private fun runPackageCommand(action: String, packageName: String, userId: Int): Boolean = runCatching {
-
-        val process = de.mm20.launcher2.ktx.ShizukuProcesses.start(arrayOf("pm", action, "--user", userId.toString(), packageName))
-        try { process.waitFor(10, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0 }
-        finally { process.destroy() }
-    }.getOrDefault(false)
+    private suspend fun runPackageCommand(action: String, packageName: String, userId: Int): Boolean {
+        return de.mm20.launcher2.ktx.TelosShellEngine.execArgsResult(
+            args = arrayOf("pm", action, "--user", userId.toString(), packageName),
+            timeoutMs = 10_000L,
+        ).isSuccess
+    }
 
     // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 

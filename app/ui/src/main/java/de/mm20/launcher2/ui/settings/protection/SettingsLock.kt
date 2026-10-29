@@ -45,19 +45,19 @@ class SettingsLockVM : ViewModel(), KoinComponent {
     private val protectionSettings: ProtectionSettings by inject()
 
     val lockSensitiveSettings = protectionSettings.lockSensitiveSettings
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val lockMethod = protectionSettings.lockMethod
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val useCustomLock = protectionSettings.useCustomLock
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val customLockHashed = protectionSettings.customLockHashed
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val lockLauncher = protectionSettings.lockLauncher
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setLockLauncher(locked: Boolean) = protectionSettings.setLockLauncher(locked)
 

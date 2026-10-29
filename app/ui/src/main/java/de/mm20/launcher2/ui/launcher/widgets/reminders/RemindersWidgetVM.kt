@@ -28,7 +28,7 @@ class RemindersWidgetVM : ViewModel(), KoinComponent {
     private val widgetConfig = MutableStateFlow(RemindersWidgetConfig())
 
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Tasks)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val tasks = mutableStateOf<List<CalendarEvent>>(emptyList())
 

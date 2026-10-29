@@ -25,17 +25,17 @@ class WidgetsVM(
     private val uiSettings: UiSettings by inject()
 
     val editButton = uiSettings.widgetEditButton
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     // The "Favorites" widget duplicates the app grid/drawer's own Favorites section onto the
     // home screen, which favorites are meant to stay out of - filtered here (not deleted) so any
     // already-placed instance disappears without losing the underlying stored widget row.
     private val allWidgets = widgetRepository.get(parent = parentId)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val widgets = allWidgets
         .map { list -> list.filterNot { it is AppsWidget } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     /**
      * [WidgetRepository.set] replaces every widget of this parent, so the hidden Favorites widgets
@@ -54,7 +54,7 @@ class WidgetsVM(
      */
     val slots = widgets
         .map { list -> list.groupBy { it.stackId ?: it.id }.values.toList() }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun addWidget(widget: Widget, index: Int? = null) {
         val widgets = widgets.value.toMutableList()

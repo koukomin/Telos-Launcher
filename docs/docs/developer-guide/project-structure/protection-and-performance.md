@@ -74,6 +74,19 @@ decoder or of the torrent engine then ends that process, not the launcher.
 SIP and the photo editor still run in the launcher process. SIP would need a service with an
 interface between the processes.
 
+## ART App Optimizer and Dex2Oat Architecture
+
+The ART App Optimizer subsystem resides in `:services:app-management` (`de.mm20.launcher2.appmanagement.art`) with UI in `:app:ui`:
+
+- **StartupOptimizationAudit (`StartupOptimizationAudit.kt`):** A streaming parser for `dumpsys package dexopt` (with fallback to `dumpsys package`) and batched `stat -c '%Y|%n'` `.odex` modification checks. Categorizes packages into `UP_TO_DATE`, `NEEDS_OPTIMIZATION`, `DEGRADED` (e.g. newly updated or reset), and `FROZEN_SKIPPED`.
+- **TelosArtOptimizer (`TelosArtOptimizer.kt`):** Privileged execution coordinator supporting Shizuku (`ShizukuProcesses`) and root (`su`). Runs `cmd package compile -m <profile> -f <package>` with streaming pipes (180s bounded timeout) to prevent pipe blocking. Handles `optimizeSmartPackages`, `optimizeAllPackages`, and `stripFrozenPackages`.
+- **Frozen Apps Synergy:** By default, frozen and disabled apps are included in bulk optimization (`skipFrozenApps = false`) so launcher unfreeze-to-launch transitions are instant. If the user opts into `skipFrozenApps = true`, apps can either be skipped (`skip`) or stripped of `.odex` binaries (`strip_reset`).
+- **ProfileDiagnostic:** Inspects `assets/dexopt/baseline.prof` in the base APK, `.dm` Cloud Profile files, and `/data/misc/profiles/{ref,cur}/.../primary.prof`. If empty (header $\le 64$ bytes), it auto-upgrades `speed-profile` to full `speed` (`artFallbackEmptyProfileToSpeed = true`).
+- **AppLaunchBenchmark:** Cold-start benchmark executing `am force-stop` followed by `am start -W -n <component>`, parsing `TotalTime` and `WaitTime` to measure real-world performance gains.
+- **SqliteVacuumEngine (`SqliteVacuumEngine.kt`):** Executes SQLite `VACUUM; REINDEX;` on internal Telos Room databases and external app databases when privileged access is available.
+- **Background Worker (`ArtOptimizationWorker.kt`):** Periodic WorkManager job adhering to user constraints (charging, idle, battery $> 30\%$, power saver off).
+
+
 
 ## Wallpaper contrast
 

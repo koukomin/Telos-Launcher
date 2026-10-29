@@ -1172,6 +1172,8 @@ private fun AddAppDialog(viewModel: StoreViewModel, prefill: String, onDismiss: 
 @Composable
 private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit) {
     val context = LocalContext.current
+    val uiSettings: de.mm20.launcher2.preferences.ui.UiSettings = org.koin.compose.koinInject()
+    val artPostInstall by uiSettings.artOptimizationStorePostInstall.collectAsStateWithLifecycle(false)
     val g by viewModel.global.collectAsStateWithLifecycle()
     var token by remember { mutableStateOf(g.githubToken) }
     val neverLabel = stringResource(R.string.hf_store_never)
@@ -1226,6 +1228,15 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                 }
                 Text(
                     stringResource(R.string.store_parallel_updates_summary),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
+                )
+                ToggleRow(stringResource(R.string.art_optimizer_store_post_install), artPostInstall) { v ->
+                    uiSettings.setArtOptimizationStorePostInstall(v)
+                }
+                Text(
+                    stringResource(R.string.art_optimizer_store_post_install_summary),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),

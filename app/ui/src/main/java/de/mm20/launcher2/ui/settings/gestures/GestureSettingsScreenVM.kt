@@ -49,33 +49,33 @@ internal class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Accessibility)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val hasAttemptedPermissionRequest = permissionsManager.hasAttemptedRequest(PermissionGroup.Accessibility)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val swipeDown = gestureSettings.swipeDown
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val swipeLeft = gestureSettings.swipeLeft
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val swipeRight = gestureSettings.swipeRight
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val swipeUp = gestureSettings.swipeUp
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val doubleTap = gestureSettings.doubleTap
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val longPress = gestureSettings.longPress
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val homeButton = gestureSettings.homeButton
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val pinchIn = gestureSettings.pinchIn
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val pinchOut = gestureSettings.pinchOut
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val twoFingerSwipeUp = gestureSettings.twoFingerSwipeUp
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val twoFingerSwipeDown = gestureSettings.twoFingerSwipeDown
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setSwipeDown(action: GestureAction, searchable: SavableSearchable?) {
         saveShortcut(searchable)
@@ -133,11 +133,11 @@ internal class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val telosNavigation = gestureSettings.telosNavigation
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     fun setTelosNavigation(enabled: Boolean) = gestureSettings.setTelosNavigation(enabled)
 
     val telosRecents = gestureSettings.telosRecents
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     fun setTelosRecents(enabled: Boolean) = gestureSettings.setTelosRecents(enabled)
 
     private fun saveShortcut(searchable: SavableSearchable?) {

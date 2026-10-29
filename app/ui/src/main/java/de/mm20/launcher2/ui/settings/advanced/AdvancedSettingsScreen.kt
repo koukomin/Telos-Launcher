@@ -46,6 +46,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.settings.applock.AppLockSettingsRoute
+import de.mm20.launcher2.ui.settings.art.ArtOptimizerRoute
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsRoute
 import de.mm20.launcher2.ui.settings.contextprofiles.ContextProfilesSettingsRoute
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsRoute
@@ -145,6 +146,14 @@ fun AdvancedSettingsScreen() {
                     summary = stringResource(id = R.string.preference_screen_performance_summary),
                     onClick = {
                         backStack.add(PerformanceSettingsRoute)
+                    }
+                )
+                Preference(
+                    icon = R.drawable.bolt_24px,
+                    title = stringResource(id = R.string.art_optimizer_title),
+                    summary = stringResource(id = R.string.art_optimizer_summary),
+                    onClick = {
+                        backStack.add(ArtOptimizerRoute)
                     }
                 )
                 Preference(

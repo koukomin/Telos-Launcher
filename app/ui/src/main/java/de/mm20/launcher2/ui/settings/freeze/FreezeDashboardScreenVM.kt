@@ -67,7 +67,7 @@ class FreezeDashboardScreenVM : ViewModel(), KoinComponent {
     private val allApps = combine(
         appRepository.findMany(), iconlessApps,
     ) { apps, iconless -> (apps + iconless).distinctBy { it.key } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), persistentListOf())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), persistentListOf())
 
     // refreshTrigger: the live frozen state of the apps is not a flow, recompute it on refresh
     val rows = combine(freezeManager.stats, allApps, refreshTrigger) { stats, apps, _ ->
@@ -85,13 +85,13 @@ class FreezeDashboardScreenVM : ViewModel(), KoinComponent {
                 )
             }.sortedByDescending { maxOf(it.lastFrozenAt ?: 0L, it.lastUnfrozenAt ?: 0L) }
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val totalFreezes = rows.map { it.sumOf { row -> row.freezeCount } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     val totalUnfreezes = rows.map { it.sumOf { row -> row.unfreezeCount } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {
         return iconService.getIcon(searchable, size)
@@ -100,7 +100,7 @@ class FreezeDashboardScreenVM : ViewModel(), KoinComponent {
     // --- App status (normal/suspended/disabled, runtime, currently running) ---
 
     val hasUsageAccess = permissionsManager.hasPermission(PermissionGroup.UsageAccess)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun requestUsageAccess(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.UsageAccess)
@@ -137,5 +137,5 @@ class FreezeDashboardScreenVM : ViewModel(), KoinComponent {
                 }.sortedByDescending { it.totalTimeMs }
             }
         }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 }

@@ -20,7 +20,7 @@ class FreezeWidgetVM : ViewModel(), KoinComponent {
     private val freezeSettings: FreezeSettings by inject()
 
     val candidates = freezeSettings.candidates
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
 
     private val _frozenCount = MutableStateFlow(0)
     val frozenCount = _frozenCount.asStateFlow()

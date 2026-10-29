@@ -50,7 +50,7 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     private val _frozenInventory = MutableStateFlow<List<de.mm20.launcher2.freeze.FrozenAppInventory>>(emptyList())
     val frozenInventory = _frozenInventory.asStateFlow()
     val maintenanceEntries = freezeManager.maintenanceEntries
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
     fun refreshFrozenInventory() = maintenanceAction { 0 }
     fun unfreezeAll(groups: Set<de.mm20.launcher2.freeze.FrozenAppGroup>) =
@@ -80,7 +80,7 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val usageAccessGranted = permissionsManager.hasPermission(PermissionGroup.UsageAccess)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun requestUsageAccess(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.UsageAccess)
@@ -89,11 +89,11 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     val activeBackend: StateFlow<FreezeBackendType?> = freezeManager.activeBackend
 
     val backend = freezeSettings.backend
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), FreezeBackendPreference.Auto)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), FreezeBackendPreference.Auto)
 
     // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
     val frozenAppStyle = freezeSettings.frozenAppStyle
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setFrozenAppStyle(style: FrozenAppStyle) {
         freezeSettings.setFrozenAppStyle(style)
@@ -110,7 +110,7 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
 
     private val sortedApps = appRepository.findMany().map {
         withContext(Dispatchers.Default) { it.sorted() }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val _showSystemApps = MutableStateFlow(false)
     val showSystemApps = _showSystemApps.asStateFlow()
@@ -156,7 +156,7 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
                 filteredApps
             }
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     /** Live OS-level frozen state, regardless of source - reflects apps frozen by Icebox,
      * Island, adb, or anything else, not just this app's own auto-freeze candidates. */
@@ -172,58 +172,58 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val candidates = freezeSettings.candidates
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
 
     val neverFreezeApps = freezeSettings.neverFreezeApps
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
 
     val profile = freezeSettings.profile
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setProfile(profile: FreezeProfile) = freezeSettings.setProfile(profile)
 
     val exclusionStrictness = freezeSettings.exclusionStrictness
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setExclusionStrictness(strictness: FreezeExclusionStrictness) =
         freezeSettings.setExclusionStrictness(strictness)
 
     val autoFreezeEnabled = freezeSettings.autoFreezeEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val freezeOnScreenOff = freezeSettings.freezeOnScreenOff
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val freezeOnIdle = freezeSettings.freezeOnIdle
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val idleTimeoutMinutes = freezeSettings.idleTimeoutMinutes
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val freezeOnBatterySaver = freezeSettings.freezeOnBatterySaver
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val excludeForeground = freezeSettings.excludeForeground
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
     fun setExcludeForeground(value: Boolean) = freezeSettings.setExcludeForeground(value)
 
     val excludeMusic = freezeSettings.excludeMusic
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val excludeNetwork = freezeSettings.excludeNetwork
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val networkThresholdKb = freezeSettings.networkThresholdKb
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val freezeMethods = freezeSettings.freezeMethods
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
     val advancedFeaturesEnabled = freezeSettings.advancedFeaturesEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val hideFromLauncher = freezeSettings.hideFromLauncher
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val gameBoosterPackage = freezeSettings.gameBoosterPackage
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
     fun setGameBoosterPackage(value: String) = freezeSettings.setGameBoosterPackage(value)
     val gameBoosterApps = freezeSettings.gameBoosterApps
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
     fun setGameBoosterAppsCsv(csv: String) {
         freezeSettings.setGameBoosterApps(csv.split(',').map { it.trim() }.filter { it.isNotEmpty() }.toSet())
     }
@@ -280,18 +280,18 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
         })
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val freezeOnRecentsRemoval = freezeSettings.freezeOnRecentsRemoval
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     private val recentsMonitor: de.mm20.launcher2.freeze.RecentsFreezeMonitor by inject()
     val recentsConnected = recentsMonitor.connected
     fun setFreezeOnRecentsRemoval(value: Boolean) = freezeSettings.setFreezeOnRecentsRemoval(value)
-    val screenOffDelays = freezeSettings.screenOffDelays.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
-    val companionEnabled = freezeSettings.companionEnabled.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
-    val companionExtras = freezeSettings.companionExtras.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
-    val riskApproved = freezeSettings.systemRiskApproved.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+    val screenOffDelays = freezeSettings.screenOffDelays.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+    val companionEnabled = freezeSettings.companionEnabled.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+    val companionExtras = freezeSettings.companionExtras.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+    val riskApproved = freezeSettings.systemRiskApproved.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
     private val descriptions: de.mm20.launcher2.freeze.BloatDescriptions by inject()
     val bloatDescriptions = descriptions.data
     val bloatUpdateStatus = descriptions.status
-    val bloatAutoUpdate = freezeSettings.bloatAutoUpdate.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    val bloatAutoUpdate = freezeSettings.bloatAutoUpdate.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
     fun setBloatAutoUpdate(value: Boolean) = freezeSettings.setBloatAutoUpdate(value)
     fun enterFreezeManagement() {
         viewModelScope.launch {

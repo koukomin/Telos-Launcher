@@ -46,7 +46,7 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
         providers += BatteryPartProvider(parts.battery)
         if (parts.alarm) providers += AlarmPartProvider()
         providers
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun getActivePart(context: Context): Flow<PartProvider?> = channelFlow {
         partProviders.collectLatest { providers ->
@@ -69,19 +69,19 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
     // first composition, and the eventual real value could differ (wrong style/alignment) from
     // whatever null-driven branch briefly showed, reading as a startup glitch.
     val compactLayout = settings.compact
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     val clockStyle = settings.clockStyle
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ClockWidgetStyle.Digital1())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ClockWidgetStyle.Digital1())
 
     val color = settings.color
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ClockWidgetColors.Auto)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ClockWidgetColors.Auto)
 
     val alignment = settings.alignment
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ClockWidgetAlignment.Bottom)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ClockWidgetAlignment.Bottom)
 
     val dockProvider = settings.dock
         .map { if (it) FavoritesPartProvider() else null }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun updateTime(time: Long) {
         partProviders.value.forEach { it.setTime(time) }

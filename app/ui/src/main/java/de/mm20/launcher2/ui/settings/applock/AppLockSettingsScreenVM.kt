@@ -23,66 +23,66 @@ class AppLockSettingsScreenVM : ViewModel(), KoinComponent {
     private val intruderPhotoManager: IntruderPhotoManager by inject()
 
     val enabled = appLockSettings.enabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setEnabled(enabled: Boolean) = appLockSettings.setEnabled(enabled)
 
     val lockMethod = appLockSettings.lockMethod
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setLockMethod(method: SettingsLockMethod) = appLockSettings.setLockMethod(method)
 
     val detectionMode = appLockSettings.detectionMode
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setDetectionMode(mode: AppLockDetectionMode) = appLockSettings.setDetectionMode(mode)
 
     val lockedPackages = appLockSettings.lockedPackages
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
 
     val lockedWebAppShortcuts = appLockSettings.lockedWebAppShortcuts
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
 
     val defaultGracePeriodMs = appLockSettings.defaultGracePeriodMs
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setDefaultGracePeriodMs(ms: Long) = appLockSettings.setDefaultGracePeriodMs(ms)
 
     val usageAccessGranted = permissionsManager.hasPermission(PermissionGroup.UsageAccess)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun requestUsageAccess(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.UsageAccess)
     }
 
     val accessibilityGranted = permissionsManager.hasPermission(PermissionGroup.Accessibility)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun requestAccessibility(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Accessibility)
     }
 
     val hasOverlayPermission = permissionsManager.hasPermission(PermissionGroup.OverlayWindow)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun requestOverlayPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.OverlayWindow)
     }
 
     val intruderPhotoEnabled = appLockSettings.intruderPhotoEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setIntruderPhotoEnabled(enabled: Boolean) =
         appLockSettings.setIntruderPhotoEnabled(enabled)
 
     val intruderPhotoRetentionDays = appLockSettings.intruderPhotoRetentionDays
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setIntruderPhotoRetentionDays(days: Int) =
         appLockSettings.setIntruderPhotoRetentionDays(days)
 
     val cameraPermissionGranted = permissionsManager.hasPermission(PermissionGroup.Camera)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun requestCameraPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Camera)
@@ -91,13 +91,13 @@ class AppLockSettingsScreenVM : ViewModel(), KoinComponent {
     val intruderPhotoCount = MutableStateFlow(0)
 
     val intruderPhotoVisibleInGallery = appLockSettings.intruderPhotoVisibleInGallery
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     /** Whether a custom storage folder is set - the gallery-visibility toggle only makes sense
      * once one is, since app-private internal storage (the default) is never gallery-visible
      * regardless of that setting. */
     val hasCustomStorageFolder = appLockSettings.intruderPhotoStorageUri
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val intruderPhotoStoragePath = MutableStateFlow("")
 
@@ -135,13 +135,13 @@ class AppLockSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val intruderPhotoNotificationEnabled = appLockSettings.intruderPhotoNotificationEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setIntruderPhotoNotificationEnabled(enabled: Boolean) =
         appLockSettings.setIntruderPhotoNotificationEnabled(enabled)
 
     val relockOnlyOnScreenOff = appLockSettings.relockOnlyOnScreenOff
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setRelockOnlyOnScreenOff(enabled: Boolean) =
         appLockSettings.setRelockOnlyOnScreenOff(enabled)

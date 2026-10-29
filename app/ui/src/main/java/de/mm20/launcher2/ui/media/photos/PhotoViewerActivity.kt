@@ -515,11 +515,12 @@ private fun OcrSheet(uri: Uri, onDismiss: () -> Unit) {
                 androidx.compose.foundation.text.selection.SelectionContainer {
                     Text(extractedText!!, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.fillMaxWidth().heightIn(max = 300.dp).verticalScroll(rememberScrollState()))
                 }
+                val copiedMessage = stringResource(R.string.ocr_copied)
                 Button(
                     onClick = {
                         @Suppress("DEPRECATION")
                         clipboard.setText(androidx.compose.ui.text.AnnotatedString(extractedText!!))
-                        Toast.makeText(context, stringResource(R.string.ocr_copied), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, copiedMessage, Toast.LENGTH_SHORT).show()
                         onDismiss()
                     },
                     modifier = Modifier.fillMaxWidth()

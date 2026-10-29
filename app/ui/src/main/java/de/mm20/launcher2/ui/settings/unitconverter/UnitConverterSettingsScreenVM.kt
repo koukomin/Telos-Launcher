@@ -17,13 +17,13 @@ class UnitConverterSettingsScreenVM: ViewModel(), KoinComponent {
     private val repository: UnitConverterRepository by inject()
 
     val unitConverter = settings.enabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setUnitConverter(unitConverter: Boolean) {
         settings.setEnabled(unitConverter)
     }
 
     val currencyConverter = settings.currenciesEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setCurrencyConverter(currencyConverter: Boolean) {
         settings.setCurrenciesEnabled(currencyConverter)
     }

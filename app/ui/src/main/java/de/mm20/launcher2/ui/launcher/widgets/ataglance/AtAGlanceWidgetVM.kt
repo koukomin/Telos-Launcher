@@ -116,7 +116,7 @@ class AtAGlanceWidgetVM : ViewModel(), KoinComponent {
             calendar?.let { c -> calendarScore(c)?.let { c to it } },
         )
         candidates.maxByOrNull { it.second }?.first
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     private fun batteryScore(battery: GlanceContent.Battery): Int? {
         return when {

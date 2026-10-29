@@ -18,17 +18,17 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
     private val themeRepository: ThemeRepository by inject()
 
     val colorScheme = uiSettings.colorScheme
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setColorScheme(colorScheme: ColorScheme) {
         uiSettings.setColorScheme(colorScheme)
     }
 
     val colorSchemeNightStart = uiSettings.colorSchemeNightStart
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val colorSchemeDayStart = uiSettings.colorSchemeDayStart
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setColorSchemeNightStart(hour: Int) {
         uiSettings.setColorSchemeNightStart(hour)
@@ -43,38 +43,38 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
     }.map {
         it.name
     }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val shapeThemeName = uiSettings.shapesId.flatMapLatest {
         themeRepository.shapes.getOrDefault(it)
     }.map {
         it.name
     }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val typographyThemeName = uiSettings.typographyId.flatMapLatest {
         themeRepository.typographies.getOrDefault(it)
     }.map {
         it.name
     }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val transparencyThemeName = uiSettings.transparenciesId.flatMapLatest {
         themeRepository.transparencies.getOrDefault(it)
     }.map {
         it.name
     }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val compatModeColors = uiSettings.compatModeColors
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setCompatModeColors(enabled: Boolean) {
         uiSettings.setCompatModeColors(enabled)
     }
 
     val fontScale = uiSettings.fontScale
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1f)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1f)
 
     fun setFontScale(fontScale: Float) {
         uiSettings.setFontScale(fontScale)

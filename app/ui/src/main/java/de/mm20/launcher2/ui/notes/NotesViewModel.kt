@@ -31,7 +31,7 @@ class NotesViewModel(app: Application) : AndroidViewModel(app), KoinComponent {
     init { viewModelScope.launch(Dispatchers.IO) { store.load() } }
 
     val labels: StateFlow<List<String>> = store.notes.combine(filter) { n, _ -> n.flatMap { it.labels }.distinct().sorted() }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val visible: StateFlow<List<Note>> = combine(store.notes, query, filter, label) { all, q, f, l ->
         all.filter {
@@ -43,7 +43,7 @@ class NotesViewModel(app: Application) : AndroidViewModel(app), KoinComponent {
         }.filter { l == null || l in it.labels }
             .filter { q.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(q, it.title, it.body, *it.labels.toTypedArray()) }
             .sortedWith(compareByDescending<Note> { it.pinned }.thenByDescending { it.modifiedAt })
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun save(n: Note) = viewModelScope.launch(Dispatchers.IO) { if (n.isEmpty) store.deleteForever(n.id) else store.saveEdited(n) }
     fun trash(n: Note) = viewModelScope.launch(Dispatchers.IO) { store.saveEdited(n.copy(trashed = true, pinned = false)) }

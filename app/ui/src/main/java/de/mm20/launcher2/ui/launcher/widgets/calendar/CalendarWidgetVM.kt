@@ -45,13 +45,13 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
         favoritesService.getFavorites(
             includeTypes = listOf("calendar", "tasks.org", "plugin.calendar"),
             minPinnedLevel = PinnedLevel.AutomaticallySorted,
-        ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val nextEvents = mutableStateOf<List<CalendarEvent>>(emptyList())
     var availableDates = listOf(LocalDate.now())
 
     private val permissionsManager: PermissionsManager by inject()
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     private var showRunningPastDayEvents = false
     private var showRunningTasks = false

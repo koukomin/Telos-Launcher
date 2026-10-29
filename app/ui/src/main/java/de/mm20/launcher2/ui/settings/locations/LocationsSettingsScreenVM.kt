@@ -26,7 +26,7 @@ class LocationsSettingsScreenVM : ViewModel(), KoinComponent {
     val enabledPlugins = settings.enabledPlugins
 
     val osmLocations = settings.osmLocations
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setOsmLocations(osmLocations: Boolean) {
         settings.setOsmLocations(osmLocations)
@@ -48,31 +48,31 @@ class LocationsSettingsScreenVM : ViewModel(), KoinComponent {
             }
             return@map ms
         }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), MeasurementSystem.Metric)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MeasurementSystem.Metric)
 
     val radius = settings.searchRadius
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1500)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1500)
 
     fun setRadius(radius: Int) {
         settings.setSearchRadius(radius)
     }
 
     val showMap = settings.showMap
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setShowMap(showMap: Boolean) {
         settings.setShowMap(showMap)
     }
 
     val customTileServerUrl = settings.tileServer
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setCustomTileServerUrl(customTileServerUrl: String) {
         settings.setTileServer(customTileServerUrl.takeIf { it.isNotBlank() })
     }
 
     val themeMap = settings.themeMap
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setThemeMap(themeMap: Boolean) {
         settings.setThemeMap(themeMap)

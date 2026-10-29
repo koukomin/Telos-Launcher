@@ -63,21 +63,11 @@ internal class RootProvider : PrivilegedAccessProvider {
     }
     // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
-    private suspend fun runAsRoot(command: String, timeoutSeconds: Long? = null): Boolean = withContext(Dispatchers.IO) {
-        var process: Process? = null
-        try {
-            process = Runtime.getRuntime().exec("su")
-            DataOutputStream(process.outputStream).use { stdin ->
-                stdin.writeBytes("$command\n")
-                stdin.writeBytes("exit\n")
-                stdin.flush()
-            }
-            if (timeoutSeconds == null) process.waitFor() == 0
-            else process.waitFor(timeoutSeconds, java.util.concurrent.TimeUnit.SECONDS) && process.exitValue() == 0
-        } catch (e: Exception) {
-            false
-        } finally {
-            process?.destroy()
-        }
+    private suspend fun runAsRoot(command: String, timeoutSeconds: Long? = null): Boolean {
+        val timeoutMs = (timeoutSeconds ?: 30L) * 1_000L
+        return de.mm20.launcher2.ktx.TelosShellEngine.execResult(
+            command = command,
+            timeoutMs = timeoutMs,
+        ).isSuccess
     }
 }

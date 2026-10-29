@@ -22,11 +22,11 @@ class SmartspacerSettingsScreenVM: ViewModel(), KoinComponent {
     private val clockWidgetSettings: ClockWidgetSettings by inject()
 
     val smartspacerApp = appRepository.findOne("com.kieronquinn.app.smartspacer", Process.myUserHandle())
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     val isSmartspacerAppInstalled = smartspacerApp
         .map { it != null }
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     fun downloadSmartspacerApp(activity: AppCompatActivity) {
         activity.startActivity(
@@ -43,7 +43,7 @@ class SmartspacerSettingsScreenVM: ViewModel(), KoinComponent {
     }
 
     val isSmartspacerEnabled = clockWidgetSettings.useSmartspacer
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     fun setSmartspacerEnabled(enabled: Boolean) {
         clockWidgetSettings.setUseSmartspacer(enabled)

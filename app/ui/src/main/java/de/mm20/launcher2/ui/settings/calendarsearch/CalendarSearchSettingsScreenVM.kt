@@ -32,7 +32,7 @@ class CalendarSearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     val isTasksAppInstalled = appRepository.findOne("org.tasks", Process.myUserHandle())
         .map { it != null }
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     val availablePlugins = pluginService.getPluginsWithState(
         type = PluginType.Calendar,

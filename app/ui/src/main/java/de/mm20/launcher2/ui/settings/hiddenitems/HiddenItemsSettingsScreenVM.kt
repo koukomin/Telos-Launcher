@@ -33,14 +33,14 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
 
     val allApps = appRepository.findMany().map {
         withContext(Dispatchers.Default) { it.sorted() }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val hiddenItems: StateFlow<List<SavableSearchable>> = flow {
         val hidden =
             searchableRepository.get(
                 maxVisibility = VisibilityLevel.SearchOnly,
             ).first().filter { it !is Application }.sorted()
         emit(hidden)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun getVisibility(searchable: SavableSearchable): Flow<VisibilityLevel> {
         return searchableRepository.getVisibility(searchable)
@@ -67,7 +67,7 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val hiddenItemsButton = searchUiSettings.hiddenItemsButton
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setHiddenItemsButton(hidden: Boolean) {
         searchUiSettings.setHiddenItemsButton(hidden)

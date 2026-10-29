@@ -30,7 +30,7 @@ class HiddenItemBadgeProvider(
         maxVisibility = VisibilityLevel.Hidden,
         limit = 9999,
     ).map { it.toHashSet() } // O(1) lookup, every visible item checks against this set
-        .shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
     override fun getBadge(searchable: Searchable): Flow<Badge?> {
         if (searchable !is SavableSearchable) return flowOf(null)

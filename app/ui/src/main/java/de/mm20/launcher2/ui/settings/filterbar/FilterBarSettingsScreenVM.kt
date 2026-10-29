@@ -14,7 +14,7 @@ class FilterBarSettingsScreenVM(
     private val searchFilterSettings: SearchFilterSettings by inject()
 
     val filterBarItems = searchFilterSettings.filterBarItems
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun moveItem(item: KeyboardFilterBarItem, toItem: KeyboardFilterBarItem) {
         val items = filterBarItems.value?.toMutableList() ?: return

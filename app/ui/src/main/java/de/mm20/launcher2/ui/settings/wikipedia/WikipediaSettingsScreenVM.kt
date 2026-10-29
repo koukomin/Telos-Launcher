@@ -14,13 +14,13 @@ class WikipediaSettingsScreenVM: ViewModel(), KoinComponent {
     private val wikipediaSearchSettings: WikipediaSearchSettings by inject()
 
     val wikipedia = wikipediaSearchSettings.enabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setWikipedia(wikipedia: Boolean) {
         wikipediaSearchSettings.setEnabled(wikipedia)
     }
 
     val customUrl = wikipediaSearchSettings.customUrl
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
     fun setCustomUrl(customUrl: String) {
         wikipediaSearchSettings.setCustomUrl(customUrl)
     }

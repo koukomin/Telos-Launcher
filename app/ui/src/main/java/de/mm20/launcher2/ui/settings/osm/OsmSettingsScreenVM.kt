@@ -14,21 +14,21 @@ class OsmSettingsScreenVM: ViewModel(), KoinComponent {
     private val pluginService: PluginService by inject()
 
     val osmLocations = settings.osmLocations
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setOsmLocations(osmLocations: Boolean) {
         settings.setOsmLocations(osmLocations)
     }
 
     val hideUncategorized = settings.hideUncategorized
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setHideUncategorized(hideUncategorized: Boolean) {
         settings.setHideUncategorized(hideUncategorized)
     }
 
     val customOverpassUrl = settings.overpassUrl
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
 
     fun setCustomOverpassUrl(customUrl: String) {
         settings.setOverpassUrl(customUrl)

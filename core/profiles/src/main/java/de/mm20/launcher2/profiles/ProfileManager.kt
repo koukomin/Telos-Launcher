@@ -57,11 +57,11 @@ class ProfileManager(
      */
     val activeProfiles: Flow<List<Profile>> = profileStates.map { rows ->
         rows.mapNotNull { if (it.state.locked) null else it.profile }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), replay = 1)
 
     val profiles: Flow<List<Profile>> = profileStates.map { rows ->
         rows.map { it.profile }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), replay = 1)
 
     init {
         val receiver = object : BroadcastReceiver() {

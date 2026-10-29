@@ -36,7 +36,7 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
     val selectedTag = MutableStateFlow<String?>(null)
 
     val showEditButton =
-        settings.showEditButton.stateIn(viewModelScope, SharingStarted.Lazily, false)
+        settings.showEditButton.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     abstract val tagsExpanded: Flow<Boolean>
     abstract val compactTags: Flow<Boolean>
 
@@ -45,7 +45,7 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
         minPinnedLevel = PinnedLevel.AutomaticallySorted,
     ).map {
         it.filterIsInstance<Tag>()
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     open val favorites: Flow<List<SavableSearchable>> = selectedTag.flatMapLatest { tag ->
         if (tag == null) {
@@ -100,7 +100,7 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
                 .withCustomLabels(customAttributesRepository)
                 .map { it.sortedBy { it } }
         }
-    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
+    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), replay = 1)
 
 
     fun selectTag(tag: String?) {

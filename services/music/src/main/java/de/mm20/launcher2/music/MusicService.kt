@@ -131,7 +131,7 @@ internal class MusicServiceImpl(
                     }
                 }
             }
-            .shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+            .shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
     private val currentMetadata: SharedFlow<MediaMetadata?> = channelFlow {
         currentMediaController.collectLatest { controller ->
@@ -153,7 +153,7 @@ internal class MusicServiceImpl(
                 controller.unregisterCallback(callback)
             }
         }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
     private val currentState: SharedFlow<android.media.session.PlaybackState?> = channelFlow {
         currentMediaController.collectLatest { controller ->
@@ -175,7 +175,7 @@ internal class MusicServiceImpl(
                 controller.unregisterCallback(callback)
             }
         }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
     override val playbackState: SharedFlow<PlaybackState> = channelFlow {
         currentState.collectLatest { state ->
@@ -190,7 +190,7 @@ internal class MusicServiceImpl(
                 else -> send(PlaybackState.Stopped)
             }
         }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
     private var lastPosition: Long? = null
         get() {
@@ -225,7 +225,7 @@ internal class MusicServiceImpl(
                 delay(1000)
             }
         }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
 
     private var lastTitle: String? = null
@@ -262,7 +262,7 @@ internal class MusicServiceImpl(
             lastTitle = title
             send(title)
         }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
     private var lastArtist: String? = null
         get() {
@@ -293,7 +293,7 @@ internal class MusicServiceImpl(
             lastArtist = artist
             send(artist)
         }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
     private var lastAlbum: String? = null
         get() {
@@ -320,7 +320,7 @@ internal class MusicServiceImpl(
             lastAlbum = album
             send(album)
         }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
 
     override val albumArt: Flow<Bitmap?> = channelFlow {
@@ -370,7 +370,7 @@ internal class MusicServiceImpl(
             send(bitmap)
             lastBitmap = bitmap
         }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
     private var lastDuration: Long? = null
         get() {
@@ -396,7 +396,7 @@ internal class MusicServiceImpl(
             lastDuration = duration
             send(duration)
         }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
     override val supportedActions: Flow<SupportedActions> = channelFlow {
         currentState.collectLatest { state ->
@@ -406,7 +406,7 @@ internal class MusicServiceImpl(
             }
             send(SupportedActions(lastPlayerPackage, state.actions, state.customActions))
         }
-    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+    }.shareIn(scope, SharingStarted.WhileSubscribed(5000), 1)
 
     private suspend fun loadBitmapFromUri(uri: Uri, size: Int): Bitmap? {
         var bitmap: Bitmap? = null

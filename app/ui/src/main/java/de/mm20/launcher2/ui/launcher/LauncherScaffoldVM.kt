@@ -83,56 +83,56 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         }
         dim && isDark
     }
-    val dimBackground = dimBackgroundState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val dimBackground = dimBackgroundState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val statusBarColor = uiSettings.statusBarColor
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val navBarColor = uiSettings.navigationBarColor
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val chargingAnimation = uiSettings.chargingAnimation
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val hideNavBar = uiSettings.hideNavigationBar
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     val hideStatusBar = uiSettings.hideStatusBar
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val activeContextProfile = contextProfileManager.activeProfile
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setSystemInDarkMode(darkMode: Boolean) {
         isSystemInDarkMode.value = darkMode
     }
 
     val bottomSearchBar = uiSettings.bottomSearchBar
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     val reverseSearchResults = uiSettings.reverseSearchResults
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     val fixedSearchBar = uiSettings.fixedSearchBar
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     val screenOrientation = uiSettings.orientation
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ScreenOrientation.Auto)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ScreenOrientation.Auto)
 
     val widgetsOnHomeScreen = uiSettings.homeScreenWidgets
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val autoFocusSearch = uiSettings.openKeyboardOnSearch
 
     val wallpaperBlur = wallpaperSettings.blurWallpaper
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
     val wallpaperBlurRadius = wallpaperSettings.wallpaperBlurRadius
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 32)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 32)
 
 
     val fillClockHeight = uiSettings.clockFillScreen
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
     val searchBarColor = uiSettings.searchBarColor
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SearchBarColors.Auto)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), SearchBarColors.Auto)
     val searchBarColorDrawer = uiSettings.searchBarColorDrawer
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val searchBarStyle = uiSettings.searchBarStyle
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SearchBarStyle.Transparent)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), SearchBarStyle.Transparent)
 
     val gestureState: StateFlow<GestureState?> = combine(
         gestureSettings,
@@ -200,7 +200,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 twoFingerSwipeUpApp = apps.find { it.key == twoFingerSwipeUpAppKey },
                 twoFingerSwipeDownApp = apps.find { it.key == twoFingerSwipeDownAppKey },
             )
-        }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 }
 
 data class GestureState(

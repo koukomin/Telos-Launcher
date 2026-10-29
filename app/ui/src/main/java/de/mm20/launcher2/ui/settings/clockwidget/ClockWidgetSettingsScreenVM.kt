@@ -24,7 +24,7 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
 
     val compact = settings.compact
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setCompact(compact: Boolean) {
         settings.setCompact(compact)
     }
@@ -40,54 +40,54 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
             custom,
             ClockWidgetStyle.Empty,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val clockStyle = settings.clockStyle
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setClockStyle(clockStyle: ClockWidgetStyle) {
         settings.setClockStyle(clockStyle)
     }
 
     val color = settings.color
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setColor(color: ClockWidgetColors) {
         settings.setColor(color)
     }
 
     val showSeconds = settings.showSeconds
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setShowSeconds(showSeconds: Boolean) {
         settings.setShowSeconds(showSeconds)
     }
 
     val monospaced = settings.monospaced
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setMonospaced(monospaced: Boolean) {
         settings.setMonospaced(monospaced)
     }
 
     val useThemeColor = settings.useThemeColor
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setUseThemeColor(boolean: Boolean) {
         settings.setUseThemeColor(boolean)
     }
 
     val widgetsOnHome = uiSettings.homeScreenWidgets
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val fillHeight = settings.fillHeight
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setFillHeight(fillHeight: Boolean) {
         settings.setFillHeight(fillHeight)
     }
 
     val parts = settings.parts
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setDatePart(datePart: Boolean) {
         settings.setDatePart(datePart)
@@ -116,14 +116,14 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val alignment = settings.alignment
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setAlignment(alignment: ClockWidgetAlignment) {
         settings.setAlignment(alignment)
     }
 
     val useSmartspacer = settings.useSmartspacer
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun disableSmartspacer() {
         settings.setUseSmartspacer(false)

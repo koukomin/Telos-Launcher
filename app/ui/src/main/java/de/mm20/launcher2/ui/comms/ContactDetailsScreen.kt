@@ -99,8 +99,8 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
     private val spam: SpamRepository by inject()
     private val commsSettings: CommsSettings by inject()
 
-    val sim1Color = commsSettings.sim1Color.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "green")
-    val sim2Color = commsSettings.sim2Color.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "blue")
+    val sim1Color = commsSettings.sim1Color.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "green")
+    val sim2Color = commsSettings.sim2Color.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "blue")
 
     fun setSpeedDial(digit: Int, number: String) {
         commsSettings.setSpeedDial(digit, number)
@@ -108,34 +108,34 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
 
     val clirPrefix = commsSettings.clirPrefix.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(),
+        SharingStarted.WhileSubscribed(5000),
         "",
     )
     val clirEnabled = commsSettings.clirEnabled.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(),
+        SharingStarted.WhileSubscribed(5000),
         false,
     )
     val callerNotes = commsSettings.callerNotes.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(),
+        SharingStarted.WhileSubscribed(5000),
         emptyMap(),
     )
     val numberDefaultSim = commsSettings.numberDefaultSim.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(),
+        SharingStarted.WhileSubscribed(5000),
         emptyMap(),
     )
     val contactDefaultNumbers = commsSettings.contactDefaultNumbers.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(),
+        SharingStarted.WhileSubscribed(5000),
         emptyMap(),
     )
     val contactDefaultCallApp = commsSettings.contactDefaultCallApp.stateIn(
-        viewModelScope, SharingStarted.WhileSubscribed(), emptyMap(),
+        viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap(),
     )
     val contactDefaultMessageApp = commsSettings.contactDefaultMessageApp.stateIn(
-        viewModelScope, SharingStarted.WhileSubscribed(), emptyMap(),
+        viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap(),
     )
 
     fun setDefaultCallApp(number: String, appId: String?) {
@@ -147,12 +147,12 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
     }
     val hiddenNumbers = commsSettings.hiddenNumbers.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(),
+        SharingStarted.WhileSubscribed(5000),
         emptyMap(),
     )
     val protectedCallNumbers = commsSettings.protectedCallNumbers.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(),
+        SharingStarted.WhileSubscribed(5000),
         emptyMap(),
     )
 

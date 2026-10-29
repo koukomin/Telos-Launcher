@@ -353,12 +353,41 @@ data class IconsGroup(
 )
 
 @Serializable
+data class ArtBenchmarkRecord(
+    val beforeMs: Long? = null,
+    val afterMs: Long? = null,
+    val waitBeforeMs: Long? = null,
+    val waitAfterMs: Long? = null,
+    val profileAfter: String? = null,
+    val updatedAt: Long = 0L,
+)
+
+@Serializable
 data class MiscGroup(
     val easterEgg: Boolean = false,
     /** Local crash reporter switch. Mirrored into SharedPreferences for the crash handler. */
     val crashReporterEnabled: Boolean = true,
     /** Automatically configure Wireless Debugging and wake Shizuku on boot. */
     val shizukuAutoStart: Boolean = false,
+    val artOptimizerMasterEnabled: Boolean = false,
+    val artOptimizationProfile: String = "speed-profile",
+    val artOptimizationScheduled: Boolean = false,
+    val artOptimizationFrequencyDays: Long = 1,
+    val artOptimizationRequireCharging: Boolean = true,
+    val artOptimizationRequireIdle: Boolean = true,
+    val artOptimizationRequireBatteryNotLow: Boolean = true,
+    val artOptimizationSkipPowerSave: Boolean = true,
+    val artOptimizationStorePostInstall: Boolean = false,
+    /** Default false: frozen apps are optimized too so launcher unfreeze-to-launch stays instant. */
+    val artSkipFrozenApps: Boolean = false,
+    /** Sub-mode when [artSkipFrozenApps] is true: "skip" or "strip_reset". */
+    val artFrozenAppsMode: String = "skip",
+    /** Optional SQLite VACUUM & REINDEX pass. Default false. */
+    val artSqliteOptimizeEnabled: Boolean = false,
+    /** Automatically upgrade speed-profile -> speed when primary.prof/baseline profile is empty. */
+    val artFallbackEmptyProfileToSpeed: Boolean = true,
+    /** Saved cold-start benchmark records keyed by package name. */
+    val artBenchmarkRecords: Map<String, ArtBenchmarkRecord> = emptyMap(),
 )
 
 @Serializable

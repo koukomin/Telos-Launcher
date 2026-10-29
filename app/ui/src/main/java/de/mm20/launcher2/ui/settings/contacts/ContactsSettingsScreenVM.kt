@@ -20,19 +20,19 @@ class ContactsSettingsScreenVM : ViewModel(), KoinComponent {
     private val pluginService: PluginService by inject()
 
     val hasCallPermission = permissionsManager.hasPermission(PermissionGroup.Call)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun requestCallPermission(activity: AppCompatActivity) =
         permissionsManager.requestPermission(activity, PermissionGroup.Call)
 
     val callOnTap = settings.callOnTap
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setCallOnTap(callOnTap: Boolean) =
         settings.setCallOnTap(callOnTap)
 
     val hasContactsPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun requestContactsPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Contacts)
     }

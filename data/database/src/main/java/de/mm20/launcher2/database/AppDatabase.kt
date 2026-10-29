@@ -8,6 +8,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.asExecutor
 import de.mm20.launcher2.database.daos.PluginDao
 import de.mm20.launcher2.database.daos.StoreItemDao
 import de.mm20.launcher2.database.daos.ThemeDao
@@ -101,6 +102,8 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             val instance = _instance
                 ?: Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "room")
+                    // Unify Thread Pool: Use the same Dispatchers.IO executor to reduce context switches
+                    .setQueryExecutor(kotlinx.coroutines.Dispatchers.IO.asExecutor())
                     //.fallbackToDestructiveMigration()
                     .addCallback(object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {

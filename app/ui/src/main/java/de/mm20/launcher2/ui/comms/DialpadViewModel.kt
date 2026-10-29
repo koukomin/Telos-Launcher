@@ -39,19 +39,19 @@ class DialpadViewModel : ViewModel(), KoinComponent {
     private val authManager = AuthManager()
 
     val speedDials = commsSettings.speedDials
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
     val t9Alphabet = commsSettings.t9Alphabet
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "latin")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "latin")
     val dialpadSounds = commsSettings.dialpadSounds
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
     val dialpadVibration = commsSettings.dialpadVibration
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
     val hideDialpadLetters = commsSettings.hideDialpadLetters
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     val clirEnabled = commsSettings.clirEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
     val clirPrefix = commsSettings.clirPrefix
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
     val recents: StateFlow<List<CallLogEntry>> = combine(
         callLogRepository.observeRecents(),
         commsSettings.hiddenNumbers,

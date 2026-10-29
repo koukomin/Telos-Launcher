@@ -1,20 +1,19 @@
 -keepattributes SourceFile,LineNumberTable
-# === TELOS_PENDING_REVIEW_START: perf_optimizations ===
-# Telos note: Optimizations were disabled here (-dontoptimize). Removing the flag allows R8 to execute inlining, dead code removal, and constant propagation.
-# -dontoptimize
+-repackageclasses ''
+-allowaccessmodification
 
-# Preserve Shizuku internal methods accessed via reflection by SmartFreezeService
+# Preserve Shizuku internal methods accessed via reflection by SmartFreezeService and TelosShellEngine
 -keep class rikka.shizuku.** { *; }
-# === TELOS_PENDING_REVIEW_END: perf_optimizations ===
+
 -keep public class de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM {
     public <init>();
 }
 
-
-# Debug and verbose log calls do nothing useful in a release build and cost time and size
+# Debug, verbose, and informational log calls stripped completely from release builds
 -assumenosideeffects class android.util.Log {
     public static int v(...);
     public static int d(...);
+    public static int i(...);
 }
 
 # Telos Files: SSH, SMB and FTP clients use reflection and optional libraries that Android does not have

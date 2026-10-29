@@ -35,24 +35,24 @@ android {
 
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
-        // Picnic (legacy post-quantum signatures) lookup tables: nothing in Telos uses Picnic
-        resources.excludes.add("org/bouncycastle/pqc/legacy/picnic/**")
+        resources.excludes.add("META-INF/DEPENDENCIES.txt")
         resources.excludes.add("META-INF/INDEX.LIST")
         resources.excludes.add("META-INF/LICENSE")
         resources.excludes.add("META-INF/LICENSE.txt")
         resources.excludes.add("META-INF/license.txt")
+        resources.excludes.add("META-INF/LICENSE.md")
         resources.excludes.add("META-INF/NOTICE")
         resources.excludes.add("META-INF/NOTICE.txt")
         resources.excludes.add("META-INF/notice.txt")
-        resources.excludes.add("META-INF/ASL2.0")
-        resources.excludes.add("META-INF/LICENSE.md")
         resources.excludes.add("META-INF/NOTICE.md")
+        resources.excludes.add("META-INF/ASL2.0")
         resources.excludes.add("META-INF/versions/**")
+        resources.excludes.add("META-INF/*.kotlin_module")
+        resources.excludes.add("META-INF/*.version")
+        // Picnic (legacy post-quantum signatures) lookup tables: nothing in Telos uses Picnic
+        resources.excludes.add("org/bouncycastle/pqc/legacy/picnic/**")
         // youtubedl-android runs Python and FFmpeg from the extracted native library folder
         if (mediaRuntime) jniLibs.useLegacyPackaging = true
-        resources.excludes.add("META-INF/INDEX.LIST")
-        resources.excludes.add("META-INF/DEPENDENCIES.txt")
-        resources.excludes.add("META-INF/LICENSE.txt")
     }
 
     compileSdk {
@@ -158,9 +158,10 @@ android {
 dependencies {
     implementation(libs.bundles.kotlin)
 
-    //Android Jetpack
+    // Android Jetpack & Optimization
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core)
+    implementation(libs.androidx.profileinstaller)
 
     implementation(libs.coil.core)
     implementation(libs.coil.svg)

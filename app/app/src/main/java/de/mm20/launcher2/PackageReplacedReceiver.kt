@@ -28,6 +28,12 @@ class PackageReplacedReceiver : BroadcastReceiver() {
                 }
                 context.startActivity(launchIntent)
             }
+
+            // Trigger background self-optimization (ART speed compile) if Shizuku/root is available
+            de.mm20.launcher2.art.TelosSelfOptimizer.checkAndSelfCompileAsync(
+                context = context,
+                scope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO + kotlinx.coroutines.SupervisorJob()),
+            )
         } catch (e: Exception) {
             Log.e("PackageReplacedReceiver", "Failed to relaunch Telos Launcher post-update", e)
         }

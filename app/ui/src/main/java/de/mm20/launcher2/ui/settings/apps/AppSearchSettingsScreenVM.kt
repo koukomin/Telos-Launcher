@@ -15,10 +15,10 @@ class AppSearchSettingsScreenVM: ViewModel(), KoinComponent {
     private val uiSettings: UiSettings by inject()
 
     val allApps = searchUiSettings.allApps
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val showAppDetails = searchUiSettings.showAppDetails
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setAllApps(allApps: Boolean) {
         searchUiSettings.setAllApps(allApps)
@@ -29,14 +29,14 @@ class AppSearchSettingsScreenVM: ViewModel(), KoinComponent {
     }
 
     val showList = uiSettings.gridSettings.map { it.showList }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setShowList(showList: Boolean) {
         uiSettings.setGridShowList(showList)
     }
 
     val showListIcons = uiSettings.gridSettings.map { it.showListIcons }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setShowListIcons(showIcons: Boolean) {
         uiSettings.setGridShowListIcons(showIcons)
@@ -44,7 +44,7 @@ class AppSearchSettingsScreenVM: ViewModel(), KoinComponent {
 
     // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
     val moveFrozenAppsToEnd = searchUiSettings.moveFrozenAppsToEnd
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setMoveFrozenAppsToEnd(move: Boolean) {
         searchUiSettings.setMoveFrozenAppsToEnd(move)

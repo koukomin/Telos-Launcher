@@ -30,26 +30,26 @@ class WallpaperSettingsScreenVM : ViewModel(), KoinComponent {
         private set
 
     val textColors = wallpaperSettings.textColors
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), de.mm20.launcher2.preferences.SystemBarColors.Auto)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), de.mm20.launcher2.preferences.SystemBarColors.Auto)
 
     fun setTextColors(colors: de.mm20.launcher2.preferences.SystemBarColors) = wallpaperSettings.setTextColors(colors)
 
     val dimWallpaper = wallpaperSettings.dimWallpaper
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setDimWallpaper(dimWallpaper: Boolean) {
         wallpaperSettings.setDimWallpaper(dimWallpaper)
     }
 
     val blurWallpaper = wallpaperSettings.blurWallpaper
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun setBlurWallpaper(blurWallpaper: Boolean) {
         wallpaperSettings.setBlurWallpaper(blurWallpaper)
     }
 
     val blurWallpaperRadius = wallpaperSettings.wallpaperBlurRadius
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 32)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 32)
 
     fun setBlurWallpaperRadius(blurWallpaperRadius: Int) {
         wallpaperSettings.setWallpaperBlurRadius(blurWallpaperRadius)
@@ -61,20 +61,20 @@ class WallpaperSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val pauseOnBatterySaver = wallpaperSettings.videoPauseOnBatterySaver
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val pauseOnThermal = wallpaperSettings.videoPauseOnThermalThrottling
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     val pauseOnDesktopMode = wallpaperSettings.videoPauseOnDesktopMode
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val videoTransforms = wallpaperSettings.videoTransforms
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val videoSpeed = wallpaperSettings.videoSpeed
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val videoStartBehavior = wallpaperSettings.videoStartBehavior
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun setPauseOnBatterySaver(pause: Boolean) =
         wallpaperSettings.setVideoPauseOnBatterySaver(pause)

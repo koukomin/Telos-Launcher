@@ -22,7 +22,7 @@ jobs:
       generate: ${{ steps.activation.outputs.generate }}
       partitions: ${{ steps.partitions.outputs.value }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.sha || inputs.source_ref }}
           fetch-depth: 0
@@ -54,7 +54,7 @@ jobs:
       matrix:
         partition: ${{ fromJSON(needs.request.outputs.partitions) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.sha || inputs.source_ref }}
           fetch-depth: 0

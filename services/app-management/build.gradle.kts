@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.datastore)
+    implementation(libs.androidx.work)
     implementation(libs.bundles.androidx.lifecycle)
 
     implementation(libs.koin.android)
@@ -56,4 +57,7 @@ dependencies {
 
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))
+    implementation(project(":core:i18n"))
+    implementation(project(":core:preferences"))
+    testImplementation(libs.bundles.tests)
 }

@@ -17,31 +17,31 @@ class FavoritesSettingsScreenVM: ViewModel(), KoinComponent {
     private val rankingSettings: RankingSettings by inject()
 
     val frequentlyUsed = favoritesSettings.frequentlyUsed
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setFrequentlyUsed(frequentlyUsed: Boolean) {
         favoritesSettings.setFrequentlyUsed(frequentlyUsed)
     }
 
     val frequentlyUsedRows = favoritesSettings.frequentlyUsedRows
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
     fun setFrequentlyUsedRows(frequentlyUsedRows: Int) {
         favoritesSettings.setFrequentlyUsedRows(frequentlyUsedRows)
     }
 
     val editButton = favoritesSettings.showEditButton
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setEditButton(editButton: Boolean) {
         favoritesSettings.setShowEditButton(editButton)
     }
 
     val searchResultWeightFactor = rankingSettings.weightFactor
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), WeightFactor.Default)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), WeightFactor.Default)
     fun setSearchResultWeightFactor(searchResultWeightFactor: WeightFactor) {
         rankingSettings.setWeightFactor(searchResultWeightFactor)
     }
 
     val compactTags = favoritesSettings.compactTags
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
     fun setCompactTags(compactTags: Boolean) {
         favoritesSettings.setCompactTags(compactTags)
     }

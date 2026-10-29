@@ -111,14 +111,14 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
     }
 
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun requestLocationPermission(context: AppCompatActivity) {
         permissionsManager.requestPermission(context, PermissionGroup.Location)
     }
 
     val autoLocation = weatherSettings.autoLocation
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun selectDay(index: Int) {
         selectedDayIndex = min(index, forecasts.lastIndex)

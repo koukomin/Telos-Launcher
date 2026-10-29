@@ -91,7 +91,7 @@ class ExperimentalViewModel(
     /** Kept apart from [uiState]: it can hold fifty thousand entries and changes in bursts. */
     val logEntries: StateFlow<List<MonitorLogEntry>> = eventLog.entries
         .map { it.orEmpty() }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     init {
         viewModelScope.launch { eventLog.load() }
@@ -137,7 +137,7 @@ class ExperimentalViewModel(
         )
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.Eagerly,
+        started = SharingStarted.WhileSubscribed(5000),
         initialValue = ExperimentalUiState(),
     )
 

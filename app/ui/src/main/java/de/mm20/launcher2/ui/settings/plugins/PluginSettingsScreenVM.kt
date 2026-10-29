@@ -70,7 +70,7 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
                 PluginWithState(it, state)
             } ?: emptyList()
         }
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000))
 
     val hasPermission = states
         .map {

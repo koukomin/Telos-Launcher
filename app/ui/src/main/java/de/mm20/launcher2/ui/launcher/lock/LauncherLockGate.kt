@@ -46,10 +46,10 @@ class LauncherLockGateVM : ViewModel(), KoinComponent {
     private val protectionSettings: ProtectionSettings by inject()
 
     val lockLauncher = protectionSettings.lockLauncher
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val lockMethod = protectionSettings.lockMethod
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 }
 
 /**

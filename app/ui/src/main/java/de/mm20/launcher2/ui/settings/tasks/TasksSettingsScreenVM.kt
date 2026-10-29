@@ -28,14 +28,14 @@ class TasksSettingsScreenVM : ViewModel(), KoinComponent {
     private val calendarSearchSettings: CalendarSearchSettings by inject()
 
     val tasksApp = appRepository.findOne("org.tasks", Process.myUserHandle())
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     val isTasksAppInstalled = tasksApp
         .map { it != null }
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     val hasTasksPermission = permissionsManager.hasPermission(PermissionGroup.Tasks)
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     fun requestTasksPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Tasks)
@@ -56,7 +56,7 @@ class TasksSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val isTasksSearchEnabled = calendarSearchSettings.isProviderEnabled("tasks.org")
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
 
     fun setTasksSearchEnabled(enabled: Boolean) {
         calendarSearchSettings.setProviderEnabled("tasks.org", enabled)

@@ -121,6 +121,8 @@ import de.mm20.launcher2.ui.settings.homescreen.wallpaper.WallpaperSettingsRoute
 import de.mm20.launcher2.ui.settings.homescreen.wallpaper.WallpaperSettingsScreen
 import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsRoute
 import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsScreen
+import de.mm20.launcher2.ui.settings.art.ArtOptimizerRoute
+import de.mm20.launcher2.ui.settings.art.ArtOptimizerScreen
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsRoute
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsScreen
 import de.mm20.launcher2.ui.settings.protection.ProtectedSettingsScreen
@@ -607,6 +609,9 @@ open class SettingsActivity : BaseActivity() {
             }
             entry<PerformanceSettingsRoute> {
                 PerformanceSettingsScreen()
+            }
+            entry<ArtOptimizerRoute> {
+                ArtOptimizerScreen()
             }
             entry<FloatingLauncherSettingsRoute> {
                 FloatingLauncherSettingsScreen()

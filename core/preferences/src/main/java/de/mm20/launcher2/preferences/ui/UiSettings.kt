@@ -726,4 +726,145 @@ class UiSettings internal constructor(
             it.copy(misc = it.misc.copy(shizukuAutoStart = enabled))
         }
     }
+
+    val artOptimizerMasterEnabled
+        get() = launcherDataStore.data.map { it.misc.artOptimizerMasterEnabled }
+
+    fun setArtOptimizerMasterEnabled(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artOptimizerMasterEnabled = enabled))
+        }
+    }
+
+    val artOptimizationProfile
+        get() = launcherDataStore.data.map { it.misc.artOptimizationProfile }
+
+    fun setArtOptimizationProfile(profile: String) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artOptimizationProfile = profile))
+        }
+    }
+
+    val artOptimizationScheduled
+        get() = launcherDataStore.data.map { it.misc.artOptimizationScheduled }
+
+    fun setArtOptimizationScheduled(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artOptimizationScheduled = enabled))
+        }
+    }
+
+    val artOptimizationFrequencyDays
+        get() = launcherDataStore.data.map { it.misc.artOptimizationFrequencyDays }
+
+    fun setArtOptimizationFrequencyDays(days: Long) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artOptimizationFrequencyDays = days))
+        }
+    }
+
+    val artOptimizationRequireCharging
+        get() = launcherDataStore.data.map { it.misc.artOptimizationRequireCharging }
+
+    fun setArtOptimizationRequireCharging(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artOptimizationRequireCharging = enabled))
+        }
+    }
+
+    val artOptimizationRequireIdle
+        get() = launcherDataStore.data.map { it.misc.artOptimizationRequireIdle }
+
+    fun setArtOptimizationRequireIdle(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artOptimizationRequireIdle = enabled))
+        }
+    }
+
+    val artOptimizationRequireBatteryNotLow
+        get() = launcherDataStore.data.map { it.misc.artOptimizationRequireBatteryNotLow }
+
+    fun setArtOptimizationRequireBatteryNotLow(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artOptimizationRequireBatteryNotLow = enabled))
+        }
+    }
+
+    val artOptimizationSkipPowerSave
+        get() = launcherDataStore.data.map { it.misc.artOptimizationSkipPowerSave }
+
+    fun setArtOptimizationSkipPowerSave(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artOptimizationSkipPowerSave = enabled))
+        }
+    }
+
+    val artOptimizationStorePostInstall
+        get() = launcherDataStore.data.map { it.misc.artOptimizationStorePostInstall }
+
+    fun setArtOptimizationStorePostInstall(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artOptimizationStorePostInstall = enabled))
+        }
+    }
+
+    val artSkipFrozenApps
+        get() = launcherDataStore.data.map { it.misc.artSkipFrozenApps }
+
+    fun setArtSkipFrozenApps(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artSkipFrozenApps = enabled))
+        }
+    }
+
+    val artFrozenAppsMode
+        get() = launcherDataStore.data.map { it.misc.artFrozenAppsMode }
+
+    fun setArtFrozenAppsMode(mode: String) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artFrozenAppsMode = mode))
+        }
+    }
+
+    val artSqliteOptimizeEnabled
+        get() = launcherDataStore.data.map { it.misc.artSqliteOptimizeEnabled }
+
+    fun setArtSqliteOptimizeEnabled(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artSqliteOptimizeEnabled = enabled))
+        }
+    }
+
+    val artFallbackEmptyProfileToSpeed
+        get() = launcherDataStore.data.map { it.misc.artFallbackEmptyProfileToSpeed }
+
+    fun setArtFallbackEmptyProfileToSpeed(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(artFallbackEmptyProfileToSpeed = enabled))
+        }
+    }
+
+    val artBenchmarkRecords
+        get() = launcherDataStore.data.map { it.misc.artBenchmarkRecords }
+
+    fun updateArtBenchmarkRecord(
+        packageName: String,
+        transform: (de.mm20.launcher2.preferences.ArtBenchmarkRecord?) -> de.mm20.launcher2.preferences.ArtBenchmarkRecord?
+    ) {
+        launcherDataStore.update { current ->
+            val updated = current.misc.artBenchmarkRecords.toMutableMap()
+            val next = transform(updated[packageName])
+            if (next == null) {
+                updated.remove(packageName)
+            } else {
+                // Bound stored benchmark records to 300 entries to keep DataStore compact
+                if (packageName !in updated && updated.size >= 300) {
+                    val oldestKey = updated.minByOrNull { it.value.updatedAt }?.key
+                    if (oldestKey != null) updated.remove(oldestKey)
+                }
+                updated[packageName] = next
+            }
+            current.copy(misc = current.misc.copy(artBenchmarkRecords = updated))
+        }
+    }
 }

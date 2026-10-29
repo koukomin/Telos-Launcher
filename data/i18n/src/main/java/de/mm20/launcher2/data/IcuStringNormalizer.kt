@@ -32,7 +32,7 @@ internal class IcuStringNormalizer(
         .map {
             getTransliteratorId(it)
         }
-        .stateIn(scope, SharingStarted.Eagerly, DisabledTransliteratorId)
+        .stateIn(scope, SharingStarted.WhileSubscribed(5000), DisabledTransliteratorId)
 
     override fun normalize(input: String): String = GreekFold.finish(normalizeBase(GreekFold.prepare(input)))
 
