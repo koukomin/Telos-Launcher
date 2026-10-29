@@ -31,6 +31,7 @@ object RecommendedApps {
             "dev.imranr.obtainium",
         ),
         RecommendedApp("Accrescent", RecommendedCategory.Stores, AppSource.GitHub("accrescent", "accrescent"), "app.accrescent.client"),
+        RecommendedApp("Orion Store", RecommendedCategory.Stores, AppSource.GitHub("Orion-Store", "Orion"), "com.orion.store"),
         RecommendedApp("F-Droid", RecommendedCategory.Stores, AppSource.FDroid("org.fdroid.fdroid"), "org.fdroid.fdroid"),
         RecommendedApp("Droid-ify", RecommendedCategory.Stores, AppSource.FDroid("com.looker.droidify"), "com.looker.droidify"),
 
