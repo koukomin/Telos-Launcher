@@ -1200,7 +1200,10 @@ toolchain and Gradle 9.4.1 via the wrapper. Build variants combine a build type 
 ./gradlew installDefaultDebug       # install to a connected device or emulator
 ./gradlew test                      # run all unit tests
 ./gradlew :core:base:test           # run the tests of a single module
+./gradlew :desktop-linux:packageUberJarForCurrentOS  # Linux desktop shell (not in the APK)
 ```
+
+`:desktop-linux` is a Compose for Desktop JVM module. It is not a dependency of `:app:app`. Linux builds need a host JDK 17+ and, at runtime, `cryptsetup` or `udisksctl` for the LUKS vault. See [Telos Linux Desktop](docs/docs/developer-guide/desktop-linux.md).
 
 Developer documentation (module structure, plugin contracts) lives in `docs/docs/developer-guide/`.
 
@@ -1230,6 +1233,7 @@ adapted, the original license is respected.
 | [IronFox](https://gitlab.com/ironfox-oss/IronFox) | AGPL-3.0-or-later build scripts; per-file MPL-2.0 / Apache-2.0 / GPL licenses | Pinned source and build preparation for Ironewolf; not shipped in the launcher APK yet |
 | [libarchive](https://libarchive.org) with [libarchive-android](https://github.com/zhanghai/libarchive-android) | BSD-2-Clause, Apache-2.0 | RAR and RAR5 reading in Telos Files (standard version only, prebuilt library, used unchanged) |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | The whole launcher, plugin SDK and architecture |
+| [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) | Apache-2.0 | JVM desktop shell in `:desktop-linux` only (not packaged in the Android APK) |
 | [QUIK](https://github.com/quik-sms/quik) | GPL-3.0 | Ideas for Telos Messages: pin, archive, delayed send, any-file attachments, speech-to-text (written in Compose, no QUIK code copied) |
 | [Right Dialer (Goodwy/Dialer)](https://github.com/Goodwy/Dialer) | GPL-3.0 | Phone app layout and look: recents, contacts, dialpad, call screens |
 | [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) | GPL-3.0 | Privacy features: biometric lock, secure call screen, call screening, callback reminders |

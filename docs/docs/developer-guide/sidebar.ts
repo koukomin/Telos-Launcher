@@ -22,6 +22,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/setup',
   },
   {
+    text: 'Linux Desktop module',
+    link: '/docs/developer-guide/desktop-linux',
+  },
+  {
     text: 'Ironewolf browser',
     link: '/docs/developer-guide/ironewolf',
   },

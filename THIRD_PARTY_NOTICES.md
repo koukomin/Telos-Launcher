@@ -8,6 +8,7 @@ based on" table in `readme.md`.
 | Project | License | Copyright notice found in the project |
 | --- | --- | --- |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | Copyright (C) 2021-2026 MM2-0 and the Kvaesitso contributors |
+| [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) | Apache-2.0 | Copyright 2020-2026 JetBrains s.r.o. and Kotlin Programming Language contributors. Used only by `:desktop-linux` |
 | [Right Dialer (Goodwy/Dialer)](https://github.com/Goodwy/Dialer) | GPL-3.0 | Based by its author on [Simple Dialer](https://github.com/SimpleMobileTools/Simple-Dialer) and [Fossify Phone](https://github.com/FossifyOrg/Phone) |
 | [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) | GPL-3.0 | Copyright (C) 2026 MovStore |
 | [Ever Dialer](https://github.com/hari161008/Ever-Dialer) | GPL-3.0 | Copyright (c) 2024-2026 Ever Dialer Contributors; parts Copyright (C) 2026-present kitsumed (Med) |

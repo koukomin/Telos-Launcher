@@ -40,7 +40,8 @@ object VirtualAppAppearance {
         "telos_network_app", "telos_system_app" -> R.drawable.ic_app_network_fg
         "telos_media_app" -> R.drawable.ic_app_media_fg
         "telos_store_app" -> R.drawable.local_convenience_store_24px
-        "telos_akou_app" -> R.drawable.ic_app_youtube_music_fg
+        "telos_akou_app" -> R.drawable.ic_app_akou_fg
+        "telos_sync_app" -> R.drawable.ic_app_sync_fg
         "telos_trash_app" -> R.drawable.ic_app_trash_fg
         "telos_clock_app" -> R.drawable.ic_app_clock_fg
         "telos_magnifier_app" -> R.drawable.ic_app_magnifier_fg

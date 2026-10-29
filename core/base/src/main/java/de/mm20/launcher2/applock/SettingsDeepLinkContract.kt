@@ -48,6 +48,7 @@ object SettingsDeepLinkContract {
     const val ROUTE_NETWORK_PRIVATE_DNS = "settings/network/private_dns"
     const val ROUTE_SYSTEM = "settings/system"
     const val ROUTE_TRASH = "settings/trash"
+    const val ROUTE_SYNC = "settings/sync"
     /** Links (string array) to offer in the add sheet of Telos Downloads, from a share or an Open with */
     const val EXTRA_DOWNLOAD_URLS = "de.mm20.launcher2.settings.DOWNLOAD_URLS"
     /** Stable identity for one Recents task per built-in app, independent of launch payload. */

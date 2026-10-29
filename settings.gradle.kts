@@ -3,6 +3,7 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -88,3 +89,6 @@ include(":data:comms")
 include(":services:downloads")
 
 include(":libs:appops-next")
+
+// Isolated Compose for Desktop / JVM shell. Never depended on by :app:app.
+include(":desktop-linux")

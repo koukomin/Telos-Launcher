@@ -31,6 +31,7 @@ object TelosAppIcons {
         "telos_trash_app" -> R.drawable.ic_app_trash_full
         "telos_clock_app" -> R.drawable.ic_app_clock_full
         "telos_akou_app" -> R.drawable.ic_app_akou_full
+        "telos_sync_app" -> R.drawable.ic_app_sync_full
         "telos_magnifier_app" -> R.drawable.ic_app_magnifier_full
         "telos_flashlight_app" -> R.drawable.ic_app_flashlight_full
         else -> null

@@ -1,0 +1,108 @@
+package com.telos.desktop.ui
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.telos.desktop.cursor.CursorPreset
+import com.telos.desktop.display.LinuxDisplayManager
+import com.telos.desktop.icons.LinuxIconThemeResolver
+import com.telos.desktop.platform.PlatformEnvironment
+import com.telos.desktop.settings.TelosDesktopSettings
+import com.telos.desktop.wm.WindowButtonStyle
+
+@Composable
+fun LinuxDesktopSettingsPanel(
+    settings: TelosDesktopSettings,
+    icons: LinuxIconThemeResolver,
+    display: LinuxDisplayManager,
+    onClose: () -> Unit,
+) {
+    val filter = PlatformEnvironment.settings
+    val themes = remember { icons.listInstalledThemes() }
+    val outputs = remember { display.queryOutputs() }
+    Column(Modifier.padding(16.dp).verticalScroll(rememberScrollState())) {
+        Text("Telos Desktop Settings", color = TelosColors.secondary, fontSize = 22.sp)
+        if (filter.showAndroidMobileSettings) {
+            Text("Shizuku / Dhizuku / Island and Android permissions are hidden on Linux.", fontSize = 12.sp, color = TelosColors.onSurface.copy(0.6f))
+        }
+        if (filter.showDisplayResolution) {
+            Text("Display resolution & refresh rate", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
+            outputs.forEach { out ->
+                Text(out.name + " " + (out.current?.label ?: ""), color = TelosColors.onSurface)
+                out.modes.take(12).forEach { mode ->
+                    TextButton(onClick = {
+                        display.applyDisplayMode(out.name, "${mode.width}x${mode.height}", mode.refreshHz, out.scale)
+                    }) { Text(mode.label) }
+                }
+            }
+        }
+        if (filter.showDesktopSurfaceFilters) {
+            Text("Desktop surface icons", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
+            Toggle("Show desktop icons", settings.showDesktopIcons) { settings.showDesktopIcons = it; settings.save() }
+            Toggle("Show hidden files", settings.showHiddenFiles) { settings.showHiddenFiles = it; settings.save() }
+            Toggle("Show .lnk files", settings.showLnkFiles) { settings.showLnkFiles = it; settings.save() }
+            Toggle("Show .desktop shortcuts", settings.showDesktopFiles) { settings.showDesktopFiles = it; settings.save() }
+            Toggle("Show standard folders", settings.showStandardFolders) { settings.showStandardFolders = it; settings.save() }
+        }
+        if (filter.showLinuxIconThemeSelector) {
+            Text("Linux icon theme", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
+            var open by remember { mutableStateOf(false) }
+            TextButton(onClick = { open = true }) { Text(settings.iconTheme) }
+            DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+                themes.forEach { theme ->
+                    DropdownMenuItem(
+                        text = { Text(theme.name) },
+                        onClick = {
+                            settings.iconTheme = theme.name
+                            icons.preferredTheme = theme.name
+                            settings.save()
+                            open = false
+                        },
+                    )
+                }
+            }
+        }
+        if (filter.showKlassyWindowManager) {
+            Text("Klassy / SierraBreeze window buttons", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
+            WindowButtonStyle.entries.forEach { style ->
+                TextButton(onClick = { settings.windowButtonStyle = style.name; settings.save() }) {
+                    Text(style.name + if (settings.windowButtonStyle == style.name) " ✓" else "")
+                }
+            }
+            Toggle("Buttons on left", settings.buttonsOnLeft) { settings.buttonsOnLeft = it; settings.save() }
+        }
+        if (filter.showSweetCursor) {
+            Text("Sweet cursor", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
+            CursorPreset.entries.forEach { preset ->
+                TextButton(onClick = { settings.cursorPreset = preset.name; settings.save() }) {
+                    Text(preset.name + if (settings.cursorPreset == preset.name) " ✓" else "")
+                }
+            }
+        }
+        if (filter.showLuksVault) {
+            Text("LUKS vault", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
+            Text("Configurations are stored only inside ~/.local/share/telos/vault_mnt after unlock.", fontSize = 12.sp)
+        }
+        TextButton(onClick = onClose) { Text("Close") }
+    }
+}
+
+@Composable
+private fun Toggle(label: String, value: Boolean, onChange: (Boolean) -> Unit) {
+    TextButton(onClick = { onChange(!value) }) {
+        Text("$label: ${if (value) "On" else "Off"}")
+    }
+}

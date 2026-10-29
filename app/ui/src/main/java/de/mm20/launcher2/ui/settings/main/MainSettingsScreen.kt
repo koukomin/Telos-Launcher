@@ -21,6 +21,7 @@ import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsRoute
 import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsRoute
 import de.mm20.launcher2.ui.settings.freeze.SmartFreezeDashboardRoute
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
+import de.mm20.launcher2.ui.settings.platform.PlatformEnvironment
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -29,6 +30,7 @@ data object MainRoute: NavKey
 @Composable
 fun MainSettingsScreen() {
     val backStack = LocalBackStack.current
+    val visibility = PlatformEnvironment.settings(desktopModeOnAndroid = false)
     PreferenceScreen(
         title = stringResource(R.string.settings),
     ) {
@@ -123,14 +125,16 @@ fun MainSettingsScreen() {
                     }
                 )
                 // === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions ===
-                Preference(
-                    icon = R.drawable.ac_unit_24px,
-                    title = stringResource(R.string.preference_screen_freeze),
-                    summary = stringResource(R.string.preference_screen_freeze_summary),
-                    onClick = {
-                        backStack.add(SmartFreezeDashboardRoute)
-                    }
-                )
+                if (visibility.showShizukuDhizukuFreeze) {
+                    Preference(
+                        icon = R.drawable.ac_unit_24px,
+                        title = stringResource(R.string.preference_screen_freeze),
+                        summary = stringResource(R.string.preference_screen_freeze_summary),
+                        onClick = {
+                            backStack.add(SmartFreezeDashboardRoute)
+                        }
+                    )
+                }
                 // === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions ===
                 Preference(
                     icon = R.drawable.info_24px,
