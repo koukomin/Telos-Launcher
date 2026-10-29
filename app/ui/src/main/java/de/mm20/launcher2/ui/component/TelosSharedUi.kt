@@ -38,7 +38,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -87,6 +89,7 @@ fun TelosAppListRow(
     trailingContent: (@Composable () -> Unit)? = null,
 ) {
     val context = LocalContext.current
+    val haptics = LocalHapticFeedback.current
     var iconBitmap by remember(packageName) {
         mutableStateOf(TelosIconCache.getCached(packageName))
     }
@@ -101,7 +104,14 @@ fun TelosAppListRow(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 3.dp)
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
+            .then(
+                if (onClick != null) {
+                    Modifier.clickable {
+                        haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                        onClick()
+                    }
+                } else Modifier
+            ),
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.surfaceContainer,
         contentColor = MaterialTheme.colorScheme.onSurface,
@@ -282,6 +292,7 @@ fun TelosSearchAndFilterBar(
     availableFilters: List<SharedAppFilter> = SharedAppFilter.entries,
     placeholder: String = stringResource(R.string.art_optimizer_search_apps_hint),
 ) {
+    val haptics = LocalHapticFeedback.current
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -300,7 +311,10 @@ fun TelosSearchAndFilterBar(
                     for (filter in availableFilters) {
                         FilterChip(
                             selected = activeFilter == filter,
-                            onClick = { onFilterChange(filter) },
+                            onClick = {
+                                haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                onFilterChange(filter)
+                            },
                             label = { Text(stringResource(filter.labelRes)) },
                         )
                     }
