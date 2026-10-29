@@ -7,7 +7,7 @@ plugins {
 
 // the CPU types of this build, see -Ptelos.abi in app/app/build.gradle.kts
 val telosAbis = ((findProperty("telos.abi") as String?)?.takeIf { it.isNotBlank() }?.let { listOf(it) }
-    ?: listOf("arm64-v8a", "armeabi-v7a"))
+    ?: listOf("arm64-v8a"))
 
 android {
     compileSdk {

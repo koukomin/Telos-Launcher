@@ -17,7 +17,7 @@ val keepNames = providers.gradleProperty("telos.keepNames")
 // One APK per CPU type: -Ptelos.abi=arm64-v8a or -Ptelos.abi=armeabi-v7a puts only the native libraries of that
 // CPU into the APK. Without it both are included (local and debug builds). Keep in sync with services/comms.
 val telosAbis = ((findProperty("telos.abi") as String?)?.takeIf { it.isNotBlank() }?.let { listOf(it) }
-    ?: listOf("arm64-v8a", "armeabi-v7a"))
+    ?: listOf("arm64-v8a"))
 
 android {
     androidResources {

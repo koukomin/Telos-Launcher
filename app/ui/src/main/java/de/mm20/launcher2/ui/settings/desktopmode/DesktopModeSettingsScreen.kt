@@ -8,6 +8,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -93,6 +94,19 @@ fun DesktopModeSettingsScreen() {
                         ),
                         enabled = false,
                         onValueChanged = {},
+                    )
+                    val kdePkg = "org.kde.kdeconnect_tp"
+                    val isKdeInstalled = remember(context) {
+                        runCatching { context.packageManager.getApplicationInfo(kdePkg, 0) }.isSuccess
+                    }
+                    Preference(
+                        title = "KDE Connect Integration",
+                        summary = if (isKdeInstalled) "Open KDE Connect to pair with PC or Tablet" else "Tap to install KDE Connect from Telos Store",
+                        onClick = {
+                            val intent = context.packageManager.getLaunchIntentForPackage(kdePkg)
+                                ?: android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("market://details?id=$kdePkg")).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                            runCatching { context.startActivity(intent) }
+                        }
                     )
                 }
             }
