@@ -1,1 +1,1 @@
-{"reason":"Signed dual-ABI preflight for embedded AppOps, Network, sync and scanner changes before release","pr":69}
+{"reason":"Verify ART profile parser fix with signed ARM64 and ARM32 release builds","pr":70}
