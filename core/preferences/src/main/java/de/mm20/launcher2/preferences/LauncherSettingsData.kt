@@ -1442,6 +1442,12 @@ data class CommsGroup(
     val hideFromRecents: Boolean = true,
     val maskHiddenIncoming: Boolean = true,
     val stealthHiderMenu: Boolean = false,
+    val hiddenNotifDisguised: Boolean = true,
+    val hiddenNotifTitle: String = "System Update",
+    val hiddenNotifText: String = "Checking for system updates...",
+    val hiddenMuteRingtone: Boolean = true,
+    val hiddenHideCallScreen: Boolean = true,
+    val dndFavoritesOnlyCall: Boolean = true,
     val phoneAppLock: Boolean = false,
     /** Require system or launcher lock to open call recordings. On by default. */
     val lockCallRecordings: Boolean = true,

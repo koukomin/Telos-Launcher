@@ -77,6 +77,22 @@ class TelosInCallService : InCallService(), KoinComponent {
       catch (_: IllegalArgumentException) { CallerIdentity() }
       catch (_: android.database.sqlite.SQLiteException) { CallerIdentity() }
 
+    private fun isFavoriteCaller(context: android.content.Context, number: String): Boolean {
+        if (number.isBlank()) return false
+        return runCatching {
+            val uri = android.net.Uri.withAppendedPath(android.provider.ContactsContract.PhoneLookup.CONTENT_FILTER_URI, android.net.Uri.encode(number))
+            context.contentResolver.query(
+                uri,
+                arrayOf(android.provider.ContactsContract.PhoneLookup.STARRED),
+                null,
+                null,
+                null,
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) cursor.getInt(0) == 1 else false
+            } ?: false
+        }.getOrDefault(false)
+    }
+
     private fun releaseCallState() {
         val ownsSession = TelosCallSession.inCallService === this || !TelosCallSession.ui.value.hasCall
         TelosCallSession.onServiceDestroyed(this)
@@ -104,7 +120,41 @@ class TelosInCallService : InCallService(), KoinComponent {
             CallBlockEngine.rejectIfNeeded(applicationContext, call)
         }
         TelosCallSession.onCallAdded(call)
-        startCallUi()
+
+        popupScope.launch {
+            val snap = runCatching { commsSettings.snapshot.first() }.getOrNull()
+            val number = call.details?.handle?.schemeSpecificPart.orEmpty()
+            val isHidden = snap?.hiddenNumbers?.let { de.mm20.launcher2.comms.privacy.HiddenContacts.matches(number, it) } == true
+
+            if (isHidden) {
+                if (snap.hiddenMuteRingtone) {
+                    runCatching {
+                        call.reject(false, null)
+                    }
+                }
+                if (snap.hiddenHideCallScreen) {
+                    // Do NOT launch call activity for hidden contacts
+                    return@launch
+                }
+            }
+
+            val nm = applicationContext.getSystemService(android.app.NotificationManager::class.java)
+            val dndFilter = nm?.currentInterruptionFilter ?: android.app.NotificationManager.INTERRUPTION_FILTER_ALL
+            val isDndActive = dndFilter != android.app.NotificationManager.INTERRUPTION_FILTER_ALL &&
+                dndFilter != android.app.NotificationManager.INTERRUPTION_FILTER_UNKNOWN
+
+            if (isDndActive && snap?.dndFavoritesOnlyCall == true) {
+                val isFavorite = isFavoriteCaller(applicationContext, number)
+                if (!isFavorite) {
+                    runCatching {
+                        call.reject(false, null)
+                    }
+                    return@launch
+                }
+            }
+
+            startCallUi()
+        }
     }
 
     override fun onCallRemoved(call: Call) {

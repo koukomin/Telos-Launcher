@@ -17,9 +17,17 @@ object SmsNotifier {
 
     suspend fun incoming(context: Context, settings: CommsSettings, address: String, text: String) {
         val hidden = runCatching { HiddenContacts.matches(address, settings.hiddenNumbers.first()) }.getOrDefault(false)
-        // a hidden contact is not named, and the text is not shown
-        val title = if (hidden) SmsText.get(context, "hc_new_message", "New message") else (SmsThreads.displayName(context, address) ?: address)
-        show(context, address, title, if (hidden) "" else text)
+        val snap = runCatching { settings.snapshot.first() }.getOrNull()
+        val title = if (hidden) {
+            if (snap?.hiddenNotifDisguised == true) snap.hiddenNotifTitle
+            else SmsText.get(context, "hc_new_message", "New message")
+        } else (SmsThreads.displayName(context, address) ?: address)
+
+        val notifText = if (hidden) {
+            if (snap?.hiddenNotifDisguised == true) snap.hiddenNotifText else ""
+        } else text
+
+        show(context, address, title, notifText)
         if (!hidden && settings.smsPopupReply.first()) {
             runCatching {
                 context.startActivity(

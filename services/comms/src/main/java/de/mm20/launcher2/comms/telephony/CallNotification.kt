@@ -27,8 +27,12 @@ object CallNotification {
             return
         }
         val manager = context.getSystemService(NotificationManager::class.java) ?: return
+        val dndFilter = manager.currentInterruptionFilter
+        val isDndActive = dndFilter != NotificationManager.INTERRUPTION_FILTER_ALL && dndFilter != NotificationManager.INTERRUPTION_FILTER_UNKNOWN
+        val importance = if (isDndActive) NotificationManager.IMPORTANCE_LOW else NotificationManager.IMPORTANCE_HIGH
+
         manager.createNotificationChannel(NotificationChannel(CHANNEL_ID,
-            context.getString(I18nR.string.au_phoneb_calls_channel), NotificationManager.IMPORTANCE_HIGH))
+            context.getString(I18nR.string.au_phoneb_calls_channel), importance))
         try {
             manager.notify(NOTIFICATION_ID, create(context, state, alertIncoming))
         } catch (e: SecurityException) {

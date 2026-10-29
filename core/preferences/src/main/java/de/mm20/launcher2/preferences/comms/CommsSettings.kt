@@ -418,6 +418,36 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(stealthHiderMenu = enabled)) }
     }
 
+    val hiddenNotifDisguised get() = dataStore.data.map { it.comms.hiddenNotifDisguised }
+    fun setHiddenNotifDisguised(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(hiddenNotifDisguised = enabled)) }
+    }
+
+    val hiddenNotifTitle get() = dataStore.data.map { it.comms.hiddenNotifTitle }
+    fun setHiddenNotifTitle(value: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(hiddenNotifTitle = value)) }
+    }
+
+    val hiddenNotifText get() = dataStore.data.map { it.comms.hiddenNotifText }
+    fun setHiddenNotifText(value: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(hiddenNotifText = value)) }
+    }
+
+    val hiddenMuteRingtone get() = dataStore.data.map { it.comms.hiddenMuteRingtone }
+    fun setHiddenMuteRingtone(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(hiddenMuteRingtone = enabled)) }
+    }
+
+    val hiddenHideCallScreen get() = dataStore.data.map { it.comms.hiddenHideCallScreen }
+    fun setHiddenHideCallScreen(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(hiddenHideCallScreen = enabled)) }
+    }
+
+    val dndFavoritesOnlyCall get() = dataStore.data.map { it.comms.dndFavoritesOnlyCall }
+    fun setDndFavoritesOnlyCall(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(dndFavoritesOnlyCall = enabled)) }
+    }
+
     val phoneAppLock
         get() = dataStore.data.map { it.comms.phoneAppLock }
     fun setPhoneAppLock(enabled: Boolean) {
