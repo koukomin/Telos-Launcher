@@ -104,4 +104,21 @@ object ApkSecurityScanner {
             warnings = warnings,
         )
     }
+
+    @Suppress("DEPRECATION")
+    fun verifyInstalledSignatureMatch(context: Context, apkFile: File): Boolean {
+        val pm = context.packageManager
+        val archiveInfo = pm.getPackageArchiveInfo(apkFile.path, PackageManager.GET_SIGNATURES) ?: return true
+        val packageName = archiveInfo.packageName ?: return true
+
+        val installedInfo = runCatching {
+            pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+        }.getOrNull() ?: return true // Clean install, app not present yet
+
+        val archiveSigs = archiveInfo.signatures?.map { it.toCharsString() }?.toSet().orEmpty()
+        val installedSigs = installedInfo.signatures?.map { it.toCharsString() }?.toSet().orEmpty()
+
+        if (archiveSigs.isEmpty() || installedSigs.isEmpty()) return true
+        return archiveSigs.intersect(installedSigs).isNotEmpty()
+    }
 }

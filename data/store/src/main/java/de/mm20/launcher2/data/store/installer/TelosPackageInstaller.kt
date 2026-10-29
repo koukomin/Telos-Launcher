@@ -70,6 +70,13 @@ class TelosPackageInstaller(
             android.util.Log.w("TelosPackageInstaller", "High security risk detected for package $packageName: ${securityReport.warnings.joinToString()}")
         }
 
+        // Verify Certificate Signature Match against installed app before update
+        val signatureMatch = de.mm20.launcher2.data.store.security.ApkSecurityScanner.verifyInstalledSignatureMatch(context, apk)
+        if (!signatureMatch) {
+            android.util.Log.e("TelosPackageInstaller", "APK signature mismatch for package $packageName! Update blocked for security.")
+            return failed(IllegalStateException("APK signature does not match installed application! Update blocked for security."))
+        }
+
         val archive = context.packageManager.getPackageArchiveInfo(apk.path, 0)
             ?: return failed(IllegalArgumentException("Invalid APK"))
         if (archive?.packageName != packageName) return failed(IllegalArgumentException("APK package does not match the selected app"))
