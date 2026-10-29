@@ -431,29 +431,105 @@ private fun HubBottomBar(
     blurRadius: Int,
     onSelect: (MediaSpace) -> Unit,
 ) {
-    val dests = listOf("listen", "watch", "live").mapNotNull { id ->
-        groupSpaces.firstOrNull { it.group == id }
-            ?: MediaSpace.entries.firstOrNull { it.group == id }
-    }.distinctBy { it.group }
+    val isAudioMode = current.group == "listen"
     val t = MaterialTheme.transparency
     val glass = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
+    val haptic = LocalHapticFeedback.current
+
     AdaptiveNavigationBar(
         modifier = Modifier.hubGlass(haze, blurRadius, glass),
         containerColor = Color.Transparent,
     ) {
-        dests.forEach { dest ->
-            val selected = dest.group == current.group
+        // 1. Far-left Mode Icon (Listen)
+        AdaptiveNavigationItem(
+            selected = isAudioMode,
+            onClick = {
+                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                if (!isAudioMode) {
+                    onSelect(MediaSpace.Radio)
+                }
+            },
+            icon = {
+                Icon(painterResource(R.drawable.headphones_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+            },
+            label = {
+                Text(stringResource(R.string.telos_media_listen))
+            },
+        )
+
+        // 2. Middle Sub-Icons (Radio & YT Music in Audio Mode, TV & Stremio in Video Mode)
+        if (isAudioMode) {
             AdaptiveNavigationItem(
-                selected = selected,
-                onClick = { onSelect(dest) },
+                selected = current == MediaSpace.Radio,
+                onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onSelect(MediaSpace.Radio)
+                },
                 icon = {
-                    Icon(painterResource(dest.groupIcon), contentDescription = null, modifier = Modifier.size(22.dp))
+                    Icon(painterResource(R.drawable.ic_glyph_radio), contentDescription = null, modifier = Modifier.size(22.dp))
                 },
                 label = {
-                    Text(stringResource(dest.groupLabel))
+                    Text(stringResource(R.string.au9_mediahub_space_radio))
+                },
+            )
+            AdaptiveNavigationItem(
+                selected = current == MediaSpace.YouTubeMusic || current == MediaSpace.Music,
+                onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onSelect(MediaSpace.YouTubeMusic)
+                },
+                icon = {
+                    Icon(painterResource(de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg), contentDescription = null, modifier = Modifier.size(22.dp))
+                },
+                label = {
+                    Text("YT Music")
+                },
+            )
+        } else {
+            AdaptiveNavigationItem(
+                selected = current == MediaSpace.Tv,
+                onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onSelect(MediaSpace.Tv)
+                },
+                icon = {
+                    Icon(painterResource(R.drawable.tv_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                },
+                label = {
+                    Text(stringResource(R.string.au12_tvui_space_tv))
+                },
+            )
+            AdaptiveNavigationItem(
+                selected = current == MediaSpace.Stremio || current == MediaSpace.Video || current == MediaSpace.YouTube,
+                onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onSelect(MediaSpace.Stremio)
+                },
+                icon = {
+                    Icon(painterResource(R.drawable.theaters_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                },
+                label = {
+                    Text("Stremio")
                 },
             )
         }
+
+        // 3. Far-right Mode Icon (View / Video)
+        AdaptiveNavigationItem(
+            selected = !isAudioMode,
+            onClick = {
+                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                if (isAudioMode) {
+                    onSelect(MediaSpace.Stremio)
+                }
+            },
+            icon = {
+                Icon(painterResource(R.drawable.video_library_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+            },
+            label = {
+                Text(stringResource(R.string.telos_media_watch))
+            },
+        )
     }
 }
 
