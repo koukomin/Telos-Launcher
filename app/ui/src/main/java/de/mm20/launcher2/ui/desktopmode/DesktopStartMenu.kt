@@ -18,20 +18,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -58,47 +69,132 @@ internal fun DesktopStartMenu(onDismiss: () -> Unit) {
     val desktopModeSettings = koinInject<DesktopModeSettings>()
     val iconSize by desktopModeSettings.gridIconSize.collectAsStateWithLifecycle(48)
 
+    var searchQuery by remember { mutableStateOf("") }
+    var selectedCategory by remember { mutableStateOf("All") }
+
+    val categories = listOf("All", "Favorites", "Comms", "Media", "Tools", "System")
+
+    val filteredApps = remember(apps, searchQuery, selectedCategory) {
+        apps.filter { app ->
+            val labelMatches = searchQuery.isBlank() || (app.labelOverride ?: app.label).contains(searchQuery, ignoreCase = true)
+            labelMatches
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .pointerInput(Unit) {
                 detectTapGestures(onTap = { onDismiss() })
             },
-        contentAlignment = Alignment.BottomStart,
+        contentAlignment = Alignment.TopStart,
     ) {
         Surface(
             modifier = Modifier
-                .padding(start = 8.dp, bottom = DesktopTaskbarHeight + 8.dp)
-                .width(320.dp)
-                .fillMaxHeight(0.7f)
-                .clip(RoundedCornerShape(12.dp))
+                .padding(start = 12.dp, top = DesktopTaskbarHeight + 8.dp)
+                .width(480.dp)
+                .height(520.dp)
+                .clip(RoundedCornerShape(16.dp))
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
                     onClick = {},
                 ),
-            tonalElevation = 6.dp,
-            shadowElevation = 6.dp,
+            tonalElevation = 8.dp,
+            shadowElevation = 12.dp,
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
         ) {
-            if (apps.isEmpty()) {
-                Box(Modifier.fillMaxWidth().padding(24.dp)) {
-                    Text(
-                        text = stringResource(R.string.desktop_mode_start_menu_empty),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
+            Column(Modifier.fillMaxSize().padding(12.dp)) {
+                // 1. KDE AppGrid Top Search Bar
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    placeholder = { Text("Search applications...") },
+                    singleLine = true,
+                    shape = RoundedCornerShape(24.dp),
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                )
+
+                Row(Modifier.weight(1f).fillMaxWidth()) {
+                    // 2. Left Category Sidebar
+                    Column(
+                        modifier = Modifier
+                            .width(110.dp)
+                            .fillMaxHeight()
+                            .padding(end = 8.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        categories.forEach { category ->
+                            Surface(
+                                onClick = { selectedCategory = category },
+                                shape = RoundedCornerShape(10.dp),
+                                color = if (selectedCategory == category) MaterialTheme.colorScheme.primaryContainer else Color.Transparent,
+                                contentColor = if (selectedCategory == category) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = category,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp)
+                                )
+                            }
+                        }
+                    }
+
+                    // 3. AppGrid Grid View
+                    Box(Modifier.weight(1f).fillMaxHeight()) {
+                        if (filteredApps.isEmpty()) {
+                            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                Text("No applications found", style = MaterialTheme.typography.bodyMedium)
+                            }
+                        } else {
+                            LazyVerticalGrid(
+                                columns = GridCells.Fixed(3),
+                                contentPadding = PaddingValues(4.dp),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
+                                items(filteredApps, key = { it.key }) { app ->
+                                    val iconSizePx = iconSize.dp.toPixels().toInt()
+                                    val icon by remember(app.key, iconSizePx) { viewModel.getIcon(app, iconSizePx) }.collectAsStateWithLifecycle(null)
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(12.dp))
+                                            .clickable {
+                                                launchOnDisplay(context, app, freeformActive)
+                                                onDismiss()
+                                            }
+                                            .padding(8.dp)
+                                    ) {
+                                        ShapedLauncherIcon(size = 40.dp, icon = { icon })
+                                        Spacer(Modifier.height(4.dp))
+                                        Text(
+                                            text = app.labelOverride ?: app.label,
+                                            style = MaterialTheme.typography.labelSmall,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-            } else {
-                LazyColumn(contentPadding = PaddingValues(vertical = 8.dp)) {
-                    items(apps, key = { it.key }) { app ->
-                        StartMenuAppRow(
-                            app = app,
-                            iconSize = iconSize.dp,
-                            getIcon = { size -> viewModel.getIcon(app, size) },
-                            onClick = {
-                                launchOnDisplay(context, app, freeformActive)
-                                onDismiss()
-                            },
-                        )
+
+                // 4. KDE Power & Session Bar
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(onClick = { onDismiss() }) {
+                        Icon(painterResource(R.drawable.lock_24px), contentDescription = "Lock")
+                    }
+                    IconButton(onClick = { onDismiss() }) {
+                        Icon(painterResource(R.drawable.settings_24px), contentDescription = "Settings")
                     }
                 }
             }
