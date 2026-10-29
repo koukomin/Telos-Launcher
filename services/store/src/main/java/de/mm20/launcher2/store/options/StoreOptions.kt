@@ -67,7 +67,7 @@ class StoreOptions(context: Context) {
     }
 
     private val prefs = context.applicationContext.getSharedPreferences("store_options", Context.MODE_PRIVATE)
-    private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
 
     private val _items = MutableStateFlow(loadItems())
     val items: StateFlow<Map<String, ItemOptions>> = _items

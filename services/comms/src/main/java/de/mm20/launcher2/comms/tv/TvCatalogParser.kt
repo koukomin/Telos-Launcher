@@ -38,7 +38,7 @@ object TvCatalogParser {
         return parse(Sources(s(channels), s(streams), s(logos), s(feeds), s(blocklist), s(categories)))
     }
 
-    private val json = Json { ignoreUnknownKeys = true; isLenient = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
 
     @OptIn(ExperimentalSerializationApi::class)
     private fun forEachObject(open: () -> InputStream?, block: (JsonObject) -> Unit) {

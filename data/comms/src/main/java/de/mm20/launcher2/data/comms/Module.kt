@@ -27,7 +27,7 @@ val dataCommsModule = module {
             }
             install(io.ktor.client.plugins.HttpTimeout)
             install(ContentNegotiation) {
-                json(Json { ignoreUnknownKeys = true })
+                json(de.mm20.launcher2.serialization.Json.Lenient)
             }
         }
     }

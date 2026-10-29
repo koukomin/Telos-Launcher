@@ -80,7 +80,7 @@ class MediaInfo(
 }
 
 object MediaInfoParser {
-    private val json = Json { ignoreUnknownKeys = true; isLenient = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
 
     /** Parses the output of `yt-dlp -J --flat-playlist`; null when it is not a JSON object. */
     fun parse(text: String): MediaInfo? {

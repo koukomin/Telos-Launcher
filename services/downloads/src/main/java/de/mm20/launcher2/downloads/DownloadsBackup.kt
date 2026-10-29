@@ -23,7 +23,7 @@ class DownloadsBackup(
 ) : Backupable {
     override val group: BackupGroup = BackupGroup.Downloads
 
-    private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true; coerceInputValues = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
 
     override suspend fun backup(toDir: File) = withContext(Dispatchers.IO) {
         val dir = File(toDir, "downloads").also { it.mkdirs() }

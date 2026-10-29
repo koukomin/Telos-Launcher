@@ -26,7 +26,7 @@ internal class PersistedState<T : Any>(
     private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO),
     private val debounceMs: Long = 400,
 ) {
-    private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true; coerceInputValues = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
     private val saveRequests = Channel<Unit>(Channel.CONFLATED)
     private val lock = Any()
 

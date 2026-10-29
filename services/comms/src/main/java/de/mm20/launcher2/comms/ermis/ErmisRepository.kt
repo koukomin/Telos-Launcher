@@ -32,7 +32,7 @@ class ErmisRepository private constructor(private val context: Context) {
     private val mutex = Mutex()
     private val ready = CompletableDeferred<Unit>()
     private val vault = ErmisVault(context)
-    private val json = Json { ignoreUnknownKeys = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
     private var passwords = emptyMap<String,String>()
     private var uidValidity = emptyMap<String,Long>()
     init {

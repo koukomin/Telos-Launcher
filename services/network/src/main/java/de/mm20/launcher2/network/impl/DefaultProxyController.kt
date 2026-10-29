@@ -24,7 +24,7 @@ internal class DefaultProxyController(context: Context) : ProxyController {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val mutex = Mutex()
     private val loaded = CompletableDeferred<Unit>()
-    private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
     private val _endpoints = MutableStateFlow<List<ProxyEndpoint>>(emptyList())
     override val endpoints: StateFlow<List<ProxyEndpoint>> = _endpoints
     private val _assignments = MutableStateFlow<Map<Int, ProxyAssignment>>(emptyMap())

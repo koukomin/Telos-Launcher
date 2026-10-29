@@ -27,7 +27,7 @@ class CommsBackupManager(
     private val settings: CommsSettings,
     private val spam: SpamRepository,
 ) {
-    private val json = Json { encodeDefaults = true; ignoreUnknownKeys = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
 
     suspend fun exportEncrypted(password: String): String = withContext(Dispatchers.IO) {
         val payload = CommsBackupPayload(

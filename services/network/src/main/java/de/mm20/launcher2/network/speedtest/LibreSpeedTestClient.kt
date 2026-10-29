@@ -189,7 +189,7 @@ class LibreSpeedTestClient {
         private const val MAX_SERVER_NAME_LENGTH = 120
         private const val MAX_URL_LENGTH = 2_048
         private val OCTET_STREAM = "application/octet-stream".toMediaType()
-        private val json = Json { ignoreUnknownKeys = true }
+        private val json = de.mm20.launcher2.serialization.Json.Lenient
 
         internal fun parsePublicServers(payload: String): List<LibreSpeedServer> {
             val root = json.parseToJsonElement(payload)

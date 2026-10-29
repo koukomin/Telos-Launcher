@@ -44,7 +44,7 @@ object BlockLists {
     private const val MAX_TEXT_BYTES = 160L * 1024 * 1024
     private const val WORK_NAME = "telos_blocklists_update"
 
-    private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val lock = Any()
 

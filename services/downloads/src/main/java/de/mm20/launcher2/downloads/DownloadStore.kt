@@ -25,7 +25,7 @@ private class StoreFile(val version: Int = 1, val tasks: List<DownloadTask> = em
  */
 class DownloadStore(context: Context) {
     private val file = File(context.filesDir, "downloads").also { it.mkdirs() }.let { File(it, "tasks.json") }
-    private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true; coerceInputValues = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val saveRequests = Channel<Unit>(Channel.CONFLATED)
 

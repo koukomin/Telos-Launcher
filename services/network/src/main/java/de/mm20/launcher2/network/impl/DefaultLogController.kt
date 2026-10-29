@@ -40,7 +40,7 @@ internal class DefaultLogController(
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val lock = Any()
     private val dir = File(File(context.filesDir, "network"), "log")
-    private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true; coerceInputValues = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
     private var diskDirty = false
 
     // newest first

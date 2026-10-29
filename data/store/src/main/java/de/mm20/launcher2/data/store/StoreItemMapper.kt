@@ -14,7 +14,7 @@ import kotlinx.serialization.json.Json
  */
 internal object StoreItemMapper {
 
-    private val json = Json { ignoreUnknownKeys = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
 
     fun toDomain(entity: StoreItemEntity, installedCode: Long? = entity.installedVersionCode, installedName: String? = null): StoreItem {
         val source = json.decodeFromString(AppSource.serializer(), entity.sourceJson)

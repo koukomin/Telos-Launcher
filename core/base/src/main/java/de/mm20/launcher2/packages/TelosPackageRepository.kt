@@ -9,6 +9,9 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.compose.runtime.Immutable
 import androidx.core.content.pm.PackageInfoCompat
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -59,8 +62,8 @@ class TelosPackageRepository private constructor(context: Context) {
     private val receiverRegistered = AtomicBoolean(false)
     private val initialLoadCompleted = AtomicBoolean(false)
 
-    private val _packages = MutableStateFlow<List<TelosAppEntry>>(emptyList())
-    val packages: StateFlow<List<TelosAppEntry>> = _packages.asStateFlow()
+    private val _packages = MutableStateFlow<ImmutableList<TelosAppEntry>>(persistentListOf())
+    val packages: StateFlow<ImmutableList<TelosAppEntry>> = _packages.asStateFlow()
 
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -166,7 +169,7 @@ class TelosPackageRepository private constructor(context: Context) {
         entriesByPkg.clear()
         entriesByPkg.putAll(freshMap)
         val sorted = buildSortedSnapshot()
-        _packages.value = sorted
+        _packages.value = sorted.toImmutableList()
         initialLoadCompleted.set(true)
         return sorted
     }
@@ -177,7 +180,7 @@ class TelosPackageRepository private constructor(context: Context) {
             val removed = entriesByPkg.remove(packageName)
             TelosIconCache.invalidate(packageName, appContext)
             if (removed != null) {
-                _packages.value = buildSortedSnapshot()
+                _packages.value = buildSortedSnapshot().toImmutableList()
             }
         }
     }
@@ -215,7 +218,7 @@ class TelosPackageRepository private constructor(context: Context) {
                 }
             }
             if (changed) {
-                _packages.value = buildSortedSnapshot()
+                _packages.value = buildSortedSnapshot().toImmutableList()
             }
         }
     }

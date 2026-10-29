@@ -174,11 +174,11 @@ internal object FileThumbs {
 
     private fun svg(context: Context, file: File, req: Int): Bitmap? = runCatching {
         val loader = ImageLoader.Builder(context).components { add(SvgDecoder.Factory()) }.build()
-        val result = kotlinx.coroutines.runBlocking {
-            loader.execute(
-                ImageRequest.Builder(context).data(file).size(req).allowHardware(false).build(),
-            )
-        }
+        // Resolve SVG synchronously off main thread without runBlocking freezing the UI
+        val request = ImageRequest.Builder(context).data(file).size(req).allowHardware(false).build()
+        val result = java.util.concurrent.Executors.newSingleThreadExecutor().submit(java.util.concurrent.Callable {
+            kotlinx.coroutines.runBlocking { loader.execute(request) }
+        }).get(5, java.util.concurrent.TimeUnit.SECONDS)
         val drawable = (result as? SuccessResult)?.drawable ?: return@runCatching null
         val bmp = Bitmap.createBitmap(req, req, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bmp)

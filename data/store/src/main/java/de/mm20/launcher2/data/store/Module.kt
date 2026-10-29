@@ -26,7 +26,7 @@ val dataStoreModule = module {
                 socketTimeoutMillis = 60_000
             }
             install(ContentNegotiation) {
-                json(Json { ignoreUnknownKeys = true })
+                json(de.mm20.launcher2.serialization.Json.Lenient)
             }
         }
     }

@@ -21,7 +21,7 @@ data class RadioBrowserStation(
 
 class RadioBrowserClient(private val httpClient: HttpClient) {
 
-    private val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true; isLenient = true }
+    private val json = de.mm20.launcher2.serialization.Json.Lenient
 
     // radio-browser.info runs several mirrors: the names behind its DNS round robin are looked up,
     // with fixed names as a fallback
