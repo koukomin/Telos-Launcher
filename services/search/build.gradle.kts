@@ -51,6 +51,7 @@ dependencies {
 
     implementation(libs.jsoup)
     implementation(libs.coil.core)
+    implementation(libs.zxing.core)
 
     implementation(project(":data:calculator"))
     implementation(project(":data:unitconverter"))
