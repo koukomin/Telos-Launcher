@@ -23,8 +23,11 @@ object SmsNotifier {
             else SmsText.get(context, "hc_new_message", "New message")
         } else (SmsThreads.displayName(context, address) ?: address)
 
+        val isSmishing = isSuspiciousSmishingText(text)
         val notifText = if (hidden) {
             if (snap?.hiddenNotifDisguised == true) snap.hiddenNotifText else ""
+        } else if (isSmishing) {
+            "⚠️ [Suspicious Link] $text"
         } else text
 
         show(context, address, title, notifText)
@@ -104,5 +107,32 @@ object SmsNotifier {
                 .addAction(Notification.Action.Builder(null, SmsText.get(context, "comms_speak", "Speak"), speak).build())
                 .build()
         )
+    }
+
+    fun sanitizeUrl(url: String): String {
+        return runCatching {
+            val uri = android.net.Uri.parse(url)
+            val builder = uri.buildUpon().clearQuery()
+            uri.queryParameterNames.forEach { name ->
+                val lower = name.lowercase()
+                if (lower != "utm_source" && lower != "utm_medium" && lower != "utm_campaign" &&
+                    lower != "utm_term" && lower != "utm_content" && lower != "fbclid" &&
+                    lower != "gclid" && lower != "msclkid" && lower != "mc_eid"
+                ) {
+                    builder.appendQueryParameter(name, uri.getQueryParameter(name))
+                }
+            }
+            builder.build().toString()
+        }.getOrDefault(url)
+    }
+
+    fun isSuspiciousSmishingText(text: String): Boolean {
+        if (text.isBlank()) return false
+        val lower = text.lowercase()
+        val containsSuspiciousKeyword = lower.contains("verify") || lower.contains("bank") ||
+            lower.contains("account suspended") || lower.contains("login") || lower.contains("urgent") || lower.contains("click")
+        val containsIpOrUnsecureUrl = lower.contains("http://") ||
+            Regex("""\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b""").containsMatchIn(text)
+        return containsSuspiciousKeyword && containsIpOrUnsecureUrl
     }
 }
