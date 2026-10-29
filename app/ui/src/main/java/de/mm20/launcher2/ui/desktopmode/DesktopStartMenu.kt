@@ -2,11 +2,14 @@ package de.mm20.launcher2.ui.desktopmode
 
 import android.app.ActivityOptions
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Build
 import android.view.Display
 import android.view.WindowManager
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -157,24 +160,58 @@ internal fun DesktopStartMenu(onDismiss: () -> Unit) {
                                 items(filteredApps, key = { it.key }) { app ->
                                     val iconSizePx = iconSize.dp.toPixels().toInt()
                                     val icon by remember(app.key, iconSizePx) { viewModel.getIcon(app, iconSizePx) }.collectAsStateWithLifecycle(null)
-                                    Column(
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        modifier = Modifier
-                                            .clip(RoundedCornerShape(12.dp))
-                                            .clickable {
-                                                launchOnDisplay(context, app, freeformActive)
-                                                onDismiss()
-                                            }
-                                            .padding(8.dp)
-                                    ) {
-                                        ShapedLauncherIcon(size = 40.dp, icon = { icon })
-                                        Spacer(Modifier.height(4.dp))
-                                        Text(
-                                            text = app.labelOverride ?: app.label,
-                                            style = MaterialTheme.typography.labelSmall,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
+                                    var appContextMenuOpen by remember { mutableStateOf(false) }
+                                    Box {
+                                        @OptIn(ExperimentalFoundationApi::class)
+                                        Column(
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = Modifier
+                                                .clip(RoundedCornerShape(12.dp))
+                                                .combinedClickable(
+                                                    onClick = {
+                                                        launchOnDisplay(context, app, freeformActive)
+                                                        onDismiss()
+                                                    },
+                                                    onLongClick = {
+                                                        appContextMenuOpen = true
+                                                    }
+                                                )
+                                                .padding(8.dp)
+                                        ) {
+                                            ShapedLauncherIcon(size = 40.dp, icon = { icon })
+                                            Spacer(Modifier.height(4.dp))
+                                            Text(
+                                                text = app.labelOverride ?: app.label,
+                                                style = MaterialTheme.typography.labelSmall,
+                                                maxLines = 1,
+                                                overflow = TextOverflow.Ellipsis
+                                            )
+                                        }
+
+                                        androidx.compose.material3.DropdownMenu(
+                                            expanded = appContextMenuOpen,
+                                            onDismissRequest = { appContextMenuOpen = false }
+                                        ) {
+                                            androidx.compose.material3.DropdownMenuItem(
+                                                text = { Text(stringResource(R.string.hc_edit)) },
+                                                onClick = {
+                                                    appContextMenuOpen = false
+                                                },
+                                                leadingIcon = { Icon(painterResource(R.drawable.edit_24px), null) }
+                                            )
+                                            androidx.compose.material3.DropdownMenuItem(
+                                                text = { Text("App Info") },
+                                                onClick = {
+                                                    appContextMenuOpen = false
+                                                    val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                                        data = android.net.Uri.fromParts("package", app.componentName.packageName, null)
+                                                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                    }
+                                                    runCatching { context.startActivity(intent) }
+                                                },
+                                                leadingIcon = { Icon(painterResource(R.drawable.info_24px), null) }
+                                            )
+                                        }
                                     }
                                 }
                             }
