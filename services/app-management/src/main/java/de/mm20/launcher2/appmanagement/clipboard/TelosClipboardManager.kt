@@ -77,13 +77,13 @@ class TelosClipboardManager private constructor(context: Context) {
     private fun scheduleAutoClear(sensitiveText: String) {
         autoClearJob?.cancel()
         autoClearJob = scope.launch {
-            // Auto-clear sensitive clip after 5 minutes (300,000 ms)
-            delay(300_000L)
+            // Auto-clear sensitive clip after 30 seconds (30,000 ms) for maximum security
+            delay(30_000L)
             val currentClip = systemClipboard?.primaryClip?.getItemAt(0)?.text?.toString()?.trim()
             if (currentClip == sensitiveText) {
                 runCatching {
                     systemClipboard?.setPrimaryClip(ClipData.newPlainText("", ""))
-                    Log.i(TAG, "Sensitive clip auto-cleared from system clipboard")
+                    Log.i(TAG, "Sensitive clip auto-cleared from system clipboard after 30s")
                 }
             }
         }
