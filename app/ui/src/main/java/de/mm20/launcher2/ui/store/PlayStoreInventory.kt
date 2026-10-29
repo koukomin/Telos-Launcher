@@ -8,6 +8,8 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import de.mm20.launcher2.compat.PackageManagerCompat
 import de.mm20.launcher2.ktx.tryStartActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -24,12 +26,34 @@ data class PlayStoreApp(
 
 object PlayStoreInventory {
     const val PLAY_PACKAGE = "com.android.vending"
+    const val AURORA_PACKAGE = "com.aurora.store"
 
     fun isPlayStoreInstalled(context: Context): Boolean {
         return runCatching {
-            context.packageManager.getApplicationInfo(PLAY_PACKAGE, 0)
+            val flags = PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES
+            context.packageManager.getApplicationInfo(PLAY_PACKAGE, flags)
             true
         }.getOrDefault(false)
+    }
+
+    fun isAuroraStoreInstalled(context: Context): Boolean {
+        return runCatching {
+            val flags = PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES
+            context.packageManager.getApplicationInfo(AURORA_PACKAGE, flags)
+            true
+        }.getOrDefault(false)
+    }
+
+    fun getPreferredStorePackage(context: Context): String? {
+        if (isPlayStoreInstalled(context)) return PLAY_PACKAGE
+        if (isAuroraStoreInstalled(context)) return AURORA_PACKAGE
+        return null
+    }
+
+    fun getPreferredStoreTitle(context: Context): String {
+        if (isPlayStoreInstalled(context)) return "Play Store"
+        if (isAuroraStoreInstalled(context)) return "Aurora Store"
+        return "Store"
     }
 
     fun installedFromPlay(context: Context, isFrozen: (String) -> Boolean): List<PlayStoreApp> {
@@ -111,6 +135,39 @@ object PlayStoreInventory {
                 .setPackage(PLAY_PACKAGE)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.tryStartActivity(market)
+        }
+    }
+
+    suspend fun openPreferredStoreUpdates(context: Context, freezeManager: de.mm20.launcher2.freeze.FreezeManager? = null) {
+        val targetPkg = getPreferredStorePackage(context) ?: PLAY_PACKAGE
+        
+        withContext(Dispatchers.Main) {
+            android.widget.Toast.makeText(context, "Ξεπάγωμα εφαρμογών για ενημέρωση...", android.widget.Toast.LENGTH_SHORT).show()
+        }
+
+        if (freezeManager != null) {
+            runCatching {
+                if (freezeManager.isFrozen(targetPkg)) {
+                    freezeManager.unfreeze(targetPkg)
+                }
+                freezeManager.restoreFrozenApps()
+            }
+        }
+
+        if (targetPkg == AURORA_PACKAGE) {
+            val intent = context.packageManager.getLaunchIntentForPackage(AURORA_PACKAGE)
+                ?: Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$AURORA_PACKAGE")).apply {
+                    setPackage(AURORA_PACKAGE)
+                }
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.tryStartActivity(intent)
+        } else {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://collection/updates"))
+                .setPackage(PLAY_PACKAGE)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            if (!context.tryStartActivity(intent)) {
+                openPlayUpdates(context)
+            }
         }
     }
 

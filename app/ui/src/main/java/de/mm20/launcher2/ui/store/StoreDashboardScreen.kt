@@ -61,7 +61,9 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import org.koin.compose.koinInject
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -241,19 +243,26 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                     )
                 }
                 // === TELOS_PENDING_REVIEW_END: store_micro_progress ===
-                                val playTabIndex = if (playStoreInstalled) 3 else -1
+                                val freezeManager: de.mm20.launcher2.freeze.FreezeManager = koinInject()
+                val preferredStorePkg = PlayStoreInventory.getPreferredStorePackage(context)
+                val preferredStoreTitle = PlayStoreInventory.getPreferredStoreTitle(context)
+                val showStoreTab = preferredStorePkg != null
+                val playTabIndex = if (showStoreTab) 3 else -1
 
                 PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 16.dp) {
                     Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.hc_apps), maxLines = 1) })
                     Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.hc_telos_apps), maxLines = 1) })
                     Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(R.string.recommendation_tab_label), maxLines = 1) })
-                    if (playStoreInstalled) {
-                        Tab(selected = tab == playTabIndex, onClick = { 
-                            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse("market://collection/updates")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            runCatching { context.startActivity(intent) }.onFailure {
-                                runCatching { context.packageManager.getLaunchIntentForPackage("com.android.vending")?.let { context.startActivity(it) } }
-                            }
-                        }, text = { Text(stringResource(R.string.store_play_tab), maxLines = 1) })
+                    if (showStoreTab) {
+                        Tab(
+                            selected = tab == playTabIndex,
+                            onClick = { 
+                                scope.launch {
+                                    PlayStoreInventory.openPreferredStoreUpdates(context, freezeManager)
+                                }
+                            },
+                            text = { Text(preferredStoreTitle, maxLines = 1) }
+                        )
                     }
                 }
                 if (tab == 0) {
