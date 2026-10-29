@@ -1,7 +1,6 @@
 package de.mm20.launcher2.applock
 
 import android.content.Context
-import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,14 +11,13 @@ import kotlinx.coroutines.flow.asStateFlow
  */
 object TelosSecretVault {
 
-    private const val TAG = "TelosSecretVault"
-    private const val DEFAULT_SECRET_PIN = "1234"
-
     data class VaultState(
         val isUnlocked: Boolean = false,
-        val pinCode: String = DEFAULT_SECRET_PIN,
+        val pinCode: String = "",
         val hiddenAppPackages: Set<String> = emptySet()
-    )
+    ) {
+        val isPinSet: Boolean get() = pinCode.length >= 4
+    }
 
     private val _state = MutableStateFlow(VaultState())
     val state: StateFlow<VaultState> = _state.asStateFlow()
@@ -28,12 +26,11 @@ object TelosSecretVault {
      * Evaluates a calculator expression/input. If it matches `[PIN]=` or `[PIN]`, unlocks the secret vault.
      */
     fun evaluateCalculatorExpression(inputExpression: String, context: Context): Boolean {
+        val current = _state.value
+        if (!current.isPinSet) return false
         val cleanInput = inputExpression.trim().removeSuffix("=")
-        val currentPin = _state.value.pinCode
-
-        return if (cleanInput == currentPin) {
-            _state.value = _state.value.copy(isUnlocked = true)
-            Log.i(TAG, "Secret Vault successfully unlocked via Calculator gate!")
+        return if (cleanInput == current.pinCode) {
+            _state.value = current.copy(isUnlocked = true)
             true
         } else {
             false
@@ -42,13 +39,12 @@ object TelosSecretVault {
 
     fun lockVault() {
         _state.value = _state.value.copy(isUnlocked = false)
-        Log.i(TAG, "Secret Vault locked")
     }
 
     fun setVaultPin(newPin: String) {
-        if (newPin.length >= 4) {
-            _state.value = _state.value.copy(pinCode = newPin)
-            Log.i(TAG, "Vault PIN updated")
+        val trimmed = newPin.trim()
+        if (trimmed.length >= 4) {
+            _state.value = _state.value.copy(pinCode = trimmed, isUnlocked = false)
         }
     }
 }

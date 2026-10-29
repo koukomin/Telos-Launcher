@@ -950,7 +950,7 @@
     <string name="preference_search_tasks_summary">Αναζήτηση εργασιών στην εφαρμογή Tasks</string>
     <string name="search_action_alarm">Ορισμός ξυπνητηριού</string>
     <string name="search_action_screentime">"Χρόνος οθόνης"</string>
-    <string name="search_action_ai">"Αναζήτηση AI"</string>
+    <string name="search_action_ai">"Αναζήτηση ιστού"</string>
     <string name="search_action_contact">Προσθήκη στις επαφές</string>
     <string name="search_action_label">Όνομα</string>
     <string name="search_action_open_url">Προβολή ιστότοπου</string>
@@ -1568,7 +1568,7 @@
     <string name="settings_shizuku_step2_title">Βήμα 2 (Χειροκίνητα μέσω ADB / Termux):</string>
     <string name="settings_shizuku_copy_adb">Αντιγραφή Εντολής ADB</string>
     <string name="settings_shizuku_step3_title">Βήμα 3 (Αποτροπή τερματισμού στο παρασκήνιο):</string>
-    <string name="tweaks_title">Ρυθμίσεις Συστήματος (Essentials Engine)</string>
+    <string name="tweaks_title">Ρυθμίσεις συστήματος</string>
     <string name="tweaks_banner">Βασικά εργαλεία, τροποποιήσεις και βελτιστοποιήσεις απόδοσης.</string>
     <string name="tweaks_cat_display">Ρυθμίσεις Μπάρας Κατάστασης &amp; Οθόνης</string>
     <string name="tweaks_cat_sound">Ρυθμίσεις Ήχου &amp; Δόνησης</string>
@@ -1576,13 +1576,13 @@
     <string name="tweaks_cat_network">Δίκτυο &amp; Συνδεσιμότητα</string>
     <string name="tweaks_cat_battery">Μπαταρία &amp; Ενέργεια</string>
     <string name="media_frame_stepping">Μετακίνηση Καρέ-Καρέ (NeriPlayer)</string>
-    <string name="inure_title">Ανάλυση &amp; Ασφάλεια Εφαρμογής (Inure)</string>
+    <string name="inure_title">Ανάλυση και ασφάλεια εφαρμογών</string>
     <string name="inure_cert_fingerprints">Αποτυπώματα Πιστοποιητικού</string>
     <string name="inure_permissions_breakdown">Ανάλυση Δικαιωμάτων</string>
-    <string name="installerx_title">Εγκαταστάτης Πακέτων InstallerX</string>
-    <string name="installerx_scanning">Σκανάρισμα APK με τη μηχανή Antivirus...</string>
-    <string name="installerx_install_btn">Εγκατάσταση (InstallerX Engine)</string>
-    <string name="installerx_fallback_btn">Επιστροφή στον Προεπιλεγμένο Εγκαταστάτη Συστήματος</string>
+    <string name="installerx_title">Εγκαταστάτης πακέτων</string>
+    <string name="installerx_scanning">Έλεγχος δικαιωμάτων και υπογραφών APK…</string>
+    <string name="installerx_install_btn">Εγκατάσταση</string>
+    <string name="installerx_fallback_btn">Χρήση εγκαταστάτη συστήματος</string>
 
 
     <string name="flow_tab_discover">Ανακάλυψη</string>
@@ -1898,8 +1898,8 @@
     <string name="ocr_empty">Δεν βρέθηκε κείμενο σε αυτήν την εικόνα.</string>
     <string name="ocr_copy">Αντιγραφή Κειμένου</string>
     <string name="ocr_copied">Το κείμενο αντιγράφηκε στο πρόχειρο!</string>
-    <string name="ai_summary_title">Σύνοψη AI (TL;DR)</string>
-    <string name="ai_summarize">Σύνοψη με AI (TL;DR)</string>
+    <string name="ai_summary_title">Σύνοψη</string>
+    <string name="ai_summarize">Σύνοψη</string>
     <string name="ai_summarizing">Σύνταξη σύνοψης...</string>
     <string name="quick_event_title">Γρήγορο Συμβάν (Φυσική Γλώσσα)</string>
     <string name="quick_event_desc">Πληκτρολογήστε σε απλό κείμενο (π.χ. Συνάντηση αύριο στις 5)</string>

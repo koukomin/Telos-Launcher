@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="dl_m_auto_update">Αυτόματη ενημέρωση του yt-dlp</string>
+    <string name="dl_m_auto_update_sum">Κατεβάζει το νεότερο yt-dlp μία φορά την ημέρα μέσω Wi‑Fi, ώστε οι λήψεις να συνεχίζουν να δουλεύουν όταν αλλάζουν οι ιστότοποι</string>
+    <string name="dimension_length">Μήκος</string>
+    <string name="dimension_mass">Μάζα</string>
+    <string name="dimension_velocity">Ταχύτητα</string>
+    <string name="dimension_volume">Όγκος</string>
+    <string name="dimension_area">Επιφάνεια</string>
+    <string name="dimension_currency">Νόμισμα</string>
+    <string name="dimension_data">Δεδομένα</string>
+    <string name="dimension_bitrate">Ρυθμός μετάδοσης</string>
+    <string name="dimension_pressure">Πίεση</string>
+    <string name="dimension_energy">Ενέργεια</string>
+    <string name="dimension_frequency">Συχνότητα</string>
+    <string name="dimension_temperature">Θερμοκρασία</string>
+    <string name="dimension_time">Χρόνος</string>
+    <string name="unit_decimeter_symbol">dm</string>
+    <string name="unit_liter_symbol">L</string>
+    <string name="unit_milliliter_symbol">mL</string>
+    <string name="unit_cubic_meter_symbol">m³</string>
+    <string name="unit_cubic_centimeter_symbol">cm³</string>
+    <string name="unit_cubic_millimeter_symbol">mm³</string>
+    <string name="unit_cubic_inch_symbol">cu in</string>
+    <string name="unit_cubic_foot_symbol">cu ft</string>
+    <string name="unit_cubic_yard_symbol">cu yd</string>
+    <string name="unit_gallon_us_symbol">gal ΗΠΑ</string>
+    <string name="unit_gallon_imp_symbol">gal imp</string>
+    <string name="unit_pint_us_symbol">pt ΗΠΑ</string>
+    <string name="unit_pint_imp_symbol">pt imp</string>
+    <string name="unit_fluid_ounce_us_symbol">fl oz ΗΠΑ</string>
+    <string name="unit_fluid_ounce_imp_symbol">fl oz imp</string>
+    <string name="unit_cup_symbol">φλ.</string>
+    <string name="unit_tablespoon_symbol">κ.σ.</string>
+    <string name="unit_teaspoon_symbol">κ.γ.</string>
+    <plurals name="floating_launcher_zone_apps_count">
+        <item quantity="one">%1$d εφαρμογή</item>
+        <item quantity="other">%1$d εφαρμογές</item>
+    </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="one">δεκατόμετρο</item>
+        <item quantity="other">δεκατόμετρα</item>
+    </plurals>
+    <plurals name="unit_liter">
+        <item quantity="one">λίτρο</item>
+        <item quantity="other">λίτρα</item>
+    </plurals>
+    <plurals name="unit_milliliter">
+        <item quantity="one">χιλιοστόλιτρο</item>
+        <item quantity="other">χιλιοστόλιτρα</item>
+    </plurals>
+    <plurals name="unit_cubic_meter">
+        <item quantity="one">κυβικό μέτρο</item>
+        <item quantity="other">κυβικά μέτρα</item>
+    </plurals>
+    <plurals name="unit_cubic_centimeter">
+        <item quantity="one">κυβικό εκατοστό</item>
+        <item quantity="other">κυβικά εκατοστά</item>
+    </plurals>
+    <plurals name="unit_cubic_millimeter">
+        <item quantity="one">κυβικό χιλιοστό</item>
+        <item quantity="other">κυβικά χιλιοστά</item>
+    </plurals>
+    <plurals name="unit_cubic_inch">
+        <item quantity="one">κυβική ίντσα</item>
+        <item quantity="other">κυβικές ίντσες</item>
+    </plurals>
+    <plurals name="unit_cubic_foot">
+        <item quantity="one">κυβικό πόδι</item>
+        <item quantity="other">κυβικά πόδια</item>
+    </plurals>
+    <plurals name="unit_cubic_yard">
+        <item quantity="one">κυβική γιάρδα</item>
+        <item quantity="other">κυβικές γιάρδες</item>
+    </plurals>
+    <plurals name="unit_gallon_us">
+        <item quantity="one">γαλόνι (ΗΠΑ)</item>
+        <item quantity="other">γαλόνια (ΗΠΑ)</item>
+    </plurals>
+    <plurals name="unit_gallon_imp">
+        <item quantity="one">γαλόνι (αυτοκρατορικό)</item>
+        <item quantity="other">γαλόνια (αυτοκρατορικά)</item>
+    </plurals>
+    <plurals name="unit_pint_us">
+        <item quantity="one">πίντα (ΗΠΑ)</item>
+        <item quantity="other">πίντες (ΗΠΑ)</item>
+    </plurals>
+    <plurals name="unit_pint_imp">
+        <item quantity="one">πίντα (αυτοκρατορική)</item>
+        <item quantity="other">πίντες (αυτοκρατορικές)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_us">
+        <item quantity="one">ουγγιά υγρού (ΗΠΑ)</item>
+        <item quantity="other">ουγγιές υγρού (ΗΠΑ)</item>
+    </plurals>
+    <plurals name="unit_fluid_ounce_imp">
+        <item quantity="one">ουγγιά υγρού (αυτοκρατορική)</item>
+        <item quantity="other">ουγγιές υγρού (αυτοκρατορικές)</item>
+    </plurals>
+    <plurals name="unit_cup">
+        <item quantity="one">φλιτζάνι (ΗΠΑ)</item>
+        <item quantity="other">φλιτζάνια (ΗΠΑ)</item>
+    </plurals>
+    <plurals name="unit_tablespoon">
+        <item quantity="one">κουταλιά της σούπας (ΗΠΑ)</item>
+        <item quantity="other">κουταλιές της σούπας (ΗΠΑ)</item>
+    </plurals>
+    <plurals name="unit_teaspoon">
+        <item quantity="one">κουταλιά του γλυκού (ΗΠΑ)</item>
+        <item quantity="other">κουταλιές του γλυκού (ΗΠΑ)</item>
+    </plurals>
+</resources>

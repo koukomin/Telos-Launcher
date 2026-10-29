@@ -35,7 +35,7 @@ object TelosAppClonerEngine {
         val entry = ClonedAppEntry(
             originalPackageName = packageName,
             cloneId = 1,
-            appLabel = "$appLabel (Clone)",
+            appLabel = appLabel,
             sandboxDir = cloneDir.absolutePath
         )
 

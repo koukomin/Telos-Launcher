@@ -11,6 +11,9 @@ import java.util.Locale
  */
 object TelosSearchSummarizer {
 
+    private val sentenceSplit = Regex("(?<=[.!?])\\s+")
+    private val wordSplit = Regex("\\W+")
+
     data class SummaryResult(
         val originalLength: Int,
         val summaryBullets: List<String>,
@@ -18,7 +21,7 @@ object TelosSearchSummarizer {
     )
 
     /**
-     * Synthesizes [text] into a clean 3-bullet summary off the main thread.
+     * Extractive local summary: top sentences by word frequency. Not a cloud or LLM model.
      */
     suspend fun summarize(text: String, maxBullets: Int = 3): SummaryResult = withContext(Dispatchers.Default) {
         val cleanText = text.trim()
@@ -30,8 +33,7 @@ object TelosSearchSummarizer {
             )
         }
 
-        // Split text into sentences
-        val rawSentences = cleanText.split(Regex("(?<=[.!?])\\s+"))
+        val rawSentences = cleanText.split(sentenceSplit)
             .map { it.trim() }
             .filter { it.length in 20..300 }
 
@@ -39,10 +41,9 @@ object TelosSearchSummarizer {
             return@withContext SummaryResult(cleanText.length, listOf(cleanText.take(150) + "..."), true)
         }
 
-        // Score sentences by word frequency / key terms
         val wordFreq = mutableMapOf<String, Int>()
         cleanText.lowercase(Locale.ROOT)
-            .split(Regex("\\W+"))
+            .split(wordSplit)
             .filter { it.length > 3 }
             .forEach { word -> wordFreq[word] = (wordFreq[word] ?: 0) + 1 }
 

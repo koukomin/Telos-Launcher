@@ -30,10 +30,8 @@ object TelosGameTurbo {
     val state: StateFlow<TurboState> = _state.asStateFlow()
 
     fun launchGameWithTurbo(context: Context, gamePackageName: String) {
+        val appContext = context.applicationContext
         scope.launch {
-            Log.i(TAG, "Launching Game Turbo mode for $gamePackageName...")
-
-            // 1. Force JVM Garbage Collection & trim memory
             val beforeMem = Runtime.getRuntime().freeMemory()
             System.gc()
             val afterMem = Runtime.getRuntime().freeMemory()
@@ -44,7 +42,15 @@ object TelosGameTurbo {
                 activeGamePackage = gamePackageName,
                 freedMemoryBytes = freed
             )
-            Log.i(TAG, "Game Turbo activated! Freed ${freed / (1024 * 1024)} MB RAM for $gamePackageName")
+
+            val launch = appContext.packageManager.getLaunchIntentForPackage(gamePackageName)
+                ?.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+            if (launch != null) {
+                runCatching { appContext.startActivity(launch) }
+                    .onFailure { Log.e(TAG, "Could not start $gamePackageName", it) }
+            } else {
+                Log.w(TAG, "No launch intent for $gamePackageName")
+            }
         }
     }
 

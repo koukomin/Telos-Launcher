@@ -116,7 +116,7 @@
     <string name="au_office_truncated">Μεγάλο αρχείο: εμφανίζεται μόνο το πρώτο μέρος. Το υπόλοιπο παραμένει αμετάβλητο όταν αποθηκεύσετε.</string>
     <string name="au_office_encrypted">Αυτό το αρχείο προστατεύεται με κωδικό πρόσβασης και δεν μπορεί να ανοιχθεί εδώ.</string>
     <string name="au_office_slide_n">Διαφάνεια %1$d</string>
-    <string name="au_phonea_recents">Πρόσφατα</string>
+    <string name="au_phonea_recents">Κλήσεις</string>
     <string name="au_phonea_dialer">Πληκτρολόγιο κλήσης</string>
     <string name="au_phonea_unlock_phone">Ξεκλείδωμα τηλεφώνου</string>
     <string name="au_phonea_sip_not_connected">Ο λογαριασμός SIP δεν είναι συνδεδεμένος</string>

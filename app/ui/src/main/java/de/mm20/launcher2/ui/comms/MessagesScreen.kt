@@ -8,7 +8,9 @@ import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -318,31 +321,58 @@ fun MessagesScreen(
                                 if (c.snippet.isNotBlank()) Text(c.snippet, style = MaterialTheme.typography.bodyMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
                                 if (c.unread > 0) androidx.compose.material3.Badge { Text(c.unread.toString()) }
                             }
-                            Column {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
                                 IconButton(onClick = { open = c }) {
                                     Icon(painterResource(R.drawable.sms_24px), contentDescription = stringResource(R.string.comms_reply))
                                 }
-                                IconButton(onClick = { settings.setConversationPinned(c.address, !isPinned(c)) }) {
-                                    Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.comms_pin_conversation))
-                                }
-                                if (isDefault) IconButton(onClick = {
-                                    sendScope.launch {
-                                        withContext(Dispatchers.IO) {
-                                            if (c.unread > 0) SmsStore.markThreadRead(context, c.threadId)
-                                            else SmsStore.markThreadUnread(context, c.threadId)
+                                var cardMenuOpen by remember { mutableStateOf(false) }
+                                Box {
+                                    IconButton(onClick = { cardMenuOpen = true }) {
+                                        Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.comms_menu))
+                                    }
+                                    androidx.compose.material3.DropdownMenu(
+                                        expanded = cardMenuOpen,
+                                        onDismissRequest = { cardMenuOpen = false }
+                                    ) {
+                                        androidx.compose.material3.DropdownMenuItem(
+                                            text = { Text(if (isPinned(c)) stringResource(R.string.comms_unpin_conversation) else stringResource(R.string.comms_pin_conversation)) },
+                                            onClick = {
+                                                cardMenuOpen = false
+                                                settings.setConversationPinned(c.address, !isPinned(c))
+                                            },
+                                            leadingIcon = { Icon(painterResource(R.drawable.add_24px), contentDescription = null) }
+                                        )
+                                        if (isDefault) {
+                                            androidx.compose.material3.DropdownMenuItem(
+                                                text = { Text(if (c.unread > 0) stringResource(R.string.comms_mark_read) else stringResource(R.string.comms_mark_unread)) },
+                                                onClick = {
+                                                    cardMenuOpen = false
+                                                    sendScope.launch {
+                                                        withContext(Dispatchers.IO) {
+                                                            if (c.unread > 0) SmsStore.markThreadRead(context, c.threadId)
+                                                            else SmsStore.markThreadUnread(context, c.threadId)
+                                                        }
+                                                        refresh++
+                                                    }
+                                                },
+                                                leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) }
+                                            )
+                                            androidx.compose.material3.DropdownMenuItem(
+                                                text = { Text(stringResource(R.string.comms_delete_conversation), color = MaterialTheme.colorScheme.error) },
+                                                onClick = {
+                                                    cardMenuOpen = false
+                                                    sendScope.launch {
+                                                        withContext(Dispatchers.IO) { SmsStore.deleteThread(context, c.threadId) }
+                                                        refresh++
+                                                    }
+                                                },
+                                                leadingIcon = { Icon(painterResource(R.drawable.close_24px), contentDescription = null, tint = MaterialTheme.colorScheme.error) }
+                                            )
                                         }
-                                        refresh++
                                     }
-                                }) {
-                                    Icon(painterResource(R.drawable.search_24px), contentDescription = stringResource(R.string.comms_mark_unread))
-                                }
-                                if (isDefault) IconButton(onClick = {
-                                    sendScope.launch {
-                                        withContext(Dispatchers.IO) { SmsStore.deleteThread(context, c.threadId) }
-                                        refresh++
-                                    }
-                                }) {
-                                    Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.comms_delete_conversation))
                                 }
                             }
                         }
@@ -471,13 +501,20 @@ private fun ThreadView(
             verticalArrangement = Arrangement.spacedBy(6.dp), contentPadding = PaddingValues(12.dp),
         ) {
             items(shownMessages, key = { it.id + it.date }) { m ->
+                var messageMenuOpen by remember { mutableStateOf(false) }
                 Box(Modifier.fillMaxWidth(), contentAlignment = if (m.outgoing) Alignment.CenterEnd else Alignment.CenterStart) {
+                    @OptIn(ExperimentalFoundationApi::class)
                     Surface(
                         shape = RoundedCornerShape(16.dp),
                         color = if (m.outgoing) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
-                        modifier = Modifier.widthIn(max = 300.dp).clickable {
-                            if (m.body.isNotBlank()) de.mm20.launcher2.comms.sms.SmsTts.speak(context, m.body)
-                        },
+                        modifier = Modifier.widthIn(max = 300.dp).combinedClickable(
+                            onClick = {
+                                if (m.body.isNotBlank()) de.mm20.launcher2.comms.sms.SmsTts.speak(context, m.body)
+                            },
+                            onLongClick = {
+                                messageMenuOpen = true
+                            }
+                        ),
                     ) {
                         Column(Modifier.padding(horizontal = 12.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                             m.attachments.forEach { a ->
@@ -494,6 +531,37 @@ private fun ThreadView(
                                 style = MaterialTheme.typography.labelSmall,
                                 color = if (m.failed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
+                        }
+                        androidx.compose.material3.DropdownMenu(
+                            expanded = messageMenuOpen,
+                            onDismissRequest = { messageMenuOpen = false }
+                        ) {
+                            androidx.compose.material3.DropdownMenuItem(
+                                text = { Text(stringResource(R.string.hc_copy)) },
+                                onClick = {
+                                    messageMenuOpen = false
+                                    if (m.body.isNotBlank()) {
+                                        val clip = android.content.ClipData.newPlainText("message", m.body)
+                                        (context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager)?.setPrimaryClip(clip)
+                                    }
+                                },
+                                leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) }
+                            )
+                            if (isDefault) {
+                                androidx.compose.material3.DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.comms_delete_conversation), color = MaterialTheme.colorScheme.error) },
+                                    onClick = {
+                                        messageMenuOpen = false
+                                        sendScope.launch {
+                                            withContext(Dispatchers.IO) {
+                                                SmsStore.deleteMessage(context, m.id)
+                                            }
+                                            version++
+                                        }
+                                    },
+                                    leadingIcon = { Icon(painterResource(R.drawable.close_24px), contentDescription = null, tint = MaterialTheme.colorScheme.error) }
+                                )
+                            }
                         }
                     }
                 }
@@ -645,7 +713,43 @@ private fun ThreadView(
                     modifier = Modifier.padding(horizontal = 12.dp),
                 ) {
                     installed.forEach { (id, label) ->
-                        FilterChip(selected = current == id, onClick = { sendVia = id }, label = { Text(label) })
+                        val pkg = remember(id) {
+                            if (id == "sms") null
+                            else de.mm20.launcher2.comms.intent.MessengerApps.installedPackage(
+                                context, de.mm20.launcher2.comms.intent.MessengerChannel.fromId(id)
+                            )
+                        }
+                        val iconDrawable = remember(pkg) {
+                            if (pkg != null) runCatching { context.packageManager.getApplicationIcon(pkg) }.getOrNull() else null
+                        }
+                        Surface(
+                            onClick = { sendVia = id },
+                            shape = RoundedCornerShape(12.dp),
+                            color = if (current == id) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
+                            contentColor = if (current == id) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(vertical = 2.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                            ) {
+                                if (iconDrawable != null) {
+                                    AsyncImage(
+                                        model = iconDrawable,
+                                        contentDescription = label,
+                                        modifier = Modifier.size(20.dp),
+                                    )
+                                } else {
+                                    Icon(
+                                        painter = painterResource(R.drawable.sms_24px),
+                                        contentDescription = label,
+                                        modifier = Modifier.size(20.dp),
+                                    )
+                                }
+                                Text(label, style = MaterialTheme.typography.labelMedium, maxLines = 1)
+                            }
+                        }
                     }
                 }
             }

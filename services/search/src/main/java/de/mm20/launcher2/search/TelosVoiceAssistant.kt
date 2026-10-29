@@ -1,7 +1,5 @@
 package de.mm20.launcher2.search
 
-import android.content.Context
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Locale
@@ -12,8 +10,6 @@ import java.util.Locale
  * (e.g. "turn on flashlight", "freeze instagram", "search wikipedia for x").
  */
 object TelosVoiceAssistant {
-
-    private const val TAG = "TelosVoiceAssistant"
 
     sealed class VoiceAction {
         data class SearchWikipedia(val query: String) : VoiceAction()
@@ -29,8 +25,6 @@ object TelosVoiceAssistant {
     suspend fun parseCommand(rawSpeechInput: String): VoiceAction = withContext(Dispatchers.Default) {
         val clean = rawSpeechInput.trim().lowercase(Locale.ROOT)
         if (clean.isBlank()) return@withContext VoiceAction.Unknown(rawSpeechInput)
-
-        Log.d(TAG, "Parsing voice command: '$clean'")
 
         return@withContext when {
             clean.contains("flashlight") || clean.contains("φακός") -> {

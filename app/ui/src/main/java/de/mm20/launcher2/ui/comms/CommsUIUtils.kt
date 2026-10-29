@@ -135,7 +135,7 @@ internal fun CommsAvatar(
             .background(avatarColorFor(name)),
         contentAlignment = Alignment.Center,
     ) {
-        if (photoUri != null) {
+        if (!photoUri.isNullOrBlank()) {
             AsyncImage(
                 model = photoUri,
                 contentDescription = null,

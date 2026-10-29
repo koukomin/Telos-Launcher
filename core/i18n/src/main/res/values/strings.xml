@@ -1139,7 +1139,7 @@
     <string name="search_action_email">Email</string>
     <string name="search_action_alarm">Set alarm</string>
     <string name="search_action_screentime">Screen time</string>
-    <string name="search_action_ai">AI Search</string>
+    <string name="search_action_ai">Web search</string>
     <string name="hc_high_volume_warning_title">High Volume Boost Warning</string>
     <string name="hc_high_volume_warning_text">Boosting audio above 100% may cause sound distortion or potential speaker damage. Telos is not responsible for hardware damage. Use at your own risk.</string>
     <string name="store_audio_focus_title">Audio Focus Mixer</string>
@@ -1150,7 +1150,7 @@
     <string name="store_tab_installed_apps">Installed Apps</string>
     <string name="store_show_system_apps">Show system apps</string>
     <string name="store_show_virtual_apps">Show virtual apps</string>
-    <string name="preference_screen_tweaks">Tweaks (Essentials Engine)</string>
+    <string name="preference_screen_tweaks">Tweaks</string>
     <string name="preference_screen_tweaks_summary">System-level customizations, refresh rate, and volume controls (Shizuku/Root)</string>
     <string name="settings_system_automation">System Automation &amp; Shizuku</string>
     <string name="settings_shizuku_autostart">Shizuku Auto-Start</string>
@@ -1164,7 +1164,7 @@
     <string name="settings_shizuku_step2_title">Step 2 (Manual via ADB / Termux):</string>
     <string name="settings_shizuku_copy_adb">Copy ADB Command</string>
     <string name="settings_shizuku_step3_title">Step 3 (Preventing OS Background Killing):</string>
-    <string name="tweaks_title">Tweaks &amp; Essentials Engine</string>
+    <string name="tweaks_title">Tweaks</string>
     <string name="tweaks_banner">Essential tools, mods and performance optimizations.</string>
     <string name="tweaks_cat_display">Status Bar &amp; Display Tweaks</string>
     <string name="tweaks_cat_sound">Sound &amp; Haptics Tweaks</string>
@@ -1172,13 +1172,13 @@
     <string name="tweaks_cat_network">Network &amp; Connectivity</string>
     <string name="tweaks_cat_battery">Battery &amp; Power Tweaks</string>
     <string name="media_frame_stepping">Frame Stepping (NeriPlayer)</string>
-    <string name="inure_title">Inure App Analytics &amp; Security</string>
+    <string name="inure_title">App analytics and security</string>
     <string name="inure_cert_fingerprints">Certificate Fingerprints</string>
     <string name="inure_permissions_breakdown">Permissions Breakdown</string>
-    <string name="installerx_title">InstallerX Package Installer</string>
-    <string name="installerx_scanning">Scanning APK with Antivirus Engine...</string>
-    <string name="installerx_install_btn">Install (InstallerX Engine)</string>
-    <string name="installerx_fallback_btn">Fallback to Default System Installer</string>
+    <string name="installerx_title">Package installer</string>
+    <string name="installerx_scanning">Inspecting APK permissions and signatures…</string>
+    <string name="installerx_install_btn">Install</string>
+    <string name="installerx_fallback_btn">Use system installer</string>
     <string name="flow_tab_discover">Discover</string>
     <string name="flow_tab_music">Music</string>
     <string name="flow_tab_videos">Videos</string>
@@ -2001,8 +2001,8 @@
     <string name="ocr_empty">No text found in this image.</string>
     <string name="ocr_copy">Copy Text</string>
     <string name="ocr_copied">Text copied to clipboard!</string>
-    <string name="ai_summary_title">AI Summary (TL;DR)</string>
-    <string name="ai_summarize">AI Summarize (TL;DR)</string>
+    <string name="ai_summary_title">Summary</string>
+    <string name="ai_summarize">Summarize</string>
     <string name="ai_summarizing">Summarizing...</string>
     <string name="quick_event_title">Quick Event (Natural Language)</string>
     <string name="quick_event_desc">Type in plain text (e.g. Meeting tomorrow at 5pm)</string>

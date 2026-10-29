@@ -16,7 +16,9 @@ import androidx.compose.ui.Alignment
 import de.mm20.launcher2.ui.component.AdaptiveNavigationBar
 import de.mm20.launcher2.ui.component.AdaptiveNavigationItem
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.zIndex
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.lifecycle.Lifecycle
@@ -300,7 +302,7 @@ fun CommsDashboardScreen(
                 }
             },
             floatingActionButton = {
-                if (!inSubScreen) {
+                if (!inSubScreen && selectedTab != CommsTab.Keypad) {
                     FloatingActionButton(
                         onClick = { selectedTab = CommsTab.Keypad },
                         shape = CircleShape,
@@ -329,13 +331,27 @@ fun CommsDashboardScreen(
                         showLocalSearch = false,
                         showAddFab = false,
                     )
-                    CommsTab.Keypad -> DialpadScreen(initialNumber = initialNumber)
+                    CommsTab.Keypad -> Box(Modifier.fillMaxSize()) // Rendered in overlay below
                     CommsTab.Messages -> MessagesScreen(
                         initialNumber = if (initialTab.lowercase() == "messages") initialNumber else "",
                         initialBody = initialBody,
                         initialAttachments = initialAttachments,
                     )
                 }
+            }
+        }
+    }
+
+    if (selectedTab == CommsTab.Keypad) {
+        BackHandler { selectedTab = CommsTab.Recents }
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .zIndex(20f),
+            color = MaterialTheme.colorScheme.surfaceContainerLowest,
+        ) {
+            Box(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding()) {
+                DialpadScreen(initialNumber = initialNumber)
             }
         }
     }
@@ -402,16 +418,18 @@ private fun DefaultSmsLauncherIcon() {
         packageName = android.provider.Telephony.Sms.getDefaultSmsPackage(context)
     }
     // Telos hosts several virtual apps in one package; resolve the Messages virtual app explicitly.
-    if (packageName == context.packageName) {
-        val applications: AppRepository = koinInject()
-        val icons: IconService = koinInject()
-        val pixels = with(LocalDensity.current) { 28.dp.roundToPx() }
-        val icon by remember(pixels) {
-            applications.findMany().flatMapLatest { apps ->
-                apps.firstOrNull { it.key.startsWith("telos_messages_app://") }?.let { icons.getIcon(it, pixels) } ?: flowOf(null)
-            }
-        }.collectAsStateWithLifecycle(null)
-        if (icon != null) ShapedLauncherIcon(size = 28.dp, icon = { icon })
-        else Icon(painterResource(R.drawable.sms_24px), contentDescription = null)
+    if (packageName == context.packageName || packageName.isNullOrBlank()) {
+        val bitmap = remember(context) {
+            de.mm20.launcher2.search.VirtualAppAppearance.largeIcon(context, "telos_messages_app")
+        }
+        if (bitmap != null) {
+            androidx.compose.foundation.Image(
+                bitmap = bitmap.asImageBitmap(),
+                contentDescription = null,
+                modifier = Modifier.size(28.dp),
+            )
+        } else {
+            Icon(painterResource(R.drawable.sms_24px), contentDescription = null)
+        }
     } else CommsLauncherIcon(packageName)
 }

@@ -507,8 +507,8 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
                         summarizing = true
                         scope.launch {
                             val plain = message.body.ifBlank { message.preview }
-                            val sentences = plain.split(Regex("(?<=[.!?])\\s+")).filter { it.length > 15 }
-                            summary = if (sentences.size <= 2) plain else sentences.take(2).joinToString(" ")
+                            val result = de.mm20.launcher2.search.TelosSearchSummarizer.summarize(plain)
+                            summary = result.summaryBullets.joinToString("\n")
                             summarizing = false
                         }
                     },

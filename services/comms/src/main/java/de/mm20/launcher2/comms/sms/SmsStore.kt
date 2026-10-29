@@ -84,6 +84,15 @@ object SmsStore {
         return true
     }
 
+    fun deleteMessage(context: Context, messageId: String): Boolean {
+        if (messageId.isBlank() || !SmsRole.isDefault(context)) return false
+        val id = messageId.filter { it.isDigit() }
+        if (id.isBlank()) return false
+        val deletedSms = runCatching { context.contentResolver.delete(Telephony.Sms.CONTENT_URI, "${Telephony.Sms._ID} = ?", arrayOf(id)) }.getOrDefault(0)
+        val deletedMms = runCatching { context.contentResolver.delete(Telephony.Mms.CONTENT_URI, "${Telephony.Mms._ID} = ?", arrayOf(id)) }.getOrDefault(0)
+        return (deletedSms + deletedMms) > 0
+    }
+
     fun deleteOlderThan(context: Context, olderThanMs: Long) {
         if (!SmsRole.isDefault(context) || olderThanMs <= 0) return
         val cut = olderThanMs.toString()
