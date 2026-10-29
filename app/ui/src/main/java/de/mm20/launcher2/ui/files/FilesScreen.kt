@@ -324,8 +324,13 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                 }
                             },
                             actions = {
-                                if (vm.path != null) IconButton(onClick = { searching = true }) {
-                                    Icon(painterResource(Icons.search_24px), contentDescription = stringResource(R.string.hc_search))
+                                if (vm.path != null) {
+                                    IconButton(onClick = { vm.path?.let { dialog = FilesDialog.TelosDrop(it) } }) {
+                                        Icon(painterResource(R.drawable.share_24px), contentDescription = "Telos Drop")
+                                    }
+                                    IconButton(onClick = { searching = true }) {
+                                        Icon(painterResource(Icons.search_24px), contentDescription = stringResource(R.string.hc_search))
+                                    }
                                 }
                                 toolbarConfig.actions.forEach { action ->
                                 if (vm.path != null && action == FilesToolbarAction.View) Box {
@@ -526,6 +531,7 @@ private sealed interface FilesDialog {
     data class Archive(val entry: FsEntry) : FilesDialog
     data class Unlock(val entry: FsEntry) : FilesDialog
     data class ShareLarge(val entries: List<FsEntry>, val bytes: Long) : FilesDialog
+    data class TelosDrop(val path: String) : FilesDialog
 }
 
 @Composable
@@ -570,6 +576,7 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         )
         is FilesDialog.Unlock -> UnlockVaultDialog(vm, dialog.entry, onDismiss)
         is FilesDialog.Properties -> PropertiesDialog(vm, dialog.entry, onDismiss)
+        is FilesDialog.TelosDrop -> FilesSharingDialog(dialog.path, onDismiss)
     }
 }
 
