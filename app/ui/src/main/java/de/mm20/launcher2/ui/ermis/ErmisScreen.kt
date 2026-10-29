@@ -460,6 +460,7 @@ private fun ComposeDialog(accounts: List<ErmisAccount>, initialAccount: String?,
 
 @Composable
 private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage>, folders: List<ErmisFolder>, onSelect: (ErmisMessage) -> Unit, onDismiss: () -> Unit, onReply: () -> Unit, onReplyAll: () -> Unit, onForward: () -> Unit, onMarkUnread: () -> Unit, onMove: (ErmisFolder) -> Unit, onMoveAny: () -> Unit, onSaveNote: (String) -> Unit, onDownload: (ErmisAttachment, Uri) -> Unit) {
+    val scope = rememberCoroutineScope()
     var conversationOpen by remember { mutableStateOf(false) }
     var showHtml by remember(message.accountId, message.folder, message.uid, message.html) { mutableStateOf(message.html.isNotBlank()) }
     val htmlHeight = (LocalConfiguration.current.screenHeightDp * .6f).coerceIn(180f, 640f).dp
@@ -480,6 +481,46 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
                 TextButton(onClick = { conversationOpen = true }) { Text(stringResource(R.string.ermis_conversation_count, conversation.size)) }
             }
             Text(message.from, style = MaterialTheme.typography.titleMedium)
+            
+            var summary by remember { mutableStateOf<String?>(null) }
+            var summarizing by remember { mutableStateOf(false) }
+
+            if (summary != null) {
+                Surface(
+                    color = MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+                ) {
+                    Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(painterResource(R.drawable.auto_awesome_20dp), contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.width(6.dp))
+                            Text("AI Summary (TL;DR)", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+                        }
+                        Text(summary!!, style = MaterialTheme.typography.bodyMedium)
+                    }
+                }
+            } else {
+                OutlinedButton(
+                    onClick = {
+                        summarizing = true
+                        scope.launch {
+                            val plain = message.body.ifBlank { message.preview }
+                            val sentences = plain.split(Regex("(?<=[.!?])\\s+")).filter { it.length > 15 }
+                            summary = if (sentences.size <= 2) plain else sentences.take(2).joinToString(" ")
+                            summarizing = false
+                        }
+                    },
+                    enabled = !summarizing,
+                    modifier = Modifier.padding(vertical = 2.dp)
+                ) {
+                    Icon(painterResource(R.drawable.auto_awesome_20dp), contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(if (summarizing) "Summarizing..." else "AI Summarize (TL;DR)")
+                }
+            }
+
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 TextButton(onClick = onReplyAll) { Text(stringResource(R.string.ermis_reply_all)) }
                 TextButton(onClick = onForward) { Text(stringResource(R.string.ermis_forward)) }
