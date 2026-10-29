@@ -19,7 +19,17 @@ val LocalVirtualAppBlur = staticCompositionLocalOf<VirtualAppBlur?> { null }
     .copy(alpha = 1f)
 
 @Composable fun VirtualAppWindow(content: @Composable () -> Unit) {
-    if (LocalGlassSurface.current) content() else VirtualAppTheme(content)
+    if (LocalGlassSurface.current) content() else {
+        androidx.compose.animation.AnimatedVisibility(
+            visible = true,
+            enter = androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(300)) + 
+                    androidx.compose.animation.scaleIn(androidx.compose.animation.core.tween(300), initialScale = 0.92f),
+            exit = androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(200)) + 
+                   androidx.compose.animation.scaleOut(androidx.compose.animation.core.tween(200), targetScale = 0.92f)
+        ) {
+            VirtualAppTheme(content)
+        }
+    }
 }
 @Suppress("UNUSED_PARAMETER")
 fun Modifier.virtualAppGlass(blur: VirtualAppBlur, color: Color): Modifier = frostedGlass(color)
