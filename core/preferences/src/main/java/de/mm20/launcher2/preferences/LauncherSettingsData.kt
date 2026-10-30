@@ -344,6 +344,7 @@ data class IconsGroup(
     val iconsAdaptify: Boolean = false,
     val iconsThemed: Boolean = false,
     val iconsForceThemed: Boolean = false,
+    val iconsCyberpunk: Boolean = false,
     val iconsPack: String? = null,
     // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
     val fallbackIconPacks: List<String> = emptyList(),

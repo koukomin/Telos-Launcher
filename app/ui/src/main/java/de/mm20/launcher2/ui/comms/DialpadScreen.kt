@@ -225,6 +225,7 @@ fun DialpadScreen(initialNumber: String = "") {
                                     contact.phoneNumbers.firstOrNull()?.let { viewModel.dial(context, it) }
                                 },
                                 onDetails = {
+                                    viewModel.onClear()
                                     backStack.add(ContactDetailsRoute(contactId = contact.id))
                                 },
                             )

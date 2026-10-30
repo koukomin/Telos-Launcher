@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.map
 data class IconSettingsData(
     val themedIcons: Boolean,
     val forceThemed: Boolean,
+    val cyberpunkIcons: Boolean,
     val adaptify: Boolean,
     val iconPack: String?,
     // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
@@ -21,6 +22,7 @@ class IconSettings internal constructor(
             IconSettingsData(
                 themedIcons = it.icons.iconsThemed,
                 forceThemed = it.icons.iconsForceThemed,
+                cyberpunkIcons = it.icons.iconsCyberpunk,
                 adaptify = it.icons.iconsAdaptify,
                 iconPack = it.icons.iconsPack,
                 // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
@@ -45,6 +47,12 @@ class IconSettings internal constructor(
     fun setForceThemedIcons(forceThemed: Boolean) {
         launcherDataStore.update {
             it.copy(icons = it.icons.copy(iconsForceThemed = forceThemed))
+        }
+    }
+
+    fun setCyberpunkIcons(cyberpunkIcons: Boolean) {
+        launcherDataStore.update {
+            it.copy(icons = it.icons.copy(iconsCyberpunk = cyberpunkIcons))
         }
     }
 

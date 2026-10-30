@@ -313,13 +313,23 @@ fun CommsDashboardScreen(
                     ) {
                         listOf(
                             Triple(CommsTab.Recents, R.drawable.schedule_24px, CommsTab.Recents.label),
-                            Triple(CommsTab.Contacts, R.drawable.person_24px_filled, CommsTab.Contacts.label),
+                            Triple(CommsTab.Contacts, R.drawable.person_24px, CommsTab.Contacts.label),
                             Triple(CommsTab.Messages, R.drawable.sms_24px, CommsTab.Messages.label),
                         ).forEach { (tab, icon, label) ->
                             AdaptiveNavigationItem(
                                 selected = selectedTab == tab,
                                 onClick = { selectedTab = tab },
-                                icon = { if (tab == CommsTab.Messages) DefaultSmsLauncherIcon() else Icon(painterResource(icon), contentDescription = null) },
+                                icon = {
+                                    if (tab == CommsTab.Messages) {
+                                        DefaultSmsLauncherIcon()
+                                    } else {
+                                        Icon(
+                                            painter = painterResource(icon),
+                                            contentDescription = null,
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
+                                },
                                 label = { Text(stringResource(label)) },
                             )
                         }
