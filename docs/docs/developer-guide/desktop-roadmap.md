@@ -4,7 +4,7 @@ sidebar_position: 9
 
 # Telos Linux Desktop roadmap (remember this)
 
-When a later session asks **what is still pending** for the Linux desktop, the answer is **Helix H4** (settings visual pass). P0–P4 and Helix H0–H3 are in tree. `:app:app` still must not depend on `:desktop-linux`. `:app:ui` hosts `:ui-kmp` screens. Spec: [Telos Helix](./telos-helix.md).
+When a later session asks **what is still pending** for the Linux desktop, the answer is **none of P0–P4 and none of Helix H0–H4**. `:app:app` still must not depend on `:desktop-linux`. `:app:ui` hosts `:ui-kmp` screens. Spec: [Telos Helix](./telos-helix.md).
 
 | Phase | Status | Scope |
 | --- | --- | --- |
@@ -14,6 +14,6 @@ When a later session asks **what is still pending** for the Linux desktop, the a
 | **P3** | In tree | `TELOS_COMPOSITOR=niri` (fallback labwc), fractional scale 100–200%, screenshots `0600` and no clipboard unless `TELOS_SHOT_CLIPBOARD=1` (macOS `screencapture`), macOS/BSD settings filter (no LUKS), CI `ubuntu-latest` + `ubuntu-24.04-arm`. |
 | **P4** | In tree | `:ui-kmp` JVM+Android screens. `:desktop-linux` uses JVM. `:app:ui` hosts them (search calculator pad, clock local face, empty notes, agenda month). **Do not add `:ui-kmp` to `:app:app`.** Full Calculator/Notes/Clock/Calendar apps stay in `:app:ui`. |
 | **Helix H0–H3** | In tree | Plasma-class chrome: shared Helix tokens, panel glyphs, Kickoff favorites+search. See [telos-helix.md](./telos-helix.md). |
-| **Helix H4** | Pending | Settings window visual pass with Helix tokens. |
+| **Helix H4** | In tree | Settings grouped Helix cards (`LinuxDesktopSettingsPanel`). |
 
 Constraints that stay in force: no `:app:app` dependency on `:desktop-linux`; i18n keys from `:core:i18n` only; labwc is a **host package**, not bundled.

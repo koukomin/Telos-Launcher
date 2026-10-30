@@ -26,9 +26,9 @@ Beat GNOME / Cosmic / Hyprland-default chrome on density and search, using KDE-c
 | **H1** | In tree (panel glyphs) | `TelosTopPanel` system tray uses `CandyCyberIcon` (volume, network, battery, tray, clip, bell, shot) instead of English word chips. Popups stay opaque `TelosColors.surface`. |
 | **H2** | In tree (Kickoff) | `PlasmaAppGrid` Kickoff layout: left favorites + power, right search (`DesktopSearch`) + Telos/Linux grids. Super / logo still `DesktopChrome.toggleAppGrid()`. |
 | **H3** | Already in tree | Klassy titlebars, workspace dots, dock row, Alt-Tab strip. Polish only if gaps. |
-| **H4** | Pending | Settings window visual pass (same tokens, grouped cards). Do not start extra DEs. |
+| **H4** | In tree | Settings window: opaque Helix `surface` + grouped `surfaceContainer` cards with `outline`. Same toggles and actions as before. |
 
-When a later session asks **what is still pending**: **Helix H4** (settings visual pass). H0–H3 are in tree.
+When a later session asks **what is still pending**: **none of P0–P4, none of Helix H0–H4**. Do not start extra DEs unless asked.
 
 ## Files
 
@@ -37,7 +37,8 @@ When a later session asks **what is still pending**: **Helix H4** (settings visu
 - Kickoff: `desktop-linux/.../ui/AppGrid.kt`
 - Icons: `desktop-linux/.../icons/CandyCyberIcons.kt`
 - Status comment: `desktop-linux/.../ui/Helix.kt`
+- Settings: `desktop-linux/.../ui/LinuxDesktopSettings.kt`
 
 ## Resume prompt
 
-Continue Helix H4 if H0–H3 are already committed. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`.
+Helix H0–H4 are in tree. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`.

@@ -1,12 +1,16 @@
 package com.telos.desktop.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -18,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.cursor.CursorPreset
@@ -39,103 +44,133 @@ fun LinuxDesktopSettingsPanel(
     val outputs = remember { display.queryOutputs() }
     Column(
         Modifier.fillMaxSize().background(TelosColors.surface).padding(16.dp).verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Text(com.telos.desktop.i18n.TelosI18n.t("telos_desktop_settings"), color = TelosColors.secondary, fontSize = 22.sp)
-        // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
-        Toggle("Start fullscreen", settings.startFullscreen) {
-            settings.startFullscreen = it
-            settings.save()
-            com.telos.desktop.ui.DesktopChrome.fullscreen = it
-        }
-        Toggle("Follow KDE/GTK system theme", settings.followSystemTheme) {
-            settings.followSystemTheme = it
-            settings.save()
-        }
-        TextButton(onClick = { com.telos.desktop.ui.DesktopChrome.toggleFullscreen() }) {
-            Text(if (com.telos.desktop.ui.DesktopChrome.fullscreen) "Exit fullscreen (F11)" else "Enter fullscreen (F11)")
-        }
-        // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
-        if (filter.showAndroidMobileSettings) {
-            Text("Shizuku / Dhizuku / Island and Android permissions are hidden on Linux.", fontSize = 12.sp, color = TelosColors.onSurface.copy(0.6f))
+        HelixSettingsCard("Session") {
+            Toggle("Start fullscreen", settings.startFullscreen) {
+                settings.startFullscreen = it
+                settings.save()
+                DesktopChrome.fullscreen = it
+            }
+            Toggle("Follow KDE/GTK system theme", settings.followSystemTheme) {
+                settings.followSystemTheme = it
+                settings.save()
+            }
+            TextButton(onClick = { DesktopChrome.toggleFullscreen() }) {
+                Text(if (DesktopChrome.fullscreen) "Exit fullscreen (F11)" else "Enter fullscreen (F11)")
+            }
+            if (filter.showAndroidMobileSettings) {
+                Text(
+                    "Shizuku / Dhizuku / Island and Android permissions are hidden on Linux.",
+                    fontSize = 12.sp,
+                    color = TelosColors.onSurface.copy(0.6f),
+                )
+            }
         }
         if (filter.showDisplayResolution) {
-            Text("Display resolution & refresh rate", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
-            outputs.forEach { out ->
-                Text(out.name + " " + (out.current?.label ?: ""), color = TelosColors.onSurface)
-                out.modes.take(12).forEach { mode ->
-                    TextButton(onClick = {
-                        display.applyDisplayMode(out.name, "${mode.width}x${mode.height}", mode.refreshHz, out.scale)
-                    }) { Text(mode.label) }
-                }
-                Row {
-                    com.telos.desktop.session.SessionCompositor.fractionalScales.forEach { scale ->
+            HelixSettingsCard("Display") {
+                outputs.forEach { out ->
+                    Text(out.name + " " + (out.current?.label ?: ""), color = TelosColors.onSurface)
+                    out.modes.take(12).forEach { mode ->
                         TextButton(onClick = {
-                            val res = out.current?.let { "${it.width}x${it.height}" } ?: return@TextButton
-                            val hz = out.current?.refreshHz ?: return@TextButton
-                            display.applyDisplayMode(out.name, res, hz, scale)
-                        }) { Text(com.telos.desktop.session.SessionCompositor.scaleLabel(scale)) }
+                            display.applyDisplayMode(out.name, "${mode.width}x${mode.height}", mode.refreshHz, out.scale)
+                        }) { Text(mode.label) }
+                    }
+                    Row {
+                        com.telos.desktop.session.SessionCompositor.fractionalScales.forEach { scale ->
+                            TextButton(onClick = {
+                                val res = out.current?.let { "${it.width}x${it.height}" } ?: return@TextButton
+                                val hz = out.current?.refreshHz ?: return@TextButton
+                                display.applyDisplayMode(out.name, res, hz, scale)
+                            }) { Text(com.telos.desktop.session.SessionCompositor.scaleLabel(scale)) }
+                        }
                     }
                 }
             }
         }
         if (filter.showDesktopSurfaceFilters) {
-            Text("Desktop surface icons", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
-            Toggle("Show desktop icons", settings.showDesktopIcons) { settings.showDesktopIcons = it; settings.save() }
-            Toggle("Show hidden files", settings.showHiddenFiles) { settings.showHiddenFiles = it; settings.save() }
-            Toggle("Show .lnk files", settings.showLnkFiles) { settings.showLnkFiles = it; settings.save() }
-            Toggle("Show .desktop shortcuts", settings.showDesktopFiles) { settings.showDesktopFiles = it; settings.save() }
-            Toggle("Show standard folders", settings.showStandardFolders) { settings.showStandardFolders = it; settings.save() }
+            HelixSettingsCard("Desktop") {
+                Toggle("Show desktop icons", settings.showDesktopIcons) { settings.showDesktopIcons = it; settings.save() }
+                Toggle("Show hidden files", settings.showHiddenFiles) { settings.showHiddenFiles = it; settings.save() }
+                Toggle("Show .lnk files", settings.showLnkFiles) { settings.showLnkFiles = it; settings.save() }
+                Toggle("Show .desktop shortcuts", settings.showDesktopFiles) { settings.showDesktopFiles = it; settings.save() }
+                Toggle("Show standard folders", settings.showStandardFolders) { settings.showStandardFolders = it; settings.save() }
+            }
         }
         if (filter.showLinuxIconThemeSelector) {
-            Text("Linux icon theme", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
-            var open by remember { mutableStateOf(false) }
-            TextButton(onClick = { open = true }) { Text(settings.iconTheme) }
-            DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
-                themes.forEach { theme ->
-                    DropdownMenuItem(
-                        text = { Text(theme.name) },
-                        onClick = {
-                            settings.iconTheme = theme.name
-                            icons.preferredTheme = theme.name
-                            settings.save()
-                            open = false
-                        },
-                    )
+            HelixSettingsCard("Icons") {
+                var open by remember { mutableStateOf(false) }
+                TextButton(onClick = { open = true }) { Text(settings.iconTheme) }
+                DropdownMenu(
+                    expanded = open,
+                    onDismissRequest = { open = false },
+                    modifier = Modifier.background(TelosColors.menu),
+                ) {
+                    themes.forEach { theme ->
+                        DropdownMenuItem(
+                            text = { Text(theme.name) },
+                            onClick = {
+                                settings.iconTheme = theme.name
+                                icons.preferredTheme = theme.name
+                                settings.save()
+                                open = false
+                            },
+                        )
+                    }
                 }
             }
         }
         if (filter.showKlassyWindowManager) {
-            Text("Klassy / SierraBreeze window buttons", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
-            WindowButtonStyle.entries.forEach { style ->
-                TextButton(onClick = { settings.windowButtonStyle = style.name; settings.save() }) {
-                    Text(style.name + if (settings.windowButtonStyle == style.name) " ✓" else "")
+            HelixSettingsCard("Windows") {
+                WindowButtonStyle.entries.forEach { style ->
+                    TextButton(onClick = { settings.windowButtonStyle = style.name; settings.save() }) {
+                        Text(style.name + if (settings.windowButtonStyle == style.name) " ✓" else "")
+                    }
                 }
+                Toggle("Buttons on left", settings.buttonsOnLeft) { settings.buttonsOnLeft = it; settings.save() }
             }
-            Toggle("Buttons on left", settings.buttonsOnLeft) { settings.buttonsOnLeft = it; settings.save() }
         }
         if (filter.showSweetCursor) {
-            Text("Sweet cursor", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
-            CursorPreset.entries.forEach { preset ->
-                TextButton(onClick = { settings.cursorPreset = preset.name; settings.save() }) {
-                    Text(preset.name + if (settings.cursorPreset == preset.name) " ✓" else "")
+            HelixSettingsCard("Cursor") {
+                CursorPreset.entries.forEach { preset ->
+                    TextButton(onClick = { settings.cursorPreset = preset.name; settings.save() }) {
+                        Text(preset.name + if (settings.cursorPreset == preset.name) " ✓" else "")
+                    }
                 }
             }
         }
         if (filter.showLuksVault) {
-            Text("LUKS vault", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
-            Text("Configurations are stored only inside ~/.local/share/telos/vault_mnt after unlock.", fontSize = 12.sp)
-            // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
-            Text(com.telos.desktop.vault.HardwareCryptoAccelerator.probe().label, fontSize = 12.sp, color = TelosColors.secondary)
-            TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.expandManual() } }) { Text("Expand vault +128MB") }
-            TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.compact() } }) { Text("Compact vault (fstrim)") }
-            TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.lock(syncCloud = true) } }) { Text("Sync vault now") }
-            Toggle("Auto-grow", com.telos.desktop.vault.PhantomVault.engine.autoGrow) {
-                com.telos.desktop.vault.PhantomVault.engine.autoGrow = it
-                com.telos.desktop.vault.PhantomVault.engine.expander?.autoGrowEnabled = it
+            HelixSettingsCard("Vault") {
+                Text("Configurations are stored only inside ~/.local/share/telos/vault_mnt after unlock.", fontSize = 12.sp)
+                Text(com.telos.desktop.vault.HardwareCryptoAccelerator.probe().label, fontSize = 12.sp, color = TelosColors.secondary)
+                TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.expandManual() } }) { Text("Expand vault +128MB") }
+                TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.compact() } }) { Text("Compact vault (fstrim)") }
+                TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.lock(syncCloud = true) } }) { Text("Sync vault now") }
+                Toggle("Auto-grow", com.telos.desktop.vault.PhantomVault.engine.autoGrow) {
+                    com.telos.desktop.vault.PhantomVault.engine.autoGrow = it
+                    com.telos.desktop.vault.PhantomVault.engine.expander?.autoGrowEnabled = it
+                }
             }
-            // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
         }
         TextButton(onClick = onClose) { Text(com.telos.desktop.i18n.TelosI18n.t("close")) }
+    }
+}
+
+@Composable
+private fun HelixSettingsCard(title: String, body: @Composable ColumnScope.() -> Unit) {
+    val shape = RoundedCornerShape(12.dp)
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(shape)
+            .background(TelosColors.surfaceContainer)
+            .border(1.dp, TelosColors.outline, shape)
+            .padding(12.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        Text(title, color = TelosColors.primary, fontSize = 14.sp)
+        body()
     }
 }
 
