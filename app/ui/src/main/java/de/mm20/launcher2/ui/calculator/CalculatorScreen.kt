@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.calculator
 
+import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.i18n.R as I18nR
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -96,18 +98,18 @@ private enum class Page { Calculator, Units, UnitDetail, Vat }
 
 /** The tiles of the unit converter. Pressure, energy and the numeral systems are converted by [CalcUnits], the rest by the launcher's unit converter. */
 private enum class UnitCat(val label: Int, val icon: Int?, val glyph: String?, val dimension: Dimension?) {
-    Currency(R.string.calculator_cat_currency, null, "¥", Dimension.Currency),
-    Length(R.string.calculator_cat_length, R.drawable.ic_calc_length, null, Dimension.Length),
-    Area(R.string.calculator_cat_area, R.drawable.ic_calc_area, null, Dimension.Area),
-    Volume(R.string.calculator_cat_volume, R.drawable.ic_calc_volume, null, Dimension.Volume),
-    Weight(R.string.calculator_cat_weight, R.drawable.ic_calc_weight, null, Dimension.Mass),
-    Temperature(R.string.calculator_cat_temperature, R.drawable.ic_calc_temperature, null, Dimension.Temperature),
-    Speed(R.string.calculator_cat_speed, R.drawable.ic_calc_speed, null, Dimension.Velocity),
-    Pressure(R.string.calculator_cat_pressure, R.drawable.ic_calc_pressure, null, null),
-    Energy(R.string.calculator_cat_energy, R.drawable.ic_calc_energy, null, null),
-    Numeral(R.string.calculator_cat_numeral, null, "01", null),
-    Time(R.string.calculator_cat_time, R.drawable.ic_calc_time, null, Dimension.Time),
-    Data(R.string.calculator_cat_data, R.drawable.ic_calc_data, null, Dimension.Data),
+    Currency(I18nR.string.calculator_cat_currency, null, "¥", Dimension.Currency),
+    Length(I18nR.string.calculator_cat_length, BaseR.drawable.ic_calc_length, null, Dimension.Length),
+    Area(I18nR.string.calculator_cat_area, BaseR.drawable.ic_calc_area, null, Dimension.Area),
+    Volume(I18nR.string.calculator_cat_volume, BaseR.drawable.ic_calc_volume, null, Dimension.Volume),
+    Weight(I18nR.string.calculator_cat_weight, BaseR.drawable.ic_calc_weight, null, Dimension.Mass),
+    Temperature(I18nR.string.calculator_cat_temperature, BaseR.drawable.ic_calc_temperature, null, Dimension.Temperature),
+    Speed(I18nR.string.calculator_cat_speed, BaseR.drawable.ic_calc_speed, null, Dimension.Velocity),
+    Pressure(I18nR.string.calculator_cat_pressure, BaseR.drawable.ic_calc_pressure, null, null),
+    Energy(I18nR.string.calculator_cat_energy, BaseR.drawable.ic_calc_energy, null, null),
+    Numeral(I18nR.string.calculator_cat_numeral, null, "01", null),
+    Time(I18nR.string.calculator_cat_time, BaseR.drawable.ic_calc_time, null, Dimension.Time),
+    Data(I18nR.string.calculator_cat_data, BaseR.drawable.ic_calc_data, null, Dimension.Data),
 }
 
 private val decimalSeparator: Char = DecimalFormatSymbols.getInstance().decimalSeparator
@@ -158,11 +160,11 @@ private fun TopBar(title: String, onBack: () -> Unit, actions: @Composable () ->
     }
     Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = onBack) {
-            Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.calculator_back))
+            Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.calculator_back))
         }
         Text(title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f).padding(start = 4.dp), maxLines = 1, overflow = TextOverflow.Ellipsis)
         IconButton(onClick = { showFontDialog = true }) {
-            Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
+            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
         }
         actions()
     }
@@ -231,7 +233,7 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
             Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                 Spacer(Modifier.weight(1f))
                 if (!twoPanes) {
-                    val modeLabel = stringResource(if (scientific) R.string.calculator_standard else R.string.calculator_scientific)
+                    val modeLabel = stringResource(if (scientific) I18nR.string.calculator_standard else I18nR.string.calculator_scientific)
                     IconButton(onClick = { scientificChoice = !scientificChoice }, modifier = Modifier.semantics { contentDescription = modeLabel }) {
                         Text(
                             text = if (scientific) "+ −\n× =" else "√ π\ne =",
@@ -244,19 +246,19 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
                     }
                 }
                 IconButton(onClick = onVat) {
-                    Icon(painterResource(R.drawable.ic_calc_vat), contentDescription = stringResource(R.string.calculator_vat))
+                    Icon(painterResource(BaseR.drawable.ic_calc_vat), contentDescription = stringResource(I18nR.string.calculator_vat))
                 }
                 IconButton(onClick = onUnits) {
-                    Icon(painterResource(R.drawable.ic_calc_grid), contentDescription = stringResource(R.string.calculator_unit_converter))
+                    Icon(painterResource(BaseR.drawable.ic_calc_grid), contentDescription = stringResource(I18nR.string.calculator_unit_converter))
                 }
                 Box {
                     IconButton(onClick = { menu = true }) {
-                        Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.calculator_more))
+                        Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.calculator_more))
                     }
                     DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.calculator_history)) }, onClick = { menu = false; showHistory = true })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.calculator_history)) }, onClick = { menu = false; showHistory = true })
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.calculator_copy_result)) },
+                            text = { Text(stringResource(I18nR.string.calculator_copy_result)) },
                             onClick = {
                                 menu = false
                                 val text = vm.currentValue()?.let { CalcEngine.format(it) } ?: vm.expression
@@ -323,7 +325,7 @@ private fun Display(vm: CalculatorViewModel, modifier: Modifier, onHistory: () -
         horizontalAlignment = Alignment.End,
     ) {
         Text(
-            if (vm.error) stringResource(R.string.calculator_invalid) else vm.expression.toDisplay(),
+            if (vm.error) stringResource(I18nR.string.calculator_invalid) else vm.expression.toDisplay(),
             modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState(), reverseScrolling = true),
             style = MaterialTheme.typography.displayLarge.copy(fontSize = 56.sp),
             color = if (vm.error) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface,
@@ -340,8 +342,8 @@ private fun Display(vm: CalculatorViewModel, modifier: Modifier, onHistory: () -
         )
         if (canVat) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 6.dp)) {
-                AssistChip(onClick = { vm.applyVat(remove = false) }, label = { Text(stringResource(R.string.calculator_chip_add_vat, vm.vatRate)) })
-                AssistChip(onClick = { vm.applyVat(remove = true) }, label = { Text(stringResource(R.string.calculator_chip_remove_vat, vm.vatRate)) })
+                AssistChip(onClick = { vm.applyVat(remove = false) }, label = { Text(stringResource(I18nR.string.calculator_chip_add_vat, vm.vatRate)) })
+                AssistChip(onClick = { vm.applyVat(remove = true) }, label = { Text(stringResource(I18nR.string.calculator_chip_remove_vat, vm.vatRate)) })
             }
         }
         Spacer(Modifier.height(8.dp))
@@ -361,7 +363,7 @@ private fun StandardKeys(vm: CalculatorViewModel, modifier: Modifier) {
         KeyRow(
             { m -> RoundKey("AC", KeyKind.Clear, m) { vm.clear() } },
             { m -> RoundKey("%", KeyKind.Clear, m) { vm.input("%") } },
-            { m -> RoundKey("⌫", KeyKind.Clear, m, iconRes = R.drawable.rd_ic_backspace) { vm.backspace() } },
+            { m -> RoundKey("⌫", KeyKind.Clear, m, iconRes = BaseR.drawable.rd_ic_backspace) { vm.backspace() } },
             op("÷"),
         )
         KeyRow(num("7"), num("8"), num("9"), op("×"))
@@ -391,8 +393,8 @@ private fun ScientificKeys(vm: CalculatorViewModel, inverse: Boolean, onInverse:
             if (inverse) fn("sin⁻¹", "asin(") else fn("sin", "sin("),
             if (inverse) fn("cos⁻¹", "acos(") else fn("cos", "cos("),
             if (inverse) fn("tan⁻¹", "atan(") else fn("tan", "tan("),
-            fn(stringResource(R.string.calculator_radians), selected = !degrees, onClick = { vm.chooseDegrees(false) }),
-            fn(stringResource(R.string.calculator_degrees), selected = degrees, onClick = { vm.chooseDegrees(true) }),
+            fn(stringResource(I18nR.string.calculator_radians), selected = !degrees, onClick = { vm.chooseDegrees(false) }),
+            fn(stringResource(I18nR.string.calculator_degrees), selected = degrees, onClick = { vm.chooseDegrees(true) }),
         )
         KeyRow(
             if (inverse) fn("10ˣ", "10^") else fn("log", "log("),
@@ -404,7 +406,7 @@ private fun ScientificKeys(vm: CalculatorViewModel, inverse: Boolean, onInverse:
             fn("!", "!"),
             { m -> RoundKey("AC", KeyKind.Clear, m, fontSize = 22) { vm.clear() } },
             { m -> RoundKey("%", KeyKind.Clear, m, fontSize = 24) { vm.input("%") } },
-            { m -> RoundKey("⌫", KeyKind.Clear, m, iconRes = R.drawable.rd_ic_backspace) { vm.backspace() } },
+            { m -> RoundKey("⌫", KeyKind.Clear, m, iconRes = BaseR.drawable.rd_ic_backspace) { vm.backspace() } },
             op("÷"),
         )
         KeyRow(fn("^", "^"), num("7"), num("8"), num("9"), op("×"))
@@ -422,15 +424,15 @@ private fun HistorySheet(vm: CalculatorViewModel, onPick: (String) -> Unit) {
     val format = remember { DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT) }
     Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp).padding(bottom = 24.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(stringResource(R.string.calculator_history), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+            Text(stringResource(I18nR.string.calculator_history), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
             if (vm.history.isNotEmpty()) {
                 IconButton(onClick = { vm.clearHistory() }) {
-                    Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.calculator_history_clear))
+                    Icon(painterResource(BaseR.drawable.delete_24px), contentDescription = stringResource(I18nR.string.calculator_history_clear))
                 }
             }
         }
         if (vm.history.isEmpty()) {
-            Text(stringResource(R.string.calculator_history_empty), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(I18nR.string.calculator_history_empty), color = MaterialTheme.colorScheme.onSurfaceVariant)
         } else {
             LazyColumn(Modifier.fillMaxWidth()) {
                 items(vm.history) { entry ->
@@ -449,7 +451,7 @@ private fun HistorySheet(vm: CalculatorViewModel, onPick: (String) -> Unit) {
 private fun copyToClipboard(context: Context, text: String) {
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     clipboard.setPrimaryClip(ClipData.newPlainText("Telos Calculator", text))
-    Toast.makeText(context, context.getString(R.string.calculator_copied, text), Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, context.getString(I18nR.string.calculator_copied, text), Toast.LENGTH_SHORT).show()
 }
 
 // ---- unit converter -------------------------------------------------------------------------
@@ -457,7 +459,7 @@ private fun copyToClipboard(context: Context, text: String) {
 @Composable
 private fun UnitsPage(onBack: () -> Unit, onPick: (UnitCat) -> Unit) {
     Column(Modifier.fillMaxSize()) {
-        TopBar(stringResource(R.string.calculator_unit_converter), onBack)
+        TopBar(stringResource(I18nR.string.calculator_unit_converter), onBack)
         LazyVerticalGrid(
             columns = GridCells.Adaptive(144.dp * LocalDensity.current.fontScale),
             modifier = Modifier.fillMaxSize(),
@@ -513,8 +515,8 @@ private fun UnitDetailPage(vm: CalculatorViewModel, cat: UnitCat, onBack: () -> 
     }
     val numeral = cat == UnitCat.Numeral
     val radixNames = listOf(
-        stringResource(R.string.calculator_radix_2), stringResource(R.string.calculator_radix_8),
-        stringResource(R.string.calculator_radix_10), stringResource(R.string.calculator_radix_16),
+        stringResource(I18nR.string.calculator_radix_2), stringResource(I18nR.string.calculator_radix_8),
+        stringResource(I18nR.string.calculator_radix_10), stringResource(I18nR.string.calculator_radix_16),
     )
     val labels: List<String> = when {
         numeral -> radixNames
@@ -544,19 +546,19 @@ private fun UnitDetailPage(vm: CalculatorViewModel, cat: UnitCat, onBack: () -> 
         TopBar(stringResource(cat.label), onBack)
         if (labels.size < 2) {
             Text(
-                text = stringResource(if (cat == UnitCat.Currency) R.string.calculator_currency_missing else R.string.calculator_unit_converter),
+                text = stringResource(if (cat == UnitCat.Currency) I18nR.string.calculator_currency_missing else I18nR.string.calculator_unit_converter),
                 modifier = Modifier.padding(24.dp),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             return@Column
         }
         Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            UnitCard(stringResource(R.string.calculator_from)) {
+            UnitCard(stringResource(I18nR.string.calculator_from)) {
                 OutlinedTextField(
                     value = input,
                     onValueChange = { input = it.take(40) },
                     singleLine = true,
-                    label = { Text(stringResource(R.string.calculator_value)) },
+                    label = { Text(stringResource(I18nR.string.calculator_value)) },
                     keyboardOptions = KeyboardOptions(keyboardType = if (numeral) KeyboardType.Ascii else KeyboardType.Text),
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -564,10 +566,10 @@ private fun UnitDetailPage(vm: CalculatorViewModel, cat: UnitCat, onBack: () -> 
             }
             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                 IconButton(onClick = { val f = fromIndex; fromIndex = toIndex; toIndex = f }) {
-                    Icon(painterResource(R.drawable.swap_vert_24px), contentDescription = stringResource(R.string.calculator_swap))
+                    Icon(painterResource(BaseR.drawable.swap_vert_24px), contentDescription = stringResource(I18nR.string.calculator_swap))
                 }
             }
-            UnitCard(stringResource(R.string.calculator_to)) {
+            UnitCard(stringResource(I18nR.string.calculator_to)) {
                 Text(
                     output?.toDisplay() ?: "—",
                     style = MaterialTheme.typography.headlineMedium,
@@ -630,12 +632,12 @@ private fun VatPage(vm: CalculatorViewModel, onBack: () -> Unit, onUseInCalculat
     val remove = vm.vatRemove
 
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
-        TopBar(stringResource(R.string.calculator_vat), onBack)
+        TopBar(stringResource(I18nR.string.calculator_vat), onBack)
         Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
             OutlinedTextField(
                 value = vm.vatRate,
                 onValueChange = vm::updateVatRate,
-                label = { Text(stringResource(R.string.calculator_vat_rate)) },
+                label = { Text(stringResource(I18nR.string.calculator_vat_rate)) },
                 suffix = { Text("%") },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
@@ -648,28 +650,28 @@ private fun VatPage(vm: CalculatorViewModel, onBack: () -> Unit, onUseInCalculat
             }
 
             SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-                SegmentedButton(selected = !remove, onClick = { vm.updateVatRemove(false) }, shape = SegmentedButtonDefaults.itemShape(0, 2)) { Text(stringResource(R.string.calculator_vat_add)) }
-                SegmentedButton(selected = remove, onClick = { vm.updateVatRemove(true) }, shape = SegmentedButtonDefaults.itemShape(1, 2)) { Text(stringResource(R.string.calculator_vat_remove)) }
+                SegmentedButton(selected = !remove, onClick = { vm.updateVatRemove(false) }, shape = SegmentedButtonDefaults.itemShape(0, 2)) { Text(stringResource(I18nR.string.calculator_vat_add)) }
+                SegmentedButton(selected = remove, onClick = { vm.updateVatRemove(true) }, shape = SegmentedButtonDefaults.itemShape(1, 2)) { Text(stringResource(I18nR.string.calculator_vat_remove)) }
             }
 
             OutlinedTextField(
                 value = amountText,
                 onValueChange = { amountText = it.take(40) },
-                label = { Text(stringResource(if (remove) R.string.calculator_vat_amount_gross else R.string.calculator_vat_amount_net)) },
+                label = { Text(stringResource(if (remove) I18nR.string.calculator_vat_amount_gross else I18nR.string.calculator_vat_amount_net)) },
                 singleLine = true,
-                supportingText = { Text(stringResource(R.string.calculator_vat_amount_hint)) },
+                supportingText = { Text(stringResource(I18nR.string.calculator_vat_amount_hint)) },
                 modifier = Modifier.fillMaxWidth(),
             )
             TextButton(onClick = { vm.currentValue()?.let { amountText = CalcEngine.format(it) } }, enabled = vm.currentValue() != null) {
-                Text(stringResource(R.string.calculator_vat_use_result))
+                Text(stringResource(I18nR.string.calculator_vat_use_result))
             }
 
             Card(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     val rows = listOf(
-                        Triple(stringResource(R.string.calculator_vat_without), result?.net, remove),
-                        Triple(stringResource(R.string.calculator_vat_amount, vm.vatRate), result?.vat, false),
-                        Triple(stringResource(R.string.calculator_vat_with), result?.gross, !remove),
+                        Triple(stringResource(I18nR.string.calculator_vat_without), result?.net, remove),
+                        Triple(stringResource(I18nR.string.calculator_vat_amount, vm.vatRate), result?.vat, false),
+                        Triple(stringResource(I18nR.string.calculator_vat_with), result?.gross, !remove),
                     )
                     for ((label, value, highlight) in rows) {
                         Row(
@@ -685,14 +687,14 @@ private fun VatPage(vm: CalculatorViewModel, onBack: () -> Unit, onUseInCalculat
                             )
                         }
                     }
-                    Text(stringResource(R.string.calculator_vat_tap_copy), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(I18nR.string.calculator_vat_tap_copy), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             OutlinedButton(
                 onClick = { result?.let { onUseInCalculator((if (remove) it.net else it.gross).toPlainString()) } },
                 enabled = result != null,
                 modifier = Modifier.fillMaxWidth(),
-            ) { Text(stringResource(if (remove) R.string.calculator_vat_use_net else R.string.calculator_vat_use_gross)) }
+            ) { Text(stringResource(if (remove) I18nR.string.calculator_vat_use_net else I18nR.string.calculator_vat_use_gross)) }
         }
     }
 }

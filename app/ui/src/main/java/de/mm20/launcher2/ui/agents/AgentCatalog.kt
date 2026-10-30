@@ -1,3 +1,5 @@
+package de.mm20.launcher2.ui.agents
+
 import de.mm20.launcher2.i18n.R
 
 data class AgentSpec(

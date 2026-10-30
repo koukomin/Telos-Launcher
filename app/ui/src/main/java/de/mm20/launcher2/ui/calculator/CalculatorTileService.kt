@@ -14,7 +14,7 @@ class CalculatorTileService : TileService() {
     override fun onStartListening() {
         qsTile?.apply {
             state = Tile.STATE_INACTIVE
-            label = getString(R.string.hc_calculator)
+            label = getString(de.mm20.launcher2.i18n.R.string.hc_calculator)
             updateTile()
         }
     }

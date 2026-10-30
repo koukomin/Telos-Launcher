@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.camera
 
+import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.i18n.R as I18nR
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -109,8 +111,8 @@ fun CameraScreen() {
         permissions.launch(buildList { add(Manifest.permission.CAMERA); if (Build.VERSION.SDK_INT <= 28) add(Manifest.permission.WRITE_EXTERNAL_STORAGE) }.toTypedArray())
     }
     val microphone = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted -> audio = granted }
-    fun error(value: String) { busy = false; recording = false; message = context.getString(R.string.camera_native_failed, value) }
-    fun saved() { busy = false; recording = false; Toast.makeText(context, R.string.camera_native_saved, Toast.LENGTH_SHORT).show() }
+    fun error(value: String) { busy = false; recording = false; message = context.getString(I18nR.string.camera_native_failed, value) }
+    fun saved() { busy = false; recording = false; Toast.makeText(context, I18nR.string.camera_native_saved, Toast.LENGTH_SHORT).show() }
     DisposableEffect(camera) {
         onDispose { webcam?.close(); webcam = null; camera.close() }
     }
@@ -176,7 +178,7 @@ fun CameraScreen() {
                     catch (failure: Exception) { error(failure.message.orEmpty()) }
                     finally { rebind++ }
                 } else camera.capture(format, keepExif, flash, hidden, freshLocation(), onDone = { uri ->
-                    if (panorama && uri != null) { if (slices.size < 8) slices.add(uri); busy = false } else { saved(); if (hidden) Toast.makeText(context, R.string.camera_native_hidden_saved, Toast.LENGTH_LONG).show() }
+                    if (panorama && uri != null) { if (slices.size < 8) slices.add(uri); busy = false } else { saved(); if (hidden) Toast.makeText(context, I18nR.string.camera_native_hidden_saved, Toast.LENGTH_LONG).show() }
                 }, onError = ::error)
             }
         }
@@ -197,39 +199,39 @@ fun CameraScreen() {
             }
         }
         AlertDialog(onDismissRequest = { detectedCode = null },
-            title = { Text(stringResource(R.string.camera_scan_code)) },
+            title = { Text(stringResource(I18nR.string.camera_scan_code)) },
             text = { androidx.compose.foundation.text.selection.SelectionContainer {
                 Text(code.text, Modifier.heightIn(max = 280.dp).verticalScroll(rememberScrollState()))
             } },
             confirmButton = { TextButton(onClick = {
                 context.getSystemService(android.content.ClipboardManager::class.java).setPrimaryClip(android.content.ClipData.newPlainText(code.format.name, code.text))
                 detectedCode = null
-            }) { Text(stringResource(R.string.hc_copy)) } },
+            }) { Text(stringResource(I18nR.string.hc_copy)) } },
             dismissButton = { Row {
                 if (webAddress != null) TextButton(onClick = {
                     runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, webAddress)) }
-                        .onFailure { message = context.getString(R.string.pdft_error_title) }
+                        .onFailure { message = context.getString(I18nR.string.pdft_error_title) }
                     detectedCode = null
-                }) { Text(stringResource(R.string.hc_open)) }
-                TextButton(onClick = { detectedCode = null }) { Text(stringResource(R.string.hc_close)) }
+                }) { Text(stringResource(I18nR.string.hc_open)) }
+                TextButton(onClick = { detectedCode = null }) { Text(stringResource(I18nR.string.hc_close)) }
             } })
     }
     Scaffold(containerColor = Color.Black, contentColor = Color.White, topBar = {
         TopAppBar(title = { Text("TELOS", color = Color.White) }, navigationIcon = {
-            IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back), tint = Color.White) }
+            IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back), tint = Color.White) }
         }, actions = {
             IconButton(onClick = { reviewScan = true }, enabled = !busy && !recording) {
                 BadgedBox(badge = { if (scanPages.isNotEmpty()) Badge { Text(scanPages.size.toString()) } }) {
-                    Icon(painterResource(R.drawable.description_24px), stringResource(R.string.camera_scan_pdf), tint = Color.White)
+                    Icon(painterResource(BaseR.drawable.description_24px), stringResource(I18nR.string.camera_scan_pdf), tint = Color.White)
                 }
             }
-            IconButton(onClick = { settings = true }) { Icon(painterResource(R.drawable.settings_24px), stringResource(R.string.camera_native_settings), tint = Color.White) }
+            IconButton(onClick = { settings = true }) { Icon(painterResource(BaseR.drawable.settings_24px), stringResource(I18nR.string.camera_native_settings), tint = Color.White) }
         }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Black))
     }) { padding ->
         if (!permission) {
             Column(Modifier.fillMaxSize().padding(padding).padding(24.dp), verticalArrangement = Arrangement.Center) {
-                Text(stringResource(R.string.camera_need_permission))
-                Button(onClick = ::requestPermission) { Text(stringResource(R.string.hc_allow)) }
+                Text(stringResource(I18nR.string.camera_need_permission))
+                Button(onClick = ::requestPermission) { Text(stringResource(I18nR.string.hc_allow)) }
             }
         } else BoxWithConstraints(Modifier.fillMaxSize().padding(padding)) {
             val landscape = maxWidth > maxHeight

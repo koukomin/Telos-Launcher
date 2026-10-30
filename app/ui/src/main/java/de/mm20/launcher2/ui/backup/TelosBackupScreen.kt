@@ -1,5 +1,8 @@
 package de.mm20.launcher2.ui.backup
 
+import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.i18n.R as I18nR
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -62,7 +65,7 @@ fun TelosBackupScreen() {
                     },
                     actions = {
                         IconButton(onClick = { /* Open Settings */ }) {
-                            Icon(painterResource(R.drawable.settings_24px), contentDescription = "Settings")
+                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Settings")
                         }
                     }
                 )
@@ -72,7 +75,7 @@ fun TelosBackupScreen() {
                     onClick = { /* Start batch backup */ },
                     containerColor = MaterialTheme.colorScheme.primary
                 ) {
-                    Icon(painterResource(R.drawable.save_24px), contentDescription = "Backup All")
+                    Icon(painterResource(BaseR.drawable.save_24px), contentDescription = "Backup All")
                 }
             }
         ) { paddingValues ->
@@ -91,7 +94,7 @@ fun TelosBackupScreen() {
                             modifier = Modifier.padding(16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(painterResource(R.drawable.warning_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer)
+                            Icon(painterResource(BaseR.drawable.warning_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer)
                             Spacer(Modifier.width(12.dp))
                             Column {
                                 Text("Shizuku / Root Required", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onErrorContainer)
@@ -171,7 +174,7 @@ private fun AppListTab(apps: List<AppBackupEntry>) {
                         modifier = Modifier.size(40.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceContainerHighest),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(painterResource(R.drawable.android_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Icon(painterResource(BaseR.drawable.android_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Spacer(Modifier.width(16.dp))
                     Column(Modifier.weight(1f)) {
@@ -186,18 +189,18 @@ private fun AppListTab(apps: List<AppBackupEntry>) {
                     var menuOpen by remember { mutableStateOf(false) }
                     Box {
                         IconButton(onClick = { menuOpen = true }) {
-                            Icon(painterResource(R.drawable.more_vert_24px), contentDescription = "Options")
+                            Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = "Options")
                         }
                         DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                             DropdownMenuItem(
                                 text = { Text("Backup APK & Data") },
                                 onClick = { menuOpen = false },
-                                leadingIcon = { Icon(painterResource(R.drawable.save_24px), null) }
+                                leadingIcon = { Icon(painterResource(BaseR.drawable.save_24px), null) }
                             )
                             DropdownMenuItem(
                                 text = { Text("Restore Data") },
                                 onClick = { menuOpen = false },
-                                leadingIcon = { Icon(painterResource(R.drawable.settings_backup_restore_24px), null) }
+                                leadingIcon = { Icon(painterResource(BaseR.drawable.settings_backup_restore_24px), null) }
                             )
                         }
                     }
@@ -226,7 +229,7 @@ private fun SystemDataTab(items: List<String>) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(item, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                    Icon(painterResource(R.drawable.save_24px), contentDescription = "Backup", tint = MaterialTheme.colorScheme.primary)
+                    Icon(painterResource(BaseR.drawable.save_24px), contentDescription = "Backup", tint = MaterialTheme.colorScheme.primary)
                 }
             }
         }

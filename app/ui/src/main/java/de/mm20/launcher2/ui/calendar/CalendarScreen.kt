@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.calendar
 
+import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.i18n.R as I18nR
 import android.Manifest
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -199,13 +201,13 @@ fun CalendarScreen() {
     Box(Modifier.fillMaxSize().background(de.mm20.launcher2.ui.component.virtualAppSurface()).systemBarsPadding()) {
         if (!granted) {
             Column(Modifier.fillMaxSize().padding(32.dp), Arrangement.Center, Alignment.CenterHorizontally) {
-                Text(stringResource(R.string.cal_permission), textAlign = TextAlign.Center)
+                Text(stringResource(I18nR.string.cal_permission), textAlign = TextAlign.Center)
                 if (blocked) {
                     Button(onClick = {
                         context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", context.packageName, null)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                    }, modifier = Modifier.padding(top = 16.dp)) { Text(stringResource(R.string.au_planner_open_settings)) }
+                    }, modifier = Modifier.padding(top = 16.dp)) { Text(stringResource(I18nR.string.au_planner_open_settings)) }
                 } else Button(onClick = { permLauncher.launch(arrayOf(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)) }, modifier = Modifier.padding(top = 16.dp)) {
-                    Text(stringResource(R.string.cal_grant))
+                    Text(stringResource(I18nR.string.cal_grant))
                 }
             }
         } else CalendarContent(vm)
@@ -232,7 +234,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
 
     val text = message?.let { m ->
         val p = m.split(':', limit = 2)
-        when (p[0]) { "imported" -> stringResource(R.string.cal_imported, p[1].toInt()); "sync" -> stringResource(R.string.cal_sync_requested); else -> stringResource(R.string.cal_error, p.getOrElse(1) { "" }) }
+        when (p[0]) { "imported" -> stringResource(I18nR.string.cal_imported, p[1].toInt()); "sync" -> stringResource(I18nR.string.cal_sync_requested); else -> stringResource(I18nR.string.cal_error, p.getOrElse(1) { "" }) }
     }
     LaunchedEffect(text) { if (text != null) { snack.showSnackbar(text); vm.message.value = null } }
 
@@ -294,10 +296,10 @@ private fun CalendarContent(vm: CalendarViewModel) {
         confirmDelete?.let { id ->
             AlertDialog(
                 onDismissRequest = { confirmDelete = null },
-                title = { Text(stringResource(R.string.au_planner_delete_series_title)) },
-                text = { Text(stringResource(R.string.au_planner_delete_series_message)) },
-                confirmButton = { TextButton(onClick = { confirmDelete = null; vm.io { vm.repo.delete(id) }; draft = null }) { Text(stringResource(R.string.cal_delete)) } },
-                dismissButton = { TextButton(onClick = { confirmDelete = null }) { Text(stringResource(R.string.cal_cancel)) } },
+                title = { Text(stringResource(I18nR.string.au_planner_delete_series_title)) },
+                text = { Text(stringResource(I18nR.string.au_planner_delete_series_message)) },
+                confirmButton = { TextButton(onClick = { confirmDelete = null; vm.io { vm.repo.delete(id) }; draft = null }) { Text(stringResource(I18nR.string.cal_delete)) } },
+                dismissButton = { TextButton(onClick = { confirmDelete = null }) { Text(stringResource(I18nR.string.cal_cancel)) } },
             )
         }
         return
@@ -315,14 +317,14 @@ private fun CalendarContent(vm: CalendarViewModel) {
                 if (showQuickAdd) {
                     AlertDialog(
                         onDismissRequest = { showQuickAdd = false },
-                        title = { Text(stringResource(R.string.quick_event_title)) },
+                        title = { Text(stringResource(I18nR.string.quick_event_title)) },
                         text = {
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Text(stringResource(R.string.quick_event_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Text(stringResource(I18nR.string.quick_event_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 OutlinedTextField(
                                     value = quickText,
                                     onValueChange = { quickText = it },
-                                    placeholder = { Text(stringResource(R.string.quick_event_hint)) },
+                                    placeholder = { Text(stringResource(I18nR.string.quick_event_hint)) },
                                     singleLine = true,
                                     modifier = Modifier.fillMaxWidth()
                                 )
@@ -336,10 +338,10 @@ private fun CalendarContent(vm: CalendarViewModel) {
                                     draft = parseNaturalLanguageEvent(quickText, defaultId, selected)
                                     showQuickAdd = false
                                 }
-                            ) { Text(stringResource(R.string.quick_event_create)) }
+                            ) { Text(stringResource(I18nR.string.quick_event_create)) }
                         },
                         dismissButton = {
-                            TextButton(onClick = { showQuickAdd = false }) { Text(stringResource(R.string.cal_cancel)) }
+                            TextButton(onClick = { showQuickAdd = false }) { Text(stringResource(I18nR.string.cal_cancel)) }
                         }
                     )
                 }
@@ -350,23 +352,23 @@ private fun CalendarContent(vm: CalendarViewModel) {
                         containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                         contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                     ) {
-                        Icon(painterResource(R.drawable.auto_awesome_20dp), contentDescription = "Quick AI Add")
+                        Icon(painterResource(BaseR.drawable.auto_awesome_20dp), contentDescription = "Quick AI Add")
                     }
                     FloatingActionButton(onClick = {
                         val start = LocalDateTime.of(selected, LocalTime.now().plusHours(1).withMinute(0).withSecond(0).withNano(0))
                         draft = Draft(calendarId = (writable.firstOrNull { it.visible } ?: writable.first()).id, start = start, end = start.plusHours(1))
-                    }) { Icon(painterResource(R.drawable.add_24px), stringResource(R.string.cal_new_event)) }
+                    }) { Icon(painterResource(BaseR.drawable.add_24px), stringResource(I18nR.string.cal_new_event)) }
                 }
             }
         },
     ) { pad ->
         Column(Modifier.padding(pad)) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = { vm.go(month.minusMonths(1)) }) { Icon(painterResource(R.drawable.chevron_backward_24px), stringResource(R.string.cal_previous)) }
+                IconButton(onClick = { vm.go(month.minusMonths(1)) }) { Icon(painterResource(BaseR.drawable.chevron_backward_24px), stringResource(I18nR.string.cal_previous)) }
                 Text(month.atDay(1).format(DateTimeFormatter.ofPattern("LLLL yyyy")).replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.weight(1f).clickable { pickMonth = true }, textAlign = TextAlign.Center)
-                IconButton(onClick = { vm.go(month.plusMonths(1)) }) { Icon(painterResource(R.drawable.chevron_forward_24px), stringResource(R.string.cal_next)) }
-                IconButton(onClick = { vm.selected.value = LocalDate.now(); vm.go(YearMonth.now()) }) { Icon(painterResource(R.drawable.today_24px), stringResource(R.string.cal_today)) }
+                IconButton(onClick = { vm.go(month.plusMonths(1)) }) { Icon(painterResource(BaseR.drawable.chevron_forward_24px), stringResource(I18nR.string.cal_next)) }
+                IconButton(onClick = { vm.selected.value = LocalDate.now(); vm.go(YearMonth.now()) }) { Icon(painterResource(BaseR.drawable.today_24px), stringResource(I18nR.string.cal_today)) }
                 var showFontDialog by remember { mutableStateOf(false) }
                 if (showFontDialog) {
                     de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
@@ -376,28 +378,28 @@ private fun CalendarContent(vm: CalendarViewModel) {
                     )
                 }
                 IconButton(onClick = { searching = !searching; if (!searching) calQuery = "" }) {
-                    Icon(painterResource(if (searching) R.drawable.close_24px else R.drawable.search_24px), stringResource(R.string.ts_search))
+                    Icon(painterResource(if (searching) BaseR.drawable.close_24px else BaseR.drawable.search_24px), stringResource(I18nR.string.ts_search))
                 }
                 IconButton(onClick = { showFontDialog = true }) {
-                    Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
+                    Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
                 }
                 Box {
-                    IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), null) }
+                    IconButton(onClick = { menu = true }) { Icon(painterResource(BaseR.drawable.more_vert_24px), null) }
                     DropdownMenu(menu, { menu = false }) {
-                        DropdownMenuItem(text = { Text(stringResource(if (agenda) R.string.cal_view_month else R.string.cal_view_agenda)) }, onClick = { menu = false; agenda = !agenda })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.cal_calendars)) }, onClick = { menu = false; showCalendars = true })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.cal_sync_now)) }, onClick = { menu = false; vm.repo.requestSync(); vm.message.value = "sync" })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.cal_add_account)) }, onClick = {
+                        DropdownMenuItem(text = { Text(stringResource(if (agenda) I18nR.string.cal_view_month else I18nR.string.cal_view_agenda)) }, onClick = { menu = false; agenda = !agenda })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.cal_calendars)) }, onClick = { menu = false; showCalendars = true })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.cal_sync_now)) }, onClick = { menu = false; vm.repo.requestSync(); vm.message.value = "sync" })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.cal_add_account)) }, onClick = {
                             menu = false
                             context.startActivity(Intent(Settings.ACTION_ADD_ACCOUNT).putExtra(Settings.EXTRA_AUTHORITIES, arrayOf(CalendarContract.AUTHORITY)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                         })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.cal_import)) }, onClick = { menu = false; importer.launch(arrayOf("text/calendar", "*/*")) })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.cal_export)) }, onClick = { menu = false; exporter.launch("telos-calendar.ics") })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.cal_import)) }, onClick = { menu = false; importer.launch(arrayOf("text/calendar", "*/*")) })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.cal_export)) }, onClick = { menu = false; exporter.launch("telos-calendar.ics") })
                     }
                 }
             }
             if (searching) {
-                TelosSearchBar(calQuery, { calQuery = it }, stringResource(R.string.tsp_search_events), autoFocus = true)
+                TelosSearchBar(calQuery, { calQuery = it }, stringResource(I18nR.string.tsp_search_events), autoFocus = true)
                 val results = remember(searchPool, calQuery) {
                     if (calQuery.isBlank()) emptyList() else de.mm20.launcher2.comms.search.TelosSearch
                         .filter(searchPool, calQuery) { listOf(it.title, it.location, it.description) }
@@ -418,7 +420,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
                     upcoming.flatMap { ev -> generateSequence(maxOf(ev.firstDay, today)) { it.plusDays(1) }.takeWhile { it <= ev.lastDay && it <= today.plusDays(30) }.map { it to ev } }
                         .groupBy({ it.first }, { it.second }).toSortedMap()
                 }
-                if (byDay.isEmpty()) Text(stringResource(R.string.cal_no_events), Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (byDay.isEmpty()) Text(stringResource(I18nR.string.cal_no_events), Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 LazyColumn(contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     byDay.forEach { (day, evs) ->
                         item(key = "h$day") { Text(day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp)) }
@@ -442,12 +444,12 @@ private fun CalendarContent(vm: CalendarViewModel) {
             }
             if (calendars.isEmpty()) {
                 item(key = "no-calendars") { Column(Modifier.fillMaxWidth().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(stringResource(R.string.cal_no_calendars), textAlign = TextAlign.Center)
-                    Button(onClick = { vm.io { vm.repo.createLocalCalendar("Telos", 0xFF1E88E5.toInt()) } }, modifier = Modifier.padding(top = 12.dp)) { Text(stringResource(R.string.cal_create_local)) }
+                    Text(stringResource(I18nR.string.cal_no_calendars), textAlign = TextAlign.Center)
+                    Button(onClick = { vm.io { vm.repo.createLocalCalendar("Telos", 0xFF1E88E5.toInt()) } }, modifier = Modifier.padding(top = 12.dp)) { Text(stringResource(I18nR.string.cal_create_local)) }
                 }
                 }
             } else if (dayEvents.isEmpty()) {
-                item(key = "no-events") { Text(stringResource(R.string.cal_no_events), Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                item(key = "no-events") { Text(stringResource(I18nR.string.cal_no_events), Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onSurfaceVariant) }
             } else {
                 items(dayEvents, key = { "${it.id}-${it.begin}" }) { ev ->
                     EventRow(ev, writable.any { it.id == ev.calendarId }) { openEvent(ev) }
@@ -509,8 +511,8 @@ private fun EventRow(ev: CalEvent, editable: Boolean, onClick: () -> Unit) {
         .clickable(enabled = editable, onClick = onClick).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
         Box(Modifier.width(4.dp).height(40.dp).clip(RoundedCornerShape(2.dp)).background(Color(ev.color)))
         Column(Modifier.padding(start = 12.dp)) {
-            Text(ev.title.ifBlank { stringResource(R.string.cal_no_title) }, style = MaterialTheme.typography.titleSmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
-            Text(if (ev.allDay) stringResource(R.string.cal_all_day) else "${Instant.ofEpochMilli(ev.begin).atZone(zone).format(tf)} – ${Instant.ofEpochMilli(ev.end).atZone(zone).format(tf)}",
+            Text(ev.title.ifBlank { stringResource(I18nR.string.cal_no_title) }, style = MaterialTheme.typography.titleSmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
+            Text(if (ev.allDay) stringResource(I18nR.string.cal_all_day) else "${Instant.ofEpochMilli(ev.begin).atZone(zone).format(tf)} – ${Instant.ofEpochMilli(ev.end).atZone(zone).format(tf)}",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             if (ev.location.isNotBlank()) Text(ev.location, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
@@ -529,20 +531,20 @@ private fun EventEditor(d: Draft, writable: List<DeviceCalendar>, all: List<Devi
     var repeatMenu by remember { mutableStateOf(false) }
     var calMenu by remember { mutableStateOf(false) }
     var remMenu by remember { mutableStateOf(false) }
-    val repeatLabels = listOf(R.string.cal_repeat_none, R.string.cal_repeat_daily, R.string.cal_repeat_weekly, R.string.cal_repeat_monthly, R.string.cal_repeat_yearly)
+    val repeatLabels = listOf(I18nR.string.cal_repeat_none, I18nR.string.cal_repeat_daily, I18nR.string.cal_repeat_weekly, I18nR.string.cal_repeat_monthly, I18nR.string.cal_repeat_yearly)
     val reminders = listOf(null, 0, 10, 30, 60, 1440)
     val cal = all.firstOrNull { it.id == d.calendarId }
 
     Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).imePadding().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.cal_cancel)) }
-            Text(stringResource(if (d.id == null) R.string.cal_new_event else R.string.cal_edit_event), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
-            if (d.id != null) IconButton(onClick = { onDelete(d.id) }) { Icon(painterResource(R.drawable.delete_24px), stringResource(R.string.cal_delete)) }
-            Button(onClick = { onSave(d) }) { Text(stringResource(R.string.cal_save)) }
+            IconButton(onClick = onDismiss) { Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.cal_cancel)) }
+            Text(stringResource(if (d.id == null) I18nR.string.cal_new_event else I18nR.string.cal_edit_event), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+            if (d.id != null) IconButton(onClick = { onDelete(d.id) }) { Icon(painterResource(BaseR.drawable.delete_24px), stringResource(I18nR.string.cal_delete)) }
+            Button(onClick = { onSave(d) }) { Text(stringResource(I18nR.string.cal_save)) }
         }
-        OutlinedTextField(d.title, { onChange(d.copy(title = it)) }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.cal_title)) }, singleLine = true)
+        OutlinedTextField(d.title, { onChange(d.copy(title = it)) }, Modifier.fillMaxWidth(), label = { Text(stringResource(I18nR.string.cal_title)) }, singleLine = true)
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(stringResource(R.string.cal_all_day), Modifier.weight(1f)); Switch(d.allDay, { onChange(d.copy(allDay = it)) })
+            Text(stringResource(I18nR.string.cal_all_day), Modifier.weight(1f)); Switch(d.allDay, { onChange(d.copy(allDay = it)) })
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OutlinedButton(onClick = { pickDate(d.start, ::setStart) }, Modifier.weight(1f)) { Text(d.start.format(df)) }
@@ -552,18 +554,18 @@ private fun EventEditor(d: Draft, writable: List<DeviceCalendar>, all: List<Devi
             OutlinedButton(onClick = { pickDate(d.end) { onChange(d.copy(end = it)) } }, Modifier.weight(1f)) { Text(d.end.format(df)) }
             if (!d.allDay) OutlinedButton(onClick = { pickTime(d.end) { onChange(d.copy(end = it)) } }) { Text(d.end.format(tf)) }
         }
-        OutlinedTextField(d.location, { onChange(d.copy(location = it)) }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.cal_location)) }, singleLine = true)
-        OutlinedTextField(d.description, { onChange(d.copy(description = it)) }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.cal_description)) }, minLines = 3)
+        OutlinedTextField(d.location, { onChange(d.copy(location = it)) }, Modifier.fillMaxWidth(), label = { Text(stringResource(I18nR.string.cal_location)) }, singleLine = true)
+        OutlinedTextField(d.description, { onChange(d.copy(description = it)) }, Modifier.fillMaxWidth(), label = { Text(stringResource(I18nR.string.cal_description)) }, minLines = 3)
         Box {
-            OutlinedButton(onClick = { repeatMenu = true }) { Text(stringResource(R.string.cal_repeat) + ": " + stringResource(repeatLabels[d.repeat])) }
+            OutlinedButton(onClick = { repeatMenu = true }) { Text(stringResource(I18nR.string.cal_repeat) + ": " + stringResource(repeatLabels[d.repeat])) }
             DropdownMenu(repeatMenu, { repeatMenu = false }) { repeatLabels.forEachIndexed { i, r -> DropdownMenuItem(text = { Text(stringResource(r)) }, onClick = { repeatMenu = false; onChange(d.copy(repeat = i)) }) } }
         }
         Box {
             OutlinedButton(onClick = { remMenu = true }) {
-                Text(stringResource(R.string.cal_reminder) + ": " + (d.reminder?.let { if (it == 0) stringResource(R.string.cal_reminder_at_time) else stringResource(R.string.cal_reminder_before, it) } ?: stringResource(R.string.cal_reminder_none)))
+                Text(stringResource(I18nR.string.cal_reminder) + ": " + (d.reminder?.let { if (it == 0) stringResource(I18nR.string.cal_reminder_at_time) else stringResource(I18nR.string.cal_reminder_before, it) } ?: stringResource(I18nR.string.cal_reminder_none)))
             }
             DropdownMenu(remMenu, { remMenu = false }) {
-                reminders.forEach { m -> DropdownMenuItem(text = { Text(m?.let { if (it == 0) stringResource(R.string.cal_reminder_at_time) else stringResource(R.string.cal_reminder_before, it) } ?: stringResource(R.string.cal_reminder_none)) }, onClick = { remMenu = false; onChange(d.copy(reminder = m)) }) }
+                reminders.forEach { m -> DropdownMenuItem(text = { Text(m?.let { if (it == 0) stringResource(I18nR.string.cal_reminder_at_time) else stringResource(I18nR.string.cal_reminder_before, it) } ?: stringResource(I18nR.string.cal_reminder_none)) }, onClick = { remMenu = false; onChange(d.copy(reminder = m)) }) }
             }
         }
         Box {
@@ -572,7 +574,7 @@ private fun EventEditor(d: Draft, writable: List<DeviceCalendar>, all: List<Devi
             }
             DropdownMenu(calMenu, { calMenu = false }) { writable.forEach { c -> DropdownMenuItem(text = { Text("${c.name} (${c.account})") }, onClick = { calMenu = false; onChange(d.copy(calendarId = c.id)) }) } }
         }
-        if (d.repeat != 0 && d.id != null) Text(stringResource(R.string.cal_series_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (d.repeat != 0 && d.id != null) Text(stringResource(I18nR.string.cal_series_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
@@ -581,27 +583,27 @@ private fun CalendarsDialog(vm: CalendarViewModel, calendars: List<DeviceCalenda
     var name by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.cal_calendars)) },
+        title = { Text(stringResource(I18nR.string.cal_calendars)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 calendars.groupBy { it.account to it.accountType }.forEach { (acc, list) ->
-                    Text(if (list.first().isLocal) stringResource(R.string.cal_on_phone) else acc.first, style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
+                    Text(if (list.first().isLocal) stringResource(I18nR.string.cal_on_phone) else acc.first, style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
                     list.forEach { c ->
                         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                             Box(Modifier.size(12.dp).clip(CircleShape).background(Color(c.color)))
                             Text(c.name, Modifier.weight(1f).padding(start = 8.dp), maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            if (c.isLocal) IconButton(onClick = { vm.io { vm.repo.deleteLocalCalendar(c.id) } }) { Icon(painterResource(R.drawable.delete_24px), stringResource(R.string.cal_delete)) }
+                            if (c.isLocal) IconButton(onClick = { vm.io { vm.repo.deleteLocalCalendar(c.id) } }) { Icon(painterResource(BaseR.drawable.delete_24px), stringResource(I18nR.string.cal_delete)) }
                             Switch(c.visible, { v -> vm.io { vm.repo.setVisible(c.id, v) } })
                         }
                     }
                 }
                 HorizontalDivider(Modifier.padding(vertical = 8.dp))
-                OutlinedTextField(name, { name = it }, label = { Text(stringResource(R.string.cal_new_local)) }, singleLine = true)
-                TextButton(onClick = { if (name.isNotBlank()) { vm.io { vm.repo.createLocalCalendar(name.trim(), 0xFF1E88E5.toInt()) }; name = "" } }) { Text(stringResource(R.string.cal_create_local)) }
-                Text(stringResource(R.string.cal_sync_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                OutlinedTextField(name, { name = it }, label = { Text(stringResource(I18nR.string.cal_new_local)) }, singleLine = true)
+                TextButton(onClick = { if (name.isNotBlank()) { vm.io { vm.repo.createLocalCalendar(name.trim(), 0xFF1E88E5.toInt()) }; name = "" } }) { Text(stringResource(I18nR.string.cal_create_local)) }
+                Text(stringResource(I18nR.string.cal_sync_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cal_ok)) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.cal_ok)) } },
     )
 }
 
@@ -633,6 +635,6 @@ private fun MonthYearDialog(initial: YearMonth, onChoose: (YearMonth) -> Unit, o
             }
         },
         confirmButton = { TextButton(onClick = { hostActivity?.currentFocus?.clearFocus(); onChoose(YearMonth.of(chosenYear, chosenMonth)) }) { Text(stringResource(android.R.string.ok)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }

@@ -38,7 +38,7 @@ object TelosApps {
             name = "Clock",
             description = "World clock with capital timezones, alarms with stream fallback, countdown timer, stopwatch and bedside night clock.",
             features = listOf("World clock", "Alarms with stream fallback", "Countdown timer", "Stopwatch", "Night clock"),
-            iconRes = de.mm20.launcher2.base.R.drawable.schedule_24px,
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_clock_full,
             route = "settings/clock",
         ),
         TelosApp(
@@ -46,7 +46,7 @@ object TelosApps {
             name = "Akou",
             description = "Music recognition using a real microphone sample and your own AudD API token, with local history and YouTube Music search.",
             features = listOf("AudD recognition (own API token required)", "10-second microphone sample", "Local recognition history", "YouTube Music search"),
-            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_full,
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_akou_full,
             route = "settings/akou",
         ),
         TelosApp(
@@ -54,7 +54,7 @@ object TelosApps {
             name = "Magnifier",
             description = "Camera magnifier with high contrast readability filters and freeze frame.",
             features = listOf("Camera2 zoom", "Inverted, B&W, Yellow/Black, Blue/Yellow filters", "Freeze frame"),
-            iconRes = de.mm20.launcher2.base.R.drawable.search_24px,
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_magnifier_full,
             route = "settings/magnifier",
         ),
         TelosApp(
@@ -62,7 +62,7 @@ object TelosApps {
             name = "Flashlight",
             description = "Flashlight app with camera LED and screen light, Morse translator and emergency siren.",
             features = listOf("Camera LED & Screen light", "Hardware dimming", "Morse code generator", "Police siren alarm"),
-            iconRes = de.mm20.launcher2.base.R.drawable.light_mode_24px,
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_flashlight_full,
             route = "settings/flashlight",
         ),
         TelosApp(
@@ -70,7 +70,7 @@ object TelosApps {
             name = "Trash",
             description = "Trash bin for deleted items with security unlock.",
             features = listOf("App Lock security", "Restore and permanent deletion"),
-            iconRes = de.mm20.launcher2.base.R.drawable.delete_24px,
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_trash_full,
             route = SettingsDeepLinkContract.ROUTE_TRASH,
         ),
         TelosApp(
@@ -205,7 +205,7 @@ object TelosApps {
                 "Conversation threading",
                 "Notes on Gmail messages, stored locally and in IMAP folder Ermis-Notes",
             ),
-            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_messages_full,
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_ermis_full,
             route = SettingsDeepLinkContract.ROUTE_ERMIS,
         ),
         TelosApp(
@@ -260,7 +260,7 @@ object TelosApps {
             name = "System",
             description = "Live OS status: CPU, RAM, IPs, running processes, and saved Wi-Fi passwords (root or Shizuku) with QR share.",
             features = listOf("CPU and RAM meters", "Local IPs", "Saved Wi-Fi manager", "Password reveal with lock, root or Shizuku", "Notes, import/export, connect and forget", "QR share"),
-            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_network_full,
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_system_full,
             route = SettingsDeepLinkContract.ROUTE_SYSTEM,
         ),
         TelosApp(
@@ -284,7 +284,7 @@ object TelosApps {
             name = "Screenshot",
             description = "Takes full, partial and scrolling screenshots and edits them: crop, hide with pixelate or blur, and draw.",
             features = listOf("Full, partial (rectangle, oval, free shape) and scrolling screenshots", "Pixelate and blur to hide private parts", "Notification with share, edit and delete", "Delay timer"),
-            iconRes = de.mm20.launcher2.base.R.drawable.ic_sidebar_screenshot,
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_screenshot_full,
             route = SettingsDeepLinkContract.ROUTE_SCREENSHOT,
         ),
     )
