@@ -10,7 +10,7 @@ class WaylandShellTest {
     fun exclusiveZonesMatchPanelAndDock() {
         assertEquals(36, WaylandShell.PANEL_PX)
         assertEquals(56, WaylandShell.DOCK_PX)
-        assertEquals("W2", WaylandShell.PHASE)
+        assertEquals("W3", WaylandShell.PHASE)
     }
 
     @Test
@@ -49,6 +49,12 @@ class WaylandShellTest {
         assertEquals("abc", req?.id)
         assertEquals("Open File", req?.title)
         assertEquals(false, req?.directory)
+    }
+
+    @Test
+    fun idleLockLine() {
+        assertEquals(true, IdleLockParser.isLock("""{"event":"lock"}"""))
+        assertEquals(false, IdleLockParser.isLock("""{"event":"unlock"}"""))
     }
 
     @Test

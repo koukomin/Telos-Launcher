@@ -37,11 +37,20 @@ Host package: `gtk-layer-shell` / `gir1.2-gtk-layer-shell-0`. Missing GIR → `t
 
 Gio missing → helpers exit 0. gtk FileChooser remains the fallback in `portals.conf`.
 
-## Later (do not start unless asked)
+## W3 (in tree)
 
-| Phase | Scope |
+| Piece | What it does |
 | --- | --- |
-| **W3** | Idle, inhibit, greeter, mixed-DPI, IME, AT-SPI. |
+| Idle | `telos-idle` uses swayidle (or a sleep loop). Writes `telos-lock.jsonl`; Compose `IdleLockBridge` calls `SessionPowerActions.lock`. Timeout from `idleSeconds` / `telos-idle.sec` (default 300). |
+| Inhibit | `IdleInhibit` runs `systemd-inhibit --what=idle:sleep` while playerctl is Playing. |
+| Greeter | `telos-greeter` GTK password when `WAYLAND_DISPLAY`/`DISPLAY` is set, pipes `--unlock-stdin`. TTY session keeps console unlock. |
+| Mixed-DPI | `desktop.properties` `output.<name>=WxH@Hz@scale` applied to every output on startup. |
+| IME | Session exports fcitx5 or ibus modules; autostart launches the daemon if present. |
+| AT-SPI | `GTK_A11Y=1`, `at-spi-bus-launcher --launch-immediately` when installed. |
+
+## Later
+
+Numbered Wayland shell phases W0–W3 are in tree. Do not start extra DEs unless asked.
 
 ## Files
 
@@ -51,4 +60,4 @@ Gio missing → helpers exit 0. gtk FileChooser remains the fallback in `portals
 
 ## Resume prompt
 
-W0–W2 are in tree. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`. Next is **W3** only if the user asks.
+W0–W3 are in tree. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`.

@@ -5,10 +5,10 @@ package com.telos.desktop.ui
  * `docs/docs/developer-guide/telos-helix.md` and `telos-wayland-shell.md`.
  *
  * H0–H6, Surface S0–S4 — done
- * Wayland W0–W2 — done
- * W3 idle/greeter/IME — pending until asked
+ * Wayland W0–W3 — done
+ * Next: none of the numbered Wayland shell phases unless the user asks.
  */
 object Helix {
-    const val PHASE = "W2"
-    const val NEXT = "W3"
+    const val PHASE = "W3"
+    const val NEXT = "none"
 }

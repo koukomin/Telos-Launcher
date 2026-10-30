@@ -15,6 +15,20 @@ fi
 if [ -x "$CONF_DIR/telos-sni" ]; then
   "$CONF_DIR/telos-sni" &
 fi
+if [ -x "$CONF_DIR/telos-idle" ]; then
+  "$CONF_DIR/telos-idle" &
+fi
+if command -v fcitx5 >/dev/null 2>&1; then
+  fcitx5 -d >/dev/null 2>&1 &
+elif command -v ibus-daemon >/dev/null 2>&1; then
+  ibus-daemon -drx >/dev/null 2>&1 &
+fi
+for spi in /usr/libexec/at-spi-bus-launcher /usr/lib/at-spi2-core/at-spi-bus-launcher at-spi-bus-launcher; do
+  if [ -x "$spi" ] || command -v "$spi" >/dev/null 2>&1; then
+    "$spi" --launch-immediately >/dev/null 2>&1 &
+    break
+  fi
+done
 start_portal() {
   for cand in "$@"; do
     if [ -x "$cand" ]; then

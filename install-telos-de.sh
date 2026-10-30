@@ -62,7 +62,7 @@ sudo chmod 755 /opt/telos-desktop/telos-desktop.jar
 sudo cp -a "$PROJECT_DIR/desktop-linux/session/." /opt/telos-desktop/session/
 sudo chmod 755 /opt/telos-desktop/session/telos-session
 sudo chmod 755 /opt/telos-desktop/session/labwc/autostart
-sudo chmod 755 /opt/telos-desktop/session/telos-notifyd /opt/telos-desktop/session/telos-pam-auth /opt/telos-desktop/session/telos-layer /opt/telos-desktop/session/telos-portal /opt/telos-desktop/session/telos-sni
+sudo chmod 755 /opt/telos-desktop/session/telos-notifyd /opt/telos-desktop/session/telos-pam-auth /opt/telos-desktop/session/telos-layer /opt/telos-desktop/session/telos-portal /opt/telos-desktop/session/telos-sni /opt/telos-desktop/session/telos-idle /opt/telos-desktop/session/telos-greeter
 
 sudo tee /usr/local/bin/telos-session >/dev/null << 'EOF'
 #!/bin/sh

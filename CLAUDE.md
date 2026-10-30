@@ -48,7 +48,7 @@ External apps can extend Kvaesitso (weather, file/contact/places search, calenda
 
 `:desktop-linux` P0/P1 (labwc session, vault as full `$HOME`, Linux only) is in the tree. See `docs/docs/developer-guide/desktop-roadmap.md`.
 
-If the user asks what is still pending for the Linux desktop: **Wayland W3** (idle, greeter, IME). P0–P4, Helix, Surface, W0–W2 are in tree. Spec: `docs/docs/developer-guide/telos-wayland-shell.md`. Spec: `docs/docs/developer-guide/telos-helix.md`. Never depend `:app:app` on `:desktop-linux`. `:app:ui` may use `:ui-kmp`.
+If the user asks what is still pending for the Linux desktop: **none of P0–P4, Helix, Surface, or Wayland W0–W3**. Spec: `docs/docs/developer-guide/telos-wayland-shell.md`. Spec: `docs/docs/developer-guide/telos-helix.md`. Never depend `:app:app` on `:desktop-linux`. `:app:ui` may use `:ui-kmp`.
 
 ## Documentation
 

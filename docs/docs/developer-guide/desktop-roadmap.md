@@ -4,7 +4,7 @@ sidebar_position: 9
 
 # Telos Linux Desktop roadmap (remember this)
 
-When a later session asks **what is still pending** for the Linux desktop, the answer is **Wayland W3** (idle, greeter, IME, AT-SPI). P0–P4, Helix, Surface, **W0–W2** are in tree. Spec: [telos-wayland-shell.md](./telos-wayland-shell.md). `:app:app` still must not depend on `:desktop-linux`. `:app:ui` hosts `:ui-kmp` screens. Spec: [Telos Helix](./telos-helix.md).
+When a later session asks **what is still pending** for the Linux desktop, the answer is **none of P0–P4, Helix, Surface, or Wayland W0–W3**. Spec: [telos-wayland-shell.md](./telos-wayland-shell.md). `:app:app` still must not depend on `:desktop-linux`. `:app:ui` hosts `:ui-kmp` screens. Spec: [Telos Helix](./telos-helix.md).
 
 | Phase | Status | Scope |
 | --- | --- | --- |
@@ -21,6 +21,6 @@ When a later session asks **what is still pending** for the Linux desktop, the a
 | **Wayland W0** | In tree | labwc/niri exclusive-zone struts, `telos-notifyd`, portal prefer gtk+wlr, PAM lock helper. Compose is still xdg-toplevel. |
 | **Wayland W1** | In tree | GtkLayerShell panel/dock (`telos-layer`) + Unix socket. Compose chrome hides when the helper is ready. |
 | **Wayland W2** | In tree | `telos-portal` FileChooser + Notification, `telos-sni` StatusNotifierWatcher, tray Activate. |
-| **Wayland W3** | Pending | Idle, greeter, mixed-DPI, IME, AT-SPI. |
+| **Wayland W3** | In tree | Idle lock, media idle-inhibit, GTK greeter when a display exists, per-output scale, IME, AT-SPI. |
 
 Constraints that stay in force: no `:app:app` dependency on `:desktop-linux`; i18n keys from `:core:i18n` only; labwc is a **host package**, not bundled.

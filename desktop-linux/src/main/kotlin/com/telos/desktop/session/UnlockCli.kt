@@ -10,16 +10,18 @@ import kotlin.system.exitProcess
 
 // === TELOS_PENDING_REVIEW_START: telos_labwc_session_p0p1 ===
 object UnlockCli {
-    fun run() {
+    fun run(fromStdin: Boolean = false) {
         System.setProperty("telos.session", "1")
         val hostHome = System.getProperty("user.home")
         val engine = PhantomVaultEngine().also { PhantomVault.engine = it }
         val console: Console? = System.console()
-        val password = if (console != null) {
-            String(console.readPassword("Telos vault password: ") ?: CharArray(0))
-        } else {
-            print("Telos vault password: ")
-            readlnOrNull().orEmpty()
+        val password = when {
+            fromStdin -> readlnOrNull().orEmpty()
+            console != null -> String(console.readPassword("Telos vault password: ") ?: CharArray(0))
+            else -> {
+                print("Telos vault password: ")
+                readlnOrNull().orEmpty()
+            }
         }
         if (password.isEmpty()) {
             System.err.println("telos-session: empty password")

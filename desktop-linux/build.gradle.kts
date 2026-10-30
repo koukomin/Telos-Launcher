@@ -111,6 +111,8 @@ tasks.matching { it.name == "packageUberJarForCurrentOS" }.configureEach {
         sessionDest.resolve("telos-layer").setExecutable(true)
         sessionDest.resolve("telos-portal").setExecutable(true)
         sessionDest.resolve("telos-sni").setExecutable(true)
+        sessionDest.resolve("telos-idle").setExecutable(true)
+        sessionDest.resolve("telos-greeter").setExecutable(true)
     }
 }
 // === TELOS_PENDING_REVIEW_END: fix_uberjar_signature ===

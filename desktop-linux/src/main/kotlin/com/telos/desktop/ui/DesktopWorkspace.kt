@@ -121,6 +121,23 @@ fun DesktopWorkspace(
     LaunchedEffect(Unit) {
         com.telos.desktop.session.SniTray.pollLoop()
     }
+    LaunchedEffect(Unit) {
+        com.telos.desktop.session.IdleLockBridge.pollLoop()
+    }
+    LaunchedEffect(Unit) {
+        while (true) {
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                com.telos.desktop.session.IdleInhibit.update(
+                    com.telos.desktop.panel.AudioControlManager.snapshot().playing,
+                )
+            }
+            kotlinx.coroutines.delay(4000)
+        }
+    }
+    LaunchedEffect(settings.idleSeconds) {
+        val dir = java.io.File(System.getenv("XDG_RUNTIME_DIR") ?: System.getProperty("java.io.tmpdir"))
+        java.io.File(dir, "telos-idle.sec").writeText(settings.idleSeconds.toString())
+    }
     LaunchedEffect(wm) {
         com.telos.desktop.session.LayerShellBridge.extraHandler = { id ->
             when (id) {

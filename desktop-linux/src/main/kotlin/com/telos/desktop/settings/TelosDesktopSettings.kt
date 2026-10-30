@@ -30,6 +30,8 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
     var panelIconDp: Float = 22f
     var panelHeightDp: Float = 36f
     // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
+    val outputPrefs = LinkedHashMap<String, String>()
+    var idleSeconds: Int = 300
 
     private val file: File get() = File(vaultConfigDir, "desktop.properties")
 
@@ -63,6 +65,13 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         panelIconDp = p.getProperty("panelIconDp")?.toFloatOrNull() ?: panelIconDp
         panelHeightDp = p.getProperty("panelHeightDp")?.toFloatOrNull() ?: panelHeightDp
         // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
+        idleSeconds = p.getProperty("idleSeconds")?.toIntOrNull()?.coerceIn(30, 3600) ?: 300
+        outputPrefs.clear()
+        p.stringPropertyNames().forEach { key ->
+            if (key.startsWith("output.")) {
+                outputPrefs[key.removePrefix("output.")] = p.getProperty(key).orEmpty()
+            }
+        }
     }
 
     fun save() {
@@ -95,6 +104,16 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         p["panelIconDp"] = panelIconDp.toString()
         p["panelHeightDp"] = panelHeightDp.toString()
         // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
+        p["idleSeconds"] = idleSeconds.toString()
+        outputPrefs.forEach { (name, spec) -> p["output.$name"] = spec }
         file.outputStream().use { p.store(it, "Telos Linux Desktop") }
+    }
+
+    fun rememberOutput(name: String, resolution: String, refresh: Double, scale: Double) {
+        outputPrefs[name] = "$resolution@$refresh@$scale"
+        preferredOutput = name
+        preferredResolution = resolution
+        preferredRefresh = refresh
+        preferredScale = scale
     }
 }

@@ -7,6 +7,6 @@ object WaylandShell {
     const val PANEL_PX = WorkArea.DEFAULT_TOP_BAR_PX.toInt()
     const val DOCK_PX = WorkArea.DEFAULT_DOCK_PX.toInt()
     const val NOTIFY_FIFO = "telos-notify.jsonl"
-    const val PHASE = "W2"
+    const val PHASE = "W3"
     const val LAYER_SOCK = "telos-layer.sock"
 }

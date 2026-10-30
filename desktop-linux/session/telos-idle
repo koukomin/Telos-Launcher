@@ -1,0 +1,23 @@
+#!/bin/sh
+# W3: lock on idle via swayidle, or a sleep loop if swayidle is missing.
+if [ -z "${TELOS_IDLE_SEC:-}" ] && [ -f "${XDG_RUNTIME_DIR:-/tmp}/telos-idle.sec" ]; then
+  TELOS_IDLE_SEC="$(cat "${XDG_RUNTIME_DIR}/telos-idle.sec" 2>/dev/null || true)"
+fi
+TIMEOUT="${TELOS_IDLE_SEC:-300}"
+LOCKF="${XDG_RUNTIME_DIR:-/tmp}/telos-lock.jsonl"
+lock_now() {
+  printf '%s\n' '{"event":"lock"}' >> "$LOCKF" 2>/dev/null || true
+  chmod 600 "$LOCKF" 2>/dev/null || true
+  loginctl lock-session >/dev/null 2>&1 || true
+}
+if command -v swayidle >/dev/null 2>&1; then
+  SUSPEND=$((TIMEOUT + 60))
+  exec swayidle -w \
+    timeout "$TIMEOUT" "sh -c 'printf \"%s\\n\" \"{\\\"event\\\":\\\"lock\\\"}\" >> \"$LOCKF\"; loginctl lock-session'" \
+    timeout "$SUSPEND" "systemctl suspend" \
+    before-sleep "sh -c 'printf \"%s\\n\" \"{\\\"event\\\":\\\"lock\\\"}\" >> \"$LOCKF\"; loginctl lock-session'"
+fi
+while true; do
+  sleep "$TIMEOUT"
+  lock_now
+done

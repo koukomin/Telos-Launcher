@@ -30,7 +30,11 @@ import kotlin.system.exitProcess
 fun main(args: Array<String>) {
     // === TELOS_PENDING_REVIEW_START: telos_labwc_session_p0p1 ===
     if (args.contains("--unlock-only")) {
-        com.telos.desktop.session.UnlockCli.run()
+        com.telos.desktop.session.UnlockCli.run(fromStdin = args.contains("--unlock-stdin"))
+        return
+    }
+    if (args.contains("--unlock-stdin")) {
+        com.telos.desktop.session.UnlockCli.run(fromStdin = true)
         return
     }
     if (args.contains("--lock-only")) {

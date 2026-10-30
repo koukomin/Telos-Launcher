@@ -57,6 +57,14 @@ fun LinuxDesktopSettingsPanel(
                 settings.followSystemTheme = it
                 settings.save()
             }
+            Text("Idle lock ${settings.idleSeconds}s", fontSize = 12.sp, color = TelosColors.onSurface)
+            androidx.compose.material3.Slider(
+                (settings.idleSeconds - 30).toFloat() / 570f,
+                {
+                    settings.idleSeconds = (30 + it * 570f).toInt().coerceIn(30, 600)
+                    settings.save()
+                },
+            )
             TextButton(onClick = { DesktopChrome.toggleFullscreen() }) {
                 Text(if (DesktopChrome.fullscreen) "Exit fullscreen (F11)" else "Enter fullscreen (F11)")
             }

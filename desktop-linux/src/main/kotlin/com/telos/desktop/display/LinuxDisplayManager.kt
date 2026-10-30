@@ -61,21 +61,29 @@ class LinuxDisplayManager(
             DisplayBackend.Unknown -> false
         }
         if (ok) {
-            settingsStore.preferredOutput = output
-            settingsStore.preferredResolution = resolution
-            settingsStore.preferredRefresh = refreshRate
-            settingsStore.preferredScale = scale
+            settingsStore.rememberOutput(output, resolution, refreshRate, scale)
             settingsStore.save()
         }
         return ok
     }
 
     fun applyPersistedOnStartup() {
-        val out = settingsStore.preferredOutput ?: return
-        val res = settingsStore.preferredResolution ?: return
-        val hz = settingsStore.preferredRefresh ?: return
-        val scale = settingsStore.preferredScale ?: 1.0
-        applyDisplayMode(out, res, hz, scale)
+        if (settingsStore.outputPrefs.isEmpty()) {
+            val out = settingsStore.preferredOutput ?: return
+            val res = settingsStore.preferredResolution ?: return
+            val hz = settingsStore.preferredRefresh ?: return
+            val scale = settingsStore.preferredScale ?: 1.0
+            applyDisplayMode(out, res, hz, scale)
+            return
+        }
+        settingsStore.outputPrefs.forEach { (name, spec) ->
+            val parts = spec.split('@')
+            if (parts.size < 3) return@forEach
+            val res = parts[0]
+            val hz = parts[1].toDoubleOrNull() ?: return@forEach
+            val scale = parts[2].toDoubleOrNull() ?: 1.0
+            applyDisplayMode(name, res, hz, scale)
+        }
     }
 
     private fun parseXrandr(): List<DisplayOutput> {
