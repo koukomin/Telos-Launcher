@@ -3,7 +3,6 @@ package de.mm20.launcher2
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.util.Log
 import de.mm20.launcher2.ui.launcher.SharedLauncherActivity
 
@@ -14,20 +13,11 @@ class PackageReplacedReceiver : BroadcastReceiver() {
         Log.i("PackageReplacedReceiver", "Telos Launcher updated! Checking default launcher status...")
 
         try {
-            // Check if Telos is set as the default HOME launcher
-            val homeIntent = Intent(Intent.ACTION_MAIN).apply {
-                addCategory(Intent.CATEGORY_HOME)
+            // Relaunch Telos Launcher directly on the main Home Screen post-update
+            val launchIntent = Intent(context, SharedLauncherActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
             }
-            val defaultHome = context.packageManager.resolveActivity(homeIntent, PackageManager.MATCH_DEFAULT_ONLY)
-            val isDefaultLauncher = defaultHome?.activityInfo?.packageName == context.packageName
-
-            if (isDefaultLauncher) {
-                Log.i("PackageReplacedReceiver", "Telos Launcher is default HOME! Relaunching main activity...")
-                val launchIntent = Intent(context, SharedLauncherActivity::class.java).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
-                }
-                context.startActivity(launchIntent)
-            }
+            context.startActivity(launchIntent)
 
             // Trigger background self-optimization (ART speed compile) if Shizuku/root is available
             de.mm20.launcher2.art.TelosSelfOptimizer.checkAndSelfCompileAsync(

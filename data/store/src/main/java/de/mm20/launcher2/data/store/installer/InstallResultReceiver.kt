@@ -64,6 +64,17 @@ class InstallResultReceiver : BroadcastReceiver() {
                 AppDatabase.getInstance(appContext).storeItemDao()
                     .updateInstalledVersion(packageName, versionCode)
 
+                // When Telos Launcher updates itself, automatically relaunch the main Home Screen
+                if (packageName == appContext.packageName) {
+                    Log.i(TAG, "Telos Launcher self-update completed! Launching Home Screen...")
+                    val launchIntent = appContext.packageManager.getLaunchIntentForPackage(appContext.packageName)?.apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
+                    }
+                    if (launchIntent != null) {
+                        appContext.startActivity(launchIntent)
+                    }
+                }
+
                 val uiSettings = runCatching { org.koin.core.context.GlobalContext.get().get<UiSettings>() }.getOrNull()
                 if (uiSettings != null && uiSettings.artOptimizationStorePostInstall.first()) {
                     TelosArtOptimizer.optimizePackage(appContext, packageName, profile = TelosArtOptimizer.PROFILE_SPEED)
