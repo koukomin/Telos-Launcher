@@ -387,6 +387,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.system.SystemDashboardRoute> {
                 de.mm20.launcher2.ui.system.SystemDashboardScreen()
             }
+            entry<de.mm20.launcher2.ui.weather.WeatherRoute> {
+                de.mm20.launcher2.ui.weather.WeatherScreen()
+            }
             entry<de.mm20.launcher2.ui.trash.TrashUnlockRoute> {
                 de.mm20.launcher2.ui.trash.TrashUnlockScreen()
             }
@@ -786,6 +789,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_NETWORK, SettingsDeepLinkContract.ROUTE_NETWORK_SPEED_TEST,
             SettingsDeepLinkContract.ROUTE_NETWORK_PRIVATE_DNS -> "telos_network_app"
             SettingsDeepLinkContract.ROUTE_SYSTEM -> "telos_system_app"
+            SettingsDeepLinkContract.ROUTE_WEATHER -> "telos_weather_app"
             SettingsDeepLinkContract.ROUTE_TRASH -> "telos_trash_app"
             ROUTE_CALCULATOR -> "telos_calculator_app"
             ROUTE_VOICE_RECORDER -> "telos_voice_recorder_app"
@@ -903,6 +907,7 @@ open class SettingsActivity : BaseActivity() {
             SettingsDeepLinkContract.ROUTE_NETWORK_SPEED_TEST -> de.mm20.launcher2.ui.network.NetworkSpeedTestRoute
             SettingsDeepLinkContract.ROUTE_NETWORK_PRIVATE_DNS -> de.mm20.launcher2.ui.network.PrivateDnsRoute
             SettingsDeepLinkContract.ROUTE_SYSTEM -> de.mm20.launcher2.ui.system.SystemDashboardRoute
+            SettingsDeepLinkContract.ROUTE_WEATHER -> de.mm20.launcher2.ui.weather.WeatherRoute
             SettingsDeepLinkContract.ROUTE_TRASH -> de.mm20.launcher2.ui.trash.TrashUnlockRoute
             ROUTE_CALCULATOR -> de.mm20.launcher2.ui.calculator.CalculatorRoute
             ROUTE_VOICE_RECORDER -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute

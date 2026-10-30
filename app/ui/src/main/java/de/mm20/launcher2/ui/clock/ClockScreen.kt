@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.clock
 
+import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.i18n.R as I18nR
 import android.app.Activity
 import android.content.Intent
 import android.media.RingtoneManager
@@ -85,19 +87,19 @@ fun ClockScreen() {
             verticalArrangement = Arrangement.Center) {
             ClockDigits(now.format(DateTimeFormatter.ofPattern("HH:mm:ss")), Color.Red)
             Text(now.format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")), color = Color.Gray)
-            Text(stringResource(R.string.clock_night_exit), color = Color.Gray)
+            Text(stringResource(I18nR.string.clock_night_exit), color = Color.Gray)
         }
         return
     }
     Scaffold(containerColor = Color.Transparent, topBar = {
-        TopAppBar(title = { Text(stringResource(R.string.preference_screen_clockwidget)) }, navigationIcon = {
-            IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back)) }
+        TopAppBar(title = { Text(stringResource(I18nR.string.preference_screen_clockwidget)) }, navigationIcon = {
+            IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back)) }
         }, actions = { IconButton(onClick = { night = true }) {
-            Icon(painterResource(de.mm20.launcher2.base.R.drawable.light_mode_24px), stringResource(R.string.clock_night))
+            Icon(painterResource(BaseR.drawable.light_mode_24px), stringResource(I18nR.string.clock_night))
         } }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent))
     }) { padding ->
         Column(Modifier.fillMaxSize().padding(padding)) {
-            val titles = listOf(R.string.clock_world, R.string.clock_alarm, R.string.clock_timer, R.string.clock_stopwatch)
+            val titles = listOf(I18nR.string.clock_world, I18nR.string.clock_alarm, I18nR.string.clock_timer, I18nR.string.clock_stopwatch)
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 titles.forEachIndexed { index, title -> FilterChip(selectedTab == index, { selectedTab = index }, { Text(stringResource(title)) }) }
             }
@@ -145,7 +147,7 @@ private fun WorldClockTab() {
             val local = ZonedDateTime.ofInstant(now, ZoneId.systemDefault())
             Card(Modifier.fillMaxWidth()) {
                 de.mm20.launcher2.ui.kmp.SharedClockHost(
-                    title = stringResource(R.string.clock_local),
+                    title = stringResource(I18nR.string.clock_local),
                     time = local.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
                     date = local.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy")),
                     modifier = Modifier.fillMaxWidth(),
@@ -155,7 +157,7 @@ private fun WorldClockTab() {
         item {
             de.mm20.launcher2.ui.component.TelosSearchBar(
                 value = query, onValueChange = { query = it },
-                placeholder = stringResource(R.string.clock_world),
+                placeholder = stringResource(I18nR.string.clock_world),
                 onFocusChanged = { searchFocused = it },
             )
         }
@@ -213,24 +215,24 @@ private fun AlarmTab() {
     }
     LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         if (loading) item { LinearProgressIndicator(Modifier.fillMaxWidth()) }
-        if (failed) item { TextButton(onClick = { refresh() }, enabled = !loading) { Text(stringResource(R.string.hc_failed_try_again)) } }
+        if (failed) item { TextButton(onClick = { refresh() }, enabled = !loading) { Text(stringResource(I18nR.string.hc_failed_try_again)) } }
         if (!exact && !loading) item { OutlinedButton(onClick = {
             if (android.os.Build.VERSION.SDK_INT >= 31) context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:${context.packageName}")))
-        }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.clock_exact)) } }
+        }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.clock_exact)) } }
         items(alarms, key = { it.id }) { alarm ->
             Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp)) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f).clickable { editing = alarm }) {
                         Text("%02d:%02d".format(alarm.hour, alarm.minute), style = MaterialTheme.typography.headlineMedium, fontFamily = FontFamily.Monospace)
-                        Text(alarm.label.ifBlank { context.getString(R.string.clock_alarm) })
-                        Text(alarm.soundName.ifBlank { context.getString(R.string.clock_default_sound) }, style = MaterialTheme.typography.bodySmall)
+                        Text(alarm.label.ifBlank { context.getString(I18nR.string.clock_alarm) })
+                        Text(alarm.soundName.ifBlank { context.getString(I18nR.string.clock_default_sound) }, style = MaterialTheme.typography.bodySmall)
                     }
                     Switch(alarm.enabled, { enabled -> save { current -> current.map { if (it.id == alarm.id) it.copy(enabled = enabled) else it } } }, enabled = exact && !loading)
                 }
-                TextButton(onClick = { save { current -> current.filterNot { it.id == alarm.id } } }, enabled = !loading) { Text(stringResource(R.string.hc_delete)) }
+                TextButton(onClick = { save { current -> current.filterNot { it.id == alarm.id } } }, enabled = !loading) { Text(stringResource(I18nR.string.hc_delete)) }
             } }
         }
-        item { Button(onClick = { editing = ClockAlarm(enabled = exact) }, Modifier.fillMaxWidth(), enabled = !loading) { Text(stringResource(R.string.hc_add)) } }
+        item { Button(onClick = { editing = ClockAlarm(enabled = exact) }, Modifier.fillMaxWidth(), enabled = !loading) { Text(stringResource(I18nR.string.hc_add)) } }
     }
     editing?.let { alarm -> AlarmEditor(alarm, onDismiss = { editing = null }, onSave = { updated ->
         save { current -> current.filterNot { it.id == updated.id } + updated }; editing = null
@@ -250,13 +252,13 @@ private fun AlarmEditor(initial: ClockAlarm, onDismiss: () -> Unit, onSave: (Clo
     val filePicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri != null) {
             runCatching { context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) }
-            alarm = alarm.copy(soundUri = uri.toString(), soundName = context.getString(R.string.clock_audio_file))
+            alarm = alarm.copy(soundUri = uri.toString(), soundName = context.getString(I18nR.string.clock_audio_file))
         }
     }
     val ringtonePicker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             @Suppress("DEPRECATION") val uri = result.data?.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
-            if (uri != null) alarm = alarm.copy(soundUri = uri.toString(), soundName = runCatching { RingtoneManager.getRingtone(context, uri).getTitle(context) }.getOrDefault(context.getString(R.string.clock_default_sound)))
+            if (uri != null) alarm = alarm.copy(soundUri = uri.toString(), soundName = runCatching { RingtoneManager.getRingtone(context, uri).getTitle(context) }.getOrDefault(context.getString(I18nR.string.clock_default_sound)))
         }
     }
     Dialog(onDismissRequest = onDismiss) {
@@ -267,24 +269,24 @@ private fun AlarmEditor(initial: ClockAlarm, onDismiss: () -> Unit, onSave: (Clo
                 tonalElevation = 16.dp
             ) {
             Column(Modifier.heightIn(max = (LocalConfiguration.current.screenHeightDp * .85f).dp).verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(stringResource(R.string.clock_alarm), style = MaterialTheme.typography.titleLarge)
+                Text(stringResource(I18nR.string.clock_alarm), style = MaterialTheme.typography.titleLarge)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(hour, { hour = it.filter(Char::isDigit).take(2) }, Modifier.weight(1f), label = { Text("HH") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true)
                     OutlinedTextField(minute, { minute = it.filter(Char::isDigit).take(2) }, Modifier.weight(1f), label = { Text("mm") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true)
                 }
-                OutlinedTextField(alarm.label, { alarm = alarm.copy(label = it) }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.au3_appearance_typo_label)) })
-                Text(alarm.soundName.ifBlank { context.getString(R.string.clock_default_sound) })
-                OutlinedButton(onClick = { ringtonePicker.launch(Intent(RingtoneManager.ACTION_RINGTONE_PICKER).putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM).putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false)) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.clock_default_sound)) }
-                OutlinedButton(onClick = { filePicker.launch(arrayOf("audio/*")) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.clock_audio_file)) }
-                OutlinedButton(onClick = { radio = !radio }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.hc_radio)) }
+                OutlinedTextField(alarm.label, { alarm = alarm.copy(label = it) }, Modifier.fillMaxWidth(), label = { Text(stringResource(I18nR.string.au3_appearance_typo_label)) })
+                Text(alarm.soundName.ifBlank { context.getString(I18nR.string.clock_default_sound) })
+                OutlinedButton(onClick = { ringtonePicker.launch(Intent(RingtoneManager.ACTION_RINGTONE_PICKER).putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM).putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false)) }, Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.clock_default_sound)) }
+                OutlinedButton(onClick = { filePicker.launch(arrayOf("audio/*")) }, Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.clock_audio_file)) }
+                OutlinedButton(onClick = { radio = !radio }, Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.hc_radio)) }
                 if (radio) {
                     stations.forEach { station -> TextButton(onClick = { alarm = alarm.copy(soundUri = station.streamUrl, soundName = station.name); radio = false }, Modifier.fillMaxWidth()) { Text(station.name) } }
-                    OutlinedTextField(stream, { stream = it }, Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.clock_stream_url)) }, singleLine = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri))
-                    TextButton(onClick = { alarm = alarm.copy(soundUri = stream.trim(), soundName = context.getString(R.string.hc_radio)); radio = false }, enabled = Uri.parse(stream).scheme in listOf("http", "https")) { Text(stringResource(R.string.hc_save)) }
+                    OutlinedTextField(stream, { stream = it }, Modifier.fillMaxWidth(), label = { Text(stringResource(I18nR.string.clock_stream_url)) }, singleLine = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri))
+                    TextButton(onClick = { alarm = alarm.copy(soundUri = stream.trim(), soundName = context.getString(I18nR.string.hc_radio)); radio = false }, enabled = Uri.parse(stream).scheme in listOf("http", "https")) { Text(stringResource(I18nR.string.hc_save)) }
                 }
-                Text(stringResource(R.string.clock_sound_fallback), style = MaterialTheme.typography.bodySmall)
-                Button(onClick = { onSave(alarm.copy(hour = hour.toInt(), minute = minute.toInt(), enabled = alarm.enabled && ClockAlarms.canSchedule(context))) }, enabled = hour.toIntOrNull() in 0..23 && minute.toIntOrNull() in 0..59, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.hc_save)) }
-                TextButton(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.hc_cancel)) }
+                Text(stringResource(I18nR.string.clock_sound_fallback), style = MaterialTheme.typography.bodySmall)
+                Button(onClick = { onSave(alarm.copy(hour = hour.toInt(), minute = minute.toInt(), enabled = alarm.enabled && ClockAlarms.canSchedule(context))) }, enabled = hour.toIntOrNull() in 0..23 && minute.toIntOrNull() in 0..59, modifier = Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.hc_save)) }
+                TextButton(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.hc_cancel)) }
             }
         }
       }
@@ -330,7 +332,7 @@ private fun TimerTab() {
                     totalSeconds = m * 60
                     remainingMs = totalSeconds * 1000L
                 },
-                label = { Text(stringResource(R.string.clock_minutes)) },
+                label = { Text(stringResource(I18nR.string.clock_minutes)) },
                 singleLine = true,
                 modifier = Modifier.width(200.dp)
             )
@@ -348,7 +350,7 @@ private fun TimerTab() {
                     }
                 }
             ) {
-                Text(if (isRunning) stringResource(R.string.au_music_pause) else stringResource(R.string.clock_start))
+                Text(if (isRunning) stringResource(I18nR.string.au_music_pause) else stringResource(I18nR.string.clock_start))
             }
 
             Button(
@@ -358,7 +360,7 @@ private fun TimerTab() {
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
-                Text(stringResource(R.string.clock_reset), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(I18nR.string.clock_reset), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }
@@ -394,11 +396,11 @@ private fun StopwatchTab() {
 
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Button(onClick = { isRunning = !isRunning }) {
-                Text(if (isRunning) stringResource(R.string.au_music_pause) else stringResource(R.string.clock_start))
+                Text(if (isRunning) stringResource(I18nR.string.au_music_pause) else stringResource(I18nR.string.clock_start))
             }
 
             Button(onClick = { if (isRunning) laps.add(0, elapsedMs) }, enabled = isRunning) {
-                Text(stringResource(R.string.clock_lap))
+                Text(stringResource(I18nR.string.clock_lap))
             }
 
             Button(
@@ -409,7 +411,7 @@ private fun StopwatchTab() {
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
-                Text(stringResource(R.string.clock_reset), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(I18nR.string.clock_reset), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
 
@@ -429,7 +431,7 @@ private fun StopwatchTab() {
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f))
                 ) {
                     Row(modifier = Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text(stringResource(R.string.clock_lap), fontWeight = FontWeight.Bold)
+                        Text(stringResource(I18nR.string.clock_lap), fontWeight = FontWeight.Bold)
                         Text("%02d:%02d.%02d".format(m, s, ms), fontFamily = FontFamily.Monospace)
                     }
                 }

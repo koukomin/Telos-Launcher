@@ -90,11 +90,9 @@ include(":services:downloads")
 
 include(":libs:appops-next")
 
-// Shared Compose Multiplatform screens (JVM + Android). Never depended on by :app:app.
-include(":ui-kmp")
-
-// Isolated Compose for Desktop / JVM shell. Never depended on by :app:app.
+// Isolated Compose Multiplatform & Desktop modules. Never depended on by :app:app.
 val isFdroidBuild = providers.gradleProperty("fdroidBuild").orNull?.toBoolean() == true
 if (!isFdroidBuild) {
+    include(":ui-kmp")
     include(":desktop-linux")
 }

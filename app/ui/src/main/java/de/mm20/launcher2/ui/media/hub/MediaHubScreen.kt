@@ -281,12 +281,9 @@ fun MediaHubScreen(initialSpace: String = "") {
                                 LocalInMediaHub provides true,
                                 de.mm20.launcher2.ui.media.LocalMediaHubToolbar provides { actions ->
                                     HubToolbar(
-                                        current = target, available = available, groupSpaces = groupSpaces,
+                                        current = target,
+                                        available = available,
                                         onSelect = { space = it.id },
-                                        onReorder = { reordered ->
-                                            settings.setMediaHubOrder(reordered.map { it.id })
-                                        },
-                                        reduceAnimations = reduceAnimations,
                                         onBack = { backStack.removeLastOrNull() },
                                         actions = actions,
                                         haze = hazeState,
@@ -351,16 +348,12 @@ fun MediaHubScreen(initialSpace: String = "") {
 private fun HubToolbar(
     current: MediaSpace,
     available: List<MediaSpace>,
-    groupSpaces: List<MediaSpace>,
     onSelect: (MediaSpace) -> Unit,
-    onReorder: (List<MediaSpace>) -> Unit,
-    reduceAnimations: Boolean,
     onBack: () -> Unit,
     actions: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit,
     haze: de.mm20.launcher2.ui.component.VirtualAppBlur,
     blurRadius: Int,
 ) {
-    val sources = remember(available, current.group) { available.filter { it.group == current.group } }
     var menu by remember { mutableStateOf(false) }
     val t = MaterialTheme.transparency
     val glass = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
@@ -371,41 +364,16 @@ private fun HubToolbar(
             sourceMenu = {
                 androidx.compose.material3.DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     available.forEach { source ->
-                        androidx.compose.material3.DropdownMenuItem(text = { Text(stringResource(source.label)) },
+                        androidx.compose.material3.DropdownMenuItem(
+                            text = { Text(stringResource(source.label)) },
                             leadingIcon = { Icon(painterResource(source.icon), null) },
-                            onClick = { onSelect(source); menu = false })
-                    }
-                    androidx.compose.material3.HorizontalDivider()
-                    listOf(-1 to R.string.vn_move_up, 1 to R.string.vn_move_down).forEach { (delta, label) ->
-                        val index = available.indexOf(current)
-                        androidx.compose.material3.DropdownMenuItem(text = { Text(stringResource(label)) },
-                            enabled = index + delta in available.indices,
-                            onClick = {
-                                onReorder(available.toMutableList().apply { removeAt(index); add(index + delta, current) })
-                                menu = false
-                            })
+                            onClick = { onSelect(source); menu = false }
+                        )
                     }
                 }
             },
         )
-        val chipState = androidx.compose.foundation.lazy.rememberLazyListState()
-        val selectedIndex = remember(sources, current) { sources.indexOf(current).coerceAtLeast(0) }
-        LaunchedEffect(selectedIndex, reduceAnimations) {
-            if (reduceAnimations) chipState.scrollToItem(selectedIndex) else chipState.animateScrollToItem(selectedIndex)
-        }
-        androidx.compose.foundation.lazy.LazyRow(state = chipState,
-            modifier = Modifier.fillMaxWidth(), contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            items(sources.size, key = { sources[it].id }) { index ->
-                val source = sources[index]
-                de.mm20.launcher2.ui.media.MediaFilterButton(
-                    selected = source == current, onClick = { onSelect(source) },
-                    label = stringResource(source.label), icon = source.icon,
-                )
-            }
-        }
     }
-
 }
 
 @Composable
@@ -440,25 +408,20 @@ private fun HubBottomBar(
         modifier = Modifier.hubGlass(haze, blurRadius, glass),
         containerColor = Color.Transparent,
     ) {
-        // 1. Far-left Mode Icon (Listen)
-        AdaptiveNavigationItem(
-            selected = isAudioMode,
-            onClick = {
-                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                if (!isAudioMode) {
-                    onSelect(MediaSpace.Radio)
-                }
-            },
-            icon = {
-                Icon(painterResource(R.drawable.headphones_24px), contentDescription = null, modifier = Modifier.size(22.dp))
-            },
-            label = {
-                Text(stringResource(R.string.telos_media_listen))
-            },
-        )
-
-        // 2. Middle Sub-Icons (Radio & YT Music in Audio Mode, TV & Stremio in Video Mode)
         if (isAudioMode) {
+            AdaptiveNavigationItem(
+                selected = current == MediaSpace.Music,
+                onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onSelect(MediaSpace.Music)
+                },
+                icon = {
+                    Icon(painterResource(R.drawable.headphones_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                },
+                label = {
+                    Text(stringResource(R.string.au9_mediahub_space_music))
+                },
+            )
             AdaptiveNavigationItem(
                 selected = current == MediaSpace.Radio,
                 onClick = {
@@ -473,7 +436,7 @@ private fun HubBottomBar(
                 },
             )
             AdaptiveNavigationItem(
-                selected = current == MediaSpace.YouTubeMusic || current == MediaSpace.Music,
+                selected = current == MediaSpace.YouTubeMusic,
                 onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                     onSelect(MediaSpace.YouTubeMusic)
@@ -485,7 +448,59 @@ private fun HubBottomBar(
                     Text("YT Music")
                 },
             )
+            AdaptiveNavigationItem(
+                selected = false,
+                onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onSelect(MediaSpace.Video)
+                },
+                icon = {
+                    Icon(painterResource(R.drawable.video_library_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                },
+                label = {
+                    Text(stringResource(R.string.telos_media_watch))
+                },
+            )
         } else {
+            AdaptiveNavigationItem(
+                selected = false,
+                onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onSelect(MediaSpace.Music)
+                },
+                icon = {
+                    Icon(painterResource(R.drawable.headphones_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                },
+                label = {
+                    Text(stringResource(R.string.telos_media_listen))
+                },
+            )
+            AdaptiveNavigationItem(
+                selected = current == MediaSpace.Video,
+                onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onSelect(MediaSpace.Video)
+                },
+                icon = {
+                    Icon(painterResource(R.drawable.video_library_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                },
+                label = {
+                    Text(stringResource(R.string.au9_mediahub_space_video))
+                },
+            )
+            AdaptiveNavigationItem(
+                selected = current == MediaSpace.YouTube,
+                onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    onSelect(MediaSpace.YouTube)
+                },
+                icon = {
+                    Icon(painterResource(de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg), contentDescription = null, modifier = Modifier.size(22.dp))
+                },
+                label = {
+                    Text("YouTube")
+                },
+            )
             AdaptiveNavigationItem(
                 selected = current == MediaSpace.Tv,
                 onClick = {
@@ -500,7 +515,7 @@ private fun HubBottomBar(
                 },
             )
             AdaptiveNavigationItem(
-                selected = current == MediaSpace.Stremio || current == MediaSpace.Video || current == MediaSpace.YouTube,
+                selected = current == MediaSpace.Stremio,
                 onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                     onSelect(MediaSpace.Stremio)
@@ -513,23 +528,6 @@ private fun HubBottomBar(
                 },
             )
         }
-
-        // 3. Far-right Mode Icon (View / Video)
-        AdaptiveNavigationItem(
-            selected = !isAudioMode,
-            onClick = {
-                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                if (isAudioMode) {
-                    onSelect(MediaSpace.Stremio)
-                }
-            },
-            icon = {
-                Icon(painterResource(R.drawable.video_library_24px), contentDescription = null, modifier = Modifier.size(22.dp))
-            },
-            label = {
-                Text(stringResource(R.string.telos_media_watch))
-            },
-        )
     }
 }
 
@@ -617,48 +615,56 @@ private fun HubMiniPlayer(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 6.dp)
-                .clip(RoundedCornerShape(24.dp))
-                .clickable(onClickLabel = stringResource(R.string.au9_mediahub_open_player)) { onOpen(display) },
+                .clip(RoundedCornerShape(24.dp)),
         ) {
             Box {
             Row(
                 Modifier.padding(start = 6.dp, end = 6.dp, top = 6.dp, bottom = 6.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Box(
-                    Modifier.size(48.dp).clip(RoundedCornerShape(6.dp)).background(scheme.secondaryContainer),
-                    contentAlignment = Alignment.Center,
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clip(RoundedCornerShape(12.dp))
+                        .clickable(onClickLabel = stringResource(R.string.au9_mediahub_open_player)) { onOpen(display) }
+                        .padding(2.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(
-                        painterResource(if (isMusic) R.drawable.music_note_24px else if (isTv) R.drawable.tv_24px else R.drawable.ic_glyph_radio),
-                        contentDescription = null,
-                        tint = scheme.onSecondaryContainer,
-                    )
-                    val art = artUrl
-                    if (art != null) AsyncImage(model = art, contentDescription = null, contentScale = androidx.compose.ui.layout.ContentScale.Crop, modifier = Modifier.fillMaxSize())
-                    val logo = if (isTv) lastTv?.logoUrl?.takeIf { it.isNotBlank() } else null
-                    if (logo != null) {
-                        AsyncImage(
-                            model = logo,
+                    Box(
+                        Modifier.size(48.dp).clip(RoundedCornerShape(6.dp)).background(scheme.secondaryContainer),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            painterResource(if (isMusic) R.drawable.music_note_24px else if (isTv) R.drawable.tv_24px else R.drawable.ic_glyph_radio),
                             contentDescription = null,
-                            contentScale = androidx.compose.ui.layout.ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize().padding(4.dp),
+                            tint = scheme.onSecondaryContainer,
                         )
+                        val art = artUrl
+                        if (art != null) AsyncImage(model = art, contentDescription = null, contentScale = androidx.compose.ui.layout.ContentScale.Crop, modifier = Modifier.fillMaxSize())
+                        val logo = if (isTv) lastTv?.logoUrl?.takeIf { it.isNotBlank() } else null
+                        if (logo != null) {
+                            AsyncImage(
+                                model = logo,
+                                contentDescription = null,
+                                contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize().padding(4.dp),
+                            )
+                        }
+                    }
+                    Column(Modifier.weight(1f).padding(horizontal = 12.dp)) {
+                        Text(title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        if (subtitle.isNotEmpty()) {
+                            Text(
+                                subtitle,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = if (!isMusic && !isTv && radioError != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
                     }
                 }
-                Column(Modifier.weight(1f).padding(horizontal = 12.dp)) {
-                    Text(title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    if (subtitle.isNotEmpty()) {
-                        Text(
-                            subtitle,
-                            style = MaterialTheme.typography.labelSmall,
-                            color = if (!isMusic && !isTv && radioError != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-                }
-                Surface(
+                IconButton(
                     onClick = {
                         haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                         when {
@@ -666,18 +672,12 @@ private fun HubMiniPlayer(
                             isTv -> if (tvPlaying) tvVm.controller.pause() else tvVm.controller.resume()
                             else -> radioVm.togglePlayPause()
                         }
-                    },
-                    shape = CircleShape,
-                    color = Color.Transparent,
-                    contentColor = scheme.onSurface,
-                    modifier = Modifier.size(48.dp),
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Icon(
-                            painterResource(if (playing) R.drawable.pause_24px else R.drawable.play_arrow_24px),
-                            contentDescription = stringResource(if (playing) R.string.au_music_pause else R.string.hc_play),
-                        )
                     }
+                ) {
+                    Icon(
+                        painterResource(if (playing) R.drawable.pause_24px else R.drawable.play_arrow_24px),
+                        contentDescription = stringResource(if (playing) R.string.au_music_pause else R.string.hc_play),
+                    )
                 }
                 if (isMusic) {
                     IconButton(onClick = { musicVm.next() }) {

@@ -46,6 +46,7 @@ object TelosAppKeywords {
         "telos_magnifier_app" to listOf("magnifier", "zoom", "zoom in", "μεγεθυντικός", "φακός"),
         "telos_flashlight_app" to listOf("flashlight", "torch", "siren", "morse", "φακός", "σειρήνα", "μορς"),
         "telos_clock_app" to listOf("clock", "alarm", "time", "world clock", "timer", "stopwatch", "night clock", "ρολόι", "ρολοι", "ξυπνητήρι", "ώρα", "roloi", "xypnitiri", "ora", "χρονόμετρο", "αντίστροφη μέτρηση"),
+        "telos_weather_app" to listOf("weather", "forecast", "breezy", "today weather", "radar", "aqi", "uv", "rain", "temperature", "καιρός", "καιρος", "πρόγνωση", "προγνωση", "βροχή", "θερμοκρασία", "kairos", "prognosi"),
     )
 
     private val englishNames = mapOf(
@@ -79,6 +80,7 @@ object TelosAppKeywords {
         "telos_magnifier_app" to "Magnifier",
         "telos_flashlight_app" to "Flashlight",
         "telos_clock_app" to "Clock",
+        "telos_weather_app" to "Weather",
     )
 
     fun forDomain(domain: String): List<String> {

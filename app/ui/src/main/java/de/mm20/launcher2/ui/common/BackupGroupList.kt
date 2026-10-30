@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.common
 
+import de.mm20.launcher2.i18n.R as I18nR
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,25 +19,25 @@ import de.mm20.launcher2.backup.BackupGroup
 import de.mm20.launcher2.ui.R
 
 private fun title(group: BackupGroup) = when (group) {
-    BackupGroup.Launcher -> R.string.backup_group_launcher
-    BackupGroup.Notes -> R.string.backup_group_notes
-    BackupGroup.Calendar -> R.string.backup_group_calendar
-    BackupGroup.Downloads -> R.string.dl_p3_backup_group_downloads
-    BackupGroup.Apps -> R.string.backup_group_apps
-    BackupGroup.AppData -> R.string.backup_group_app_data
-    BackupGroup.SystemData -> R.string.backup_group_system_data
-    BackupGroup.VirtualApps -> R.string.backup_group_virtual_apps
+    BackupGroup.Launcher -> I18nR.string.backup_group_launcher
+    BackupGroup.Notes -> I18nR.string.backup_group_notes
+    BackupGroup.Calendar -> I18nR.string.backup_group_calendar
+    BackupGroup.Downloads -> I18nR.string.dl_p3_backup_group_downloads
+    BackupGroup.Apps -> I18nR.string.backup_group_apps
+    BackupGroup.AppData -> I18nR.string.backup_group_app_data
+    BackupGroup.SystemData -> I18nR.string.backup_group_system_data
+    BackupGroup.VirtualApps -> I18nR.string.backup_group_virtual_apps
 }
 
 private fun summary(group: BackupGroup) = when (group) {
-    BackupGroup.Launcher -> R.string.backup_group_launcher_summary
-    BackupGroup.Notes -> R.string.backup_group_notes_summary
-    BackupGroup.Calendar -> R.string.backup_group_calendar_summary
-    BackupGroup.Downloads -> R.string.dl_p3_backup_group_downloads_summary
-    BackupGroup.Apps -> R.string.backup_group_apps_summary
-    BackupGroup.AppData -> R.string.backup_group_app_data_summary
-    BackupGroup.SystemData -> R.string.backup_group_system_data_summary
-    BackupGroup.VirtualApps -> R.string.backup_group_virtual_apps_summary
+    BackupGroup.Launcher -> I18nR.string.backup_group_launcher_summary
+    BackupGroup.Notes -> I18nR.string.backup_group_notes_summary
+    BackupGroup.Calendar -> I18nR.string.backup_group_calendar_summary
+    BackupGroup.Downloads -> I18nR.string.dl_p3_backup_group_downloads_summary
+    BackupGroup.Apps -> I18nR.string.backup_group_apps_summary
+    BackupGroup.AppData -> I18nR.string.backup_group_app_data_summary
+    BackupGroup.SystemData -> I18nR.string.backup_group_system_data_summary
+    BackupGroup.VirtualApps -> I18nR.string.backup_group_virtual_apps_summary
 }
 
 /**
@@ -66,7 +67,7 @@ fun BackupGroupList(
         }
         if (available.size > 1) {
             OutlinedButton(onClick = onSelectAll, modifier = Modifier.padding(top = 8.dp), enabled = !selected.containsAll(available)) {
-                Text(stringResource(R.string.backup_all))
+                Text(stringResource(I18nR.string.backup_all))
             }
         }
     }

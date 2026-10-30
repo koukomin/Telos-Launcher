@@ -35,6 +35,7 @@ object TelosAppLabels {
         "telos_network_app" -> R.string.hc_network
         "telos_store_app" -> R.string.hf_store_title
         "telos_system_app" -> R.string.telos_system_label
+        "telos_weather_app" -> R.string.widget_name_weather
         "telos_trash_app" -> R.string.telos_trash_title
         else -> null
     }

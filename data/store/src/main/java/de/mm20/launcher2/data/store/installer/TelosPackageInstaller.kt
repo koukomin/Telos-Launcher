@@ -1,6 +1,7 @@
 package de.mm20.launcher2.data.store.installer
 
 import android.content.Context
+import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.store.installer.AppInstaller
@@ -55,14 +56,14 @@ class TelosPackageInstaller(
         ?.isDeviceOwnerApp(context.packageName) == true
 
     private fun failed(cause: Throwable? = null, details: String? = cause?.message) = InstallResult.Failed(
-        context.getString(de.mm20.launcher2.data.store.R.string.au_store_msg_install_failed) +
+        context.getString(de.mm20.launcher2.i18n.R.string.au_store_msg_install_failed) +
             details?.takeIf { it.isNotBlank() }?.take(8192)?.let { "\n$it" }.orEmpty(), cause)
 
     override suspend fun install(apk: File, packageName: String): InstallResult =
         kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { installOnIo(apk, packageName) }
 
     private suspend fun installOnIo(apk: File, packageName: String): InstallResult {
-        if (freezeManager.hasPendingFrozenUpdate(packageName)) return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.hf_store_installing))
+        if (freezeManager.hasPendingFrozenUpdate(packageName)) return InstallResult.Failed(context.getString(de.mm20.launcher2.i18n.R.string.hf_store_installing))
         
         // Run Antivirus & Malware Security Scan on APK before installation
         val securityReport = de.mm20.launcher2.data.store.security.ApkSecurityScanner.scanApk(context, apk)
@@ -81,7 +82,7 @@ class TelosPackageInstaller(
             ?: return failed(IllegalArgumentException("Invalid APK"))
         if (archive?.packageName != packageName) return failed(IllegalArgumentException("APK package does not match the selected app"))
         if (freezeManager.isFrozen(packageName) && !options.global.value.updateFrozenApps)
-            return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.store_update_frozen))
+            return InstallResult.Failed(context.getString(de.mm20.launcher2.i18n.R.string.store_update_frozen))
         val selected = options.global.value.installer
         val selectedBackend = when (selected) { "shizuku" -> shizuku; "root" -> root; else -> null }
         for (backend in listOfNotNull(selectedBackend)) {
@@ -102,8 +103,8 @@ class TelosPackageInstaller(
                 restored = lease?.let { freezeManager.finishFrozenUpdate(packageName, it) } ?: true
             }
             if (!restored) return InstallResult.Failed(
-                context.getString(de.mm20.launcher2.data.store.R.string.freeze_restore_all) + ": " +
-                    context.getString(de.mm20.launcher2.data.store.R.string.pdft_error_title))
+                context.getString(de.mm20.launcher2.i18n.R.string.freeze_restore_all) + ": " +
+                    context.getString(de.mm20.launcher2.i18n.R.string.pdft_error_title))
             return when (val installed = result) {
                 is BackendInstallResult.Success -> {
                     // Shizuku/root installs finish synchronously (unlike the session API path,
@@ -130,7 +131,7 @@ class TelosPackageInstaller(
         try {
             val frozen = freezeManager.isFrozen(packageName)
             val restorationBackend = if (frozen) freezeBackend()
-                ?: return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.freeze_no_backend_available))
+                ?: return InstallResult.Failed(context.getString(de.mm20.launcher2.i18n.R.string.freeze_no_backend_available))
                 else "DeviceOwner"
             lease = freezeManager.beginFrozenUpdate(packageName, restorationBackend)
             if (selected.startsWith("external:")) {

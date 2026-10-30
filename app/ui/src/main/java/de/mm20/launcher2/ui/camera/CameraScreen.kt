@@ -263,12 +263,12 @@ fun CameraScreen() {
             @Composable fun Controls(modifier: Modifier) {
                 Column(modifier.verticalScroll(rememberScrollState()).padding(12.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        val modes = buildList {
-                            add(NativeCamera.MODE_PHOTO to R.string.camera_mode_photo); add(NativeCamera.MODE_VIDEO to R.string.camera_mode_video)
-                            if (ExtensionMode.BOKEH in supported) add(ExtensionMode.BOKEH to R.string.camera_mode_portrait)
-                            if (ExtensionMode.NIGHT in supported) add(ExtensionMode.NIGHT to R.string.camera_mode_night)
+                        val modes = buildList<Pair<Int, Int>> {
+                            add(NativeCamera.MODE_PHOTO to I18nR.string.camera_mode_photo); add(NativeCamera.MODE_VIDEO to I18nR.string.camera_mode_video)
+                            if (ExtensionMode.BOKEH in supported) add(ExtensionMode.BOKEH to I18nR.string.camera_mode_portrait)
+                            if (ExtensionMode.NIGHT in supported) add(ExtensionMode.NIGHT to I18nR.string.camera_mode_night)
                         }
-                        FilterChip(selected = scanMode, onClick = { if (!recording && !busy) { scanMode = !scanMode; raw = false; panorama = false; mode = NativeCamera.MODE_PHOTO } }, label = { Text(stringResource(R.string.camera_scan_pdf)) })
+                        FilterChip(selected = scanMode, onClick = { if (!recording && !busy) { scanMode = !scanMode; raw = false; panorama = false; mode = NativeCamera.MODE_PHOTO } }, label = { Text(stringResource(I18nR.string.camera_scan_pdf)) })
                         modes.forEach { (value, label) -> FilterChip(selected = mode == value && !scanMode, onClick = { if (!recording && !busy) { message = null; scanMode = false; mode = value } }, label = { Text(stringResource(label)) }) }
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -276,21 +276,21 @@ fun CameraScreen() {
                         Slider(value = zoom, onValueChange = { zoom = it; camera.zoom(it) }, modifier = Modifier.weight(1f), valueRange = 1f..(camera.camera?.cameraInfo?.zoomState?.value?.maxZoomRatio?.coerceAtLeast(1.01f) ?: 4f))
                     }
                     if (panorama) {
-                        Text(stringResource(R.string.camera_native_panorama_hint), color = Color.White, style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.camera_native_panorama_hint), color = Color.White, style = MaterialTheme.typography.bodySmall)
                         Button(onClick = {
                             busy = true
                             scope.launch {
                                 try { withContext(Dispatchers.IO) { CameraPanorama.stitch(context, slices.toList()) }; slices.clear(); saved() }
                                 catch (failure: Exception) { error(failure.message.orEmpty()) }
                             }
-                        }, enabled = slices.size >= 2 && !busy) { Text(stringResource(R.string.camera_pano_done, slices.size)) }
+                        }, enabled = slices.size >= 2 && !busy) { Text(stringResource(I18nR.string.camera_pano_done, slices.size)) }
                     }
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
-                        TextButton(onClick = { front = !front }, enabled = !busy && !recording) { Text(stringResource(R.string.camera_flip)) }
+                        TextButton(onClick = { front = !front }, enabled = !busy && !recording) { Text(stringResource(I18nR.string.camera_flip)) }
                         FilledIconButton(onClick = ::capture, enabled = ready && (!busy || recording), modifier = Modifier.size(72.dp), colors = IconButtonDefaults.filledIconButtonColors(containerColor = if (recording) Color.Red else Color.White, contentColor = Color.Black)) {
-                            Icon(painterResource(if (recording) de.mm20.launcher2.base.R.drawable.crop_square_24px else de.mm20.launcher2.base.R.drawable.ic_app_camera_fg), stringResource(if (recording) R.string.camera_native_stop else if (mode == NativeCamera.MODE_VIDEO) R.string.camera_native_record else R.string.camera_native_capture), Modifier.size(36.dp))
+                            Icon(painterResource(if (recording) de.mm20.launcher2.base.R.drawable.crop_square_24px else de.mm20.launcher2.base.R.drawable.ic_app_camera_fg), stringResource(if (recording) I18nR.string.camera_native_stop else if (mode == NativeCamera.MODE_VIDEO) I18nR.string.camera_native_record else I18nR.string.camera_native_capture), Modifier.size(36.dp))
                         }
-                        TextButton(onClick = { runCatching { context.startActivity(Intent(Intent.ACTION_VIEW).setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")) } }) { Text(stringResource(R.string.camera_native_gallery)) }
+                        TextButton(onClick = { runCatching { context.startActivity(Intent(Intent.ACTION_VIEW).setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")) } }) { Text(stringResource(I18nR.string.camera_native_gallery)) }
                     }
                 }
             }
@@ -300,14 +300,14 @@ fun CameraScreen() {
     }
     if (settings) ModalBottomSheet(onDismissRequest = { settings = false }) {
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text(stringResource(R.string.camera_native_settings), style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(I18nR.string.camera_native_settings), style = MaterialTheme.typography.titleLarge)
             @Composable fun Toggle(label: Int, value: Boolean, change: (Boolean) -> Unit) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) { Text(stringResource(label), Modifier.weight(1f)); Switch(value, change) }
             }
             if (mode == NativeCamera.MODE_PHOTO) {
                 val rawSupported = camera.rawAvailable
-                if (rawSupported && !hidden) Toggle(R.string.camera_raw, raw) { raw = it; if (it) panorama = false }
-                Toggle(R.string.camera_mode_pano, panorama) { panorama = it; if (it) { raw = false; hidden = false } else slices.clear() }
+                if (rawSupported && !hidden) Toggle(I18nR.string.camera_raw, raw) { raw = it; if (it) panorama = false }
+                Toggle(I18nR.string.camera_mode_pano, panorama) { panorama = it; if (it) { raw = false; hidden = false } else slices.clear() }
             }
             if (webcamUrl == null) Button(onClick = {
                 webcamStarting = true
@@ -326,61 +326,61 @@ fun CameraScreen() {
                         if (owner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) error(failure.message.orEmpty())
                     } finally { webcamStarting = false }
                 }
-            }, enabled = ready && !recording && !busy && !webcamStarting) { Text(stringResource(R.string.camera_webcam_start)) }
+            }, enabled = ready && !recording && !busy && !webcamStarting) { Text(stringResource(I18nR.string.camera_webcam_start)) }
             else {
                 Text(webcamUrl.orEmpty(), modifier = Modifier.fillMaxWidth())
-                Button(onClick = { webcam?.close(); webcam = null; webcamUrl = null }) { Text(stringResource(R.string.camera_webcam_stop)) }
-                Text(stringResource(R.string.camera_native_webcam_lan), style = MaterialTheme.typography.bodySmall)
+                Button(onClick = { webcam?.close(); webcam = null; webcamUrl = null }) { Text(stringResource(I18nR.string.camera_webcam_stop)) }
+                Text(stringResource(I18nR.string.camera_native_webcam_lan), style = MaterialTheme.typography.bodySmall)
             }
             if (mode == NativeCamera.MODE_PHOTO && !raw && !panorama) {
-                if (camera.faceAvailable) Toggle(R.string.camera_native_face_trigger, faceTrigger) { faceTrigger = it }
-                if (camera.analysisAvailable) Toggle(R.string.camera_native_motion_trigger, motionTrigger) { motionTrigger = it }
-                if (faceTrigger || motionTrigger) Text(stringResource(R.string.camera_native_trigger_hint), style = MaterialTheme.typography.bodySmall)
+                if (camera.faceAvailable) Toggle(I18nR.string.camera_native_face_trigger, faceTrigger) { faceTrigger = it }
+                if (camera.analysisAvailable) Toggle(I18nR.string.camera_native_motion_trigger, motionTrigger) { motionTrigger = it }
+                if (faceTrigger || motionTrigger) Text(stringResource(I18nR.string.camera_native_trigger_hint), style = MaterialTheme.typography.bodySmall)
             }
             if (!raw) {
-                Toggle(R.string.camera_hide_folder, hidden) { hidden = it; if (it) panorama = false }
-                Toggle(R.string.camera_geotag, geotag) { requested ->
+                Toggle(I18nR.string.camera_hide_folder, hidden) { hidden = it; if (it) panorama = false }
+                Toggle(I18nR.string.camera_geotag, geotag) { requested ->
                     geotag = requested
                     if (requested && ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) permissions.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
                 }
-                if (geotag) Text(stringResource(R.string.camera_native_geo_hint), style = MaterialTheme.typography.bodySmall)
+                if (geotag) Text(stringResource(I18nR.string.camera_native_geo_hint), style = MaterialTheme.typography.bodySmall)
             }
-            Toggle(R.string.camera_grid, grid) { grid = it; preferences.edit().putBoolean("grid", it).apply() }
-            if (camera.analysisAvailable) Toggle(R.string.camera_native_histogram, histogram) { histogram = it }
-            Toggle(R.string.camera_discreet, discreet) { discreet = it }
-            if (discreet) Text(stringResource(R.string.camera_native_discreet_hint), style = MaterialTheme.typography.bodySmall)
-            if (camera.camera?.cameraInfo?.hasFlashUnit() == true) Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) { Text(stringResource(R.string.camera_native_flash), Modifier.weight(1f)); Switch(flash, { flash = it }, enabled = !recording) }
-            if (mode == NativeCamera.MODE_VIDEO) Toggle(R.string.camera_native_audio, audio) { audio = it }
-            Text(stringResource(R.string.camera_native_timer))
+            Toggle(I18nR.string.camera_grid, grid) { grid = it; preferences.edit().putBoolean("grid", it).apply() }
+            if (camera.analysisAvailable) Toggle(I18nR.string.camera_native_histogram, histogram) { histogram = it }
+            Toggle(I18nR.string.camera_discreet, discreet) { discreet = it }
+            if (discreet) Text(stringResource(I18nR.string.camera_native_discreet_hint), style = MaterialTheme.typography.bodySmall)
+            if (camera.camera?.cameraInfo?.hasFlashUnit() == true) Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) { Text(stringResource(I18nR.string.camera_native_flash), Modifier.weight(1f)); Switch(flash, { flash = it }, enabled = !recording) }
+            if (mode == NativeCamera.MODE_VIDEO) Toggle(I18nR.string.camera_native_audio, audio) { audio = it }
+            Text(stringResource(I18nR.string.camera_native_timer))
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) { listOf(0, 3, 5, 10).forEach { seconds -> FilterChip(timer == seconds, { timer = seconds }, { Text("${seconds}s") }) } }
-            Text(stringResource(R.string.camera_format))
+            Text(stringResource(I18nR.string.camera_format))
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) { listOf("JPEG", "PNG", "WebP").forEach { value -> FilterChip(format == value, { format = value; preferences.edit().putString("format", value).apply() }, { Text(value) }) } }
-            Toggle(R.string.camera_exif, keepExif) { keepExif = it; preferences.edit().putBoolean("exif", it).apply() }
-            Text(stringResource(R.string.camera_native_formats), style = MaterialTheme.typography.bodySmall)
+            Toggle(I18nR.string.camera_exif, keepExif) { keepExif = it; preferences.edit().putBoolean("exif", it).apply() }
+            Text(stringResource(I18nR.string.camera_native_formats), style = MaterialTheme.typography.bodySmall)
             camera.camera?.cameraInfo?.exposureState?.let { state ->
                 if (state.isExposureCompensationSupported) {
-                    Text(stringResource(R.string.camera_native_exposure))
+                    Text(stringResource(I18nR.string.camera_native_exposure))
                     Slider(exposure, { exposure = it; camera.exposure(it.toInt()) }, valueRange = state.exposureCompensationRange.lower.toFloat()..state.exposureCompensationRange.upper.toFloat(), enabled = !manual)
                 }
             }
-            if (camera.aeLockAvailable) Toggle(R.string.camera_ae_lock, aeLock) { aeLock = it }
+            if (camera.aeLockAvailable) Toggle(I18nR.string.camera_ae_lock, aeLock) { aeLock = it }
             if (camera.awbModes.size > 1) {
                 val options = listOf(1 to "Auto", 2 to "2800K", 3 to "4000K", 5 to "5500K", 6 to "6500K", 8 to "7500K").filter { it.first in camera.awbModes }
                 Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    options.forEach { (value, label) -> FilterChip(whiteBalance == value, { whiteBalance = value }, { Text(stringResource(R.string.camera_wb, if (value == 1) stringResource(R.string.camera_native_auto) else label)) }) }
+                    options.forEach { (value, label) -> FilterChip(whiteBalance == value, { whiteBalance = value }, { Text(stringResource(I18nR.string.camera_wb, if (value == 1) stringResource(I18nR.string.camera_native_auto) else label)) }) }
                 }
             }
             if (camera.manualAvailable && !raw) {
-                Toggle(R.string.camera_native_auto, !manual) { manual = !it }
+                Toggle(I18nR.string.camera_native_auto, !manual) { manual = !it }
                 if (manual) {
-                    camera.isoRange?.let { range -> Text("${stringResource(R.string.camera_native_iso)} · ${iso.toInt()}"); Slider(iso.coerceIn(range.lower.toFloat(), range.upper.toFloat()), { iso = it }, valueRange = range.lower.toFloat()..range.upper.toFloat()) }
+                    camera.isoRange?.let { range -> Text("${stringResource(I18nR.string.camera_native_iso)} · ${iso.toInt()}"); Slider(iso.coerceIn(range.lower.toFloat(), range.upper.toFloat()), { iso = it }, valueRange = range.lower.toFloat()..range.upper.toFloat()) }
                     camera.exposureRange?.let { range ->
                         val low = (range.lower / 1_000_000f).coerceAtLeast(.01f); val high = (range.upper / 1_000_000f).coerceAtMost(1000f).coerceAtLeast(low + .01f)
-                        Text("${stringResource(R.string.camera_native_shutter)} · ${"%.1f".format(shutter)}"); Slider(shutter.coerceIn(low, high), { shutter = it }, valueRange = low..high)
+                        Text("${stringResource(I18nR.string.camera_native_shutter)} · ${"%.1f".format(shutter)}"); Slider(shutter.coerceIn(low, high), { shutter = it }, valueRange = low..high)
                     }
                 }
             }
-            Text(stringResource(R.string.camera_native_capabilities), style = MaterialTheme.typography.bodySmall)
+            Text(stringResource(I18nR.string.camera_native_capabilities), style = MaterialTheme.typography.bodySmall)
             Spacer(Modifier.height(24.dp))
         }
     }

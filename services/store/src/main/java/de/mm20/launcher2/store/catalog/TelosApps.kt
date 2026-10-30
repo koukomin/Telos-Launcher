@@ -287,5 +287,20 @@ object TelosApps {
             iconRes = de.mm20.launcher2.base.R.drawable.ic_app_screenshot_full,
             route = SettingsDeepLinkContract.ROUTE_SCREENSHOT,
         ),
+        TelosApp(
+            key = "telos_weather_app://weather",
+            name = "Weather",
+            description = "Hyperlocal weather forecasts, radar maps, air quality (AQI), UV index, severe weather alerts, hourly charts, 14-day forecast and sun/moon cycles. Inspired by Today Weather, Breezy Weather and OSS Weather.",
+            features = listOf(
+                "Today Weather inspired Material 3 UI",
+                "Open-Meteo, MET Norway, BrightSky & OpenWeatherMap providers",
+                "Severe weather alerts & notifications",
+                "Air Quality Index (AQI), UV index, Wind & Pressure",
+                "Precipitation radar map & 14-day daily forecast",
+                "Moon phase & Sunrise / Sunset golden hour cycle",
+            ),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_weather_full,
+            route = SettingsDeepLinkContract.ROUTE_WEATHER,
+        ),
     )
 }
