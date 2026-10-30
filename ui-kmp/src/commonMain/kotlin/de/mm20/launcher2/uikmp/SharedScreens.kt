@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,10 +24,11 @@ fun SharedCalculatorScreen(
     title: String,
     display: String,
     onKey: (String) -> Unit,
+    modifier: Modifier = Modifier.fillMaxSize(),
 ) {
-    Column(Modifier.fillMaxSize().background(TelosSharedColors.surface).padding(12.dp)) {
-        Text(title, color = TelosSharedColors.secondary, fontSize = 20.sp)
-        Text(display, color = TelosSharedColors.onSurface, fontSize = 28.sp, modifier = Modifier.padding(vertical = 8.dp))
+    Column(modifier.background(MaterialTheme.colorScheme.surface).padding(12.dp)) {
+        Text(title, color = MaterialTheme.colorScheme.secondary, fontSize = 20.sp)
+        Text(display, color = MaterialTheme.colorScheme.onSurface, fontSize = 28.sp, modifier = Modifier.padding(vertical = 8.dp))
         listOf(
             listOf("7", "8", "9", "/"),
             listOf("4", "5", "6", "*"),
@@ -43,18 +45,29 @@ fun SharedCalculatorScreen(
 }
 
 @Composable
-fun SharedClockScreen(title: String, time: String, date: String) {
-    Column(Modifier.fillMaxSize().background(TelosSharedColors.surface).padding(16.dp)) {
-        Text(title, color = TelosSharedColors.secondary, fontSize = 20.sp)
-        Text(time, color = TelosSharedColors.onSurface, fontSize = 42.sp)
-        Text(date, color = TelosSharedColors.primary)
+fun SharedClockScreen(
+    title: String,
+    time: String,
+    date: String,
+    modifier: Modifier = Modifier.fillMaxSize(),
+) {
+    Column(modifier.background(MaterialTheme.colorScheme.surface).padding(16.dp)) {
+        Text(title, color = MaterialTheme.colorScheme.secondary, fontSize = 20.sp)
+        Text(time, color = MaterialTheme.colorScheme.onSurface, fontSize = 42.sp)
+        Text(date, color = MaterialTheme.colorScheme.primary)
     }
 }
 
 @Composable
-fun SharedNotesScreen(title: String, placeholder: String, text: String, onText: (String) -> Unit) {
-    Column(Modifier.fillMaxSize().background(TelosSharedColors.surface).padding(12.dp)) {
-        Text(title, color = TelosSharedColors.secondary, fontSize = 20.sp)
+fun SharedNotesScreen(
+    title: String,
+    placeholder: String,
+    text: String,
+    onText: (String) -> Unit,
+    modifier: Modifier = Modifier.fillMaxSize(),
+) {
+    Column(modifier.background(MaterialTheme.colorScheme.surface).padding(12.dp)) {
+        Text(title, color = MaterialTheme.colorScheme.secondary, fontSize = 20.sp)
         OutlinedTextField(
             text,
             onText,
@@ -65,14 +78,19 @@ fun SharedNotesScreen(title: String, placeholder: String, text: String, onText: 
 }
 
 @Composable
-fun SharedCalendarScreen(title: String, daysInMonth: Int, today: Int) {
-    Column(Modifier.fillMaxSize().background(TelosSharedColors.surface).padding(12.dp)) {
-        Text(title, color = TelosSharedColors.secondary, fontSize = 20.sp)
+fun SharedCalendarScreen(
+    title: String,
+    daysInMonth: Int,
+    today: Int,
+    modifier: Modifier = Modifier.fillMaxSize(),
+) {
+    Column(modifier.background(MaterialTheme.colorScheme.surface).padding(12.dp)) {
+        Text(title, color = MaterialTheme.colorScheme.secondary, fontSize = 20.sp)
         LazyVerticalGrid(columns = GridCells.Fixed(7), modifier = Modifier.padding(top = 8.dp)) {
             items((1..daysInMonth).toList()) { d ->
                 Text(
                     "$d",
-                    color = if (d == today) TelosSharedColors.primary else TelosSharedColors.onSurface,
+                    color = if (d == today) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(8.dp),
                 )
             }

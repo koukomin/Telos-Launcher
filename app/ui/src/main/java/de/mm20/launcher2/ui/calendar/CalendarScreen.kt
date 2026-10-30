@@ -422,6 +422,13 @@ private fun CalendarContent(vm: CalendarViewModel) {
                 }
                 if (byDay.isEmpty()) Text(stringResource(I18nR.string.cal_no_events), Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 LazyColumn(contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    item(key = "kmp-month") {
+                        de.mm20.launcher2.ui.kmp.SharedCalendarHost(
+                            modifier = Modifier.fillMaxWidth().height(280.dp),
+                            month = month,
+                            today = if (month == YearMonth.now()) LocalDate.now().dayOfMonth else 0,
+                        )
+                    }
                     byDay.forEach { (day, evs) ->
                         item(key = "h$day") { Text(day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp)) }
                         items(evs.sortedBy { it.begin }, key = { "$day-${it.id}-${it.begin}" }) { ev -> EventRow(ev, writable.any { it.id == ev.calendarId }) { openEvent(ev) } }

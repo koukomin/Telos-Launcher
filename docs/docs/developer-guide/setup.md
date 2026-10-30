@@ -16,4 +16,4 @@ The optional Linux desktop shell is a separate Gradle module:
 ./gradlew :desktop-linux:packageUberJarForCurrentOS
 ```
 
-Do not add `:desktop-linux` or `:ui-kmp` to `:app:app`. `:ui-kmp` has JVM and Android targets; `:app:ui` does not host its screens yet. Details: [Telos Linux Desktop](/docs/developer-guide/desktop-linux).
+Do not add `:desktop-linux` or `:ui-kmp` to `:app:app`. `:app:ui` may depend on `:ui-kmp`. Details: [Telos Linux Desktop](/docs/developer-guide/desktop-linux).

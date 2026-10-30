@@ -162,7 +162,11 @@ fun NotesScreen() {
                 if (notes.isEmpty() && query.isNotBlank()) {
                     SearchEmptyState(query)
                 } else if (notes.isEmpty()) {
-                    Box(Modifier.fillMaxSize(), Alignment.Center) { Text(stringResource(R.string.notes_empty), color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                    de.mm20.launcher2.ui.kmp.SharedNotesHost(
+                        text = "",
+                        onText = { editing = Note(body = it, labels = listOfNotNull(label)) },
+                        modifier = Modifier.fillMaxSize().padding(16.dp),
+                    )
                 } else LazyVerticalStaggeredGrid(
                     StaggeredGridCells.Adaptive(160.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale), Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalItemSpacing = 8.dp,

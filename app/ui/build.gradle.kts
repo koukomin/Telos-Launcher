@@ -166,6 +166,7 @@ dependencies {
     implementation(project(":libs:material-color-utilities"))
 
     implementation(project(":core:base"))
+    implementation(project(":ui-kmp"))
     implementation(libs.shizuku.api)
     implementation(libs.hiddenapibypass)
     implementation(project(":core:i18n"))

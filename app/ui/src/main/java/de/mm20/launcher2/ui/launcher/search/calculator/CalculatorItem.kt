@@ -18,8 +18,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -105,6 +110,17 @@ fun CalculatorItem(
                 calculator.formattedOctString,
                 style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
                 modifier = Modifier.align(Alignment.End),
+            )
+        }
+        var pad by remember { mutableStateOf(false) }
+        TextButton(onClick = { pad = !pad }) {
+            Text(stringResource(de.mm20.launcher2.i18n.R.string.calculator_title))
+        }
+        if (pad) {
+            de.mm20.launcher2.ui.kmp.SharedCalculatorHost(
+                Modifier
+                    .fillMaxWidth()
+                    .height(320.dp),
             )
         }
     }

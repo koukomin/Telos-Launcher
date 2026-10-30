@@ -142,10 +142,15 @@ private fun WorldClockTab() {
     LaunchedEffect(Unit) { while (isActive) { now = Instant.now(); delay(1000) } }
     LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item {
-            Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(stringResource(R.string.clock_local), style = MaterialTheme.typography.titleMedium)
-                ClockDigits(ZonedDateTime.ofInstant(now, ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm:ss")))
-            } }
+            val local = ZonedDateTime.ofInstant(now, ZoneId.systemDefault())
+            Card(Modifier.fillMaxWidth()) {
+                de.mm20.launcher2.ui.kmp.SharedClockHost(
+                    title = stringResource(R.string.clock_local),
+                    time = local.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+                    date = local.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy")),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
         item {
             de.mm20.launcher2.ui.component.TelosSearchBar(
