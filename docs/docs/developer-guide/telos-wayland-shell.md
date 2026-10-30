@@ -27,11 +27,20 @@ P0–P4, Helix H0–H6, Surface S0–S4 stay in tree. Do **not** depend `:app:ap
 
 Host package: `gtk-layer-shell` / `gir1.2-gtk-layer-shell-0`. Missing GIR → `telos-layer` exits 0, Compose chrome remains.
 
+## W2 (in tree)
+
+| Piece | What it does |
+| --- | --- |
+| `telos-portal` | D-Bus `org.freedesktop.impl.portal.desktop.telos`. FileChooser Open/Save writes `telos-portal-in.jsonl`; Compose `TelosFilePickerModal` replies on `telos-portal-out.jsonl` with `file://` URIs. Notification impl appends to the notify fifo. |
+| `telos.portal` | `UseIn=Telos`. `portals.conf` prefers `telos;gtk` for FileChooser and Notification. |
+| `telos-sni` | Owns `org.kde.StatusNotifierWatcher` with `IsStatusNotifierHostRegistered=true`. Snapshot `telos-sni.jsonl`. Panel tray lists SNI items; click writes `telos-sni-cmd.jsonl` Activate. |
+
+Gio missing → helpers exit 0. gtk FileChooser remains the fallback in `portals.conf`.
+
 ## Later (do not start unless asked)
 
 | Phase | Scope |
 | --- | --- |
-| **W2** | `org.freedesktop.impl.portal.Notification` + FileChooser in Telos Files. SNI tray. |
 | **W3** | Idle, inhibit, greeter, mixed-DPI, IME, AT-SPI. |
 
 ## Files
@@ -42,4 +51,4 @@ Host package: `gtk-layer-shell` / `gir1.2-gtk-layer-shell-0`. Missing GIR → `t
 
 ## Resume prompt
 
-W0 and W1 are in tree. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`. Next is **W2** only if the user asks.
+W0–W2 are in tree. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`. Next is **W3** only if the user asks.

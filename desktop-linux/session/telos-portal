@@ -1,0 +1,150 @@
+#!/usr/bin/env python3
+"""W2: org.freedesktop.impl.portal.desktop.telos FileChooser + Notification."""
+import json
+import os
+import uuid
+import sys
+
+RUNTIME = os.environ.get("XDG_RUNTIME_DIR", "/tmp")
+IN_PATH = os.path.join(RUNTIME, "telos-portal-in.jsonl")
+OUT_PATH = os.path.join(RUNTIME, "telos-portal-out.jsonl")
+NOTIFY = os.path.join(RUNTIME, "telos-notify.jsonl")
+
+
+def append_json(path, obj):
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
+    try:
+        os.write(fd, (json.dumps(obj, ensure_ascii=False) + "\n").encode("utf-8"))
+    finally:
+        os.close(fd)
+
+
+def read_out(req_id):
+    if not os.path.isfile(OUT_PATH):
+        return None
+    with open(OUT_PATH, "r", encoding="utf-8") as fh:
+        for line in fh:
+            try:
+                data = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if data.get("id") == req_id:
+                return data
+    return None
+
+
+def main():
+    try:
+        import gi
+        gi.require_version("Gio", "2.0")
+        from gi.repository import Gio, GLib
+    except Exception as exc:
+        sys.stderr.write("telos-portal: Gio unavailable (%s)\n" % exc)
+        sys.exit(0)
+
+    xml = """
+    <node>
+      <interface name="org.freedesktop.impl.portal.FileChooser">
+        <method name="OpenFile">
+          <arg direction="in" type="o" name="handle"/>
+          <arg direction="in" type="s" name="app_id"/>
+          <arg direction="in" type="s" name="parent_window"/>
+          <arg direction="in" type="s" name="title"/>
+          <arg direction="in" type="a{sv}" name="options"/>
+          <arg direction="out" type="u" name="response"/>
+          <arg direction="out" type="a{sv}" name="results"/>
+        </method>
+        <method name="SaveFile">
+          <arg direction="in" type="o" name="handle"/>
+          <arg direction="in" type="s" name="app_id"/>
+          <arg direction="in" type="s" name="parent_window"/>
+          <arg direction="in" type="s" name="title"/>
+          <arg direction="in" type="a{sv}" name="options"/>
+          <arg direction="out" type="u" name="response"/>
+          <arg direction="out" type="a{sv}" name="results"/>
+        </method>
+      </interface>
+      <interface name="org.freedesktop.impl.portal.Notification">
+        <method name="AddNotification">
+          <arg direction="in" type="s" name="app_id"/>
+          <arg direction="in" type="s" name="id"/>
+          <arg direction="in" type="a{sv}" name="notification"/>
+        </method>
+        <method name="RemoveNotification">
+          <arg direction="in" type="s" name="app_id"/>
+          <arg direction="in" type="s" name="id"/>
+        </method>
+      </interface>
+    </node>
+    """
+    node = Gio.DBusNodeInfo.new_for_xml(xml)
+    pending = {}
+
+    def start_chooser(mode, title, options, invocation):
+        req_id = str(uuid.uuid4())
+        opts = options if isinstance(options, dict) else {}
+        multiple = bool(opts.get("multiple", False))
+        directory = bool(opts.get("directory", False))
+        append_json(IN_PATH, {
+            "id": req_id,
+            "mode": mode,
+            "title": title or "Open",
+            "multiple": multiple,
+            "directory": directory,
+        })
+        pending[req_id] = invocation
+
+        def tick():
+            if req_id not in pending:
+                return False
+            data = read_out(req_id)
+            if data is None:
+                return True
+            response = int(data.get("response", 1))
+            uris = data.get("uris") or []
+            invocation.return_value(GLib.Variant("(ua{sv})", (response, {"uris": GLib.Variant("as", uris)})))
+            pending.pop(req_id, None)
+            return False
+
+        GLib.timeout_add(200, tick)
+
+    def on_method(_c, _s, _p, iface, method, parameters, invocation):
+        if iface.endswith("FileChooser") and method in ("OpenFile", "SaveFile"):
+            unpacked = parameters.unpack()
+            title = unpacked[3]
+            options = unpacked[4] if len(unpacked) > 4 else {}
+            start_chooser("open" if method == "OpenFile" else "save", title, options, invocation)
+            return
+        if method == "AddNotification":
+            app_id, nid, note = parameters.unpack()
+            title = ""
+            body = ""
+            if isinstance(note, dict):
+                title = str(note.get("title") or app_id or "Notification")
+                body = str(note.get("body") or nid)
+            append_json(NOTIFY, {"summary": title, "body": body})
+            invocation.return_value(None)
+            return
+        if method == "RemoveNotification":
+            invocation.return_value(None)
+            return
+        invocation.return_dbus_error("org.freedesktop.DBus.Error.UnknownMethod", method)
+
+    def on_bus_acquired(connection, _name):
+        for iface in node.interfaces:
+            connection.register_object("/org/freedesktop/portal/desktop", iface, on_method, None, None)
+
+    Gio.bus_own_name(
+        Gio.BusType.SESSION,
+        "org.freedesktop.impl.portal.desktop.telos",
+        Gio.BusNameOwnerFlags.REPLACE,
+        on_bus_acquired,
+        None,
+        None,
+    )
+    GLib.MainLoop().run()
+
+
+if __name__ == "__main__":
+    main()

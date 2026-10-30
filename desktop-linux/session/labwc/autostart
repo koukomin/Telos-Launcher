@@ -9,6 +9,12 @@ fi
 if [ -x "$CONF_DIR/telos-layer" ]; then
   "$CONF_DIR/telos-layer" &
 fi
+if [ -x "$CONF_DIR/telos-portal" ]; then
+  "$CONF_DIR/telos-portal" &
+fi
+if [ -x "$CONF_DIR/telos-sni" ]; then
+  "$CONF_DIR/telos-sni" &
+fi
 start_portal() {
   for cand in "$@"; do
     if [ -x "$cand" ]; then

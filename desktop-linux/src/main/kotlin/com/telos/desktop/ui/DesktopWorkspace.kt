@@ -115,6 +115,12 @@ fun DesktopWorkspace(
     LaunchedEffect(Unit) {
         com.telos.desktop.session.LayerShellBridge.listenLoop()
     }
+    LaunchedEffect(Unit) {
+        com.telos.desktop.session.PortalFileChooser.pollLoop()
+    }
+    LaunchedEffect(Unit) {
+        com.telos.desktop.session.SniTray.pollLoop()
+    }
     LaunchedEffect(wm) {
         com.telos.desktop.session.LayerShellBridge.extraHandler = { id ->
             when (id) {
@@ -302,6 +308,14 @@ fun DesktopWorkspace(
             Box(Modifier.align(Alignment.TopEnd).padding(top = 40.dp, end = 12.dp).zIndex(203f)) { ClipboardPopup() }
             Box(Modifier.align(Alignment.CenterEnd).zIndex(204f)) { NotificationSidebar() }
             HelixToastOverlay(Modifier.align(Alignment.TopEnd).padding(top = 48.dp, end = 12.dp).zIndex(205f))
+            com.telos.desktop.session.PortalFileChooser.pending?.let { req ->
+                Box(Modifier.align(Alignment.Center).zIndex(310f)) {
+                    com.telos.desktop.vault.TelosFilePickerModal(
+                        onPick = { com.telos.desktop.session.PortalFileChooser.complete(it) },
+                        onDismiss = { com.telos.desktop.session.PortalFileChooser.cancel() },
+                    )
+                }
+            }
             Box(Modifier.align(Alignment.Center)) {
                 PolkitDialog()
                 SessionPowerDialog(vault, onLogout)

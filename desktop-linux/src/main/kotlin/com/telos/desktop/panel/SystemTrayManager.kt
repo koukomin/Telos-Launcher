@@ -15,12 +15,22 @@ object SystemTrayManager {
 
     fun snapshot(): List<TrayApp> {
         val ps = Sys.run("ps", "-eo", "comm=").stdout.lines().map { it.trim() }.toSet()
-        return watched.map { app ->
+        val local = watched.map { app ->
             app.copy(running = ps.any { it.equals(app.id, true) || it.contains(app.id) })
         }
+        val sni = com.telos.desktop.session.SniTray.items.map { item ->
+            TrayApp("sni:" + item.service, item.title.ifBlank { item.id }, true, emptyList())
+        }
+        return local + sni
     }
 
     fun launch(app: TrayApp) {
+        if (app.id.startsWith("sni:")) {
+            val service = app.id.removePrefix("sni:")
+            val item = com.telos.desktop.session.SniTray.items.find { it.service == service } ?: return
+            com.telos.desktop.session.SniTray.activate(item)
+            return
+        }
         val bin = app.exec.firstNotNullOfOrNull { Sys.which(it) } ?: return
         Sys.runBg(bin)
     }

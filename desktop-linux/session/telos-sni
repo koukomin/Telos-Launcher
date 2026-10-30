@@ -1,0 +1,164 @@
+#!/usr/bin/env python3
+"""W2: org.kde.StatusNotifierWatcher → telos-sni.jsonl"""
+import json
+import os
+import sys
+
+RUNTIME = os.environ.get("XDG_RUNTIME_DIR", "/tmp")
+SNAP = os.path.join(RUNTIME, "telos-sni.jsonl")
+CMD = os.path.join(RUNTIME, "telos-sni-cmd.jsonl")
+items = []
+
+
+def write_snap():
+    os.makedirs(os.path.dirname(SNAP) or ".", exist_ok=True)
+    fd = os.open(SNAP, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    try:
+        os.write(fd, (json.dumps({"items": items}, ensure_ascii=False) + "\n").encode("utf-8"))
+    finally:
+        os.close(fd)
+
+
+def main():
+    try:
+        import gi
+        gi.require_version("Gio", "2.0")
+        from gi.repository import Gio, GLib
+    except Exception as exc:
+        sys.stderr.write("telos-sni: Gio unavailable (%s)\n" % exc)
+        sys.exit(0)
+
+    xml = """
+    <node>
+      <interface name="org.kde.StatusNotifierWatcher">
+        <method name="RegisterStatusNotifierItem">
+          <arg direction="in" type="s" name="service"/>
+        </method>
+        <method name="RegisterStatusNotifierHost">
+          <arg direction="in" type="s" name="service"/>
+        </method>
+        <property name="RegisteredStatusNotifierItems" type="as" access="read"/>
+        <property name="IsStatusNotifierHostRegistered" type="b" access="read"/>
+        <property name="ProtocolVersion" type="i" access="read"/>
+        <signal name="StatusNotifierItemRegistered">
+          <arg type="s" name="service"/>
+        </signal>
+        <signal name="StatusNotifierItemUnregistered">
+          <arg type="s" name="service"/>
+        </signal>
+        <signal name="StatusNotifierHostRegistered"/>
+      </interface>
+    </node>
+    """
+    node = Gio.DBusNodeInfo.new_for_xml(xml)
+    conn_hold = {}
+
+    def get_title(service):
+        name = service
+        path = "/StatusNotifierItem"
+        if "/" in service and not service.startswith(":"):
+            name, path = service.split("/", 1)
+            path = "/" + path
+        elif service.startswith(":"):
+            name = service
+        try:
+            proxy = Gio.DBusProxy.new_sync(
+                conn_hold["c"],
+                Gio.DBusProxyFlags.NONE,
+                None,
+                name,
+                path,
+                "org.kde.StatusNotifierItem",
+                None,
+            )
+            title = proxy.get_cached_property("Title")
+            ident = proxy.get_cached_property("Id")
+            return str(ident.unpack() if ident else ident or service), str(title.unpack() if title else title or service)
+        except Exception:
+            return service, service
+
+    def on_method(_c, _s, _p, _i, method, parameters, invocation):
+        if method == "RegisterStatusNotifierItem":
+            service = parameters.unpack()[0]
+            ident, title = get_title(service)
+            items.append({"id": ident, "title": title, "service": service})
+            write_snap()
+            invocation.return_value(None)
+            return
+        if method == "RegisterStatusNotifierHost":
+            invocation.return_value(None)
+            return
+        invocation.return_dbus_error("org.freedesktop.DBus.Error.UnknownMethod", method)
+
+    def on_get_property(_c, _s, _p, _iface, name):
+        if name == "RegisteredStatusNotifierItems":
+            return GLib.Variant("as", [it["service"] for it in items])
+        if name == "IsStatusNotifierHostRegistered":
+            return GLib.Variant("b", True)
+        if name == "ProtocolVersion":
+            return GLib.Variant("i", 0)
+        return None
+
+    def poll_cmd():
+        if not os.path.isfile(CMD):
+            return True
+        try:
+            with open(CMD, "r", encoding="utf-8") as fh:
+                lines = fh.readlines()
+            os.remove(CMD)
+        except OSError:
+            return True
+        for line in lines:
+            try:
+                data = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if data.get("cmd") != "activate":
+                continue
+            service = data.get("service") or ""
+            name = service
+            path = "/StatusNotifierItem"
+            if "/" in service and not service.startswith(":"):
+                name, rest = service.split("/", 1)
+                path = "/" + rest
+            try:
+                conn_hold["c"].call_sync(
+                    name,
+                    path,
+                    "org.kde.StatusNotifierItem",
+                    "Activate",
+                    GLib.Variant("(ii)", (0, 0)),
+                    None,
+                    Gio.DBusCallFlags.NONE,
+                    2000,
+                    None,
+                )
+            except Exception:
+                pass
+        return True
+
+    def on_bus_acquired(connection, _name):
+        conn_hold["c"] = connection
+        connection.register_object(
+            "/StatusNotifierWatcher",
+            node.interfaces[0],
+            on_method,
+            on_get_property,
+            None,
+        )
+        write_snap()
+        GLib.timeout_add(400, poll_cmd)
+
+    Gio.bus_own_name(
+        Gio.BusType.SESSION,
+        "org.kde.StatusNotifierWatcher",
+        Gio.BusNameOwnerFlags.REPLACE,
+        on_bus_acquired,
+        None,
+        None,
+    )
+    GLib.MainLoop().run()
+
+
+if __name__ == "__main__":
+    main()

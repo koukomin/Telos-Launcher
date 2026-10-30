@@ -1,0 +1,4 @@
+[portal]
+DBusName=org.freedesktop.impl.portal.desktop.telos
+Interfaces=org.freedesktop.impl.portal.FileChooser;org.freedesktop.impl.portal.Notification;
+UseIn=Telos
