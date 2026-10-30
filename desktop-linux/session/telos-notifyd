@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+"""W0: org.freedesktop.Notifications → $XDG_RUNTIME_DIR/telos-notify.jsonl"""
+import json
+import os
+import sys
+
+FIFO = os.path.join(os.environ.get("XDG_RUNTIME_DIR", "/tmp"), "telos-notify.jsonl")
+next_id = 1
+
+
+def append_note(summary, body):
+    os.makedirs(os.path.dirname(FIFO) or ".", exist_ok=True)
+    line = json.dumps({"summary": summary or "Notification", "body": body or ""}, ensure_ascii=False)
+    fd = os.open(FIFO, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
+    try:
+        os.write(fd, (line + "\n").encode("utf-8"))
+    finally:
+        os.close(fd)
+
+
+def main():
+    try:
+        import gi
+        gi.require_version("Gio", "2.0")
+        from gi.repository import Gio, GLib
+    except Exception as exc:
+        sys.stderr.write("telos-notifyd: Gio unavailable (%s)\n" % exc)
+        sys.exit(0)
+
+    xml = """
+    <node>
+      <interface name="org.freedesktop.Notifications">
+        <method name="Notify">
+          <arg direction="in" type="s" name="app_name"/>
+          <arg direction="in" type="u" name="replaces_id"/>
+          <arg direction="in" type="s" name="app_icon"/>
+          <arg direction="in" type="s" name="summary"/>
+          <arg direction="in" type="s" name="body"/>
+          <arg direction="in" type="as" name="actions"/>
+          <arg direction="in" type="a{sv}" name="hints"/>
+          <arg direction="in" type="i" name="expire_timeout"/>
+          <arg direction="out" type="u" name="id"/>
+        </method>
+        <method name="CloseNotification">
+          <arg direction="in" type="u" name="id"/>
+        </method>
+        <method name="GetCapabilities">
+          <arg direction="out" type="as" name="caps"/>
+        </method>
+        <method name="GetServerInformation">
+          <arg direction="out" type="s" name="name"/>
+          <arg direction="out" type="s" name="vendor"/>
+          <arg direction="out" type="s" name="version"/>
+          <arg direction="out" type="s" name="spec_version"/>
+        </method>
+      </interface>
+    </node>
+    """
+    node = Gio.DBusNodeInfo.new_for_xml(xml)
+
+    def on_method(_connection, _sender, _object_path, _interface_name, method_name, parameters, invocation):
+        global next_id
+        if method_name == "Notify":
+            unpacked = parameters.unpack()
+            append_note(unpacked[3], unpacked[4])
+            nid = next_id
+            next_id += 1
+            invocation.return_value(GLib.Variant("(u)", (nid,)))
+            return
+        if method_name == "CloseNotification":
+            invocation.return_value(None)
+            return
+        if method_name == "GetCapabilities":
+            invocation.return_value(GLib.Variant("(as)", (["body", "body-markup"],)))
+            return
+        if method_name == "GetServerInformation":
+            invocation.return_value(GLib.Variant("(ssss)", ("Telos", "Telos", "1", "1.2")))
+            return
+        invocation.return_dbus_error("org.freedesktop.DBus.Error.UnknownMethod", method_name)
+
+    def on_bus_acquired(connection, _name):
+        connection.register_object(
+            "/org/freedesktop/Notifications",
+            node.interfaces[0],
+            on_method,
+            None,
+            None,
+        )
+
+    Gio.bus_own_name(
+        Gio.BusType.SESSION,
+        "org.freedesktop.Notifications",
+        Gio.BusNameOwnerFlags.REPLACE,
+        on_bus_acquired,
+        None,
+        None,
+    )
+    GLib.MainLoop().run()
+
+
+if __name__ == "__main__":
+    main()

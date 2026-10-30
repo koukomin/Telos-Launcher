@@ -34,6 +34,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/telos-helix',
   },
   {
+    text: 'Telos Wayland Shell',
+    link: '/docs/developer-guide/telos-wayland-shell',
+  },
+  {
     text: 'Ironewolf browser',
     link: '/docs/developer-guide/ironewolf',
   },

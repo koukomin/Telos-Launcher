@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+"""W0: read one password line from stdin, check PAM. Exit 0 on success. Never print the password."""
+import ctypes
+import os
+import pwd
+import sys
+
+PAM_SUCCESS = 0
+PAM_PROMPT_ECHO_OFF = 1
+service = os.environ.get("TELOS_PAM_SERVICE", "login")
+
+
+class PamHandle(ctypes.Structure):
+    _fields_ = [("handle", ctypes.c_void_p)]
+
+
+class PamMessage(ctypes.Structure):
+    _fields_ = [("msg_style", ctypes.c_int), ("msg", ctypes.c_char_p)]
+
+
+class PamResponse(ctypes.Structure):
+    _fields_ = [("resp", ctypes.c_char_p), ("resp_retcode", ctypes.c_int)]
+
+
+ConvFunc = ctypes.CFUNCTYPE(
+    ctypes.c_int,
+    ctypes.c_int,
+    ctypes.POINTER(ctypes.POINTER(PamMessage)),
+    ctypes.POINTER(ctypes.POINTER(PamResponse)),
+    ctypes.c_void_p,
+)
+
+
+class PamConv(ctypes.Structure):
+    _fields_ = [("conv", ConvFunc), ("appdata_ptr", ctypes.c_void_p)]
+
+
+def main():
+    password = sys.stdin.readline()
+    if password.endswith("\n"):
+        password = password[:-1]
+    if not password:
+        sys.exit(1)
+    user = pwd.getpwuid(os.getuid()).pw_name.encode()
+    pw_bytes = password.encode()
+    lib = ctypes.CDLL("libpam.so.0")
+
+    def conv(n_msg, msg, resp, app):
+        arr = (PamResponse * n_msg)()
+        for i in range(n_msg):
+            arr[i].resp = ctypes.c_char_p(pw_bytes)
+            arr[i].resp_retcode = 0
+        resp[0] = ctypes.cast(arr, ctypes.POINTER(PamResponse))
+        return PAM_SUCCESS
+
+    conv_cb = ConvFunc(conv)
+    conversation = PamConv(conv_cb, None)
+    handle = PamHandle()
+    if lib.pam_start(service.encode(), user, ctypes.byref(conversation), ctypes.byref(handle)) != PAM_SUCCESS:
+        sys.exit(1)
+    rc = lib.pam_authenticate(handle, 0)
+    lib.pam_end(handle, rc)
+    sys.exit(0 if rc == PAM_SUCCESS else 1)
+
+
+if __name__ == "__main__":
+    main()

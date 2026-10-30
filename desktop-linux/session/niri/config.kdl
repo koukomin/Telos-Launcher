@@ -7,6 +7,12 @@ input {
 
 layout {
     gaps 8
+    struts {
+        left 0
+        right 0
+        top 36
+        bottom 56
+    }
 }
 
 binds {

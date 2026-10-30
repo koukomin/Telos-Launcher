@@ -105,8 +105,11 @@ chmod 700 "$CONF" 2>/dev/null || true
 cp -f "$SCRIPT_DIR/labwc/rc.xml" "$CONF/rc.xml"
 cp -f "$SCRIPT_DIR/labwc/menu.xml" "$CONF/menu.xml"
 cp -f "$SCRIPT_DIR/labwc/autostart" "$CONF/autostart"
-chmod +x "$CONF/autostart"
+cp -f "$SCRIPT_DIR/telos-notifyd" "$CONF/telos-notifyd"
+cp -f "$SCRIPT_DIR/telos-pam-auth" "$CONF/telos-pam-auth"
+chmod +x "$CONF/autostart" "$CONF/telos-notifyd" "$CONF/telos-pam-auth"
 cp -f "$SCRIPT_DIR/labwc/environment" "$CONF/environment"
+export TELOS_PAM_AUTH="$CONF/telos-pam-auth"
 
 if [ "${TELOS_VAULT_UNLOCKED:-0}" != "1" ]; then
   java -jar "$JAR" --unlock-only
@@ -132,6 +135,11 @@ swapoff -a 2>/dev/null || true
 export XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-Telos:$COMPOSITOR}"
 export XDG_SESSION_TYPE="${XDG_SESSION_TYPE:-wayland}"
 export XDG_SESSION_DESKTOP="${XDG_SESSION_DESKTOP:-Telos}"
+PORTAL_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/xdg-desktop-portal"
+mkdir -p "$PORTAL_DIR"
+chmod 700 "$PORTAL_DIR" 2>/dev/null || true
+cp -f "$SCRIPT_DIR/xdg-desktop-portal/portals.conf" "$PORTAL_DIR/portals.conf"
+cp -f "$SCRIPT_DIR/xdg-desktop-portal/portals.conf" "$PORTAL_DIR/Telos-portals.conf"
 export QT_QPA_PLATFORM="${QT_QPA_PLATFORM:-wayland;xcb}"
 export GDK_BACKEND="${GDK_BACKEND:-wayland,x11}"
 export MOZ_ENABLE_WAYLAND="${MOZ_ENABLE_WAYLAND:-1}"

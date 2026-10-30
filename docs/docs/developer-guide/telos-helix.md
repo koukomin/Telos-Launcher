@@ -30,7 +30,7 @@ Beat GNOME / Cosmic / Hyprland-default chrome on density and search, using KDE-c
 | **H5** | In tree | Bottom dock uses `CandyCyberIcon` + labels. Apps opens Kickoff (`toggleAppGrid`). Alt-Tab uses opaque `menu` chips. |
 | **H6** | In tree | Context menu, notifications, clipboard: opaque `menu` + outline. Window chrome: opaque title bar + title text, opaque body. |
 
-When a later session asks **what is still pending**: **none of P0–P4, none of Helix H0–H6, none of Surface S0–S4**. Do not start extra DEs unless asked.
+When a later session asks **what is still pending**: **Wayland W1**. H0–H6, S0–S4, and W0 are in tree. See [telos-wayland-shell.md](./telos-wayland-shell.md).
 
 ## Helix Surface (2026 DE chrome)
 
@@ -56,4 +56,4 @@ Wallpaper is the stage. Menus stay opaque. Motion is 120–160 ms, no bounce.
 
 ## Resume prompt
 
-Helix H0–H6 and Surface S0–S4 are in tree. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`.
+Helix H0–H6, Surface S0–S4, and Wayland W0 are in tree. Next is W1 only if asked. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`.

@@ -23,6 +23,7 @@ object SessionPowerActions {
     fun lock() {
         SessionPower.locked.value = true
         SessionPower.open.value = false
+        Sys.run("loginctl", "lock-session", timeoutSec = 4)
     }
 
     // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===

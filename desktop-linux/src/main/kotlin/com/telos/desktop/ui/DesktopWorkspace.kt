@@ -310,6 +310,9 @@ fun DesktopWorkspace(
                 }
             }
             // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
+            LaunchedEffect(Unit) {
+                com.telos.desktop.session.FreedesktopNotifyBridge.pollLoop()
+            }
             LaunchedEffect(toast) {
                 toast?.let { HelixToast.show("Desktop", it) }
             }
@@ -323,7 +326,9 @@ fun DesktopWorkspace(
                         Text("Telos locked", color = TelosColors.secondary)
                         OutlinedTextField(pw, { pw = it }, label = { Text("Master password") })
                         Text("Unlock", color = TelosColors.primary, modifier = Modifier.clickable {
-                            if (vault.unlock(pw, null, false).ok) SessionPower.locked.value = false
+                            val pam = com.telos.desktop.session.PamAuth.authenticate(pw)
+                            val vaultOk = vault.unlock(pw, null, false).ok
+                            if (pam || vaultOk) SessionPower.locked.value = false
                         }.padding(12.dp))
                     }
                 }

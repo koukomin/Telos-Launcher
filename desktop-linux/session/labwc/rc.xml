@@ -6,6 +6,12 @@
     <allowTearing>no</allowTearing>
     <decoration>client</decoration>
   </core>
+  <margin>
+    <top>36</top>
+    <bottom>56</bottom>
+    <left>0</left>
+    <right>0</right>
+  </margin>
   <focus>
     <followMouse>no</followMouse>
     <raiseOnFocus>no</raiseOnFocus>
