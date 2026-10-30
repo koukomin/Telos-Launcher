@@ -6,7 +6,7 @@ echo "   TELOS LINUX DESKTOP — labwc session installer          "
 echo "=========================================================="
 
 PROJECT_DIR="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
-JAR_SOURCE=$(find "$PROJECT_DIR/desktop-linux/build/compose/jars" -name "telos-desktop-linux*.jar" 2>/dev/null | head -n 1 || true)
+JAR_SOURCE=$(find "$PROJECT_DIR/desktop-linux/build/compose/jars" -name "telos-desktop-linux*.jar" ! -path "*/session/*" 2>/dev/null | head -n 1 || true)
 
 if [ -z "$JAR_SOURCE" ]; then
     echo "[!] UberJar missing. Building :desktop-linux:packageUberJarForCurrentOS..."

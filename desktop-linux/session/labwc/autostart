@@ -2,4 +2,8 @@
 export TELOS_SESSION=1
 export TELOS_SESSION_HOME=full
 export TELOS_VAULT_UNLOCKED="${TELOS_VAULT_UNLOCKED:-1}"
-exec java -Xms256m -Xmx2048m -XX:+UseG1GC -jar "@TELOS_JAR@" --session --already-unlocked
+if [ -z "${TELOS_JAR:-}" ] || [ ! -f "$TELOS_JAR" ]; then
+  echo "telos autostart: TELOS_JAR missing" >&2
+  exit 1
+fi
+exec java -Xms256m -Xmx2048m -XX:+UseG1GC -jar "$TELOS_JAR" --session --already-unlocked

@@ -45,12 +45,28 @@ if ! command -v labwc >/dev/null 2>&1; then
   exit 1
 fi
 
+if [ -n "${WAYLAND_DISPLAY:-}" ] && [ "${TELOS_ALLOW_NESTED:-0}" != "1" ]; then
+  echo "telos-session: already on Wayland ($WAYLAND_DISPLAY). Set TELOS_ALLOW_NESTED=1 to nest labwc." >&2
+  exit 1
+fi
+
+LOCKF="$XDG_RUNTIME_DIR/telos-session.lock"
+exec 9>"$LOCKF"
+if command -v flock >/dev/null 2>&1; then
+  if ! flock -n 9; then
+    echo "telos-session: already running" >&2
+    exit 1
+  fi
+fi
+
+export TELOS_JAR="$JAR"
+
 CONF="$XDG_RUNTIME_DIR/telos-labwc"
 mkdir -p "$CONF"
 chmod 700 "$CONF" 2>/dev/null || true
 cp -f "$SCRIPT_DIR/labwc/rc.xml" "$CONF/rc.xml"
 cp -f "$SCRIPT_DIR/labwc/menu.xml" "$CONF/menu.xml"
-sed "s|@TELOS_JAR@|$JAR|g" "$SCRIPT_DIR/labwc/autostart" > "$CONF/autostart"
+cp -f "$SCRIPT_DIR/labwc/autostart" "$CONF/autostart"
 chmod +x "$CONF/autostart"
 cp -f "$SCRIPT_DIR/labwc/environment" "$CONF/environment"
 
@@ -83,7 +99,12 @@ export GDK_BACKEND="${GDK_BACKEND:-wayland,x11}"
 export MOZ_ENABLE_WAYLAND="${MOZ_ENABLE_WAYLAND:-1}"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+CLEANED=0
 cleanup() {
+  if [ "$CLEANED" = 1 ]; then
+    return 0
+  fi
+  CLEANED=1
   java -jar "$JAR" --lock-only >/dev/null 2>&1 || true
   nft delete table inet telos_session 2>/dev/null || \
     pkexec nft delete table inet telos_session 2>/dev/null || true

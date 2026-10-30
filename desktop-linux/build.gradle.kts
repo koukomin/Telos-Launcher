@@ -95,6 +95,8 @@ tasks.matching { it.name == "packageUberJarForCurrentOS" }.configureEach {
             from(project.file("session"))
             into(sessionDest)
         }
+        sessionDest.resolve("telos-session").setExecutable(true)
+        sessionDest.resolve("labwc/autostart").setExecutable(true)
     }
 }
 // === TELOS_PENDING_REVIEW_END: fix_uberjar_signature ===

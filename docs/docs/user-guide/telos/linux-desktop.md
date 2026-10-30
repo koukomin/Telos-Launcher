@@ -41,6 +41,6 @@ On Linux you can start a full session instead of a window on another desktop:
 
 The vault password (and optional FIDO2 key) unlocks an encrypted volume that **becomes `$HOME`** for that session. The LUKS image stays under the **host** home (`TELOS_HOST_HOME`); only session files use the vault mount. Outbound network is denied by default except DNS and IPv4/IPv6 CIDRs in `~/.config/telos/net-allow.txt`. Leaving the session locks the vault and removes the `inet telos_session` nftables table. `Ctrl+Alt+L` panic-unmounts and ends labwc.
 
-`./install-telos-de.sh` installs the jar, `telos-session`, and the display-manager entry.
+`./install-telos-de.sh` installs the jar, `telos-session`, and the display-manager entry. Only one session runs at a time. To try labwc inside another Wayland desktop, set `TELOS_ALLOW_NESTED=1`.
 
 Compose is an xdg-toplevel that labwc pins fullscreen; it is not a native layer-shell client yet.
