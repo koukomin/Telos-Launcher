@@ -26,9 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.telos.desktop.files.CloudOAuth
 import com.telos.desktop.files.CloudPlacesStore
 import com.telos.desktop.files.DavSecrets
 import com.telos.desktop.files.NextcloudLoginFlow
+import com.telos.desktop.files.OAuthSecrets
 import com.telos.desktop.files.WebDavClient
 import com.telos.desktop.files.FilesTabState
 import com.telos.desktop.files.FilesWorkspaceState
@@ -187,6 +189,40 @@ fun TelosFilesWorkspace(
                     }
                 }
             }) { Text(t("preference_screen_integrations")) }
+            TextButton(onClick = {
+                val kind = CloudOAuth.detect(uriDraft) ?: return@TextButton
+                val clientId = userDraft.trim()
+                if (clientId.isEmpty()) return@TextButton
+                val secret = passDraft
+                passDraft = ""
+                scope.launch(Dispatchers.IO) {
+                    val verifier = CloudOAuth.verifier()
+                    val state = CloudOAuth.state()
+                    val url = CloudOAuth.authorizeUrl(kind, clientId, verifier, state)
+                    withContext(Dispatchers.Main) { flowStatus = url }
+                    CloudOAuth.openBrowser(url)
+                    val code = CloudOAuth.waitForCode(state) ?: run {
+                        withContext(Dispatchers.Main) { flowStatus = t("dl_p3_extract_failed") }
+                        return@launch
+                    }
+                    val tokens = CloudOAuth.exchange(kind, clientId, secret, code, verifier) ?: run {
+                        withContext(Dispatchers.Main) { flowStatus = t("dl_p3_extract_failed") }
+                        return@launch
+                    }
+                    val placeUri = CloudOAuth.placeUri(kind)
+                    OAuthSecrets.put(placeUri, tokens)
+                    val place = NetworkPlace(kind.name, placeUri, null, clientId)
+                    val snapshot = withContext(Dispatchers.Main) {
+                        val next = clouds + place
+                        clouds = next
+                        flowStatus = kind.name
+                        uriDraft = ""
+                        userDraft = ""
+                        next
+                    }
+                    CloudPlacesStore.save(cloudFile, snapshot)
+                }
+            }) { Text(t("preference_nextcloud_signin")) }
         }
         if (flowStatus.isNotEmpty()) {
             Text(flowStatus, color = TelosColors.secondary, fontSize = 11.sp, modifier = Modifier.padding(horizontal = 8.dp))

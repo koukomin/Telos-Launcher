@@ -26,8 +26,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.files.ArchivePasswordException
+import com.telos.desktop.files.CloudApi
+import com.telos.desktop.files.CloudOAuth
 import com.telos.desktop.files.DavSecrets
 import com.telos.desktop.files.NetworkPlaces
+import com.telos.desktop.files.OAuthSecrets
 import com.telos.desktop.files.WebDavClient
 import com.telos.desktop.files.ZipArchives
 import com.telos.desktop.i18n.TelosI18n.t
@@ -91,9 +94,20 @@ fun TelosFilesApp(
             return@LaunchedEffect
         }
         davRows = withContext(Dispatchers.IO) {
-            val pw = DavSecrets.get(davPlaceUri ?: href) ?: DavSecrets.get(href) ?: ""
-            WebDavClient.list(href, davUser, pw).map {
-                FilesRow(it.name, it.directory, null, it.href, it.size)
+            val kind = CloudOAuth.detect(davPlaceUri ?: href)
+            if (kind != null) {
+                val tokens = OAuthSecrets.get(davPlaceUri ?: CloudOAuth.placeUri(kind)) ?: return@withContext emptyList()
+                val fresh = CloudOAuth.refresh(tokens) ?: tokens
+                OAuthSecrets.put(davPlaceUri ?: CloudOAuth.placeUri(kind), fresh)
+                val folder = href.substringAfterLast('/').ifBlank { "root" }
+                CloudApi.list(kind, fresh.access, folder).map {
+                    FilesRow(it.name, it.directory, null, (davPlaceUri ?: href).trimEnd('/') + "/" + it.id, it.size)
+                }
+            } else {
+                val pw = DavSecrets.get(davPlaceUri ?: href) ?: DavSecrets.get(href) ?: ""
+                WebDavClient.list(href, davUser, pw).map {
+                    FilesRow(it.name, it.directory, null, it.href, it.size)
+                }
             }
         }
     }
@@ -154,10 +168,15 @@ fun TelosFilesApp(
                 TextButton(onClick = {
                     zipPrefix = ""
                     archiveSecret = ""
+                    val cloud = CloudOAuth.detect(place.uri)
                     val dav = place.uri.startsWith("dav", true) ||
                         place.uri.startsWith("http://", true) ||
                         place.uri.startsWith("https://", true)
-                    if (dav) {
+                    if (cloud != null) {
+                        davPlaceUri = place.uri
+                        davUser = place.user.orEmpty()
+                        davHref = place.uri.trimEnd('/') + "/root"
+                    } else if (dav) {
                         davPlaceUri = place.uri
                         davUser = place.user.orEmpty()
                         davHref = WebDavClient.normalize(place.uri, davUser)

@@ -58,7 +58,10 @@ object FilesWorkspaceStore {
 }
 
 object CloudPlacesStore {
-    private val allowed = listOf("file:", "smb:", "sftp:", "ssh:", "ftp:", "dav:", "davs:", "nfs:", "https:", "http:")
+    private val allowed = listOf(
+        "file:", "smb:", "sftp:", "ssh:", "ftp:", "dav:", "davs:", "nfs:", "https:", "http:",
+        "dropbox:", "gdrive:", "onedrive:",
+    )
 
     fun allowedUri(uri: String): Boolean {
         val u = uri.trim().lowercase()

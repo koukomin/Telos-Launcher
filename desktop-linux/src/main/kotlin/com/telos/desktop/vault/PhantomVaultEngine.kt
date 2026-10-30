@@ -69,6 +69,7 @@ class PhantomVaultEngine(
         expander?.stop()
         runCatching { com.telos.desktop.session.SessionNetGuard.clear() }
         runCatching { com.telos.desktop.files.DavSecrets.clear() }
+        runCatching { com.telos.desktop.files.OAuthSecrets.clear() }
         Sys.run("sync", timeoutSec = 30)
         Sys.run("pkexec", "umount", mountPoint.absolutePath)
         Sys.run("umount", mountPoint.absolutePath)
