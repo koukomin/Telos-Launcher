@@ -1,5 +1,8 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+import java.util.zip.ZipOutputStream
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -18,13 +21,76 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+// === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
+tasks.named<Copy>("processResources") {
+    from(rootProject.file("core/i18n/src/main/res")) {
+        include("values*/**/*.xml")
+        into("telos-android-i18n")
+    }
+    from(project.file("session")) {
+        into("telos-session")
+    }
+    doLast {
+        val dest = destinationDir.resolve("telos-android-i18n")
+        if (dest.isDirectory) {
+            dest.resolve("index.txt").writeText(
+                dest.walkTopDown().filter { it.isFile && it.extension == "xml" }
+                    .map { it.relativeTo(dest).invariantSeparatorsPath }
+                    .sorted()
+                    .joinToString("\n"),
+            )
+        }
+    }
+}
+// === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
+
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation(compose.material3)
     implementation(compose.materialIconsExtended)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2")
+    // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
+    implementation("org.bouncycastle:bcprov-jdk18on:1.86")
+    // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
 }
+
+// === TELOS_PENDING_REVIEW_START: fix_uberjar_signature ===
+tasks.withType<Jar> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude("META-INF/*.SF", "META-INF/*.RSA", "META-INF/*.DSA", "META-INF/*.sig")
+}
+
+val composeJarsDir = layout.buildDirectory.dir("compose/jars")
+tasks.matching { it.name == "packageUberJarForCurrentOS" }.configureEach {
+    val jarsDir = composeJarsDir
+    doLast {
+        val dir = jarsDir.get().asFile
+        if (!dir.isDirectory) return@doLast
+        dir.listFiles()?.filter { it.extension.equals("jar", true) }?.forEach { jar ->
+            val tmp = File(jar.parentFile, jar.name + ".unsigned")
+            ZipInputStream(jar.inputStream().buffered()).use { zin ->
+                ZipOutputStream(tmp.outputStream().buffered()).use { zout ->
+                    var entry = zin.nextEntry
+                    while (entry != null) {
+                        val name = entry.name
+                        val skip = name.matches(Regex("META-INF/.*\\.(SF|RSA|DSA|sig)", RegexOption.IGNORE_CASE))
+                        if (!skip) {
+                            val copy = ZipEntry(name)
+                            zout.putNextEntry(copy)
+                            zin.copyTo(zout)
+                            zout.closeEntry()
+                        }
+                        entry = zin.nextEntry
+                    }
+                }
+            }
+            tmp.copyTo(jar, overwrite = true)
+            tmp.delete()
+        }
+    }
+}
+// === TELOS_PENDING_REVIEW_END: fix_uberjar_signature ===
 
 compose.desktop {
     application {

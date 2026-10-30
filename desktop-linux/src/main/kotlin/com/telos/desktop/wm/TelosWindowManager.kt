@@ -9,21 +9,45 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.unit.IntSize
 
-data class ManagedWindow(
+// === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
+class ManagedWindow(
     val id: Long,
     val title: String,
-    var x: Float,
-    var y: Float,
-    var width: Float,
-    var height: Float,
-    var z: Int,
-    var shaded: Boolean = false,
-    var alwaysOnTop: Boolean = false,
-    var opacity: Float = 1f,
-    var maximized: Boolean = false,
-    var snap: SnapZone = SnapZone.None,
-    var workspace: Int = 0,
-)
+    x: Float,
+    y: Float,
+    width: Float,
+    height: Float,
+    z: Int,
+    shaded: Boolean = false,
+    alwaysOnTop: Boolean = false,
+    opacity: Float = 1f,
+    maximized: Boolean = false,
+    snap: SnapZone = SnapZone.None,
+    workspace: Int = 0,
+    minimized: Boolean = false,
+    restoreX: Float = x,
+    restoreY: Float = y,
+    restoreW: Float = width,
+    restoreH: Float = height,
+) {
+    var x by mutableStateOf(x)
+    var y by mutableStateOf(y)
+    var width by mutableStateOf(width)
+    var height by mutableStateOf(height)
+    var z by mutableIntStateOf(z)
+    var shaded by mutableStateOf(shaded)
+    var alwaysOnTop by mutableStateOf(alwaysOnTop)
+    var opacity by mutableStateOf(opacity)
+    var maximized by mutableStateOf(maximized)
+    var snap by mutableStateOf(snap)
+    var workspace by mutableIntStateOf(workspace)
+    var minimized by mutableStateOf(minimized)
+    var restoreX by mutableStateOf(restoreX)
+    var restoreY by mutableStateOf(restoreY)
+    var restoreW by mutableStateOf(restoreW)
+    var restoreH by mutableStateOf(restoreH)
+}
+// === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
 
 enum class ResizeEdge { None, N, S, E, W, NE, NW, SE, SW }
 
@@ -80,7 +104,66 @@ class TelosWindowManager {
         if (focusedId == id) focusedId = visibleWindows().maxByOrNull { it.z }?.id
     }
 
-    fun visibleWindows(): List<ManagedWindow> = windows.filter { it.workspace == currentWorkspace }
+    fun visibleWindows(): List<ManagedWindow> = windows.filter { it.workspace == currentWorkspace && !it.minimized }
+
+    // === TELOS_PENDING_REVIEW_START: telos_desktop_kwin_parity_upgrade ===
+    fun minimize(id: Long) {
+        val w = windows.find { it.id == id } ?: return
+        w.minimized = true
+        bump(w)
+        if (focusedId == id) focusedId = visibleWindows().maxByOrNull { it.z }?.id
+    }
+
+    fun restore(id: Long) {
+        val w = windows.find { it.id == id } ?: return
+        w.minimized = false
+        w.maximized = false
+        w.snap = SnapZone.None
+        w.x = w.restoreX
+        w.y = w.restoreY.coerceAtLeast(workArea.minY)
+        w.width = w.restoreW
+        w.height = w.restoreH
+        bump(w)
+        focus(id)
+    }
+
+    fun toggleMaximize(id: Long) {
+        val w = windows.find { it.id == id } ?: return
+        if (w.maximized) restore(id) else {
+            w.restoreX = w.x; w.restoreY = w.y; w.restoreW = w.width; w.restoreH = w.height
+            applySnap(w, SnapZone.Maximize)
+            bump(w)
+        }
+    }
+
+    fun endDragSnap(id: Long) {
+        val w = windows.find { it.id == id } ?: return
+        val a = workArea
+        val zone = when {
+            w.y <= a.minY + 12f -> SnapZone.Maximize
+            w.x <= a.minX + 12f && w.y <= a.minY + a.height / 3 -> SnapZone.TopLeft
+            w.x + w.width >= a.maxX - 12f && w.y <= a.minY + a.height / 3 -> SnapZone.TopRight
+            w.x <= a.minX + 12f && w.y + w.height >= a.maxY - 12f -> SnapZone.BottomLeft
+            w.x + w.width >= a.maxX - 12f && w.y + w.height >= a.maxY - 12f -> SnapZone.BottomRight
+            w.x <= a.minX + 12f -> SnapZone.Left
+            w.x + w.width >= a.maxX - 12f -> SnapZone.Right
+            else -> null
+        }
+        if (zone != null) {
+            if (!w.maximized) {
+                w.restoreX = w.x; w.restoreY = w.y; w.restoreW = w.width; w.restoreH = w.height
+            }
+            applySnap(w, zone)
+            bump(w)
+        }
+    }
+
+    fun moveToWorkspace(id: Long, index: Int) {
+        val w = windows.find { it.id == id } ?: return
+        w.workspace = index.coerceIn(0, workspaceCount - 1)
+        bump(w)
+    }
+    // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
 
     fun focus(id: Long) {
         val w = windows.find { it.id == id } ?: return
@@ -101,7 +184,12 @@ class TelosWindowManager {
 
     fun drag(id: Long, delta: Offset, bounds: IntSize) {
         val w = windows.find { it.id == id } ?: return
-        if (w.maximized) return
+        if (w.maximized) {
+            w.maximized = false
+            w.snap = SnapZone.None
+            w.width = w.restoreW
+            w.height = w.restoreH
+        }
         w.x += delta.x
         w.y += delta.y
         // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
@@ -214,10 +302,12 @@ class TelosWindowManager {
         focusedId = visibleWindows().maxByOrNull { it.z }?.id
     }
 
+    // === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
     private fun bump(w: ManagedWindow) {
-        val i = windows.indexOfFirst { it.id == w.id }
-        if (i >= 0) windows[i] = w.copy()
+        // Snapshot-backed fields already notify Compose; keep hook for focus/z sorts.
+        w.z = w.z
     }
+    // === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
 }
 
 enum class SnapZone { None, Left, Right, Maximize, Restore, TopLeft, TopRight, BottomLeft, BottomRight }

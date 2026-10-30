@@ -74,6 +74,8 @@ internal object TelosPages {
         "telos_voice_recorder_app://voice_recorder" -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
         "telos_screen_recorder_app://screen_recorder" -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
         "telos_screenshot_app://screenshot" -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute
+        "telos_sync_app://sync" -> de.mm20.launcher2.ui.sync.SyncRoute
+        "telos_backup_app://backup" -> de.mm20.launcher2.ui.backup.BackupRoute
         else -> null
     }
 

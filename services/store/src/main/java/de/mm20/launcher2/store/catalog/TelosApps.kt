@@ -228,6 +228,22 @@ object TelosApps {
             route = SettingsDeepLinkContract.ROUTE_DOWNLOADS,
         ),
         TelosApp(
+            key = "telos_sync_app://sync",
+            name = "Sync",
+            description = "Decentralized file synchronization across devices in real-time, inspired by Syncthing. Includes battery-saving SleepSync for night-time transfers.",
+            features = listOf("Decentralized peer-to-peer sync", "SleepSync night-time optimization", "Wi-Fi & Charging constraints", "Do Not Disturb (DND) integration"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_sync_full,
+            route = SettingsDeepLinkContract.ROUTE_SYNC,
+        ),
+        TelosApp(
+            key = "telos_backup_app://backup",
+            name = "Backup",
+            description = "Encrypted and password-protected backup of Telos settings, Telos Apps, and system data (SMS, Call Logs). Supports app data backups via Shizuku or Root, similar to Swift Backup.",
+            features = listOf("Zero-Trust encrypted backups", "App APK & Data backup (Root/Shizuku)", "System data sync", "Batch operations"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_backup_full,
+            route = SettingsDeepLinkContract.ROUTE_BACKUP,
+        ),
+        TelosApp(
             key = "telos_network_app://network",
             name = "Network",
             description = "A VPN based firewall and DNS filter, built on the engine of RethinkDNS. It stays off until you turn it on, and if it stops the internet works as before. Early version, not yet tested on many devices.",

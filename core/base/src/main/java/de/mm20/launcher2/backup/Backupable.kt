@@ -12,7 +12,15 @@ enum class BackupGroup(val key: String) {
     Notes("notes"),
     Calendar("calendar"),
     /** The list and the settings of Telos Downloads (not the downloaded files, not cookies) */
-    Downloads("downloads");
+    Downloads("downloads"),
+    /** Application APKs, split APKs, and external app configurations */
+    Apps("apps"),
+    /** App Data (requires Shizuku or Root) */
+    AppData("app_data"),
+    /** SMS, Call Logs, Wi-Fi networks */
+    SystemData("system_data"),
+    /** Virtual Apps settings and configuration */
+    VirtualApps("virtual_apps");
 
     companion object {
         fun fromKey(key: String): BackupGroup? = entries.firstOrNull { it.key == key }

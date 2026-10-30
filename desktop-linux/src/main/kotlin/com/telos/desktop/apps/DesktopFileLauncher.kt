@@ -33,6 +33,9 @@ object DesktopFileLauncher {
             // Integrate KsshaskpassManager env injection
             com.telos.desktop.security.KsshaskpassManager().injectAskPassEnv(pb)
             
+            // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
+            com.telos.desktop.vault.PortableEnvironmentIsolator.inject(pb)
+            // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
             pb.redirectErrorStream(true)
             pb.redirectOutput(ProcessBuilder.Redirect.DISCARD)
             pb.start()

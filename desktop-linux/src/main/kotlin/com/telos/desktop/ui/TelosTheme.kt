@@ -21,8 +21,8 @@ object TelosColors {
     val card = Color(0xCC1E1830)
 }
 
-fun telosColorScheme(): ColorScheme = darkColorScheme(
-    primary = TelosColors.primary,
+fun telosColorScheme(accent: Color = TelosColors.primary): ColorScheme = darkColorScheme(
+    primary = accent,
     secondary = TelosColors.secondary,
     background = TelosColors.background,
     surface = TelosColors.surface,
@@ -41,9 +41,9 @@ private val telosTypography = Typography(
 )
 
 @Composable
-fun TelosDesktopTheme(content: @Composable () -> Unit) {
+fun TelosDesktopTheme(accent: Color = TelosColors.primary, content: @Composable () -> Unit) {
     MaterialTheme(
-        colorScheme = telosColorScheme(),
+        colorScheme = telosColorScheme(accent),
         typography = telosTypography,
         content = content,
     )

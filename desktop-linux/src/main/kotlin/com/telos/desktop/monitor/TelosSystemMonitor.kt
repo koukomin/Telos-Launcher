@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.sp
 import com.telos.desktop.linux.Sys
 import com.telos.desktop.overlay.TelosPolkitAgent
 import com.telos.desktop.ui.TelosColors
-import com.telos.desktop.vault.LuksVaultManager
+import com.telos.desktop.vault.PhantomVaultEngine
 import kotlinx.coroutines.delay
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
@@ -61,7 +61,7 @@ object TelosSystemMonitor {
 }
 
 @Composable
-fun TelosSystemMonitorWindow(engine: LinuxSystemTelemetryEngine, vault: LuksVaultManager) {
+fun TelosSystemMonitorWindow(engine: LinuxSystemTelemetryEngine, vault: PhantomVaultEngine) {
     var snap by remember { mutableStateOf<SystemSnapshot?>(null) }
     LaunchedEffect(TelosSystemMonitor.pollMs) {
         while (true) {
@@ -106,7 +106,7 @@ fun TelosSystemMonitorWindow(engine: LinuxSystemTelemetryEngine, vault: LuksVaul
 }
 
 @Composable
-private fun OverviewPage(s: SystemSnapshot, engine: LinuxSystemTelemetryEngine, vault: LuksVaultManager) {
+private fun OverviewPage(s: SystemSnapshot, engine: LinuxSystemTelemetryEngine, vault: PhantomVaultEngine) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(Modifier.fillMaxWidth().height(180.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             GaugeCard("CPU", s.cpu.totalPercent / 100.0, "${"%.0f".format(s.cpu.totalPercent)}%\n${s.cpu.freqsMhz.firstOrNull()?.div(1000.0)?.let { "%.2f GHz".format(it) } ?: ""}\n${s.cpu.tempC?.let { "%.0f°C".format(it) } ?: ""}")
@@ -126,7 +126,7 @@ private fun OverviewPage(s: SystemSnapshot, engine: LinuxSystemTelemetryEngine, 
             Column(Modifier.fillMaxWidth().background(TelosColors.card).padding(8.dp)) {
                 Text("${m.path} (${m.fstype})  ${m.usedBytes / 1_000_000_000} / ${m.totalBytes / 1_000_000_000} GB", color = TelosColors.onSurface, fontSize = 12.sp)
                 LinearProgressIndicator(progress = { frac }, modifier = Modifier.fillMaxWidth().height(8.dp), color = TelosColors.primary)
-                if (m.fstype == "luks") Button(onClick = { vault.lock() }) { Text("Lock / Sync Vault") }
+                if (m.fstype == "luks") Button(onClick = { vault.lock(syncCloud = true) }) { Text("Lock / Sync Vault") }
             }
         }
         Text("Top processes", color = TelosColors.secondary)

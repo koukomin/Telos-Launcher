@@ -8,6 +8,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 ::: tip Two parts
 - [**The launcher**](./launcher/) is search, home screen, widgets, icons and themes (inherited from Kvaesitso).
 - **The Telos apps** are added on top. Each one has its own page below.
+- [**Linux Desktop**](./linux-desktop) is a separate JVM shell (`:desktop-linux`), not in the APK.
 :::
 
 ## ✨ Built-in apps

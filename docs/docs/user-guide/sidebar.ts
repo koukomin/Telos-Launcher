@@ -13,6 +13,7 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
     text: 'Telos',
     items: [
       { text: 'Telos at a glance', link: '/docs/user-guide/telos/' },
+      { text: 'Linux Desktop', link: '/docs/user-guide/telos/linux-desktop' },
       {
         text: 'The launcher',
         collapsed: true,

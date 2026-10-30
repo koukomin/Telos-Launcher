@@ -1,0 +1,79 @@
+package com.telos.desktop
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPlacement
+import androidx.compose.ui.window.WindowState
+import androidx.compose.ui.window.application
+import com.telos.desktop.display.LinuxDisplayManager
+import com.telos.desktop.icons.LinuxIconThemeResolver
+import com.telos.desktop.monitor.LinuxSystemTelemetryEngine
+import com.telos.desktop.settings.TelosDesktopSettings
+import androidx.compose.runtime.rememberCoroutineScope
+import com.telos.desktop.ui.DesktopWorkspace
+import com.telos.desktop.ui.TelosDesktopTheme
+import com.telos.desktop.ui.handleDesktopKeys
+import com.telos.desktop.vault.PhantomVault
+import com.telos.desktop.vault.PhantomVaultEngine
+import com.telos.desktop.vault.TelosPreBootScreen
+import com.telos.desktop.wm.TelosWindowManager
+
+fun main() = application {
+    // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
+    val vault = remember { PhantomVaultEngine().also { PhantomVault.engine = it } }
+    // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
+    var unlocked by remember { mutableStateOf(false) }
+    val wm = remember { TelosWindowManager() }
+    // === TELOS_PENDING_REVIEW_START: telos_kde_system_monitor ===
+    val telemetry = remember { LinuxSystemTelemetryEngine() }
+    // === TELOS_PENDING_REVIEW_END: telos_kde_system_monitor ===
+    Window(
+        onCloseRequest = {
+            vault.lock(syncCloud = true)
+            exitApplication()
+        },
+        undecorated = true,
+        resizable = false,
+        title = "Telos Desktop",
+        state = WindowState(placement = WindowPlacement.Fullscreen),
+        onPreviewKeyEvent = { ev ->
+            // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
+            handleDesktopKeys(ev, wm, telemetry)
+            // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
+        },
+    ) {
+        TelosDesktopTheme {
+            if (!unlocked) {
+                // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
+                TelosPreBootScreen(vault) { unlocked = true }
+                // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
+            } else {
+                val scope = rememberCoroutineScope()
+                androidx.compose.runtime.LaunchedEffect(Unit) { vault.startDaemons(scope) }
+                val settings = remember {
+                    TelosDesktopSettings(vault.configDir).also { it.load() }
+                }
+                val icons = remember {
+                    LinuxIconThemeResolver(preferredTheme = settings.iconTheme)
+                }
+                val display = remember { LinuxDisplayManager(settings) }
+                DesktopWorkspace(
+                    settings = settings,
+                    icons = icons,
+                    display = display,
+                    wm = wm,
+                    vault = vault,
+                    telemetry = telemetry,
+                    onLogout = {
+                        vault.lock(syncCloud = true)
+                        exitApplication()
+                    },
+                    onKeyEvent = { handleDesktopKeys(it, wm, telemetry) },
+                )
+            }
+        }
+    }
+}

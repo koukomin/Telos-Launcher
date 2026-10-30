@@ -44,6 +44,12 @@ Search is the core feature. `core/base` defines the common `Searchable`/`Savable
 
 External apps can extend Kvaesitso (weather, file/contact/places search, calendar) by implementing content providers using `plugins/sdk`, without needing the launcher's internal modules. `:data:plugins` holds low-level plugin APIs/access control; `:services:plugins` is the higher-level plugin management service (enable/disable/list). See `docs/docs/developer-guide/plugins/` for the plugin type contracts and `docs/docs/developer-guide/plugins/access-control.md` for the security model.
 
+## Telos Linux Desktop — pending phases (do not forget)
+
+`:desktop-linux` P0/P1 (labwc session, vault as full `$HOME`, Linux only) is in the tree. See `docs/docs/developer-guide/desktop-roadmap.md`.
+
+If the user asks what is still pending: **P2** (search/Files/Media/Store parity), **P3** (macOS/BSD, niri, two-arch CI), **P4** (`:ui-kmp`, Android later). Do not start P2–P4 unless they ask. Never depend `:app:app` on `:desktop-linux`.
+
 ## Documentation
 
 Docs live in `docs/` (a VitePress site, published as GitHub Pages at https://koukomin.github.io/Telos-Launcher/ and historically at https://telos.mm20.de). Every user-visible or architectural change must update, **in the same change**:

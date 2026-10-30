@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.telos.desktop.linux.Sys
 import com.telos.desktop.ui.TelosColors
-import com.telos.desktop.vault.LuksVaultManager
+import com.telos.desktop.vault.PhantomVaultEngine
 
 object SessionPower {
     var open = mutableStateOf(false)
@@ -25,37 +25,39 @@ object SessionPowerActions {
         SessionPower.open.value = false
     }
 
-    fun logout(vault: LuksVaultManager, exit: () -> Unit) {
-        vault.lock()
+    // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
+    fun logout(vault: PhantomVaultEngine, exit: () -> Unit) {
+        vault.lock(syncCloud = true)
         exit()
     }
 
-    fun suspend(vault: LuksVaultManager) {
-        vault.lock()
+    fun suspend(vault: PhantomVaultEngine) {
+        vault.lock(syncCloud = true)
         Sys.run("systemctl", "suspend", timeoutSec = 8)
     }
 
-    fun reboot(vault: LuksVaultManager) {
-        vault.lock()
+    fun reboot(vault: PhantomVaultEngine) {
+        vault.lock(syncCloud = true)
         Sys.run("systemctl", "reboot", timeoutSec = 8)
     }
 
-    fun poweroff(vault: LuksVaultManager) {
-        vault.lock()
+    fun poweroff(vault: PhantomVaultEngine) {
+        vault.lock(syncCloud = true)
         Sys.run("systemctl", "poweroff", timeoutSec = 8)
     }
+    // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
 }
 
 @Composable
-fun SessionPowerDialog(vault: LuksVaultManager, onLogout: () -> Unit) {
+fun SessionPowerDialog(vault: PhantomVaultEngine, onLogout: () -> Unit) {
     if (!SessionPower.open.value) return
     Column(Modifier.width(280.dp).background(TelosColors.surfaceContainer).padding(16.dp)) {
-        Text("Power", color = TelosColors.secondary, modifier = Modifier.padding(bottom = 8.dp))
-        Button(onClick = { SessionPowerActions.lock() }) { Text("Lock Screen") }
-        Button(onClick = { SessionPowerActions.suspend(vault) }) { Text("Suspend") }
+        Text(com.telos.desktop.i18n.TelosI18n.t("telos_system_label"), color = TelosColors.secondary, modifier = Modifier.padding(bottom = 8.dp))
+        Button(onClick = { SessionPowerActions.lock() }) { Text(com.telos.desktop.i18n.TelosI18n.t("hc_lock_vault")) }
+        Button(onClick = { SessionPowerActions.suspend(vault) }) { Text(com.telos.desktop.i18n.TelosI18n.t("freeze_dashboard_state_suspended")) }
         Button(onClick = { SessionPowerActions.reboot(vault) }) { Text("Reboot") }
         Button(onClick = { SessionPowerActions.poweroff(vault) }) { Text("Power Off") }
-        Button(onClick = { SessionPowerActions.logout(vault, onLogout) }) { Text("Logout") }
-        Button(onClick = { SessionPower.open.value = false }) { Text("Cancel") }
+        Button(onClick = { SessionPowerActions.logout(vault, onLogout) }) { Text(com.telos.desktop.i18n.TelosI18n.t("action_quit")) }
+        Button(onClick = { SessionPower.open.value = false }) { Text(com.telos.desktop.i18n.TelosI18n.t("hc_cancel")) }
     }
 }

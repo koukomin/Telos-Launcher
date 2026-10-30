@@ -29,6 +29,9 @@ class PtySession(
         val pb = ProcessBuilder(cmd)
         pb.directory(cwd)
         pb.environment().putAll(env)
+        // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
+        com.telos.desktop.vault.PortableEnvironmentIsolator.inject(pb)
+        // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
         pb.redirectErrorStream(true)
         process = pb.start()
         live = true

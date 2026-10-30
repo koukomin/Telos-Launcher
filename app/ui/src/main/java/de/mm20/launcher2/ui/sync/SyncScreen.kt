@@ -373,8 +373,8 @@ private fun SettingsTab(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(Modifier.weight(1f)) {
-                        Text(stringResource(R.string.sync_wifi_only), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                        Text(stringResource(R.string.sync_wifi_only_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("Sync on Wi-Fi Only", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                        Text("Prevent sync over cellular data", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Switch(checked = wifiOnly, onCheckedChange = onWifiChange)
                 }
@@ -387,8 +387,8 @@ private fun SettingsTab(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(Modifier.weight(1f)) {
-                        Text(stringResource(R.string.sync_charging_only), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                        Text(stringResource(R.string.sync_charging_only_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("Sync when Charging Only", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                        Text("Pause background sync while running on battery", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Switch(checked = chargingOnly, onCheckedChange = onChargingChange)
                 }

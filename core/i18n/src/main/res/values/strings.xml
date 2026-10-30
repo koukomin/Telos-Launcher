@@ -37,6 +37,14 @@
     <string name="action_more_actions">More actions</string>
     <string name="action_clear">Clear</string>
     <string name="action_install">Install</string>
+    <string name="backup_group_apps" translatable="false">Apps (APK &amp; Splits)</string>
+    <string name="backup_group_apps_summary" translatable="false">Installable packages for selected applications</string>
+    <string name="backup_group_app_data" translatable="false">App Data (Root/Shizuku)</string>
+    <string name="backup_group_app_data_summary" translatable="false">Application data and preferences</string>
+    <string name="backup_group_system_data" translatable="false">System Data</string>
+    <string name="backup_group_system_data_summary" translatable="false">SMS, Call Logs, Wi-Fi Networks</string>
+    <string name="backup_group_virtual_apps" translatable="false">Telos Virtual Apps</string>
+    <string name="backup_group_virtual_apps_summary" translatable="false">Configurations for Telos Sync, Viewer, Calculator, etc.</string>
     <string name="action_quit">Quit</string>
     
     <string name="menu_delete">@string/hc_delete</string>

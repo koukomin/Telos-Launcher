@@ -1,7 +1,9 @@
 package com.telos.desktop.panel
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,8 +12,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.onPointerEvent
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.Color
+import com.telos.desktop.settings.TelosDesktopSettings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,20 +35,27 @@ import com.telos.desktop.overlay.TelosNotificationCenter
 import com.telos.desktop.overlay.SessionPower
 import com.telos.desktop.overlay.TelosCaptureTool
 import com.telos.desktop.quake.TelosQuake
+import com.telos.desktop.icons.CandyCyberIcon
+import com.telos.desktop.icons.CandyIcon
+import com.telos.desktop.ui.DesktopChrome
 import com.telos.desktop.ui.TelosColors
+import com.telos.desktop.apps.TelosVirtualApps
 import com.telos.desktop.wm.TelosWindowManager
 import kotlinx.coroutines.delay
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-enum class PanelPopup { None, Clock, Audio, Network, Power, Tray }
+enum class PanelPopup { None, Clock, Audio, Network, Power, Tray, Style }
 
+@OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun TelosTopPanel(
     wm: TelosWindowManager,
     engine: LinuxSystemTelemetryEngine,
+    settings: TelosDesktopSettings? = null,
     onLauncher: () -> Unit,
     onOpenMonitor: () -> Unit,
+    onOpenTelos: (String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var clock by remember { mutableStateOf(LocalDateTime.now()) }
@@ -63,10 +77,26 @@ fun TelosTopPanel(
             delay(2000)
         }
     }
-    Box(modifier.fillMaxWidth().height(36.dp).background(TelosColors.surfaceContainer)) {
-        Row(Modifier.fillMaxWidth().height(36.dp).padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+    val barH = (settings?.panelHeightDp ?: 36f).dp
+    val barColor = Color((settings?.panelArgb ?: 0xF2241E36).toInt()).copy(alpha = settings?.panelAlpha ?: 0.94f)
+    val iconDp = (settings?.panelIconDp ?: 22f).dp
+    Box(
+        modifier.fillMaxWidth().height(barH)
+            .background(barColor)
+            .combinedClickable(onClick = {}, onLongClick = { popup = PanelPopup.Style })
+            .onPointerEvent(PointerEventType.Press) { ev ->
+                if (ev.button == androidx.compose.ui.input.pointer.PointerButton.Secondary) {
+                    popup = PanelPopup.Style
+                }
+            },
+    ) {
+        Row(Modifier.fillMaxWidth().height(barH).padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Telos", color = TelosColors.secondary, modifier = Modifier.clickable { onLauncher() })
+                // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
+                Box(Modifier.clickable { onLauncher() }.padding(4.dp)) {
+                    CandyCyberIcon(CandyIcon.TelosLogo, iconDp)
+                }
+                // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
                 (0 until wm.workspaceCount).forEach { i ->
                     val active = wm.currentWorkspace == i
                     val dots = wm.windows.count { it.workspace == i }
@@ -78,6 +108,13 @@ fun TelosTopPanel(
                     )
                 }
                 Text(wm.windows.find { it.id == wm.focusedId }?.title ?: "Desktop", color = TelosColors.onSurface, fontSize = 12.sp)
+                // === TELOS_PENDING_REVIEW_START: telos_launcher_desktop_ui_parity ===
+                TelosVirtualApps.all.filter { it.domain in TelosVirtualApps.pinnedDefaults }.forEach { app ->
+                    Box(Modifier.clickable { onOpenTelos(app.windowTitle) }.padding(horizontal = 2.dp)) {
+                        CandyCyberIcon(app.icon, iconDp)
+                    }
+                }
+                // === TELOS_PENDING_REVIEW_END: telos_launcher_desktop_ui_parity ===
             }
             Text(
                 clock.format(DateTimeFormatter.ofPattern("EEE d MMM  HH:mm")),
@@ -85,7 +122,7 @@ fun TelosTopPanel(
                 modifier = Modifier.clickable { popup = if (popup == PanelPopup.Clock) PanelPopup.None else PanelPopup.Clock },
             )
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text(">_", color = TelosColors.secondary, modifier = Modifier.clickable { TelosQuake.toggle() })
+                Box(Modifier.clickable { TelosQuake.toggle() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Terminal, 18.dp) }
                 Text(cpuPill, fontSize = 11.sp, color = TelosColors.secondary, modifier = Modifier.clickable { onOpenMonitor() })
                 Text(if (audio.muted) "Mute" else "♪ ${audio.volume.toInt()}%", fontSize = 11.sp, color = TelosColors.onSurface, modifier = Modifier.clickable { popup = PanelPopup.Audio })
                 Text(net.activeSsid ?: "Net", fontSize = 11.sp, color = TelosColors.onSurface, modifier = Modifier.clickable { popup = PanelPopup.Network })
@@ -99,7 +136,11 @@ fun TelosTopPanel(
                 Text("Clip", fontSize = 11.sp, modifier = Modifier.clickable { TelosClipboardManager.popup = !TelosClipboardManager.popup }, color = TelosColors.onSurface)
                 Text("Bell", fontSize = 11.sp, modifier = Modifier.clickable { TelosNotificationCenter.open.value = !TelosNotificationCenter.open.value }, color = TelosColors.onSurface)
                 Text("Shot", fontSize = 11.sp, modifier = Modifier.clickable { TelosCaptureTool.fullscreen() }, color = TelosColors.onSurface)
-                Text("⏻", modifier = Modifier.clickable { SessionPower.open.value = true }, color = TelosColors.primary)
+                Text("Vault+", fontSize = 11.sp, color = TelosColors.secondary, modifier = Modifier.clickable {
+                    runCatching { com.telos.desktop.vault.PhantomVault.engine.expandManual() }
+                })
+                Box(Modifier.clickable { DesktopChrome.toggleFullscreen() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Monitor, 18.dp) }
+                Box(Modifier.clickable { SessionPower.open.value = true }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Power, 18.dp) }
             }
         }
         if (popup != PanelPopup.None) {
@@ -144,7 +185,53 @@ fun TelosTopPanel(
                         PanelPopup.Tray -> tray.forEach {
                             Text("${it.name} ${if (it.running) "●" else "○"}", modifier = Modifier.clickable { SystemTrayManager.launch(it) })
                         }
+                        // === TELOS_PENDING_REVIEW_START: telos_desktop_kwin_parity_upgrade ===
+                        PanelPopup.Style -> {
+                            val s = settings
+                            if (s == null) {
+                                Text("Panel settings unavailable", color = TelosColors.onSurface)
+                            } else {
+                                Text(com.telos.desktop.i18n.TelosI18n.t("menu_customize"), color = TelosColors.secondary)
+                                Text("Height ${s.panelHeightDp.toInt()} dp", fontSize = 11.sp, color = TelosColors.onSurface)
+                                Slider((s.panelHeightDp - 32f) / 16f, {
+                                    s.panelHeightDp = (32f + it * 16f).coerceIn(32f, 48f)
+                                    s.save()
+                                })
+                                Text("Icon size ${s.panelIconDp.toInt()} dp", fontSize = 11.sp, color = TelosColors.onSurface)
+                                Slider((s.panelIconDp - 20f) / 16f, {
+                                    s.panelIconDp = (20f + it * 16f).coerceIn(20f, 36f)
+                                    s.save()
+                                })
+                                Text("Transparency ${(s.panelAlpha * 100).toInt()}%", fontSize = 11.sp, color = TelosColors.onSurface)
+                                Slider(s.panelAlpha, {
+                                    s.panelAlpha = it.coerceIn(0.2f, 1f)
+                                    s.save()
+                                })
+                                Text("Glass blur ${s.panelBlur.toInt()}", fontSize = 11.sp, color = TelosColors.onSurface)
+                                Slider((s.panelBlur / 32f).coerceIn(0f, 1f), {
+                                    s.panelBlur = (it * 32f).coerceIn(0f, 32f)
+                                    s.save()
+                                })
+                                Text("Tint (ARGB hex ${s.panelArgb.toString(16)})", fontSize = 11.sp, color = TelosColors.onSurface)
+                                val r = ((s.panelArgb shr 16) and 0xFF) / 255f
+                                val g = ((s.panelArgb shr 8) and 0xFF) / 255f
+                                val b = (s.panelArgb and 0xFF) / 255f
+                                Slider(r, { nr ->
+                                    s.panelArgb = (s.panelArgb and 0xFF00FFFFL) or ((nr * 255).toLong() shl 16)
+                                    s.save()
+                                })
+                                Slider(g, { ng ->
+                                    s.panelArgb = (s.panelArgb and 0xFFFF00FFL) or ((ng * 255).toLong() shl 8)
+                                    s.save()
+                                })
+                                Slider(b, { nb ->
+                                    s.panelArgb = (s.panelArgb and 0xFFFFFF00L) or (nb * 255).toLong()
+                                    s.save()
+                                })
+                            }
+                        }
                         else -> {}
+                        // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
                     }
                 }
             }

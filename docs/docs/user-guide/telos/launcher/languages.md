@@ -17,6 +17,7 @@ Greek together, and then translated into the other languages in the same change.
 
 - **Android 13 and newer:** Android settings > System > Languages > App languages > Telos.
 - **Older Android:** Settings > Language and region > **Language** opens an in-app list of the 35 shipped languages, English and **System default**. The choice is remembered across restarts.
+- **Telos Linux Desktop:** the JVM locale. It reads the same `core/i18n` XML as Android (copied into the desktop jar).
 - Search matches [Greek with or without accents and in Greeklish](./features/search-catalogue), whatever the app language is.
 
 ## How complete are the translations

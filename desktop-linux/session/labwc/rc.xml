@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<labwc_config>
+  <core>
+    <gap>10</gap>
+    <adaptiveSync>no</adaptiveSync>
+    <allowTearing>no</allowTearing>
+  </core>
+  <theme>
+    <name>Telos</name>
+    <cornerRadius>10</cornerRadius>
+  </theme>
+  <windowRules>
+    <windowRule identifier="Telos Desktop">
+      <skipTaskbar>yes</skipTaskbar>
+      <skipPager>yes</skipPager>
+      <serverDecoration>no</serverDecoration>
+      <iconify>no</iconify>
+    </windowRule>
+  </windowRules>
+  <keyboard>
+    <default />
+    <keybind key="W-Return">
+      <action name="Execute" command="sh -c '${TERMINAL:-kitty} || xterm'" />
+    </keybind>
+    <keybind key="A-F4">
+      <action name="Close" />
+    </keybind>
+    <keybind key="W-q">
+      <action name="Close" />
+    </keybind>
+  </keyboard>
+</labwc_config>

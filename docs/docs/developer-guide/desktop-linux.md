@@ -19,6 +19,12 @@ Main class: `com.telos.desktop.MainKt`. The window is undecorated fullscreen.
 
 ## Vault
 
+The Phantom Vault can sit on a single image or a folder of media carriers (stego shards +
+`dmsetup` linear span), grow online with BTRFS zstd, use AES-NI `aes-xts-plain64` plus Argon2id,
+and rclone-sync modified carriers on lock. Pre-boot offers host home, unlock, create, and tmpfs ghost modes.
+
+## Vault (legacy image)
+
 `LuksVaultManager` asks for a master password, then unlocks `~/.local/share/telos/telos_vault.img` with `cryptsetup` / `udisksctl` / `pkexec` and mounts it at `~/.local/share/telos/vault_mnt`. Desktop settings, state and databases are written only under that mount. A JVM shutdown hook syncs and locks the vault.
 
 ## Desktop shell
@@ -29,6 +35,40 @@ Main class: `com.telos.desktop.MainKt`. The window is undecorated fullscreen.
 - Wayland/X11 display modes (`wlr-randr`, `kscreen-doctor`, `xrandr`)
 - Klassy / SierraBreeze-inspired Compose window chrome and Sweet cursor presets
 
+## Adaptive shell (proposal, implemented on Linux)
+
+One Telos product, three chrome modes from the same settings store:
+
+- **Phone (Android `:app:app`):** existing launcher; no Linux module in the APK.
+- **Tablet:** top status bar + AppGrid (this desktop shell when width is tablet-sized).
+- **Linux desktop:** KDE-style top panel, AppGrid with Telos + `.desktop` apps, floating windows.
+
+Shared preferences (theme, icon pack, grid size, vault, display) live in the vault `desktop.properties` on Linux and Datastore on Android. They are not compiled together; names stay aligned so a future sync can copy keys.
+
+## Windowed vs fullscreen
+
+F11 and Settings toggle a normal resizable window vs undecorated fullscreen. When
+`followSystemTheme` is on, accent/icon/cursor names are read from `~/.config/kdeglobals`
+and GTK `settings.ini`. The left Telos candy/cyberpunk vector logo opens a Plasma-style AppGrid.
+
+## Plasma replacement shell
+
+The desktop shell includes a configurable top bar (default 36 dp; 32–48 dp, tint, alpha, icon size persist in `desktop.properties`). Right-click the bar for style. Work-area struts keep maximized windows below the bar. Telos Quake (`F12` / Ctrl+\`) and System Monitor (`Ctrl+Escape`) read `/proc` and `/sys`.
+
+Window chrome: titlebar-only `awaitEachGesture` drag, 8-edge resize, minimize / maximize / close, double-click shade, edge snap (halves, corners, maximize). Geometry is Compose snapshot state so frames follow the pointer.
+
+## File routing
+
+`TelosFileHandler` opens directories in Telos Files and media in Telos Media (then `xdg-open` / MPRIS). Other types call `xdg-open`. Desktop icons, the dock shortcuts, and the Files list all use this path.
+
+## Locale
+
+Desktop chrome uses the **same string names** as the Android launcher (`:core:i18n`). Gradle copies `core/i18n/src/main/res/values*` XML into the UberJar. `TelosI18n` picks `values`, then `values-<lang>` for `Locale.getDefault()`. No second translation table. Window titles stay English because they are window-manager ids.
+
+## Telos apps on Linux
+
+Floating windows host Files, Photos, Downloads, Trash, Media Player, Notes, Calendar, Calculator, Clock, Network, Store, Settings, System Monitor, and System Optimizer. They are JVM Compose UIs with the same names as the Android virtual apps. They do not import `:app:ui`.
+
 ## Settings isolation
 
 `PlatformEnvironment` / `SettingsVisibilityFilter` exist twice:
@@ -37,3 +77,11 @@ Main class: `com.telos.desktop.MainKt`. The window is undecorated fullscreen.
 - Linux: `desktop-linux/.../platform/PlatformEnvironment.kt` — the inverse.
 
 The two copies are intentional so `:app:app` never depends on `:desktop-linux`.
+
+## labwc session (P0 / P1, Linux only)
+
+`desktop-linux/session/telos-session` unlocks the vault (`java -jar … --unlock-only`), exports **`$HOME` to the vault mount**, then `exec labwc`. Telos runs as `java -jar … --session`. Host apps are normal labwc windows. Optional FIDO2: `fido2-token` / `fido2-assert` mixed into the password. nftables table `inet telos_session` default-drops outbound except loopback, DNS, and `~/.config/telos/net-allow.txt`.
+
+Install `labwc`. Copy `session/telos.desktop` to `/usr/share/wayland-sessions/` for a display-manager entry. Arm64 uses the same `packageUberJarForCurrentOS` on an aarch64 machine.
+
+Pending work is listed in [Linux Desktop roadmap](/docs/developer-guide/desktop-roadmap) (**P2, P3, P4**).

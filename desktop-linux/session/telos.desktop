@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Telos
+Comment=Telos encrypted Linux session (labwc)
+Exec=telos-session
+TryExec=labwc
+Type=Application
+DesktopNames=Telos
+X-GDM-SessionRegisters=true

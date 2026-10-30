@@ -28,11 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.apps.DesktopFileLauncher
 import com.telos.desktop.apps.DesktopFileParser
+import com.telos.desktop.apps.TelosFileHandler
 import com.telos.desktop.icons.LinuxIconThemeResolver
 import com.telos.desktop.settings.TelosDesktopSettings
 import com.telos.desktop.xdg.DesktopWatchService
 import com.telos.desktop.xdg.XdgUserDirs
-import java.awt.Desktop
 import java.io.File
 
 data class DesktopItem(
@@ -146,8 +146,6 @@ private fun activate(item: DesktopItem, onNotify: (String) -> Unit) {
                 is DesktopFileLauncher.LaunchLnkResult.Failed -> onNotify(r.message)
             }
         }
-        else -> runCatching {
-            if (Desktop.isDesktopSupported()) Desktop.getDesktop().open(item.file)
-        }
+        else -> TelosFileHandler.open(item.file)
     }
 }

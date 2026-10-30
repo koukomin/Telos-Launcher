@@ -22,6 +22,10 @@ private fun title(group: BackupGroup) = when (group) {
     BackupGroup.Notes -> R.string.backup_group_notes
     BackupGroup.Calendar -> R.string.backup_group_calendar
     BackupGroup.Downloads -> R.string.dl_p3_backup_group_downloads
+    BackupGroup.Apps -> R.string.backup_group_apps
+    BackupGroup.AppData -> R.string.backup_group_app_data
+    BackupGroup.SystemData -> R.string.backup_group_system_data
+    BackupGroup.VirtualApps -> R.string.backup_group_virtual_apps
 }
 
 private fun summary(group: BackupGroup) = when (group) {
@@ -29,6 +33,10 @@ private fun summary(group: BackupGroup) = when (group) {
     BackupGroup.Notes -> R.string.backup_group_notes_summary
     BackupGroup.Calendar -> R.string.backup_group_calendar_summary
     BackupGroup.Downloads -> R.string.dl_p3_backup_group_downloads_summary
+    BackupGroup.Apps -> R.string.backup_group_apps_summary
+    BackupGroup.AppData -> R.string.backup_group_app_data_summary
+    BackupGroup.SystemData -> R.string.backup_group_system_data_summary
+    BackupGroup.VirtualApps -> R.string.backup_group_virtual_apps_summary
 }
 
 /**

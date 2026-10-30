@@ -1,0 +1,49 @@
+#!/bin/sh
+# Telos P0/P1 session: unlock vault as HOME, then exec labwc with Telos as the shell.
+set -eu
+
+export TELOS_SESSION=1
+export TELOS_SESSION_HOME=full
+ulimit -c 0 2>/dev/null || true
+
+ROOT="$(CDPATH= cd -- "$(dirname "$0")/../.." && pwd)"
+JAR="${TELOS_JAR:-}"
+if [ -z "$JAR" ]; then
+  if [ -f /opt/telos-desktop/telos-desktop.jar ]; then
+    JAR=/opt/telos-desktop/telos-desktop.jar
+  else
+    JAR="$(ls -1 "$ROOT/desktop-linux/build/compose/jars"/telos-desktop-linux-*.jar 2>/dev/null | head -n 1 || true)"
+  fi
+fi
+if [ -z "$JAR" ] || [ ! -f "$JAR" ]; then
+  echo "telos-session: jar not found. Build :desktop-linux:packageUberJarForCurrentOS" >&2
+  exit 1
+fi
+
+if ! command -v labwc >/dev/null 2>&1; then
+  echo "telos-session: install labwc (Wayland compositor)" >&2
+  exit 1
+fi
+
+CONF="${XDG_RUNTIME_DIR:-/tmp}/telos-labwc"
+mkdir -p "$CONF"
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
+cp -f "$SCRIPT_DIR/labwc/rc.xml" "$CONF/rc.xml"
+cp -f "$SCRIPT_DIR/labwc/menu.xml" "$CONF/menu.xml"
+sed "s|@TELOS_JAR@|$JAR|g" "$SCRIPT_DIR/labwc/autostart" > "$CONF/autostart"
+chmod +x "$CONF/autostart"
+cp -f "$SCRIPT_DIR/labwc/environment" "$CONF/environment"
+
+if [ "${TELOS_VAULT_UNLOCKED:-0}" != "1" ]; then
+  java -jar "$JAR" --unlock-only
+  ENVF="${XDG_RUNTIME_DIR:-/tmp}/telos-session.env"
+  if [ -f "$ENVF" ]; then
+    # shellcheck disable=SC1090
+    . "$ENVF"
+  fi
+fi
+
+swapoff -a 2>/dev/null || true
+
+export XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-Telos:labwc}"
+exec labwc -C "$CONF" -s "$CONF/autostart"

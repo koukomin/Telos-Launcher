@@ -1,0 +1,5 @@
+#!/bin/sh
+export TELOS_SESSION=1
+export TELOS_SESSION_HOME=full
+export TELOS_VAULT_UNLOCKED="${TELOS_VAULT_UNLOCKED:-1}"
+exec java -jar @TELOS_JAR@ --session --already-unlocked

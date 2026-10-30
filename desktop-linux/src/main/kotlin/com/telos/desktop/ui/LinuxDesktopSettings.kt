@@ -34,7 +34,21 @@ fun LinuxDesktopSettingsPanel(
     val themes = remember { icons.listInstalledThemes() }
     val outputs = remember { display.queryOutputs() }
     Column(Modifier.padding(16.dp).verticalScroll(rememberScrollState())) {
-        Text("Telos Desktop Settings", color = TelosColors.secondary, fontSize = 22.sp)
+        Text(com.telos.desktop.i18n.TelosI18n.t("telos_desktop_settings"), color = TelosColors.secondary, fontSize = 22.sp)
+        // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
+        Toggle("Start fullscreen", settings.startFullscreen) {
+            settings.startFullscreen = it
+            settings.save()
+            com.telos.desktop.ui.DesktopChrome.fullscreen = it
+        }
+        Toggle("Follow KDE/GTK system theme", settings.followSystemTheme) {
+            settings.followSystemTheme = it
+            settings.save()
+        }
+        TextButton(onClick = { com.telos.desktop.ui.DesktopChrome.toggleFullscreen() }) {
+            Text(if (com.telos.desktop.ui.DesktopChrome.fullscreen) "Exit fullscreen (F11)" else "Enter fullscreen (F11)")
+        }
+        // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===
         if (filter.showAndroidMobileSettings) {
             Text("Shizuku / Dhizuku / Island and Android permissions are hidden on Linux.", fontSize = 12.sp, color = TelosColors.onSurface.copy(0.6f))
         }
@@ -95,8 +109,18 @@ fun LinuxDesktopSettingsPanel(
         if (filter.showLuksVault) {
             Text("LUKS vault", color = TelosColors.primary, modifier = Modifier.padding(top = 16.dp))
             Text("Configurations are stored only inside ~/.local/share/telos/vault_mnt after unlock.", fontSize = 12.sp)
+            // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
+            Text(com.telos.desktop.vault.HardwareCryptoAccelerator.probe().label, fontSize = 12.sp, color = TelosColors.secondary)
+            TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.expandManual() } }) { Text("Expand vault +128MB") }
+            TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.compact() } }) { Text("Compact vault (fstrim)") }
+            TextButton(onClick = { runCatching { com.telos.desktop.vault.PhantomVault.engine.lock(syncCloud = true) } }) { Text("Sync vault now") }
+            Toggle("Auto-grow", com.telos.desktop.vault.PhantomVault.engine.autoGrow) {
+                com.telos.desktop.vault.PhantomVault.engine.autoGrow = it
+                com.telos.desktop.vault.PhantomVault.engine.expander?.autoGrowEnabled = it
+            }
+            // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
         }
-        TextButton(onClick = onClose) { Text("Close") }
+        TextButton(onClick = onClose) { Text(com.telos.desktop.i18n.TelosI18n.t("close")) }
     }
 }
 
