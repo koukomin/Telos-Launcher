@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.common
 
+import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.i18n.R as I18nR
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.core.animateFloat
@@ -80,7 +82,7 @@ fun FavoritesTagSelector(
                             leadingIcon = if (compact) null else {
                                 {
                                     Icon(
-                                        painter = painterResource(R.drawable.star_20px_filled),
+                                        painter = painterResource(BaseR.drawable.star_20px_filled),
                                         contentDescription = null,
                                         modifier = Modifier.size(FilterChipDefaults.IconSize),
                                     )
@@ -89,12 +91,12 @@ fun FavoritesTagSelector(
                             label = {
                                 if (compact) {
                                     Icon(
-                                        painter = painterResource(R.drawable.star_20px_filled),
+                                        painter = painterResource(BaseR.drawable.star_20px_filled),
                                         contentDescription = null,
                                         modifier = Modifier.size(FilterChipDefaults.IconSize),
                                     )
                                 } else {
-                                    Text(stringResource(R.string.favorites))
+                                    Text(stringResource(I18nR.string.favorites))
                                 }
                             }
                         )
@@ -126,7 +128,7 @@ fun FavoritesTagSelector(
                             modifier = Modifier
                                 .rotate(rot),
                             onClick = { onExpand(true) }) {
-                            Icon(painterResource(R.drawable.arrow_drop_down_24px), stringResource(R.string.au3_launcher2_expand))
+                            Icon(painterResource(BaseR.drawable.arrow_drop_down_24px), stringResource(I18nR.string.au3_launcher2_expand))
                         }
                     }
 
@@ -137,8 +139,8 @@ fun FavoritesTagSelector(
                         onClick = { sheetManager.showEditFavoritesSheet() },
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.edit_24px),
-                            contentDescription = stringResource(R.string.au3_launcher4b_edit_favorites)
+                            painter = painterResource(BaseR.drawable.edit_24px),
+                            contentDescription = stringResource(I18nR.string.au3_launcher4b_edit_favorites)
                         )
                     }
                 }
@@ -160,7 +162,7 @@ fun FavoritesTagSelector(
                         leadingIcon = if (compact) null else {
                             {
                                 Icon(
-                                    painter = painterResource(R.drawable.star_20px_filled),
+                                    painter = painterResource(BaseR.drawable.star_20px_filled),
                                     contentDescription = null,
                                     modifier = Modifier.size(FilterChipDefaults.IconSize),
                                 )
@@ -169,12 +171,12 @@ fun FavoritesTagSelector(
                         label = {
                             if (compact) {
                                 Icon(
-                                    painter = painterResource(R.drawable.star_20px_filled),
+                                    painter = painterResource(BaseR.drawable.star_20px_filled),
                                     contentDescription = null,
                                     modifier = Modifier.size(FilterChipDefaults.IconSize),
                                 )
                             } else {
-                                Text(stringResource(R.string.favorites))
+                                Text(stringResource(I18nR.string.favorites))
                             }
                         }
                     )
@@ -212,7 +214,7 @@ fun FavoritesTagSelector(
                             .rotate(rot),
                         onClick = { onExpand(false) }
                     ) {
-                        Icon(painterResource(R.drawable.arrow_drop_up_24px), stringResource(R.string.au3_launcher4b_collapse))
+                        Icon(painterResource(BaseR.drawable.arrow_drop_up_24px), stringResource(I18nR.string.au3_launcher4b_collapse))
                     }
 
                     if (editButton) {
@@ -220,8 +222,8 @@ fun FavoritesTagSelector(
                             onClick = { sheetManager.showEditFavoritesSheet() },
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.edit_24px),
-                                contentDescription = stringResource(R.string.au3_launcher4b_edit_favorites)
+                                painter = painterResource(BaseR.drawable.edit_24px),
+                                contentDescription = stringResource(I18nR.string.au3_launcher4b_edit_favorites)
                             )
                         }
                     }

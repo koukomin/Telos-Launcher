@@ -28,13 +28,26 @@ class DownloadShareActivity : Activity() {
         val links = ArrayList<String>()
         links.addAll(TorrentSources.extract(text))
         links.addAll(LinkParser.extractHttp(text).filter { it !in links })
-        // a .torrent file: read it now, the permission to read it ends with this activity
-        val streamUri: Uri? = when (intent?.action) {
-            Intent.ACTION_SEND -> @Suppress("DEPRECATION") intent.getParcelableExtra(Intent.EXTRA_STREAM) as? Uri
-            Intent.ACTION_VIEW -> intent.data?.takeIf { it.scheme == "content" || it.scheme == "file" }
-            else -> null
+        val streamUris = mutableListOf<Uri>()
+        if (intent?.action == Intent.ACTION_SEND) {
+            @Suppress("DEPRECATION")
+            (intent.getParcelableExtra(Intent.EXTRA_STREAM) as? Uri)?.let { streamUris.add(it) }
+        } else if (intent?.action == Intent.ACTION_SEND_MULTIPLE) {
+            @Suppress("DEPRECATION")
+            intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)?.filterNotNull()?.let { streamUris.addAll(it) }
+        } else if (intent?.action == Intent.ACTION_VIEW) {
+            intent.data?.takeIf { it.scheme == "content" || it.scheme == "file" || it.scheme == "http" || it.scheme == "https" }?.let { streamUris.add(it) }
         }
-        if (streamUri != null) copyTorrentFile(streamUri)?.let { links.add(0, it) }
+
+        for (uri in streamUris) {
+            if (uri.scheme == "http" || uri.scheme == "https") {
+                if (uri.toString() !in links) links.add(uri.toString())
+            } else {
+                copyTorrentFile(uri)?.let { if (it !in links) links.add(0, it) } ?: run {
+                    if (uri.toString() !in links) links.add(uri.toString())
+                }
+            }
+        }
         if (links.isEmpty()) {
             Toast.makeText(this, R.string.dl_invalid_links, Toast.LENGTH_SHORT).show()
         } else {
