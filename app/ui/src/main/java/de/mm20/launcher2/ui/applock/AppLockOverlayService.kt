@@ -214,7 +214,7 @@ class AppLockOverlayService : Service(), SavedStateRegistryOwner {
             nm.createNotificationChannel(
                 NotificationChannel(
                     CHANNEL_ID,
-                    getString(R.string.app_lock_notification_channel),
+                    getString(de.mm20.launcher2.i18n.R.string.app_lock_notification_channel),
                     NotificationManager.IMPORTANCE_MIN,
                 )
             )
@@ -228,9 +228,9 @@ class AppLockOverlayService : Service(), SavedStateRegistryOwner {
         )
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.lock_24px)
-            .setContentTitle(getString(R.string.app_lock_notification_title))
-            .setContentText(getString(R.string.app_lock_notification_text))
+            .setSmallIcon(de.mm20.launcher2.base.R.drawable.lock_24px)
+            .setContentTitle(getString(de.mm20.launcher2.i18n.R.string.app_lock_notification_title))
+            .setContentText(getString(de.mm20.launcher2.i18n.R.string.app_lock_notification_text))
             .setContentIntent(openSettings)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)
@@ -261,19 +261,19 @@ private fun AppLockOverlayContent(
             verticalArrangement = Arrangement.Center,
         ) {
             Icon(
-                painterResource(R.drawable.lock_48px),
+                painterResource(de.mm20.launcher2.base.R.drawable.lock_48px),
                 contentDescription = null,
                 modifier = Modifier.size(48.dp),
                 tint = MaterialTheme.colorScheme.primary,
             )
             Text(
-                text = stringResource(R.string.app_lock_locked_message, appLabel),
+                text = stringResource(de.mm20.launcher2.i18n.R.string.app_lock_locked_message, appLabel),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(vertical = 16.dp),
             )
             Button(onClick = onUnlockTapped) {
-                Text(stringResource(R.string.settings_locked_unlock))
+                Text(stringResource(de.mm20.launcher2.i18n.R.string.settings_locked_unlock))
             }
             TextButton(onClick = onCancel) {
                 Text(stringResource(android.R.string.cancel))
