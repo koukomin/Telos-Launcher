@@ -1,7 +1,9 @@
 package com.telos.desktop.files
 
 import com.telos.desktop.linux.Sys
+import java.io.File
 import java.io.IOException
+import java.io.RandomAccessFile
 import java.net.HttpURLConnection
 import java.net.InetAddress
 import java.net.ServerSocket
@@ -246,6 +248,51 @@ object CloudApi {
         CloudKind.OneDrive -> oneDrive(access, folderId)
     }
 
+    fun download(kind: CloudKind, access: String, id: String, dest: File): File? {
+        dest.parentFile?.mkdirs()
+        return when (kind) {
+            CloudKind.Dropbox -> {
+                val path = dropboxPath(id)
+                streamTo(
+                    "https://content.dropboxapi.com/2/files/download",
+                    access,
+                    dest,
+                    method = "POST",
+                    extra = mapOf("Dropbox-API-Arg" to """{"path":"${jsonEscape(path)}"}"""),
+                    emptyBody = true,
+                )
+            }
+            CloudKind.GoogleDrive -> streamTo(
+                "https://www.googleapis.com/drive/v3/files/${enc(id)}?alt=media",
+                access,
+                dest,
+            )
+            CloudKind.OneDrive -> streamTo(
+                "https://graph.microsoft.com/v1.0/me/drive/items/${enc(id)}/content",
+                access,
+                dest,
+            )
+        }
+    }
+
+    fun upload(kind: CloudKind, access: String, parentId: String, name: String, file: File): Boolean {
+        if (!file.isFile) return false
+        return when (kind) {
+            CloudKind.Dropbox -> uploadDropbox(access, parentId, name, file)
+            CloudKind.GoogleDrive -> uploadDrive(access, parentId, name, file)
+            CloudKind.OneDrive -> uploadOneDrive(access, parentId, name, file)
+        }
+    }
+
+    internal fun jsonEscape(s: String): String =
+        s.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n")
+
+    internal fun dropboxPath(id: String): String {
+        val t = id.trim()
+        if (t.isEmpty() || t == "root") return ""
+        return if (t.startsWith("/")) t else "/$t"
+    }
+
     private fun dropbox(access: String, folderId: String): List<CloudEntry> {
         val path = if (folderId.isBlank() || folderId == "root") "" else folderId
         val json = postJson("https://api.dropboxapi.com/2/files/list_folder", access, """{"path":"$path","recursive":false}""")
@@ -312,6 +359,193 @@ object CloudApi {
         }
         return out
     }
+
+    private fun uploadDropbox(access: String, parentId: String, name: String, file: File): Boolean {
+        val path = dropboxPath(parentId).trimEnd('/') + "/" + name.trimStart('/')
+        val arg = """{"path":"${jsonEscape(path)}","mode":"overwrite","mute":true}"""
+        if (file.length() <= 100L * 1024 * 1024) {
+            return putFile(
+                "https://content.dropboxapi.com/2/files/upload",
+                access,
+                file,
+                method = "POST",
+                extra = mapOf("Dropbox-API-Arg" to arg, "Content-Type" to "application/octet-stream"),
+            )
+        }
+        val chunk = 8 * 1024 * 1024
+        RandomAccessFile(file, "r").use { raf ->
+            fun piece(): ByteArray {
+                val n = minOf(chunk.toLong(), raf.length() - raf.filePointer).toInt()
+                val b = ByteArray(n)
+                raf.readFully(b)
+                return b
+            }
+            val start = postBytes(
+                "https://content.dropboxapi.com/2/files/upload_session/start",
+                access,
+                piece(),
+                mapOf("Dropbox-API-Arg" to """{"close":false}""", "Content-Type" to "application/octet-stream"),
+            ) ?: return false
+            val sessionId = CloudOAuth.jsonField(start, "session_id") ?: return false
+            while (raf.length() - raf.filePointer > chunk) {
+                val offset = raf.filePointer
+                val cursor = """{"session_id":"${jsonEscape(sessionId)}","offset":$offset}"""
+                if (!postBytesOk(
+                        "https://content.dropboxapi.com/2/files/upload_session/append_v2",
+                        access,
+                        piece(),
+                        mapOf("Dropbox-API-Arg" to """{"cursor":$cursor,"close":false}""", "Content-Type" to "application/octet-stream"),
+                    )
+                ) return false
+            }
+            val offset = raf.filePointer
+            val cursor = """{"session_id":"${jsonEscape(sessionId)}","offset":$offset}"""
+            return postBytesOk(
+                "https://content.dropboxapi.com/2/files/upload_session/finish",
+                access,
+                piece(),
+                mapOf("Dropbox-API-Arg" to """{"cursor":$cursor,"commit":$arg}""", "Content-Type" to "application/octet-stream"),
+            )
+        }
+    }
+
+    private fun uploadDrive(access: String, parentId: String, name: String, file: File): Boolean {
+        val parent = parentId.ifBlank { "root" }
+        val meta = """{"name":"${jsonEscape(name)}","parents":["${jsonEscape(parent)}"]}"""
+        val created = postJson("https://www.googleapis.com/drive/v3/files?fields=id", access, meta) ?: return false
+        val id = CloudOAuth.jsonField(created, "id") ?: return false
+        return putFile(
+            "https://www.googleapis.com/upload/drive/v3/files/${enc(id)}?uploadType=media",
+            access,
+            file,
+            method = "PATCH",
+            extra = mapOf("Content-Type" to "application/octet-stream"),
+        )
+    }
+
+    private fun uploadOneDrive(access: String, parentId: String, name: String, file: File): Boolean {
+        val encodedName = enc(name)
+        val url = if (parentId.isBlank() || parentId == "root") {
+            "https://graph.microsoft.com/v1.0/me/drive/root:/$encodedName:/content"
+        } else {
+            "https://graph.microsoft.com/v1.0/me/drive/items/${enc(parentId)}:/$encodedName:/content"
+        }
+        if (file.length() <= 4L * 1024 * 1024) {
+            return putFile(url, access, file, method = "PUT", extra = mapOf("Content-Type" to "application/octet-stream"))
+        }
+        val sessionJson = postJson(
+            url.removeSuffix("/content") + "/createUploadSession",
+            access,
+            """{"item":{"@microsoft.graph.conflictBehavior":"replace"}}""",
+        ) ?: return false
+        val session = CloudOAuth.jsonField(sessionJson, "uploadUrl") ?: return false
+        val total = file.length()
+        val chunk = 10 * 320 * 1024
+        RandomAccessFile(file, "r").use { raf ->
+            var start = 0L
+            while (start < total) {
+                val size = minOf(chunk.toLong(), total - start).toInt()
+                val buf = ByteArray(size)
+                raf.seek(start)
+                raf.readFully(buf)
+                val conn = URI(session).toURL().openConnection() as HttpURLConnection
+                conn.connectTimeout = 20_000
+                conn.readTimeout = 120_000
+                conn.requestMethod = "PUT"
+                conn.doOutput = true
+                conn.setRequestProperty("Content-Range", "bytes $start-${start + size - 1}/$total")
+                conn.setRequestProperty("Content-Type", "application/octet-stream")
+                conn.outputStream.use { it.write(buf) }
+                val code = conn.responseCode
+                conn.disconnect()
+                if (code !in 200..308 && code != 202) return false
+                start += size
+            }
+        }
+        return true
+    }
+
+    private fun enc(s: String): String = URLEncoder.encode(s, StandardCharsets.UTF_8).replace("+", "%20")
+
+    private fun streamTo(
+        url: String,
+        access: String,
+        dest: File,
+        method: String = "GET",
+        extra: Map<String, String> = emptyMap(),
+        emptyBody: Boolean = false,
+    ): File? = try {
+        val conn = URI(url).toURL().openConnection() as HttpURLConnection
+        conn.connectTimeout = 20_000
+        conn.readTimeout = 120_000
+        conn.instanceFollowRedirects = true
+        conn.requestMethod = method
+        conn.setRequestProperty("Authorization", "Bearer $access")
+        conn.setRequestProperty("User-Agent", "Telos-Desktop")
+        extra.forEach { (k, v) -> conn.setRequestProperty(k, v) }
+        if (emptyBody) {
+            conn.doOutput = true
+            conn.setFixedLengthStreamingMode(0)
+            conn.outputStream.close()
+        }
+        val code = conn.responseCode
+        if (code !in 200..299) {
+            conn.disconnect()
+            return null
+        }
+        conn.inputStream.use { input -> dest.outputStream().use { input.copyTo(it) } }
+        conn.disconnect()
+        dest.takeIf { it.isFile }
+    } catch (_: Exception) {
+        dest.delete()
+        null
+    }
+
+    private fun putFile(
+        url: String,
+        access: String,
+        file: File,
+        method: String,
+        extra: Map<String, String>,
+    ): Boolean = try {
+        val conn = URI(url).toURL().openConnection() as HttpURLConnection
+        conn.connectTimeout = 20_000
+        conn.readTimeout = 120_000
+        conn.requestMethod = method
+        conn.doOutput = true
+        conn.setRequestProperty("Authorization", "Bearer $access")
+        conn.setRequestProperty("User-Agent", "Telos-Desktop")
+        extra.forEach { (k, v) -> conn.setRequestProperty(k, v) }
+        conn.setFixedLengthStreamingMode(file.length())
+        file.inputStream().use { input -> conn.outputStream.use { input.copyTo(it) } }
+        val code = conn.responseCode
+        conn.disconnect()
+        code in 200..299
+    } catch (_: Exception) {
+        false
+    }
+
+    private fun postBytes(url: String, access: String, body: ByteArray, extra: Map<String, String>): String? = try {
+        val conn = URI(url).toURL().openConnection() as HttpURLConnection
+        conn.connectTimeout = 20_000
+        conn.readTimeout = 120_000
+        conn.requestMethod = "POST"
+        conn.doOutput = true
+        conn.setRequestProperty("Authorization", "Bearer $access")
+        conn.setRequestProperty("User-Agent", "Telos-Desktop")
+        extra.forEach { (k, v) -> conn.setRequestProperty(k, v) }
+        conn.outputStream.use { it.write(body) }
+        val code = conn.responseCode
+        val text = (if (code in 200..299) conn.inputStream else conn.errorStream)
+            ?.bufferedReader()?.use { it.readText() }.orEmpty()
+        conn.disconnect()
+        if (code in 200..299) text else null
+    } catch (_: Exception) {
+        null
+    }
+
+    private fun postBytesOk(url: String, access: String, body: ByteArray, extra: Map<String, String>): Boolean =
+        postBytes(url, access, body, extra) != null
 
     private fun get(url: String, access: String): String? = try {
         val conn = URI(url).toURL().openConnection() as HttpURLConnection

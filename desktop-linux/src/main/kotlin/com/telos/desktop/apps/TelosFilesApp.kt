@@ -78,6 +78,7 @@ fun TelosFilesApp(
     var davUser by remember { mutableStateOf("") }
     var davPlaceUri by remember { mutableStateOf<String?>(null) }
     var davRows by remember { mutableStateOf<List<FilesRow>>(emptyList()) }
+    var cloudTrail by remember { mutableStateOf(listOf("root")) }
     val scope = rememberCoroutineScope()
     val dir = path
     val inZip = ZipArchives.isArchive(dir)
@@ -87,7 +88,7 @@ fun TelosFilesApp(
         val tdir = trashRoot.absoluteFile
         p == tdir || p.path.startsWith(tdir.path + File.separator)
     }
-    androidx.compose.runtime.LaunchedEffect(davHref, davUser, davPlaceUri, tick) {
+    androidx.compose.runtime.LaunchedEffect(davHref, davUser, davPlaceUri, tick, cloudTrail) {
         val href = davHref
         if (href == null) {
             davRows = emptyList()
@@ -96,12 +97,13 @@ fun TelosFilesApp(
         davRows = withContext(Dispatchers.IO) {
             val kind = CloudOAuth.detect(davPlaceUri ?: href)
             if (kind != null) {
-                val tokens = OAuthSecrets.get(davPlaceUri ?: CloudOAuth.placeUri(kind)) ?: return@withContext emptyList()
+                val key = davPlaceUri ?: CloudOAuth.placeUri(kind)
+                val tokens = OAuthSecrets.get(key) ?: return@withContext emptyList()
                 val fresh = CloudOAuth.refresh(tokens) ?: tokens
-                OAuthSecrets.put(davPlaceUri ?: CloudOAuth.placeUri(kind), fresh)
-                val folder = href.substringAfterLast('/').ifBlank { "root" }
+                OAuthSecrets.put(key, fresh)
+                val folder = cloudTrail.lastOrNull() ?: "root"
                 CloudApi.list(kind, fresh.access, folder).map {
-                    FilesRow(it.name, it.directory, null, (davPlaceUri ?: href).trimEnd('/') + "/" + it.id, it.size)
+                    FilesRow(it.name, it.directory, null, it.id, it.size)
                 }
             } else {
                 val pw = DavSecrets.get(davPlaceUri ?: href) ?: DavSecrets.get(href) ?: ""
@@ -175,7 +177,8 @@ fun TelosFilesApp(
                     if (cloud != null) {
                         davPlaceUri = place.uri
                         davUser = place.user.orEmpty()
-                        davHref = place.uri.trimEnd('/') + "/root"
+                        cloudTrail = listOf("root")
+                        davHref = place.uri
                     } else if (dav) {
                         davPlaceUri = place.uri
                         davUser = place.user.orEmpty()
@@ -195,7 +198,15 @@ fun TelosFilesApp(
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
             TextButton(onClick = {
                 val href = davHref
-                if (href != null) {
+                val cloudKind = CloudOAuth.detect(davPlaceUri ?: href.orEmpty())
+                if (cloudKind != null) {
+                    if (cloudTrail.size > 1) cloudTrail = cloudTrail.dropLast(1)
+                    else {
+                        davHref = null
+                        davPlaceUri = null
+                    }
+                    tick++
+                } else if (href != null) {
                     val trimmed = href.trimEnd('/')
                     val parent = trimmed.substringBeforeLast('/', missingDelimiterValue = "")
                     davHref = parent.takeIf { it.contains("://") && it.count { c -> c == '/' } > 2 }
@@ -208,7 +219,7 @@ fun TelosFilesApp(
                     dir.parentFile?.let { path = it; TelosFilesNav.path = it }
                 }
             }) { Text(t("menu_back")) }
-            if (!inZip) {
+            if (!inZip && davHref == null) {
                 TextButton(onClick = {
                     val folder = File(dir, "Folder")
                     var dest = folder
@@ -222,7 +233,8 @@ fun TelosFilesApp(
                     ZipArchives.compressDir(dir, zip)
                     tick++
                 }) { Text(t("hc_compress_to_zip")) }
-            } else {
+            }
+            if (inZip) {
                 TextButton(onClick = {
                     val dest = File(dir.parentFile ?: dir, dir.nameWithoutExtension)
                     ZipArchives.extractAll(dir, dest, archiveSecret.toCharArray().takeIf { it.isNotEmpty() })
@@ -231,6 +243,26 @@ fun TelosFilesApp(
                     TelosFilesNav.path = dest
                     tick++
                 }) { Text(t("hc_extract_here")) }
+            }
+            val cloudKindBar = CloudOAuth.detect(davPlaceUri.orEmpty())
+            if (cloudKindBar != null) {
+                TextButton(onClick = {
+                    scope.launch(Dispatchers.IO) {
+                        val chosen = withContext(Dispatchers.Main) {
+                            java.awt.FileDialog(null as java.awt.Frame?, t("hc_add"), java.awt.FileDialog.LOAD).run {
+                                isVisible = true
+                                file?.let { File(directory, it) }
+                            }
+                        }
+                        if (chosen == null || !chosen.isFile) return@launch
+                        val key = davPlaceUri ?: return@launch
+                        val tokens = OAuthSecrets.get(key) ?: return@launch
+                        val fresh = CloudOAuth.refresh(tokens) ?: tokens
+                        OAuthSecrets.put(key, fresh)
+                        CloudApi.upload(cloudKindBar, fresh.access, cloudTrail.last(), chosen.name, chosen)
+                        withContext(Dispatchers.Main) { tick++ }
+                    }
+                }) { Text(t("hc_add")) }
             }
             if (inTrash) {
                 TextButton(onClick = { XdgTrash.empty(); tick++; path = trashRoot }) { Text(t("hc_delete")) }
@@ -263,6 +295,24 @@ fun TelosFilesApp(
                     Modifier.fillMaxWidth().combinedClickable(
                         onClick = {
                             when {
+                                davHref != null && CloudOAuth.detect(davPlaceUri.orEmpty()) != null && row.directory && row.zipInner != null -> {
+                                    cloudTrail = cloudTrail + row.zipInner
+                                    tick++
+                                }
+                                davHref != null && CloudOAuth.detect(davPlaceUri.orEmpty()) != null && row.zipInner != null -> {
+                                    val dest = File(File(System.getProperty("java.io.tmpdir"), "telos-cloud"), row.name)
+                                    val id = row.zipInner
+                                    val key = davPlaceUri ?: ""
+                                    val kind = CloudOAuth.detect(key) ?: return@combinedClickable
+                                    scope.launch(Dispatchers.IO) {
+                                        dest.delete()
+                                        val tokens = OAuthSecrets.get(key) ?: return@launch
+                                        val fresh = CloudOAuth.refresh(tokens) ?: tokens
+                                        OAuthSecrets.put(key, fresh)
+                                        val got = CloudApi.download(kind, fresh.access, id, dest)
+                                        if (got != null) withContext(Dispatchers.Main) { TelosFileHandler.open(got) }
+                                    }
+                                }
                                 davHref != null && row.directory && row.zipInner != null -> davHref = row.zipInner
                                 davHref != null && row.zipInner != null -> {
                                     val cache = File(System.getProperty("java.io.tmpdir"), "telos-dav")
@@ -303,6 +353,19 @@ fun TelosFilesApp(
                             }
                         },
                         onLongClick = {
+                            val cloudKind = CloudOAuth.detect(davPlaceUri.orEmpty())
+                            if (cloudKind != null && row.zipInner != null && !row.directory) {
+                                val dest = File(XdgUserDirsManager.resolve().download, row.name)
+                                val id = row.zipInner
+                                val key = davPlaceUri ?: return@combinedClickable
+                                scope.launch(Dispatchers.IO) {
+                                    val tokens = OAuthSecrets.get(key) ?: return@launch
+                                    val fresh = CloudOAuth.refresh(tokens) ?: tokens
+                                    OAuthSecrets.put(key, fresh)
+                                    CloudApi.download(cloudKind, fresh.access, id, dest)
+                                }
+                                return@combinedClickable
+                            }
                             val f = row.disk ?: return@combinedClickable
                             if (inZip) return@combinedClickable
                             if (inTrash) {

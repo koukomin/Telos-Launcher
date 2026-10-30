@@ -40,4 +40,13 @@ class CloudOAuthTest {
         assertTrue(g[0].directory)
         assertEquals("f.pdf", g[1].name)
     }
+
+    @Test
+    fun dropboxPathAndEscape() {
+        assertEquals("", CloudApi.dropboxPath("root"))
+        assertEquals("/Photos", CloudApi.dropboxPath("Photos"))
+        assertEquals("/Photos/a", CloudApi.dropboxPath("/Photos/a"))
+        assertEquals("a\\\"b", CloudApi.jsonEscape("a\"b"))
+        assertEquals("a\\\\b", CloudApi.jsonEscape("a\\b"))
+    }
 }
