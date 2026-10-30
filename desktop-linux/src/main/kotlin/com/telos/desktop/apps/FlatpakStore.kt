@@ -31,6 +31,23 @@ object FlatpakStore {
         return Sys.runBg("flatpak", "install", "-y", "--noninteractive", "flathub", id)
     }
 
+    fun uninstall(id: String): Boolean {
+        if (!available() || id.isBlank()) return false
+        return Sys.runBg("flatpak", "uninstall", "-y", "--noninteractive", id)
+    }
+
+    fun updateAll(): Boolean {
+        if (!available()) return false
+        return Sys.runBg("flatpak", "update", "-y", "--noninteractive")
+    }
+
+    fun remotes(): List<String> {
+        if (!available()) return emptyList()
+        val r = Sys.run("flatpak", "remotes", "--columns=name", timeoutSec = 10)
+        if (!r.ok) return emptyList()
+        return r.stdout.lineSequence().map { it.trim() }.filter { it.isNotEmpty() && it != "Name" }.toList()
+    }
+
     internal fun parseRows(stdout: String, installed: Boolean): List<FlatpakRef> {
         val out = ArrayList<FlatpakRef>()
         for (raw in stdout.lineSequence()) {

@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -165,20 +167,41 @@ fun TelosStoreApp() {
             Text(t("hc_add_an_app"), color = TelosColors.secondary)
         }
         OutlinedTextField(q, { q = it }, modifier = Modifier.fillMaxWidth(), label = { Text(t("hc_filter")) }, singleLine = true)
-        Text(t("hc_add_installed_apps"), color = TelosColors.secondary, fontSize = 12.sp, modifier = Modifier.padding(top = 8.dp))
-        shown.take(40).forEach { e ->
-            Text(e.name + "  " + e.id, color = TelosColors.onSurface, modifier = Modifier.clickable {
-                com.telos.desktop.linux.Sys.runBg("flatpak", "run", e.id)
-            }.padding(8.dp))
+        Row(Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button(onClick = { FlatpakStore.updateAll() }) { Text(t("hc_check_for_updates")) }
         }
-        if (remote.isNotEmpty()) {
-            Text(t("action_install"), color = TelosColors.secondary, fontSize = 12.sp)
-            remote.take(30).forEach { e ->
-                Text(
-                    e.name + "  " + e.id,
-                    color = TelosColors.onSurface,
-                    modifier = Modifier.clickable { FlatpakStore.install(e.id) }.padding(8.dp),
-                )
+        LazyColumn(Modifier.fillMaxSize().padding(top = 8.dp)) {
+            item {
+                Text(t("hc_add_installed_apps"), color = TelosColors.secondary, fontSize = 12.sp)
+            }
+            items(shown.take(80), key = { it.id }) { e ->
+                Row(Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+                    Text(
+                        e.name + "  " + e.id,
+                        color = TelosColors.onSurface,
+                        modifier = Modifier.weight(1f).clickable {
+                            com.telos.desktop.linux.Sys.runBg("flatpak", "run", e.id)
+                        },
+                    )
+                    Text(
+                        t("hc_delete"),
+                        color = TelosColors.primary,
+                        modifier = Modifier.clickable {
+                            FlatpakStore.uninstall(e.id)
+                            installed = installed.filter { it.id != e.id }
+                        }.padding(start = 8.dp),
+                    )
+                }
+            }
+            if (remote.isNotEmpty()) {
+                item { Text(t("action_install"), color = TelosColors.secondary, fontSize = 12.sp) }
+                items(remote.take(40), key = { "r-" + it.id }) { e ->
+                    Text(
+                        e.name + "  " + e.id,
+                        color = TelosColors.onSurface,
+                        modifier = Modifier.clickable { FlatpakStore.install(e.id) }.padding(8.dp),
+                    )
+                }
             }
         }
     }

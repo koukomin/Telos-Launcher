@@ -51,4 +51,10 @@ object AudioControlManager {
     fun playPause() { Sys.run("playerctl", "play-pause") }
     fun next() { Sys.run("playerctl", "next") }
     fun prev() { Sys.run("playerctl", "previous") }
+    fun open(file: java.io.File) {
+        val uri = file.toURI().toString()
+        if (!Sys.run("playerctl", "open", uri).ok) Sys.runBg("xdg-open", file.absolutePath)
+    }
+    fun volumeUp() { setVolume(snapshot().volume + 5) }
+    fun volumeDown() { setVolume(snapshot().volume - 5) }
 }

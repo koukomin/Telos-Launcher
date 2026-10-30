@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,6 +41,7 @@ fun TelosMediaPlayer() {
     var state by remember { mutableStateOf(AudioState(0.0, false, false, emptyList(), emptyList(), "", "", false)) }
     var tab by remember { mutableStateOf(MediaTab.Audio) }
     var library by remember { mutableStateOf<List<File>>(emptyList()) }
+    var filter by remember { mutableStateOf("") }
     val pending = TelosFileHandler.pendingMedia
     LaunchedEffect(pending?.absolutePath) {
         pending?.let { Sys.runBg("xdg-open", it.absolutePath) }
@@ -53,17 +55,19 @@ fun TelosMediaPlayer() {
     LaunchedEffect(tab) {
         library = withContext(Dispatchers.IO) {
             val xdg = XdgUserDirsManager.resolve()
-            val root = when (tab) {
-                MediaTab.Audio -> xdg.music
-                MediaTab.Video -> xdg.videos
-                MediaTab.Photos -> xdg.pictures
-            }
             val want = when (tab) {
                 MediaTab.Audio -> setOf("mp3", "flac", "ogg", "wav", "m4a", "aac", "opus")
                 MediaTab.Video -> setOf("mp4", "mkv", "webm", "avi", "mov", "m4v")
                 MediaTab.Photos -> setOf("jpg", "jpeg", "png", "gif", "webp", "bmp", "heic", "heif", "raw", "dng")
             }
-            scanLibrary(root, want)
+            val roots = when (tab) {
+                MediaTab.Audio -> listOf(xdg.music, xdg.download)
+                MediaTab.Video -> listOf(xdg.videos, xdg.download)
+                MediaTab.Photos -> listOf(xdg.pictures, xdg.download)
+            }
+            roots.distinct().flatMap { scanLibrary(it, want, maxDepth = 4, maxHits = 400) }
+                .distinctBy { it.absolutePath }
+                .sortedBy { it.name.lowercase() }
         }
     }
     Column(Modifier.fillMaxSize().padding(16.dp)) {
@@ -80,18 +84,28 @@ fun TelosMediaPlayer() {
             Button(onClick = { AudioControlManager.next() }) { Text(t("hc_next")) }
         }
         Text("${t("comms_mute")} ${state.volume.toInt()}%", color = TelosColors.onSurface, modifier = Modifier.padding(top = 8.dp))
-        Button(onClick = { AudioControlManager.toggleMute() }) { Text(t("comms_mute")) }
+        Row {
+            Button(onClick = { AudioControlManager.volumeDown() }) { Text("-") }
+            Button(onClick = { AudioControlManager.toggleMute() }) { Text(t("comms_mute")) }
+            Button(onClick = { AudioControlManager.volumeUp() }) { Text("+") }
+        }
         Row(Modifier.padding(top = 12.dp)) {
             FilterChip(selected = tab == MediaTab.Audio, onClick = { tab = MediaTab.Audio }, label = { Text(t("au_music_title")) })
             FilterChip(selected = tab == MediaTab.Video, onClick = { tab = MediaTab.Video }, label = { Text(t("hc_all_videos")) })
             FilterChip(selected = tab == MediaTab.Photos, onClick = { tab = MediaTab.Photos }, label = { Text(t("hc_photos")) })
         }
+        OutlinedTextField(filter, { filter = it }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp), label = { Text(t("hc_filter")) }, singleLine = true)
+        val shown = remember(library, filter) {
+            if (filter.isBlank()) library else library.filter { it.name.contains(filter, true) }
+        }
         LazyColumn(Modifier.fillMaxSize().padding(top = 8.dp)) {
-            items(library, key = { it.absolutePath }) { f ->
+            items(shown, key = { it.absolutePath }) { f ->
                 Text(
                     f.name,
                     color = TelosColors.onSurface,
-                    modifier = Modifier.fillMaxWidth().clickable { TelosFileHandler.open(f) }.padding(8.dp),
+                    modifier = Modifier.fillMaxWidth().clickable {
+                        if (tab == MediaTab.Photos) TelosFileHandler.open(f) else AudioControlManager.open(f)
+                    }.padding(8.dp),
                 )
             }
         }

@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.apps.DesktopEntry
 import com.telos.desktop.apps.DesktopFileLauncher
+import com.telos.desktop.apps.FlatpakStore
 import com.telos.desktop.apps.LinuxAppScanner
 import com.telos.desktop.apps.TelosAppCategory
 import com.telos.desktop.apps.TelosFileHandler
@@ -62,7 +63,10 @@ fun PlasmaAppGrid(
             hits = emptyList()
         } else {
             tab = "All"
-            hits = withContext(Dispatchers.Default) { DesktopSearch.search(query, apps = apps) }
+            val remote = if (query.length >= 3) {
+                withContext(Dispatchers.IO) { FlatpakStore.search(query) }
+            } else emptyList()
+            hits = withContext(Dispatchers.Default) { DesktopSearch.search(query, apps = apps, store = remote) }
         }
     }
     val telos = remember(query) {
@@ -119,6 +123,8 @@ fun PlasmaAppGrid(
                                     SearchKind.TelosApp -> hit.telos?.let { onOpenTelos(it) }
                                     SearchKind.Desktop -> hit.desktop?.let { DesktopFileLauncher.launch(it) }
                                     SearchKind.File -> hit.file?.let { TelosFileHandler.open(it) }
+                                    SearchKind.Calculator -> { }
+                                    SearchKind.Store -> hit.storeId?.let { FlatpakStore.install(it) }
                                 }
                                 onDismiss()
                             }.padding(12.dp),

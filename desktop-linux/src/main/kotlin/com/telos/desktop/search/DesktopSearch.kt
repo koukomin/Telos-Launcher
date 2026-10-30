@@ -1,13 +1,14 @@
 package com.telos.desktop.search
 
 import com.telos.desktop.apps.DesktopEntry
+import com.telos.desktop.apps.FlatpakRef
 import com.telos.desktop.apps.LinuxAppScanner
 import com.telos.desktop.apps.TelosVirtualApp
 import com.telos.desktop.apps.TelosVirtualApps
 import com.telos.desktop.xdg.XdgUserDirsManager
 import java.io.File
 
-enum class SearchKind { TelosApp, Desktop, File }
+enum class SearchKind { TelosApp, Desktop, File, Calculator, Store }
 
 data class SearchHit(
     val id: String,
@@ -18,6 +19,7 @@ data class SearchHit(
     val telos: TelosVirtualApp? = null,
     val desktop: DesktopEntry? = null,
     val file: File? = null,
+    val storeId: String? = null,
 )
 
 object DesktopSearch {
@@ -40,10 +42,14 @@ object DesktopSearch {
         apps: List<DesktopEntry> = LinuxAppScanner.scan(),
         filesRoot: List<File> = defaultFileRoots(),
         telos: List<TelosVirtualApp> = TelosVirtualApps.all,
+        store: List<FlatpakRef> = emptyList(),
     ): List<SearchHit> {
         val q = query.trim()
         if (q.isEmpty()) return emptyList()
         val out = ArrayList<SearchHit>(64)
+        evaluate(q)?.let { value ->
+            out += SearchHit("calc:$q", value, q, SearchKind.Calculator, 120)
+        }
         for (app in telos) {
             val score = rank(q, app.label, app.domain)
             if (score > 0) {
@@ -68,12 +74,35 @@ object DesktopSearch {
                 }
             }
         }
+        for (ref in store) {
+            val score = rank(q, ref.name, ref.id)
+            if (score > 0) {
+                out += SearchHit("store:${ref.id}", ref.name, ref.id, SearchKind.Store, score, storeId = ref.id)
+            }
+        }
         return out.sortedWith(compareByDescending<SearchHit> { it.score }.thenBy { it.title.lowercase() }).take(80)
+    }
+
+    internal fun evaluate(query: String): String? {
+        val m = Regex("^\\s*([0-9]+(?:\\.[0-9]+)?)\\s*([+\\-*/])\\s*([0-9]+(?:\\.[0-9]+)?)\\s*$").matchEntire(query)
+            ?: return null
+        val a = m.groupValues[1].toDouble()
+        val b = m.groupValues[3].toDouble()
+        val v = when (m.groupValues[2]) {
+            "+" -> a + b
+            "-" -> a - b
+            "*" -> a * b
+            "/" -> if (b == 0.0) return null else a / b
+            else -> return null
+        }
+        return if (v == v.toLong().toDouble()) v.toLong().toString() else v.toString()
     }
 
     fun defaultFileRoots(): List<File> {
         val dirs = XdgUserDirsManager.resolve()
-        return listOf(dirs.desktop, dirs.download, dirs.documents, dirs.home).filter { it.isDirectory }
+        return listOf(dirs.desktop, dirs.download, dirs.documents, dirs.music, dirs.pictures, dirs.videos, dirs.home)
+            .distinctBy { it.absolutePath }
+            .filter { it.isDirectory }
     }
 
     private fun walkFiles(root: File, maxDepth: Int, maxHits: Int, visit: (File) -> Unit) {

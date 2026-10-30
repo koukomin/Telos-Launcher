@@ -39,4 +39,27 @@ class DesktopSearchTest {
         assertTrue(hits.any { it.kind == SearchKind.TelosApp && it.title == "Files" })
         assertTrue(hits.any { it.kind == SearchKind.Desktop && it.title == "Firefox" })
     }
+
+    @Test
+    fun calculatorAndStore() {
+        assertEquals("4", DesktopSearch.evaluate("2 + 2"))
+        assertEquals("7.5", DesktopSearch.evaluate("3*2.5"))
+        assertEquals(null, DesktopSearch.evaluate("2+"))
+        val hits = DesktopSearch.search(
+            "2+2",
+            apps = emptyList(),
+            filesRoot = emptyList(),
+            telos = emptyList(),
+            store = listOf(com.telos.desktop.apps.FlatpakRef("org.mozilla.firefox", "Firefox", "flathub", false)),
+        )
+        assertTrue(hits.any { it.kind == SearchKind.Calculator && it.title == "4" })
+        val storeHits = DesktopSearch.search(
+            "fire",
+            apps = emptyList(),
+            filesRoot = emptyList(),
+            telos = emptyList(),
+            store = listOf(com.telos.desktop.apps.FlatpakRef("org.mozilla.firefox", "Firefox", "flathub", false)),
+        )
+        assertTrue(storeHits.any { it.kind == SearchKind.Store && it.storeId == "org.mozilla.firefox" })
+    }
 }

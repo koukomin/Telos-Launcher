@@ -1203,7 +1203,7 @@ toolchain and Gradle 9.4.1 via the wrapper. Build variants combine a build type 
 ./gradlew :desktop-linux:packageUberJarForCurrentOS  # Linux desktop shell (not in the APK)
 ```
 
-`:desktop-linux` is a Compose for Desktop JVM module. It is not a dependency of `:app:app`. Linux builds need a host JDK 17+ and, at runtime, `cryptsetup` or `udisksctl` for the LUKS vault and `labwc` for a full session. `desktop-linux/session/telos-session` unlocks the vault as `$HOME` (keeping `TELOS_HOST_HOME` for the image path) and starts labwc. AppGrid search covers Telos apps, `.desktop` and files; Store talks to Flatpak. See [Telos Linux Desktop](docs/docs/developer-guide/desktop-linux.md), the [roadmap](docs/docs/developer-guide/desktop-roadmap.md) (P2 in progress; P3–P4 still pending), and the [user guide](docs/docs/user-guide/telos/linux-desktop.md).
+`:desktop-linux` is a Compose for Desktop JVM module. It is not a dependency of `:app:app`. Linux builds need a host JDK 17+ and, at runtime, `cryptsetup` or `udisksctl` for the LUKS vault and `labwc` for a full session. `desktop-linux/session/telos-session` unlocks the vault as `$HOME` (keeping `TELOS_HOST_HOME` for the image path) and starts labwc. AppGrid search covers Telos apps, `.desktop` and files; Store talks to Flatpak. See [Telos Linux Desktop](docs/docs/developer-guide/desktop-linux.md), the [roadmap](docs/docs/developer-guide/desktop-roadmap.md) (P2 search/Media/Store/Files in tree; P3–P4 still pending), and the [user guide](docs/docs/user-guide/telos/linux-desktop.md).
 
 Developer documentation (module structure, plugin contracts) lives in `docs/docs/developer-guide/`.
 
