@@ -1,0 +1,143 @@
+#!/usr/bin/env python3
+"""W1: zwlr_layer_shell panel + dock via GtkLayerShell. IPC: $XDG_RUNTIME_DIR/telos-layer.sock"""
+import json
+import os
+import socket
+import sys
+import threading
+from datetime import datetime
+
+SOCK = os.path.join(os.environ.get("XDG_RUNTIME_DIR", "/tmp"), "telos-layer.sock")
+clients = []
+clients_lock = threading.Lock()
+
+
+def emit(event, **fields):
+    line = (json.dumps({"event": event, **fields}, ensure_ascii=False) + "\n").encode("utf-8")
+    with clients_lock:
+        dead = []
+        for c in clients:
+            try:
+                c.sendall(line)
+            except OSError:
+                dead.append(c)
+        for c in dead:
+            clients.remove(c)
+
+
+def ipc_server():
+    if os.path.exists(SOCK):
+        os.unlink(SOCK)
+    srv = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    srv.bind(SOCK)
+    os.chmod(SOCK, 0o600)
+    srv.listen(4)
+    while True:
+        conn, _ = srv.accept()
+        with clients_lock:
+            clients.append(conn)
+        try:
+            conn.sendall(b'{"event":"ready"}\n')
+        except OSError:
+            pass
+
+
+def click(ident):
+    emit("click", id=ident)
+
+
+def main():
+    try:
+        import gi
+        gi.require_version("Gtk", "3.0")
+        gi.require_version("GtkLayerShell", "0.1")
+        from gi.repository import Gtk, GtkLayerShell, GLib
+    except Exception as exc:
+        sys.stderr.write("telos-layer: GtkLayerShell unavailable (%s)\n" % exc)
+        sys.exit(0)
+
+    threading.Thread(target=ipc_server, daemon=True).start()
+
+    css = Gtk.CssProvider()
+    css.load_from_data(
+        b"""
+        window { background-color: #241E36; }
+        button { background: #1E1830; color: #F4F0FF; border: none; padding: 4px 8px; }
+        label { color: #F4F0FF; }
+        .accent { color: #FF007F; }
+        .cyan { color: #00F0FF; }
+        """
+    )
+    from gi.repository import Gdk
+    Gtk.StyleContext.add_provider_for_screen(
+        Gdk.Screen.get_default(),
+        css,
+        Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+    )
+
+    def layer_bar(edge, height, namespace):
+        win = Gtk.Window(type=Gtk.WindowType.TOPLEVEL)
+        win.set_decorated(False)
+        GtkLayerShell.init_for_window(win)
+        GtkLayerShell.set_namespace(win, namespace)
+        GtkLayerShell.set_layer(win, GtkLayerShell.Layer.TOP)
+        GtkLayerShell.set_anchor(win, edge, True)
+        GtkLayerShell.set_anchor(win, GtkLayerShell.Edge.LEFT, True)
+        GtkLayerShell.set_anchor(win, GtkLayerShell.Edge.RIGHT, True)
+        GtkLayerShell.set_exclusive_zone(win, 0)
+        GtkLayerShell.set_keyboard_mode(win, GtkLayerShell.KeyboardMode.NONE)
+        win.set_size_request(-1, height)
+        return win
+
+    panel = layer_bar(GtkLayerShell.Edge.TOP, 36, "telos-panel")
+    dock = layer_bar(GtkLayerShell.Edge.BOTTOM, 56, "telos-dock")
+
+    def btn(label, ident, cls=None):
+        b = Gtk.Button(label=label)
+        if cls:
+            b.get_style_context().add_class(cls)
+        b.connect("clicked", lambda *_: click(ident))
+        return b
+
+    clock = Gtk.Label(label=datetime.now().strftime("%a %-d %b  %H:%M"))
+    clock.get_style_context().add_class("cyan")
+
+    def tick():
+        clock.set_text(datetime.now().strftime("%a %-d %b  %H:%M"))
+        return True
+
+    GLib.timeout_add_seconds(15, tick)
+
+    top = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+    top.set_margin_start(8)
+    top.set_margin_end(8)
+    top.pack_start(btn("Telos", "kickoff", "accent"), False, False, 0)
+    top.pack_start(btn("1-4", "overview"), False, False, 0)
+    top.set_center_widget(clock)
+    right = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
+    right.pack_start(btn("Vol", "control"), False, False, 0)
+    right.pack_start(btn("Net", "control"), False, False, 0)
+    right.pack_start(btn("Bell", "notify"), False, False, 0)
+    right.pack_start(btn("Clip", "clipboard"), False, False, 0)
+    top.pack_end(right, False, False, 0)
+    panel.add(top)
+
+    bottom = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+    bottom.set_margin_start(8)
+    bottom.set_margin_end(8)
+    bottom.pack_start(btn("Apps", "kickoff", "accent"), False, False, 0)
+    bottom.pack_start(btn("Overview", "overview"), False, False, 0)
+    bottom.pack_start(btn("Files", "files"), False, False, 0)
+    end = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
+    end.pack_start(btn("Settings", "settings"), False, False, 0)
+    end.pack_start(btn("Lock", "lock"), False, False, 0)
+    bottom.pack_end(end, False, False, 0)
+    dock.add(bottom)
+
+    panel.show_all()
+    dock.show_all()
+    Gtk.main()
+
+
+if __name__ == "__main__":
+    main()

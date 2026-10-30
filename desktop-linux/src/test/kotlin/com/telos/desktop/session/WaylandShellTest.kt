@@ -10,7 +10,7 @@ class WaylandShellTest {
     fun exclusiveZonesMatchPanelAndDock() {
         assertEquals(36, WaylandShell.PANEL_PX)
         assertEquals(56, WaylandShell.DOCK_PX)
-        assertEquals("W0", WaylandShell.PHASE)
+        assertEquals("W1", WaylandShell.PHASE)
     }
 
     @Test
@@ -34,5 +34,12 @@ class WaylandShellTest {
     @Test
     fun emptyPasswordIsNotPamSuccess() {
         assertFalse(PamAuth.authenticate(""))
+    }
+
+    @Test
+    fun parsesLayerClick() {
+        assertEquals("ready", LayerShellParser.eventId("""{"event":"ready"}"""))
+        assertEquals("kickoff", LayerShellParser.eventId("""{"event":"click","id":"kickoff"}"""))
+        assertNull(LayerShellParser.eventId("nope"))
     }
 }

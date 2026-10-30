@@ -6,6 +6,9 @@ CONF_DIR="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
 if [ -x "$CONF_DIR/telos-notifyd" ]; then
   "$CONF_DIR/telos-notifyd" &
 fi
+if [ -x "$CONF_DIR/telos-layer" ]; then
+  "$CONF_DIR/telos-layer" &
+fi
 start_portal() {
   for cand in "$@"; do
     if [ -x "$cand" ]; then

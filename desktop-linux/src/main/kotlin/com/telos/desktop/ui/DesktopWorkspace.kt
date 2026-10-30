@@ -112,6 +112,21 @@ fun DesktopWorkspace(
     val preset = runCatching { CursorPreset.valueOf(settings.cursorPreset) }.getOrDefault(CursorPreset.SWEET_DARK_NEON)
     val density = LocalDensity.current
 
+    LaunchedEffect(Unit) {
+        com.telos.desktop.session.LayerShellBridge.listenLoop()
+    }
+    LaunchedEffect(wm) {
+        com.telos.desktop.session.LayerShellBridge.extraHandler = { id ->
+            when (id) {
+                "settings" -> {
+                    showSettings = true
+                    wm.open("Settings")
+                }
+                "files" -> wm.open("Files", y = wm.workArea.minY + 12f)
+            }
+        }
+    }
+    val nativeLayer = com.telos.desktop.session.LayerShellBridge.connected
     LaunchedEffect(settings.windowButtonStyle, settings.buttonsOnLeft) {
         val style = runCatching { WindowButtonStyle.valueOf(settings.windowButtonStyle) }
             .getOrDefault(WindowButtonStyle.KLASSY_ACCENT_FILLED)
@@ -216,6 +231,7 @@ fun DesktopWorkspace(
                     )
                 }
             }
+            if (!nativeLayer) {
             Row(
                 Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(56.dp).background(TelosColors.surfaceContainer).border(1.dp, TelosColors.outline),
                 verticalAlignment = Alignment.CenterVertically,
@@ -239,7 +255,9 @@ fun DesktopWorkspace(
                     }
                 }
             }
+            }
             // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
+            if (!nativeLayer) {
             TelosTopPanel(
                 wm = wm,
                 engine = telemetry,
@@ -249,6 +267,7 @@ fun DesktopWorkspace(
                 onOpenTelos = { title -> wm.open(title, y = WorkArea.DEFAULT_TOP_BAR_PX + 12f) },
                 modifier = Modifier.align(Alignment.TopCenter),
             )
+            }
             // === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
             AnimatedVisibility(DesktopChrome.appGridOpen, modifier = Modifier.fillMaxSize().zIndex(200f), enter = HelixMotion.enter, exit = HelixMotion.exit) {
                 PlasmaAppGrid(
