@@ -21,8 +21,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.telos.desktop.files.ArchivePasswordException
 import com.telos.desktop.files.NetworkPlaces
 import com.telos.desktop.files.ZipArchives
 import com.telos.desktop.i18n.TelosI18n.t
@@ -51,26 +53,36 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
     var query by remember { mutableStateOf("") }
     var path by remember(start?.absolutePath) { mutableStateOf(start ?: TelosFilesNav.path) }
     var zipPrefix by remember { mutableStateOf("") }
+    var archiveSecret by remember { mutableStateOf("") }
+    var needPassword by remember { mutableStateOf(false) }
     var tick by remember { mutableStateOf(0) }
     val dir = path
-    val inZip = ZipArchives.isZip(dir)
+    val inZip = ZipArchives.isArchive(dir)
     val trashRoot = remember { XdgTrash.filesDir() }
     val inTrash = remember(dir, tick) {
         val p = dir.absoluteFile
         val tdir = trashRoot.absoluteFile
         p == tdir || p.path.startsWith(tdir.path + File.separator)
     }
-    val rows = remember(dir, query, showHiddenFiles, tick, zipPrefix) {
+    val rows = remember(dir, query, showHiddenFiles, tick, zipPrefix, archiveSecret) {
         val list = if (inZip) {
-            ZipArchives.listChildren(dir, zipPrefix).map {
-                FilesRow(it.name, it.directory, dir, it.inner, it.size)
+            try {
+                val secret = archiveSecret.toCharArray().takeIf { it.isNotEmpty() }
+                val kids = ZipArchives.listChildren(dir, zipPrefix, secret).map {
+                    FilesRow(it.name, it.directory, dir, it.inner, it.size)
+                }
+                needPassword = false
+                kids
+            } catch (_: ArchivePasswordException) {
+                needPassword = true
+                emptyList()
             }
         } else {
             dir.listFiles()
                 ?.filter { showHiddenFiles || !it.name.startsWith(".") }
-                ?.sortedWith(compareBy({ !it.isDirectory && !ZipArchives.isZip(it) }, { it.name.lowercase() }))
+                ?.sortedWith(compareBy({ !it.isDirectory && !ZipArchives.isArchive(it) }, { it.name.lowercase() }))
                 ?.map {
-                    FilesRow(it.name, it.isDirectory || ZipArchives.isZip(it), it, null, if (it.isFile) it.length() else 0)
+                    FilesRow(it.name, it.isDirectory || ZipArchives.isArchive(it), it, null, if (it.isFile) it.length() else 0)
                 }
                 ?: emptyList()
         }
@@ -94,6 +106,7 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
             shortcuts.forEach { (n, f) ->
                 TextButton(onClick = {
                     zipPrefix = ""
+                    archiveSecret = ""
                     if (f.exists() || f.mkdirs()) {
                         path = f
                         TelosFilesNav.path = f
@@ -103,6 +116,7 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
             net.forEach { place ->
                 TextButton(onClick = {
                     zipPrefix = ""
+                    archiveSecret = ""
                     val local = NetworkPlaces.open(place)
                     if (local != null) {
                         path = local
@@ -118,6 +132,7 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
                     zipPrefix = zipPrefix.trimEnd('/').substringBeforeLast('/', missingDelimiterValue = "")
                 } else {
                     zipPrefix = ""
+                    archiveSecret = ""
                     dir.parentFile?.let { path = it; TelosFilesNav.path = it }
                 }
             }) { Text(t("menu_back")) }
@@ -138,7 +153,7 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
             } else {
                 TextButton(onClick = {
                     val dest = File(dir.parentFile ?: dir, dir.nameWithoutExtension)
-                    ZipArchives.extractAll(dir, dest)
+                    ZipArchives.extractAll(dir, dest, archiveSecret.toCharArray().takeIf { it.isNotEmpty() })
                     zipPrefix = ""
                     path = dest
                     TelosFilesNav.path = dest
@@ -155,6 +170,16 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
             fontSize = 12.sp,
             modifier = Modifier.padding(horizontal = 8.dp),
         )
+        if (needPassword) {
+            OutlinedTextField(
+                archiveSecret,
+                { archiveSecret = it },
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(t("hc_password")) },
+                visualTransformation = PasswordVisualTransformation(),
+                singleLine = true,
+            )
+        }
         OutlinedTextField(query, { query = it }, modifier = Modifier.fillMaxWidth(), label = { Text(t("hc_filter")) }, singleLine = true)
         LazyColumn(Modifier.fillMaxSize()) {
             items(rows, key = { it.zipInner ?: it.disk?.absolutePath ?: it.name }) { row ->
@@ -166,10 +191,15 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
                                 row.zipInner != null && row.directory -> zipPrefix = row.zipInner
                                 row.zipInner != null -> {
                                     val cache = File(System.getProperty("java.io.tmpdir"), "telos-zip")
-                                    val extracted = ZipArchives.extractEntry(dir, row.zipInner, cache)
+                                    val extracted = ZipArchives.extractEntry(
+                                        dir,
+                                        row.zipInner,
+                                        cache,
+                                        archiveSecret.toCharArray().takeIf { it.isNotEmpty() },
+                                    )
                                     extracted?.let { TelosFileHandler.open(it) }
                                 }
-                                row.disk != null && (row.disk.isDirectory || ZipArchives.isZip(row.disk)) -> {
+                                row.disk != null && (row.disk.isDirectory || ZipArchives.isArchive(row.disk)) -> {
                                     zipPrefix = ""
                                     path = row.disk
                                     TelosFilesNav.path = row.disk

@@ -23,7 +23,7 @@ object TelosFileHandler {
     )
 
     fun classify(file: File): TelosOpenTarget = when {
-        file.isDirectory || ZipArchives.isZip(file) -> TelosOpenTarget.Files
+        file.isDirectory || ZipArchives.isArchive(file) -> TelosOpenTarget.Files
         file.extension.lowercase() in mediaExt -> TelosOpenTarget.Media
         else -> TelosOpenTarget.Host
     }

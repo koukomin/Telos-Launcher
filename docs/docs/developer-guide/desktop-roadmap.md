@@ -10,7 +10,7 @@ When a later session asks **what is still pending** for the Linux desktop, the a
 | --- | --- | --- |
 | **P0** | In tree | `telos-session` → vault CLI unlock → **labwc** compositor → Telos Compose shell (`--session`). Host apps are normal labwc windows. x64 UberJar. |
 | **P1** | In tree | Session **HOME is the vault mount**. nftables `inet telos_session` default-drop + `~/.config/telos/net-allow.txt`. Optional FIDO2 mix-in via `fido2-token` / `fido2-assert`. Panic unmount unchanged. Arm64 jar = same Gradle task on an aarch64 host. Linux only. |
-| **P2** | In progress | Search, Flatpak store, settings aliases, trash, media libraries. Files browse zip/jar/apk (zip-slip rejected), extract/compress, GTK bookmarks + gvfs network places. Remaining: encrypted/rar/7z archives. |
+| **P2** | In progress | Search, Flatpak store, settings aliases, trash, media libraries. Files: zip/jar/apk/7z/tar (+gz/bz2/xz), encrypted zip (in-memory password), rar via host `7z`. Remaining: split archives, ACE. |
 | **P3** | **Pending** | Unix/macOS backends, fractional scaling, niri option, secure screenshots, CI two-arch (x64 + arm64). |
 | **P4** | **Pending** | `:ui-kmp` shared Compose screens. Android migration is a **separate PR** and must not land unless the user asks. `:app:app` stays +0 until then. |
 

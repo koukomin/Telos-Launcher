@@ -129,7 +129,7 @@ fun DesktopWorkspace(
         }
         LaunchedEffect(Unit) {
             TelosFileHandler.onOpenFiles = { file ->
-                TelosFilesNav.path = if (file.isDirectory) file else file.parentFile ?: file
+                TelosFilesNav.path = if (file.isDirectory || com.telos.desktop.files.ZipArchives.isArchive(file)) file else file.parentFile ?: file
                 wm.open("Files", y = topBarPx + 12f)
             }
             TelosFileHandler.onOpenMedia = { file ->
