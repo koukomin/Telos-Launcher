@@ -66,6 +66,7 @@ class PhantomVaultEngine(
 
     fun lock(syncCloud: Boolean = true) {
         expander?.stop()
+        runCatching { com.telos.desktop.session.SessionNetGuard.clear() }
         Sys.run("sync", timeoutSec = 30)
         Sys.run("pkexec", "umount", mountPoint.absolutePath)
         Sys.run("umount", mountPoint.absolutePath)
@@ -81,6 +82,7 @@ class PhantomVaultEngine(
     fun panicUnmount() {
         shards.wipeInnerHeaders(shards.shards.toList())
         lock(syncCloud = false)
+        Sys.run("labwc", "--exit", timeoutSec = 5)
     }
 
     fun expandManual() {

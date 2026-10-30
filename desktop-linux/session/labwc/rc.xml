@@ -26,7 +26,7 @@
   <keyboard>
     <default />
     <keybind key="W-Return">
-      <action name="Execute" command="sh -c '${TERMINAL:-kitty} || xterm'" />
+      <action name="Execute" command="sh -c '${TERMINAL:-} || foot || kitty || gnome-terminal || xterm'" />
     </keybind>
     <keybind key="A-F4">
       <action name="Close" />

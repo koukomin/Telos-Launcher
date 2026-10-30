@@ -61,4 +61,14 @@ object UnlockCli {
     private fun shQuote(value: String): String =
         "'" + value.replace("'", "'\\''") + "'"
 }
+
+object LockCli {
+    fun run() {
+        val engine = PhantomVaultEngine().also { PhantomVault.engine = it }
+        engine.attachMounted()
+        SessionNetGuard.clear()
+        engine.lock(syncCloud = true)
+        exitProcess(0)
+    }
+}
 // === TELOS_PENDING_REVIEW_END: telos_labwc_session_p0p1 ===

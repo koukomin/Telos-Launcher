@@ -21,10 +21,28 @@ object PortableEnvironmentIsolator {
         } else {
             File(mount, "home").apply { mkdirs() }
         }
-        File(home, "Desktop").mkdirs()
+        val xdg = listOf(
+            "DESKTOP" to "Desktop",
+            "DOWNLOAD" to "Downloads",
+            "TEMPLATES" to "Templates",
+            "PUBLICSHARE" to "Public",
+            "DOCUMENTS" to "Documents",
+            "MUSIC" to "Music",
+            "PICTURES" to "Pictures",
+            "VIDEOS" to "Videos",
+        )
+        xdg.forEach { File(home, it.second).mkdirs() }
         File(home, ".config").mkdirs()
         File(home, ".local/share").mkdirs()
         File(home, ".cache").mkdirs()
+        val userDirs = File(home, ".config/user-dirs.dirs")
+        if (!userDirs.exists()) {
+            userDirs.writeText(
+                xdg.joinToString("\n") { (key, dir) ->
+                    """XDG_${key}_DIR="${'$'}HOME/$dir""""
+                } + "\n",
+            )
+        }
         vaultHome = home
         active = true
         System.setProperty("user.home", home.absolutePath)
@@ -43,6 +61,11 @@ object PortableEnvironmentIsolator {
         env["XDG_CACHE_HOME"] = File(home, ".cache").absolutePath
         env["HISTFILE"] = File(home, ".zsh_history").absolutePath
         env["XDG_DESKTOP_DIR"] = File(home, "Desktop").absolutePath
+        env["XDG_DOWNLOAD_DIR"] = File(home, "Downloads").absolutePath
+        env["XDG_DOCUMENTS_DIR"] = File(home, "Documents").absolutePath
+        env["XDG_MUSIC_DIR"] = File(home, "Music").absolutePath
+        env["XDG_PICTURES_DIR"] = File(home, "Pictures").absolutePath
+        env["XDG_VIDEOS_DIR"] = File(home, "Videos").absolutePath
         pb.directory(home)
     }
 

@@ -28,6 +28,7 @@ object SessionPowerActions {
     // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
     fun logout(vault: PhantomVaultEngine, exit: () -> Unit) {
         vault.lock(syncCloud = true)
+        Sys.run("labwc", "--exit", timeoutSec = 5)
         exit()
     }
 
@@ -38,11 +39,13 @@ object SessionPowerActions {
 
     fun reboot(vault: PhantomVaultEngine) {
         vault.lock(syncCloud = true)
+        Sys.run("labwc", "--exit", timeoutSec = 5)
         Sys.run("systemctl", "reboot", timeoutSec = 8)
     }
 
     fun poweroff(vault: PhantomVaultEngine) {
         vault.lock(syncCloud = true)
+        Sys.run("labwc", "--exit", timeoutSec = 5)
         Sys.run("systemctl", "poweroff", timeoutSec = 8)
     }
     // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===

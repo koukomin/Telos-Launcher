@@ -31,6 +31,10 @@ fun main(args: Array<String>) {
         com.telos.desktop.session.UnlockCli.run()
         return
     }
+    if (args.contains("--lock-only")) {
+        com.telos.desktop.session.LockCli.run()
+        return
+    }
     if (args.contains("--already-unlocked")) {
         System.setProperty("telos.alreadyUnlocked", "1")
     }
