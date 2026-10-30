@@ -27,8 +27,9 @@ Beat GNOME / Cosmic / Hyprland-default chrome on density and search, using KDE-c
 | **H2** | In tree (Kickoff) | `PlasmaAppGrid` Kickoff layout: left favorites + power, right search (`DesktopSearch`) + Telos/Linux grids. Super / logo still `DesktopChrome.toggleAppGrid()`. |
 | **H3** | Already in tree | Klassy titlebars, workspace dots, dock row, Alt-Tab strip. Polish only if gaps. |
 | **H4** | In tree | Settings window: opaque Helix `surface` + grouped `surfaceContainer` cards with `outline`. Same toggles and actions as before. |
+| **H5** | In tree | Bottom dock uses `CandyCyberIcon` + labels. Apps opens Kickoff (`toggleAppGrid`). Alt-Tab uses opaque `menu` chips. |
 
-When a later session asks **what is still pending**: **none of P0–P4, none of Helix H0–H4**. Do not start extra DEs unless asked.
+When a later session asks **what is still pending**: **none of P0–P4, none of Helix H0–H5**. Do not start extra DEs unless asked.
 
 ## Files
 
@@ -41,4 +42,4 @@ When a later session asks **what is still pending**: **none of P0–P4, none of 
 
 ## Resume prompt
 
-Helix H0–H4 are in tree. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`.
+Helix H0–H5 are in tree. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`.

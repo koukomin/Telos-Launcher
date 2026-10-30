@@ -8,12 +8,17 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import com.telos.desktop.icons.CandyCyberIcon
+import com.telos.desktop.icons.CandyIcon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -94,7 +99,6 @@ fun DesktopWorkspace(
     onKeyEvent: (KeyEvent) -> Boolean,
 ) {
     val dirs = remember { XdgUserDirsManager.resolve() }
-    var showDrawer by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
     var showDisplay by remember { mutableStateOf(false) }
     var menuAt by remember { mutableStateOf<Offset?>(null) }
@@ -162,9 +166,6 @@ fun DesktopWorkspace(
                     onNotify = { toast = it },
                 )
             }
-            if (showDrawer) {
-                AppDrawer(icons, Modifier.fillMaxSize().padding(top = topBarPx.dp, bottom = 56.dp))
-            }
             FloatingWindowLayer(wm) { win ->
                 when (win.title) {
                     "Settings" -> LinuxDesktopSettingsPanel(settings, icons, display) { wm.close(win.id); showSettings = false }
@@ -218,17 +219,17 @@ fun DesktopWorkspace(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Text(" ${com.telos.desktop.i18n.TelosI18n.t("hc_apps")}", color = TelosColors.secondary, modifier = Modifier.clickable { showDrawer = !showDrawer }.padding(16.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.padding(end = 16.dp)) {
+                DockItem(com.telos.desktop.i18n.TelosI18n.t("hc_apps"), CandyIcon.AppGrid) {
+                    DesktopChrome.toggleAppGrid()
+                }
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(end = 8.dp)) {
                     XdgUserDirsManager.shortcuts(dirs).take(6).forEach { (label, file) ->
-                        Text(label, color = TelosColors.onSurface, fontSize = 12.sp, modifier = Modifier.clickable {
-                            TelosFileHandler.open(file)
-                        })
+                        DockItem(label, CandyIcon.Folder) { TelosFileHandler.open(file) }
                     }
-                    Text(com.telos.desktop.i18n.TelosI18n.t("settings"), color = TelosColors.secondary, modifier = Modifier.clickable {
+                    DockItem(com.telos.desktop.i18n.TelosI18n.t("settings"), CandyIcon.Settings) {
                         showSettings = true
                         wm.open("Settings")
-                    })
+                    }
                 }
             }
             // === TELOS_PENDING_REVIEW_START: telos_kde_replacement_suite ===
@@ -266,9 +267,24 @@ fun DesktopWorkspace(
                 SessionPowerDialog(vault, onLogout)
             }
             if (altTab) {
-                Row(Modifier.align(Alignment.Center).background(TelosColors.surfaceContainer).padding(16.dp)) {
+                Row(
+                    Modifier
+                        .align(Alignment.Center)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(TelosColors.menu)
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
                     wm.visibleWindows().forEach { w ->
-                        Text(w.title, color = if (w.id == wm.focusedId) TelosColors.secondary else TelosColors.onSurface, modifier = Modifier.padding(8.dp))
+                        val selected = w.id == wm.focusedId
+                        Text(
+                            w.title,
+                            color = if (selected) TelosColors.secondary else TelosColors.onSurface,
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(if (selected) TelosColors.surfaceHigh else TelosColors.surfaceContainer)
+                                .padding(12.dp),
+                        )
                     }
                 }
             }
@@ -379,5 +395,16 @@ fun handleDesktopKeys(
     }
     // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
     return false
+}
+
+@Composable
+private fun DockItem(label: String, icon: CandyIcon, onClick: () -> Unit) {
+    Column(
+        Modifier.clickable(onClick = onClick).padding(horizontal = 8.dp, vertical = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        CandyCyberIcon(icon, 22.dp)
+        Text(label, color = TelosColors.onSurface, fontSize = 10.sp, maxLines = 1)
+    }
 }
 // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===

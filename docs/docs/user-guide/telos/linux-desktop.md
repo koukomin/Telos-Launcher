@@ -4,7 +4,7 @@ sidebar_position: 40
 
 # Telos Linux Desktop
 
-Telos Linux Desktop is a **separate JVM program** (`:desktop-linux`). It is not inside the Android APK. Unlock the Phantom Vault, then you get **Helix** chrome: a KDE-style top bar with glyphs, Kickoff (favorites + search), Klassy window buttons, floating Telos apps, and a host `.desktop` launcher. The display manager offers **Telos** (labwc) and **Telos (niri)**. Scale 100–200% is in Settings. Screenshots save as owner-only PNGs (set `TELOS_SHOT_CLIPBOARD=1` to also copy).
+Telos Linux Desktop is a **separate JVM program** (`:desktop-linux`). It is not inside the Android APK. Unlock the Phantom Vault, then you get **Helix** chrome: a KDE-style top bar with glyphs, Kickoff (favorites + search), icon dock, Klassy window buttons, floating Telos apps, and a host `.desktop` launcher. The display manager offers **Telos** (labwc) and **Telos (niri)**. Scale 100–200% is in Settings. Screenshots save as owner-only PNGs (set `TELOS_SHOT_CLIPBOARD=1` to also copy).
 
 ## What it does
 
