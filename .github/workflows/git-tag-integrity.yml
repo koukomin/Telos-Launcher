@@ -1,0 +1,25 @@
+# Automated Git Release Tag Format & Semantic Versioning Integrity Check
+
+name: Git Tag Integrity Check
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  verify-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Validate Semantic Versioning Format
+        run: |
+          TAG_NAME="${GITHUB_REF_NAME:-v1.43.68}"
+          echo "Validating tag format: $TAG_NAME"
+          if [[ ! "$TAG_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Invalid release tag format $TAG_NAME. Must follow v1.XX.XX semantic versioning"
+            exit 1
+          fi
+          echo "Release tag $TAG_NAME is valid!"
