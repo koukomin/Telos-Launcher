@@ -12,7 +12,7 @@ object SessionNetGuard {
         return File(home, ".config/telos/net-allow.txt").apply { parentFile.mkdirs() }
     }
 
-    fun apply() {
+    fun apply(): Boolean {
         val allow = allowlistFile()
         if (!allow.exists()) {
             allow.writeText("# one IPv4/IPv6 CIDR per line; empty = loopback + DNS only\n")
@@ -26,10 +26,9 @@ object SessionNetGuard {
             script.setWritable(true, true)
         }
         val r = Sys.run("pkexec", "nft", "-f", script.absolutePath, timeoutSec = 20)
-        if (!r.ok) {
-            Sys.run("nft", "-f", script.absolutePath, timeoutSec = 10)
-        }
+        val ok = r.ok || Sys.run("nft", "-f", script.absolutePath, timeoutSec = 10).ok
         script.delete()
+        return ok
     }
 
     fun clear() {
@@ -66,10 +65,11 @@ object SessionNetGuard {
         val addr = if (slash >= 0) entry.substring(0, slash) else entry
         val prefix = if (slash >= 0) entry.substring(slash + 1).toIntOrNull() else null
         if (slash >= 0 && prefix == null) return null
+        if (prefix == 0) return null
         return when {
-            isIpv4(addr) && (prefix == null || prefix in 0..32) ->
+            isIpv4(addr) && (prefix == null || prefix in 1..32) ->
                 "        ip daddr $entry accept"
-            isIpv6(addr) && (prefix == null || prefix in 0..128) ->
+            isIpv6(addr) && (prefix == null || prefix in 1..128) ->
                 "        ip6 daddr $entry accept"
             else -> null
         }

@@ -20,6 +20,8 @@ class SessionNetGuardTest {
                 "999.1.1.1",
                 "1.2.3.4/99",
                 "01.2.3.4",
+                "0.0.0.0/0",
+                "::/0",
             ),
         )
         assertEquals(

@@ -1,5 +1,6 @@
 package com.telos.desktop.vault
 
+import com.telos.desktop.linux.ProcMounts
 import com.telos.desktop.linux.Sys
 import kotlinx.coroutines.CoroutineScope
 import java.io.File
@@ -231,8 +232,7 @@ class PhantomVaultEngine(
 
     private fun isMounted(): Boolean {
         val mounts = runCatching { Files.readString(Path("/proc/self/mounts")) }.getOrDefault("")
-        val extra = TelosSessionHome.vaultMount?.absolutePath
-        return mounts.contains(mountPoint.absolutePath) ||
-            (extra != null && mounts.contains(extra))
+        return ProcMounts.containsPath(mounts, mountPoint.absolutePath) ||
+            ProcMounts.containsPath(mounts, TelosSessionHome.vaultMount?.absolutePath)
     }
 }

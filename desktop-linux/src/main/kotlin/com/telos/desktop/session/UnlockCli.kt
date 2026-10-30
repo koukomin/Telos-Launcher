@@ -33,7 +33,9 @@ object UnlockCli {
             System.err.println(result.toString())
             exitProcess(1)
         }
-        SessionNetGuard.apply()
+        if (!SessionNetGuard.apply()) {
+            System.err.println("telos-session: nftables inet telos_session not applied (continuing)")
+        }
         val home = engine.mountPoint
         val stamp = File(System.getenv("XDG_RUNTIME_DIR") ?: "/tmp", "telos-session.env")
         stamp.writeText(
