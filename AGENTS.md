@@ -49,7 +49,7 @@ External apps can extend Kvaesitso (weather, file/contact/places search, calenda
 
 `:desktop-linux` P0/P1 (labwc session, vault as full `$HOME`, Linux only) is in the tree. See `docs/docs/developer-guide/desktop-roadmap.md`.
 
-If the user asks what is still pending: **Android `:ui-kmp` migration** (separate change). P0–P4 desktop are in the tree. Never depend `:app:app` on `:desktop-linux` or `:ui-kmp` unless the user asks.
+If the user asks what is still pending: **`:app:ui` hosting `:ui-kmp` screens** (separate change). P0–P4 including the Android KMP target are in the tree. Never depend `:app:app` on `:desktop-linux` or `:ui-kmp` unless the user asks.
 
 ## Documentation
 

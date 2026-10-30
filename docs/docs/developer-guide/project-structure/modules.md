@@ -61,7 +61,7 @@ started this project so future refactorings are to be expected. This is the curr
     - `:permissions`: Request and observe permission status for this app
     - `:preferences`: Store user preferences; uses AndroidX Datastore
     - `:profiles`: Manage user profiles on the device
-- `:ui-kmp`: Compose Multiplatform (`commonMain` + JVM) shared screens and palette. Used by `:desktop-linux`. **Not** a dependency of `:app:app` / `:app:ui` yet.
+- `:ui-kmp`: Compose Multiplatform (`commonMain`, JVM, Android) shared screens and palette. Used by `:desktop-linux` (JVM). The Android target is in the tree; `:app:ui` does not depend on it yet. **Not** a dependency of `:app:app`.
 - `:desktop-linux`: Compose for Desktop / JVM Linux shell (LUKS vault, `.desktop` launcher, XDG desktop). Isolated; **not** depended on by `:app:app`. See [Telos Linux Desktop](/docs/developer-guide/desktop-linux).
 - `:libs`: Somewhat standalone modules and 3rd party libraries that do not depend on `:core:base`
     - `:address-formatter`: Fork of https://github.com/woheller69/AndroidAddressFormatter (because
