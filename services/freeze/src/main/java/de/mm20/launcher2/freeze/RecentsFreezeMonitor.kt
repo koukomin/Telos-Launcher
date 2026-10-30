@@ -100,7 +100,7 @@ class RecentsFreezeMonitor internal constructor(
                 override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean {
                     if (code == INTERFACE_TRANSACTION) return super.onTransact(code, data, reply, flags)
                     // Accept callbacks only from Android system_server, never another application.
-                    if (Binder.getCallingUid() != SYSTEM_UID) return false
+                    if (getCallingUid() != SYSTEM_UID) return false
                     data.enforceInterface("android.app.ITaskStackListener")
                     when (code) {
                         removed -> offer(RecentsSignal(data.readInt()))
@@ -176,8 +176,8 @@ class RecentsFreezeMonitor internal constructor(
         if (tasks.size >= 256) return null // A full page cannot prove another task is absent.
         tasks.map { value ->
             val task = value as? ActivityManager.RecentTaskInfo ?: return null
-            val pkg = task.baseIntent?.component?.packageName ?: task.baseActivity?.packageName
-                ?: task.baseIntent?.`package` ?: return null
+            val pkg = task.baseIntent.component?.packageName ?: task.baseActivity?.packageName
+                ?: task.baseIntent.`package` ?: return null
             val owner = task.javaClass.getField("userId").getInt(task)
             RecentsTask(task.taskId, pkg, owner)
         }

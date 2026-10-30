@@ -358,7 +358,7 @@ fun ContactsScreen(
             text = {
                 androidx.compose.foundation.rememberScrollState().let { scroll ->
                     Column(Modifier.heightIn(max = 420.dp).verticalScroll(scroll)) {
-                        androidx.compose.material3.TextButton(onClick = {
+                        TextButton(onClick = {
                             selectedAccounts = null
                             accountPrefs.edit().remove("accounts").apply()
                         }) { Text(stringResource(R.string.contacts_accounts_all)) }
@@ -434,22 +434,7 @@ internal fun ContactRow(
     onSms: () -> Unit,
     onLongPress: () -> Unit,
 ) {
-    val dismissState = rememberSwipeToDismissBoxState(
-        confirmValueChange = { value ->
-            when (value) {
-                SwipeToDismissBoxValue.StartToEnd -> {
-                    onSms()
-                    false
-                }
-                SwipeToDismissBoxValue.EndToStart -> {
-                    onCall()
-                    false
-                }
-                else -> false
-            }
-        },
-        positionalThreshold = { it * 0.4f },
-    )
+    val dismissState = rememberSwipeToDismissBoxState(COMPILED_CODE, { it * 0.4f })
     SwipeToDismissBox(
         state = dismissState,
         backgroundContent = {

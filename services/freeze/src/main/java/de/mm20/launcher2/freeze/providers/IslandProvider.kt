@@ -15,7 +15,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.freeze.R
+import de.mm20.launcher2.base.R
 
 /**
  * Freezes/unfreezes apps through Island (com.oasisfeng.island), using its documented public
@@ -79,7 +79,7 @@ internal class IslandProvider(private val context: Context) {
             nm.createNotificationChannel(
                 NotificationChannel(
                     CHANNEL_ID,
-                    context.getString(R.string.freeze_island_notification_channel),
+                    context.getString(de.mm20.launcher2.i18n.R.string.freeze_island_notification_channel),
                     NotificationManager.IMPORTANCE_DEFAULT,
                 )
             )
@@ -94,9 +94,9 @@ internal class IslandProvider(private val context: Context) {
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ac_unit_24px)
-            .setContentTitle(context.getString(R.string.freeze_island_notification_title))
+            .setContentTitle(context.getString(de.mm20.launcher2.i18n.R.string.freeze_island_notification_title))
             .setContentText(
-                context.getString(R.string.freeze_island_notification_text, packageNames.size)
+                context.getString(de.mm20.launcher2.i18n.R.string.freeze_island_notification_text, packageNames.size)
             )
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

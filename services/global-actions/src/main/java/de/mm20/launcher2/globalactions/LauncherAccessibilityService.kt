@@ -30,7 +30,7 @@ class LauncherAccessibilityService: AccessibilityService() {
         RecentsStore.record(
             packageName,
             event.className?.toString(),
-            event.text?.firstOrNull(),
+            event.text.firstOrNull(),
         )
     }
 

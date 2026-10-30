@@ -40,6 +40,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.ui.res.painterResource
 import de.mm20.launcher2.ui.component.SearchEmptyState
 import de.mm20.launcher2.ui.component.TelosSearchBar
@@ -855,27 +857,32 @@ private fun BlockedMessagesView(onBack: () -> Unit) {
             }
             items(messages, key = { "m${it.id}" }) { m ->
                 ListItem(
-                    headlineContent = { Text(SmsThreads.displayNameOf(context, m.address) ?: m.address, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                    supportingContent = {
-                        Column {
-                            m.attachments.forEach { a ->
-                                if (a.mimeType.startsWith("image/")) AsyncImage(
-                                    model = a.uri, contentDescription = stringResource(R.string.au_messages_attachment), contentScale = ContentScale.Fit,
-                                    modifier = Modifier.fillMaxWidth().heightIn(max = 160.dp),
-                                ) else Text(stringResource(R.string.au_messages_attachment) + " (${a.mimeType})", style = MaterialTheme.typography.labelSmall)
-                            }
-                            if (m.body.isNotBlank()) Text(m.body, maxLines = 4, overflow = TextOverflow.Ellipsis)
-                            Text(shortDate(m.date), style = MaterialTheme.typography.labelSmall)
-                        }
-                    },
+                    modifier = COMPILED_CODE,
+                    leadingContent = COMPILED_CODE,
                     trailingContent = {
-                        TextButton(onClick = {
-                            scope.launch {
-                                withContext(Dispatchers.IO) { BlockedMessages.delete(context, m.id) }
-                                version++
-                            }
-                        }) { Text(stringResource(R.string.hc_delete)) }
-                    },
+                                        TextButton(onClick = {
+                                            scope.launch {
+                                                withContext(Dispatchers.IO) { BlockedMessages.delete(context, m.id) }
+                                                version++
+                                            }
+                                        }) { Text(stringResource(R.string.hc_delete)) }
+                                    },
+                    overlineContent = COMPILED_CODE,
+                    supportingContent = {
+                                        Column {
+                                            m.attachments.forEach { a ->
+                                                if (a.mimeType.startsWith("image/")) AsyncImage(
+                                                    model = a.uri, contentDescription = stringResource(R.string.au_messages_attachment), contentScale = ContentScale.Fit,
+                                                    modifier = Modifier.fillMaxWidth().heightIn(max = 160.dp),
+                                                ) else Text(stringResource(R.string.au_messages_attachment) + " (${a.mimeType})", style = MaterialTheme.typography.labelSmall)
+                                            }
+                                            if (m.body.isNotBlank()) Text(m.body, maxLines = 4, overflow = TextOverflow.Ellipsis)
+                                            Text(shortDate(m.date), style = MaterialTheme.typography.labelSmall)
+                                        }
+                                    },
+                    colors = COMPILED_CODE,
+                    elevation = ListItemDefaults.elevation(COMPILED_CODE),
+                    content = { Text(SmsThreads.displayNameOf(context, m.address) ?: m.address, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 )
             }
         }

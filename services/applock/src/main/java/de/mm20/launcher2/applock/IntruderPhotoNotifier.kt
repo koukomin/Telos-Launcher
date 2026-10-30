@@ -37,14 +37,14 @@ class IntruderPhotoNotifier(private val context: Context) {
         )
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.lock_24px)
-            .setContentTitle(context.getString(R.string.intruder_photo_notification_title))
+            .setSmallIcon(de.mm20.launcher2.base.R.drawable.lock_24px)
+            .setContentTitle(context.getString(de.mm20.launcher2.i18n.R.string.intruder_photo_notification_title))
             .setContentText(
-                context.getString(R.string.intruder_photo_notification_text, appLabel)
+                context.getString(de.mm20.launcher2.i18n.R.string.intruder_photo_notification_text, appLabel)
             )
             .setContentIntent(openGallery)
             .setAutoCancel(true)
-            .addAction(0, context.getString(R.string.intruder_photo_notification_show_more), openGallery)
+            .addAction(0, context.getString(de.mm20.launcher2.i18n.R.string.intruder_photo_notification_show_more), openGallery)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
@@ -61,7 +61,7 @@ class IntruderPhotoNotifier(private val context: Context) {
             nm.createNotificationChannel(
                 NotificationChannel(
                     CHANNEL_ID,
-                    context.getString(R.string.intruder_photo_notification_channel),
+                    context.getString(de.mm20.launcher2.i18n.R.string.intruder_photo_notification_channel),
                     NotificationManager.IMPORTANCE_DEFAULT,
                 )
             )

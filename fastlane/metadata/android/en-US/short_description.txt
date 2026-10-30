@@ -1,1 +1,1 @@
-A search-focused, free and open source launcher for Android
+Telos Launcher — A search-focused, private, and open-source Android launcher & virtual workspace.

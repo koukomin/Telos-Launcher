@@ -136,8 +136,7 @@ internal class DefaultProxyController(context: Context) : ProxyController {
     }
     override val hasPolicies: Boolean get() = !loaded.isCompleted || failedLoad || _default.value != null || _assignments.value.values.any { it is ProxyAssignment.Endpoint }
     override fun failClosedFor(uid: Int): Boolean {
-        if (!loaded.isCompleted || failedLoad) return true
-        return when (_assignments.value[if (uid < 0) -1 else uid % 100000]) {
+        return !loaded.isCompleted || failedLoad || when (_assignments.value[if (uid < 0) -1 else uid % 100000]) {
             ProxyAssignment.Direct -> false
             is ProxyAssignment.Endpoint -> true
             else -> _default.value != null

@@ -76,8 +76,7 @@ internal class FreeformAccessProvider(private val context: Context) {
     }
 
     suspend fun hasShizukuPermission(): Boolean {
-        if (!isShizukuAvailable()) return false
-        return try {
+        return isShizukuAvailable() && try {
             Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED
         } catch (e: Throwable) {
             false
@@ -122,8 +121,7 @@ internal class FreeformAccessProvider(private val context: Context) {
     }
 
     private suspend fun grantSelfWriteSecureSettings(): Boolean {
-        if (!hasShizukuPermission()) return false
-        return runCatching {
+        return hasShizukuPermission() && runCatching {
             val pm = packageManager() ?: return false
             if (isAtLeastApiLevel(Build.VERSION_CODES.P)) {
                 HiddenApiBypass.invoke(

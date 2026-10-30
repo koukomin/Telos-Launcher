@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.coil.core)
 
     implementation(project(":core:ktx"))
+    implementation(project(":core:i18n"))
     implementation(project(":core:preferences"))
     implementation(project(":data:notifications"))
     implementation(project(":core:crashreporter"))

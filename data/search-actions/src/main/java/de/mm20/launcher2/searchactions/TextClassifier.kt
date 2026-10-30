@@ -1,6 +1,7 @@
 package de.mm20.launcher2.searchactions
 
 import android.content.Context
+import de.mm20.launcher2.i18n.R
 import android.icu.text.SimpleDateFormat
 import android.text.format.DateFormat
 import java.text.ParseException

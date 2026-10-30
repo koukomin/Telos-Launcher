@@ -300,6 +300,7 @@ fabric.properties
 
 .kotlin
 *.telos_backup
+desktop-linux/build/
 
 # Native SIP libraries (downloaded by CI or built with sip-native/Makefile)
 sip-native/distribution/

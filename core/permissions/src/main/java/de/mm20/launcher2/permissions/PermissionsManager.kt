@@ -319,8 +319,8 @@ internal class PermissionsManagerImpl(
                 ActivityCompat.requestPermissions(
                     context,
                     arrayOf(
-                        android.Manifest.permission.READ_CALL_LOG,
-                        android.Manifest.permission.WRITE_CALL_LOG,
+                        Manifest.permission.READ_CALL_LOG,
+                        Manifest.permission.WRITE_CALL_LOG,
                     ),
                     permissionGroup.ordinal
                 )
@@ -363,9 +363,7 @@ internal class PermissionsManagerImpl(
             }
 
             PermissionGroup.ManageProfiles -> {
-                if (isAtLeastApiLevel(29)) {
-                    context.getSystemService<RoleManager>()?.isRoleHeld(RoleManager.ROLE_HOME) == true
-                } else false
+                isAtLeastApiLevel(29) && context.getSystemService<RoleManager>()?.isRoleHeld(RoleManager.ROLE_HOME) == true
             }
 
             PermissionGroup.Accessibility -> {
@@ -412,7 +410,7 @@ internal class PermissionsManagerImpl(
             }
             PermissionGroup.CallLog -> ActivityCompat.checkSelfPermission(
                 context,
-                android.Manifest.permission.READ_CALL_LOG
+                Manifest.permission.READ_CALL_LOG
             ) == PackageManager.PERMISSION_GRANTED
         }
     }

@@ -26,7 +26,7 @@ class MusicPlayerService : MediaSessionService() {
     // Nothing keeps the service (and the decoder) alive after music has been paused for a while
     private val idleStop: Runnable = Runnable {
         val p = mediaSession?.player
-        if (de.mm20.launcher2.comms.media.PlaybackCoordinator.isWaiting(this, PlaybackCoordinator.KIND_MUSIC)) {
+        if (PlaybackCoordinator.isWaiting(this, PlaybackCoordinator.KIND_MUSIC)) {
             handler.postDelayed(idleStop, IDLE_STOP_MS) // a video paused the music, it may continue
         } else if (p?.isPlaying != true && p?.playWhenReady != true) pauseAllPlayersAndStopSelf()
     }
@@ -34,7 +34,7 @@ class MusicPlayerService : MediaSessionService() {
     override fun onCreate() {
         super.onCreate()
         setMediaNotificationProvider(androidx.media3.session.DefaultMediaNotificationProvider.Builder(this)
-            .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.MUSIC).build().apply { setSmallIcon(de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_music_app")!!) })
+            .setNotificationId(MediaPlaybackNotifications.MUSIC).build().apply { setSmallIcon(de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_music_app")!!) })
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(C.USAGE_MEDIA)
             .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
@@ -48,7 +48,7 @@ class MusicPlayerService : MediaSessionService() {
         player.addListener(object : Player.Listener {
             private var effectSession = -1
             override fun onAudioSessionIdChanged(audioSessionId: Int) {
-                de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession(effectSession)
+                MediaAudioFx.detachFromSession(effectSession)
                 effectSession = audioSessionId
                 MediaAudioFx.attachToSession(audioSessionId)
             }
@@ -170,7 +170,7 @@ class MusicPlayerService : MediaSessionService() {
         MusicSleepTimer.onExpire = null
         MusicSleepTimer.cancel() // no timer without a player to stop
         mediaSession?.run {
-            de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession((player as? ExoPlayer)?.audioSessionId ?: -1); player.release()
+            MediaAudioFx.detachFromSession((player as? ExoPlayer)?.audioSessionId ?: -1); player.release()
             release()
             mediaSession = null
         }

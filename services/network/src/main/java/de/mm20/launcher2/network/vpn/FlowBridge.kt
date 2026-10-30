@@ -102,12 +102,12 @@ internal class FlowBridge(
         val mark = PreMark()
         try {
             val owner = resolveUid(protocol, uid, src, dst)
-            mark.setUID(owner.toString())
-            mark.setIsUidSelf(owner >= 0 && owner % FlowInfo.PER_USER_RANGE == ownAppId)
+            mark.uid = owner.toString()
+            mark.isUidSelf = owner >= 0 && owner % FlowInfo.PER_USER_RANGE == ownAppId
         } catch (t: Throwable) {
             fault("preflow", t)
-            mark.setUID(uid.toString())
-            mark.setIsUidSelf(false)
+            mark.uid = uid.toString()
+            mark.isUidSelf = false
         }
         return mark
     }
@@ -249,8 +249,8 @@ internal class FlowBridge(
 
     override fun postflow(s: FlowSummary?) {
         try {
-            if (s == null || s.getID().isNullOrEmpty()) return
-            logs.recordConnectionEnd(s.getID(), s.getRx(), s.getTx(), s.getDuration())
+            if (s == null || s.id.isNullOrEmpty()) return
+            logs.recordConnectionEnd(s.id, s.rx, s.tx, s.duration)
         } catch (t: Throwable) {
             fault("postflow", t)
         }
@@ -289,9 +289,9 @@ internal class FlowBridge(
 
     private fun mark(proxyIds: String, cid: String, uid: Int): Mark {
         val m = Mark()
-        m.setPIDCSV(proxyIds)
-        m.setCID(cid)
-        m.setUID(uid.toString())
+        m.pidcsv = proxyIds
+        m.cid = cid
+        m.uid = uid.toString()
         return m
     }
 
@@ -341,20 +341,20 @@ internal class FlowBridge(
             } else {
                 Backend.CT + dns.transportFor(owner, domain)
             }
-            opts.setUID(uid.orEmpty())
-            opts.setIPCSV("")
+            opts.uid = uid.orEmpty()
+            opts.ipcsv = ""
             // "<transport>:<proxy>": DNS itself goes out directly (Base), not through WireGuard
-            opts.setTIDCSV("$transport:${Backend.Base}")
-            opts.setTIDSECCSV("")
-            opts.setNOBLOCK(verdict == DnsVerdict.AllowSkipBlocklists)
+            opts.tidcsv = "$transport:${Backend.Base}"
+            opts.tidseccsv = ""
+            opts.noblock = verdict == DnsVerdict.AllowSkipBlocklists
         } catch (t: Throwable) {
             fault("onQuery", t)
-            opts.setUID(uid.orEmpty())
-            opts.setIPCSV("")
+            opts.uid = uid.orEmpty()
+            opts.ipcsv = ""
             val failClosed = torRestrictions() || de.mm20.launcher2.network.tor.TorPolicy.isOnion(domain)
-            opts.setTIDCSV("${if (failClosed) Backend.BlockAll else Backend.System}:${Backend.Base}")
-            opts.setTIDSECCSV("")
-            opts.setNOBLOCK(false)
+            opts.tidcsv = "${if (failClosed) Backend.BlockAll else Backend.System}:${Backend.Base}"
+            opts.tidseccsv = ""
+            opts.noblock = false
         }
         return opts
     }
@@ -371,29 +371,29 @@ internal class FlowBridge(
     override fun onResponse(summary: DNSSummary?) {
         try {
             if (summary == null) return
-            val answers = summary.getRData().orEmpty().split(',').map { it.trim() }.filter { it.isNotEmpty() }
-            val lists = summary.getBlocklists().orEmpty().split(',').map { it.trim() }.filter { it.isNotEmpty() }
-            val transport = summary.getID().orEmpty()
+            val answers = summary.rData.orEmpty().split(',').map { it.trim() }.filter { it.isNotEmpty() }
+            val lists = summary.blocklists.orEmpty().split(',').map { it.trim() }.filter { it.isNotEmpty() }
+            val transport = summary.id.orEmpty()
             val blocked = transport == Backend.BlockAll || transport == Backend.Block ||
                 (answers.isNotEmpty() && IpUtil.isUnspecified(answers.first())) ||
-                (answers.isEmpty() && (lists.isNotEmpty() || summary.getUpstreamBlocks()))
+                (answers.isEmpty() && (lists.isNotEmpty() || summary.upstreamBlocks))
             if (blocked && lists.isNotEmpty()) blocklists.recordBlock(lists)
             if (!settings.current.logDns) return
-            val status = summary.getStatus()
+            val status = summary.status
             logs.recordDns(
                 DnsLogEntry(
-                    timeMs = summary.getStart(),
-                    uid = summary.getUID().orEmpty().toIntOrNull() ?: FlowInfo.UNKNOWN_UID,
-                    domain = summary.getQName().orEmpty().trimEnd('.'),
-                    type = summary.getQType().toInt(),
-                    responseCode = summary.getRCode().toInt(),
+                    timeMs = summary.start,
+                    uid = summary.uid.orEmpty().toIntOrNull() ?: FlowInfo.UNKNOWN_UID,
+                    domain = summary.qName.orEmpty().trimEnd('.'),
+                    type = summary.qType.toInt(),
+                    responseCode = summary.rCode.toInt(),
                     answers = answers,
-                    server = summary.getServer().orEmpty(),
-                    latencyMs = (summary.getLatency() * 1000).toLong(),
-                    cached = summary.getCached(),
+                    server = summary.server.orEmpty(),
+                    latencyMs = (summary.latency * 1000).toLong(),
+                    cached = summary.cached,
                     blocked = blocked,
                     blocklists = lists,
-                    error = if (status != Backend.Complete) summary.getMsg()?.takeIf { it.isNotBlank() } else null,
+                    error = if (status != Backend.Complete) summary.msg?.takeIf { it.isNotBlank() } else null,
                 )
             )
         } catch (t: Throwable) {

@@ -42,8 +42,7 @@ internal class NextDnsApi(private val transport: NextDnsTransport) {
         }.joinToString("&")
         val suffix = if (metric.series) ";series" else ""
         val response = request("GET", "/profiles/$id/analytics/${metric.feature}$suffix?$query", key)
-        val data = response.data
-        val root = when (data) {
+        val root = when (val data = response.data) {
             is JsonObject -> data
             is JsonArray -> buildJsonObject { put("data", data) }
             else -> throw NextDnsException(NextDnsErrorKind.API)

@@ -4,7 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.locations.providers.AndroidLocation
 import de.mm20.launcher2.locations.providers.LocationProvider
-import de.mm20.launcher2.openstreetmaps.R
+import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.ResultScore

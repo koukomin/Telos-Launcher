@@ -264,7 +264,7 @@ class NextDnsApiTest {
             suspend { api.createRewrite("abc123", key, "192.0.2.10", "192.0.2.11"); Unit },
             suspend { api.createRewrite("abc123", key, "*.example.org", "192.0.2.11"); Unit },
             suspend { api.createRewrite("abc123", key, "valid.example.org", "https://example.org"); Unit },
-            suspend { api.deleteRewrite("abc123", key, "../secret"); Unit },
+            suspend { api.deleteRewrite("abc123", key, "../secret"); },
         )) {
             try {
                 input()

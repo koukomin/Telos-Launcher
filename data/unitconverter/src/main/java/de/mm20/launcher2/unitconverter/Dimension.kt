@@ -1,6 +1,7 @@
 package de.mm20.launcher2.unitconverter
 
 import androidx.annotation.StringRes
+import de.mm20.launcher2.i18n.R
 
 enum class Dimension(@StringRes val resource: Int) {
     Length(R.string.dimension_length),

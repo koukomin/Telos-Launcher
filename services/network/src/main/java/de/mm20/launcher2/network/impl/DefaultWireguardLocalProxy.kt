@@ -107,7 +107,7 @@ internal class DefaultWireguardLocalProxy(
 
     private fun start(t: Tunnel, proxyId: String): LocalProxyEndpoint {
         val port = ServerSocket(0, 1, InetAddress.getByName(HOST)).use { it.localPort }
-        val services = t.getServices()
+        val services = t.services
         // AddServer reports "no proxy named svchttp" although the server was stored: ignore that, check below
         try {
             services.addServer(Backend.SVCHTTP, "http://$HOST:$port")
@@ -124,7 +124,7 @@ internal class DefaultWireguardLocalProxy(
 
     private fun stop(t: Tunnel? = runningTunnel) {
         try {
-            t?.getServices()?.removeServer(Backend.SVCHTTP)
+            t?.services?.removeServer(Backend.SVCHTTP)
         } catch (e: Throwable) {
             // tunnel already gone: its servers are gone too
         }

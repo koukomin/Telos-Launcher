@@ -2,6 +2,7 @@ package de.mm20.launcher2.nextcloud
 
 import android.app.Activity
 import android.content.Context
+import de.mm20.launcher2.i18n.R
 import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
@@ -95,7 +96,7 @@ class NextcloudApiHelper(val context: Context) {
                     takeFrom(serverUrl)
                     path("index.php", "login", "v2")
                 }
-                header(HttpHeaders.UserAgent, context.getString(R.string.app_name))
+                header(HttpHeaders.UserAgent, context.getString(de.mm20.launcher2.base.R.string.app_name))
             }
         } catch (e: IOException) {
             Log.e("NextcloudApiHelper", "HTTP error", e)

@@ -1,0 +1,22 @@
+Categories:
+  - System
+License: GPL-3.0-only
+SourceCode: https://github.com/koukomin/Telos-Launcher
+IssueTracker: https://github.com/koukomin/Telos-Launcher/issues
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: 1.41.89
+CurrentVersionCode: 2026110500
+
+Builds:
+  - versionName: 1.41.89
+    versionCode: 2026110500
+    commit: v1.41.89
+    subdir: app/app
+    gradle:
+      - yes
+    gradleProps:
+      - fdroidBuild=true
+    rm:
+      - desktop-linux

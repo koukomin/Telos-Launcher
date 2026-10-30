@@ -14,6 +14,7 @@ import android.os.UserHandle
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import de.mm20.launcher2.base.R
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber

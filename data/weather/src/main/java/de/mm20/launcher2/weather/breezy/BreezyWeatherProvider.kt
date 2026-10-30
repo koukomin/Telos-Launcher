@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
-import de.mm20.launcher2.weather.R
+import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.weather.WeatherIcon
 import de.mm20.launcher2.weather.WeatherProvider
 import kotlinx.coroutines.Dispatchers

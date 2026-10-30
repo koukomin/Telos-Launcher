@@ -64,7 +64,7 @@ internal class BadgeServiceImpl(
                 if (it.plugins) {
                     providers += PluginBadgeProvider(context)
                 }
-                providers += get<de.mm20.launcher2.appmanagement.FossUpdateBadgeProvider>()
+                providers += get<FossUpdateBadgeProvider>()
                 badgeProviders.value = providers
             }
         }

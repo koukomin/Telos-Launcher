@@ -95,7 +95,7 @@ class FreezeManager internal constructor(
             FreezeBackendType.Dhizuku -> dhizukuProvider
             else -> return null
         }
-        return if (provider.isAvailable() && provider.hasPermission()) type!!.name to provider else null
+        return if (provider.isAvailable() && provider.hasPermission()) type.name to provider else null
     }
 
     /** Re-evaluates which backend (if any) is currently usable, based on the user's preference. */
@@ -257,13 +257,14 @@ class FreezeManager internal constructor(
         operationMutex.withLock {
             if (!VALID_PACKAGE_NAME.matches(packageName)) return@withLock false
             val userId = user.hashCode()
-            val frozen = if (!candidate) false else if (userId == Process.myUid() / 100000) isFrozen(packageName) else {
+            val frozen = candidate && if (userId == Process.myUid() / 100000) isFrozen(packageName) else {
                 // PackageManager on the launcher context describes only the current user.
                 val launcherApps = requireNotNull(context.getSystemService(LauncherApps::class.java))
                 val info = launcherApps.getApplicationInfo(packageName, PackageManager.MATCH_DISABLED_COMPONENTS, user)
                 !launcherApps.isPackageEnabled(packageName, user) || !info.enabled ||
-                    (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0
+                        (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0
             }
+            // PackageManager on the launcher context describes only the current user.
             if (candidate && frozen) {
                 if (_activeBackend.value == null) refreshBackendState()
                 // Island exposes a hide intent, not a synchronous suspend/disable conversion.
@@ -372,11 +373,10 @@ class FreezeManager internal constructor(
                             val flags = PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES
                             val info = if (userId == Process.myUid() / 100000) context.packageManager.getApplicationInfo(pkg, flags)
                                 else requireNotNull(context.getSystemService(LauncherApps::class.java)).getApplicationInfo(pkg, flags, user)
-                            if (info.flags and ApplicationInfo.FLAG_INSTALLED == 0) false
-                            else if (suspended && backend == FreezeBackendType.Island) freezeState(pkg) != AppFreezeState.Normal
+                            info.flags and ApplicationInfo.FLAG_INSTALLED != 0 && if (suspended && backend == FreezeBackendType.Island) freezeState(pkg) != AppFreezeState.Normal
                             else if (suspended) methodApplied(pkg, user, methods[pkg] ?: FreezeMethod.Suspend)
                             else info.enabled && info.flags and ApplicationInfo.FLAG_SUSPENDED == 0 &&
-                                (userId != Process.myUid() / 100000 || freezeState(pkg) == AppFreezeState.Normal)
+                                    (userId != Process.myUid() / 100000 || freezeState(pkg) == AppFreezeState.Normal)
                         }.getOrDefault(false)
                     }
                 }

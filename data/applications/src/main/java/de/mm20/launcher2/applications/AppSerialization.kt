@@ -9,6 +9,7 @@ import android.os.Process
 import android.os.UserManager
 import android.util.Log
 import androidx.core.content.getSystemService
+import de.mm20.launcher2.base.R
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.search.SavableSearchable
@@ -66,7 +67,7 @@ class LauncherAppDeserializer(val context: Context) : SearchableDeserializer {
                     )
                 ) {
                     return LockedPrivateProfileApp(
-                        label = context.getString(R.string.app_label_locked_profile),
+                        label = context.getString(de.mm20.launcher2.i18n.R.string.app_label_locked_profile),
                         componentName = componentName,
                         user = user,
                         userSerialNumber = userSerial

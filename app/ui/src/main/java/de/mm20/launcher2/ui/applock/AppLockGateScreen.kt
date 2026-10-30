@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.applock
 
+import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.i18n.R as I18nR
 import android.content.pm.PackageManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -60,7 +62,7 @@ fun AppLockGateScreen(
     var attempted by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val activity = context as? FragmentActivity
-    val promptTitle = stringResource(R.string.app_lock_prompt_title, appLabel)
+    val promptTitle = stringResource(I18nR.string.app_lock_prompt_title, appLabel)
     val authAvailable = activity != null && canAuthenticateSettings(activity, lockMethod)
 
     val appLockSettings: AppLockSettings = koinInject()
@@ -120,15 +122,15 @@ fun AppLockGateScreen(
                 verticalArrangement = Arrangement.Center,
             ) {
                 Icon(
-                    painterResource(R.drawable.lock_48px),
+                    painterResource(BaseR.drawable.lock_48px),
                     contentDescription = null,
                     modifier = Modifier.size(48.dp),
                     tint = MaterialTheme.colorScheme.primary,
                 )
                 Text(
                     text = stringResource(
-                        if (authAvailable) R.string.app_lock_locked_message
-                        else R.string.settings_locked_no_authenticator,
+                        if (authAvailable) I18nR.string.app_lock_locked_message
+                        else I18nR.string.settings_locked_no_authenticator,
                         appLabel,
                     ),
                     style = MaterialTheme.typography.bodyMedium,
@@ -137,7 +139,7 @@ fun AppLockGateScreen(
                 )
                 if (authAvailable) {
                     Button(onClick = { authenticate() }) {
-                        Text(stringResource(R.string.settings_locked_unlock))
+                        Text(stringResource(I18nR.string.settings_locked_unlock))
                     }
                 } else {
                     Button(onClick = onCancelled) {

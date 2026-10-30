@@ -6,7 +6,7 @@ import de.mm20.launcher2.ktx.into
 import de.mm20.launcher2.ktx.map
 import de.mm20.launcher2.ktx.stripStartOrNull
 import de.mm20.launcher2.locations.OsmLocationSerializer
-import de.mm20.launcher2.openstreetmaps.R
+import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer

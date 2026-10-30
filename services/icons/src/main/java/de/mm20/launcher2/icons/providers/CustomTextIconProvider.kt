@@ -14,7 +14,7 @@ class CustomTextIconProvider(
     override suspend fun getIcon(
         searchable: SavableSearchable,
         size: Int
-    ): LauncherIcon? {
+    ): LauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = TextLayer(
                 text = customIcon.text,

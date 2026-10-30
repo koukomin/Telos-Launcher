@@ -33,7 +33,7 @@ internal data class OwncloudFile(
 
     override val key: String = "$domain://$server/$fileId"
 
-    override val providerIconRes = R.drawable.ic_badge_owncloud
+    override val providerIconRes = de.mm20.launcher2.base.R.drawable.ic_badge_owncloud
 
     private fun getLaunchIntent(): Intent {
         return Intent(Intent.ACTION_VIEW).apply {

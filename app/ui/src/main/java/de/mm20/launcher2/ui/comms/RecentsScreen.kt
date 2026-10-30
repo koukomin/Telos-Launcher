@@ -343,24 +343,9 @@ internal fun RecentCallRow(
         else -> R.drawable.rd_ic_call_received_vector
     }
     
-    val dismissState = rememberSwipeToDismissBoxState(
-        confirmValueChange = { value ->
-            when (value) {
-                SwipeToDismissBoxValue.StartToEnd -> {
-                    onSms()
-                    false
-                }
-                SwipeToDismissBoxValue.EndToStart -> {
-                    // the row leaves the list when the call log changes; if deleting is not
-                    // allowed it springs back instead of staying dismissed
-                    onDelete()
-                    false
-                }
-                else -> false
-            }
-        },
-        positionalThreshold = { it * 0.4f },
-    )
+    val dismissState = // the row leaves the list when the call log changes; if deleting is not
+        // allowed it springs back instead of staying dismissed
+        rememberSwipeToDismissBoxState(COMPILED_CODE, { it * 0.4f })
 
     SwipeToDismissBox(
         state = dismissState,

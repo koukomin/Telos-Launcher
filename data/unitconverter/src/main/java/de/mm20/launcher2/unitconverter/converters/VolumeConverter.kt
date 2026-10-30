@@ -2,7 +2,7 @@ package de.mm20.launcher2.unitconverter.converters
 
 import android.content.Context
 import de.mm20.launcher2.unitconverter.Dimension
-import de.mm20.launcher2.unitconverter.R
+import de.mm20.launcher2.i18n.R
 
 internal class VolumeConverter(context: Context) : SimpleFactorConverter() {
     override val dimension: Dimension = Dimension.Volume

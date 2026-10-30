@@ -3,6 +3,7 @@ package de.mm20.launcher2.unitconverter.converters
 import android.content.Context
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.unitconverter.*
+import de.mm20.launcher2.i18n.R
 
 internal class TemperatureConverter(context: Context) : Converter {
     override val dimension = Dimension.Temperature

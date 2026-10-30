@@ -20,8 +20,8 @@ class MediaLogicTest {
     }
 
     @Test fun parsesStages() {
-        assertEquals(MediaLine.Stage(de.mm20.launcher2.downloads.MediaStage.Merging), YtDlpOutput.parse("[Merger] Merging formats into \"a.mp4\""))
-        assertEquals(MediaLine.Stage(de.mm20.launcher2.downloads.MediaStage.ExtractingAudio), YtDlpOutput.parse("[ExtractAudio] Destination: a.mp3"))
+        assertEquals(MediaLine.Stage(MediaStage.Merging), YtDlpOutput.parse("[Merger] Merging formats into \"a.mp4\""))
+        assertEquals(MediaLine.Stage(MediaStage.ExtractingAudio), YtDlpOutput.parse("[ExtractAudio] Destination: a.mp3"))
         assertEquals(MediaLine.Destination("/x/a.f137.mp4"), YtDlpOutput.parse("[download] Destination: /x/a.f137.mp4"))
         assertEquals(MediaLine.Other, YtDlpOutput.parse("[youtube] Extracting URL"))
         assertEquals(MediaLine.Other, YtDlpOutput.parse("[tlsprog] garbage"))

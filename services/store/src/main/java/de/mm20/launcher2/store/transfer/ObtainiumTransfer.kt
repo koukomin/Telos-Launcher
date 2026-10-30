@@ -33,7 +33,7 @@ object ObtainiumTransfer {
             val count = reader.read(buffer, 0, minOf(buffer.size, MaxExportCharacters - text.length + 1))
             if (count < 0) return text.toString()
             require(count <= MaxExportCharacters - text.length) { "Obtainium export is too large" }
-            text.append(buffer, 0, count)
+            text.appendRange(buffer, 0, count)
         }
     }
 
@@ -129,8 +129,7 @@ object ObtainiumTransfer {
 
     /** Obtainium writes the settings of an app as a JSON text inside the JSON file */
     private fun additionalSettings(app: JSONObject): JSONObject {
-        val raw = app.opt("additionalSettings")
-        return when (raw) {
+        return when (val raw = app.opt("additionalSettings")) {
             is JSONObject -> raw
             is String -> runCatching { JSONObject(raw) }.getOrDefault(JSONObject())
             else -> JSONObject()

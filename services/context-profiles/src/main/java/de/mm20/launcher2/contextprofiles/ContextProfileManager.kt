@@ -116,8 +116,7 @@ class ContextProfileManager internal constructor(
     private fun isInWindow(now: LocalTime, window: ContextProfileTrigger.TimeWindow): Boolean {
         val start = LocalTime.of(window.startHour, window.startMinute)
         val end = LocalTime.of(window.endHour, window.endMinute)
-        if (start == end) return false
-        return if (start < end) {
+        return start != end && if (start < end) {
             now >= start && now < end
         } else {
             // Window wraps past midnight (e.g. 22:00 - 06:00).

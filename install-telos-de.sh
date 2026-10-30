@@ -11,7 +11,7 @@ JAR_SOURCE=$(find "$PROJECT_DIR/desktop-linux/build/compose/jars" -name "telos-d
 if [ -z "$JAR_SOURCE" ]; then
     echo "[!] UberJar missing. Building :desktop-linux:packageUberJarForCurrentOS..."
     (cd "$PROJECT_DIR" && ./gradlew :desktop-linux:packageUberJarForCurrentOS)
-    JAR_SOURCE=$(find "$PROJECT_DIR/desktop-linux/build/compose/jars" -name "telos-desktop-linux*.jar" | head -n 1)
+    JAR_SOURCE=$(find "$PROJECT_DIR/desktop-linux/build/compose/jars" -name "telos-desktop-linux*.jar" ! -path "*/session/*" | head -n 1)
 fi
 
 if [ -z "$JAR_SOURCE" ] || [ ! -f "$JAR_SOURCE" ]; then
@@ -87,7 +87,7 @@ PROJECT_DIR="$PROJECT_DIR"
 cd "\$PROJECT_DIR"
 echo "[*] Building UberJar..."
 ./gradlew :desktop-linux:packageUberJarForCurrentOS
-NEW_JAR=\$(find "\$PROJECT_DIR/desktop-linux/build/compose/jars" -name "telos-desktop-linux*.jar" | head -n 1)
+NEW_JAR=\$(find "\$PROJECT_DIR/desktop-linux/build/compose/jars" -name "telos-desktop-linux*.jar" ! -path "*/session/*" | head -n 1)
 sudo cp -f "\$NEW_JAR" /opt/telos-desktop/telos-desktop.jar
 sudo chmod 755 /opt/telos-desktop/telos-desktop.jar
 sudo cp -a "\$PROJECT_DIR/desktop-linux/session/." /opt/telos-desktop/session/

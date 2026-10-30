@@ -314,7 +314,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     val hiddenNumbers by viewModel.hiddenNumbers.collectAsStateWithLifecycle()
     val protectedNumbers by viewModel.protectedCallNumbers.collectAsStateWithLifecycle()
     var confirmDelete by remember { mutableStateOf(false) }
-    var deleteContact by remember { mutableStateOf<de.mm20.launcher2.comms.model.DialerContact?>(null) }
+    var deleteContact by remember { mutableStateOf<DialerContact?>(null) }
     var editingNote by remember { mutableStateOf(false) }
     var starOverride by remember { mutableStateOf<Boolean?>(null) }
     var showReminder by remember { mutableStateOf(false) }
@@ -589,7 +589,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 // Messenger apps: chat, plus voice and video calls where the app adds them to the contact
                 item {
                     val actions by produceState(initialValue = emptyMap<String, DataAction?>(), contact.id) {
-                        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        value = withContext(Dispatchers.IO) {
                             mapOf(
                                 "wa_call" to ContactActions.find(context, contact.id, ContactActions.whatsAppCall),
                                 "wa_video" to ContactActions.find(context, contact.id, ContactActions.whatsAppVideo),
@@ -774,7 +774,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     }
                 }
                 item {
-                    val sipSettings: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
+                    val sipSettings: CommsSettings = org.koin.compose.koinInject()
                     val sipEnabled by sipSettings.sipEnabled.collectAsStateWithLifecycle(false)
                     val sipMode by sipSettings.sipOutgoing.collectAsStateWithLifecycle("choose")
                     val sipRegistration by de.mm20.launcher2.comms.sip.SipEngine.registration.collectAsStateWithLifecycle()
@@ -814,7 +814,8 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                                 androidx.compose.material3.AssistChip(
                                     onClick = {
                                         val clipboard = context.getSystemService(android.content.ClipboardManager::class.java)
-                                        clipboard?.setPrimaryClip(android.content.ClipData.newPlainText("number", primary))
+                                        clipboard?.primaryClip =
+                                            android.content.ClipData.newPlainText("number", primary)
                                         android.widget.Toast.makeText(context, context.getString(R.string.hc_copied), android.widget.Toast.LENGTH_SHORT).show()
                                     },
                                     label = { Text(stringResource(R.string.hc_copy_number)) },
@@ -1149,7 +1150,7 @@ private fun MessengerButton(icon: Int, description: String, onClick: () -> Unit)
 /** A visible opt-in and source link instead of a silent, unexplained missing caller result. */
 @Composable
 private fun CallerLookupCard(number: String, hidden: Map<String, String>) {
-    val settings: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
+    val settings: CommsSettings = org.koin.compose.koinInject()
     val lookup: de.mm20.launcher2.comms.callerid.CallerLookup = org.koin.compose.koinInject()
     val enabled by settings.onlineCallerLookup.collectAsStateWithLifecycle(false)
     val results by lookup.results.collectAsStateWithLifecycle()
@@ -1165,11 +1166,9 @@ private fun CallerLookupCard(number: String, hidden: Map<String, String>) {
                 val privacy = settings.snapshot.first()
                 val canRead = androidx.core.content.ContextCompat.checkSelfPermission(context,
                     android.Manifest.permission.READ_CONTACTS) == android.content.pm.PackageManager.PERMISSION_GRANTED
-                val directory: de.mm20.launcher2.comms.repository.ContactDirectoryRepository =
+                val directory: ContactDirectoryRepository =
                     org.koin.mp.KoinPlatform.getKoin().get()
-                val saved = if (!canRead) true else try { directory.containsNumber(number) }
-                    catch (e: kotlinx.coroutines.CancellationException) { throw e }
-                    catch (_: Exception) { true }
+                val saved = !canRead || try { directory.containsNumber(number) } catch (e: kotlinx.coroutines.CancellationException) { throw e } catch (_: Exception) { true }
                 if (canRead && !saved && privacy.onlineCallerLookup &&
                     !de.mm20.launcher2.comms.privacy.HiddenContacts.matches(number, privacy.hiddenNumbers)) lookup.lookup(number)
             } finally { loading = false }

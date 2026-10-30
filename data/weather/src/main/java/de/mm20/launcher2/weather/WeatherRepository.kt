@@ -1,6 +1,7 @@
 package de.mm20.launcher2.weather
 
 import android.content.Context
+import de.mm20.launcher2.i18n.R
 import android.util.Log
 import androidx.work.*
 import de.mm20.launcher2.database.AppDatabase

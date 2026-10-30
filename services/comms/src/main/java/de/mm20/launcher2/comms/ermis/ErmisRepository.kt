@@ -44,7 +44,7 @@ class ErmisRepository private constructor(private val context: Context) {
                     mutable.value = ErmisState(it.accounts, ErmisCachePolicy.bound(it.messages), drafts = it.drafts, folders = it.folders)
                 }
                 mutable.update { it.copy(loading = false) }
-            } catch (e: Exception) { mutable.update { it.copy(loading = false, error = context.getString(de.mm20.launcher2.comms.R.string.ermis_error_cache)) } }
+            } catch (e: Exception) { mutable.update { it.copy(loading = false, error = context.getString(de.mm20.launcher2.i18n.R.string.ermis_error_cache)) } }
             finally { ready.complete(Unit) }
         }
     }
@@ -55,10 +55,10 @@ class ErmisRepository private constructor(private val context: Context) {
             try { runInterruptible { block() } } catch (e: CancellationException) { throw e } catch (e: Exception) {
                 val causes = ErmisMailFailure.causes(e)
                 val detail = context.getString(when (ErmisMailFailure.kind(causes)) {
-                    ErmisFailureKind.GOOGLE_ACCESS -> de.mm20.launcher2.comms.R.string.ermis_google_unavailable
-                    ErmisFailureKind.AUTHENTICATION -> de.mm20.launcher2.comms.R.string.ermis_error_auth
-                    ErmisFailureKind.TLS -> de.mm20.launcher2.comms.R.string.ermis_error_tls
-                    ErmisFailureKind.OTHER -> de.mm20.launcher2.comms.R.string.ermis_error_generic
+                    ErmisFailureKind.GOOGLE_ACCESS -> de.mm20.launcher2.i18n.R.string.ermis_google_unavailable
+                    ErmisFailureKind.AUTHENTICATION -> de.mm20.launcher2.i18n.R.string.ermis_error_auth
+                    ErmisFailureKind.TLS -> de.mm20.launcher2.i18n.R.string.ermis_error_tls
+                    ErmisFailureKind.OTHER -> de.mm20.launcher2.i18n.R.string.ermis_error_generic
                 })
                 val endpoint = causes.filterIsInstance<ErmisConnectionException>().firstOrNull()?.endpoint
                 mutable.update { it.copy(error = if (endpoint == null) detail else "$endpoint\n$detail") }; throw e
@@ -381,7 +381,7 @@ class ErmisRepository private constructor(private val context: Context) {
                     sent.appendMessages(arrayOf(message))
                 } finally { sentStore.close() }
             } catch (_: Exception) {
-                mutable.update { it.copy(error=context.getString(de.mm20.launcher2.comms.R.string.ermis_error_sent_copy)) }
+                mutable.update { it.copy(error=context.getString(de.mm20.launcher2.i18n.R.string.ermis_error_sent_copy)) }
             }
         }
         // Sending is explicit; never silently resend after a connection failure.

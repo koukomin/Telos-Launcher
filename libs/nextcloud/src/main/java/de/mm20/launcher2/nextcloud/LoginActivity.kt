@@ -1,6 +1,7 @@
 package de.mm20.launcher2.nextcloud
 
 import android.os.Bundle
+import de.mm20.launcher2.i18n.R
 import android.util.Log
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -84,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Image(
-                        painterResource(R.drawable.ic_nextcloud_logo),
+                        painterResource(de.mm20.launcher2.nextcloud.R.drawable.ic_nextcloud_logo),
                         contentDescription = "Nextcloud Logo",
                         colorFilter = ColorFilter.tint(
                             MaterialTheme.colorScheme.primary,

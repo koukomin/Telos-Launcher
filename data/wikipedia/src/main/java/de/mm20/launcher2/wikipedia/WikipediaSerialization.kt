@@ -1,6 +1,7 @@
 package de.mm20.launcher2.wikipedia
 
 import android.content.Context
+import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer

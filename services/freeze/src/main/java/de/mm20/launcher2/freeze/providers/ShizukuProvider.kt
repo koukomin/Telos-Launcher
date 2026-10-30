@@ -56,8 +56,7 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
     }
 
     override suspend fun hasPermission(): Boolean {
-        if (!isAvailable()) return false
-        return try {
+        return isAvailable() && try {
             Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED
         } catch (e: Throwable) {
             false

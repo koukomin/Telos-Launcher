@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.koin.android)
 
     implementation(project(":core:base"))
+    implementation(project(":core:i18n"))
     implementation(project(":core:ktx"))
     implementation(project(":data:database"))
     implementation(project(":core:crashreporter"))

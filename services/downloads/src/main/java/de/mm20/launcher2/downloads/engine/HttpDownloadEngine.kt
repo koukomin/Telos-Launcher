@@ -464,7 +464,7 @@ class HttpDownloadEngine : DownloadEngine {
                 ranged && (r.code == 200 || r.code == 416) -> throw ResourceChanged()
                 else -> throw httpError(r.code, r.message)
             }
-            val input = r.body?.byteStream() ?: throw IOException("Empty response")
+            val input = r.body.byteStream() ?: throw IOException("Empty response")
             val buf = ByteArray(BUFFER_SIZE)
             while (true) {
                 currentCoroutineContext().ensureActive()

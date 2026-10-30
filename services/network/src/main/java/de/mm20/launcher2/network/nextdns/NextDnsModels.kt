@@ -218,10 +218,7 @@ object NextDnsRewriteValidation {
     }
 
     private fun isIpv6(value: String): Boolean {
-        if (value.length !in 2..45 || ':' !in value || value.any { it !in "0123456789abcdefABCDEF:." }) {
-            return false
-        }
-        return try {
+        return !(value.length !in 2..45 || ':' !in value || value.any { it !in "0123456789abcdefABCDEF:." }) && try {
             java.net.InetAddress.getByName(value) is java.net.Inet6Address
         } catch (_: java.net.UnknownHostException) {
             false

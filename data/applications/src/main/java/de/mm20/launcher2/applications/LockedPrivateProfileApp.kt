@@ -9,6 +9,7 @@ import android.os.UserHandle
 import android.os.UserManager
 import android.util.Log
 import androidx.core.content.getSystemService
+import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.StaticLauncherIcon

@@ -33,7 +33,7 @@ internal data class NextcloudFile(
 
     override val key: String = "$domain://$server/$fileId"
 
-    override val providerIconRes = R.drawable.ic_badge_nextcloud
+    override val providerIconRes = de.mm20.launcher2.base.R.drawable.ic_badge_nextcloud
 
     private fun getLaunchIntent(context: Context): Intent {
         return Intent(Intent.ACTION_VIEW).apply {

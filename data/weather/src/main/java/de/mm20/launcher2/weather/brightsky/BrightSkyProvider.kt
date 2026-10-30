@@ -8,7 +8,7 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.GeocoderWeatherProvider
-import de.mm20.launcher2.weather.R
+import de.mm20.launcher2.i18n.R
 import kotlin.math.roundToInt
 
 internal class BrightSkyProvider(

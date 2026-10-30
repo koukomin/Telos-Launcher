@@ -5,7 +5,7 @@ import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.themes.BlackAndWhiteThemeId
 import de.mm20.launcher2.themes.DefaultThemeId
 import de.mm20.launcher2.themes.HighContrastThemeId
-import de.mm20.launcher2.themes.R
+import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.themes.presets.ThemePresetsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

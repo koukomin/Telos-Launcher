@@ -142,7 +142,7 @@ internal object DnsTester {
             }
             else -> Intra.addODoHTransport(tunnel, id, server.relay.orEmpty().trim(), server.url.trim(), "")
         }
-        val m = tunnel.getResolver().get(id).measure(domain, 1, 1)
+        val m = tunnel.resolver.get(id).measure(domain, 1, 1)
         if (m.success <= 0) throw IllegalStateException(m.errors.ifBlank { "no answer" })
     }
 }

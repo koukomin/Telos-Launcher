@@ -24,14 +24,14 @@ class ClockAlarmService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == "dismiss") { stopSelf(); return START_NOT_STICKY }
         val manager = getSystemService(NotificationManager::class.java)
-        manager.createNotificationChannel(NotificationChannel("clock_alarms", getString(R.string.clock_alarm), NotificationManager.IMPORTANCE_HIGH))
+        manager.createNotificationChannel(NotificationChannel("clock_alarms", getString(de.mm20.launcher2.i18n.R.string.clock_alarm), NotificationManager.IMPORTANCE_HIGH))
         val stop = PendingIntent.getService(this, 0, Intent(this, ClockAlarmService::class.java).setAction("dismiss"), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         startForeground(7141, NotificationCompat.Builder(this, "clock_alarms")
             .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, this, "telos_clock_app") }
-            .setContentTitle(intent?.getStringExtra("label").takeUnless { it.isNullOrBlank() } ?: getString(R.string.clock_alarm))
-            .setContentText(getString(R.string.clock_dismiss)).setContentIntent(stop)
+            .setContentTitle(intent?.getStringExtra("label").takeUnless { it.isNullOrBlank() } ?: getString(de.mm20.launcher2.i18n.R.string.clock_alarm))
+            .setContentText(getString(de.mm20.launcher2.i18n.R.string.clock_dismiss)).setContentIntent(stop)
             .setCategory(NotificationCompat.CATEGORY_ALARM).setOngoing(true)
-            .addAction(0, getString(R.string.clock_dismiss), stop).build())
+            .addAction(0, getString(de.mm20.launcher2.i18n.R.string.clock_dismiss), stop).build())
         play(intent?.getStringExtra("uri").orEmpty(), fallback = false)
         handler.postDelayed({ stopSelf() }, 10 * 60_000L)
         return START_NOT_STICKY

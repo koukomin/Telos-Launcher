@@ -121,7 +121,8 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
             val eta = t.etaSeconds?.let { " · " + Formatting.duration(it) }.orEmpty()
             val seeding = t.state == DownloadState.Seeding && t.torrent != null
             val text = if (seeding) {
-                context.getString(I18nR.string.dl_t_notification_seeding, de.mm20.launcher2.downloads.logic.SeedRules.formatRatio(t.torrent!!.ratio), Formatting.speed(t.torrent.uploadBps))
+                context.getString(I18nR.string.dl_t_notification_seeding, de.mm20.launcher2.downloads.logic.SeedRules.formatRatio(
+                    t.torrent.ratio), Formatting.speed(t.torrent.uploadBps))
             } else if (t.totalBytes > 0) {
                 "${Formatting.size(t.downloadedBytes)} / ${Formatting.size(t.totalBytes)}" + (if (t.speedBps > 0) " · " + Formatting.speed(t.speedBps) else "") + eta
             } else Formatting.size(t.downloadedBytes)

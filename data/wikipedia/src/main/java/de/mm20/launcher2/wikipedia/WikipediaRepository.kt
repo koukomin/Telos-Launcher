@@ -1,6 +1,7 @@
 package de.mm20.launcher2.wikipedia
 
 import android.content.Context
+import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.search.Article

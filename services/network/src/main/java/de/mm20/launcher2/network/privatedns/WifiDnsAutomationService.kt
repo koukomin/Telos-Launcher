@@ -243,12 +243,9 @@ class WifiDnsAutomationService : Service(), KoinComponent {
         getSystemService(WifiManager::class.java)?.connectionInfo?.ssid
 
     private fun hasRequiredPermissions(): Boolean {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-            PackageManager.PERMISSION_GRANTED
-        ) return false
-        return Build.VERSION.SDK_INT < 33 ||
-            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
-            PackageManager.PERMISSION_GRANTED
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && (Build.VERSION.SDK_INT < 33 ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED)
     }
 
     private fun buildNotification(): Notification {
@@ -299,7 +296,7 @@ class WifiDnsAutomationService : Service(), KoinComponent {
 
         fun start(context: Context) {
             val intent = Intent(context, WifiDnsAutomationService::class.java).setAction(ACTION_START)
-            androidx.core.content.ContextCompat.startForegroundService(context, intent)
+            ContextCompat.startForegroundService(context, intent)
         }
 
         fun stop(context: Context) {

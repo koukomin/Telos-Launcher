@@ -28,8 +28,7 @@ internal class DhizukuProvider(private val context: Context) : PrivilegedAccessP
     }
 
     override suspend fun hasPermission(): Boolean {
-        if (!isAvailable()) return false
-        return try {
+        return isAvailable() && try {
             Dhizuku.isPermissionGranted() && getDhizukuPolicyManager() != null
         } catch (e: Exception) {
             false
@@ -65,7 +64,7 @@ internal class DhizukuProvider(private val context: Context) : PrivilegedAccessP
             val admin = Dhizuku.getOwnerComponent()
             // Returns the packages that could NOT be changed.
             val failed = dpm.setPackagesSuspended(admin, packageNames.toTypedArray(), suspended)
-                ?.toSet() ?: return@withContext emptySet()
+                .toSet() ?: return@withContext emptySet()
             packageNames.filter { it !in failed }.toSet()
         } catch (e: SecurityException) {
             Log.e(TAG, "setPackagesSuspended denied", e)

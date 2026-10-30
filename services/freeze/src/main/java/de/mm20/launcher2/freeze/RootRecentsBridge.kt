@@ -32,7 +32,7 @@ object RootRecentsBridge {
         val callbackBinder = object : Binder() {
             override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean {
                 if (code == INTERFACE_TRANSACTION) return super.onTransact(code, data, reply, flags)
-                if (Binder.getCallingUid() != 1000) return false
+                if (getCallingUid() != 1000) return false
                 data.enforceInterface("android.app.ITaskStackListener")
                 when (code) {
                     removed -> emit("R ${data.readInt()}")

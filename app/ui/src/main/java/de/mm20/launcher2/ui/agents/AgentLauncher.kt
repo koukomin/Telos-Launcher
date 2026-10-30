@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
-import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.i18n.R
 import java.net.URLEncoder
 
 object AgentLauncher {

@@ -91,4 +91,7 @@ include(":services:downloads")
 include(":libs:appops-next")
 
 // Isolated Compose for Desktop / JVM shell. Never depended on by :app:app.
-include(":desktop-linux")
+val isFdroidBuild = providers.gradleProperty("fdroidBuild").orNull?.toBoolean() == true
+if (!isFdroidBuild) {
+    include(":desktop-linux")
+}

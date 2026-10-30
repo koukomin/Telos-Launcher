@@ -151,6 +151,10 @@ android {
         abortOnError = false
     }
     namespace = "de.mm20.launcher2"
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
     buildFeatures {
         buildConfig = true
         // === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge ===
@@ -253,4 +257,9 @@ configurations.all {
     resolutionStrategy.eachDependency {
         if (requested.group == "org.bouncycastle") useVersion("1.84")
     }
+}
+
+tasks.withType<AbstractArchiveTask>().configureEach {
+    isPreserveFileTimestamps = false
+    isReproducibleFileOrder = true
 }

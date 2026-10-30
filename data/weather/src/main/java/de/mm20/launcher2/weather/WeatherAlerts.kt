@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.text.format.DateUtils
 import androidx.core.app.NotificationCompat
+import de.mm20.launcher2.i18n.R
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.database.AppDatabase
@@ -169,7 +170,7 @@ class WeatherAlertManager(
         manager.notify(
             NOTIFICATION_BASE + alert.type.ordinal + if (test) 100 else 0,
             NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_weather_alert)
+                .setSmallIcon(de.mm20.launcher2.weather.R.drawable.ic_weather_alert)
                 .setContentTitle(title)
                 .setContentText(text)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(text))

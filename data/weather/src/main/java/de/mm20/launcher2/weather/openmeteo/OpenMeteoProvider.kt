@@ -8,7 +8,7 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.GeocoderWeatherProvider
-import de.mm20.launcher2.weather.R
+import de.mm20.launcher2.i18n.R
 
 /**
  * Open-Meteo (https://open-meteo.com/) - the default weather provider: free for non-commercial

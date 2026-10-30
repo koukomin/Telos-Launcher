@@ -67,7 +67,7 @@ internal suspend fun copyVideoGlass(holder: SurfaceHolder): Bitmap? {
                 if (!continuation.isActive || result != PixelCopy.SUCCESS) {
                     bitmap.recycle()
                     if (continuation.isActive) continuation.resume(null)
-                } else continuation.resume(bitmap) { _, abandoned, _ -> abandoned?.recycle() }
+                } else continuation.resume(bitmap) { _, abandoned, _ -> abandoned.recycle() }
             }, Handler(Looper.getMainLooper()))
         } catch (_: IllegalArgumentException) {
             videoCopyInFlight.set(false)

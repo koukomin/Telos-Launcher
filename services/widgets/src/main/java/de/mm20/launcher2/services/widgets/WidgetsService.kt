@@ -1,6 +1,7 @@
 package de.mm20.launcher2.services.widgets
 
 import android.appwidget.AppWidgetManager
+import de.mm20.launcher2.i18n.R
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
 import android.content.pm.LauncherApps

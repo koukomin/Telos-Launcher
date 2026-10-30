@@ -410,8 +410,8 @@ class TelosVpnService : VpnService(), KoinComponent {
                 }
             }
             try {
-                t.getProxies().refreshProxies()
-                t.getResolver().refresh()
+                t.proxies.refreshProxies()
+                t.resolver.refresh()
             } catch (e: Exception) {
                 // refreshing is best effort
             }
@@ -430,7 +430,7 @@ class TelosVpnService : VpnService(), KoinComponent {
             while (isActive) {
                 delay(HEALTH_INTERVAL_MS)
                 val alive = try {
-                    t.isConnected()
+                    t.isConnected
                 } catch (e: Throwable) {
                     false
                 }

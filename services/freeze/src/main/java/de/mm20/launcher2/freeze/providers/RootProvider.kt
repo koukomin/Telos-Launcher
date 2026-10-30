@@ -43,12 +43,10 @@ internal class RootProvider : PrivilegedAccessProvider {
     }
 
     override suspend fun setEnabledSetting(packageName: String, state: Int, userId: Int): Boolean =
-        if (!packageName.matches(Regex("[A-Za-z0-9_.$/]+"))) false else
-            enabledAction(state)?.let { runAsRoot("pm $it --user $userId '$packageName'") } ?: false
+        packageName.matches(Regex("[A-Za-z0-9_.$/]+")) && enabledAction(state)?.let { runAsRoot("pm $it --user $userId '$packageName'") } ?: false
 
     override suspend fun setComponentSetting(component: String, state: Int, userId: Int): Boolean =
-        if (!component.matches(Regex("[A-Za-z0-9_.$/]+"))) false else
-            enabledAction(state)?.let { runAsRoot("pm $it --user $userId '$component'", 10) } ?: false
+        component.matches(Regex("[A-Za-z0-9_.$/]+")) && enabledAction(state)?.let { runAsRoot("pm $it --user $userId '$component'", 10) } ?: false
 
     override suspend fun setHidden(packageName: String, hidden: Boolean, userId: Int): Boolean =
         runAsRoot("pm ${if (hidden) "hide" else "unhide"} --user $userId $packageName")

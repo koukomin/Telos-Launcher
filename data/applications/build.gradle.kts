@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.commons.text)
 
     implementation(project(":core:base"))
+    implementation(project(":core:i18n"))
     implementation(project(":core:ktx"))
     implementation(project(":core:compat"))
     implementation(project(":core:profiles"))

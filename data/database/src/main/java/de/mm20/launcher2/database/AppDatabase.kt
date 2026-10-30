@@ -7,6 +7,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import de.mm20.launcher2.i18n.R
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.asExecutor
 import de.mm20.launcher2.database.daos.PluginDao

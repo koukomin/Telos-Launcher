@@ -381,7 +381,7 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
     /** Reads status and stats of one proxy; adds it again if the engine lost it. Never throws. */
     private fun readProxy(t: Tunnel, c: WireguardConfig): Pair<WgStatus, WgStats?> {
         return try {
-            val proxies = t.getProxies()
+            val proxies = t.proxies
             if (!proxies.hasProxy(c.proxyId)) {
                 hopsReady.remove(c.id)
                 state.configs.filter { it.hopVia == c.id }.forEach { hopsReady.remove(it.id) }
@@ -438,7 +438,7 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
         withContext(Dispatchers.IO) {
             engineLock.withLock {
                 val result = try {
-                    val proxy = t.getProxies().addProxy(config.proxyId, WgConfParser.toUserspace(config))
+                    val proxy = t.proxies.addProxy(config.proxyId, WgConfParser.toUserspace(config))
                     mapStatus(proxy.status(), WgStats())
                 } catch (e: Throwable) {
                     WgStatus.Error
@@ -482,7 +482,7 @@ internal class DefaultWireguardController(context: Context) : WireguardControlle
             val t = tunnel ?: return
             withContext(Dispatchers.IO) {
                 try {
-                    t.getProxies().removeProxy("wg$id")
+                    t.proxies.removeProxy("wg$id")
                 } catch (e: Throwable) {
                     // already gone
                 }

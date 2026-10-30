@@ -87,12 +87,12 @@ internal fun DesktopWorkspace(
             .then(
                 if (!keyboardShortcuts) Modifier
                 else Modifier.onPreviewKeyEvent { event ->
-                    if (event.type != KeyEventType.KeyDown || !event.isMetaPressed) false
-                    else when (event.key) {
+                    !(event.type != KeyEventType.KeyDown || !event.isMetaPressed) && when (event.key) {
                         Key.Enter -> {
                             de.mm20.launcher2.ui.common.openExternalTermux(context)
                             true
                         }
+
                         else -> false
                     }
                 }
@@ -277,7 +277,7 @@ private fun launchOnDisplay(context: Context, app: Application, freeformActive: 
         launchDisplayId = displayId
     }
     if (freeformActive) {
-        options.setLaunchBounds(nextFreeformBounds(context))
+        options.launchBounds = nextFreeformBounds(context)
     }
     app.launch(context, options.toBundle())
 }
@@ -296,7 +296,7 @@ private fun nextFreeformBounds(context: Context): Rect {
 
 private fun Context.displayIdCompat(): Int {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        display?.displayId ?: Display.DEFAULT_DISPLAY
+        display.displayId ?: Display.DEFAULT_DISPLAY
     } else {
         @Suppress("DEPRECATION")
         (getSystemService(Context.WINDOW_SERVICE) as? WindowManager)?.defaultDisplay?.displayId ?: 0

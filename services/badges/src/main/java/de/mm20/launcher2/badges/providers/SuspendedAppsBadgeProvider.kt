@@ -7,7 +7,7 @@ import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeIcon
 import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.badges.MutableBadge
-import de.mm20.launcher2.badges.R
+import de.mm20.launcher2.base.R
 import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.preferences.FrozenAppStyle
 import de.mm20.launcher2.preferences.freeze.FreezeSettings

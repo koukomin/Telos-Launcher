@@ -1,6 +1,7 @@
 package de.mm20.launcher2.widgets
 
 import android.content.Context
+import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.database.entities.PartialWidgetEntity
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString

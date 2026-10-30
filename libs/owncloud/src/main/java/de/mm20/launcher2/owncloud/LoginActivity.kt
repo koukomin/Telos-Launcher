@@ -1,6 +1,7 @@
 package de.mm20.launcher2.owncloud
 
 import android.os.Bundle
+import de.mm20.launcher2.i18n.R
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.PredictiveBackHandler
@@ -98,7 +99,7 @@ class LoginActivity : AppCompatActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Image(
-                        painterResource(R.drawable.ic_owncloud_logo),
+                        painterResource(de.mm20.launcher2.owncloud.R.drawable.ic_owncloud_logo),
                         contentDescription = "Owncloud Logo",
                         colorFilter = ColorFilter.tint(
                             MaterialTheme.colorScheme.primary,

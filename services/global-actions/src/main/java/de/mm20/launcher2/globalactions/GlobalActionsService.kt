@@ -18,8 +18,7 @@ class GlobalActionsService(private val context: Context) {
 
     /** Locks the screen through the accessibility service (Android 9+). Returns false if that is not possible. */
     fun lockScreenOrFalse(): Boolean {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.P) return false
-        return LauncherAccessibilityService.getInstance()
+        return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P && LauncherAccessibilityService.getInstance()
             ?.performGlobalAction(AccessibilityService.GLOBAL_ACTION_LOCK_SCREEN) ?: false
     }
 
@@ -40,8 +39,7 @@ class GlobalActionsService(private val context: Context) {
      * Returns false if the accessibility service is not running or the system refused.
      */
     fun takeScreenshot(): Boolean {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.P) return false
-        return LauncherAccessibilityService.getInstance()
+        return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P && LauncherAccessibilityService.getInstance()
             ?.performGlobalAction(AccessibilityService.GLOBAL_ACTION_TAKE_SCREENSHOT) ?: false
     }
 

@@ -21,6 +21,7 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.preferences.media.MediaSettings
 import kotlinx.coroutines.CoroutineScope
@@ -324,7 +325,7 @@ internal class MusicServiceImpl(
 
 
     override val albumArt: Flow<Bitmap?> = channelFlow {
-        val size = context.resources.getDimensionPixelSize(R.dimen.album_art_size)
+        val size = context.resources.getDimensionPixelSize(de.mm20.launcher2.music.R.dimen.album_art_size)
         var lastBitmap: Bitmap? = null
         currentMetadata.collectLatest { metadata ->
             if (metadata == null) {

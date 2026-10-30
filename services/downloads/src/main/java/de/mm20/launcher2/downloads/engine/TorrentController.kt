@@ -91,7 +91,7 @@ class TorrentController(private val store: DownloadStore) {
                 val fails = eps.maxOfOrNull { it.fails().toInt() } ?: 0
                 val message = eps.firstOrNull { !it.message().isNullOrBlank() }?.message().orEmpty()
                 val status = when {
-                    eps.any { it.isWorking() } -> TrackerStatus.Working
+                    eps.any { it.isWorking } -> TrackerStatus.Working
                     eps.any { it.updating() } -> TrackerStatus.Updating
                     fails > 0 -> TrackerStatus.Error
                     else -> TrackerStatus.NotContacted
@@ -161,7 +161,7 @@ class TorrentController(private val store: DownloadStore) {
         store.update(taskId) { t -> t.copy(torrent = t.torrent?.copy(sequential = sequential)) }
         val h = handle(taskId)
         if (h != null) runCatching {
-            if (sequential) h.setFlags(TorrentFlags.SEQUENTIAL_DOWNLOAD) else h.unsetFlags(TorrentFlags.SEQUENTIAL_DOWNLOAD)
+            if (sequential) h.flags = TorrentFlags.SEQUENTIAL_DOWNLOAD else h.unsetFlags(TorrentFlags.SEQUENTIAL_DOWNLOAD)
         }
         Unit
     }

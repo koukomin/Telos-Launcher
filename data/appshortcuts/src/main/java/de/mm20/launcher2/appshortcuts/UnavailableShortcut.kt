@@ -42,7 +42,7 @@ internal class UnavailableShortcut(
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
-                icon = context.getDrawable(R.drawable.android_24px)!!,
+                icon = context.getDrawable(de.mm20.launcher2.base.R.drawable.android_24px)!!,
                 color = 0xFF333333.toInt()
             ),
             backgroundLayer = ColorLayer(0xFF333333.toInt()),
@@ -74,7 +74,7 @@ internal class UnavailableShortcut(
                 return null
             }
             return UnavailableShortcut(
-                label = context.getString(R.string.shortcut_label_unavailable),
+                label = context.getString(de.mm20.launcher2.i18n.R.string.shortcut_label_unavailable),
                 appName = appInfo.loadLabel(context.packageManager).toString(),
                 packageName = packageName,
                 shortcutId = id,
