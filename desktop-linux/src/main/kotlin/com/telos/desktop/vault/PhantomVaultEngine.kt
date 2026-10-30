@@ -14,7 +14,7 @@ object PhantomVault {
 }
 
 class PhantomVaultEngine(
-    private val hostHome: Path = Path(System.getProperty("user.home")),
+    private val hostHome: Path = TelosSessionHome.hostHome,
 ) {
     val luks = LuksVaultManager(hostHome)
     val shards = StegoShardArrayManager()
@@ -229,6 +229,8 @@ class PhantomVaultEngine(
 
     private fun isMounted(): Boolean {
         val mounts = runCatching { Files.readString(Path("/proc/self/mounts")) }.getOrDefault("")
-        return mounts.contains(mountPoint.absolutePath)
+        val extra = TelosSessionHome.vaultMount?.absolutePath
+        return mounts.contains(mountPoint.absolutePath) ||
+            (extra != null && mounts.contains(extra))
     }
 }

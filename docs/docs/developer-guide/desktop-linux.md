@@ -80,8 +80,8 @@ The two copies are intentional so `:app:app` never depends on `:desktop-linux`.
 
 ## labwc session (P0 / P1, Linux only)
 
-`desktop-linux/session/telos-session` unlocks the vault (`java -jar … --unlock-only`), exports **`$HOME` to the vault mount**, then `exec labwc`. Telos runs as `java -jar … --session`. Host apps are normal labwc windows. Optional FIDO2: `fido2-token` / `fido2-assert` mixed into the password. nftables table `inet telos_session` default-drops outbound except loopback, DNS, and `~/.config/telos/net-allow.txt`.
+`desktop-linux/session/telos-session` unlocks the vault (`java -jar … --unlock-only`), writes `TELOS_HOST_HOME` / `TELOS_VAULT_MOUNT`, exports **`$HOME` to the vault mount**, then starts labwc (not `exec`, so nftables is cleared on compositor exit). Telos runs as `java -jar … --session --already-unlocked` and reattaches using the **host** home for the LUKS image, not the vault `$HOME`. Host apps are normal labwc windows. Optional FIDO2: `fido2-token` / `fido2-assert` mixed into the password. nftables table `inet telos_session` default-drops outbound except loopback, DNS, and IPv4/IPv6 CIDRs in `~/.config/telos/net-allow.txt` (other lines are ignored).
 
-Install `labwc`. Copy `session/telos.desktop` to `/usr/share/wayland-sessions/` for a display-manager entry. Arm64 uses the same `packageUberJarForCurrentOS` on an aarch64 machine.
+Install `labwc`. `./install-telos-de.sh` copies the jar and session files to `/opt/telos-desktop`, installs `/usr/local/bin/telos-session`, and registers `/usr/share/wayland-sessions/telos.desktop`. Arm64 uses the same `packageUberJarForCurrentOS` on an aarch64 machine.
 
 Pending work is listed in [Linux Desktop roadmap](/docs/developer-guide/desktop-roadmap) (**P2, P3, P4**).

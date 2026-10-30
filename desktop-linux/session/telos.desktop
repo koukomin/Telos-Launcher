@@ -2,7 +2,7 @@
 Name=Telos
 Comment=Telos encrypted Linux session (labwc)
 Exec=telos-session
-TryExec=labwc
+TryExec=telos-session
 Type=Application
 DesktopNames=Telos
 X-GDM-SessionRegisters=true

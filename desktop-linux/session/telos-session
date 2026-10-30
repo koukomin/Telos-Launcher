@@ -1,5 +1,5 @@
 #!/bin/sh
-# Telos P0/P1 session: unlock vault as HOME, then exec labwc with Telos as the shell.
+# Telos P0/P1 session: unlock vault as HOME, then run labwc with Telos as the shell.
 set -eu
 
 export TELOS_SESSION=1
@@ -27,6 +27,7 @@ fi
 
 CONF="${XDG_RUNTIME_DIR:-/tmp}/telos-labwc"
 mkdir -p "$CONF"
+chmod 700 "$CONF" 2>/dev/null || true
 SCRIPT_DIR="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
 cp -f "$SCRIPT_DIR/labwc/rc.xml" "$CONF/rc.xml"
 cp -f "$SCRIPT_DIR/labwc/menu.xml" "$CONF/menu.xml"
@@ -40,10 +41,28 @@ if [ "${TELOS_VAULT_UNLOCKED:-0}" != "1" ]; then
   if [ -f "$ENVF" ]; then
     # shellcheck disable=SC1090
     . "$ENVF"
+    rm -f "$ENVF"
   fi
+fi
+
+if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ] && command -v dbus-launch >/dev/null 2>&1; then
+  eval "$(dbus-launch --sh-syntax --exit-with-session)"
 fi
 
 swapoff -a 2>/dev/null || true
 
 export XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-Telos:labwc}"
-exec labwc -C "$CONF" -s "$CONF/autostart"
+export XDG_SESSION_TYPE="${XDG_SESSION_TYPE:-wayland}"
+export XDG_SESSION_DESKTOP="${XDG_SESSION_DESKTOP:-Telos}"
+export QT_QPA_PLATFORM="${QT_QPA_PLATFORM:-wayland;xcb}"
+export GDK_BACKEND="${GDK_BACKEND:-wayland,x11}"
+export MOZ_ENABLE_WAYLAND="${MOZ_ENABLE_WAYLAND:-1}"
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+cleanup() {
+  nft delete table inet telos_session 2>/dev/null || \
+    pkexec nft delete table inet telos_session 2>/dev/null || true
+}
+trap cleanup EXIT INT TERM
+
+labwc -C "$CONF"

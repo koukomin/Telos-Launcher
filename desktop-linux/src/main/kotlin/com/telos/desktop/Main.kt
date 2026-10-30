@@ -31,6 +31,9 @@ fun main(args: Array<String>) {
         com.telos.desktop.session.UnlockCli.run()
         return
     }
+    if (args.contains("--already-unlocked")) {
+        System.setProperty("telos.alreadyUnlocked", "1")
+    }
     if (args.contains("--session") || System.getenv("TELOS_SESSION") == "1") {
         System.setProperty("telos.session", "1")
         DesktopChrome.fullscreen = true
