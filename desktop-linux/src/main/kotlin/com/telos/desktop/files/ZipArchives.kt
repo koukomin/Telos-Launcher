@@ -26,6 +26,7 @@ object ZipArchives {
     private val zipExt = setOf("zip", "jar", "apk")
     private val sevenExt = setOf("7z")
     private val rarExt = setOf("rar")
+    private val aceExt = setOf("ace")
     private val tarExt = setOf("tar", "tgz", "tbz", "txz")
 
     fun isZip(file: File): Boolean = isArchive(file)
@@ -33,11 +34,11 @@ object ZipArchives {
     fun isArchive(file: File): Boolean {
         if (!file.isFile) return false
         val n = file.name.lowercase()
-        if (n.endsWith(".ace")) return false
         if (n.endsWith(".tar.gz") || n.endsWith(".tar.bz2") || n.endsWith(".tar.xz")) return true
         if (n.matches(Regex(".*\\.z[0-9]{2}$"))) return true
-        if (n.matches(Regex(".*\\.(zip|7z|rar)\\.[0-9]{3}$"))) return true
-        return file.extension.lowercase() in zipExt + sevenExt + rarExt + tarExt
+        if (n.matches(Regex(".*\\.c[0-9]{2}$"))) return true
+        if (n.matches(Regex(".*\\.(zip|7z|rar|ace)\\.[0-9]{3}$"))) return true
+        return file.extension.lowercase() in zipExt + sevenExt + rarExt + aceExt + tarExt
     }
 
     /** Central `.zip` next to `.z01` / `.zip.001` parts. */
@@ -47,8 +48,13 @@ object ZipArchives {
         val parent = file.parentFile ?: return file
         val zPart = Regex("^(.*)\\.z[0-9]{2}$", RegexOption.IGNORE_CASE).matchEntire(n)
         if (zPart != null) return File(parent, zPart.groupValues[1] + ".zip")
-        val numbered = Regex("^(.*)\\.(zip|7z|rar)\\.[0-9]{3}$", RegexOption.IGNORE_CASE).matchEntire(n)
+        val numbered = Regex("^(.*)\\.(zip|7z|rar|ace)\\.[0-9]{3}$", RegexOption.IGNORE_CASE).matchEntire(n)
         if (numbered != null) return File(parent, numbered.groupValues[1] + "." + numbered.groupValues[2])
+        val acePart = Regex("^(.*)\\.c[0-9]{2}$", RegexOption.IGNORE_CASE).matchEntire(n)
+        if (acePart != null) {
+            val ace = File(parent, acePart.groupValues[1] + ".ace")
+            if (ace.isFile) return ace
+        }
         if (lower.endsWith(".zip") && File(parent, n.dropLast(4) + ".z01").isFile) return file
         return file
     }
@@ -99,6 +105,9 @@ object ZipArchives {
                     return out
                 }
             }
+            archive.extension.lowercase() == "ace" -> {
+                return if (aceExtract(archive, destDir, safe)) File(destDir, File(safe).name).takeIf { it.exists() } else null
+            }
             else -> {
                 val outDir = File(destDir, File(safe).name)
                 return if (hostExtract(archive, destDir, safe, password)) File(destDir, File(safe).name).takeIf { it.exists() } ?: outDir.takeIf { it.exists() } else null
@@ -132,6 +141,7 @@ object ZipArchives {
                 true
             }
             isTar(archive) -> extractTar(archive, destDir)
+            archive.extension.lowercase() == "ace" -> aceExtract(archive, destDir, null)
             else -> hostExtract(archive, destDir, null, password)
         }
     }
@@ -183,6 +193,7 @@ object ZipArchives {
             ext == "7z" -> sevenNames(archive, password)
             isTar(archive) -> tarNames(archive)
             ext == "rar" -> hostList(archive, password)
+            ext == "ace" -> aceList(archive)
             else -> jdkZipNames(archive)
         }
     }
@@ -314,6 +325,99 @@ object ZipArchives {
             }
         }
         return true
+    }
+
+    private fun aceHost(): Pair<String, String>? {
+        Sys.which("unar")?.let { return it to "unar" }
+        Sys.which("unace")?.let { return it to "unace" }
+        return null
+    }
+
+    private fun aceList(archive: File): List<Triple<String, Boolean, Long>> {
+        val (bin, kind) = aceHost() ?: return emptyList()
+        val r = if (kind == "unar") {
+            Sys.run(bin, "-l", archive.absolutePath, timeoutSec = 30)
+        } else {
+            Sys.run(bin, "l", archive.absolutePath, timeoutSec = 30)
+        }
+        if (!r.ok && r.stdout.isBlank()) return emptyList()
+        return parseAceList(r.stdout, kind)
+    }
+
+    internal fun parseAceList(stdout: String, kind: String): List<Triple<String, Boolean, Long>> {
+        return if (kind == "unar") parseUnarList(stdout) else parseUnaceList(stdout)
+    }
+
+    internal fun parseUnarList(stdout: String): List<Triple<String, Boolean, Long>> {
+        val out = ArrayList<Triple<String, Boolean, Long>>()
+        for (raw in stdout.lineSequence()) {
+            val line = raw.trim()
+            if (line.isEmpty()) continue
+            if (line.contains(" ACE", ignoreCase = true) && !line.contains('/')) continue
+            if (line.startsWith("unar:") || line.startsWith("Archive:")) continue
+            val sizeMatch = Regex("^(.*?)\\s+\\((\\d+)\\s*B\\)\\s*$").matchEntire(line)
+            if (sizeMatch != null) {
+                val name = sizeMatch.groupValues[1].trim().trimEnd('/')
+                val safe = safeInner(name) ?: continue
+                out += Triple(safe, false, sizeMatch.groupValues[2].toLong())
+                continue
+            }
+            if (line.endsWith("/")) {
+                val name = line.trimEnd('/')
+                val safe = safeInner(name) ?: continue
+                out += Triple(safe, true, 0)
+            }
+        }
+        return out
+    }
+
+    internal fun parseUnaceList(stdout: String): List<Triple<String, Boolean, Long>> {
+        val out = ArrayList<Triple<String, Boolean, Long>>()
+        var table = false
+        for (raw in stdout.lineSequence()) {
+            val line = raw.trim()
+            if (line.contains("File name", ignoreCase = true) && line.contains("Packed", ignoreCase = true)) {
+                table = true
+                continue
+            }
+            if (!table) continue
+            if (line.isEmpty() || line.startsWith("-")) continue
+            val parts = line.split(Regex("\\s+"))
+            if (parts.size < 6) continue
+            val rawName = parts.drop(5).joinToString(" ")
+            val directory = rawName.endsWith("/")
+            val name = rawName.trimEnd('/')
+            val safe = safeInner(name) ?: continue
+            val size = parts.getOrNull(3)?.toLongOrNull() ?: 0L
+            out += Triple(safe, directory, size)
+        }
+        if (out.isEmpty()) {
+            for (raw in stdout.lineSequence()) {
+                val line = raw.trim()
+                if (line.isEmpty() || line.contains("UNACE", ignoreCase = true) || line.endsWith(":")) continue
+                val name = line.substringAfterLast("  ").trim().trimEnd('/')
+                if (name.contains('.') || name.contains('/')) {
+                    val safe = safeInner(name) ?: continue
+                    out += Triple(safe, false, 0)
+                }
+            }
+        }
+        return out
+    }
+
+    private fun aceExtract(archive: File, destDir: File, inner: String?): Boolean {
+        val (bin, kind) = aceHost() ?: return false
+        destDir.mkdirs()
+        val safe = inner?.let { safeInner(it) }
+        return if (kind == "unar") {
+            val args = mutableListOf(bin, "-o", destDir.absolutePath, "-force-overwrite", archive.absolutePath)
+            if (safe != null) args += safe
+            Sys.run(*args.toTypedArray(), timeoutSec = 120).ok
+        } else {
+            val args = mutableListOf(bin, "x", "-y", archive.absolutePath)
+            if (safe != null) args += safe
+            Sys.run(*args.toTypedArray(), timeoutSec = 120, dir = destDir).ok
+        }
     }
 
     private fun hostList(archive: File, password: CharArray?): List<Triple<String, Boolean, Long>> {

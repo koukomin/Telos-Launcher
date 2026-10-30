@@ -9,9 +9,10 @@ object Sys {
         return path.split(':').map { File(it, name) }.firstOrNull { it.isFile && it.canExecute() }?.absolutePath
     }
 
-    fun run(vararg args: String, timeoutSec: Long = 4, input: String? = null): Result {
+    fun run(vararg args: String, timeoutSec: Long = 4, input: String? = null, dir: File? = null): Result {
         return try {
             val pb = ProcessBuilder(*args)
+            if (dir != null) pb.directory(dir)
             pb.redirectErrorStream(true)
             val p = pb.start()
             p.outputStream.use { stream ->

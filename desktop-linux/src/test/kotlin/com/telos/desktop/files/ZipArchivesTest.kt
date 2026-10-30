@@ -76,6 +76,31 @@ class ZipArchivesTest {
         val kids = ZipArchives.listChildren(if (z01.isFile) z01 else zip, "")
         assertTrue(kids.any { it.name == "blob.bin" })
         assertEquals(null, ZipArchives.safeInner("..\\ace"))
-        assertTrue(!ZipArchives.isArchive(File(root, "x.ace").apply { writeText("x") }))
+        assertTrue(ZipArchives.isArchive(File(root, "x.ace").apply { writeText("x") }))
+        assertEquals(File("/tmp/pack.ace"), ZipArchives.archiveRoot(File("/tmp/pack.c00")))
+    }
+
+    @Test
+    fun aceHostListParsers() {
+        val unar = """
+            pack.ace  (ACE 2.0)
+              hello.txt  (12 B)
+              photos/
+              photos/a.jpg  (80 B)
+        """.trimIndent()
+        val u = ZipArchives.parseUnarList(unar)
+        assertEquals(listOf("hello.txt", "photos", "photos/a.jpg"), u.map { it.first })
+        assertTrue(u[1].second)
+        assertEquals(12L, u[0].third)
+        val unace = """
+            UNACE v2.5 public version
+              Date    Time     Packed      Size  Ratio  File name
+            12.01.00  12:00        10        12   100%  hello.txt
+            12.01.00  12:00         0         0     0%  photos/
+        """.trimIndent()
+        val a = ZipArchives.parseUnaceList(unace)
+        assertEquals("hello.txt", a[0].first)
+        assertEquals(12L, a[0].third)
+        assertTrue(a.any { it.first == "photos" })
     }
 }
