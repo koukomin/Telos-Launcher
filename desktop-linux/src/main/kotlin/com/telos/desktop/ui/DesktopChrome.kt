@@ -8,6 +8,8 @@ import androidx.compose.ui.window.WindowPlacement
 object DesktopChrome {
     var fullscreen by mutableStateOf(false)
     var appGridOpen by mutableStateOf(false)
+    var overviewOpen by mutableStateOf(false)
+    var controlCenterOpen by mutableStateOf(false)
 
     val placement: WindowPlacement
         get() = if (fullscreen) WindowPlacement.Fullscreen else WindowPlacement.Floating
@@ -18,5 +20,22 @@ object DesktopChrome {
 
     fun toggleAppGrid() {
         appGridOpen = !appGridOpen
+        if (appGridOpen) {
+            overviewOpen = false
+            controlCenterOpen = false
+        }
+    }
+
+    fun toggleOverview() {
+        overviewOpen = !overviewOpen
+        if (overviewOpen) {
+            appGridOpen = false
+            controlCenterOpen = false
+        }
+    }
+
+    fun toggleControlCenter() {
+        controlCenterOpen = !controlCenterOpen
+        if (controlCenterOpen) overviewOpen = false
     }
 }

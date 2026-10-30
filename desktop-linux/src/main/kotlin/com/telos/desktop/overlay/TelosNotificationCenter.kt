@@ -35,12 +35,17 @@ object TelosNotificationCenter {
         if (dnd.value) return
         notes.add(0, TelosNote(next++, title, body))
         while (notes.size > 80) notes.removeLast()
+        com.telos.desktop.ui.HelixToast.show(title, body)
     }
 }
 
 @Composable
 fun NotificationSidebar(modifier: Modifier = Modifier) {
-    if (!TelosNotificationCenter.open.value) return
+    androidx.compose.animation.AnimatedVisibility(
+        TelosNotificationCenter.open.value,
+        enter = com.telos.desktop.ui.HelixMotion.enter,
+        exit = com.telos.desktop.ui.HelixMotion.exit,
+    ) {
     val shape = RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)
     Column(
         modifier
@@ -85,5 +90,6 @@ fun NotificationSidebar(modifier: Modifier = Modifier) {
                 }
             }
         }
+    }
     }
 }

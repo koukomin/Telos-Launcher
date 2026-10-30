@@ -1,6 +1,8 @@
 package com.telos.desktop.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.border
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -215,12 +217,17 @@ fun DesktopWorkspace(
                 }
             }
             Row(
-                Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(56.dp).background(TelosColors.surfaceContainer),
+                Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(56.dp).background(TelosColors.surfaceContainer).border(1.dp, TelosColors.outline),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                DockItem(com.telos.desktop.i18n.TelosI18n.t("hc_apps"), CandyIcon.AppGrid) {
-                    DesktopChrome.toggleAppGrid()
+                Row {
+                    DockItem(com.telos.desktop.i18n.TelosI18n.t("hc_apps"), CandyIcon.AppGrid) {
+                        DesktopChrome.toggleAppGrid()
+                    }
+                    DockItem("Overview", CandyIcon.Monitor) {
+                        DesktopChrome.toggleOverview()
+                    }
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(end = 8.dp)) {
                     XdgUserDirsManager.shortcuts(dirs).take(6).forEach { (label, file) ->
@@ -243,25 +250,39 @@ fun DesktopWorkspace(
                 modifier = Modifier.align(Alignment.TopCenter),
             )
             // === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
-            if (DesktopChrome.appGridOpen) {
-                Box(Modifier.fillMaxSize().zIndex(200f)) {
-                    PlasmaAppGrid(
-                        icons = icons,
-                        onDismiss = { DesktopChrome.appGridOpen = false },
-                        onOpenTelos = { app ->
-                            when (app.windowTitle) {
-                                "Quake" -> TelosQuake.toggle()
-                                else -> wm.open(app.windowTitle, y = wm.workArea.minY + 12f)
-                            }
-                        },
-                    )
-                }
+            AnimatedVisibility(DesktopChrome.appGridOpen, modifier = Modifier.fillMaxSize().zIndex(200f), enter = HelixMotion.enter, exit = HelixMotion.exit) {
+                PlasmaAppGrid(
+                    icons = icons,
+                    onDismiss = { DesktopChrome.appGridOpen = false },
+                    onOpenTelos = { app ->
+                        when (app.windowTitle) {
+                            "Quake" -> TelosQuake.toggle()
+                            else -> wm.open(app.windowTitle, y = wm.workArea.minY + 12f)
+                        }
+                    },
+                )
+            }
+            AnimatedVisibility(DesktopChrome.overviewOpen, modifier = Modifier.fillMaxSize().zIndex(201f), enter = HelixMotion.enter, exit = HelixMotion.exit) {
+                HelixOverview(wm) { DesktopChrome.overviewOpen = false }
+            }
+            AnimatedVisibility(
+                DesktopChrome.controlCenterOpen,
+                modifier = Modifier.align(Alignment.TopEnd).padding(top = 40.dp, end = 12.dp).zIndex(202f),
+                enter = HelixMotion.enter,
+                exit = HelixMotion.exit,
+            ) {
+                HelixControlCenter(
+                    wm = wm,
+                    onOpenSettings = { showSettings = true },
+                    onDismiss = { DesktopChrome.controlCenterOpen = false },
+                )
             }
             // === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
             TelosQuakeTerminal(wm.workArea)
             TelosOsdOverlay()
-            Box(Modifier.align(Alignment.TopEnd).padding(top = 40.dp, end = 12.dp)) { ClipboardPopup() }
-            Box(Modifier.align(Alignment.CenterEnd)) { NotificationSidebar() }
+            Box(Modifier.align(Alignment.TopEnd).padding(top = 40.dp, end = 12.dp).zIndex(203f)) { ClipboardPopup() }
+            Box(Modifier.align(Alignment.CenterEnd).zIndex(204f)) { NotificationSidebar() }
+            HelixToastOverlay(Modifier.align(Alignment.TopEnd).padding(top = 48.dp, end = 12.dp).zIndex(205f))
             Box(Modifier.align(Alignment.Center)) {
                 PolkitDialog()
                 SessionPowerDialog(vault, onLogout)
@@ -289,8 +310,8 @@ fun DesktopWorkspace(
                 }
             }
             // === TELOS_PENDING_REVIEW_END: telos_kde_replacement_suite ===
-            toast?.let {
-                Text(it, color = TelosColors.primary, modifier = Modifier.align(Alignment.TopCenter).padding(top = 48.dp))
+            LaunchedEffect(toast) {
+                toast?.let { HelixToast.show("Desktop", it) }
             }
             Canvas(Modifier.fillMaxSize()) {
                 with(TelosCursorEngine) { drawCursor(cursorState, preset, pointer) }
@@ -338,8 +359,22 @@ fun handleDesktopKeys(
         wm.focusedId?.let { wm.close(it) }
         return true
     }
-    if (key == Key.Escape && DesktopChrome.appGridOpen) {
-        DesktopChrome.appGridOpen = false
+    if (key == Key.Escape) {
+        if (DesktopChrome.appGridOpen) {
+            DesktopChrome.appGridOpen = false
+            return true
+        }
+        if (DesktopChrome.overviewOpen) {
+            DesktopChrome.overviewOpen = false
+            return true
+        }
+        if (DesktopChrome.controlCenterOpen) {
+            DesktopChrome.controlCenterOpen = false
+            return true
+        }
+    }
+    if (ev.isMetaPressed && key == Key.Tab) {
+        DesktopChrome.toggleOverview()
         return true
     }
     // === TELOS_PENDING_REVIEW_END: telos_de_final_polish ===

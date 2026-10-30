@@ -2,6 +2,7 @@ package com.telos.desktop.panel
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -73,7 +74,7 @@ fun TelosTopPanel(
             power = LaptopPowerManager.snapshot()
             tray = SystemTrayManager.snapshot()
             val s = engine.overviewHistory.lastOrNull() ?: engine.poll()
-            cpuPill = "CPU ${s.cpu.totalPercent.toInt()}%  RAM ${(s.mem.usedKb / 1048576.0).toInt()}G"
+            cpuPill = "${s.cpu.totalPercent.toInt()}%"
             delay(2000)
         }
     }
@@ -83,6 +84,7 @@ fun TelosTopPanel(
     Box(
         modifier.fillMaxWidth().height(barH)
             .background(barColor)
+            .border(1.dp, TelosColors.outline)
             .combinedClickable(onClick = {}, onLongClick = { popup = PanelPopup.Style })
             .onPointerEvent(PointerEventType.Press) { ev ->
                 if (ev.button == androidx.compose.ui.input.pointer.PointerButton.Secondary) {
@@ -124,9 +126,9 @@ fun TelosTopPanel(
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.clickable { TelosQuake.toggle() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Terminal, 18.dp) }
                 Text(cpuPill, fontSize = 11.sp, color = TelosColors.secondary, modifier = Modifier.clickable { onOpenMonitor() })
-                Box(Modifier.clickable { popup = PanelPopup.Audio }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Volume, 18.dp) }
-                Box(Modifier.clickable { popup = PanelPopup.Network }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Network, 18.dp) }
-                Box(Modifier.clickable { popup = PanelPopup.Power }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Battery, 18.dp) }
+                Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Volume, 18.dp) }
+                Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Network, 18.dp) }
+                Box(Modifier.clickable { DesktopChrome.toggleControlCenter() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Battery, 18.dp) }
                 Box(Modifier.clickable { popup = PanelPopup.Tray }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Tray, 18.dp) }
                 Box(Modifier.clickable { TelosClipboardManager.popup = !TelosClipboardManager.popup }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Clip, 18.dp) }
                 Box(Modifier.clickable { TelosNotificationCenter.open.value = !TelosNotificationCenter.open.value }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Bell, 18.dp) }
@@ -140,13 +142,13 @@ fun TelosTopPanel(
         }
         if (popup != PanelPopup.None) {
             Box(Modifier.fillMaxWidth().padding(top = 36.dp), contentAlignment = Alignment.TopEnd) {
-                Column(Modifier.width(320.dp).background(TelosColors.menu).padding(12.dp)) {
+                Column(Modifier.width(320.dp).background(TelosColors.menu).border(1.dp, TelosColors.outline).padding(12.dp)) {
                     when (popup) {
                         PanelPopup.Clock -> {
                             val s = engine.overviewHistory.lastOrNull()
                             Text(clock.format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")), color = TelosColors.onSurface)
+                            HelixMonthGrid(clock)
                             Text("CPU ${s?.cpu?.totalPercent?.toInt() ?: 0}%  RAM ${s?.mem?.usedKb?.div(1024) ?: 0} MiB", color = TelosColors.secondary, fontSize = 12.sp)
-                            Text("GPU ${s?.cpu?.tempC?.toInt() ?: 0}°C package  vault ${s?.mounts?.firstOrNull { it.fstype == "luks" }?.let { it.usedBytes / 1_000_000 } ?: 0} MB", fontSize = 12.sp, color = TelosColors.onSurface)
                             Text("Open System Monitor", color = TelosColors.primary, modifier = Modifier.clickable { onOpenMonitor(); popup = PanelPopup.None }.padding(8.dp))
                         }
                         PanelPopup.Audio -> {
@@ -229,6 +231,36 @@ fun TelosTopPanel(
                         // === TELOS_PENDING_REVIEW_END: telos_desktop_kwin_parity_upgrade ===
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun HelixMonthGrid(now: LocalDateTime) {
+    val month = java.time.YearMonth.from(now.toLocalDate())
+    val firstDow = month.atDay(1).dayOfWeek.value % 7
+    val days = month.lengthOfMonth()
+    val today = now.dayOfMonth
+    Text("${month.month} ${month.year}", color = TelosColors.secondary, fontSize = 12.sp, modifier = Modifier.padding(top = 8.dp))
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        listOf("M", "T", "W", "T", "F", "S", "S").forEach { d ->
+            Text(d, color = TelosColors.onSurface.copy(0.5f), fontSize = 10.sp, modifier = Modifier.width(28.dp))
+        }
+    }
+    var cell = 0
+    repeat(6) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            repeat(7) { col ->
+                val day = cell - firstDow + 1
+                cell++
+                val label = if (day in 1..days) day.toString() else ""
+                Text(
+                    label,
+                    color = if (day == today) TelosColors.primary else TelosColors.onSurface,
+                    fontSize = 11.sp,
+                    modifier = Modifier.width(28.dp),
+                )
             }
         }
     }

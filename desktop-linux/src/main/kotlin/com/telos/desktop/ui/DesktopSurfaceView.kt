@@ -7,8 +7,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -75,15 +78,20 @@ fun DesktopSurfaceView(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         items(items, key = { it.file.absolutePath + it.label }) { item ->
+            val card = RoundedCornerShape(12.dp)
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .width(88.dp)
+                    .clip(card)
+                    .background(TelosColors.card)
+                    .border(1.dp, TelosColors.outline, card)
                     .combinedClickable(
                         onDoubleClick = { activate(item, onNotify) },
                         onClick = {},
                         onLongClick = onEmptyRightClick,
-                    ),
+                    )
+                    .padding(8.dp),
             ) {
                 val iconFile = icons.resolve(item.iconName, 48) ?: if (item.file.isDirectory) icons.resolve("folder", 48) else icons.resolve("text-x-generic", 48)
                 DiskIcon(iconFile, item.label, 48.dp)

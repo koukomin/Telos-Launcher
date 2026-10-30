@@ -74,7 +74,11 @@ object TelosClipboardManager {
 @Composable
 fun ClipboardPopup() {
     LaunchedEffect(Unit) { TelosClipboardManager.pollLoop() }
-    if (!TelosClipboardManager.popup) return
+    androidx.compose.animation.AnimatedVisibility(
+        TelosClipboardManager.popup,
+        enter = com.telos.desktop.ui.HelixMotion.enter,
+        exit = com.telos.desktop.ui.HelixMotion.exit,
+    ) {
     val shape = RoundedCornerShape(12.dp)
     Column(
         Modifier
@@ -99,5 +103,6 @@ fun ClipboardPopup() {
                 )
             }
         }
+    }
     }
 }

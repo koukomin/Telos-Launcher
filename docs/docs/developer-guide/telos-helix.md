@@ -30,7 +30,19 @@ Beat GNOME / Cosmic / Hyprland-default chrome on density and search, using KDE-c
 | **H5** | In tree | Bottom dock uses `CandyCyberIcon` + labels. Apps opens Kickoff (`toggleAppGrid`). Alt-Tab uses opaque `menu` chips. |
 | **H6** | In tree | Context menu, notifications, clipboard: opaque `menu` + outline. Window chrome: opaque title bar + title text, opaque body. |
 
-When a later session asks **what is still pending**: **none of P0–P4, none of Helix H0–H6**. Do not start extra DEs unless asked.
+When a later session asks **what is still pending**: **none of P0–P4, none of Helix H0–H6, none of Surface S0–S4**. Do not start extra DEs unless asked.
+
+## Helix Surface (2026 DE chrome)
+
+Wallpaper is the stage. Menus stay opaque. Motion is 120–160 ms, no bounce.
+
+| Phase | Status | Scope |
+| --- | --- | --- |
+| **S0** | In tree | Desktop icons on Helix cards. Panel and dock 1 px `outline`. |
+| **S1** | In tree | Kickoff, notifications, clipboard, context menu, Overview, Control Center: fade+scale 160 ms. |
+| **S2** | In tree | Clock popup month grid. OSD bottom-center opaque card. Toast 4 s. Slim CPU pill. |
+| **S3** | In tree | Overview: 4 workspace tiles + window titles. Dock button + Meta+Tab. Escape closes. |
+| **S4** | In tree | Control Center: volume, Wi-Fi, brightness, DND, vault, Settings. Volume/Net/Battery open it. |
 
 ## Files
 
@@ -40,7 +52,8 @@ When a later session asks **what is still pending**: **none of P0–P4, none of 
 - Icons: `desktop-linux/.../icons/CandyCyberIcons.kt`
 - Status comment: `desktop-linux/.../ui/Helix.kt`
 - Settings: `desktop-linux/.../ui/LinuxDesktopSettings.kt`
+- Surface: `HelixMotion.kt`, `HelixToast.kt`, `HelixControlCenter.kt`, `HelixOverview.kt`
 
 ## Resume prompt
 
-Helix H0–H6 are in tree. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`.
+Helix H0–H6 and Surface S0–S4 are in tree. Push `origin/main`. Never merge/release. Never `:app:app` → `:desktop-linux`.

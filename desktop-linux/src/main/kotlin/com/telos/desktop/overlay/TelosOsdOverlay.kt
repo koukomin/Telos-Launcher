@@ -1,11 +1,11 @@
 package com.telos.desktop.overlay
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -46,10 +46,10 @@ fun TelosOsdOverlay() {
             TelosOsd.visible = false
         }
     }
-    Box(Modifier.fillMaxWidth().padding(top = 72.dp), contentAlignment = Alignment.TopCenter) {
-        AnimatedVisibility(TelosOsd.visible, enter = fadeIn(), exit = fadeOut()) {
+    Box(Modifier.fillMaxSize().padding(bottom = 80.dp), contentAlignment = Alignment.BottomCenter) {
+        AnimatedVisibility(TelosOsd.visible, enter = com.telos.desktop.ui.HelixMotion.enter, exit = com.telos.desktop.ui.HelixMotion.exit) {
             Column(
-                Modifier.width(280.dp).clip(RoundedCornerShape(20.dp)).background(TelosColors.surfaceContainer.copy(alpha = 0.94f)).padding(16.dp),
+                Modifier.width(320.dp).clip(RoundedCornerShape(20.dp)).background(TelosColors.menu).padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(TelosOsd.label, color = TelosColors.secondary, fontSize = 14.sp)

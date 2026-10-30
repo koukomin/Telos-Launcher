@@ -4,7 +4,7 @@ sidebar_position: 9
 
 # Telos Linux Desktop roadmap (remember this)
 
-When a later session asks **what is still pending** for the Linux desktop, the answer is **none of P0–P4 and none of Helix H0–H6**. `:app:app` still must not depend on `:desktop-linux`. `:app:ui` hosts `:ui-kmp` screens. Spec: [Telos Helix](./telos-helix.md).
+When a later session asks **what is still pending** for the Linux desktop, the answer is **none of P0–P4, none of Helix H0–H6, none of Surface S0–S4**. `:app:app` still must not depend on `:desktop-linux`. `:app:ui` hosts `:ui-kmp` screens. Spec: [Telos Helix](./telos-helix.md).
 
 | Phase | Status | Scope |
 | --- | --- | --- |
@@ -17,5 +17,6 @@ When a later session asks **what is still pending** for the Linux desktop, the a
 | **Helix H4** | In tree | Settings grouped Helix cards (`LinuxDesktopSettingsPanel`). |
 | **Helix H5** | In tree | Icon dock + Kickoff from dock + opaque Alt-Tab. |
 | **Helix H6** | In tree | Context menu, notifications, clipboard, opaque window chrome + titles. |
+| **Surface S0–S4** | In tree | Icon cards, 160 ms overlays, OSD/toast/clock month, Overview, Control Center. |
 
 Constraints that stay in force: no `:app:app` dependency on `:desktop-linux`; i18n keys from `:core:i18n` only; labwc is a **host package**, not bundled.
