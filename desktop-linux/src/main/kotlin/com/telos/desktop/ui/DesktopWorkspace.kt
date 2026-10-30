@@ -47,6 +47,7 @@ import com.telos.desktop.apps.DesktopFileLauncher
 import com.telos.desktop.apps.TelosFileHandler
 import com.telos.desktop.apps.TelosFilesApp
 import com.telos.desktop.apps.TelosFilesNav
+import com.telos.desktop.apps.TelosFilesWorkspace
 import com.telos.desktop.apps.TelosMediaPlayer
 import com.telos.desktop.cursor.CursorPreset
 import com.telos.desktop.cursor.CursorState
@@ -190,7 +191,11 @@ fun DesktopWorkspace(
                             "Trash" -> x.trash
                             else -> TelosFilesNav.path
                         }
-                        TelosFilesApp(start, showHiddenFiles = settings.showHiddenFiles)
+                        if (win.title == "Files") {
+                            TelosFilesWorkspace(start, settings.showHiddenFiles, settings.configDir)
+                        } else {
+                            TelosFilesApp(start, showHiddenFiles = settings.showHiddenFiles)
+                        }
                     }
                     // === TELOS_PENDING_REVIEW_END: telos_launcher_desktop_ui_parity ===
                     else -> Text(win.title, color = TelosColors.onSurface, modifier = Modifier.padding(16.dp))

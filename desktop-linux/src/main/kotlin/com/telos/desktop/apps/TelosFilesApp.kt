@@ -49,9 +49,18 @@ private data class FilesRow(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
+fun TelosFilesApp(
+    start: File? = null,
+    showHiddenFiles: Boolean = false,
+    extraPlaces: List<com.telos.desktop.files.NetworkPlace> = emptyList(),
+    onPathChange: (File) -> Unit = {},
+) {
     var query by remember { mutableStateOf("") }
     var path by remember(start?.absolutePath) { mutableStateOf(start ?: TelosFilesNav.path) }
+    androidx.compose.runtime.LaunchedEffect(path) {
+        TelosFilesNav.path = path
+        onPathChange(path)
+    }
     var zipPrefix by remember { mutableStateOf("") }
     var archiveSecret by remember { mutableStateOf("") }
     var needPassword by remember { mutableStateOf(false) }
@@ -100,7 +109,7 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
             t("ermis_trash") to xdg.trash,
         )
     }
-    val net = remember(tick) { NetworkPlaces.places() }
+    val net = remember(tick, extraPlaces) { NetworkPlaces.places() + extraPlaces }
     Column(Modifier.fillMaxSize().background(TelosColors.surface).padding(8.dp)) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
             shortcuts.forEach { (n, f) ->

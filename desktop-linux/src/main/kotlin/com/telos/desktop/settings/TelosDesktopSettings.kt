@@ -4,6 +4,7 @@ import java.io.File
 import java.util.Properties
 
 class TelosDesktopSettings(private val vaultConfigDir: File) {
+    val configDir: File get() = vaultConfigDir
     var showDesktopIcons: Boolean = true
     var showHiddenFiles: Boolean = false
     var showLnkFiles: Boolean = false
