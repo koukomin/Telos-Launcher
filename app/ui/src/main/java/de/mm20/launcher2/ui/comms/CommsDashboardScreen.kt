@@ -149,7 +149,13 @@ fun CommsDashboardScreen(
                 )
                 HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
                 NavigationDrawerItem(
-                    icon = { Icon(painterResource(R.drawable.mic_24px), contentDescription = null) },
+                    icon = {
+                        ThemedDrawerIcon(
+                            iconRes = R.drawable.mic_24px,
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    },
                     label = { Text(stringResource(R.string.hc_call_recordings)) },
                     selected = selectedTab == CommsTab.Recordings,
                     onClick = {
@@ -158,7 +164,13 @@ fun CommsDashboardScreen(
                     },
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(painterResource(R.drawable.settings_24px), contentDescription = null) },
+                    icon = {
+                        ThemedDrawerIcon(
+                            iconRes = R.drawable.settings_24px,
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                    },
                     label = { Text(stringResource(R.string.hc_settings)) },
                     selected = false,
                     onClick = {
@@ -167,7 +179,13 @@ fun CommsDashboardScreen(
                     },
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(painterResource(R.drawable.text_fields_24px), contentDescription = null) },
+                    icon = {
+                        ThemedDrawerIcon(
+                            iconRes = R.drawable.text_fields_24px,
+                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                        )
+                    },
                     label = { Text("Font Size / Γραμματοσειρά") },
                     selected = false,
                     onClick = {
@@ -176,7 +194,13 @@ fun CommsDashboardScreen(
                     },
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(painterResource(R.drawable.close_24px), contentDescription = null) },
+                    icon = {
+                        ThemedDrawerIcon(
+                            iconRes = R.drawable.delete_24px,
+                            containerColor = MaterialTheme.colorScheme.errorContainer,
+                            contentColor = MaterialTheme.colorScheme.onErrorContainer
+                        )
+                    },
                     label = { Text(stringResource(R.string.comms_clear_history)) },
                     selected = false,
                     onClick = {
@@ -411,6 +435,28 @@ private fun CommsLauncherIcon(packageName: String?, user: android.os.UserHandle 
     else Icon(painterResource(R.drawable.sms_24px), contentDescription = null)
 }
 
+@Composable
+private fun ThemedDrawerIcon(
+    iconRes: Int,
+    containerColor: Color,
+    contentColor: Color
+) {
+    Surface(
+        shape = CircleShape,
+        color = containerColor,
+        contentColor = contentColor,
+        modifier = Modifier.size(32.dp)
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            Icon(
+                painter = painterResource(iconRes),
+                contentDescription = null,
+                modifier = Modifier.size(18.dp)
+            )
+        }
+    }
+}
+
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 @Composable
 private fun DefaultSmsLauncherIcon() {
@@ -425,13 +471,21 @@ private fun DefaultSmsLauncherIcon() {
             de.mm20.launcher2.search.VirtualAppAppearance.largeIcon(context, "telos_messages_app")
         }
         if (bitmap != null) {
-            androidx.compose.foundation.Image(
-                bitmap = bitmap.asImageBitmap(),
-                contentDescription = null,
-                modifier = Modifier.size(28.dp),
+            val drawable = remember(bitmap, context) {
+                android.graphics.drawable.BitmapDrawable(context.resources, bitmap)
+            }
+            val staticIcon = remember(drawable) {
+                de.mm20.launcher2.icons.StaticLauncherIcon(
+                    foregroundLayer = de.mm20.launcher2.icons.StaticIconLayer(drawable),
+                    backgroundLayer = de.mm20.launcher2.icons.ColorLayer(0)
+                )
+            }
+            ShapedLauncherIcon(
+                size = 28.dp,
+                icon = { staticIcon }
             )
         } else {
-            Icon(painterResource(R.drawable.sms_24px), contentDescription = null)
+            ShapedLauncherIcon(size = 28.dp, icon = { null })
         }
     } else CommsLauncherIcon(packageName)
 }

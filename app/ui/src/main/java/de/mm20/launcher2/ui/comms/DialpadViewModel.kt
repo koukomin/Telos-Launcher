@@ -184,6 +184,7 @@ class DialpadViewModel : ViewModel(), KoinComponent {
         if (number.isEmpty()) return
         viewModelScope.launch {
             de.mm20.launcher2.comms.privacy.CallGuard.place(context, number)
+            onClear()
         }
     }
 
@@ -191,6 +192,7 @@ class DialpadViewModel : ViewModel(), KoinComponent {
         if (phoneNumber.isEmpty()) return
         viewModelScope.launch {
             de.mm20.launcher2.comms.privacy.CallGuard.place(context, phoneNumber, handle)
+            onClear()
         }
     }
 
@@ -199,6 +201,7 @@ class DialpadViewModel : ViewModel(), KoinComponent {
         if (number.isEmpty()) return
         viewModelScope.launch {
             val ok = de.mm20.launcher2.comms.privacy.CallGuard.placeSip(context, number)
+            onClear()
             if (!ok) {
                 android.widget.Toast.makeText(
                     context,
