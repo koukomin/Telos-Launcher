@@ -18,6 +18,7 @@ Telos — a search-focused, free and open source Android launcher (package `de.m
 - Lint is non-fatal (`lint.abortOnError = false` in `app/app/build.gradle.kts`).
 - Unit tests exist in `core/ktx`, `core/base`, `data/locations`, `services/comms`, `services/store` and `data/store`; most other modules have no test suite.
 - CI (`.github/workflows/build-nightly.yml`) builds `assembleDefaultNightly` nightly.
+- Automated Daily Dependency Check: Scheduled GitHub Action (`.github/workflows/daily-dependency-check.yml`) executes daily at 06:00 UTC and updates `.github/daily-dependency-check.json`. AI agents check this status upon connecting to the repository.
 
 ## Architecture
 

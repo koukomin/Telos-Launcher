@@ -53,6 +53,11 @@ android {
         resources.excludes.add("org/bouncycastle/pqc/legacy/picnic/**")
         // youtubedl-android runs Python and FFmpeg from the extracted native library folder
         if (mediaRuntime) jniLibs.useLegacyPackaging = true
+        
+        // Exclude 32-bit and x86 native libraries completely from the build to slash APK size
+        jniLibs.excludes.add("lib/armeabi-v7a/**")
+        jniLibs.excludes.add("lib/x86/**")
+        jniLibs.excludes.add("lib/x86_64/**")
     }
 
     compileSdk {
