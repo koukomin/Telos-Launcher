@@ -1,0 +1,40 @@
+# Automated Telos Linux Desktop AppImage & UberJar Package Builder
+# Builds native Linux packages on tag push (v*) or dispatch
+
+name: Build Linux Desktop Artifacts
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-linux-desktop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build Linux Desktop UberJar Package
+        run: ./gradlew :desktop-linux:packageUberJarForCurrentOS --stacktrace
+
+      - name: Upload Linux Desktop Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: telos-linux-desktop-jar
+          path: desktop-linux/build/compose/jars/*.jar
