@@ -11,10 +11,10 @@ Telos Linux Desktop is a **separate JVM program** (`:desktop-linux`). It is not 
 | Feature | Behaviour |
 | --- | --- |
 | Top bar | Workspaces 1–4, clock, audio, network, battery, tray, clipboard, notifications. Right-click or long-press opens style (height, icon size, tint, transparency). Choices save in vault `desktop.properties`. |
-| AppGrid | Telos logo on the bar opens the full-screen grid: Telos apps and installed Linux apps. |
+| AppGrid | Telos logo on the bar opens the full-screen grid. The All tab searches Telos apps, `.desktop` (including Flatpak) and files under Desktop/Downloads/Documents. |
 | Windows | Titlebar drag, 8-edge resize, minimize / maximize / close, shade (double-click titlebar), edge snap. Maximized windows stay below the top bar. |
 | Files / Media | Folders and media open in Telos Files / Telos Media first. Other types use `xdg-open`. |
-| Telos apps | Files, Photos, Downloads, Trash, Media, Notes, Calendar, Calculator, Clock, Network, Store, Settings, System Monitor, System Optimizer. |
+| Telos apps | Files, Photos, Downloads, Trash, Media, Notes, Calendar, Calculator, Clock, Network, Store (Flatpak list/search/install), Settings, System Monitor, System Optimizer. |
 | Quake | `F12` / Ctrl+\` drop-down terminal. |
 | System Monitor | `Ctrl+Escape`, reads `/proc` and `/sys`. |
 

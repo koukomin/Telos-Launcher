@@ -31,8 +31,12 @@ import com.telos.desktop.apps.DesktopEntry
 import com.telos.desktop.apps.DesktopFileLauncher
 import com.telos.desktop.apps.LinuxAppScanner
 import com.telos.desktop.apps.TelosAppCategory
+import com.telos.desktop.apps.TelosFileHandler
 import com.telos.desktop.apps.TelosVirtualApp
 import com.telos.desktop.apps.TelosVirtualApps
+import com.telos.desktop.search.DesktopSearch
+import com.telos.desktop.search.SearchHit
+import com.telos.desktop.search.SearchKind
 import com.telos.desktop.icons.CandyCyberIcon
 import com.telos.desktop.icons.LinuxIconThemeResolver
 import com.telos.desktop.i18n.TelosI18n.t
@@ -51,7 +55,16 @@ fun PlasmaAppGrid(
     var tab by remember { mutableStateOf("Telos") }
     var cat by remember { mutableStateOf<TelosAppCategory?>(null) }
     var apps by remember { mutableStateOf<List<DesktopEntry>>(emptyList()) }
+    var hits by remember { mutableStateOf<List<SearchHit>>(emptyList()) }
     LaunchedEffect(Unit) { apps = withContext(Dispatchers.IO) { LinuxAppScanner.scan() } }
+    LaunchedEffect(query, apps) {
+        if (query.isBlank()) {
+            hits = emptyList()
+        } else {
+            tab = "All"
+            hits = withContext(Dispatchers.Default) { DesktopSearch.search(query, apps = apps) }
+        }
+    }
     val telos = remember(query) {
         TelosVirtualApps.all.filter { query.isBlank() || it.label.contains(query, true) }
     }
@@ -82,6 +95,7 @@ fun PlasmaAppGrid(
             }
             OutlinedTextField(query, { query = it }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp), label = { Text(t("search_bar_placeholder")) }, singleLine = true)
             Row(Modifier.padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilterChip(selected = tab == "All", onClick = { tab = "All" }, label = { Text(t("search_bar_placeholder")) })
                 FilterChip(selected = tab == "Telos", onClick = { tab = "Telos" }, label = { Text(t("hc_apps")) })
                 FilterChip(selected = tab == "Linux", onClick = { tab = "Linux" }, label = { Text("Linux") })
                 if (tab == "Linux") {
@@ -96,7 +110,24 @@ fun PlasmaAppGrid(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                if (tab == "Telos") {
+                if (tab == "All") {
+                    items(hits, key = { it.id }) { hit ->
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.clip(RoundedCornerShape(16.dp)).background(TelosColors.card).clickable {
+                                when (hit.kind) {
+                                    SearchKind.TelosApp -> hit.telos?.let { onOpenTelos(it) }
+                                    SearchKind.Desktop -> hit.desktop?.let { DesktopFileLauncher.launch(it) }
+                                    SearchKind.File -> hit.file?.let { TelosFileHandler.open(it) }
+                                }
+                                onDismiss()
+                            }.padding(12.dp),
+                        ) {
+                            CandyCyberIcon(hit.telos?.icon ?: com.telos.desktop.icons.CandyIcon.AppGrid, 48.dp)
+                            Text(hit.title, color = TelosColors.onSurface, fontSize = 12.sp, maxLines = 2)
+                        }
+                    }
+                } else if (tab == "Telos") {
                     items(telos, key = { it.domain }) { app ->
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,

@@ -37,11 +37,12 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         val p = Properties()
         file.inputStream().use { p.load(it) }
         showDesktopIcons = p.getProperty("showDesktopIcons", "true").toBoolean()
-        showHiddenFiles = p.getProperty("showHiddenFiles", "false").toBoolean()
+        showHiddenFiles = (p.getProperty("hiddenItems.showHiddenFiles")
+            ?: p.getProperty("showHiddenFiles", "false")).toBoolean()
         showLnkFiles = p.getProperty("showLnkFiles", "false").toBoolean()
         showDesktopFiles = p.getProperty("showDesktopFiles", "true").toBoolean()
         showStandardFolders = p.getProperty("showStandardFolders", "true").toBoolean()
-        iconTheme = p.getProperty("iconTheme", iconTheme)
+        iconTheme = p.getProperty("icons.theme") ?: p.getProperty("iconTheme", iconTheme)
         windowButtonStyle = p.getProperty("windowButtonStyle", windowButtonStyle)
         buttonsOnLeft = p.getProperty("buttonsOnLeft", "false").toBoolean()
         cursorPreset = p.getProperty("cursorPreset", cursorPreset)
@@ -68,10 +69,12 @@ class TelosDesktopSettings(private val vaultConfigDir: File) {
         val p = Properties()
         p["showDesktopIcons"] = showDesktopIcons.toString()
         p["showHiddenFiles"] = showHiddenFiles.toString()
+        p["hiddenItems.showHiddenFiles"] = showHiddenFiles.toString()
         p["showLnkFiles"] = showLnkFiles.toString()
         p["showDesktopFiles"] = showDesktopFiles.toString()
         p["showStandardFolders"] = showStandardFolders.toString()
         p["iconTheme"] = iconTheme
+        p["icons.theme"] = iconTheme
         p["windowButtonStyle"] = windowButtonStyle
         p["buttonsOnLeft"] = buttonsOnLeft.toString()
         p["cursorPreset"] = cursorPreset

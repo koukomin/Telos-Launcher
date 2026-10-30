@@ -34,12 +34,15 @@ object TelosFilesNav {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TelosFilesApp(start: File? = null) {
+fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
     var query by remember { mutableStateOf("") }
     var path by remember(start?.absolutePath) { mutableStateOf(start ?: TelosFilesNav.path) }
     val dir = path
-    val entries = remember(dir, query) {
-        val list = dir.listFiles()?.sortedWith(compareBy({ !it.isDirectory }, { it.name.lowercase() })) ?: emptyList()
+    val entries = remember(dir, query, showHiddenFiles) {
+        val list = dir.listFiles()
+            ?.filter { showHiddenFiles || !it.name.startsWith(".") }
+            ?.sortedWith(compareBy({ !it.isDirectory }, { it.name.lowercase() }))
+            ?: emptyList()
         if (query.isBlank()) list else list.filter { it.name.contains(query, true) }
     }
     val xdg = remember { XdgUserDirsManager.resolve() }

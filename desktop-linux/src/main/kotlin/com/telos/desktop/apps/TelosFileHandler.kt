@@ -18,6 +18,7 @@ object TelosFileHandler {
         "mp3", "flac", "ogg", "wav", "m4a", "aac", "opus",
         "mp4", "mkv", "webm", "avi", "mov", "m4v",
         "jpg", "jpeg", "png", "gif", "webp", "bmp", "svg",
+        "heic", "heif", "raw", "cr2", "nef", "arw", "dng",
     )
 
     fun classify(file: File): TelosOpenTarget = when {

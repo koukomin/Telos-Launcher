@@ -26,7 +26,9 @@ import androidx.compose.ui.unit.sp
 import com.telos.desktop.i18n.TelosI18n.t
 import com.telos.desktop.panel.ConnectivityManager
 import com.telos.desktop.ui.TelosColors
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.YearMonth
@@ -144,15 +146,40 @@ fun TelosNetworkApp() {
 
 @Composable
 fun TelosStoreApp() {
-    var apps by remember { mutableStateOf<List<DesktopEntry>>(emptyList()) }
-    LaunchedEffect(Unit) { apps = LinuxAppScanner.scan() }
+    var installed by remember { mutableStateOf<List<FlatpakRef>>(emptyList()) }
+    var remote by remember { mutableStateOf<List<FlatpakRef>>(emptyList()) }
     var q by remember { mutableStateOf("") }
-    val shown = remember(apps, q) { apps.filter { q.isBlank() || it.name.contains(q, true) }.take(80) }
+    LaunchedEffect(Unit) {
+        installed = withContext(Dispatchers.IO) { FlatpakStore.listInstalled() }
+    }
+    LaunchedEffect(q) {
+        remote = if (q.length < 2) emptyList()
+        else withContext(Dispatchers.IO) { FlatpakStore.search(q) }
+    }
+    val shown = remember(installed, q) {
+        installed.filter { q.isBlank() || it.name.contains(q, true) || it.id.contains(q, true) }
+    }
     Column(Modifier.fillMaxSize().background(TelosColors.surface).padding(12.dp)) {
         Text(t("hf_store_title"), color = TelosColors.secondary, fontSize = 20.sp)
+        if (!FlatpakStore.available()) {
+            Text(t("hc_add_an_app"), color = TelosColors.secondary)
+        }
         OutlinedTextField(q, { q = it }, modifier = Modifier.fillMaxWidth(), label = { Text(t("hc_filter")) }, singleLine = true)
-        shown.forEach { e ->
-            Text(e.name, color = TelosColors.onSurface, modifier = Modifier.clickable { DesktopFileLauncher.launch(e) }.padding(8.dp))
+        Text(t("hc_add_installed_apps"), color = TelosColors.secondary, fontSize = 12.sp, modifier = Modifier.padding(top = 8.dp))
+        shown.take(40).forEach { e ->
+            Text(e.name + "  " + e.id, color = TelosColors.onSurface, modifier = Modifier.clickable {
+                com.telos.desktop.linux.Sys.runBg("flatpak", "run", e.id)
+            }.padding(8.dp))
+        }
+        if (remote.isNotEmpty()) {
+            Text(t("action_install"), color = TelosColors.secondary, fontSize = 12.sp)
+            remote.take(30).forEach { e ->
+                Text(
+                    e.name + "  " + e.id,
+                    color = TelosColors.onSurface,
+                    modifier = Modifier.clickable { FlatpakStore.install(e.id) }.padding(8.dp),
+                )
+            }
         }
     }
 }

@@ -190,7 +190,7 @@ fun DesktopWorkspace(
                             "Trash" -> x.trash
                             else -> TelosFilesNav.path
                         }
-                        TelosFilesApp(start)
+                        TelosFilesApp(start, showHiddenFiles = settings.showHiddenFiles)
                     }
                     // === TELOS_PENDING_REVIEW_END: telos_launcher_desktop_ui_parity ===
                     else -> Text(win.title, color = TelosColors.onSurface, modifier = Modifier.padding(16.dp))
