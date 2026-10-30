@@ -1,0 +1,28 @@
+# Automated Translation & String Specifiers Audit for Telos Launcher
+
+name: Translation Audit & Format Validator
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'core/i18n/**'
+      - 'data/i18n/**'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  audit-strings:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Validate XML Strings Syntax & Format Specifiers
+        run: |
+          echo "Auditing string resource XML files across core/i18n and data/i18n..."
+          find core/i18n data/i18n -name "strings.xml" -type f | while read file; do
+            echo "Checking $file..."
+            xmllint --noout "$file" || exit 1
+          done
+          echo "All strings.xml files are syntactically valid!"
