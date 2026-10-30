@@ -6,13 +6,13 @@ IssueTracker: https://github.com/koukomin/Telos-Launcher/issues
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 1.41.89
-CurrentVersionCode: 2026110500
+CurrentVersion: 1.43.77
+CurrentVersionCode: 2026110501
 
 Builds:
-  - versionName: 1.41.89
-    versionCode: 2026110500
-    commit: v1.41.89
+  - versionName: 1.43.77
+    versionCode: 2026110501
+    commit: v1.43.77
     subdir: app/app
     gradle:
       - yes
