@@ -393,15 +393,6 @@ fun IconsSettingsScreen() {
                         viewModel.setForceThemedIcons(it)
                     }
                 )
-                SwitchPreference(
-                    title = "Cyberpunk Neo Icons",
-                    summary = "Dynamically convert all app icons into glowing cyberpunk vectors",
-                    value = icons?.cyberpunkIcons == true,
-                    enabled = icons?.themedIcons == true,
-                    onValueChanged = {
-                        viewModel.setCyberpunkIcons(it)
-                    }
-                )
                 val iconPack by remember {
                     derivedStateOf { installedIconPacks.firstOrNull { it.packageName == icons?.iconPack } }
                 }

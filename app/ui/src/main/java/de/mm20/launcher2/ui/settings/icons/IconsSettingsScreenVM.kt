@@ -111,10 +111,6 @@ class IconsSettingsScreenVM(
         iconSettings.setForceThemedIcons(forceThemedIcons)
     }
 
-    fun setCyberpunkIcons(cyberpunkIcons: Boolean) {
-        iconSettings.setCyberpunkIcons(cyberpunkIcons)
-    }
-
     val installedIconPacks: Flow<List<IconPack>> = iconService.getInstalledIconPacks().map {
         listOf(
             IconPack(
