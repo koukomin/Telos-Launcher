@@ -397,6 +397,7 @@ fun IconsSettingsScreen() {
                     title = "Cyberpunk Neo Icons",
                     summary = "Dynamically convert all app icons into glowing cyberpunk vectors",
                     value = icons?.cyberpunkIcons == true,
+                    enabled = icons?.themedIcons == true,
                     onValueChanged = {
                         viewModel.setCyberpunkIcons(it)
                     }

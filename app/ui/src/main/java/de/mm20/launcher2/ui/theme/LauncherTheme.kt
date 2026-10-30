@@ -105,6 +105,21 @@ fun LauncherTheme(
 
 
     val baseDensity = LocalDensity.current
+    val view = androidx.compose.ui.platform.LocalView.current
+    val window = (view.context as? android.app.Activity)?.window
+
+    if (!view.isInEditMode && window != null) {
+        androidx.compose.runtime.SideEffect {
+            androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
+            val insetsController = androidx.core.view.WindowCompat.getInsetsController(window, view)
+            insetsController.isAppearanceLightStatusBars = !darkTheme
+            insetsController.isAppearanceLightNavigationBars = !darkTheme
+            window.navigationBarColor = android.graphics.Color.TRANSPARENT
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                window.isNavigationBarContrastEnforced = false
+            }
+        }
+    }
 
     CompositionLocalProvider(
         LocalDarkTheme provides darkTheme,
