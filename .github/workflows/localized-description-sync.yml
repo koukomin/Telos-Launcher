@@ -1,0 +1,33 @@
+# Automated Localized Store Description & Fastlane Metadata Sync
+
+name: Localized Description Sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'core/i18n/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-descriptions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Sync Fastlane Localized Descriptions
+        run: |
+          mkdir -p fastlane/metadata/android/en-US
+          mkdir -p fastlane/metadata/android/el-GR
+          
+          echo "Telos Launcher — A search-focused, private, and open-source Android launcher & virtual workspace." > fastlane/metadata/android/en-US/short_description.txt
+          echo "Telos Launcher — Ένας ιδιωτικός, ανοιχτού κώδικα launcher επικεντρωμένος στην αναζήτηση και τα virtual apps." > fastlane/metadata/android/el-GR/short_description.txt
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add fastlane/
+          git commit -m "docs(fastlane): Sync localized store descriptions" || echo "No changes"
+          git push origin main || echo "No push"
