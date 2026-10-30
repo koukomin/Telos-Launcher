@@ -1,12 +1,15 @@
 package com.telos.desktop.overlay
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -72,7 +75,16 @@ object TelosClipboardManager {
 fun ClipboardPopup() {
     LaunchedEffect(Unit) { TelosClipboardManager.pollLoop() }
     if (!TelosClipboardManager.popup) return
-    Column(Modifier.width(360.dp).heightIn(max = 420.dp).background(TelosColors.surfaceContainer).padding(8.dp)) {
+    val shape = RoundedCornerShape(12.dp)
+    Column(
+        Modifier
+            .width(360.dp)
+            .heightIn(max = 420.dp)
+            .clip(shape)
+            .background(TelosColors.menu)
+            .border(1.dp, TelosColors.outline, shape)
+            .padding(8.dp),
+    ) {
         Text("Clipboard", color = TelosColors.secondary, modifier = Modifier.padding(8.dp))
         LazyColumn {
             items(TelosClipboardManager.history, key = { it.text.hashCode() }) { item ->

@@ -1,14 +1,17 @@
 package com.telos.desktop.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.settings.TelosDesktopSettings
@@ -22,10 +25,13 @@ fun DesktopContextMenu(
     onRefresh: () -> Unit,
     onDismiss: () -> Unit,
 ) {
+    val shape = RoundedCornerShape(12.dp)
     Column(
         modifier = Modifier
             .width(280.dp)
-            .background(TelosColors.surfaceContainer)
+            .clip(shape)
+            .background(TelosColors.menu)
+            .border(1.dp, TelosColors.outline, shape)
             .padding(8.dp),
     ) {
         MenuRow("Display Settings & Resolution…") { onDisplaySettings(); onDismiss() }

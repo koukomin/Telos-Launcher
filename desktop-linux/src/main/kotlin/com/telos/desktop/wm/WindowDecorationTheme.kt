@@ -16,9 +16,9 @@ data class WindowDecorationTheme(
     val unisonHoverSymbols: Boolean = true,
     val cornerRadiusPx: Float = 12f,
     val titleBarHeightPx: Float = 36f,
-    val glassTitleBar: Boolean = true,
+    val glassTitleBar: Boolean = false,
     val activeOutline: Color = Color(0xFF00F0FF),
-    val inactiveOutline: Color = Color(0x33FFFFFF),
-    val titleBarTint: Color = Color(0xCC1A1528),
+    val inactiveOutline: Color = Color(0xFF4A4266),
+    val titleBarTint: Color = Color(0xFF241E36),
     val accent: Color = Color(0xFFFF007F),
 )

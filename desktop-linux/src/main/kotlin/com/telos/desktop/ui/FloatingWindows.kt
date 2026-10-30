@@ -13,7 +13,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
@@ -74,6 +78,7 @@ fun FloatingWindowLayer(
                     Modifier
                         .fillMaxWidth()
                         .height(with(density) { barH.toDp() })
+                        .background(theme.titleBarTint)
                         .pointerInput(win.id) {
                             awaitEachGesture {
                                 val down = awaitFirstDown(requireUnconsumed = false)
@@ -118,6 +123,15 @@ fun FloatingWindowLayer(
                         }
                         drawWindowButtons(theme.buttonStyle, theme.buttonsOnLeft, size.width, size.height, theme.accent)
                     }
+                    Text(
+                        win.title,
+                        color = TelosColors.onSurface,
+                        fontSize = 13.sp,
+                        maxLines = 1,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(horizontal = 88.dp),
+                    )
                     val start = if (theme.buttonsOnLeft) 8f else win.width - 84f
                     listOf(0 to { wm.close(win.id) }, 1 to { wm.toggleMaximize(win.id) }, 2 to { wm.minimize(win.id) }).forEach { (i, action) ->
                         Box(
@@ -130,7 +144,7 @@ fun FloatingWindowLayer(
                     }
                 }
                 if (!win.shaded) {
-                    Box(Modifier.fillMaxSize().background(TelosColors.surface.copy(alpha = 0.96f))) {
+                    Box(Modifier.fillMaxSize().background(TelosColors.surface)) {
                         content(win)
                     }
                 }
