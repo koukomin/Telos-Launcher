@@ -8,6 +8,7 @@ data class NetworkPlace(
     val label: String,
     val uri: String,
     val local: File?,
+    val user: String? = null,
 )
 
 object NetworkPlaces {

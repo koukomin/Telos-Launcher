@@ -58,10 +58,14 @@ object FilesWorkspaceStore {
 }
 
 object CloudPlacesStore {
-    private val allowed = listOf("file:", "smb:", "sftp:", "ssh:", "ftp:", "dav:", "davs:", "nfs:")
+    private val allowed = listOf("file:", "smb:", "sftp:", "ssh:", "ftp:", "dav:", "davs:", "nfs:", "https:", "http:")
 
     fun allowedUri(uri: String): Boolean {
         val u = uri.trim().lowercase()
+        if (u.startsWith("https://")) return true
+        if (u.startsWith("http://")) {
+            return u.contains("/dav") || u.contains("remote.php") || u.contains("nextcloud") || u.contains("owncloud")
+        }
         return allowed.any { u.startsWith(it) }
     }
 
@@ -74,7 +78,8 @@ object CloudPlacesStore {
             val uri = p.getProperty("uri.$i") ?: return@mapNotNull null
             if (!allowedUri(uri)) return@mapNotNull null
             val label = p.getProperty("label.$i") ?: uri
-            NetworkPlace(label, uri, null)
+            val user = p.getProperty("user.$i")
+            NetworkPlace(label, uri, null, user)
         }
     }
 
@@ -86,6 +91,7 @@ object CloudPlacesStore {
         ok.forEachIndexed { i, place ->
             p["uri.$i"] = place.uri
             p["label.$i"] = place.label
+            place.user?.let { p["user.$i"] = it }
         }
         file.outputStream().use { p.store(it, "Telos Files cloud places") }
     }

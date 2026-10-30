@@ -30,6 +30,8 @@ class FilesWorkspaceStoreTest {
     fun cloudUriAllowlist() {
         assertTrue(CloudPlacesStore.allowedUri("sftp://host/path"))
         assertTrue(CloudPlacesStore.allowedUri("smb://nas/share"))
+        assertTrue(CloudPlacesStore.allowedUri("https://cloud.example"))
+        assertTrue(CloudPlacesStore.allowedUri("https://cloud.example/remote.php/dav/files/a"))
         assertFalse(CloudPlacesStore.allowedUri("javascript:alert(1)"))
         assertFalse(CloudPlacesStore.allowedUri("http://example"))
         val file = Files.createTempFile("cloud", ".properties").toFile()

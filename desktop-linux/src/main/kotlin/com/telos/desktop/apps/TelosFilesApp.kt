@@ -19,13 +19,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.files.ArchivePasswordException
+import com.telos.desktop.files.DavSecrets
 import com.telos.desktop.files.NetworkPlaces
+import com.telos.desktop.files.WebDavClient
 import com.telos.desktop.files.ZipArchives
 import com.telos.desktop.i18n.TelosI18n.t
 import com.telos.desktop.icons.CandyCyberIcon
@@ -34,6 +37,9 @@ import com.telos.desktop.ui.TelosColors
 import com.telos.desktop.xdg.XdgTrash
 import com.telos.desktop.xdg.XdgUserDirsManager
 import java.io.File
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 object TelosFilesNav {
     var path by mutableStateOf(File(System.getProperty("user.home")))
@@ -65,6 +71,11 @@ fun TelosFilesApp(
     var archiveSecret by remember { mutableStateOf("") }
     var needPassword by remember { mutableStateOf(false) }
     var tick by remember { mutableStateOf(0) }
+    var davHref by remember { mutableStateOf<String?>(null) }
+    var davUser by remember { mutableStateOf("") }
+    var davPlaceUri by remember { mutableStateOf<String?>(null) }
+    var davRows by remember { mutableStateOf<List<FilesRow>>(emptyList()) }
+    val scope = rememberCoroutineScope()
     val dir = path
     val inZip = ZipArchives.isArchive(dir)
     val trashRoot = remember { XdgTrash.filesDir() }
@@ -73,7 +84,23 @@ fun TelosFilesApp(
         val tdir = trashRoot.absoluteFile
         p == tdir || p.path.startsWith(tdir.path + File.separator)
     }
-    val rows = remember(dir, query, showHiddenFiles, tick, zipPrefix, archiveSecret) {
+    androidx.compose.runtime.LaunchedEffect(davHref, davUser, davPlaceUri, tick) {
+        val href = davHref
+        if (href == null) {
+            davRows = emptyList()
+            return@LaunchedEffect
+        }
+        davRows = withContext(Dispatchers.IO) {
+            val pw = DavSecrets.get(davPlaceUri ?: href) ?: DavSecrets.get(href) ?: ""
+            WebDavClient.list(href, davUser, pw).map {
+                FilesRow(it.name, it.directory, null, it.href, it.size)
+            }
+        }
+    }
+    val rows = remember(dir, query, showHiddenFiles, tick, zipPrefix, archiveSecret, davHref, davRows) {
+        if (davHref != null) {
+            return@remember if (query.isBlank()) davRows else davRows.filter { it.name.contains(query, true) }
+        }
         val list = if (inZip) {
             try {
                 val secret = archiveSecret.toCharArray().takeIf { it.isNotEmpty() }
@@ -116,6 +143,7 @@ fun TelosFilesApp(
                 TextButton(onClick = {
                     zipPrefix = ""
                     archiveSecret = ""
+                    davHref = null
                     if (f.exists() || f.mkdirs()) {
                         path = f
                         TelosFilesNav.path = f
@@ -126,10 +154,20 @@ fun TelosFilesApp(
                 TextButton(onClick = {
                     zipPrefix = ""
                     archiveSecret = ""
-                    val local = NetworkPlaces.open(place)
-                    if (local != null) {
-                        path = local
-                        TelosFilesNav.path = local
+                    val dav = place.uri.startsWith("dav", true) ||
+                        place.uri.startsWith("http://", true) ||
+                        place.uri.startsWith("https://", true)
+                    if (dav) {
+                        davPlaceUri = place.uri
+                        davUser = place.user.orEmpty()
+                        davHref = WebDavClient.normalize(place.uri, davUser)
+                    } else {
+                        davHref = null
+                        val local = NetworkPlaces.open(place)
+                        if (local != null) {
+                            path = local
+                            TelosFilesNav.path = local
+                        }
                     }
                     tick++
                 }) { Text(place.label, fontSize = 11.sp) }
@@ -137,7 +175,13 @@ fun TelosFilesApp(
         }
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
             TextButton(onClick = {
-                if (inZip && zipPrefix.isNotEmpty()) {
+                val href = davHref
+                if (href != null) {
+                    val trimmed = href.trimEnd('/')
+                    val parent = trimmed.substringBeforeLast('/', missingDelimiterValue = "")
+                    davHref = parent.takeIf { it.contains("://") && it.count { c -> c == '/' } > 2 }
+                    if (davHref == null) tick++
+                } else if (inZip && zipPrefix.isNotEmpty()) {
                     zipPrefix = zipPrefix.trimEnd('/').substringBeforeLast('/', missingDelimiterValue = "")
                 } else {
                     zipPrefix = ""
@@ -200,6 +244,20 @@ fun TelosFilesApp(
                     Modifier.fillMaxWidth().combinedClickable(
                         onClick = {
                             when {
+                                davHref != null && row.directory && row.zipInner != null -> davHref = row.zipInner
+                                davHref != null && row.zipInner != null -> {
+                                    val cache = File(System.getProperty("java.io.tmpdir"), "telos-dav")
+                                    val dest = File(cache, row.name)
+                                    val href = row.zipInner
+                                    val user = davUser
+                                    val key = davPlaceUri ?: davHref ?: ""
+                                    scope.launch(Dispatchers.IO) {
+                                        dest.delete()
+                                        val pw = DavSecrets.get(key) ?: ""
+                                        val got = WebDavClient.download(href, user, pw, dest)
+                                        if (got != null) withContext(Dispatchers.Main) { TelosFileHandler.open(got) }
+                                    }
+                                }
                                 row.zipInner != null && row.directory -> zipPrefix = row.zipInner
                                 row.zipInner != null -> {
                                     val cache = File(System.getProperty("java.io.tmpdir"), "telos-zip")

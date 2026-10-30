@@ -23,9 +23,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.files.CloudPlacesStore
+import com.telos.desktop.files.DavSecrets
+import com.telos.desktop.files.WebDavClient
 import com.telos.desktop.files.FilesTabState
 import com.telos.desktop.files.FilesWorkspaceState
 import com.telos.desktop.files.FilesWorkspaceStore
@@ -51,6 +54,8 @@ fun TelosFilesWorkspace(
     }
     var clouds by remember { mutableStateOf(CloudPlacesStore.load(cloudFile)) }
     var uriDraft by remember { mutableStateOf("") }
+    var userDraft by remember { mutableStateOf("") }
+    var passDraft by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     fun persist(next: FilesWorkspaceState) {
         state = next
@@ -107,18 +112,46 @@ fun TelosFilesWorkspace(
             OutlinedTextField(
                 uriDraft,
                 { uriDraft = it },
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1.4f),
                 label = { Text(t("telos_system_network")) },
+                singleLine = true,
+            )
+            OutlinedTextField(
+                userDraft,
+                { userDraft = it },
+                modifier = Modifier.weight(0.7f).padding(start = 4.dp),
+                label = { Text(t("hc_user")) },
+                singleLine = true,
+            )
+            OutlinedTextField(
+                passDraft,
+                { passDraft = it },
+                modifier = Modifier.weight(0.7f).padding(start = 4.dp),
+                label = { Text(t("hc_password")) },
+                visualTransformation = PasswordVisualTransformation(),
                 singleLine = true,
             )
             TextButton(onClick = {
                 val uri = uriDraft.trim()
                 if (!CloudPlacesStore.allowedUri(uri)) return@TextButton
-                val place = NetworkPlace(uri.substringAfterLast('/').ifBlank { uri }, uri, null)
+                val user = userDraft.trim()
+                val normalized = WebDavClient.normalize(uri, user)
+                val place = NetworkPlace(
+                    uri.substringAfterLast('/').ifBlank { uri },
+                    uri,
+                    null,
+                    user.ifBlank { null },
+                )
+                if (passDraft.isNotEmpty()) DavSecrets.put(uri, passDraft)
+                if (passDraft.isNotEmpty()) DavSecrets.put(normalized, passDraft)
+                passDraft = ""
                 clouds = clouds + place
                 scope.launch(Dispatchers.IO) { CloudPlacesStore.save(cloudFile, clouds) }
-                NetworkPlaces.open(place)
+                if (uri.startsWith("smb") || uri.startsWith("sftp") || uri.startsWith("file")) {
+                    NetworkPlaces.open(place)
+                }
                 uriDraft = ""
+                userDraft = ""
             }) { Text(t("hc_add")) }
         }
         if (!state.dual) {
