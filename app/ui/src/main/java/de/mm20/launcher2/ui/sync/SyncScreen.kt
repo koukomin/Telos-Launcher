@@ -46,6 +46,7 @@ fun SyncScreen() {
     var selectedTab by remember { mutableIntStateOf(0) }
     var showAddFolderDialog by remember { mutableStateOf(false) }
     var showAddDeviceDialog by remember { mutableStateOf(false) }
+    var showFontDialog by remember { mutableStateOf(false) }
 
     VirtualAppWindow {
         Scaffold(
@@ -64,6 +65,9 @@ fun SyncScreen() {
                         }
                     },
                     actions = {
+                        IconButton(onClick = { showFontDialog = true }) {
+                            Icon(painterResource(R.drawable.text_fields_24px), contentDescription = "Font Size")
+                        }
                         TextButton(
                             onClick = {
                                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://127.0.0.1:8384"))
@@ -243,6 +247,14 @@ fun SyncScreen() {
             dismissButton = {
                 TextButton(onClick = { showAddDeviceDialog = false }) { Text("Cancel") }
             }
+        )
+    }
+
+    if (showFontDialog) {
+        de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
+            appKey = "sync",
+            appName = "Telos Sync",
+            onDismiss = { showFontDialog = false }
         )
     }
 }

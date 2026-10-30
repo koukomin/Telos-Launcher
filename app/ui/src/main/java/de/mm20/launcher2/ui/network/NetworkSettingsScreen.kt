@@ -10,6 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -54,9 +57,21 @@ fun NetworkSettingsScreen() {
 
     val mtuLabelAuto = stringResource(R.string.net_settings_mtu_auto)
 
+    var showFontDialog by remember { mutableStateOf(false) }
+
     val networkBackStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
     PreferenceScreen(title = { Text(stringResource(R.string.net_settings_title), modifier = Modifier.padding(horizontal = 16.dp)) }, bottomBar = { NetworkNavigationBar(NetworkSection.Settings) }) {
         item { de.mm20.launcher2.ui.component.preferences.Preference(title = stringResource(R.string.netproxy_title), onClick = { networkBackStack.add(NetworkProxiesRoute) }) }
+        item {
+            PreferenceCategory(title = "Font / Γραμματοσειρά") {
+                Preference(
+                    title = "Font Size / Γραμματοσειρά",
+                    summary = "Adjust font scale specifically for Telos Network",
+                    icon = IconsNetworkSettingsScreen.text_fields_24px,
+                    onClick = { showFontDialog = true }
+                )
+            }
+        }
         item {
             PreferenceCategory(title = stringResource(R.string.net_settings_cat_start)) {
                 SwitchPreference(
@@ -222,5 +237,13 @@ fun NetworkSettingsScreen() {
                 }
             }
         }
+    }
+
+    if (showFontDialog) {
+        de.mm20.launcher2.ui.component.PerAppFontScaleDialog(
+            appKey = "network",
+            appName = "Telos Network",
+            onDismiss = { showFontDialog = false }
+        )
     }
 }
