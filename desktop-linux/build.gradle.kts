@@ -45,6 +45,7 @@ tasks.named<Copy>("processResources") {
 // === TELOS_PENDING_REVIEW_END: telos_window_drag_and_ui_fix ===
 
 dependencies {
+    implementation(project(":ui-kmp"))
     implementation(compose.desktop.currentOs)
     implementation(compose.material3)
     implementation(compose.materialIconsExtended)

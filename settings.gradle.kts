@@ -93,5 +93,6 @@ include(":libs:appops-next")
 // Isolated Compose for Desktop / JVM shell. Never depended on by :app:app.
 val isFdroidBuild = providers.gradleProperty("fdroidBuild").orNull?.toBoolean() == true
 if (!isFdroidBuild) {
+    include(":ui-kmp")
     include(":desktop-linux")
 }

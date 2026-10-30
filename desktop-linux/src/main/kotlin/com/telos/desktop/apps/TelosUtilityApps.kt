@@ -40,74 +40,23 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun TelosNotesApp() {
     var text by remember { mutableStateOf("") }
-    Column(Modifier.fillMaxSize().background(TelosColors.surface).padding(12.dp)) {
-        Text(t("notes_title"), color = TelosColors.secondary, fontSize = 20.sp)
-        OutlinedTextField(text, { text = it }, modifier = Modifier.fillMaxSize().padding(top = 8.dp), label = { Text(t("notes_widget_placeholder")) })
-    }
+    de.mm20.launcher2.uikmp.SharedNotesScreen(t("notes_title"), t("notes_widget_placeholder"), text) { text = it }
 }
 
 @Composable
 fun TelosCalendarApp() {
     val month = remember { YearMonth.now() }
     val today = LocalDate.now().dayOfMonth
-    val days = month.lengthOfMonth()
-    Column(Modifier.fillMaxSize().background(TelosColors.surface).padding(12.dp)) {
-        Text("${month.month} ${month.year}", color = TelosColors.secondary, fontSize = 20.sp)
-        LazyVerticalGrid(columns = GridCells.Fixed(7), modifier = Modifier.padding(top = 8.dp)) {
-            items((1..days).toList()) { d ->
-                Text(
-                    "$d",
-                    color = if (d == today) TelosColors.primary else TelosColors.onSurface,
-                    modifier = Modifier.padding(8.dp),
-                )
-            }
-        }
-    }
+    de.mm20.launcher2.uikmp.SharedCalendarScreen("${month.month} ${month.year}", month.lengthOfMonth(), today)
 }
 
 @Composable
 fun TelosCalculatorApp() {
-    var expr by remember { mutableStateOf("0") }
-    var acc by remember { mutableStateOf(0.0) }
-    var op by remember { mutableStateOf<Char?>(null) }
-    fun digit(d: String) {
-        expr = if (expr == "0") d else expr + d
-    }
-    fun apply(next: Char?) {
-        val v = expr.toDoubleOrNull() ?: 0.0
-        acc = when (op) {
-            '+' -> acc + v
-            '-' -> acc - v
-            '*' -> acc * v
-            '/' -> if (v == 0.0) acc else acc / v
-            else -> v
-        }
-        expr = if (next == '=') acc.toString() else "0"
-        op = if (next == '=') null else next
-        if (next == '=') acc = expr.toDoubleOrNull() ?: 0.0
-    }
-    Column(Modifier.fillMaxSize().background(TelosColors.surface).padding(12.dp)) {
-        Text(t("calculator_title"), color = TelosColors.secondary, fontSize = 20.sp)
-        Text(expr, color = TelosColors.onSurface, fontSize = 28.sp, modifier = Modifier.padding(vertical = 8.dp))
-        listOf(
-            listOf("7", "8", "9", "/"),
-            listOf("4", "5", "6", "*"),
-            listOf("1", "2", "3", "-"),
-            listOf("0", "C", "=", "+"),
-        ).forEach { row ->
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                row.forEach { key ->
-                    Button(onClick = {
-                        when (key) {
-                            "C" -> { expr = "0"; acc = 0.0; op = null }
-                            in listOf("+", "-", "*", "/") -> apply(key[0])
-                            "=" -> apply('=')
-                            else -> digit(key)
-                        }
-                    }, modifier = Modifier.weight(1f)) { Text(key) }
-                }
-            }
-        }
+    val engine = remember { de.mm20.launcher2.uikmp.CalculatorEngine() }
+    var display by remember { mutableStateOf(engine.display) }
+    de.mm20.launcher2.uikmp.SharedCalculatorScreen(t("calculator_title"), display) { key ->
+        engine.key(key)
+        display = engine.display
     }
 }
 
@@ -120,11 +69,11 @@ fun TelosClockApp() {
             delay(500)
         }
     }
-    Column(Modifier.fillMaxSize().background(TelosColors.surface).padding(16.dp)) {
-        Text(t("preference_screen_clockwidget"), color = TelosColors.secondary, fontSize = 20.sp)
-        Text(now.format(DateTimeFormatter.ofPattern("HH:mm:ss")), color = TelosColors.onSurface, fontSize = 42.sp)
-        Text(now.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy")), color = TelosColors.primary)
-    }
+    de.mm20.launcher2.uikmp.SharedClockScreen(
+        t("preference_screen_clockwidget"),
+        now.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+        now.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy")),
+    )
 }
 
 @Composable
