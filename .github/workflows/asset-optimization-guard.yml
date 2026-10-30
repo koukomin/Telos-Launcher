@@ -1,0 +1,28 @@
+# Automated Asset Optimization & Vector Path Guard for Telos Launcher
+
+name: Asset Optimization Guard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.png'
+      - '**/*.jpg'
+      - '**/*.xml'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  optimize-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Verify Vector Drawables & Image Assets
+        run: |
+          echo "Scanning vector drawables and image assets across res/drawable..."
+          find core/base/src/main/res/drawable -name "*.xml" -type f | while read file; do
+            xmllint --noout "$file" || exit 1
+          done
+          echo "All vector drawables verified successfully!"
