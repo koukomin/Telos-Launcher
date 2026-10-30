@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -81,23 +84,41 @@ fun PlasmaAppGrid(
     Box(
         Modifier.fillMaxSize().background(TelosColors.background.copy(alpha = 0.82f)).clickable { onDismiss() },
     ) {
-        Column(
+        Row(
             Modifier
                 .align(Alignment.Center)
-                .fillMaxWidth(0.78f)
-                .clip(RoundedCornerShape(24.dp))
-                .background(TelosColors.surface.copy(alpha = 0.96f))
-                .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) { }
-                .padding(24.dp),
+                .fillMaxWidth(0.82f)
+                .height(560.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .background(TelosColors.surface)
+                .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) { },
         ) {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("Telos", color = TelosColors.secondary, fontSize = 22.sp)
+            Column(
+                Modifier.width(168.dp).fillMaxHeight().background(TelosColors.surfaceContainer).padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text("Telos", color = TelosColors.secondary, fontSize = 18.sp)
+                TelosVirtualApps.all.filter { it.domain in TelosVirtualApps.pinnedDefaults }.forEach { app ->
+                    Row(
+                        Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(TelosColors.card).clickable {
+                            onOpenTelos(app)
+                            onDismiss()
+                        }.padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        CandyCyberIcon(app.icon, 22.dp)
+                        Text(app.label, color = TelosColors.onSurface, fontSize = 12.sp, maxLines = 1)
+                    }
+                }
+                Box(Modifier.weight(1f))
                 Text(t("action_quit"), color = TelosColors.primary, modifier = Modifier.clickable {
                     SessionPower.open.value = true
                     onDismiss()
-                })
+                }.padding(8.dp))
             }
-            OutlinedTextField(query, { query = it }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp), label = { Text(t("search_bar_placeholder")) }, singleLine = true)
+            Column(Modifier.weight(1f).fillMaxHeight().padding(20.dp)) {
+            OutlinedTextField(query, { query = it }, modifier = Modifier.fillMaxWidth(), label = { Text(t("search_bar_placeholder")) }, singleLine = true)
             Row(Modifier.padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 FilterChip(selected = tab == "All", onClick = { tab = "All" }, label = { Text(t("search_bar_placeholder")) })
                 FilterChip(selected = tab == "Telos", onClick = { tab = "Telos" }, label = { Text(t("hc_apps")) })
@@ -160,6 +181,7 @@ fun PlasmaAppGrid(
                         }
                     }
                 }
+            }
             }
         }
     }

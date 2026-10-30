@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 enum class CandyIcon {
-    TelosLogo, AppGrid, Terminal, Monitor, Volume, Network, Battery, Power, Settings, Folder
+    TelosLogo, AppGrid, Terminal, Monitor, Volume, Network, Battery, Power, Settings, Folder,
+    Tray, Clip, Bell, Shot,
 }
 
 private val neon = Brush.linearGradient(listOf(Color(0xFFFF007F), Color(0xFF00F0FF)))
@@ -38,6 +39,10 @@ fun CandyCyberIcon(kind: CandyIcon, size: Dp = 22.dp, modifier: Modifier = Modif
             CandyIcon.Power -> power()
             CandyIcon.Settings -> settings()
             CandyIcon.Folder -> folder()
+            CandyIcon.Tray -> tray()
+            CandyIcon.Clip -> clip()
+            CandyIcon.Bell -> bell()
+            CandyIcon.Shot -> shot()
         }
     }
 }
@@ -131,4 +136,27 @@ private fun DrawScope.folder() {
         close()
     }
     drawPath(p, neon)
+}
+
+private fun DrawScope.tray() {
+    drawRoundRect(neon, Offset(4f, size.height * 0.58f), Size(size.width - 8f, size.height * 0.28f), CornerRadius(3f, 3f), style = Stroke(2f))
+    drawCircle(Color(0xFF00F0FF), 3f, Offset(size.width * 0.3f, size.height * 0.72f))
+    drawCircle(Color(0xFFFF007F), 3f, Offset(size.width * 0.5f, size.height * 0.72f))
+    drawCircle(Color(0xFF00F0FF), 3f, Offset(size.width * 0.7f, size.height * 0.72f))
+}
+
+private fun DrawScope.clip() {
+    drawRoundRect(neon, Offset(size.width * 0.28f, size.height * 0.22f), Size(size.width * 0.44f, size.height * 0.62f), CornerRadius(4f, 4f), style = Stroke(2.2f))
+    drawRoundRect(Color(0xFF00F0FF), Offset(size.width * 0.36f, size.height * 0.12f), Size(size.width * 0.28f, size.height * 0.18f), CornerRadius(3f, 3f), style = Stroke(2f))
+}
+
+private fun DrawScope.bell() {
+    drawArc(neon, 200f, 140f, false, topLeft = Offset(6f, 6f), size = Size(size.width - 12f, size.height - 8f), style = Stroke(2.4f))
+    drawLine(Color(0xFFFF007F), Offset(size.width * 0.32f, size.height * 0.78f), Offset(size.width * 0.68f, size.height * 0.78f), 2.4f, StrokeCap.Round)
+}
+
+private fun DrawScope.shot() {
+    drawCircle(neon, size.minDimension * 0.22f, Offset(center.x, center.y + 2f), style = Stroke(2.4f))
+    drawRoundRect(Color(0xFF00F0FF), Offset(6f, size.height * 0.28f), Size(size.width - 12f, size.height * 0.5f), CornerRadius(4f, 4f), style = Stroke(2f))
+    drawCircle(Color(0xFFFF007F), 3f, Offset(size.width * 0.72f, size.height * 0.38f))
 }

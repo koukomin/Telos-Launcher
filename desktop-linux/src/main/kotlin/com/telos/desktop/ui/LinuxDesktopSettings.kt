@@ -1,8 +1,11 @@
 package com.telos.desktop.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
@@ -34,7 +37,9 @@ fun LinuxDesktopSettingsPanel(
     val filter = PlatformEnvironment.settings
     val themes = remember { icons.listInstalledThemes() }
     val outputs = remember { display.queryOutputs() }
-    Column(Modifier.padding(16.dp).verticalScroll(rememberScrollState())) {
+    Column(
+        Modifier.fillMaxSize().background(TelosColors.surface).padding(16.dp).verticalScroll(rememberScrollState()),
+    ) {
         Text(com.telos.desktop.i18n.TelosI18n.t("telos_desktop_settings"), color = TelosColors.secondary, fontSize = 22.sp)
         // === TELOS_PENDING_REVIEW_START: telos_de_final_polish ===
         Toggle("Start fullscreen", settings.startFullscreen) {

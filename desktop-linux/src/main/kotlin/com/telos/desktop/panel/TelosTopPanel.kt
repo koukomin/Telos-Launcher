@@ -121,21 +121,16 @@ fun TelosTopPanel(
                 color = TelosColors.onSurface,
                 modifier = Modifier.clickable { popup = if (popup == PanelPopup.Clock) PanelPopup.None else PanelPopup.Clock },
             )
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.clickable { TelosQuake.toggle() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Terminal, 18.dp) }
                 Text(cpuPill, fontSize = 11.sp, color = TelosColors.secondary, modifier = Modifier.clickable { onOpenMonitor() })
-                Text(if (audio.muted) "Mute" else "♪ ${audio.volume.toInt()}%", fontSize = 11.sp, color = TelosColors.onSurface, modifier = Modifier.clickable { popup = PanelPopup.Audio })
-                Text(net.activeSsid ?: "Net", fontSize = 11.sp, color = TelosColors.onSurface, modifier = Modifier.clickable { popup = PanelPopup.Network })
-                Text(
-                    if (power.battery.present) "BAT ${power.battery.percent}%" else "AC",
-                    fontSize = 11.sp,
-                    color = TelosColors.onSurface,
-                    modifier = Modifier.clickable { popup = PanelPopup.Power },
-                )
-                Text("Tray", fontSize = 11.sp, modifier = Modifier.clickable { popup = PanelPopup.Tray }, color = TelosColors.onSurface)
-                Text("Clip", fontSize = 11.sp, modifier = Modifier.clickable { TelosClipboardManager.popup = !TelosClipboardManager.popup }, color = TelosColors.onSurface)
-                Text("Bell", fontSize = 11.sp, modifier = Modifier.clickable { TelosNotificationCenter.open.value = !TelosNotificationCenter.open.value }, color = TelosColors.onSurface)
-                Text("Shot", fontSize = 11.sp, modifier = Modifier.clickable { TelosCaptureTool.fullscreen() }, color = TelosColors.onSurface)
+                Box(Modifier.clickable { popup = PanelPopup.Audio }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Volume, 18.dp) }
+                Box(Modifier.clickable { popup = PanelPopup.Network }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Network, 18.dp) }
+                Box(Modifier.clickable { popup = PanelPopup.Power }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Battery, 18.dp) }
+                Box(Modifier.clickable { popup = PanelPopup.Tray }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Tray, 18.dp) }
+                Box(Modifier.clickable { TelosClipboardManager.popup = !TelosClipboardManager.popup }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Clip, 18.dp) }
+                Box(Modifier.clickable { TelosNotificationCenter.open.value = !TelosNotificationCenter.open.value }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Bell, 18.dp) }
+                Box(Modifier.clickable { TelosCaptureTool.fullscreen() }.padding(2.dp)) { CandyCyberIcon(CandyIcon.Shot, 18.dp) }
                 Text("Vault+", fontSize = 11.sp, color = TelosColors.secondary, modifier = Modifier.clickable {
                     runCatching { com.telos.desktop.vault.PhantomVault.engine.expandManual() }
                 })
@@ -145,7 +140,7 @@ fun TelosTopPanel(
         }
         if (popup != PanelPopup.None) {
             Box(Modifier.fillMaxWidth().padding(top = 36.dp), contentAlignment = Alignment.TopEnd) {
-                Column(Modifier.width(320.dp).background(TelosColors.surface).padding(12.dp)) {
+                Column(Modifier.width(320.dp).background(TelosColors.menu).padding(12.dp)) {
                     when (popup) {
                         PanelPopup.Clock -> {
                             val s = engine.overviewHistory.lastOrNull()

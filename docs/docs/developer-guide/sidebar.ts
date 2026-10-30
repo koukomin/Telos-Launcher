@@ -30,6 +30,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/desktop-roadmap',
   },
   {
+    text: 'Telos Helix chrome',
+    link: '/docs/developer-guide/telos-helix',
+  },
+  {
     text: 'Ironewolf browser',
     link: '/docs/developer-guide/ironewolf',
   },
