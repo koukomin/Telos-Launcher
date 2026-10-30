@@ -165,11 +165,14 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
             }
         }
         Text(
-            if (inZip) "${dir.absolutePath} :: ${zipPrefix.ifBlank { "/" }}" else dir.absolutePath,
+            if (inZip) "${ZipArchives.archiveRoot(dir).absolutePath} :: ${zipPrefix.ifBlank { "/" }}" else dir.absolutePath,
             color = TelosColors.secondary,
             fontSize = 12.sp,
             modifier = Modifier.padding(horizontal = 8.dp),
         )
+        if (inZip && ZipArchives.isSplitZip(dir)) {
+            Text(t("files_archive_split_note"), color = TelosColors.secondary, fontSize = 11.sp, modifier = Modifier.padding(horizontal = 8.dp))
+        }
         if (needPassword) {
             OutlinedTextField(
                 archiveSecret,
@@ -201,8 +204,10 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
                                 }
                                 row.disk != null && (row.disk.isDirectory || ZipArchives.isArchive(row.disk)) -> {
                                     zipPrefix = ""
-                                    path = row.disk
-                                    TelosFilesNav.path = row.disk
+                                    archiveSecret = ""
+                                    val next = if (ZipArchives.isArchive(row.disk)) ZipArchives.archiveRoot(row.disk) else row.disk
+                                    path = next
+                                    TelosFilesNav.path = next
                                 }
                                 inTrash && row.disk != null -> {
                                     XdgTrash.restore(row.disk)

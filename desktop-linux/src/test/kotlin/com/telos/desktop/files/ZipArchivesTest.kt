@@ -53,4 +53,29 @@ class ZipArchivesTest {
         assertTrue(ZipArchives.extractAll(zip, out, pw))
         assertEquals("hidden", File(out, "secret.txt").readText())
     }
+
+    @Test
+    fun splitZipRootAndBrowse() {
+        val mapped = File("/tmp/pack.z01")
+        assertEquals(File("/tmp/pack.zip"), ZipArchives.archiveRoot(mapped))
+        assertEquals(File("/tmp/pack.zip"), ZipArchives.archiveRoot(File("/tmp/pack.zip.001")))
+        val root = Files.createTempDirectory("telos-split").toFile()
+        val src = File(root, "blob.bin").apply { writeBytes(ByteArray(80_000) { 1 }) }
+        val zip = File(root, "blob.zip")
+        net.lingala.zip4j.ZipFile(zip).use { z ->
+            z.createSplitZipFile(
+                listOf(src),
+                net.lingala.zip4j.model.ZipParameters(),
+                true,
+                65_536,
+            )
+        }
+        val z01 = File(root, "blob.z01")
+        assertTrue(z01.isFile || ZipArchives.isSplitZip(zip))
+        assertEquals(zip.canonicalFile, ZipArchives.archiveRoot(if (z01.isFile) z01 else zip).canonicalFile)
+        val kids = ZipArchives.listChildren(if (z01.isFile) z01 else zip, "")
+        assertTrue(kids.any { it.name == "blob.bin" })
+        assertEquals(null, ZipArchives.safeInner("..\\ace"))
+        assertTrue(!ZipArchives.isArchive(File(root, "x.ace").apply { writeText("x") }))
+    }
 }

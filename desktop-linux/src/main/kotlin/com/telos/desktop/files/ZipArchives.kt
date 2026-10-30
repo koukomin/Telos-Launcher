@@ -33,8 +33,24 @@ object ZipArchives {
     fun isArchive(file: File): Boolean {
         if (!file.isFile) return false
         val n = file.name.lowercase()
+        if (n.endsWith(".ace")) return false
         if (n.endsWith(".tar.gz") || n.endsWith(".tar.bz2") || n.endsWith(".tar.xz")) return true
+        if (n.matches(Regex(".*\\.z[0-9]{2}$"))) return true
+        if (n.matches(Regex(".*\\.(zip|7z|rar)\\.[0-9]{3}$"))) return true
         return file.extension.lowercase() in zipExt + sevenExt + rarExt + tarExt
+    }
+
+    /** Central `.zip` next to `.z01` / `.zip.001` parts. */
+    fun archiveRoot(file: File): File {
+        val n = file.name
+        val lower = n.lowercase()
+        val parent = file.parentFile ?: return file
+        val zPart = Regex("^(.*)\\.z[0-9]{2}$", RegexOption.IGNORE_CASE).matchEntire(n)
+        if (zPart != null) return File(parent, zPart.groupValues[1] + ".zip")
+        val numbered = Regex("^(.*)\\.(zip|7z|rar)\\.[0-9]{3}$", RegexOption.IGNORE_CASE).matchEntire(n)
+        if (numbered != null) return File(parent, numbered.groupValues[1] + "." + numbered.groupValues[2])
+        if (lower.endsWith(".zip") && File(parent, n.dropLast(4) + ".z01").isFile) return file
+        return file
     }
 
     fun safeInner(path: String): String? {
@@ -44,13 +60,14 @@ object ZipArchives {
     }
 
     fun listChildren(archive: File, prefix: String, password: CharArray? = null): List<ZipChild> {
-        val names = entryNames(archive, password)
+        val names = entryNames(archiveRoot(archive), password)
         return childrenFromNames(names, prefix)
     }
 
     fun extractEntry(archive: File, inner: String, destDir: File, password: CharArray? = null): File? {
         val safe = safeInner(inner) ?: return null
         destDir.mkdirs()
+        val archive = archiveRoot(archive)
         when {
             isPlainZip(archive) && password == null -> {
                 ZipFile(archive).use { zip ->
@@ -91,6 +108,7 @@ object ZipArchives {
 
     fun extractAll(archive: File, destDir: File, password: CharArray? = null): Boolean {
         destDir.mkdirs()
+        val archive = archiveRoot(archive)
         return when {
             isPlainZip(archive) && password == null -> extractZipJdk(archive, destDir)
             archive.extension.lowercase() in zipExt -> {
@@ -157,6 +175,7 @@ object ZipArchives {
     }
 
     private fun entryNames(archive: File, password: CharArray?): List<Triple<String, Boolean, Long>> {
+        val archive = archiveRoot(archive)
         val ext = archive.extension.lowercase()
         return when {
             isPlainZip(archive) && password == null -> jdkZipNames(archive)
@@ -168,8 +187,20 @@ object ZipArchives {
         }
     }
 
-    private fun isPlainZip(archive: File): Boolean =
-        archive.extension.lowercase() in zipExt && !zip4jEncrypted(archive)
+    private fun isPlainZip(archive: File): Boolean {
+        val root = archiveRoot(archive)
+        if (root.extension.lowercase() !in zipExt) return false
+        if (zip4jEncrypted(root) || isSplitZip(root)) return false
+        return true
+    }
+
+    fun isSplitZip(file: File): Boolean {
+        val root = archiveRoot(file)
+        val parent = root.parentFile ?: return false
+        if (File(parent, root.nameWithoutExtension + ".z01").isFile) return true
+        if (File(parent, root.name + ".001").isFile) return true
+        return runCatching { Zip4jFile(root).use { it.isSplitArchive } }.getOrDefault(false)
+    }
 
     private fun zip4jEncrypted(archive: File): Boolean =
         runCatching { Zip4jFile(archive).use { it.isEncrypted } }.getOrDefault(false)
