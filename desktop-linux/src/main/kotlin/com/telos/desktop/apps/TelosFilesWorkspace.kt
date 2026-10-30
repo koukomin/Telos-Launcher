@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.telos.desktop.files.CloudPlacesStore
 import com.telos.desktop.files.DavSecrets
+import com.telos.desktop.files.NextcloudLoginFlow
 import com.telos.desktop.files.WebDavClient
 import com.telos.desktop.files.FilesTabState
 import com.telos.desktop.files.FilesWorkspaceState
@@ -39,7 +40,9 @@ import com.telos.desktop.ui.TelosColors
 import java.io.File
 import java.util.UUID
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun TelosFilesWorkspace(
@@ -56,6 +59,7 @@ fun TelosFilesWorkspace(
     var uriDraft by remember { mutableStateOf("") }
     var userDraft by remember { mutableStateOf("") }
     var passDraft by remember { mutableStateOf("") }
+    var flowStatus by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     fun persist(next: FilesWorkspaceState) {
         state = next
@@ -153,6 +157,39 @@ fun TelosFilesWorkspace(
                 uriDraft = ""
                 userDraft = ""
             }) { Text(t("hc_add")) }
+            TextButton(onClick = {
+                val server = uriDraft.trim().ifBlank { return@TextButton }
+                if (!server.startsWith("http://") && !server.startsWith("https://") && !server.startsWith("dav")) return@TextButton
+                scope.launch(Dispatchers.IO) {
+                    val session = NextcloudLoginFlow.start(server)
+                    if (session == null) {
+                        withContext(Dispatchers.Main) { flowStatus = t("dl_p3_extract_failed") }
+                        return@launch
+                    }
+                    withContext(Dispatchers.Main) { flowStatus = session.loginUrl }
+                    NextcloudLoginFlow.openBrowser(session.loginUrl)
+                    repeat(90) {
+                        delay(2000)
+                        val result = NextcloudLoginFlow.poll(session) ?: return@repeat
+                        DavSecrets.put(result.server, result.appPassword)
+                        val dav = WebDavClient.normalize(result.server, result.loginName)
+                        DavSecrets.put(dav, result.appPassword)
+                        val place = NetworkPlace(result.loginName, result.server, null, result.loginName)
+                        val snapshot = withContext(Dispatchers.Main) {
+                            val next = clouds + place
+                            clouds = next
+                            flowStatus = result.loginName
+                            uriDraft = ""
+                            next
+                        }
+                        CloudPlacesStore.save(cloudFile, snapshot)
+                        return@launch
+                    }
+                }
+            }) { Text(t("preference_screen_integrations")) }
+        }
+        if (flowStatus.isNotEmpty()) {
+            Text(flowStatus, color = TelosColors.secondary, fontSize = 11.sp, modifier = Modifier.padding(horizontal = 8.dp))
         }
         if (!state.dual) {
             TelosFilesApp(
