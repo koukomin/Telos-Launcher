@@ -5,13 +5,14 @@ set -eu
 case "${1:-}" in
   -h|--help)
     cat <<'EOF'
-telos-session — unlock the Telos vault as $HOME and start labwc
+telos-session — unlock the Telos vault as $HOME and start labwc (or niri)
 
   TELOS_JAR            UberJar path
-  TELOS_ALLOW_NESTED=1 allow labwc inside another Wayland session
+  TELOS_COMPOSITOR     labwc (default) or niri
+  TELOS_ALLOW_NESTED=1 allow a compositor inside another Wayland session
   TELOS_VAULT_UNLOCKED=1 skip --unlock-only (already mounted)
 
-  Super+Esc  exit labwc (locks the vault)
+  Super+Esc  exit the compositor (locks the vault)
   Ctrl+Alt+L panic unmount
 EOF
     exit 0
@@ -56,13 +57,34 @@ if ! command -v java >/dev/null 2>&1; then
   echo "telos-session: java not on PATH" >&2
   exit 1
 fi
-if ! command -v labwc >/dev/null 2>&1; then
-  echo "telos-session: install labwc (Wayland compositor)" >&2
-  exit 1
-fi
+COMPOSITOR="${TELOS_COMPOSITOR:-labwc}"
+case "$COMPOSITOR" in
+  niri)
+    if ! command -v niri >/dev/null 2>&1; then
+      if command -v labwc >/dev/null 2>&1; then
+        COMPOSITOR=labwc
+      else
+        echo "telos-session: install niri or labwc" >&2
+        exit 1
+      fi
+    fi
+    ;;
+  *)
+    COMPOSITOR=labwc
+    if ! command -v labwc >/dev/null 2>&1; then
+      if command -v niri >/dev/null 2>&1; then
+        COMPOSITOR=niri
+      else
+        echo "telos-session: install labwc (or niri)" >&2
+        exit 1
+      fi
+    fi
+    ;;
+esac
+export TELOS_COMPOSITOR="$COMPOSITOR"
 
 if [ -n "${WAYLAND_DISPLAY:-}" ] && [ "${TELOS_ALLOW_NESTED:-0}" != "1" ]; then
-  echo "telos-session: already on Wayland ($WAYLAND_DISPLAY). Set TELOS_ALLOW_NESTED=1 to nest labwc." >&2
+  echo "telos-session: already on Wayland ($WAYLAND_DISPLAY). Set TELOS_ALLOW_NESTED=1 to nest $COMPOSITOR." >&2
   exit 1
 fi
 
@@ -107,7 +129,7 @@ fi
 
 swapoff -a 2>/dev/null || true
 
-export XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-Telos:labwc}"
+export XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-Telos:$COMPOSITOR}"
 export XDG_SESSION_TYPE="${XDG_SESSION_TYPE:-wayland}"
 export XDG_SESSION_DESKTOP="${XDG_SESSION_DESKTOP:-Telos}"
 export QT_QPA_PLATFORM="${QT_QPA_PLATFORM:-wayland;xcb}"
@@ -127,4 +149,15 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-labwc -C "$CONF"
+if [ "$COMPOSITOR" = "niri" ]; then
+  NIRI_CONF="$XDG_RUNTIME_DIR/telos-niri"
+  mkdir -p "$NIRI_CONF"
+  chmod 700 "$NIRI_CONF" 2>/dev/null || true
+  {
+    cat "$SCRIPT_DIR/niri/config.kdl"
+    echo "spawn-at-startup \"$CONF/autostart\""
+  } > "$NIRI_CONF/config.kdl"
+  niri --config "$NIRI_CONF/config.kdl"
+else
+  labwc -C "$CONF"
+fi

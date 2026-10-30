@@ -1,0 +1,19 @@
+// Telos session niri config. spawn-at-startup is filled by telos-session.
+input {
+    keyboard {
+        xkb { }
+    }
+}
+
+layout {
+    gaps 8
+}
+
+binds {
+    Mod+Escape { quit; }
+    Mod+Shift+E { quit; }
+}
+
+hotkey-overlay {
+    skip-at-startup
+}

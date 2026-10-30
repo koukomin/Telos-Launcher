@@ -1,6 +1,7 @@
 package com.telos.desktop.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -60,6 +61,15 @@ fun LinuxDesktopSettingsPanel(
                     TextButton(onClick = {
                         display.applyDisplayMode(out.name, "${mode.width}x${mode.height}", mode.refreshHz, out.scale)
                     }) { Text(mode.label) }
+                }
+                Row {
+                    com.telos.desktop.session.SessionCompositor.fractionalScales.forEach { scale ->
+                        TextButton(onClick = {
+                            val res = out.current?.let { "${it.width}x${it.height}" } ?: return@TextButton
+                            val hz = out.current?.refreshHz ?: return@TextButton
+                            display.applyDisplayMode(out.name, res, hz, scale)
+                        }) { Text(com.telos.desktop.session.SessionCompositor.scaleLabel(scale)) }
+                    }
                 }
             }
         }

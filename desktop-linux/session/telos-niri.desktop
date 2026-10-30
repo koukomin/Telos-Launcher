@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Telos (niri)
+Comment=Telos encrypted Linux session (niri)
+Exec=env TELOS_COMPOSITOR=niri telos-session
+TryExec=niri
+Type=Application
+DesktopNames=Telos
+X-GDM-SessionRegisters=true

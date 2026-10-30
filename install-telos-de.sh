@@ -132,9 +132,19 @@ Type=Application
 DesktopNames=Telos
 X-GDM-SessionRegisters=true
 EOF
+sudo tee /usr/share/wayland-sessions/telos-niri.desktop >/dev/null << 'EOF'
+[Desktop Entry]
+Name=Telos (niri)
+Comment=Telos encrypted Linux session (niri)
+Exec=env TELOS_COMPOSITOR=niri /usr/local/bin/telos-session
+TryExec=niri
+Type=Application
+DesktopNames=Telos
+X-GDM-SessionRegisters=true
+EOF
 
 echo "=========================================================="
-echo " [✓] Installed labwc session (vault HOME, nft default-drop)"
+echo " [✓] Installed labwc session (vault HOME, nft default-drop); niri is optional"
 echo " • Test window on current DE:  telos-desktop-test"
 echo " • Rebuild + deploy:           update-telos"
 echo " • Full session:               logout → Telos"
