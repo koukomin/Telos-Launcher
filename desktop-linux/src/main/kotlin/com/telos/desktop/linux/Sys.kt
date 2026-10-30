@@ -14,10 +14,19 @@ object Sys {
             val pb = ProcessBuilder(*args)
             pb.redirectErrorStream(true)
             val p = pb.start()
-            if (input != null) p.outputStream.bufferedWriter().use { it.write(input); it.flush() }
-            val out = p.inputStream.bufferedReader().readText()
-            p.waitFor(timeoutSec, TimeUnit.SECONDS)
-            Result(if (p.isAlive) { p.destroyForcibly(); -1 } else p.exitValue(), out)
+            p.outputStream.use { stream ->
+                if (input != null) {
+                    stream.write(input.toByteArray())
+                    stream.flush()
+                }
+            }
+            val out = p.inputStream.bufferedReader().use { it.readText() }
+            if (!p.waitFor(timeoutSec, TimeUnit.SECONDS)) {
+                p.destroyForcibly()
+                p.waitFor(2, TimeUnit.SECONDS)
+                return Result(-1, out)
+            }
+            Result(p.exitValue(), out)
         } catch (e: Exception) {
             Result(-1, e.message ?: "exec failed")
         }

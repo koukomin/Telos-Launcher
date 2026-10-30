@@ -2,6 +2,22 @@
 # Telos P0/P1 session: unlock vault as HOME, then run labwc with Telos as the shell.
 set -eu
 
+case "${1:-}" in
+  -h|--help)
+    cat <<'EOF'
+telos-session — unlock the Telos vault as $HOME and start labwc
+
+  TELOS_JAR            UberJar path
+  TELOS_ALLOW_NESTED=1 allow labwc inside another Wayland session
+  TELOS_VAULT_UNLOCKED=1 skip --unlock-only (already mounted)
+
+  Super+Esc  exit labwc (locks the vault)
+  Ctrl+Alt+L panic unmount
+EOF
+    exit 0
+    ;;
+esac
+
 export TELOS_SESSION=1
 export TELOS_SESSION_HOME=full
 ulimit -c 0 2>/dev/null || true

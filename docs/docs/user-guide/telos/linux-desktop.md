@@ -37,7 +37,7 @@ On Linux you can start a full session instead of a window on another desktop:
 
 1. Install `labwc` and a JRE 17+.
 2. Build the UberJar.
-3. Run `desktop-linux/session/telos-session` (or pick **Telos** in the display manager after installing `telos.desktop`).
+3. Run `desktop-linux/session/telos-session` (or pick **Telos** in the display manager after installing `telos.desktop`). `telos-session --help` lists environment variables and session keys.
 
 The vault password (and optional FIDO2 key) unlocks an encrypted volume that **becomes `$HOME`** for that session. The LUKS image stays under the **host** home (`TELOS_HOST_HOME`); only session files use the vault mount. Outbound network is denied by default except DNS and IPv4/IPv6 CIDRs in `~/.config/telos/net-allow.txt`. Leaving the session locks the vault and removes the `inet telos_session` nftables table. `Ctrl+Alt+L` panic-unmounts and ends labwc.
 

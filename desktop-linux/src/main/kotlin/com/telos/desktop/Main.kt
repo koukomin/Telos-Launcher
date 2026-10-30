@@ -65,7 +65,9 @@ fun main(args: Array<String>) {
     // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
     val vault = remember { PhantomVaultEngine().also { PhantomVault.engine = it } }
     // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
-    var unlocked by remember { mutableStateOf(vault.attachMounted()) }
+    var unlocked by remember {
+        mutableStateOf(vault.attachMounted() || TelosSessionHome.alreadyUnlocked)
+    }
     val wm = remember { TelosWindowManager() }
     // === TELOS_PENDING_REVIEW_START: telos_kde_system_monitor ===
     val telemetry = remember { LinuxSystemTelemetryEngine() }
@@ -78,7 +80,7 @@ fun main(args: Array<String>) {
     }
     Window(
         onCloseRequest = {
-            if (!com.telos.desktop.vault.TelosSessionHome.session) {
+            if (!TelosSessionHome.session) {
                 vault.lock(syncCloud = true)
             }
             exitApplication()
@@ -93,18 +95,10 @@ fun main(args: Array<String>) {
     ) {
         TelosDesktopTheme(accent = hostTheme.accent) {
             if (!unlocked) {
-                // === TELOS_PENDING_REVIEW_START: telos_labwc_session_p0p1 ===
-                if (com.telos.desktop.vault.TelosSessionHome.alreadyUnlocked && vault.unlocked) {
-                    unlocked = true
-                } else {
-                // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
                 TelosPreBootScreen(vault) {
                     com.telos.desktop.session.SessionNetGuard.apply()
                     unlocked = true
                 }
-                // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
-                }
-                // === TELOS_PENDING_REVIEW_END: telos_labwc_session_p0p1 ===
             } else {
                 val scope = rememberCoroutineScope()
                 androidx.compose.runtime.LaunchedEffect(Unit) { vault.startDaemons(scope) }
@@ -112,7 +106,7 @@ fun main(args: Array<String>) {
                     TelosDesktopSettings(vault.configDir).also { it.load() }
                 }
                 LaunchedEffect(settings.startFullscreen) {
-                    if (!com.telos.desktop.vault.TelosSessionHome.session) {
+                    if (!TelosSessionHome.session) {
                         DesktopChrome.fullscreen = settings.startFullscreen
                     }
                 }
