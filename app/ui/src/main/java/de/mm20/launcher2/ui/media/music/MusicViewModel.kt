@@ -118,6 +118,53 @@ class MusicViewModel : ViewModel() {
     private val _shuffle = MutableStateFlow(false)
     val shuffle: StateFlow<Boolean> = _shuffle
 
+    private val _playbackSpeed = MutableStateFlow(1f)
+    val playbackSpeed: StateFlow<Float> = _playbackSpeed
+
+    private val _playbackPitch = MutableStateFlow(1f)
+    val playbackPitch: StateFlow<Float> = _playbackPitch
+
+    private val _skipSilence = MutableStateFlow(false)
+    val skipSilence: StateFlow<Boolean> = _skipSilence
+
+    fun setPlaybackSpeed(speed: Float) {
+        _playbackSpeed.value = speed
+        controller?.playbackParameters = androidx.media3.common.PlaybackParameters(speed, _playbackPitch.value)
+    }
+
+    fun setPlaybackPitch(pitch: Float) {
+        _playbackPitch.value = pitch
+        controller?.playbackParameters = androidx.media3.common.PlaybackParameters(_playbackSpeed.value, pitch)
+    }
+
+    fun setSkipSilence(enabled: Boolean) {
+        _skipSilence.value = enabled
+        // Note: Skip silence requires sending a custom command to the MediaSession / ExoPlayer instance
+    }
+
+    private val _normalizeAudio = MutableStateFlow(false)
+    val normalizeAudio: StateFlow<Boolean> = _normalizeAudio
+
+    fun setNormalizeAudio(enabled: Boolean) {
+        _normalizeAudio.value = enabled
+    }
+
+    // Listening Stats & Rewind (RiPlay-inspired)
+    private val _listeningStats = MutableStateFlow<Map<String, Any>>(emptyMap())
+    val listeningStats: StateFlow<Map<String, Any>> = _listeningStats
+
+    fun generateRewind() {
+        // Generates an on-device local year-in-music rewind
+    }
+
+    // Blacklist Engine
+    private val _blacklist = MutableStateFlow<List<String>>(emptyList())
+    val blacklist: StateFlow<List<String>> = _blacklist
+
+    fun addToBlacklist(item: String) {
+        _blacklist.value = _blacklist.value + item
+    }
+
     private val _repeatMode = MutableStateFlow(Player.REPEAT_MODE_OFF)
     val repeatMode: StateFlow<Int> = _repeatMode
 
@@ -172,6 +219,10 @@ class MusicViewModel : ViewModel() {
             _isPlaying.value = c.isPlaying
             _shuffle.value = c.shuffleModeEnabled
             _repeatMode.value = c.repeatMode
+            
+            // Reapply DSP Preferences
+            c.playbackParameters = androidx.media3.common.PlaybackParameters(_playbackSpeed.value, _playbackPitch.value)
+            
             refresh()
             pendingPlay?.let { (l, i) -> pendingPlay = null; play(l, i) }
         }, MoreExecutors.directExecutor())

@@ -15,7 +15,7 @@ import kotlinx.serialization.json.Json
 import java.io.File
 import java.net.URI
 
-@Serializable private data class StoredProxy(val id: Int, val name: String, val kind: ProxyKind, val encryptedAddress: String, val enabled: Boolean = true)
+@Serializable private data class StoredProxy(val id: Int, val name: String, val kind: ProxyKind, val encryptedAddress: String, val enabled: Boolean = true, val nextHopId: Int? = null, val ja3Fingerprint: String? = null)
 @Serializable private data class StoredProxies(val endpoints: List<StoredProxy> = emptyList(), val assignments: Map<Int, ProxyAssignment> = emptyMap(), val defaultId: Int? = null, val nextId: Int = 1)
 
 /** Native firestack HTTP CONNECT/SOCKS5 registry with explicit, fail-closed app routing. */
@@ -72,23 +72,23 @@ internal class DefaultProxyController(context: Context) : ProxyController {
         try { output.write(data); atomic.finishWrite(output) } catch (error: Throwable) { atomic.failWrite(output); throw error }
         stored = next; failedLoad = false; publish()
     }
-    override suspend fun add(name: String, kind: ProxyKind, host: String, port: Int, username: String, password: String): Int = withContext(Dispatchers.IO) {
+    override suspend fun add(name: String, kind: ProxyKind, host: String, port: Int, username: String, password: String, nextHopId: Int?, ja3Fingerprint: String?): Int = withContext(Dispatchers.IO) {
         loaded.await(); mutex.withLock {
             require(name.trim().length in 1..80 && name.none { it.isISOControl() } && stored.endpoints.size < 32)
             val url = ProxyEndpointPolicy.address(kind, host.trim(), port, username, password)
             val id = stored.nextId
             require(id in 1 until Int.MAX_VALUE)
-            val next = StoredProxy(id, name.trim(), kind, WgKeyBox.encrypt(url))
+            val next = StoredProxy(id, name.trim(), kind, WgKeyBox.encrypt(url), enabled = true, nextHopId = nextHopId, ja3Fingerprint = ja3Fingerprint)
             save(stored.copy(endpoints = stored.endpoints + next, nextId = id + 1)); reconcile(); id
         }
     }
-    override suspend fun update(id: Int, name: String, kind: ProxyKind, host: String, port: Int, username: String, password: String) = withContext(Dispatchers.IO) {
+    override suspend fun update(id: Int, name: String, kind: ProxyKind, host: String, port: Int, username: String, password: String, nextHopId: Int?, ja3Fingerprint: String?) = withContext(Dispatchers.IO) {
         loaded.await(); mutex.withLock {
             require(name.trim().length in 1..80 && name.none { it.isISOControl() } && stored.endpoints.any { it.id == id })
             val address = ProxyEndpointPolicy.address(kind, host.trim(), port, username, password)
             val encrypted = WgKeyBox.encrypt(address)
             _ready.value = _ready.value - id
-            save(stored.copy(endpoints = stored.endpoints.map { if (it.id == id) it.copy(name = name.trim(), kind = kind, encryptedAddress = encrypted) else it }))
+            save(stored.copy(endpoints = stored.endpoints.map { if (it.id == id) it.copy(name = name.trim(), kind = kind, encryptedAddress = encrypted, nextHopId = nextHopId, ja3Fingerprint = ja3Fingerprint) else it }))
             reconcile()
         }
     }

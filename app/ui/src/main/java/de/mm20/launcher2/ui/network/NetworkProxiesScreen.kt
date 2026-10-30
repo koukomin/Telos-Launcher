@@ -47,6 +47,7 @@ fun NetworkProxiesScreen() {
         }
     }
     PreferenceScreen(title = stringResource(R.string.netproxy_title), bottomBar = { NetworkNavigationBar(NetworkSection.Settings) }, topBarActions = {
+        IconButton(onClick = { /* TODO: FoxyProxy Import */ }, enabled = !busy) { Icon(painterResource(R.drawable.download_24px), "Import") }
         IconButton(onClick = { editing = null; adding = true }, enabled = !busy) { Icon(painterResource(R.drawable.add_24px), stringResource(R.string.hc_add)) }
     }) {
         item { Text(stringResource(R.string.netproxy_hint), Modifier.padding(12.dp), style = MaterialTheme.typography.bodySmall) }
@@ -78,25 +79,30 @@ fun NetworkProxiesScreen() {
     if (adding) {
         var name by remember { mutableStateOf(editing?.name.orEmpty()) }; var host by remember { mutableStateOf(editing?.host.orEmpty()) }; var port by remember { mutableStateOf(editing?.port?.toString() ?: "1080") }
         var username by remember { mutableStateOf("") }; var password by remember { mutableStateOf("") }; var kind by remember { mutableStateOf(editing?.kind ?: ProxyKind.Socks5) }
+        var ja3Fingerprint by remember { mutableStateOf(editing?.ja3Fingerprint.orEmpty()) }
         AlertDialog(onDismissRequest = { if (!busy) adding = false }, title = { Text(stringResource(R.string.netproxy_title)) },
             text = { Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (editing != null) Text(stringResource(R.string.netproxy_reenter_credentials), style = MaterialTheme.typography.bodySmall)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilterChip(selected = kind == ProxyKind.Socks5, onClick = { kind = ProxyKind.Socks5; port = "1080" }, label = { Text("SOCKS5") })
                     FilterChip(selected = kind == ProxyKind.HttpConnect, onClick = { kind = ProxyKind.HttpConnect; port = "8080" }, label = { Text("HTTP CONNECT") })
+                    FilterChip(selected = kind == ProxyKind.Ssh, onClick = { kind = ProxyKind.Ssh; port = "22" }, label = { Text("SSH") })
+                    FilterChip(selected = kind == ProxyKind.HttpsConnect, onClick = { kind = ProxyKind.HttpsConnect; port = "443" }, label = { Text("HTTPS CONNECT") })
+                    FilterChip(selected = kind == ProxyKind.Masque, onClick = { kind = ProxyKind.Masque; port = "443" }, label = { Text("MASQUE (HTTP/3)") })
                 }
                 OutlinedTextField(name, { name = it.take(80) }, label = { Text(stringResource(R.string.netproxy_name)) }, enabled = !busy)
                 OutlinedTextField(host, { host = it.take(253) }, label = { Text(stringResource(R.string.netproxy_host)) }, enabled = !busy, singleLine = true)
                 OutlinedTextField(port, { port = it.filter(Char::isDigit).take(5) }, label = { Text(stringResource(R.string.netproxy_port)) }, enabled = !busy, singleLine = true)
                 OutlinedTextField(username, { username = it.take(512) }, label = { Text(stringResource(R.string.netproxy_username)) }, enabled = !busy, singleLine = true)
                 OutlinedTextField(password, { password = it.take(512) }, label = { Text(stringResource(R.string.netproxy_password)) }, enabled = !busy, singleLine = true, visualTransformation = PasswordVisualTransformation())
+                OutlinedTextField(ja3Fingerprint, { ja3Fingerprint = it.take(200) }, label = { Text("Custom JA3 TLS Fingerprint (Optional)") }, enabled = !busy, singleLine = true)
             } },
             confirmButton = { TextButton(onClick = {
                 val numericPort = port.toIntOrNull() ?: return@TextButton
                 perform {
                     val id = editing?.id
-                    if (id == null) controller.add(name, kind, host, numericPort, username, password)
-                    else controller.update(id, name, kind, host, numericPort, username, password)
+                    if (id == null) controller.add(name, kind, host, numericPort, username, password, null, ja3Fingerprint.takeIf { it.isNotBlank() })
+                    else controller.update(id, name, kind, host, numericPort, username, password, null, ja3Fingerprint.takeIf { it.isNotBlank() })
                     password = ""; adding = false; editing = null
                 }
             }, enabled = !busy && name.isNotBlank() && host.isNotBlank() && (port.toIntOrNull() ?: 0) in 1..65535) { Text(stringResource(R.string.hc_save)) } },

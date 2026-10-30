@@ -997,6 +997,28 @@ fun AudioFxDialog(onDismiss: () -> Unit) {
                         valueRange = 0f..100f
                     )
                 }
+                
+                // Advanced DSP Controls (RiPlay inspired)
+                var speedPercent by remember { mutableStateOf(100f) }
+                var pitchPercent by remember { mutableStateOf(100f) }
+                
+                Column {
+                    Text("Playback Speed (${speedPercent.toInt()}%)", style = MaterialTheme.typography.bodyMedium)
+                    Slider(
+                        value = speedPercent,
+                        onValueChange = { speedPercent = it },
+                        valueRange = 50f..200f
+                    )
+                }
+                
+                Column {
+                    Text("Pitch Control (${pitchPercent.toInt()}%)", style = MaterialTheme.typography.bodyMedium)
+                    Slider(
+                        value = pitchPercent,
+                        onValueChange = { pitchPercent = it },
+                        valueRange = 50f..200f
+                    )
+                }
                 Column {
                     Text("3D Spatial Audio (${spatialPercent.toInt()}%)", style = MaterialTheme.typography.bodyMedium)
                     Slider(

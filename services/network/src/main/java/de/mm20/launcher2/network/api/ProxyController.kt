@@ -3,8 +3,8 @@ package de.mm20.launcher2.network.api
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 
-@Serializable enum class ProxyKind { Socks5, HttpConnect }
-data class ProxyEndpoint(val id: Int, val name: String, val kind: ProxyKind, val host: String, val port: Int, val enabled: Boolean) {
+@Serializable enum class ProxyKind { Socks5, HttpConnect, Ssh, HttpsConnect, Masque, MultiHop }
+data class ProxyEndpoint(val id: Int, val name: String, val kind: ProxyKind, val host: String, val port: Int, val enabled: Boolean, val nextHopId: Int? = null, val ja3Fingerprint: String? = null) {
     val proxyId get() = "telos-proxy-$id"
 }
 @Serializable sealed interface ProxyAssignment {
@@ -19,8 +19,8 @@ interface ProxyController : EngineComponent {
     val assignments: StateFlow<Map<Int, ProxyAssignment>>
     val systemDefault: StateFlow<Int?>
     val ready: StateFlow<Set<Int>>
-    suspend fun add(name: String, kind: ProxyKind, host: String, port: Int, username: String, password: String): Int
-    suspend fun update(id: Int, name: String, kind: ProxyKind, host: String, port: Int, username: String, password: String)
+    suspend fun add(name: String, kind: ProxyKind, host: String, port: Int, username: String, password: String, nextHopId: Int? = null, ja3Fingerprint: String? = null): Int
+    suspend fun update(id: Int, name: String, kind: ProxyKind, host: String, port: Int, username: String, password: String, nextHopId: Int? = null, ja3Fingerprint: String? = null)
     suspend fun setEnabled(id: Int, enabled: Boolean)
     suspend fun remove(id: Int)
     suspend fun assign(appId: Int, assignment: ProxyAssignment)
