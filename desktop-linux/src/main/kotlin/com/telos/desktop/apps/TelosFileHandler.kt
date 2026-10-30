@@ -3,6 +3,7 @@ package com.telos.desktop.apps
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.telos.desktop.files.ZipArchives
 import com.telos.desktop.linux.Sys
 import java.io.File
 
@@ -22,7 +23,7 @@ object TelosFileHandler {
     )
 
     fun classify(file: File): TelosOpenTarget = when {
-        file.isDirectory -> TelosOpenTarget.Files
+        file.isDirectory || ZipArchives.isZip(file) -> TelosOpenTarget.Files
         file.extension.lowercase() in mediaExt -> TelosOpenTarget.Media
         else -> TelosOpenTarget.Host
     }

@@ -23,6 +23,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.telos.desktop.files.NetworkPlaces
+import com.telos.desktop.files.ZipArchives
 import com.telos.desktop.i18n.TelosI18n.t
 import com.telos.desktop.icons.CandyCyberIcon
 import com.telos.desktop.icons.CandyIcon
@@ -35,24 +37,43 @@ object TelosFilesNav {
     var path by mutableStateOf(File(System.getProperty("user.home")))
 }
 
+private data class FilesRow(
+    val name: String,
+    val directory: Boolean,
+    val disk: File?,
+    val zipInner: String?,
+    val size: Long,
+)
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
     var query by remember { mutableStateOf("") }
     var path by remember(start?.absolutePath) { mutableStateOf(start ?: TelosFilesNav.path) }
+    var zipPrefix by remember { mutableStateOf("") }
     var tick by remember { mutableStateOf(0) }
     val dir = path
+    val inZip = ZipArchives.isZip(dir)
     val trashRoot = remember { XdgTrash.filesDir() }
     val inTrash = remember(dir, tick) {
         val p = dir.absoluteFile
         val tdir = trashRoot.absoluteFile
         p == tdir || p.path.startsWith(tdir.path + File.separator)
     }
-    val entries = remember(dir, query, showHiddenFiles, tick) {
-        val list = dir.listFiles()
-            ?.filter { showHiddenFiles || !it.name.startsWith(".") }
-            ?.sortedWith(compareBy({ !it.isDirectory }, { it.name.lowercase() }))
-            ?: emptyList()
+    val rows = remember(dir, query, showHiddenFiles, tick, zipPrefix) {
+        val list = if (inZip) {
+            ZipArchives.listChildren(dir, zipPrefix).map {
+                FilesRow(it.name, it.directory, dir, it.inner, it.size)
+            }
+        } else {
+            dir.listFiles()
+                ?.filter { showHiddenFiles || !it.name.startsWith(".") }
+                ?.sortedWith(compareBy({ !it.isDirectory && !ZipArchives.isZip(it) }, { it.name.lowercase() }))
+                ?.map {
+                    FilesRow(it.name, it.isDirectory || ZipArchives.isZip(it), it, null, if (it.isFile) it.length() else 0)
+                }
+                ?: emptyList()
+        }
         if (query.isBlank()) list else list.filter { it.name.contains(query, true) }
     }
     val xdg = remember { XdgUserDirsManager.resolve() }
@@ -65,51 +86,104 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
             t("hc_photos") to xdg.pictures,
             t("hc_all_videos") to xdg.videos,
             t("ermis_trash") to xdg.trash,
-        ).map { it }
+        )
     }
+    val net = remember(tick) { NetworkPlaces.places() }
     Column(Modifier.fillMaxSize().background(TelosColors.surface).padding(8.dp)) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
             shortcuts.forEach { (n, f) ->
-                TextButton(onClick = { if (f.exists() || f.mkdirs()) { path = f; TelosFilesNav.path = f } }) {
-                    Text(n, fontSize = 11.sp)
-                }
+                TextButton(onClick = {
+                    zipPrefix = ""
+                    if (f.exists() || f.mkdirs()) {
+                        path = f
+                        TelosFilesNav.path = f
+                    }
+                }) { Text(n, fontSize = 11.sp) }
+            }
+            net.forEach { place ->
+                TextButton(onClick = {
+                    zipPrefix = ""
+                    val local = NetworkPlaces.open(place)
+                    if (local != null) {
+                        path = local
+                        TelosFilesNav.path = local
+                    }
+                    tick++
+                }) { Text(place.label, fontSize = 11.sp) }
             }
         }
-        Row(Modifier.fillMaxWidth()) {
-            TextButton(onClick = { dir.parentFile?.let { path = it; TelosFilesNav.path = it } }) { Text(t("menu_back")) }
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
             TextButton(onClick = {
-                val folder = File(dir, "Folder")
-                var dest = folder
-                var i = 1
-                while (dest.exists()) dest = File(dir, "Folder $i").also { i++ }
-                dest.mkdirs()
-                tick++
-            }) { Text(t("hc_new_folder")) }
+                if (inZip && zipPrefix.isNotEmpty()) {
+                    zipPrefix = zipPrefix.trimEnd('/').substringBeforeLast('/', missingDelimiterValue = "")
+                } else {
+                    zipPrefix = ""
+                    dir.parentFile?.let { path = it; TelosFilesNav.path = it }
+                }
+            }) { Text(t("menu_back")) }
+            if (!inZip) {
+                TextButton(onClick = {
+                    val folder = File(dir, "Folder")
+                    var dest = folder
+                    var i = 1
+                    while (dest.exists()) dest = File(dir, "Folder $i").also { i++ }
+                    dest.mkdirs()
+                    tick++
+                }) { Text(t("hc_new_folder")) }
+                TextButton(onClick = {
+                    val zip = File(dir.parentFile ?: dir, dir.name + ".zip")
+                    ZipArchives.compressDir(dir, zip)
+                    tick++
+                }) { Text(t("hc_compress_to_zip")) }
+            } else {
+                TextButton(onClick = {
+                    val dest = File(dir.parentFile ?: dir, dir.nameWithoutExtension)
+                    ZipArchives.extractAll(dir, dest)
+                    zipPrefix = ""
+                    path = dest
+                    TelosFilesNav.path = dest
+                    tick++
+                }) { Text(t("hc_extract_here")) }
+            }
             if (inTrash) {
                 TextButton(onClick = { XdgTrash.empty(); tick++; path = trashRoot }) { Text(t("hc_delete")) }
             }
         }
-        Text(dir.absolutePath, color = TelosColors.secondary, fontSize = 12.sp, modifier = Modifier.padding(horizontal = 8.dp))
+        Text(
+            if (inZip) "${dir.absolutePath} :: ${zipPrefix.ifBlank { "/" }}" else dir.absolutePath,
+            color = TelosColors.secondary,
+            fontSize = 12.sp,
+            modifier = Modifier.padding(horizontal = 8.dp),
+        )
         OutlinedTextField(query, { query = it }, modifier = Modifier.fillMaxWidth(), label = { Text(t("hc_filter")) }, singleLine = true)
         LazyColumn(Modifier.fillMaxSize()) {
-            items(entries, key = { it.absolutePath }) { f ->
-                val size = remember(f.length(), f.isDirectory) {
-                    if (f.isDirectory) "" else humanSize(f.length())
-                }
+            items(rows, key = { it.zipInner ?: it.disk?.absolutePath ?: it.name }) { row ->
+                val size = if (row.directory) "" else humanSize(row.size)
                 Row(
                     Modifier.fillMaxWidth().combinedClickable(
                         onClick = {
-                            if (f.isDirectory) {
-                                path = f
-                                TelosFilesNav.path = f
-                            } else if (inTrash) {
-                                XdgTrash.restore(f)
-                                tick++
-                            } else {
-                                TelosFileHandler.open(f)
+                            when {
+                                row.zipInner != null && row.directory -> zipPrefix = row.zipInner
+                                row.zipInner != null -> {
+                                    val cache = File(System.getProperty("java.io.tmpdir"), "telos-zip")
+                                    val extracted = ZipArchives.extractEntry(dir, row.zipInner, cache)
+                                    extracted?.let { TelosFileHandler.open(it) }
+                                }
+                                row.disk != null && (row.disk.isDirectory || ZipArchives.isZip(row.disk)) -> {
+                                    zipPrefix = ""
+                                    path = row.disk
+                                    TelosFilesNav.path = row.disk
+                                }
+                                inTrash && row.disk != null -> {
+                                    XdgTrash.restore(row.disk)
+                                    tick++
+                                }
+                                row.disk != null -> TelosFileHandler.open(row.disk)
                             }
                         },
                         onLongClick = {
+                            val f = row.disk ?: return@combinedClickable
+                            if (inZip) return@combinedClickable
                             if (inTrash) {
                                 f.deleteRecursively()
                                 File(XdgTrash.infoDir(), f.name + ".trashinfo").delete()
@@ -120,9 +194,9 @@ fun TelosFilesApp(start: File? = null, showHiddenFiles: Boolean = false) {
                         },
                     ).padding(8.dp),
                 ) {
-                    CandyCyberIcon(if (f.isDirectory) CandyIcon.Folder else CandyIcon.Settings, 20.dp)
+                    CandyCyberIcon(if (row.directory) CandyIcon.Folder else CandyIcon.Settings, 20.dp)
                     Text(
-                        f.name + if (size.isNotEmpty()) "  $size" else "",
+                        row.name + if (size.isNotEmpty()) "  $size" else "",
                         color = TelosColors.onSurface,
                         modifier = Modifier.padding(start = 8.dp),
                     )
