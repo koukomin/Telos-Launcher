@@ -9,8 +9,11 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -292,8 +295,28 @@ fun MessagesScreen(
                     androidx.compose.material3.SwipeToDismissBox(
                         state = dismiss,
                         backgroundContent = {
-                            Box(Modifier.fillMaxSize().padding(horizontal = 24.dp), contentAlignment = Alignment.CenterEnd) {
-                                Text(stringResource(R.string.comms_archive_conversation))
+                            val color = if (dismiss.dismissDirection == androidx.compose.material3.SwipeToDismissBoxValue.EndToStart) {
+                                MaterialTheme.colorScheme.primary
+                            } else if (dismiss.dismissDirection == androidx.compose.material3.SwipeToDismissBoxValue.StartToEnd) {
+                                MaterialTheme.colorScheme.secondary
+                            } else {
+                                Color.Transparent
+                            }
+                            Box(
+                                Modifier
+                                    .fillMaxSize()
+                                    .padding(horizontal = 16.dp, vertical = 4.dp)
+                                    .clip(RoundedCornerShape(24.dp))
+                                    .background(color)
+                                    .padding(horizontal = 24.dp),
+                                contentAlignment = if (dismiss.dismissDirection == androidx.compose.material3.SwipeToDismissBoxValue.StartToEnd) Alignment.CenterStart else Alignment.CenterEnd
+                            ) {
+                                val icon = if (dismiss.dismissDirection == androidx.compose.material3.SwipeToDismissBoxValue.EndToStart) {
+                                    painterResource(if (isArchived(c)) R.drawable.unarchive_24px else R.drawable.archive_24px)
+                                } else {
+                                    painterResource(if (c.unread > 0) R.drawable.draft_24px else R.drawable.search_24px)
+                                }
+                                Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)
                             }
                         },
                         modifier = Modifier.fillMaxWidth(),
