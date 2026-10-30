@@ -35,7 +35,7 @@ This module never ships in `:app:app`.
 
 On Linux you can start a full session instead of a window on another desktop:
 
-1. Install `labwc` and a JRE 21.
+1. Install `labwc` and a JRE 17+.
 2. Build the UberJar.
 3. Run `desktop-linux/session/telos-session` (or pick **Telos** in the display manager after installing `telos.desktop`).
 

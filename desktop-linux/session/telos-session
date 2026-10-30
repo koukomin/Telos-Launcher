@@ -26,6 +26,8 @@ if [ -z "$JAR" ]; then
     JAR=/opt/telos-desktop/telos-desktop.jar
   elif [ -f "$OPT_ROOT/telos-desktop.jar" ]; then
     JAR="$OPT_ROOT/telos-desktop.jar"
+  elif ls -1 "$OPT_ROOT"/telos-desktop-linux-*.jar >/dev/null 2>&1; then
+    JAR="$(ls -1 "$OPT_ROOT"/telos-desktop-linux-*.jar | head -n 1)"
   else
     JAR="$(ls -1 "$ROOT/desktop-linux/build/compose/jars"/telos-desktop-linux-*.jar 2>/dev/null | head -n 1 || true)"
   fi

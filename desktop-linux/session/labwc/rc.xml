@@ -22,6 +22,20 @@
       <iconify>no</iconify>
       <fullscreen>yes</fullscreen>
     </windowRule>
+    <windowRule identifier="MainKt">
+      <skipTaskbar>yes</skipTaskbar>
+      <skipPager>yes</skipPager>
+      <serverDecoration>no</serverDecoration>
+      <iconify>no</iconify>
+      <fullscreen>yes</fullscreen>
+    </windowRule>
+    <windowRule title="Telos Desktop">
+      <skipTaskbar>yes</skipTaskbar>
+      <skipPager>yes</skipPager>
+      <serverDecoration>no</serverDecoration>
+      <iconify>no</iconify>
+      <fullscreen>yes</fullscreen>
+    </windowRule>
   </windowRules>
   <keyboard>
     <default />
@@ -29,9 +43,6 @@
       <action name="Execute" command="sh -c '${TERMINAL:-} || foot || kitty || gnome-terminal || xterm'" />
     </keybind>
     <keybind key="A-F4">
-      <action name="Close" />
-    </keybind>
-    <keybind key="W-q">
       <action name="Close" />
     </keybind>
     <keybind key="W-Escape">

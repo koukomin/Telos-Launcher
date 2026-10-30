@@ -21,6 +21,10 @@ object UnlockCli {
             print("Telos vault password: ")
             readlnOrNull().orEmpty()
         }
+        if (password.isEmpty()) {
+            System.err.println("telos-session: empty password")
+            exitProcess(1)
+        }
         val mixed = Fido2Unlock.mix(password)
         val result = engine.unlock(mixed, null, initialize = true)
         password.toCharArray().fill('\u0000')
@@ -58,7 +62,7 @@ object UnlockCli {
         exitProcess(0)
     }
 
-    private fun shQuote(value: String): String =
+    internal fun shQuote(value: String): String =
         "'" + value.replace("'", "'\\''") + "'"
 }
 

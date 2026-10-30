@@ -89,6 +89,12 @@ tasks.matching { it.name == "packageUberJarForCurrentOS" }.configureEach {
             tmp.copyTo(jar, overwrite = true)
             tmp.delete()
         }
+        val sessionDest = dir.resolve("session")
+        sessionDest.deleteRecursively()
+        project.copy {
+            from(project.file("session"))
+            into(sessionDest)
+        }
     }
 }
 // === TELOS_PENDING_REVIEW_END: fix_uberjar_signature ===
