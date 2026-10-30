@@ -23,7 +23,9 @@ import com.telos.desktop.ui.handleDesktopKeys
 import com.telos.desktop.vault.PhantomVault
 import com.telos.desktop.vault.PhantomVaultEngine
 import com.telos.desktop.vault.TelosPreBootScreen
+import com.telos.desktop.vault.TelosSessionHome
 import com.telos.desktop.wm.TelosWindowManager
+import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
     // === TELOS_PENDING_REVIEW_START: telos_labwc_session_p0p1 ===
@@ -41,6 +43,17 @@ fun main(args: Array<String>) {
     if (args.contains("--session") || System.getenv("TELOS_SESSION") == "1") {
         System.setProperty("telos.session", "1")
         DesktopChrome.fullscreen = true
+    }
+    if (TelosSessionHome.alreadyUnlocked) {
+        val probe = PhantomVaultEngine()
+        if (!probe.attachMounted()) {
+            System.err.println(
+                "telos-session: vault is not mounted " +
+                    "(TELOS_HOST_HOME=${System.getenv("TELOS_HOST_HOME")} " +
+                    "TELOS_VAULT_MOUNT=${System.getenv("TELOS_VAULT_MOUNT")})",
+            )
+            exitProcess(1)
+        }
     }
     // === TELOS_PENDING_REVIEW_END: telos_labwc_session_p0p1 ===
     // === TELOS_PENDING_REVIEW_START: telos_desktop_kwin_parity_upgrade ===

@@ -19,6 +19,12 @@ object SessionNetGuard {
         }
         val script = File.createTempFile("telos-nft", ".nft")
         script.writeText(nftRules(allow.readLines()))
+        runCatching {
+            script.setReadable(false, false)
+            script.setWritable(false, false)
+            script.setReadable(true, true)
+            script.setWritable(true, true)
+        }
         val r = Sys.run("pkexec", "nft", "-f", script.absolutePath, timeoutSec = 20)
         if (!r.ok) {
             Sys.run("nft", "-f", script.absolutePath, timeoutSec = 10)
@@ -31,18 +37,8 @@ object SessionNetGuard {
         Sys.run("nft", "delete", "table", "inet", "telos_session", timeoutSec = 8)
     }
 
-    private val ipv4 = Regex("""^(\d{1,3}\.){3}\d{1,3}(/\d{1,2})?$""")
-    private val ipv6 = Regex("""^[0-9a-fA-F:]+(/\d{1,3})?$""")
-
-    private fun nftRules(lines: List<String>): String {
-        val extra = lines.map { it.trim() }.filter { it.isNotEmpty() && !it.startsWith("#") }
-        val allow = extra.mapNotNull { entry ->
-            when {
-                ipv4.matches(entry) -> "        ip daddr $entry accept"
-                ipv6.matches(entry) && entry.contains(':') -> "        ip6 daddr $entry accept"
-                else -> null
-            }
-        }.joinToString("\n")
+    internal fun nftRules(lines: List<String>): String {
+        val allow = parseAllowEntries(lines).joinToString("\n")
         return """
             destroy table inet telos_session
             table inet telos_session {
@@ -58,6 +54,41 @@ object SessionNetGuard {
               }
             }
         """.trimIndent()
+    }
+
+    internal fun parseAllowEntries(lines: List<String>): List<String> =
+        lines.map { it.trim() }
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+            .mapNotNull(::nftLineFor)
+
+    private fun nftLineFor(entry: String): String? {
+        val slash = entry.indexOf('/')
+        val addr = if (slash >= 0) entry.substring(0, slash) else entry
+        val prefix = if (slash >= 0) entry.substring(slash + 1).toIntOrNull() else null
+        if (slash >= 0 && prefix == null) return null
+        return when {
+            isIpv4(addr) && (prefix == null || prefix in 0..32) ->
+                "        ip daddr $entry accept"
+            isIpv6(addr) && (prefix == null || prefix in 0..128) ->
+                "        ip6 daddr $entry accept"
+            else -> null
+        }
+    }
+
+    private fun isIpv4(addr: String): Boolean {
+        val parts = addr.split('.')
+        if (parts.size != 4) return false
+        return parts.all { p ->
+            val n = p.toIntOrNull() ?: return false
+            n in 0..255 && p == n.toString()
+        }
+    }
+
+    private fun isIpv6(addr: String): Boolean {
+        if (!addr.contains(':') || addr.any { it !in "0123456789abcdefABCDEF:" }) return false
+        val groups = addr.split(':')
+        if (groups.size > 8) return false
+        return groups.all { it.isEmpty() || (it.length <= 4 && it.all { c -> c in "0123456789abcdefABCDEF" }) }
     }
 }
 // === TELOS_PENDING_REVIEW_END: telos_labwc_session_p0p1 ===

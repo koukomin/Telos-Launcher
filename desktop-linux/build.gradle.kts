@@ -53,6 +53,7 @@ dependencies {
     // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
     implementation("org.bouncycastle:bcprov-jdk18on:1.86")
     // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===
+    testImplementation("junit:junit:4.13.2")
 }
 
 // === TELOS_PENDING_REVIEW_START: fix_uberjar_signature ===

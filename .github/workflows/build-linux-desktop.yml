@@ -7,13 +7,41 @@ on:
   push:
     tags:
       - 'v*'
+    branches:
+      - main
+    paths:
+      - 'desktop-linux/**'
+      - '.github/workflows/build-linux-desktop.yml'
+  pull_request:
+    paths:
+      - 'desktop-linux/**'
+      - '.github/workflows/build-linux-desktop.yml'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
+  session-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Session scripts and unit tests
+        run: |
+          chmod +x gradlew desktop-linux/session/telos-session desktop-linux/session/labwc/autostart
+          sh -n desktop-linux/session/telos-session
+          sh -n desktop-linux/session/labwc/autostart
+          test -f desktop-linux/session/labwc/rc.xml
+          test -f desktop-linux/session/telos.desktop
+          ./gradlew :desktop-linux:test --stacktrace
+
   build-linux-desktop:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
