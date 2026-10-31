@@ -1,4 +1,5 @@
 import java.util.Properties
+import java.util.jar.Manifest
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.zip.ZipEntry
@@ -82,6 +83,7 @@ tasks.withType<Jar>().configureEach {
     manifest.attributes["Implementation-Version"] = project.version.toString()
 }
 
+val jarReleaseVersion = version.toString()
 val composeJarsDir = layout.buildDirectory.dir("compose/jars")
 tasks.matching { it.name == "packageUberJarForCurrentOS" }.configureEach {
     notCompatibleWithConfigurationCache("unsigned jar rewrite copies session files at execution time")
@@ -100,7 +102,13 @@ tasks.matching { it.name == "packageUberJarForCurrentOS" }.configureEach {
                         if (!skip) {
                             val copy = ZipEntry(name)
                             zout.putNextEntry(copy)
-                            zin.copyTo(zout)
+                            if (name.equals("META-INF/MANIFEST.MF", ignoreCase = true)) {
+                                val manifest = Manifest(zin)
+                                manifest.mainAttributes.putValue("Implementation-Version", jarReleaseVersion)
+                                manifest.write(zout)
+                            } else {
+                                zin.copyTo(zout)
+                            }
                             zout.closeEntry()
                         }
                         entry = zin.nextEntry
