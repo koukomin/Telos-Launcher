@@ -36,6 +36,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          python3 tools/release-apk-check-test.py
           python3 tools/release-version-test.py
           python3 tools/release-version.py >> "$GITHUB_OUTPUT"
 
@@ -90,6 +91,11 @@ jobs:
       - name: Build Release APK (${{ matrix.abi }})
         run: ./gradlew assembleDefaultRelease -Ptelos.abi=${{ matrix.abi }} --stacktrace
 
+      - name: Verify packaged native ABIs
+        env:
+          EXPECTED_ABI: ${{ matrix.abi }}
+        run: python3 tools/release-apk-check.py
+
       - name: Align and Sign APK with v1/v2/v3/v4 & 16KB Page Alignment
         if: github.event_name != 'pull_request'
         run: |
@@ -130,12 +136,6 @@ jobs:
           [[ "$BADGING" == *"versionName='$VERSION_NAME'"* ]]
           [[ "$BADGING" == *"versionCode='$VERSION_CODE'"* ]]
 
-          # Verify ABI restrictions
-          ABIS=$(unzip -Z1 "$FINAL_APK" 'lib/*' | cut -d/ -f2 | sort -u | tr '\n' ' ')
-          echo "Native library folders in APK: $ABIS"
-          if [ "$ABIS" != "${{ matrix.abi }} " ]; then
-            echo "::error::APK contains unexpected ABIs: $ABIS"; exit 1
-          fi
 
       - name: Upload APK artifact
         if: github.event_name != 'pull_request'
