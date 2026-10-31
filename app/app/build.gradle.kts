@@ -64,10 +64,10 @@ android {
         // youtubedl-android runs Python and FFmpeg from the extracted native library folder
         if (mediaRuntime) jniLibs.useLegacyPackaging = true
         
-        // Exclude 32-bit and x86 native libraries completely from the build to slash APK size
-        jniLibs.excludes.add("lib/armeabi-v7a/**")
-        jniLibs.excludes.add("lib/x86/**")
-        jniLibs.excludes.add("lib/x86_64/**")
+        // Keep the selected ABI's native libraries; size filtering must not empty a 32-bit APK.
+        listOf("arm64-v8a", "armeabi-v7a", "x86", "x86_64")
+            .filterNot { it in telosAbis }
+            .forEach { jniLibs.excludes.add("lib/$it/**") }
     }
 
     compileSdk {
