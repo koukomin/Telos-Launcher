@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.tv
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.net.Uri
 import android.text.format.DateUtils
@@ -127,11 +129,11 @@ fun TvScreen() {
         scope.launch {
             val r = vm.importM3u(uri)
             when {
-                r == null -> toast(context.getString(R.string.au12_tvui_import_failed))
-                r.tooLarge -> toast(context.getString(R.string.au11_tvdata_import_too_large))
+                r == null -> toast(context.getString(I18nR.string.au12_tvui_import_failed))
+                r.tooLarge -> toast(context.getString(I18nR.string.au11_tvdata_import_too_large))
                 else -> {
-                    val base = context.getString(R.string.au11_tvdata_import_result, r.added, r.skipped)
-                    toast(if (r.truncated) base + "\n" + context.getString(R.string.au11_tvdata_import_truncated) else base)
+                    val base = context.getString(I18nR.string.au11_tvdata_import_result, r.added, r.skipped)
+                    toast(if (r.truncated) base + "\n" + context.getString(I18nR.string.au11_tvdata_import_truncated) else base)
                 }
             }
         }
@@ -139,40 +141,40 @@ fun TvScreen() {
     val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri: Uri? ->
         if (uri == null) return@rememberLauncherForActivityResult
         scope.launch {
-            toast(context.getString(if (vm.exportBackup(uri)) R.string.au_radio_backup_saved else R.string.au_radio_backup_save_failed))
+            toast(context.getString(if (vm.exportBackup(uri)) I18nR.string.au_radio_backup_saved else I18nR.string.au_radio_backup_save_failed))
         }
     }
     val restoreLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         if (uri == null) return@rememberLauncherForActivityResult
         scope.launch {
             val n = vm.restoreBackup(uri)
-            toast(if (n >= 0) context.getString(R.string.au12_tvui_restored, n) else context.getString(R.string.au_radio_restore_failed))
+            toast(if (n >= 0) context.getString(I18nR.string.au12_tvui_restored, n) else context.getString(I18nR.string.au_radio_restore_failed))
         }
     }
 
     MediaFrame(
-        title = stringResource(R.string.au12_tvui_title),
+        title = stringResource(I18nR.string.au12_tvui_title),
         actions = {
             if (disclaimer) {
                 if (load == TvLoad.Ready) {
                     IconButton(onClick = { edit = EditTarget(null) }) {
-                        Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.au12_tvui_add_channel))
+                        Icon(painterResource(BaseR.drawable.add_24px), contentDescription = stringResource(I18nR.string.au12_tvui_add_channel))
                     }
                     IconButton(onClick = { vm.refresh() }) {
-                        Icon(painterResource(R.drawable.autorenew_24px), contentDescription = stringResource(R.string.hc_refresh))
+                        Icon(painterResource(BaseR.drawable.autorenew_24px), contentDescription = stringResource(I18nR.string.hc_refresh))
                     }
                 }
                 Box {
                     IconButton(onClick = { menuOpen = true }) {
-                        Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+                        Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_more))
                     }
                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.au15_tvbg_menu_playback)) },
+                            text = { Text(stringResource(I18nR.string.au15_tvbg_menu_playback)) },
                             onClick = { menuOpen = false; showPlayback = true },
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.au12_tvui_import_m3u)) },
+                            text = { Text(stringResource(I18nR.string.au12_tvui_import_m3u)) },
                             onClick = {
                                 menuOpen = false
                                 importM3uLauncher.launch(
@@ -181,11 +183,11 @@ fun TvScreen() {
                             },
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.au12_tvui_export_tv)) },
+                            text = { Text(stringResource(I18nR.string.au12_tvui_export_tv)) },
                             onClick = { menuOpen = false; exportLauncher.launch("telos-tv-backup.json") },
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.au12_tvui_import_tv)) },
+                            text = { Text(stringResource(I18nR.string.au12_tvui_import_tv)) },
                             onClick = { menuOpen = false; restoreLauncher.launch(arrayOf("*/*")) },
                         )
                     }
@@ -207,9 +209,9 @@ fun TvScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                Text(stringResource(R.string.au12_tvui_load_failed), textAlign = TextAlign.Center)
+                Text(stringResource(I18nR.string.au12_tvui_load_failed), textAlign = TextAlign.Center)
                 Button(onClick = { vm.retryLoad() }, modifier = Modifier.padding(top = 16.dp)) {
-                    Text(stringResource(R.string.hc_retry))
+                    Text(stringResource(I18nR.string.hc_retry))
                 }
             }
             else -> Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
@@ -220,7 +222,7 @@ fun TvScreen() {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
-                    Text(stringResource(R.string.au12_tvui_loading), modifier = Modifier.padding(start = 12.dp))
+                    Text(stringResource(I18nR.string.au12_tvui_loading), modifier = Modifier.padding(start = 12.dp))
                 }
             }
         }
@@ -240,10 +242,10 @@ fun TvScreen() {
             onDismissRequest = { deleteTarget = null },
             title = { Text(ch.name, maxLines = 2, overflow = TextOverflow.Ellipsis) },
             confirmButton = {
-                TextButton(onClick = { vm.deleteCustom(ch.id); deleteTarget = null }) { Text(stringResource(R.string.hc_delete)) }
+                TextButton(onClick = { vm.deleteCustom(ch.id); deleteTarget = null }) { Text(stringResource(I18nR.string.hc_delete)) }
             },
             dismissButton = {
-                TextButton(onClick = { deleteTarget = null }) { Text(stringResource(R.string.hc_cancel)) }
+                TextButton(onClick = { deleteTarget = null }) { Text(stringResource(I18nR.string.hc_cancel)) }
             },
         )
     }
@@ -261,16 +263,16 @@ private fun DisclaimerCard(onAccept: () -> Unit, greece: Boolean) {
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
-                    stringResource(R.string.au12_tvui_disclaimer_title),
+                    stringResource(I18nR.string.au12_tvui_disclaimer_title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                 )
-                Text(stringResource(R.string.au12_tvui_disclaimer_text), style = MaterialTheme.typography.bodyMedium)
+                Text(stringResource(I18nR.string.au12_tvui_disclaimer_text), style = MaterialTheme.typography.bodyMedium)
                 if (greece) {
-                    Text(stringResource(R.string.au13_tvextraui_disclaimer_extra), style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(I18nR.string.au13_tvextraui_disclaimer_extra), style = MaterialTheme.typography.bodyMedium)
                 }
                 Button(onClick = onAccept, modifier = Modifier.align(Alignment.End)) {
-                    Text(stringResource(R.string.au12_tvui_accept))
+                    Text(stringResource(I18nR.string.au12_tvui_accept))
                 }
             }
         }
@@ -324,10 +326,10 @@ private fun TvHomeContent(
             TvSegmentedControl(
                 selected = if (showFavorites) 0 else 1,
                 labels = listOf(
-                    stringResource(R.string.au14_tvhome_view_favorites),
-                    stringResource(R.string.au14_tvhome_view_browse),
+                    stringResource(I18nR.string.au14_tvhome_view_favorites),
+                    stringResource(I18nR.string.au14_tvhome_view_browse),
                 ),
-                icons = listOf(R.drawable.star_24px_filled, R.drawable.travel_explore_24px),
+                icons = listOf(BaseR.drawable.star_24px_filled, BaseR.drawable.travel_explore_24px),
                 reduceAnimations = reduceAnimations,
                 onSelect = {
                     val v = if (it == 0) VIEW_FAVORITES else VIEW_BROWSE
@@ -336,7 +338,7 @@ private fun TvHomeContent(
                 },
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp)
-                    .semantics { contentDescription = context.getString(R.string.au14_tvhome_views_description) },
+                    .semantics { contentDescription = context.getString(I18nR.string.au14_tvhome_views_description) },
             )
             Box(Modifier.weight(1f).fillMaxWidth()) {
                 if (showFavorites) {
@@ -407,11 +409,11 @@ private fun TvFavoritesBody(
             item(key = "empty:fav", span = { GridItemSpan(maxLineSpan) }) {
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                     TvEmptyState(
-                        R.drawable.star_24px_outlined,
-                        stringResource(R.string.au14_tvhome_empty_favorites_title),
-                        stringResource(R.string.au14_tvhome_empty_favorites_text),
+                        BaseR.drawable.star_24px_outlined,
+                        stringResource(I18nR.string.au14_tvhome_empty_favorites_title),
+                        stringResource(I18nR.string.au14_tvhome_empty_favorites_text),
                     )
-                    Button(onClick = onBrowse) { Text(stringResource(R.string.au14_tvhome_view_browse)) }
+                    Button(onClick = onBrowse) { Text(stringResource(I18nR.string.au14_tvhome_view_browse)) }
                 }
             }
         }
@@ -425,7 +427,7 @@ private fun TvFavoritesBody(
             }
         }
         if (favorites.isNotEmpty()) {
-            header("h:fav", { stringResource(R.string.au12_tvui_shelf_favorites) })
+            header("h:fav", { stringResource(I18nR.string.au12_tvui_shelf_favorites) })
             itemsIndexed(favorites, key = { _, c -> "f:" + c.id }) { i, ch ->
                 TvChannelCard(
                     ch, playing = ch.id == playingId, favorite = true,
@@ -441,7 +443,7 @@ private fun TvFavoritesBody(
             }
         }
         if (recents.isNotEmpty()) {
-            header("h:rec", { stringResource(R.string.au12_tvui_shelf_recents) })
+            header("h:rec", { stringResource(I18nR.string.au12_tvui_shelf_recents) })
             item(key = "s:rec", span = { GridItemSpan(maxLineSpan) }) {
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 4.dp)) {
                     items(recents.distinctBy { it.id }, key = { it.id }) { ch ->
@@ -456,7 +458,7 @@ private fun TvFavoritesBody(
             }
         }
         if (custom.isNotEmpty()) {
-            header("h:cus", { stringResource(R.string.au12_tvui_shelf_custom) })
+            header("h:cus", { stringResource(I18nR.string.au12_tvui_shelf_custom) })
             item(key = "s:cus", span = { GridItemSpan(maxLineSpan) }) {
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 4.dp)) {
                     items(custom.distinctBy { it.id }, key = { it.id }) { ch ->
@@ -524,10 +526,10 @@ private fun TvHomeBody(
         ) {
             val results = home.results
             if (results != null) {
-                header("h:results", { stringResource(R.string.au12_tvui_shelf_results) })
+                header("h:results", { stringResource(I18nR.string.au12_tvui_shelf_results) })
                 if (results.isEmpty()) {
                     item(key = "empty", span = { GridItemSpan(maxLineSpan) }) {
-                        TvEmptyState(R.drawable.search_24px, stringResource(R.string.au12_tvui_no_results), null)
+                        TvEmptyState(BaseR.drawable.search_24px, stringResource(I18nR.string.au12_tvui_no_results), null)
                     }
                 }
                 items(results.distinctBy { it.id }, key = { "r:" + it.id }) { ch ->
@@ -543,7 +545,7 @@ private fun TvHomeBody(
                         item(key = "hint:star", span = { GridItemSpan(maxLineSpan) }) { TvStarHint(Modifier.padding(vertical = 4.dp)) }
                     }
                     if (favorites.isEmpty() && recents.isNotEmpty()) {
-                        header("h:rec", { stringResource(R.string.au12_tvui_shelf_recents) })
+                        header("h:rec", { stringResource(I18nR.string.au12_tvui_shelf_recents) })
                         item(key = "s:rec", span = { GridItemSpan(maxLineSpan) }) {
                             LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                                 items(recents.distinctBy { it.id }, key = { it.id }) { ch ->
@@ -558,7 +560,7 @@ private fun TvHomeBody(
                         }
                     }
                     if (favorites.isEmpty() && custom.isNotEmpty()) {
-                        header("h:cus", { stringResource(R.string.au12_tvui_shelf_custom) })
+                        header("h:cus", { stringResource(I18nR.string.au12_tvui_shelf_custom) })
                         item(key = "s:cus", span = { GridItemSpan(maxLineSpan) }) {
                             LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                                 items(custom.distinctBy { it.id }, key = { it.id }) { ch ->
@@ -577,18 +579,18 @@ private fun TvHomeBody(
                     when {
                         category != null -> categories.firstOrNull { it.id == category }
                             ?.let { tvCategoryName(it.id, it.name) }
-                            ?: stringResource(R.string.au12_tvui_shelf_filtered)
+                            ?: stringResource(I18nR.string.au12_tvui_shelf_filtered)
                         countries.size == 1 -> stringResource(
-                            R.string.au12_tvui_shelf_country, TvIndex.countryName(countries.first(), Locale.getDefault())
+                            I18nR.string.au12_tvui_shelf_country, TvIndex.countryName(countries.first(), Locale.getDefault())
                         )
-                        countries.isNotEmpty() -> stringResource(R.string.au12_tvui_shelf_filtered)
-                        else -> stringResource(R.string.au12_tvui_shelf_suggested)
+                        countries.isNotEmpty() -> stringResource(I18nR.string.au12_tvui_shelf_filtered)
+                        else -> stringResource(I18nR.string.au12_tvui_shelf_suggested)
                     }
                 }
                 header("h:main", title)
                 if (home.channels.isEmpty()) {
                     item(key = "empty", span = { GridItemSpan(maxLineSpan) }) {
-                        TvEmptyState(R.drawable.search_24px, stringResource(R.string.au12_tvui_no_results), null)
+                        TvEmptyState(BaseR.drawable.search_24px, stringResource(I18nR.string.au12_tvui_no_results), null)
                     }
                 }
                 items(home.channels, key = { "m:" + it.id }) { ch ->
@@ -612,7 +614,7 @@ private fun TvHomeBody(
             MediaSearchBar(
                 value = query,
                 onValueChange = { vm.setQuery(it) },
-                placeholder = stringResource(R.string.au12_tvui_search_hint),
+                placeholder = stringResource(I18nR.string.au12_tvui_search_hint),
                 modifier = Modifier.fillMaxWidth(),
             )
             LazyRow(
@@ -625,7 +627,7 @@ private fun TvHomeBody(
                         onClick = onShowCountries,
                         label = {
                             Text(
-                                (if (flags.isNotEmpty()) "$flags " else "") + stringResource(R.string.au12_tvui_countries),
+                                (if (flags.isNotEmpty()) "$flags " else "") + stringResource(I18nR.string.au12_tvui_countries),
                                 maxLines = 1,
                             )
                         },
@@ -635,7 +637,7 @@ private fun TvHomeBody(
                     FilterChip(
                         selected = category == null,
                         onClick = { vm.setCategory(null) },
-                        label = { Text(stringResource(R.string.au12_tvui_chip_all)) },
+                        label = { Text(stringResource(I18nR.string.au12_tvui_chip_all)) },
                     )
                 }
                 items(localizedCategories, key = { "cat:" + it.first.id }) { (c, label) ->
@@ -647,11 +649,11 @@ private fun TvHomeBody(
                 }
             }
             val statusText = when {
-                status.refreshing -> stringResource(R.string.au12_tvui_updating)
-                status.failed -> stringResource(R.string.au11_tvdata_refresh_failed)
-                status.lastCheckedAt == 0L -> stringResource(R.string.au11_tvdata_refresh_never)
+                status.refreshing -> stringResource(I18nR.string.au12_tvui_updating)
+                status.failed -> stringResource(I18nR.string.au11_tvdata_refresh_failed)
+                status.lastCheckedAt == 0L -> stringResource(I18nR.string.au11_tvdata_refresh_never)
                 else -> stringResource(
-                    R.string.au12_tvui_last_checked,
+                    I18nR.string.au12_tvui_last_checked,
                     DateUtils.getRelativeTimeSpanString(status.lastCheckedAt, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS).toString(),
                 )
             }
@@ -713,24 +715,24 @@ private fun TvCountrySheet(vm: TvViewModel, onDismiss: () -> Unit) {
         Column(Modifier.fillMaxHeight(0.92f).navigationBarsPadding()) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.au12_tvui_countries), style = MaterialTheme.typography.titleLarge)
+                    Text(stringResource(I18nR.string.au12_tvui_countries), style = MaterialTheme.typography.titleLarge)
                     Text(
-                        if (selected.isEmpty()) stringResource(R.string.au12_tvui_countries_none)
-                        else stringResource(R.string.au12_tvui_countries_selected, selected.size),
+                        if (selected.isEmpty()) stringResource(I18nR.string.au12_tvui_countries_none)
+                        else stringResource(I18nR.string.au12_tvui_countries_selected, selected.size),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 if (selected.isNotEmpty() || selectedLangs.isNotEmpty()) {
                     TextButton(onClick = { vm.setCountries(emptyList()); vm.setLanguages(emptyList()) }) {
-                        Text(stringResource(R.string.au12_tvui_clear))
+                        Text(stringResource(I18nR.string.au12_tvui_clear))
                     }
                 }
-                TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_done)) }
+                TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_done)) }
             }
             if (langChips.isNotEmpty()) {
                 Text(
-                    stringResource(R.string.au12_tvui_languages),
+                    stringResource(I18nR.string.au12_tvui_languages),
                     style = MaterialTheme.typography.labelLarge,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                 )
@@ -753,22 +755,22 @@ private fun TvCountrySheet(vm: TvViewModel, onDismiss: () -> Unit) {
                 value = search,
                 onValueChange = { search = it.take(60) },
                 singleLine = true,
-                placeholder = { Text(stringResource(R.string.au12_tvui_countries_search)) },
+                placeholder = { Text(stringResource(I18nR.string.au12_tvui_countries_search)) },
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
             )
             LazyColumn(Modifier.weight(1f)) {
                 if (greece) {
                     item(key = "extra:playlists") {
                         ExtraSwitchRow(
-                            stringResource(R.string.au13_tvextra_playlists_title),
-                            stringResource(R.string.au13_tvextra_playlists_summary),
+                            stringResource(I18nR.string.au13_tvextra_playlists_title),
+                            stringResource(I18nR.string.au13_tvextra_playlists_summary),
                             extraPlaylists,
                         ) { vm.setExtraPlaylists(it) }
                     }
                     item(key = "extra:epg") {
                         ExtraSwitchRow(
-                            stringResource(R.string.au13_tvextra_epg_title),
-                            stringResource(R.string.au13_tvextra_epg_summary),
+                            stringResource(I18nR.string.au13_tvextra_epg_title),
+                            stringResource(I18nR.string.au13_tvextra_epg_summary),
                             epgOn,
                         ) { vm.setEpg(it) }
                     }
@@ -787,7 +789,7 @@ private fun TvCountrySheet(vm: TvViewModel, onDismiss: () -> Unit) {
                         Column(Modifier.weight(1f).padding(start = 12.dp)) {
                             Text(c.name, maxLines = 1, overflow = TextOverflow.Ellipsis)
                             Text(
-                                stringResource(R.string.au12_tvui_channel_count, c.channelCount),
+                                stringResource(I18nR.string.au12_tvui_channel_count, c.channelCount),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -809,13 +811,13 @@ private fun TvPlaybackSheet(vm: TvViewModel, onDismiss: () -> Unit) {
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(bottom = 16.dp)) {
             Text(
-                stringResource(R.string.au15_tvbg_menu_playback),
+                stringResource(I18nR.string.au15_tvbg_menu_playback),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             )
             ExtraSwitchRow(
-                stringResource(R.string.au15_tvbg_title),
-                stringResource(R.string.au15_tvbg_summary),
+                stringResource(I18nR.string.au15_tvbg_title),
+                stringResource(I18nR.string.au15_tvbg_summary),
                 keep,
             ) { on ->
                 vm.setKeepInBackground(on)
@@ -853,11 +855,11 @@ private fun ExtraSwitchRow(title: String, summary: String, checked: Boolean, onC
 @StringRes
 private fun TvSaveResult.messageRes(): Int? = when (this) {
     TvSaveResult.SAVED -> null
-    TvSaveResult.INVALID_NAME -> R.string.au11_tvdata_save_invalid_name
-    TvSaveResult.INVALID_STREAM_URL -> R.string.au11_tvdata_save_invalid_url
-    TvSaveResult.INVALID_LOGO_URL -> R.string.au11_tvdata_save_invalid_logo
-    TvSaveResult.DUPLICATE_URL -> R.string.au11_tvdata_save_duplicate
-    TvSaveResult.LIMIT_REACHED -> R.string.au11_tvdata_save_limit
+    TvSaveResult.INVALID_NAME -> I18nR.string.au11_tvdata_save_invalid_name
+    TvSaveResult.INVALID_STREAM_URL -> I18nR.string.au11_tvdata_save_invalid_url
+    TvSaveResult.INVALID_LOGO_URL -> I18nR.string.au11_tvdata_save_invalid_logo
+    TvSaveResult.DUPLICATE_URL -> I18nR.string.au11_tvdata_save_duplicate
+    TvSaveResult.LIMIT_REACHED -> I18nR.string.au11_tvdata_save_limit
 }
 
 @Composable
@@ -873,28 +875,28 @@ private fun TvChannelDialog(vm: TvViewModel, channel: TvChannel?, onDismiss: () 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text(stringResource(if (channel == null) R.string.au12_tvui_add_channel else R.string.au12_tvui_edit_channel))
+            Text(stringResource(if (channel == null) I18nR.string.au12_tvui_add_channel else I18nR.string.au12_tvui_edit_channel))
         },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(
                     name, { name = it.take(120) }, singleLine = true,
-                    label = { Text(stringResource(R.string.au12_tvui_field_name)) },
+                    label = { Text(stringResource(I18nR.string.au12_tvui_field_name)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
                     url, { url = it.take(2048) }, singleLine = true,
-                    label = { Text(stringResource(R.string.au12_tvui_field_stream)) },
+                    label = { Text(stringResource(I18nR.string.au12_tvui_field_stream)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
                     logo, { logo = it.take(2048) }, singleLine = true,
-                    label = { Text(stringResource(R.string.au12_tvui_field_logo)) },
+                    label = { Text(stringResource(I18nR.string.au12_tvui_field_logo)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
                     group, { group = it.take(60) }, singleLine = true,
-                    label = { Text(stringResource(R.string.au12_tvui_field_group)) },
+                    label = { Text(stringResource(I18nR.string.au12_tvui_field_group)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
                 error?.let {
@@ -914,8 +916,8 @@ private fun TvChannelDialog(vm: TvViewModel, channel: TvChannel?, onDismiss: () 
                         if (res == null) onDismiss() else error = res
                     }
                 },
-            ) { Text(stringResource(R.string.hc_save)) }
+            ) { Text(stringResource(I18nR.string.hc_save)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ContentValues
 import android.content.Context
@@ -81,9 +82,9 @@ internal fun VideoOrganizeDialog(items: List<VideoItem>, onClose: (Boolean) -> U
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
         AlertDialog(
             onDismissRequest = { onClose(false) },
-            title = { Text(stringResource(R.string.au7_vidfolders_title)) },
-            text = { Text(stringResource(R.string.au7_vidfolders_unsupported)) },
-            confirmButton = { TextButton(onClick = { onClose(false) }) { Text(stringResource(R.string.hc_cancel)) } },
+            title = { Text(stringResource(I18nR.string.au7_vidfolders_title)) },
+            text = { Text(stringResource(I18nR.string.au7_vidfolders_unsupported)) },
+            confirmButton = { TextButton(onClick = { onClose(false) }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
         return
     }
@@ -108,8 +109,8 @@ internal fun VideoOrganizeDialog(items: List<VideoItem>, onClose: (Boolean) -> U
             }
             toast(
                 context,
-                if (failed == 0) context.getString(R.string.au7_vidfolders_done, moves.size)
-                else context.getString(R.string.au7_vidfolders_partial, moves.size - failed, failed),
+                if (failed == 0) context.getString(I18nR.string.au7_vidfolders_done, moves.size)
+                else context.getString(I18nR.string.au7_vidfolders_partial, moves.size - failed, failed),
             )
             onClose(true)
         }
@@ -118,9 +119,9 @@ internal fun VideoOrganizeDialog(items: List<VideoItem>, onClose: (Boolean) -> U
     if (moves.isEmpty()) {
         AlertDialog(
             onDismissRequest = { onClose(false) },
-            title = { Text(stringResource(R.string.au7_vidfolders_title)) },
-            text = { Text(stringResource(R.string.au7_vidfolders_nothing)) },
-            confirmButton = { TextButton(onClick = { onClose(false) }) { Text(stringResource(R.string.hc_cancel)) } },
+            title = { Text(stringResource(I18nR.string.au7_vidfolders_title)) },
+            text = { Text(stringResource(I18nR.string.au7_vidfolders_nothing)) },
+            confirmButton = { TextButton(onClick = { onClose(false) }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
         return
     }
@@ -128,10 +129,10 @@ internal fun VideoOrganizeDialog(items: List<VideoItem>, onClose: (Boolean) -> U
     val episodes = moves.count { it.series }
     AlertDialog(
         onDismissRequest = { onClose(false) },
-        title = { Text(stringResource(R.string.au7_vidfolders_title)) },
+        title = { Text(stringResource(I18nR.string.au7_vidfolders_title)) },
         text = {
             Text(
-                stringResource(R.string.au7_vidfolders_confirm, films, episodes) + "\n\n" +
+                stringResource(I18nR.string.au7_vidfolders_confirm, films, episodes) + "\n\n" +
                     moves.take(5).joinToString("\n") { it.item.fileName + "\n  → " + it.target } +
                     (if (moves.size > 5) "\n…" else "")
             )
@@ -142,11 +143,11 @@ internal fun VideoOrganizeDialog(items: List<VideoItem>, onClose: (Boolean) -> U
                     val request = MediaStore.createWriteRequest(context.contentResolver, moves.map { it.item.uri })
                     writeLauncher.launch(IntentSenderRequest.Builder(request.intentSender).build())
                 }.onFailure {
-                    toast(context, context.getString(R.string.au7_vidfolders_failed))
+                    toast(context, context.getString(I18nR.string.au7_vidfolders_failed))
                     onClose(false)
                 }
-            }) { Text(stringResource(R.string.au7_vidfolders_move)) }
+            }) { Text(stringResource(I18nR.string.au7_vidfolders_move)) }
         },
-        dismissButton = { TextButton(onClick = { onClose(false) }) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(onClick = { onClose(false) }) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }

@@ -21,7 +21,7 @@ internal object ContactActions {
     fun edit(context: Context, id: Long) {
         if (!context.tryStartActivity(Intent(Intent.ACTION_EDIT,
             ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id)))) {
-            android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_LONG).show()
+            android.widget.Toast.makeText(context, de.mm20.launcher2.i18n.R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_LONG).show()
         }
     }
 
@@ -96,7 +96,7 @@ internal fun DeleteContactDialog(
     val scope = androidx.compose.runtime.rememberCoroutineScope()
     val deleting = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     fun failed() {
-        android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.au_phonea_action_failed,
+        android.widget.Toast.makeText(context, de.mm20.launcher2.i18n.R.string.au_phonea_action_failed,
             android.widget.Toast.LENGTH_LONG).show()
     }
     fun delete() {
@@ -117,14 +117,14 @@ internal fun DeleteContactDialog(
     }
     androidx.compose.material3.AlertDialog(
         onDismissRequest = { if (!deleting.value) onDismiss() },
-        title = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.hc_delete)) },
-        text = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.contacts_delete_confirm, contact.displayName)) },
+        title = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.i18n.R.string.hc_delete)) },
+        text = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.i18n.R.string.contacts_delete_confirm, contact.displayName)) },
         confirmButton = {
             androidx.compose.material3.TextButton(enabled = !deleting.value, onClick = {
                 if (androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_CONTACTS) ==
                     android.content.pm.PackageManager.PERMISSION_GRANTED) delete()
                 else { deleting.value = true; permission.launch(android.Manifest.permission.WRITE_CONTACTS) }
-            }) { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.hc_delete)) }
+            }) { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.i18n.R.string.hc_delete)) }
         },
         dismissButton = {
             androidx.compose.material3.TextButton(enabled = !deleting.value, onClick = onDismiss) {

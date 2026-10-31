@@ -2,7 +2,7 @@
 package de.mm20.launcher2.freeze
 
 import android.app.ActivityManager
-import de.mm20.launcher2.R
+import de.mm20.launcher2.base.R as BaseR
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
@@ -57,7 +57,7 @@ class SmartFreezeService : Service() {
         val notification = NotificationCompat.Builder(this, "smart_freeze_channel")
             .setContentTitle("Smart Freeze Manager")
             .setContentText("Monitoring for idle apps to freeze")
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(BaseR.mipmap.ic_launcher)
             .build()
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {

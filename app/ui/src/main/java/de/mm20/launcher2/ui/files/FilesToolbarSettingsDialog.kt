@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -14,16 +16,16 @@ import de.mm20.launcher2.ui.R
 fun FilesToolbarSettingsDialog(initial: FilesToolbarConfig, onDismiss: () -> Unit, onSave: (FilesToolbarConfig) -> Unit) {
     var config by remember(initial) { mutableStateOf(initial) }
     AlertDialog(onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.telos_files_toolbar_title)) },
+        title = { Text(stringResource(I18nR.string.telos_files_toolbar_title)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(stringResource(R.string.telos_files_toolbar_info, FilesToolbarConfig.MAX_ACTIONS))
+                Text(stringResource(I18nR.string.telos_files_toolbar_info, FilesToolbarConfig.MAX_ACTIONS))
                 config.order.forEachIndexed { index, action ->
                     val label = stringResource(when (action) {
-                        FilesToolbarAction.View -> R.string.au22_files_view_mode
-                        FilesToolbarAction.Sort -> R.string.hc_sort_by_2
-                        FilesToolbarAction.Hidden -> R.string.hf_files_show_hidden
-                        FilesToolbarAction.Refresh -> R.string.hc_refresh
+                        FilesToolbarAction.View -> I18nR.string.au22_files_view_mode
+                        FilesToolbarAction.Sort -> I18nR.string.hc_sort_by_2
+                        FilesToolbarAction.Hidden -> I18nR.string.hf_files_show_hidden
+                        FilesToolbarAction.Refresh -> I18nR.string.hc_refresh
                     })
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(checked = action in config.visible,
@@ -36,16 +38,16 @@ fun FilesToolbarSettingsDialog(initial: FilesToolbarConfig, onDismiss: () -> Uni
                             config = config.copy(order = order)
                         }
                         IconButton(onClick = { move(index - 1) }, enabled = index > 0) {
-                            Icon(painterResource(R.drawable.keyboard_arrow_up_24px), stringResource(R.string.telos_files_toolbar_up, label))
+                            Icon(painterResource(BaseR.drawable.keyboard_arrow_up_24px), stringResource(I18nR.string.telos_files_toolbar_up, label))
                         }
                         IconButton(onClick = { move(index + 1) }, enabled = index < config.order.lastIndex) {
-                            Icon(painterResource(R.drawable.keyboard_arrow_down_24px), stringResource(R.string.telos_files_toolbar_down, label))
+                            Icon(painterResource(BaseR.drawable.keyboard_arrow_down_24px), stringResource(I18nR.string.telos_files_toolbar_down, label))
                         }
                     }
                 }
-                TextButton(onClick = { config = FilesToolbarConfig() }) { Text(stringResource(R.string.telos_files_toolbar_reset)) }
+                TextButton(onClick = { config = FilesToolbarConfig() }) { Text(stringResource(I18nR.string.telos_files_toolbar_reset)) }
             }
         },
-        confirmButton = { TextButton(onClick = { onSave(config) }) { Text(stringResource(R.string.telos_files_toolbar_save)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } })
+        confirmButton = { TextButton(onClick = { onSave(config) }) { Text(stringResource(I18nR.string.telos_files_toolbar_save)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } })
 }

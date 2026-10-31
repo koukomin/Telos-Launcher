@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.system
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.os.Build
 import androidx.compose.foundation.layout.Column
@@ -22,7 +24,7 @@ fun SystemAppOpsScreen(packageName: String? = null) {
     val backStack = LocalBackStack.current
     Column(Modifier.fillMaxSize()) {
         androidx.compose.material3.IconButton(onClick = { backStack.removeLastOrNull() }) {
-            androidx.compose.material3.Icon(androidx.compose.ui.res.painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
+            androidx.compose.material3.Icon(androidx.compose.ui.res.painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
         }
         if (Build.VERSION.SDK_INT >= 35) {
             Box(Modifier.weight(1f)) { dev.izumi.appopsnext.EmbeddedAppOpsScreen(packageName) }

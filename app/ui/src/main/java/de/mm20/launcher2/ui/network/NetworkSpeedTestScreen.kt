@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -65,7 +66,7 @@ fun NetworkSpeedTestScreen() {
     val numberFormat = remember { NumberFormat.getNumberInstance() }
 
     PreferenceScreen(title = {
-        Text(stringResource(R.string.nsp_title), Modifier.padding(horizontal = 16.dp))
+        Text(stringResource(I18nR.string.nsp_title), Modifier.padding(horizontal = 16.dp))
     }) {
         item {
             Column(
@@ -86,10 +87,10 @@ fun NetworkSpeedTestScreen() {
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(28.dp),
                             )
-                            Text(stringResource(R.string.nsp_intro), style = MaterialTheme.typography.titleSmall)
+                            Text(stringResource(I18nR.string.nsp_intro), style = MaterialTheme.typography.titleSmall)
                         }
                         Text(
-                            stringResource(R.string.nsp_privacy),
+                            stringResource(I18nR.string.nsp_privacy),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -104,7 +105,7 @@ fun NetworkSpeedTestScreen() {
                         error = null
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text(stringResource(R.string.nsp_server_url)) },
+                    label = { Text(stringResource(I18nR.string.nsp_server_url)) },
                     placeholder = { Text("https://speed.example/backend/") },
                     singleLine = true,
                     enabled = !busy,
@@ -138,7 +139,7 @@ fun NetworkSpeedTestScreen() {
                     }
                     Text(
                         stringResource(
-                            if (selectedServer == null) R.string.nsp_load_servers else R.string.nsp_select_server,
+                            if (selectedServer == null) I18nR.string.nsp_load_servers else I18nR.string.nsp_select_server,
                         ),
                         Modifier.padding(start = 8.dp),
                     )
@@ -146,7 +147,7 @@ fun NetworkSpeedTestScreen() {
 
                 selectedServer?.takeIf { customUrl.isBlank() }?.let { server ->
                     Text(
-                        stringResource(R.string.nsp_selected_server, server.name),
+                        stringResource(I18nR.string.nsp_selected_server, server.name),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
@@ -184,7 +185,7 @@ fun NetworkSpeedTestScreen() {
                     ),
                 ) {
                     Icon(painterResource(de.mm20.launcher2.base.R.drawable.speed_24px), null)
-                    Text(stringResource(R.string.nsp_run), Modifier.padding(start = 8.dp))
+                    Text(stringResource(I18nR.string.nsp_run), Modifier.padding(start = 8.dp))
                 }
 
                 phase?.let { runningPhase ->
@@ -196,16 +197,16 @@ fun NetworkSpeedTestScreen() {
                         CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
                         Text(stringResource(phaseString(runningPhase)), Modifier.weight(1f))
                         TextButton(onClick = { job?.cancel() }) {
-                            Text(stringResource(R.string.nsp_cancel))
+                            Text(stringResource(I18nR.string.nsp_cancel))
                         }
                     }
                 }
 
                 error?.let { reason ->
                     val message = when (reason) {
-                        "invalid" -> R.string.nsp_invalid_url
-                        "missing" -> R.string.nsp_invalid_url
-                        else -> R.string.nsp_error
+                        "invalid" -> I18nR.string.nsp_invalid_url
+                        "missing" -> I18nR.string.nsp_invalid_url
+                        else -> I18nR.string.nsp_error
                     }
                     Text(
                         stringResource(message),
@@ -226,12 +227,12 @@ fun NetworkSpeedTestScreen() {
                                 style = MaterialTheme.typography.titleMedium,
                             )
                             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                SpeedMetric(Modifier.weight(1f), stringResource(R.string.nsp_ping), "${testResult.pingMs} ms")
-                                SpeedMetric(Modifier.weight(1f), stringResource(R.string.nsp_jitter), "${testResult.jitterMs} ms")
+                                SpeedMetric(Modifier.weight(1f), stringResource(I18nR.string.nsp_ping), "${testResult.pingMs} ms")
+                                SpeedMetric(Modifier.weight(1f), stringResource(I18nR.string.nsp_jitter), "${testResult.jitterMs} ms")
                             }
                             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                SpeedMetric(Modifier.weight(1f), stringResource(R.string.nsp_download), "${numberFormat.format(testResult.downloadMbps)} Mbps")
-                                SpeedMetric(Modifier.weight(1f), stringResource(R.string.nsp_upload), "${numberFormat.format(testResult.uploadMbps)} Mbps")
+                                SpeedMetric(Modifier.weight(1f), stringResource(I18nR.string.nsp_download), "${numberFormat.format(testResult.downloadMbps)} Mbps")
+                                SpeedMetric(Modifier.weight(1f), stringResource(I18nR.string.nsp_upload), "${numberFormat.format(testResult.uploadMbps)} Mbps")
                             }
                         }
                     }
@@ -243,7 +244,7 @@ fun NetworkSpeedTestScreen() {
     if (showServerPicker) {
         AlertDialog(
             onDismissRequest = { showServerPicker = false },
-            title = { Text(stringResource(R.string.nsp_select_server)) },
+            title = { Text(stringResource(I18nR.string.nsp_select_server)) },
             text = {
                 LazyColumn {
                     items(servers, key = { it.pingUrl.toString() }) { server ->
@@ -280,7 +281,7 @@ private fun SpeedMetric(modifier: Modifier, label: String, value: String) {
 }
 
 private fun phaseString(phase: NetworkSpeedTestPhase): Int = when (phase) {
-    NetworkSpeedTestPhase.PING -> R.string.nsp_ping
-    NetworkSpeedTestPhase.DOWNLOAD -> R.string.nsp_download
-    NetworkSpeedTestPhase.UPLOAD -> R.string.nsp_upload
+    NetworkSpeedTestPhase.PING -> I18nR.string.nsp_ping
+    NetworkSpeedTestPhase.DOWNLOAD -> I18nR.string.nsp_download
+    NetworkSpeedTestPhase.UPLOAD -> I18nR.string.nsp_upload
 }

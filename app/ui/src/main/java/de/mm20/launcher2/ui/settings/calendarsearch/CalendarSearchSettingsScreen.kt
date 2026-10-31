@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.calendarsearch
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
@@ -40,7 +42,7 @@ fun CalendarSearchSettingsScreen() {
     )
     val enabledProviders by viewModel.enabledProviders.collectAsState(emptySet())
 
-    PreferenceScreen(title = stringResource(R.string.preference_search_calendar)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_search_calendar)) {
         item {
             PreferenceCategory {
                 GuardedPreference(
@@ -48,11 +50,11 @@ fun CalendarSearchSettingsScreen() {
                     onUnlock = {
                         viewModel.requestCalendarPermission(context as AppCompatActivity)
                     },
-                    description = stringResource(R.string.missing_permission_calendar_search_settings),
+                    description = stringResource(I18nR.string.missing_permission_calendar_search_settings),
                 ) {
                     PreferenceWithSwitch(
-                        title = stringResource(R.string.preference_search_calendar),
-                        summary = stringResource(R.string.preference_search_local_calendar_summary),
+                        title = stringResource(I18nR.string.preference_search_calendar),
+                        summary = stringResource(I18nR.string.preference_search_local_calendar_summary),
                         switchValue = enabledProviders.contains("local") && hasCalendarPermission == true,
                         onSwitchChanged = {
                             viewModel.setProviderEnabled("local", it)
@@ -69,11 +71,11 @@ fun CalendarSearchSettingsScreen() {
                         onUnlock = {
                             viewModel.requestTasksPermission(context as AppCompatActivity)
                         },
-                        description = stringResource(R.string.missing_permission_tasks_search_settings),
+                        description = stringResource(I18nR.string.missing_permission_tasks_search_settings),
                     ) {
                         PreferenceWithSwitch(
-                            title = stringResource(R.string.preference_search_tasks),
-                            summary = stringResource(R.string.preference_search_tasks_summary),
+                            title = stringResource(I18nR.string.preference_search_tasks),
+                            summary = stringResource(I18nR.string.preference_search_tasks_summary),
                             switchValue = enabledProviders.contains("tasks.org") && hasTasksPermission == true,
                             onSwitchChanged = {
                                 viewModel.setProviderEnabled("tasks.org", it)
@@ -99,9 +101,9 @@ fun CalendarSearchSettingsScreen() {
                             }
                         },
                         description = (state as? PluginState.SetupRequired)?.message
-                            ?: stringResource(id = R.string.plugin_state_setup_required),
-                        icon = R.drawable.error_24px,
-                        unlockLabel = stringResource(id = R.string.plugin_action_setup),
+                            ?: stringResource(id = I18nR.string.plugin_state_setup_required),
+                        icon = BaseR.drawable.error_24px,
+                        unlockLabel = stringResource(id = I18nR.string.plugin_action_setup),
                     ) {
                         PreferenceWithSwitch(
                             title = plugin.plugin.label,

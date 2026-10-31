@@ -1,4 +1,5 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import de.mm20.launcher2.ktx.ifNullOrEmpty
@@ -6,7 +7,6 @@ import de.mm20.launcher2.ktx.into
 import de.mm20.launcher2.ktx.map
 import de.mm20.launcher2.ktx.stripStartOrNull
 import de.mm20.launcher2.locations.OsmLocationSerializer
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
@@ -207,88 +207,88 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
 
             "shop" -> values.firstNotNullOfOrNull {
                 when (it) {
-                    "florist" -> R.string.poi_category_florist to LocationIcon.Florist
-                    "kiosk" -> R.string.poi_category_kiosk to LocationIcon.Kiosk
-                    "furniture" -> R.string.poi_category_furniture to LocationIcon.FurnitureStore
-                    "cell_phones", "mobile_phone" -> R.string.poi_category_mobile_phone to LocationIcon.CellPhoneStore
-                    "books" -> R.string.poi_category_books to LocationIcon.BookStore
-                    "clothes" -> R.string.poi_category_clothes to LocationIcon.ClothingStore
-                    "convenience" -> R.string.poi_category_convenience to LocationIcon.ConvenienceStore
-                    "discount" -> R.string.poi_category_discount_store to LocationIcon.DiscountStore
-                    "jewelry" -> R.string.poi_category_jewelry to LocationIcon.JewelryStore
-                    "alcohol" -> R.string.poi_category_alcohol to LocationIcon.LiquorStore
-                    "pet", "pet_grooming" -> R.string.poi_category_pet to LocationIcon.PetStore
-                    "mall", "shopping_centre", "department_store" -> R.string.poi_category_mall to LocationIcon.ShoppingMall
-                    "supermarket" -> R.string.poi_category_supermarket to LocationIcon.Supermarket
-                    "bakery" -> R.string.poi_category_bakery to LocationIcon.Bakery
-                    "optician" -> R.string.poi_category_optician to LocationIcon.Optician
-                    "hairdresser" -> R.string.poi_category_hairdresser to LocationIcon.HairSalon
-                    "laundry" -> R.string.poi_category_laundry to LocationIcon.Laundromat
-                    "stationery" -> R.string.poi_category_stationery to LocationIcon.Stationery
+                    "florist" -> I18nR.string.poi_category_florist to LocationIcon.Florist
+                    "kiosk" -> I18nR.string.poi_category_kiosk to LocationIcon.Kiosk
+                    "furniture" -> I18nR.string.poi_category_furniture to LocationIcon.FurnitureStore
+                    "cell_phones", "mobile_phone" -> I18nR.string.poi_category_mobile_phone to LocationIcon.CellPhoneStore
+                    "books" -> I18nR.string.poi_category_books to LocationIcon.BookStore
+                    "clothes" -> I18nR.string.poi_category_clothes to LocationIcon.ClothingStore
+                    "convenience" -> I18nR.string.poi_category_convenience to LocationIcon.ConvenienceStore
+                    "discount" -> I18nR.string.poi_category_discount_store to LocationIcon.DiscountStore
+                    "jewelry" -> I18nR.string.poi_category_jewelry to LocationIcon.JewelryStore
+                    "alcohol" -> I18nR.string.poi_category_alcohol to LocationIcon.LiquorStore
+                    "pet", "pet_grooming" -> I18nR.string.poi_category_pet to LocationIcon.PetStore
+                    "mall", "shopping_centre", "department_store" -> I18nR.string.poi_category_mall to LocationIcon.ShoppingMall
+                    "supermarket" -> I18nR.string.poi_category_supermarket to LocationIcon.Supermarket
+                    "bakery" -> I18nR.string.poi_category_bakery to LocationIcon.Bakery
+                    "optician" -> I18nR.string.poi_category_optician to LocationIcon.Optician
+                    "hairdresser" -> I18nR.string.poi_category_hairdresser to LocationIcon.HairSalon
+                    "laundry" -> I18nR.string.poi_category_laundry to LocationIcon.Laundromat
+                    "stationery" -> I18nR.string.poi_category_stationery to LocationIcon.Stationery
 
-                    else -> R.string.poi_category_shopping to LocationIcon.Shopping
+                    else -> I18nR.string.poi_category_shopping to LocationIcon.Shopping
                 }
             }
 
             "amenity" -> values.firstNotNullOfOrNull {
                 when (it) {
                     "place_of_worship" -> matchAnyTag<Int, LocationIcon>("religion") {
-                        "christian" with (R.string.poi_category_church to LocationIcon.Church)
-                        "muslim" with (R.string.poi_category_mosque to LocationIcon.Mosque)
-                        "buddhist" with (R.string.poi_category_buddhist_temple to LocationIcon.BuddhistTemple)
-                        "hindu" with (R.string.poi_category_hindu_temple to LocationIcon.HinduTemple)
-                        "jewish" with (R.string.poi_category_synagogue to LocationIcon.Synagogue)
-                    } ?: (R.string.poi_category_place_of_worship to LocationIcon.PlaceOfWorship)
+                        "christian" with (I18nR.string.poi_category_church to LocationIcon.Church)
+                        "muslim" with (I18nR.string.poi_category_mosque to LocationIcon.Mosque)
+                        "buddhist" with (I18nR.string.poi_category_buddhist_temple to LocationIcon.BuddhistTemple)
+                        "hindu" with (I18nR.string.poi_category_hindu_temple to LocationIcon.HinduTemple)
+                        "jewish" with (I18nR.string.poi_category_synagogue to LocationIcon.Synagogue)
+                    } ?: (I18nR.string.poi_category_place_of_worship to LocationIcon.PlaceOfWorship)
 
-                    "fast_food" -> R.string.poi_category_fast_food to LocationIcon.FastFood
-                    "cafe" -> R.string.poi_category_cafe to LocationIcon.Cafe
-                    "ice_cream" -> R.string.poi_category_ice_cream to LocationIcon.IceCream
-                    "bar" -> R.string.poi_category_bar to LocationIcon.Bar
-                    "pub" -> R.string.poi_category_pub to LocationIcon.Pub
+                    "fast_food" -> I18nR.string.poi_category_fast_food to LocationIcon.FastFood
+                    "cafe" -> I18nR.string.poi_category_cafe to LocationIcon.Cafe
+                    "ice_cream" -> I18nR.string.poi_category_ice_cream to LocationIcon.IceCream
+                    "bar" -> I18nR.string.poi_category_bar to LocationIcon.Bar
+                    "pub" -> I18nR.string.poi_category_pub to LocationIcon.Pub
                     "restaurant" -> matchAnyTag<Int, LocationIcon>("cuisine") {
-                        "pizza" with (R.string.poi_category_pizza_restaurant to LocationIcon.Pizza)
-                        "burger" with (R.string.poi_category_burger_restaurant to LocationIcon.Burger)
-                        "chinese" with (R.string.poi_category_chinese_restaurant to LocationIcon.Ramen)
-                        "ramen" with (R.string.poi_category_ramen_restaurant to LocationIcon.Ramen)
-                        "japanese" with (R.string.poi_category_japanese_restaurant to LocationIcon.JapaneseCuisine)
-                        "kebab" with (R.string.poi_category_kebab_restaurant to LocationIcon.Kebab)
-                        "asian" with (R.string.poi_category_asian_restaurant to LocationIcon.AsianCuisine)
-                        "soup" with (R.string.poi_category_soup_restaurant to LocationIcon.Soup)
-                        "coffee_shop" with (R.string.poi_category_cafe to LocationIcon.Cafe)
-                        "brunch" with (R.string.poi_category_brunch_restaurant to LocationIcon.Brunch)
-                    } ?: (R.string.poi_category_restaurant to LocationIcon.Restaurant)
+                        "pizza" with (I18nR.string.poi_category_pizza_restaurant to LocationIcon.Pizza)
+                        "burger" with (I18nR.string.poi_category_burger_restaurant to LocationIcon.Burger)
+                        "chinese" with (I18nR.string.poi_category_chinese_restaurant to LocationIcon.Ramen)
+                        "ramen" with (I18nR.string.poi_category_ramen_restaurant to LocationIcon.Ramen)
+                        "japanese" with (I18nR.string.poi_category_japanese_restaurant to LocationIcon.JapaneseCuisine)
+                        "kebab" with (I18nR.string.poi_category_kebab_restaurant to LocationIcon.Kebab)
+                        "asian" with (I18nR.string.poi_category_asian_restaurant to LocationIcon.AsianCuisine)
+                        "soup" with (I18nR.string.poi_category_soup_restaurant to LocationIcon.Soup)
+                        "coffee_shop" with (I18nR.string.poi_category_cafe to LocationIcon.Cafe)
+                        "brunch" with (I18nR.string.poi_category_brunch_restaurant to LocationIcon.Brunch)
+                    } ?: (I18nR.string.poi_category_restaurant to LocationIcon.Restaurant)
 
-                    "fuel" -> R.string.poi_category_fuel to LocationIcon.GasStation
-                    "car_rental" -> R.string.poi_category_car_rental to LocationIcon.CarRental
-                    "car_sharing" -> R.string.poi_category_car_sharing to LocationIcon.CarRental
-                    "car_wash" -> R.string.poi_category_car_wash to LocationIcon.CarWash
-                    "charging_station" -> R.string.poi_category_charging_station to LocationIcon.ChargingStation
-                    "parking", "parking_space", "motorcycle_parking" -> R.string.poi_category_parking to LocationIcon.Parking
-                    "motorcycle_rental" -> R.string.poi_category_motorcycle_rental to LocationIcon.Motorcycle
+                    "fuel" -> I18nR.string.poi_category_fuel to LocationIcon.GasStation
+                    "car_rental" -> I18nR.string.poi_category_car_rental to LocationIcon.CarRental
+                    "car_sharing" -> I18nR.string.poi_category_car_sharing to LocationIcon.CarRental
+                    "car_wash" -> I18nR.string.poi_category_car_wash to LocationIcon.CarWash
+                    "charging_station" -> I18nR.string.poi_category_charging_station to LocationIcon.ChargingStation
+                    "parking", "parking_space", "motorcycle_parking" -> I18nR.string.poi_category_parking to LocationIcon.Parking
+                    "motorcycle_rental" -> I18nR.string.poi_category_motorcycle_rental to LocationIcon.Motorcycle
 
-                    "theatre" -> R.string.poi_category_theater to LocationIcon.Theater
-                    "cinema" -> R.string.poi_category_cinema to LocationIcon.MovieTheater
-                    "nightclub" -> R.string.poi_category_nightclub to LocationIcon.NightClub
-                    "concert_hall" -> R.string.poi_category_concert_hall to LocationIcon.ConcertHall
-                    "casino" -> R.string.poi_category_casino to LocationIcon.Casino
+                    "theatre" -> I18nR.string.poi_category_theater to LocationIcon.Theater
+                    "cinema" -> I18nR.string.poi_category_cinema to LocationIcon.MovieTheater
+                    "nightclub" -> I18nR.string.poi_category_nightclub to LocationIcon.NightClub
+                    "concert_hall" -> I18nR.string.poi_category_concert_hall to LocationIcon.ConcertHall
+                    "casino" -> I18nR.string.poi_category_casino to LocationIcon.Casino
 
-                    "pharmacy" -> R.string.poi_category_pharmacy to LocationIcon.Pharmacy
-                    "bank" -> R.string.poi_category_bank to LocationIcon.Bank
-                    "atm" -> R.string.poi_category_atm to LocationIcon.Atm
-                    "doctors" -> R.string.poi_category_doctors to LocationIcon.Physician
-                    "dentist" -> R.string.poi_category_dentist to LocationIcon.Dentist
-                    "hospital" -> R.string.poi_category_hospital to LocationIcon.Hospital
-                    "clinic" -> R.string.poi_category_clinic to LocationIcon.Clinic
+                    "pharmacy" -> I18nR.string.poi_category_pharmacy to LocationIcon.Pharmacy
+                    "bank" -> I18nR.string.poi_category_bank to LocationIcon.Bank
+                    "atm" -> I18nR.string.poi_category_atm to LocationIcon.Atm
+                    "doctors" -> I18nR.string.poi_category_doctors to LocationIcon.Physician
+                    "dentist" -> I18nR.string.poi_category_dentist to LocationIcon.Dentist
+                    "hospital" -> I18nR.string.poi_category_hospital to LocationIcon.Hospital
+                    "clinic" -> I18nR.string.poi_category_clinic to LocationIcon.Clinic
 
-                    "police" -> R.string.poi_category_police to LocationIcon.Police
-                    "fire_station" -> R.string.poi_category_fire_station to LocationIcon.FireDepartment
-                    "courthouse" -> R.string.poi_category_courthouse to LocationIcon.Courthouse
-                    "post_office" -> R.string.poi_category_post_office to LocationIcon.PostOffice
-                    "library" -> R.string.poi_category_library to LocationIcon.Library
-                    "school" -> R.string.poi_category_school to LocationIcon.School
-                    "university" -> R.string.poi_category_university to LocationIcon.University
-                    "toilets" -> R.string.poi_category_toilets to LocationIcon.PublicBathroom
-                    "townhall" -> R.string.poi_category_townhall to LocationIcon.GovernmentBuilding
+                    "police" -> I18nR.string.poi_category_police to LocationIcon.Police
+                    "fire_station" -> I18nR.string.poi_category_fire_station to LocationIcon.FireDepartment
+                    "courthouse" -> I18nR.string.poi_category_courthouse to LocationIcon.Courthouse
+                    "post_office" -> I18nR.string.poi_category_post_office to LocationIcon.PostOffice
+                    "library" -> I18nR.string.poi_category_library to LocationIcon.Library
+                    "school" -> I18nR.string.poi_category_school to LocationIcon.School
+                    "university" -> I18nR.string.poi_category_university to LocationIcon.University
+                    "toilets" -> I18nR.string.poi_category_toilets to LocationIcon.PublicBathroom
+                    "townhall" -> I18nR.string.poi_category_townhall to LocationIcon.GovernmentBuilding
 
                     else -> null
                 }
@@ -296,52 +296,52 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
 
             "tourism" -> values.firstNotNullOfOrNull {
                 when (it) {
-                    "gallery" -> R.string.poi_category_gallery to LocationIcon.ArtGallery
-                    "museum" -> R.string.poi_category_museum to LocationIcon.Museum
-                    "theme_park" -> R.string.poi_category_amusement_park to LocationIcon.AmusementPark
-                    "hotel" -> R.string.poi_category_hotel to LocationIcon.Hotel
+                    "gallery" -> I18nR.string.poi_category_gallery to LocationIcon.ArtGallery
+                    "museum" -> I18nR.string.poi_category_museum to LocationIcon.Museum
+                    "theme_park" -> I18nR.string.poi_category_amusement_park to LocationIcon.AmusementPark
+                    "hotel" -> I18nR.string.poi_category_hotel to LocationIcon.Hotel
                     else -> null
                 }
             }
 
             "leisure" -> values.firstNotNullOfOrNull {
                 when (it) {
-                    "stadium" -> R.string.poi_category_stadium to LocationIcon.Stadium
-                    "fitness_centre" -> R.string.poi_category_fitness_center to LocationIcon.FitnessCenter
-                    "swimming_pool" -> R.string.poi_category_swimming to LocationIcon.Swimming
+                    "stadium" -> I18nR.string.poi_category_stadium to LocationIcon.Stadium
+                    "fitness_centre" -> I18nR.string.poi_category_fitness_center to LocationIcon.FitnessCenter
+                    "swimming_pool" -> I18nR.string.poi_category_swimming to LocationIcon.Swimming
                     "pitch", "sports_centre", "sports_hall" -> matchAnyTag<Int, LocationIcon>("sport") {
-                        "soccer" with (R.string.poi_category_soccer to LocationIcon.Soccer)
-                        "tennis" with (R.string.poi_category_tennis to LocationIcon.Tennis)
-                        "basketball" with (R.string.poi_category_basketball to LocationIcon.Basketball)
-                        "gymnastics" with (R.string.poi_category_gymnastics to LocationIcon.Gymnastics)
-                        "martial_arts" with (R.string.poi_category_martial_arts to LocationIcon.MartialArts)
-                        "ice_hockey" with (R.string.poi_category_ice_hockey to LocationIcon.Hockey)
-                        "baseball" with (R.string.poi_category_baseball to LocationIcon.Baseball)
-                        "american_football" with (R.string.poi_category_american_football to LocationIcon.AmericanFootball)
-                        "handball" with (R.string.poi_category_handball to LocationIcon.Handball)
-                        "volleyball" with (R.string.poi_category_volleyball to LocationIcon.Volleyball)
-                        "skiing" with (R.string.poi_category_skiing to LocationIcon.Skiing)
-                        "cricket" with (R.string.poi_category_cricket to LocationIcon.Cricket)
-                        "climbing" with (R.string.poi_category_climbing_gym to LocationIcon.Climbing)
+                        "soccer" with (I18nR.string.poi_category_soccer to LocationIcon.Soccer)
+                        "tennis" with (I18nR.string.poi_category_tennis to LocationIcon.Tennis)
+                        "basketball" with (I18nR.string.poi_category_basketball to LocationIcon.Basketball)
+                        "gymnastics" with (I18nR.string.poi_category_gymnastics to LocationIcon.Gymnastics)
+                        "martial_arts" with (I18nR.string.poi_category_martial_arts to LocationIcon.MartialArts)
+                        "ice_hockey" with (I18nR.string.poi_category_ice_hockey to LocationIcon.Hockey)
+                        "baseball" with (I18nR.string.poi_category_baseball to LocationIcon.Baseball)
+                        "american_football" with (I18nR.string.poi_category_american_football to LocationIcon.AmericanFootball)
+                        "handball" with (I18nR.string.poi_category_handball to LocationIcon.Handball)
+                        "volleyball" with (I18nR.string.poi_category_volleyball to LocationIcon.Volleyball)
+                        "skiing" with (I18nR.string.poi_category_skiing to LocationIcon.Skiing)
+                        "cricket" with (I18nR.string.poi_category_cricket to LocationIcon.Cricket)
+                        "climbing" with (I18nR.string.poi_category_climbing_gym to LocationIcon.Climbing)
                     }
 
-                    "golf_course" -> R.string.poi_category_golf to LocationIcon.Golf
-                    "park" -> R.string.poi_category_park to LocationIcon.Park
-                    "hackerspace" -> R.string.poi_category_hackerspace to LocationIcon.Hackerspace
+                    "golf_course" -> I18nR.string.poi_category_golf to LocationIcon.Golf
+                    "park" -> I18nR.string.poi_category_park to LocationIcon.Park
+                    "hackerspace" -> I18nR.string.poi_category_hackerspace to LocationIcon.Hackerspace
                     else -> null
                 }
             }
 
             "historic" -> values.firstNotNullOfOrNull {
                 when (it) {
-                    "monument" -> R.string.poi_category_monument to LocationIcon.Monument
+                    "monument" -> I18nR.string.poi_category_monument to LocationIcon.Monument
                     else -> null
                 }
             }
 
             "building" -> values.firstNotNullOfOrNull {
                 when (it) {
-                    "government" -> R.string.poi_category_government_building to LocationIcon.GovernmentBuilding
+                    "government" -> I18nR.string.poi_category_government_building to LocationIcon.GovernmentBuilding
                     else -> null
                 }
             }

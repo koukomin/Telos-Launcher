@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.webapps
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -140,8 +141,8 @@ fun EditWebAppShortcutSheet(
         ) {
             Text(
                 text = stringResource(
-                    if (existing == null) R.string.web_app_shortcut_create
-                    else R.string.web_app_shortcut_edit
+                    if (existing == null) I18nR.string.web_app_shortcut_create
+                    else I18nR.string.web_app_shortcut_edit
                 ),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(bottom = 16.dp),
@@ -162,7 +163,7 @@ fun EditWebAppShortcutSheet(
                     )
                 }
                 OutlinedButton(onClick = { showIconPicker = true }) {
-                    Text(stringResource(R.string.web_app_shortcut_pick_icon))
+                    Text(stringResource(I18nR.string.web_app_shortcut_pick_icon))
                 }
             }
 
@@ -172,7 +173,7 @@ fun EditWebAppShortcutSheet(
                     .padding(top = 16.dp),
                 value = label,
                 onValueChange = { label = it },
-                label = { Text(stringResource(R.string.web_app_shortcut_label)) },
+                label = { Text(stringResource(I18nR.string.web_app_shortcut_label)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
                     .withPrivateKeyboard(privateKeyboard),
@@ -184,7 +185,7 @@ fun EditWebAppShortcutSheet(
                     .padding(top = 8.dp),
                 value = url,
                 onValueChange = { url = it; findingFavicon = false },
-                label = { Text(stringResource(R.string.web_app_shortcut_url)) },
+                label = { Text(stringResource(I18nR.string.web_app_shortcut_url)) },
                 singleLine = true,
                 // Explicitly Uri, never routed through withPrivateKeyboard: that helper's only way
                 // to get IME_FLAG_NO_PERSONALIZED_LEARNING set is KeyboardType.Password, which is
@@ -209,16 +210,16 @@ fun EditWebAppShortcutSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(R.string.web_app_shortcut_icon_source),
+                    text = stringResource(I18nR.string.web_app_shortcut_icon_source),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.weight(1f),
                 )
                 TextButton(onClick = { showIconSourceMenu = true }) {
                     Text(
                         when (iconSource) {
-                            WebAppShortcut.IconSource.Website -> stringResource(R.string.web_app_shortcut_icon_source_website)
-                            WebAppShortcut.IconSource.System -> stringResource(R.string.web_app_shortcut_icon_source_system)
-                            WebAppShortcut.IconSource.Custom -> stringResource(R.string.web_app_shortcut_icon_source_custom)
+                            WebAppShortcut.IconSource.Website -> stringResource(I18nR.string.web_app_shortcut_icon_source_website)
+                            WebAppShortcut.IconSource.System -> stringResource(I18nR.string.web_app_shortcut_icon_source_system)
+                            WebAppShortcut.IconSource.Custom -> stringResource(I18nR.string.web_app_shortcut_icon_source_custom)
                         }
                     )
                 }
@@ -235,9 +236,9 @@ fun EditWebAppShortcutSheet(
                                 text = {
                                     Text(
                                         when (source) {
-                                            WebAppShortcut.IconSource.Website -> stringResource(R.string.web_app_shortcut_icon_source_website)
-                                            WebAppShortcut.IconSource.System -> stringResource(R.string.web_app_shortcut_icon_source_system)
-                                            WebAppShortcut.IconSource.Custom -> stringResource(R.string.web_app_shortcut_icon_source_custom)
+                                            WebAppShortcut.IconSource.Website -> stringResource(I18nR.string.web_app_shortcut_icon_source_website)
+                                            WebAppShortcut.IconSource.System -> stringResource(I18nR.string.web_app_shortcut_icon_source_system)
+                                            WebAppShortcut.IconSource.Custom -> stringResource(I18nR.string.web_app_shortcut_icon_source_custom)
                                         }
                                     )
                                 },
@@ -258,7 +259,7 @@ fun EditWebAppShortcutSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(R.string.search_filter_apps),
+                    text = stringResource(I18nR.string.search_filter_apps),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.weight(1f),
                 )
@@ -272,7 +273,7 @@ fun EditWebAppShortcutSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(R.string.preference_screen_web_apps_panel),
+                    text = stringResource(I18nR.string.preference_screen_web_apps_panel),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.weight(1f),
                 )
@@ -286,14 +287,14 @@ fun EditWebAppShortcutSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(R.string.web_app_shortcut_renderer),
+                    text = stringResource(I18nR.string.web_app_shortcut_renderer),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.weight(1f),
                 )
                 TextButton(onClick = { showRendererMenu = true }) {
                     Text(
                         rendererPackage?.let { appLabel(context, it) }
-                            ?: stringResource(R.string.web_app_shortcut_renderer_embedded)
+                            ?: stringResource(I18nR.string.web_app_shortcut_renderer_embedded)
                     )
                 }
                 DropdownMenuPopup(
@@ -302,7 +303,7 @@ fun EditWebAppShortcutSheet(
                 ) {
                     DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.web_app_shortcut_renderer_embedded)) },
+                            text = { Text(stringResource(I18nR.string.web_app_shortcut_renderer_embedded)) },
                             onClick = {
                                 rendererPackage = null
                                 showRendererMenu = false
@@ -310,7 +311,7 @@ fun EditWebAppShortcutSheet(
                         )
                         if (supportedBrowsers.isEmpty()) {
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.web_app_shortcut_renderer_none_detected)) },
+                                text = { Text(stringResource(I18nR.string.web_app_shortcut_renderer_none_detected)) },
                                 enabled = false,
                                 onClick = {},
                             )
@@ -334,8 +335,8 @@ fun EditWebAppShortcutSheet(
                     .padding(top = 8.dp),
                 value = customCss,
                 onValueChange = { customCss = it },
-                label = { Text(stringResource(R.string.web_app_shortcut_custom_css)) },
-                supportingText = { Text(stringResource(R.string.web_app_shortcut_custom_css_summary)) },
+                label = { Text(stringResource(I18nR.string.web_app_shortcut_custom_css)) },
+                supportingText = { Text(stringResource(I18nR.string.web_app_shortcut_custom_css_summary)) },
                 minLines = 3,
             )
 
@@ -346,7 +347,7 @@ fun EditWebAppShortcutSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(R.string.web_app_shortcut_enable_notifications),
+                    text = stringResource(I18nR.string.web_app_shortcut_enable_notifications),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.weight(1f),
                 )
@@ -360,14 +361,14 @@ fun EditWebAppShortcutSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(R.string.web_app_shortcut_ad_block),
+                    text = stringResource(I18nR.string.web_app_shortcut_ad_block),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.weight(1f),
                 )
                 val adBlockLabels = mapOf(
-                    WebAppShortcut.AdBlockMode.Global to stringResource(R.string.web_app_shortcut_ad_block_global),
-                    WebAppShortcut.AdBlockMode.On to stringResource(R.string.web_app_shortcut_ad_block_on),
-                    WebAppShortcut.AdBlockMode.Off to stringResource(R.string.web_app_shortcut_ad_block_off),
+                    WebAppShortcut.AdBlockMode.Global to stringResource(I18nR.string.web_app_shortcut_ad_block_global),
+                    WebAppShortcut.AdBlockMode.On to stringResource(I18nR.string.web_app_shortcut_ad_block_on),
+                    WebAppShortcut.AdBlockMode.Off to stringResource(I18nR.string.web_app_shortcut_ad_block_off),
                 )
                 TextButton(onClick = { showAdBlockMenu = true }) {
                     Text(adBlockLabels.getValue(adBlockMode))
@@ -390,15 +391,15 @@ fun EditWebAppShortcutSheet(
                 }
             }
             Text(
-                text = stringResource(R.string.web_app_shortcut_ad_block_summary),
+                text = stringResource(I18nR.string.web_app_shortcut_ad_block_summary),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             val cookieLabels = mapOf(
-                WebAppShortcut.CookieMode.Global to stringResource(R.string.web_app_shortcut_ad_block_global),
-                WebAppShortcut.CookieMode.Accept to stringResource(R.string.au5_webapps3_cookie_accept),
-                WebAppShortcut.CookieMode.Block to stringResource(R.string.au5_webapps3_cookie_block),
+                WebAppShortcut.CookieMode.Global to stringResource(I18nR.string.web_app_shortcut_ad_block_global),
+                WebAppShortcut.CookieMode.Accept to stringResource(I18nR.string.au5_webapps3_cookie_accept),
+                WebAppShortcut.CookieMode.Block to stringResource(I18nR.string.au5_webapps3_cookie_block),
             )
             Row(
                 modifier = Modifier
@@ -407,7 +408,7 @@ fun EditWebAppShortcutSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(R.string.au4_webapps2_cookies),
+                    text = stringResource(I18nR.string.au4_webapps2_cookies),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.weight(1f),
                 )
@@ -436,7 +437,7 @@ fun EditWebAppShortcutSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(R.string.au4_webapps2_third_party_cookies),
+                    text = stringResource(I18nR.string.au4_webapps2_third_party_cookies),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.weight(1f),
                 )
@@ -462,8 +463,8 @@ fun EditWebAppShortcutSheet(
             }
             Text(
                 text = stringResource(
-                    if (profilesSupported) R.string.au5_webapps3_cookies_isolated
-                    else R.string.au5_webapps3_cookies_unsupported
+                    if (profilesSupported) I18nR.string.au5_webapps3_cookies_isolated
+                    else I18nR.string.au5_webapps3_cookies_unsupported
                 ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -473,12 +474,12 @@ fun EditWebAppShortcutSheet(
                     WebAppProfiles.clear(existing.key) {
                         android.widget.Toast.makeText(
                             context,
-                            context.getString(R.string.au5_webapps3_clear_done),
+                            context.getString(I18nR.string.au5_webapps3_clear_done),
                             android.widget.Toast.LENGTH_SHORT,
                         ).show()
                     }
                 }) {
-                    Text(stringResource(R.string.au5_webapps3_clear_this))
+                    Text(stringResource(I18nR.string.au5_webapps3_clear_this))
                 }
             }
 
@@ -490,14 +491,14 @@ fun EditWebAppShortcutSheet(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = stringResource(R.string.web_app_group_label),
+                        text = stringResource(I18nR.string.web_app_group_label),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.weight(1f),
                     )
                     TextButton(onClick = { showGroupMenu = true }) {
                         Text(
                             groupId?.let { id -> groups.find { it.id == id }?.name }
-                                ?: stringResource(R.string.web_app_group_none)
+                                ?: stringResource(I18nR.string.web_app_group_none)
                         )
                     }
                     DropdownMenuPopup(
@@ -506,7 +507,7 @@ fun EditWebAppShortcutSheet(
                     ) {
                         DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.web_app_group_none)) },
+                                text = { Text(stringResource(I18nR.string.web_app_group_none)) },
                                 onClick = {
                                     groupId = null
                                     showGroupMenu = false
@@ -546,7 +547,7 @@ fun EditWebAppShortcutSheet(
                         )
                     }
                 ) {
-                    Text(stringResource(R.string.save))
+                    Text(stringResource(I18nR.string.save))
                 }
             }
         }
@@ -560,17 +561,17 @@ fun EditWebAppShortcutSheet(
                     Tab(
                         selected = iconPickerTab == IconPickerTab.IconPack,
                         onClick = { iconPickerTab = IconPickerTab.IconPack },
-                        text = { Text(stringResource(R.string.web_app_icon_picker_tab_icon_pack)) },
+                        text = { Text(stringResource(I18nR.string.web_app_icon_picker_tab_icon_pack)) },
                     )
                     Tab(
                         selected = iconPickerTab == IconPickerTab.Photo,
                         onClick = { iconPickerTab = IconPickerTab.Photo },
-                        text = { Text(stringResource(R.string.web_app_icon_picker_tab_photo)) },
+                        text = { Text(stringResource(I18nR.string.web_app_icon_picker_tab_photo)) },
                     )
                     Tab(
                         selected = iconPickerTab == IconPickerTab.Favicon,
                         onClick = { iconPickerTab = IconPickerTab.Favicon },
-                        text = { Text(stringResource(R.string.web_app_icon_picker_tab_favicon)) },
+                        text = { Text(stringResource(I18nR.string.web_app_icon_picker_tab_favicon)) },
                     )
                 }
                 Box(
@@ -601,7 +602,7 @@ fun EditWebAppShortcutSheet(
                                     pickIconLauncher.launch("image/*")
                                     showIconPicker = false
                                 }) {
-                                    Text(stringResource(R.string.web_app_shortcut_pick_icon))
+                                    Text(stringResource(I18nR.string.web_app_shortcut_pick_icon))
                                 }
                             }
                         }
@@ -626,7 +627,7 @@ fun EditWebAppShortcutSheet(
                                             }
                                         },
                                     ) {
-                                        Text(stringResource(R.string.web_app_shortcut_detect_icon))
+                                        Text(stringResource(I18nR.string.web_app_shortcut_detect_icon))
                                     }
                                 }
                             }

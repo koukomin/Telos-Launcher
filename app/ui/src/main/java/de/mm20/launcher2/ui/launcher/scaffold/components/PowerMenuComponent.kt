@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+import de.mm20.launcher2.base.R as BaseR
 
 import android.annotation.SuppressLint
 import android.view.Surface
@@ -155,7 +156,7 @@ internal object PowerMenuComponent : ScaffoldComponent(), KoinComponent {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painterResource(R.drawable.power_settings_new_24px), null,
+                    painterResource(BaseR.drawable.power_settings_new_24px), null,
                     modifier = Modifier.padding(16.dp),
                     tint = MaterialTheme.colorScheme.onSecondaryContainer,
                 )

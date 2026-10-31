@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms.radio
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -56,13 +58,13 @@ fun RadioRecordingResultEffect() {
     LaunchedEffect(result) {
         val r = result ?: return@LaunchedEffect
         val text = when (r.kind) {
-            RadioRecorder.Kind.SAVED -> context.getString(R.string.au2_radio2_saved, r.fileName)
-            RadioRecorder.Kind.SAVED_STREAM_ENDED -> context.getString(R.string.au2_radio2_saved_dropped, r.fileName)
-            RadioRecorder.Kind.SAVED_STORAGE_FULL -> context.getString(R.string.au2_radio2_saved_full, r.fileName)
-            RadioRecorder.Kind.NOTHING -> context.getString(R.string.au2_radio2_nothing_recorded)
-            RadioRecorder.Kind.HLS -> context.getString(R.string.au2_radio2_hls)
-            RadioRecorder.Kind.FAILED -> context.getString(R.string.au2_radio2_failed)
-            RadioRecorder.Kind.SAVE_FAILED -> context.getString(R.string.au2_radio2_save_failed)
+            RadioRecorder.Kind.SAVED -> context.getString(I18nR.string.au2_radio2_saved, r.fileName)
+            RadioRecorder.Kind.SAVED_STREAM_ENDED -> context.getString(I18nR.string.au2_radio2_saved_dropped, r.fileName)
+            RadioRecorder.Kind.SAVED_STORAGE_FULL -> context.getString(I18nR.string.au2_radio2_saved_full, r.fileName)
+            RadioRecorder.Kind.NOTHING -> context.getString(I18nR.string.au2_radio2_nothing_recorded)
+            RadioRecorder.Kind.HLS -> context.getString(I18nR.string.au2_radio2_hls)
+            RadioRecorder.Kind.FAILED -> context.getString(I18nR.string.au2_radio2_failed)
+            RadioRecorder.Kind.SAVE_FAILED -> context.getString(I18nR.string.au2_radio2_save_failed)
         }
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
         RadioRecorder.consumeResult()
@@ -93,14 +95,14 @@ fun RadioRecordingsEntry(showCard: Boolean = true, open: Boolean = false, onDism
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Icon(
-                painterResource(R.drawable.folder_24px),
+                painterResource(BaseR.drawable.folder_24px),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
             )
             Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.au2_radio2_recordings), style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(I18nR.string.au2_radio2_recordings), style = MaterialTheme.typography.titleMedium)
                 Text(
-                    stringResource(R.string.au2_radio2_recordings_summary, recordings.size),
+                    stringResource(I18nR.string.au2_radio2_recordings_summary, recordings.size),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -112,13 +114,13 @@ fun RadioRecordingsEntry(showCard: Boolean = true, open: Boolean = false, onDism
         ModalBottomSheet(onDismissRequest = { showSheet = false; onDismiss() }) {
             Column(Modifier.navigationBarsPadding().padding(horizontal = 16.dp)) {
                 Text(
-                    stringResource(R.string.au2_radio2_recordings),
+                    stringResource(I18nR.string.au2_radio2_recordings),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(bottom = 8.dp),
                 )
                 if (recordings.isEmpty()) {
                     Text(
-                        stringResource(R.string.au2_radio2_recordings_empty),
+                        stringResource(I18nR.string.au2_radio2_recordings_empty),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(vertical = 16.dp),
@@ -163,10 +165,10 @@ private fun RecordingRow(rec: RadioRecording, onOpen: () -> Unit, onShare: () ->
             )
         }
         IconButton(onClick = onShare) {
-            Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.hc_share))
+            Icon(painterResource(BaseR.drawable.share_24px), contentDescription = stringResource(I18nR.string.hc_share))
         }
         IconButton(onClick = onDelete) {
-            Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+            Icon(painterResource(BaseR.drawable.delete_24px), contentDescription = stringResource(I18nR.string.hc_delete))
         }
     }
 }
@@ -178,7 +180,7 @@ private fun openRecording(context: Context, rec: RadioRecording) {
     try {
         context.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
-        Toast.makeText(context, context.getString(R.string.au2_radio2_no_app), Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(I18nR.string.au2_radio2_no_app), Toast.LENGTH_SHORT).show()
     }
 }
 
@@ -197,7 +199,7 @@ private fun shareRecording(
             )
         }
         if (!shared) {
-            Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
         }
     }
 }

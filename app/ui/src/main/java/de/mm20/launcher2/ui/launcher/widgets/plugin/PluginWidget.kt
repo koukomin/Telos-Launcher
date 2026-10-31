@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.widgets.plugin
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.net.Uri
@@ -56,7 +57,7 @@ fun PluginWidget(widget: PluginWidget) {
     ) {
         if (currentItems == null || currentItems.isEmpty()) {
             Text(
-                text = stringResource(R.string.widget_plugin_empty),
+                text = stringResource(I18nR.string.widget_plugin_empty),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

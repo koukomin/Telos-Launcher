@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.breezyweather
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
@@ -34,23 +36,23 @@ fun BreezyWeatherSettingsScreen() {
     val isWeatherProvider by viewModel.isBreezySetAsWeatherProvider.collectAsStateWithLifecycle(null)
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_breezyweather_integration)
+        title = stringResource(I18nR.string.preference_breezyweather_integration)
     ) {
         if (isBreezyInstalled == false) {
             item {
                 PreferenceCategory {
                     Banner(
                         text = stringResource(
-                            R.string.preference_breezyweather_integration_description,
-                            stringResource(R.string.app_name),
+                            I18nR.string.preference_breezyweather_integration_description,
+                            stringResource(BaseR.string.app_name),
                         ),
-                        icon = R.drawable.info_24px,
+                        icon = BaseR.drawable.info_24px,
                         modifier = Modifier.background(MaterialTheme.colorScheme.surface).padding(16.dp),
                         primaryAction = {
                             Button(onClick = {
                                 viewModel.downloadBreezyApp(activity)
                             }) {
-                                Text(stringResource(R.string.action_install))
+                                Text(stringResource(I18nR.string.action_install))
                             }
                         }
                     )
@@ -62,17 +64,17 @@ fun BreezyWeatherSettingsScreen() {
                 PreferenceCategory {
                     Banner(
                         text = stringResource(
-                            R.string.preference_breezyweather_integration_instructions,
-                            stringResource(R.string.app_name),
+                            I18nR.string.preference_breezyweather_integration_instructions,
+                            stringResource(BaseR.string.app_name),
                         ),
-                        icon = R.drawable.info_24px,
+                        icon = BaseR.drawable.info_24px,
                         modifier = Modifier.background(MaterialTheme.colorScheme.surface).padding(16.dp),
                     )
                     Preference(
-                        title = stringResource(R.string.preference_breezyweather_integration),
+                        title = stringResource(I18nR.string.preference_breezyweather_integration),
                         summary = stringResource(
-                            if (isWeatherProvider == true) R.string.plugin_weather_provider_enabled
-                            else R.string.plugin_weather_provider_enable
+                            if (isWeatherProvider == true) I18nR.string.plugin_weather_provider_enabled
+                            else I18nR.string.plugin_weather_provider_enable
                         ),
                         enabled = isWeatherProvider == false,
                         onClick = {
@@ -80,8 +82,8 @@ fun BreezyWeatherSettingsScreen() {
                         }
                     )
                     Preference(
-                        title = stringResource(R.string.preference_launch_breezyweather_app),
-                        icon = R.drawable.open_in_new_24px,
+                        title = stringResource(I18nR.string.preference_launch_breezyweather_app),
+                        icon = BaseR.drawable.open_in_new_24px,
                         onClick = {
                             viewModel.launchBreezyApp(activity)
                         }

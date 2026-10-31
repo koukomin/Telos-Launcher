@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.system
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
@@ -13,7 +14,7 @@ class WifiAutoPersistTileService : TileService() {
     override fun onStartListening() {
         val enabled = PrivilegedWifiStore.autoPersist(applicationContext)
         qsTile?.state = if (enabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-        qsTile?.label = getString(R.string.telos_system_wifi_auto_persist_tile)
+        qsTile?.label = getString(I18nR.string.telos_system_wifi_auto_persist_tile)
         qsTile?.updateTile()
     }
 

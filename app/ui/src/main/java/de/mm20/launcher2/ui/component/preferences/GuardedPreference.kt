@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component.preferences
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
@@ -22,8 +24,8 @@ fun GuardedPreference(
     locked: Boolean,
     onUnlock: (() -> Unit)? = null,
     description: String,
-    @DrawableRes icon: Int = R.drawable.lock_24px,
-    unlockLabel: String = stringResource(R.string.grant_permission),
+    @DrawableRes icon: Int = BaseR.drawable.lock_24px,
+    unlockLabel: String = stringResource(I18nR.string.grant_permission),
     /** Shows [RestrictedSettingsBanner] below the lock banner - pass true once the user has
      * already tried to grant this permission at least once and it's still not showing granted. */
     showRestrictedSettingsHint: Boolean = false,

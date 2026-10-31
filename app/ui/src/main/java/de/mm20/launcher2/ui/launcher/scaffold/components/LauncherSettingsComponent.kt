@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -58,7 +60,7 @@ internal class LauncherSettingsComponent(
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
-                        Text(stringResource(R.string.settings))
+                        Text(stringResource(I18nR.string.settings))
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.surfaceContainer,
@@ -67,7 +69,7 @@ internal class LauncherSettingsComponent(
                     navigationIcon = {
                         IconButton(onClick = {}) {
                             Icon(
-                                painter = painterResource(R.drawable.arrow_back_24px),
+                                painter = painterResource(BaseR.drawable.arrow_back_24px),
                                 contentDescription = null
                             )
                         }

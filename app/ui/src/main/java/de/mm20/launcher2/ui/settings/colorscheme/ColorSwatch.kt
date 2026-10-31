@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.colorscheme
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -57,7 +58,7 @@ fun ColorSwatch(
     ) {
         if (selected) {
             Icon(
-                painterResource(R.drawable.check_circle_24px),
+                painterResource(BaseR.drawable.check_circle_24px),
                 null,
                 modifier = Modifier.size(32.dp),
                 tint = iconColor,

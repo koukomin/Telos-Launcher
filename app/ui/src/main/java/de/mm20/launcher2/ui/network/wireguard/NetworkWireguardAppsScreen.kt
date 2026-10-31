@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network.wireguard
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -84,23 +85,23 @@ fun NetworkWireguardAppsScreen() {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                 title = {
-                    Text(if (selected.isEmpty()) stringResource(R.string.nwg_apps_title) else stringResource(R.string.nwg_selected, selected.size))
+                    Text(if (selected.isEmpty()) stringResource(I18nR.string.nwg_apps_title) else stringResource(I18nR.string.nwg_selected, selected.size))
                 },
                 navigationIcon = {
                     IconButton(onClick = { if (selected.isEmpty()) backStack.removeLastOrNull() else selected.clear() }) {
                         Icon(
                             painterResource(if (selected.isEmpty()) IconsNetworkWireguardAppsScreen.arrow_back_24px else IconsNetworkWireguardAppsScreen.close_24px),
-                            contentDescription = stringResource(if (selected.isEmpty()) R.string.nwg_back else R.string.nwg_clear_selection),
+                            contentDescription = stringResource(if (selected.isEmpty()) I18nR.string.nwg_back else I18nR.string.nwg_clear_selection),
                         )
                     }
                 },
                 actions = {
                     if (selected.isNotEmpty()) {
                         TextButton(onClick = { selected.clear(); selected.addAll(shown.map { it.appId }) }) {
-                            Text(stringResource(R.string.nwg_select_all))
+                            Text(stringResource(I18nR.string.nwg_select_all))
                         }
                         Box {
-                            TextButton(onClick = { bulkMenu = true }) { Text(stringResource(R.string.nwg_assign_selected)) }
+                            TextButton(onClick = { bulkMenu = true }) { Text(stringResource(I18nR.string.nwg_assign_selected)) }
                             DropdownMenu(expanded = bulkMenu, onDismissRequest = { bulkMenu = false }) {
                                 assignmentChoices(configs).forEach { (label, a) ->
                                     DropdownMenuItem(text = { Text(label) }, onClick = {
@@ -118,9 +119,9 @@ fun NetworkWireguardAppsScreen() {
         },
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(padding)) {
-            de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.nwg_search))
+            de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(I18nR.string.nwg_search))
             Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text(stringResource(R.string.nwg_show_system), Modifier.weight(1f))
+                Text(stringResource(I18nR.string.nwg_show_system), Modifier.weight(1f))
                 Switch(checked = showSystem, onCheckedChange = { showSystem = it })
             }
             if (shown.isEmpty() && query.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
@@ -130,10 +131,10 @@ fun NetworkWireguardAppsScreen() {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
-                Text(stringResource(R.string.au_netui_loading_apps), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(I18nR.string.au_netui_loading_apps), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             else if (shown.isEmpty()) Text(
-                stringResource(R.string.netfw_no_apps),
+                stringResource(I18nR.string.netfw_no_apps),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(16.dp),
             )
@@ -157,8 +158,8 @@ fun NetworkWireguardAppsScreen() {
 @Composable
 private fun assignmentChoices(configs: List<WireguardConfig>): List<Pair<String, WgAssignment>> =
     listOf(
-        stringResource(R.string.nwg_system_default) to WgAssignment.SystemDefault,
-        stringResource(R.string.nwg_direct) to WgAssignment.Direct,
+        stringResource(I18nR.string.nwg_system_default) to WgAssignment.SystemDefault,
+        stringResource(I18nR.string.nwg_direct) to WgAssignment.Direct,
     ) + configs.map { it.name to WgAssignment.Config(it.id) }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -174,9 +175,9 @@ private fun AppRow(
 ) {
     var menu by remember { mutableStateOf(false) }
     val current = when (assignment) {
-        WgAssignment.SystemDefault -> stringResource(R.string.nwg_system_default)
-        WgAssignment.Direct -> stringResource(R.string.nwg_direct)
-        is WgAssignment.Config -> configs.firstOrNull { it.id == assignment.configId }?.name ?: stringResource(R.string.nwg_system_default)
+        WgAssignment.SystemDefault -> stringResource(I18nR.string.nwg_system_default)
+        WgAssignment.Direct -> stringResource(I18nR.string.nwg_direct)
+        is WgAssignment.Config -> configs.firstOrNull { it.id == assignment.configId }?.name ?: stringResource(I18nR.string.nwg_system_default)
     }
     Box {
         ListItem(

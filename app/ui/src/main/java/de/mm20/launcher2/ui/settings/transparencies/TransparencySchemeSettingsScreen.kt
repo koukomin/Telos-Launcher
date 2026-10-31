@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.transparencies
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -92,7 +93,7 @@ fun TransparencySchemeSettingsScreen(themeId: UUID) {
                         editName = false
                     }
                 ) {
-                    Text(stringResource(R.string.save))
+                    Text(stringResource(I18nR.string.save))
                 }
             }
         )
@@ -115,19 +116,19 @@ fun TransparencySchemeSettingsScreen(themeId: UUID) {
             PreferenceCategory {
                 TransparenciesPreview(theme!!)
                 TransparencyPreference(
-                    title = stringResource(R.string.hc_background),
+                    title = stringResource(I18nR.string.hc_background),
                     value = theme!!.background,
                     defaultValue = 0.80f,
                     onValueChange = { viewModel.updateTransparencies(theme!!.copy(background = it)) }
                 )
                 TransparencyPreference(
-                    title = stringResource(R.string.hc_surface),
+                    title = stringResource(I18nR.string.hc_surface),
                     value = theme!!.surface,
                     defaultValue = 0.80f,
                     onValueChange = { viewModel.updateTransparencies(theme!!.copy(surface = it)) }
                 )
                 TransparencyPreference(
-                    title = stringResource(R.string.hc_elevated_surface),
+                    title = stringResource(I18nR.string.hc_elevated_surface),
                     value = theme!!.elevatedSurface,
                     defaultValue = 0.80f,
                     onValueChange = { viewModel.updateTransparencies(theme!!.copy(elevatedSurface = it)) }

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Activity
 import android.app.ActivityOptions
@@ -156,7 +158,7 @@ fun WatchFaceSelector(
                             modifier = Modifier
                                 .padding(4.dp)
                         ) {
-                            Icon(painterResource(R.drawable.tune_24px), stringResource(R.string.settings))
+                            Icon(painterResource(BaseR.drawable.tune_24px), stringResource(I18nR.string.settings))
                             DropdownMenuPopup(
                                 expanded = showStyleSettings,
                                 onDismissRequest = { showStyleSettings = false }) {
@@ -170,16 +172,16 @@ fun WatchFaceSelector(
                                                 onSelect(selected.copy(outlined = it))
                                             },
                                             shapes = MenuDefaults.itemShapes(),
-                                            text = { Text(stringResource(R.string.clock_variant_outlined)) },
+                                            text = { Text(stringResource(I18nR.string.clock_variant_outlined)) },
                                             leadingIcon = {
                                                 Icon(
-                                                    painterResource(R.drawable.circle_24px),
+                                                    painterResource(BaseR.drawable.circle_24px),
                                                     null
                                                 )
                                             },
                                             checkedLeadingIcon = {
                                                 Icon(
-                                                    painterResource(R.drawable.check_circle_24px_filled),
+                                                    painterResource(BaseR.drawable.check_circle_24px_filled),
                                                     null
                                                 )
                                             },
@@ -191,16 +193,16 @@ fun WatchFaceSelector(
                                         shapes = MenuDefaults.groupShapes()
                                     ) {
                                         CheckableDropdownMenuItem(
-                                            text = { Text(stringResource(R.string.clock_variant_analog_ticks)) },
+                                            text = { Text(stringResource(I18nR.string.clock_variant_analog_ticks)) },
                                             leadingIcon = {
                                                 Icon(
-                                                    painterResource(R.drawable.circle_24px),
+                                                    painterResource(BaseR.drawable.circle_24px),
                                                     null
                                                 )
                                             },
                                             checkedLeadingIcon = {
                                                 Icon(
-                                                    painterResource(R.drawable.check_circle_24px_filled),
+                                                    painterResource(BaseR.drawable.check_circle_24px_filled),
                                                     null
                                                 )
                                             },
@@ -222,10 +224,10 @@ fun WatchFaceSelector(
                                                 .getAppWidgetInfo(id)
                                         }
                                         DropdownMenuItem(
-                                            text = { Text(stringResource(R.string.widget_pick_widget)) },
+                                            text = { Text(stringResource(I18nR.string.widget_pick_widget)) },
                                             leadingIcon = {
                                                 Icon(
-                                                    painterResource(R.drawable.swap_horiz_24px),
+                                                    painterResource(BaseR.drawable.swap_horiz_24px),
                                                     null
                                                 )
                                             },
@@ -237,9 +239,9 @@ fun WatchFaceSelector(
                                         )
                                         DropdownMenuItem(
                                             leadingIcon = {
-                                                Icon(painterResource(R.drawable.resize_24px), null)
+                                                Icon(painterResource(BaseR.drawable.resize_24px), null)
                                             },
-                                            text = { Text(stringResource(R.string.widget_config_appwidget_resize)) },
+                                            text = { Text(stringResource(I18nR.string.widget_config_appwidget_resize)) },
                                             onClick = { resizeCustomWidget = true },
                                             shape = if (widget?.configure == null && !BuildConfig.DEBUG) {
                                                 MenuDefaults.trailingItemShape
@@ -250,10 +252,10 @@ fun WatchFaceSelector(
                                         val appWidgetHost = LocalAppWidgetHost.current
                                         if (widget?.configure != null) {
                                             DropdownMenuItem(
-                                                text = { Text(stringResource(R.string.widget_config_appwidget_configure)) },
+                                                text = { Text(stringResource(I18nR.string.widget_config_appwidget_configure)) },
                                                 leadingIcon = {
                                                     Icon(
-                                                        painterResource(R.drawable.settings_24px),
+                                                        painterResource(BaseR.drawable.settings_24px),
                                                         null
                                                     )
                                                 },
@@ -288,11 +290,11 @@ fun WatchFaceSelector(
                                                 shape = MenuDefaults.trailingItemShape,
                                                 leadingIcon = {
                                                     Icon(
-                                                        painterResource(R.drawable.restart_alt_24px),
+                                                        painterResource(BaseR.drawable.restart_alt_24px),
                                                         null
                                                     )
                                                 },
-                                                text = { Text(stringResource(R.string.au3_launcher2_reset)) },
+                                                text = { Text(stringResource(I18nR.string.au3_launcher2_reset)) },
                                                 onClick = {
                                                     val widgetId = selected.widgetId
                                                     if (widgetId != null) {
@@ -350,10 +352,10 @@ fun WatchFaceSelector(
                                             modifier = Modifier
                                                 .padding(end = ButtonDefaults.IconSpacing)
                                                 .size(ButtonDefaults.IconSize),
-                                            painter = painterResource(R.drawable.widgets_20px),
+                                            painter = painterResource(BaseR.drawable.widgets_20px),
                                             contentDescription = null,
                                         )
-                                        Text(stringResource(R.string.widget_pick_widget))
+                                        Text(stringResource(I18nR.string.widget_pick_widget))
                                     }
                                 }
                             } else {
@@ -395,7 +397,7 @@ fun WatchFaceSelector(
                                 )
                             }
                         }) {
-                        Icon(painterResource(R.drawable.chevron_backward_24px), stringResource(R.string.au3_launcher2_previous))
+                        Icon(painterResource(BaseR.drawable.chevron_backward_24px), stringResource(I18nR.string.au3_launcher2_previous))
                     }
                     var showStyleDropdown by remember { mutableStateOf(false) }
                     TextButton(
@@ -421,7 +423,7 @@ fun WatchFaceSelector(
                             textAlign = TextAlign.Center,
                         )
                         Icon(
-                            painterResource(R.drawable.arrow_drop_down_20px),
+                            painterResource(BaseR.drawable.arrow_drop_down_20px),
                             null,
                             modifier = Modifier
                                 .padding(ButtonDefaults.IconSpacing)
@@ -453,7 +455,7 @@ fun WatchFaceSelector(
                                         },
                                         selectedLeadingIcon = {
                                             Icon(
-                                                painterResource(R.drawable.check_24px),
+                                                painterResource(BaseR.drawable.check_24px),
                                                 null,
                                             )
                                         }
@@ -471,7 +473,7 @@ fun WatchFaceSelector(
                                 )
                             }
                         }) {
-                        Icon(painterResource(R.drawable.chevron_forward_24px), stringResource(R.string.action_next))
+                        Icon(painterResource(BaseR.drawable.chevron_forward_24px), stringResource(I18nR.string.action_next))
                     }
                 }
             }
@@ -506,14 +508,14 @@ fun WatchFaceSelector(
 
 fun getClockStyleName(context: Context, style: ClockWidgetStyle): String {
     return when (style) {
-        is ClockWidgetStyle.Digital1 -> context.getString(R.string.clock_style_digital1)
-        is ClockWidgetStyle.Digital2 -> context.getString(R.string.clock_style_digital2)
-        is ClockWidgetStyle.Orbit -> context.getString(R.string.clock_style_orbit)
-        is ClockWidgetStyle.Binary -> context.getString(R.string.clock_style_binary)
-        is ClockWidgetStyle.Analog -> context.getString(R.string.clock_style_analog)
-        is ClockWidgetStyle.Segment -> context.getString(R.string.clock_style_segment)
-        is ClockWidgetStyle.Empty -> context.getString(R.string.clock_style_empty)
-        is ClockWidgetStyle.Custom -> context.getString(R.string.clock_style_custom)
+        is ClockWidgetStyle.Digital1 -> context.getString(I18nR.string.clock_style_digital1)
+        is ClockWidgetStyle.Digital2 -> context.getString(I18nR.string.clock_style_digital2)
+        is ClockWidgetStyle.Orbit -> context.getString(I18nR.string.clock_style_orbit)
+        is ClockWidgetStyle.Binary -> context.getString(I18nR.string.clock_style_binary)
+        is ClockWidgetStyle.Analog -> context.getString(I18nR.string.clock_style_analog)
+        is ClockWidgetStyle.Segment -> context.getString(I18nR.string.clock_style_segment)
+        is ClockWidgetStyle.Empty -> context.getString(I18nR.string.clock_style_empty)
+        is ClockWidgetStyle.Custom -> context.getString(I18nR.string.clock_style_custom)
         else -> ""
     }
 }
@@ -655,7 +657,7 @@ private fun ResizeCustomWidget(
                     .offset(y = 64.dp),
                 onClick = onExit
             ) {
-                Icon(painterResource(R.drawable.check_24px), stringResource(R.string.action_done))
+                Icon(painterResource(BaseR.drawable.check_24px), stringResource(I18nR.string.action_done))
             }
         }
     }

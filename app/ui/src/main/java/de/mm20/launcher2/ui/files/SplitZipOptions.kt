@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,19 +29,19 @@ internal fun SplitZipOptions(
     Column(Modifier.fillMaxWidth().padding(top = 8.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(enabled, onEnabled)
-            Text(stringResource(R.string.files_archive_split))
+            Text(stringResource(I18nR.string.files_archive_split))
         }
         if (enabled) {
             OutlinedTextField(
                 value = sizeMiB, onValueChange = onSize,
-                label = { Text(stringResource(R.string.files_archive_split_size)) },
-                supportingText = { Text(stringResource(R.string.files_archive_split_note)) },
+                label = { Text(stringResource(I18nR.string.files_archive_split_size)) },
+                supportingText = { Text(stringResource(I18nR.string.files_archive_split_note)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true, isError = splitZipBytes(true, sizeMiB) == null,
                 modifier = Modifier.fillMaxWidth(),
             )
             if (splitZipBytes(true, sizeMiB) == null) Text(
-                stringResource(R.string.files_archive_split_invalid),
+                stringResource(I18nR.string.files_archive_split_invalid),
                 color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall,
             )
         }

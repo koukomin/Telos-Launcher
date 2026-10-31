@@ -1,11 +1,11 @@
 package de.mm20.launcher2.searchactions.builders
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.ResultScore
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.PrivateSpaceLockAction
 import de.mm20.launcher2.searchactions.actions.SearchAction
@@ -19,7 +19,7 @@ class PrivateSpaceLockActionBuilder(
 
     private val profileManager: ProfileManager by inject()
 
-    constructor(context: Context) : this(context.getString(R.string.search_query_private_space))
+    constructor(context: Context) : this(context.getString(I18nR.string.search_query_private_space))
 
     override val key = "private_space"
     override val icon = SearchActionIcon.PrivateSpace
@@ -30,7 +30,7 @@ class PrivateSpaceLockActionBuilder(
         val privateProfile = profileManager.getProfile(Profile.Type.Private) ?: return null
         val profileState = profileManager.getProfileStateOnce(privateProfile) ?: return null
 
-        val keyword = context.getString(R.string.search_query_private_space).lowercase()
+        val keyword = context.getString(I18nR.string.search_query_private_space).lowercase()
         val score = ResultScore.from(
             query = classifiedQuery.text.lowercase(),
             primaryFields = listOf(keyword),
@@ -39,8 +39,8 @@ class PrivateSpaceLockActionBuilder(
 
         return PrivateSpaceLockAction(
             label = context.getString(
-                if (profileState.locked) R.string.search_action_private_space_unlock
-                else R.string.search_action_private_space_lock
+                if (profileState.locked) I18nR.string.search_action_private_space_unlock
+                else I18nR.string.search_action_private_space_lock
             ),
             isLocked = profileState.locked,
             profile = privateProfile,

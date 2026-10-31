@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -48,38 +49,38 @@ fun NetworkPrivacyScreen() {
     val progress by tor.progress.collectAsState()
     val torError by tor.error.collectAsState()
     val backStack = LocalBackStack.current
-    PreferenceScreen(title = { Text(stringResource(R.string.nt_title), Modifier.padding(horizontal = 16.dp)) }) {
+    PreferenceScreen(title = { Text(stringResource(I18nR.string.nt_title), Modifier.padding(horizontal = 16.dp)) }) {
         item {
             PreferenceCategory(title = "Tor") {
                 SwitchPreference(
-                    title = stringResource(R.string.nt_onion),
+                    title = stringResource(I18nR.string.nt_onion),
                     value = config.torEnabled, enabled = state !is NetState.Starting,
                     onValueChanged = {
                         settings.update { s -> s.copy(torEnabled = it, torSystemDefault = if (it) s.torSystemDefault else false, torWasActive = if (it) s.torWasActive else false) }; settings.flush()
                         if (state is NetState.On) engine.restart()
                     },
                 )
-                Preference(title = stringResource(R.string.net_hub_status), summary = stringResource(when (status) {
-                    TorStatus.Off -> R.string.nwg_status_off
-                    TorStatus.Waiting -> R.string.nt_waiting
-                    TorStatus.Starting -> R.string.nwg_status_connecting
-                    TorStatus.Ready -> R.string.nwg_status_up
-                    TorStatus.Unavailable -> R.string.nwg_status_down
+                Preference(title = stringResource(I18nR.string.net_hub_status), summary = stringResource(when (status) {
+                    TorStatus.Off -> I18nR.string.nwg_status_off
+                    TorStatus.Waiting -> I18nR.string.nt_waiting
+                    TorStatus.Starting -> I18nR.string.nwg_status_connecting
+                    TorStatus.Ready -> I18nR.string.nwg_status_up
+                    TorStatus.Unavailable -> I18nR.string.nwg_status_down
                 }))
                 if (status == TorStatus.Starting) Text("$progress%", Modifier.padding(16.dp))
                 torError?.let { Text(it, Modifier.padding(16.dp), color = MaterialTheme.colorScheme.error) }
                 SwitchPreference(
-                    title = stringResource(R.string.nt_auto), summary = stringResource(R.string.nt_auto_hint),
+                    title = stringResource(I18nR.string.nt_auto), summary = stringResource(I18nR.string.nt_auto_hint),
                     value = config.torAutoStart, enabled = config.torEnabled,
                     onValueChanged = { settings.update { s -> s.copy(torAutoStart = it) } },
                 )
-                Preference(title = stringResource(R.string.nt_apps), summary = config.torAppIds.size.toString(),
+                Preference(title = stringResource(I18nR.string.nt_apps), summary = config.torAppIds.size.toString(),
                     enabled = config.torEnabled, onClick = { backStack.add(NetworkTorAppsRoute) })
             }
         }
         item { NetworkRouteChooser() }
-        item { Text(stringResource(R.string.nt_scope), Modifier.padding(16.dp)) }
-        item { Text(stringResource(R.string.nt_safety), Modifier.padding(16.dp)) }
+        item { Text(stringResource(I18nR.string.nt_scope), Modifier.padding(16.dp)) }
+        item { Text(stringResource(I18nR.string.nt_safety), Modifier.padding(16.dp)) }
         item { Web3Lookup() }
     }
 }
@@ -97,8 +98,8 @@ fun NetworkTorAppsScreen() {
             .filter { de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.label, it.packageName) }
             .sortedBy { it.label.lowercase() }
     }
-    PreferenceScreen(title = { Text(stringResource(R.string.nt_apps), Modifier.padding(horizontal = 16.dp)) }) {
-        item { de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.nwg_search)) }
+    PreferenceScreen(title = { Text(stringResource(I18nR.string.nt_apps), Modifier.padding(horizontal = 16.dp)) }) {
+        item { de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(I18nR.string.nwg_search)) }
         items(shown, key = { it.appId }) { app ->
             SwitchPreference(title = app.label, summary = app.packages.joinToString("\n"),
                 value = app.appId in config.torAppIds, enabled = config.torEnabled,
@@ -126,17 +127,17 @@ private fun Web3Lookup() {
     var generation by remember { mutableIntStateOf(0) }
     Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("Web3", style = MaterialTheme.typography.titleLarge)
-        Text(stringResource(R.string.nweb_intro))
+        Text(stringResource(I18nR.string.nweb_intro))
         SelectionContainer { Text(".eth · " + Web3Names.unstoppableSuffixes.sorted().joinToString(" · ") { ".$it" }) }
         OutlinedTextField(value = proxy, onValueChange = {
             proxy = it
             generation++
             settings.update { s -> s.copy(web3UnstoppableProxy = it) }
             job?.cancel(); loading = false; result = null; failed = false
-        }, label = { Text(stringResource(R.string.nweb_proxy)) }, modifier = Modifier.fillMaxWidth(), singleLine = false)
+        }, label = { Text(stringResource(I18nR.string.nweb_proxy)) }, modifier = Modifier.fillMaxWidth(), singleLine = false)
         OutlinedTextField(value = name, onValueChange = {
             name = it; generation++; job?.cancel(); loading = false; result = null; failed = false
-        }, label = { Text(stringResource(R.string.net_dns_detail_address)) },
+        }, label = { Text(stringResource(I18nR.string.net_dns_detail_address)) },
             placeholder = { Text("alice.eth") }, modifier = Modifier.fillMaxWidth(), singleLine = true)
         Button(enabled = !loading && Web3Names.normalize(name) != null && (name.trim().trimEnd('.').endsWith(".eth", true) || Web3Names.httpsUrl(proxy) != null),
             onClick = {
@@ -148,30 +149,30 @@ private fun Web3Lookup() {
                     catch (_: Exception) { failed = true }
                     finally { if (generation == request) loading = false }
                 }
-            }) { Text(stringResource(R.string.ts_search)) }
+            }) { Text(stringResource(I18nR.string.ts_search)) }
         if (loading) CircularProgressIndicator()
-        if (failed) Text(stringResource(R.string.nwg_status_error), color = MaterialTheme.colorScheme.error)
+        if (failed) Text(stringResource(I18nR.string.nwg_status_error), color = MaterialTheme.colorScheme.error)
         result?.let { resolution ->
             Text(resolution.name, style = MaterialTheme.typography.titleMedium)
-            Text(stringResource(R.string.nweb_wallets))
-            if (resolution.wallets.isEmpty() && !resolution.partialFailure) Text(stringResource(R.string.od_no_results))
+            Text(stringResource(I18nR.string.nweb_wallets))
+            if (resolution.wallets.isEmpty() && !resolution.partialFailure) Text(stringResource(I18nR.string.od_no_results))
             resolution.wallets.forEach { (chain, address) ->
                 SelectionContainer { Text("$chain\n$address") }
                 TextButton(onClick = {
                     context.getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText(chain, address))
-                }) { Text(stringResource(R.string.au8_traktweb_copy_redirect)) }
+                }) { Text(stringResource(I18nR.string.au8_traktweb_copy_redirect)) }
             }
             resolution.website?.let { url ->
                 SelectionContainer { Text(url) }
                 Button(onClick = {
                     try { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }
                     catch (_: Exception) { failed = true }
-                }) { Text(stringResource(R.string.au22_stremio_opens_browser)) }
+                }) { Text(stringResource(I18nR.string.au22_stremio_opens_browser)) }
             }
-            if (resolution.website == null && !resolution.partialFailure) Text(stringResource(R.string.od_no_results))
-            Text(stringResource(R.string.net_dns_detail_provider), style = MaterialTheme.typography.labelLarge)
+            if (resolution.website == null && !resolution.partialFailure) Text(stringResource(I18nR.string.od_no_results))
+            Text(stringResource(I18nR.string.net_dns_detail_provider), style = MaterialTheme.typography.labelLarge)
             SelectionContainer { Text(resolution.providers.joinToString("\n")) }
-            if (resolution.partialFailure) Text(stringResource(R.string.nwg_status_error), color = MaterialTheme.colorScheme.error)
+            if (resolution.partialFailure) Text(stringResource(I18nR.string.nwg_status_error), color = MaterialTheme.colorScheme.error)
         }
     }
 }

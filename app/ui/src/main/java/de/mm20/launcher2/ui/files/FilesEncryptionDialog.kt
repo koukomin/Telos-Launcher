@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -38,22 +39,22 @@ fun FilesEncryptionDialog(source: File, decrypt: Boolean, onDismiss: () -> Unit,
     }
     AlertDialog(onDismissRequest = { if (job?.isActive != true) dismiss() },
         properties = DialogProperties(securePolicy = SecureFlagPolicy.SecureOn, dismissOnBackPress = job?.isActive != true, dismissOnClickOutside = job?.isActive != true),
-        title = { Text(stringResource(if (decrypt) R.string.telos_files_decrypt else R.string.telos_files_encrypt)) },
+        title = { Text(stringResource(if (decrypt) I18nR.string.telos_files_decrypt else I18nR.string.telos_files_encrypt)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(source.name, style = MaterialTheme.typography.titleSmall)
-                Text(stringResource(R.string.telos_files_encryption_info))
-                Text(stringResource(R.string.telos_files_encryption_publish_note), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(I18nR.string.telos_files_encryption_info))
+                Text(stringResource(I18nR.string.telos_files_encryption_publish_note), style = MaterialTheme.typography.bodySmall)
                 OutlinedTextField(filename, { filename = it }, enabled = job?.isActive != true, singleLine = true,
-                    label = { Text(stringResource(R.string.telos_files_encryption_output)) })
+                    label = { Text(stringResource(I18nR.string.telos_files_encryption_output)) })
                 OutlinedTextField(password, { if (it.length <= 1024) password = it }, enabled = job?.isActive != true, singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password), visualTransformation = PasswordVisualTransformation(),
-                    label = { Text(stringResource(R.string.telos_files_encryption_password)) })
+                    label = { Text(stringResource(I18nR.string.telos_files_encryption_password)) })
                 if (!decrypt) OutlinedTextField(confirmation, { if (it.length <= 1024) confirmation = it }, enabled = job?.isActive != true, singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password), visualTransformation = PasswordVisualTransformation(),
-                    label = { Text(stringResource(R.string.telos_files_encryption_confirm)) })
+                    label = { Text(stringResource(I18nR.string.telos_files_encryption_confirm)) })
                 if (job?.isActive == true) LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
-                if (failure) Text(stringResource(R.string.telos_files_encryption_failed), color = MaterialTheme.colorScheme.error)
+                if (failure) Text(stringResource(I18nR.string.telos_files_encryption_failed), color = MaterialTheme.colorScheme.error)
             }
         },
         confirmButton = {
@@ -78,7 +79,7 @@ fun FilesEncryptionDialog(source: File, decrypt: Boolean, onDismiss: () -> Unit,
                     catch (_: Exception) { failure = true }
                     finally { secret.fill('\u0000'); job = null }
                 }
-            }) { Text(stringResource(if (decrypt) R.string.telos_files_decrypt else R.string.telos_files_encrypt)) }
+            }) { Text(stringResource(if (decrypt) I18nR.string.telos_files_decrypt else I18nR.string.telos_files_encrypt)) }
         },
-        dismissButton = { TextButton(onClick = ::dismiss) { Text(stringResource(R.string.hc_cancel)) } })
+        dismissButton = { TextButton(onClick = ::dismiss) { Text(stringResource(I18nR.string.hc_cancel)) } })
 }

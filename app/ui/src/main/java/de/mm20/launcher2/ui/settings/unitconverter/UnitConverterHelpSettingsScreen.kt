@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.unitconverter
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -41,7 +42,7 @@ fun UnitConverterHelpSettingsScreen() {
     val availableUnits by viewModel.availableUnits.collectAsState(emptyList())
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_search_unitconverter),
+        title = stringResource(I18nR.string.preference_search_unitconverter),
         verticalArrangement = Arrangement.spacedBy(2.dp),
         helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/search/unit-converter"
     ) {

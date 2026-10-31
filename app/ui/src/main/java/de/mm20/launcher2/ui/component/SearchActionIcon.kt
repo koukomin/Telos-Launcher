@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.ComponentName
 import android.content.pm.PackageManager
@@ -104,30 +105,30 @@ fun SearchActionIcon(builder: CustomizableSearchActionBuilder, size: Dp = 20.dp)
 
 fun getSearchActionIconVector(icon: SearchActionIcon): Int {
     return when (icon) {
-        SearchActionIcon.Phone -> R.drawable.call_24px
-        SearchActionIcon.Website -> R.drawable.language_24px
-        SearchActionIcon.Alarm -> R.drawable.alarm_24px
-        SearchActionIcon.Timer -> R.drawable.timer_24px
-        SearchActionIcon.Contact -> R.drawable.person_add_24px
-        SearchActionIcon.Email -> R.drawable.mail_24px
-        SearchActionIcon.Message -> R.drawable.sms_24px
-        SearchActionIcon.Calendar -> R.drawable.event_24px
-        SearchActionIcon.Translate -> R.drawable.translate_24px
-        SearchActionIcon.Search -> R.drawable.search_24px
-        SearchActionIcon.Custom -> R.drawable.warning_24px
-        SearchActionIcon.WebSearch -> R.drawable.travel_explore_24px
-        SearchActionIcon.PersonSearch -> R.drawable.person_search_24px
-        SearchActionIcon.StatsSearch -> R.drawable.query_stats_24px
-        SearchActionIcon.SearchPage -> R.drawable.find_in_page_24px
-        SearchActionIcon.SearchList -> R.drawable.manage_search_24px
-        SearchActionIcon.ImageSearch -> R.drawable.image_search_24px
-        SearchActionIcon.Location -> R.drawable.location_on_24px
-        SearchActionIcon.Movie -> R.drawable.movie_24px
-        SearchActionIcon.Music -> R.drawable.music_note_24px
-        SearchActionIcon.Game -> R.drawable.sports_esports_24px
-        SearchActionIcon.Note -> R.drawable.sticky_note_2_24px
-        SearchActionIcon.Share -> R.drawable.share_24px
-        SearchActionIcon.PrivateSpace -> R.drawable.encrypted_24px
-        SearchActionIcon.WorkProfile -> R.drawable.enterprise_24px
+        SearchActionIcon.Phone -> BaseR.drawable.call_24px
+        SearchActionIcon.Website -> BaseR.drawable.language_24px
+        SearchActionIcon.Alarm -> BaseR.drawable.alarm_24px
+        SearchActionIcon.Timer -> BaseR.drawable.timer_24px
+        SearchActionIcon.Contact -> BaseR.drawable.person_add_24px
+        SearchActionIcon.Email -> BaseR.drawable.mail_24px
+        SearchActionIcon.Message -> BaseR.drawable.sms_24px
+        SearchActionIcon.Calendar -> BaseR.drawable.event_24px
+        SearchActionIcon.Translate -> BaseR.drawable.translate_24px
+        SearchActionIcon.Search -> BaseR.drawable.search_24px
+        SearchActionIcon.Custom -> BaseR.drawable.warning_24px
+        SearchActionIcon.WebSearch -> BaseR.drawable.travel_explore_24px
+        SearchActionIcon.PersonSearch -> BaseR.drawable.person_search_24px
+        SearchActionIcon.StatsSearch -> BaseR.drawable.query_stats_24px
+        SearchActionIcon.SearchPage -> BaseR.drawable.find_in_page_24px
+        SearchActionIcon.SearchList -> BaseR.drawable.manage_search_24px
+        SearchActionIcon.ImageSearch -> BaseR.drawable.image_search_24px
+        SearchActionIcon.Location -> BaseR.drawable.location_on_24px
+        SearchActionIcon.Movie -> BaseR.drawable.movie_24px
+        SearchActionIcon.Music -> BaseR.drawable.music_note_24px
+        SearchActionIcon.Game -> BaseR.drawable.sports_esports_24px
+        SearchActionIcon.Note -> BaseR.drawable.sticky_note_2_24px
+        SearchActionIcon.Share -> BaseR.drawable.share_24px
+        SearchActionIcon.PrivateSpace -> BaseR.drawable.encrypted_24px
+        SearchActionIcon.WorkProfile -> BaseR.drawable.enterprise_24px
     }
 }

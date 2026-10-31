@@ -1,5 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: radio_mini_player ===
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.ui.res.stringResource
 import androidx.compose.animation.AnimatedVisibility
@@ -83,8 +85,8 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.music_note_24px), // Fallback icon
-                        contentDescription = stringResource(R.string.hc_radio),
+                        painter = painterResource(BaseR.drawable.music_note_24px), // Fallback icon
+                        contentDescription = stringResource(I18nR.string.hc_radio),
                         tint = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
@@ -95,7 +97,7 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = stationName.ifEmpty { stringResource(R.string.au_radio_unknown_station) },
+                        text = stationName.ifEmpty { stringResource(I18nR.string.au_radio_unknown_station) },
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
@@ -104,7 +106,7 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                     )
                     val sleepSuffix = if (sleepEndsAt > 0L) {
                         val minutes = ((sleepEndsAt - now).coerceAtLeast(0L) / 60_000L) + 1
-                        "  ·  " + stringResource(R.string.au_radio_sleep_in, minutes.toInt())
+                        "  ·  " + stringResource(I18nR.string.au_radio_sleep_in, minutes.toInt())
                     } else ""
                     val recText = recState?.let {
                         val seconds = ((now - it.startedAt).coerceAtLeast(0L) / 1000L)
@@ -113,12 +115,12 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                         } else {
                             String.format(java.util.Locale.ROOT, "%02d:%02d", seconds / 60, seconds % 60)
                         }
-                        stringResource(R.string.au2_radio2_rec_status, clock, Formatter.formatShortFileSize(context, it.bytes))
+                        stringResource(I18nR.string.au2_radio2_rec_status, clock, Formatter.formatShortFileSize(context, it.bytes))
                     }
                     Text(
                         text = (recText?.let { "$it  ·  " }.orEmpty()) +
-                            ((if (reconnecting) stringResource(if (waitingForNetwork) R.string.au16_reconnect_waiting else R.string.au16_reconnect_label) else null)
-                            ?: error?.let { stringResource(it) } ?: nowPlaying.ifEmpty { stringResource(R.string.au_radio_streaming_live) }) + sleepSuffix,
+                            ((if (reconnecting) stringResource(if (waitingForNetwork) I18nR.string.au16_reconnect_waiting else I18nR.string.au16_reconnect_label) else null)
+                            ?: error?.let { stringResource(it) } ?: nowPlaying.ifEmpty { stringResource(I18nR.string.au_radio_streaming_live) }) + sleepSuffix,
                         style = MaterialTheme.typography.labelSmall,
                         color = if ((error != null && !reconnecting) || recText != null) MaterialTheme.colorScheme.error
                         else MaterialTheme.colorScheme.onSurfaceVariant,
@@ -134,23 +136,23 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                     }
                 }) {
                     Icon(
-                        painter = painterResource(if (recState != null) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px),
-                        contentDescription = stringResource(if (recState != null) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record),
+                        painter = painterResource(if (recState != null) BaseR.drawable.radio_button_checked_24px else BaseR.drawable.radio_button_unchecked_24px),
+                        contentDescription = stringResource(if (recState != null) I18nR.string.au2_radio2_stop_recording else I18nR.string.au2_radio2_record),
                         tint = if (recState != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
                     )
                 }
                 IconButton(onClick = { viewModel.togglePlayPause() }) {
                     Icon(
-                        painter = painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px),
-                        contentDescription = if (isPlaying) stringResource(R.string.au_radio_pause) else stringResource(R.string.hc_play),
+                        painter = painterResource(if (isPlaying) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px),
+                        contentDescription = if (isPlaying) stringResource(I18nR.string.au_radio_pause) else stringResource(I18nR.string.hc_play),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
 
                 IconButton(onClick = { viewModel.stop() }) {
                     Icon(
-                        painter = painterResource(R.drawable.close_24px),
-                        contentDescription = stringResource(R.string.hc_stop),
+                        painter = painterResource(BaseR.drawable.close_24px),
+                        contentDescription = stringResource(I18nR.string.hc_stop),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }

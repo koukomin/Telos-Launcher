@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Column
@@ -133,8 +135,8 @@ fun WidgetColumn(
                         lifecycleOwner.lifecycleScope.launch {
                             viewModel.removeWidget(widget)
                             val result = snackbarHostState.showSnackbar(
-                                message = context.getString(R.string.widget_removed),
-                                actionLabel = context.getString(R.string.action_undo),
+                                message = context.getString(I18nR.string.widget_removed),
+                                actionLabel = context.getString(I18nR.string.action_undo),
                                 duration = SnackbarDuration.Short,
                             )
                             if (result == SnackbarResult.ActionPerformed) {
@@ -203,10 +205,10 @@ fun WidgetColumn(
                     modifier = Modifier
                         .padding(end = ButtonDefaults.IconSpacing)
                         .size(ButtonDefaults.IconSize),
-                    painter = painterResource(R.drawable.edit_20px),
+                    painter = painterResource(BaseR.drawable.edit_20px),
                     contentDescription = null,
                 )
-                Text(stringResource(R.string.menu_edit_widgets))
+                Text(stringResource(I18nR.string.menu_edit_widgets))
             }
         }
     }

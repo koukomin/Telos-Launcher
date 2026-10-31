@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.wikipedia
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,13 +20,13 @@ data object WikipediaSettingsRoute: NavKey
 @Composable
 fun WikipediaSettingsScreen() {
     val viewModel: WikipediaSettingsScreenVM = viewModel()
-    PreferenceScreen(title = stringResource(R.string.preference_search_wikipedia)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_search_wikipedia)) {
         item {
             PreferenceCategory {
                 val wikipedia by viewModel.wikipedia.collectAsState()
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_wikipedia),
-                    summary = stringResource(R.string.preference_search_wikipedia_summary),
+                    title = stringResource(I18nR.string.preference_search_wikipedia),
+                    summary = stringResource(I18nR.string.preference_search_wikipedia_summary),
                     value = wikipedia == true,
                     onValueChanged = {
                         viewModel.setWikipedia(it)
@@ -33,11 +34,11 @@ fun WikipediaSettingsScreen() {
                 )
                 val customUrl by viewModel.customUrl.collectAsState()
                 TextPreference(
-                    title = stringResource(R.string.preference_wikipedia_customurl),
+                    title = stringResource(I18nR.string.preference_wikipedia_customurl),
                     value = customUrl ?: "",
-                    placeholder = stringResource(id = R.string.wikipedia_url),
+                    placeholder = stringResource(id = I18nR.string.wikipedia_url),
                     summary = customUrl.takeIf { !it.isNullOrBlank() }
-                        ?: stringResource(id = R.string.wikipedia_url),
+                        ?: stringResource(id = I18nR.string.wikipedia_url),
                     onValueChanged = {
                         viewModel.setCustomUrl(it)
                     })

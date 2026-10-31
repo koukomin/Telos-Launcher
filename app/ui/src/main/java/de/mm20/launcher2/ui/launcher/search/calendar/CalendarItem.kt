@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.calendar
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import android.icu.text.DateFormat
@@ -96,9 +98,9 @@ fun CalendarItem(
                         Icon(
                             painterResource(
                                 when (calendar.isCompleted) {
-                                    true -> R.drawable.check_circle_24px_filled
-                                    false -> R.drawable.radio_button_unchecked_24px
-                                    null -> R.drawable.circle_24px_filled
+                                    true -> BaseR.drawable.check_circle_24px_filled
+                                    false -> BaseR.drawable.radio_button_unchecked_24px
+                                    null -> BaseR.drawable.circle_24px_filled
                                 }
                             ),
                             null,
@@ -152,7 +154,7 @@ fun CalendarItem(
                     ) {
                         Icon(
                             modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                            painter = painterResource(R.drawable.schedule_24px),
+                            painter = painterResource(BaseR.drawable.schedule_24px),
                             contentDescription = null
                         )
                         Column {
@@ -192,7 +194,7 @@ fun CalendarItem(
                         ) {
                             Icon(
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                painter = painterResource(R.drawable.notes_24px),
+                                painter = painterResource(BaseR.drawable.notes_24px),
                                 contentDescription = null
                             )
                             Text(
@@ -215,7 +217,7 @@ fun CalendarItem(
                         ) {
                             Icon(
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                painter = painterResource(R.drawable.group_24px),
+                                painter = painterResource(BaseR.drawable.group_24px),
                                 contentDescription = null
                             )
                             Text(
@@ -238,7 +240,7 @@ fun CalendarItem(
                         ) {
                             Icon(
                                 modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                painter = painterResource(R.drawable.location_on_24px),
+                                painter = painterResource(BaseR.drawable.location_on_24px),
                                 contentDescription = null
                             )
                             Text(
@@ -253,16 +255,16 @@ fun CalendarItem(
                         val isPinned by viewModel.isPinned.collectAsState(false)
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_unpin),
-                                icon = R.drawable.star_24px_filled,
+                                label = stringResource(I18nR.string.menu_favorites_unpin),
+                                icon = BaseR.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
                             )
                         } else {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_pin),
-                                icon = R.drawable.star_24px,
+                                label = stringResource(I18nR.string.menu_favorites_pin),
+                                icon = BaseR.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -272,8 +274,8 @@ fun CalendarItem(
 
                     toolbarActions.add(
                         DefaultToolbarAction(
-                            label = stringResource(R.string.menu_calendar_open_externally),
-                            icon = R.drawable.open_in_new_24px,
+                            label = stringResource(I18nR.string.menu_calendar_open_externally),
+                            icon = BaseR.drawable.open_in_new_24px,
                             action = {
                                 viewModel.launch(context)
                                 onBack()
@@ -284,16 +286,16 @@ fun CalendarItem(
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(
                         DefaultToolbarAction(
-                            label = stringResource(R.string.menu_customize),
-                            icon = R.drawable.tune_24px,
+                            label = stringResource(I18nR.string.menu_customize),
+                            icon = BaseR.drawable.tune_24px,
                             action = { sheetManager.showCustomizeSearchableModal(calendar) }
                         ))
 
                     Toolbar(
                         leftActions = listOf(
                             DefaultToolbarAction(
-                                label = stringResource(id = R.string.menu_back),
-                                icon = R.drawable.arrow_back_24px,
+                                label = stringResource(id = I18nR.string.menu_back),
+                                icon = BaseR.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }
@@ -310,9 +312,9 @@ fun CalendarItem(
                     Icon(
                         painterResource(
                             when (calendar.isCompleted) {
-                                true -> R.drawable.check_circle_24px_filled
-                                false -> R.drawable.radio_button_unchecked_24px
-                                null -> R.drawable.circle_24px_filled
+                                true -> BaseR.drawable.check_circle_24px_filled
+                                false -> BaseR.drawable.radio_button_unchecked_24px
+                                null -> BaseR.drawable.circle_24px_filled
                             }
                         ),
                         null,
@@ -441,23 +443,23 @@ private fun CalendarEvent.getSummary(
         val isToday = DateUtils.isToday(endTime)
         if (isToday) {
             if (allDay) {
-                return context.getString(R.string.task_due_today)
+                return context.getString(I18nR.string.task_due_today)
             }
             return context.getString(
-                R.string.task_due_time,
+                I18nR.string.task_due_time,
                 DateIntervalFormat.getInstance(time, locale)
                     .format(DateInterval(endTime, endTime))
             )
         }
         if (allDay) {
             return context.getString(
-                R.string.task_due_date,
+                I18nR.string.task_due_date,
                 DateFormat.getInstanceForSkeleton("EEE, MMMM d", locale)
                     .format(endTime)
             )
         }
         return context.getString(
-            R.string.task_due_date,
+            I18nR.string.task_due_date,
             DateFormat.getInstanceForSkeleton("EEE, MMMM d, $time", locale)
                 .format(endTime)
         )
@@ -467,7 +469,7 @@ private fun CalendarEvent.getSummary(
         DateUtils.isToday(startTime) && DateUtils.isToday(endTime)
     return if (isToday) {
         if (allDay) {
-            context.getString(R.string.calendar_event_allday)
+            context.getString(I18nR.string.calendar_event_allday)
         } else {
             DateIntervalFormat.getInstance(time, locale)
                 .format(DateInterval(startTime, endTime))

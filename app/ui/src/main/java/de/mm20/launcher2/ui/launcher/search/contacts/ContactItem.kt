@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.contacts
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import android.content.Intent
@@ -137,9 +139,9 @@ fun ContactItem(
                         var expandedSection by remember { mutableStateOf(-1) }
                         if (contact.phoneNumbers.isNotEmpty()) {
                             ContactInfo(
-                                icon = R.drawable.call_24px,
+                                icon = BaseR.drawable.call_24px,
                                 label = pluralStringResource(
-                                    R.plurals.contact_phone_numbers,
+                                    I18nR.plurals.contact_phone_numbers,
                                     contact.phoneNumbers.size,
                                     contact.phoneNumbers.size
                                 ),
@@ -160,8 +162,8 @@ fun ContactItem(
                                         )
                                     }) {
                                         Icon(
-                                            painterResource(R.drawable.sms_24px),
-                                            stringResource(R.string.search_action_message),
+                                            painterResource(BaseR.drawable.sms_24px),
+                                            stringResource(I18nR.string.search_action_message),
                                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
                                     }
@@ -191,9 +193,9 @@ fun ContactItem(
                         }
                         if (contact.emailAddresses.isNotEmpty()) {
                             ContactInfo(
-                                icon = R.drawable.mail_24px,
+                                icon = BaseR.drawable.mail_24px,
                                 label = pluralStringResource(
-                                    R.plurals.contact_email_addresses,
+                                    I18nR.plurals.contact_email_addresses,
                                     contact.emailAddresses.size,
                                     contact.emailAddresses.size
                                 ),
@@ -220,9 +222,9 @@ fun ContactItem(
                         }
                         if (contact.postalAddresses.isNotEmpty()) {
                             ContactInfo(
-                                icon = R.drawable.location_on_24px,
+                                icon = BaseR.drawable.location_on_24px,
                                 label = pluralStringResource(
-                                    R.plurals.contact_postal_addresses,
+                                    I18nR.plurals.contact_postal_addresses,
                                     contact.postalAddresses.size,
                                     contact.postalAddresses.size
                                 ),
@@ -241,8 +243,8 @@ fun ContactItem(
                                             )
                                         }) {
                                             Icon(
-                                                painterResource(R.drawable.directions_24px),
-                                                stringResource(R.string.menu_navigation),
+                                                painterResource(BaseR.drawable.directions_24px),
+                                                stringResource(I18nR.string.menu_navigation),
                                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                             )
                                         }
@@ -296,7 +298,7 @@ fun ContactItem(
                             if (itemsWithPermission.isEmpty()) continue
 
                             ContactInfo(
-                                icon = R.drawable.open_in_new_24px,
+                                icon = BaseR.drawable.open_in_new_24px,
                                 customIcon = appIcon,
                                 label = label,
                                 items = itemsWithPermission,
@@ -330,16 +332,16 @@ fun ContactItem(
                         val isPinned by viewModel.isPinned.collectAsState(false)
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_unpin),
-                                icon = R.drawable.star_24px_filled,
+                                label = stringResource(I18nR.string.menu_favorites_unpin),
+                                icon = BaseR.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
                             )
                         } else {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_pin),
-                                icon = R.drawable.star_24px,
+                                label = stringResource(I18nR.string.menu_favorites_pin),
+                                icon = BaseR.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -349,8 +351,8 @@ fun ContactItem(
 
                     toolbarActions.add(
                         DefaultToolbarAction(
-                            label = stringResource(R.string.menu_contacts_open_externally),
-                            icon = R.drawable.open_in_new_24px,
+                            label = stringResource(I18nR.string.menu_contacts_open_externally),
+                            icon = BaseR.drawable.open_in_new_24px,
                             action = {
                                 viewModel.launch(context)
                             }
@@ -359,8 +361,8 @@ fun ContactItem(
 
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(DefaultToolbarAction(
-                        label = stringResource(R.string.menu_customize),
-                        icon = R.drawable.tune_24px,
+                        label = stringResource(I18nR.string.menu_customize),
+                        icon = BaseR.drawable.tune_24px,
                         action = { sheetManager.showCustomizeSearchableModal(contact) }
                     ))
 
@@ -368,8 +370,8 @@ fun ContactItem(
                     Toolbar(
                         leftActions = listOf(
                             DefaultToolbarAction(
-                                label = stringResource(id = R.string.menu_back),
-                                icon = R.drawable.arrow_back_24px,
+                                label = stringResource(id = I18nR.string.menu_back),
+                                icon = BaseR.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }
@@ -579,7 +581,7 @@ private fun <T> ContactInfo(
                             .padding(horizontal = 16.dp),
                     )
                     Icon(
-                        painterResource(R.drawable.chevron_forward_24px),
+                        painterResource(BaseR.drawable.chevron_forward_24px),
                         null,
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -593,9 +595,9 @@ private fun <T> ContactInfo(
 
 private fun ContactInfoType.toString(context: Context): String? {
     return when (this) {
-        ContactInfoType.Home -> context.getString(R.string.contact_info_home)
-        ContactInfoType.Mobile -> context.getString(R.string.contact_info_mobile)
-        ContactInfoType.Work -> context.getString(R.string.contact_info_work)
+        ContactInfoType.Home -> context.getString(I18nR.string.contact_info_home)
+        ContactInfoType.Mobile -> context.getString(I18nR.string.contact_info_mobile)
+        ContactInfoType.Work -> context.getString(I18nR.string.contact_info_work)
         ContactInfoType.Other -> null
     }
 }

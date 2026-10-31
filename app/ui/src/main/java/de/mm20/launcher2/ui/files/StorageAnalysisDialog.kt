@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -31,28 +32,28 @@ internal fun StorageAnalysisDialog(path: String, onOpenFolder: (String) -> Unit,
         finally { busy = false }
     }
     AlertDialog(onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.telos_files_analyze)) },
+        title = { Text(stringResource(I18nR.string.telos_files_analyze)) },
         text = {
             Column(Modifier.fillMaxWidth().heightIn(max = 500.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                if (busy) { LinearProgressIndicator(Modifier.fillMaxWidth()); Text(stringResource(R.string.telos_files_analyzing)) }
-                if (failed) Text(stringResource(R.string.telos_files_analysis_failed), color = MaterialTheme.colorScheme.error)
+                if (busy) { LinearProgressIndicator(Modifier.fillMaxWidth()); Text(stringResource(I18nR.string.telos_files_analyzing)) }
+                if (failed) Text(stringResource(I18nR.string.telos_files_analysis_failed), color = MaterialTheme.colorScheme.error)
                 scan?.let { result ->
-                    Text(stringResource(R.string.telos_files_analysis_total, result.files.size, formatSize(result.bytes)), style = MaterialTheme.typography.titleMedium)
-                    if (result.truncated || result.unreadable > 0) Text(stringResource(R.string.telos_files_analysis_partial), color = MaterialTheme.colorScheme.tertiary)
+                    Text(stringResource(I18nR.string.telos_files_analysis_total, result.files.size, formatSize(result.bytes)), style = MaterialTheme.typography.titleMedium)
+                    if (result.truncated || result.unreadable > 0) Text(stringResource(I18nR.string.telos_files_analysis_partial), color = MaterialTheme.colorScheme.tertiary)
                     result.files.groupBy { FileKind.of(it.file.name, false) }.entries.sortedByDescending { it.value.sumOf { f -> f.size } }.forEach { (kind, records) ->
                         val bytes = records.sumOf { it.size }
                         Text("${stringResource(kind.labelRes)} · ${formatSize(bytes)}")
                         LinearProgressIndicator(progress = { if (result.bytes > 0) bytes.toFloat() / result.bytes else 0f }, modifier = Modifier.fillMaxWidth())
                     }
-                    Text(stringResource(R.string.telos_files_largest), style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(I18nR.string.telos_files_largest), style = MaterialTheme.typography.titleMedium)
                     result.files.sortedByDescending { it.size }.take(10).forEach { record ->
                         Column(Modifier.fillMaxWidth().clickable { onOpenFolder(record.file.parent.orEmpty()); onDismiss() }.padding(vertical = 4.dp)) {
                             Text(record.file.name, style = MaterialTheme.typography.bodyMedium)
                             Text("${formatSize(record.size)} · ${record.file.parent}", style = MaterialTheme.typography.bodySmall)
                         }
                     }
-                    OutlinedTextField(excluded, { excluded = it.take(2048); duplicates = null }, label = { Text(stringResource(R.string.telos_files_duplicates_exclude)) },
-                        supportingText = { Text(stringResource(R.string.telos_files_duplicates_exclude_hint)) }, enabled = !busy, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(excluded, { excluded = it.take(2048); duplicates = null }, label = { Text(stringResource(I18nR.string.telos_files_duplicates_exclude)) },
+                        supportingText = { Text(stringResource(I18nR.string.telos_files_duplicates_exclude_hint)) }, enabled = !busy, modifier = Modifier.fillMaxWidth())
                     OutlinedButton(enabled = !busy && duplicates == null, onClick = {
                         prefs.edit().putString("duplicateExclusions", excluded).apply()
                         val skip = duplicateExclusions(excluded)
@@ -68,10 +69,10 @@ internal fun StorageAnalysisDialog(path: String, onOpenFolder: (String) -> Unit,
                               catch (_: Exception) { failed = true }
                             finally { busy = false }
                         }
-                    }) { Text(stringResource(R.string.telos_files_find_duplicates)) }
+                    }) { Text(stringResource(I18nR.string.telos_files_find_duplicates)) }
                     duplicates?.let { groups ->
-                        Text(stringResource(R.string.telos_files_duplicates_count, groups.size), style = MaterialTheme.typography.titleMedium)
-                        Text(stringResource(R.string.telos_files_duplicates_hint), style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.telos_files_duplicates_count, groups.size), style = MaterialTheme.typography.titleMedium)
+                        Text(stringResource(I18nR.string.telos_files_duplicates_hint), style = MaterialTheme.typography.bodySmall)
                         groups.take(50).forEach { group ->
                             HorizontalDivider()
                             Text(formatSize(group.first().size * (group.size - 1)), style = MaterialTheme.typography.titleSmall)
@@ -81,7 +82,7 @@ internal fun StorageAnalysisDialog(path: String, onOpenFolder: (String) -> Unit,
                     }
                 }
             }
-        }, confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } })
+        }, confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_close)) } })
 }
 
 /** Folder names ("Android", ".thumbnails") or paths below the analysed folder ("DCIM/Camera"), one per comma or line */

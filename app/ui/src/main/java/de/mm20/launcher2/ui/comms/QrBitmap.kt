@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
@@ -22,12 +23,12 @@ internal fun ContactQrImage(payload: String, modifier: Modifier = Modifier) {
     if (bitmap != null) {
         Image(
             bitmap = bitmap.asImageBitmap(),
-            contentDescription = stringResource(R.string.hc_qr_code),
+            contentDescription = stringResource(I18nR.string.hc_qr_code),
             modifier = modifier.size(200.dp),
         )
     } else {
         Text(
-            text = stringResource(R.string.au_phonea_qr_too_large),
+            text = stringResource(I18nR.string.au_phonea_qr_too_large),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

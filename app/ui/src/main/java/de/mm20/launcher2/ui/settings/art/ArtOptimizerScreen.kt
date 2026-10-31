@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.art
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.text.format.Formatter
 import androidx.compose.animation.AnimatedVisibility
@@ -149,7 +151,7 @@ fun ArtOptimizerScreen() {
     }
 
     PreferenceScreen(
-        title = { Text(stringResource(R.string.art_optimizer_title)) },
+        title = { Text(stringResource(I18nR.string.art_optimizer_title)) },
         topBarActions = {
             if (masterEnabled) {
                 IconButton(
@@ -157,14 +159,14 @@ fun ArtOptimizerScreen() {
                     enabled = !isScanningAudit && !progress.isRunning,
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.autorenew_24px),
-                        contentDescription = stringResource(R.string.art_optimizer_audit_refresh),
+                        painter = painterResource(BaseR.drawable.autorenew_24px),
+                        contentDescription = stringResource(I18nR.string.art_optimizer_audit_refresh),
                     )
                 }
                 Box {
                     IconButton(onClick = { showOverflowMenu = true }) {
                         Icon(
-                            painter = painterResource(R.drawable.more_vert_24px),
+                            painter = painterResource(BaseR.drawable.more_vert_24px),
                             contentDescription = null,
                         )
                     }
@@ -174,7 +176,7 @@ fun ArtOptimizerScreen() {
                         containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     ) {
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.art_optimizer_btn_force_recompile)) },
+                            text = { Text(stringResource(I18nR.string.art_optimizer_btn_force_recompile)) },
                             enabled = !progress.isRunning && privilegedAvailable,
                             onClick = {
                                 showOverflowMenu = false
@@ -188,7 +190,7 @@ fun ArtOptimizerScreen() {
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.art_optimizer_btn_reset_all)) },
+                            text = { Text(stringResource(I18nR.string.art_optimizer_btn_reset_all)) },
                             enabled = !progress.isRunning && privilegedAvailable,
                             onClick = {
                                 showOverflowMenu = false
@@ -196,7 +198,7 @@ fun ArtOptimizerScreen() {
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.art_optimizer_btn_trim_bg)) },
+                            text = { Text(stringResource(I18nR.string.art_optimizer_btn_trim_bg)) },
                             enabled = !progress.isRunning && privilegedAvailable,
                             onClick = {
                                 showOverflowMenu = false
@@ -211,8 +213,8 @@ fun ArtOptimizerScreen() {
         item(key = "master_toggle") {
             PreferenceCategory {
                 SwitchPreference(
-                    title = stringResource(R.string.art_optimizer_master_toggle),
-                    summary = stringResource(R.string.art_optimizer_summary),
+                    title = stringResource(I18nR.string.art_optimizer_master_toggle),
+                    summary = stringResource(I18nR.string.art_optimizer_summary),
                     value = masterEnabled,
                     onValueChanged = { viewModel.setMasterEnabled(context, it) }
                 )
@@ -238,19 +240,19 @@ fun ArtOptimizerScreen() {
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.warning_24px),
+                                painter = painterResource(BaseR.drawable.warning_24px),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onErrorContainer,
                                 modifier = Modifier.size(24.dp),
                             )
                             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                                 Text(
-                                    text = stringResource(R.string.art_optimizer_shizuku_required_title),
+                                    text = stringResource(I18nR.string.art_optimizer_shizuku_required_title),
                                     style = MaterialTheme.typography.titleSmall,
                                     fontWeight = FontWeight.Bold,
                                 )
                                 Text(
-                                    text = stringResource(R.string.art_optimizer_shizuku_required_desc),
+                                    text = stringResource(I18nR.string.art_optimizer_shizuku_required_desc),
                                     style = MaterialTheme.typography.bodySmall,
                                 )
                             }
@@ -302,25 +304,25 @@ fun ArtOptimizerScreen() {
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
-                                painter = painterResource(R.drawable.info_24px),
+                                painter = painterResource(BaseR.drawable.info_24px),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(24.dp),
                             )
                             Spacer(Modifier.size(8.dp))
                             Text(
-                                text = stringResource(R.string.art_optimizer_warning_title),
+                                text = stringResource(I18nR.string.art_optimizer_warning_title),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
                             )
                         }
                         Text(
-                            text = stringResource(R.string.art_optimizer_warning_pros),
+                            text = stringResource(I18nR.string.art_optimizer_warning_pros),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Text(
-                            text = stringResource(R.string.art_optimizer_warning_cons),
+                            text = stringResource(I18nR.string.art_optimizer_warning_cons),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
                         )
@@ -329,28 +331,28 @@ fun ArtOptimizerScreen() {
             }
 
             item(key = "profile_category") {
-                PreferenceCategory(stringResource(R.string.art_optimizer_profile_title)) {
+                PreferenceCategory(stringResource(I18nR.string.art_optimizer_profile_title)) {
                     ListPreference(
-                        title = stringResource(R.string.art_optimizer_profile_title),
+                        title = stringResource(I18nR.string.art_optimizer_profile_title),
                         value = selectedProfile,
                         items = listOf(
-                            stringResource(R.string.art_optimizer_profile_speed_profile) to TelosArtOptimizer.PROFILE_SPEED_PROFILE,
-                            stringResource(R.string.art_optimizer_profile_speed) to TelosArtOptimizer.PROFILE_SPEED,
-                            stringResource(R.string.art_optimizer_profile_everything) to TelosArtOptimizer.PROFILE_EVERYTHING,
+                            stringResource(I18nR.string.art_optimizer_profile_speed_profile) to TelosArtOptimizer.PROFILE_SPEED_PROFILE,
+                            stringResource(I18nR.string.art_optimizer_profile_speed) to TelosArtOptimizer.PROFILE_SPEED,
+                            stringResource(I18nR.string.art_optimizer_profile_everything) to TelosArtOptimizer.PROFILE_EVERYTHING,
                         ),
                         onValueChanged = { if (it != null) viewModel.setProfile(context, it) }
                     )
 
                     SwitchPreference(
-                        title = stringResource(R.string.art_optimizer_fallback_empty_prof),
-                        summary = stringResource(R.string.art_optimizer_fallback_empty_prof_summary),
+                        title = stringResource(I18nR.string.art_optimizer_fallback_empty_prof),
+                        summary = stringResource(I18nR.string.art_optimizer_fallback_empty_prof_summary),
                         value = fallbackEmptyProf,
                         onValueChanged = { viewModel.setFallbackEmptyProfileToSpeed(it) }
                     )
 
                     SwitchPreference(
-                        title = stringResource(R.string.art_optimizer_store_post_install),
-                        summary = stringResource(R.string.art_optimizer_store_post_install_summary),
+                        title = stringResource(I18nR.string.art_optimizer_store_post_install),
+                        summary = stringResource(I18nR.string.art_optimizer_store_post_install_summary),
                         value = storePostInstall,
                         onValueChanged = { viewModel.setStorePostInstall(it) }
                     )
@@ -358,10 +360,10 @@ fun ArtOptimizerScreen() {
             }
 
             item(key = "frozen_synergy_category") {
-                PreferenceCategory(stringResource(R.string.art_optimizer_frozen_category)) {
+                PreferenceCategory(stringResource(I18nR.string.art_optimizer_frozen_category)) {
                     SwitchPreference(
-                        title = stringResource(R.string.art_optimizer_frozen_toggle),
-                        summary = stringResource(R.string.art_optimizer_frozen_toggle_summary),
+                        title = stringResource(I18nR.string.art_optimizer_frozen_toggle),
+                        summary = stringResource(I18nR.string.art_optimizer_frozen_toggle_summary),
                         value = skipFrozenApps,
                         onValueChanged = { viewModel.setSkipFrozenApps(context, it) }
                     )
@@ -369,11 +371,11 @@ fun ArtOptimizerScreen() {
                     AnimatedVisibility(skipFrozenApps) {
                         Column {
                             ListPreference(
-                                title = stringResource(R.string.art_optimizer_frozen_mode_title),
+                                title = stringResource(I18nR.string.art_optimizer_frozen_mode_title),
                                 value = frozenAppsMode,
                                 items = listOf(
-                                    stringResource(R.string.art_optimizer_frozen_mode_skip) to TelosArtOptimizer.FROZEN_MODE_SKIP,
-                                    stringResource(R.string.art_optimizer_frozen_mode_strip) to TelosArtOptimizer.FROZEN_MODE_STRIP_RESET,
+                                    stringResource(I18nR.string.art_optimizer_frozen_mode_skip) to TelosArtOptimizer.FROZEN_MODE_SKIP,
+                                    stringResource(I18nR.string.art_optimizer_frozen_mode_strip) to TelosArtOptimizer.FROZEN_MODE_STRIP_RESET,
                                 ),
                                 onValueChanged = { if (it != null) viewModel.setFrozenAppsMode(it) }
                             )
@@ -387,7 +389,7 @@ fun ArtOptimizerScreen() {
                                         .heightIn(min = 48.dp)
                                         .padding(horizontal = 16.dp, vertical = 8.dp),
                                 ) {
-                                    Text(stringResource(R.string.art_optimizer_btn_strip_frozen_now))
+                                    Text(stringResource(I18nR.string.art_optimizer_btn_strip_frozen_now))
                                 }
                             }
                         }
@@ -396,10 +398,10 @@ fun ArtOptimizerScreen() {
             }
 
             item(key = "sqlite_category") {
-                PreferenceCategory(stringResource(R.string.art_optimizer_sqlite_category)) {
+                PreferenceCategory(stringResource(I18nR.string.art_optimizer_sqlite_category)) {
                     SwitchPreference(
-                        title = stringResource(R.string.art_optimizer_sqlite_toggle),
-                        summary = stringResource(R.string.art_optimizer_sqlite_toggle_summary),
+                        title = stringResource(I18nR.string.art_optimizer_sqlite_toggle),
+                        summary = stringResource(I18nR.string.art_optimizer_sqlite_toggle_summary),
                         value = sqliteEnabled,
                         onValueChanged = { viewModel.setSqliteOptimizeEnabled(it) }
                     )
@@ -412,7 +414,7 @@ fun ArtOptimizerScreen() {
                     ) {
                         if (sqliteState.isRunning) {
                             Text(
-                                text = stringResource(R.string.art_optimizer_sqlite_running_fmt, sqliteState.currentTarget),
+                                text = stringResource(I18nR.string.art_optimizer_sqlite_running_fmt, sqliteState.currentTarget),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.primary,
                             )
@@ -422,7 +424,7 @@ fun ArtOptimizerScreen() {
                                 val formattedBytes = Formatter.formatFileSize(context, sqliteState.bytesReclaimed)
                                 Text(
                                     text = stringResource(
-                                        R.string.art_optimizer_sqlite_done_fmt,
+                                        I18nR.string.art_optimizer_sqlite_done_fmt,
                                         sqliteState.databasesOptimized,
                                         formattedBytes,
                                     ),
@@ -438,7 +440,7 @@ fun ArtOptimizerScreen() {
                                     .fillMaxWidth()
                                     .heightIn(min = 48.dp),
                             ) {
-                                Text(stringResource(R.string.art_optimizer_sqlite_btn_run))
+                                Text(stringResource(I18nR.string.art_optimizer_sqlite_btn_run))
                             }
                         }
                     }
@@ -446,9 +448,9 @@ fun ArtOptimizerScreen() {
             }
 
             item(key = "scheduler_category") {
-                PreferenceCategory(stringResource(R.string.art_optimizer_scheduler_title)) {
+                PreferenceCategory(stringResource(I18nR.string.art_optimizer_scheduler_title)) {
                     SwitchPreference(
-                        title = stringResource(R.string.art_optimizer_scheduler_enable),
+                        title = stringResource(I18nR.string.art_optimizer_scheduler_enable),
                         value = scheduled,
                         onValueChanged = {
                             viewModel.setScheduled(context, it, frequencyDays, requireCharging, requireIdle, requireBatteryNotLow)
@@ -458,12 +460,12 @@ fun ArtOptimizerScreen() {
                     AnimatedVisibility(scheduled) {
                         Column {
                             ListPreference(
-                                title = stringResource(R.string.art_optimizer_scheduler_frequency),
+                                title = stringResource(I18nR.string.art_optimizer_scheduler_frequency),
                                 value = frequencyDays,
                                 items = listOf(
-                                    stringResource(R.string.art_optimizer_freq_daily) to 1L,
-                                    stringResource(R.string.art_optimizer_freq_weekly) to 7L,
-                                    stringResource(R.string.art_optimizer_freq_monthly) to 30L,
+                                    stringResource(I18nR.string.art_optimizer_freq_daily) to 1L,
+                                    stringResource(I18nR.string.art_optimizer_freq_weekly) to 7L,
+                                    stringResource(I18nR.string.art_optimizer_freq_monthly) to 30L,
                                 ),
                                 onValueChanged = {
                                     if (it != null) {
@@ -473,7 +475,7 @@ fun ArtOptimizerScreen() {
                             )
 
                             CheckboxPreference(
-                                title = stringResource(R.string.art_optimizer_constraint_charging),
+                                title = stringResource(I18nR.string.art_optimizer_constraint_charging),
                                 value = requireCharging,
                                 onValueChanged = {
                                     viewModel.setRequireCharging(context, it, frequencyDays, requireIdle, requireBatteryNotLow)
@@ -481,7 +483,7 @@ fun ArtOptimizerScreen() {
                             )
 
                             CheckboxPreference(
-                                title = stringResource(R.string.art_optimizer_constraint_idle),
+                                title = stringResource(I18nR.string.art_optimizer_constraint_idle),
                                 value = requireIdle,
                                 onValueChanged = {
                                     viewModel.setRequireIdle(context, it, frequencyDays, requireCharging, requireBatteryNotLow)
@@ -489,7 +491,7 @@ fun ArtOptimizerScreen() {
                             )
 
                             CheckboxPreference(
-                                title = stringResource(R.string.art_optimizer_constraint_battery_low),
+                                title = stringResource(I18nR.string.art_optimizer_constraint_battery_low),
                                 value = requireBatteryNotLow,
                                 onValueChanged = {
                                     viewModel.setRequireBatteryNotLow(context, it, frequencyDays, requireCharging, requireIdle)
@@ -497,7 +499,7 @@ fun ArtOptimizerScreen() {
                             )
 
                             CheckboxPreference(
-                                title = stringResource(R.string.art_optimizer_constraint_power_saver),
+                                title = stringResource(I18nR.string.art_optimizer_constraint_power_saver),
                                 value = skipPowerSave,
                                 onValueChanged = { viewModel.setSkipPowerSave(it) }
                             )
@@ -509,7 +511,7 @@ fun ArtOptimizerScreen() {
             item(key = "per_app_header") {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(
-                        text = stringResource(R.string.art_optimizer_apps_category),
+                        text = stringResource(I18nR.string.art_optimizer_apps_category),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.SemiBold,
@@ -518,7 +520,7 @@ fun ArtOptimizerScreen() {
                     TelosSearchBar(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
-                        placeholder = stringResource(R.string.art_optimizer_search_apps_hint),
+                        placeholder = stringResource(I18nR.string.art_optimizer_search_apps_hint),
                         filters = {
                             Row(
                                 modifier = Modifier
@@ -529,27 +531,27 @@ fun ArtOptimizerScreen() {
                                 FilterChip(
                                     selected = activeFilter == ArtAppFilter.ALL,
                                     onClick = { activeFilterName = ArtAppFilter.ALL.name },
-                                    label = { Text(stringResource(R.string.art_optimizer_filter_all)) },
+                                    label = { Text(stringResource(I18nR.string.art_optimizer_filter_all)) },
                                 )
                                 FilterChip(
                                     selected = activeFilter == ArtAppFilter.NEEDS_OPTIMIZATION,
                                     onClick = { activeFilterName = ArtAppFilter.NEEDS_OPTIMIZATION.name },
-                                    label = { Text(stringResource(R.string.art_optimizer_filter_needed)) },
+                                    label = { Text(stringResource(I18nR.string.art_optimizer_filter_needed)) },
                                 )
                                 FilterChip(
                                     selected = activeFilter == ArtAppFilter.UP_TO_DATE,
                                     onClick = { activeFilterName = ArtAppFilter.UP_TO_DATE.name },
-                                    label = { Text(stringResource(R.string.art_optimizer_filter_optimized)) },
+                                    label = { Text(stringResource(I18nR.string.art_optimizer_filter_optimized)) },
                                 )
                                 FilterChip(
                                     selected = activeFilter == ArtAppFilter.DEGRADED,
                                     onClick = { activeFilterName = ArtAppFilter.DEGRADED.name },
-                                    label = { Text(stringResource(R.string.art_optimizer_filter_degraded)) },
+                                    label = { Text(stringResource(I18nR.string.art_optimizer_filter_degraded)) },
                                 )
                                 FilterChip(
                                     selected = activeFilter == ArtAppFilter.FROZEN,
                                     onClick = { activeFilterName = ArtAppFilter.FROZEN.name },
-                                    label = { Text(stringResource(R.string.art_optimizer_filter_frozen)) },
+                                    label = { Text(stringResource(I18nR.string.art_optimizer_filter_frozen)) },
                                 )
                             }
                         }
@@ -662,13 +664,13 @@ private fun AuditDashboardCard(
                     modifier = Modifier.weight(1f),
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.speed_24px),
+                        painter = painterResource(BaseR.drawable.speed_24px),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(24.dp),
                     )
                     Text(
-                        text = stringResource(R.string.art_optimizer_audit_title),
+                        text = stringResource(I18nR.string.art_optimizer_audit_title),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                     )
@@ -678,7 +680,7 @@ private fun AuditDashboardCard(
                         onClick = onRefresh,
                         modifier = Modifier.heightIn(min = 48.dp),
                     ) {
-                        Text(stringResource(R.string.art_optimizer_audit_refresh))
+                        Text(stringResource(I18nR.string.art_optimizer_audit_refresh))
                     }
                 }
             }
@@ -690,7 +692,7 @@ private fun AuditDashboardCard(
                 ) {
                     CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
                     Text(
-                        text = stringResource(R.string.art_optimizer_audit_scanning),
+                        text = stringResource(I18nR.string.art_optimizer_audit_scanning),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
@@ -707,7 +709,7 @@ private fun AuditDashboardCard(
                     ) {
                         Text(
                             text = stringResource(
-                                R.string.art_optimizer_audit_summary_fmt,
+                                I18nR.string.art_optimizer_audit_summary_fmt,
                                 auditReport.upToDate.size,
                                 auditReport.totalActionableCount,
                                 auditReport.estimatedMinutesSaved,
@@ -717,12 +719,12 @@ private fun AuditDashboardCard(
                         )
                         if (auditReport.degraded.isNotEmpty()) {
                             Text(
-                                text = stringResource(R.string.art_optimizer_audit_degraded_fmt, auditReport.degraded.size),
+                                text = stringResource(I18nR.string.art_optimizer_audit_degraded_fmt, auditReport.degraded.size),
                                 style = MaterialTheme.typography.bodySmall,
                             )
                         } else if (auditReport.totalActionableCount == 0 && auditReport.privilegedAvailable) {
                             Text(
-                                text = stringResource(R.string.art_optimizer_audit_all_done),
+                                text = stringResource(I18nR.string.art_optimizer_audit_all_done),
                                 style = MaterialTheme.typography.bodySmall,
                             )
                         }
@@ -734,7 +736,7 @@ private fun AuditDashboardCard(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
                         text = stringResource(
-                            R.string.art_optimizer_progress_fmt,
+                            I18nR.string.art_optimizer_progress_fmt,
                             progress.currentPackage,
                             progress.currentIndex,
                             progress.totalPackages,
@@ -758,7 +760,7 @@ private fun AuditDashboardCard(
                             .align(Alignment.End)
                             .heightIn(min = 48.dp),
                     ) {
-                        Text(stringResource(R.string.art_optimizer_btn_cancel))
+                        Text(stringResource(I18nR.string.art_optimizer_btn_cancel))
                     }
                 }
             } else {
@@ -775,14 +777,14 @@ private fun AuditDashboardCard(
                             .weight(1f)
                             .heightIn(min = 48.dp),
                     ) {
-                        Text(stringResource(R.string.art_optimizer_btn_smart_optimize))
+                        Text(stringResource(I18nR.string.art_optimizer_btn_smart_optimize))
                     }
                     OutlinedButton(
                         onClick = onForceRecompileAll,
                         enabled = privilegedAvailable && !isScanning,
                         modifier = Modifier.heightIn(min = 48.dp),
                     ) {
-                        Text(stringResource(R.string.art_optimizer_btn_force_recompile))
+                        Text(stringResource(I18nR.string.art_optimizer_btn_force_recompile))
                     }
                 }
             }
@@ -849,7 +851,7 @@ private fun AuditedAppRow(
                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                     ) {
                         Text(
-                            text = stringResource(R.string.art_optimizer_filter_frozen),
+                            text = stringResource(I18nR.string.art_optimizer_filter_frozen),
                             style = MaterialTheme.typography.labelSmall,
                             modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
                         )
@@ -869,22 +871,22 @@ private fun BucketBadge(entry: AuditedAppEntry) {
         OptimizationBucket.UP_TO_DATE -> Triple(
             MaterialTheme.colorScheme.primaryContainer,
             MaterialTheme.colorScheme.onPrimaryContainer,
-            R.string.art_optimizer_bucket_up_to_date,
+            I18nR.string.art_optimizer_bucket_up_to_date,
         )
         OptimizationBucket.DEGRADED -> Triple(
             MaterialTheme.colorScheme.errorContainer,
             MaterialTheme.colorScheme.onErrorContainer,
-            R.string.art_optimizer_bucket_degraded,
+            I18nR.string.art_optimizer_bucket_degraded,
         )
         OptimizationBucket.FROZEN_SKIPPED -> Triple(
             MaterialTheme.colorScheme.surfaceContainerHighest,
             MaterialTheme.colorScheme.onSurfaceVariant,
-            R.string.art_optimizer_bucket_frozen_skipped,
+            I18nR.string.art_optimizer_bucket_frozen_skipped,
         )
         OptimizationBucket.NEEDS_OPTIMIZATION -> Triple(
             MaterialTheme.colorScheme.secondaryContainer,
             MaterialTheme.colorScheme.onSecondaryContainer,
-            R.string.art_optimizer_bucket_needs_opt,
+            I18nR.string.art_optimizer_bucket_needs_opt,
         )
     }
 
@@ -909,9 +911,9 @@ private fun BenchmarkInlineBadge(record: ArtBenchmarkRecord) {
     val text = if (after != null && before > 0L) {
         val gainPct = (((before - after).toDouble() / before.toDouble()) * 100.0).roundToInt()
         if (gainPct > 0) {
-            stringResource(R.string.art_optimizer_benchmark_comparison_fmt, before, after, gainPct)
+            stringResource(I18nR.string.art_optimizer_benchmark_comparison_fmt, before, after, gainPct)
         } else {
-            stringResource(R.string.art_optimizer_benchmark_slower_fmt, before, after)
+            stringResource(I18nR.string.art_optimizer_benchmark_slower_fmt, before, after)
         }
     } else {
         "${before}ms"
@@ -968,7 +970,7 @@ private fun PerAppInspectorSheetContent(
             )
             Text(
                 text = stringResource(
-                    R.string.art_optimizer_sheet_status_fmt,
+                    I18nR.string.art_optimizer_sheet_status_fmt,
                     entry.currentFilter,
                     entry.compilationReason,
                 ),
@@ -998,18 +1000,18 @@ private fun PerAppInspectorSheetContent(
                 verticalArrangement = Arrangement.spacedBy(6.dp),
             ) {
                 Text(
-                    text = stringResource(R.string.art_optimizer_profile_diag_title),
+                    text = stringResource(I18nR.string.art_optimizer_profile_diag_title),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold,
                 )
                 if (diagnostic == null) {
                     CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
                 } else {
-                    val yesStr = stringResource(R.string.art_optimizer_yes)
-                    val noStr = stringResource(R.string.art_optimizer_no)
+                    val yesStr = stringResource(I18nR.string.art_optimizer_yes)
+                    val noStr = stringResource(I18nR.string.art_optimizer_no)
                     Text(
                         text = stringResource(
-                            R.string.art_optimizer_profile_diag_details_fmt,
+                            I18nR.string.art_optimizer_profile_diag_details_fmt,
                             if (diagnostic.hasEmbeddedBaselineProf) yesStr else noStr,
                             if (diagnostic.hasDexMetadataDm) yesStr else noStr,
                             diagnostic.refProfileBytes,
@@ -1019,9 +1021,9 @@ private fun PerAppInspectorSheetContent(
                     )
                     Text(
                         text = if (diagnostic.hasUsableProfile) {
-                            stringResource(R.string.art_optimizer_profile_diag_ok)
+                            stringResource(I18nR.string.art_optimizer_profile_diag_ok)
                         } else {
-                            stringResource(R.string.art_optimizer_profile_diag_empty_warn)
+                            stringResource(I18nR.string.art_optimizer_profile_diag_empty_warn)
                         },
                         style = MaterialTheme.typography.bodySmall,
                     )
@@ -1042,12 +1044,12 @@ private fun PerAppInspectorSheetContent(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Text(
-                    text = stringResource(R.string.art_optimizer_benchmark_title),
+                    text = stringResource(I18nR.string.art_optimizer_benchmark_title),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold,
                 )
                 Text(
-                    text = stringResource(R.string.art_optimizer_benchmark_desc),
+                    text = stringResource(I18nR.string.art_optimizer_benchmark_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -1064,13 +1066,13 @@ private fun PerAppInspectorSheetContent(
                         val summary = if (after != null && before > 0L) {
                             val gainPct = (((before - after).toDouble() / before.toDouble()) * 100.0).roundToInt()
                             if (gainPct > 0) {
-                                stringResource(R.string.art_optimizer_benchmark_comparison_fmt, before, after, gainPct)
+                                stringResource(I18nR.string.art_optimizer_benchmark_comparison_fmt, before, after, gainPct)
                             } else {
-                                stringResource(R.string.art_optimizer_benchmark_slower_fmt, before, after)
+                                stringResource(I18nR.string.art_optimizer_benchmark_slower_fmt, before, after)
                             }
                         } else {
                             stringResource(
-                                R.string.art_optimizer_benchmark_before_only_fmt,
+                                I18nR.string.art_optimizer_benchmark_before_only_fmt,
                                 before,
                                 benchmarkRecord.waitBeforeMs ?: before,
                             )
@@ -1086,9 +1088,9 @@ private fun PerAppInspectorSheetContent(
 
                 if (benchmarkError != null) {
                     val errText = when (benchmarkError) {
-                        BenchmarkUiError.FROZEN -> stringResource(R.string.art_optimizer_benchmark_err_frozen)
-                        BenchmarkUiError.NO_ACTIVITY -> stringResource(R.string.art_optimizer_benchmark_err_no_activity)
-                        BenchmarkUiError.FAILED -> stringResource(R.string.art_optimizer_benchmark_err_failed)
+                        BenchmarkUiError.FROZEN -> stringResource(I18nR.string.art_optimizer_benchmark_err_frozen)
+                        BenchmarkUiError.NO_ACTIVITY -> stringResource(I18nR.string.art_optimizer_benchmark_err_no_activity)
+                        BenchmarkUiError.FAILED -> stringResource(I18nR.string.art_optimizer_benchmark_err_failed)
                     }
                     Text(
                         text = errText,
@@ -1116,9 +1118,9 @@ private fun PerAppInspectorSheetContent(
                                 color = MaterialTheme.colorScheme.onPrimary,
                             )
                             Spacer(Modifier.size(8.dp))
-                            Text(stringResource(R.string.art_optimizer_benchmark_running))
+                            Text(stringResource(I18nR.string.art_optimizer_benchmark_running))
                         } else {
-                            Text(stringResource(R.string.art_optimizer_benchmark_btn_run))
+                            Text(stringResource(I18nR.string.art_optimizer_benchmark_btn_run))
                         }
                     }
 
@@ -1128,7 +1130,7 @@ private fun PerAppInspectorSheetContent(
                             enabled = !isBenchmarking,
                             modifier = Modifier.heightIn(min = 48.dp),
                         ) {
-                            Text(stringResource(R.string.art_optimizer_benchmark_btn_reset))
+                            Text(stringResource(I18nR.string.art_optimizer_benchmark_btn_reset))
                         }
                     }
                 }
@@ -1154,7 +1156,7 @@ private fun PerAppInspectorSheetContent(
                     .weight(1f)
                     .heightIn(min = 48.dp),
             ) {
-                Text(stringResource(R.string.art_optimizer_app_btn_optimize_speed))
+                Text(stringResource(I18nR.string.art_optimizer_app_btn_optimize_speed))
             }
 
             if (selectedProfile != TelosArtOptimizer.PROFILE_SPEED) {
@@ -1163,7 +1165,7 @@ private fun PerAppInspectorSheetContent(
                     enabled = privilegedAvailable && !isCompiling && !isBenchmarking,
                     modifier = Modifier.heightIn(min = 48.dp),
                 ) {
-                    Text(stringResource(R.string.art_optimizer_app_btn_optimize_selected, selectedProfile))
+                    Text(stringResource(I18nR.string.art_optimizer_app_btn_optimize_selected, selectedProfile))
                 }
             }
 
@@ -1172,7 +1174,7 @@ private fun PerAppInspectorSheetContent(
                 enabled = privilegedAvailable && !isCompiling && !isBenchmarking,
                 modifier = Modifier.heightIn(min = 48.dp),
             ) {
-                Text(stringResource(R.string.art_optimizer_app_btn_reset))
+                Text(stringResource(I18nR.string.art_optimizer_app_btn_reset))
             }
         }
 

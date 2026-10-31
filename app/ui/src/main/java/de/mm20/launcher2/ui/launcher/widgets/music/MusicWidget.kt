@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.music
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.pm.PackageManager
 import android.content.res.Resources
@@ -114,7 +116,7 @@ fun MusicWidget(widget: MusicWidget) {
         AnimatedVisibility(!hasPermission) {
             MissingPermissionBanner(
                 modifier = Modifier.padding(16.dp),
-                text = stringResource(R.string.missing_permission_music_widget),
+                text = stringResource(I18nR.string.missing_permission_music_widget),
                 onClick = {
                     viewModel.requestPermission(context as AppCompatActivity)
                 }
@@ -252,7 +254,7 @@ fun MusicWidget(widget: MusicWidget) {
                             )
                             .semantics {
                                 contentDescription =
-                                    resources.getString(R.string.music_widget_open_player)
+                                    resources.getString(I18nR.string.music_widget_open_player)
                             }
                             .conditional(
                                 art == null,
@@ -299,7 +301,7 @@ fun MusicWidget(widget: MusicWidget) {
                             }
                         } else {
                             Icon(
-                                painterResource(R.drawable.music_note_48px),
+                                painterResource(BaseR.drawable.music_note_48px),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onSecondaryContainer,
                                 modifier = Modifier.size(48.dp)
@@ -323,7 +325,7 @@ fun MusicWidget(widget: MusicWidget) {
                 ) {
                 if (supportedActions.skipToPrevious) {
                     Tooltip(
-                        tooltipText = stringResource(R.string.music_widget_previous_track)
+                        tooltipText = stringResource(I18nR.string.music_widget_previous_track)
                     ) {
                         IconButton(
                             onClick = {
@@ -331,8 +333,8 @@ fun MusicWidget(widget: MusicWidget) {
                             },
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.skip_previous_24px),
-                                stringResource(R.string.music_widget_previous_track)
+                                painter = painterResource(BaseR.drawable.skip_previous_24px),
+                                stringResource(I18nR.string.music_widget_previous_track)
                             )
                         }
                     }
@@ -340,8 +342,8 @@ fun MusicWidget(widget: MusicWidget) {
 
                 Tooltip(
                     tooltipText = stringResource(
-                        if (playbackState == PlaybackState.Playing) R.string.music_widget_pause
-                        else R.string.music_widget_play
+                        if (playbackState == PlaybackState.Playing) I18nR.string.music_widget_pause
+                        else I18nR.string.music_widget_play
                     )
                 ) {
                     FilledTonalIconToggleButton(
@@ -361,14 +363,14 @@ fun MusicWidget(widget: MusicWidget) {
                         ) {
                             if (it) {
                                 Icon(
-                                    painterResource(R.drawable.pause_24px_filled),
-                                    stringResource(R.string.music_widget_pause),
+                                    painterResource(BaseR.drawable.pause_24px_filled),
+                                    stringResource(I18nR.string.music_widget_pause),
                                     modifier = Modifier.rotate(-90f)
                                 )
                             } else {
                                 Icon(
-                                    painterResource(R.drawable.play_arrow_24px),
-                                    stringResource(R.string.music_widget_play),
+                                    painterResource(BaseR.drawable.play_arrow_24px),
+                                    stringResource(I18nR.string.music_widget_play),
                                 )
                             }
                         }
@@ -376,7 +378,7 @@ fun MusicWidget(widget: MusicWidget) {
                 }
                 if (supportedActions.skipToNext) {
                     Tooltip(
-                        tooltipText = stringResource(R.string.music_widget_next_track)
+                        tooltipText = stringResource(I18nR.string.music_widget_next_track)
                     ) {
                         IconButton(
                             onClick = {
@@ -384,8 +386,8 @@ fun MusicWidget(widget: MusicWidget) {
                             },
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.skip_next_24px),
-                                stringResource(R.string.music_widget_next_track)
+                                painter = painterResource(BaseR.drawable.skip_next_24px),
+                                stringResource(I18nR.string.music_widget_next_track)
                             )
                         }
                     }
@@ -429,12 +431,12 @@ fun CustomActions(
         var showOverflowMenu by remember { mutableStateOf(false) }
         Box {
             Tooltip(
-                tooltipText = stringResource(R.string.action_more_actions)
+                tooltipText = stringResource(I18nR.string.action_more_actions)
             ) {
                 IconButton(onClick = { showOverflowMenu = true }) {
                     Icon(
-                        painterResource(R.drawable.more_vert_24px),
-                        contentDescription = stringResource(R.string.action_more_actions)
+                        painterResource(BaseR.drawable.more_vert_24px),
+                        contentDescription = stringResource(I18nR.string.action_more_actions)
                     )
                 }
             }
@@ -540,7 +542,7 @@ fun NoData() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = painterResource(R.drawable.music_note_24px),
+            painter = painterResource(BaseR.drawable.music_note_24px),
             contentDescription = null,
             modifier = Modifier
                 .padding(24.dp)
@@ -548,7 +550,7 @@ fun NoData() {
             tint = MaterialTheme.colorScheme.secondary
         )
         Text(
-            text = stringResource(id = R.string.music_widget_no_data),
+            text = stringResource(id = I18nR.string.music_widget_no_data),
             style = MaterialTheme.typography.bodySmall
         )
     }

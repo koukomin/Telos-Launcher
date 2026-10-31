@@ -1,4 +1,5 @@
 package de.mm20.launcher2.comms.telephony
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.Person
 import androidx.core.app.NotificationCompat
-import de.mm20.launcher2.i18n.R as I18nR
 
 object CallNotification {
     private const val CHANNEL_ID = "telos_incall"

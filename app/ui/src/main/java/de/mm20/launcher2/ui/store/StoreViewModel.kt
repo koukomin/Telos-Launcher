@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.store
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.comms.search.TelosSearch
 import android.content.Context
@@ -185,7 +186,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                     setState(it.id, if (event.success) StoreInstallUiState.Installed else StoreInstallUiState.Failed)
                 }
                 if (!event.success) _installationError.value = event.packageName + ": " +
-                    str(R.string.au_store_msg_install_failed) + "\n" + event.details
+                    str(I18nR.string.au_store_msg_install_failed) + "\n" + event.details
             }
         }
     }
@@ -197,7 +198,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
     fun addFromUrl(url: String, packageName: String = "", onResult: (String?) -> Unit) {
         viewModelScope.launch {
             val result = runCatching { tools.addFromUrl(url.trim(), packageName) }.getOrElse { Result.failure(it) }
-            result.onSuccess { onResult(null) }.onFailure { onResult(it.message ?: str(R.string.au_store_msg_add_failed)) }
+            result.onSuccess { onResult(null) }.onFailure { onResult(it.message ?: str(I18nR.string.au_store_msg_add_failed)) }
         }
     }
 
@@ -205,7 +206,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
     fun addRecommended(app: de.mm20.launcher2.store.catalog.RecommendedApp, onResult: (String?) -> Unit) {
         viewModelScope.launch {
             val result = runCatching { tools.addSource(app.source, app.name, app.packageName) }.getOrElse { Result.failure(it) }
-            result.onSuccess { onResult(null) }.onFailure { onResult(it.message ?: str(R.string.au_store_msg_add_failed)) }
+            result.onSuccess { onResult(null) }.onFailure { onResult(it.message ?: str(I18nR.string.au_store_msg_add_failed)) }
         }
     }
 
@@ -247,10 +248,10 @@ class StoreViewModel : ViewModel(), KoinComponent {
                     val wrapped = runCatching { JSONObject().put("apps", if (uri.host.equals("apps", true)) org.json.JSONArray(json) else org.json.JSONArray().put(JSONObject(json))).toString() }.getOrNull()
                     val summary = wrapped?.let { runCatching { tools.importObtainium(it) }.getOrNull() }
                     _message.value = when {
-                        summary == null -> str(R.string.au_store_msg_link_unreadable)
-                        summary.added > 0 -> str(R.string.au_store_msg_app_added)
-                        summary.skipped > 0 -> str(R.string.au_store_msg_already_listed)
-                        else -> str(R.string.au_store_msg_unsupported)
+                        summary == null -> str(I18nR.string.au_store_msg_link_unreadable)
+                        summary.added > 0 -> str(I18nR.string.au_store_msg_app_added)
+                        summary.skipped > 0 -> str(I18nR.string.au_store_msg_already_listed)
+                        else -> str(I18nR.string.au_store_msg_unsupported)
                     }
                 }
                 Uri.parse(link).let { it.scheme.equals("obtainium", true) && it.host.equals("add", true) } -> {
@@ -293,10 +294,10 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 _checking.value = false
             }
             _message.value = when {
-                summary == null -> str(R.string.au_store_msg_check_failed)
-                summary.updates.isNotEmpty() -> str(R.string.au_store_msg_updates_available, summary.updates.size)
-                summary.failed > 0 -> str(R.string.au_store_msg_up_to_date_unreachable, summary.failed)
-                else -> str(R.string.au_store_msg_all_up_to_date)
+                summary == null -> str(I18nR.string.au_store_msg_check_failed)
+                summary.updates.isNotEmpty() -> str(I18nR.string.au_store_msg_updates_available, summary.updates.size)
+                summary.failed > 0 -> str(I18nR.string.au_store_msg_up_to_date_unreachable, summary.failed)
+                else -> str(I18nR.string.au_store_msg_all_up_to_date)
             }
             publishStoreBadge()
         }
@@ -317,7 +318,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
             } finally {
                 _checking.value = false
             }
-            if (!ok) _message.value = str(R.string.au_store_msg_source_unreachable, item.displayName)
+            if (!ok) _message.value = str(I18nR.string.au_store_msg_source_unreachable, item.displayName)
         }
     }
 
@@ -422,7 +423,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
             setState(item.id, StoreInstallUiState.Idle)
             throw e
         } catch (e: Exception) {
-            StoreAction.Failed(e.message ?: str(R.string.au_store_msg_install_failed), e)
+            StoreAction.Failed(e.message ?: str(I18nR.string.au_store_msg_install_failed), e)
         }
         when (val action = result) {
             is StoreAction.Installed -> setState(item.id, StoreInstallUiState.Installed)
@@ -483,7 +484,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                     context.contentResolver.openOutputStream(uri)!!.use { it.write(json.toByteArray()) }
                 }.isSuccess
             }
-            _message.value = if (ok) str(R.string.au_store_msg_exported) else str(R.string.au_store_msg_export_failed)
+            _message.value = if (ok) str(I18nR.string.au_store_msg_exported) else str(I18nR.string.au_store_msg_export_failed)
         }
     }
 
@@ -497,19 +498,19 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 }.getOrNull()
             }
             if (text == null) {
-                _message.value = str(R.string.au_store_msg_read_failed)
+                _message.value = str(I18nR.string.au_store_msg_read_failed)
                 return@launch
             }
             runCatching { tools.importObtainium(text) }
                 .onSuccess {
                     _message.value = listOfNotNull(
-                        str(R.string.au_store_msg_imported_added, it.added),
-                        if (it.skipped > 0) str(R.string.au_store_msg_imported_skipped, it.skipped) else null,
-                        if (it.unsupported > 0) str(R.string.au_store_msg_imported_unsupported, it.unsupported) else null,
+                        str(I18nR.string.au_store_msg_imported_added, it.added),
+                        if (it.skipped > 0) str(I18nR.string.au_store_msg_imported_skipped, it.skipped) else null,
+                        if (it.unsupported > 0) str(I18nR.string.au_store_msg_imported_unsupported, it.unsupported) else null,
                     ).joinToString(", ")
                     if (it.added > 0) checkAll()
                 }
-                .onFailure { _message.value = str(R.string.au_store_msg_not_obtainium) }
+                .onFailure { _message.value = str(I18nR.string.au_store_msg_not_obtainium) }
         }
     }
 

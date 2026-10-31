@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.smartspacer
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
@@ -37,17 +39,17 @@ fun SmartspacerSettingsScreen() {
     val isSmartspacerEnabled by viewModel.isSmartspacerEnabled.collectAsStateWithLifecycle(null)
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_smartspacer_integration)
+        title = stringResource(I18nR.string.preference_smartspacer_integration)
     ) {
         if (isSmartspacerAppInstalled == false) {
             item {
                 PreferenceCategory {
                     Banner(
                         text = stringResource(
-                            R.string.preference_smartspacer_integration_description,
-                            stringResource(R.string.app_name)
+                            I18nR.string.preference_smartspacer_integration_description,
+                            stringResource(BaseR.string.app_name)
                         ),
-                        icon = R.drawable.info_24px,
+                        icon = BaseR.drawable.info_24px,
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.surface)
                             .padding(16.dp),
@@ -55,7 +57,7 @@ fun SmartspacerSettingsScreen() {
                             Button(onClick = {
                                 viewModel.downloadSmartspacerApp(activity as AppCompatActivity)
                             }) {
-                                Text(stringResource(R.string.action_install))
+                                Text(stringResource(I18nR.string.action_install))
                             }
                         }
                     )
@@ -66,8 +68,8 @@ fun SmartspacerSettingsScreen() {
             item {
                 PreferenceCategory {
                     SwitchPreference(
-                        icon = R.drawable.smartspacer,
-                        title = stringResource(R.string.preference_smartspacer_enable),
+                        icon = BaseR.drawable.smartspacer,
+                        title = stringResource(I18nR.string.preference_smartspacer_enable),
                         value = isSmartspacerEnabled == true,
                         onValueChanged = {
                             viewModel.setSmartspacerEnabled(it)
@@ -75,8 +77,8 @@ fun SmartspacerSettingsScreen() {
                     )
 
                     Preference(
-                        title = stringResource(R.string.preference_launch_smartspacer_app),
-                        icon = R.drawable.open_in_new_24px,
+                        title = stringResource(I18nR.string.preference_launch_smartspacer_app),
+                        icon = BaseR.drawable.open_in_new_24px,
                         onClick = {
                             viewModel.launchSmartspacerApp(activity as AppCompatActivity)
                         }

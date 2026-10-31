@@ -14,6 +14,8 @@
  */
 
 package de.mm20.launcher2.ui.media.docs.pdf
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Application
 import android.content.ActivityNotFoundException
@@ -79,7 +81,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
-import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
@@ -219,7 +220,7 @@ class PdfToolsViewModel(app: Application) : AndroidViewModel(app) {
         return when (res) {
             is LoadResult.Ok -> res.source
             is LoadResult.Failed -> {
-                error = appContext.getString(R.string.pdft_error_open, name, res.reason)
+                error = appContext.getString(I18nR.string.pdft_error_open, name, res.reason)
                 null
             }
             is LoadResult.NeedsPassword -> null
@@ -253,7 +254,7 @@ class PdfToolsViewModel(app: Application) : AndroidViewModel(app) {
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Throwable) {
-                error = appContext.getString(R.string.pdft_error_failed, e.message ?: e.javaClass.simpleName)
+                error = appContext.getString(I18nR.string.pdft_error_failed, e.message ?: e.javaClass.simpleName)
             } finally {
                 busy = false
                 progress = null
@@ -294,7 +295,7 @@ class PdfToolsViewModel(app: Application) : AndroidViewModel(app) {
             val shared = withContext(Dispatchers.IO) {
                 PdfStorage.share(appContext, uris)
             }
-            if (!shared) message = appContext.getString(R.string.pdft_error_open_other)
+            if (!shared) message = appContext.getString(I18nR.string.pdft_error_open_other)
         }
     }
 
@@ -317,11 +318,11 @@ class PdfToolsViewModel(app: Application) : AndroidViewModel(app) {
                 val done = withContext(Dispatchers.IO) { files.map(op) }
                 saved = saved + done
                 PdfStorage.addHistory(appContext, resultTool, done)
-                message = appContext.getString(R.string.pdft_saved_n, done.size)
+                message = appContext.getString(I18nR.string.pdft_saved_n, done.size)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Throwable) {
-                error = appContext.getString(R.string.pdft_error_save, e.message ?: e.javaClass.simpleName)
+                error = appContext.getString(I18nR.string.pdft_error_save, e.message ?: e.javaClass.simpleName)
             } finally {
                 busy = false
             }
@@ -334,7 +335,7 @@ class PdfToolsViewModel(app: Application) : AndroidViewModel(app) {
             val src = withContext(Dispatchers.IO) { PdfEngine.sourceFromResult(appContext, r) }
             loading = false
             if (src == null) {
-                error = appContext.getString(R.string.pdft_error_failed, r.name)
+                error = appContext.getString(I18nR.string.pdft_error_failed, r.name)
             } else {
                 pdfs.add(src)
                 selectedId = src.id
@@ -382,13 +383,13 @@ fun PdfToolsApp(vm: PdfToolsViewModel, onFinish: () -> Unit) {
         val p = vm.progress
         AlertDialog(
             onDismissRequest = {},
-            title = { Text(stringResource(R.string.pdft_working)) },
+            title = { Text(stringResource(I18nR.string.pdft_working)) },
             text = {
                 Column {
                     if (p != null && p.second > 0) {
                         LinearProgressIndicator(progress = { (p.first.toFloat() / p.second).coerceIn(0f, 1f) }, modifier = Modifier.fillMaxWidth())
                         Text(
-                            stringResource(R.string.pdft_progress, p.first.coerceAtMost(p.second), p.second),
+                            stringResource(I18nR.string.pdft_progress, p.first.coerceAtMost(p.second), p.second),
                             Modifier.padding(top = 8.dp),
                             style = MaterialTheme.typography.bodyMedium,
                         )
@@ -397,7 +398,7 @@ fun PdfToolsApp(vm: PdfToolsViewModel, onFinish: () -> Unit) {
                     }
                 }
             },
-            confirmButton = { TextButton(onClick = { vm.cancel() }) { Text(stringResource(R.string.pdft_cancel)) } },
+            confirmButton = { TextButton(onClick = { vm.cancel() }) { Text(stringResource(I18nR.string.pdft_cancel)) } },
         )
     }
     if (vm.loading && vm.passwordRequest == null) {
@@ -407,7 +408,7 @@ fun PdfToolsApp(vm: PdfToolsViewModel, onFinish: () -> Unit) {
             text = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     CircularProgressIndicator(Modifier.size(28.dp))
-                    Text(stringResource(R.string.pdft_loading), Modifier.padding(start = 16.dp))
+                    Text(stringResource(I18nR.string.pdft_loading), Modifier.padding(start = 16.dp))
                 }
             },
         )
@@ -415,9 +416,9 @@ fun PdfToolsApp(vm: PdfToolsViewModel, onFinish: () -> Unit) {
     vm.error?.let { msg ->
         AlertDialog(
             onDismissRequest = { vm.error = null },
-            title = { Text(stringResource(R.string.pdft_error_title)) },
+            title = { Text(stringResource(I18nR.string.pdft_error_title)) },
             text = { Text(msg) },
-            confirmButton = { TextButton(onClick = { vm.error = null }) { Text(stringResource(R.string.pdft_ok)) } },
+            confirmButton = { TextButton(onClick = { vm.error = null }) { Text(stringResource(I18nR.string.pdft_ok)) } },
         )
     }
 }
@@ -433,15 +434,15 @@ private fun HomeScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState, onFin
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.pdft_title)) },
+                title = { Text(stringResource(I18nR.string.pdft_title)) },
                 navigationIcon = {
                     IconButton(onClick = onFinish) {
-                        Ico(BaseR.drawable.arrow_back_24px, description = stringResource(R.string.pdft_back))
+                        Ico(BaseR.drawable.arrow_back_24px, description = stringResource(I18nR.string.pdft_back))
                     }
                 },
                 actions = {
                     IconButton(onClick = { vm.screen = PdfScreen.History }) {
-                        Ico(BaseR.drawable.schedule_24px, description = stringResource(R.string.pdft_history))
+                        Ico(BaseR.drawable.schedule_24px, description = stringResource(I18nR.string.pdft_history))
                     }
                 },
             )
@@ -455,16 +456,16 @@ private fun HomeScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState, onFin
         ) {
             item {
                 Text(
-                    stringResource(R.string.pdft_home_hint),
+                    stringResource(I18nR.string.pdft_home_hint),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            item { SectionLabel(stringResource(R.string.pdft_files)) }
+            item { SectionLabel(stringResource(I18nR.string.pdft_files)) }
             if (vm.pdfs.isEmpty()) {
                 item {
                     Text(
-                        stringResource(R.string.pdft_no_files),
+                        stringResource(I18nR.string.pdft_no_files),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -475,7 +476,7 @@ private fun HomeScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState, onFin
                 }
             }
             item {
-                FilledTonalButton(onClick = pickPdf) { Text(stringResource(R.string.pdft_add_pdf)) }
+                FilledTonalButton(onClick = pickPdf) { Text(stringResource(I18nR.string.pdft_add_pdf)) }
             }
             for (group in ToolGroup.entries) {
                 item(key = "group_${group.name}") { SectionLabel(stringResource(group.title), Modifier.padding(top = 8.dp)) }
@@ -545,7 +546,7 @@ private fun ResultScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
     var previewing by remember { mutableStateOf<ResultFile?>(null) }
 
     ToolFrame(
-        title = stringResource(R.string.pdft_result_title),
+        title = stringResource(I18nR.string.pdft_result_title),
         onBack = { vm.back {} },
         snackbar = snackbar,
     ) { padding ->
@@ -560,7 +561,7 @@ private fun ResultScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                         Ico(BaseR.drawable.check_24px, tint = MaterialTheme.colorScheme.onPrimaryContainer)
                     }
                     Column(Modifier.padding(start = 12.dp)) {
-                        Text(stringResource(R.string.pdft_done), style = MaterialTheme.typography.titleMedium)
+                        Text(stringResource(I18nR.string.pdft_done), style = MaterialTheme.typography.titleMedium)
                         Text(
                             vm.resultTool?.let { stringResource(it.title) } ?: "",
                             style = MaterialTheme.typography.bodySmall,
@@ -576,13 +577,13 @@ private fun ResultScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                     Text(
                         if (after < vm.inputBytes) {
                             stringResource(
-                                R.string.pdft_compress_result,
+                                I18nR.string.pdft_compress_result,
                                 formatBytes(context, vm.inputBytes),
                                 formatBytes(context, after),
                                 saving.toInt(),
                             )
                         } else {
-                            stringResource(R.string.pdft_compress_no_gain, formatBytes(context, vm.inputBytes), formatBytes(context, after))
+                            stringResource(I18nR.string.pdft_compress_no_gain, formatBytes(context, vm.inputBytes), formatBytes(context, after))
                         },
                         style = MaterialTheme.typography.bodyMedium,
                     )
@@ -592,53 +593,53 @@ private fun ResultScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                 ResultCard(r, onPreview = { previewing = r })
             }
             item { HorizontalDivider(Modifier.padding(vertical = 4.dp)) }
-            item { SectionLabel(stringResource(R.string.pdft_save)) }
+            item { SectionLabel(stringResource(I18nR.string.pdft_save)) }
             if (PdfStorage.mediaStoreSupported) {
                 item {
                     Button(onClick = { vm.saveToDocuments() }, modifier = Modifier.fillMaxWidth()) {
-                        Text(stringResource(R.string.pdft_save_to, PdfStorage.mediaStoreFolder(mime)))
+                        Text(stringResource(I18nR.string.pdft_save_to, PdfStorage.mediaStoreFolder(mime)))
                     }
                 }
             }
             item {
                 OutlinedButton(onClick = { tree.launch(null) }, modifier = Modifier.fillMaxWidth()) {
-                    Text(stringResource(R.string.pdft_save_choose_folder))
+                    Text(stringResource(I18nR.string.pdft_save_choose_folder))
                 }
             }
             if (results.size == 1) {
                 item {
                     OutlinedButton(onClick = { createDoc.launch(results[0].name) }, modifier = Modifier.fillMaxWidth()) {
-                        Text(stringResource(R.string.pdft_save_as))
+                        Text(stringResource(I18nR.string.pdft_save_as))
                     }
                 }
             }
             if (vm.saved.isNotEmpty()) {
                 item {
                     Column {
-                        Text(stringResource(R.string.pdft_saved_files), style = MaterialTheme.typography.titleSmall)
+                        Text(stringResource(I18nR.string.pdft_saved_files), style = MaterialTheme.typography.titleSmall)
                         vm.saved.forEach {
                             Text("${it.name} (${formatBytes(context, it.size)})", style = MaterialTheme.typography.bodySmall)
                         }
                     }
                 }
             }
-            item { SectionLabel(stringResource(R.string.pdft_then)) }
+            item { SectionLabel(stringResource(I18nR.string.pdft_then)) }
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilledTonalButton(onClick = {
                         val items = if (vm.saved.isNotEmpty()) vm.saved.map { it.uri to it.mime }
                         else results.map { PdfStorage.cacheUri(context, it.file) to it.mime }
                         vm.share(items.map { it.first })
-                    }) { Text(stringResource(R.string.pdft_share)) }
+                    }) { Text(stringResource(I18nR.string.pdft_share)) }
                     if (results.size == 1) {
                         FilledTonalButton(onClick = {
                             val uri = vm.saved.firstOrNull()?.uri ?: PdfStorage.cacheUri(context, results[0].file)
                             try {
                                 PdfStorage.open(context, uri, results[0].mime)
                             } catch (e: ActivityNotFoundException) {
-                                vm.message = context.getString(R.string.pdft_error_open_other)
+                                vm.message = context.getString(I18nR.string.pdft_error_open_other)
                             }
-                        }) { Text(stringResource(R.string.pdft_open)) }
+                        }) { Text(stringResource(I18nR.string.pdft_open)) }
                     }
                 }
             }
@@ -649,21 +650,21 @@ private fun ResultScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                             val text = runCatching { results[0].file.readText() }.getOrDefault("")
                             val cm = context.getSystemService(android.content.ClipboardManager::class.java)
                             cm?.setPrimaryClip(android.content.ClipData.newPlainText(null, text))
-                            vm.message = context.getString(R.string.pdft_copied)
+                            vm.message = context.getString(I18nR.string.pdft_copied)
                         },
                         modifier = Modifier.fillMaxWidth(),
-                    ) { Text(stringResource(R.string.pdft_copy_text)) }
+                    ) { Text(stringResource(I18nR.string.pdft_copy_text)) }
                 }
             }
             if (results.size == 1 && results[0].mime == "application/pdf") {
                 item {
                     OutlinedButton(onClick = { vm.useResultAsInput(results[0]) }, modifier = Modifier.fillMaxWidth()) {
-                        Text(stringResource(R.string.pdft_use_as_input))
+                        Text(stringResource(I18nR.string.pdft_use_as_input))
                     }
                 }
             }
             item {
-                TextButton(onClick = { vm.screen = PdfScreen.Home }) { Text(stringResource(R.string.pdft_back_to_tools)) }
+                TextButton(onClick = { vm.screen = PdfScreen.Home }) { Text(stringResource(I18nR.string.pdft_back_to_tools)) }
             }
         }
     }
@@ -698,7 +699,7 @@ private fun ResultCard(r: ResultFile, onPreview: () -> Unit) {
             Column(Modifier.weight(1f)) {
                 Text(r.name, style = MaterialTheme.typography.titleSmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 Text(
-                    formatBytes(context, r.size) + if (pages != null) " - " + stringResource(R.string.pdft_pages_count, pages.count) else "",
+                    formatBytes(context, r.size) + if (pages != null) " - " + stringResource(I18nR.string.pdft_pages_count, pages.count) else "",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -708,7 +709,7 @@ private fun ResultCard(r: ResultFile, onPreview: () -> Unit) {
             }
             if (pages != null) {
                 IconButton(onClick = onPreview) {
-                    Ico(BaseR.drawable.visibility_24px, description = stringResource(R.string.pdft_preview))
+                    Ico(BaseR.drawable.visibility_24px, description = stringResource(I18nR.string.pdft_preview))
                 }
             }
         }
@@ -723,7 +724,7 @@ private fun HistoryScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
     val context = LocalContext.current
     var entries by remember { mutableStateOf(PdfStorage.loadHistory(context)) }
     ToolFrame(
-        title = stringResource(R.string.pdft_history),
+        title = stringResource(I18nR.string.pdft_history),
         onBack = { vm.back {} },
         snackbar = snackbar,
         actions = {
@@ -731,14 +732,14 @@ private fun HistoryScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                 TextButton(onClick = {
                     PdfStorage.clearHistory(context)
                     entries = emptyList()
-                }) { Text(stringResource(R.string.pdft_history_clear)) }
+                }) { Text(stringResource(I18nR.string.pdft_history_clear)) }
             }
         },
     ) { padding ->
         if (entries.isEmpty()) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
                 Text(
-                    stringResource(R.string.pdft_history_empty),
+                    stringResource(I18nR.string.pdft_history_empty),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -756,7 +757,7 @@ private fun HistoryScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {
                                     Text(
-                                        tool?.let { stringResource(it.title) } ?: stringResource(R.string.pdft_title),
+                                        tool?.let { stringResource(it.title) } ?: stringResource(I18nR.string.pdft_title),
                                         style = MaterialTheme.typography.titleSmall,
                                     )
                                     Text(
@@ -768,7 +769,7 @@ private fun HistoryScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                                 IconButton(onClick = {
                                     PdfStorage.removeHistory(context, entry.id)
                                     entries = entries.filter { it.id != entry.id }
-                                }) { Ico(BaseR.drawable.delete_24px, description = stringResource(R.string.pdft_remove)) }
+                                }) { Ico(BaseR.drawable.delete_24px, description = stringResource(I18nR.string.pdft_remove)) }
                             }
                             entry.files.forEach { f ->
                                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -783,12 +784,12 @@ private fun HistoryScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                                         try {
                                             PdfStorage.open(context, f.uri, f.mime)
                                         } catch (e: Exception) {
-                                            vm.message = context.getString(R.string.pdft_error_open_other)
+                                            vm.message = context.getString(I18nR.string.pdft_error_open_other)
                                         }
-                                    }) { Text(stringResource(R.string.pdft_open)) }
+                                    }) { Text(stringResource(I18nR.string.pdft_open)) }
                                     TextButton(onClick = {
                                         vm.share(listOf(f.uri))
-                                    }) { Text(stringResource(R.string.pdft_share)) }
+                                    }) { Text(stringResource(I18nR.string.pdft_share)) }
                                 }
                             }
                         }

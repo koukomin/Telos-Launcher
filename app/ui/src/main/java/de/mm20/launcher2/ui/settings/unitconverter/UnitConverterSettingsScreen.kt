@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.unitconverter
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,15 +26,15 @@ fun UnitConverterSettingsScreen() {
     val backStack = LocalBackStack.current
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_search_unitconverter),
+        title = stringResource(I18nR.string.preference_search_unitconverter),
         helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/search/unit-converter"
     ) {
         item {
             PreferenceCategory {
                 val unitConverter by viewModel.unitConverter.collectAsState()
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_unitconverter),
-                    summary = stringResource(R.string.preference_search_unitconverter_summary),
+                    title = stringResource(I18nR.string.preference_search_unitconverter),
+                    summary = stringResource(I18nR.string.preference_search_unitconverter_summary),
                     value = unitConverter == true,
                     onValueChanged = {
                         viewModel.setUnitConverter(it)
@@ -40,8 +42,8 @@ fun UnitConverterSettingsScreen() {
                 )
                 val currencyConverter by viewModel.currencyConverter.collectAsState()
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_currencyconverter),
-                    summary = stringResource(R.string.preference_search_currencyconverter_summary),
+                    title = stringResource(I18nR.string.preference_search_currencyconverter),
+                    summary = stringResource(I18nR.string.preference_search_currencyconverter_summary),
                     enabled = unitConverter != false,
                     value = currencyConverter == true,
                     onValueChanged = {
@@ -53,15 +55,15 @@ fun UnitConverterSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    title = stringResource(R.string.preference_search_supportedunits),
-                    icon = R.drawable.help_24px,
+                    title = stringResource(I18nR.string.preference_search_supportedunits),
+                    icon = BaseR.drawable.help_24px,
                     onClick = {
                         backStack.add(UnitConverterHelpSettingsRoute)
                     }
                 )
                 Preference(
-                    title = stringResource(R.string.preference_currency_settings),
-                    icon = R.drawable.open_in_new_24px,
+                    title = stringResource(I18nR.string.preference_currency_settings),
+                    icon = BaseR.drawable.open_in_new_24px,
                     onClick = {
                         backStack.add(CurrencySettingsRoute)
                     }

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.colorscheme
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -62,8 +64,8 @@ fun ColorSchemePreferenceCategory(
                     onCheckedChange = { onDarkModeChanged(false) }
                 ) {
                     Icon(
-                        painterResource(R.drawable.light_mode_24px),
-                        stringResource(R.string.preference_theme_light)
+                        painterResource(BaseR.drawable.light_mode_24px),
+                        stringResource(I18nR.string.preference_theme_light)
                     )
                 }
                 FilledTonalIconToggleButton(
@@ -71,8 +73,8 @@ fun ColorSchemePreferenceCategory(
                     onCheckedChange = { onDarkModeChanged(true) }
                 ) {
                     Icon(
-                        painterResource(R.drawable.dark_mode_24px),
-                        stringResource(R.string.preference_theme_dark)
+                        painterResource(BaseR.drawable.dark_mode_24px),
+                        stringResource(I18nR.string.preference_theme_dark)
                     )
                 }
             }

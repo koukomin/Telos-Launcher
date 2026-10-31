@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.net.Uri
@@ -66,13 +68,13 @@ internal val RATIO_CHOICES = listOf(0, 50, 100, 150, 200, 300, 500)
 internal val MINUTE_CHOICES = listOf(0, 30, 60, 180, 720, 1440, 4320)
 
 @Composable
-internal fun ratioLabel(x100: Int) = if (x100 <= 0) stringResource(R.string.dl_t_none) else SeedRules.formatRatio(x100 / 100.0)
+internal fun ratioLabel(x100: Int) = if (x100 <= 0) stringResource(I18nR.string.dl_t_none) else SeedRules.formatRatio(x100 / 100.0)
 
 @Composable
 internal fun minutesLabel(m: Int) = when {
-    m <= 0 -> stringResource(R.string.dl_t_none)
-    m < 60 -> stringResource(R.string.dl_t_minutes, m)
-    else -> stringResource(R.string.dl_t_hours, m / 60)
+    m <= 0 -> stringResource(I18nR.string.dl_t_none)
+    m < 60 -> stringResource(I18nR.string.dl_t_minutes, m)
+    else -> stringResource(I18nR.string.dl_t_hours, m / 60)
 }
 
 /**
@@ -155,14 +157,14 @@ internal fun AddTorrentSheet(initialText: String, manager: DownloadManager, onDi
             Modifier.verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).navigationBarsPadding(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text(stringResource(R.string.dl_t_add_title), style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(I18nR.string.dl_t_add_title), style = MaterialTheme.typography.titleLarge)
             val wgRoute by manager.torrentRoute.collectAsState()
             val wgText = torrentWgStatusText(wgRoute)
             if (wgText != null) {
                 Text(wgText, style = MaterialTheme.typography.bodyMedium)
             } else if (settings.proxyType != de.mm20.launcher2.downloads.ProxyType.None) {
                 Text(
-                    stringResource(if (settings.proxyType == de.mm20.launcher2.downloads.ProxyType.Http) R.string.au4_torrentproxy_note_http else R.string.au4_torrentproxy_note_socks),
+                    stringResource(if (settings.proxyType == de.mm20.launcher2.downloads.ProxyType.Http) I18nR.string.au4_torrentproxy_note_http else I18nR.string.au4_torrentproxy_note_socks),
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }
@@ -171,48 +173,48 @@ internal fun AddTorrentSheet(initialText: String, manager: DownloadManager, onDi
                 onValueChange = { text = it; if (preview != null && it != previewSource) preview = null },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 2, maxLines = 5,
-                label = { Text(stringResource(R.string.dl_t_source_hint)) },
+                label = { Text(stringResource(I18nR.string.dl_t_source_hint)) },
                 isError = text.isNotBlank() && sources.isEmpty(),
                 supportingText = {
-                    if (text.isNotBlank() && sources.isEmpty()) Text(stringResource(R.string.dl_t_source_invalid))
-                    else if (sources.size > 1) Text(pluralStringResource(R.plurals.dl_t_sources_found, sources.size, sources.size))
+                    if (text.isNotBlank() && sources.isEmpty()) Text(stringResource(I18nR.string.dl_t_source_invalid))
+                    else if (sources.size > 1) Text(pluralStringResource(I18nR.plurals.dl_t_sources_found, sources.size, sources.size))
                 },
                 trailingIcon = {
                     IconButton(onClick = {
                         val clip = context.getSystemService(android.content.ClipboardManager::class.java)
                             ?.primaryClip?.takeIf { it.itemCount > 0 }?.getItemAt(0)?.coerceToText(context)?.toString().orEmpty()
                         if (clip.isNotBlank()) text = if (text.isBlank()) clip else text.trimEnd() + "\n" + clip
-                    }) { Icon(painterResource(R.drawable.content_copy_24px), stringResource(R.string.dl_paste)) }
+                    }) { Icon(painterResource(BaseR.drawable.content_copy_24px), stringResource(I18nR.string.dl_paste)) }
                 },
             )
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedButton(onClick = { filePicker.launch(arrayOf("application/x-bittorrent", "application/octet-stream", "*/*")) }) {
-                    Text(stringResource(R.string.dl_t_choose_file))
+                    Text(stringResource(I18nR.string.dl_t_choose_file))
                 }
                 if (sources.size == 1 && preview == null) {
-                    Button(onClick = { fetch(sources.first()) }, enabled = !loading) { Text(stringResource(R.string.dl_t_fetch)) }
+                    Button(onClick = { fetch(sources.first()) }, enabled = !loading) { Text(stringResource(I18nR.string.dl_t_fetch)) }
                 }
             }
             if (loading) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 3.dp)
                     Spacer(Modifier.width(12.dp))
-                    Text(stringResource(R.string.dl_t_fetching), style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(I18nR.string.dl_t_fetching), style = MaterialTheme.typography.bodyMedium)
                 }
             }
-            error?.let { Text(stringResource(R.string.dl_t_fetch_failed, it), color = MaterialTheme.colorScheme.error) }
+            error?.let { Text(stringResource(I18nR.string.dl_t_fetch_failed, it), color = MaterialTheme.colorScheme.error) }
 
             val p = preview
             if (p != null) {
                 Text(p.name, style = MaterialTheme.typography.titleMedium)
                 val selected = FileSelection.selectedCount(files)
                 Text(
-                    stringResource(R.string.dl_t_files_selected, selected, files.size, Formatting.size(FileSelection.selectedBytes(files))),
+                    stringResource(I18nR.string.dl_t_files_selected, selected, files.size, Formatting.size(FileSelection.selectedBytes(files))),
                     style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    TextButton(onClick = { files = FileSelection.select(files, files.map { it.index }.toSet()) }) { Text(stringResource(R.string.dl_t_select_all)) }
-                    TextButton(onClick = { files = FileSelection.select(files, emptySet()) }) { Text(stringResource(R.string.dl_t_select_none)) }
+                    TextButton(onClick = { files = FileSelection.select(files, files.map { it.index }.toSet()) }) { Text(stringResource(I18nR.string.dl_t_select_all)) }
+                    TextButton(onClick = { files = FileSelection.select(files, emptySet()) }) { Text(stringResource(I18nR.string.dl_t_select_none)) }
                 }
                 TorrentFileList(
                     files = files,
@@ -220,39 +222,39 @@ internal fun AddTorrentSheet(initialText: String, manager: DownloadManager, onDi
                     showProgress = false,
                     modifier = Modifier.fillMaxWidth().height(300.dp),
                 )
-                if (selected == 0) Text(stringResource(R.string.dl_t_no_files_selected), color = MaterialTheme.colorScheme.error)
+                if (selected == 0) Text(stringResource(I18nR.string.dl_t_no_files_selected), color = MaterialTheme.colorScheme.error)
             }
 
-            Text(stringResource(R.string.dl_folder), style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(I18nR.string.dl_folder), style = MaterialTheme.typography.labelLarge)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(painterResource(R.drawable.folder_24px), null, Modifier.size(20.dp))
+                Icon(painterResource(BaseR.drawable.folder_24px), null, Modifier.size(20.dp))
                 Spacer(Modifier.width(8.dp))
                 Text(
                     folder?.let { Uri.parse(it).lastPathSegment?.substringAfterLast(':') ?: it }
                         ?: settings.defaultFolder.takeIf { it.isNotEmpty() }?.let { Uri.parse(it).lastPathSegment?.substringAfterLast(':') }
-                        ?: stringResource(R.string.dl_folder_default),
+                        ?: stringResource(I18nR.string.dl_folder_default),
                     modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium, maxLines = 1,
                 )
-                TextButton(onClick = { folderPicker.launch(null) }) { Text(stringResource(R.string.dl_folder_choose)) }
-                if (folder != null) TextButton(onClick = { folder = null }) { Text(stringResource(R.string.dl_reset)) }
+                TextButton(onClick = { folderPicker.launch(null) }) { Text(stringResource(I18nR.string.dl_folder_choose)) }
+                if (folder != null) TextButton(onClick = { folder = null }) { Text(stringResource(I18nR.string.dl_reset)) }
             }
 
-            SwitchRow(stringResource(R.string.dl_t_sequential), sequential) { sequential = it }
-            Text(stringResource(R.string.dl_t_sequential_summary), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            SwitchRow(stringResource(I18nR.string.dl_t_sequential), sequential) { sequential = it }
+            Text(stringResource(I18nR.string.dl_t_sequential_summary), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
-            Text(stringResource(R.string.dl_t_seed_options), style = MaterialTheme.typography.labelLarge)
-            SwitchRow(stringResource(R.string.dl_t_stop_at_done), stopAtDone) { stopAtDone = it }
+            Text(stringResource(I18nR.string.dl_t_seed_options), style = MaterialTheme.typography.labelLarge)
+            SwitchRow(stringResource(I18nR.string.dl_t_stop_at_done), stopAtDone) { stopAtDone = it }
             if (!stopAtDone) {
-                Text(stringResource(R.string.dl_t_ratio_limit), style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(I18nR.string.dl_t_ratio_limit), style = MaterialTheme.typography.labelMedium)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     for (r in RATIO_CHOICES) FilterChip(selected = ratioX100 == r, onClick = { ratioX100 = r }, label = { Text(ratioLabel(r)) })
                 }
-                Text(stringResource(R.string.dl_t_time_limit), style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(I18nR.string.dl_t_time_limit), style = MaterialTheme.typography.labelMedium)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     for (m in MINUTE_CHOICES) FilterChip(selected = minutes == m, onClick = { minutes = m }, label = { Text(minutesLabel(m)) })
                 }
             }
-            SwitchRow(stringResource(R.string.dl_start_paused), startPaused) { startPaused = it }
+            SwitchRow(stringResource(I18nR.string.dl_start_paused), startPaused) { startPaused = it }
 
             val canAdd = if (p != null) FileSelection.selectedCount(files) > 0 else sources.isNotEmpty() && sources.none { TorrentSources.classify(it) != TorrentSourceKind.Magnet && TorrentSources.classify(it) != TorrentSourceKind.TorrentUrl }
             Button(
@@ -286,11 +288,11 @@ internal fun AddTorrentSheet(initialText: String, manager: DownloadManager, onDi
                             if (manager.tasks.value.size == n) duplicates++
                         }
                     }
-                    if (duplicates > 0) Toast.makeText(context, R.string.dl_t_duplicate, Toast.LENGTH_SHORT).show()
+                    if (duplicates > 0) Toast.makeText(context, I18nR.string.dl_t_duplicate, Toast.LENGTH_SHORT).show()
                     onDismiss()
                 },
             ) {
-                Text(stringResource(if (p != null) R.string.dl_t_download_button else R.string.dl_t_add_without_list))
+                Text(stringResource(if (p != null) I18nR.string.dl_t_download_button else I18nR.string.dl_t_add_without_list))
             }
             Spacer(Modifier.size(16.dp))
         }

@@ -1,6 +1,6 @@
 package de.mm20.launcher2.ui.common
-
 import de.mm20.launcher2.i18n.R as I18nR
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

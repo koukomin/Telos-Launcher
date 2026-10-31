@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.sheets
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Activity
 import android.app.ActivityOptions
@@ -182,7 +184,7 @@ fun ColumnScope.ConfigureWeatherWidget(
             modifier = Modifier.fillMaxWidth()
         ) {
             SwitchPreference(
-                title = stringResource(R.string.widget_config_weather_compact),
+                title = stringResource(I18nR.string.widget_config_weather_compact),
                 iconPadding = false,
                 value = !widget.config.showForecast,
                 onValueChanged = {
@@ -213,12 +215,12 @@ fun ColumnScope.ConfigureWeatherWidget(
                     )
                 })
         }) {
-        Text(stringResource(R.string.widget_config_weather_integration_settings))
+        Text(stringResource(I18nR.string.widget_config_weather_integration_settings))
         Icon(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
                 .requiredSize(ButtonDefaults.IconSize),
-            painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
+            painter = painterResource(BaseR.drawable.open_in_new_20px), contentDescription = null
         )
     }
 }
@@ -264,7 +266,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
         ) {
             Icon(
                 painterResource(
-                    if (!widget.config.customTags) R.drawable.check_20px else R.drawable.star_20px
+                    if (!widget.config.customTags) BaseR.drawable.check_20px else BaseR.drawable.star_20px
                 ),
                 contentDescription = null,
                 modifier = Modifier
@@ -272,7 +274,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
                     .size(ToggleButtonDefaults.IconSize)
             )
 
-            Text(stringResource(R.string.favorites))
+            Text(stringResource(I18nR.string.favorites))
         }
         ToggleButton(
             modifier = Modifier.weight(1f),
@@ -290,7 +292,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
         ) {
             Icon(
                 painterResource(
-                    if (widget.config.customTags) R.drawable.check_20px else R.drawable.tag_20px
+                    if (widget.config.customTags) BaseR.drawable.check_20px else BaseR.drawable.tag_20px
                 ),
                 contentDescription = null,
                 modifier = Modifier
@@ -298,7 +300,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
                     .size(ToggleButtonDefaults.IconSize)
             )
 
-            Text(stringResource(R.string.preference_screen_tags))
+            Text(stringResource(I18nR.string.preference_screen_tags))
         }
     }
 
@@ -362,7 +364,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
                                 ) {
                                     Preference(
                                         title = tag,
-                                        icon = R.drawable.tag_24px,
+                                        icon = BaseR.drawable.tag_24px,
                                         controls = {
                                             IconButton(
                                                 modifier = Modifier.offset(x = 8.dp),
@@ -371,8 +373,8 @@ fun ColumnScope.ConfigureFavoritesWidget(
                                                 }
                                             ) {
                                                 Icon(
-                                                    painterResource(R.drawable.close_24px),
-                                                    stringResource(R.string.menu_remove),
+                                                    painterResource(BaseR.drawable.close_24px),
+                                                    stringResource(I18nR.string.menu_remove),
                                                 )
                                             }
                                         }
@@ -396,13 +398,13 @@ fun ColumnScope.ConfigureFavoritesWidget(
                         shapes = ButtonDefaults.shapes()
                     ) {
                         Icon(
-                            painterResource(R.drawable.add_20px),
+                            painterResource(BaseR.drawable.add_20px),
                             null,
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize)
                         )
-                        Text(stringResource(R.string.select_tag))
+                        Text(stringResource(I18nR.string.select_tag))
                     }
                     DropdownMenuPopup(
                         expanded = showAddMenu,
@@ -421,7 +423,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
                                         },
                                         leadingIcon = {
                                             Icon(
-                                                painterResource(R.drawable.tag_24px),
+                                                painterResource(BaseR.drawable.tag_24px),
                                                 null
                                             )
                                         },
@@ -445,11 +447,11 @@ fun ColumnScope.ConfigureFavoritesWidget(
                             DropdownMenuItem(
                                 shape = MenuDefaults.standaloneItemShape,
                                 leadingIcon = {
-                                    Icon(painterResource(R.drawable.add_24px), null)
+                                    Icon(painterResource(BaseR.drawable.add_24px), null)
                                 },
                                 text = {
                                     Text(
-                                        stringResource(R.string.edit_favorites_dialog_new_tag),
+                                        stringResource(I18nR.string.edit_favorites_dialog_new_tag),
                                     )
                                 },
                                 onClick = {
@@ -481,7 +483,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         SwitchPreference(
-                            title = stringResource(R.string.preference_compact_tags),
+                            title = stringResource(I18nR.string.preference_compact_tags),
                             iconPadding = false,
                             value = widget.config.compactTags,
                             onValueChanged = {
@@ -509,7 +511,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
                         ) {
 
                             SwitchPreference(
-                                title = stringResource(R.string.preference_edit_button),
+                                title = stringResource(I18nR.string.preference_edit_button),
                                 iconPadding = false,
                                 value = widget.config.editButton,
                                 onValueChanged = {
@@ -523,7 +525,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
                                 }
                             )
                             SwitchPreference(
-                                title = stringResource(R.string.preference_compact_tags),
+                                title = stringResource(I18nR.string.preference_compact_tags),
                                 iconPadding = false,
                                 value = widget.config.compactTags,
                                 onValueChanged = {
@@ -543,7 +545,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
                         modifier = Modifier.padding(top = 16.dp)
                     ) {
                         SliderPreference(
-                            title = stringResource(R.string.favorites_skip_rows),
+                            title = stringResource(I18nR.string.favorites_skip_rows),
                             value = widget.config.skipRows,
                             min = 0,
                             max = 8,
@@ -572,12 +574,12 @@ fun ColumnScope.ConfigureFavoritesWidget(
                         onClick = {
                             bottomSheetManager.showEditFavoritesSheet()
                         }) {
-                        Text(stringResource(R.string.menu_item_edit_favs))
+                        Text(stringResource(I18nR.string.menu_item_edit_favs))
                         Icon(
                             modifier = Modifier
                                 .padding(start = ButtonDefaults.IconSpacing)
                                 .requiredSize(ButtonDefaults.IconSize),
-                            painter = painterResource(R.drawable.open_in_new_20px),
+                            painter = painterResource(BaseR.drawable.open_in_new_20px),
                             contentDescription = null
                         )
                     }
@@ -599,7 +601,7 @@ fun ColumnScope.ConfigureMusicWidget(
             modifier = Modifier.fillMaxWidth()
         ) {
             SwitchPreference(
-                title = stringResource(R.string.music_widget_interactive_progress_bar),
+                title = stringResource(I18nR.string.music_widget_interactive_progress_bar),
                 iconPadding = false,
                 value = widget.config.interactiveProgressBar,
                 onValueChanged = {
@@ -630,12 +632,12 @@ fun ColumnScope.ConfigureMusicWidget(
                     )
                 })
         }) {
-        Text(stringResource(R.string.widget_config_music_integration_settings))
+        Text(stringResource(I18nR.string.widget_config_music_integration_settings))
         Icon(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
                 .requiredSize(ButtonDefaults.IconSize),
-            painter = painterResource(R.drawable.open_in_new_20px), contentDescription = null
+            painter = painterResource(BaseR.drawable.open_in_new_20px), contentDescription = null
         )
     }
 }
@@ -662,8 +664,8 @@ fun ColumnScope.ConfigureAppWidget(
             contentAlignment = Alignment.Center
         ) {
             LargeMessage(
-                icon = R.drawable.error_48px,
-                text = stringResource(id = R.string.app_widget_loading_failed)
+                icon = BaseR.drawable.error_48px,
+                text = stringResource(id = I18nR.string.app_widget_loading_failed)
             )
         }
         OutlinedButton(
@@ -673,13 +675,13 @@ fun ColumnScope.ConfigureAppWidget(
             contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
             onClick = { replaceWidget = true }) {
             Icon(
-                painterResource(R.drawable.build_20px),
+                painterResource(BaseR.drawable.build_20px),
                 null,
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .requiredSize(ButtonDefaults.IconSize)
             )
-            Text(stringResource(R.string.widget_action_replace))
+            Text(stringResource(I18nR.string.widget_action_replace))
         }
         WidgetPickerSheet(
             expanded = replaceWidget,
@@ -804,7 +806,7 @@ fun ColumnScope.ConfigureAppWidget(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 SwitchPreference(
-                    title = stringResource(R.string.widget_config_appwidget_borderless),
+                    title = stringResource(I18nR.string.widget_config_appwidget_borderless),
                     iconPadding = false,
                     value = widget.config.borderless,
                     onValueChanged = {
@@ -813,7 +815,7 @@ fun ColumnScope.ConfigureAppWidget(
                 )
                 HorizontalDivider()
                 SwitchPreference(
-                    title = stringResource(R.string.widget_config_appwidget_background),
+                    title = stringResource(I18nR.string.widget_config_appwidget_background),
                     iconPadding = false,
                     value = widget.config.background,
                     onValueChanged = {
@@ -823,7 +825,7 @@ fun ColumnScope.ConfigureAppWidget(
                 if (isAtLeastApiLevel(31)) {
                     HorizontalDivider()
                     SwitchPreference(
-                        title = stringResource(R.string.widget_use_theme_colors),
+                        title = stringResource(I18nR.string.widget_use_theme_colors),
                         iconPadding = false,
                         value = widget.config.themeColors,
                         onValueChanged = {
@@ -863,13 +865,13 @@ fun ColumnScope.ConfigureAppWidget(
                     )
                 }) {
                 Text(
-                    stringResource(id = R.string.widget_config_appwidget_configure)
+                    stringResource(id = I18nR.string.widget_config_appwidget_configure)
                 )
                 Icon(
                     modifier = Modifier
                         .padding(start = ButtonDefaults.IconSpacing)
                         .requiredSize(ButtonDefaults.IconSize),
-                    painter = painterResource(R.drawable.open_in_new_20px),
+                    painter = painterResource(BaseR.drawable.open_in_new_20px),
                     contentDescription = null
                 )
             }
@@ -911,7 +913,7 @@ fun ColumnScope.ConfigureCalendarWidget(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_calendar_hide_completed),
+                    title = stringResource(I18nR.string.preference_calendar_hide_completed),
                     iconPadding = false,
                     value = !widget.config.completedTasks,
                     onValueChanged = {
@@ -934,8 +936,8 @@ fun ColumnScope.ConfigureCalendarWidget(
     if (groups?.isNotEmpty() == true) {
         for (group in groups) {
             val pluginName = remember(plugins, group.key) {
-                if (group.key == "local") context.getString(R.string.preference_calendar_calendars)
-                else if (group.key == "tasks.org") context.getString(R.string.preference_search_tasks)
+                if (group.key == "local") context.getString(I18nR.string.preference_calendar_calendars)
+                else if (group.key == "tasks.org") context.getString(I18nR.string.preference_search_tasks)
                 else plugins.find { it.authority == group.key }?.label
             }
             if (pluginName != null) {
@@ -988,7 +990,7 @@ fun ColumnScope.ConfigureCalendarWidget(
     } else if (!hasPermission) {
         MissingPermissionBanner(
             modifier = Modifier.padding(8.dp),
-            text = stringResource(R.string.missing_permission_calendar_widget_settings),
+            text = stringResource(I18nR.string.missing_permission_calendar_widget_settings),
             onClick = { permissionsManager.requestPermission(context, PermissionGroup.Calendar) },
         )
     } else if (calendars != null) {
@@ -996,7 +998,7 @@ fun ColumnScope.ConfigureCalendarWidget(
             modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            text = stringResource(R.string.widget_config_calendar_no_calendars)
+            text = stringResource(I18nR.string.widget_config_calendar_no_calendars)
         )
     }
     if (hasPermission) {
@@ -1027,9 +1029,9 @@ fun ColumnScope.ConfigureCalendarWidget(
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
                     .requiredSize(ButtonDefaults.IconSize),
-                painter = painterResource(R.drawable.help_20px), contentDescription = null
+                painter = painterResource(BaseR.drawable.help_20px), contentDescription = null
             )
-            Text(stringResource(R.string.widget_config_calendar_missing_calendars_hint))
+            Text(stringResource(I18nR.string.widget_config_calendar_missing_calendars_hint))
         }
     }
 }
@@ -1075,12 +1077,12 @@ fun ConfigureNotesWidget(
     OutlinedCard {
         if (widget.config.linkedFile != null) {
             Preference(
-                icon = { Icon(painterResource(R.drawable.link_off_24px), null) },
-                title = { Text(stringResource(R.string.note_widget_action_unlink_file)) },
+                icon = { Icon(painterResource(BaseR.drawable.link_off_24px), null) },
+                title = { Text(stringResource(I18nR.string.note_widget_action_unlink_file)) },
                 summary = {
                     Text(
                         stringResource(
-                            R.string.note_widget_linked_file_summary,
+                            I18nR.string.note_widget_linked_file_summary,
                             formatLinkedFileUri(widget.config.linkedFile?.toUri())
                         )
                     )
@@ -1099,13 +1101,13 @@ fun ConfigureNotesWidget(
             )
         } else {
             Preference(
-                title = stringResource(R.string.note_widget_link_file),
-                summary = stringResource(R.string.note_widget_link_file_summary),
-                icon = R.drawable.link_24px,
+                title = stringResource(I18nR.string.note_widget_link_file),
+                summary = stringResource(I18nR.string.note_widget_link_file_summary),
+                icon = BaseR.drawable.link_24px,
                 onClick = {
                     linkFileLauncher.launch(
                         resources.getString(
-                            R.string.notes_widget_export_filename,
+                            I18nR.string.notes_widget_export_filename,
                             ZonedDateTime.now().format(
                                 DateTimeFormatter.ISO_INSTANT
                             )
@@ -1127,7 +1129,7 @@ fun ConfigureRemindersWidget(
             modifier = Modifier.fillMaxWidth()
         ) {
             SwitchPreference(
-                title = stringResource(R.string.preference_calendar_hide_completed),
+                title = stringResource(I18nR.string.preference_calendar_hide_completed),
                 iconPadding = false,
                 value = !widget.config.showCompleted,
                 onValueChanged = {

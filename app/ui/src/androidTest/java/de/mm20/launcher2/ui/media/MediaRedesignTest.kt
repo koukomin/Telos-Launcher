@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.layout.*
@@ -64,7 +65,7 @@ class MediaRedesignTest {
             }
         }
         }
-        compose.onNodeWithContentDescription(context.getString(R.string.comms_hangup))
+        compose.onNodeWithContentDescription(context.getString(I18nR.string.comms_hangup))
             .assertIsDisplayed().performTouchInput { click() }
         compose.runOnIdle { assertEquals(1, clicks) }
         screenshot("media-call-termination-font2.png")
@@ -89,12 +90,12 @@ class MediaRedesignTest {
         }
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         compose.onNodeWithText(entry.title).performTouchInput { click() }
-        compose.onNodeWithContentDescription(context.getString(R.string.au10_music_more)).performClick()
-        compose.onNodeWithText(context.getString(R.string.telos_youtube_artist_radio)).performClick()
+        compose.onNodeWithContentDescription(context.getString(I18nR.string.au10_music_more)).performClick()
+        compose.onNodeWithText(context.getString(I18nR.string.telos_youtube_artist_radio)).performClick()
         compose.runOnIdle { assertEquals(1, played); assertEquals(1, radio) }
         for (listen in listOf(true, false)) for (largeFont in listOf(false, true)) for (isLight in listOf(false, true)) for (isWide in listOf(false, true)) {
             compose.runOnIdle { music.value = listen; large.value = largeFont; light.value = isLight; wide.value = isWide }
-            compose.onNodeWithContentDescription(context.getString(R.string.au10_music_more)).assertIsDisplayed()
+            compose.onNodeWithContentDescription(context.getString(I18nR.string.au10_music_more)).assertIsDisplayed()
             screenshot("media-${if (listen) "listen" else "watch"}-font${if (largeFont) 2 else 1}-${if (isLight) "light" else "dark"}-${if (isWide) "wide" else "compact"}.png")
         }
     }
@@ -117,14 +118,14 @@ class MediaRedesignTest {
             }
         }
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        compose.onNodeWithContentDescription(context.getString(R.string.hc_previous)).assertIsNotEnabled()
-        compose.onNodeWithContentDescription(context.getString(R.string.hc_next)).performClick()
-        compose.onNodeWithContentDescription(context.getString(R.string.au_music_pause)).performClick()
-        compose.onNodeWithContentDescription(context.getString(R.string.hc_stop)).performClick()
+        compose.onNodeWithContentDescription(context.getString(I18nR.string.hc_previous)).assertIsNotEnabled()
+        compose.onNodeWithContentDescription(context.getString(I18nR.string.hc_next)).performClick()
+        compose.onNodeWithContentDescription(context.getString(I18nR.string.au_music_pause)).performClick()
+        compose.onNodeWithContentDescription(context.getString(I18nR.string.hc_stop)).performClick()
         compose.runOnIdle { assertEquals(1, toggles); assertEquals(1, stopped); assertEquals(1, chosen) }
         for (landscape in listOf(false, true)) for (font2 in listOf(false, true)) {
             compose.runOnIdle { wide.value = landscape; large.value = font2 }
-            compose.onNodeWithContentDescription(context.getString(R.string.hc_stop)).performScrollTo().assertIsDisplayed()
+            compose.onNodeWithContentDescription(context.getString(I18nR.string.hc_stop)).performScrollTo().assertIsDisplayed()
             screenshot("media-player-${if (landscape) "landscape" else "portrait"}-font${if (font2) 2 else 1}.png")
         }
     }

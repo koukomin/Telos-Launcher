@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.floating
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.ClipData
 import android.content.Intent
@@ -229,8 +231,8 @@ private fun SidebarCard(
             Column(modifier = Modifier.padding(8.dp)) {
                 if (style.fileDock) {
                     SidebarWideButton(
-                        icon = R.drawable.ic_sidebar_file_dock,
-                        label = R.string.floating_launcher_file_dock,
+                        icon = BaseR.drawable.ic_sidebar_file_dock,
+                        label = I18nR.string.floating_launcher_file_dock,
                         highlighted = fileDockItems.isNotEmpty(),
                     ) { showFileDock = true }
                     HorizontalDivider(Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
@@ -282,12 +284,12 @@ private fun SidebarCard(
                         }
                     }
                     item(key = "all") {
-                        SidebarTile(stringResource(R.string.floating_launcher_tools_all), { showTools = true }) {
+                        SidebarTile(stringResource(I18nR.string.floating_launcher_tools_all), { showTools = true }) {
                             SidebarAllToolsIcon(style.iconSize)
                         }
                     }
                     item(key = "edit") {
-                        SidebarTile(stringResource(R.string.floating_launcher_edit), onEdit) { SidebarEditIcon(style.iconSize) }
+                        SidebarTile(stringResource(I18nR.string.floating_launcher_edit), onEdit) { SidebarEditIcon(style.iconSize) }
                     }
                 }
             }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.base.R as BaseR
 
 import android.icu.text.DecimalFormat
 import androidx.compose.foundation.layout.Row
@@ -41,7 +42,7 @@ fun RatingBar(
     ) {
         for (i in 0 until fullStars) {
             Icon(
-                painter = painterResource(R.drawable.star_20px_filled),
+                painter = painterResource(BaseR.drawable.star_20px_filled),
                 contentDescription = null,
                 tint = tint,
                 modifier = iconModifier
@@ -49,7 +50,7 @@ fun RatingBar(
         }
         if (halfStar) {
             Icon(
-                painter = painterResource(R.drawable.star_half_20px),
+                painter = painterResource(BaseR.drawable.star_half_20px),
                 contentDescription = null,
                 tint = tint,
                 modifier = iconModifier
@@ -57,7 +58,7 @@ fun RatingBar(
         }
         for (i in 0 until emptyStars) {
             Icon(
-                painter = painterResource(R.drawable.star_20px),
+                painter = painterResource(BaseR.drawable.star_20px),
                 contentDescription = null,
                 tint = tint,
                 modifier = iconModifier

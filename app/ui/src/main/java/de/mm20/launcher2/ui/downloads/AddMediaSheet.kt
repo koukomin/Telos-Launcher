@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.net.Uri
@@ -119,7 +121,7 @@ internal fun AddMediaSheet(initialUrl: String, manager: DownloadManager, onDismi
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e
             } catch (e: Exception) {
-                error = context.getString(R.string.dl_m_analyze_failed, e.message.orEmpty())
+                error = context.getString(I18nR.string.dl_m_analyze_failed, e.message.orEmpty())
             }
             analyzing = false
         }
@@ -130,13 +132,13 @@ internal fun AddMediaSheet(initialUrl: String, manager: DownloadManager, onDismi
             Modifier.verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).navigationBarsPadding(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text(stringResource(R.string.dl_m_title), style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(I18nR.string.dl_m_title), style = MaterialTheme.typography.titleLarge)
 
             if (!runtime.isAvailable) {
                 Surface(shape = RoundedCornerShape(16.dp), color = MaterialTheme.colorScheme.errorContainer) {
                     Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text(stringResource(R.string.dl_m_missing_title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onErrorContainer)
-                        Text(stringResource(R.string.dl_m_missing_text), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
+                        Text(stringResource(I18nR.string.dl_m_missing_title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onErrorContainer)
+                        Text(stringResource(I18nR.string.dl_m_missing_text), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
                     }
                 }
             }
@@ -146,16 +148,16 @@ internal fun AddMediaSheet(initialUrl: String, manager: DownloadManager, onDismi
                 onValueChange = { url = it; info = null; error = null },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 1, maxLines = 3,
-                label = { Text(stringResource(R.string.dl_m_url_hint)) },
+                label = { Text(stringResource(I18nR.string.dl_m_url_hint)) },
                 isError = url.isNotBlank() && link == null,
             )
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedButton(onClick = { analyze() }, enabled = link != null && !analyzing && runtime.isAvailable) {
-                    Text(stringResource(R.string.dl_m_analyze))
+                    Text(stringResource(I18nR.string.dl_m_analyze))
                 }
                 if (analyzing) {
                     CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
-                    Text(stringResource(R.string.dl_m_analyzing), style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f))
+                    Text(stringResource(I18nR.string.dl_m_analyzing), style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f))
                 }
             }
             error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
@@ -183,10 +185,10 @@ internal fun AddMediaSheet(initialUrl: String, manager: DownloadManager, onDismi
                     }
                 }
                 if (i.isPlaylist) {
-                    Text(stringResource(R.string.dl_m_playlist, i.entries.size), style = MaterialTheme.typography.labelLarge)
+                    Text(stringResource(I18nR.string.dl_m_playlist, i.entries.size), style = MaterialTheme.typography.labelLarge)
                     Row {
-                        TextButton(onClick = { selected = i.entries.map { it.url }.toSet() }) { Text(stringResource(R.string.dl_m_select_all)) }
-                        TextButton(onClick = { selected = emptySet() }) { Text(stringResource(R.string.dl_m_select_none)) }
+                        TextButton(onClick = { selected = i.entries.map { it.url }.toSet() }) { Text(stringResource(I18nR.string.dl_m_select_all)) }
+                        TextButton(onClick = { selected = emptySet() }) { Text(stringResource(I18nR.string.dl_m_select_none)) }
                     }
                     Column {
                         for (e in i.entries.take(300)) {
@@ -200,60 +202,60 @@ internal fun AddMediaSheet(initialUrl: String, manager: DownloadManager, onDismi
                 }
             }
 
-            Text(stringResource(R.string.dl_m_quality), style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(I18nR.string.dl_m_quality), style = MaterialTheme.typography.labelLarge)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterChip(selected = !audioOnly && heightCap == 0, onClick = { audioOnly = false; heightCap = 0 }, label = { Text(stringResource(R.string.dl_m_quality_best)) })
+                FilterChip(selected = !audioOnly && heightCap == 0, onClick = { audioOnly = false; heightCap = 0 }, label = { Text(stringResource(I18nR.string.dl_m_quality_best)) })
                 for (h in heights) {
-                    FilterChip(selected = !audioOnly && heightCap == h, onClick = { audioOnly = false; heightCap = h }, label = { Text(stringResource(R.string.dl_m_quality_p, h)) })
+                    FilterChip(selected = !audioOnly && heightCap == h, onClick = { audioOnly = false; heightCap = h }, label = { Text(stringResource(I18nR.string.dl_m_quality_p, h)) })
                 }
-                FilterChip(selected = audioOnly, onClick = { audioOnly = true }, label = { Text(stringResource(R.string.dl_m_audio_only)) })
+                FilterChip(selected = audioOnly, onClick = { audioOnly = true }, label = { Text(stringResource(I18nR.string.dl_m_audio_only)) })
             }
             if (audioOnly) {
-                Text(stringResource(R.string.dl_m_audio_format), style = MaterialTheme.typography.labelLarge)
+                Text(stringResource(I18nR.string.dl_m_audio_format), style = MaterialTheme.typography.labelLarge)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     for (f in MediaFormats.audioFormats) FilterChip(selected = audioFormat == f, onClick = { audioFormat = f }, label = { Text(f) })
                 }
             } else {
-                Text(stringResource(R.string.dl_m_container), style = MaterialTheme.typography.labelLarge)
+                Text(stringResource(I18nR.string.dl_m_container), style = MaterialTheme.typography.labelLarge)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     for (c in MediaFormats.containers) {
-                        FilterChip(selected = container == c, onClick = { container = c }, label = { Text(if (c.isEmpty()) stringResource(R.string.dl_m_container_auto) else c) })
+                        FilterChip(selected = container == c, onClick = { container = c }, label = { Text(if (c.isEmpty()) stringResource(I18nR.string.dl_m_container_auto) else c) })
                     }
                 }
-                Text(stringResource(R.string.dl_m_subtitles), style = MaterialTheme.typography.labelLarge)
+                Text(stringResource(I18nR.string.dl_m_subtitles), style = MaterialTheme.typography.labelLarge)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(selected = subtitles == SubtitleMode.Off, onClick = { subtitles = SubtitleMode.Off }, label = { Text(stringResource(R.string.dl_m_sub_off)) })
-                    FilterChip(selected = subtitles == SubtitleMode.Files, onClick = { subtitles = SubtitleMode.Files }, label = { Text(stringResource(R.string.dl_m_sub_files)) })
-                    FilterChip(selected = subtitles == SubtitleMode.Embed, onClick = { subtitles = SubtitleMode.Embed }, label = { Text(stringResource(R.string.dl_m_sub_embed)) })
+                    FilterChip(selected = subtitles == SubtitleMode.Off, onClick = { subtitles = SubtitleMode.Off }, label = { Text(stringResource(I18nR.string.dl_m_sub_off)) })
+                    FilterChip(selected = subtitles == SubtitleMode.Files, onClick = { subtitles = SubtitleMode.Files }, label = { Text(stringResource(I18nR.string.dl_m_sub_files)) })
+                    FilterChip(selected = subtitles == SubtitleMode.Embed, onClick = { subtitles = SubtitleMode.Embed }, label = { Text(stringResource(I18nR.string.dl_m_sub_embed)) })
                 }
                 if (subtitles != SubtitleMode.Off) {
-                    OutlinedTextField(value = subLangs, onValueChange = { subLangs = it }, singleLine = true, modifier = Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.dl_m_sub_langs)) })
+                    OutlinedTextField(value = subLangs, onValueChange = { subLangs = it }, singleLine = true, modifier = Modifier.fillMaxWidth(), label = { Text(stringResource(I18nR.string.dl_m_sub_langs)) })
                 }
             }
-            SwitchRow(embedThumb, { embedThumb = it }, R.string.dl_m_embed_thumb)
-            SwitchRow(embedMeta, { embedMeta = it }, R.string.dl_m_embed_meta)
-            SwitchRow(sponsor, { sponsor = it }, R.string.dl_m_sponsorblock)
+            SwitchRow(embedThumb, { embedThumb = it }, I18nR.string.dl_m_embed_thumb)
+            SwitchRow(embedMeta, { embedMeta = it }, I18nR.string.dl_m_embed_meta)
+            SwitchRow(sponsor, { sponsor = it }, I18nR.string.dl_m_sponsorblock)
 
             // sites that need a login
             val hasCookies = remember(cookiesVersion) { runtime.hasCookies }
-            if (hasCookies) SwitchRow(useCookies, { useCookies = it }, R.string.dl_m_use_cookies)
+            if (hasCookies) SwitchRow(useCookies, { useCookies = it }, I18nR.string.dl_m_use_cookies)
             MediaCookieControls(runtime, link, onChanged = { cookiesVersion++; if (runtime.hasCookies) useCookies = true })
 
-            Text(stringResource(R.string.dl_folder), style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(I18nR.string.dl_folder), style = MaterialTheme.typography.labelLarge)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(painterResource(R.drawable.folder_24px), null, Modifier.size(20.dp))
+                Icon(painterResource(BaseR.drawable.folder_24px), null, Modifier.size(20.dp))
                 Spacer(Modifier.width(8.dp))
                 Text(
                     folder?.let { Uri.parse(it).lastPathSegment?.substringAfterLast(':') ?: it }
                         ?: settings.defaultFolder.takeIf { it.isNotEmpty() }?.let { Uri.parse(it).lastPathSegment?.substringAfterLast(':') }
-                        ?: stringResource(R.string.dl_folder_default),
+                        ?: stringResource(I18nR.string.dl_folder_default),
                     modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium, maxLines = 1,
                 )
-                TextButton(onClick = { folderPicker.launch(null) }) { Text(stringResource(R.string.dl_folder_choose)) }
-                if (folder != null) TextButton(onClick = { folder = null }) { Text(stringResource(R.string.dl_reset)) }
+                TextButton(onClick = { folderPicker.launch(null) }) { Text(stringResource(I18nR.string.dl_folder_choose)) }
+                if (folder != null) TextButton(onClick = { folder = null }) { Text(stringResource(I18nR.string.dl_reset)) }
             }
 
-            Text(stringResource(R.string.dl_m_notice), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(I18nR.string.dl_m_notice), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
             val playlist = info?.takeIf { it.isPlaylist }
             val count = if (playlist != null) selected.size else if (link != null) 1 else 0
@@ -286,7 +288,7 @@ internal fun AddMediaSheet(initialUrl: String, manager: DownloadManager, onDismi
                 enabled = count > 0 && runtime.isAvailable,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text(if (count > 1) stringResource(R.string.dl_m_add_n, count) else stringResource(R.string.dl_m_add_one))
+                Text(if (count > 1) stringResource(I18nR.string.dl_m_add_n, count) else stringResource(I18nR.string.dl_m_add_one))
             }
             Spacer(Modifier.size(16.dp))
         }
@@ -316,12 +318,12 @@ internal fun MediaCookieControls(runtime: MediaRuntime, pageUrl: String?, onChan
                 context.contentResolver.openInputStream(uri)?.use { it.readBytes().take(4 * 1024 * 1024).toByteArray().decodeToString() }
             }.getOrNull().orEmpty()
             val n = runtime.importCookies(text)
-            Toast.makeText(context, if (n > 0) context.getString(R.string.dl_m_cookies_imported, n) else context.getString(R.string.dl_m_cookies_invalid), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, if (n > 0) context.getString(I18nR.string.dl_m_cookies_imported, n) else context.getString(I18nR.string.dl_m_cookies_invalid), Toast.LENGTH_SHORT).show()
             onChanged()
         }
     }
     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        OutlinedButton(onClick = { picker.launch(arrayOf("text/plain", "text/*", "application/octet-stream")) }) { Text(stringResource(R.string.dl_m_cookies_import)) }
+        OutlinedButton(onClick = { picker.launch(arrayOf("text/plain", "text/*", "application/octet-stream")) }) { Text(stringResource(I18nR.string.dl_m_cookies_import)) }
         if (pageUrl != null) {
             // Each web app has its own isolated cookies: the user picks which one is the cookie source.
             // The cookies are read for pageUrl only, so they are never sent to another host.
@@ -335,7 +337,7 @@ internal fun MediaCookieControls(runtime: MediaRuntime, pageUrl: String?, onChan
                 val n = if (header.isBlank()) 0 else runtime.addCookieHeader(pageUrl, header)
                 Toast.makeText(
                     context,
-                    if (n > 0) context.getString(R.string.dl_m_cookies_browser_done, n) else context.getString(R.string.dl_m_cookies_browser_none),
+                    if (n > 0) context.getString(I18nR.string.dl_m_cookies_browser_done, n) else context.getString(I18nR.string.dl_m_cookies_browser_none),
                     Toast.LENGTH_LONG,
                 ).show()
                 onChanged()
@@ -343,10 +345,10 @@ internal fun MediaCookieControls(runtime: MediaRuntime, pageUrl: String?, onChan
             Box {
                 OutlinedButton(onClick = {
                     if (webApps.isEmpty() || !WebAppProfiles.isSupported()) takeOver(null) else sourceMenu = true
-                }) { Text(stringResource(R.string.dl_m_cookies_browser)) }
+                }) { Text(stringResource(I18nR.string.dl_m_cookies_browser)) }
                 DropdownMenu(expanded = sourceMenu, onDismissRequest = { sourceMenu = false }) {
                     DropdownMenuItem(
-                        text = { Text(stringResource(R.string.au6_webapps4_cookie_source_default)) },
+                        text = { Text(stringResource(I18nR.string.au6_webapps4_cookie_source_default)) },
                         onClick = { sourceMenu = false; takeOver(null) },
                     )
                     for (app in webApps.sortedBy { it.label.lowercase() }) {
@@ -356,7 +358,7 @@ internal fun MediaCookieControls(runtime: MediaRuntime, pageUrl: String?, onChan
                                 if (model != null) {
                                     AsyncImage(model = model, contentDescription = null, modifier = Modifier.size(24.dp).clip(RoundedCornerShape(6.dp)))
                                 } else {
-                                    Icon(painterResource(R.drawable.language_24px), contentDescription = null, modifier = Modifier.size(24.dp))
+                                    Icon(painterResource(BaseR.drawable.language_24px), contentDescription = null, modifier = Modifier.size(24.dp))
                                 }
                             },
                             text = { Text(app.label, maxLines = 1, overflow = TextOverflow.Ellipsis) },
@@ -366,6 +368,6 @@ internal fun MediaCookieControls(runtime: MediaRuntime, pageUrl: String?, onChan
                 }
             }
         }
-        if (runtime.hasCookies) OutlinedButton(onClick = { runtime.clearCookies(); onChanged() }) { Text(stringResource(R.string.dl_m_cookies_clear)) }
+        if (runtime.hasCookies) OutlinedButton(onClick = { runtime.clearCookies(); onChanged() }) { Text(stringResource(I18nR.string.dl_m_cookies_clear)) }
     }
 }

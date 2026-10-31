@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.islandoverlay
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -192,7 +194,7 @@ class DynamicIslandService : Service(), SavedStateRegistryOwner {
             nm.createNotificationChannel(
                 NotificationChannel(
                     CHANNEL_ID,
-                    getString(R.string.dynamic_island_notification_channel),
+                    getString(I18nR.string.dynamic_island_notification_channel),
                     NotificationManager.IMPORTANCE_MIN,
                 )
             )
@@ -206,9 +208,9 @@ class DynamicIslandService : Service(), SavedStateRegistryOwner {
         )
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.widgets_24px)
-            .setContentTitle(getString(R.string.dynamic_island_notification_title))
-            .setContentText(getString(R.string.dynamic_island_notification_text))
+            .setSmallIcon(BaseR.drawable.widgets_24px)
+            .setContentTitle(getString(I18nR.string.dynamic_island_notification_title))
+            .setContentText(getString(I18nR.string.dynamic_island_notification_text))
             .setContentIntent(openSettings)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)
@@ -352,17 +354,17 @@ private fun ExpandedPill(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     IconButton(onClick = { musicService.previous() }) {
-                        Icon(painterResource(R.drawable.skip_previous_24px), contentDescription = null, tint = Color.White)
+                        Icon(painterResource(BaseR.drawable.skip_previous_24px), contentDescription = null, tint = Color.White)
                     }
                     IconButton(onClick = { musicService.togglePause() }) {
                         Icon(
-                            painterResource(if (content.playing) R.drawable.pause_24px else R.drawable.play_arrow_24px),
+                            painterResource(if (content.playing) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px),
                             contentDescription = null,
                             tint = Color.White,
                         )
                     }
                     IconButton(onClick = { musicService.next() }) {
-                        Icon(painterResource(R.drawable.skip_next_24px), contentDescription = null, tint = Color.White)
+                        Icon(painterResource(BaseR.drawable.skip_next_24px), contentDescription = null, tint = Color.White)
                     }
                 }
             }
@@ -373,7 +375,7 @@ private fun ExpandedPill(
                     horizontalArrangement = Arrangement.End,
                 ) {
                     IconButton(onClick = onTimerCancel) {
-                        Icon(painterResource(R.drawable.close_24px), contentDescription = null, tint = Color.White)
+                        Icon(painterResource(BaseR.drawable.close_24px), contentDescription = null, tint = Color.White)
                     }
                 }
             }
@@ -384,18 +386,18 @@ private fun ExpandedPill(
 }
 
 private fun islandIcon(content: IslandContent): Int = when (content) {
-    is IslandContent.Call -> R.drawable.call_24px
-    is IslandContent.Timer -> R.drawable.timer_24px
-    is IslandContent.Media -> R.drawable.music_note_24px
-    is IslandContent.Charging -> R.drawable.battery_charging_full_24px
+    is IslandContent.Call -> BaseR.drawable.call_24px
+    is IslandContent.Timer -> BaseR.drawable.timer_24px
+    is IslandContent.Media -> BaseR.drawable.music_note_24px
+    is IslandContent.Charging -> BaseR.drawable.battery_charging_full_24px
 }
 
 @Composable
 private fun islandSummary(content: IslandContent): String = when (content) {
-    is IslandContent.Call -> stringResource(R.string.dynamic_island_call)
+    is IslandContent.Call -> stringResource(I18nR.string.dynamic_island_call)
     is IslandContent.Timer -> formatRemaining(content.remainingMs)
-    is IslandContent.Media -> content.title ?: stringResource(R.string.dynamic_island_media_playing)
-    is IslandContent.Charging -> stringResource(R.string.dynamic_island_charging_percent, content.level)
+    is IslandContent.Media -> content.title ?: stringResource(I18nR.string.dynamic_island_media_playing)
+    is IslandContent.Charging -> stringResource(I18nR.string.dynamic_island_charging_percent, content.level)
 }
 
 @Composable

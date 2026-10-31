@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -67,8 +68,8 @@ fun FilePeekSheet(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                TextButton(onClick = { onOpen(); onDismiss() }) { Text(stringResource(R.string.hc_open)) }
-                TextButton(onClick = { onSelect(); onDismiss() }) { Text(stringResource(R.string.telos_files_peek_select)) }
+                TextButton(onClick = { onOpen(); onDismiss() }) { Text(stringResource(I18nR.string.hc_open)) }
+                TextButton(onClick = { onSelect(); onDismiss() }) { Text(stringResource(I18nR.string.telos_files_peek_select)) }
             }
         }
     }

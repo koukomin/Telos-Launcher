@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.unitconverter
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.icu.text.DateFormat
 import androidx.compose.foundation.clickable
@@ -116,7 +117,7 @@ fun UnitConverterItem(
                         style = MaterialTheme.typography.labelSmall,
                     )
                     Text(
-                        text = stringResource(id = R.string.disclaimer),
+                        text = stringResource(id = I18nR.string.disclaimer),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.clickable {
@@ -128,14 +129,14 @@ fun UnitConverterItem(
                             onDismissRequest = { showDisclaimer = false },
                             confirmButton = {
                                 TextButton(onClick = { showDisclaimer = false }) {
-                                    Text(text = stringResource(id = R.string.close))
+                                    Text(text = stringResource(id = I18nR.string.close))
                                 }
                             },
-                            title = { Text(stringResource(id = R.string.disclaimer)) },
+                            title = { Text(stringResource(id = I18nR.string.disclaimer)) },
                             text = {
                                 Text(
                                     stringResource(
-                                        id = R.string.disclaimer_currency_converter,
+                                        id = I18nR.string.disclaimer_currency_converter,
                                         df.format(Date(it.updateTimestamp))
                                     )
                                 )
@@ -151,7 +152,7 @@ fun UnitConverterItem(
                         .padding(horizontal = 12.dp)
                 ) {
                     Text(
-                        text = stringResource(id = R.string.show_all),
+                        text = stringResource(id = I18nR.string.show_all),
                     )
                 }
             }

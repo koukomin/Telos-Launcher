@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.screenrec
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.Manifest
 import android.content.ContentUris
@@ -179,7 +181,7 @@ fun ScreenRecorderScreen() {
                 ShareActions.shareUris(context, uris, "video/mp4")
             }
             if (!shared) {
-                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -202,14 +204,14 @@ fun ScreenRecorderScreen() {
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                 Spacer(Modifier.weight(1f))
                 IconButton(onClick = { showFontDialog = true }) {
-                    Icon(painterResource(R.drawable.text_fields_24px), contentDescription = "Font Settings")
+                    Icon(painterResource(BaseR.drawable.text_fields_24px), contentDescription = "Font Settings")
                 }
                 IconButton(onClick = { backStack.add(ScreenRecorderSettingsRoute) }) {
-                    Icon(painterResource(R.drawable.settings_24px), contentDescription = stringResource(R.string.voice_settings))
+                    Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.voice_settings))
                 }
             }
             Text(
-                stringResource(R.string.screenrec_title),
+                stringResource(I18nR.string.screenrec_title),
                 style = MaterialTheme.typography.displaySmall,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
@@ -223,20 +225,20 @@ fun ScreenRecorderScreen() {
                                 .shadow(20.dp, CircleShape, ambientColor = Color(0xFFE53935), spotColor = Color(0xFFE53935))
                                 .clip(CircleShape)
                                 .background(Brush.verticalGradient(listOf(Color(0xFFFF7A6E), Color(0xFFE53935))))
-                                .clickable(onClickLabel = stringResource(R.string.screenrec_start), onClick = ::start),
+                                .clickable(onClickLabel = stringResource(I18nR.string.screenrec_start), onClick = ::start),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Icon(painterResource(R.drawable.ic_glyph_screen_recorder), contentDescription = stringResource(R.string.screenrec_start), tint = Color.White, modifier = Modifier.size(40.dp))
+                            Icon(painterResource(BaseR.drawable.ic_glyph_screen_recorder), contentDescription = stringResource(I18nR.string.screenrec_start), tint = Color.White, modifier = Modifier.size(40.dp))
                         }
-                        Text(stringResource(R.string.screenrec_start), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 12.dp))
+                        Text(stringResource(I18nR.string.screenrec_start), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 12.dp))
                     }
                     ScreenRecStatus.Countdown -> {
                         Text(state.countdown.toString(), fontSize = 72.sp, fontWeight = FontWeight.Light)
-                        TextButton(onClick = { ScreenRecorderService.stop(context) }) { Text(stringResource(R.string.voice_cancel)) }
+                        TextButton(onClick = { ScreenRecorderService.stop(context) }) { Text(stringResource(I18nR.string.voice_cancel)) }
                     }
                     ScreenRecStatus.Recording, ScreenRecStatus.Paused -> {
                         Text(
-                            stringResource(if (state.status == ScreenRecStatus.Paused) R.string.screenrec_paused else R.string.screenrec_recording),
+                            stringResource(if (state.status == ScreenRecStatus.Paused) I18nR.string.screenrec_paused else I18nR.string.screenrec_recording),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Text(formatDuration(state.elapsedMs), fontSize = 56.sp, fontWeight = FontWeight.Light, modifier = Modifier.padding(vertical = 8.dp).horizontalScroll(rememberScrollState()), maxLines = 1, softWrap = false)
@@ -246,13 +248,13 @@ fun ScreenRecorderScreen() {
                                 modifier = Modifier.size(56.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceContainerHigh),
                             ) {
                                 Icon(
-                                    painterResource(if (state.status == ScreenRecStatus.Paused) R.drawable.ic_voice_play else R.drawable.ic_voice_pause),
-                                    contentDescription = stringResource(if (state.status == ScreenRecStatus.Paused) R.string.voice_resume else R.string.voice_pause),
+                                    painterResource(if (state.status == ScreenRecStatus.Paused) BaseR.drawable.ic_voice_play else BaseR.drawable.ic_voice_pause),
+                                    contentDescription = stringResource(if (state.status == ScreenRecStatus.Paused) I18nR.string.voice_resume else I18nR.string.voice_pause),
                                 )
                             }
                             Box(
                                 Modifier.size(72.dp).clip(CircleShape).background(Brush.verticalGradient(listOf(Color(0xFFFF7A6E), Color(0xFFE53935))))
-                                    .clickable(onClickLabel = stringResource(R.string.voice_stop)) { ScreenRecorderService.stop(context) },
+                                    .clickable(onClickLabel = stringResource(I18nR.string.voice_stop)) { ScreenRecorderService.stop(context) },
                                 contentAlignment = Alignment.Center,
                             ) { Box(Modifier.size(24.dp).clip(RoundedCornerShape(5.dp)).background(Color.White)) }
                         }
@@ -260,15 +262,15 @@ fun ScreenRecorderScreen() {
                 }
             }
             Text(
-                stringResource(R.string.screenrec_recordings),
+                stringResource(I18nR.string.screenrec_recordings),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
             )
             }
             if (recordings.isEmpty()) {
-                item(key = "empty") { Text(stringResource(R.string.screenrec_no_recordings), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 20.dp)) }
+                item(key = "empty") { Text(stringResource(I18nR.string.screenrec_no_recordings), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 20.dp)) }
             } else {
-                item(key = "search") { TelosSearchBar(recQuery, { recQuery = it }, stringResource(R.string.tsp_search_recordings)) }
+                item(key = "search") { TelosSearchBar(recQuery, { recQuery = it }, stringResource(I18nR.string.tsp_search_recordings)) }
                 if (shownRecordings.isEmpty() && recQuery.isNotBlank()) item(key = "search-empty") { SearchEmptyState(recQuery) }
                     items(shownRecordings, key = { it.uri.toString() }) { rec ->
                         RecordingRow(
@@ -292,15 +294,15 @@ fun ScreenRecorderScreen() {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    stringResource(R.string.au_viewer_items, selectedForShare.size),
+                    stringResource(I18nR.string.au_viewer_items, selectedForShare.size),
                     modifier = Modifier.weight(1f).padding(start = 8.dp),
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 IconButton(onClick = ::shareSelected) {
-                    Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.hc_share))
+                    Icon(painterResource(BaseR.drawable.share_24px), contentDescription = stringResource(I18nR.string.hc_share))
                 }
                 IconButton(onClick = { selectedForShare = emptySet() }) {
-                    Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_cancel))
+                    Icon(painterResource(BaseR.drawable.close_24px), contentDescription = stringResource(I18nR.string.hc_cancel))
                 }
             }
         }
@@ -339,7 +341,7 @@ private fun RecordingRow(
                             context.startActivity(
                                 Intent(Intent.ACTION_VIEW).setDataAndType(rec.uri, "video/mp4").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                             )
-                        }.onFailure { Toast.makeText(context, R.string.screenrec_cannot_open, Toast.LENGTH_SHORT).show() }
+                        }.onFailure { Toast.makeText(context, I18nR.string.screenrec_cannot_open, Toast.LENGTH_SHORT).show() }
                     }
                 },
                 onLongClick = onToggleSelected,
@@ -363,21 +365,21 @@ private fun RecordingRow(
         }
         Box {
             IconButton(onClick = { menu = true }) {
-                Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.voice_more))
+                Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.voice_more))
             }
             DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                DropdownMenuItem(text = { Text(stringResource(R.string.voice_share)) }, onClick = {
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.voice_share)) }, onClick = {
                     menu = false
                     scope.launch {
                         val shared = withContext(Dispatchers.IO) {
                             ShareActions.shareUris(context, listOf(rec.uri), "video/mp4")
                         }
                         if (!shared) {
-                            Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
                         }
                     }
                 })
-                DropdownMenuItem(text = { Text(stringResource(R.string.voice_delete)) }, onClick = { menu = false; onDelete() })
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.voice_delete)) }, onClick = { menu = false; onDelete() })
             }
         }
     }
@@ -396,13 +398,13 @@ fun ScreenRecorderSettingsScreen() {
     var countdown by remember { mutableStateOf(settings.countdown) }
     var screenOff by remember { mutableStateOf(settings.stopOnScreenOff) }
 
-    PreferenceScreen(title = stringResource(R.string.voice_settings)) {
+    PreferenceScreen(title = stringResource(I18nR.string.voice_settings)) {
         item {
-            PreferenceCategory(title = stringResource(R.string.screenrec_settings_video)) {
+            PreferenceCategory(title = stringResource(I18nR.string.screenrec_settings_video)) {
                 ListPreference(
-                    title = stringResource(R.string.screenrec_resolution),
+                    title = stringResource(I18nR.string.screenrec_resolution),
                     items = listOf(
-                        ListPreferenceItem(stringResource(R.string.screenrec_resolution_native), ScreenResolution.Native),
+                        ListPreferenceItem(stringResource(I18nR.string.screenrec_resolution_native), ScreenResolution.Native),
                         ListPreferenceItem("1080p", ScreenResolution.P1080),
                         ListPreferenceItem("720p", ScreenResolution.P720),
                         ListPreferenceItem("480p", ScreenResolution.P480),
@@ -411,17 +413,17 @@ fun ScreenRecorderSettingsScreen() {
                     onValueChanged = { resolution = it; settings.resolution = it },
                 )
                 ListPreference(
-                    title = stringResource(R.string.screenrec_fps),
+                    title = stringResource(I18nR.string.screenrec_fps),
                     items = listOf(ListPreferenceItem("30 fps", 30), ListPreferenceItem("60 fps", 60)),
                     value = fps,
                     onValueChanged = { fps = it; settings.fps = it },
                 )
                 ListPreference(
-                    title = stringResource(R.string.voice_quality),
+                    title = stringResource(I18nR.string.voice_quality),
                     items = listOf(
-                        ListPreferenceItem(stringResource(R.string.voice_quality_compact), ScreenQuality.Low),
-                        ListPreferenceItem(stringResource(R.string.voice_quality_balanced), ScreenQuality.Medium),
-                        ListPreferenceItem(stringResource(R.string.voice_quality_high), ScreenQuality.High),
+                        ListPreferenceItem(stringResource(I18nR.string.voice_quality_compact), ScreenQuality.Low),
+                        ListPreferenceItem(stringResource(I18nR.string.voice_quality_balanced), ScreenQuality.Medium),
+                        ListPreferenceItem(stringResource(I18nR.string.voice_quality_high), ScreenQuality.High),
                     ),
                     value = quality,
                     onValueChanged = { quality = it; settings.quality = it },
@@ -429,10 +431,10 @@ fun ScreenRecorderSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.screenrec_settings_audio)) {
+            PreferenceCategory(title = stringResource(I18nR.string.screenrec_settings_audio)) {
                 SwitchPreference(
-                    title = stringResource(R.string.screenrec_microphone),
-                    summary = stringResource(R.string.screenrec_microphone_summary),
+                    title = stringResource(I18nR.string.screenrec_microphone),
+                    summary = stringResource(I18nR.string.screenrec_microphone_summary),
                     value = audio == ScreenAudio.Microphone,
                     onValueChanged = {
                         audio = if (it) ScreenAudio.Microphone else ScreenAudio.None
@@ -442,10 +444,10 @@ fun ScreenRecorderSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.screenrec_settings_recording)) {
+            PreferenceCategory(title = stringResource(I18nR.string.screenrec_settings_recording)) {
                 SwitchPreference(
-                    title = stringResource(R.string.screenrec_show_touches),
-                    summary = stringResource(R.string.screenrec_show_touches_summary),
+                    title = stringResource(I18nR.string.screenrec_show_touches),
+                    summary = stringResource(I18nR.string.screenrec_show_touches_summary),
                     value = touches,
                     onValueChanged = {
                         touches = it
@@ -461,18 +463,18 @@ fun ScreenRecorderSettingsScreen() {
                     },
                 )
                 ListPreference(
-                    title = stringResource(R.string.screenrec_countdown_setting),
+                    title = stringResource(I18nR.string.screenrec_countdown_setting),
                     items = listOf(
-                        ListPreferenceItem(stringResource(R.string.screenrec_countdown_none), 0),
-                        ListPreferenceItem(stringResource(R.string.au_capture_seconds, 3), 3),
-                        ListPreferenceItem(stringResource(R.string.au_capture_seconds, 5), 5),
+                        ListPreferenceItem(stringResource(I18nR.string.screenrec_countdown_none), 0),
+                        ListPreferenceItem(stringResource(I18nR.string.au_capture_seconds, 3), 3),
+                        ListPreferenceItem(stringResource(I18nR.string.au_capture_seconds, 5), 5),
                     ),
                     value = countdown,
                     onValueChanged = { countdown = it; settings.countdown = it },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.screenrec_stop_screen_off),
-                    summary = stringResource(R.string.screenrec_stop_screen_off_summary),
+                    title = stringResource(I18nR.string.screenrec_stop_screen_off),
+                    summary = stringResource(I18nR.string.screenrec_stop_screen_off_summary),
                     value = screenOff,
                     onValueChanged = { screenOff = it; settings.stopOnScreenOff = it },
                 )

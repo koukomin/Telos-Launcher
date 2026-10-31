@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.tv
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -189,9 +191,9 @@ fun TvChannelCard(
                     TvStaticMini(Modifier.fillMaxSize().clip(RoundedCornerShape(16.dp)).alpha(0.6f))
                 }
                 if (channel.isExtra) {
-                    val desc = stringResource(R.string.au13_tvextra_marker_description)
+                    val desc = stringResource(I18nR.string.au13_tvextra_marker_description)
                     Text(
-                        stringResource(R.string.au13_tvextra_marker),
+                        stringResource(I18nR.string.au13_tvextra_marker),
                         fontSize = 9.sp,
                         maxLines = 1,
                         color = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -212,9 +214,9 @@ fun TvChannelCard(
                     modifier = Modifier.align(Alignment.TopEnd).size(48.dp),
                 ) {
                     Icon(
-                        painterResource(if (favorite) R.drawable.star_24px_filled else R.drawable.star_24px_outlined),
+                        painterResource(if (favorite) BaseR.drawable.star_24px_filled else BaseR.drawable.star_24px_outlined),
                         contentDescription = stringResource(
-                            if (favorite) R.string.au12_tvui_favorite_remove else R.string.au12_tvui_favorite_add
+                            if (favorite) I18nR.string.au12_tvui_favorite_remove else I18nR.string.au12_tvui_favorite_add
                         ),
                         tint = if (favorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(18.dp),
@@ -232,7 +234,7 @@ fun TvChannelCard(
             )
             if (nowTitle != null) {
                 Text(
-                    stringResource(R.string.au13_tvextraui_now_line, nowTitle),
+                    stringResource(I18nR.string.au13_tvextraui_now_line, nowTitle),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
@@ -245,22 +247,22 @@ fun TvChannelCard(
         DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
             DropdownMenuItem(
                 text = {
-                    Text(stringResource(if (favorite) R.string.au12_tvui_favorite_remove else R.string.au12_tvui_favorite_add))
+                    Text(stringResource(if (favorite) I18nR.string.au12_tvui_favorite_remove else I18nR.string.au12_tvui_favorite_add))
                 },
                 onClick = { menu = false; actions.onFavorite(!favorite) },
             )
             actions.onMoveBefore?.let {
-                DropdownMenuItem(text = { Text(stringResource(R.string.au12_tvui_move_up)) }, onClick = { menu = false; it() })
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.au12_tvui_move_up)) }, onClick = { menu = false; it() })
             }
             actions.onMoveAfter?.let {
-                DropdownMenuItem(text = { Text(stringResource(R.string.au12_tvui_move_down)) }, onClick = { menu = false; it() })
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.au12_tvui_move_down)) }, onClick = { menu = false; it() })
             }
-            DropdownMenuItem(text = { Text(stringResource(R.string.hc_share)) }, onClick = { menu = false; actions.onShare() })
+            DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_share)) }, onClick = { menu = false; actions.onShare() })
             actions.onEdit?.let {
-                DropdownMenuItem(text = { Text(stringResource(R.string.hc_edit)) }, onClick = { menu = false; it() })
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_edit)) }, onClick = { menu = false; it() })
             }
             actions.onDelete?.let {
-                DropdownMenuItem(text = { Text(stringResource(R.string.hc_delete)) }, onClick = { menu = false; it() })
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_delete)) }, onClick = { menu = false; it() })
             }
         }
     }

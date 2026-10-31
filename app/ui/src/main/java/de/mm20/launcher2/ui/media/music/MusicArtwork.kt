@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.music
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.graphics.Bitmap
 import android.util.LruCache
@@ -119,10 +121,10 @@ fun ArtTintedMiniPlayer(
                 Text(artist, style = MaterialTheme.typography.labelSmall, color = Color.White.copy(alpha = 0.75f), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
             IconButton(onClick = onToggle) {
-                Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = stringResource(if (isPlaying) R.string.au_music_pause else R.string.hc_play))
+                Icon(painterResource(if (isPlaying) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px), contentDescription = stringResource(if (isPlaying) I18nR.string.au_music_pause else I18nR.string.hc_play))
             }
             IconButton(onClick = onNext) {
-                Icon(painterResource(R.drawable.skip_next_24px), contentDescription = stringResource(R.string.hc_next))
+                Icon(painterResource(BaseR.drawable.skip_next_24px), contentDescription = stringResource(I18nR.string.hc_next))
             }
         }
     }

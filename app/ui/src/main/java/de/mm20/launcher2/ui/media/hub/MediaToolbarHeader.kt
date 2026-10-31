@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.hub
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -54,7 +56,7 @@ internal fun MediaToolbarHeader(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onBack) {
-                    Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
+                    Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
                 }
 
                 Spacer(Modifier.width(4.dp))

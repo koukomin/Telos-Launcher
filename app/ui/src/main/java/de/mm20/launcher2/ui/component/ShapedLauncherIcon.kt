@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.base.R as BaseR
 
 import android.graphics.Bitmap
 import android.graphics.BitmapShader
@@ -335,7 +336,7 @@ fun ShapedLauncherIcon(
         }
         // Preserve other badges and avoid drawing a second copy of the frozen marker.
         if (showSnowflake &&
-            (_badge?.icon as? BadgeIcon.Vector)?.iconRes != de.mm20.launcher2.ui.R.drawable.ac_unit_24px) {
+            (_badge?.icon as? BadgeIcon.Vector)?.iconRes != BaseR.drawable.ac_unit_24px) {
             Surface(
                 modifier = Modifier.size(size * 0.33f)
                     .align(if (_badge == null) Alignment.BottomEnd else Alignment.TopEnd),
@@ -343,7 +344,7 @@ fun ShapedLauncherIcon(
                 contentColor = MaterialTheme.colorScheme.onTertiary,
                 shape = CircleShape,
             ) {
-                Icon(painterResource(de.mm20.launcher2.ui.R.drawable.ac_unit_24px),
+                Icon(painterResource(BaseR.drawable.ac_unit_24px),
                     contentDescription = null, modifier = Modifier.padding(size / 24))
             }
         }

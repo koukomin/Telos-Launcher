@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.ermis
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.net.Uri
 import android.content.Intent
@@ -100,7 +102,7 @@ private fun ErmisMailbox() {
     val notifications = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { }
     var selected by remember { mutableStateOf<ErmisMessage?>(null) }
     var error by remember { mutableStateOf<String?>(null) }
-    fun task(block: suspend () -> Unit) { scope.launch { try { block(); repository.state.value.error?.let { error = it } } catch (e: CancellationException) { throw e } catch (_: Exception) { error = repository.state.value.error ?: context.getString(R.string.ermis_operation_failed) } } }
+    fun task(block: suspend () -> Unit) { scope.launch { try { block(); repository.state.value.error?.let { error = it } } catch (e: CancellationException) { throw e } catch (_: Exception) { error = repository.state.value.error ?: context.getString(I18nR.string.ermis_operation_failed) } } }
     fun selectAccount(id: String?) {
         accountId = id; mailboxId = "INBOX"; serverResults = null
         if (id != null) task { repository.loadFolders(id); repository.sync(id) }
@@ -144,11 +146,11 @@ private fun ErmisMailbox() {
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp)
                 ) {
                     IconButton(onClick = { backStack.removeLastOrNull() }) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close))
+                        Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_close))
                     }
                     OutlinedTextField(
                         query, { query = it; serverResults = null },
-                        placeholder = { Text(stringResource(R.string.ermis_search)) },
+                        placeholder = { Text(stringResource(I18nR.string.ermis_search)) },
                         modifier = Modifier.weight(1f).height(52.dp),
                         singleLine = true,
                         shape = MaterialTheme.shapes.extraLarge,
@@ -158,36 +160,36 @@ private fun ErmisMailbox() {
                         )
                     )
                     IconButton(onClick = { showFontDialog = true }) {
-                        Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
+                        Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
                     }
                     IconButton(onClick = { accounts = true }) {
-                        Icon(painterResource(R.drawable.person_24px), stringResource(R.string.ermis_accounts))
+                        Icon(painterResource(BaseR.drawable.person_24px), stringResource(I18nR.string.ermis_accounts))
                     }
                 }
             }
         },
         floatingActionButton = { if (state.accounts.isNotEmpty()) ExtendedFloatingActionButton(
-            onClick = { editingDraft = null; reply = null; replyAll = false; forwarding = null; composing = true }, icon = { Icon(painterResource(R.drawable.edit_24px), null) },
-            text = { Text(stringResource(R.string.ermis_compose)) }) }
+            onClick = { editingDraft = null; reply = null; replyAll = false; forwarding = null; composing = true }, icon = { Icon(painterResource(BaseR.drawable.edit_24px), null) },
+            text = { Text(stringResource(I18nR.string.ermis_compose)) }) }
     ) { padding ->
       LazyColumn(Modifier.fillMaxSize().padding(padding), contentPadding = PaddingValues(bottom = 104.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
         item {
             Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(!starred && !showingDrafts && mailboxId == "INBOX", onClick = { starred = false; showingDrafts = false; mailboxId = "INBOX"; serverResults = null; task { repository.sync(accountId) } }, label = { Text(stringResource(R.string.ermis_inbox)) })
-                    FilterChip(starred && !showingDrafts, onClick = { starred = true; showingDrafts = false }, label = { Text(stringResource(R.string.ermis_starred)) })
-                    FilterChip(showingDrafts, onClick = { showingDrafts = true }, label = { Text(stringResource(R.string.ermis_drafts)) })
-                    TextButton(onClick = { task { repository.sync(accountId, mailboxId); serverResults = null } }, enabled = !state.loading && state.accounts.isNotEmpty()) { Text(stringResource(R.string.ermis_sync)) }
+                    FilterChip(!starred && !showingDrafts && mailboxId == "INBOX", onClick = { starred = false; showingDrafts = false; mailboxId = "INBOX"; serverResults = null; task { repository.sync(accountId) } }, label = { Text(stringResource(I18nR.string.ermis_inbox)) })
+                    FilterChip(starred && !showingDrafts, onClick = { starred = true; showingDrafts = false }, label = { Text(stringResource(I18nR.string.ermis_starred)) })
+                    FilterChip(showingDrafts, onClick = { showingDrafts = true }, label = { Text(stringResource(I18nR.string.ermis_drafts)) })
+                    TextButton(onClick = { task { repository.sync(accountId, mailboxId); serverResults = null } }, enabled = !state.loading && state.accounts.isNotEmpty()) { Text(stringResource(I18nR.string.ermis_sync)) }
                 }
                 if (state.accounts.isNotEmpty()) {
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        FilterChip(accountId == null, onClick = { selectAccount(null) }, label = { Text(stringResource(R.string.ermis_all_accounts)) })
+                        FilterChip(accountId == null, onClick = { selectAccount(null) }, label = { Text(stringResource(I18nR.string.ermis_all_accounts)) })
                         state.accounts.forEach { account -> FilterChip(accountId == account.id, onClick = { selectAccount(account.id) }, label = { Text(account.email) }) }
                     }
                 }
                 if (state.accounts.isNotEmpty()) {
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        TextButton(enabled = !state.loading, onClick = { foldersOpen = true; accountId?.let { id -> task { repository.loadFolders(id) } } }) { Text(stringResource(R.string.ermis_folders)) }
+                        TextButton(enabled = !state.loading, onClick = { foldersOpen = true; accountId?.let { id -> task { repository.loadFolders(id) } } }) { Text(stringResource(I18nR.string.ermis_folders)) }
                         if (accountId != null && query.isNotBlank()) TextButton(enabled = !state.loading, onClick = {
                             val id = accountId ?: return@TextButton
                             val searchedFolder = mailboxId
@@ -196,11 +198,11 @@ private fun ErmisMailbox() {
                                 val matches = repository.serverSearch(id, searchedFolder, searchedQuery).map { it.uid }.toSet()
                                 if (accountId == id && mailboxId == searchedFolder && query == searchedQuery) serverResults = matches
                             }
-                        }) { Text(stringResource(R.string.ermis_search_server)) }
-                        if (serverResults != null) FilterChip(true, onClick = { serverResults = null }, label = { Text(stringResource(R.string.ermis_show_folder)) })
+                        }) { Text(stringResource(I18nR.string.ermis_search_server)) }
+                        if (serverResults != null) FilterChip(true, onClick = { serverResults = null }, label = { Text(stringResource(I18nR.string.ermis_show_folder)) })
                     }
-                    if (!showingDrafts) Text(if (serverResults == null) mailboxId else stringResource(R.string.ermis_server_results), style = MaterialTheme.typography.labelLarge)
-                    if (accountId != null && query.isNotBlank()) Text(stringResource(R.string.ermis_search_server_help), style = MaterialTheme.typography.bodySmall)
+                    if (!showingDrafts) Text(if (serverResults == null) mailboxId else stringResource(I18nR.string.ermis_server_results), style = MaterialTheme.typography.labelLarge)
+                    if (accountId != null && query.isNotBlank()) Text(stringResource(I18nR.string.ermis_search_server_help), style = MaterialTheme.typography.bodySmall)
                 }
                 if (state.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
             }
@@ -208,17 +210,17 @@ private fun ErmisMailbox() {
         if (state.accounts.isEmpty()) item {
             ElevatedCard(modifier = Modifier.fillMaxWidth().padding(16.dp), onClick = { adding = true }) {
                 Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text(stringResource(R.string.ermis_add_account), style = MaterialTheme.typography.titleLarge)
-                    Text(stringResource(R.string.ermis_native_intro))
+                    Text(stringResource(I18nR.string.ermis_add_account), style = MaterialTheme.typography.titleLarge)
+                    Text(stringResource(I18nR.string.ermis_native_intro))
                 }
             }
         }
-        if (!showingDrafts && visible.isEmpty() && state.accounts.isNotEmpty() && !state.loading) item { Text(stringResource(R.string.ermis_empty), Modifier.padding(24.dp)) }
+        if (!showingDrafts && visible.isEmpty() && state.accounts.isNotEmpty() && !state.loading) item { Text(stringResource(I18nR.string.ermis_empty), Modifier.padding(24.dp)) }
         if (showingDrafts) items(visibleDrafts, key = { "draft:${it.id}" }) { draft ->
-            ListItem(headlineContent = { Text(draft.subject.ifBlank { stringResource(R.string.ermis_no_subject) }) },
+            ListItem(headlineContent = { Text(draft.subject.ifBlank { stringResource(I18nR.string.ermis_no_subject) }) },
                 supportingContent = { Text(draft.to.ifBlank { draft.cc.ifBlank { draft.bcc } } + "\n" + draft.body.take(160), maxLines = 3) },
-                leadingContent = { Icon(painterResource(R.drawable.draft_24px), null) },
-                trailingContent = { IconButton(onClick = { task { repository.deleteDraft(draft.id) } }) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.ermis_remove)) } },
+                leadingContent = { Icon(painterResource(BaseR.drawable.draft_24px), null) },
+                trailingContent = { IconButton(onClick = { task { repository.deleteDraft(draft.id) } }) { Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.ermis_remove)) } },
                 modifier = Modifier.clickable { editingDraft = draft; reply = null; replyAll = false; forwarding = draft.forwardSource; composing = true })
         }
         if (!showingDrafts) items(conversations, key = { "${it.first().accountId}:${it.first().folder}:${it.first().uid}" }) { conversation ->
@@ -231,18 +233,18 @@ private fun ErmisMailbox() {
                     Box(Modifier.size(40.dp).background(MaterialTheme.colorScheme.secondaryContainer, CircleShape), contentAlignment = Alignment.Center) { Text(message.from.firstOrNull()?.uppercase() ?: "@") }
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         Text(message.from, fontWeight = if (message.read) FontWeight.Normal else FontWeight.Bold)
-                        Text(message.subject.ifBlank { context.getString(R.string.ermis_no_subject) }, style = MaterialTheme.typography.titleMedium, fontWeight = if (message.read) FontWeight.Normal else FontWeight.SemiBold)
+                        Text(message.subject.ifBlank { context.getString(I18nR.string.ermis_no_subject) }, style = MaterialTheme.typography.titleMedium, fontWeight = if (message.read) FontWeight.Normal else FontWeight.SemiBold)
                         Text(message.preview, style = MaterialTheme.typography.bodyMedium, maxLines = 2)
                         Text(dateFormatter.format(Date(message.date)), style = MaterialTheme.typography.labelSmall)
-                        if (conversation.size > 1) Text(stringResource(R.string.ermis_conversation_count, conversation.size), style = MaterialTheme.typography.labelSmall)
+                        if (conversation.size > 1) Text(stringResource(I18nR.string.ermis_conversation_count, conversation.size), style = MaterialTheme.typography.labelSmall)
                     }
-                    IconToggleButton(checked = message.starred, onCheckedChange = { task { repository.star(message.accountId, message.uid, it, message.folder) } }) { Icon(painterResource(R.drawable.star_24px), stringResource(R.string.ermis_starred), tint = if (message.starred) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline) }
+                    IconToggleButton(checked = message.starred, onCheckedChange = { task { repository.star(message.accountId, message.uid, it, message.folder) } }) { Icon(painterResource(BaseR.drawable.star_24px), stringResource(I18nR.string.ermis_starred), tint = if (message.starred) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline) }
                 }
             }
         }
       }
     }
-    if (accounts) AlertDialog(onDismissRequest = { accounts = false }, title = { Text(stringResource(R.string.ermis_accounts)) }, text = {
+    if (accounts) AlertDialog(onDismissRequest = { accounts = false }, title = { Text(stringResource(I18nR.string.ermis_accounts)) }, text = {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             state.accounts.forEach { account ->
                 Text(account.email, style = MaterialTheme.typography.titleMedium)
@@ -250,13 +252,13 @@ private fun ErmisMailbox() {
                 val googleAccount = account.googleAccount
                 if (googleAccount != null && activity != null) TextButton(enabled = !state.loading, onClick = {
                     task { repository.addAccount(account, ErmisGoogleAuth.consent(activity, googleAccount)); repository.sync(account.id) }
-                }) { Text(stringResource(R.string.ermis_google_sign_in)) }
-                TextButton(onClick = { task { repository.removeAccount(account.id); if (accountId == account.id) accountId = null } }) { Text(stringResource(R.string.ermis_remove)) }
+                }) { Text(stringResource(I18nR.string.ermis_google_sign_in)) }
+                TextButton(onClick = { task { repository.removeAccount(account.id); if (accountId == account.id) accountId = null } }) { Text(stringResource(I18nR.string.ermis_remove)) }
             }
-            Button(onClick = { adding = true; accounts = false }) { Text(stringResource(R.string.ermis_add_account)) }
+            Button(onClick = { adding = true; accounts = false }) { Text(stringResource(I18nR.string.ermis_add_account)) }
         }
-    }, confirmButton = { TextButton(onClick = { accounts = false }) { Text(stringResource(R.string.hc_close)) } })
-    if (adding) AddAccountDialog(state.loading, onDismiss = { adding = false }, onAuthError = { error = context.getString(R.string.ermis_google_unavailable) }) { account, password -> task { repository.addAccount(account, password); adding = false; if (Build.VERSION.SDK_INT >= 33) notifications.launch(Manifest.permission.POST_NOTIFICATIONS); repository.sync(account.id) } }
+    }, confirmButton = { TextButton(onClick = { accounts = false }) { Text(stringResource(I18nR.string.hc_close)) } })
+    if (adding) AddAccountDialog(state.loading, onDismiss = { adding = false }, onAuthError = { error = context.getString(I18nR.string.ermis_google_unavailable) }) { account, password -> task { repository.addAccount(account, password); adding = false; if (Build.VERSION.SDK_INT >= 33) notifications.launch(Manifest.permission.POST_NOTIFICATIONS); repository.sync(account.id) } }
     fun closeComposer() { composing = false; reply = null; editingDraft = null; forwarding = null; replyAll = false }
     if (composing) ComposeDialog(state.accounts, accountId, reply, replyAll, forwarding, editingDraft, state.loading,
         onDismiss = { closeComposer() },
@@ -286,30 +288,30 @@ private fun ErmisMailbox() {
         onMoveAny = { moving = message; task { repository.loadFolders(message.accountId) } },
         onSaveNote = { task { repository.saveNote(message.accountId, message.uid, it, message.folder); selected = selected?.copy(note = it) } },
         onDownload = { attachment, uri -> task { repository.downloadAttachment(message.accountId, message.uid, attachment.index, uri, message.folder) } }) }
-    if (foldersOpen) AlertDialog(onDismissRequest = { foldersOpen = false }, title = { Text(stringResource(R.string.ermis_folders)) }, text = {
+    if (foldersOpen) AlertDialog(onDismissRequest = { foldersOpen = false }, title = { Text(stringResource(I18nR.string.ermis_folders)) }, text = {
         LazyColumn(Modifier.heightIn(max = 480.dp)) {
             if (accountId == null) {
-                item { Text(stringResource(R.string.ermis_select_account)) }
+                item { Text(stringResource(I18nR.string.ermis_select_account)) }
                 items(state.accounts, key = { it.id }) { account -> TextButton(enabled = !state.loading, onClick = { selectAccount(account.id) }) { Text(account.email) } }
             } else {
                 item { TextButton(enabled = !state.loading, onClick = {
                     editingFolder = null; folderName = ""; folderEditorOpen = true; foldersOpen = false
-                }) { Text(stringResource(R.string.hc_new_folder)) } }
+                }) { Text(stringResource(I18nR.string.hc_new_folder)) } }
                 items(accountFolders, key = { it.id }) { folder ->
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         TextButton(modifier = Modifier.weight(1f), enabled = !state.loading, onClick = { mailboxId = folder.id; foldersOpen = false; serverResults = null; showingDrafts = false; query = ""; task { repository.sync(accountId, folder.id) } }) { Text(folder.name) }
                         if (folder.role == ErmisFolderRole.OTHER) TextButton(enabled = !state.loading, onClick = {
                             editingFolder = folder; folderName = folder.id; folderEditorOpen = true; foldersOpen = false
-                        }) { Text(stringResource(R.string.hc_rename)) }
+                        }) { Text(stringResource(I18nR.string.hc_rename)) }
                     }
                 }
             }
         }
-    }, confirmButton = { TextButton(onClick = { foldersOpen = false }) { Text(stringResource(R.string.hc_close)) } })
+    }, confirmButton = { TextButton(onClick = { foldersOpen = false }) { Text(stringResource(I18nR.string.hc_close)) } })
     if (folderEditorOpen) AlertDialog(onDismissRequest = { if (!state.loading) folderEditorOpen = false },
-        title = { Text(stringResource(if (editingFolder == null) R.string.hc_new_folder else R.string.hf_folder_rename)) },
+        title = { Text(stringResource(if (editingFolder == null) I18nR.string.hc_new_folder else I18nR.string.hf_folder_rename)) },
         text = { OutlinedTextField(folderName, { folderName = it }, enabled = !state.loading,
-            label = { Text(stringResource(R.string.hf_folder_name)) }, singleLine = true) },
+            label = { Text(stringResource(I18nR.string.hf_folder_name)) }, singleLine = true) },
         confirmButton = { TextButton(enabled = !state.loading && folderName.isNotBlank() && accountId != null, onClick = {
             val id = accountId ?: return@TextButton
             val original = editingFolder
@@ -324,23 +326,23 @@ private fun ErmisMailbox() {
                 repository.loadFolders(id)
                 repository.sync(id, mailboxId)
             }
-        }) { Text(stringResource(R.string.hc_save)) } },
-        dismissButton = { TextButton(enabled = !state.loading, onClick = { folderEditorOpen = false }) { Text(stringResource(R.string.hc_cancel)) } })
+        }) { Text(stringResource(I18nR.string.hc_save)) } },
+        dismissButton = { TextButton(enabled = !state.loading, onClick = { folderEditorOpen = false }) { Text(stringResource(I18nR.string.hc_cancel)) } })
     moving?.let { message ->
         val choices = remember(state.folders, message.accountId, message.folder) { state.folders.filter { it.accountId == message.accountId && it.id != message.folder } }
-        AlertDialog(onDismissRequest = { moving = null }, title = { Text(stringResource(R.string.ermis_move)) }, text = {
+        AlertDialog(onDismissRequest = { moving = null }, title = { Text(stringResource(I18nR.string.ermis_move)) }, text = {
             LazyColumn(Modifier.heightIn(max = 480.dp)) { items(choices, key = { it.id }) { folder ->
                 TextButton(enabled = !state.loading, onClick = { moving = null; moveTarget = message to folder }) { Text(folder.name) }
             } }
-        }, confirmButton = { TextButton(onClick = { moving = null }) { Text(stringResource(R.string.hc_cancel)) } })
+        }, confirmButton = { TextButton(onClick = { moving = null }) { Text(stringResource(I18nR.string.hc_cancel)) } })
     }
-    moveTarget?.let { (message, target) -> AlertDialog(onDismissRequest = { moveTarget = null }, title = { Text(stringResource(R.string.ermis_move)) }, text = {
+    moveTarget?.let { (message, target) -> AlertDialog(onDismissRequest = { moveTarget = null }, title = { Text(stringResource(I18nR.string.ermis_move)) }, text = {
         Text(message.subject + "\n" + target.name)
     }, confirmButton = { TextButton(enabled = !state.loading, onClick = { task {
         repository.moveMessage(message.accountId, message.uid, message.folder, target.id)
         moveTarget = null; selected = null; serverResults = null; repository.sync(accountId, mailboxId)
-    } }) { Text(stringResource(R.string.hc_save)) } }, dismissButton = { TextButton(onClick = { moveTarget = null }) { Text(stringResource(R.string.hc_cancel)) } }) }
-    error?.let { detail -> AlertDialog(onDismissRequest = { error = null }, title = { Text(stringResource(R.string.ermis_operation_failed)) }, text = { Text(detail, Modifier.verticalScroll(rememberScrollState())) }, confirmButton = { TextButton(onClick = { error = null }) { Text(stringResource(R.string.hc_close)) } }) }
+    } }) { Text(stringResource(I18nR.string.hc_save)) } }, dismissButton = { TextButton(onClick = { moveTarget = null }) { Text(stringResource(I18nR.string.hc_cancel)) } }) }
+    error?.let { detail -> AlertDialog(onDismissRequest = { error = null }, title = { Text(stringResource(I18nR.string.ermis_operation_failed)) }, text = { Text(detail, Modifier.verticalScroll(rememberScrollState())) }, confirmButton = { TextButton(onClick = { error = null }) { Text(stringResource(I18nR.string.hc_close)) } }) }
 }
 
 @Composable
@@ -362,26 +364,26 @@ private fun AddAccountDialog(busy: Boolean, onDismiss: () -> Unit, onAuthError: 
     var email by rememberSaveable { mutableStateOf("") }; var password by remember { mutableStateOf("") }
     var username by rememberSaveable { mutableStateOf("") }; var imap by rememberSaveable { mutableStateOf("") }; var smtp by rememberSaveable { mutableStateOf("") }
     var imapPort by rememberSaveable { mutableStateOf("993") }; var smtpPort by rememberSaveable { mutableStateOf("465") }; var startTls by rememberSaveable { mutableStateOf(false) }
-    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(R.string.ermis_add_account)) }, text = {
+    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(I18nR.string.ermis_add_account)) }, text = {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text(stringResource(R.string.ermis_tls_help))
+            Text(stringResource(I18nR.string.ermis_tls_help))
             OutlinedButton(enabled = !busy && !authenticating && activity != null, onClick = {
                 runCatching { googleChooser.launch(AccountManager.newChooseAccountIntent(null, null, arrayOf("com.google"), null, null, null, null)) }.onFailure { onAuthError() }
-            }) { Text(stringResource(R.string.ermis_google_sign_in)) }
-            Text(stringResource(R.string.ermis_google_help), style = MaterialTheme.typography.bodySmall)
+            }) { Text(stringResource(I18nR.string.ermis_google_sign_in)) }
+            Text(stringResource(I18nR.string.ermis_google_help), style = MaterialTheme.typography.bodySmall)
             if (authenticating) LinearProgressIndicator(Modifier.fillMaxWidth())
-            OutlinedTextField(email, { email = it; if (it.trim().endsWith("@gmail.com", true) || it.trim().endsWith("@googlemail.com", true)) { imap = "imap.gmail.com"; smtp = "smtp.gmail.com" } }, label = { Text(stringResource(R.string.ermis_email)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
-            OutlinedTextField(username, { username = it }, label = { Text(stringResource(R.string.ermis_username)) }, supportingText = { Text(stringResource(R.string.ermis_username_help)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
-            OutlinedTextField(password, { password = it }, label = { Text(stringResource(R.string.ermis_password)) }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(), singleLine = true)
-            OutlinedTextField(imap, { imap = it }, label = { Text(stringResource(R.string.ermis_imap_host)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
-            OutlinedTextField(imapPort, { imapPort = it.filter(Char::isDigit) }, label = { Text(stringResource(R.string.ermis_imap_port)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
-            OutlinedTextField(smtp, { smtp = it }, label = { Text(stringResource(R.string.ermis_smtp_host)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
-            OutlinedTextField(smtpPort, { smtpPort = it.filter(Char::isDigit) }, label = { Text(stringResource(R.string.ermis_smtp_port)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
-            Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(startTls, { startTls = it; smtpPort = if (it) "587" else "465" }); Text(stringResource(R.string.ermis_starttls), Modifier.weight(1f)) }
+            OutlinedTextField(email, { email = it; if (it.trim().endsWith("@gmail.com", true) || it.trim().endsWith("@googlemail.com", true)) { imap = "imap.gmail.com"; smtp = "smtp.gmail.com" } }, label = { Text(stringResource(I18nR.string.ermis_email)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
+            OutlinedTextField(username, { username = it }, label = { Text(stringResource(I18nR.string.ermis_username)) }, supportingText = { Text(stringResource(I18nR.string.ermis_username_help)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
+            OutlinedTextField(password, { password = it }, label = { Text(stringResource(I18nR.string.ermis_password)) }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(), singleLine = true)
+            OutlinedTextField(imap, { imap = it }, label = { Text(stringResource(I18nR.string.ermis_imap_host)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
+            OutlinedTextField(imapPort, { imapPort = it.filter(Char::isDigit) }, label = { Text(stringResource(I18nR.string.ermis_imap_port)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
+            OutlinedTextField(smtp, { smtp = it }, label = { Text(stringResource(I18nR.string.ermis_smtp_host)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
+            OutlinedTextField(smtpPort, { smtpPort = it.filter(Char::isDigit) }, label = { Text(stringResource(I18nR.string.ermis_smtp_port)) }, modifier = Modifier.fillMaxWidth(), singleLine = true)
+            Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(startTls, { startTls = it; smtpPort = if (it) "587" else "465" }); Text(stringResource(I18nR.string.ermis_starttls), Modifier.weight(1f)) }
         }
     }, confirmButton = { TextButton(enabled = !busy && !authenticating && email.contains('@') && password.isNotEmpty() && imap.isNotBlank() && smtp.isNotBlank() && (imapPort.toIntOrNull() ?: 0) in 1..65535 && (smtpPort.toIntOrNull() ?: 0) in 1..65535, onClick = {
         onConnect(ErmisAccount(UUID.randomUUID().toString(), email.trim(), email.trim(), imap.trim(), imapPort.toInt(), smtp.trim(), smtpPort.toInt(), startTls, username.trim().ifBlank { email.trim() }), password)
-    }) { Text(stringResource(R.string.ermis_connect)) } }, dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } })
+    }) { Text(stringResource(I18nR.string.ermis_connect)) } }, dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } })
 }
 
 @Composable
@@ -424,37 +426,37 @@ private fun ComposeDialog(accounts: List<ErmisAccount>, initialAccount: String?,
             else to.isNotBlank() || subject.isNotBlank() || body.isNotBlank() || cc.isNotBlank() || bcc.isNotBlank() || attachments.isNotEmpty() || original != null
         if (changed) confirmClose = true else onDismiss()
     }
-    MailPage(onDismiss = { if (!busy) requestClose() }, title = stringResource(R.string.ermis_compose), action = {
-        IconButton(enabled = !busy && account != null, onClick = { onSave(draftId, currentDraft()) }) { Icon(painterResource(R.drawable.save_24px), stringResource(R.string.hc_save)) }
-        TextButton(enabled = !busy && account != null && listOf(to, cc, bcc).any { it.contains('@') }, onClick = { onSend(draftId, currentDraft()) }) { Text(stringResource(R.string.ermis_send)) }
+    MailPage(onDismiss = { if (!busy) requestClose() }, title = stringResource(I18nR.string.ermis_compose), action = {
+        IconButton(enabled = !busy && account != null, onClick = { onSave(draftId, currentDraft()) }) { Icon(painterResource(BaseR.drawable.save_24px), stringResource(I18nR.string.hc_save)) }
+        TextButton(enabled = !busy && account != null && listOf(to, cc, bcc).any { it.contains('@') }, onClick = { onSend(draftId, currentDraft()) }) { Text(stringResource(I18nR.string.ermis_send)) }
     }) {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             FlowRow { accounts.forEach { a -> FilterChip(account == a.id, onClick = { account = a.id }, label = { Text(a.email) }) } }
-            OutlinedTextField(to, { to = it }, label = { Text(stringResource(R.string.ermis_to)) }, modifier = Modifier.fillMaxWidth(),
+            OutlinedTextField(to, { to = it }, label = { Text(stringResource(I18nR.string.ermis_to)) }, modifier = Modifier.fillMaxWidth(),
                 trailingIcon = { IconButton(onClick = { runCatching { contactPicker.launch(Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Email.CONTENT_URI)) }.onFailure { contactError = true } }) {
-                    Icon(painterResource(R.drawable.person_24px), stringResource(R.string.tsp_search_contacts))
+                    Icon(painterResource(BaseR.drawable.person_24px), stringResource(I18nR.string.tsp_search_contacts))
                 } })
-            OutlinedTextField(cc, { cc = it }, label = { Text(stringResource(R.string.ermis_cc)) }, modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(bcc, { bcc = it }, label = { Text(stringResource(R.string.ermis_bcc)) }, modifier = Modifier.fillMaxWidth())
-            if (contactError) Text(stringResource(R.string.hc_no_contacts_found), color = MaterialTheme.colorScheme.error)
-            OutlinedTextField(subject, { subject = it }, label = { Text(stringResource(R.string.ermis_subject)) }, modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(body, { body = it }, label = { Text(stringResource(R.string.ermis_body)) }, minLines = 5, modifier = Modifier.fillMaxWidth())
-            TextButton(onClick = { picker.launch(arrayOf("*/*")) }) { Icon(painterResource(R.drawable.attach_file_24px), null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.ermis_attach)) }
-            Text(stringResource(R.string.ermis_saf_help), style = MaterialTheme.typography.bodySmall)
+            OutlinedTextField(cc, { cc = it }, label = { Text(stringResource(I18nR.string.ermis_cc)) }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(bcc, { bcc = it }, label = { Text(stringResource(I18nR.string.ermis_bcc)) }, modifier = Modifier.fillMaxWidth())
+            if (contactError) Text(stringResource(I18nR.string.hc_no_contacts_found), color = MaterialTheme.colorScheme.error)
+            OutlinedTextField(subject, { subject = it }, label = { Text(stringResource(I18nR.string.ermis_subject)) }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(body, { body = it }, label = { Text(stringResource(I18nR.string.ermis_body)) }, minLines = 5, modifier = Modifier.fillMaxWidth())
+            TextButton(onClick = { picker.launch(arrayOf("*/*")) }) { Icon(painterResource(BaseR.drawable.attach_file_24px), null); Spacer(Modifier.width(8.dp)); Text(stringResource(I18nR.string.ermis_attach)) }
+            Text(stringResource(I18nR.string.ermis_saf_help), style = MaterialTheme.typography.bodySmall)
             if (original != null) Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(stringResource(R.string.ermis_forward_original), Modifier.weight(1f))
-                IconButton(onClick = { original = null }) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.ermis_remove)) }
+                Text(stringResource(I18nR.string.ermis_forward_original), Modifier.weight(1f))
+                IconButton(onClick = { original = null }) { Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.ermis_remove)) }
             }
             attachments.forEach { uri ->
                 val name by produceState(uri.lastPathSegment.orEmpty(), uri) { value = withContext(Dispatchers.IO) { runCatching { context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { if (it.moveToFirst()) it.getString(0) else null } }.getOrNull() ?: uri.lastPathSegment.orEmpty() } }
-                Row(verticalAlignment = Alignment.CenterVertically) { Text(name, Modifier.weight(1f)); IconButton(onClick = { attachments = attachments - uri }) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.ermis_remove)) } }
+                Row(verticalAlignment = Alignment.CenterVertically) { Text(name, Modifier.weight(1f)); IconButton(onClick = { attachments = attachments - uri }) { Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.ermis_remove)) } }
             }
         }
     }
-    if (confirmClose) AlertDialog(onDismissRequest = { confirmClose = false }, title = { Text(stringResource(R.string.ermis_drafts)) },
-        text = { Text(subject.ifBlank { stringResource(R.string.ermis_no_subject) }) },
-        confirmButton = { TextButton(enabled = !busy && account != null, onClick = { onSave(draftId, currentDraft()) }) { Text(stringResource(R.string.hc_save)) } },
-        dismissButton = { FlowRow { TextButton(onClick = { confirmClose = false }) { Text(stringResource(R.string.hc_cancel)) }; TextButton(enabled = !busy, onClick = { onDiscard(draftId) }) { Text(stringResource(R.string.ermis_remove)) } } })
+    if (confirmClose) AlertDialog(onDismissRequest = { confirmClose = false }, title = { Text(stringResource(I18nR.string.ermis_drafts)) },
+        text = { Text(subject.ifBlank { stringResource(I18nR.string.ermis_no_subject) }) },
+        confirmButton = { TextButton(enabled = !busy && account != null, onClick = { onSave(draftId, currentDraft()) }) { Text(stringResource(I18nR.string.hc_save)) } },
+        dismissButton = { FlowRow { TextButton(onClick = { confirmClose = false }) { Text(stringResource(I18nR.string.hc_cancel)) }; TextButton(enabled = !busy, onClick = { onDiscard(draftId) }) { Text(stringResource(I18nR.string.ermis_remove)) } } })
 
 }
 
@@ -466,19 +468,19 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
     val htmlHeight = (LocalConfiguration.current.screenHeightDp * .6f).coerceIn(180f, 640f).dp
     val moveActions = remember(folders, message.folder) {
         listOfNotNull(
-            (folders.firstOrNull { it.role == ErmisFolderRole.ARCHIVE } ?: folders.firstOrNull { it.role == ErmisFolderRole.ALL })?.let { R.string.ermis_archive to it },
-            folders.firstOrNull { it.role == ErmisFolderRole.TRASH }?.let { R.string.ermis_trash to it },
-            folders.firstOrNull { it.role == ErmisFolderRole.SPAM }?.let { R.string.ermis_spam to it }
+            (folders.firstOrNull { it.role == ErmisFolderRole.ARCHIVE } ?: folders.firstOrNull { it.role == ErmisFolderRole.ALL })?.let { I18nR.string.ermis_archive to it },
+            folders.firstOrNull { it.role == ErmisFolderRole.TRASH }?.let { I18nR.string.ermis_trash to it },
+            folders.firstOrNull { it.role == ErmisFolderRole.SPAM }?.let { I18nR.string.ermis_spam to it }
         ).filter { it.second.id != message.folder }
     }
     var note by remember(message.accountId, message.folder, message.uid, message.note) { mutableStateOf(message.note) }
     var attachment by remember { mutableStateOf<ErmisAttachment?>(null) }
     val download = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/octet-stream")) { uri -> if (uri != null) attachment?.let { onDownload(it, uri) } }
-    MailPage(onDismiss, title = message.subject.ifBlank { stringResource(R.string.ermis_no_subject) }, action = { TextButton(onClick = onReply) { Text(stringResource(R.string.ermis_reply)) } }) {
+    MailPage(onDismiss, title = message.subject.ifBlank { stringResource(I18nR.string.ermis_no_subject) }, action = { TextButton(onClick = onReply) { Text(stringResource(I18nR.string.ermis_reply)) } }) {
         Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(16.dp)) {
             if (conversation.size > 1) {
-                Text(stringResource(R.string.ermis_conversation_count, conversation.size), style = MaterialTheme.typography.labelLarge)
-                TextButton(onClick = { conversationOpen = true }) { Text(stringResource(R.string.ermis_conversation_count, conversation.size)) }
+                Text(stringResource(I18nR.string.ermis_conversation_count, conversation.size), style = MaterialTheme.typography.labelLarge)
+                TextButton(onClick = { conversationOpen = true }) { Text(stringResource(I18nR.string.ermis_conversation_count, conversation.size)) }
             }
             Text(message.from, style = MaterialTheme.typography.titleMedium)
             
@@ -494,9 +496,9 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
                 ) {
                     Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(painterResource(R.drawable.auto_awesome_20dp), contentDescription = null, modifier = Modifier.size(18.dp))
+                            Icon(painterResource(BaseR.drawable.auto_awesome_20dp), contentDescription = null, modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(6.dp))
-                            Text(stringResource(R.string.ai_summary_title), style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
+                            Text(stringResource(I18nR.string.ai_summary_title), style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold)
                         }
                         Text(summary!!, style = MaterialTheme.typography.bodyMedium)
                     }
@@ -515,35 +517,35 @@ private fun MessageDialog(message: ErmisMessage, conversation: List<ErmisMessage
                     enabled = !summarizing,
                     modifier = Modifier.padding(vertical = 2.dp)
                 ) {
-                    Icon(painterResource(R.drawable.auto_awesome_20dp), contentDescription = null, modifier = Modifier.size(18.dp))
+                    Icon(painterResource(BaseR.drawable.auto_awesome_20dp), contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text(if (summarizing) stringResource(R.string.ai_summarizing) else stringResource(R.string.ai_summarize))
+                    Text(if (summarizing) stringResource(I18nR.string.ai_summarizing) else stringResource(I18nR.string.ai_summarize))
                 }
             }
 
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                TextButton(onClick = onReplyAll) { Text(stringResource(R.string.ermis_reply_all)) }
-                TextButton(onClick = onForward) { Text(stringResource(R.string.ermis_forward)) }
-                TextButton(onClick = onMoveAny) { Text(stringResource(R.string.ermis_move)) }
-                TextButton(onClick = onMarkUnread) { Text(stringResource(R.string.comms_mark_unread)) }
+                TextButton(onClick = onReplyAll) { Text(stringResource(I18nR.string.ermis_reply_all)) }
+                TextButton(onClick = onForward) { Text(stringResource(I18nR.string.ermis_forward)) }
+                TextButton(onClick = onMoveAny) { Text(stringResource(I18nR.string.ermis_move)) }
+                TextButton(onClick = onMarkUnread) { Text(stringResource(I18nR.string.comms_mark_unread)) }
                 moveActions.forEach { (label, folder) -> TextButton(onClick = { onMove(folder) }) { Text(stringResource(label)) } }
             }
             if (message.html.isNotBlank()) FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterChip(showHtml, onClick = { showHtml = true }, label = { Text(stringResource(R.string.ermis_html_view)) })
-                FilterChip(!showHtml, onClick = { showHtml = false }, label = { Text(stringResource(R.string.ermis_text_view)) })
+                FilterChip(showHtml, onClick = { showHtml = true }, label = { Text(stringResource(I18nR.string.ermis_html_view)) })
+                FilterChip(!showHtml, onClick = { showHtml = false }, label = { Text(stringResource(I18nR.string.ermis_text_view)) })
             }
             if (showHtml && message.html.isNotBlank()) ErmisHtmlBody(message.html, message.body.ifBlank { message.preview }, Modifier.fillMaxWidth().height(htmlHeight))
             else SelectionContainer { Text(message.body.ifBlank { message.preview }) }
             message.attachments.forEach { item -> OutlinedButton(onClick = { attachment = item; download.launch(item.name) }) { Text(item.name) } }
-            OutlinedTextField(note, { note = it }, label = { Text(stringResource(R.string.ermis_note)) }, modifier = Modifier.fillMaxWidth(), minLines = 2)
-            TextButton(onClick = { onSaveNote(note) }) { Text(stringResource(R.string.ermis_note_save)) }
+            OutlinedTextField(note, { note = it }, label = { Text(stringResource(I18nR.string.ermis_note)) }, modifier = Modifier.fillMaxWidth(), minLines = 2)
+            TextButton(onClick = { onSaveNote(note) }) { Text(stringResource(I18nR.string.ermis_note_save)) }
         }
     }
-    if (conversationOpen) AlertDialog(onDismissRequest = { conversationOpen = false }, title = { Text(stringResource(R.string.ermis_conversation_count, conversation.size)) }, text = {
+    if (conversationOpen) AlertDialog(onDismissRequest = { conversationOpen = false }, title = { Text(stringResource(I18nR.string.ermis_conversation_count, conversation.size)) }, text = {
         LazyColumn(Modifier.heightIn(max = 480.dp)) { items(conversation, key = { "${it.accountId}:${it.folder}:${it.uid}" }) { other ->
             TextButton(onClick = { conversationOpen = false; onSelect(other) }) { Text(other.from + "\n" + other.subject) }
         } }
-    }, confirmButton = { TextButton(onClick = { conversationOpen = false }) { Text(stringResource(R.string.hc_close)) } })
+    }, confirmButton = { TextButton(onClick = { conversationOpen = false }) { Text(stringResource(I18nR.string.hc_close)) } })
 
 }
 
@@ -561,7 +563,7 @@ private fun MailPage(onDismiss: () -> Unit, title: String, action: @Composable (
                 ) {
                     Scaffold(containerColor = androidx.compose.ui.graphics.Color.Transparent, topBar = {
                         Row(Modifier.statusBarsPadding().fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                            IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close)) }
+                            IconButton(onClick = onDismiss) { Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_close)) }
                             Text(title, Modifier.weight(1f), maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, style = MaterialTheme.typography.titleMedium)
                             action()
                         }

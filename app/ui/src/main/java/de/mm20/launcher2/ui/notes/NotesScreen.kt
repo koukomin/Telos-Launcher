@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.notes
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import androidx.activity.compose.BackHandler
@@ -86,11 +88,11 @@ fun NotesScreen() {
     val text = message?.let {
         val p = it.split(':')
         when (p[0]) {
-            "import" -> if (p.getOrNull(2)?.toIntOrNull().let { it != null && it > 0 }) stringResource(R.string.notes_imported_skipped, p[1].toInt(), p[2].toInt())
-                else stringResource(R.string.notes_imported, p[1].toInt())
-            "sync" -> if (p.getOrNull(3)?.toIntOrNull().let { it != null && it > 0 }) stringResource(R.string.notes_synced_skipped, p[1].toInt(), p[2].toInt(), p[3].toInt())
-                else stringResource(R.string.notes_synced, p[1].toInt(), p[2].toInt())
-            else -> stringResource(R.string.notes_sync_failed, it.substringAfter(':'))
+            "import" -> if (p.getOrNull(2)?.toIntOrNull().let { it != null && it > 0 }) stringResource(I18nR.string.notes_imported_skipped, p[1].toInt(), p[2].toInt())
+                else stringResource(I18nR.string.notes_imported, p[1].toInt())
+            "sync" -> if (p.getOrNull(3)?.toIntOrNull().let { it != null && it > 0 }) stringResource(I18nR.string.notes_synced_skipped, p[1].toInt(), p[2].toInt(), p[3].toInt())
+                else stringResource(I18nR.string.notes_synced, p[1].toInt(), p[2].toInt())
+            else -> stringResource(I18nR.string.notes_sync_failed, it.substringAfter(':'))
         }
     }
     // a label filter whose notes are all gone has no chip left to switch it off
@@ -117,17 +119,17 @@ fun NotesScreen() {
             snackbarHost = { SnackbarHost(snack) },
             floatingActionButton = {
                 if (filter == NotesFilter.Notes) FloatingActionButton(onClick = { editing = Note(labels = listOfNotNull(label)) }) {
-                    Icon(painterResource(R.drawable.add_24px), stringResource(R.string.notes_new))
+                    Icon(painterResource(BaseR.drawable.add_24px), stringResource(I18nR.string.notes_new))
                 }
             },
         ) { pad ->
             Column(Modifier.padding(pad)) {
                 Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     if (searching) {
-                        TelosSearchTopBar(query, { vm.query.value = it }, stringResource(R.string.tsp_search_notes), Modifier.weight(1f), autoFocus = true)
+                        TelosSearchTopBar(query, { vm.query.value = it }, stringResource(I18nR.string.tsp_search_notes), Modifier.weight(1f), autoFocus = true)
                     } else {
                         Text(stringResource(when (filter) {
-                            NotesFilter.Notes -> R.string.notes_title; NotesFilter.Archive -> R.string.notes_archive; NotesFilter.Trash -> R.string.notes_trash
+                            NotesFilter.Notes -> I18nR.string.notes_title; NotesFilter.Archive -> I18nR.string.notes_archive; NotesFilter.Trash -> I18nR.string.notes_trash
                         }), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.weight(1f))
                     }
                     var showFontDialog by remember { mutableStateOf(false) }
@@ -139,20 +141,20 @@ fun NotesScreen() {
                         )
                     }
                     IconButton(onClick = { searching = !searching; if (!searching) vm.query.value = "" }) {
-                        Icon(painterResource(if (searching) R.drawable.close_24px else R.drawable.search_24px), stringResource(R.string.notes_search))
+                        Icon(painterResource(if (searching) BaseR.drawable.close_24px else BaseR.drawable.search_24px), stringResource(I18nR.string.notes_search))
                     }
                     IconButton(onClick = { showFontDialog = true }) {
-                        Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
+                        Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
                     }
                     if (syncing) CircularProgressIndicator(Modifier.size(24.dp)) else Box {
-                        IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.notes_title)) }
+                        IconButton(onClick = { menu = true }) { Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.notes_title)) }
                         DropdownMenu(menu, { menu = false }) {
-                            DropdownMenuItem(text = { Text(stringResource(R.string.notes_sync_now)) }, onClick = { menu = false; vm.syncNow() })
-                            DropdownMenuItem(text = { Text(stringResource(R.string.notes_sync_settings)) }, onClick = { menu = false; showSync = true })
-                            DropdownMenuItem(text = { Text(stringResource(R.string.notes_import)) }, onClick = { menu = false; importer.launch(arrayOf("*/*")) })
-                            DropdownMenuItem(text = { Text(stringResource(R.string.notes_archive)) }, onClick = { menu = false; vm.filter.value = NotesFilter.Archive })
-                            DropdownMenuItem(text = { Text(stringResource(R.string.notes_trash)) }, onClick = { menu = false; vm.filter.value = NotesFilter.Trash })
-                            if (filter == NotesFilter.Trash) DropdownMenuItem(text = { Text(stringResource(R.string.notes_empty_trash)) }, onClick = { menu = false; vm.emptyTrash() })
+                            DropdownMenuItem(text = { Text(stringResource(I18nR.string.notes_sync_now)) }, onClick = { menu = false; vm.syncNow() })
+                            DropdownMenuItem(text = { Text(stringResource(I18nR.string.notes_sync_settings)) }, onClick = { menu = false; showSync = true })
+                            DropdownMenuItem(text = { Text(stringResource(I18nR.string.notes_import)) }, onClick = { menu = false; importer.launch(arrayOf("*/*")) })
+                            DropdownMenuItem(text = { Text(stringResource(I18nR.string.notes_archive)) }, onClick = { menu = false; vm.filter.value = NotesFilter.Archive })
+                            DropdownMenuItem(text = { Text(stringResource(I18nR.string.notes_trash)) }, onClick = { menu = false; vm.filter.value = NotesFilter.Trash })
+                            if (filter == NotesFilter.Trash) DropdownMenuItem(text = { Text(stringResource(I18nR.string.notes_empty_trash)) }, onClick = { menu = false; vm.emptyTrash() })
                         }
                     }
                 }
@@ -182,15 +184,15 @@ fun NotesScreen() {
                             trash = filter == NotesFilter.Trash)
                         DropdownMenu(cardMenu, { cardMenu = false }) {
                             DropdownMenuItem(
-                                text = { Text(stringResource(if (n.archived) R.string.au9_share_unarchive else R.string.notes_archive)) },
+                                text = { Text(stringResource(if (n.archived) I18nR.string.au9_share_unarchive else I18nR.string.notes_archive)) },
                                 onClick = {
                                     cardMenu = false
                                     vm.save(n.copy(archived = !n.archived))
                                     scope.launch {
                                         snack.currentSnackbarData?.dismiss()
                                         val r = snack.showSnackbar(
-                                            context.getString(if (n.archived) R.string.au_planner_unarchived else R.string.au_planner_archived),
-                                            context.getString(R.string.au_planner_undo), duration = SnackbarDuration.Short)
+                                            context.getString(if (n.archived) I18nR.string.au_planner_unarchived else I18nR.string.au_planner_archived),
+                                            context.getString(I18nR.string.au_planner_undo), duration = SnackbarDuration.Short)
                                         if (r == SnackbarResult.ActionPerformed) vm.save(n)
                                     }
                                 })
@@ -200,7 +202,7 @@ fun NotesScreen() {
                                 de.mm20.launcher2.ui.common.share.ShareActions.shareNote(context, n.title, n.body, false)
                             })
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.au9_share_note_md)) },
+                                text = { Text(stringResource(I18nR.string.au9_share_note_md)) },
                                 onClick = {
                                     cardMenu = false
                                     de.mm20.launcher2.ui.common.share.ShareActions.shareNote(context, n.title, n.body, true)
@@ -252,7 +254,7 @@ private fun NoteCard(n: Note, onClick: () -> Unit, onLong: () -> Unit, trash: Bo
         Row(Modifier.padding(top = 6.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(n.modifiedAt)),
                 style = MaterialTheme.typography.labelSmall, color = fg.copy(alpha = 0.6f))
-            if (n.pinned) Icon(painterResource(R.drawable.star_24px_filled), stringResource(R.string.notes_pin),
+            if (n.pinned) Icon(painterResource(BaseR.drawable.star_24px_filled), stringResource(I18nR.string.notes_pin),
                 Modifier.padding(start = 6.dp).size(14.dp), tint = fg.copy(alpha = 0.6f))
         }
     }
@@ -268,30 +270,30 @@ private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Uni
     val context = LocalContext.current
     Column(Modifier.fillMaxSize().background(bg).imePadding()) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onClose) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.notes_back), tint = fg) }
+            IconButton(onClick = onClose) { Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.notes_back), tint = fg) }
             Spacer(Modifier.weight(1f))
             IconButton(onClick = { onChange(note.copy(pinned = !note.pinned)) }) {
-                Icon(painterResource(if (note.pinned) R.drawable.star_24px_filled else R.drawable.star_24px_outlined), stringResource(R.string.notes_pin), tint = fg)
+                Icon(painterResource(if (note.pinned) BaseR.drawable.star_24px_filled else BaseR.drawable.star_24px_outlined), stringResource(I18nR.string.notes_pin), tint = fg)
             }
-            IconButton(onClick = { colors = !colors }) { Icon(painterResource(R.drawable.palette_24px), stringResource(R.string.notes_color), tint = fg) }
-            IconButton(onClick = { labelDialog = true }) { Icon(painterResource(R.drawable.label_24px), stringResource(R.string.notes_labels), tint = fg) }
-            IconButton(onClick = onArchive) { Icon(painterResource(R.drawable.archive_24px), stringResource(R.string.notes_archive), tint = fg) }
+            IconButton(onClick = { colors = !colors }) { Icon(painterResource(BaseR.drawable.palette_24px), stringResource(I18nR.string.notes_color), tint = fg) }
+            IconButton(onClick = { labelDialog = true }) { Icon(painterResource(BaseR.drawable.label_24px), stringResource(I18nR.string.notes_labels), tint = fg) }
+            IconButton(onClick = onArchive) { Icon(painterResource(BaseR.drawable.archive_24px), stringResource(I18nR.string.notes_archive), tint = fg) }
             Box {
                 var shareMenu by remember { mutableStateOf(false) }
-                IconButton(onClick = { shareMenu = true }) { Icon(painterResource(R.drawable.share_24px), stringResource(R.string.notes_share), tint = fg) }
+                IconButton(onClick = { shareMenu = true }) { Icon(painterResource(BaseR.drawable.share_24px), stringResource(I18nR.string.notes_share), tint = fg) }
                 DropdownMenu(shareMenu, { shareMenu = false }) {
                     NoteImageShareItem(note) { shareMenu = false }
-                    DropdownMenuItem(text = { Text(stringResource(R.string.au9_share_note_text)) }, onClick = {
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.au9_share_note_text)) }, onClick = {
                         shareMenu = false
                         de.mm20.launcher2.ui.common.share.ShareActions.shareNote(context, note.title, note.body, false)
                     })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.au9_share_note_md)) }, onClick = {
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.au9_share_note_md)) }, onClick = {
                         shareMenu = false
                         de.mm20.launcher2.ui.common.share.ShareActions.shareNote(context, note.title, note.body, true)
                     })
                 }
             }
-            IconButton(onClick = onTrash) { Icon(painterResource(R.drawable.delete_24px), stringResource(R.string.notes_delete), tint = fg) }
+            IconButton(onClick = onTrash) { Icon(painterResource(BaseR.drawable.delete_24px), stringResource(I18nR.string.notes_delete), tint = fg) }
         }
         if (colors) LazyRow(Modifier.padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             items(NotesStore.Colors.indices.toList()) { i ->
@@ -304,31 +306,31 @@ private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Uni
             Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
             textStyle = MaterialTheme.typography.headlineSmall.copy(color = fg, fontWeight = FontWeight.SemiBold),
             cursorBrush = SolidColor(fg),
-            decorationBox = { inner -> Box { if (note.title.isEmpty()) Text(stringResource(R.string.notes_title_hint), style = MaterialTheme.typography.headlineSmall, color = fg.copy(alpha = 0.4f)); inner() } },
+            decorationBox = { inner -> Box { if (note.title.isEmpty()) Text(stringResource(I18nR.string.notes_title_hint), style = MaterialTheme.typography.headlineSmall, color = fg.copy(alpha = 0.4f)); inner() } },
         )
         if (note.labels.isNotEmpty()) Text(note.labels.joinToString("  ") { "#$it" }, Modifier.padding(horizontal = 20.dp), color = fg.copy(alpha = 0.7f), style = MaterialTheme.typography.labelLarge)
         BasicTextField(
             note.body, { onChange(note.copy(body = it)) },
             Modifier.fillMaxWidth().weight(1f).padding(horizontal = 20.dp, vertical = 8.dp),
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = fg), cursorBrush = SolidColor(fg),
-            decorationBox = { inner -> Box { if (note.body.isEmpty()) Text(stringResource(R.string.notes_body_hint), style = MaterialTheme.typography.bodyLarge, color = fg.copy(alpha = 0.4f)); inner() } },
+            decorationBox = { inner -> Box { if (note.body.isEmpty()) Text(stringResource(I18nR.string.notes_body_hint), style = MaterialTheme.typography.bodyLarge, color = fg.copy(alpha = 0.4f)); inner() } },
         )
     }
     if (labelDialog) {
         var text by remember { mutableStateOf(note.labels.joinToString(", ")) }
         AlertDialog(
             onDismissRequest = { labelDialog = false },
-            title = { Text(stringResource(R.string.notes_labels)) },
+            title = { Text(stringResource(I18nR.string.notes_labels)) },
             text = {
                 Column {
-                    OutlinedTextField(text, { text = it }, singleLine = true, placeholder = { Text(stringResource(R.string.notes_labels_hint)) })
+                    OutlinedTextField(text, { text = it }, singleLine = true, placeholder = { Text(stringResource(I18nR.string.notes_labels_hint)) })
                     if (labels.isNotEmpty()) Text(labels.joinToString("  ") { "#$it" }, Modifier.padding(top = 8.dp), style = MaterialTheme.typography.labelMedium)
                 }
             },
             confirmButton = { TextButton(onClick = {
                 onChange(note.copy(labels = text.split(',').map { it.trim().trimStart('#') }.filter { it.isNotEmpty() }.distinct())); labelDialog = false
-            }) { Text(stringResource(R.string.notes_ok)) } },
-            dismissButton = { TextButton(onClick = { labelDialog = false }) { Text(stringResource(R.string.notes_cancel)) } },
+            }) { Text(stringResource(I18nR.string.notes_ok)) } },
+            dismissButton = { TextButton(onClick = { labelDialog = false }) { Text(stringResource(I18nR.string.notes_cancel)) } },
         )
     }
 }
@@ -349,29 +351,29 @@ private fun SyncDialog(vm: NotesViewModel, onDismiss: () -> Unit) {
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.notes_sync_settings)) },
+        title = { Text(stringResource(I18nR.string.notes_sync_settings)) },
         text = {
             Column(Modifier.verticalScrollCompat(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(stringResource(R.string.notes_sync_folder), style = MaterialTheme.typography.titleSmall)
-                Text(stringResource(R.string.notes_sync_folder_desc), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(I18nR.string.notes_sync_folder), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(I18nR.string.notes_sync_folder_desc), style = MaterialTheme.typography.bodySmall)
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    OutlinedButton(onClick = { picker.launch(null) }) { Text(stringResource(R.string.notes_sync_choose_folder)) }
-                    if (folder != null) TextButton(onClick = { folder = null }) { Text(stringResource(R.string.notes_sync_off)) }
+                    OutlinedButton(onClick = { picker.launch(null) }) { Text(stringResource(I18nR.string.notes_sync_choose_folder)) }
+                    if (folder != null) TextButton(onClick = { folder = null }) { Text(stringResource(I18nR.string.notes_sync_off)) }
                 }
-                Text(folder?.let { Uri_decode(it) } ?: stringResource(R.string.notes_sync_not_set), style = MaterialTheme.typography.labelSmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                Text(folder?.let { Uri_decode(it) } ?: stringResource(I18nR.string.notes_sync_not_set), style = MaterialTheme.typography.labelSmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 HorizontalDivider(Modifier.padding(vertical = 4.dp))
-                Text(stringResource(R.string.notes_sync_nextcloud), style = MaterialTheme.typography.titleSmall)
-                Text(stringResource(R.string.notes_sync_nextcloud_desc), style = MaterialTheme.typography.bodySmall)
-                OutlinedTextField(url, { url = it }, label = { Text(stringResource(R.string.notes_sync_server)) }, singleLine = true, keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = KeyboardType.Uri))
-                OutlinedTextField(user, { user = it }, label = { Text(stringResource(R.string.notes_sync_user)) }, singleLine = true)
-                OutlinedTextField(pass, { pass = it }, label = { Text(stringResource(R.string.notes_sync_password)) }, singleLine = true, visualTransformation = PasswordVisualTransformation())
+                Text(stringResource(I18nR.string.notes_sync_nextcloud), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(I18nR.string.notes_sync_nextcloud_desc), style = MaterialTheme.typography.bodySmall)
+                OutlinedTextField(url, { url = it }, label = { Text(stringResource(I18nR.string.notes_sync_server)) }, singleLine = true, keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = KeyboardType.Uri))
+                OutlinedTextField(user, { user = it }, label = { Text(stringResource(I18nR.string.notes_sync_user)) }, singleLine = true)
+                OutlinedTextField(pass, { pass = it }, label = { Text(stringResource(I18nR.string.notes_sync_password)) }, singleLine = true, visualTransformation = PasswordVisualTransformation())
             }
         },
         confirmButton = { TextButton(onClick = {
             s.folderUri = folder; s.ncUrl = url.trim(); s.ncUser = user.trim(); s.ncPassword = pass
             onDismiss(); vm.syncNow()
-        }) { Text(stringResource(R.string.notes_sync_save)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.notes_cancel)) } },
+        }) { Text(stringResource(I18nR.string.notes_sync_save)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.notes_cancel)) } },
     )
 }
 
@@ -382,11 +384,11 @@ private fun NoteImageShareItem(note: Note, onDismiss: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var busy by remember { mutableStateOf(false) }
-    DropdownMenuItem(enabled = !busy, text = { Text(stringResource(R.string.notes_share_image)) }, onClick = {
+    DropdownMenuItem(enabled = !busy, text = { Text(stringResource(I18nR.string.notes_share_image)) }, onClick = {
         busy = true
         scope.launch {
             val success = shareNoteImages(context, note)
-            if (!success) android.widget.Toast.makeText(context, R.string.au9_share_failed, android.widget.Toast.LENGTH_LONG).show()
+            if (!success) android.widget.Toast.makeText(context, I18nR.string.au9_share_failed, android.widget.Toast.LENGTH_LONG).show()
             busy = false
             onDismiss()
         }

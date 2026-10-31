@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.backup
-
 import de.mm20.launcher2.base.R as BaseR
-import de.mm20.launcher2.i18n.R as I18nR
+
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

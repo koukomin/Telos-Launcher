@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -153,7 +155,7 @@ fun OutlinedTagsInputField(
                                         Icon(
                                             modifier = Modifier
                                                 .size(InputChipDefaults.IconSize),
-                                            painter = painterResource(R.drawable.tag_20px),
+                                            painter = painterResource(BaseR.drawable.tag_20px),
                                             contentDescription = null
                                         )
                                     },
@@ -165,8 +167,8 @@ fun OutlinedTagsInputField(
                                                 .clickable {
                                                     onTagsChange(tags.filterIndexed { index, _ -> index != i })
                                                 },
-                                            painter = painterResource(R.drawable.close_20px),
-                                            contentDescription = androidx.compose.ui.res.stringResource(R.string.menu_remove)
+                                            painter = painterResource(BaseR.drawable.close_20px),
+                                            contentDescription = androidx.compose.ui.res.stringResource(I18nR.string.menu_remove)
                                         )
                                     },
                                 )

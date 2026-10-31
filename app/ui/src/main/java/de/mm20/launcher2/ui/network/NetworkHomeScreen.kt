@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Activity
 import android.widget.Toast
@@ -108,7 +109,7 @@ fun NetworkHomeScreen() {
         if (result.resultCode == Activity.RESULT_OK) engine.start()
         else {
             engine.acknowledgeError()
-            Toast.makeText(context, R.string.net_hub_permission_denied, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, I18nR.string.net_hub_permission_denied, Toast.LENGTH_LONG).show()
         }
     }
     LaunchedEffect(state, requested) {
@@ -146,10 +147,10 @@ fun NetworkHomeScreen() {
             },
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(R.string.net_hub_title), fontWeight = FontWeight.Medium) },
+                    title = { Text(stringResource(I18nR.string.net_hub_title), fontWeight = FontWeight.Medium) },
                     actions = {
                         IconButton(onClick = { backStack.add(NetworkSettingsRoute) }) {
-                            Icon(painterResource(Icons.settings_24px), contentDescription = stringResource(R.string.net_hub_settings))
+                            Icon(painterResource(Icons.settings_24px), contentDescription = stringResource(I18nR.string.net_hub_settings))
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(containerColor = bar),
@@ -207,7 +208,7 @@ fun NetworkHomeScreen() {
 
                         if (state is NetState.Error) {
                             Text((state as NetState.Error).message, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 12.dp))
-                            TextButton(onClick = { engine.acknowledgeError() }) { Text(stringResource(R.string.net_hub_dismiss)) }
+                            TextButton(onClick = { engine.acknowledgeError() }) { Text(stringResource(I18nR.string.net_hub_dismiss)) }
                         }
 
                         FlowRow(
@@ -215,10 +216,10 @@ fun NetworkHomeScreen() {
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
-                            StatChip(stringResource(R.string.net_hub_stat_blocked_dns), number.format(stats.dnsBlocked), card) {
+                            StatChip(stringResource(I18nR.string.net_hub_stat_blocked_dns), number.format(stats.dnsBlocked), card) {
                                 backStack.add(NetworkLogsRoute)
                             }
-                            StatChip(stringResource(R.string.net_hub_stat_blocked_conn), number.format(stats.connectionsBlocked), card) {
+                            StatChip(stringResource(I18nR.string.net_hub_stat_blocked_conn), number.format(stats.connectionsBlocked), card) {
                                 backStack.add(NetworkLogsRoute)
                             }
                         }
@@ -227,20 +228,20 @@ fun NetworkHomeScreen() {
                 item(span = { GridItemSpan(maxLineSpan) }) { NetworkRouteChooser() }
                 item {
                     HubTile(
-                        title = stringResource(R.string.nsp_title),
-                        value = stringResource(R.string.nsp_intro),
+                        title = stringResource(I18nR.string.nsp_title),
+                        value = stringResource(I18nR.string.nsp_intro),
                         icon = Icons.speed_24px,
                         card = card,
                         onClick = { backStack.add(NetworkSpeedTestRoute) },
                     )
                 }
-                item { HubTile(title = "NextDNS", value = stringResource(R.string.nd_title),
+                item { HubTile(title = "NextDNS", value = stringResource(I18nR.string.nd_title),
                     icon = Icons.edit_24px, card = card, onClick = { backStack.add(de.mm20.launcher2.ui.network.nextdns.NextDnsRoute) }) }
-                item { HubTile(title = "Tor", value = stringResource(R.string.nt_onion),
+                item { HubTile(title = "Tor", value = stringResource(I18nR.string.nt_onion),
                     icon = Icons.visibility_off_24px, card = card, onClick = { backStack.add(NetworkPrivacyRoute) }) }
                 item {
                     HubTile(
-                        title = stringResource(R.string.net_hub_dns),
+                        title = stringResource(I18nR.string.net_hub_dns),
                         value = selectedDns.name,
                         icon = Icons.language_24px,
                         card = card,
@@ -249,8 +250,8 @@ fun NetworkHomeScreen() {
                 }
                 item {
                     HubTile(
-                        title = stringResource(R.string.net_dns_system),
-                        value = stringResource(R.string.net_dns_group_system),
+                        title = stringResource(I18nR.string.net_dns_system),
+                        value = stringResource(I18nR.string.net_dns_group_system),
                         icon = Icons.language_24px,
                         card = card,
                         onClick = { backStack.add(PrivateDnsRoute) },
@@ -258,8 +259,8 @@ fun NetworkHomeScreen() {
                 }
                 item {
                     HubTile(
-                        title = stringResource(R.string.net_hub_cat_firewall),
-                        value = stringResource(R.string.net_hub_fw_apps_n, appRules.size),
+                        title = stringResource(I18nR.string.net_hub_cat_firewall),
+                        value = stringResource(I18nR.string.net_hub_fw_apps_n, appRules.size),
                         icon = Icons.apps_24px,
                         card = card,
                         onClick = { backStack.add(NetworkFirewallRoute) },
@@ -267,9 +268,9 @@ fun NetworkHomeScreen() {
                 }
                 item {
                     HubTile(
-                        title = stringResource(R.string.net_hub_wireguard),
-                        value = if (wgUp == 0) stringResource(R.string.net_hub_stat_wg_off)
-                        else stringResource(R.string.net_hub_wg_up, wgUp),
+                        title = stringResource(I18nR.string.net_hub_wireguard),
+                        value = if (wgUp == 0) stringResource(I18nR.string.net_hub_stat_wg_off)
+                        else stringResource(I18nR.string.net_hub_wg_up, wgUp),
                         icon = Icons.lock_24px,
                         card = card,
                         onClick = { backStack.add(NetworkWireguardRoute) },
@@ -277,8 +278,8 @@ fun NetworkHomeScreen() {
                 }
                 item {
                     HubTile(
-                        title = stringResource(R.string.net_hub_blocklists),
-                        value = stringResource(R.string.net_hub_lists_n, listsOn.size),
+                        title = stringResource(I18nR.string.net_hub_blocklists),
+                        value = stringResource(I18nR.string.net_hub_lists_n, listsOn.size),
                         icon = Icons.visibility_off_24px,
                         card = card,
                         onClick = { backStack.add(NetworkBlocklistsRoute) },
@@ -286,8 +287,8 @@ fun NetworkHomeScreen() {
                 }
                 item {
                     HubTile(
-                        title = stringResource(R.string.net_hub_logs),
-                        value = stringResource(R.string.net_hub_logs_sum_short),
+                        title = stringResource(I18nR.string.net_hub_logs),
+                        value = stringResource(I18nR.string.net_hub_logs_sum_short),
                         icon = Icons.manage_search_24px,
                         card = card,
                         onClick = { backStack.add(NetworkLogsRoute) },
@@ -295,8 +296,8 @@ fun NetworkHomeScreen() {
                 }
                 item {
                     HubTile(
-                        title = stringResource(R.string.net_scan_title),
-                        value = stringResource(R.string.net_scan_subnet),
+                        title = stringResource(I18nR.string.net_scan_title),
+                        value = stringResource(I18nR.string.net_scan_subnet),
                         icon = Icons.manage_search_24px,
                         card = card,
                         onClick = { backStack.add(de.mm20.launcher2.ui.network.NetworkScanRoute) },
@@ -304,8 +305,8 @@ fun NetworkHomeScreen() {
                 }
                 item {
                     HubTile(
-                        title = stringResource(R.string.net_hub_settings),
-                        value = stringResource(R.string.net_hub_settings_sum_short),
+                        title = stringResource(I18nR.string.net_hub_settings),
+                        value = stringResource(I18nR.string.net_hub_settings_sum_short),
                         icon = Icons.settings_24px,
                         card = card,
                         onClick = { backStack.add(NetworkSettingsRoute) },
@@ -313,7 +314,7 @@ fun NetworkHomeScreen() {
                 }
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Text(
-                        stringResource(R.string.net_hub_safety),
+                        stringResource(I18nR.string.net_hub_safety),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(vertical = 8.dp),

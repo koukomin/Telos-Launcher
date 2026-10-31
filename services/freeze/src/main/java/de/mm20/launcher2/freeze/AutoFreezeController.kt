@@ -1,4 +1,5 @@
 package de.mm20.launcher2.freeze
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -17,7 +18,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.network.NetState
 import de.mm20.launcher2.network.NetworkEngine
 import de.mm20.launcher2.network.api.AppDirectory
@@ -431,16 +431,16 @@ class AutoFreezeController internal constructor(
             nm.createNotificationChannel(
                 NotificationChannel(
                     PLAY_PAUSE_CHANNEL,
-                    context.getString(R.string.play_update_pause_channel),
+                    context.getString(I18nR.string.play_update_pause_channel),
                     NotificationManager.IMPORTANCE_DEFAULT,
                 )
             )
         }
         val hours = (durationMs / 3_600_000L).coerceAtLeast(1L)
-        val text = context.getString(R.string.play_update_pause_text, hours.toInt(), thawedCount)
+        val text = context.getString(I18nR.string.play_update_pause_text, hours.toInt(), thawedCount)
         val notification = NotificationCompat.Builder(context, PLAY_PAUSE_CHANNEL)
             .setSmallIcon(android.R.drawable.stat_sys_download)
-            .setContentTitle(context.getString(R.string.play_update_pause_title))
+            .setContentTitle(context.getString(I18nR.string.play_update_pause_title))
             .setContentText(text)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -522,7 +522,7 @@ class AutoFreezeController internal constructor(
             nm.createNotificationChannel(
                 NotificationChannel(
                     CHANNEL_ID,
-                    context.getString(R.string.freeze_ready_notification_channel),
+                    context.getString(I18nR.string.freeze_ready_notification_channel),
                     NotificationManager.IMPORTANCE_LOW,
                 )
             )
@@ -549,17 +549,17 @@ class AutoFreezeController internal constructor(
             .setSmallIcon(android.R.drawable.ic_lock_idle_lock)
             .setContentTitle(
                 context.resources.getQuantityString(
-                    R.plurals.freeze_ready_notification_title, freezable.size, freezable.size
+                    I18nR.plurals.freeze_ready_notification_title, freezable.size, freezable.size
                 )
             )
             .setContentText(labelsSummary)
             .setStyle(NotificationCompat.InboxStyle().also { style ->
                 style.setBigContentTitle(
                     context.resources.getQuantityString(
-                        R.plurals.freeze_ready_notification_title, freezable.size, freezable.size
+                        I18nR.plurals.freeze_ready_notification_title, freezable.size, freezable.size
                     )
                 )
-                style.setSummaryText(context.getString(R.string.freeze_ready_notification_text))
+                style.setSummaryText(context.getString(I18nR.string.freeze_ready_notification_text))
                 appLabels.forEach { style.addLine(it) }
             })
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)

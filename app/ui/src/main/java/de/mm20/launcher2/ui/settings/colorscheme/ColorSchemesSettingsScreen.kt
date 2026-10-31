@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.colorscheme
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -65,14 +67,14 @@ fun ColorSchemesSettingsScreen() {
     val (builtin, user) = themes.partition { it.builtIn }
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_colors),
+        title = stringResource(I18nR.string.preference_screen_colors),
     ) {
         item {
             PreferenceCategory {
                 for (theme in builtin) {
                     var showMenu by remember { mutableStateOf(false) }
                     Preference(
-                        icon = if (theme.id == selectedTheme) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px,
+                        icon = if (theme.id == selectedTheme) BaseR.drawable.radio_button_checked_24px else BaseR.drawable.radio_button_unchecked_24px,
                         title = theme.name,
                         controls = {
                             Row(
@@ -82,7 +84,7 @@ fun ColorSchemesSettingsScreen() {
                                 IconButton(
                                     modifier = Modifier.padding(start = 12.dp),
                                     onClick = { showMenu = true }) {
-                                    Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
+                                    Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.action_more_actions))
                                 }
                                 DropdownMenuPopup(
                                     expanded = showMenu,
@@ -95,11 +97,11 @@ fun ColorSchemesSettingsScreen() {
                                             shape = MenuDefaults.standaloneItemShape,
                                             leadingIcon = {
                                                 Icon(
-                                                    painterResource(R.drawable.content_copy_24px),
+                                                    painterResource(BaseR.drawable.content_copy_24px),
                                                     null
                                                 )
                                             },
-                                            text = { Text(stringResource(R.string.duplicate)) },
+                                            text = { Text(stringResource(I18nR.string.duplicate)) },
                                             onClick = {
                                                 viewModel.duplicate(theme)
                                                 showMenu = false
@@ -123,7 +125,7 @@ fun ColorSchemesSettingsScreen() {
                     for (theme in user) {
                         var showMenu by remember { mutableStateOf(false) }
                         Preference(
-                            icon = if (theme.id == selectedTheme) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px,
+                            icon = if (theme.id == selectedTheme) BaseR.drawable.radio_button_checked_24px else BaseR.drawable.radio_button_unchecked_24px,
                             title = theme.name,
                             controls = {
                                 Row(
@@ -133,7 +135,7 @@ fun ColorSchemesSettingsScreen() {
                                     IconButton(
                                         modifier = Modifier.padding(start = 12.dp),
                                         onClick = { showMenu = true }) {
-                                        Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
+                                        Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.action_more_actions))
                                     }
                                     DropdownMenuPopup(
                                         expanded = showMenu,
@@ -146,11 +148,11 @@ fun ColorSchemesSettingsScreen() {
                                                 shape = MenuDefaults.leadingItemShape,
                                                 leadingIcon = {
                                                     Icon(
-                                                        painterResource(R.drawable.edit_24px),
+                                                        painterResource(BaseR.drawable.edit_24px),
                                                         null
                                                     )
                                                 },
-                                                text = { Text(stringResource(R.string.edit)) },
+                                                text = { Text(stringResource(I18nR.string.edit)) },
                                                 onClick = {
                                                     backStack.add(ColorSchemeSettingsRoute(id = theme.id))
                                                     showMenu = false
@@ -160,11 +162,11 @@ fun ColorSchemesSettingsScreen() {
                                                 shape = MenuDefaults.middleItemShape,
                                                 leadingIcon = {
                                                     Icon(
-                                                        painterResource(R.drawable.content_copy_24px),
+                                                        painterResource(BaseR.drawable.content_copy_24px),
                                                         null
                                                     )
                                                 },
-                                                text = { Text(stringResource(R.string.duplicate)) },
+                                                text = { Text(stringResource(I18nR.string.duplicate)) },
                                                 onClick = {
                                                     viewModel.duplicate(theme)
                                                     showMenu = false
@@ -174,11 +176,11 @@ fun ColorSchemesSettingsScreen() {
                                                 shape = MenuDefaults.trailingItemShape,
                                                 leadingIcon = {
                                                     Icon(
-                                                        painterResource(R.drawable.delete_24px),
+                                                        painterResource(BaseR.drawable.delete_24px),
                                                         null
                                                     )
                                                 },
-                                                text = { Text(stringResource(R.string.menu_delete)) },
+                                                text = { Text(stringResource(I18nR.string.menu_delete)) },
                                                 onClick = {
                                                     deleteColors = theme
                                                     showMenu = false
@@ -206,13 +208,13 @@ fun ColorSchemesSettingsScreen() {
                     backStack.add(ColorSchemeSettingsRoute(uuid))
                 }) {
                 Icon(
-                    painterResource(R.drawable.add_20px),
+                    painterResource(BaseR.drawable.add_20px),
                     null,
                     modifier = Modifier
                         .padding(end = ButtonDefaults.IconSpacing)
                         .size(ButtonDefaults.IconSize)
                 )
-                Text(stringResource(R.string.preference_create_colors))
+                Text(stringResource(I18nR.string.preference_create_colors))
             }
         }
     }
@@ -222,7 +224,7 @@ fun ColorSchemesSettingsScreen() {
             text = {
                 Text(
                     stringResource(
-                        R.string.confirmation_delete_color_scheme,
+                        I18nR.string.confirmation_delete_color_scheme,
                         deleteColors!!.name
                     )
                 )

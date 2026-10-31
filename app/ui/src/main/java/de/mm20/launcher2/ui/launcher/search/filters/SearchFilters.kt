@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.filters
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -39,16 +41,16 @@ fun SearchFilters(
             },
             leadingIcon = {
                 Icon(
-                    painter = painterResource(R.drawable.language_20px),
+                    painter = painterResource(BaseR.drawable.language_20px),
                     contentDescription = null,
                     modifier = Modifier.size(FilterChipDefaults.IconSize)
                 )
             },
-            label = { Text(stringResource(R.string.search_filter_online)) }
+            label = { Text(stringResource(I18nR.string.search_filter_online)) }
         )
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
         Text(
-            text = stringResource(R.string.search_filter_quick_filters),
+            text = stringResource(I18nR.string.search_filter_quick_filters),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.padding(bottom = 8.dp)
@@ -66,12 +68,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.apps_20px),
+                        painter = painterResource(BaseR.drawable.apps_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.search_filter_apps)) }
+                label = { Text(stringResource(I18nR.string.search_filter_apps)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -85,12 +87,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.description_20px),
+                        painter = painterResource(BaseR.drawable.description_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.preference_search_files)) }
+                label = { Text(stringResource(I18nR.string.preference_search_files)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -104,12 +106,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.person_20px),
+                        painter = painterResource(BaseR.drawable.person_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.preference_search_contacts)) }
+                label = { Text(stringResource(I18nR.string.preference_search_contacts)) }
             )
         }
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
@@ -126,12 +128,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.article_24px),
+                        painter = painterResource(BaseR.drawable.article_24px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.file_type_document)) }
+                label = { Text(stringResource(I18nR.string.file_type_document)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -145,12 +147,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.photo_24px),
+                        painter = painterResource(BaseR.drawable.photo_24px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.file_type_image)) }
+                label = { Text(stringResource(I18nR.string.file_type_image)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -164,12 +166,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.movie_24px),
+                        painter = painterResource(BaseR.drawable.movie_24px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.file_type_video)) }
+                label = { Text(stringResource(I18nR.string.file_type_video)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -183,12 +185,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.music_note_24px),
+                        painter = painterResource(BaseR.drawable.music_note_24px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.file_type_music)) }
+                label = { Text(stringResource(I18nR.string.file_type_music)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -202,12 +204,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.today_20px),
+                        painter = painterResource(BaseR.drawable.today_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.preference_search_calendar)) }
+                label = { Text(stringResource(I18nR.string.preference_search_calendar)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -221,12 +223,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.task_alt_24px),
+                        painter = painterResource(BaseR.drawable.task_alt_24px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.widget_name_reminders)) }
+                label = { Text(stringResource(I18nR.string.widget_name_reminders)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -240,12 +242,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.mobile_arrow_up_right_20px),
+                        painter = painterResource(BaseR.drawable.mobile_arrow_up_right_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.preference_search_appshortcuts)) }
+                label = { Text(stringResource(I18nR.string.preference_search_appshortcuts)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -259,12 +261,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.wikipedia),
+                        painter = painterResource(BaseR.drawable.wikipedia),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.preference_search_wikipedia)) }
+                label = { Text(stringResource(I18nR.string.preference_search_wikipedia)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -278,12 +280,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.public_20px),
+                        painter = painterResource(BaseR.drawable.public_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.preference_search_websites)) }
+                label = { Text(stringResource(I18nR.string.preference_search_websites)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -297,12 +299,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.location_on_20px),
+                        painter = painterResource(BaseR.drawable.location_on_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.preference_search_locations)) }
+                label = { Text(stringResource(I18nR.string.preference_search_locations)) }
             )
             FilterChip(
                 selected = filters.tools && (!allCategoriesEnabled || settings),
@@ -315,12 +317,12 @@ fun SearchFilters(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.handyman_20px),
+                        painter = painterResource(BaseR.drawable.handyman_20px),
                         contentDescription = null,
                         modifier = Modifier.size(FilterChipDefaults.IconSize)
                     )
                 },
-                label = { Text(stringResource(R.string.search_filter_tools)) }
+                label = { Text(stringResource(I18nR.string.search_filter_tools)) }
             )
         }
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
@@ -331,12 +333,12 @@ fun SearchFilters(
             },
             leadingIcon = {
                 Icon(
-                    painter = painterResource(R.drawable.visibility_off_20px),
+                    painter = painterResource(BaseR.drawable.visibility_off_20px),
                     contentDescription = null,
                     modifier = Modifier.size(FilterChipDefaults.IconSize)
                 )
             },
-            label = { Text(stringResource(R.string.preference_hidden_items)) }
+            label = { Text(stringResource(I18nR.string.preference_hidden_items)) }
         )
     }
 }

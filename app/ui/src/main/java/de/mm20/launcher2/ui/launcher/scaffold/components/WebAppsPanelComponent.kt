@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -133,7 +135,7 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                                 }
                                 Text(
                                     text = section.group?.name
-                                        ?: stringResource(R.string.web_apps_panel_ungrouped),
+                                        ?: stringResource(I18nR.string.web_apps_panel_ungrouped),
                                     style = MaterialTheme.typography.titleSmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
@@ -170,8 +172,8 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                                             .size(28.dp),
                                     ) {
                                         Icon(
-                                            painterResource(R.drawable.close_24px),
-                                            contentDescription = stringResource(R.string.widget_action_remove),
+                                            painterResource(BaseR.drawable.close_24px),
+                                            contentDescription = stringResource(I18nR.string.widget_action_remove),
                                         )
                                     }
                                 }
@@ -183,7 +185,7 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                     if (availableToAdd.isNotEmpty()) {
                         item(key = "available-header", span = { GridItemSpan(maxLineSpan) }) {
                             Text(
-                                text = stringResource(R.string.web_apps_panel_add_existing),
+                                text = stringResource(I18nR.string.web_apps_panel_add_existing),
                                 style = MaterialTheme.typography.titleSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp),
@@ -209,12 +211,12 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                         ) {
                             TextButton(onClick = { showCreateSheet = true }) {
                                 Icon(
-                                    painterResource(R.drawable.add_24px),
+                                    painterResource(BaseR.drawable.add_24px),
                                     contentDescription = null,
                                     modifier = Modifier.size(18.dp),
                                 )
                                 Text(
-                                    stringResource(R.string.web_app_shortcut_create),
+                                    stringResource(I18nR.string.web_app_shortcut_create),
                                     modifier = Modifier.padding(start = 8.dp),
                                 )
                             }
@@ -224,7 +226,7 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
             }
             if (!editMode && items.isEmpty()) {
                 Text(
-                    text = stringResource(R.string.web_apps_panel_empty_hint),
+                    text = stringResource(I18nR.string.web_apps_panel_empty_hint),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
@@ -246,13 +248,13 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                 exit = shrinkVertically(shrinkTowards = Alignment.Top) + fadeOut(),
             ) {
                 CenterAlignedTopAppBar(
-                    title = { Text(stringResource(R.string.web_apps_panel_edit)) },
+                    title = { Text(stringResource(I18nR.string.web_apps_panel_edit)) },
                     navigationIcon = {
                         IconButton(onClick = {
                             editMode = false
                             scope.launch { state.unlock() }
                         }) {
-                            Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.action_done))
+                            Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(I18nR.string.action_done))
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -277,8 +279,8 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                         .then(readability.modifier),
                 ) {
                     Icon(
-                        painterResource(R.drawable.tune_24px),
-                        contentDescription = stringResource(R.string.web_apps_panel_edit),
+                        painterResource(BaseR.drawable.tune_24px),
+                        contentDescription = stringResource(I18nR.string.web_apps_panel_edit),
                         tint = readability.color
                     )
                 }
@@ -334,8 +336,8 @@ private fun AvailableWebAppTile(
                 )
             }
             Icon(
-                painterResource(R.drawable.add_24px),
-                contentDescription = stringResource(R.string.web_apps_panel_add_existing),
+                painterResource(BaseR.drawable.add_24px),
+                contentDescription = stringResource(I18nR.string.web_apps_panel_add_existing),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .align(Alignment.TopEnd)

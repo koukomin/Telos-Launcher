@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.feed
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,7 +39,7 @@ fun FeedIntegrationSettingsScreen() {
 
     val providers = remember { viewModel.getFeedProviders(context) }
     PreferenceScreen(
-        title = stringResource(R.string.preference_feed_integration),
+        title = stringResource(I18nR.string.preference_feed_integration),
         helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/integrations/feed"
     ) {
         if (providers.isEmpty()) {
@@ -51,8 +53,8 @@ fun FeedIntegrationSettingsScreen() {
                     verticalArrangement = Arrangement.Center,
                 ) {
                     LargeMessage(
-                        icon = R.drawable.news_48px,
-                        text = stringResource(R.string.no_feed_providers),
+                        icon = BaseR.drawable.news_48px,
+                        text = stringResource(I18nR.string.no_feed_providers),
                         color = MaterialTheme.colorScheme.secondary
                     )
                 }
@@ -61,9 +63,9 @@ fun FeedIntegrationSettingsScreen() {
             item {
                 PreferenceCategory {
                     SwitchPreference(
-                        icon = R.drawable.news_24px,
-                        title = stringResource(R.string.preference_feed_integration),
-                        summary = stringResource(R.string.preference_feed_enable_summary),
+                        icon = BaseR.drawable.news_24px,
+                        title = stringResource(I18nR.string.preference_feed_integration),
+                        summary = stringResource(I18nR.string.preference_feed_enable_summary),
                         value = feedEnabled == true,
                         onValueChanged = {
                             viewModel.setFeedEnabled(it)
@@ -72,11 +74,11 @@ fun FeedIntegrationSettingsScreen() {
                 }
             }
             item {
-                PreferenceCategory(stringResource(R.string.preference_category_feed_provider)) {
+                PreferenceCategory(stringResource(I18nR.string.preference_category_feed_provider)) {
                     for (prov in providers) {
                         Preference(
                             title = prov.label,
-                            icon = if (prov.packageName == selectedProvider) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px,
+                            icon = if (prov.packageName == selectedProvider) BaseR.drawable.radio_button_checked_24px else BaseR.drawable.radio_button_unchecked_24px,
                             onClick = {
                                 viewModel.setProviderPackage(prov.packageName)
                             }

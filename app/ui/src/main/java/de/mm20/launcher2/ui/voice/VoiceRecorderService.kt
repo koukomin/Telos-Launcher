@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.voice
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -80,7 +81,7 @@ class VoiceRecorderService : Service() {
     private fun buildNotification(paused: Boolean): Notification {
         val nm = getSystemService(NotificationManager::class.java)
         if (nm.getNotificationChannel(CHANNEL_ID) == null) {
-            nm.createNotificationChannel(NotificationChannel(CHANNEL_ID, getString(R.string.voice_notification_channel), NotificationManager.IMPORTANCE_LOW))
+            nm.createNotificationChannel(NotificationChannel(CHANNEL_ID, getString(I18nR.string.voice_notification_channel), NotificationManager.IMPORTANCE_LOW))
         }
         fun action(action: String, request: Int) = PendingIntent.getService(
             this, request, Intent(this, VoiceRecorderService::class.java).setAction(action), PendingIntent.FLAG_IMMUTABLE,
@@ -95,13 +96,13 @@ class VoiceRecorderService : Service() {
         )
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, this, "telos_voice_recorder_app") }
-            .setContentTitle(getString(if (paused) R.string.voice_notification_paused else R.string.voice_notification_recording))
+            .setContentTitle(getString(if (paused) I18nR.string.voice_notification_paused else I18nR.string.voice_notification_recording))
             .setContentIntent(open)
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
-            .addAction(0, getString(if (paused) R.string.voice_resume else R.string.voice_pause), action(ACTION_TOGGLE_PAUSE, 1))
-            .addAction(0, getString(R.string.voice_stop), action(ACTION_STOP, 2))
+            .addAction(0, getString(if (paused) I18nR.string.voice_resume else I18nR.string.voice_pause), action(ACTION_TOGGLE_PAUSE, 1))
+            .addAction(0, getString(I18nR.string.voice_stop), action(ACTION_STOP, 2))
             .build()
     }
 

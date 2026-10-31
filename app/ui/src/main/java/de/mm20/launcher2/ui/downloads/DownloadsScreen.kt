@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
@@ -148,7 +150,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                     AfterFinish.Share -> shareDownload(context, e.task)
                     AfterFinish.Nothing -> true
                 }
-                if (!ok) Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show()
+                if (!ok) Toast.makeText(context, I18nR.string.dl_no_app, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -157,25 +159,25 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
     val filterLabels = Filter.entries.associateWith { f ->
         stringResource(
             when (f) {
-                Filter.All -> R.string.dl_tab_all
-                Filter.Active -> R.string.dl_tab_active
-                Filter.Queued -> R.string.dl_tab_queued
-                Filter.Completed -> R.string.dl_tab_completed
-                Filter.Failed -> R.string.dl_tab_failed
-                Filter.Torrents -> R.string.dl_tab_torrents
-                Filter.Media -> R.string.dl_m_tab
+                Filter.All -> I18nR.string.dl_tab_all
+                Filter.Active -> I18nR.string.dl_tab_active
+                Filter.Queued -> I18nR.string.dl_tab_queued
+                Filter.Completed -> I18nR.string.dl_tab_completed
+                Filter.Failed -> I18nR.string.dl_tab_failed
+                Filter.Torrents -> I18nR.string.dl_tab_torrents
+                Filter.Media -> I18nR.string.dl_m_tab
             }
         )
     }
     val categoryLabels = DownloadCategory.entries.associateWith { c ->
         stringResource(
             when (c) {
-                DownloadCategory.Video -> R.string.dl_category_video
-                DownloadCategory.Audio -> R.string.dl_category_audio
-                DownloadCategory.Documents -> R.string.dl_category_documents
-                DownloadCategory.Archives -> R.string.dl_category_archives
-                DownloadCategory.Programs -> R.string.dl_category_programs
-                DownloadCategory.Other -> R.string.dl_category_other
+                DownloadCategory.Video -> I18nR.string.dl_category_video
+                DownloadCategory.Audio -> I18nR.string.dl_category_audio
+                DownloadCategory.Documents -> I18nR.string.dl_category_documents
+                DownloadCategory.Archives -> I18nR.string.dl_category_archives
+                DownloadCategory.Programs -> I18nR.string.dl_category_programs
+                DownloadCategory.Other -> I18nR.string.dl_category_other
             }
         )
     }
@@ -200,7 +202,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
     }
 
     MediaFrame(
-        stringResource(R.string.dl_title),
+        stringResource(I18nR.string.dl_title),
         askNotifications = true,
         guardKey = "telos_downloads_app://downloads",
         actions = {
@@ -213,20 +215,20 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                 )
             }
             IconButton(onClick = { searching = !searching; if (!searching) query = "" }) {
-                Icon(painterResource(R.drawable.search_24px), stringResource(R.string.dl_search))
+                Icon(painterResource(BaseR.drawable.search_24px), stringResource(I18nR.string.dl_search))
             }
             IconButton(onClick = { showFontDialog = true }) {
-                Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
+                Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
             }
             IconButton(onClick = { menu = true }) {
-                Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
+                Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.action_more_actions))
             }
             DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                DropdownMenuItem(text = { Text(stringResource(R.string.dl_pause_all)) }, onClick = { menu = false; manager.pauseAll() })
-                DropdownMenuItem(text = { Text(stringResource(R.string.dl_resume_all)) }, onClick = { menu = false; manager.resumeAll() })
-                DropdownMenuItem(text = { Text(stringResource(R.string.dl_clear_completed)) }, onClick = { menu = false; manager.clearFinished(false) })
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_pause_all)) }, onClick = { menu = false; manager.pauseAll() })
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_resume_all)) }, onClick = { menu = false; manager.resumeAll() })
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_clear_completed)) }, onClick = { menu = false; manager.clearFinished(false) })
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.dl_settings)) },
+                    text = { Text(stringResource(I18nR.string.dl_settings)) },
                     onClick = { menu = false; backStack.add(DownloadsSettingsRoute) },
                 )
             }
@@ -235,7 +237,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
         Box(Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize()) {
                 AnimatedVisibility(searching) {
-                    TelosSearchBar(query, { query = it }, stringResource(R.string.dl_search))
+                    TelosSearchBar(query, { query = it }, stringResource(I18nR.string.dl_search))
                 }
                 Row(
                     Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 4.dp),
@@ -243,13 +245,13 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                 ) {
                     for (f in Filter.entries) {
                         val label = when (f) {
-                            Filter.All -> R.string.dl_tab_all
-                            Filter.Active -> R.string.dl_tab_active
-                            Filter.Queued -> R.string.dl_tab_queued
-                            Filter.Completed -> R.string.dl_tab_completed
-                            Filter.Failed -> R.string.dl_tab_failed
-                            Filter.Torrents -> R.string.dl_tab_torrents
-                            Filter.Media -> R.string.dl_m_tab
+                            Filter.All -> I18nR.string.dl_tab_all
+                            Filter.Active -> I18nR.string.dl_tab_active
+                            Filter.Queued -> I18nR.string.dl_tab_queued
+                            Filter.Completed -> I18nR.string.dl_tab_completed
+                            Filter.Failed -> I18nR.string.dl_tab_failed
+                            Filter.Torrents -> I18nR.string.dl_tab_torrents
+                            Filter.Media -> I18nR.string.dl_m_tab
                         }
                         FilterChip(
                             selected = filter == f,
@@ -275,10 +277,10 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                 if (visible.isEmpty() && query.isNotBlank() && tasks.isNotEmpty()) {
                     SearchEmptyState(query)
                 } else if (filter == Filter.Torrents && visible.isEmpty()) {
-                    EmptyState(R.string.dl_t_empty_title, R.string.dl_t_empty_text)
+                    EmptyState(I18nR.string.dl_t_empty_title, I18nR.string.dl_t_empty_text)
                 } else if (visible.isEmpty()) {
-                    if (tasks.isEmpty()) EmptyState(R.string.dl_empty_title, R.string.dl_empty_text)
-                    else EmptyState(R.string.dl_empty_filter_title, R.string.dl_empty_filter_text)
+                    if (tasks.isEmpty()) EmptyState(I18nR.string.dl_empty_title, I18nR.string.dl_empty_text)
+                    else EmptyState(I18nR.string.dl_empty_filter_title, I18nR.string.dl_empty_filter_text)
                 } else {
                     LazyColumn(
                         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 96.dp),
@@ -305,8 +307,8 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                     else showAdd = true
                 },
                 modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
-                icon = { Icon(painterResource(R.drawable.add_24px), null) },
-                text = { Text(stringResource(R.string.dl_add)) },
+                icon = { Icon(painterResource(BaseR.drawable.add_24px), null) },
+                text = { Text(stringResource(I18nR.string.dl_add)) },
             )
         }
     }
@@ -344,11 +346,11 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
 @Composable
 private fun BlockBanner(reason: BlockReason) {
     val text = when (reason) {
-        BlockReason.NetworkPolicy -> R.string.netfw_blocked
-        BlockReason.Offline -> R.string.dl_block_offline
-        BlockReason.WifiOnly -> R.string.dl_block_wifi
-        BlockReason.LowBattery -> R.string.dl_block_battery
-        BlockReason.Schedule -> R.string.dl_p3_block_schedule
+        BlockReason.NetworkPolicy -> I18nR.string.netfw_blocked
+        BlockReason.Offline -> I18nR.string.dl_block_offline
+        BlockReason.WifiOnly -> I18nR.string.dl_block_wifi
+        BlockReason.LowBattery -> I18nR.string.dl_block_battery
+        BlockReason.Schedule -> I18nR.string.dl_p3_block_schedule
     }
     Surface(
         color = MaterialTheme.colorScheme.secondaryContainer,
@@ -357,7 +359,7 @@ private fun BlockBanner(reason: BlockReason) {
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
     ) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(painterResource(if (reason == BlockReason.Offline) R.drawable.wifi_off_24px else R.drawable.schedule_24px), null, Modifier.size(20.dp))
+            Icon(painterResource(if (reason == BlockReason.Offline) BaseR.drawable.wifi_off_24px else BaseR.drawable.schedule_24px), null, Modifier.size(20.dp))
             Spacer(Modifier.width(12.dp))
             Text(stringResource(text), style = MaterialTheme.typography.bodyMedium)
         }
@@ -373,14 +375,14 @@ private fun ClipboardBanner(link: String, onAdd: () -> Unit, onDismiss: () -> Un
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
     ) {
         Row(Modifier.padding(start = 12.dp, top = 4.dp, bottom = 4.dp, end = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(painterResource(R.drawable.link_24px), null, Modifier.size(20.dp))
+            Icon(painterResource(BaseR.drawable.link_24px), null, Modifier.size(20.dp))
             Spacer(Modifier.width(10.dp))
             Text(
-                stringResource(R.string.dl_p3_clip_found, link.take(60)),
+                stringResource(I18nR.string.dl_p3_clip_found, link.take(60)),
                 style = MaterialTheme.typography.bodySmall, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f),
             )
-            TextButton(onClick = onAdd) { Text(stringResource(R.string.dl_p3_clip_add)) }
-            IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.dl_cancel)) }
+            TextButton(onClick = onAdd) { Text(stringResource(I18nR.string.dl_p3_clip_add)) }
+            IconButton(onClick = onDismiss) { Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.dl_cancel)) }
         }
     }
 }
@@ -394,10 +396,10 @@ private fun SpeedHeader(tasks: List<DownloadTask>) {
         Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(painterResource(R.drawable.speed_24px), null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+        Icon(painterResource(BaseR.drawable.speed_24px), null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.width(8.dp))
         Text(
-            pluralStringResource(R.plurals.dl_header_active, active.size, active.size) + " · " + Formatting.speed(speed),
+            pluralStringResource(I18nR.plurals.dl_header_active, active.size, active.size) + " · " + Formatting.speed(speed),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.primary,
         )
@@ -415,7 +417,7 @@ private fun EmptyState(title: Int, text: Int) {
             Modifier.size(96.dp).clip(RoundedCornerShape(32.dp)).background(MaterialTheme.colorScheme.secondaryContainer),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(painterResource(R.drawable.download_24px), null, Modifier.size(44.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer)
+            Icon(painterResource(BaseR.drawable.download_24px), null, Modifier.size(44.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer)
         }
         Spacer(Modifier.size(20.dp))
         Text(stringResource(title), style = MaterialTheme.typography.titleMedium)
@@ -458,7 +460,7 @@ private fun SwipeableTaskCard(task: DownloadTask, manager: DownloadManager, onOp
             ) {
                 val paused = task.state == DownloadState.Paused || task.state == DownloadState.Failed
                 Icon(
-                    painterResource(if (toEnd) (if (paused) R.drawable.play_arrow_24px else R.drawable.pause_24px) else R.drawable.delete_24px),
+                    painterResource(if (toEnd) (if (paused) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px) else BaseR.drawable.delete_24px),
                     null,
                 )
             }
@@ -494,7 +496,7 @@ private fun TaskCard(task: DownloadTask, manager: DownloadManager, onOpenDetails
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    painterResource(if (failed) R.drawable.error_24px else categoryIcon(task.category)), null,
+                    painterResource(if (failed) BaseR.drawable.error_24px else categoryIcon(task.category)), null,
                     tint = if (failed) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onPrimaryContainer,
                 )
             }
@@ -522,10 +524,10 @@ private fun TaskCard(task: DownloadTask, manager: DownloadManager, onOpenDetails
             // ring with the main action in the middle
             when (task.state) {
                 DownloadState.Completed -> IconButton(onClick = {
-                    if (!openDownload(context, task)) Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show()
-                }) { Icon(painterResource(R.drawable.open_in_new_24px), stringResource(R.string.dl_open)) }
+                    if (!openDownload(context, task)) Toast.makeText(context, I18nR.string.dl_no_app, Toast.LENGTH_SHORT).show()
+                }) { Icon(painterResource(BaseR.drawable.open_in_new_24px), stringResource(I18nR.string.dl_open)) }
                 DownloadState.Failed -> IconButton(onClick = { manager.resume(task.id) }) {
-                    Icon(painterResource(R.drawable.restart_alt_24px), stringResource(R.string.dl_retry))
+                    Icon(painterResource(BaseR.drawable.restart_alt_24px), stringResource(I18nR.string.dl_retry))
                 }
                 else -> Box(contentAlignment = Alignment.Center) {
                     if (task.totalBytes > 0) CircularProgressIndicator(progress = { task.progress }, modifier = Modifier.size(44.dp), strokeWidth = 3.dp)
@@ -533,43 +535,43 @@ private fun TaskCard(task: DownloadTask, manager: DownloadManager, onOpenDetails
                     IconButton(onClick = { togglePause(manager, task) }, modifier = Modifier.size(44.dp)) {
                         val paused = task.state == DownloadState.Paused
                         Icon(
-                            painterResource(if (paused) R.drawable.play_arrow_24px else R.drawable.pause_24px),
-                            stringResource(if (paused) R.string.dl_resume else R.string.dl_pause),
+                            painterResource(if (paused) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px),
+                            stringResource(if (paused) I18nR.string.dl_resume else I18nR.string.dl_pause),
                             Modifier.size(20.dp),
                         )
                     }
                 }
             }
             Box {
-                IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions)) }
+                IconButton(onClick = { menu = true }) { Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.action_more_actions)) }
                 DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     if (task.state == DownloadState.Completed) {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.dl_open)) }, onClick = {
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_open)) }, onClick = {
                             menu = false
-                            if (!openDownload(context, task)) Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show()
+                            if (!openDownload(context, task)) Toast.makeText(context, I18nR.string.dl_no_app, Toast.LENGTH_SHORT).show()
                         })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.dl_share)) }, onClick = {
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_share)) }, onClick = {
                             menu = false
                             scope.launch {
                                 if (!shareDownload(context, task)) {
-                                    Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, I18nR.string.dl_no_app, Toast.LENGTH_SHORT).show()
                                 }
                             }
                         })
                     }
-                    if (task.state == DownloadState.Paused) DropdownMenuItem(text = { Text(stringResource(R.string.dl_resume)) }, onClick = { menu = false; manager.resume(task.id) })
-                    if (task.state.isActive || task.state == DownloadState.Queued) DropdownMenuItem(text = { Text(stringResource(R.string.dl_pause)) }, onClick = { menu = false; manager.pause(task.id) })
-                    if (failed) DropdownMenuItem(text = { Text(stringResource(R.string.dl_retry)) }, onClick = { menu = false; manager.resume(task.id) })
+                    if (task.state == DownloadState.Paused) DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_resume)) }, onClick = { menu = false; manager.resume(task.id) })
+                    if (task.state.isActive || task.state == DownloadState.Queued) DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_pause)) }, onClick = { menu = false; manager.pause(task.id) })
+                    if (failed) DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_retry)) }, onClick = { menu = false; manager.resume(task.id) })
                     if (task.state == DownloadState.Queued || task.state == DownloadState.Paused) {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.dl_p3_move_top)) }, onClick = { menu = false; manager.moveToTop(task.id) })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.dl_p3_move_bottom)) }, onClick = { menu = false; manager.moveToBottom(task.id) })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_p3_move_top)) }, onClick = { menu = false; manager.moveToTop(task.id) })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_p3_move_bottom)) }, onClick = { menu = false; manager.moveToBottom(task.id) })
                     }
                     if (task.state == DownloadState.Completed && de.mm20.launcher2.downloads.logic.ArchiveLogic.isZip(task.name) && !task.fileMissing) {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.dl_p3_extract)) }, onClick = { menu = false; manager.extract(task.id) })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_p3_extract)) }, onClick = { menu = false; manager.extract(task.id) })
                     }
-                    DropdownMenuItem(text = { Text(stringResource(R.string.dl_copy_link)) }, onClick = { menu = false; copyLink(context, task.url) })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.dl_details)) }, onClick = { menu = false; onOpenDetails() })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.dl_delete)) }, onClick = { menu = false; onDelete() })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_copy_link)) }, onClick = { menu = false; copyLink(context, task.url) })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_details)) }, onClick = { menu = false; onOpenDetails() })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.dl_delete)) }, onClick = { menu = false; onDelete() })
                 }
             }
         }
@@ -587,14 +589,14 @@ private fun DeleteDialog(task: DownloadTask, onDismiss: () -> Unit, onConfirm: (
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.dl_delete_title)) },
-        text = { Text(stringResource(if (done) R.string.dl_delete_text_done else R.string.dl_delete_text_partial, task.displayName)) },
+        title = { Text(stringResource(I18nR.string.dl_delete_title)) },
+        text = { Text(stringResource(if (done) I18nR.string.dl_delete_text_done else I18nR.string.dl_delete_text_partial, task.displayName)) },
         confirmButton = {
             Row {
-                if (done) TextButton(onClick = { if (uris.isNotEmpty()) deleteFiles = true else onConfirm(true) }) { Text(stringResource(R.string.dl_delete_with_file)) }
-                TextButton(onClick = { onConfirm(false) }) { Text(stringResource(if (done) R.string.dl_delete_keep_file else R.string.dl_delete)) }
+                if (done) TextButton(onClick = { if (uris.isNotEmpty()) deleteFiles = true else onConfirm(true) }) { Text(stringResource(I18nR.string.dl_delete_with_file)) }
+                TextButton(onClick = { onConfirm(false) }) { Text(stringResource(if (done) I18nR.string.dl_delete_keep_file else I18nR.string.dl_delete)) }
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.dl_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.dl_cancel)) } },
     )
 }

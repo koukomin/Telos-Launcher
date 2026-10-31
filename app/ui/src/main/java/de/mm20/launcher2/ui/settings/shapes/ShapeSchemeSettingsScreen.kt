@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.shapes
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -113,7 +115,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                         editName = false
                     }
                 ) {
-                    Text(stringResource(R.string.save))
+                    Text(stringResource(I18nR.string.save))
                 }
             }
         )
@@ -136,7 +138,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
         item {
             PreferenceCategory {
                 ShapePreference(
-                    title = stringResource(R.string.preference_shapes_base),
+                    title = stringResource(I18nR.string.preference_shapes_base),
                     shape = baseShape,
                     baseShape = baseShape,
                     factor = 1f,
@@ -204,15 +206,15 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                         ) {
                             DropdownMenuItem(
                                 leadingIcon = {
-                                    Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
+                                    Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.action_more_actions))
                                 },
-                                text = { Text(stringResource(R.string.hc_menu)) },
+                                text = { Text(stringResource(I18nR.string.hc_menu)) },
                                 onClick = { })
                         }
                     }
                 }
                 ShapePreference(
-                    title = stringResource(R.string.hc_extra_small),
+                    title = stringResource(I18nR.string.hc_extra_small),
                     shape = theme!!.extraSmall,
                     baseShape = baseShape,
                     factor = 1f / 3f,
@@ -232,13 +234,13 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     FilterChip(
                         onClick = {},
                         label = {
-                            Text(stringResource(R.string.typo_preview_short1))
+                            Text(stringResource(I18nR.string.typo_preview_short1))
                         },
                         selected = false,
                     )
                 }
                 ShapePreference(
-                    title = stringResource(R.string.hc_small),
+                    title = stringResource(I18nR.string.hc_small),
                     shape = theme!!.small,
                     baseShape = baseShape,
                     factor = 2f / 3f,
@@ -266,14 +268,14 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                             )
                     ) {
                         Icon(
-                            painterResource(R.drawable.search_24px),
+                            painterResource(BaseR.drawable.search_24px),
                             null,
                             modifier = Modifier.padding(12.dp)
                         )
                     }
                 }
                 ShapePreference(
-                    title = stringResource(R.string.hc_medium),
+                    title = stringResource(I18nR.string.hc_medium),
                     shape = theme!!.medium,
                     baseShape = baseShape,
                     factor = 1f,
@@ -291,11 +293,11 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     previewShapes = previewShapes,
                 ) {
                     FloatingActionButton(onClick = {}) {
-                        Icon(painterResource(R.drawable.edit_24px), null)
+                        Icon(painterResource(BaseR.drawable.edit_24px), null)
                     }
                 }
                 ShapePreference(
-                    title = stringResource(R.string.hc_large),
+                    title = stringResource(I18nR.string.hc_large),
                     shape = theme!!.large,
                     baseShape = baseShape,
                     factor = 4f / 3f,
@@ -310,7 +312,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
         item {
             PreferenceCategory {
                 ShapePreference(
-                    title = stringResource(R.string.hc_large_increased),
+                    title = stringResource(I18nR.string.hc_large_increased),
                     shape = theme!!.largeIncreased,
                     baseShape = baseShape,
                     factor = 5f / 3f,
@@ -344,7 +346,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     }
                 }
                 ShapePreference(
-                    title = stringResource(R.string.hc_extra_large),
+                    title = stringResource(I18nR.string.hc_extra_large),
                     shape = theme!!.extraLarge,
                     baseShape = baseShape,
                     factor = 7f / 3f,
@@ -359,7 +361,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
         item {
             PreferenceCategory {
                 ShapePreference(
-                    title = stringResource(R.string.hc_extra_large_increased),
+                    title = stringResource(I18nR.string.hc_extra_large_increased),
                     shape = theme!!.extraLargeIncreased,
                     baseShape = baseShape,
                     factor = 8f / 3f,
@@ -374,7 +376,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
         item {
             PreferenceCategory {
                 ShapePreference(
-                    title = stringResource(R.string.hc_extra_extra_large),
+                    title = stringResource(I18nR.string.hc_extra_extra_large),
                     shape = theme!!.extraExtraLarge,
                     baseShape = baseShape,
                     factor = 12f / 3f,
@@ -555,14 +557,14 @@ fun ShapePreference(
                 ) {
                     Icon(
                         painterResource(
-                            if (actualCornerStyle == CornerStyle.Rounded) R.drawable.check_20px else R.drawable.rounded_corner_alt_24px
+                            if (actualCornerStyle == CornerStyle.Rounded) BaseR.drawable.check_20px else BaseR.drawable.rounded_corner_alt_24px
                         ),
                         contentDescription = null,
                         modifier = Modifier
                             .padding(end = ToggleButtonDefaults.IconSpacing)
                             .size(ToggleButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.preference_cards_shape_rounded))
+                    Text(stringResource(I18nR.string.preference_cards_shape_rounded))
                 }
                 ToggleButton(
                     modifier = Modifier.weight(1f),
@@ -574,14 +576,14 @@ fun ShapePreference(
                 ) {
                     Icon(
                         painterResource(
-                            if (actualCornerStyle == CornerStyle.Cut) R.drawable.check_20px else R.drawable.cut_corner_20px
+                            if (actualCornerStyle == CornerStyle.Cut) BaseR.drawable.check_20px else BaseR.drawable.cut_corner_20px
                         ),
                         contentDescription = null,
                         modifier = Modifier
                             .padding(end = ToggleButtonDefaults.IconSpacing)
                             .size(ToggleButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.preference_cards_shape_cut))
+                    Text(stringResource(I18nR.string.preference_cards_shape_cut))
                 }
             }
 
@@ -590,7 +592,7 @@ fun ShapePreference(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    painterResource(R.drawable.rounded_corner_24px),
+                    painterResource(BaseR.drawable.rounded_corner_24px),
                     null,
                     modifier = Modifier
                         .padding(end = 8.dp)
@@ -617,7 +619,7 @@ fun ShapePreference(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    painterResource(R.drawable.rounded_corner_24px),
+                    painterResource(BaseR.drawable.rounded_corner_24px),
                     null,
                     modifier = Modifier.padding(end = 8.dp)
                 )
@@ -642,7 +644,7 @@ fun ShapePreference(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    painterResource(R.drawable.rounded_corner_24px),
+                    painterResource(BaseR.drawable.rounded_corner_24px),
                     null,
                     modifier = Modifier
                         .padding(end = 8.dp)
@@ -669,7 +671,7 @@ fun ShapePreference(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    painterResource(R.drawable.rounded_corner_24px),
+                    painterResource(BaseR.drawable.rounded_corner_24px),
                     null,
                     modifier = Modifier
                         .padding(end = 8.dp)
@@ -713,12 +715,12 @@ fun ShapePreference(
                 }
             ) {
                 Icon(
-                    painterResource(R.drawable.restart_alt_20px), null,
+                    painterResource(BaseR.drawable.restart_alt_20px), null,
                     modifier = Modifier
                         .padding(ButtonDefaults.IconSpacing)
                         .size(ButtonDefaults.IconSize)
                 )
-                Text(stringResource(R.string.preference_restore_default))
+                Text(stringResource(I18nR.string.preference_restore_default))
             }
         }
     }

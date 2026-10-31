@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Box
@@ -36,7 +38,7 @@ fun Toolbar(
     leftActions: List<ToolbarAction> = emptyList(),
     rightActions: List<ToolbarAction> = emptyList()
 ) {
-    val slots = integerResource(R.integer.config_toolbarSlots)
+    val slots = integerResource(BaseR.integer.config_toolbarSlots)
     Row(
         modifier = modifier
             .padding(4.dp)
@@ -55,8 +57,8 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
             Box {
                 IconButton(onClick = { showMenu = true }) {
                     Icon(
-                        painterResource(R.drawable.more_vert_24px),
-                        contentDescription = stringResource(R.string.action_more_actions)
+                        painterResource(BaseR.drawable.more_vert_24px),
+                        contentDescription = stringResource(I18nR.string.action_more_actions)
                     )
                 }
                 Box(
@@ -148,7 +150,7 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                             Icon(painterResource(action.icon), null)
                         },
                         trailingContent = {
-                            Icon(painterResource(R.drawable.arrow_right_24px), null)
+                            Icon(painterResource(BaseR.drawable.arrow_right_24px), null)
                         },
                         shape = when {
                             i == 0 -> MenuDefaults.leadingItemShape

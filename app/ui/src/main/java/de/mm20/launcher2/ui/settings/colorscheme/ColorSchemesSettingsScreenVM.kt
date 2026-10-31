@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.colorscheme
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.widget.Toast
@@ -66,7 +67,7 @@ class ColorSchemesSettingsScreenVM : ViewModel(), KoinComponent {
                 ShareActions.shareFile(context, file, "application/json")
             }
             if (!shared) {
-                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -76,7 +77,7 @@ class ColorSchemesSettingsScreenVM : ViewModel(), KoinComponent {
         themeRepository.colors.create(
             Colors(
                 id = uuid,
-                name = context.getString(R.string.new_theme_name)
+                name = context.getString(I18nR.string.new_theme_name)
             )
         )
         return uuid

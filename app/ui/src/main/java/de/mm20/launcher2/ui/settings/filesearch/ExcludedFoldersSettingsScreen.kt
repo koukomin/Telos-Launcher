@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.filesearch
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -33,17 +35,17 @@ fun ExcludedFoldersSettingsScreen() {
         ActivityResultContracts.OpenDocumentTree()
     ) { uri ->
         if (uri != null && !viewModel.addExcludedFolder(uri)) {
-            Toast.makeText(context, R.string.excluded_folders_unsupported, Toast.LENGTH_LONG)
+            Toast.makeText(context, I18nR.string.excluded_folders_unsupported, Toast.LENGTH_LONG)
                 .show()
         }
     }
 
-    PreferenceScreen(title = stringResource(R.string.preference_file_search_excluded_folders)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_file_search_excluded_folders)) {
         item {
             PreferenceCategory {
                 Preference(
-                    icon = R.drawable.add_24px,
-                    title = stringResource(R.string.excluded_folders_add),
+                    icon = BaseR.drawable.add_24px,
+                    title = stringResource(I18nR.string.excluded_folders_add),
                     onClick = {
                         folderPicker.launch(null)
                     }
@@ -55,21 +57,21 @@ fun ExcludedFoldersSettingsScreen() {
                 if (excludedFolders.isEmpty()) {
                     Text(
                         modifier = Modifier.padding(16.dp),
-                        text = stringResource(R.string.excluded_folders_empty),
+                        text = stringResource(I18nR.string.excluded_folders_empty),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 } else {
                     for (folder in excludedFolders.sorted()) {
                         Preference(
-                            icon = R.drawable.folder_24px,
+                            icon = BaseR.drawable.folder_24px,
                             title = folder.substringAfterLast('/'),
                             summary = folder,
                             controls = {
                                 IconButton(onClick = { viewModel.removeExcludedFolder(folder) }) {
                                     Icon(
-                                        painterResource(R.drawable.delete_24px),
-                                        contentDescription = stringResource(R.string.menu_delete),
+                                        painterResource(BaseR.drawable.delete_24px),
+                                        contentDescription = stringResource(I18nR.string.menu_delete),
                                     )
                                 }
                             }

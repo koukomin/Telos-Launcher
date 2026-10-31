@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -19,14 +21,14 @@ fun MissingPermissionBanner(
     Banner(
         modifier = modifier,
         text = text,
-        icon = R.drawable.lock_24px,
+        icon = BaseR.drawable.lock_24px,
         primaryAction = {
             Button(
                 modifier = Modifier.padding(start = 8.dp),
                 onClick = onClick
             ) {
                 Text(
-                    stringResource(R.string.grant_permission),
+                    stringResource(I18nR.string.grant_permission),
                 )
             }
         },

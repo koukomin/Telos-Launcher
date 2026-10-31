@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
@@ -145,12 +147,12 @@ internal fun VideoHome(
                         Text(
                             stringResource(
                                 when (c) {
-                                    HomeChip.Movies -> R.string.au_video_tab_movies
-                                    HomeChip.Series -> R.string.au_video_tab_series
-                                    HomeChip.Other -> R.string.au7_vidfolders_tab_other
-                                    HomeChip.Recent -> R.string.au10_video_chip_recent
-                                    HomeChip.Unwatched -> R.string.au10_video_chip_unwatched
-                                    HomeChip.Folders -> R.string.au_video_tab_folders
+                                    HomeChip.Movies -> I18nR.string.au_video_tab_movies
+                                    HomeChip.Series -> I18nR.string.au_video_tab_series
+                                    HomeChip.Other -> I18nR.string.au7_vidfolders_tab_other
+                                    HomeChip.Recent -> I18nR.string.au10_video_chip_recent
+                                    HomeChip.Unwatched -> I18nR.string.au10_video_chip_unwatched
+                                    HomeChip.Folders -> I18nR.string.au_video_tab_folders
                                 }
                             )
                         )
@@ -158,7 +160,7 @@ internal fun VideoHome(
                 )
             }
         }
-        val empty = stringResource(R.string.au10_video_nothing_here)
+        val empty = stringResource(I18nR.string.au10_video_nothing_here)
         Box(Modifier.weight(1f).fillMaxWidth()) {
             when (chip) {
                 HomeChip.Movies -> PosterGrid(movies, metas, empty, onOpenGroup)
@@ -180,7 +182,7 @@ internal fun VideoHome(
                             val rest = continueWatching.drop(1)
                             item(key = "s-continue") {
                                 Column {
-                                    ShelfTitle(stringResource(R.string.hc_continue_watching))
+                                    ShelfTitle(stringResource(I18nR.string.hc_continue_watching))
                                     LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                                         items(rest, key = { it.uri.toString() }) { v ->
                                             WideCard(v) { openPlayer(context, continueWatching, continueWatching.indexOf(v)) }
@@ -194,7 +196,7 @@ internal fun VideoHome(
                         val shelf = recent.take(20)
                         item(key = "s-recent") {
                             Column {
-                                ShelfTitle(stringResource(R.string.au10_video_recently_added), onMore = { selected = HomeChip.Recent })
+                                ShelfTitle(stringResource(I18nR.string.au10_video_recently_added), onMore = { selected = HomeChip.Recent })
                                 LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                                     items(shelf, key = { it.uri.toString() }) { v ->
                                         WideCard(v, width = 200) { openPlayer(context, shelf, shelf.indexOf(v)) }
@@ -206,7 +208,7 @@ internal fun VideoHome(
                     if (movies.isNotEmpty()) {
                         item(key = "s-movies") {
                             Column {
-                                ShelfTitle(stringResource(R.string.au_video_tab_movies), onMore = { selected = HomeChip.Movies })
+                                ShelfTitle(stringResource(I18nR.string.au_video_tab_movies), onMore = { selected = HomeChip.Movies })
                                 PosterShelf(movies.take(30), metas, onOpenGroup)
                             }
                         }
@@ -214,13 +216,13 @@ internal fun VideoHome(
                     if (series.isNotEmpty()) {
                         item(key = "s-series") {
                             Column {
-                                ShelfTitle(stringResource(R.string.au_video_tab_series), onMore = { selected = HomeChip.Series })
+                                ShelfTitle(stringResource(I18nR.string.au_video_tab_series), onMore = { selected = HomeChip.Series })
                                 PosterShelf(series.take(30), metas, onOpenGroup)
                             }
                         }
                     }
                     if (movies.isEmpty() && series.isEmpty() && recent.isEmpty()) {
-                        item { VideoEmptyState(R.drawable.movie_24px, stringResource(R.string.au14_videoui_empty_title), empty, Modifier.height(320.dp)) }
+                        item { VideoEmptyState(BaseR.drawable.movie_24px, stringResource(I18nR.string.au14_videoui_empty_title), empty, Modifier.height(320.dp)) }
                     }
                 }
             }
@@ -232,7 +234,7 @@ internal fun VideoHome(
 private fun ShelfTitle(text: String, onMore: (() -> Unit)? = null) {
     Row(Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp, bottom = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         Text(text, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
-        if (onMore != null) TextButton(onClick = onMore) { Text(stringResource(R.string.au14_videoui_more)) }
+        if (onMore != null) TextButton(onClick = onMore) { Text(stringResource(I18nR.string.au14_videoui_more)) }
     }
 }
 
@@ -256,17 +258,17 @@ private fun HeroCard(video: VideoItem, onPlay: () -> Unit) {
             )
         )
         Column(Modifier.align(Alignment.BottomStart).padding(20.dp, 20.dp, 20.dp, 24.dp)) {
-            Text(stringResource(R.string.hc_continue_watching), style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.8f))
+            Text(stringResource(I18nR.string.hc_continue_watching), style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.8f))
             Text(video.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold, color = Color.White, maxLines = 2, overflow = TextOverflow.Ellipsis)
             Row(Modifier.padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                 Button(onClick = onPlay, contentPadding = PaddingValues(start = 16.dp, end = 20.dp)) {
-                    Icon(painterResource(R.drawable.play_arrow_24px), contentDescription = null, modifier = Modifier.size(20.dp))
+                    Icon(painterResource(BaseR.drawable.play_arrow_24px), contentDescription = null, modifier = Modifier.size(20.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text(stringResource(R.string.hc_play))
+                    Text(stringResource(I18nR.string.hc_play))
                 }
                 if (progress in 0.02f..0.95f && video.durationMs > 0) {
                     Text(
-                        stringResource(R.string.au10_video_remaining, formatDuration((video.durationMs * (1f - progress)).toLong())),
+                        stringResource(I18nR.string.au10_video_remaining, formatDuration((video.durationMs * (1f - progress)).toLong())),
                         style = MaterialTheme.typography.labelLarge,
                         color = Color.White,
                         modifier = Modifier.padding(start = 12.dp),
@@ -359,7 +361,7 @@ private fun WideCard(video: VideoItem, width: Int = 260, onClick: () -> Unit) {
         )
         if (progress in 0.02f..0.95f && video.durationMs > 0) {
             Text(
-                stringResource(R.string.au10_video_remaining, formatDuration((video.durationMs * (1f - progress)).toLong())),
+                stringResource(I18nR.string.au10_video_remaining, formatDuration((video.durationMs * (1f - progress)).toLong())),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,

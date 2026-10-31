@@ -1,5 +1,6 @@
 // === TELOS_PENDING_REVIEW_START: radio_mini_player ===
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ComponentName
 import android.content.Context
@@ -76,10 +77,10 @@ class RadioViewModel : ViewModel(), KoinComponent {
             RadioRecorder.stop()
             return null
         }
-        val item = mediaController?.currentMediaItem ?: return R.string.au2_radio2_nothing_playing
-        val url = item.localConfiguration?.uri?.toString() ?: return R.string.au2_radio2_nothing_playing
-        if (!RadioRecorder.isRecordable(url)) return R.string.au2_radio2_hls
-        val name = _stationName.value.ifEmpty { context.getString(R.string.au_radio_unknown_station) }
+        val item = mediaController?.currentMediaItem ?: return I18nR.string.au2_radio2_nothing_playing
+        val url = item.localConfiguration?.uri?.toString() ?: return I18nR.string.au2_radio2_nothing_playing
+        if (!RadioRecorder.isRecordable(url)) return I18nR.string.au2_radio2_hls
+        val name = _stationName.value.ifEmpty { context.getString(I18nR.string.au_radio_unknown_station) }
         RadioRecorder.start(context, item.mediaId, name, url)
         return null
     }
@@ -266,7 +267,7 @@ class RadioViewModel : ViewModel(), KoinComponent {
             streamIndex++
             startCurrentStream()
         } else {
-            _error.value = R.string.au_radio_cannot_play
+            _error.value = I18nR.string.au_radio_cannot_play
             _isLoading.value = false
         }
     }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.location
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -47,12 +48,12 @@ fun LazyListScope.LocationResults(
             {
                 MissingPermissionBanner(
                     modifier = Modifier.padding(8.dp),
-                    text = stringResource(R.string.missing_permission_location_search),
+                    text = stringResource(I18nR.string.missing_permission_location_search),
                     onClick = onPermissionRequest,
                     secondaryAction = {
                         OutlinedButton(onClick = onPermissionRequestRejected) {
                             Text(
-                                stringResource(R.string.turn_off),
+                                stringResource(I18nR.string.turn_off),
                             )
                         }
                     }

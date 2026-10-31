@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.akou
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.Manifest
 import android.content.Intent
@@ -62,36 +64,36 @@ fun AkouScreen() {
                 recording = AkouRecognition.record()
                 phase = 2
                 val result = AkouRecognition.recognize(recording)
-                if (result == null) status = R.string.akou_no_match
-                else { entries = withContext(Dispatchers.IO) { history.add(result) }; status = R.string.akou_matched }
+                if (result == null) status = I18nR.string.akou_no_match
+                else { entries = withContext(Dispatchers.IO) { history.add(result) }; status = I18nR.string.akou_matched }
             } catch (e: CancellationException) { throw e }
-            catch (_: SecurityException) { status = R.string.akou_microphone_denied }
-            catch (_: Exception) { status = R.string.akou_failed }
+            catch (_: SecurityException) { status = I18nR.string.akou_microphone_denied }
+            catch (_: Exception) { status = I18nR.string.akou_failed }
             finally { recording?.fill(0); phase = 0 }
         }
     }
     val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        if (granted) start() else status = R.string.akou_microphone_denied
+        if (granted) start() else status = I18nR.string.akou_microphone_denied
     }
     LifecycleEventEffect(Lifecycle.Event.ON_STOP) { job?.cancel() }
     DisposableEffect(Unit) { onDispose { job?.cancel() } }
     Scaffold(containerColor = MaterialTheme.colorScheme.surface, topBar = {
-        TopAppBar(title = { Text(stringResource(R.string.telos_akou_app_label)) }, navigationIcon = {
+        TopAppBar(title = { Text(stringResource(I18nR.string.telos_akou_app_label)) }, navigationIcon = {
             IconButton(onClick = { backStack.removeLastOrNull() }) {
-                Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
+                Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
             }
         }, actions = {
             IconButton(onClick = { showAbout = true }) {
-                Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.hc_settings))
+                Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.hc_settings))
             }
         })
     }) { padding ->
         LazyColumn(Modifier.fillMaxSize().padding(padding), contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item {
                 if (showDisclosure) {
-                    Text(stringResource(R.string.akou_provider_disclosure), style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(I18nR.string.akou_provider_disclosure), style = MaterialTheme.typography.bodyMedium)
                     TextButton(onClick = { showDisclosure = false; prefs.edit().putBoolean("show_disclosure", false).apply() }) {
-                        Text(stringResource(R.string.app_polish_dont_show))
+                        Text(stringResource(I18nR.string.app_polish_dont_show))
                     }
                 }
                 Spacer(Modifier.height(12.dp))
@@ -100,18 +102,18 @@ fun AkouScreen() {
                     else if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) start()
                     else permission.launch(Manifest.permission.RECORD_AUDIO)
                 }) {
-                    Text(stringResource(if (phase == 0) R.string.akou_start else R.string.hc_cancel))
+                    Text(stringResource(if (phase == 0) I18nR.string.akou_start else I18nR.string.hc_cancel))
                 }
                 if (phase != 0) {
                     LinearProgressIndicator(Modifier.fillMaxWidth())
-                    Text(stringResource(if (phase == 1) R.string.akou_recording else R.string.akou_identifying))
+                    Text(stringResource(if (phase == 1) I18nR.string.akou_recording else I18nR.string.akou_identifying))
                 }
                 if (status != 0) Text(stringResource(status))
             }
             item {
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(stringResource(R.string.akou_history), style = MaterialTheme.typography.titleMedium)
-                    TextButton(enabled = entries.isNotEmpty(), onClick = { scope.launch { withContext(Dispatchers.IO) { history.clear() }; entries = emptyList() } }) { Text(stringResource(R.string.hc_delete)) }
+                    Text(stringResource(I18nR.string.akou_history), style = MaterialTheme.typography.titleMedium)
+                    TextButton(enabled = entries.isNotEmpty(), onClick = { scope.launch { withContext(Dispatchers.IO) { history.clear() }; entries = emptyList() } }) { Text(stringResource(I18nR.string.hc_delete)) }
                 }
             }
             items(entries, key = { "${it.recognizedAt}:${it.title}:${it.artist}" }) { song ->
@@ -123,7 +125,7 @@ fun AkouScreen() {
                         TextButton(onClick = {
                             val uri = Uri.parse("https://music.youtube.com/search?q=" + Uri.encode("${song.artist} ${song.title}"))
                             runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, uri)) }
-                        }) { Text(stringResource(R.string.akou_youtube_music)) }
+                        }) { Text(stringResource(I18nR.string.akou_youtube_music)) }
                     }
                 }
             }
@@ -131,14 +133,14 @@ fun AkouScreen() {
     }
     if (showAbout) AlertDialog(
         onDismissRequest = { showAbout = false },
-        title = { Text(stringResource(R.string.telos_akou_app_label)) },
+        title = { Text(stringResource(I18nR.string.telos_akou_app_label)) },
         text = { Column {
-            Text(stringResource(R.string.akou_provider_disclosure))
+            Text(stringResource(I18nR.string.akou_provider_disclosure))
             Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
                 Checkbox(checked = showDisclosure, onCheckedChange = {
                     showDisclosure = it; prefs.edit().putBoolean("show_disclosure", it).apply()
                 })
-                Text(stringResource(R.string.app_polish_show_info), Modifier.weight(1f))
+                Text(stringResource(I18nR.string.app_polish_show_info), Modifier.weight(1f))
             }
         } },
         confirmButton = { TextButton(onClick = { showAbout = false }) { Text(stringResource(android.R.string.ok)) } },

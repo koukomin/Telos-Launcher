@@ -1,4 +1,5 @@
 package de.mm20.launcher2.network
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.Intent
@@ -8,7 +9,6 @@ import de.mm20.launcher2.network.vpn.VpnPausePolicy
 import de.mm20.launcher2.network.vpn.VpnPauseScheduler
 import androidx.core.content.ContextCompat
 import com.celzero.firestack.intra.Tunnel
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.network.api.EngineComponent
 import de.mm20.launcher2.network.api.NetworkSettings
 import de.mm20.launcher2.network.vpn.TelosVpnService

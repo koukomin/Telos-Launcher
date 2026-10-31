@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.component.weather
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColor
@@ -79,7 +80,7 @@ fun AnimatedWeatherIcon(
 
 @Composable
 private fun SunMoon(icon: WeatherIcon, night: Boolean, colors: WeatherIconColors) {
-    val sunMoonIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_weather_sun_moon)
+    val sunMoonIcon = AnimatedImageVector.animatedVectorResource(BaseR.drawable.anim_weather_sun_moon)
     val transition = updateTransition(targetState = icon, "AnimatedWeatherIcon")
 
     val color by animateColorAsState(if (night) colors.moon else colors.sun)
@@ -135,7 +136,7 @@ private fun LightningBolt(icon: WeatherIcon, colors: WeatherIconColors) {
     }
 
     Icon(
-        painter = painterResource(R.drawable.bolt_24px_filled),
+        painter = painterResource(BaseR.drawable.bolt_24px_filled),
         null,
         modifier = Modifier
             .size(32.dp)
@@ -368,7 +369,7 @@ private fun Hot(icon: WeatherIcon, colors: WeatherIconColors) {
         }
     )
     Icon(
-        painterResource(R.drawable.heat_24px),
+        painterResource(BaseR.drawable.heat_24px),
         null,
         modifier = Modifier
             .scale(scale)
@@ -387,7 +388,7 @@ private fun Cold(icon: WeatherIcon, colors: WeatherIconColors) {
         }
     )
     Icon(
-        painterResource(R.drawable.severe_cold_24px),
+        painterResource(BaseR.drawable.severe_cold_24px),
         null,
         modifier = Modifier
             .scale(scale)
@@ -406,7 +407,7 @@ private fun Wind1(icon: WeatherIcon, colors: WeatherIconColors) {
         }
     )
     Icon(
-        painterResource(R.drawable.air_20px),
+        painterResource(BaseR.drawable.air_20px),
         null,
         modifier = Modifier
             .scale(scale)

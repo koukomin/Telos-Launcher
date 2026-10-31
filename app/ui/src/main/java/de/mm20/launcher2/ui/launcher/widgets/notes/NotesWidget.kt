@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.notes
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import android.content.Intent
@@ -122,23 +124,23 @@ fun NotesWidget(
     if (showLinkChooser) {
         AlertDialog(
             onDismissRequest = { showLinkChooser = false },
-            title = { Text(stringResource(R.string.note_widget_link_file)) },
+            title = { Text(stringResource(I18nR.string.note_widget_link_file)) },
             text = {
                 Column {
                     TextButton(onClick = {
                         showLinkChooser = false
                         linkExistingFileLauncher.launch(arrayOf("text/*", "application/octet-stream"))
-                    }) { Text(stringResource(R.string.au4_noteslink_link_existing)) }
+                    }) { Text(stringResource(I18nR.string.au4_noteslink_link_existing)) }
                     TextButton(onClick = {
                         showLinkChooser = false
                         linkFileLauncher.launch(getDefaultNoteFileName(context))
-                    }) { Text(stringResource(R.string.au4_noteslink_create_new)) }
+                    }) { Text(stringResource(I18nR.string.au4_noteslink_create_new)) }
                 }
             },
             confirmButton = {},
             dismissButton = {
                 TextButton(onClick = { showLinkChooser = false }) {
-                    Text(stringResource(R.string.au4_noteslink_cancel))
+                    Text(stringResource(I18nR.string.au4_noteslink_cancel))
                 }
             },
         )
@@ -148,11 +150,11 @@ fun NotesWidget(
     if (viewModel.linkedFileConflict.value) {
         Banner(
             modifier = Modifier.padding(16.dp),
-            text = stringResource(R.string.note_widget_conflict),
-            icon = R.drawable.error_24px,
+            text = stringResource(I18nR.string.note_widget_conflict),
+            icon = BaseR.drawable.error_24px,
             primaryAction = {
                 Button(onClick = { showConflictResolveSheet = true }) {
-                    Text(stringResource(R.string.note_widget_conflict_action_resolve))
+                    Text(stringResource(I18nR.string.note_widget_conflict_action_resolve))
                 }
             },
         )
@@ -187,7 +189,7 @@ fun NotesWidget(
                     .padding(16.dp),
                 placeholder = {
                     Text(
-                        stringResource(R.string.notes_widget_placeholder),
+                        stringResource(I18nR.string.notes_widget_placeholder),
                     )
                 }
             )
@@ -197,8 +199,8 @@ fun NotesWidget(
                 ) {
                     Tooltip(
                         tooltipText = stringResource(
-                            if (widget.config.linkedFile == null) R.string.note_widget_link_file
-                            else R.string.note_widget_action_unlink_file
+                            if (widget.config.linkedFile == null) I18nR.string.note_widget_link_file
+                            else I18nR.string.note_widget_action_unlink_file
                         ),
                     ) {
                         IconButton(
@@ -212,19 +214,19 @@ fun NotesWidget(
                         ) {
                             Icon(
                                 painterResource(
-                                    if (widget.config.linkedFile == null) R.drawable.link_24px
-                                    else R.drawable.link_off_24px,
+                                    if (widget.config.linkedFile == null) BaseR.drawable.link_24px
+                                    else BaseR.drawable.link_off_24px,
                                 ),
                                 stringResource(
-                                    if (widget.config.linkedFile == null) R.string.note_widget_link_file
-                                    else R.string.note_widget_action_unlink_file
+                                    if (widget.config.linkedFile == null) I18nR.string.note_widget_link_file
+                                    else I18nR.string.note_widget_action_unlink_file
                                 )
                             )
                         }
                     }
                     if (isLastWidget == false) {
                         Tooltip(
-                            tooltipText = stringResource(R.string.notes_widget_action_dismiss)
+                            tooltipText = stringResource(I18nR.string.notes_widget_action_dismiss)
                         ) {
                             IconButton(
                                 onClick = {
@@ -232,8 +234,8 @@ fun NotesWidget(
                                 },
                             ) {
                                 Icon(
-                                    painterResource(R.drawable.delete_24px),
-                                    stringResource(R.string.notes_widget_action_dismiss)
+                                    painterResource(BaseR.drawable.delete_24px),
+                                    stringResource(I18nR.string.notes_widget_action_dismiss)
                                 )
                             }
                         }
@@ -263,12 +265,12 @@ fun NotesWidget(
                 Spacer(modifier = Modifier.weight(1f))
                 Box {
                     Tooltip(
-                        tooltipText = stringResource(R.string.action_more_actions)
+                        tooltipText = stringResource(I18nR.string.action_more_actions)
                     ) {
                         IconButton(onClick = { showMenu = true }) {
                             Icon(
-                                painterResource(R.drawable.more_vert_24px),
-                                stringResource(R.string.action_more_actions)
+                                painterResource(BaseR.drawable.more_vert_24px),
+                                stringResource(I18nR.string.action_more_actions)
                             )
                         }
                     }
@@ -280,9 +282,9 @@ fun NotesWidget(
                         ) {
                             DropdownMenuItem(
                                 shape = MenuDefaults.leadingItemShape,
-                                text = { Text(stringResource(R.string.notes_widget_action_new)) },
+                                text = { Text(stringResource(I18nR.string.notes_widget_action_new)) },
                                 leadingIcon = {
-                                    Icon(painterResource(R.drawable.add_24px), null)
+                                    Icon(painterResource(BaseR.drawable.add_24px), null)
                                 },
                                 onClick = {
                                     val newWidget = NotesWidget(
@@ -294,9 +296,9 @@ fun NotesWidget(
                             )
                             DropdownMenuItem(
                                 shape = MenuDefaults.middleItemShape,
-                                text = { Text(stringResource(R.string.menu_share)) },
+                                text = { Text(stringResource(I18nR.string.menu_share)) },
                                 leadingIcon = {
-                                    Icon(painterResource(R.drawable.share_24px), null)
+                                    Icon(painterResource(BaseR.drawable.share_24px), null)
                                 },
                                 onClick = {
                                     Intent(Intent.ACTION_SEND).apply {
@@ -309,9 +311,9 @@ fun NotesWidget(
                             )
                             DropdownMenuItem(
                                 shape = MenuDefaults.middleItemShape,
-                                text = { Text(stringResource(R.string.notes_widget_action_save)) },
+                                text = { Text(stringResource(I18nR.string.notes_widget_action_save)) },
                                 leadingIcon = {
-                                    Icon(painterResource(R.drawable.file_save_24px), null)
+                                    Icon(painterResource(BaseR.drawable.file_save_24px), null)
                                 },
                                 onClick = {
                                     val fileName = getDefaultNoteFileName(context)
@@ -322,9 +324,9 @@ fun NotesWidget(
                             if (widget.config.linkedFile == null) {
                                 DropdownMenuItem(
                                     shape = MenuDefaults.middleItemShape,
-                                    text = { Text(stringResource(R.string.note_widget_link_file)) },
+                                    text = { Text(stringResource(I18nR.string.note_widget_link_file)) },
                                     leadingIcon = {
-                                        Icon(painterResource(R.drawable.link_24px), null)
+                                        Icon(painterResource(BaseR.drawable.link_24px), null)
                                     },
                                     onClick = {
                                         showLinkChooser = true
@@ -334,9 +336,9 @@ fun NotesWidget(
                             } else {
                                 DropdownMenuItem(
                                     shape = MenuDefaults.middleItemShape,
-                                    text = { Text(stringResource(R.string.note_widget_action_unlink_file)) },
+                                    text = { Text(stringResource(I18nR.string.note_widget_action_unlink_file)) },
                                     leadingIcon = {
-                                        Icon(painterResource(R.drawable.link_off_24px), null)
+                                        Icon(painterResource(BaseR.drawable.link_off_24px), null)
                                     },
                                     onClick = {
                                         viewModel.unlinkFile(context)
@@ -346,9 +348,9 @@ fun NotesWidget(
                             }
                             DropdownMenuItem(
                                 shape = MenuDefaults.trailingItemShape,
-                                text = { Text(stringResource(R.string.notes_widget_action_dismiss)) },
+                                text = { Text(stringResource(I18nR.string.notes_widget_action_dismiss)) },
                                 leadingIcon = {
-                                    Icon(painterResource(R.drawable.delete_24px), null)
+                                    Icon(painterResource(BaseR.drawable.delete_24px), null)
                                 },
                                 onClick = {
                                     val wasLast = isLastWidget != false
@@ -361,8 +363,8 @@ fun NotesWidget(
 
                                     lifecycleOwner.lifecycleScope.launch {
                                         val result = snackbarHostState.showSnackbar(
-                                            message = context.getString(R.string.notes_widget_dismissed),
-                                            actionLabel = context.getString(R.string.action_undo),
+                                            message = context.getString(I18nR.string.notes_widget_dismissed),
+                                            actionLabel = context.getString(I18nR.string.action_undo),
                                             duration = SnackbarDuration.Short,
                                         )
                                         if (result == SnackbarResult.ActionPerformed) {
@@ -418,8 +420,8 @@ private fun NoteFileErrorChip(viewModel: NotesWidgetVM, onShow: (String) -> Unit
         onClick = {
             onShow(
                 context.getString(
-                    if (isWrite) R.string.note_widget_file_write_error_description
-                    else R.string.note_widget_file_read_error_description
+                    if (isWrite) I18nR.string.note_widget_file_write_error_description
+                    else I18nR.string.note_widget_file_read_error_description
                 )
             )
         }) {
@@ -427,13 +429,13 @@ private fun NoteFileErrorChip(viewModel: NotesWidgetVM, onShow: (String) -> Unit
             modifier = Modifier
                 .padding(end = ButtonDefaults.IconSpacing)
                 .size(ButtonDefaults.IconSize),
-            painter = painterResource(R.drawable.error_20px),
+            painter = painterResource(BaseR.drawable.error_20px),
             contentDescription = null,
         )
         Text(
             stringResource(
-                if (isWrite) R.string.note_widget_file_write_error
-                else R.string.note_widget_file_read_error
+                if (isWrite) I18nR.string.note_widget_file_write_error
+                else I18nR.string.note_widget_file_read_error
             )
         )
     }
@@ -461,11 +463,11 @@ fun NoteWidgetConflictResolveSheet(
         ) {
 
             Text(
-                stringResource(R.string.note_widget_conflict_description),
+                stringResource(I18nR.string.note_widget_conflict_description),
                 style = MaterialTheme.typography.bodyMedium,
             )
             Text(
-                stringResource(R.string.note_widget_conflict_local_version),
+                stringResource(I18nR.string.note_widget_conflict_local_version),
                 modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
                 style = MaterialTheme.typography.titleSmall
             )
@@ -475,7 +477,7 @@ fun NoteWidgetConflictResolveSheet(
                 onSelect = { selectedStrategy = LinkedFileConflictStrategy.KeepLocal },
             )
             Text(
-                stringResource(R.string.note_widget_conflict_file_version),
+                stringResource(I18nR.string.note_widget_conflict_file_version),
                 modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
                 style = MaterialTheme.typography.titleSmall
             )
@@ -495,13 +497,13 @@ fun NoteWidgetConflictResolveSheet(
                     ),
                 ) {
                     Icon(
-                        painterResource(R.drawable.link_off_24px),
+                        painterResource(BaseR.drawable.link_off_24px),
                         null,
                         modifier = Modifier
                             .padding(end = ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.note_widget_action_unlink_file))
+                    Text(stringResource(I18nR.string.note_widget_action_unlink_file))
                 }
                 Button(
                     onClick = { onResolve(selectedStrategy ?: return@Button) },
@@ -509,13 +511,13 @@ fun NoteWidgetConflictResolveSheet(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Icon(
-                        painterResource(R.drawable.check_circle_20px),
+                        painterResource(BaseR.drawable.check_circle_20px),
                         null,
                         modifier = Modifier
                             .padding(end = ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.note_widget_conflict_keep_selected))
+                    Text(stringResource(I18nR.string.note_widget_conflict_keep_selected))
                 }
             }
         }
@@ -564,7 +566,7 @@ fun SelectableNoteContent(
                 onClick = onSelect
             ) {
                 Icon(
-                    painterResource(if (selected) R.drawable.check_circle_24px_filled else R.drawable.circle_24px),
+                    painterResource(if (selected) BaseR.drawable.check_circle_24px_filled else BaseR.drawable.circle_24px),
                     tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     contentDescription = null
                 )
@@ -574,7 +576,7 @@ fun SelectableNoteContent(
                 onClick = { expanded = !expanded }
             ) {
                 Icon(
-                    painterResource(if (expanded) R.drawable.keyboard_arrow_up_24px else R.drawable.keyboard_arrow_down_24px),
+                    painterResource(if (expanded) BaseR.drawable.keyboard_arrow_up_24px else BaseR.drawable.keyboard_arrow_down_24px),
                     contentDescription = null
                 )
             }
@@ -620,9 +622,9 @@ fun NoteReadWriteErrorSheet(
                     .padding(horizontal = 24.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(painterResource(R.drawable.link_24px), null)
+                Icon(painterResource(BaseR.drawable.link_24px), null)
                 Text(
-                    stringResource(R.string.note_widget_action_relink_file),
+                    stringResource(I18nR.string.note_widget_action_relink_file),
                     modifier = Modifier.padding(start = 16.dp),
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -637,9 +639,9 @@ fun NoteReadWriteErrorSheet(
                     .padding(horizontal = 24.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(painterResource(R.drawable.link_off_24px), null)
+                Icon(painterResource(BaseR.drawable.link_off_24px), null)
                 Text(
-                    stringResource(R.string.note_widget_action_unlink_file),
+                    stringResource(I18nR.string.note_widget_action_unlink_file),
                     modifier = Modifier.padding(start = 16.dp),
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -650,7 +652,7 @@ fun NoteReadWriteErrorSheet(
 
 fun getDefaultNoteFileName(context: Context): String {
     return context.getString(
-        R.string.notes_widget_export_filename,
+        I18nR.string.notes_widget_export_filename,
         // No colons: many document providers reject or rewrite them in file names
         ZonedDateTime.now().format(
             DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss", java.util.Locale.ROOT)

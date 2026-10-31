@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network.dns
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.widget.Toast
 import androidx.compose.foundation.horizontalScroll
@@ -73,7 +74,7 @@ fun NetworkDnsScreen() {
 
     val select: (DnsServer) -> Unit = { s ->
         vm.select(s.id) { msg ->
-            Toast.makeText(context, context.getString(R.string.net_dns_select_failed, msg), Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(I18nR.string.net_dns_select_failed, msg), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -86,18 +87,18 @@ fun NetworkDnsScreen() {
         tag to visible.filter { it.builtIn && it.kind != DnsKind.System && it.tags.firstOrNull() == tag }
     }.filter { it.second.isNotEmpty() }
 
-    PreferenceScreen(title = stringResource(R.string.net_dns_title)) {
+    PreferenceScreen(title = stringResource(I18nR.string.net_dns_title)) {
         item {
             PreferenceCategory {
                 Preference(
                     title = { Text(engineStateText(engineState)) },
-                    summary = { Text(stringResource(R.string.net_dns_vpn_only)) },
+                    summary = { Text(stringResource(I18nR.string.net_dns_vpn_only)) },
                     icon = { Icon(painterResource(IconsNetworkDnsScreen.info_24px), contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
                 )
             }
         }
         item {
-            de.mm20.launcher2.ui.component.TelosSearchBar(dnsQuery, { dnsQuery = it }, stringResource(R.string.hc_search), Modifier.padding(horizontal = 0.dp))
+            de.mm20.launcher2.ui.component.TelosSearchBar(dnsQuery, { dnsQuery = it }, stringResource(I18nR.string.hc_search), Modifier.padding(horizontal = 0.dp))
         }
         if (dnsQuery.isNotBlank() && visible.isEmpty()) {
             item { de.mm20.launcher2.ui.component.SearchEmptyState(dnsQuery.trim()) }
@@ -107,7 +108,7 @@ fun NetworkDnsScreen() {
                 Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 4.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                FilterChip(selected = filter == null, onClick = { filterName = null }, label = { Text(stringResource(R.string.net_dns_filter_all)) })
+                FilterChip(selected = filter == null, onClick = { filterName = null }, label = { Text(stringResource(I18nR.string.net_dns_filter_all)) })
                 DnsTag.values().forEach { tag ->
                     FilterChip(selected = filter == tag, onClick = { filterName = tag.name }, label = { Text(tagFilterText(tag)) })
                 }
@@ -116,19 +117,19 @@ fun NetworkDnsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    title = stringResource(R.string.net_dns_add_custom),
+                    title = stringResource(I18nR.string.net_dns_add_custom),
                     icon = IconsNetworkDnsScreen.add_24px,
                     onClick = { formIsNew = true; form = DnsServer("", DnsKind.Doh, "") },
                 )
                 Preference(
-                    title = stringResource(R.string.nd_title),
-                    summary = stringResource(R.string.nd_intro),
+                    title = stringResource(I18nR.string.nd_title),
+                    summary = stringResource(I18nR.string.nd_intro),
                     icon = IconsNetworkDnsScreen.edit_24px,
                     onClick = { backStack.add(de.mm20.launcher2.ui.network.nextdns.NextDnsRoute) },
                 )
                 Preference(
-                    title = stringResource(R.string.net_dns_nextdns),
-                    summary = stringResource(R.string.net_dns_nextdns_summary),
+                    title = stringResource(I18nR.string.net_dns_nextdns),
+                    summary = stringResource(I18nR.string.net_dns_nextdns_summary),
                     icon = IconsNetworkDnsScreen.add_24px,
                     onClick = { nextDns = true },
                 )
@@ -136,14 +137,14 @@ fun NetworkDnsScreen() {
         }
         if (systemServer.isNotEmpty()) {
             item {
-                PreferenceCategory(title = stringResource(R.string.net_dns_group_system)) {
+                PreferenceCategory(title = stringResource(I18nR.string.net_dns_group_system)) {
                     systemServer.forEach { s -> DnsRow(s, selected.id == s.id, { details = s }, { select(s) }) }
                 }
             }
         }
         if (custom.isNotEmpty()) {
             item {
-                PreferenceCategory(title = stringResource(R.string.net_dns_group_custom)) {
+                PreferenceCategory(title = stringResource(I18nR.string.net_dns_group_custom)) {
                     custom.forEach { s -> DnsRow(s, selected.id == s.id, { details = s }, { select(s) }) }
                 }
             }
@@ -198,7 +199,7 @@ fun NetworkDnsScreen() {
             onAdd = { s ->
                 vm.add(s) { r ->
                     if (r.isSuccess) nextDns = false
-                    else Toast.makeText(context, context.getString(R.string.net_dns_invalid), Toast.LENGTH_LONG).show()
+                    else Toast.makeText(context, context.getString(I18nR.string.net_dns_invalid), Toast.LENGTH_LONG).show()
                 }
             },
             onDismiss = { nextDns = false },
@@ -214,7 +215,7 @@ private fun DnsRow(server: DnsServer, isSelected: Boolean, onClick: () -> Unit, 
         if (server.provider.isNotEmpty() && server.name != server.provider) { append(" · "); append(server.provider) }
     }
     Preference(
-        title = { Text(if (server.kind == DnsKind.System) stringResource(R.string.net_dns_system) else server.name) },
+        title = { Text(if (server.kind == DnsKind.System) stringResource(I18nR.string.net_dns_system) else server.name) },
         summary = { Text(summary) },
         icon = { RadioButton(selected = isSelected, onClick = onSelect) },
         onClick = onClick,
@@ -244,31 +245,31 @@ private fun DnsDetailsSheet(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                if (server.kind == DnsKind.System) stringResource(R.string.net_dns_system) else server.name,
+                if (server.kind == DnsKind.System) stringResource(I18nR.string.net_dns_system) else server.name,
                 style = MaterialTheme.typography.titleLarge,
             )
             server.tags.forEach { Text(tagText(it), color = MaterialTheme.colorScheme.onSurfaceVariant) }
-            Detail(stringResource(R.string.net_dns_detail_protocol), kindLabel(server.kind))
-            if (server.provider.isNotEmpty()) Detail(stringResource(R.string.net_dns_detail_provider), server.provider)
-            if (server.url.isNotEmpty()) Detail(stringResource(R.string.net_dns_detail_address), server.url)
-            if (!server.relay.isNullOrBlank()) Detail(stringResource(R.string.net_dns_detail_relay), server.relay.orEmpty())
-            if (server.bootstrapIps.isNotEmpty()) Detail(stringResource(R.string.net_dns_detail_bootstrap), server.bootstrapIps.joinToString(", "))
+            Detail(stringResource(I18nR.string.net_dns_detail_protocol), kindLabel(server.kind))
+            if (server.provider.isNotEmpty()) Detail(stringResource(I18nR.string.net_dns_detail_provider), server.provider)
+            if (server.url.isNotEmpty()) Detail(stringResource(I18nR.string.net_dns_detail_address), server.url)
+            if (!server.relay.isNullOrBlank()) Detail(stringResource(I18nR.string.net_dns_detail_relay), server.relay.orEmpty())
+            if (server.bootstrapIps.isNotEmpty()) Detail(stringResource(I18nR.string.net_dns_detail_bootstrap), server.bootstrapIps.joinToString(", "))
             if (server.kind == DnsKind.Plain || server.kind == DnsKind.DnsProxy) {
-                Text(stringResource(R.string.net_dns_not_encrypted_note), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(I18nR.string.net_dns_not_encrypted_note), style = MaterialTheme.typography.bodySmall)
             }
             if (server.kind == DnsKind.Odoh && server.relay.isNullOrBlank()) {
-                Text(stringResource(R.string.net_dns_odoh_note), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(I18nR.string.net_dns_odoh_note), style = MaterialTheme.typography.bodySmall)
             }
-            Text(stringResource(R.string.net_dns_vpn_only), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(I18nR.string.net_dns_vpn_only), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
             when {
-                testing -> Text(stringResource(R.string.net_dns_test_running))
+                testing -> Text(stringResource(I18nR.string.net_dns_test_running))
                 result != null -> {
                     val r = result!!
                     Text(
                         r.fold(
-                            { stringResource(R.string.net_dns_test_ok, it) },
-                            { stringResource(R.string.net_dns_test_fail, it.message ?: it.toString()) },
+                            { stringResource(I18nR.string.net_dns_test_ok, it) },
+                            { stringResource(I18nR.string.net_dns_test_fail, it.message ?: it.toString()) },
                         ),
                         color = if (r.isSuccess) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
                     )
@@ -276,22 +277,22 @@ private fun DnsDetailsSheet(
             }
 
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = onUse, enabled = !isSelected) { Text(stringResource(R.string.net_dns_action_use)) }
+                Button(onClick = onUse, enabled = !isSelected) { Text(stringResource(I18nR.string.net_dns_action_use)) }
                 OutlinedButton(
                     onClick = {
                         testing = true
                         scope.launch { result = test(server); testing = false }
                     },
                     enabled = !testing,
-                ) { Text(stringResource(R.string.net_dns_action_test)) }
+                ) { Text(stringResource(I18nR.string.net_dns_action_test)) }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (server.kind != DnsKind.System) {
-                    OutlinedButton(onClick = onCopy) { Text(stringResource(R.string.net_dns_action_copy)) }
+                    OutlinedButton(onClick = onCopy) { Text(stringResource(I18nR.string.net_dns_action_copy)) }
                 }
                 if (!server.builtIn) {
-                    OutlinedButton(onClick = onEdit) { Text(stringResource(R.string.net_dns_action_edit)) }
-                    TextButton(onClick = { confirmRemove = true }) { Text(stringResource(R.string.net_dns_action_remove)) }
+                    OutlinedButton(onClick = onEdit) { Text(stringResource(I18nR.string.net_dns_action_edit)) }
+                    TextButton(onClick = { confirmRemove = true }) { Text(stringResource(I18nR.string.net_dns_action_remove)) }
                 }
             }
             Text("", Modifier.padding(bottom = 16.dp))
@@ -301,10 +302,10 @@ private fun DnsDetailsSheet(
     if (confirmRemove) {
         AlertDialog(
             onDismissRequest = { confirmRemove = false },
-            title = { Text(stringResource(R.string.net_dns_remove_title)) },
-            text = { Text(stringResource(R.string.net_dns_remove_message, server.name)) },
-            confirmButton = { TextButton(onClick = { confirmRemove = false; onRemove() }) { Text(stringResource(R.string.net_dns_action_remove)) } },
-            dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(stringResource(R.string.net_dns_cancel)) } },
+            title = { Text(stringResource(I18nR.string.net_dns_remove_title)) },
+            text = { Text(stringResource(I18nR.string.net_dns_remove_message, server.name)) },
+            confirmButton = { TextButton(onClick = { confirmRemove = false; onRemove() }) { Text(stringResource(I18nR.string.net_dns_action_remove)) } },
+            dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(stringResource(I18nR.string.net_dns_cancel)) } },
         )
     }
 }
@@ -319,53 +320,53 @@ private fun Detail(label: String, value: String) {
 
 @Composable
 internal fun kindLabel(kind: DnsKind): String = when (kind) {
-    DnsKind.System -> stringResource(R.string.net_dns_group_system)
-    DnsKind.Plain -> stringResource(R.string.net_dns_kind_plain)
+    DnsKind.System -> stringResource(I18nR.string.net_dns_group_system)
+    DnsKind.Plain -> stringResource(I18nR.string.net_dns_kind_plain)
     DnsKind.Doh -> "DoH"
     DnsKind.Dot -> "DoT"
     DnsKind.DnsCrypt -> "DNSCrypt"
     DnsKind.Odoh -> "ODoH"
-    DnsKind.DnsProxy -> stringResource(R.string.net_dns_kind_proxy)
+    DnsKind.DnsProxy -> stringResource(I18nR.string.net_dns_kind_proxy)
 }
 
 @Composable
 private fun tagText(tag: DnsTag): String = stringResource(
     when (tag) {
-        DnsTag.Adblock -> R.string.net_dns_tag_adblock
-        DnsTag.Malware -> R.string.net_dns_tag_malware
-        DnsTag.Family -> R.string.net_dns_tag_family
-        DnsTag.Privacy -> R.string.net_dns_tag_privacy
-        DnsTag.Unfiltered -> R.string.net_dns_tag_unfiltered
+        DnsTag.Adblock -> I18nR.string.net_dns_tag_adblock
+        DnsTag.Malware -> I18nR.string.net_dns_tag_malware
+        DnsTag.Family -> I18nR.string.net_dns_tag_family
+        DnsTag.Privacy -> I18nR.string.net_dns_tag_privacy
+        DnsTag.Unfiltered -> I18nR.string.net_dns_tag_unfiltered
     }
 )
 
 @Composable
 private fun tagFilterText(tag: DnsTag): String = stringResource(
     when (tag) {
-        DnsTag.Adblock -> R.string.net_dns_filter_adblock
-        DnsTag.Malware -> R.string.net_dns_filter_malware
-        DnsTag.Family -> R.string.net_dns_filter_family
-        DnsTag.Privacy -> R.string.net_dns_filter_privacy
-        DnsTag.Unfiltered -> R.string.net_dns_filter_unfiltered
+        DnsTag.Adblock -> I18nR.string.net_dns_filter_adblock
+        DnsTag.Malware -> I18nR.string.net_dns_filter_malware
+        DnsTag.Family -> I18nR.string.net_dns_filter_family
+        DnsTag.Privacy -> I18nR.string.net_dns_filter_privacy
+        DnsTag.Unfiltered -> I18nR.string.net_dns_filter_unfiltered
     }
 )
 
 @Composable
 private fun tagGroupText(tag: DnsTag): String = stringResource(
     when (tag) {
-        DnsTag.Adblock -> R.string.net_dns_group_adblock
-        DnsTag.Malware -> R.string.net_dns_group_malware
-        DnsTag.Family -> R.string.net_dns_group_family
-        DnsTag.Privacy -> R.string.net_dns_group_privacy
-        DnsTag.Unfiltered -> R.string.net_dns_group_unfiltered
+        DnsTag.Adblock -> I18nR.string.net_dns_group_adblock
+        DnsTag.Malware -> I18nR.string.net_dns_group_malware
+        DnsTag.Family -> I18nR.string.net_dns_group_family
+        DnsTag.Privacy -> I18nR.string.net_dns_group_privacy
+        DnsTag.Unfiltered -> I18nR.string.net_dns_group_unfiltered
     }
 )
 
 @Composable
 private fun engineStateText(state: NetState): String = when (state) {
-    NetState.Off -> stringResource(R.string.net_dns_engine_off)
-    NetState.Starting -> stringResource(R.string.net_dns_engine_starting)
-    NetState.On -> stringResource(R.string.net_dns_engine_on)
-    is NetState.Error -> stringResource(R.string.net_dns_engine_error, state.message)
-    is NetState.NeedsPermission -> stringResource(R.string.net_dns_engine_permission)
+    NetState.Off -> stringResource(I18nR.string.net_dns_engine_off)
+    NetState.Starting -> stringResource(I18nR.string.net_dns_engine_starting)
+    NetState.On -> stringResource(I18nR.string.net_dns_engine_on)
+    is NetState.Error -> stringResource(I18nR.string.net_dns_engine_error, state.message)
+    is NetState.NeedsPermission -> stringResource(I18nR.string.net_dns_engine_permission)
 }

@@ -1,5 +1,6 @@
 // === TELOS_PENDING_REVIEW_START: desktop_wm_klassy_sweet_theming ===
 package de.mm20.launcher2.ui.desktopmode.wm
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Canvas
@@ -252,21 +253,21 @@ private fun WindowButtonsGroup(
             WindowButtonStyle.SIERRA_BREEZE_BLEND, WindowButtonStyle.KLASSY_OUTLINE, WindowButtonStyle.KLASSY_ICON_ONLY, WindowButtonStyle.KLASSY_ACCENT_FILLED -> {
                 KlassyButton(
                     style = themeConfig.buttonStyle,
-                    iconRes = R.drawable.close_24px,
+                    iconRes = BaseR.drawable.close_24px,
                     contentDescription = "Close",
                     semanticColor = MaterialTheme.colorScheme.error,
                     onClick = { windowManager.closeWindow(windowState.id) }
                 )
                 KlassyButton(
                     style = themeConfig.buttonStyle,
-                    iconRes = R.drawable.circle_24px,
+                    iconRes = BaseR.drawable.circle_24px,
                     contentDescription = "Minimize",
                     semanticColor = MaterialTheme.colorScheme.secondary,
                     onClick = { windowManager.toggleMinimize(windowState.id) }
                 )
                 KlassyButton(
                     style = themeConfig.buttonStyle,
-                    iconRes = R.drawable.add_24px,
+                    iconRes = BaseR.drawable.add_24px,
                     contentDescription = "Maximize",
                     semanticColor = MaterialTheme.colorScheme.primary,
                     onClick = { windowManager.toggleMaximize(windowState.id, desktopWidth, desktopHeight) }

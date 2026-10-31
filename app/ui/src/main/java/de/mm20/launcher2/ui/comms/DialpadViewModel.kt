@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.Intent
@@ -206,7 +207,7 @@ class DialpadViewModel : ViewModel(), KoinComponent {
                 android.widget.Toast.makeText(
                     context,
                     de.mm20.launcher2.comms.sip.SipDialer.lastFailure
-                        .ifBlank { context.getString(R.string.au_phoneb_sip_err_not_connected) },
+                        .ifBlank { context.getString(I18nR.string.au_phoneb_sip_err_not_connected) },
                     android.widget.Toast.LENGTH_SHORT,
                 ).show()
             }

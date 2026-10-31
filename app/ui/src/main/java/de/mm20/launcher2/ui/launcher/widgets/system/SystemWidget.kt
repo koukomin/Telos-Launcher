@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.system
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.ActivityManager
 import android.content.Context
@@ -117,7 +119,7 @@ fun SystemWidget(widget: SystemWidget) {
     var stats by remember { mutableStateOf(SystemStats()) }
     var rx by remember { mutableStateOf<Long?>(null) }
     var tx by remember { mutableStateOf<Long?>(null) }
-    var transport by remember { mutableIntStateOf(R.string.network_widget_disconnected) }
+    var transport by remember { mutableIntStateOf(I18nR.string.network_widget_disconnected) }
     var liveRenderer by remember { mutableStateOf(HwuiRenderer.MODE_DEFAULT) }
     var publicIp by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
@@ -140,11 +142,11 @@ fun SystemWidget(widget: SystemWidget) {
                 val manager = context.getSystemService<ConnectivityManager>()
                 val capabilities = manager?.getNetworkCapabilities(manager.activeNetwork)
                 transport = when {
-                    capabilities == null -> R.string.network_widget_disconnected
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> R.string.network_widget_wifi
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> R.string.network_widget_cellular
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> R.string.network_widget_ethernet
-                    else -> R.string.network_widget_connected
+                    capabilities == null -> I18nR.string.network_widget_disconnected
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> I18nR.string.network_widget_wifi
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> I18nR.string.network_widget_cellular
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> I18nR.string.network_widget_ethernet
+                    else -> I18nR.string.network_widget_connected
                 }
                 delay(2000)
                 val now = SystemClock.elapsedRealtime()
@@ -193,9 +195,9 @@ fun SystemWidget(widget: SystemWidget) {
                 }
             }
             Column(Modifier.weight(1f).padding(start = 12.dp)) {
-                Text(stringResource(R.string.widget_name_system), style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(I18nR.string.widget_name_system), style = MaterialTheme.typography.titleMedium)
                 Text(
-                    stringResource(if (vk) R.string.hc_graphics_vulkan else if (liveRenderer == HwuiRenderer.MODE_OPENGL) R.string.hc_graphics_opengl else R.string.hc_graphics_default),
+                    stringResource(if (vk) I18nR.string.hc_graphics_vulkan else if (liveRenderer == HwuiRenderer.MODE_OPENGL) I18nR.string.hc_graphics_opengl else I18nR.string.hc_graphics_default),
                     color = accent,
                     style = MaterialTheme.typography.labelLarge,
                 )
@@ -206,7 +208,7 @@ fun SystemWidget(widget: SystemWidget) {
                         .putExtra(SettingsActivity.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_SYSTEM),
                 )
             }) {
-                Icon(painterResource(R.drawable.settings_24px), stringResource(R.string.telos_system_label))
+                Icon(painterResource(BaseR.drawable.settings_24px), stringResource(I18nR.string.telos_system_label))
             }
         }
 
@@ -214,13 +216,13 @@ fun SystemWidget(widget: SystemWidget) {
         val glOn = liveRenderer == HwuiRenderer.MODE_OPENGL || savedRenderer == HwuiRenderer.MODE_OPENGL
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             GraphicsButton(
-                label = stringResource(R.string.hc_graphics_vulkan),
+                label = stringResource(I18nR.string.hc_graphics_vulkan),
                 selected = vulkanOn,
                 selectedColor = Color(0xFF00E5A8),
                 enabled = allowSwitch,
                 onClick = {
                     if (!allowSwitch) {
-                        Toast.makeText(context, R.string.hc_graphics_widget_locked, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18nR.string.hc_graphics_widget_locked, Toast.LENGTH_SHORT).show()
                         return@GraphicsButton
                     }
                     scope.launch {
@@ -229,20 +231,20 @@ fun SystemWidget(widget: SystemWidget) {
                         liveRenderer = HwuiRenderer.current()
                         Toast.makeText(
                             context,
-                            if (ok) R.string.hc_graphics_applied else R.string.hc_graphics_priv_missing,
+                            if (ok) I18nR.string.hc_graphics_applied else I18nR.string.hc_graphics_priv_missing,
                             Toast.LENGTH_SHORT,
                         ).show()
                     }
                 },
             )
             GraphicsButton(
-                label = stringResource(R.string.hc_graphics_opengl),
+                label = stringResource(I18nR.string.hc_graphics_opengl),
                 selected = glOn,
                 selectedColor = scheme.primary,
                 enabled = allowSwitch,
                 onClick = {
                     if (!allowSwitch) {
-                        Toast.makeText(context, R.string.hc_graphics_widget_locked, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18nR.string.hc_graphics_widget_locked, Toast.LENGTH_SHORT).show()
                         return@GraphicsButton
                     }
                     scope.launch {
@@ -251,7 +253,7 @@ fun SystemWidget(widget: SystemWidget) {
                         liveRenderer = HwuiRenderer.current()
                         Toast.makeText(
                             context,
-                            if (ok) R.string.hc_graphics_applied else R.string.hc_graphics_priv_missing,
+                            if (ok) I18nR.string.hc_graphics_applied else I18nR.string.hc_graphics_priv_missing,
                             Toast.LENGTH_SHORT,
                         ).show()
                     }
@@ -264,10 +266,10 @@ fun SystemWidget(widget: SystemWidget) {
                 Modifier
                     .weight(1f)
                     .clickable { openTaskKiller(context) },
-                stringResource(R.string.system_widget_ram),
+                stringResource(I18nR.string.system_widget_ram),
                 if (stats.ramTotal == 0L) 0f else stats.ramUsed.toFloat() / stats.ramTotal,
                 stringResource(
-                    R.string.system_widget_used_of_total,
+                    I18nR.string.system_widget_used_of_total,
                     Formatter.formatShortFileSize(context, stats.ramUsed),
                     Formatter.formatShortFileSize(context, stats.ramTotal),
                 ),
@@ -282,14 +284,14 @@ fun SystemWidget(widget: SystemWidget) {
                                 .putExtra(SettingsActivity.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_TRASH),
                         )
                     },
-                stringResource(R.string.system_widget_storage),
+                stringResource(I18nR.string.system_widget_storage),
                 if (stats.storageTotal == 0L) 0f else stats.storageUsed.toFloat() / stats.storageTotal,
                 stringResource(
-                    R.string.system_widget_used_of_total,
+                    I18nR.string.system_widget_used_of_total,
                     Formatter.formatShortFileSize(context, stats.storageUsed),
                     Formatter.formatShortFileSize(context, stats.storageTotal),
                 ) + " · " + stringResource(
-                    R.string.system_widget_free,
+                    I18nR.string.system_widget_free,
                     Formatter.formatShortFileSize(context, free),
                 ),
             )
@@ -319,25 +321,25 @@ fun SystemWidget(widget: SystemWidget) {
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    painterResource(R.drawable.speed_24px),
+                    painterResource(BaseR.drawable.speed_24px),
                     contentDescription = null,
                     tint = scheme.onPrimaryContainer,
                 )
             }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(stringResource(R.string.nsp_title), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(I18nR.string.nsp_title), style = MaterialTheme.typography.titleSmall)
                 Text(
-                    stringResource(R.string.nsp_intro),
+                    stringResource(I18nR.string.nsp_intro),
                     style = MaterialTheme.typography.bodySmall,
                     color = scheme.onSurfaceVariant,
                 )
             }
         }
-        Text(stringResource(R.string.telos_system_processes), style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(I18nR.string.telos_system_processes), style = MaterialTheme.typography.titleSmall)
         Column(Modifier.fillMaxWidth().heightIn(max = 200.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         processes.take(40).forEach { process ->
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Icon(painterResource(R.drawable.memory_24px), null, Modifier.size(16.dp))
+                Icon(painterResource(BaseR.drawable.memory_24px), null, Modifier.size(16.dp))
                 Text(process.name, Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
                 Text(process.pid.toString(), style = MaterialTheme.typography.labelSmall)
             }
@@ -365,8 +367,8 @@ fun SystemWidget(widget: SystemWidget) {
                         .background(if (vpnOn) Color(0xFF00E5A8) else scheme.outline),
                 )
                 Text(
-                    stringResource(R.string.net_hub_title) + " · " + stringResource(
-                        if (vpnOn) R.string.net_hub_state_on else R.string.net_hub_state_off,
+                    stringResource(I18nR.string.net_hub_title) + " · " + stringResource(
+                        if (vpnOn) I18nR.string.net_hub_state_on else I18nR.string.net_hub_state_off,
                     ),
                     modifier = Modifier.padding(start = 8.dp),
                     style = MaterialTheme.typography.labelLarge,
@@ -376,21 +378,21 @@ fun SystemWidget(widget: SystemWidget) {
             Text(stringResource(transport), style = MaterialTheme.typography.labelMedium)
             Text("↓ ${formatRate(rx)}    ↑ ${formatRate(tx)}", style = MaterialTheme.typography.titleMedium)
             stats.lanIp?.let {
-                Text(stringResource(R.string.system_widget_lan_ip, it), style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(I18nR.string.system_widget_lan_ip, it), style = MaterialTheme.typography.labelMedium)
             }
             Text(
-                stringResource(R.string.system_widget_public_ip, publicIp ?: "—"),
+                stringResource(I18nR.string.system_widget_public_ip, publicIp ?: "—"),
                 style = MaterialTheme.typography.labelMedium,
             )
             if (vpnOn || stats.vpnIp != null) {
                 Text(
-                    stringResource(R.string.system_widget_vpn_ip, stats.vpnIp ?: publicIp ?: "—"),
+                    stringResource(I18nR.string.system_widget_vpn_ip, stats.vpnIp ?: publicIp ?: "—"),
                     style = MaterialTheme.typography.labelMedium,
                     color = Color(0xFF00E5A8),
                 )
             }
             Text(
-                "${stringResource(R.string.net_hub_stat_dns)} ${server.name}  ·  ${number.format(statsLog.dnsBlocked)} DNS  ·  ${number.format(statsLog.connectionsBlocked)} conn",
+                "${stringResource(I18nR.string.net_hub_stat_dns)} ${server.name}  ·  ${number.format(statsLog.dnsBlocked)} DNS  ·  ${number.format(statsLog.connectionsBlocked)} conn",
                 style = MaterialTheme.typography.labelSmall,
                 color = scheme.onSurfaceVariant,
             )
@@ -508,7 +510,7 @@ private fun openTaskKiller(context: Context) {
         )
         return
     }
-    Toast.makeText(context, R.string.system_widget_no_task_killer, Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, I18nR.string.system_widget_no_task_killer, Toast.LENGTH_SHORT).show()
     context.tryStartActivity(
         Intent(context, SettingsActivity::class.java)
             .putExtra(SettingsActivity.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_SYSTEM),

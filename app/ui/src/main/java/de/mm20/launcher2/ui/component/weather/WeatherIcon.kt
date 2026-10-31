@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.component.weather
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
@@ -67,7 +68,7 @@ private fun SunMoon(icon: WeatherIcon, night: Boolean, colors: WeatherIconColors
     }
 
     Icon(
-        painterResource(if (night) R.drawable.dark_mode_24px_filled else R.drawable.light_mode_24px_filled),
+        painterResource(if (night) BaseR.drawable.dark_mode_24px_filled else BaseR.drawable.light_mode_24px_filled),
         null,
         modifier = Modifier
             .size(24.dp)
@@ -338,7 +339,7 @@ private fun HotCold(icon: WeatherIcon, colors: WeatherIconColors) {
         Icon(
             modifier = Modifier
                 .size(32.dp),
-            painter = painterResource(R.drawable.heat_24px),
+            painter = painterResource(BaseR.drawable.heat_24px),
             contentDescription = null,
             tint = colors.hot
         )
@@ -347,7 +348,7 @@ private fun HotCold(icon: WeatherIcon, colors: WeatherIconColors) {
         Icon(
             modifier = Modifier
                 .size(32.dp),
-            painter = painterResource(R.drawable.severe_cold_24px),
+            painter = painterResource(BaseR.drawable.severe_cold_24px),
             contentDescription = null,
             tint = colors.cold
         )
@@ -360,7 +361,7 @@ private fun Wind(icon: WeatherIcon, colors: WeatherIconColors) {
         Icon(
             modifier = Modifier
                 .size(32.dp),
-            painter = painterResource(R.drawable.air_24px),
+            painter = painterResource(BaseR.drawable.air_24px),
             contentDescription = null,
             tint = colors.wind
         )
@@ -397,7 +398,7 @@ private fun LightningBolts(icon: WeatherIcon, colors: WeatherIconColors) {
         modifier = Modifier
             .size(12.dp)
             .offset(x = 1.dp, y = 6.dp),
-        painter = painterResource(R.drawable.bolt_24px_filled),
+        painter = painterResource(BaseR.drawable.bolt_24px_filled),
         contentDescription = null,
         tint = colors.lightningBolt
     )

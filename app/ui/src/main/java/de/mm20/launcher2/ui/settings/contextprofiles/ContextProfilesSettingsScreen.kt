@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.contextprofiles
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.TimePickerDialog
 import android.text.format.DateFormat
@@ -87,12 +89,12 @@ fun ContextProfilesSettingsScreen() {
     // a stable id for the profile being created, otherwise every recomposition would reset the sheet
     var newProfileId by rememberSaveable { mutableStateOf(UUID.randomUUID().toString()) }
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_context_profiles)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_context_profiles)) {
         item {
             PreferenceCategory {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_context_profiles_enabled),
-                    summary = stringResource(R.string.preference_context_profiles_enabled_summary),
+                    title = stringResource(I18nR.string.preference_context_profiles_enabled),
+                    summary = stringResource(I18nR.string.preference_context_profiles_enabled_summary),
                     value = enabled,
                     onValueChanged = { viewModel.setEnabled(it) },
                 )
@@ -100,20 +102,20 @@ fun ContextProfilesSettingsScreen() {
         }
         if (enabled) {
             item {
-                PreferenceCategory(title = stringResource(R.string.preference_category_context_profiles)) {
+                PreferenceCategory(title = stringResource(I18nR.string.preference_category_context_profiles)) {
                     for (profile in profiles) {
                         val isManuallyActive = manualOverrideId == profile.id
                         Preference(
                             icon = iconFor(profile.icon),
                             title = profile.name,
                             summary = triggerSummary(profile.trigger) +
-                                    if (isManuallyActive) " · " + stringResource(R.string.context_profile_active_now) else "",
+                                    if (isManuallyActive) " · " + stringResource(I18nR.string.context_profile_active_now) else "",
                             onClick = { editingProfileId = profile.id },
                         )
                     }
                     Preference(
-                        icon = R.drawable.add_24px,
-                        title = stringResource(R.string.context_profile_add),
+                        icon = BaseR.drawable.add_24px,
+                        title = stringResource(I18nR.string.context_profile_add),
                         onClick = {
                             newProfileId = UUID.randomUUID().toString()
                             showNewProfileSheet = true
@@ -241,22 +243,22 @@ private fun ContextProfileEditSheet(
             }
             item {
                 TextPreference(
-                    title = stringResource(R.string.context_profile_name),
+                    title = stringResource(I18nR.string.context_profile_name),
                     value = current.name,
                     onValueChanged = { current = current.copy(name = it) },
                 )
             }
             item {
-                PreferenceCategory(title = stringResource(R.string.context_profile_trigger)) {
+                PreferenceCategory(title = stringResource(I18nR.string.context_profile_trigger)) {
                     ListPreference(
-                        title = stringResource(R.string.context_profile_trigger),
+                        title = stringResource(I18nR.string.context_profile_trigger),
                         items = listOf(
-                            ListPreferenceItem(stringResource(R.string.context_profile_trigger_manual), 0),
-                            ListPreferenceItem(stringResource(R.string.context_profile_trigger_time), 1),
-                            ListPreferenceItem(stringResource(R.string.context_profile_trigger_wifi), 2),
-                            ListPreferenceItem(stringResource(R.string.context_profile_trigger_bluetooth), 3),
-                            ListPreferenceItem(stringResource(R.string.context_profile_trigger_battery_saver), 4),
-                            ListPreferenceItem(stringResource(R.string.context_profile_trigger_charging), 5),
+                            ListPreferenceItem(stringResource(I18nR.string.context_profile_trigger_manual), 0),
+                            ListPreferenceItem(stringResource(I18nR.string.context_profile_trigger_time), 1),
+                            ListPreferenceItem(stringResource(I18nR.string.context_profile_trigger_wifi), 2),
+                            ListPreferenceItem(stringResource(I18nR.string.context_profile_trigger_bluetooth), 3),
+                            ListPreferenceItem(stringResource(I18nR.string.context_profile_trigger_battery_saver), 4),
+                            ListPreferenceItem(stringResource(I18nR.string.context_profile_trigger_charging), 5),
                         ),
                         value = when (current.trigger) {
                             is ContextProfileTrigger.Manual -> 0
@@ -292,7 +294,7 @@ private fun ContextProfileEditSheet(
                                 ).show()
                             }
                             Preference(
-                                title = stringResource(R.string.au3_commsfreeze_start_time),
+                                title = stringResource(I18nR.string.au3_commsfreeze_start_time),
                                 summary = "%02d:%02d".format(trigger.startHour, trigger.startMinute),
                                 onClick = {
                                     pickTime(trigger.startHour, trigger.startMinute) { h, m ->
@@ -301,7 +303,7 @@ private fun ContextProfileEditSheet(
                                 },
                             )
                             Preference(
-                                title = stringResource(R.string.au3_commsfreeze_end_time),
+                                title = stringResource(I18nR.string.au3_commsfreeze_end_time),
                                 summary = "%02d:%02d".format(trigger.endHour, trigger.endMinute),
                                 onClick = {
                                     pickTime(trigger.endHour, trigger.endMinute) { h, m ->
@@ -314,12 +316,12 @@ private fun ContextProfileEditSheet(
                         is ContextProfileTrigger.Wifi -> {
                             GuardedPreference(
                                 locked = hasLocationPermission == false,
-                                description = stringResource(R.string.missing_permission_context_profile_wifi),
+                                description = stringResource(I18nR.string.missing_permission_context_profile_wifi),
                                 onUnlock = onRequestLocationPermission,
                             ) {
                                 TextPreference(
-                                    title = stringResource(R.string.context_profile_trigger_wifi_ssid),
-                                    summary = stringResource(R.string.context_profile_trigger_wifi_ssid_summary),
+                                    title = stringResource(I18nR.string.context_profile_trigger_wifi_ssid),
+                                    summary = stringResource(I18nR.string.context_profile_trigger_wifi_ssid_summary),
                                     value = trigger.ssids.firstOrNull() ?: "",
                                     onValueChanged = {
                                         current = current.copy(
@@ -333,12 +335,12 @@ private fun ContextProfileEditSheet(
                         is ContextProfileTrigger.Bluetooth -> {
                             GuardedPreference(
                                 locked = hasBluetoothPermission == false,
-                                description = stringResource(R.string.missing_permission_context_profile_bluetooth),
+                                description = stringResource(I18nR.string.missing_permission_context_profile_bluetooth),
                                 onUnlock = onRequestBluetoothPermission,
                             ) {
                                 TextPreference(
-                                    title = stringResource(R.string.context_profile_trigger_bluetooth_device),
-                                    summary = stringResource(R.string.context_profile_trigger_bluetooth_device_summary),
+                                    title = stringResource(I18nR.string.context_profile_trigger_bluetooth_device),
+                                    summary = stringResource(I18nR.string.context_profile_trigger_bluetooth_device_summary),
                                     value = trigger.deviceNames.firstOrNull() ?: "",
                                     onValueChanged = {
                                         current = current.copy(
@@ -351,12 +353,12 @@ private fun ContextProfileEditSheet(
 
                         is ContextProfileTrigger.Charging -> {
                             ListPreference(
-                                title = stringResource(R.string.context_profile_trigger_charging_type),
+                                title = stringResource(I18nR.string.context_profile_trigger_charging_type),
                                 items = listOf(
-                                    ListPreferenceItem(stringResource(R.string.charging_type_any), ChargingType.Any),
-                                    ListPreferenceItem(stringResource(R.string.charging_type_usb), ChargingType.Usb),
-                                    ListPreferenceItem(stringResource(R.string.charging_type_ac), ChargingType.Ac),
-                                    ListPreferenceItem(stringResource(R.string.charging_type_wireless), ChargingType.Wireless),
+                                    ListPreferenceItem(stringResource(I18nR.string.charging_type_any), ChargingType.Any),
+                                    ListPreferenceItem(stringResource(I18nR.string.charging_type_usb), ChargingType.Usb),
+                                    ListPreferenceItem(stringResource(I18nR.string.charging_type_ac), ChargingType.Ac),
+                                    ListPreferenceItem(stringResource(I18nR.string.charging_type_wireless), ChargingType.Wireless),
                                 ),
                                 value = trigger.type,
                                 onValueChanged = {
@@ -370,34 +372,34 @@ private fun ContextProfileEditSheet(
                 }
             }
             item {
-                PreferenceCategory(title = stringResource(R.string.context_profile_overrides)) {
+                PreferenceCategory(title = stringResource(I18nR.string.context_profile_overrides)) {
                     ListPreference(
-                        title = stringResource(R.string.preference_freeze_profile),
+                        title = stringResource(I18nR.string.preference_freeze_profile),
                         items = listOf(
-                            ListPreferenceItem(stringResource(R.string.context_profile_no_override), null),
-                            ListPreferenceItem(stringResource(R.string.freeze_profile_battery_saver), FreezeProfile.BatterySaver),
-                            ListPreferenceItem(stringResource(R.string.freeze_profile_balanced), FreezeProfile.Balanced),
-                            ListPreferenceItem(stringResource(R.string.freeze_profile_aggressive), FreezeProfile.Aggressive),
-                            ListPreferenceItem(stringResource(R.string.freeze_profile_ultra_aggressive), FreezeProfile.UltraAggressive),
+                            ListPreferenceItem(stringResource(I18nR.string.context_profile_no_override), null),
+                            ListPreferenceItem(stringResource(I18nR.string.freeze_profile_battery_saver), FreezeProfile.BatterySaver),
+                            ListPreferenceItem(stringResource(I18nR.string.freeze_profile_balanced), FreezeProfile.Balanced),
+                            ListPreferenceItem(stringResource(I18nR.string.freeze_profile_aggressive), FreezeProfile.Aggressive),
+                            ListPreferenceItem(stringResource(I18nR.string.freeze_profile_ultra_aggressive), FreezeProfile.UltraAggressive),
                         ),
                         value = current.freezeProfileOverride,
                         onValueChanged = { current = current.copy(freezeProfileOverride = it) },
                     )
                     ListPreference(
-                        title = stringResource(R.string.context_profile_widget_page),
+                        title = stringResource(I18nR.string.context_profile_widget_page),
                         items = listOf(
-                            ListPreferenceItem(stringResource(R.string.context_profile_no_override), null),
-                            ListPreferenceItem(stringResource(R.string.gesture_action_widgets), WidgetScreenTarget.Widgets1),
+                            ListPreferenceItem(stringResource(I18nR.string.context_profile_no_override), null),
+                            ListPreferenceItem(stringResource(I18nR.string.gesture_action_widgets), WidgetScreenTarget.Widgets1),
                             ListPreferenceItem(
-                                stringResource(R.string.gesture_action_widgets_indexed, 2),
+                                stringResource(I18nR.string.gesture_action_widgets_indexed, 2),
                                 WidgetScreenTarget.Widgets2
                             ),
                             ListPreferenceItem(
-                                stringResource(R.string.gesture_action_widgets_indexed, 3),
+                                stringResource(I18nR.string.gesture_action_widgets_indexed, 3),
                                 WidgetScreenTarget.Widgets3
                             ),
                             ListPreferenceItem(
-                                stringResource(R.string.gesture_action_widgets_indexed, 4),
+                                stringResource(I18nR.string.gesture_action_widgets_indexed, 4),
                                 WidgetScreenTarget.Widgets4
                             ),
                         ),
@@ -405,42 +407,42 @@ private fun ContextProfileEditSheet(
                         onValueChanged = { current = current.copy(widgetScreenTargetOverride = it) },
                     )
                     GestureOverrideRow(
-                        title = stringResource(R.string.preference_gesture_swipe_up),
+                        title = stringResource(I18nR.string.preference_gesture_swipe_up),
                         value = current.gestureOverrides.swipeUp,
                         onValueChanged = {
                             current = current.copy(gestureOverrides = current.gestureOverrides.copy(swipeUp = it))
                         },
                     )
                     GestureOverrideRow(
-                        title = stringResource(R.string.preference_gesture_swipe_down),
+                        title = stringResource(I18nR.string.preference_gesture_swipe_down),
                         value = current.gestureOverrides.swipeDown,
                         onValueChanged = {
                             current = current.copy(gestureOverrides = current.gestureOverrides.copy(swipeDown = it))
                         },
                     )
                     GestureOverrideRow(
-                        title = stringResource(R.string.preference_gesture_swipe_left),
+                        title = stringResource(I18nR.string.preference_gesture_swipe_left),
                         value = current.gestureOverrides.swipeLeft,
                         onValueChanged = {
                             current = current.copy(gestureOverrides = current.gestureOverrides.copy(swipeLeft = it))
                         },
                     )
                     GestureOverrideRow(
-                        title = stringResource(R.string.preference_gesture_swipe_right),
+                        title = stringResource(I18nR.string.preference_gesture_swipe_right),
                         value = current.gestureOverrides.swipeRight,
                         onValueChanged = {
                             current = current.copy(gestureOverrides = current.gestureOverrides.copy(swipeRight = it))
                         },
                     )
                     GestureOverrideRow(
-                        title = stringResource(R.string.preference_gesture_long_press),
+                        title = stringResource(I18nR.string.preference_gesture_long_press),
                         value = current.gestureOverrides.longPress,
                         onValueChanged = {
                             current = current.copy(gestureOverrides = current.gestureOverrides.copy(longPress = it))
                         },
                     )
                     GestureOverrideRow(
-                        title = stringResource(R.string.preference_gesture_double_tap),
+                        title = stringResource(I18nR.string.preference_gesture_double_tap),
                         value = current.gestureOverrides.doubleTap,
                         onValueChanged = {
                             current = current.copy(gestureOverrides = current.gestureOverrides.copy(doubleTap = it))
@@ -448,15 +450,15 @@ private fun ContextProfileEditSheet(
                     )
                     GuardedPreference(
                         locked = hasNotificationPolicyPermission == false,
-                        description = stringResource(R.string.missing_permission_context_profile_dnd),
+                        description = stringResource(I18nR.string.missing_permission_context_profile_dnd),
                         onUnlock = onRequestNotificationPolicyPermission,
                     ) {
                         ListPreference(
-                            title = stringResource(R.string.context_profile_override_dnd),
+                            title = stringResource(I18nR.string.context_profile_override_dnd),
                             items = listOf(
-                                ListPreferenceItem(stringResource(R.string.context_profile_no_override), null),
-                                ListPreferenceItem(stringResource(R.string.context_profile_override_dnd_on), true),
-                                ListPreferenceItem(stringResource(R.string.context_profile_override_dnd_off), false),
+                                ListPreferenceItem(stringResource(I18nR.string.context_profile_no_override), null),
+                                ListPreferenceItem(stringResource(I18nR.string.context_profile_override_dnd_on), true),
+                                ListPreferenceItem(stringResource(I18nR.string.context_profile_override_dnd_off), false),
                             ),
                             value = current.doNotDisturbOverride,
                             onValueChanged = { current = current.copy(doNotDisturbOverride = it) },
@@ -464,12 +466,12 @@ private fun ContextProfileEditSheet(
                     }
                     GuardedPreference(
                         locked = hasWriteSettingsPermission == false,
-                        description = stringResource(R.string.missing_permission_context_profile_brightness),
+                        description = stringResource(I18nR.string.missing_permission_context_profile_brightness),
                         onUnlock = onRequestWriteSettingsPermission,
                     ) {
                         Column {
                             SwitchPreference(
-                                title = stringResource(R.string.context_profile_override_brightness),
+                                title = stringResource(I18nR.string.context_profile_override_brightness),
                                 value = current.brightnessOverride != null,
                                 onValueChanged = {
                                     current = current.copy(brightnessOverride = if (it) 50 else null)
@@ -478,7 +480,7 @@ private fun ContextProfileEditSheet(
                             val brightness = current.brightnessOverride
                             if (brightness != null) {
                                 SliderPreference(
-                                    title = stringResource(R.string.context_profile_override_brightness_value),
+                                    title = stringResource(I18nR.string.context_profile_override_brightness_value),
                                     value = brightness,
                                     min = 1,
                                     max = 100,
@@ -492,16 +494,16 @@ private fun ContextProfileEditSheet(
                     val launchApp by (launchAppKey?.let { resolveSearchable(it) } ?: emptyFlow())
                         .collectAsStateWithLifecycle(null)
                     Preference(
-                        icon = R.drawable.open_in_new_24px,
-                        title = stringResource(R.string.context_profile_override_launch_app),
-                        summary = launchApp?.label ?: stringResource(R.string.context_profile_no_override),
+                        icon = BaseR.drawable.open_in_new_24px,
+                        title = stringResource(I18nR.string.context_profile_override_launch_app),
+                        summary = launchApp?.label ?: stringResource(I18nR.string.context_profile_no_override),
                         onClick = { showLaunchAppPicker = true },
                         controls = if (launchAppKey != null) {
                             {
                                 IconButton(onClick = { current = current.copy(launchAppOverride = null) }) {
                                     Icon(
-                                        painterResource(R.drawable.close_24px),
-                                        contentDescription = stringResource(R.string.context_profile_no_override),
+                                        painterResource(BaseR.drawable.close_24px),
+                                        contentDescription = stringResource(I18nR.string.context_profile_no_override),
                                     )
                                 }
                             }
@@ -513,15 +515,15 @@ private fun ContextProfileEditSheet(
                 item {
                     PreferenceCategory {
                         SwitchPreference(
-                            title = stringResource(R.string.context_profile_activate_now),
-                            summary = stringResource(R.string.context_profile_activate_now_summary),
+                            title = stringResource(I18nR.string.context_profile_activate_now),
+                            summary = stringResource(I18nR.string.context_profile_activate_now_summary),
                             value = manuallyActive,
                             onValueChanged = onSetManuallyActive,
                         )
                         if (onDelete != null) {
                             Preference(
-                                icon = R.drawable.delete_24px,
-                                title = stringResource(R.string.context_profile_delete),
+                                icon = BaseR.drawable.delete_24px,
+                                title = stringResource(I18nR.string.context_profile_delete),
                                 onClick = onDelete,
                             )
                         }
@@ -563,13 +565,13 @@ private fun GestureOverrideRow(
     ListPreference(
         title = title,
         items = listOf(
-            ListPreferenceItem(stringResource(R.string.context_profile_no_override), null),
-            ListPreferenceItem(stringResource(R.string.gesture_action_none), GestureAction.NoAction),
-            ListPreferenceItem(stringResource(R.string.gesture_action_open_search), GestureAction.Search),
-            ListPreferenceItem(stringResource(R.string.gesture_action_notifications), GestureAction.Notifications),
-            ListPreferenceItem(stringResource(R.string.gesture_action_quick_settings), GestureAction.QuickSettings),
-            ListPreferenceItem(stringResource(R.string.gesture_action_lock_screen), GestureAction.ScreenLock),
-            ListPreferenceItem(stringResource(R.string.gesture_action_recents), GestureAction.Recents),
+            ListPreferenceItem(stringResource(I18nR.string.context_profile_no_override), null),
+            ListPreferenceItem(stringResource(I18nR.string.gesture_action_none), GestureAction.NoAction),
+            ListPreferenceItem(stringResource(I18nR.string.gesture_action_open_search), GestureAction.Search),
+            ListPreferenceItem(stringResource(I18nR.string.gesture_action_notifications), GestureAction.Notifications),
+            ListPreferenceItem(stringResource(I18nR.string.gesture_action_quick_settings), GestureAction.QuickSettings),
+            ListPreferenceItem(stringResource(I18nR.string.gesture_action_lock_screen), GestureAction.ScreenLock),
+            ListPreferenceItem(stringResource(I18nR.string.gesture_action_recents), GestureAction.Recents),
         ),
         value = value,
         onValueChanged = onValueChanged,
@@ -578,26 +580,26 @@ private fun GestureOverrideRow(
 }
 
 private fun iconFor(icon: ContextProfileIcon): Int = when (icon) {
-    ContextProfileIcon.Home -> R.drawable.home_24px
-    ContextProfileIcon.Work -> R.drawable.dashboard_2_24px
-    ContextProfileIcon.Car -> R.drawable.directions_car_24px
-    ContextProfileIcon.Gaming -> R.drawable.sports_esports_24px
-    ContextProfileIcon.BatterySaver -> R.drawable.battery_full_24px
-    ContextProfileIcon.Sleep -> R.drawable.bed_24px
-    ContextProfileIcon.Custom -> R.drawable.tune_24px
+    ContextProfileIcon.Home -> BaseR.drawable.home_24px
+    ContextProfileIcon.Work -> BaseR.drawable.dashboard_2_24px
+    ContextProfileIcon.Car -> BaseR.drawable.directions_car_24px
+    ContextProfileIcon.Gaming -> BaseR.drawable.sports_esports_24px
+    ContextProfileIcon.BatterySaver -> BaseR.drawable.battery_full_24px
+    ContextProfileIcon.Sleep -> BaseR.drawable.bed_24px
+    ContextProfileIcon.Custom -> BaseR.drawable.tune_24px
 }
 
 @Composable
 private fun triggerSummary(trigger: ContextProfileTrigger): String = when (trigger) {
-    is ContextProfileTrigger.Manual -> stringResource(R.string.context_profile_trigger_manual)
+    is ContextProfileTrigger.Manual -> stringResource(I18nR.string.context_profile_trigger_manual)
     is ContextProfileTrigger.TimeWindow -> stringResource(
-        R.string.context_profile_trigger_time_summary,
+        I18nR.string.context_profile_trigger_time_summary,
         "%02d:%02d".format(trigger.startHour, trigger.startMinute),
         "%02d:%02d".format(trigger.endHour, trigger.endMinute),
     )
 
-    is ContextProfileTrigger.Wifi -> stringResource(R.string.context_profile_trigger_wifi)
-    is ContextProfileTrigger.Bluetooth -> stringResource(R.string.context_profile_trigger_bluetooth)
-    is ContextProfileTrigger.BatterySaver -> stringResource(R.string.context_profile_trigger_battery_saver)
-    is ContextProfileTrigger.Charging -> stringResource(R.string.context_profile_trigger_charging)
+    is ContextProfileTrigger.Wifi -> stringResource(I18nR.string.context_profile_trigger_wifi)
+    is ContextProfileTrigger.Bluetooth -> stringResource(I18nR.string.context_profile_trigger_bluetooth)
+    is ContextProfileTrigger.BatterySaver -> stringResource(I18nR.string.context_profile_trigger_battery_saver)
+    is ContextProfileTrigger.Charging -> stringResource(I18nR.string.context_profile_trigger_charging)
 }

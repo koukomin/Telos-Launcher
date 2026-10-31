@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.provider.Settings
@@ -26,8 +28,8 @@ fun RestrictedSettingsBanner(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     Banner(
         modifier = modifier,
-        text = stringResource(R.string.restricted_settings_hint),
-        icon = R.drawable.info_24px,
+        text = stringResource(I18nR.string.restricted_settings_hint),
+        icon = BaseR.drawable.info_24px,
         primaryAction = {
             OutlinedButton(
                 modifier = Modifier.padding(start = 8.dp),
@@ -40,7 +42,7 @@ fun RestrictedSettingsBanner(modifier: Modifier = Modifier) {
                     )
                 }
             ) {
-                Text(stringResource(R.string.restricted_settings_hint_action))
+                Text(stringResource(I18nR.string.restricted_settings_hint_action))
             }
         }
     )

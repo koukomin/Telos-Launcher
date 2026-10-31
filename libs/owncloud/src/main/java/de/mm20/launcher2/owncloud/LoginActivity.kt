@@ -1,7 +1,7 @@
 package de.mm20.launcher2.owncloud
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Bundle
-import de.mm20.launcher2.i18n.R
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.PredictiveBackHandler
@@ -113,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
                                         .fillMaxWidth()
                                         .padding(vertical = 32.dp),
                                     label = {
-                                        Text(stringResource(R.string.owncloud_server_url))
+                                        Text(stringResource(I18nR.string.owncloud_server_url))
                                     },
                                     value = owncloudUrl,
                                     onValueChange = { owncloudUrl = it },
@@ -141,13 +141,13 @@ class LoginActivity : AppCompatActivity() {
                                                 serverUrlConfirmed = true
                                             } else {
                                                 error =
-                                                    getString(R.string.owncloud_server_invalid_url)
+                                                    getString(I18nR.string.owncloud_server_invalid_url)
                                             }
                                             loading = false
                                         }
                                     }
                                 ) {
-                                    Text(stringResource(R.string.login_flow_continue))
+                                    Text(stringResource(I18nR.string.login_flow_continue))
                                 }
                             } else {
                                 Text(
@@ -163,7 +163,7 @@ class LoginActivity : AppCompatActivity() {
                                         .fillMaxWidth()
                                         .padding(vertical = 8.dp),
                                     label = {
-                                        Text(stringResource(R.string.owncloud_username))
+                                        Text(stringResource(I18nR.string.owncloud_username))
                                     },
                                     value = username,
                                     onValueChange = { username = it },
@@ -176,14 +176,14 @@ class LoginActivity : AppCompatActivity() {
                                         .fillMaxWidth()
                                         .padding(bottom = 32.dp),
                                     label = {
-                                        Text(stringResource(R.string.owncloud_password))
+                                        Text(stringResource(I18nR.string.owncloud_password))
                                     },
                                     value = password,
                                     onValueChange = { password = it },
                                     enabled = !loading,
                                     isError = error != null,
                                     supportingText = {
-                                        Text(error ?: stringResource(R.string.owncloud_login_2fa_hint))
+                                        Text(error ?: stringResource(I18nR.string.owncloud_login_2fa_hint))
                                     },
                                     singleLine = true,
                                     keyboardOptions = KeyboardOptions(
@@ -207,12 +207,12 @@ class LoginActivity : AppCompatActivity() {
                                                 owncloudClient.setServer(owncloudUrl, username, password)
                                                 finish()
                                             } else {
-                                                error = getString(R.string.owncloud_login_failed)
+                                                error = getString(I18nR.string.owncloud_login_failed)
                                             }
                                         }
                                     }
                                 ) {
-                                    Text(stringResource(R.string.login_flow_login))
+                                    Text(stringResource(I18nR.string.login_flow_login))
                                 }
                             }
                         }

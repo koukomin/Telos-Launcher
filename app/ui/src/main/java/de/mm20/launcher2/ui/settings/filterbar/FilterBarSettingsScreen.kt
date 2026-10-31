@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.filterbar
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.core.animateDpAsState
@@ -87,7 +89,7 @@ fun FilterBarSettingsScreen() {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        stringResource(id = R.string.preference_customize_filter_bar),
+                        stringResource(id = I18nR.string.preference_customize_filter_bar),
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(horizontal = 16.dp),
                         maxLines = 1
@@ -103,7 +105,7 @@ fun FilterBarSettingsScreen() {
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = stringResource(R.string.menu_back)
+                            contentDescription = stringResource(I18nR.string.menu_back)
                         )
                     }
                 },
@@ -130,7 +132,7 @@ fun FilterBarSettingsScreen() {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        painterResource(R.drawable.info_20px), null,
+                        painterResource(BaseR.drawable.info_20px), null,
                         modifier = Modifier
                             .padding(end = 24.dp)
                             .size(16.dp),
@@ -138,7 +140,7 @@ fun FilterBarSettingsScreen() {
                     )
                     Text(
                         modifier = Modifier,
-                        text = stringResource(R.string.hint_drag_and_drop_reorder),
+                        text = stringResource(I18nR.string.hint_drag_and_drop_reorder),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.secondary
                     )

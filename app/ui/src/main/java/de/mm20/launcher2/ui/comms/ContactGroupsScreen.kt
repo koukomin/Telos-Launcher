@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.provider.ContactsContract
 import androidx.compose.foundation.clickable
@@ -19,7 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.comms.search.TelosSearch
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchEmptyState
 import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -100,22 +100,22 @@ fun ContactGroupsScreen() {
         }
     }
     val shownGroups = TelosSearch.filter(groups.value, groupQuery) { listOf(it.title) }
-    PreferenceScreen(title = { Text(stringResource(R.string.hc_groups)) }) {
+    PreferenceScreen(title = { Text(stringResource(I18nR.string.hc_groups)) }) {
         if (groups.value.isNotEmpty()) {
-            item { TelosSearchBar(groupQuery, { groupQuery = it }, stringResource(R.string.tsp_search_groups)) }
+            item { TelosSearchBar(groupQuery, { groupQuery = it }, stringResource(I18nR.string.tsp_search_groups)) }
             if (shownGroups.isEmpty() && groupQuery.isNotBlank()) item { SearchEmptyState(groupQuery) }
         }
         if (groups.value.isEmpty()) {
-            item { Text(stringResource(R.string.hc_no_contact_groups_on_this_device), modifier = Modifier.padding(16.dp)) }
+            item { Text(stringResource(I18nR.string.hc_no_contact_groups_on_this_device), modifier = Modifier.padding(16.dp)) }
         }
         shownGroups.forEach { group ->
             item(key = "group-${group.id}") {
                 ListItem(
                     headlineContent = {
-                        Text(group.title.ifBlank { stringResource(R.string.au_phonea_untitled_group) })
+                        Text(group.title.ifBlank { stringResource(I18nR.string.au_phonea_untitled_group) })
                     },
                     supportingContent = {
-                        Text(pluralStringResource(R.plurals.au_phonea_group_contacts, group.count, group.count))
+                        Text(pluralStringResource(I18nR.plurals.au_phonea_group_contacts, group.count, group.count))
                     },
                     modifier = Modifier.clickable {
                         expandedGroup = if (expandedGroup == group.id) -1L else group.id
@@ -126,7 +126,7 @@ fun ContactGroupsScreen() {
                 if (members.value.isEmpty()) {
                     item(key = "group-${group.id}-empty") {
                         Text(
-                            stringResource(R.string.au_phonea_group_empty),
+                            stringResource(I18nR.string.au_phonea_group_empty),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(start = 32.dp, end = 16.dp, top = 4.dp, bottom = 12.dp),

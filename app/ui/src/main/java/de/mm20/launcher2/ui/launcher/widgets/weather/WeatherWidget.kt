@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.weather
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.ComponentName
 import android.content.Context
@@ -140,8 +142,8 @@ fun WeatherWidget(widget: WeatherWidget) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                text = stringResource(R.string.weather_widget_no_provider),
-                icon = R.drawable.error_24px,
+                text = stringResource(I18nR.string.weather_widget_no_provider),
+                icon = BaseR.drawable.error_24px,
                 primaryAction = {
                     Button(
                         onClick = {
@@ -150,13 +152,13 @@ fun WeatherWidget(widget: WeatherWidget) {
                         contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                     ) {
                         Icon(
-                            painterResource(R.drawable.open_in_new_24px),
+                            painterResource(BaseR.drawable.open_in_new_24px),
                             null,
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize)
                         )
-                        Text(stringResource(R.string.settings))
+                        Text(stringResource(I18nR.string.settings))
                     }
                 }
             )
@@ -170,7 +172,7 @@ fun WeatherWidget(widget: WeatherWidget) {
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .padding(top = 16.dp),
-                    text = stringResource(id = R.string.missing_permission_auto_location),
+                    text = stringResource(id = I18nR.string.missing_permission_auto_location),
                     onClick = {
                         viewModel.requestLocationPermission(context as AppCompatActivity)
                     },
@@ -179,7 +181,7 @@ fun WeatherWidget(widget: WeatherWidget) {
                             showLocationDialog = true
                         }) {
                             Text(
-                                stringResource(R.string.weather_widget_set_location),
+                                stringResource(I18nR.string.weather_widget_set_location),
                             )
                         }
                     }
@@ -406,7 +408,7 @@ private fun CurrentWeatherDetails(
                         "rain",
                         @Composable {
                             Icon(
-                                painter = painterResource(R.drawable.rainy_20px),
+                                painter = painterResource(BaseR.drawable.rainy_20px),
                                 modifier = Modifier
                                     .size(20.dp),
                                 contentDescription = null,
@@ -452,14 +454,14 @@ private fun CurrentWeatherDetails(
                         "uv",
                         @Composable {
                             Icon(
-                                painter = painterResource(R.drawable.sunny_20px),
+                                painter = painterResource(BaseR.drawable.sunny_20px),
                                 modifier = Modifier
                                     .size(20.dp),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.secondary,
                             )
                         },
-                        resources.getString(R.string.uv_index, forecast.uvIndex?.roundToInt())
+                        resources.getString(I18nR.string.uv_index, forecast.uvIndex?.roundToInt())
                     )
 
                 )
@@ -473,7 +475,7 @@ private fun CurrentWeatherDetails(
                                 // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction
                                 val angle by animateFloatAsState(forecast.windDirection!!.toFloat() + 180f)
                                 Icon(
-                                    painter = painterResource(R.drawable.navigation_20px),
+                                    painter = painterResource(BaseR.drawable.navigation_20px),
                                     modifier = Modifier
                                         .rotate(angle)
                                         .size(20.dp),
@@ -482,7 +484,7 @@ private fun CurrentWeatherDetails(
                                 )
                             } else {
                                 Icon(
-                                    painter = painterResource(R.drawable.air_20px),
+                                    painter = painterResource(BaseR.drawable.air_20px),
                                     contentDescription = null,
                                     modifier = Modifier.size(20.dp),
                                     tint = MaterialTheme.colorScheme.secondary,
@@ -503,7 +505,7 @@ private fun CurrentWeatherDetails(
                         "humidity",
                         @Composable {
                             Icon(
-                                painter = painterResource(R.drawable.humidity_mid_20px),
+                                painter = painterResource(BaseR.drawable.humidity_mid_20px),
                                 modifier = Modifier
                                     .size(20.dp),
                                 contentDescription = null,
@@ -520,7 +522,7 @@ private fun CurrentWeatherDetails(
                         "clouds",
                         @Composable {
                             Icon(
-                                painter = painterResource(R.drawable.cloud_20px),
+                                painter = painterResource(BaseR.drawable.cloud_20px),
                                 modifier = Modifier
                                     .size(20.dp),
                                 contentDescription = null,
@@ -802,22 +804,22 @@ private fun formatTime(context: Context, timestamp: Long, timeFormat: TimeFormat
 private fun windDirectionAsWord(resources: Resources, direction: Double): String {
     return resources.getString(
         when (direction) {
-            in 11.25..33.75 -> R.string.wind_north_north_east
-            in 33.75..56.25 -> R.string.wind_north_east
-            in 56.25..78.75 -> R.string.wind_east_north_east
-            in 78.75..101.25 -> R.string.wind_east
-            in 101.25..123.75 -> R.string.wind_east_south_east
-            in 123.75..146.25 -> R.string.wind_south_east
-            in 146.25..168.75 -> R.string.wind_south_south_east
-            in 168.75..191.25 -> R.string.wind_south
-            in 191.25..213.75 -> R.string.wind_south_south_west
-            in 213.75..236.25 -> R.string.wind_south_west
-            in 236.25..258.75 -> R.string.wind_west_south_west
-            in 258.75..281.25 -> R.string.wind_west
-            in 281.25..303.75 -> R.string.wind_west_north_west
-            in 303.75..326.25 -> R.string.wind_north_west
-            in 326.25..348.75 -> R.string.wind_north_north_west
-            else -> R.string.wind_north
+            in 11.25..33.75 -> I18nR.string.wind_north_north_east
+            in 33.75..56.25 -> I18nR.string.wind_north_east
+            in 56.25..78.75 -> I18nR.string.wind_east_north_east
+            in 78.75..101.25 -> I18nR.string.wind_east
+            in 101.25..123.75 -> I18nR.string.wind_east_south_east
+            in 123.75..146.25 -> I18nR.string.wind_south_east
+            in 146.25..168.75 -> I18nR.string.wind_south_south_east
+            in 168.75..191.25 -> I18nR.string.wind_south
+            in 191.25..213.75 -> I18nR.string.wind_south_south_west
+            in 213.75..236.25 -> I18nR.string.wind_south_west
+            in 236.25..258.75 -> I18nR.string.wind_west_south_west
+            in 258.75..281.25 -> I18nR.string.wind_west
+            in 281.25..303.75 -> I18nR.string.wind_west_north_west
+            in 303.75..326.25 -> I18nR.string.wind_north_west
+            in 326.25..348.75 -> I18nR.string.wind_north_north_west
+            else -> I18nR.string.wind_north
         }
     )
 }
@@ -858,7 +860,7 @@ fun NoData() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = painterResource(R.drawable.light_mode_24px),
+            painter = painterResource(BaseR.drawable.light_mode_24px),
             contentDescription = null,
             modifier = Modifier
                 .padding(24.dp)
@@ -866,7 +868,7 @@ fun NoData() {
             tint = MaterialTheme.colorScheme.secondary
         )
         Text(
-            text = stringResource(id = R.string.weather_no_data),
+            text = stringResource(id = I18nR.string.weather_no_data),
             style = MaterialTheme.typography.bodySmall
         )
     }

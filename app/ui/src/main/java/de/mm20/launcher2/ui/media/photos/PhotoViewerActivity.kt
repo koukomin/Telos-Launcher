@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.photos
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.ui.res.stringResource
 import android.app.Activity
@@ -219,9 +221,9 @@ private fun PagerVideo(uri: Uri, onTap: () -> Unit) {
 }
 
 private val staticPhotoWallpaperTargets = listOf(
-    R.string.preference_wallpaper_set_home to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Home,
-    R.string.preference_wallpaper_set_lock to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Lock,
-    R.string.preference_wallpaper_set_both to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Both)
+    I18nR.string.preference_wallpaper_set_home to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Home,
+    I18nR.string.preference_wallpaper_set_lock to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Lock,
+    I18nR.string.preference_wallpaper_set_both to de.mm20.launcher2.wallpapers.StaticWallpaperTarget.Both)
 
 @Composable
 private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
@@ -239,7 +241,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     val wallpapers = org.koin.compose.koinInject<de.mm20.launcher2.wallpapers.WallpapersService>()
     wallpaperUri?.let { selectedUri ->
         AlertDialog(onDismissRequest = { if (!settingWallpaper) wallpaperUri = null },
-            title = { Text(stringResource(R.string.wallpaper_target_dialog_title)) },
+            title = { Text(stringResource(I18nR.string.wallpaper_target_dialog_title)) },
             text = { Column {
                 staticPhotoWallpaperTargets.forEach { (label, target) ->
                     TextButton(enabled = !settingWallpaper, onClick = {
@@ -247,7 +249,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                         wallpaperScope.launch {
                             try {
                                 val ok = wallpapers.setStaticWallpaper(selectedUri, target)
-                                Toast.makeText(context, context.getString(if (ok) R.string.wallpaper_set_success else R.string.wallpaper_set_failure), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(if (ok) I18nR.string.wallpaper_set_success else I18nR.string.wallpaper_set_failure), Toast.LENGTH_SHORT).show()
                                 wallpaperUri = null
                             } finally { settingWallpaper = false }
                         }
@@ -255,7 +257,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                 }
                 if (settingWallpaper) LinearProgressIndicator(Modifier.fillMaxWidth())
             } },
-            confirmButton = { TextButton(enabled = !settingWallpaper, onClick = { wallpaperUri = null }) { Text(stringResource(R.string.hc_cancel)) } })
+            confirmButton = { TextButton(enabled = !settingWallpaper, onClick = { wallpaperUri = null }) { Text(stringResource(I18nR.string.hc_cancel)) } })
     }
     val current = uris[pager.currentPage]
     val mime = remember(current) { context.contentResolver.getType(current).orEmpty() }
@@ -283,7 +285,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     fun share(uri: Uri) {
         wallpaperScope.launch {
             val ok = withContext(Dispatchers.IO) { ShareActions.shareUris(context, listOf(uri)) }
-            if (!ok) Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+            if (!ok) Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -309,7 +311,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
         if (chrome) {
             ViewerTopChrome(blur) {
                 IconButton(onClick = onClose) {
-                    Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back), tint = onWhite)
+                    Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back), tint = onWhite)
                 }
                 Spacer(Modifier.weight(1f))
                 Text(
@@ -320,11 +322,11 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                 )
                 Box {
                     IconButton(onClick = { more = true }) {
-                        Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.hc_more), tint = onWhite)
+                        Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.hc_more), tint = onWhite)
                     }
                     DropdownMenu(expanded = more, onDismissRequest = { more = false }) {
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.viewer_set_wallpaper)) },
+                            text = { Text(stringResource(I18nR.string.viewer_set_wallpaper)) },
                             onClick = {
                                 more = false
                                 if (!isVideo && mime != "image/gif") wallpaperUri = current
@@ -338,7 +340,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                         )
                         if (Build.VERSION.SDK_INT >= 30 && current.authority == MediaStore.AUTHORITY) {
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.hc_delete)) },
+                                text = { Text(stringResource(I18nR.string.hc_delete)) },
                                 onClick = { more = false; confirmDelete = true },
                             )
                         }
@@ -346,17 +348,17 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                 }
             }
             ViewerPillBar(blur, Modifier.align(Alignment.BottomCenter)) {
-                ViewerAction(R.drawable.share_24px, stringResource(R.string.hc_share)) { share(current) }
+                ViewerAction(BaseR.drawable.share_24px, stringResource(I18nR.string.hc_share)) { share(current) }
                 if (!isVideo) {
-                    ViewerAction(R.drawable.tune_24px, stringResource(R.string.hc_edit)) {
+                    ViewerAction(BaseR.drawable.tune_24px, stringResource(I18nR.string.hc_edit)) {
                         context.startActivity(Intent(context, PhotoEditorActivity::class.java).setData(current))
                     }
-                    ViewerAction(R.drawable.text_fields_24px, "OCR") { showOcr = true }
+                    ViewerAction(BaseR.drawable.text_fields_24px, "OCR") { showOcr = true }
                 }
-                ViewerAction(R.drawable.info_24px, stringResource(R.string.hc_details)) { showInfo = true }
+                ViewerAction(BaseR.drawable.info_24px, stringResource(I18nR.string.hc_details)) { showInfo = true }
                 ViewerAction(
-                    if (starred) R.drawable.star_20px_filled else R.drawable.star_20px,
-                    stringResource(R.string.viewer_favorite),
+                    if (starred) BaseR.drawable.star_20px_filled else BaseR.drawable.star_20px,
+                    stringResource(I18nR.string.viewer_favorite),
                 ) {
                     starred = ViewerLibrary.toggleFavorite(context, current)
                 }
@@ -372,7 +374,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
             onShareClean = {
                 val file = PhotoExif.cleanCopy(context, current)
                 if (file == null) {
-                    Toast.makeText(context, context.getString(R.string.hc_could_not_create_a_copy), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(I18nR.string.hc_could_not_create_a_copy), Toast.LENGTH_SHORT).show()
                 } else {
                     share(FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file))
                 }
@@ -411,22 +413,22 @@ private fun ExifDialog(
     var editing by remember { mutableStateOf(false) }
 
     fun done(ok: Boolean) {
-        Toast.makeText(context, context.getString(if (ok) R.string.hc_done else R.string.au_viewer_metadata_unsupported), Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(if (ok) I18nR.string.hc_done else I18nR.string.au_viewer_metadata_unsupported), Toast.LENGTH_SHORT).show()
         reload++
     }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.hc_details)) },
+        title = { Text(stringResource(I18nR.string.hc_details)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 if (info == null) {
-                    Text(stringResource(R.string.hc_no_metadata_available))
+                    Text(stringResource(I18nR.string.hc_no_metadata_available))
                 } else {
                     if (info.width > 0 && info.height > 0) Text("${info.width} × ${info.height}", style = MaterialTheme.typography.bodyMedium)
                     info.latLong?.let {
                         Text(
-                            stringResource(R.string.au_viewer_location, "%.5f, %.5f".format(it[0], it[1])),
+                            stringResource(I18nR.string.au_viewer_location, "%.5f, %.5f".format(it[0], it[1])),
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.padding(top = 4.dp),
                         )
@@ -452,15 +454,15 @@ private fun ExifDialog(
                             if (info.hasGps) {
                                 AssistChip(onClick = {
                                     withWriteAccess { done(PhotoExif.strip(context.contentResolver, uri, gpsOnly = true)) }
-                                }, label = { Text(stringResource(R.string.hc_remove_location)) })
+                                }, label = { Text(stringResource(I18nR.string.hc_remove_location)) })
                             }
                             AssistChip(onClick = {
                                 withWriteAccess { done(PhotoExif.strip(context.contentResolver, uri, gpsOnly = false)) }
-                            }, label = { Text(stringResource(R.string.hc_remove_all)) })
+                            }, label = { Text(stringResource(I18nR.string.hc_remove_all)) })
                         }
                         AssistChip(
                             onClick = onShareClean,
-                            label = { Text(stringResource(R.string.hc_share_without_metadata)) },
+                            label = { Text(stringResource(I18nR.string.hc_share_without_metadata)) },
                             modifier = Modifier.padding(top = 4.dp),
                         )
                     }
@@ -471,14 +473,14 @@ private fun ExifDialog(
             if (editing) {
                 TextButton(onClick = {
                     withWriteAccess { done(PhotoExif.write(context.contentResolver, uri, edits.toMap())); editing = false }
-                }) { Text(stringResource(R.string.hc_save)) }
+                }) { Text(stringResource(I18nR.string.hc_save)) }
             } else if (info != null) {
-                TextButton(onClick = { editing = true }) { Text(stringResource(R.string.hc_edit)) }
+                TextButton(onClick = { editing = true }) { Text(stringResource(I18nR.string.hc_edit)) }
             }
         },
         dismissButton = {
             TextButton(onClick = { if (editing) editing = false else onDismiss() }) {
-                Text(stringResource(if (editing) R.string.hc_cancel else R.string.hc_close))
+                Text(stringResource(if (editing) I18nR.string.hc_cancel else I18nR.string.hc_close))
             }
         },
     )
@@ -505,17 +507,17 @@ private fun OcrSheet(uri: Uri, onDismiss: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(stringResource(R.string.ocr_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+            Text(stringResource(I18nR.string.ocr_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             if (loading) {
                 LinearProgressIndicator(Modifier.fillMaxWidth())
-                Text(stringResource(R.string.ocr_scanning), style = MaterialTheme.typography.bodyMedium)
+                Text(stringResource(I18nR.string.ocr_scanning), style = MaterialTheme.typography.bodyMedium)
             } else if (extractedText.isNullOrBlank()) {
-                Text(stringResource(R.string.ocr_empty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(I18nR.string.ocr_empty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             } else {
                 androidx.compose.foundation.text.selection.SelectionContainer {
                     Text(extractedText!!, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.fillMaxWidth().heightIn(max = 300.dp).verticalScroll(rememberScrollState()))
                 }
-                val copiedMessage = stringResource(R.string.ocr_copied)
+                val copiedMessage = stringResource(I18nR.string.ocr_copied)
                 Button(
                     onClick = {
                         @Suppress("DEPRECATION")
@@ -525,9 +527,9 @@ private fun OcrSheet(uri: Uri, onDismiss: () -> Unit) {
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Icon(painterResource(R.drawable.content_copy_24px), contentDescription = null)
+                    Icon(painterResource(BaseR.drawable.content_copy_24px), contentDescription = null)
                     Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.ocr_copy))
+                    Text(stringResource(I18nR.string.ocr_copy))
                 }
             }
         }

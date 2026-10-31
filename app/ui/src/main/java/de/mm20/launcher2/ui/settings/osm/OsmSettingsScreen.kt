@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.osm
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,20 +25,20 @@ fun OsmSettingsScreen() {
     val hideUncategorized by viewModel.hideUncategorized.collectAsState()
     val customOverpassUrl by viewModel.customOverpassUrl.collectAsState()
 
-    PreferenceScreen(title = stringResource(R.string.preference_search_osm_locations)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_search_osm_locations)) {
         item {
             PreferenceCategory {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_osm_locations),
-                    summary = stringResource(R.string.preference_search_osm_locations_summary),
+                    title = stringResource(I18nR.string.preference_search_osm_locations),
+                    summary = stringResource(I18nR.string.preference_search_osm_locations_summary),
                     value = osmLocations == true,
                     onValueChanged = {
                         viewModel.setOsmLocations(it)
                     },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_locations_hide_uncategorized),
-                    summary = stringResource(R.string.preference_search_locations_hide_uncategorized_summary),
+                    title = stringResource(I18nR.string.preference_search_locations_hide_uncategorized),
+                    summary = stringResource(I18nR.string.preference_search_locations_hide_uncategorized_summary),
                     value = hideUncategorized == true,
                     enabled = osmLocations == true,
                     onValueChanged = {
@@ -48,9 +49,9 @@ fun OsmSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(stringResource(R.string.preference_category_advanced)) {
+            PreferenceCategory(stringResource(I18nR.string.preference_category_advanced)) {
                 TextPreference(
-                    title = stringResource(R.string.preference_search_location_custom_overpass_url),
+                    title = stringResource(I18nR.string.preference_search_location_custom_overpass_url),
                     value = customOverpassUrl ?: "",
                     placeholder = LocationSearchSettings.DefaultOverpassUrl,
                     summary = customOverpassUrl?.takeIf { it.isNotBlank() }

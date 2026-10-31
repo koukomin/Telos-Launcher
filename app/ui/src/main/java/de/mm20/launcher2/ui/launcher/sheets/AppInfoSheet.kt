@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.sheets
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -85,27 +87,27 @@ fun AppInfoSheet(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 ActionButton(
-                    icon = R.drawable.close_24px,
-                    label = stringResource(R.string.menu_force_stop),
+                    icon = BaseR.drawable.close_24px,
+                    label = stringResource(I18nR.string.menu_force_stop),
                     enabled = isShizukuAvailable,
                     onClick = { viewModel.forceStop() }
                 )
                 ActionButton(
-                    icon = R.drawable.ac_unit_24px,
-                    label = stringResource(if (isFrozen) R.string.menu_unfreeze else R.string.hf_appinfo_freeze),
+                    icon = BaseR.drawable.ac_unit_24px,
+                    label = stringResource(if (isFrozen) I18nR.string.menu_unfreeze else I18nR.string.hf_appinfo_freeze),
                     enabled = canFreeze || isFrozen,
                     onClick = { viewModel.freeze() }
                 )
                 ActionButton(
-                    icon = R.drawable.info_24px,
-                    label = stringResource(R.string.hf_appinfo_system_info),
+                    icon = BaseR.drawable.info_24px,
+                    label = stringResource(I18nR.string.hf_appinfo_system_info),
                     onClick = { currentApp.openAppDetails(context) }
                 )
             }
 
             if (!isShizukuAvailable) {
                 Text(
-                    text = stringResource(R.string.hf_appinfo_shizuku_missing),
+                    text = stringResource(I18nR.string.hf_appinfo_shizuku_missing),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier
@@ -118,14 +120,14 @@ fun AppInfoSheet(
 
             // Permissions
             Text(
-                text = stringResource(R.string.hf_appinfo_permissions),
+                text = stringResource(I18nR.string.hf_appinfo_permissions),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.align(Alignment.Start).padding(bottom = 8.dp)
             )
 
             if (permissions.isEmpty()) {
                 Text(
-                    text = stringResource(R.string.au3_launcher3_no_permissions),
+                    text = stringResource(I18nR.string.au3_launcher3_no_permissions),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.align(Alignment.Start)
@@ -174,10 +176,10 @@ private fun PermissionItem(permission: AppInfoSheetVM.PermissionInfo) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = painterResource(if (permission.isGranted) R.drawable.check_24px else R.drawable.close_24px),
+            painter = painterResource(if (permission.isGranted) BaseR.drawable.check_24px else BaseR.drawable.close_24px),
             contentDescription = stringResource(
-                if (permission.isGranted) R.string.au3_launcher3_permission_granted
-                else R.string.au3_launcher3_permission_denied
+                if (permission.isGranted) I18nR.string.au3_launcher3_permission_granted
+                else I18nR.string.au3_launcher3_permission_denied
             ),
             tint = if (permission.isGranted) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error,
             modifier = Modifier.size(16.dp)

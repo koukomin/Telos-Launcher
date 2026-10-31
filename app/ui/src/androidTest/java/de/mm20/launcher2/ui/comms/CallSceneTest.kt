@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -60,8 +61,8 @@ class CallSceneTest {
                 }
             }
         }
-        compose.onNodeWithContentDescription(context.getString(R.string.comms_answer)).assertIsDisplayed().performClick()
-        compose.onNodeWithContentDescription(context.getString(R.string.comms_hangup)).assertIsDisplayed().performClick()
+        compose.onNodeWithContentDescription(context.getString(I18nR.string.comms_answer)).assertIsDisplayed().performClick()
+        compose.onNodeWithContentDescription(context.getString(I18nR.string.comms_hangup)).assertIsDisplayed().performClick()
         compose.runOnIdle { assertEquals(1, answers); assertEquals(1, hangups); assertEquals(0, rejects) }
         for (mode in listOf("incoming", "outgoing", "active")) for (isLight in listOf(true, false)) for (font2 in listOf(false, true)) for (landscape in listOf(false, true)) {
             compose.runOnIdle {
@@ -69,7 +70,7 @@ class CallSceneTest {
                 hasPhoto.value = !font2 // Also exercise the initials path under larger text.
             }
             if (!font2) compose.waitUntil(5_000) { compose.onAllNodesWithTag("caller-photo-loaded").fetchSemanticsNodes().isNotEmpty() }
-            compose.onNodeWithContentDescription(context.getString(if (mode == "incoming") R.string.comms_answer else R.string.comms_hangup)).assertIsDisplayed()
+            compose.onNodeWithContentDescription(context.getString(if (mode == "incoming") I18nR.string.comms_answer else I18nR.string.comms_hangup)).assertIsDisplayed()
             screenshot("call-$mode-${if (isLight) "light" else "dark"}-font${if (font2) 2 else 1}-${if (landscape) "wide" else "portrait"}.png")
         }
         photo.delete()

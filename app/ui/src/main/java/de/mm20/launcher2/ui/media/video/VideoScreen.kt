@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.ui.res.stringResource
 import android.Manifest
@@ -145,7 +147,7 @@ fun VideoScreen() {
         }.groupBy { it.first }.values.map { list ->
             val name = list.first().second.title
             val episodes = list.sortedWith(compareBy({ it.second.season }, { it.second.episode })).map { it.third }
-            VideoGroup(name, context.getString(R.string.au_video_episodes_count, episodes.size), episodes, series = true)
+            VideoGroup(name, context.getString(I18nR.string.au_video_episodes_count, episodes.size), episodes, series = true)
         }.sortedBy { it.title.lowercase() }
     }
     val movies = remember(filtered, parsedNames) {
@@ -154,7 +156,7 @@ fun VideoScreen() {
             if (parsed.isEpisode || parsed.year == null) null else Triple(parsed.title.lowercase() + "|" + parsed.year, parsed, item)
         }.groupBy { it.first }.values.map { list ->
             val parsed = list.first().second
-            VideoGroup(parsed.title, parsed.year?.toString() ?: context.getString(R.string.au_video_files_count, list.size), list.map { it.third }, series = false, year = parsed.year)
+            VideoGroup(parsed.title, parsed.year?.toString() ?: context.getString(I18nR.string.au_video_files_count, list.size), list.map { it.third }, series = false, year = parsed.year)
         }.sortedBy { it.title.lowercase() }
     }
     // neither an episode nor a film with a year in its name: not recognised
@@ -198,7 +200,7 @@ fun VideoScreen() {
                     if (action != null) deleteLauncher.launch(androidx.activity.result.IntentSenderRequest.Builder(action).build()) else throw e
                 }
             }
-        }.onFailure { toast(context, context.getString(R.string.vn_delete_failed)) }
+        }.onFailure { toast(context, context.getString(I18nR.string.vn_delete_failed)) }
     }
     var confirmShare by remember { mutableStateOf<VideoItem?>(null) }
     val shareScope = androidx.compose.runtime.rememberCoroutineScope()
@@ -207,11 +209,11 @@ fun VideoScreen() {
         when (uri.scheme?.lowercase()) {
             "http", "https", "magnet" -> {
                 if (!de.mm20.launcher2.ui.common.share.ShareActions.shareText(context, uri.toString(), video.title)) {
-                    toast(context, context.getString(R.string.au10_video_share_failed))
+                    toast(context, context.getString(I18nR.string.au10_video_share_failed))
                 }
             }
             // a video on a network storage: its address is private, so only a public link could be shared
-            "rem" -> toast(context, context.getString(R.string.au10_video_share_remote_private))
+            "rem" -> toast(context, context.getString(I18nR.string.au10_video_share_remote_private))
             else -> shareScope.launch {
                 val ok = withContext(Dispatchers.IO) {
                     val name = video.fileName.ifBlank { video.title }
@@ -222,7 +224,7 @@ fun VideoScreen() {
                         de.mm20.launcher2.ui.common.share.ShareActions.shareFile(context, uri, mime, name)
                     }
                 }
-                if (!ok) toast(context, context.getString(R.string.au10_video_share_failed))
+                if (!ok) toast(context, context.getString(I18nR.string.au10_video_share_failed))
             }
         }
     }
@@ -239,10 +241,10 @@ fun VideoScreen() {
     confirmShare?.let { video ->
         AlertDialog(
             onDismissRequest = { confirmShare = null },
-            title = { Text(stringResource(R.string.au10_video_share_large_title)) },
-            text = { Text(stringResource(R.string.au10_video_share_large_message, de.mm20.launcher2.ui.files.formatSize(video.sizeBytes))) },
-            confirmButton = { TextButton(onClick = { confirmShare = null; performShare(video) }) { Text(stringResource(R.string.au10_video_share_large_confirm)) } },
-            dismissButton = { TextButton(onClick = { confirmShare = null }) { Text(stringResource(R.string.hc_cancel)) } },
+            title = { Text(stringResource(I18nR.string.au10_video_share_large_title)) },
+            text = { Text(stringResource(I18nR.string.au10_video_share_large_message, de.mm20.launcher2.ui.files.formatSize(video.sizeBytes))) },
+            confirmButton = { TextButton(onClick = { confirmShare = null; performShare(video) }) { Text(stringResource(I18nR.string.au10_video_share_large_confirm)) } },
+            dismissButton = { TextButton(onClick = { confirmShare = null }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
     }
     confirmDelete?.let { video ->
@@ -278,32 +280,32 @@ fun VideoScreen() {
             }
         }
     }
-    val otherFolder = stringResource(R.string.au_video_other_folder)
+    val otherFolder = stringResource(I18nR.string.au_video_other_folder)
     val folders = remember(filtered, otherFolder) {
         filtered.groupBy { it.folder.ifBlank { otherFolder } }
-            .map { (name, list) -> VideoGroup(name, context.getString(R.string.au_video_videos_count, list.size), list.sortedBy { it.title.lowercase() }) }
+            .map { (name, list) -> VideoGroup(name, context.getString(I18nR.string.au_video_videos_count, list.size), list.sortedBy { it.title.lowercase() }) }
             .sortedBy { it.title.lowercase() }
     }
 
     var showLibraryActions by remember { mutableStateOf(false) }
-    de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.au_video_title), guardKey = "telos_video_app://video", actions = {
+    de.mm20.launcher2.ui.media.MediaFrame(stringResource(I18nR.string.au_video_title), guardKey = "telos_video_app://video", actions = {
         if (hasPermission && group == null) de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, query.isNotBlank()) {
             if (searchExpanded) query = ""
             searchExpanded = !searchExpanded
         }
         Box {
             IconButton(onClick = { showLibraryActions = true }) {
-                Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.hc_more))
+                Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.hc_more))
             }
             DropdownMenu(expanded = showLibraryActions, onDismissRequest = { showLibraryActions = false }) {
-                DropdownMenuItem(text = { Text(stringResource(R.string.hc_play_from_the_web)) },
-                    leadingIcon = { Icon(painterResource(R.drawable.link_24px), null) },
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_play_from_the_web)) },
+                    leadingIcon = { Icon(painterResource(BaseR.drawable.link_24px), null) },
                     onClick = { showLibraryActions = false; showOpen = true })
-                DropdownMenuItem(text = { Text(stringResource(R.string.au7_vidfolders_action)) },
-                    leadingIcon = { Icon(painterResource(R.drawable.folder_24px), null) },
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.au7_vidfolders_action)) },
+                    leadingIcon = { Icon(painterResource(BaseR.drawable.folder_24px), null) },
                     onClick = { showLibraryActions = false; showOrganize = true })
-                DropdownMenuItem(text = { Text(stringResource(R.string.hc_video_services)) },
-                    leadingIcon = { Icon(painterResource(R.drawable.settings_24px), null) },
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_video_services)) },
+                    leadingIcon = { Icon(painterResource(BaseR.drawable.settings_24px), null) },
                     onClick = { showLibraryActions = false; showServices = true })
             }
         }
@@ -318,9 +320,9 @@ fun VideoScreen() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(stringResource(R.string.hc_allow_access_to_your_videos_to_build_the), style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(I18nR.string.hc_allow_access_to_your_videos_to_build_the), style = MaterialTheme.typography.titleMedium)
                 Button(onClick = { permissionLauncher.launch(permission) }, modifier = Modifier.padding(top = 16.dp)) {
-                    Text(stringResource(R.string.hc_allow))
+                    Text(stringResource(I18nR.string.hc_allow))
                 }
                 if (permissionDenied) {
                     // after two refusals the system no longer shows its dialog: the switch is in the app settings
@@ -331,7 +333,7 @@ fun VideoScreen() {
                                 android.net.Uri.fromParts("package", context.packageName, null),
                             ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
-                    }) { Text(stringResource(R.string.au_video_open_settings)) }
+                    }) { Text(stringResource(I18nR.string.au_video_open_settings)) }
                 }
             }
             return@Column
@@ -340,7 +342,7 @@ fun VideoScreen() {
         val current = group
         // inside a series or folder the search field would have no effect
         if (current == null) {
-            de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_videos),
+            de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(I18nR.string.tsm_search_videos),
                     expanded = searchExpanded, onClose = { query = ""; searchExpanded = false })
         }
         if (current != null) {
@@ -354,13 +356,13 @@ fun VideoScreen() {
         }
 
         PillTabs(
-            titles = listOf(R.string.au_video_tab_library, R.string.au_video_tab_movies, R.string.au_video_tab_series, R.string.au7_vidfolders_tab_other, R.string.au_video_tab_folders).map { stringResource(it) },
+            titles = listOf(I18nR.string.au_video_tab_library, I18nR.string.au_video_tab_movies, I18nR.string.au_video_tab_series, I18nR.string.au7_vidfolders_tab_other, I18nR.string.au_video_tab_folders).map { stringResource(it) },
             selected = tab,
             onSelect = { tab = it },
         )
         when {
             loading -> VideoSkeleton()
-            items.isEmpty() -> VideoEmptyState(R.drawable.movie_24px, stringResource(R.string.au14_videoui_empty_title), stringResource(R.string.hc_no_videos_found_on_this_device))
+            items.isEmpty() -> VideoEmptyState(BaseR.drawable.movie_24px, stringResource(I18nR.string.au14_videoui_empty_title), stringResource(I18nR.string.hc_no_videos_found_on_this_device))
             filtered.isEmpty() && query.isNotBlank() -> de.mm20.launcher2.ui.component.SearchEmptyState(query)
             tab == 0 && query.isBlank() -> TintedHeader(null, Modifier.fillMaxSize()) {
                 VideoHome(items, continueWatching, movies, series, others, folders, metas, showContinue = true) { group = it }
@@ -370,10 +372,10 @@ fun VideoScreen() {
                     VideoRow(video) { openPlayer(context, filtered, filtered.indexOf(video)) }
                 }
             }
-            tab == 1 -> PosterGrid(movies, metas, stringResource(R.string.au_video_no_movies)) { group = it }
-            tab == 2 -> PosterGrid(series, metas, stringResource(R.string.au_video_no_series)) { group = it }
+            tab == 1 -> PosterGrid(movies, metas, stringResource(I18nR.string.au_video_no_movies)) { group = it }
+            tab == 2 -> PosterGrid(series, metas, stringResource(I18nR.string.au_video_no_series)) { group = it }
             tab == 3 -> if (others.isEmpty()) {
-                VideoEmptyState(R.drawable.folder_24px, stringResource(R.string.au7_vidfolders_no_other), "")
+                VideoEmptyState(BaseR.drawable.folder_24px, stringResource(I18nR.string.au7_vidfolders_no_other), "")
             } else VideoList(others) { index -> openPlayer(context, others, index) }
             else -> GroupList(folders, "") { group = it }
         }
@@ -431,7 +433,7 @@ private fun DetailPage(
                     onClick = onBack,
                     modifier = Modifier.align(Alignment.TopStart).padding(8.dp),
                     colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f)),
-                ) { Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) }
+                ) { Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back)) }
                 Row(Modifier.align(Alignment.BottomStart).padding(20.dp, 0.dp, 20.dp, 12.dp), verticalAlignment = Alignment.Bottom) {
                     if (meta?.posterUrl != null) {
                         Poster(meta.posterUrl, Modifier.width(112.dp).aspectRatio(2f / 3f).shadow(8.dp, shape).clip(shape))
@@ -446,10 +448,10 @@ private fun DetailPage(
                 meta?.year?.ifBlank { null }?.let { MetaChip(it) }
                 meta?.rating?.takeIf { it > 0 }?.let { MetaChip("★ %.1f".format(it)) }
                 if (group.series) {
-                    if (seasons.isNotEmpty()) MetaChip(stringResource(R.string.au14_videoui_seasons, seasons.size))
+                    if (seasons.isNotEmpty()) MetaChip(stringResource(I18nR.string.au14_videoui_seasons, seasons.size))
                     MetaChip(group.subtitle)
                 } else if (shown.size == 1 && shown[0].durationMs > 0) {
-                    MetaChip(stringResource(R.string.au14_videoui_minutes, (shown[0].durationMs / 60000).toInt().coerceAtLeast(1)))
+                    MetaChip(stringResource(I18nR.string.au14_videoui_minutes, (shown[0].durationMs / 60000).toInt().coerceAtLeast(1)))
                 } else MetaChip(group.subtitle)
             }
         }
@@ -462,20 +464,20 @@ private fun DetailPage(
                     },
                     contentPadding = PaddingValues(start = 18.dp, end = 24.dp),
                 ) {
-                    Icon(painterResource(R.drawable.play_arrow_24px), contentDescription = null, modifier = Modifier.size(20.dp))
+                    Icon(painterResource(BaseR.drawable.play_arrow_24px), contentDescription = null, modifier = Modifier.size(20.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.hc_play))
+                    Text(stringResource(I18nR.string.hc_play))
                 }
                 if (traktConnected) {
                     FilledTonalButton(onClick = {
                         scope.launch {
                             val ok = de.mm20.launcher2.comms.media.video.trakt.Trakt.addToWatchlist(context, group.title, group.year, group.series)
-                            toast(context, context.getString(if (ok) R.string.au_video_watchlist_added else R.string.au_video_watchlist_failed))
+                            toast(context, context.getString(if (ok) I18nR.string.au_video_watchlist_added else I18nR.string.au_video_watchlist_failed))
                         }
                     }) {
-                        Icon(painterResource(R.drawable.add_24px), contentDescription = null, modifier = Modifier.size(18.dp))
+                        Icon(painterResource(BaseR.drawable.add_24px), contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text(stringResource(R.string.hc_add_to_trakt_watchlist), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(stringResource(I18nR.string.hc_add_to_trakt_watchlist), maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
             }
@@ -493,7 +495,7 @@ private fun DetailPage(
                     )
                     if (overflow || expanded) {
                         TextButton(onClick = { expanded = !expanded }, contentPadding = PaddingValues(0.dp)) {
-                            Text(stringResource(if (expanded) R.string.au14_videoui_less else R.string.au14_videoui_more))
+                            Text(stringResource(if (expanded) I18nR.string.au14_videoui_less else I18nR.string.au14_videoui_more))
                         }
                     }
                 }
@@ -501,7 +503,7 @@ private fun DetailPage(
         }
         if (seasons.size > 1) {
             item(key = "seasons") {
-                PillTabs(seasons.map { stringResource(R.string.au7_vidfolders_season, it) }, seasonIndex.coerceIn(0, seasons.size - 1), { seasonIndex = it })
+                PillTabs(seasons.map { stringResource(I18nR.string.au7_vidfolders_season, it) }, seasonIndex.coerceIn(0, seasons.size - 1), { seasonIndex = it })
             }
         }
         val indices = shown.indices.filter { !group.series || seasons.size <= 1 || parsed[it].season == season }
@@ -514,7 +516,7 @@ private fun DetailPage(
 @Composable
 internal fun GroupList(groups: List<VideoGroup>, emptyText: String, onOpen: (VideoGroup) -> Unit) {
     if (groups.isEmpty()) {
-        VideoEmptyState(R.drawable.folder_24px, emptyText, "")
+        VideoEmptyState(BaseR.drawable.folder_24px, emptyText, "")
         return
     }
     LazyColumn(contentPadding = PaddingValues(top = 4.dp, bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
@@ -539,7 +541,7 @@ internal fun GroupList(groups: List<VideoGroup>, emptyText: String, onOpen: (Vid
 @Composable
 internal fun VideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
     if (list.isEmpty()) {
-        VideoEmptyState(R.drawable.movie_24px, stringResource(R.string.au10_video_nothing_here), "")
+        VideoEmptyState(BaseR.drawable.movie_24px, stringResource(I18nR.string.au10_video_nothing_here), "")
         return
     }
     androidx.compose.foundation.lazy.grid.LazyVerticalGrid(
@@ -576,7 +578,7 @@ internal fun VideoRow(video: VideoItem, number: Int? = null, tile: Boolean = fal
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 IconButton(onClick = { menu = true }) {
-                    Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.au10_music_more))
+                    Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.au10_music_more))
                 }
             }
             VideoMenu(video, menu, seen) { menu = false }
@@ -604,7 +606,7 @@ internal fun VideoRow(video: VideoItem, number: Int? = null, tile: Boolean = fal
             Text(video.title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
             VideoMenu(video, menu, seen) { menu = false }
             Text(
-                formatDuration(video.durationMs) + " · " + video.folder.ifBlank { stringResource(R.string.au_video_other_folder) },
+                formatDuration(video.durationMs) + " · " + video.folder.ifBlank { stringResource(I18nR.string.au_video_other_folder) },
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
@@ -622,7 +624,7 @@ internal fun VideoMenu(video: VideoItem, expanded: Boolean, seen: Boolean, onDis
     val actions = LocalVideoActions.current
     DropdownMenu(expanded = expanded, onDismissRequest = onDismiss, shape = RoundedCornerShape(20.dp)) {
         DropdownMenuItem(
-            text = { Text(stringResource(if (seen) R.string.vn_mark_unwatched else R.string.vn_mark_watched)) },
+            text = { Text(stringResource(if (seen) I18nR.string.vn_mark_unwatched else I18nR.string.vn_mark_watched)) },
             onClick = {
                 onDismiss()
                 if (seen) ResumeStore.markUnwatched(context, video.uri) else ResumeStore.markWatched(context, video.uri, video.durationMs)
@@ -632,7 +634,7 @@ internal fun VideoMenu(video: VideoItem, expanded: Boolean, seen: Boolean, onDis
         de.mm20.launcher2.ui.common.share.ShareMenuItem(onClick = { onDismiss(); actions?.onShare?.invoke(video) })
         if (video.id > 0) {
             DropdownMenuItem(
-                text = { Text(stringResource(R.string.vn_delete_video)) },
+                text = { Text(stringResource(I18nR.string.vn_delete_video)) },
                 onClick = { onDismiss(); actions?.onDelete?.invoke(video) },
             )
         }
@@ -649,7 +651,7 @@ internal fun VideoThumb(video: VideoItem, modifier: Modifier) {
     Box(modifier.background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
         val b = bitmap
         if (b == null) {
-            Icon(painterResource(R.drawable.play_circle_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
+            Icon(painterResource(BaseR.drawable.play_circle_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
         } else {
             Image(b.asImageBitmap(), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
         }
@@ -669,7 +671,7 @@ internal fun Poster(url: String?, modifier: Modifier, fallback: (@Composable () 
     var failed by remember(url) { mutableStateOf(false) }
     Box(modifier.background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
         if (url == null || failed) {
-            if (fallback != null) fallback() else Icon(painterResource(R.drawable.movie_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
+            if (fallback != null) fallback() else Icon(painterResource(BaseR.drawable.movie_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
         } else {
             coil.compose.AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize(), onError = { failed = true })
         }
@@ -684,7 +686,7 @@ internal fun PosterGrid(
     onOpen: (VideoGroup) -> Unit,
 ) {
     if (groups.isEmpty()) {
-        VideoEmptyState(R.drawable.movie_24px, emptyText, "")
+        VideoEmptyState(BaseR.drawable.movie_24px, emptyText, "")
         return
     }
     androidx.compose.foundation.lazy.grid.LazyVerticalGrid(

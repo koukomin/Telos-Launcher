@@ -1,4 +1,5 @@
 package de.mm20.launcher2.comms.fakecall
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -11,7 +12,6 @@ import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import de.mm20.launcher2.i18n.R as I18nR
 
 class FakeCallReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

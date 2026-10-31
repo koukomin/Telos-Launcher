@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Environment
 import androidx.compose.foundation.horizontalScroll
@@ -63,20 +64,20 @@ internal fun FilesCollectionsDialog(vm: FilesViewModel, onDismiss: () -> Unit, o
         catch (_: Exception) { failed = true; result = FilesCollectionResult(emptyList(), false) }
         finally { loading = false }
     }
-    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(R.string.telos_files_collections)) },
+    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(I18nR.string.telos_files_collections)) },
         text = { Column(Modifier.fillMaxWidth().heightIn(max = 480.dp)) {
-            Text(stringResource(R.string.telos_files_collections_scope, root.path), style = MaterialTheme.typography.bodySmall)
+            Text(stringResource(I18nR.string.telos_files_collections_scope, root.path), style = MaterialTheme.typography.bodySmall)
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                FilterChip(selected == "recent", { selected = "recent" }, label = { Text(stringResource(R.string.telos_files_collection_recent)) })
-                FilterChip(selected == "bookmarks", { selected = "bookmarks" }, label = { Text(stringResource(R.string.telos_files_collection_bookmarks)) })
+                FilterChip(selected == "recent", { selected = "recent" }, label = { Text(stringResource(I18nR.string.telos_files_collection_recent)) })
+                FilterChip(selected == "bookmarks", { selected = "bookmarks" }, label = { Text(stringResource(I18nR.string.telos_files_collection_bookmarks)) })
                 FileKind.entries.filter { it != FileKind.Folder && it != FileKind.Other }.forEach { kind ->
                     FilterChip(selected == kind.name, { selected = kind.name }, label = { Text(stringResource(kind.labelRes)) })
                 }
             }
             if (loading) LinearProgressIndicator(Modifier.fillMaxWidth())
-            if (failed) Text(stringResource(R.string.telos_files_collections_failed), color = MaterialTheme.colorScheme.error)
-            if (result.partial) Text(stringResource(R.string.telos_files_collections_partial), style = MaterialTheme.typography.bodySmall)
-            if (!loading && !failed && result.entries.isEmpty()) Text(stringResource(R.string.telos_files_collections_empty))
+            if (failed) Text(stringResource(I18nR.string.telos_files_collections_failed), color = MaterialTheme.colorScheme.error)
+            if (result.partial) Text(stringResource(I18nR.string.telos_files_collections_partial), style = MaterialTheme.typography.bodySmall)
+            if (!loading && !failed && result.entries.isEmpty()) Text(stringResource(I18nR.string.telos_files_collections_empty))
             LazyColumn(Modifier.fillMaxWidth().weight(1f, fill = false)) {
                 items(result.entries, key = { it.path }) { entry ->
                     TextButton(onClick = { onDismiss(); onOpen(entry) }, modifier = Modifier.fillMaxWidth()) {

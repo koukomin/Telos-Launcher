@@ -1,27 +1,26 @@
 package de.mm20.launcher2.unitconverter.converters
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.unitconverter.*
-import de.mm20.launcher2.i18n.R
-
 internal class TemperatureConverter(context: Context) : Converter {
     override val dimension = Dimension.Temperature
 
     val units = listOf(
         TemperatureMeasureUnit(
-            context.getString(R.string.unit_degree_celsius_symbol),
-            R.plurals.unit_degree_celsius,
+            context.getString(I18nR.string.unit_degree_celsius_symbol),
+            I18nR.plurals.unit_degree_celsius,
             TemperatureUnit.DegreeCelsius
         ),
         TemperatureMeasureUnit(
-            context.getString(R.string.unit_degree_fahrenheit_symbol),
-            R.plurals.unit_degree_fahrenheit,
+            context.getString(I18nR.string.unit_degree_fahrenheit_symbol),
+            I18nR.plurals.unit_degree_fahrenheit,
             TemperatureUnit.DegreeFahrenheit
         ),
         TemperatureMeasureUnit(
-            context.getString(R.string.unit_kelvin_symbol),
-            R.plurals.unit_kelvin,
+            context.getString(I18nR.string.unit_kelvin_symbol),
+            I18nR.plurals.unit_kelvin,
             TemperatureUnit.Kelvin
         ),
     )

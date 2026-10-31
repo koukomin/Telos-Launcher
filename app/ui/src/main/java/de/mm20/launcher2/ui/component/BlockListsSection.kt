@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.text.format.DateUtils
 import android.widget.Toast
@@ -58,13 +59,13 @@ fun BlockListsSection(kind: BlockListKind, modifier: Modifier = Modifier) {
         if (uri != null) scope.launch {
             val name = uri.lastPathSegment?.substringAfterLast('/')?.substringBeforeLast('.').orEmpty()
             val error = BlockLists.importFile(context, kind, name, uri)
-            if (error != null) Toast.makeText(context, R.string.blocklists_import_failed, Toast.LENGTH_LONG).show()
+            if (error != null) Toast.makeText(context, I18nR.string.blocklists_import_failed, Toast.LENGTH_LONG).show()
         }
     }
 
     Column(modifier) {
         Text(
-            stringResource(if (kind == BlockListKind.WEB) R.string.blocklists_web_info else R.string.blocklists_torrent_info),
+            stringResource(if (kind == BlockListKind.WEB) I18nR.string.blocklists_web_info else I18nR.string.blocklists_torrent_info),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(bottom = 8.dp),
@@ -73,8 +74,8 @@ fun BlockListsSection(kind: BlockListKind, modifier: Modifier = Modifier) {
             // what the torrent session filters right now
             val enabled = lists.filter { it.enabled && it.entryCount > 0 }
             Text(
-                if (enabled.isEmpty()) stringResource(R.string.blocklists_torrent_none_active)
-                else stringResource(R.string.blocklists_torrent_active, enabled.sumOf { it.entryCount }, enabled.size),
+                if (enabled.isEmpty()) stringResource(I18nR.string.blocklists_torrent_none_active)
+                else stringResource(I18nR.string.blocklists_torrent_active, enabled.sumOf { it.entryCount }, enabled.size),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(bottom = 8.dp),
@@ -84,16 +85,16 @@ fun BlockListsSection(kind: BlockListKind, modifier: Modifier = Modifier) {
             BlockListRow(list, list.id in updating)
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            TextButton(onClick = { BlockLists.updateNow(context) }) { Text(stringResource(R.string.blocklists_update_now)) }
-            TextButton(onClick = { showAdd = true }) { Text(stringResource(R.string.blocklists_add_custom)) }
-            TextButton(onClick = { importLauncher.launch(arrayOf("*/*")) }) { Text(stringResource(R.string.blocklists_import_file)) }
+            TextButton(onClick = { BlockLists.updateNow(context) }) { Text(stringResource(I18nR.string.blocklists_update_now)) }
+            TextButton(onClick = { showAdd = true }) { Text(stringResource(I18nR.string.blocklists_add_custom)) }
+            TextButton(onClick = { importLauncher.launch(arrayOf("*/*")) }) { Text(stringResource(I18nR.string.blocklists_import_file)) }
         }
-        Text(stringResource(R.string.blocklists_schedule), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
+        Text(stringResource(I18nR.string.blocklists_schedule), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             for ((s, label) in listOf(
-                UpdateSchedule.OFF to R.string.blocklists_schedule_off,
-                UpdateSchedule.DAILY to R.string.blocklists_schedule_daily,
-                UpdateSchedule.WEEKLY to R.string.blocklists_schedule_weekly,
+                UpdateSchedule.OFF to I18nR.string.blocklists_schedule_off,
+                UpdateSchedule.DAILY to I18nR.string.blocklists_schedule_daily,
+                UpdateSchedule.WEEKLY to I18nR.string.blocklists_schedule_weekly,
             )) {
                 FilterChip(
                     selected = state.schedule == s,
@@ -103,11 +104,11 @@ fun BlockListsSection(kind: BlockListKind, modifier: Modifier = Modifier) {
             }
         }
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
-            Text(stringResource(R.string.blocklists_wifi_only), modifier = Modifier.weight(1f))
+            Text(stringResource(I18nR.string.blocklists_wifi_only), modifier = Modifier.weight(1f))
             Switch(checked = state.wifiOnly, onCheckedChange = { BlockLists.setWifiOnly(context, it) })
         }
         Text(
-            stringResource(R.string.blocklists_schedule_info),
+            stringResource(I18nR.string.blocklists_schedule_info),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -127,36 +128,36 @@ private fun BlockListRow(list: BlockList, updating: Boolean) {
                 val subtle = MaterialTheme.colorScheme.onSurfaceVariant
                 if (list.sourceUrl.isNotEmpty()) {
                     Text(
-                        stringResource(R.string.blocklists_downloaded_from, list.sourceUrl),
+                        stringResource(I18nR.string.blocklists_downloaded_from, list.sourceUrl),
                         style = MaterialTheme.typography.bodySmall, color = subtle,
                     )
                 } else {
-                    Text(stringResource(R.string.blocklists_imported), style = MaterialTheme.typography.bodySmall, color = subtle)
+                    Text(stringResource(I18nR.string.blocklists_imported), style = MaterialTheme.typography.bodySmall, color = subtle)
                 }
                 if (preset != null) {
                     if (preset.description.isNotEmpty()) {
                         Text(preset.description, style = MaterialTheme.typography.bodySmall, color = subtle)
                     }
                     Text(
-                        stringResource(R.string.blocklists_license, preset.license),
+                        stringResource(I18nR.string.blocklists_license, preset.license),
                         style = MaterialTheme.typography.bodySmall, color = subtle,
                     )
                 }
                 if (list.enabled) {
                     val status = when {
-                        updating -> stringResource(R.string.blocklists_updating)
+                        updating -> stringResource(I18nR.string.blocklists_updating)
                         list.lastUpdate > 0 -> stringResource(
-                            R.string.blocklists_status, list.entryCount,
+                            I18nR.string.blocklists_status, list.entryCount,
                             DateUtils.getRelativeTimeSpanString(list.lastUpdate, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS).toString(),
                         )
-                        else -> stringResource(R.string.blocklists_never)
+                        else -> stringResource(I18nR.string.blocklists_never)
                     }
                     Text(status, style = MaterialTheme.typography.bodySmall, color = subtle)
                     if (list.dataDate > 0) {
                         // the date the list itself carries: tells whether the list is still being maintained
                         Text(
                             stringResource(
-                                R.string.blocklists_data_date,
+                                I18nR.string.blocklists_data_date,
                                 DateUtils.formatDateTime(context, list.dataDate, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_MONTH),
                             ),
                             style = MaterialTheme.typography.bodySmall, color = subtle,
@@ -164,7 +165,7 @@ private fun BlockListRow(list: BlockList, updating: Boolean) {
                     }
                     list.lastError?.let {
                         Text(
-                            stringResource(R.string.blocklists_error, it),
+                            stringResource(I18nR.string.blocklists_error, it),
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error,
                         )
                     }
@@ -173,7 +174,7 @@ private fun BlockListRow(list: BlockList, updating: Boolean) {
             Switch(checked = list.enabled, onCheckedChange = { BlockLists.setEnabled(context, list.id, it) })
         }
         if (!list.builtin) {
-            TextButton(onClick = { BlockLists.remove(context, list.id) }) { Text(stringResource(R.string.blocklists_remove)) }
+            TextButton(onClick = { BlockLists.remove(context, list.id) }) { Text(stringResource(I18nR.string.blocklists_remove)) }
         }
     }
 }
@@ -186,22 +187,22 @@ private fun AddCustomDialog(kind: BlockListKind, onDismiss: () -> Unit) {
     var invalid by remember { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.blocklists_add_custom)) },
+        title = { Text(stringResource(I18nR.string.blocklists_add_custom)) },
         text = {
             Column {
-                OutlinedTextField(name, { name = it }, label = { Text(stringResource(R.string.blocklists_custom_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(name, { name = it }, label = { Text(stringResource(I18nR.string.blocklists_custom_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(
-                    url, { url = it; invalid = false }, label = { Text(stringResource(R.string.blocklists_custom_url)) },
+                    url, { url = it; invalid = false }, label = { Text(stringResource(I18nR.string.blocklists_custom_url)) },
                     singleLine = true, isError = invalid, modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                    supportingText = if (invalid) ({ Text(stringResource(R.string.blocklists_invalid_url)) }) else null,
+                    supportingText = if (invalid) ({ Text(stringResource(I18nR.string.blocklists_invalid_url)) }) else null,
                 )
             }
         },
         confirmButton = {
             TextButton(onClick = {
                 if (BlockLists.addCustom(context, kind, name, url) == null) onDismiss() else invalid = true
-            }) { Text(stringResource(R.string.blocklists_add)) }
+            }) { Text(stringResource(I18nR.string.blocklists_add)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.blocklists_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.blocklists_cancel)) } },
     )
 }

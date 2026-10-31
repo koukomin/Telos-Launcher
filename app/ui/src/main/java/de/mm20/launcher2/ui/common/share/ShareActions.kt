@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.common.share
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.ClipData
 import android.content.Context
@@ -277,8 +279,8 @@ object ShareActions {
 @Composable
 fun ShareMenuItem(onClick: () -> Unit, modifier: Modifier = Modifier) {
     DropdownMenuItem(
-        text = { Text(stringResource(R.string.menu_share)) },
-        leadingIcon = { Icon(painterResource(R.drawable.share_24px), contentDescription = null, modifier = Modifier.size(24.dp)) },
+        text = { Text(stringResource(I18nR.string.menu_share)) },
+        leadingIcon = { Icon(painterResource(BaseR.drawable.share_24px), contentDescription = null, modifier = Modifier.size(24.dp)) },
         onClick = onClick,
         modifier = modifier,
     )

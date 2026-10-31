@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.location
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import android.content.Intent
@@ -218,7 +219,7 @@ fun MapTiles(
                 )
 
                 Icon(
-                    painterResource(R.drawable.location_on_24px_filled),
+                    painterResource(BaseR.drawable.location_on_24px_filled),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.tertiary,
                     modifier = Modifier
@@ -261,7 +262,7 @@ fun MapTiles(
                                 typeConverter = Float.DegreesConverter
                             )
                             Icon(
-                                painterResource(R.drawable.assistant_navigation_20px),
+                                painterResource(BaseR.drawable.assistant_navigation_20px),
                                 null,
                                 tint = MaterialTheme.colorScheme.tertiary,
                                 modifier = Modifier

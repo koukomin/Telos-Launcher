@@ -1,4 +1,5 @@
 package de.mm20.launcher2.comms.tv
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.PendingIntent
 import android.content.Intent
@@ -19,7 +20,6 @@ import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.base.containedScope
-import de.mm20.launcher2.i18n.R as I18nR
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.combine

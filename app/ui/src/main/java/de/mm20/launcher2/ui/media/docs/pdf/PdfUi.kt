@@ -14,6 +14,8 @@
  */
 
 package de.mm20.launcher2.ui.media.docs.pdf
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -104,7 +106,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
@@ -281,11 +282,11 @@ fun PdfPreviewDialog(pages: PdfPages, startPage: Int, onDismiss: () -> Unit) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     IconButton(onClick = onDismiss) {
-                        Ico(BaseR.drawable.close_24px, tint = Color.White, description = stringResource(R.string.pdft_close))
+                        Ico(BaseR.drawable.close_24px, tint = Color.White, description = stringResource(I18nR.string.pdft_close))
                     }
                     Surface(shape = MaterialTheme.shapes.large, color = Color.White.copy(alpha = 0.16f)) {
                         Text(
-                            stringResource(R.string.pdft_page_of, pager.currentPage + 1, pages.count),
+                            stringResource(I18nR.string.pdft_page_of, pager.currentPage + 1, pages.count),
                             Modifier.padding(12.dp, 6.dp),
                             color = Color.White,
                             style = MaterialTheme.typography.labelLarge,
@@ -392,7 +393,7 @@ fun ToolFrame(
                 title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Ico(BaseR.drawable.arrow_back_24px, description = stringResource(R.string.pdft_back))
+                        Ico(BaseR.drawable.arrow_back_24px, description = stringResource(I18nR.string.pdft_back))
                     }
                 },
                 actions = actions,
@@ -463,21 +464,21 @@ fun FileHeader(src: PdfSource, onChange: (() -> Unit)?, onPreview: (() -> Unit)?
             Column(Modifier.weight(1f)) {
                 Text(src.name, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(
-                    if (src.broken) stringResource(R.string.pdft_file_broken, formatBytes(context, src.sizeBytes))
-                    else stringResource(R.string.pdft_file_info, src.pageCount, formatBytes(context, src.sizeBytes)),
+                    if (src.broken) stringResource(I18nR.string.pdft_file_broken, formatBytes(context, src.sizeBytes))
+                    else stringResource(I18nR.string.pdft_file_info, src.pageCount, formatBytes(context, src.sizeBytes)),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
             if (onPreview != null && !src.broken) {
                 IconButton(onClick = onPreview) {
-                    Ico(BaseR.drawable.visibility_24px, description = stringResource(R.string.pdft_preview))
+                    Ico(BaseR.drawable.visibility_24px, description = stringResource(I18nR.string.pdft_preview))
                 }
             }
-            if (onChange != null) TextButton(onClick = onChange) { Text(stringResource(R.string.pdft_change)) }
+            if (onChange != null) TextButton(onClick = onChange) { Text(stringResource(I18nR.string.pdft_change)) }
             if (onRemove != null) {
                 IconButton(onClick = onRemove) {
-                    Ico(BaseR.drawable.close_24px, description = stringResource(R.string.pdft_remove))
+                    Ico(BaseR.drawable.close_24px, description = stringResource(I18nR.string.pdft_remove))
                 }
             }
         }
@@ -507,25 +508,25 @@ fun PasswordDialog(name: String, wrong: Boolean, onSubmit: (String) -> Unit, onC
     var password by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onCancel,
-        title = { Text(stringResource(R.string.pdft_password_title)) },
+        title = { Text(stringResource(I18nR.string.pdft_password_title)) },
         text = {
             Column {
-                Text(stringResource(R.string.pdft_password_text, name), style = MaterialTheme.typography.bodyMedium)
+                Text(stringResource(I18nR.string.pdft_password_text, name), style = MaterialTheme.typography.bodyMedium)
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
                     modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
                     singleLine = true,
-                    label = { Text(stringResource(R.string.pdft_password)) },
+                    label = { Text(stringResource(I18nR.string.pdft_password)) },
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     isError = wrong,
-                    supportingText = if (wrong) ({ Text(stringResource(R.string.pdft_password_wrong)) }) else null,
+                    supportingText = if (wrong) ({ Text(stringResource(I18nR.string.pdft_password_wrong)) }) else null,
                 )
             }
         },
-        confirmButton = { TextButton(onClick = { onSubmit(password) }, enabled = password.isNotEmpty()) { Text(stringResource(R.string.pdft_unlock_action)) } },
-        dismissButton = { TextButton(onClick = onCancel) { Text(stringResource(R.string.pdft_cancel)) } },
+        confirmButton = { TextButton(onClick = { onSubmit(password) }, enabled = password.isNotEmpty()) { Text(stringResource(I18nR.string.pdft_unlock_action)) } },
+        dismissButton = { TextButton(onClick = onCancel) { Text(stringResource(I18nR.string.pdft_cancel)) } },
     )
 }
 

@@ -1,7 +1,7 @@
 package de.mm20.launcher2.widgets
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.database.entities.PartialWidgetEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -37,7 +37,7 @@ data class CalendarWidget(
     }
 
     override fun getLabel(context: Context): String {
-        return context.getString(R.string.widget_name_calendar)
+        return context.getString(I18nR.string.widget_name_calendar)
     }
 
     companion object {

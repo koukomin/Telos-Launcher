@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files.remote
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
@@ -33,25 +34,25 @@ internal fun CloudFields(c: RemoteConnection, onChange: (RemoteConnection) -> Un
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val provider = remember(c.type) { OAuthProviders.of(c.type) }
-    val waitingText = stringResource(R.string.au_files_oauth_waiting)
-    val browserFailedText = stringResource(R.string.au_files_oauth_browser_failed)
-    val signedInText = stringResource(R.string.au_files_oauth_signed_in)
-    val failedFormat = stringResource(R.string.au_files_oauth_failed, "%s")
+    val waitingText = stringResource(I18nR.string.au_files_oauth_waiting)
+    val browserFailedText = stringResource(I18nR.string.au_files_oauth_browser_failed)
+    val signedInText = stringResource(I18nR.string.au_files_oauth_signed_in)
+    val failedFormat = stringResource(I18nR.string.au_files_oauth_failed, "%s")
 
     Text(provider.consoleHint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     OutlinedTextField(
         value = c.clientId, onValueChange = { onChange(c.copy(clientId = it.trim())) }, singleLine = true,
-        label = { Text(if (c.type == RemoteType.Dropbox) stringResource(R.string.hf_remote_app_key) else stringResource(R.string.hf_remote_client_id)) }, modifier = Modifier.fillMaxWidth(),
+        label = { Text(if (c.type == RemoteType.Dropbox) stringResource(I18nR.string.hf_remote_app_key) else stringResource(I18nR.string.hf_remote_client_id)) }, modifier = Modifier.fillMaxWidth(),
     )
     if (provider.needsSecret) {
         OutlinedTextField(
             value = c.clientSecret, onValueChange = { onChange(c.copy(clientSecret = it.trim())) }, singleLine = true,
-            label = { Text(stringResource(R.string.hc_client_secret)) }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
+            label = { Text(stringResource(I18nR.string.hc_client_secret)) }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
         )
     }
     Row(Modifier.fillMaxWidth().padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(if (c.refreshToken.isNotEmpty()) stringResource(R.string.hf_remote_signed_in) else stringResource(R.string.hf_remote_not_signed_in), Modifier.weight(1f))
-        if (c.refreshToken.isNotEmpty()) TextButton(onClick = { onChange(c.copy(refreshToken = "")) }) { Text(stringResource(R.string.hc_sign_out)) }
+        Text(if (c.refreshToken.isNotEmpty()) stringResource(I18nR.string.hf_remote_signed_in) else stringResource(I18nR.string.hf_remote_not_signed_in), Modifier.weight(1f))
+        if (c.refreshToken.isNotEmpty()) TextButton(onClick = { onChange(c.copy(refreshToken = "")) }) { Text(stringResource(I18nR.string.hc_sign_out)) }
         Button(
             enabled = c.clientId.isNotBlank() && (!provider.needsSecret || c.clientSecret.isNotBlank()),
             onClick = {
@@ -70,6 +71,6 @@ internal fun CloudFields(c: RemoteConnection, onChange: (RemoteConnection) -> Un
                         .onFailure { onStatus(failedFormat.replace("%s", it.message.orEmpty()), false) }
                 }
             },
-        ) { Text(if (c.refreshToken.isNotEmpty()) stringResource(R.string.hf_remote_sign_in_again) else stringResource(R.string.hf_remote_sign_in)) }
+        ) { Text(if (c.refreshToken.isNotEmpty()) stringResource(I18nR.string.hf_remote_sign_in_again) else stringResource(I18nR.string.hf_remote_sign_in)) }
     }
 }

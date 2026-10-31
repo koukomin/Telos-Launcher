@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.system
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Build
 import androidx.compose.material3.OutlinedButton
@@ -14,6 +15,6 @@ internal fun AppOpsNextButton(packageName: String? = null) {
     val backStack = LocalBackStack.current
     OutlinedButton(enabled = Build.VERSION.SDK_INT >= 35,
         onClick = { backStack.add(SystemAppOpsRoute(packageName)) }) {
-        Text(stringResource(R.string.system_appopsnext_name))
+        Text(stringResource(I18nR.string.system_appopsnext_name))
     }
 }

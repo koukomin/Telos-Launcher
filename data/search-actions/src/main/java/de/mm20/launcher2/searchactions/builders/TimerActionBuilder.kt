@@ -1,7 +1,7 @@
 package de.mm20.launcher2.searchactions.builders
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
@@ -10,7 +10,7 @@ import de.mm20.launcher2.searchactions.actions.TimerAction
 class TimerActionBuilder(
     override val label: String,
 ) : SearchActionBuilder {
-    constructor(context: Context) : this(context.getString(R.string.search_action_timer))
+    constructor(context: Context) : this(context.getString(I18nR.string.search_action_timer))
 
     override val key: String
         get() = "timer"
@@ -21,7 +21,7 @@ class TimerActionBuilder(
         // Maximum time span for a timer is 24 hours, see https://developer.android.com/reference/android/provider/AlarmClock#EXTRA_LENGTH
         if (classifiedQuery.timespan != null && classifiedQuery.timespan.seconds <= 86400) {
             return TimerAction(
-                context.getString(R.string.search_action_timer), classifiedQuery.timespan
+                context.getString(I18nR.string.search_action_timer), classifiedQuery.timespan
             )
         }
         return null

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.log
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
@@ -102,7 +104,7 @@ fun LogScreen() {
     val scope = rememberCoroutineScope()
 
     PreferenceScreen(
-        title = stringResource(id = R.string.preference_logs),
+        title = stringResource(id = I18nR.string.preference_logs),
         topBarActions = {
             IconButton(onClick = {
                 scope.launch {
@@ -110,10 +112,10 @@ fun LogScreen() {
                     val shared = withContext(Dispatchers.IO) {
                         ShareActions.shareFile(context, File(path), "text/plain")
                     }
-                    if (!shared) Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                    if (!shared) Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
                 }
             }) {
-                Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.menu_share))
+                Icon(painterResource(BaseR.drawable.share_24px), contentDescription = stringResource(I18nR.string.menu_share))
             }
         },
         verticalArrangement = Arrangement.spacedBy(2.dp),
@@ -155,10 +157,10 @@ fun LogScreen() {
                         Icon(
                             painterResource(
                                 when (it.level) {
-                                    "E" -> R.drawable.error_20px
-                                    "W" -> R.drawable.warning_20px
-                                    "D" -> R.drawable.bug_report_20px
-                                    else -> R.drawable.info_20px
+                                    "E" -> BaseR.drawable.error_20px
+                                    "W" -> BaseR.drawable.warning_20px
+                                    "D" -> BaseR.drawable.bug_report_20px
+                                    else -> BaseR.drawable.info_20px
                                 },
                             ),
                             null,

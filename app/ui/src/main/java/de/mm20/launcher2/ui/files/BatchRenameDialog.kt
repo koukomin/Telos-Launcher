@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -26,20 +27,20 @@ internal fun BatchRenameDialog(vm: FilesViewModel, items: List<FsEntry>, onDismi
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.telos_files_batch_rename)) },
+        title = { Text(stringResource(I18nR.string.telos_files_batch_rename)) },
         text = {
             Column(Modifier.heightIn(max = 420.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(stringResource(R.string.telos_files_rename_tokens), style = MaterialTheme.typography.bodySmall)
-                OutlinedTextField(pattern, { pattern = it }, label = { Text(stringResource(R.string.telos_files_rename_pattern)) }, singleLine = true)
-                OutlinedTextField(start, { start = it }, label = { Text(stringResource(R.string.telos_files_rename_start)) }, singleLine = true)
-                OutlinedTextField(find, { find = it }, label = { Text(stringResource(R.string.telos_files_rename_find)) }, singleLine = true)
-                OutlinedTextField(replacement, { replacement = it }, label = { Text(stringResource(R.string.telos_files_rename_replace)) }, singleLine = true)
-                Row { Checkbox(regex, { regex = it }); Text(stringResource(R.string.telos_files_rename_regex), modifier = Modifier.padding(top = 12.dp)) }
-                if (names == null) Text(stringResource(R.string.telos_files_rename_invalid), color = MaterialTheme.colorScheme.error)
+                Text(stringResource(I18nR.string.telos_files_rename_tokens), style = MaterialTheme.typography.bodySmall)
+                OutlinedTextField(pattern, { pattern = it }, label = { Text(stringResource(I18nR.string.telos_files_rename_pattern)) }, singleLine = true)
+                OutlinedTextField(start, { start = it }, label = { Text(stringResource(I18nR.string.telos_files_rename_start)) }, singleLine = true)
+                OutlinedTextField(find, { find = it }, label = { Text(stringResource(I18nR.string.telos_files_rename_find)) }, singleLine = true)
+                OutlinedTextField(replacement, { replacement = it }, label = { Text(stringResource(I18nR.string.telos_files_rename_replace)) }, singleLine = true)
+                Row { Checkbox(regex, { regex = it }); Text(stringResource(I18nR.string.telos_files_rename_regex), modifier = Modifier.padding(top = 12.dp)) }
+                if (names == null) Text(stringResource(I18nR.string.telos_files_rename_invalid), color = MaterialTheme.colorScheme.error)
                 else items.zip(names).take(8).forEach { (item, name) -> Text("${item.name} → $name", style = MaterialTheme.typography.bodySmall) }
             }
         },
-        confirmButton = { TextButton(enabled = names != null, onClick = { names?.let { vm.batchRename(items, it) }; onDismiss() }) { Text(stringResource(R.string.hc_rename)) } },
+        confirmButton = { TextButton(enabled = names != null, onClick = { names?.let { vm.batchRename(items, it) }; onDismiss() }) { Text(stringResource(I18nR.string.hc_rename)) } },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(android.R.string.cancel)) } },
     )
 }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -57,13 +58,13 @@ fun ScrobbleSettingsScreen() {
     var message by remember { mutableStateOf("") }
     var busy by remember { mutableStateOf(false) }
 
-    val lastFmConnectedMsg = stringResource(R.string.au_music_lastfm_connected)
-    val libreFmConnectedMsg = stringResource(R.string.au_music_librefm_connected)
-    val loginFailedMsg = stringResource(R.string.au_music_login_failed_generic)
-    val loginFailedFormat = stringResource(R.string.au_music_login_failed)
-    val lbOkFormat = stringResource(R.string.au7_scrobble_lb_ok)
-    val httpsMsg = stringResource(R.string.au7_scrobble_https)
-    val clearedMsg = stringResource(R.string.au7_scrobble_queue_cleared)
+    val lastFmConnectedMsg = stringResource(I18nR.string.au_music_lastfm_connected)
+    val libreFmConnectedMsg = stringResource(I18nR.string.au_music_librefm_connected)
+    val loginFailedMsg = stringResource(I18nR.string.au_music_login_failed_generic)
+    val loginFailedFormat = stringResource(I18nR.string.au_music_login_failed)
+    val lbOkFormat = stringResource(I18nR.string.au7_scrobble_lb_ok)
+    val httpsMsg = stringResource(I18nR.string.au7_scrobble_https)
+    val clearedMsg = stringResource(I18nR.string.au7_scrobble_queue_cleared)
 
     var lfKey by rememberSaveable { mutableStateOf(config.lastfmKey) }
     var lfSecret by remember { mutableStateOf(config.lastfmSecret) }
@@ -93,16 +94,16 @@ fun ScrobbleSettingsScreen() {
         if (config.listenbrainzEnabled && listenBrainzReady) add("ListenBrainz")
     }
     val status = when {
-        active.isEmpty() -> stringResource(R.string.au7_scrobble_status_no_service)
-        !config.musicEnabled && !config.radioEnabled -> stringResource(R.string.au7_scrobble_status_no_source)
-        else -> stringResource(R.string.au7_scrobble_status_active, active.joinToString(", "))
+        active.isEmpty() -> stringResource(I18nR.string.au7_scrobble_status_no_service)
+        !config.musicEnabled && !config.radioEnabled -> stringResource(I18nR.string.au7_scrobble_status_no_source)
+        else -> stringResource(I18nR.string.au7_scrobble_status_active, active.joinToString(", "))
     }
 
-    PreferenceScreen(title = stringResource(R.string.hc_scrobbling)) {
+    PreferenceScreen(title = stringResource(I18nR.string.hc_scrobbling)) {
         item {
             PreferenceCategory {
                 Text(
-                    stringResource(R.string.au7_scrobble_note),
+                    stringResource(I18nR.string.au7_scrobble_note),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(16.dp),
@@ -115,16 +116,16 @@ fun ScrobbleSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.au7_scrobble_what)) {
+            PreferenceCategory(title = stringResource(I18nR.string.au7_scrobble_what)) {
                 SwitchPreference(
-                    title = stringResource(R.string.au7_scrobble_music_title),
-                    summary = stringResource(R.string.au7_scrobble_music_summary),
+                    title = stringResource(I18nR.string.au7_scrobble_music_title),
+                    summary = stringResource(I18nR.string.au7_scrobble_music_summary),
                     value = config.musicEnabled,
                     onValueChanged = { on -> update { it.copy(musicEnabled = on) } },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.au7_scrobble_radio_title),
-                    summary = stringResource(R.string.au7_scrobble_radio_summary),
+                    title = stringResource(I18nR.string.au7_scrobble_radio_title),
+                    summary = stringResource(I18nR.string.au7_scrobble_radio_summary),
                     value = config.radioEnabled,
                     onValueChanged = { on -> update { it.copy(radioEnabled = on) } },
                 )
@@ -133,29 +134,29 @@ fun ScrobbleSettingsScreen() {
         item {
             PreferenceCategory(title = "Last.fm") {
                 SwitchPreference(
-                    title = stringResource(R.string.au7_scrobble_switch_on),
-                    summary = stringResource(if (lastFmReady) R.string.au_music_connected else R.string.au_music_not_connected),
+                    title = stringResource(I18nR.string.au7_scrobble_switch_on),
+                    summary = stringResource(if (lastFmReady) I18nR.string.au_music_connected else I18nR.string.au_music_not_connected),
                     value = config.lastfmEnabled,
                     enabled = lastFmReady,
                     onValueChanged = { on -> update { it.copy(lastfmEnabled = on) } },
                 )
                 Column(Modifier.padding(horizontal = 16.dp)) {
                     Text(
-                        stringResource(R.string.hc_create_a_free_api_account_at_last_fm_api),
+                        stringResource(I18nR.string.hc_create_a_free_api_account_at_last_fm_api),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    Field(lfKey, { lfKey = it }, stringResource(R.string.hc_api_key))
-                    Field(lfSecret, { lfSecret = it }, stringResource(R.string.hc_shared_secret), secret = true)
+                    Field(lfKey, { lfKey = it }, stringResource(I18nR.string.hc_api_key))
+                    Field(lfSecret, { lfSecret = it }, stringResource(I18nR.string.hc_shared_secret), secret = true)
                     if (!lfPasswordMode) {
-                        Text(stringResource(R.string.au12_lastfmweb_howto), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Text(stringResource(R.string.au12_lastfmweb_callback_label), style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(top = 8.dp))
+                        Text(stringResource(I18nR.string.au12_lastfmweb_howto), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(I18nR.string.au12_lastfmweb_callback_label), style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(top = 8.dp))
                         Text(LastFm.CALLBACK_URI, style = MaterialTheme.typography.bodyMedium)
                         TextButton(onClick = {
                             (context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as ClipboardManager)
                                 .setPrimaryClip(ClipData.newPlainText("Last.fm", LastFm.CALLBACK_URI))
-                        }) { Text(stringResource(R.string.au12_lastfmweb_copy_callback)) }
-                        Text(stringResource(R.string.au12_lastfmweb_limit_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }) { Text(stringResource(I18nR.string.au12_lastfmweb_copy_callback)) }
+                        Text(stringResource(I18nR.string.au12_lastfmweb_limit_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         TextButton(
                             enabled = !busy && lfKey.isNotBlank() && lfSecret.isNotBlank(),
                             onClick = {
@@ -165,13 +166,13 @@ fun ScrobbleSettingsScreen() {
                                 val ok = runCatching {
                                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                                 }.isSuccess
-                                message = context.getString(if (ok) R.string.au12_lastfmweb_waiting else R.string.au12_lastfmweb_no_browser)
+                                message = context.getString(if (ok) I18nR.string.au12_lastfmweb_waiting else I18nR.string.au12_lastfmweb_no_browser)
                             },
-                        ) { Text(stringResource(R.string.au12_lastfmweb_sign_in_browser)) }
-                        TextButton(onClick = { lfPasswordMode = true }) { Text(stringResource(R.string.au12_lastfmweb_use_password)) }
+                        ) { Text(stringResource(I18nR.string.au12_lastfmweb_sign_in_browser)) }
+                        TextButton(onClick = { lfPasswordMode = true }) { Text(stringResource(I18nR.string.au12_lastfmweb_use_password)) }
                     } else {
-                        Field(lfUser, { lfUser = it }, stringResource(R.string.hc_user_name))
-                        Field(lfPass, { lfPass = it }, stringResource(R.string.hc_password_not_stored), secret = true)
+                        Field(lfUser, { lfUser = it }, stringResource(I18nR.string.hc_user_name))
+                        Field(lfPass, { lfPass = it }, stringResource(I18nR.string.hc_password_not_stored), secret = true)
                         TextButton(
                             enabled = !busy && lfKey.isNotBlank() && lfSecret.isNotBlank() && lfUser.isNotBlank() && lfPass.isNotBlank(),
                             onClick = {
@@ -187,8 +188,8 @@ fun ScrobbleSettingsScreen() {
                                     busy = false
                                 }
                             },
-                        ) { Text(stringResource(R.string.hc_connect_last_fm)) }
-                        TextButton(onClick = { lfPasswordMode = false }) { Text(stringResource(R.string.au12_lastfmweb_use_browser)) }
+                        ) { Text(stringResource(I18nR.string.hc_connect_last_fm)) }
+                        TextButton(onClick = { lfPasswordMode = false }) { Text(stringResource(I18nR.string.au12_lastfmweb_use_browser)) }
                     }
                 }
             }
@@ -196,20 +197,20 @@ fun ScrobbleSettingsScreen() {
         item {
             PreferenceCategory(title = "ListenBrainz") {
                 SwitchPreference(
-                    title = stringResource(R.string.au7_scrobble_switch_on),
-                    summary = stringResource(if (listenBrainzReady) R.string.au_music_connected else R.string.au_music_not_connected),
+                    title = stringResource(I18nR.string.au7_scrobble_switch_on),
+                    summary = stringResource(if (listenBrainzReady) I18nR.string.au_music_connected else I18nR.string.au_music_not_connected),
                     value = config.listenbrainzEnabled,
                     enabled = listenBrainzReady,
                     onValueChanged = { on -> update { it.copy(listenbrainzEnabled = on) } },
                 )
                 Column(Modifier.padding(horizontal = 16.dp)) {
                     Text(
-                        stringResource(R.string.hc_copy_your_user_token_from_listenbrainz_o),
+                        stringResource(I18nR.string.hc_copy_your_user_token_from_listenbrainz_o),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    Field(lbToken, { lbToken = it }, stringResource(R.string.hc_user_token), secret = true)
-                    Field(lbServer, { lbServer = it }, stringResource(R.string.hc_server))
+                    Field(lbToken, { lbToken = it }, stringResource(I18nR.string.hc_user_token), secret = true)
+                    Field(lbServer, { lbServer = it }, stringResource(I18nR.string.hc_server))
                     TextButton(
                         enabled = !busy && lbToken.isNotBlank(),
                         onClick = {
@@ -229,22 +230,22 @@ fun ScrobbleSettingsScreen() {
                                 }
                             }
                         },
-                    ) { Text(stringResource(R.string.au7_scrobble_sign_in)) }
+                    ) { Text(stringResource(I18nR.string.au7_scrobble_sign_in)) }
                 }
             }
         }
         item {
             PreferenceCategory(title = "Libre.fm") {
                 SwitchPreference(
-                    title = stringResource(R.string.au7_scrobble_switch_on),
-                    summary = stringResource(if (libreFmReady) R.string.au_music_connected else R.string.au_music_not_connected),
+                    title = stringResource(I18nR.string.au7_scrobble_switch_on),
+                    summary = stringResource(if (libreFmReady) I18nR.string.au_music_connected else I18nR.string.au_music_not_connected),
                     value = config.librefmEnabled,
                     enabled = libreFmReady,
                     onValueChanged = { on -> update { it.copy(librefmEnabled = on) } },
                 )
                 Column(Modifier.padding(horizontal = 16.dp)) {
-                    Field(libUser, { libUser = it }, stringResource(R.string.hc_user_name))
-                    Field(libPass, { libPass = it }, stringResource(R.string.hc_password_only_its_hash_is_stored), secret = true)
+                    Field(libUser, { libUser = it }, stringResource(I18nR.string.hc_user_name))
+                    Field(libPass, { libPass = it }, stringResource(I18nR.string.hc_password_only_its_hash_is_stored), secret = true)
                     TextButton(
                         enabled = !busy && libUser.isNotBlank() && libPass.isNotBlank(),
                         onClick = {
@@ -262,7 +263,7 @@ fun ScrobbleSettingsScreen() {
                                 busy = false
                             }
                         },
-                    ) { Text(stringResource(R.string.hc_connect_libre_fm)) }
+                    ) { Text(stringResource(I18nR.string.hc_connect_libre_fm)) }
                 }
             }
         }
@@ -272,11 +273,11 @@ fun ScrobbleSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.au7_scrobble_queue)) {
+            PreferenceCategory(title = stringResource(I18nR.string.au7_scrobble_queue)) {
                 Preference(
-                    title = stringResource(R.string.au7_scrobble_queue_clear),
-                    summary = if (queueCount > 0) stringResource(R.string.au7_scrobble_queue_count, queueCount)
-                    else stringResource(R.string.au7_scrobble_queue_empty),
+                    title = stringResource(I18nR.string.au7_scrobble_queue_clear),
+                    summary = if (queueCount > 0) stringResource(I18nR.string.au7_scrobble_queue_count, queueCount)
+                    else stringResource(I18nR.string.au7_scrobble_queue_empty),
                     enabled = queueCount > 0,
                     onClick = {
                         Scrobblers.clearQueue(context)

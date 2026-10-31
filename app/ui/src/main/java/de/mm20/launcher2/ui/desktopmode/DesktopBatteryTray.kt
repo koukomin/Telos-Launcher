@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.desktopmode
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -35,7 +37,7 @@ internal fun DesktopBatteryTrayIcon() {
 
     DesktopTrayIconButton(
         icon = getBatteryIcon(state),
-        contentDescription = stringResource(R.string.desktop_mode_tray_battery),
+        contentDescription = stringResource(I18nR.string.desktop_mode_tray_battery),
         onClick = {},
     )
     Text(
@@ -48,22 +50,22 @@ internal fun DesktopBatteryTrayIcon() {
 private fun getBatteryIcon(state: DesktopBatteryState): Int {
     if (state.charging) {
         return when (state.percent) {
-            in 0..25 -> R.drawable.battery_charging_20_24px
-            in 26..55 -> R.drawable.battery_charging_30_24px
-            in 56..85 -> R.drawable.battery_charging_80_24px
-            in 86..95 -> R.drawable.battery_charging_90_24px
-            else -> R.drawable.battery_charging_full_24px
+            in 0..25 -> BaseR.drawable.battery_charging_20_24px
+            in 26..55 -> BaseR.drawable.battery_charging_30_24px
+            in 56..85 -> BaseR.drawable.battery_charging_80_24px
+            in 86..95 -> BaseR.drawable.battery_charging_90_24px
+            else -> BaseR.drawable.battery_charging_full_24px
         }
     }
     return when (state.percent) {
-        in 0..12 -> R.drawable.battery_0_bar_24px
-        in 13..25 -> R.drawable.battery_1_bar_24px
-        in 26..37 -> R.drawable.battery_2_bar_24px
-        in 38..50 -> R.drawable.battery_3_bar_24px
-        in 51..63 -> R.drawable.battery_4_bar_24px
-        in 64..75 -> R.drawable.battery_5_bar_24px
-        in 76..88 -> R.drawable.battery_6_bar_24px
-        else -> R.drawable.battery_full_24px
+        in 0..12 -> BaseR.drawable.battery_0_bar_24px
+        in 13..25 -> BaseR.drawable.battery_1_bar_24px
+        in 26..37 -> BaseR.drawable.battery_2_bar_24px
+        in 38..50 -> BaseR.drawable.battery_3_bar_24px
+        in 51..63 -> BaseR.drawable.battery_4_bar_24px
+        in 64..75 -> BaseR.drawable.battery_5_bar_24px
+        in 76..88 -> BaseR.drawable.battery_6_bar_24px
+        else -> BaseR.drawable.battery_full_24px
     }
 }
 

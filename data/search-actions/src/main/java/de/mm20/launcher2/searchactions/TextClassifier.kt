@@ -1,7 +1,7 @@
 package de.mm20.launcher2.searchactions
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
-import de.mm20.launcher2.i18n.R
 import android.icu.text.SimpleDateFormat
 import android.text.format.DateFormat
 import java.text.ParseException
@@ -103,7 +103,7 @@ internal class TextClassifierImpl : TextClassifier {
             // Nope, not a time
         }
 
-        val seconds = context.getString(R.string.unit_second_symbol)
+        val seconds = context.getString(I18nR.string.unit_second_symbol)
         val secondsMatch = Regex("^([0-9]+)\\s?${seconds}$").find(trimmedQuery)
         if (secondsMatch != null) {
             val value = secondsMatch.groups[1]!!.value.toLong()
@@ -114,7 +114,7 @@ internal class TextClassifierImpl : TextClassifier {
             )
         }
 
-        val days = context.getString(R.string.unit_day_symbol)
+        val days = context.getString(I18nR.string.unit_day_symbol)
         val daysMatch = Regex("^([0-9]+)\\s?${days}$").find(trimmedQuery)
         if (daysMatch != null) {
             val value = daysMatch.groups[1]!!.value.toLong()
@@ -125,7 +125,7 @@ internal class TextClassifierImpl : TextClassifier {
             )
         }
 
-        val minutes = context.getString(R.string.unit_minute_symbol)
+        val minutes = context.getString(I18nR.string.unit_minute_symbol)
         val minutesMatch = Regex("^([0-9]+)\\s?${minutes}$").find(trimmedQuery)
         if (minutesMatch != null) {
             val value = minutesMatch.groups[1]!!.value.toLong()
@@ -137,7 +137,7 @@ internal class TextClassifierImpl : TextClassifier {
             )
         }
 
-        val hours = context.getString(R.string.unit_hour_symbol)
+        val hours = context.getString(I18nR.string.unit_hour_symbol)
         val hoursMatch = Regex("^([0-9]+)\\s?${hours}$").find(trimmedQuery)
         if (hoursMatch != null) {
             val value = hoursMatch.groups[1]!!.value.toLong()

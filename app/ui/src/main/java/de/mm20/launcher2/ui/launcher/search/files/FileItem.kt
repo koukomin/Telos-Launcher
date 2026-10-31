@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.files
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -107,7 +109,7 @@ fun FileItem(
                             Text(
                                 modifier = Modifier.padding(top = 8.dp),
                                 text = stringResource(
-                                    R.string.file_meta_type,
+                                    I18nR.string.file_meta_type,
                                     file.mimeType
                                 ),
                                 style = MaterialTheme.typography.bodySmall,
@@ -121,7 +123,7 @@ fun FileItem(
                             if (file.path != null) {
                                 Text(
                                     text = stringResource(
-                                        R.string.file_meta_path,
+                                        I18nR.string.file_meta_path,
                                         file.path!!
                                     ),
                                     style = MaterialTheme.typography.bodySmall,
@@ -130,7 +132,7 @@ fun FileItem(
                             if (!file.isDirectory) {
                                 Text(
                                     text = stringResource(
-                                        R.string.file_meta_size,
+                                        I18nR.string.file_meta_size,
                                         android.text.format.Formatter.formatFileSize(context, file.size)
                                     ),
                                     style = MaterialTheme.typography.bodySmall,
@@ -154,16 +156,16 @@ fun FileItem(
                         val isPinned by viewModel.isPinned.collectAsState(false)
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_unpin),
-                                icon = R.drawable.star_24px_filled,
+                                label = stringResource(I18nR.string.menu_favorites_unpin),
+                                icon = BaseR.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
                             )
                         } else {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_pin),
-                                icon = R.drawable.star_24px,
+                                label = stringResource(I18nR.string.menu_favorites_pin),
+                                icon = BaseR.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -173,8 +175,8 @@ fun FileItem(
 
                     toolbarActions.add(
                         DefaultToolbarAction(
-                            label = stringResource(R.string.menu_open_file),
-                            icon = R.drawable.open_in_new_24px,
+                            label = stringResource(I18nR.string.menu_open_file),
+                            icon = BaseR.drawable.open_in_new_24px,
                             action = {
                                 viewModel.launch(context)
                             }
@@ -184,8 +186,8 @@ fun FileItem(
                     if (file.canShare) {
                         toolbarActions.add(
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_share),
-                                icon = R.drawable.share_24px,
+                                label = stringResource(I18nR.string.menu_share),
+                                icon = BaseR.drawable.share_24px,
                                 action = {
                                     file.share(context)
                                 }
@@ -196,8 +198,8 @@ fun FileItem(
                         var showConfirmDialog by remember { mutableStateOf(false) }
                         toolbarActions.add(
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_delete),
-                                icon = R.drawable.delete_24px,
+                                label = stringResource(I18nR.string.menu_delete),
+                                icon = BaseR.drawable.delete_24px,
                                 action = {
                                     showConfirmDialog = true
                                 }
@@ -223,10 +225,10 @@ fun FileItem(
                                 text = {
                                     Text(
                                         if (file.isDirectory) stringResource(
-                                            R.string.alert_delete_directory,
+                                            I18nR.string.alert_delete_directory,
                                             file.label
                                         )
-                                        else stringResource(R.string.alert_delete_file, file.label)
+                                        else stringResource(I18nR.string.alert_delete_file, file.label)
                                     )
                                 }
                             )
@@ -236,16 +238,16 @@ fun FileItem(
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(
                         DefaultToolbarAction(
-                            label = stringResource(R.string.menu_customize),
-                            icon = R.drawable.tune_24px,
+                            label = stringResource(I18nR.string.menu_customize),
+                            icon = BaseR.drawable.tune_24px,
                             action = { sheetManager.showCustomizeSearchableModal(file) }
                         ))
 
                     Toolbar(
                         leftActions = listOf(
                             DefaultToolbarAction(
-                                label = stringResource(id = R.string.menu_back),
-                                icon = R.drawable.arrow_back_24px,
+                                label = stringResource(id = I18nR.string.menu_back),
+                                icon = BaseR.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }
@@ -344,17 +346,17 @@ fun FileItemGridPopup(
 private val FileMetaType.labelRes: Int
     get() {
         return when (this) {
-            FileMetaType.Title -> R.string.file_meta_title
-            FileMetaType.Artist -> R.string.file_meta_artist
-            FileMetaType.Album -> R.string.file_meta_album
-            FileMetaType.Duration -> R.string.file_meta_duration
-            FileMetaType.Year -> R.string.file_meta_year
-            FileMetaType.Dimensions -> R.string.file_meta_dimensions
-            FileMetaType.Location -> R.string.file_meta_location
-            FileMetaType.AppName -> R.string.file_meta_app_name
-            FileMetaType.AppVersion -> R.string.file_meta_app_version
-            FileMetaType.AppMinSdk -> R.string.file_meta_app_min_sdk
-            FileMetaType.AppPackageName -> R.string.file_meta_app_pkgname
-            FileMetaType.Owner -> R.string.file_meta_owner
+            FileMetaType.Title -> I18nR.string.file_meta_title
+            FileMetaType.Artist -> I18nR.string.file_meta_artist
+            FileMetaType.Album -> I18nR.string.file_meta_album
+            FileMetaType.Duration -> I18nR.string.file_meta_duration
+            FileMetaType.Year -> I18nR.string.file_meta_year
+            FileMetaType.Dimensions -> I18nR.string.file_meta_dimensions
+            FileMetaType.Location -> I18nR.string.file_meta_location
+            FileMetaType.AppName -> I18nR.string.file_meta_app_name
+            FileMetaType.AppVersion -> I18nR.string.file_meta_app_version
+            FileMetaType.AppMinSdk -> I18nR.string.file_meta_app_min_sdk
+            FileMetaType.AppPackageName -> I18nR.string.file_meta_app_pkgname
+            FileMetaType.Owner -> I18nR.string.file_meta_owner
         }
     }

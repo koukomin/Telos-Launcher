@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -55,7 +56,7 @@ class SmsPopupActivity : BaseActivity() {
                                     CoroutineScope(Dispatchers.IO).launch { SmsThreads.send(this@SmsPopupActivity, address, body) }
                                     finish()
                                 },
-                            ) { Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.hc_send)) }
+                            ) { Text(androidx.compose.ui.res.stringResource(I18nR.string.hc_send)) }
                         }
                     }
                 }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.debug
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,7 +30,7 @@ data object StringNormalizerTestRoute: NavKey
 @Composable
 fun StringNormalizerTestScreen() {
     PreferenceScreen(
-        title = stringResource(R.string.au3_sysb_normalizer_title)
+        title = stringResource(I18nR.string.au3_sysb_normalizer_title)
     ) {
         item {
             val normalizer: StringNormalizer = koinInject()

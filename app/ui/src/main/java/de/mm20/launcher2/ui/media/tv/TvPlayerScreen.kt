@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.tv
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.text.format.DateFormat
 import android.view.View
@@ -160,13 +162,13 @@ fun TvPlayerDialog(
             onDismissRequest = { channelSheet = false },
             containerColor = MaterialTheme.colorScheme.surfaceContainer,
         ) {
-            de.mm20.launcher2.ui.component.TelosSearchBar(channelQuery, { channelQuery = it }, stringResource(R.string.au12_tvui_search_hint))
+            de.mm20.launcher2.ui.component.TelosSearchBar(channelQuery, { channelQuery = it }, stringResource(I18nR.string.au12_tvui_search_hint))
             LazyColumn(Modifier.fillMaxWidth().heightIn(max = 480.dp).navigationBarsPadding()) {
                 items(matching, key = { it.id }) { candidate ->
                     ListItem(
                         headlineContent = { Text(candidate.name) },
                         leadingContent = { TvLogo(candidate, Modifier.size(40.dp), corner = 10.dp) },
-                        trailingContent = { if (candidate.id == channel?.id) Icon(painterResource(R.drawable.check_24px), null) },
+                        trailingContent = { if (candidate.id == channel?.id) Icon(painterResource(BaseR.drawable.check_24px), null) },
                         modifier = Modifier.clickable {
                             viewModel.play(candidate, channels); channelSheet = false; controls = true
                         },
@@ -268,7 +270,7 @@ fun TvPlayerDialog(
                         if (reconnecting) {
                             CircularProgressIndicator(color = Color.White)
                             Text(
-                                stringResource(if (waitingForNetwork) R.string.au16_reconnect_waiting else R.string.au16_reconnect_label),
+                                stringResource(if (waitingForNetwork) I18nR.string.au16_reconnect_waiting else I18nR.string.au16_reconnect_label),
                                 color = Color.White,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
@@ -278,7 +280,7 @@ fun TvPlayerDialog(
                             CircularProgressIndicator(color = Color.White)
                             if (recovering) {
                                 Text(
-                                    stringResource(R.string.au11_tvdata_recovering),
+                                    stringResource(I18nR.string.au11_tvdata_recovering),
                                     color = Color.White,
                                     style = MaterialTheme.typography.bodyMedium,
                                 )
@@ -302,16 +304,16 @@ fun TvPlayerDialog(
                         ) {
                             IconButton(onClick = { viewModel.stop() },
                                 modifier = Modifier.background(Color(0xB31A1A1A), androidx.compose.foundation.shape.CircleShape)) {
-                                Icon(painterResource(R.drawable.arrow_back_24px),
-                                    contentDescription = stringResource(R.string.hc_back), tint = Color.White)
+                                Icon(painterResource(BaseR.drawable.arrow_back_24px),
+                                    contentDescription = stringResource(I18nR.string.hc_back), tint = Color.White)
                             }
                             IconButton(onClick = { channelSheet = true }) {
-                                Icon(painterResource(R.drawable.menu_24px), stringResource(R.string.au12_tvsearch_pref_title), tint = Color.White)
+                                Icon(painterResource(BaseR.drawable.menu_24px), stringResource(I18nR.string.au12_tvsearch_pref_title), tint = Color.White)
                             }
                             IconButton(onClick = onMinimize) {
                                 Icon(
-                                    painterResource(R.drawable.keyboard_arrow_down_24px),
-                                    contentDescription = stringResource(R.string.au12_tvui_minimize),
+                                    painterResource(BaseR.drawable.keyboard_arrow_down_24px),
+                                    contentDescription = stringResource(I18nR.string.au12_tvui_minimize),
                                     tint = Color.White,
                                 )
                             }
@@ -327,7 +329,7 @@ fun TvPlayerDialog(
                                 )
                                 if (streamIndex >= 0 && current.streams.size > 1) {
                                     Text(
-                                        stringResource(R.string.au12_tvui_stream_info, streamIndex + 1, current.streams.size),
+                                        stringResource(I18nR.string.au12_tvui_stream_info, streamIndex + 1, current.streams.size),
                                         color = Color(0xCCFFFFFF),
                                         style = MaterialTheme.typography.labelSmall,
                                     )
@@ -335,17 +337,17 @@ fun TvPlayerDialog(
                             }
                             IconButton(onClick = { viewModel.setFavorite(current.id, !favorite) }) {
                                 Icon(
-                                    painterResource(if (favorite) R.drawable.star_24px_filled else R.drawable.star_24px_outlined),
+                                    painterResource(if (favorite) BaseR.drawable.star_24px_filled else BaseR.drawable.star_24px_outlined),
                                     contentDescription = stringResource(
-                                        if (favorite) R.string.au12_tvui_favorite_remove else R.string.au12_tvui_favorite_add
+                                        if (favorite) I18nR.string.au12_tvui_favorite_remove else I18nR.string.au12_tvui_favorite_add
                                     ),
                                     tint = Color.White,
                                 )
                             }
                             IconButton(onClick = { viewModel.stop() }) {
                                 Icon(
-                                    painterResource(R.drawable.close_24px),
-                                    contentDescription = stringResource(R.string.hc_stop),
+                                    painterResource(BaseR.drawable.close_24px),
+                                    contentDescription = stringResource(I18nR.string.hc_stop),
                                     tint = Color.White,
                                 )
                             }
@@ -367,7 +369,7 @@ fun TvPlayerDialog(
                                 if (nowProg != null) {
                                     Text(
                                         stringResource(
-                                            R.string.au13_tvextraui_player_now, nowProg.title,
+                                            I18nR.string.au13_tvextraui_player_now, nowProg.title,
                                             timeFormat.format(java.util.Date(nowProg.start)),
                                             timeFormat.format(java.util.Date(nowProg.stop)),
                                         ),
@@ -389,7 +391,7 @@ fun TvPlayerDialog(
                                 if (nextProg != null) {
                                     Text(
                                         stringResource(
-                                            R.string.au13_tvextraui_player_next, nextProg.title,
+                                            I18nR.string.au13_tvextraui_player_next, nextProg.title,
                                             timeFormat.format(java.util.Date(nextProg.start)),
                                         ),
                                         color = Color(0xCCFFFFFF),
@@ -411,13 +413,13 @@ fun TvPlayerDialog(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(24.dp),
                         ) {
-                            RoundControl(R.drawable.skip_previous_24px, stringResource(R.string.hc_previous), 48.dp) { controller.previous() }
+                            RoundControl(BaseR.drawable.skip_previous_24px, stringResource(I18nR.string.hc_previous), 48.dp) { controller.previous() }
                             RoundControl(
-                                if (playing) R.drawable.pause_24px else R.drawable.play_arrow_24px,
-                                stringResource(if (playing) R.string.au_music_pause else R.string.hc_play),
+                                if (playing) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px,
+                                stringResource(if (playing) I18nR.string.au_music_pause else I18nR.string.hc_play),
                                 64.dp,
                             ) { if (playing) controller.pause() else controller.resume() }
-                            RoundControl(R.drawable.skip_next_24px, stringResource(R.string.hc_next), 48.dp) { controller.next() }
+                            RoundControl(BaseR.drawable.skip_next_24px, stringResource(I18nR.string.hc_next), 48.dp) { controller.next() }
                         }
                     }
                 }
@@ -437,7 +439,7 @@ private fun EpgSheet(p: TvProgramme, timeFormat: java.text.DateFormat, onDismiss
             Text(p.title, style = MaterialTheme.typography.titleLarge)
             Text(
                 stringResource(
-                    R.string.au13_tvextraui_epg_sheet_range,
+                    I18nR.string.au13_tvextraui_epg_sheet_range,
                     timeFormat.format(java.util.Date(p.start)), timeFormat.format(java.util.Date(p.stop)),
                 ),
                 style = MaterialTheme.typography.labelLarge,
@@ -467,27 +469,27 @@ private fun OfflinePanel(onRetry: () -> Unit, onBack: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         Icon(
-            painterResource(R.drawable.wifi_off_24px),
-            contentDescription = stringResource(R.string.au13_tvextraui_static_description),
+            painterResource(BaseR.drawable.wifi_off_24px),
+            contentDescription = stringResource(I18nR.string.au13_tvextraui_static_description),
             tint = Color.White,
             modifier = Modifier.size(32.dp),
         )
         Text(
-            stringResource(R.string.au13_tvextraui_offline_title),
+            stringResource(I18nR.string.au13_tvextraui_offline_title),
             color = Color.White,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
         )
         Text(
-            stringResource(R.string.au13_tvextraui_offline_hint),
+            stringResource(I18nR.string.au13_tvextraui_offline_hint),
             color = Color(0xCCFFFFFF),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyMedium,
         )
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Button(onClick = onRetry) { Text(stringResource(R.string.hc_retry)) }
-            OutlinedButton(onClick = onBack) { Text(stringResource(R.string.au13_tvextraui_offline_back)) }
+            Button(onClick = onRetry) { Text(stringResource(I18nR.string.hc_retry)) }
+            OutlinedButton(onClick = onBack) { Text(stringResource(I18nR.string.au13_tvextraui_offline_back)) }
         }
     }
 }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.files.remote.RemotePath
 import de.mm20.launcher2.ui.R
@@ -66,14 +67,14 @@ internal object FileActions {
             FileKind.Image -> {
                 val allImages = siblings.filter { it.kind == FileKind.Image && !it.isDir }
                 val chosen = allImages.indexOfFirst { it.path == entry.path }
-                if (chosen < 0) { toast(context.getString(R.string.au_files_cannot_open_picture)); return }
+                if (chosen < 0) { toast(context.getString(I18nR.string.au_files_cannot_open_picture)); return }
                 // only the pictures around the chosen one go along (Intent size limit), and only those are made readable
                 val (images, index) = allImages.windowAround(chosen)
                 // a picture that cannot be handed out is left out, the chosen one has to stay at its place
                 val readable = images.mapIndexedNotNull { i, e -> uriFor(context, e.path, rootMode, shizukuMode)?.toString()?.let { i to it } }
                 val uris = readable.map { it.second }
                 val shownIndex = readable.indexOfFirst { it.first == index }
-                if (shownIndex < 0) { toast(context.getString(R.string.au_files_cannot_open_picture)); return }
+                if (shownIndex < 0) { toast(context.getString(I18nR.string.au_files_cannot_open_picture)); return }
                 context.startActivity(
                     Intent(context, PhotoViewerActivity::class.java)
                         .putStringArrayListExtra(PhotoViewerActivity.EXTRA_URIS, ArrayList(uris))
@@ -83,12 +84,12 @@ internal object FileActions {
             FileKind.Video -> {
                 val allVideos = siblings.filter { it.kind == FileKind.Video && !it.isDir }
                 val chosen = allVideos.indexOfFirst { it.path == entry.path }
-                if (chosen < 0) { toast(context.getString(R.string.au_files_cannot_open_video)); return }
+                if (chosen < 0) { toast(context.getString(I18nR.string.au_files_cannot_open_video)); return }
                 val (videos, index) = allVideos.windowAround(chosen)
                 val readable = videos.mapIndexedNotNull { i, e -> uriFor(context, e.path, rootMode, shizukuMode)?.toString()?.let { i to it } }
                 val uris = readable.map { it.second }
                 val shownIndex = readable.indexOfFirst { it.first == index }
-                if (shownIndex < 0) { toast(context.getString(R.string.au_files_cannot_open_video)); return }
+                if (shownIndex < 0) { toast(context.getString(I18nR.string.au_files_cannot_open_video)); return }
                 context.startActivity(
                     Intent(context, PlayerChoice.playerClass(context))
                         .putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, ArrayList(uris))
@@ -97,7 +98,7 @@ internal object FileActions {
                 )
             }
             else -> {
-                val uri = uriFor(context, entry.path, rootMode, shizukuMode) ?: run { toast(context.getString(R.string.au_files_cannot_open_file)); return }
+                val uri = uriFor(context, entry.path, rootMode, shizukuMode) ?: run { toast(context.getString(I18nR.string.au_files_cannot_open_file)); return }
                 // documents open in Telos Viewer
                 if (de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(entry.name)) {
                     context.startActivity(
@@ -109,7 +110,7 @@ internal object FileActions {
                 val view = Intent(Intent.ACTION_VIEW).setDataAndType(uri, mimeOf(entry.name))
                     .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 runCatching { context.startActivity(Intent.createChooser(view, entry.name).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
-                    .onFailure { toast(context.getString(R.string.floating_launcher_recent_files_no_app)) }
+                    .onFailure { toast(context.getString(I18nR.string.floating_launcher_recent_files_no_app)) }
             }
         }
     }
@@ -124,14 +125,14 @@ internal object FileActions {
         val files = entries.filter { !it.isDir }
         val uris = files.mapNotNull { uriFor(context, it.path, rootMode, shizukuMode) }
         if (uris.isEmpty()) {
-            Toast.makeText(context, context.getString(R.string.hc_folders_cannot_be_shared_compress_them_f), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(I18nR.string.hc_folders_cannot_be_shared_compress_them_f), Toast.LENGTH_SHORT).show()
             return
         }
         val shared = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
             de.mm20.launcher2.ui.common.share.ShareActions.shareUris(context, uris)
         }
         if (!shared) {
-            Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
         }
     }
 

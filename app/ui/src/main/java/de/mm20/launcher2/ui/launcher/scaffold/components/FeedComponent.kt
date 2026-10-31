@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+import de.mm20.launcher2.base.R as BaseR
 
 import android.annotation.SuppressLint
 import androidx.activity.compose.LocalActivity
@@ -138,7 +139,7 @@ internal object FeedComponent : ScaffoldComponent(), KoinComponent {
         {
             if (!feedAvailable) {
                 Icon(
-                    painterResource(R.drawable.error_48px),
+                    painterResource(BaseR.drawable.error_48px),
                     null,
                     tint = MaterialTheme.colorScheme.error,
                     modifier = Modifier.size(48.dp)
@@ -151,7 +152,7 @@ internal object FeedComponent : ScaffoldComponent(), KoinComponent {
                 )
             } else if (!feedHasContent) {
                 Icon(
-                    painterResource(R.drawable.news_48px),
+                    painterResource(BaseR.drawable.news_48px),
                     null,
                     tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(48.dp)

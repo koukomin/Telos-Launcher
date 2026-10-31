@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+import de.mm20.launcher2.base.R as BaseR
 
 import android.annotation.SuppressLint
 import android.view.animation.PathInterpolator
@@ -74,7 +75,7 @@ internal object NotificationsComponent : ScaffoldComponent(), KoinComponent {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painterResource(R.drawable.notifications_24px), null,
+                    painterResource(BaseR.drawable.notifications_24px), null,
                     modifier = Modifier.padding(16.dp),
                     tint = MaterialTheme.colorScheme.onSecondaryContainer,
                 )

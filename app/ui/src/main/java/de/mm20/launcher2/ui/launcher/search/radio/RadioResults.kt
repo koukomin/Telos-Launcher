@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.radio
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -66,13 +68,13 @@ fun LazyListScope.RadioResults(stations: List<RadioStation>, reverse: Boolean) {
                                 AsyncImage(model = station.faviconUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
                             } else {
                                 Icon(
-                                    painter = painterResource(R.drawable.music_note_24px),
+                                    painter = painterResource(BaseR.drawable.music_note_24px),
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
                         }
-                        MediaTypeIcon(R.drawable.radio_24px, Modifier.align(Alignment.BottomEnd))
+                        MediaTypeIcon(BaseR.drawable.radio_24px, Modifier.align(Alignment.BottomEnd))
                     }
                     Column(Modifier.weight(1f).padding(horizontal = 16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -84,7 +86,7 @@ fun LazyListScope.RadioResults(stations: List<RadioStation>, reverse: Boolean) {
                                 overflow = TextOverflow.Ellipsis,
                                 modifier = Modifier.weight(1f, fill = false),
                             )
-                            MediaTypeLabel(stringResource(R.string.au12_tvsearch_badge_radio), Modifier.padding(start = 8.dp))
+                            MediaTypeLabel(stringResource(I18nR.string.au12_tvsearch_badge_radio), Modifier.padding(start = 8.dp))
                         }
                         if (subtitle.isNotEmpty()) {
                             Text(

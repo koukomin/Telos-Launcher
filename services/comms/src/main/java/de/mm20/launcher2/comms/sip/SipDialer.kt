@@ -1,9 +1,9 @@
 package de.mm20.launcher2.comms.sip
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.Intent
 import de.mm20.launcher2.preferences.comms.CommsSettings
-import de.mm20.launcher2.i18n.R as I18nR
 import kotlinx.coroutines.flow.first
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

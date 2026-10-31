@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.plugins
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,7 +40,7 @@ fun PluginsSettingsScreen() {
     val enabledPackages by viewModel.enabledPluginPackages.collectAsState(emptyList())
     val disabledPackages by viewModel.disabledPluginPackages.collectAsState(emptyList())
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_plugins),
+        title = stringResource(I18nR.string.preference_screen_plugins),
         helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/concepts/plugins"
     ) {
         when {
@@ -53,8 +55,8 @@ fun PluginsSettingsScreen() {
                         verticalArrangement = Arrangement.Center,
                     ) {
                         LargeMessage(
-                            icon = R.drawable.extension_48px,
-                            text = stringResource(R.string.no_plugins_installed),
+                            icon = BaseR.drawable.extension_48px,
+                            text = stringResource(I18nR.string.no_plugins_installed),
                             color = MaterialTheme.colorScheme.secondary
                         )
                     }
@@ -64,7 +66,7 @@ fun PluginsSettingsScreen() {
             else -> {
                 if (enabledPackages.isNotEmpty()) {
                     item {
-                        PreferenceCategory(stringResource(R.string.preference_category_enabled_plugins)) {
+                        PreferenceCategory(stringResource(I18nR.string.preference_category_enabled_plugins)) {
                             for (plugin in enabledPackages) {
                                 PluginPreference(viewModel, plugin)
                             }
@@ -73,7 +75,7 @@ fun PluginsSettingsScreen() {
                 }
                 if (disabledPackages.isNotEmpty()) {
                     item {
-                        PreferenceCategory(stringResource(R.string.preference_category_installed_plugins)) {
+                        PreferenceCategory(stringResource(I18nR.string.preference_category_installed_plugins)) {
                             for (plugin in disabledPackages) {
                                 PluginPreference(viewModel, plugin)
                             }

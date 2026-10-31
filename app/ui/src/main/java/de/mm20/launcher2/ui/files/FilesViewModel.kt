@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.comms.search.TelosSearch
 import android.app.Application
@@ -44,8 +45,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     /** The message for a RAR that cannot be read (encrypted, or no RAR reader in this build), or null for any other error */
     private fun rarMessage(t: Throwable): String? = when (t) {
-        is ArchiveRarEncryptedException -> s(R.string.au23_rar_encrypted)
-        is ArchiveRarUnavailableException -> s(R.string.au23_rar_unavailable)
+        is ArchiveRarEncryptedException -> s(I18nR.string.au23_rar_encrypted)
+        is ArchiveRarUnavailableException -> s(I18nR.string.au23_rar_unavailable)
         else -> null
     }
     private val prefs = context.getSharedPreferences("telos_files", Context.MODE_PRIVATE)
@@ -170,11 +171,11 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                     found += StorageVolume(name, dir.path, stat.totalBytes, stat.availableBytes, removable)
                 }
             }
-            add(s(R.string.au_files_internal_storage), Environment.getExternalStorageDirectory(), false)
+            add(s(I18nR.string.au_files_internal_storage), Environment.getExternalStorageDirectory(), false)
             // other volumes show up as app folders: .../Android/data/<package>/files
             context.getExternalFilesDirs(null).drop(1).filterNotNull().forEach { d ->
                 val volume = File(d.path.substringBefore("/Android"))
-                if (volume.exists()) add(s(R.string.au_files_sd_usb, volume.name), volume, true)
+                if (volume.exists()) add(s(I18nR.string.au_files_sd_usb, volume.name), volume, true)
             }
             withContext(Dispatchers.Main) { volumes = found }
         }
@@ -249,10 +250,10 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 entries = emptyList()
                 if (it is ArchiveCryptoException && ArchivePath.isArchive(dir)) {
                     // a 7z with encrypted file names cannot even be listed without its password
-                    error = s(R.string.au21_arch_password_needed)
+                    error = s(I18nR.string.au21_arch_password_needed)
                     archivePrompt = ArchivePrompt(ArchivePath.archiveOf(dir), true) { load(dir) }
                 } else {
-                    error = rarMessage(it) ?: it.message?.takeIf { m -> m != "Cannot open this folder" } ?: s(R.string.au_files_cannot_open_folder)
+                    error = rarMessage(it) ?: it.message?.takeIf { m -> m != "Cannot open this folder" } ?: s(I18nR.string.au_files_cannot_open_folder)
                 }
             }
         }
@@ -282,9 +283,9 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 prompt.retry()
             }.onFailure {
                 onError(when (it) {
-                    is ArchiveWrongPasswordException -> s(R.string.au21_arch_wrong_password)
-                    is ArchivePasswordRequiredException -> s(R.string.au21_arch_password_needed)
-                    else -> it.message ?: s(R.string.au21_arch_failed)
+                    is ArchiveWrongPasswordException -> s(I18nR.string.au21_arch_wrong_password)
+                    is ArchivePasswordRequiredException -> s(I18nR.string.au21_arch_password_needed)
+                    else -> it.message ?: s(I18nR.string.au21_arch_failed)
                 })
             }
         }
@@ -431,7 +432,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 if (searchRevision == revision) { searchResults = result.first; searchLimited = result.second }
             } catch (e: CancellationException) { throw e }
             catch (_: Exception) {
-                if (searchRevision == revision) { searchResults = emptyList(); searchLimited = false; message = s(R.string.au_files_cannot_open_folder) }
+                if (searchRevision == revision) { searchResults = emptyList(); searchLimited = false; message = s(I18nR.string.au_files_cannot_open_folder) }
             }
         }
     }
@@ -459,7 +460,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { RootShell.available(force = true) }
             rootMode = ok; shizukuMode = false
-            if (!ok) message = s(R.string.au_files_root_denied)
+            if (!ok) message = s(I18nR.string.au_files_root_denied)
             onResult(ok)
             path?.let { load(it) }
         }
@@ -479,7 +480,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             val permitted = ShizukuShell.requestAccess()
             val ok = permitted && withContext(Dispatchers.IO) { RootShell.available(force = true, shizuku = true) }
             rootMode = ok; shizukuMode = ok
-            if (!ok) message = s(R.string.telos_files_shizuku_denied)
+            if (!ok) message = s(I18nR.string.telos_files_shizuku_denied)
             path?.let { load(it) }
         }
     }
@@ -489,14 +490,14 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { root.remount(mountPoint, writable) }
             rootMounted = if (ok) writable else rootMounted
-            message = if (ok) s(if (writable) R.string.au_files_remount_rw else R.string.au_files_remount_ro, mountPoint) else s(R.string.au_files_remount_failed, mountPoint)
+            message = if (ok) s(if (writable) I18nR.string.au_files_remount_rw else I18nR.string.au_files_remount_ro, mountPoint) else s(I18nR.string.au_files_remount_failed, mountPoint)
         }
     }
 
     fun chmod(entry: FsEntry, mode: String) {
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { root.chmod(entry.path, mode) }
-            message = if (ok) s(R.string.au_files_chmod_ok) else s(R.string.au_files_chmod_failed)
+            message = if (ok) s(I18nR.string.au_files_chmod_ok) else s(I18nR.string.au_files_chmod_failed)
             reload()
             onFilesChanged()
         }
@@ -505,7 +506,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     // ---- operations ----
 
     private fun runTask(title: String, total: Long?, estimate: ((CancelFlag) -> Long?)? = null, block: (CancelFlag, (Long) -> Unit) -> String) {
-        if (task != null) { message = s(R.string.telos_files_task_busy); return }
+        if (task != null) { message = s(I18nR.string.telos_files_task_busy); return }
         val cancel = CancelFlag()
         task = TaskState(title, if (total != null) 0f else null, cancel)
         viewModelScope.launch {
@@ -522,11 +523,11 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             task = null
             message = result.getOrElse {
                 when {
-                    cancel.cancelled -> s(R.string.au_files_cancelled)
-                    it is ArchiveWrongPasswordException -> s(R.string.au21_arch_wrong_password)
-                    it is ArchivePasswordRequiredException -> s(R.string.au21_arch_password_needed)
+                    cancel.cancelled -> s(I18nR.string.au_files_cancelled)
+                    it is ArchiveWrongPasswordException -> s(I18nR.string.au21_arch_wrong_password)
+                    it is ArchivePasswordRequiredException -> s(I18nR.string.au21_arch_password_needed)
                     rarMessage(it) != null -> rarMessage(it)!!
-                    else -> it.message ?: s(R.string.au_files_failed)
+                    else -> it.message ?: s(I18nR.string.au_files_failed)
                 }
             }
             selection = emptySet()
@@ -539,7 +540,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val dir = path ?: return
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { fs.mkdir(dir, fs.freeName(dir, name)) }
-            message = if (ok) null else s(R.string.au_files_mkdir_failed)
+            message = if (ok) null else s(I18nR.string.au_files_mkdir_failed)
             reload()
             onFilesChanged()
         }
@@ -549,7 +550,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val dir = path ?: return
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { fs.createFile(dir, fs.freeName(dir, name)) }
-            message = if (ok) null else s(R.string.au_files_create_failed)
+            message = if (ok) null else s(I18nR.string.au_files_create_failed)
             reload()
             onFilesChanged()
         }
@@ -561,11 +562,11 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val destinations = items.zip(names).map { (entry, name) -> joinPath(parentOf(entry.path) ?: "/", name) }
         if (destinations.map { it.lowercase() }.toSet().size != destinations.size || names.any { !isPlainName(it) } ||
             items.any { parent -> parent.isDir && items.any { child -> child.path.startsWith(parent.path.trimEnd('/') + "/") } }) {
-            message = s(R.string.telos_files_rename_collision); return
+            message = s(I18nR.string.telos_files_rename_collision); return
         }
-        runTask(s(R.string.telos_files_batch_rename), null) { cancel, _ ->
+        runTask(s(I18nR.string.telos_files_batch_rename), null) { cancel, _ ->
             val sourcePaths = items.map { it.path }.toSet()
-            if (destinations.any { it !in sourcePaths && operationFs.exists(it) }) return@runTask s(R.string.telos_files_rename_collision)
+            if (destinations.any { it !in sourcePaths && operationFs.exists(it) }) return@runTask s(I18nR.string.telos_files_rename_collision)
             // Two phases allow swaps without overwriting an existing file.
             val current = items.map { it.path }.toMutableList()
             try {
@@ -579,7 +580,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                     if (cancel.cancelled || !operationFs.rename(current[i], names[i])) throw java.io.IOException("Rename failed")
                     current[i] = destinations[i]
                 }
-                s(R.string.telos_files_renamed, items.size)
+                s(I18nR.string.telos_files_renamed, items.size)
             } catch (e: Exception) {
                 // Best-effort rollback, using fresh names first so swaps cannot collide.
                 val rollback = current.map { old ->
@@ -587,7 +588,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                     if (runCatching { operationFs.rename(old, name) }.getOrDefault(false)) joinPath(parentOf(old) ?: "/", name) else old
                 }
                 val restored = rollback.indices.map { i -> runCatching { operationFs.rename(rollback[i], items[i].name) }.getOrDefault(false) }.all { it }
-                s(if (restored) R.string.telos_files_rename_rolled_back else R.string.telos_files_rename_partial)
+                s(if (restored) I18nR.string.telos_files_rename_rolled_back else I18nR.string.telos_files_rename_partial)
             }
         }
     }
@@ -600,7 +601,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             val ok = withContext(Dispatchers.IO) {
                 newName.isNotBlank() && isPlainName(newName) && (onlyCase || !fs.exists(joinPath(dir, newName))) && fs.rename(entry.path, newName)
             }
-            message = if (ok) null else s(R.string.au_files_rename_failed)
+            message = if (ok) null else s(I18nR.string.au_files_rename_failed)
             selection = emptySet()
             reload()
             onFilesChanged()
@@ -612,9 +613,9 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     }
     fun canTrash(items: List<FsEntry>): Boolean = !rootMode && items.isNotEmpty() && items.all { trash.supports(it.path) }
     fun moveToTrash(items: List<FsEntry>) {
-        if (task != null) { message = s(R.string.telos_files_task_busy); return }
+        if (task != null) { message = s(I18nR.string.telos_files_task_busy); return }
         val cancel = CancelFlag()
-        task = TaskState(s(R.string.telos_trash_move), 0f, cancel)
+        task = TaskState(s(I18nR.string.telos_trash_move), 0f, cancel)
         viewModelScope.launch {
             var moved = 0
             try {
@@ -624,28 +625,28 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                     moved++
                     task = task?.copy(progress = moved.toFloat() / items.size)
                 }
-                message = s(R.string.telos_trash_moved, moved)
+                message = s(I18nR.string.telos_trash_moved, moved)
             } catch (e: kotlinx.coroutines.CancellationException) { throw e }
-              catch (_: Exception) { message = s(R.string.telos_trash_move_failed) }
+              catch (_: Exception) { message = s(I18nR.string.telos_trash_move_failed) }
             finally { task = null; selection = emptySet(); reload(); onFilesChanged() }
         }
     }
 
     fun delete(items: List<FsEntry>) {
-        runTask(s(R.string.au_files_deleting), null) { cancel, _ ->
+        runTask(s(I18nR.string.au_files_deleting), null) { cancel, _ ->
             var failed = 0
             for (item in items) {
                 if (cancel.cancelled) throw java.io.IOException("Cancelled")
                 if (!fs.delete(item.path)) failed++
             }
-            if (failed == 0) s(R.string.au_files_deleted) else s(R.string.au_files_delete_failed, failed)
+            if (failed == 0) s(I18nR.string.au_files_deleted) else s(I18nR.string.au_files_delete_failed, failed)
         }
     }
 
     fun copyToClipboard(cut: Boolean) {
         clipboard = ClipboardState(selectedEntries().map { it.path }, cut, rootMode, shizukuMode)
         selection = emptySet()
-        message = if (cut) s(R.string.au_files_cut_hint) else s(R.string.au_files_copied_hint)
+        message = if (cut) s(I18nR.string.au_files_cut_hint) else s(I18nR.string.au_files_copied_hint)
     }
 
     fun clearClipboard() { clipboard = null }
@@ -669,13 +670,13 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 .onSuccess {
                     selection = emptySet()
                     if (clip.cut && clearCopiedClipboard) clipboard = null
-                    message = s(R.string.telos_files_transfer_added)
+                    message = s(I18nR.string.telos_files_transfer_added)
                 }
-                .onFailure { message = s(R.string.telos_files_transfer_queue_full) }
+                .onFailure { message = s(I18nR.string.telos_files_transfer_queue_full) }
             return
         }
         val infoByPath = (searchResults ?: entries).associateBy { it.path }
-        runTask(if (clip.cut) s(R.string.au_files_moving) else s(R.string.au_files_copying), null) { cancel, progress ->
+        runTask(if (clip.cut) s(I18nR.string.au_files_moving) else s(I18nR.string.au_files_copying), null) { cancel, progress ->
             var failed = 0
             for (src in clip.paths) {
                 if (cancel.cancelled) throw java.io.IOException("Cancelled")
@@ -694,7 +695,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 if (!ok) failed++
             }
             if (clip.cut && clearCopiedClipboard && failed == 0) clipboard = null
-            if (failed == 0) s(R.string.au_files_done) else if (clip.cut) s(R.string.au_files_move_failed, failed) else s(R.string.au_files_copy_failed, failed)
+            if (failed == 0) s(I18nR.string.au_files_done) else if (clip.cut) s(I18nR.string.au_files_move_failed, failed) else s(I18nR.string.au_files_copy_failed, failed)
         }
     }
 
@@ -713,7 +714,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) { runCatching { de.mm20.launcher2.ui.files.vault.VaultSessions.unlock(vault, password) } }
             result.onSuccess { onDone(); open(de.mm20.launcher2.ui.files.vault.VaultPath.build(vault, "/")) }.onFailure {
-                onError(if (it is de.mm20.launcher2.ui.files.vault.WrongPasswordException) s(R.string.au_files_wrong_password) else it.message ?: s(R.string.au_files_vault_failed))
+                onError(if (it is de.mm20.launcher2.ui.files.vault.WrongPasswordException) s(I18nR.string.au_files_wrong_password) else it.message ?: s(I18nR.string.au_files_vault_failed))
             }
         }
     }
@@ -730,7 +731,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         // the name comes from a server: only its last part is used, so it cannot point out of the folder
         val target = File(File(context.cacheDir, "remote_open").apply { mkdirs() }, entry.name.substringAfterLast('/').takeIf { isPlainName(it) } ?: "file")
         val cancel = CancelFlag()
-        task = TaskState(s(R.string.au_files_downloading), if (entry.size > 0) 0f else null, cancel)
+        task = TaskState(s(I18nR.string.au_files_downloading), if (entry.size > 0) 0f else null, cancel)
         viewModelScope.launch {
             val done = java.util.concurrent.atomic.AtomicLong()
             val result = withContext(Dispatchers.IO) {
@@ -757,7 +758,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                     // an encrypted file in an archive: ask for the password, then fetch it again
                     archivePrompt = ArchivePrompt(ArchivePath.archiveOf(entry.path), false) { download(entry, then) }
                 } else {
-                    message = if (cancel.cancelled) s(R.string.au_files_cancelled) else rarMessage(it) ?: it.message ?: s(R.string.au_files_download_failed)
+                    message = if (cancel.cancelled) s(I18nR.string.au_files_cancelled) else rarMessage(it) ?: it.message ?: s(I18nR.string.au_files_download_failed)
                 }
             }
         }
@@ -778,7 +779,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     fun shareEntries(entries: List<FsEntry>) {
         val files = shareable(entries)
         if (files.isEmpty()) {
-            message = s(R.string.au9_share_nothing)
+            message = s(I18nR.string.au9_share_nothing)
             return
         }
         val local = files.filter { !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) }
@@ -813,7 +814,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val dir = path ?: return
         val files = items.map { File(it.path) }
         val secret = password?.takeIf { format.supportsPassword && it.isNotEmpty() }
-        runTask(s(R.string.au_files_compressing), null, { cancel -> files.fold(0L) { total, file -> Math.addExact(total, FsOps.sizeOf(file, cancel)) } }) { cancel, progress ->
+        runTask(s(I18nR.string.au_files_compressing), null, { cancel -> files.fold(0L) { total, file -> Math.addExact(total, FsOps.sizeOf(file, cancel)) } }) { cancel, progress ->
             val name = ArchiveFormats.freeName(ArchiveFormats.withExtension(zipName, format.extension)) { File(dir, it).exists() }
             val target = File(dir, name)
             try {
@@ -831,7 +832,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                         }
                     } catch (e: Exception) { target.delete(); throw e }
                 }
-                s(R.string.au_files_created, target.name)
+                s(I18nR.string.au_files_created, target.name)
             } finally { secret?.fill('\u0000') }
         }
     }
@@ -848,7 +849,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 archivePrompt = ArchivePrompt(entry.path, false) { extract(entry) }
                 return@launch
             }
-            runTask(s(R.string.au_files_extracting), null) { cancel, progress ->
+            runTask(s(I18nR.string.au_files_extracting), null) { cancel, progress ->
                 val target = File(dir, local.freeName(dir, ArchivePath.baseName(entry.name)))
                 try {
                     archiveFs.extractAll(target, cancel, progress)
@@ -860,7 +861,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                     val current = path
                     if (current == null || !ArchivePath.isArchive(current) || ArchivePath.archiveOf(current) != entry.path) ArchiveSessions.clear(entry.path)
                 }
-                s(R.string.au_files_extracted, target.name)
+                s(I18nR.string.au_files_extracted, target.name)
             }
         }
     }

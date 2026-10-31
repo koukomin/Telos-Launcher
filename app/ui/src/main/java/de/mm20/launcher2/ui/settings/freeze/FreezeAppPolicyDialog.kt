@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.freeze
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Process
 import androidx.compose.foundation.layout.*
@@ -51,27 +52,27 @@ internal fun FreezePackagePolicyDialog(pkg: String, label: String, user: android
         text = {
             Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(pkg, style = MaterialTheme.typography.bodySmall)
-                if (!currentUser) Text(stringResource(R.string.freeze_hub_profile_notice))
-                ListPreference(title = stringResource(R.string.preference_freeze_auto_category),
+                if (!currentUser) Text(stringResource(I18nR.string.freeze_hub_profile_notice))
+                ListPreference(title = stringResource(I18nR.string.preference_freeze_auto_category),
                     value = if (state == AppFreezeState.Candidate) (if (method == FreezeMethod.Disable) 2 else 1) else if (state == AppFreezeState.NeverFreeze) 3 else 0,
-                    items = listOf(R.string.freeze_app_state_none, R.string.freeze_app_state_candidate_suspend,
-                        R.string.freeze_app_state_candidate_disable, R.string.freeze_app_state_never).mapIndexed { i, res -> stringResource(res) to i },
+                    items = listOf(I18nR.string.freeze_app_state_none, I18nR.string.freeze_app_state_candidate_suspend,
+                        I18nR.string.freeze_app_state_candidate_disable, I18nR.string.freeze_app_state_never).mapIndexed { i, res -> stringResource(res) to i },
                     enabled = currentUser,
                     onValueChanged = { choice -> if (choice != null) vm.setPackageFreezeState(pkg, user,
                         when (choice) { 1, 2 -> AppFreezeState.Candidate; 3 -> AppFreezeState.NeverFreeze; else -> AppFreezeState.None },
                         if (choice == 2) FreezeMethod.Disable else FreezeMethod.Suspend) })
-                Text(stringResource(R.string.freeze_hub_delay_help), style = MaterialTheme.typography.bodySmall)
-                ListPreference(title = stringResource(R.string.freeze_hub_delay), value = delays[pkg] ?: -1,
+                Text(stringResource(I18nR.string.freeze_hub_delay_help), style = MaterialTheme.typography.bodySmall)
+                ListPreference(title = stringResource(I18nR.string.freeze_hub_delay), value = delays[pkg] ?: -1,
                     enabled = currentUser,
-                    items = listOf(stringResource(R.string.freeze_hub_inherit) to -1,
-                        stringResource(R.string.app_lock_grace_period_immediately) to 0) +
-                        listOf(1, 5, 10, 15, 30, 60, 120).map { stringResource(R.string.au3_commsfreeze_minutes, it) to it },
+                    items = listOf(stringResource(I18nR.string.freeze_hub_inherit) to -1,
+                        stringResource(I18nR.string.app_lock_grace_period_immediately) to 0) +
+                        listOf(1, 5, 10, 15, 30, 60, 120).map { stringResource(I18nR.string.au3_commsfreeze_minutes, it) to it },
                     onValueChanged = { choice -> if (choice != null) vm.setDelay(pkg, choice.takeIf { it >= 0 }) })
-                Text(stringResource(R.string.freeze_hub_companion_help), style = MaterialTheme.typography.bodySmall)
-                SwitchPreference(title = stringResource(R.string.freeze_hub_companions), value = pkg in enabled,
+                Text(stringResource(I18nR.string.freeze_hub_companion_help), style = MaterialTheme.typography.bodySmall)
+                SwitchPreference(title = stringResource(I18nR.string.freeze_hub_companions), value = pkg in enabled,
                     enabled = currentUser && selected.isNotEmpty(),
                     onValueChanged = { vm.setCompanionRule(pkg, it, selected) })
-                Preference(title = stringResource(R.string.freeze_hub_companions),
+                Preference(title = stringResource(I18nR.string.freeze_hub_companions),
                     summary = selected.joinToString("\n") { dep -> choices.firstOrNull { it.first == dep }?.second ?: dep },
                     enabled = currentUser, onClick = { picker = true })
                 if (pkg == "com.google.android.apps.bard" && selected.contains("com.google.android.googlequicksearchbox")) {
@@ -80,11 +81,11 @@ internal fun FreezePackagePolicyDialog(pkg: String, label: String, user: android
                 }
                 HorizontalDivider()
                 Text("UAD-NG · ${description?.recommendation.orEmpty()}", style = MaterialTheme.typography.titleSmall)
-                Text(description?.description?.takeIf { it.isNotBlank() } ?: stringResource(R.string.freeze_hub_unknown),
+                Text(description?.description?.takeIf { it.isNotBlank() } ?: stringResource(I18nR.string.freeze_hub_unknown),
                     style = MaterialTheme.typography.bodySmall)
-                Text(stringResource(R.string.freeze_hub_uad_help), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(I18nR.string.freeze_hub_uad_help), style = MaterialTheme.typography.bodySmall)
                 if (description?.recommendation.equals("Expert", true)) {
-                    SwitchPreference(title = stringResource(R.string.freeze_hub_expert), value = pkg in approved,
+                    SwitchPreference(title = stringResource(I18nR.string.freeze_hub_expert), value = pkg in approved,
                         enabled = currentUser, onValueChanged = { vm.setRiskApproved(pkg, it) })
                 }
             }
@@ -99,12 +100,12 @@ private fun CompanionPicker(choices: List<Pair<String, String>>, initial: Set<St
     var query by rememberSaveable { mutableStateOf("") }
     var chosen by rememberSaveable { mutableStateOf(initial.toList()) }
     val shown = remember(choices, query) { choices.filter { it.first.contains(query, true) || it.second.contains(query, true) } }
-    AlertDialog(onDismissRequest = close, title = { Text(stringResource(R.string.freeze_hub_companions)) },
-        confirmButton = { TextButton(onClick = { save(chosen.toSet()) }) { Text(stringResource(R.string.hc_apply)) } },
+    AlertDialog(onDismissRequest = close, title = { Text(stringResource(I18nR.string.freeze_hub_companions)) },
+        confirmButton = { TextButton(onClick = { save(chosen.toSet()) }) { Text(stringResource(I18nR.string.hc_apply)) } },
         dismissButton = { TextButton(onClick = close) { Text(stringResource(android.R.string.cancel)) } },
         text = {
             Column {
-                TelosSearchBar(value = query, onValueChange = { query = it }, placeholder = stringResource(R.string.hf_freeze_search_apps))
+                TelosSearchBar(value = query, onValueChange = { query = it }, placeholder = stringResource(I18nR.string.hf_freeze_search_apps))
                 LazyColumn(Modifier.fillMaxWidth().heightIn(max = 400.dp)) {
                     items(shown, key = { it.first }) { (pkg, label) ->
                         CheckboxPreference(title = label, summary = pkg, value = pkg in chosen,

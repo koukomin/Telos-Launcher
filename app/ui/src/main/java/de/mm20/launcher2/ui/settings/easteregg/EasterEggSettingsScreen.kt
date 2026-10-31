@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.easteregg
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
@@ -33,7 +34,7 @@ data object EasterEggSettingsRoute: NavKey
 @Composable
 fun EasterEggSettingsScreen() {
     val viewModel: EasterEggSettingsScreenVM = viewModel()
-    PreferenceScreen(title = stringResource(R.string.preference_screen_about)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_about)) {
         item {
             val easterEgg by viewModel.easterEgg.collectAsState()
             val bgAlpha by animateFloatAsState(if (easterEgg) 1f else 0f)

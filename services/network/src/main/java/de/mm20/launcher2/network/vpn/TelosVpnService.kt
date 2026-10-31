@@ -1,4 +1,5 @@
 package de.mm20.launcher2.network.vpn
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.KeyguardManager
 import android.app.PendingIntent
@@ -18,7 +19,6 @@ import com.celzero.firestack.intra.DefaultDNS
 import com.celzero.firestack.intra.Intra
 import com.celzero.firestack.intra.Tunnel
 import com.celzero.firestack.settings.Settings
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.network.NetworkEngine
 import de.mm20.launcher2.network.StopReason
 import de.mm20.launcher2.network.api.AppDirectory

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.widget.Toast
@@ -55,11 +57,11 @@ data class CommsDashboardRoute(
 ) : NavKey
 
 private enum class CommsTab(@StringRes val label: Int) {
-    Recents(R.string.au_phonea_recents),
-    Contacts(R.string.preference_search_contacts),
-    Recordings(R.string.hc_recordings_tab),
-    Keypad(R.string.comms_keypad),
-    Messages(R.string.hc_messages),
+    Recents(I18nR.string.au_phonea_recents),
+    Contacts(I18nR.string.preference_search_contacts),
+    Recordings(I18nR.string.hc_recordings_tab),
+    Keypad(I18nR.string.comms_keypad),
+    Messages(I18nR.string.hc_messages),
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -137,12 +139,12 @@ fun CommsDashboardScreen(
             ) {
                 Spacer(Modifier.height(20.dp))
                 Text(
-                    stringResource(R.string.au_phonea_dialer),
+                    stringResource(I18nR.string.au_phonea_dialer),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(horizontal = 24.dp),
                 )
                 Text(
-                    stringResource(R.string.hc_messages),
+                    stringResource(I18nR.string.hc_messages),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp),
@@ -151,12 +153,12 @@ fun CommsDashboardScreen(
                 NavigationDrawerItem(
                     icon = {
                         ThemedDrawerIcon(
-                            iconRes = R.drawable.mic_24px,
+                            iconRes = BaseR.drawable.mic_24px,
                             containerColor = MaterialTheme.colorScheme.primaryContainer,
                             contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     },
-                    label = { Text(stringResource(R.string.hc_call_recordings)) },
+                    label = { Text(stringResource(I18nR.string.hc_call_recordings)) },
                     selected = selectedTab == CommsTab.Recordings,
                     onClick = {
                         coroutineScope.launch { drawerState.close() }
@@ -166,12 +168,12 @@ fun CommsDashboardScreen(
                 NavigationDrawerItem(
                     icon = {
                         ThemedDrawerIcon(
-                            iconRes = R.drawable.settings_24px,
+                            iconRes = BaseR.drawable.settings_24px,
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                         )
                     },
-                    label = { Text(stringResource(R.string.hc_settings)) },
+                    label = { Text(stringResource(I18nR.string.hc_settings)) },
                     selected = false,
                     onClick = {
                         coroutineScope.launch { drawerState.close() }
@@ -181,7 +183,7 @@ fun CommsDashboardScreen(
                 NavigationDrawerItem(
                     icon = {
                         ThemedDrawerIcon(
-                            iconRes = R.drawable.text_fields_24px,
+                            iconRes = BaseR.drawable.text_fields_24px,
                             containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                             contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                         )
@@ -196,12 +198,12 @@ fun CommsDashboardScreen(
                 NavigationDrawerItem(
                     icon = {
                         ThemedDrawerIcon(
-                            iconRes = R.drawable.delete_24px,
+                            iconRes = BaseR.drawable.delete_24px,
                             containerColor = MaterialTheme.colorScheme.errorContainer,
                             contentColor = MaterialTheme.colorScheme.onErrorContainer
                         )
                     },
-                    label = { Text(stringResource(R.string.comms_clear_history)) },
+                    label = { Text(stringResource(I18nR.string.comms_clear_history)) },
                     selected = false,
                     onClick = {
                         coroutineScope.launch { drawerState.close() }
@@ -210,14 +212,14 @@ fun CommsDashboardScreen(
                 )
                 HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
                 Text(
-                    stringResource(R.string.comms_messengers),
+                    stringResource(I18nR.string.comms_messengers),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
                 )
                 NavigationDrawerItem(
                     icon = { DefaultSmsLauncherIcon() },
-                    label = { Text(stringResource(R.string.hc_messages)) },
+                    label = { Text(stringResource(I18nR.string.hc_messages)) },
                     selected = selectedTab == CommsTab.Messages,
                     onClick = {
                         coroutineScope.launch { drawerState.close() }
@@ -232,7 +234,7 @@ fun CommsDashboardScreen(
                         label = {
                             val dual = app.user != android.os.Process.myUserHandle()
                             Text(
-                                if (dual) "${app.label} · ${stringResource(R.string.comms_dual_app)}" else app.label,
+                                if (dual) "${app.label} · ${stringResource(I18nR.string.comms_dual_app)}" else app.label,
                                 maxLines = 1,
                             )
                         },
@@ -259,18 +261,18 @@ fun CommsDashboardScreen(
                     ) {
                         if (inSubScreen) {
                             IconButton(onClick = { selectedTab = CommsTab.Recents }) {
-                                Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
+                                Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back))
                             }
                         }
                         Text(
                             text = stringResource(
-                                if (inSubScreen) selectedTab.label else R.string.au_phonea_dialer
+                                if (inSubScreen) selectedTab.label else I18nR.string.au_phonea_dialer
                             ),
                             style = MaterialTheme.typography.titleLarge,
                             modifier = Modifier.weight(1f).padding(start = if (inSubScreen) 8.dp else 0.dp),
                         )
                         IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
-                            Icon(painterResource(R.drawable.menu_24px), contentDescription = stringResource(R.string.comms_menu))
+                            Icon(painterResource(BaseR.drawable.menu_24px), contentDescription = stringResource(I18nR.string.comms_menu))
                         }
                     }
                     if (!inSubScreen) {
@@ -279,23 +281,23 @@ fun CommsDashboardScreen(
                             onValueChange = { searchQuery = it },
                             placeholder = stringResource(
                                 when (selectedTab) {
-                                    CommsTab.Recents -> R.string.tsp_search_calls
-                                    CommsTab.Recordings -> R.string.tsp_search_call_recordings
-                                    CommsTab.Messages -> R.string.tsp_search_messages
-                                    else -> R.string.tsp_search_contacts
+                                    CommsTab.Recents -> I18nR.string.tsp_search_calls
+                                    CommsTab.Recordings -> I18nR.string.tsp_search_call_recordings
+                                    CommsTab.Messages -> I18nR.string.tsp_search_messages
+                                    else -> I18nR.string.tsp_search_contacts
                                 }
                             ),
                             leading = {
                                 IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
-                                    Icon(painterResource(R.drawable.menu_24px), contentDescription = stringResource(R.string.comms_menu))
+                                    Icon(painterResource(BaseR.drawable.menu_24px), contentDescription = stringResource(I18nR.string.comms_menu))
                                 }
                             },
                             trailing = {
                                 if (selectedTab == CommsTab.Recents) {
                                     IconButton(onClick = { showFilters = !showFilters }) {
                                         Icon(
-                                            painterResource(R.drawable.filter_alt_24px),
-                                            contentDescription = stringResource(R.string.hc_filter),
+                                            painterResource(BaseR.drawable.filter_alt_24px),
+                                            contentDescription = stringResource(I18nR.string.hc_filter),
                                             tint = if (showFilters) MaterialTheme.colorScheme.primary
                                             else MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
@@ -312,9 +314,9 @@ fun CommsDashboardScreen(
                         containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     ) {
                         listOf(
-                            Triple(CommsTab.Recents, R.drawable.schedule_24px, CommsTab.Recents.label),
-                            Triple(CommsTab.Contacts, R.drawable.person_24px, CommsTab.Contacts.label),
-                            Triple(CommsTab.Messages, R.drawable.sms_24px, CommsTab.Messages.label),
+                            Triple(CommsTab.Recents, BaseR.drawable.schedule_24px, CommsTab.Recents.label),
+                            Triple(CommsTab.Contacts, BaseR.drawable.person_24px, CommsTab.Contacts.label),
+                            Triple(CommsTab.Messages, BaseR.drawable.sms_24px, CommsTab.Messages.label),
                         ).forEach { (tab, icon, label) ->
                             AdaptiveNavigationItem(
                                 selected = selectedTab == tab,
@@ -344,7 +346,7 @@ fun CommsDashboardScreen(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary,
                     ) {
-                        Icon(painterResource(R.drawable.dialpad_24px), contentDescription = stringResource(R.string.hc_dialpad))
+                        Icon(painterResource(BaseR.drawable.dialpad_24px), contentDescription = stringResource(I18nR.string.hc_dialpad))
                     }
                 }
             },
@@ -354,7 +356,7 @@ fun CommsDashboardScreen(
                     CommsTab.Recents -> RecentsScreen(searchQuery = searchQuery, showFilters = showFilters)
                     CommsTab.Recordings -> de.mm20.launcher2.ui.component.AuthGate(
                         enabled = lockCallRecordings,
-                        title = stringResource(R.string.auth_gate_recordings),
+                        title = stringResource(I18nR.string.auth_gate_recordings),
                         unlocked = recordingsUnlocked,
                         onUnlocked = { de.mm20.launcher2.comms.privacy.PrivacySession.unlockRecordings() },
                         onCancelled = { selectedTab = CommsTab.Recents },
@@ -442,7 +444,7 @@ private fun CommsLauncherIcon(packageName: String?, user: android.os.UserHandle 
         }
     }.collectAsStateWithLifecycle(null)
     if (icon != null) ShapedLauncherIcon(size = 28.dp, icon = { icon })
-    else Icon(painterResource(R.drawable.sms_24px), contentDescription = null)
+    else Icon(painterResource(BaseR.drawable.sms_24px), contentDescription = null)
 }
 
 @Composable

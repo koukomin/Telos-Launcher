@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -84,7 +85,7 @@ fun Chip(
                     Icon(
                         modifier = Modifier.size(20.dp),
                         imageVector = rightIcon,
-                        contentDescription = androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.menu_remove)
+                        contentDescription = androidx.compose.ui.res.stringResource(I18nR.string.menu_remove)
                     )
                 }
             } else {

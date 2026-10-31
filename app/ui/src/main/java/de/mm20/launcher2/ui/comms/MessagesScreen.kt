@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
-import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
 import android.Manifest
 import android.content.pm.PackageManager
@@ -137,14 +138,14 @@ fun MessagesScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            Text(stringResource(R.string.hc_messages), style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(I18nR.string.hc_messages), style = MaterialTheme.typography.titleMedium)
             Text(
-                stringResource(R.string.hc_allow_telos_to_read_and_send_text_messag),
+                stringResource(I18nR.string.hc_allow_telos_to_read_and_send_text_messag),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 12.dp),
             )
-            Button(onClick = { if (!isDefault) requestSmsRole() else launcher.launch(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS)) }) { Text(stringResource(R.string.hc_allow)) }
+            Button(onClick = { if (!isDefault) requestSmsRole() else launcher.launch(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS)) }) { Text(stringResource(I18nR.string.hc_allow)) }
         }
         return
     }
@@ -245,10 +246,10 @@ fun MessagesScreen(
             Surface(color = MaterialTheme.colorScheme.secondaryContainer, modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        stringResource(R.string.hc_make_telos_your_sms_app_to_receive_messa),
+                        stringResource(I18nR.string.hc_make_telos_your_sms_app_to_receive_messa),
                         style = MaterialTheme.typography.bodySmall,
                     )
-                    Button(onClick = ::requestSmsRole) { Text(stringResource(if (roleSettingsFallback) R.string.hc_settings else R.string.hc_set)) }
+                    Button(onClick = ::requestSmsRole) { Text(stringResource(if (roleSettingsFallback) I18nR.string.hc_settings else I18nR.string.hc_set)) }
                 }
             }
         }
@@ -256,21 +257,21 @@ fun MessagesScreen(
             onClick = { newMessage = true },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
         ) {
-            Icon(painterResource(R.drawable.sms_24px), contentDescription = null)
-            Text(stringResource(R.string.hc_new_message), Modifier.padding(start = 12.dp))
+            Icon(painterResource(BaseR.drawable.sms_24px), contentDescription = null)
+            Text(stringResource(I18nR.string.hc_new_message), Modifier.padding(start = 12.dp))
         }
         if (blockedCount > 0) TextButton(
             onClick = { showBlocked = true },
             modifier = Modifier.padding(horizontal = 8.dp),
-        ) { Text(stringResource(R.string.au2_msg2_blocked_messages_count, blockedCount)) }
+        ) { Text(stringResource(I18nR.string.au2_msg2_blocked_messages_count, blockedCount)) }
         TextButton(
             onClick = { showArchived = !showArchived },
             modifier = Modifier.padding(horizontal = 8.dp),
-        ) { Text(stringResource(if (showArchived) R.string.comms_unarchive_conversation else R.string.comms_archived)) }
+        ) { Text(stringResource(if (showArchived) I18nR.string.comms_unarchive_conversation else I18nR.string.comms_archived)) }
         when {
             shown == null -> Box(Modifier.fillMaxSize())
             shown.isEmpty() && listQuery.isNotBlank() -> SearchEmptyState(listQuery)
-            shown.isEmpty() -> EmptyCommsTab(stringResource(R.string.au_messages_no_conversations), stringResource(R.string.au_messages_no_conversations_hint))
+            shown.isEmpty() -> EmptyCommsTab(stringResource(I18nR.string.au_messages_no_conversations), stringResource(I18nR.string.au_messages_no_conversations_hint))
             else -> LazyColumn(Modifier.fillMaxSize()) {
                 items(shown, key = { it.threadId.toString() + it.address }) { c ->
                     val dismiss = androidx.compose.material3.rememberSwipeToDismissBoxState(
@@ -314,9 +315,9 @@ fun MessagesScreen(
                                 contentAlignment = if (dismiss.dismissDirection == androidx.compose.material3.SwipeToDismissBoxValue.StartToEnd) Alignment.CenterStart else Alignment.CenterEnd
                             ) {
                                 val icon = if (dismiss.dismissDirection == androidx.compose.material3.SwipeToDismissBoxValue.EndToStart) {
-                                    painterResource(if (isArchived(c)) R.drawable.unarchive_24px else R.drawable.archive_24px)
+                                    painterResource(if (isArchived(c)) BaseR.drawable.unarchive_24px else BaseR.drawable.archive_24px)
                                 } else {
-                                    painterResource(if (c.unread > 0) R.drawable.draft_24px else R.drawable.search_24px)
+                                    painterResource(if (c.unread > 0) BaseR.drawable.draft_24px else BaseR.drawable.search_24px)
                                 }
                                 Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)
                             }
@@ -346,28 +347,28 @@ fun MessagesScreen(
                                 horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
                                 IconButton(onClick = { open = c }) {
-                                    Icon(painterResource(R.drawable.sms_24px), contentDescription = stringResource(R.string.comms_reply))
+                                    Icon(painterResource(BaseR.drawable.sms_24px), contentDescription = stringResource(I18nR.string.comms_reply))
                                 }
                                 var cardMenuOpen by remember { mutableStateOf(false) }
                                 Box {
                                     IconButton(onClick = { cardMenuOpen = true }) {
-                                        Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.comms_menu))
+                                        Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.comms_menu))
                                     }
                                     androidx.compose.material3.DropdownMenu(
                                         expanded = cardMenuOpen,
                                         onDismissRequest = { cardMenuOpen = false }
                                     ) {
                                         androidx.compose.material3.DropdownMenuItem(
-                                            text = { Text(if (isPinned(c)) stringResource(R.string.comms_unpin_conversation) else stringResource(R.string.comms_pin_conversation)) },
+                                            text = { Text(if (isPinned(c)) stringResource(I18nR.string.comms_unpin_conversation) else stringResource(I18nR.string.comms_pin_conversation)) },
                                             onClick = {
                                                 cardMenuOpen = false
                                                 settings.setConversationPinned(c.address, !isPinned(c))
                                             },
-                                            leadingIcon = { Icon(painterResource(R.drawable.add_24px), contentDescription = null) }
+                                            leadingIcon = { Icon(painterResource(BaseR.drawable.add_24px), contentDescription = null) }
                                         )
                                         if (isDefault) {
                                             androidx.compose.material3.DropdownMenuItem(
-                                                text = { Text(if (c.unread > 0) stringResource(R.string.comms_mark_read) else stringResource(R.string.comms_mark_unread)) },
+                                                text = { Text(if (c.unread > 0) stringResource(I18nR.string.comms_mark_read) else stringResource(I18nR.string.comms_mark_unread)) },
                                                 onClick = {
                                                     cardMenuOpen = false
                                                     sendScope.launch {
@@ -378,10 +379,10 @@ fun MessagesScreen(
                                                         refresh++
                                                     }
                                                 },
-                                                leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) }
+                                                leadingIcon = { Icon(painterResource(BaseR.drawable.search_24px), contentDescription = null) }
                                             )
                                             androidx.compose.material3.DropdownMenuItem(
-                                                text = { Text(stringResource(R.string.comms_delete_conversation), color = MaterialTheme.colorScheme.error) },
+                                                text = { Text(stringResource(I18nR.string.comms_delete_conversation), color = MaterialTheme.colorScheme.error) },
                                                 onClick = {
                                                     cardMenuOpen = false
                                                     sendScope.launch {
@@ -389,7 +390,7 @@ fun MessagesScreen(
                                                         refresh++
                                                     }
                                                 },
-                                                leadingIcon = { Icon(painterResource(R.drawable.close_24px), contentDescription = null, tint = MaterialTheme.colorScheme.error) }
+                                                leadingIcon = { Icon(painterResource(BaseR.drawable.close_24px), contentDescription = null, tint = MaterialTheme.colorScheme.error) }
                                             )
                                         }
                                     }
@@ -407,16 +408,16 @@ fun MessagesScreen(
         var number by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { newMessage = false },
-            title = { Text(stringResource(R.string.hc_new_message)) },
-            text = { OutlinedTextField(number, { number = it }, label = { Text(stringResource(R.string.hc_number)) }, singleLine = true) },
+            title = { Text(stringResource(I18nR.string.hc_new_message)) },
+            text = { OutlinedTextField(number, { number = it }, label = { Text(stringResource(I18nR.string.hc_number)) }, singleLine = true) },
             confirmButton = {
                 TextButton(enabled = number.isNotBlank(), onClick = {
                     val n = number.trim()
                     newMessage = false
                     open = conversationFor(n)
-                }) { Text(stringResource(R.string.hc_write)) }
+                }) { Text(stringResource(I18nR.string.hc_write)) }
             },
-            dismissButton = { TextButton(onClick = { newMessage = false }) { Text(stringResource(R.string.hc_cancel)) } },
+            dismissButton = { TextButton(onClick = { newMessage = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
     }
 }
@@ -470,7 +471,7 @@ private fun ThreadView(
 
     Column(Modifier.fillMaxSize().imePadding()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
-            TextButton(onClick = onBack) { Text(stringResource(R.string.hc_back)) }
+            TextButton(onClick = onBack) { Text(stringResource(I18nR.string.hc_back)) }
             val names by settings.conversationNames.collectAsStateWithLifecycle(emptyMap())
             val title = names[conversation.address.filter { it.isDigit() || it == ',' }] ?: conversation.name ?: conversation.address
             var rename by remember { mutableStateOf(false) }
@@ -479,14 +480,14 @@ private fun ThreadView(
                 var draft by remember { mutableStateOf(title) }
                 AlertDialog(
                     onDismissRequest = { rename = false },
-                    title = { Text(stringResource(R.string.comms_rename_conversation)) },
+                    title = { Text(stringResource(I18nR.string.comms_rename_conversation)) },
                     text = { OutlinedTextField(draft, { draft = it }, singleLine = true) },
                     confirmButton = {
                         TextButton(onClick = { settings.setConversationName(conversation.address, draft); rename = false }) {
                             Text(stringResource(android.R.string.ok))
                         }
                     },
-                    dismissButton = { TextButton(onClick = { rename = false }) { Text(stringResource(R.string.hc_cancel)) } },
+                    dismissButton = { TextButton(onClick = { rename = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },
                 )
             }
             if (single) TextButton(onClick = {
@@ -501,18 +502,18 @@ private fun ThreadView(
                     }
                     if (!block) version++
                 }
-            }) { Text(stringResource(if (blocked) R.string.au2_msg2_unblock_number else R.string.au2_msg2_block_number)) }
+            }) { Text(stringResource(if (blocked) I18nR.string.au2_msg2_unblock_number else I18nR.string.au2_msg2_block_number)) }
             IconButton(onClick = { searching = !searching; if (!searching) threadQuery = "" }) {
                 Icon(
-                    painterResource(if (searching) R.drawable.close_24px else R.drawable.search_24px),
-                    contentDescription = stringResource(R.string.ts_search),
+                    painterResource(if (searching) BaseR.drawable.close_24px else BaseR.drawable.search_24px),
+                    contentDescription = stringResource(I18nR.string.ts_search),
                 )
             }
         }
         if (searching) TelosSearchBar(
             value = threadQuery,
             onValueChange = { threadQuery = it },
-            placeholder = stringResource(R.string.tsp_search_in_conversation),
+            placeholder = stringResource(I18nR.string.tsp_search_in_conversation),
             autoFocus = true,
         )
         if (searching && threadQuery.isNotBlank() && shownMessages.isEmpty()) SearchEmptyState(threadQuery, Modifier.weight(1f))
@@ -540,14 +541,14 @@ private fun ThreadView(
                             m.attachments.forEach { a ->
                                 if (a.mimeType.startsWith("image/") || a.mimeType.startsWith("video/")) {
                                     AsyncImage(
-                                        model = a.uri, contentDescription = stringResource(R.string.au_messages_attachment), contentScale = ContentScale.Fit,
+                                        model = a.uri, contentDescription = stringResource(I18nR.string.au_messages_attachment), contentScale = ContentScale.Fit,
                                         modifier = Modifier.fillMaxWidth().heightIn(max = 240.dp),
                                     )
-                                } else Text(stringResource(R.string.au_messages_attachment) + " (${a.mimeType})", style = MaterialTheme.typography.labelSmall)
+                                } else Text(stringResource(I18nR.string.au_messages_attachment) + " (${a.mimeType})", style = MaterialTheme.typography.labelSmall)
                             }
                             if (m.body.isNotBlank()) Text(m.body)
                             Text(
-                                shortDate(m.date) + if (m.failed) " · " + stringResource(R.string.au_messages_not_sent) else "",
+                                shortDate(m.date) + if (m.failed) " · " + stringResource(I18nR.string.au_messages_not_sent) else "",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = if (m.failed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -557,7 +558,7 @@ private fun ThreadView(
                             onDismissRequest = { messageMenuOpen = false }
                         ) {
                             androidx.compose.material3.DropdownMenuItem(
-                                text = { Text(stringResource(R.string.hc_copy)) },
+                                text = { Text(stringResource(I18nR.string.hc_copy)) },
                                 onClick = {
                                     messageMenuOpen = false
                                     if (m.body.isNotBlank()) {
@@ -565,11 +566,11 @@ private fun ThreadView(
                                         (context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager)?.setPrimaryClip(clip)
                                     }
                                 },
-                                leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) }
+                                leadingIcon = { Icon(painterResource(BaseR.drawable.search_24px), contentDescription = null) }
                             )
                             if (isDefault) {
                                 androidx.compose.material3.DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.comms_delete_conversation), color = MaterialTheme.colorScheme.error) },
+                                    text = { Text(stringResource(I18nR.string.comms_delete_conversation), color = MaterialTheme.colorScheme.error) },
                                     onClick = {
                                         messageMenuOpen = false
                                         sendScope.launch {
@@ -579,7 +580,7 @@ private fun ThreadView(
                                             version++
                                         }
                                     },
-                                    leadingIcon = { Icon(painterResource(R.drawable.close_24px), contentDescription = null, tint = MaterialTheme.colorScheme.error) }
+                                    leadingIcon = { Icon(painterResource(BaseR.drawable.close_24px), contentDescription = null, tint = MaterialTheme.colorScheme.error) }
                                 )
                             }
                         }
@@ -587,11 +588,11 @@ private fun ThreadView(
                 }
             }
         }
-        if (failed) Text(stringResource(R.string.hc_the_message_could_not_be_sent), color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(horizontal = 16.dp))
+        if (failed) Text(stringResource(I18nR.string.hc_the_message_could_not_be_sent), color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(horizontal = 16.dp))
         if (attachments.isNotEmpty()) {
             Row(Modifier.padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text(stringResource(R.string.au_messages_attached_count, attachments.size), modifier = Modifier.weight(1f), style = MaterialTheme.typography.labelMedium)
-                TextButton(onClick = { onAttachments(emptyList()) }) { Text(stringResource(R.string.hc_remove)) }
+                Text(stringResource(I18nR.string.au_messages_attached_count, attachments.size), modifier = Modifier.weight(1f), style = MaterialTheme.typography.labelMedium)
+                TextButton(onClick = { onAttachments(emptyList()) }) { Text(stringResource(I18nR.string.hc_remove)) }
             }
         }
         if (sims.size >= 2) SimChooser(sims, simId, { simId = it }, Modifier.padding(horizontal = 12.dp))
@@ -601,7 +602,7 @@ private fun ThreadView(
             }
             if (ch != de.mm20.launcher2.comms.intent.MessengerChannel.Sms) {
                 Text(
-                    stringResource(R.string.comms_send_via) + " " + ch.id,
+                    stringResource(I18nR.string.comms_send_via) + " " + ch.id,
                     style = MaterialTheme.typography.labelMedium,
                     modifier = Modifier.padding(horizontal = 12.dp),
                 )
@@ -613,7 +614,7 @@ private fun ThreadView(
         Column(Modifier.fillMaxWidth().padding(8.dp)) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             if (isDefault) IconButton(onClick = { picker.launch("*/*") }) {
-                Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.au_messages_attach))
+                Icon(painterResource(BaseR.drawable.add_24px), contentDescription = stringResource(I18nR.string.au_messages_attach))
             }
             IconButton(onClick = {
                 runCatching {
@@ -624,9 +625,9 @@ private fun ThreadView(
                     )
                 }
             }) {
-                Icon(painterResource(R.drawable.search_24px), contentDescription = stringResource(R.string.comms_speak))
+                Icon(painterResource(BaseR.drawable.search_24px), contentDescription = stringResource(I18nR.string.comms_speak))
             }
-            OutlinedTextField(body, onBody, modifier = Modifier.weight(1f), placeholder = { Text(stringResource(R.string.hc_message)) })
+            OutlinedTextField(body, onBody, modifier = Modifier.weight(1f), placeholder = { Text(stringResource(I18nR.string.hc_message)) })
             androidx.compose.material3.FilledIconButton(
                 enabled = body.isNotBlank() || attachments.isNotEmpty(),
                 onClick = {
@@ -652,7 +653,7 @@ private fun ThreadView(
                             if (opened) { onBody(""); onAttachments(emptyList()); return@launch }
                             android.widget.Toast.makeText(
                                 context,
-                                context.getString(R.string.comms_messenger_fallback_sms, channel.id),
+                                context.getString(I18nR.string.comms_messenger_fallback_sms, channel.id),
                                 android.widget.Toast.LENGTH_SHORT,
                             ).show()
                         }
@@ -668,19 +669,19 @@ private fun ThreadView(
                     }
                 },
             ) {
-                Icon(painterResource(R.drawable.sms_24px), contentDescription = stringResource(R.string.hc_send))
+                Icon(painterResource(BaseR.drawable.sms_24px), contentDescription = stringResource(I18nR.string.hc_send))
             }
         }
         Row(Modifier.fillMaxWidth().padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             FilterChip(selected = delaySend, onClick = { delaySend = !delaySend }, label = { Text("3s") })
             var scheduleOpen by remember { mutableStateOf(false) }
-            FilterChip(selected = false, onClick = { scheduleOpen = true }, label = { Text(stringResource(R.string.comms_schedule_send)) })
+            FilterChip(selected = false, onClick = { scheduleOpen = true }, label = { Text(stringResource(I18nR.string.comms_schedule_send)) })
             if (scheduleOpen) {
                 val fmt = remember { java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()) }
                 var whenText by remember { mutableStateOf(fmt.format(java.util.Date(System.currentTimeMillis() + 3_600_000L))) }
                 AlertDialog(
                     onDismissRequest = { scheduleOpen = false },
-                    title = { Text(stringResource(R.string.comms_schedule_send)) },
+                    title = { Text(stringResource(I18nR.string.comms_schedule_send)) },
                     text = {
                         OutlinedTextField(whenText, { whenText = it }, label = { Text("yyyy-MM-dd HH:mm") }, singleLine = true)
                     },
@@ -697,7 +698,7 @@ private fun ThreadView(
                             },
                         ) { Text(stringResource(android.R.string.ok)) }
                     },
-                    dismissButton = { TextButton(onClick = { scheduleOpen = false }) { Text(stringResource(R.string.hc_cancel)) } },
+                    dismissButton = { TextButton(onClick = { scheduleOpen = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },
                 )
             }
             if (single && e2eOn) {
@@ -707,7 +708,7 @@ private fun ThreadView(
                             SmsThreads.send(context, addresses[0], de.mm20.launcher2.comms.sms.EncryptedSms.handshakeSms(context))
                         }
                     }
-                }) { Text(stringResource(R.string.comms_e2e_start)) }
+                }) { Text(stringResource(I18nR.string.comms_e2e_start)) }
                 de.mm20.launcher2.comms.sms.EncryptedSms.safetyNumber(context, addresses[0])?.let { sn ->
                     Text(sn, style = MaterialTheme.typography.labelSmall, modifier = Modifier.padding(horizontal = 12.dp))
                     ContactQrImage(sn.replace("\n", " "), Modifier.padding(12.dp))
@@ -715,11 +716,11 @@ private fun ThreadView(
             }
             if (single) {
                 val installed = listOf(
-                    "sms" to stringResource(R.string.comms_channel_sms),
-                    "signal" to stringResource(R.string.action_signal),
-                    "whatsapp" to stringResource(R.string.action_whatsapp),
-                    "telegram" to stringResource(R.string.action_telegram),
-                    "viber" to stringResource(R.string.action_viber),
+                    "sms" to stringResource(I18nR.string.comms_channel_sms),
+                    "signal" to stringResource(I18nR.string.action_signal),
+                    "whatsapp" to stringResource(I18nR.string.action_whatsapp),
+                    "telegram" to stringResource(I18nR.string.action_telegram),
+                    "viber" to stringResource(I18nR.string.action_viber),
                 ).filter { (id, _) ->
                     id == "sms" || de.mm20.launcher2.comms.intent.MessengerApps.installedPackage(
                         context, de.mm20.launcher2.comms.intent.MessengerChannel.fromId(id),
@@ -762,7 +763,7 @@ private fun ThreadView(
                                     )
                                 } else {
                                     Icon(
-                                        painter = painterResource(R.drawable.sms_24px),
+                                        painter = painterResource(BaseR.drawable.sms_24px),
                                         contentDescription = label,
                                         modifier = Modifier.size(20.dp),
                                     )
@@ -785,7 +786,7 @@ private fun shortDate(ms: Long): String =
 @Composable
 internal fun SimChooser(sims: List<SmsSims.Sim>, selected: Int, onSelect: (Int) -> Unit, modifier: Modifier = Modifier) {
     Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(stringResource(R.string.au2_msg2_send_with), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(stringResource(I18nR.string.au2_msg2_send_with), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         sims.forEach { sim ->
             FilterChip(
                 selected = sim.subId == selected,
@@ -814,14 +815,14 @@ private fun BlockedMessagesView(onBack: () -> Unit) {
     }
     Column(Modifier.fillMaxSize()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
-            TextButton(onClick = onBack) { Text(stringResource(R.string.hc_back)) }
-            Text(stringResource(R.string.au2_msg2_blocked_messages), style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+            TextButton(onClick = onBack) { Text(stringResource(I18nR.string.hc_back)) }
+            Text(stringResource(I18nR.string.au2_msg2_blocked_messages), style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
         }
         LazyColumn(Modifier.fillMaxSize()) {
             if (numbers.isNotEmpty()) {
                 item {
                     Text(
-                        stringResource(R.string.au2_msg2_blocked_numbers), style = MaterialTheme.typography.titleSmall,
+                        stringResource(I18nR.string.au2_msg2_blocked_numbers), style = MaterialTheme.typography.titleSmall,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                     )
                 }
@@ -838,13 +839,13 @@ private fun BlockedMessagesView(onBack: () -> Unit) {
                                     }
                                     version++
                                 }
-                            }) { Text(stringResource(R.string.au2_msg2_unblock_number)) }
+                            }) { Text(stringResource(I18nR.string.au2_msg2_unblock_number)) }
                         },
                     )
                 }
                 item {
                     Text(
-                        stringResource(R.string.au2_msg2_blocked_restore_hint), style = MaterialTheme.typography.bodySmall,
+                        stringResource(I18nR.string.au2_msg2_blocked_restore_hint), style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                     )
@@ -852,37 +853,38 @@ private fun BlockedMessagesView(onBack: () -> Unit) {
             }
             if (messages.isEmpty()) {
                 item {
-                    EmptyCommsTab(stringResource(R.string.au2_msg2_blocked_empty_title), stringResource(R.string.au2_msg2_blocked_empty_hint))
+                    EmptyCommsTab(stringResource(I18nR.string.au2_msg2_blocked_empty_title), stringResource(I18nR.string.au2_msg2_blocked_empty_hint))
                 }
             }
             items(messages, key = { "m${it.id}" }) { m ->
                 ListItem(
-                    modifier = COMPILED_CODE,
-                    leadingContent = COMPILED_CODE,
+                    headlineContent = {
+                        Text(
+                            SmsThreads.displayNameOf(context, m.address) ?: m.address,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    },
                     trailingContent = {
-                                        TextButton(onClick = {
-                                            scope.launch {
-                                                withContext(Dispatchers.IO) { BlockedMessages.delete(context, m.id) }
-                                                version++
-                                            }
-                                        }) { Text(stringResource(R.string.hc_delete)) }
-                                    },
-                    overlineContent = COMPILED_CODE,
+                        TextButton(onClick = {
+                            scope.launch {
+                                withContext(Dispatchers.IO) { BlockedMessages.delete(context, m.id) }
+                                version++
+                            }
+                        }) { Text(stringResource(I18nR.string.hc_delete)) }
+                    },
                     supportingContent = {
-                                        Column {
-                                            m.attachments.forEach { a ->
-                                                if (a.mimeType.startsWith("image/")) AsyncImage(
-                                                    model = a.uri, contentDescription = stringResource(R.string.au_messages_attachment), contentScale = ContentScale.Fit,
-                                                    modifier = Modifier.fillMaxWidth().heightIn(max = 160.dp),
-                                                ) else Text(stringResource(R.string.au_messages_attachment) + " (${a.mimeType})", style = MaterialTheme.typography.labelSmall)
-                                            }
-                                            if (m.body.isNotBlank()) Text(m.body, maxLines = 4, overflow = TextOverflow.Ellipsis)
-                                            Text(shortDate(m.date), style = MaterialTheme.typography.labelSmall)
-                                        }
-                                    },
-                    colors = COMPILED_CODE,
-                    elevation = ListItemDefaults.elevation(COMPILED_CODE),
-                    content = { Text(SmsThreads.displayNameOf(context, m.address) ?: m.address, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                        Column {
+                            m.attachments.forEach { a ->
+                                if (a.mimeType.startsWith("image/")) AsyncImage(
+                                    model = a.uri, contentDescription = stringResource(I18nR.string.au_messages_attachment), contentScale = ContentScale.Fit,
+                                    modifier = Modifier.fillMaxWidth().heightIn(max = 160.dp),
+                                ) else Text(stringResource(I18nR.string.au_messages_attachment) + " (${a.mimeType})", style = MaterialTheme.typography.labelSmall)
+                            }
+                            if (m.body.isNotBlank()) Text(m.body, maxLines = 4, overflow = TextOverflow.Ellipsis)
+                            Text(shortDate(m.date), style = MaterialTheme.typography.labelSmall)
+                        }
+                    },
                 )
             }
         }

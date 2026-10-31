@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.owncloud
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
@@ -62,7 +64,7 @@ fun OwncloudSettingsScreen() {
             viewModel.onResume()
         }
     }
-    PreferenceScreen(title = stringResource(R.string.preference_owncloud)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_owncloud)) {
         if (loading) return@PreferenceScreen
 
         if (owncloudUser != null) {
@@ -97,7 +99,7 @@ fun OwncloudSettingsScreen() {
                     }
                     Text(
                         modifier = Modifier.padding(top = 24.dp),
-                        text = stringResource(R.string.preference_signin_user, owncloudUser!!.userName),
+                        text = stringResource(I18nR.string.preference_signin_user, owncloudUser!!.userName),
                         color = MaterialTheme.colorScheme.onSecondaryContainer,
                         style = MaterialTheme.typography.bodyLarge,
                     )
@@ -105,15 +107,15 @@ fun OwncloudSettingsScreen() {
                     if (confirmSignOut) {
                         AlertDialog(
                             onDismissRequest = { confirmSignOut = false },
-                            title = { Text(stringResource(R.string.au4_confirms_oc_title)) },
-                            text = { Text(stringResource(R.string.au4_confirms_oc_message)) },
+                            title = { Text(stringResource(I18nR.string.au4_confirms_oc_title)) },
+                            text = { Text(stringResource(I18nR.string.au4_confirms_oc_message)) },
                             confirmButton = {
                                 TextButton(onClick = {
                                     confirmSignOut = false
                                     viewModel.signOut()
-                                }) { Text(stringResource(R.string.au4_confirms_confirm)) }
+                                }) { Text(stringResource(I18nR.string.au4_confirms_confirm)) }
                             },
-                            dismissButton = { TextButton(onClick = { confirmSignOut = false }) { Text(stringResource(R.string.au4_confirms_cancel)) } },
+                            dismissButton = { TextButton(onClick = { confirmSignOut = false }) { Text(stringResource(I18nR.string.au4_confirms_cancel)) } },
                         )
                     }
                     Button(
@@ -124,12 +126,12 @@ fun OwncloudSettingsScreen() {
                         contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                     ) {
                         Icon(
-                            painterResource(R.drawable.logout_20px),
+                            painterResource(BaseR.drawable.logout_20px),
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize),
                             contentDescription = null)
-                        Text(text = stringResource(R.string.preference_signout))
+                        Text(text = stringResource(I18nR.string.preference_signout))
                     }
                 }
             }
@@ -137,9 +139,9 @@ fun OwncloudSettingsScreen() {
             item {
                 PreferenceCategory {
                     SwitchPreference(
-                        title = stringResource(R.string.plugin_type_filesearch),
+                        title = stringResource(I18nR.string.plugin_type_filesearch),
                         summary = stringResource(
-                            R.string.preference_search_cloud_summary,
+                            I18nR.string.preference_search_cloud_summary,
                             owncloudUser!!.userName
                         ),
                         value = searchFiles == true,
@@ -155,9 +157,9 @@ fun OwncloudSettingsScreen() {
                 val activity = LocalActivity.current as AppCompatActivity
                 PreferenceCategory {
                     Preference(
-                        title = stringResource(R.string.preference_owncloud_signin),
-                        summary = stringResource(R.string.preference_owncloud_signin_summary),
-                        icon = R.drawable.login_24px,
+                        title = stringResource(I18nR.string.preference_owncloud_signin),
+                        summary = stringResource(I18nR.string.preference_owncloud_signin_summary),
+                        icon = BaseR.drawable.login_24px,
                         onClick = {
                             viewModel.signIn(activity)
                         }

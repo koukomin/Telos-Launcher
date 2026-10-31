@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.freeze
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Process
 import androidx.compose.foundation.layout.*
@@ -59,12 +60,12 @@ fun SmartFreezeDashboardScreen(tabs: @Composable () -> Unit = {}) {
             Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
                 Column(Modifier.fillMaxWidth().padding(horizontal = 8.dp)) {
             if (picked.isNotEmpty()) {
-                Text(stringResource(R.string.nwg_selected, picked.size), modifier = Modifier.padding(horizontal = 16.dp))
+                Text(stringResource(I18nR.string.nwg_selected, picked.size), modifier = Modifier.padding(horizontal = 16.dp))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf(R.string.freeze_widget_freeze_now, R.string.hf_freeze_active, R.string.hf_freeze_auto_list)
+                    listOf(I18nR.string.freeze_widget_freeze_now, I18nR.string.hf_freeze_active, I18nR.string.hf_freeze_auto_list)
                         .forEachIndexed { action, label ->
                             Button(enabled = !busy, onClick = { vm.bulkAction(picked, action) }) {
-                                Text(if (action == 1) stringResource(R.string.freeze_hub_unfreeze) else stringResource(label))
+                                Text(if (action == 1) stringResource(I18nR.string.freeze_hub_unfreeze) else stringResource(label))
                             }
                         }
                 }
@@ -76,31 +77,31 @@ fun SmartFreezeDashboardScreen(tabs: @Composable () -> Unit = {}) {
     }
     BoxWithConstraints {
         val pinActions = maxHeight >= 480.dp * androidx.compose.ui.platform.LocalDensity.current.fontScale
-    PreferenceScreen(title = stringResource(R.string.preference_screen_freeze)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_freeze)) {
         item { tabs() }
         item {
-            Preference(title = stringResource(R.string.hf_freeze_backend_status),
-                summary = backend?.name ?: stringResource(R.string.hf_freeze_disconnected),
+            Preference(title = stringResource(I18nR.string.hf_freeze_backend_status),
+                summary = backend?.name ?: stringResource(I18nR.string.hf_freeze_disconnected),
                 onClick = { vm.refreshBackendState() })
-            Text(stringResource(R.string.freeze_hub_selection_help), modifier = Modifier.padding(16.dp),
+            Text(stringResource(I18nR.string.freeze_hub_selection_help), modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.bodySmall)
             TelosSearchBar(value = query, onValueChange = { query = it },
-                placeholder = stringResource(R.string.hf_freeze_search_apps))
+                placeholder = stringResource(I18nR.string.hf_freeze_search_apps))
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(listOf(R.string.filter_all, R.string.hf_freeze_frozen, R.string.hf_freeze_auto_list)) { label ->
-                    val i = when (label) { R.string.filter_all -> 0; R.string.hf_freeze_frozen -> 1; else -> 2 }
+                items(listOf(I18nR.string.filter_all, I18nR.string.hf_freeze_frozen, I18nR.string.hf_freeze_auto_list)) { label ->
+                    val i = when (label) { I18nR.string.filter_all -> 0; I18nR.string.hf_freeze_frozen -> 1; else -> 2 }
                     FilterChip(selected = filter == i, onClick = { filter = i }, label = { Text(stringResource(label)) })
                 }
             }
-            SwitchPreference(title = stringResource(R.string.preference_freeze_show_system_apps), value = system,
+            SwitchPreference(title = stringResource(I18nR.string.preference_freeze_show_system_apps), value = system,
                 onValueChanged = vm::setShowSystemApps)
-            SwitchPreference(title = stringResource(R.string.preference_freeze_show_iconless_apps), value = iconless,
+            SwitchPreference(title = stringResource(I18nR.string.preference_freeze_show_iconless_apps), value = iconless,
                 onValueChanged = vm::setShowIconlessApps)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 TextButton(enabled = !busy, onClick = { selected = (selected + shown.map { it.key }).distinct() }) {
-                    Text(stringResource(R.string.nwg_select_all))
+                    Text(stringResource(I18nR.string.nwg_select_all))
                 }
-                TextButton(enabled = !busy, onClick = { selected = emptyList() }) { Text(stringResource(R.string.nwg_clear_selection)) }
+                TextButton(enabled = !busy, onClick = { selected = emptyList() }) { Text(stringResource(I18nR.string.nwg_clear_selection)) }
             }
         }
         if (picked.isNotEmpty() || busy || result != null) {
@@ -111,10 +112,10 @@ fun SmartFreezeDashboardScreen(tabs: @Composable () -> Unit = {}) {
             val pkg = app.componentName.packageName
             val icon by vm.getIcon(app, 40).collectAsStateWithLifecycle(null)
             val isFrozen = frozen[app.key] == true
-            val status = stringResource(if (isFrozen) R.string.hf_freeze_frozen else R.string.hf_freeze_active)
+            val status = stringResource(if (isFrozen) I18nR.string.hf_freeze_frozen else I18nR.string.hf_freeze_active)
             Preference(title = app.label,
-                summary = "$pkg · $status" + if (pkg in never) " · " + stringResource(R.string.freeze_app_state_never)
-                    else if (pkg in candidates) " · " + stringResource(R.string.hf_freeze_auto) else "",
+                summary = "$pkg · $status" + if (pkg in never) " · " + stringResource(I18nR.string.freeze_app_state_never)
+                    else if (pkg in candidates) " · " + stringResource(I18nR.string.hf_freeze_auto) else "",
                 icon = { ShapedLauncherIcon(size = 40.dp, icon = { icon }, frozen = isFrozen) },
                 onClick = { detailKey = app.key }, controls = {
                     Checkbox(checked = app.key in selected, enabled = !busy,

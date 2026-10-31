@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.freeze
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,8 +15,8 @@ import de.mm20.launcher2.ui.R
 internal fun FreezeManagementTabs(selected: Int, select: (Int) -> Unit) {
     PrimaryScrollableTabRow(selectedTabIndex = selected, edgePadding = 0.dp,
         modifier = Modifier.fillMaxWidth(), containerColor = MaterialTheme.colorScheme.surfaceContainer) {
-        listOf(R.string.preference_freeze_apps_category, R.string.preference_freeze_auto_category,
-            R.string.settings).forEachIndexed { index, label ->
+        listOf(I18nR.string.preference_freeze_apps_category, I18nR.string.preference_freeze_auto_category,
+            I18nR.string.settings).forEachIndexed { index, label ->
             Tab(selected = selected == index, onClick = { select(index) },
                 text = { Text(stringResource(label), modifier = Modifier.padding(vertical = 8.dp)) })
         }

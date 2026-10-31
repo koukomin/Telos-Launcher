@@ -1,11 +1,11 @@
 package de.mm20.launcher2.themes.colors
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.themes.BlackAndWhiteThemeId
 import de.mm20.launcher2.themes.DefaultThemeId
 import de.mm20.launcher2.themes.HighContrastThemeId
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.themes.presets.ThemePresetsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -89,7 +89,7 @@ class ColorsRepository(
         get() = Colors(
             id = DefaultThemeId,
             builtIn = true,
-            name = context.getString(R.string.preference_colors_default),
+            name = context.getString(I18nR.string.preference_colors_default),
             corePalette = EmptyCorePalette,
             lightColorScheme = DefaultLightColorScheme,
             darkColorScheme = DefaultDarkColorScheme,
@@ -100,7 +100,7 @@ class ColorsRepository(
         get() = Colors(
             id = HighContrastThemeId,
             builtIn = true,
-            name = context.getString(R.string.preference_colors_high_contrast),
+            name = context.getString(I18nR.string.preference_colors_high_contrast),
             corePalette = EmptyCorePalette,
             lightColorScheme = HighContrastLightColorScheme,
             darkColorScheme = HighContrastDarkColorScheme,
@@ -111,7 +111,7 @@ class ColorsRepository(
         get() = Colors(
             id = BlackAndWhiteThemeId,
             builtIn = true,
-            name = context.getString(R.string.preference_colors_bw),
+            name = context.getString(I18nR.string.preference_colors_bw),
             corePalette = EmptyCorePalette,
             lightColorScheme = BlackAndWhiteLightColorScheme,
             darkColorScheme = BlackAndWhiteDarkColorScheme,

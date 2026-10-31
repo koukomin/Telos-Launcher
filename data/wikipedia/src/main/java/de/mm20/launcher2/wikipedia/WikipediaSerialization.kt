@@ -1,7 +1,7 @@
 package de.mm20.launcher2.wikipedia
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
@@ -36,7 +36,7 @@ class WikipediaDeserializer(val context: Context) : SearchableDeserializer {
             imageUrl = json.optString("image"),
             sourceUrl = json.optString("url").takeIf { !it.isNullOrBlank() } ?: "${wikipediaUrl.padEnd(1, '/')}wiki?curid=$id",
             wikipediaUrl = wikipediaUrl,
-            sourceName = context.getString(R.string.wikipedia_source),
+            sourceName = context.getString(I18nR.string.wikipedia_source),
         )
     }
 }

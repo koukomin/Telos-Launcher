@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.apps
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -68,27 +70,27 @@ fun LazyListScope.AppResults(
                             text = {
                                 Text(
                                     when (profile.type) {
-                                        Profile.Type.Personal -> stringResource(R.string.apps_profile_main)
-                                        Profile.Type.Work -> stringResource(R.string.apps_profile_work)
-                                        Profile.Type.Private -> stringResource(R.string.apps_profile_private)
-                                        Profile.Type.Clone -> stringResource(R.string.apps_profile_main)
+                                        Profile.Type.Personal -> stringResource(I18nR.string.apps_profile_main)
+                                        Profile.Type.Work -> stringResource(I18nR.string.apps_profile_work)
+                                        Profile.Type.Private -> stringResource(I18nR.string.apps_profile_private)
+                                        Profile.Type.Clone -> stringResource(I18nR.string.apps_profile_main)
                                     }
                                 )
                             },
                             icon = {
                                 when (profile.type) {
                                     Profile.Type.Personal, Profile.Type.Clone -> Icon(
-                                        painterResource(if (selected) R.drawable.person_24px_filled else R.drawable.person_24px),
+                                        painterResource(if (selected) BaseR.drawable.person_24px_filled else BaseR.drawable.person_24px),
                                         contentDescription = null
                                     )
 
                                     Profile.Type.Work -> Icon(
-                                        painterResource(if (selected) R.drawable.enterprise_24px_filled else R.drawable.enterprise_24px),
+                                        painterResource(if (selected) BaseR.drawable.enterprise_24px_filled else BaseR.drawable.enterprise_24px),
                                         contentDescription = null
                                     )
 
                                     Profile.Type.Private -> Icon(
-                                        painterResource(if (selected) R.drawable.encrypted_24px_filled else R.drawable.encrypted_24px),
+                                        painterResource(if (selected) BaseR.drawable.encrypted_24px_filled else BaseR.drawable.encrypted_24px),
                                         contentDescription = null
                                     )
                                 }
@@ -125,15 +127,15 @@ fun LazyListScope.AppResults(
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Icon(
-                                painterResource(if (profileType == Profile.Type.Work) R.drawable.enterprise_off_48px else R.drawable.lock_48px),
+                                painterResource(if (profileType == Profile.Type.Work) BaseR.drawable.enterprise_off_48px else BaseR.drawable.lock_48px),
                                 contentDescription = null,
                                 modifier = Modifier.size(48.dp),
                                 tint = MaterialTheme.colorScheme.secondary,
                             )
                             Text(
                                 stringResource(
-                                    if (profileType == Profile.Type.Work) R.string.profile_work_profile_state_locked
-                                    else R.string.profile_private_profile_state_locked
+                                    if (profileType == Profile.Type.Work) I18nR.string.profile_work_profile_state_locked
+                                    else I18nR.string.profile_private_profile_state_locked
                                 ),
                                 modifier = Modifier.padding(top = 8.dp),
                                 color = MaterialTheme.colorScheme.secondary,
@@ -151,7 +153,7 @@ fun LazyListScope.AppResults(
                                     contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
                                 ) {
                                     Icon(
-                                        painterResource(if (profileType == Profile.Type.Work) R.drawable.enterprise_20px else R.drawable.lock_open_20px),
+                                        painterResource(if (profileType == Profile.Type.Work) BaseR.drawable.enterprise_20px else BaseR.drawable.lock_open_20px),
                                         contentDescription = null,
                                         modifier = Modifier
                                             .padding(end = ButtonDefaults.IconSpacing)
@@ -159,8 +161,8 @@ fun LazyListScope.AppResults(
                                     )
                                     Text(
                                         stringResource(
-                                            if (profileType == Profile.Type.Work) R.string.profile_work_profile_action_unlock
-                                            else R.string.profile_private_profile_action_unlock
+                                            if (profileType == Profile.Type.Work) I18nR.string.profile_work_profile_action_unlock
+                                            else I18nR.string.profile_private_profile_action_unlock
                                         )
                                     )
                                 }
@@ -180,7 +182,7 @@ fun LazyListScope.AppResults(
                             contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
                         ) {
                             Icon(
-                                painterResource(if (profileType == Profile.Type.Work) R.drawable.enterprise_off_20px else R.drawable.lock_20px),
+                                painterResource(if (profileType == Profile.Type.Work) BaseR.drawable.enterprise_off_20px else BaseR.drawable.lock_20px),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .padding(end = ButtonDefaults.IconSpacing)
@@ -188,8 +190,8 @@ fun LazyListScope.AppResults(
                             )
                             Text(
                                 stringResource(
-                                    if (profileType == Profile.Type.Work) R.string.profile_work_profile_action_lock
-                                    else R.string.profile_private_profile_action_lock
+                                    if (profileType == Profile.Type.Work) I18nR.string.profile_work_profile_action_lock
+                                    else I18nR.string.profile_private_profile_action_lock
                                 )
                             )
                         }

@@ -1,10 +1,10 @@
 package de.mm20.launcher2.network.impl
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import com.celzero.firestack.backend.Backend
 import com.celzero.firestack.intra.Intra
 import com.celzero.firestack.intra.Tunnel
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.network.api.DnsController
 import de.mm20.launcher2.network.api.DnsHealth
 import de.mm20.launcher2.network.api.DnsKind

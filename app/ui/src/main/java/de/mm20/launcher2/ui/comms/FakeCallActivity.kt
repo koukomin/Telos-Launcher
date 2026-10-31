@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.NotificationManager
 import android.os.Bundle
@@ -49,7 +51,7 @@ class FakeCallActivity : BaseActivity() {
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
                 WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
-        val name = intent.getStringExtra(FakeCallScheduler.EXTRA_NAME) ?: getString(R.string.comms_incoming_call)
+        val name = intent.getStringExtra(FakeCallScheduler.EXTRA_NAME) ?: getString(I18nR.string.comms_incoming_call)
         val number = intent.getStringExtra(FakeCallScheduler.EXTRA_NUMBER).orEmpty()
         enableEdgeToEdge()
         setContent {
@@ -97,7 +99,7 @@ private fun FakeCallScreen(name: String, number: String, onFinished: () -> Unit)
             Text(number, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         Text(
-            text = if (ringing) stringResource(R.string.comms_incoming_call) else "%d:%02d".format(elapsed / 60, elapsed % 60),
+            text = if (ringing) stringResource(I18nR.string.comms_incoming_call) else "%d:%02d".format(elapsed / 60, elapsed % 60),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(top = 8.dp),
@@ -112,7 +114,7 @@ private fun FakeCallScreen(name: String, number: String, onFinished: () -> Unit)
                     modifier = Modifier.size(72.dp),
                     shape = CircleShape,
                 ) {
-                    Icon(painterResource(R.drawable.rd_ic_call_end), contentDescription = stringResource(R.string.comms_reject))
+                    Icon(painterResource(BaseR.drawable.rd_ic_call_end), contentDescription = stringResource(I18nR.string.comms_reject))
                 }
                 FloatingActionButton(
                     onClick = { ringing = false },
@@ -121,7 +123,7 @@ private fun FakeCallScreen(name: String, number: String, onFinished: () -> Unit)
                     modifier = Modifier.size(72.dp),
                     shape = CircleShape,
                 ) {
-                    Icon(painterResource(R.drawable.rd_ic_call_accept), contentDescription = stringResource(R.string.comms_answer))
+                    Icon(painterResource(BaseR.drawable.rd_ic_call_accept), contentDescription = stringResource(I18nR.string.comms_answer))
                 }
             }
         } else {
@@ -132,7 +134,7 @@ private fun FakeCallScreen(name: String, number: String, onFinished: () -> Unit)
                 modifier = Modifier.size(76.dp),
                 shape = CircleShape,
             ) {
-                Icon(painterResource(R.drawable.rd_ic_call_end), contentDescription = stringResource(R.string.comms_hangup))
+                Icon(painterResource(BaseR.drawable.rd_ic_call_end), contentDescription = stringResource(I18nR.string.comms_hangup))
             }
         }
         Spacer(Modifier.height(32.dp))

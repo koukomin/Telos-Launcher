@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.net.Uri
@@ -127,7 +128,7 @@ internal class RemoteRoutingDataSource(private val context: Context, private val
     private fun checkNetwork() {
         if (managedNetwork && !networkGate.allowed.value) {
             runCatching { active?.close() }
-            throw java.io.IOException(context.getString(de.mm20.launcher2.ui.R.string.netfw_blocked))
+            throw java.io.IOException(context.getString(I18nR.string.netfw_blocked))
         }
     }
 
@@ -277,14 +278,14 @@ internal fun NetworkSourcesDialog(onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.vn_network_scan_title)) },
+        title = { Text(stringResource(I18nR.string.vn_network_scan_title)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 val b = browsing
                 if (b == null) {
-                    Text(stringResource(R.string.vn_network_folders_help), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(I18nR.string.vn_network_folders_help), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     if (connections.isEmpty()) {
-                        Text(stringResource(R.string.vn_no_connections), style = MaterialTheme.typography.bodyMedium)
+                        Text(stringResource(I18nR.string.vn_no_connections), style = MaterialTheme.typography.bodyMedium)
                     }
                     sources.forEach { s ->
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -295,13 +296,13 @@ internal fun NetworkSourcesDialog(onDismiss: () -> Unit) {
                             TextButton(onClick = {
                                 sources = sources - s
                                 VideoPrefs.setNetworkSources(context, sources)
-                            }) { Text(stringResource(R.string.vn_remove)) }
+                            }) { Text(stringResource(I18nR.string.vn_remove)) }
                         }
                     }
                     if (status.isNotEmpty()) Text(status, style = MaterialTheme.typography.bodySmall)
-                    Text(stringResource(R.string.vn_network_slow_seek), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(I18nR.string.vn_network_slow_seek), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 } else if (b.isEmpty()) {
-                    Text(stringResource(R.string.vn_choose_storage), style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(I18nR.string.vn_choose_storage), style = MaterialTheme.typography.titleSmall)
                     connections.forEach { c ->
                         Text(c.name, modifier = Modifier.fillMaxWidth().clickable { browsing = RemotePath.build(c.id, "/") }.padding(vertical = 10.dp))
                     }
@@ -327,34 +328,34 @@ internal fun NetworkSourcesDialog(onDismiss: () -> Unit) {
             val b = browsing
             if (b == null) {
                 Row {
-                    TextButton(enabled = connections.isNotEmpty(), onClick = { browsing = "" }) { Text(stringResource(R.string.vn_add_folder)) }
+                    TextButton(enabled = connections.isNotEmpty(), onClick = { browsing = "" }) { Text(stringResource(I18nR.string.vn_add_folder)) }
                     TextButton(enabled = !scanning && sources.isNotEmpty(), onClick = {
                         scanning = true
-                        status = context.getString(R.string.vn_scanning)
+                        status = context.getString(I18nR.string.vn_scanning)
                         scope.launch {
                             try {
                                 val n = RemoteVideo.scan(context)
-                                status = context.getString(R.string.vn_scan_done, n)
+                                status = context.getString(I18nR.string.vn_scan_done, n)
                             } catch (e: Exception) {
                                 if (e is kotlinx.coroutines.CancellationException) throw e
-                                status = e.message ?: context.getString(R.string.au_video_unknown_error)
+                                status = e.message ?: context.getString(I18nR.string.au_video_unknown_error)
                             } finally {
                                 scanning = false
                             }
                         }
-                    }) { Text(stringResource(R.string.vn_rescan)) }
+                    }) { Text(stringResource(I18nR.string.vn_rescan)) }
                 }
             } else if (b.isNotEmpty()) {
                 TextButton(onClick = {
                     sources = (sources + b).distinct()
                     VideoPrefs.setNetworkSources(context, sources)
                     browsing = null
-                }) { Text(stringResource(R.string.vn_use_this_folder)) }
+                }) { Text(stringResource(I18nR.string.vn_use_this_folder)) }
             }
         },
         dismissButton = {
             TextButton(onClick = { if (browsing != null) browsing = null else onDismiss() }) {
-                Text(stringResource(if (browsing != null) R.string.hc_cancel else R.string.vn_close))
+                Text(stringResource(if (browsing != null) I18nR.string.hc_cancel else I18nR.string.vn_close))
             }
         },
     )

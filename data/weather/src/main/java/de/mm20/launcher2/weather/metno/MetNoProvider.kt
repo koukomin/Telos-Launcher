@@ -1,4 +1,5 @@
 package de.mm20.launcher2.weather.metno
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -11,7 +12,6 @@ import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.preferences.weather.WeatherSettings
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.GeocoderWeatherProvider
-import de.mm20.launcher2.i18n.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
@@ -105,7 +105,7 @@ internal class MetNoProvider(
                         windSpeed = details.windSpeed,
                         pressure = details.airPressureAtSeaLevel,
                         location = locationName,
-                        provider = context.getString(R.string.provider_metno),
+                        provider = context.getString(I18nR.string.provider_metno),
                         providerUrl = "https://www.yr.no/",
                         icon = iconForCode(symbolCode),
                         condition = conditionForCode(symbolCode),
@@ -185,48 +185,48 @@ internal class MetNoProvider(
     private fun conditionForCode(code: String): String {
         return context.getString(
             when (code.substringBefore("_")) {
-                "sleetshowers" -> R.string.weather_condition_sleetshowers
-                "heavysleet" -> R.string.weather_condition_heavysleet
-                "lightrainshowersandthunder" -> R.string.weather_condition_lightrainshowersandthunder
-                "heavyrain" -> R.string.weather_condition_heavyrain
-                "lightsnowandthunder" -> R.string.weather_condition_lightsnowandthunder
-                "lightrain" -> R.string.weather_condition_lightrain
-                "lightrainshowers" -> R.string.weather_condition_lightrainshowers
-                "lightsnow" -> R.string.weather_condition_lightsnow
-                "heavysleetshowersandthunder" -> R.string.weather_condition_heavysleetshowersandthunder
-                "lightsnowshowers" -> R.string.weather_condition_lightsnowshowers
-                "lightssleetshowersandthunder" -> R.string.weather_condition_lightssleetshowersandthunder
-                "snowandthunder" -> R.string.weather_condition_snowandthunder
-                "heavysleetshowers" -> R.string.weather_condition_heavysleetshowers
-                "heavysnow" -> R.string.weather_condition_heavysnow
-                "cloudy" -> R.string.weather_condition_cloudy
-                "lightrainandthunder" -> R.string.weather_condition_lightrainandthunder
-                "snow" -> R.string.weather_condition_snow
-                "heavysnowshowers" -> R.string.weather_condition_heavysnowshowers
-                "heavyrainshowers" -> R.string.weather_condition_heavyrainshowers
-                "rainshowersandthunder" -> R.string.weather_condition_rainshowersandthunder
-                "clearsky" -> R.string.weather_condition_clearsky
-                "sleet" -> R.string.weather_condition_sleet
-                "rain" -> R.string.weather_condition_rain
-                "sleetandthunder" -> R.string.weather_condition_sleetandthunder
-                "lightssnowshowersandthunder" -> R.string.weather_condition_lightssnowshowersandthunder
-                "heavyrainshowersandthunder" -> R.string.weather_condition_heavyrainshowersandthunder
-                "fair" -> R.string.weather_condition_fair
-                "fog" -> R.string.weather_condition_fog
-                "sleetshowersandthunder" -> R.string.weather_condition_sleetshowersandthunder
-                "rainandthunder" -> R.string.weather_condition_rainandthunder
-                "lightsleet" -> R.string.weather_condition_lightsleet
-                "heavysleetandthunder" -> R.string.weather_condition_heavysleetandthunder
-                "partlycloudy" -> R.string.weather_condition_partlycloudy
-                "heavysnowandthunder" -> R.string.weather_condition_heavysnowandthunder
-                "rainshowers" -> R.string.weather_condition_rainshowers
-                "lightsleetandthunder" -> R.string.weather_condition_lightsleetandthunder
-                "heavysnowshowersandthunder" -> R.string.weather_condition_heavysnowshowersandthunder
-                "lightsleetshowers" -> R.string.weather_condition_lightsleetshowers
-                "snowshowersandthunder" -> R.string.weather_condition_snowshowersandthunder
-                "snowshowers" -> R.string.weather_condition_snowshowers
-                "heavyrainandthunder" -> R.string.weather_condition_heavyrainandthunder
-                else -> R.string.weather_condition_unknown
+                "sleetshowers" -> I18nR.string.weather_condition_sleetshowers
+                "heavysleet" -> I18nR.string.weather_condition_heavysleet
+                "lightrainshowersandthunder" -> I18nR.string.weather_condition_lightrainshowersandthunder
+                "heavyrain" -> I18nR.string.weather_condition_heavyrain
+                "lightsnowandthunder" -> I18nR.string.weather_condition_lightsnowandthunder
+                "lightrain" -> I18nR.string.weather_condition_lightrain
+                "lightrainshowers" -> I18nR.string.weather_condition_lightrainshowers
+                "lightsnow" -> I18nR.string.weather_condition_lightsnow
+                "heavysleetshowersandthunder" -> I18nR.string.weather_condition_heavysleetshowersandthunder
+                "lightsnowshowers" -> I18nR.string.weather_condition_lightsnowshowers
+                "lightssleetshowersandthunder" -> I18nR.string.weather_condition_lightssleetshowersandthunder
+                "snowandthunder" -> I18nR.string.weather_condition_snowandthunder
+                "heavysleetshowers" -> I18nR.string.weather_condition_heavysleetshowers
+                "heavysnow" -> I18nR.string.weather_condition_heavysnow
+                "cloudy" -> I18nR.string.weather_condition_cloudy
+                "lightrainandthunder" -> I18nR.string.weather_condition_lightrainandthunder
+                "snow" -> I18nR.string.weather_condition_snow
+                "heavysnowshowers" -> I18nR.string.weather_condition_heavysnowshowers
+                "heavyrainshowers" -> I18nR.string.weather_condition_heavyrainshowers
+                "rainshowersandthunder" -> I18nR.string.weather_condition_rainshowersandthunder
+                "clearsky" -> I18nR.string.weather_condition_clearsky
+                "sleet" -> I18nR.string.weather_condition_sleet
+                "rain" -> I18nR.string.weather_condition_rain
+                "sleetandthunder" -> I18nR.string.weather_condition_sleetandthunder
+                "lightssnowshowersandthunder" -> I18nR.string.weather_condition_lightssnowshowersandthunder
+                "heavyrainshowersandthunder" -> I18nR.string.weather_condition_heavyrainshowersandthunder
+                "fair" -> I18nR.string.weather_condition_fair
+                "fog" -> I18nR.string.weather_condition_fog
+                "sleetshowersandthunder" -> I18nR.string.weather_condition_sleetshowersandthunder
+                "rainandthunder" -> I18nR.string.weather_condition_rainandthunder
+                "lightsleet" -> I18nR.string.weather_condition_lightsleet
+                "heavysleetandthunder" -> I18nR.string.weather_condition_heavysleetandthunder
+                "partlycloudy" -> I18nR.string.weather_condition_partlycloudy
+                "heavysnowandthunder" -> I18nR.string.weather_condition_heavysnowandthunder
+                "rainshowers" -> I18nR.string.weather_condition_rainshowers
+                "lightsleetandthunder" -> I18nR.string.weather_condition_lightsleetandthunder
+                "heavysnowshowersandthunder" -> I18nR.string.weather_condition_heavysnowshowersandthunder
+                "lightsleetshowers" -> I18nR.string.weather_condition_lightsleetshowers
+                "snowshowersandthunder" -> I18nR.string.weather_condition_snowshowersandthunder
+                "snowshowers" -> I18nR.string.weather_condition_snowshowers
+                "heavyrainandthunder" -> I18nR.string.weather_condition_heavyrainandthunder
+                else -> I18nR.string.weather_condition_unknown
             }
         )
     }

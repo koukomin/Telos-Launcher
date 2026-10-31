@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.agents
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
@@ -28,12 +29,12 @@ fun AgentsSettingsScreen() {
     val sendSentences by viewModel.sendSentences.collectAsStateWithLifecycle(true)
     val voice by viewModel.searchBarVoice.collectAsStateWithLifecycle(true)
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_agents)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_agents)) {
         item {
             PreferenceCategory {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_agents_enabled),
-                    summary = stringResource(R.string.preference_agents_enabled_summary),
+                    title = stringResource(I18nR.string.preference_agents_enabled),
+                    summary = stringResource(I18nR.string.preference_agents_enabled_summary),
                     value = enabled,
                     onValueChanged = viewModel::setEnabled,
                 )
@@ -43,7 +44,7 @@ fun AgentsSettingsScreen() {
             AnimatedVisibility(enabled) {
                 PreferenceCategory {
                     ListPreference(
-                        title = stringResource(R.string.preference_agents_provider),
+                        title = stringResource(I18nR.string.preference_agents_provider),
                         items = AgentCatalog.all.map {
                             ListPreferenceItem(stringResource(it.labelRes), it.id)
                         },
@@ -51,20 +52,20 @@ fun AgentsSettingsScreen() {
                         onValueChanged = { viewModel.setAgentId(it) },
                     )
                     ListPreference(
-                        title = stringResource(R.string.preference_agents_transport),
-                        summary = stringResource(R.string.preference_agents_transport_summary),
+                        title = stringResource(I18nR.string.preference_agents_transport),
+                        summary = stringResource(I18nR.string.preference_agents_transport_summary),
                         items = listOf(
-                            ListPreferenceItem(stringResource(R.string.agent_transport_auto), "auto"),
-                            ListPreferenceItem(stringResource(R.string.agent_transport_app), "app"),
-                            ListPreferenceItem(stringResource(R.string.agent_transport_web), "web"),
-                            ListPreferenceItem(stringResource(R.string.agent_transport_termux), "termux"),
+                            ListPreferenceItem(stringResource(I18nR.string.agent_transport_auto), "auto"),
+                            ListPreferenceItem(stringResource(I18nR.string.agent_transport_app), "app"),
+                            ListPreferenceItem(stringResource(I18nR.string.agent_transport_web), "web"),
+                            ListPreferenceItem(stringResource(I18nR.string.agent_transport_termux), "termux"),
                         ),
                         value = transport,
                         onValueChanged = { viewModel.setTransport(it) },
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.preference_agents_send_sentences),
-                        summary = stringResource(R.string.preference_agents_send_sentences_summary),
+                        title = stringResource(I18nR.string.preference_agents_send_sentences),
+                        summary = stringResource(I18nR.string.preference_agents_send_sentences_summary),
                         value = sendSentences,
                         onValueChanged = viewModel::setSendSentences,
                     )
@@ -74,8 +75,8 @@ fun AgentsSettingsScreen() {
         item {
             PreferenceCategory {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_bar_voice),
-                    summary = stringResource(R.string.preference_search_bar_voice_summary),
+                    title = stringResource(I18nR.string.preference_search_bar_voice),
+                    summary = stringResource(I18nR.string.preference_search_bar_voice_summary),
                     value = voice,
                     onValueChanged = viewModel::setSearchBarVoice,
                 )

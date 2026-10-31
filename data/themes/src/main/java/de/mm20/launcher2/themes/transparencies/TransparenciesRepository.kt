@@ -1,9 +1,9 @@
 package de.mm20.launcher2.themes.transparencies
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.themes.DefaultThemeId
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.themes.SemiTransparentId
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -67,7 +67,7 @@ class TransparenciesRepository(
         get() = Transparencies(
             id = DefaultThemeId,
             builtIn = true,
-            name = context.getString(R.string.preference_transparencies_default),
+            name = context.getString(I18nR.string.preference_transparencies_default),
             background = 0.80f,
             surface = 0.80f,
             elevatedSurface = 0.80f,
@@ -78,7 +78,7 @@ class TransparenciesRepository(
         get() = Transparencies(
             id = SemiTransparentId,
             builtIn = true,
-            name = context.getString(R.string.preference_transparencies_semi_transparent),
+            name = context.getString(I18nR.string.preference_transparencies_semi_transparent),
             background = 0.40f,
             surface = 0.65f,
             elevatedSurface = 0.85f,

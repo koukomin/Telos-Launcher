@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.contacts
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +41,7 @@ fun ContactsSettingsScreen() {
     val callOnTap by viewModel.callOnTap.collectAsStateWithLifecycle(null)
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_search_contacts)
+        title = stringResource(I18nR.string.preference_search_contacts)
     ) {
         item {
             PreferenceCategory {
@@ -48,12 +50,12 @@ fun ContactsSettingsScreen() {
                     onUnlock = {
                         viewModel.requestContactsPermission(context as AppCompatActivity)
                     },
-                    description = stringResource(R.string.missing_permission_contact_search_settings),
+                    description = stringResource(I18nR.string.missing_permission_contact_search_settings),
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_search_contacts),
-                        summary = stringResource(R.string.preference_search_contacts_summary),
-                        icon = R.drawable.person_24px,
+                        title = stringResource(I18nR.string.preference_search_contacts),
+                        summary = stringResource(I18nR.string.preference_search_contacts_summary),
+                        icon = BaseR.drawable.person_24px,
                         value = enabledProviders.contains("local") && hasContactsPermission == true,
                         onValueChanged = {
                             viewModel.setProviderEnabled("local", it)
@@ -75,9 +77,9 @@ fun ContactsSettingsScreen() {
                             }
                         },
                         description = (state as? PluginState.SetupRequired)?.message
-                            ?: stringResource(id = R.string.plugin_state_setup_required),
-                        icon = R.drawable.error_24px,
-                        unlockLabel = stringResource(id = R.string.plugin_action_setup),
+                            ?: stringResource(id = I18nR.string.plugin_state_setup_required),
+                        icon = BaseR.drawable.error_24px,
+                        unlockLabel = stringResource(id = I18nR.string.plugin_action_setup),
                     ) {
                         SwitchPreference(
                             title = plugin.plugin.label,
@@ -101,12 +103,12 @@ fun ContactsSettingsScreen() {
                     onUnlock = {
                         viewModel.requestCallPermission(context as AppCompatActivity)
                     },
-                    description = stringResource(R.string.missing_permission_call_contacts_settings),
+                    description = stringResource(I18nR.string.missing_permission_call_contacts_settings),
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_contacts_call_on_tap),
-                        summary = stringResource(R.string.preference_contacts_call_on_tap_summary),
-                        icon = R.drawable.call_24px,
+                        title = stringResource(I18nR.string.preference_contacts_call_on_tap),
+                        summary = stringResource(I18nR.string.preference_contacts_call_on_tap_summary),
+                        icon = BaseR.drawable.call_24px,
                         value = callOnTap == true && hasCallPermission == true,
                         onValueChanged = {
                             viewModel.setCallOnTap(it)

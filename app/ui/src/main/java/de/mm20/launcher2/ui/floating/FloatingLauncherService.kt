@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.floating
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -430,7 +432,7 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner, ViewModelSto
             SidebarTool.QuickSettings -> globalActions.openQuickSettings()
             SidebarTool.Notifications -> globalActions.openNotificationDrawer()
             SidebarTool.LockScreen -> if (!globalActions.lockScreenOrFalse()) {
-                Toast.makeText(this, R.string.floating_launcher_tool_needs_accessibility, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, I18nR.string.floating_launcher_tool_needs_accessibility, Toast.LENGTH_LONG).show()
             }
             SidebarTool.PowerMenu -> globalActions.openPowerDialog()
         }
@@ -447,7 +449,7 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner, ViewModelSto
             cameras.setTorchMode(id, torchOn)
         } catch (e: Exception) {
             torchOn = false
-            Toast.makeText(this, R.string.floating_launcher_flashlight_failed, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, I18nR.string.floating_launcher_flashlight_failed, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -536,7 +538,7 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner, ViewModelSto
             nm.createNotificationChannel(
                 NotificationChannel(
                     CHANNEL_ID,
-                    getString(R.string.floating_launcher_notification_channel),
+                    getString(I18nR.string.floating_launcher_notification_channel),
                     NotificationManager.IMPORTANCE_MIN,
                 )
             )
@@ -550,9 +552,9 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner, ViewModelSto
         )
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.widgets_24px)
-            .setContentTitle(getString(R.string.floating_launcher_notification_title))
-            .setContentText(getString(R.string.floating_launcher_notification_text))
+            .setSmallIcon(BaseR.drawable.widgets_24px)
+            .setContentTitle(getString(I18nR.string.floating_launcher_notification_title))
+            .setContentText(getString(I18nR.string.floating_launcher_notification_text))
             .setContentIntent(openSettings)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)

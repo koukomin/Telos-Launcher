@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.sheets
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,7 +41,7 @@ fun FolderCreationSheet(
                 .navigationBarsPadding()
         ) {
             Text(
-                text = stringResource(R.string.hc_new_folder),
+                text = stringResource(I18nR.string.hc_new_folder),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
@@ -48,7 +49,7 @@ fun FolderCreationSheet(
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text(stringResource(R.string.hf_folder_name)) },
+                label = { Text(stringResource(I18nR.string.hf_folder_name)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -60,9 +61,9 @@ fun FolderCreationSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(text = stringResource(R.string.hf_folder_use_as_cover), style = MaterialTheme.typography.bodyLarge)
+                    Text(text = stringResource(I18nR.string.hf_folder_use_as_cover), style = MaterialTheme.typography.bodyLarge)
                     Text(
-                        text = stringResource(R.string.hf_folder_cover_hint),
+                        text = stringResource(I18nR.string.hf_folder_cover_hint),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -82,7 +83,7 @@ fun FolderCreationSheet(
                     enabled = name.isNotBlank(),
                     modifier = Modifier.padding(start = 8.dp)
                 ) {
-                    Text(stringResource(R.string.hf_files_create))
+                    Text(stringResource(I18nR.string.hf_files_create))
                 }
             }
         }

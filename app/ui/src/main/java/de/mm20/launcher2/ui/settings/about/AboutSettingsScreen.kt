@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.about
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.net.Uri
@@ -35,7 +37,7 @@ fun AboutSettingsScreen() {
     val viewModel: AboutSettingsScreenVM = viewModel()
     val backStack = LocalBackStack.current
     val context = LocalContext.current
-    PreferenceScreen(title = stringResource(R.string.preference_screen_about)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_about)) {
         item {
             PreferenceCategory {
                 var appVersion by remember { mutableStateOf<String?>(null) }
@@ -53,7 +55,7 @@ fun AboutSettingsScreen() {
                 }
                 var easterEggCounter by remember { mutableStateOf(0) }
                 Preference(
-                    title = stringResource(R.string.preference_version),
+                    title = stringResource(I18nR.string.preference_version),
                     summary = appVersion,
                     onClick = {
                         easterEggCounter++
@@ -64,8 +66,8 @@ fun AboutSettingsScreen() {
                     }
                 )
                 Preference(
-                    title = stringResource(R.string.preference_screen_buildinfo),
-                    summary = stringResource(R.string.preference_screen_buildinfo_summary),
+                    title = stringResource(I18nR.string.preference_screen_buildinfo),
+                    summary = stringResource(I18nR.string.preference_screen_buildinfo_summary),
                     onClick = {
                         backStack.add(BuildInfoSettingsRoute)
                     }
@@ -73,11 +75,11 @@ fun AboutSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(id = R.string.preference_category_license)) {
+            PreferenceCategory(title = stringResource(id = I18nR.string.preference_category_license)) {
                 Preference(
-                    icon = R.drawable.info_24px,
-                    title = stringResource(id = R.string.preference_about_license),
-                    summary = stringResource(id = R.string.preference_about_license_summary),
+                    icon = BaseR.drawable.info_24px,
+                    title = stringResource(id = I18nR.string.preference_about_license),
+                    summary = stringResource(id = I18nR.string.preference_about_license_summary),
                     onClick = {
                         backStack.add(LicenseRoute())
                     }
@@ -85,9 +87,9 @@ fun AboutSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(id = R.string.preference_category_links)) {
+            PreferenceCategory(title = stringResource(id = I18nR.string.preference_category_links)) {
                 Preference(
-                    icon = R.drawable.github,
+                    icon = BaseR.drawable.github,
                     title = "GitHub",
                     summary = "github.com/koukomin/Telos-Launcher",
                     onClick = {
@@ -99,7 +101,7 @@ fun AboutSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(id = R.string.preference_category_licenses)) {
+            PreferenceCategory(title = stringResource(id = I18nR.string.preference_category_licenses)) {
                 for (library in OpenSourceLicenses.sortedBy { it.name.lowercase() }) {
                     Preference(
                         title = library.name,

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.filesearch
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
@@ -56,7 +58,7 @@ fun FileSearchSettingsScreen() {
     val enabledPlugins by viewModel.enabledPlugins.collectAsStateWithLifecycle(null)
 
     val loading by viewModel.loading
-    PreferenceScreen(title = stringResource(R.string.preference_search_files)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_search_files)) {
         if (loading == true) {
             item {
                 LinearProgressIndicator(
@@ -75,12 +77,12 @@ fun FileSearchSettingsScreen() {
                         viewModel.requestFilePermission(context as AppCompatActivity)
                     },
                     description = stringResource(
-                        if (isAtLeastApiLevel(29)) R.string.missing_permission_file_search_settings_android10 else R.string.missing_permission_file_search_settings
+                        if (isAtLeastApiLevel(29)) I18nR.string.missing_permission_file_search_settings_android10 else I18nR.string.missing_permission_file_search_settings
                     ),
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_search_localfiles),
-                        summary = stringResource(R.string.preference_search_localfiles_summary),
+                        title = stringResource(I18nR.string.preference_search_localfiles),
+                        summary = stringResource(I18nR.string.preference_search_localfiles_summary),
                         value = localFiles == true && hasFilePermission == true,
                         onValueChanged = {
                             viewModel.setLocalFiles(it)
@@ -96,15 +98,15 @@ fun FileSearchSettingsScreen() {
                     onUnlock = {
                         viewModel.login(context as AppCompatActivity, AccountType.Nextcloud)
                     },
-                    icon = R.drawable.account_box_24px,
-                    description = stringResource(R.string.no_account_nextcloud),
-                    unlockLabel = stringResource(R.string.connect_account),
+                    icon = BaseR.drawable.account_box_24px,
+                    description = stringResource(I18nR.string.no_account_nextcloud),
+                    unlockLabel = stringResource(I18nR.string.connect_account),
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_search_nextcloud),
+                        title = stringResource(I18nR.string.preference_search_nextcloud),
                         summary = nextcloudAccount?.let {
-                            stringResource(R.string.preference_search_cloud_summary, it.userName)
-                        } ?: stringResource(R.string.preference_summary_not_logged_in),
+                            stringResource(I18nR.string.preference_search_cloud_summary, it.userName)
+                        } ?: stringResource(I18nR.string.preference_summary_not_logged_in),
                         value = nextcloud == true && nextcloudAccount != null,
                         onValueChanged = {
                             viewModel.setNextcloud(it)
@@ -120,15 +122,15 @@ fun FileSearchSettingsScreen() {
                     onUnlock = {
                         viewModel.login(context as AppCompatActivity, AccountType.Owncloud)
                     },
-                    icon = R.drawable.account_box_24px,
-                    description = stringResource(R.string.no_account_owncloud),
-                    unlockLabel = stringResource(R.string.connect_account),
+                    icon = BaseR.drawable.account_box_24px,
+                    description = stringResource(I18nR.string.no_account_owncloud),
+                    unlockLabel = stringResource(I18nR.string.connect_account),
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_search_owncloud),
+                        title = stringResource(I18nR.string.preference_search_owncloud),
                         summary = owncloudAccount?.let {
-                            stringResource(R.string.preference_search_cloud_summary, it.userName)
-                        } ?: stringResource(R.string.preference_summary_not_logged_in),
+                            stringResource(I18nR.string.preference_search_cloud_summary, it.userName)
+                        } ?: stringResource(I18nR.string.preference_summary_not_logged_in),
                         value = owncloud == true && owncloudAccount != null,
                         onValueChanged = {
                             viewModel.setOwncloud(it)
@@ -151,9 +153,9 @@ fun FileSearchSettingsScreen() {
                             }
                         },
                         description = (state as? PluginState.SetupRequired)?.message
-                            ?: stringResource(id = R.string.plugin_state_setup_required),
-                        icon = R.drawable.error_24px,
-                        unlockLabel = stringResource(id = R.string.plugin_action_setup),
+                            ?: stringResource(id = I18nR.string.plugin_state_setup_required),
+                        icon = BaseR.drawable.error_24px,
+                        unlockLabel = stringResource(id = I18nR.string.plugin_action_setup),
                     ) {
                         SwitchPreference(
                             title = plugin.plugin.label,
@@ -176,35 +178,35 @@ fun FileSearchSettingsScreen() {
             val typeFilters by viewModel.typeFilters.collectAsState()
             val filters = typeFilters
             if (localFiles == true && hasFilePermission == true && filters != null) {
-                PreferenceCategory(title = stringResource(R.string.preference_file_search_types)) {
+                PreferenceCategory(title = stringResource(I18nR.string.preference_file_search_types)) {
                     SwitchPreference(
-                        title = stringResource(R.string.file_search_type_documents),
+                        title = stringResource(I18nR.string.file_search_type_documents),
                         value = filters.documents,
                         onValueChanged = { viewModel.setDocuments(it) },
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.file_search_type_images),
+                        title = stringResource(I18nR.string.file_search_type_images),
                         value = filters.images,
                         onValueChanged = { viewModel.setImages(it) },
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.file_search_type_videos),
+                        title = stringResource(I18nR.string.file_search_type_videos),
                         value = filters.videos,
                         onValueChanged = { viewModel.setVideos(it) },
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.file_search_type_music),
+                        title = stringResource(I18nR.string.file_search_type_music),
                         value = filters.music,
                         onValueChanged = { viewModel.setMusic(it) },
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.file_search_type_other),
+                        title = stringResource(I18nR.string.file_search_type_other),
                         value = filters.other,
                         onValueChanged = { viewModel.setOther(it) },
                     )
                     Preference(
-                        title = stringResource(R.string.preference_file_search_excluded_folders),
-                        summary = stringResource(R.string.preference_file_search_excluded_folders_summary),
+                        title = stringResource(I18nR.string.preference_file_search_excluded_folders),
+                        summary = stringResource(I18nR.string.preference_file_search_excluded_folders_summary),
                         onClick = {
                             backStack.add(ExcludedFoldersSettingsRoute)
                         }

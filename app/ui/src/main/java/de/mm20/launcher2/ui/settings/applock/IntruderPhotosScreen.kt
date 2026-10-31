@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.applock
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -60,7 +62,7 @@ fun IntruderPhotosScreen() {
     if (confirmDeleteAll) {
         AlertDialog(
             onDismissRequest = { confirmDeleteAll = false },
-            text = { Text(stringResource(R.string.confirmation_delete_all_intruder_photos)) },
+            text = { Text(stringResource(I18nR.string.confirmation_delete_all_intruder_photos)) },
             confirmButton = {
                 TextButton(onClick = {
                     viewModel.deleteAll()
@@ -89,13 +91,13 @@ fun IntruderPhotosScreen() {
     }
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_intruder_photos_gallery),
+        title = stringResource(I18nR.string.preference_intruder_photos_gallery),
         topBarActions = {
             if (photos.isNotEmpty()) {
                 IconButton(onClick = { confirmDeleteAll = true }) {
                     Icon(
-                        painter = painterResource(R.drawable.delete_24px),
-                        contentDescription = stringResource(R.string.intruder_photos_delete_all),
+                        painter = painterResource(BaseR.drawable.delete_24px),
+                        contentDescription = stringResource(I18nR.string.intruder_photos_delete_all),
                     )
                 }
             }
@@ -104,7 +106,7 @@ fun IntruderPhotosScreen() {
         if (photos.isEmpty()) {
             item {
                 Text(
-                    text = stringResource(R.string.intruder_photos_empty),
+                    text = stringResource(I18nR.string.intruder_photos_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -163,15 +165,15 @@ private fun IntruderPhotoViewerDialog(
             ) {
                 IconButton(onClick = onDismiss) {
                     Icon(
-                        painter = painterResource(R.drawable.close_24px),
+                        painter = painterResource(BaseR.drawable.close_24px),
                         contentDescription = stringResource(android.R.string.cancel),
                         tint = Color.White,
                     )
                 }
                 IconButton(onClick = onDelete) {
                     Icon(
-                        painter = painterResource(R.drawable.delete_24px),
-                        contentDescription = stringResource(R.string.intruder_photo_delete),
+                        painter = painterResource(BaseR.drawable.delete_24px),
+                        contentDescription = stringResource(I18nR.string.intruder_photo_delete),
                         tint = Color.White,
                     )
                 }

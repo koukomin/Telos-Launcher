@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.gestures
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.res.Resources
 import android.icu.text.ListFormatter
@@ -148,8 +150,8 @@ internal fun GesturePreference(
                     item {
                         PreferenceCategory {
                             GestureItem(
-                                title = stringResource(R.string.gesture_action_none),
-                                icon = R.drawable.close_24px,
+                                title = stringResource(I18nR.string.gesture_action_none),
+                                icon = BaseR.drawable.close_24px,
                                 selected = value is GestureAction.NoAction,
                                 onClick = {
                                     onValueChanged(GestureAction.NoAction, null)
@@ -160,12 +162,12 @@ internal fun GesturePreference(
                     }
                     item {
                         PreferenceCategory(
-                            title = stringResource(R.string.gesture_action_category_launcher)
+                            title = stringResource(I18nR.string.gesture_action_category_launcher)
                         ) {
                             if (options.contains(GestureAction.Search::class)) {
                                 GestureItem(
-                                    title = stringResource(R.string.gesture_action_open_search),
-                                    icon = R.drawable.search_24px,
+                                    title = stringResource(I18nR.string.gesture_action_open_search),
+                                    icon = BaseR.drawable.search_24px,
                                     selected = value is GestureAction.Search,
                                     onClick = {
                                         onValueChanged(GestureAction.Search, null)
@@ -175,8 +177,8 @@ internal fun GesturePreference(
                             }
                             if (options.contains(GestureAction.Feed::class)) {
                                 GestureItem(
-                                    title = stringResource(R.string.gesture_action_feed),
-                                    icon = R.drawable.news_24px,
+                                    title = stringResource(I18nR.string.gesture_action_feed),
+                                    icon = BaseR.drawable.news_24px,
                                     selected = value is GestureAction.Feed,
                                     onClick = {
                                         onValueChanged(GestureAction.Feed, null)
@@ -192,7 +194,7 @@ internal fun GesturePreference(
                                             GestureAction.Widgets(widget.id),
                                             shortcutOptions
                                         ),
-                                        icon = R.drawable.widgets_24px,
+                                        icon = BaseR.drawable.widgets_24px,
                                         selected = value is GestureAction.Widgets && value.target == widget.id,
                                         onClick = {
                                             onValueChanged(
@@ -202,7 +204,7 @@ internal fun GesturePreference(
                                             showSheet = false
                                         },
                                         summary = if (widget.widgets.isEmpty()) {
-                                            stringResource(R.string.gesture_action_widgets_empty)
+                                            stringResource(I18nR.string.gesture_action_widgets_empty)
                                         } else {
                                             ListFormatter.getInstance().format(
                                                 widget.widgets.map { it.getLabel(LocalContext.current) }
@@ -215,12 +217,12 @@ internal fun GesturePreference(
                     }
                     item {
                         PreferenceCategory(
-                            title = stringResource(R.string.gesture_action_category_system)
+                            title = stringResource(I18nR.string.gesture_action_category_system)
                         ) {
                             if (options.contains(GestureAction.Notifications::class)) {
                                 GestureItem(
-                                    title = stringResource(R.string.gesture_action_notifications),
-                                    icon = R.drawable.notifications_24px,
+                                    title = stringResource(I18nR.string.gesture_action_notifications),
+                                    icon = BaseR.drawable.notifications_24px,
                                     selected = value is GestureAction.Notifications,
                                     onClick = {
                                         onValueChanged(GestureAction.Notifications, null)
@@ -230,8 +232,8 @@ internal fun GesturePreference(
                             }
                             if (options.contains(GestureAction.QuickSettings::class)) {
                                 GestureItem(
-                                    title = stringResource(R.string.gesture_action_quick_settings),
-                                    icon = R.drawable.dashboard_2_24px,
+                                    title = stringResource(I18nR.string.gesture_action_quick_settings),
+                                    icon = BaseR.drawable.dashboard_2_24px,
                                     selected = value is GestureAction.QuickSettings,
                                     onClick = {
                                         onValueChanged(GestureAction.QuickSettings, null)
@@ -241,8 +243,8 @@ internal fun GesturePreference(
                             }
                             if (options.contains(GestureAction.ScreenLock::class)) {
                                 GestureItem(
-                                    title = stringResource(R.string.gesture_action_lock_screen),
-                                    icon = R.drawable.lock_24px,
+                                    title = stringResource(I18nR.string.gesture_action_lock_screen),
+                                    icon = BaseR.drawable.lock_24px,
                                     selected = value is GestureAction.ScreenLock,
                                     onClick = {
                                         onValueChanged(GestureAction.ScreenLock, null)
@@ -252,8 +254,8 @@ internal fun GesturePreference(
                             }
                             if (options.contains(GestureAction.PowerMenu::class)) {
                                 GestureItem(
-                                    title = stringResource(R.string.gesture_action_power_menu),
-                                    icon = R.drawable.power_settings_new_24px,
+                                    title = stringResource(I18nR.string.gesture_action_power_menu),
+                                    icon = BaseR.drawable.power_settings_new_24px,
                                     selected = value is GestureAction.PowerMenu,
                                     onClick = {
                                         onValueChanged(GestureAction.PowerMenu, null)
@@ -263,8 +265,8 @@ internal fun GesturePreference(
                             }
                             if (options.contains(GestureAction.Recents::class)) {
                                 GestureItem(
-                                    title = stringResource(R.string.gesture_action_recents),
-                                    icon = R.drawable.amp_stories_24px,
+                                    title = stringResource(I18nR.string.gesture_action_recents),
+                                    icon = BaseR.drawable.amp_stories_24px,
                                     selected = value is GestureAction.Recents,
                                     onClick = {
                                         onValueChanged(GestureAction.Recents, null)
@@ -274,8 +276,8 @@ internal fun GesturePreference(
                             }
                             if (options.contains(GestureAction.WebAppsPanel::class)) {
                                 GestureItem(
-                                    title = stringResource(R.string.gesture_action_web_apps_panel),
-                                    icon = R.drawable.language_24px,
+                                    title = stringResource(I18nR.string.gesture_action_web_apps_panel),
+                                    icon = BaseR.drawable.language_24px,
                                     selected = value is GestureAction.WebAppsPanel,
                                     onClick = {
                                         onValueChanged(GestureAction.WebAppsPanel, null)
@@ -285,8 +287,8 @@ internal fun GesturePreference(
                             }
                             if (options.contains(GestureAction.HomeScreenMenu::class)) {
                                 GestureItem(
-                                    title = stringResource(R.string.gesture_action_home_screen_menu),
-                                    icon = R.drawable.more_vert_24px,
+                                    title = stringResource(I18nR.string.gesture_action_home_screen_menu),
+                                    icon = BaseR.drawable.more_vert_24px,
                                     selected = value is GestureAction.HomeScreenMenu,
                                     onClick = {
                                         onValueChanged(GestureAction.HomeScreenMenu, null)
@@ -298,11 +300,11 @@ internal fun GesturePreference(
                     }
                     if (options.contains(GestureAction.TelosApp::class)) item {
                         PreferenceCategory(
-                            title = stringResource(R.string.gesture_action_category_telos_apps)
+                            title = stringResource(I18nR.string.gesture_action_category_telos_apps)
                         ) {
                             for (app in de.mm20.launcher2.store.catalog.TelosApps.all) {
                                 GestureItem(
-                                    title = stringResource(R.string.gesture_action_telos_app_open, app.localizedName(androidx.compose.ui.platform.LocalContext.current.resources)),
+                                    title = stringResource(I18nR.string.gesture_action_telos_app_open, app.localizedName(androidx.compose.ui.platform.LocalContext.current.resources)),
                                     icon = app.iconRes,
                                     selected = value is GestureAction.TelosApp && value.key == app.key,
                                     onClick = {
@@ -313,7 +315,7 @@ internal fun GesturePreference(
                                 // Apps that cannot be shown inside the launcher only have "open"
                                 if (de.mm20.launcher2.ui.launcher.scaffold.components.TelosPages.canEmbed(app.key)) {
                                     GestureItem(
-                                        title = stringResource(R.string.gesture_action_telos_app_page, app.localizedName(androidx.compose.ui.platform.LocalContext.current.resources)),
+                                        title = stringResource(I18nR.string.gesture_action_telos_app_page, app.localizedName(androidx.compose.ui.platform.LocalContext.current.resources)),
                                         icon = app.iconRes,
                                         selected = value is GestureAction.TelosPage && value.key == app.key,
                                         onClick = {
@@ -327,12 +329,12 @@ internal fun GesturePreference(
                     }
                     item {
                         PreferenceCategory(
-                            title = stringResource(R.string.gesture_action_category_apps)
+                            title = stringResource(I18nR.string.gesture_action_category_apps)
                         ) {
                             for ((i, shortcut) in shortcutOptions.withIndex()) {
                                 GestureItem(
                                     title = shortcut.labelOverride ?: shortcut.label,
-                                    icon = R.drawable.android_24px,
+                                    icon = BaseR.drawable.android_24px,
                                     shortcutIcon = icons.getOrNull(i),
                                     selected = value is GestureAction.Launch && value.key == shortcut.key,
                                     onClick = {
@@ -342,8 +344,8 @@ internal fun GesturePreference(
                                 )
                             }
                             GestureItem(
-                                title = stringResource(R.string.settings),
-                                icon = R.drawable.settings_24px,
+                                title = stringResource(I18nR.string.settings),
+                                icon = BaseR.drawable.settings_24px,
                                 selected = value is GestureAction.LauncherSettings,
                                 onClick = {
                                     onValueChanged(GestureAction.LauncherSettings, null)
@@ -351,8 +353,8 @@ internal fun GesturePreference(
                                 }
                             )
                             GestureItem(
-                                title = stringResource(R.string.gesture_action_launch_select_app),
-                                icon = R.drawable.action_key_24px,
+                                title = stringResource(I18nR.string.gesture_action_launch_select_app),
+                                icon = BaseR.drawable.action_key_24px,
                                 selected = false,
                                 onClick = {
                                     showShortcutPicker = true
@@ -363,13 +365,13 @@ internal fun GesturePreference(
                     if (pluginActions.isNotEmpty()) {
                         item {
                             PreferenceCategory(
-                                title = stringResource(R.string.gesture_action_category_plugins)
+                                title = stringResource(I18nR.string.gesture_action_category_plugins)
                             ) {
                                 for (action in pluginActions) {
                                     GestureItem(
                                         title = action.label,
                                         summary = action.pluginLabel,
-                                        icon = R.drawable.extension_24px,
+                                        icon = BaseR.drawable.extension_24px,
                                         selected = value is GestureAction.Plugin &&
                                             value.authority == action.authority &&
                                             value.actionId == action.actionId,
@@ -475,7 +477,7 @@ private fun GestureItem(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painterResource(R.drawable.check_24px),
+                    painterResource(BaseR.drawable.check_24px),
                     contentDescription = null,
                     tint = iconColor
                 )
@@ -490,49 +492,49 @@ private fun getActionLabel(
     shortcutOptions: List<SavableSearchable>
 ): String {
     return when (action) {
-        GestureAction.Feed -> resources.getString(R.string.gesture_action_feed)
+        GestureAction.Feed -> resources.getString(I18nR.string.gesture_action_feed)
         is GestureAction.TelosApp -> de.mm20.launcher2.store.catalog.TelosApps.all.firstOrNull { it.key == action.key }?.localizedName(resources)
-            ?.let { resources.getString(R.string.gesture_action_telos_app_open, it) }
-            ?: resources.getString(R.string.gesture_action_launch_app)
+            ?.let { resources.getString(I18nR.string.gesture_action_telos_app_open, it) }
+            ?: resources.getString(I18nR.string.gesture_action_launch_app)
         is GestureAction.TelosPage -> de.mm20.launcher2.store.catalog.TelosApps.all.firstOrNull { it.key == action.key }?.localizedName(resources)
-            ?.let { resources.getString(R.string.gesture_action_telos_app_page, it) }
-            ?: resources.getString(R.string.gesture_action_launch_app)
+            ?.let { resources.getString(I18nR.string.gesture_action_telos_app_page, it) }
+            ?: resources.getString(I18nR.string.gesture_action_launch_app)
         is GestureAction.Launch -> {
             shortcutOptions.find { it.key == action.key }
                 ?.let { it.labelOverride ?: it.label }
-                ?: resources.getString(R.string.gesture_action_launch_app)
+                ?: resources.getString(I18nR.string.gesture_action_launch_app)
         }
 
-        GestureAction.Notifications -> resources.getString(R.string.gesture_action_notifications)
-        GestureAction.PowerMenu -> resources.getString(R.string.gesture_action_power_menu)
-        GestureAction.QuickSettings -> resources.getString(R.string.gesture_action_quick_settings)
-        GestureAction.Recents -> resources.getString(R.string.gesture_action_recents)
-        GestureAction.ScreenLock -> resources.getString(R.string.gesture_action_lock_screen)
-        GestureAction.Search -> resources.getString(R.string.gesture_action_open_search)
-        GestureAction.LauncherSettings -> resources.getString(R.string.settings)
-        is GestureAction.Plugin -> resources.getString(R.string.gesture_action_plugin)
-        GestureAction.WebAppsPanel -> resources.getString(R.string.gesture_action_web_apps_panel)
-        GestureAction.HomeScreenMenu -> resources.getString(R.string.gesture_action_home_screen_menu)
+        GestureAction.Notifications -> resources.getString(I18nR.string.gesture_action_notifications)
+        GestureAction.PowerMenu -> resources.getString(I18nR.string.gesture_action_power_menu)
+        GestureAction.QuickSettings -> resources.getString(I18nR.string.gesture_action_quick_settings)
+        GestureAction.Recents -> resources.getString(I18nR.string.gesture_action_recents)
+        GestureAction.ScreenLock -> resources.getString(I18nR.string.gesture_action_lock_screen)
+        GestureAction.Search -> resources.getString(I18nR.string.gesture_action_open_search)
+        GestureAction.LauncherSettings -> resources.getString(I18nR.string.settings)
+        is GestureAction.Plugin -> resources.getString(I18nR.string.gesture_action_plugin)
+        GestureAction.WebAppsPanel -> resources.getString(I18nR.string.gesture_action_web_apps_panel)
+        GestureAction.HomeScreenMenu -> resources.getString(I18nR.string.gesture_action_home_screen_menu)
         is GestureAction.Widgets -> {
             when (action.target) {
-                WidgetScreenTarget.Widgets1 -> resources.getString(R.string.gesture_action_widgets)
+                WidgetScreenTarget.Widgets1 -> resources.getString(I18nR.string.gesture_action_widgets)
                 WidgetScreenTarget.Widgets2 -> resources.getString(
-                    R.string.gesture_action_widgets_indexed,
+                    I18nR.string.gesture_action_widgets_indexed,
                     2
                 )
 
                 WidgetScreenTarget.Widgets3 -> resources.getString(
-                    R.string.gesture_action_widgets_indexed,
+                    I18nR.string.gesture_action_widgets_indexed,
                     3
                 )
 
                 WidgetScreenTarget.Widgets4 -> resources.getString(
-                    R.string.gesture_action_widgets_indexed,
+                    I18nR.string.gesture_action_widgets_indexed,
                     4
                 )
             }
         }
 
-        else -> resources.getString(R.string.gesture_action_none)
+        else -> resources.getString(I18nR.string.gesture_action_none)
     }
 }

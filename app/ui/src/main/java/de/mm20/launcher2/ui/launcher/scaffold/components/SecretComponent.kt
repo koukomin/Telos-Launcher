@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
@@ -51,7 +53,7 @@ internal object SecretComponent : ScaffoldComponent() {
             )
 
             Text(
-                stringResource(R.string.bad_configuration_title),
+                stringResource(I18nR.string.bad_configuration_title),
                 color = color,
                 modifier = Modifier.padding(vertical = 16.dp),
                 style = MaterialTheme.typography.headlineSmall,
@@ -59,7 +61,7 @@ internal object SecretComponent : ScaffoldComponent() {
             )
 
             Text(
-                stringResource(R.string.bad_configuration_summary),
+                stringResource(I18nR.string.bad_configuration_summary),
                 color = color,
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center
@@ -71,11 +73,11 @@ internal object SecretComponent : ScaffoldComponent() {
                 context.startActivity(Intent(context, SettingsActivity::class.java))
             }, modifier = Modifier.padding(top = 24.dp)) {
                 Icon(
-                    painterResource(R.drawable.settings_20px),
+                    painterResource(BaseR.drawable.settings_20px),
                     contentDescription = null,
                     modifier = Modifier.padding(ButtonDefaults.IconSpacing).size(ButtonDefaults.IconSize)
                 )
-                Text(stringResource(R.string.settings))
+                Text(stringResource(I18nR.string.settings))
             }
         }
     }

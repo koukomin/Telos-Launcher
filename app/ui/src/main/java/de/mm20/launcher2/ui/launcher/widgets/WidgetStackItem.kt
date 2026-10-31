@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -61,7 +63,7 @@ fun WidgetStackItem(
                     enabled = page > 0,
                     onClick = { scope.launch { pagerState.animateScrollToPage(page - 1) } },
                 ) {
-                    Icon(painterResource(R.drawable.chevron_backward_24px), stringResource(R.string.au3_launcher2_previous))
+                    Icon(painterResource(BaseR.drawable.chevron_backward_24px), stringResource(I18nR.string.au3_launcher2_previous))
                 }
                 TextButton(
                     modifier = Modifier.weight(1f),
@@ -81,20 +83,20 @@ fun WidgetStackItem(
                     enabled = page < widgets.lastIndex,
                     onClick = { scope.launch { pagerState.animateScrollToPage(page + 1) } },
                 ) {
-                    Icon(painterResource(R.drawable.chevron_forward_24px), stringResource(R.string.action_next))
+                    Icon(painterResource(BaseR.drawable.chevron_forward_24px), stringResource(I18nR.string.action_next))
                 }
                 AnimatedVisibility(editMode) {
                     Row {
                         IconButton(onClick = { onAddToStack(widget) }) {
                             Icon(
-                                painterResource(R.drawable.add_24px),
-                                contentDescription = stringResource(R.string.widget_stack_action_add),
+                                painterResource(BaseR.drawable.add_24px),
+                                contentDescription = stringResource(I18nR.string.widget_stack_action_add),
                             )
                         }
                         IconButton(onClick = { onRemoveFromStack(widget) }) {
                             Icon(
-                                painterResource(R.drawable.link_off_24px),
-                                contentDescription = stringResource(R.string.widget_stack_action_remove),
+                                painterResource(BaseR.drawable.link_off_24px),
+                                contentDescription = stringResource(I18nR.string.widget_stack_action_remove),
                             )
                         }
                     }

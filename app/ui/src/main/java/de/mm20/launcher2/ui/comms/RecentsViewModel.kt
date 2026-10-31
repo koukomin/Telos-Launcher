@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.Intent
@@ -107,8 +108,8 @@ class RecentsViewModel : ViewModel(), KoinComponent {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
             putExtra(Intent.EXTRA_TEXT, text)
-            putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.au_phonea_export_subject))
+            putExtra(Intent.EXTRA_SUBJECT, context.getString(I18nR.string.au_phonea_export_subject))
         }
-        context.tryStartActivity(Intent.createChooser(intent, context.getString(R.string.hc_export)))
+        context.tryStartActivity(Intent.createChooser(intent, context.getString(I18nR.string.hc_export)))
     }
 }

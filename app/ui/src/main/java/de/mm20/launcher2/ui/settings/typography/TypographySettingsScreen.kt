@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.typography
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import androidx.annotation.DrawableRes
@@ -127,7 +129,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                         editName = false
                     }
                 ) {
-                    Text(stringResource(R.string.save))
+                    Text(stringResource(I18nR.string.save))
                 }
             }
         )
@@ -147,15 +149,15 @@ fun TypographySettingsScreen(themeId: UUID) {
         if (theme == null || previewTypography == null) return@PreferenceScreen
 
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_typography_fonts)) {
-                FontPreference(title = stringResource(R.string.hc_brand), theme!!.fonts["brand"], onValueChange = {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_typography_fonts)) {
+                FontPreference(title = stringResource(I18nR.string.hc_brand), theme!!.fonts["brand"], onValueChange = {
                     viewModel.updateTypography(
                         theme!!.copy(
                             fonts = theme!!.fonts.toMutableMap().apply { put("brand", it) })
                     )
                 })
                 FontPreference(
-                    title = stringResource(R.string.hc_plain),
+                    title = stringResource(I18nR.string.hc_plain),
                     theme!!.fonts["plain"],
                     onValueChange = {
                         viewModel.updateTypography(
@@ -204,16 +206,16 @@ fun TypographySettingsScreen(themeId: UUID) {
                     }
                 }) {
                     Icon(
-                        painterResource(R.drawable.add_20px),
+                        painterResource(BaseR.drawable.add_20px),
                         null,
                         modifier = Modifier.padding(end = ButtonDefaults.IconSpacing).size(ButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.add_font_style))
+                    Text(stringResource(I18nR.string.add_font_style))
                 }
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.au3_appearance_typo_body)) {
+            PreferenceCategory(stringResource(I18nR.string.au3_appearance_typo_body)) {
                 TypographyPreview(previewTypography) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -223,14 +225,14 @@ fun TypographySettingsScreen(themeId: UUID) {
                             modifier = Modifier.padding(bottom = 8.dp),
                         )
                         Text(
-                            stringResource(R.string.typo_preview_medium1),
+                            stringResource(I18nR.string.typo_preview_medium1),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
                 }
                 TextStylePreference(
-                    title = stringResource(R.string.hc_body_small),
+                    title = stringResource(I18nR.string.hc_body_small),
                     textStyle = previewTypography.bodySmall,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.bodySmall,
@@ -244,7 +246,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_body_medium),
+                    title = stringResource(I18nR.string.hc_body_medium),
                     textStyle = previewTypography.bodyMedium,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.bodyMedium,
@@ -258,7 +260,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_body_large),
+                    title = stringResource(I18nR.string.hc_body_large),
                     textStyle = previewTypography.bodyLarge,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.bodyLarge,
@@ -272,7 +274,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_body_small_emphasized),
+                    title = stringResource(I18nR.string.hc_body_small_emphasized),
                     textStyle = previewTypography.bodySmallEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.bodySmall,
@@ -288,7 +290,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_body_medium_emphasized),
+                    title = stringResource(I18nR.string.hc_body_medium_emphasized),
                     textStyle = previewTypography.bodyMediumEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.bodyMedium,
@@ -304,7 +306,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_body_large_emphasized),
+                    title = stringResource(I18nR.string.hc_body_large_emphasized),
                     textStyle = previewTypography.bodyLargeEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.bodyLarge,
@@ -322,17 +324,17 @@ fun TypographySettingsScreen(themeId: UUID) {
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.au3_appearance_typo_label)) {
+            PreferenceCategory(stringResource(I18nR.string.au3_appearance_typo_label)) {
                 TypographyPreview(previewTypography) {
                     FilterChip(
                         modifier = Modifier
                             .padding(end = 16.dp),
                         label = {
-                            Text(stringResource(R.string.typo_preview_short1))
+                            Text(stringResource(I18nR.string.typo_preview_short1))
                         },
                         leadingIcon = {
                             Icon(
-                                painterResource(R.drawable.tag_20px),
+                                painterResource(BaseR.drawable.tag_20px),
                                 contentDescription = null,
                                 modifier = Modifier.size(FilterChipDefaults.IconSize)
                             )
@@ -341,11 +343,11 @@ fun TypographySettingsScreen(themeId: UUID) {
                         onClick = {},
                     )
                     Button(onClick = {}) {
-                        Text(stringResource(R.string.typo_preview_medium2))
+                        Text(stringResource(I18nR.string.typo_preview_medium2))
                     }
                 }
                 TextStylePreference(
-                    title = stringResource(R.string.hc_label_small),
+                    title = stringResource(I18nR.string.hc_label_small),
                     textStyle = previewTypography.labelSmall,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.labelSmall,
@@ -359,7 +361,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_label_medium),
+                    title = stringResource(I18nR.string.hc_label_medium),
                     textStyle = previewTypography.labelMedium,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.labelMedium,
@@ -373,7 +375,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_label_large),
+                    title = stringResource(I18nR.string.hc_label_large),
                     textStyle = previewTypography.labelLarge,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.labelLarge,
@@ -387,7 +389,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_label_small_emphasized),
+                    title = stringResource(I18nR.string.hc_label_small_emphasized),
                     textStyle = previewTypography.labelSmallEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.labelSmall,
@@ -403,7 +405,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_label_medium_emphasized),
+                    title = stringResource(I18nR.string.hc_label_medium_emphasized),
                     textStyle = previewTypography.labelMediumEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.labelMedium,
@@ -419,7 +421,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_label_large_emphasized),
+                    title = stringResource(I18nR.string.hc_label_large_emphasized),
                     textStyle = previewTypography.labelLargeEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.labelLarge,
@@ -437,15 +439,15 @@ fun TypographySettingsScreen(themeId: UUID) {
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.au3_appearance_typo_title)) {
+            PreferenceCategory(stringResource(I18nR.string.au3_appearance_typo_title)) {
                 TypographyPreview(previewTypography) {
                     PrimaryTabRow(0, modifier = Modifier.width(300.dp)) {
                         LeadingIconTab(
                             selected = true,
-                            text = { Text(stringResource(R.string.typo_preview_short1)) },
+                            text = { Text(stringResource(I18nR.string.typo_preview_short1)) },
                             icon = {
                                 Icon(
-                                    painterResource(R.drawable.person_24px_filled),
+                                    painterResource(BaseR.drawable.person_24px_filled),
                                     contentDescription = null,
                                 )
                             },
@@ -453,10 +455,10 @@ fun TypographySettingsScreen(themeId: UUID) {
                         )
                         LeadingIconTab(
                             selected = false,
-                            text = { Text(stringResource(R.string.typo_preview_short2)) },
+                            text = { Text(stringResource(I18nR.string.typo_preview_short2)) },
                             icon = {
                                 Icon(
-                                    painterResource(R.drawable.enterprise_24px),
+                                    painterResource(BaseR.drawable.enterprise_24px),
                                     contentDescription = null
                                 )
                             },
@@ -465,7 +467,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     }
                 }
                 TextStylePreference(
-                    title = stringResource(R.string.hc_title_small),
+                    title = stringResource(I18nR.string.hc_title_small),
                     textStyle = previewTypography.titleSmall,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.titleSmall,
@@ -479,7 +481,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_title_medium),
+                    title = stringResource(I18nR.string.hc_title_medium),
                     textStyle = previewTypography.titleMedium,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.titleMedium,
@@ -493,7 +495,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_title_large),
+                    title = stringResource(I18nR.string.hc_title_large),
                     textStyle = previewTypography.titleLarge,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.titleLarge,
@@ -507,7 +509,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_title_small_emphasized),
+                    title = stringResource(I18nR.string.hc_title_small_emphasized),
                     textStyle = previewTypography.titleSmallEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.titleSmall,
@@ -523,7 +525,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_title_medium_emphasized),
+                    title = stringResource(I18nR.string.hc_title_medium_emphasized),
                     textStyle = previewTypography.titleMediumEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.titleMedium,
@@ -539,7 +541,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_title_large_emphasized),
+                    title = stringResource(I18nR.string.hc_title_large_emphasized),
                     textStyle = previewTypography.titleLargeEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.titleLarge,
@@ -557,9 +559,9 @@ fun TypographySettingsScreen(themeId: UUID) {
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.au3_appearance_typo_headline)) {
+            PreferenceCategory(stringResource(I18nR.string.au3_appearance_typo_headline)) {
                 TextStylePreference(
-                    title = stringResource(R.string.hc_headline_small),
+                    title = stringResource(I18nR.string.hc_headline_small),
                     textStyle = previewTypography.headlineSmall,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.headlineSmall,
@@ -573,7 +575,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_headline_medium),
+                    title = stringResource(I18nR.string.hc_headline_medium),
                     textStyle = previewTypography.headlineMedium,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.headlineMedium,
@@ -587,7 +589,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_headline_large),
+                    title = stringResource(I18nR.string.hc_headline_large),
                     textStyle = previewTypography.headlineLarge,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.headlineLarge,
@@ -601,7 +603,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_headline_small_emphasized),
+                    title = stringResource(I18nR.string.hc_headline_small_emphasized),
                     textStyle = previewTypography.headlineSmallEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.headlineSmall,
@@ -618,7 +620,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_headline_medium_emphasized),
+                    title = stringResource(I18nR.string.hc_headline_medium_emphasized),
                     textStyle = previewTypography.headlineMediumEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.headlineMedium,
@@ -635,7 +637,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_headline_large_emphasized),
+                    title = stringResource(I18nR.string.hc_headline_large_emphasized),
                     textStyle = previewTypography.headlineLargeEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.headlineLarge,
@@ -654,9 +656,9 @@ fun TypographySettingsScreen(themeId: UUID) {
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.au3_appearance_typo_display)) {
+            PreferenceCategory(stringResource(I18nR.string.au3_appearance_typo_display)) {
                 TextStylePreference(
-                    title = stringResource(R.string.hc_display_small),
+                    title = stringResource(I18nR.string.hc_display_small),
                     textStyle = previewTypography.displaySmall,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.displaySmall,
@@ -670,7 +672,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_display_medium),
+                    title = stringResource(I18nR.string.hc_display_medium),
                     textStyle = previewTypography.displayMedium,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.displayMedium,
@@ -684,7 +686,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_display_large),
+                    title = stringResource(I18nR.string.hc_display_large),
                     textStyle = previewTypography.displayLarge,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.displayLarge,
@@ -698,7 +700,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_display_small_emphasized),
+                    title = stringResource(I18nR.string.hc_display_small_emphasized),
                     textStyle = previewTypography.displaySmallEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.displaySmall,
@@ -715,7 +717,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_display_medium_emphasized),
+                    title = stringResource(I18nR.string.hc_display_medium_emphasized),
                     textStyle = previewTypography.displayMediumEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.displayMedium,
@@ -732,7 +734,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = stringResource(R.string.hc_display_large_emphasized),
+                    title = stringResource(I18nR.string.hc_display_large_emphasized),
                     textStyle = previewTypography.displayLargeEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.displayLarge,
@@ -789,7 +791,7 @@ private fun FontPreference(
                 summary = getFontName(context, value),
                 icon = {
                     Text(
-                        text = stringResource(R.string.typo_preview_extra_short),
+                        text = stringResource(I18nR.string.typo_preview_extra_short),
                         style = TextStyle(
                             fontFamily = remember(value) { fontFamilyOf(context, value) },
                             fontWeight = FontWeight.Normal,
@@ -814,7 +816,7 @@ private fun FontPreference(
                 modifier = Modifier.padding(horizontal = 12.dp),
                 onClick = { showFontSettings = true }
             ) {
-                Icon(painterResource(R.drawable.custom_typography_24px), null)
+                Icon(painterResource(BaseR.drawable.custom_typography_24px), null)
             }
         }
     }
@@ -837,7 +839,7 @@ private fun FontPreference(
             if (fonts.builtIn.isNotEmpty()) {
                 item {
                     FontPickerCategory(
-                        stringResource(R.string.typo_preview_extra_short),
+                        stringResource(I18nR.string.typo_preview_extra_short),
                         null,
                         fonts.builtIn,
                         onFontClick = {
@@ -849,8 +851,8 @@ private fun FontPreference(
             if (fonts.deviceDefault.isNotEmpty()) {
                 item {
                     FontPickerCategory(
-                        stringResource(R.string.typo_preview_extra_short),
-                        stringResource(R.string.font_category_device_default),
+                        stringResource(I18nR.string.typo_preview_extra_short),
+                        stringResource(I18nR.string.font_category_device_default),
                         fonts.deviceDefault,
                         onFontClick = {
                             onValueChange(it)
@@ -861,8 +863,8 @@ private fun FontPreference(
             if (fonts.generic.isNotEmpty()) {
                 item {
                     FontPickerCategory(
-                        stringResource(R.string.typo_preview_extra_short),
-                        stringResource(R.string.font_category_generic),
+                        stringResource(I18nR.string.typo_preview_extra_short),
+                        stringResource(I18nR.string.font_category_generic),
                         fonts.generic,
                         onFontClick = {
                             onValueChange(it)
@@ -875,10 +877,10 @@ private fun FontPreference(
                 item {
                     PreferenceCategory() {
                         Preference(
-                            title = stringResource(R.string.remove_font_style),
+                            title = stringResource(I18nR.string.remove_font_style),
                             icon = {
                                 Icon(
-                                    painterResource(R.drawable.delete_24px),
+                                    painterResource(BaseR.drawable.delete_24px),
                                     null,
                                     tint = MaterialTheme.colorScheme.error,
                                 )
@@ -916,7 +918,7 @@ private fun FontPreference(
                 ) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = stringResource(R.string.typo_preview_long),
+                        text = stringResource(I18nR.string.typo_preview_long),
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.headlineMedium,
@@ -990,13 +992,13 @@ private fun FontPickerCategory(
 private fun getFontName(context: Context, fontFamily: ThemeFontFamily?): String {
     return when (fontFamily) {
         is ThemeFontFamily.LauncherDefault -> "Google Sans Flex"
-        is ThemeFontFamily.DeviceHeadline -> context.getString(R.string.font_name_device_headline)
-        is ThemeFontFamily.DeviceBody -> context.getString(R.string.font_name_device_body)
+        is ThemeFontFamily.DeviceHeadline -> context.getString(I18nR.string.font_name_device_headline)
+        is ThemeFontFamily.DeviceBody -> context.getString(I18nR.string.font_name_device_body)
         is ThemeFontFamily.System -> fontFamily.name
         is ThemeFontFamily.SansSerif -> "sans-serif"
         is ThemeFontFamily.Serif -> "serif"
         is ThemeFontFamily.Monospace -> "monospace"
-        null -> context.getString(R.string.au3_appearance_font_default)
+        null -> context.getString(I18nR.string.au3_appearance_font_default)
     }
 }
 
@@ -1083,7 +1085,7 @@ private fun TextStylePreference(
         },
         icon = {
             Text(
-                text = stringResource(R.string.typo_preview_extra_short),
+                text = stringResource(I18nR.string.typo_preview_extra_short),
                 style = textStyle,
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
@@ -1171,7 +1173,7 @@ private fun TextStylePreference(
             ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(R.string.typo_preview_long),
+                    text = stringResource(I18nR.string.typo_preview_long),
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.primary,
                     fontFamily = fontFamilyOf(context, fonts[actualFontFamily]),
@@ -1205,7 +1207,7 @@ private fun TextStylePreference(
                             },
                         ) {
                             Text(
-                                text = stringResource(R.string.typo_preview_extra_short),
+                                text = stringResource(I18nR.string.typo_preview_extra_short),
                                 fontFamily = f,
                                 style = MaterialTheme.typography.headlineSmall,
                                 textAlign = TextAlign.Center,
@@ -1225,7 +1227,7 @@ private fun TextStylePreference(
             }
 
             SliderRow(
-                icon = R.drawable.format_bold_24px,
+                icon = BaseR.drawable.format_bold_24px,
                 min = 100f,
                 max = 900f,
                 step = 100f,
@@ -1236,7 +1238,7 @@ private fun TextStylePreference(
                 }
             )
             SliderRow(
-                icon = R.drawable.format_size_24px,
+                icon = BaseR.drawable.format_size_24px,
                 min = floor((defaultValue?.fontSize ?: defaultValueParent?.fontSize)!! / 2f),
                 max = ceil((defaultValue?.fontSize ?: defaultValueParent?.fontSize)!! * 2f),
                 value = actualFontSize.toFloat(),
@@ -1248,7 +1250,7 @@ private fun TextStylePreference(
                 }
             )
             SliderRow(
-                icon = R.drawable.format_line_spacing_24px,
+                icon = BaseR.drawable.format_line_spacing_24px,
                 min = 0.5f,
                 max = 2f,
                 step = 0.05f,
@@ -1259,7 +1261,7 @@ private fun TextStylePreference(
                 }
             )
             SliderRow(
-                icon = R.drawable.format_letter_spacing_24px,
+                icon = BaseR.drawable.format_letter_spacing_24px,
                 min = -0.25f,
                 max = 1f,
                 step = 0.01f,
@@ -1289,12 +1291,12 @@ private fun TextStylePreference(
                 }
             ) {
                 Icon(
-                    painterResource(R.drawable.restart_alt_20px), null,
+                    painterResource(BaseR.drawable.restart_alt_20px), null,
                     modifier = Modifier
                         .padding(ButtonDefaults.IconSpacing)
                         .size(ButtonDefaults.IconSize)
                 )
-                Text(stringResource(R.string.preference_restore_default))
+                Text(stringResource(I18nR.string.preference_restore_default))
             }
         }
     }

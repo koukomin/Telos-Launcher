@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.common
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -71,7 +73,7 @@ fun WeatherLocationSearchDialog(
                     SearchBarDefaults.InputField(
                         leadingIcon = {
                             Icon(
-                                painterResource(R.drawable.search_24px),
+                                painterResource(BaseR.drawable.search_24px),
                                 contentDescription = null
                             )
                         },
@@ -118,8 +120,8 @@ fun WeatherLocationSearchDialog(
                 SmallMessage(
                     modifier = Modifier.fillMaxWidth()
                         .padding(16.dp),
-                    icon = R.drawable.error_24px,
-                    text = stringResource(R.string.weather_location_search_no_result)
+                    icon = BaseR.drawable.error_24px,
+                    text = stringResource(I18nR.string.weather_location_search_no_result)
                 )
             }
         }

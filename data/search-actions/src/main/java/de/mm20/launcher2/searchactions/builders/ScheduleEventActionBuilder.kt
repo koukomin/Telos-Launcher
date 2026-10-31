@@ -1,7 +1,7 @@
 package de.mm20.launcher2.searchactions.builders
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.ScheduleEventAction
 import de.mm20.launcher2.searchactions.actions.SearchAction
@@ -12,7 +12,7 @@ class ScheduleEventActionBuilder(
     override val label: String
 ) : SearchActionBuilder {
 
-    constructor(context: Context) : this(context.getString(R.string.search_action_event))
+    constructor(context: Context) : this(context.getString(I18nR.string.search_action_event))
 
     override val key: String
         get() = "calendar"
@@ -22,7 +22,7 @@ class ScheduleEventActionBuilder(
     override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction? {
         if (classifiedQuery.date != null) {
             return ScheduleEventAction(
-                context.getString(R.string.search_action_event),
+                context.getString(I18nR.string.search_action_event),
                 date = classifiedQuery.date,
                 time = classifiedQuery.time
             )
@@ -33,7 +33,7 @@ class ScheduleEventActionBuilder(
         ) {
             val datetime = LocalDateTime.now().plus(classifiedQuery.timespan)
             return ScheduleEventAction(
-                context.getString(R.string.search_action_event),
+                context.getString(I18nR.string.search_action_event),
                 date = datetime.toLocalDate(),
                 time = datetime.toLocalTime(),
             )

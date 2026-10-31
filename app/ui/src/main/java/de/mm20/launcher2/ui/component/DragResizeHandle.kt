@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -135,7 +136,7 @@ fun DragResizeHandle(
                             .padding(8.dp)
                             .rotate(90f)
                             .align(Alignment.Center),
-                        painter = painterResource(R.drawable.unfold_more_24px),
+                        painter = painterResource(BaseR.drawable.unfold_more_24px),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onPrimary,
                     )
@@ -191,7 +192,7 @@ fun DragResizeHandle(
                             .background(MaterialTheme.colorScheme.primary, CircleShape)
                             .padding(8.dp)
                             .align(Alignment.Center),
-                        painter = painterResource(R.drawable.unfold_more_24px),
+                        painter = painterResource(BaseR.drawable.unfold_more_24px),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onPrimary,
                     )

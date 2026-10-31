@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.tools
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -50,14 +51,14 @@ class MorseScreenTest {
             readLayout(results)
             assertEquals(TextDirection.Ltr, results.single().layoutInput.style.textDirection)
         }
-        compose.onNodeWithText(context.getString(R.string.morse_light)).performScrollTo().performClick()
+        compose.onNodeWithText(context.getString(I18nR.string.morse_light)).performScrollTo().performClick()
         // Emulator has no physical flash. Explicitly select screen even if a virtual camera advertises one.
-        compose.onNodeWithTag("flashlight-controls").performScrollToNode(hasText(context.getString(R.string.app_polish_screen_light)))
-        compose.onAllNodesWithText(context.getString(R.string.app_polish_screen_light)).filter(hasClickAction()).onFirst().performClick()
-        compose.onNodeWithTag("flashlight-controls").performScrollToNode(hasText(context.getString(R.string.app_polish_sos)))
-        compose.onNodeWithText(context.getString(R.string.app_polish_sos)).performClick()
-        compose.onNodeWithText(context.getString(R.string.app_polish_exit_light)).assertIsDisplayed().performClick()
+        compose.onNodeWithTag("flashlight-controls").performScrollToNode(hasText(context.getString(I18nR.string.app_polish_screen_light)))
+        compose.onAllNodesWithText(context.getString(I18nR.string.app_polish_screen_light)).filter(hasClickAction()).onFirst().performClick()
+        compose.onNodeWithTag("flashlight-controls").performScrollToNode(hasText(context.getString(I18nR.string.app_polish_sos)))
+        compose.onNodeWithText(context.getString(I18nR.string.app_polish_sos)).performClick()
+        compose.onNodeWithText(context.getString(I18nR.string.app_polish_exit_light)).assertIsDisplayed().performClick()
         compose.onNodeWithTag("flashlight-controls").assertExists()
-        compose.onNodeWithText(context.getString(R.string.app_polish_exit_light)).assertDoesNotExist()
+        compose.onNodeWithText(context.getString(I18nR.string.app_polish_exit_light)).assertDoesNotExist()
     }
 }

@@ -1,9 +1,10 @@
 package de.mm20.launcher2.search
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.base.R
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
@@ -70,13 +71,13 @@ interface File : SavableSearchable {
         if (mimeType == "application/vnd.de.mm20.launcher2.backup") {
             return context.getString(
                 I18nR.string.file_type_launcherbackup,
-                context.getString(R.string.app_name)
+                context.getString(BaseR.string.app_name)
             )
         }
         if (mimeType == "application/vnd.de.mm20.launcher2.theme") {
             return context.getString(
                 I18nR.string.file_type_launchertheme,
-                context.getString(R.string.app_name)
+                context.getString(BaseR.string.app_name)
             )
         }
         val resource = when (mimeType) {

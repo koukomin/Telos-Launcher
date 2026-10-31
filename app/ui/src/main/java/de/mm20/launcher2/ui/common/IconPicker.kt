@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.common
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.pm.PackageManager
 import androidx.compose.animation.animateContentSize
@@ -97,7 +99,7 @@ fun IconPicker(
                         SearchBarDefaults.InputField(
                             leadingIcon = {
                                 Icon(
-                                    painterResource(R.drawable.search_24px),
+                                    painterResource(BaseR.drawable.search_24px),
                                     contentDescription = null
                                 )
                             },
@@ -105,7 +107,7 @@ fun IconPicker(
                             expanded = false,
                             onExpandedChange = {},
                             placeholder = {
-                                Text(stringResource(R.string.icon_picker_search_icon))
+                                Text(stringResource(I18nR.string.icon_picker_search_icon))
                             },
                             query = query,
                             onQueryChange = {
@@ -125,7 +127,7 @@ fun IconPicker(
         if (query.isEmpty()) {
             if (defaultIcon != null) {
                 item(span = { GridItemSpan(columns) }) {
-                    Separator(stringResource(R.string.icon_picker_default_icon))
+                    Separator(stringResource(I18nR.string.icon_picker_default_icon))
                 }
                 item {
                     IconPreview(item = defaultIcon, iconSize = iconSize, onClick = {
@@ -136,7 +138,7 @@ fun IconPicker(
 
             if (suggestions.isNotEmpty()) {
                 item(span = { GridItemSpan(columns) }) {
-                    Separator(stringResource(R.string.icon_picker_suggestions))
+                    Separator(stringResource(I18nR.string.icon_picker_suggestions))
                 }
                 items(suggestions) {
                     IconPreview(
@@ -163,7 +165,7 @@ fun IconPicker(
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize),
-                            painter = painterResource(R.drawable.filter_alt_20px),
+                            painter = painterResource(BaseR.drawable.filter_alt_20px),
                             contentDescription = null
                         )
                     } else {
@@ -184,8 +186,8 @@ fun IconPicker(
                             contentDescription = null
                         )
                     }
-                    DropdownMenuPopup(
 
+                    DropdownMenuPopup(
                         expanded = showIconPackFilter,
                         onDismissRequest = { showIconPackFilter = false }
                     ) {
@@ -198,7 +200,7 @@ fun IconPicker(
                                     0,
                                     installedIconPacks?.size?.plus(1) ?: 1
                                 ),
-                                text = { Text(stringResource(id = R.string.icon_picker_filter_all_packs)) },
+                                text = { Text(stringResource(id = I18nR.string.icon_picker_filter_all_packs)) },
                                 onClick = {
                                     showIconPackFilter = false
                                     filterIconPack = null
@@ -207,7 +209,7 @@ fun IconPicker(
                                     }
                                 },
                                 selectedLeadingIcon = {
-                                    Icon(painterResource(R.drawable.check_24px), null)
+                                    Icon(painterResource(BaseR.drawable.check_24px), null)
                                 }
                             )
                             installedIconPacks?.forEachIndexed { i, iconPack ->
@@ -228,7 +230,7 @@ fun IconPicker(
                                         Text(iconPack.name)
                                     },
                                     selectedLeadingIcon = {
-                                        Icon(painterResource(R.drawable.check_24px), null)
+                                        Icon(painterResource(BaseR.drawable.check_24px), null)
                                     },
                                 )
                             }
@@ -236,11 +238,11 @@ fun IconPicker(
                     }
                     Text(
                         text = filterIconPack?.name
-                            ?: stringResource(id = R.string.icon_picker_filter_all_packs),
+                            ?: stringResource(id = I18nR.string.icon_picker_filter_all_packs),
                         modifier = Modifier.animateContentSize()
                     )
                     Icon(
-                        painterResource(R.drawable.arrow_drop_down_20px),
+                        painterResource(BaseR.drawable.arrow_drop_down_20px),
                         modifier = Modifier
                             .padding(start = ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize),

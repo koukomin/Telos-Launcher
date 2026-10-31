@@ -1,4 +1,5 @@
 package de.mm20.launcher2.comms.reminder
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,7 +10,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import de.mm20.launcher2.i18n.R as I18nR
 
 class CallbackReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

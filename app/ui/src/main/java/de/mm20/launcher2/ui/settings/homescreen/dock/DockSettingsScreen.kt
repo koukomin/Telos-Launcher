@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.homescreen.dock
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.appwidget.AppWidgetManager
 import androidx.compose.animation.AnimatedVisibility
@@ -75,13 +77,13 @@ fun DockSettingsScreen() {
     var showChoiceDialog by remember { mutableStateOf(false) }
     var pendingSlotFilled by remember { mutableStateOf(false) }
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_dock)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_dock)) {
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_dock_pages)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_dock_pages)) {
                 if (dockPages.isEmpty()) {
                     Preference(
-                        title = stringResource(R.string.preference_dock_custom_enable),
-                        summary = stringResource(R.string.preference_dock_custom_enable_summary),
+                        title = stringResource(I18nR.string.preference_dock_custom_enable),
+                        summary = stringResource(I18nR.string.preference_dock_custom_enable_summary),
                         onClick = {
                             viewModel.enableCustomDock()
                         }
@@ -154,7 +156,7 @@ fun DockSettingsScreen() {
                                         selected = defaultPage == pagerState.currentPage,
                                         onClick = { viewModel.setDefaultPage(pagerState.currentPage) }
                                     )
-                                    Text(stringResource(R.string.preference_dock_page_default), style = MaterialTheme.typography.labelMedium)
+                                    Text(stringResource(I18nR.string.preference_dock_page_default), style = MaterialTheme.typography.labelMedium)
                                 }
                             }
                         }
@@ -166,14 +168,14 @@ fun DockSettingsScreen() {
         item {
             PreferenceCategory {
                 SliderPreference(
-                    title = stringResource(R.string.preference_clockwidget_dock_rows),
+                    title = stringResource(I18nR.string.preference_clockwidget_dock_rows),
                     value = rows,
                     min = 1,
                     max = 4,
                     onValueChanged = { viewModel.setRows(it) }
                 )
                 SliderPreference(
-                    title = stringResource(R.string.preference_dock_columns),
+                    title = stringResource(I18nR.string.preference_dock_columns),
                     value = columns,
                     min = 1,
                     max = 10,
@@ -184,10 +186,10 @@ fun DockSettingsScreen() {
 
         if (dockPages.isNotEmpty()) {
             item {
-                PreferenceCategory(title = stringResource(R.string.preference_dock_multiple)) {
+                PreferenceCategory(title = stringResource(I18nR.string.preference_dock_multiple)) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_dock_multiple_enable),
-                        summary = stringResource(R.string.preference_dock_multiple_enable_summary),
+                        title = stringResource(I18nR.string.preference_dock_multiple_enable),
+                        summary = stringResource(I18nR.string.preference_dock_multiple_enable_summary),
                         value = dockPages.size > 1,
                         onValueChanged = { enabled ->
                             viewModel.setDockCount(if (enabled) 2 else 1)
@@ -195,7 +197,7 @@ fun DockSettingsScreen() {
                     )
                     AnimatedVisibility(dockPages.size > 1) {
                         SliderPreference(
-                            title = stringResource(R.string.preference_dock_count),
+                            title = stringResource(I18nR.string.preference_dock_count),
                             value = dockPages.size,
                             min = 2,
                             max = DockSettingsScreenVM.MAX_DOCKS,
@@ -207,7 +209,7 @@ fun DockSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_grid_dock)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_grid_dock)) {
                 var override by remember { mutableStateOf(false) }
                 LaunchedEffect(dockGrid, grid) {
                     // Only ever switch the toggle ON from stored values; turning it off is the
@@ -217,7 +219,7 @@ fun DockSettingsScreen() {
                     ) override = true
                 }
                 SwitchPreference(
-                    title = stringResource(R.string.preference_dock_grid_override),
+                    title = stringResource(I18nR.string.preference_dock_grid_override),
                     value = override,
                     onValueChanged = {
                         override = it
@@ -236,7 +238,7 @@ fun DockSettingsScreen() {
                         // Column count is not offered here: the dock's columns come from the
                         // "Dock columns" slider above, a separate grid column override had no effect.
                         SliderPreference(
-                            title = stringResource(R.string.preference_grid_icon_size),
+                            title = stringResource(I18nR.string.preference_grid_icon_size),
                             value = dockGrid?.iconSize ?: 48,
                             step = 8,
                             min = 32,
@@ -246,27 +248,27 @@ fun DockSettingsScreen() {
                     }
                 }
                 SwitchPreference(
-                    title = stringResource(R.string.preference_dock_background),
-                    summary = stringResource(R.string.preference_dock_background_summary),
+                    title = stringResource(I18nR.string.preference_dock_background),
+                    summary = stringResource(I18nR.string.preference_dock_background_summary),
                     value = dockBackgroundEnabled,
                     onValueChanged = { viewModel.setDockBackgroundEnabled(it) }
                 )
                 AnimatedVisibility(dockBackgroundEnabled) {
                     Column {
                         ColorPreference(
-                            title = stringResource(R.string.preference_dock_background_color),
+                            title = stringResource(I18nR.string.preference_dock_background_color),
                             value = dockBackgroundColor?.let { Color(it) },
                             onValueChanged = { viewModel.setDockBackgroundColor(it?.toArgb()) }
                         )
                         SliderPreference(
-                            title = stringResource(R.string.preference_dock_background_opacity),
+                            title = stringResource(I18nR.string.preference_dock_background_opacity),
                             value = (dockBackgroundOpacity * 100).toInt(),
                             min = 0,
                             max = 100,
                             onValueChanged = { viewModel.setDockBackgroundOpacity(it / 100f) }
                         )
                         SliderPreference(
-                            title = stringResource(R.string.preference_dock_background_shadow),
+                            title = stringResource(I18nR.string.preference_dock_background_shadow),
                             value = dockBackgroundShadow,
                             min = 0,
                             max = 16,
@@ -275,14 +277,14 @@ fun DockSettingsScreen() {
                     }
                 }
                 SwitchPreference(
-                    title = stringResource(R.string.preference_dock_page_indicator),
-                    summary = stringResource(R.string.preference_dock_page_indicator_summary),
+                    title = stringResource(I18nR.string.preference_dock_page_indicator),
+                    summary = stringResource(I18nR.string.preference_dock_page_indicator_summary),
                     value = dockPageIndicatorEnabled,
                     onValueChanged = { viewModel.setDockPageIndicatorEnabled(it) }
                 )
                 AnimatedVisibility(dockPageIndicatorEnabled) {
                     ColorPreference(
-                        title = stringResource(R.string.preference_dock_page_indicator_color),
+                        title = stringResource(I18nR.string.preference_dock_page_indicator_color),
                         value = dockPageIndicatorColor?.let { Color(it) },
                         onValueChanged = { viewModel.setDockPageIndicatorColor(it?.toArgb()) }
                     )
@@ -292,11 +294,11 @@ fun DockSettingsScreen() {
 
         item {
             PreferenceCategory(
-                title = stringResource(R.string.preference_category_shutters),
+                title = stringResource(I18nR.string.preference_category_shutters),
             ) {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_shutters),
-                    summary = stringResource(R.string.preference_shutters_summary),
+                    title = stringResource(I18nR.string.preference_shutters),
+                    summary = stringResource(I18nR.string.preference_shutters_summary),
                     value = shuttersEnabled,
                     onValueChanged = {
                         shutterSettings.setEnabled(it)
@@ -310,14 +312,14 @@ fun DockSettingsScreen() {
         AlertDialog(
             onDismissRequest = { showChoiceDialog = false },
             // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
-            title = { Text(stringResource(R.string.dock_pick_item_type)) },
-            text = { Text(stringResource(R.string.dock_pick_item_message)) },
+            title = { Text(stringResource(I18nR.string.dock_pick_item_type)) },
+            text = { Text(stringResource(I18nR.string.dock_pick_item_message)) },
             confirmButton = {
                 TextButton(onClick = {
                     showChoiceDialog = false
                     showSearchablePicker = true
                 }) {
-                    Text(stringResource(R.string.dock_item_app))
+                    Text(stringResource(I18nR.string.dock_item_app))
                 }
             },
             dismissButton = {
@@ -327,14 +329,14 @@ fun DockSettingsScreen() {
                             showChoiceDialog = false
                             viewModel.pendingItemPos?.let { viewModel.setItem(it.first, it.second, it.third, null) }
                         }) {
-                            Text(stringResource(R.string.dock_menu_remove))
+                            Text(stringResource(I18nR.string.dock_menu_remove))
                         }
                     }
                     TextButton(onClick = {
                         showChoiceDialog = false
                         showWidgetPicker = true
                     }) {
-                        Text(stringResource(R.string.dock_item_widget))
+                        Text(stringResource(I18nR.string.dock_item_widget))
                     }
                 }
             }
@@ -428,7 +430,7 @@ fun DockSlot(
                     modifier = Modifier.size(32.dp)
                 )
             } else {
-                Icon(painterResource(R.drawable.widgets_24px), contentDescription = null)
+                Icon(painterResource(BaseR.drawable.widgets_24px), contentDescription = null)
             }
         } else if (resolvedSearchable != null) {
             val iconSize = 48.dp.toPixels().toInt()
@@ -442,7 +444,7 @@ fun DockSlot(
             )
         } else {
             Icon(
-                painterResource(R.drawable.add_24px), 
+                painterResource(BaseR.drawable.add_24px), 
                 contentDescription = null, 
                 tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
             )

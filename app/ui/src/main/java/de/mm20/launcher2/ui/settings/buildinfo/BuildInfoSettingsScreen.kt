@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.buildinfo
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.pm.PackageManager
 import android.os.Build
@@ -26,10 +27,10 @@ fun BuildInfoSettingsScreen() {
     val viewModel: BuildInfoSettingsScreenVM = viewModel()
     val context = LocalContext.current
     val buildFeatures by viewModel.buildFeatures.collectAsState(emptyMap())
-    PreferenceScreen(title = stringResource(R.string.preference_screen_buildinfo)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_buildinfo)) {
         item {
             PreferenceCategory {
-                Preference(title = stringResource(R.string.hf_buildinfo_type), summary = BuildConfig.BUILD_TYPE)
+                Preference(title = stringResource(I18nR.string.hf_buildinfo_type), summary = BuildConfig.BUILD_TYPE)
                 var buildSignature by remember { mutableStateOf<String?>(null) }
                 LaunchedEffect(Unit) {
                     buildSignature = withContext(Dispatchers.IO) {
@@ -65,15 +66,15 @@ fun BuildInfoSettingsScreen() {
                     }
                     }
                 }
-                Preference(title = stringResource(R.string.hf_buildinfo_signature), summary = buildSignature ?: stringResource(R.string.au3_sysb_unknown))
+                Preference(title = stringResource(I18nR.string.hf_buildinfo_signature), summary = buildSignature ?: stringResource(I18nR.string.au3_sysb_unknown))
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.hf_buildinfo_features)) {
+            PreferenceCategory(title = stringResource(I18nR.string.hf_buildinfo_features)) {
                 for (feature in buildFeatures) {
                     Preference(
                         title = feature.key,
-                        summary = stringResource(if (feature.value) R.string.au3_sysb_yes else R.string.au3_sysb_no)
+                        summary = stringResource(if (feature.value) I18nR.string.au3_sysb_yes else I18nR.string.au3_sysb_no)
                     )
                 }
             }

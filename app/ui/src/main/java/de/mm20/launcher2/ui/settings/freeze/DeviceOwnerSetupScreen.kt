@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.freeze
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -60,15 +62,15 @@ fun DeviceOwnerSetupScreen() {
     val removeCommand = "adb shell dpm remove-active-admin ${viewModel.adminComponent}"
 
     PreferenceScreen(
-        title = stringResource(R.string.freeze_device_owner_setup_title),
+        title = stringResource(I18nR.string.freeze_device_owner_setup_title),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         item {
             Preference(
-                icon = R.drawable.ac_unit_24px,
+                icon = BaseR.drawable.ac_unit_24px,
                 title = stringResource(
-                    if (isDeviceOwner == true) R.string.freeze_device_owner_status_active
-                    else R.string.freeze_device_owner_status_inactive
+                    if (isDeviceOwner == true) I18nR.string.freeze_device_owner_status_active
+                    else I18nR.string.freeze_device_owner_status_inactive
                 ),
                 onClick = { viewModel.refresh() },
             )
@@ -77,7 +79,7 @@ fun DeviceOwnerSetupScreen() {
             item {
                 Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                     Button(onClick = { viewModel.useAsBackend() }) {
-                        Text(stringResource(R.string.freeze_device_owner_use_as_backend))
+                        Text(stringResource(I18nR.string.freeze_device_owner_use_as_backend))
                     }
                 }
             }
@@ -85,19 +87,19 @@ fun DeviceOwnerSetupScreen() {
         item {
             Banner(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = stringResource(R.string.freeze_device_owner_risk_warning),
-                icon = R.drawable.error_24px,
+                text = stringResource(I18nR.string.freeze_device_owner_risk_warning),
+                icon = BaseR.drawable.error_24px,
             )
         }
         item {
             PreferenceCategory {
                 Text(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    text = stringResource(R.string.freeze_device_owner_requirements),
+                    text = stringResource(I18nR.string.freeze_device_owner_requirements),
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.freeze_device_owner_confirm_understand),
+                    title = stringResource(I18nR.string.freeze_device_owner_confirm_understand),
                     value = understood,
                     onValueChanged = { understood = it },
                 )
@@ -108,12 +110,12 @@ fun DeviceOwnerSetupScreen() {
                 PreferenceCategory {
                     Text(
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp),
-                        text = stringResource(R.string.freeze_device_owner_step1),
+                        text = stringResource(I18nR.string.freeze_device_owner_step1),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     Text(
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp),
-                        text = stringResource(R.string.freeze_device_owner_step2),
+                        text = stringResource(I18nR.string.freeze_device_owner_step2),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     CommandBlock(
@@ -125,12 +127,12 @@ fun DeviceOwnerSetupScreen() {
                     )
                     Text(
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp),
-                        text = stringResource(R.string.freeze_device_owner_step3),
+                        text = stringResource(I18nR.string.freeze_device_owner_step3),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     Row(modifier = Modifier.padding(16.dp)) {
                         Button(onClick = { viewModel.refresh() }) {
-                            Text(stringResource(R.string.freeze_device_owner_check_status))
+                            Text(stringResource(I18nR.string.freeze_device_owner_check_status))
                         }
                     }
                 }
@@ -138,15 +140,15 @@ fun DeviceOwnerSetupScreen() {
             item {
                 Banner(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    text = stringResource(R.string.freeze_device_owner_scope_note),
-                    icon = R.drawable.info_24px,
+                    text = stringResource(I18nR.string.freeze_device_owner_scope_note),
+                    icon = BaseR.drawable.info_24px,
                 )
             }
             item {
-                PreferenceCategory(title = stringResource(R.string.freeze_device_owner_undo_title)) {
+                PreferenceCategory(title = stringResource(I18nR.string.freeze_device_owner_undo_title)) {
                     Text(
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
-                        text = stringResource(R.string.freeze_device_owner_undo_text),
+                        text = stringResource(I18nR.string.freeze_device_owner_undo_text),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     CommandBlock(
@@ -177,8 +179,8 @@ private fun CommandBlock(command: String, onCopy: () -> Unit) {
             )
             IconButton(onClick = onCopy) {
                 Icon(
-                    painter = painterResource(R.drawable.content_copy_24px),
-                    contentDescription = stringResource(R.string.freeze_device_owner_copy_command),
+                    painter = painterResource(BaseR.drawable.content_copy_24px),
+                    contentDescription = stringResource(I18nR.string.freeze_device_owner_copy_command),
                 )
             }
         }

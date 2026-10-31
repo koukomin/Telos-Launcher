@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.desktopmode
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -57,40 +59,40 @@ fun DesktopModeSettingsScreen() {
             viewModel.setWallpaperImage(uri) { ok ->
                 Toast.makeText(
                     context,
-                    if (ok) R.string.wallpaper_set_success else R.string.wallpaper_set_failure,
+                    if (ok) I18nR.string.wallpaper_set_success else I18nR.string.wallpaper_set_failure,
                     Toast.LENGTH_SHORT,
                 ).show()
             }
         }
     }
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_desktop_mode)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_desktop_mode)) {
         item {
             PreferenceCategory {
                 if (!viewModel.isSupportedOnThisDevice) {
                     TextPreference(
-                        title = stringResource(R.string.desktop_mode_unsupported),
-                        value = stringResource(R.string.desktop_mode_unsupported_summary),
-                        summary = stringResource(R.string.desktop_mode_unsupported_summary),
+                        title = stringResource(I18nR.string.desktop_mode_unsupported),
+                        value = stringResource(I18nR.string.desktop_mode_unsupported_summary),
+                        summary = stringResource(I18nR.string.desktop_mode_unsupported_summary),
                         enabled = false,
                         onValueChanged = {},
                     )
                 } else {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_desktop_mode_enabled),
-                        summary = stringResource(R.string.preference_desktop_mode_enabled_summary),
+                        title = stringResource(I18nR.string.preference_desktop_mode_enabled),
+                        summary = stringResource(I18nR.string.preference_desktop_mode_enabled_summary),
                         value = enabled,
                         onValueChanged = { viewModel.setEnabled(it) },
                     )
                     TextPreference(
-                        title = stringResource(R.string.desktop_mode_display_status),
+                        title = stringResource(I18nR.string.desktop_mode_display_status),
                         value = stringResource(
-                            if (externalDisplay != null) R.string.desktop_mode_display_connected
-                            else R.string.desktop_mode_display_not_connected
+                            if (externalDisplay != null) I18nR.string.desktop_mode_display_connected
+                            else I18nR.string.desktop_mode_display_not_connected
                         ),
                         summary = stringResource(
-                            if (externalDisplay != null) R.string.desktop_mode_display_connected
-                            else R.string.desktop_mode_display_not_connected
+                            if (externalDisplay != null) I18nR.string.desktop_mode_display_connected
+                            else I18nR.string.desktop_mode_display_not_connected
                         ),
                         enabled = false,
                         onValueChanged = {},
@@ -113,20 +115,20 @@ fun DesktopModeSettingsScreen() {
         }
         if (enabled && viewModel.isSupportedOnThisDevice) {
             item {
-                PreferenceCategory(title = stringResource(R.string.preference_category_appearance)) {
+                PreferenceCategory(title = stringResource(I18nR.string.preference_category_appearance)) {
                     ListPreference(
-                        title = stringResource(R.string.desktop_mode_orientation),
+                        title = stringResource(I18nR.string.desktop_mode_orientation),
                         items = listOf(
                             ListPreferenceItem(
-                                stringResource(R.string.desktop_mode_orientation_auto),
+                                stringResource(I18nR.string.desktop_mode_orientation_auto),
                                 DesktopModeOrientation.Auto
                             ),
                             ListPreferenceItem(
-                                stringResource(R.string.desktop_mode_orientation_portrait),
+                                stringResource(I18nR.string.desktop_mode_orientation_portrait),
                                 DesktopModeOrientation.Portrait
                             ),
                             ListPreferenceItem(
-                                stringResource(R.string.desktop_mode_orientation_landscape),
+                                stringResource(I18nR.string.desktop_mode_orientation_landscape),
                                 DesktopModeOrientation.Landscape
                             ),
                         ),
@@ -134,7 +136,7 @@ fun DesktopModeSettingsScreen() {
                         onValueChanged = { viewModel.setOrientation(it) },
                     )
                     SliderPreference(
-                        title = stringResource(R.string.desktop_mode_icon_size),
+                        title = stringResource(I18nR.string.desktop_mode_icon_size),
                         value = gridIconSize,
                         step = 8,
                         min = 32,
@@ -142,24 +144,24 @@ fun DesktopModeSettingsScreen() {
                         onValueChanged = { viewModel.setGridIconSize(it) },
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.preference_keyboard_shortcuts),
-                        summary = stringResource(R.string.preference_keyboard_shortcuts_summary),
+                        title = stringResource(I18nR.string.preference_keyboard_shortcuts),
+                        summary = stringResource(I18nR.string.preference_keyboard_shortcuts_summary),
                         value = keyboardShortcuts,
                         onValueChanged = { viewModel.setHardwareKeyboardShortcuts(it) },
                     )
                 }
             }
             item {
-                PreferenceCategory(title = stringResource(R.string.desktop_mode_wallpaper_category)) {
+                PreferenceCategory(title = stringResource(I18nR.string.desktop_mode_wallpaper_category)) {
                     ListPreference(
-                        title = stringResource(R.string.desktop_mode_wallpaper_mode),
+                        title = stringResource(I18nR.string.desktop_mode_wallpaper_mode),
                         items = listOf(
                             ListPreferenceItem(
-                                stringResource(R.string.desktop_mode_wallpaper_mode_solid_color),
+                                stringResource(I18nR.string.desktop_mode_wallpaper_mode_solid_color),
                                 DesktopWallpaperMode.SolidColor,
                             ),
                             ListPreferenceItem(
-                                stringResource(R.string.desktop_mode_wallpaper_mode_static_image),
+                                stringResource(I18nR.string.desktop_mode_wallpaper_mode_static_image),
                                 DesktopWallpaperMode.StaticImage,
                             ),
                         ),
@@ -167,9 +169,9 @@ fun DesktopModeSettingsScreen() {
                         onValueChanged = { viewModel.setWallpaperMode(it) },
                     )
                     Preference(
-                        title = stringResource(R.string.desktop_mode_wallpaper_choose_image),
+                        title = stringResource(I18nR.string.desktop_mode_wallpaper_choose_image),
                         summary = wallpaperImageUri?.let {
-                            stringResource(R.string.desktop_mode_wallpaper_image_set)
+                            stringResource(I18nR.string.desktop_mode_wallpaper_image_set)
                         },
                         onClick = {
                             imagePicker.launch(
@@ -180,25 +182,25 @@ fun DesktopModeSettingsScreen() {
                 }
             }
             item {
-                PreferenceCategory(title = stringResource(R.string.desktop_mode_window_management_category)) {
+                PreferenceCategory(title = stringResource(I18nR.string.desktop_mode_window_management_category)) {
                     if (!viewModel.isFreeformPotentiallySupported) {
                         TextPreference(
-                            title = stringResource(R.string.desktop_mode_freeform_unsupported),
-                            value = stringResource(R.string.desktop_mode_freeform_unsupported_summary),
-                            summary = stringResource(R.string.desktop_mode_freeform_unsupported_summary),
+                            title = stringResource(I18nR.string.desktop_mode_freeform_unsupported),
+                            value = stringResource(I18nR.string.desktop_mode_freeform_unsupported_summary),
+                            summary = stringResource(I18nR.string.desktop_mode_freeform_unsupported_summary),
                             enabled = false,
                             onValueChanged = {},
                         )
                     } else {
                         SwitchPreference(
-                            title = stringResource(R.string.desktop_mode_freeform_enabled),
+                            title = stringResource(I18nR.string.desktop_mode_freeform_enabled),
                             summary = stringResource(
                                 if (freeformPreferenceEnabled && freeformActiveInSystem)
-                                    R.string.desktop_mode_freeform_enabled_summary_active
+                                    I18nR.string.desktop_mode_freeform_enabled_summary_active
                                 else if (freeformPreferenceEnabled)
-                                    R.string.desktop_mode_freeform_enabled_summary_pending
+                                    I18nR.string.desktop_mode_freeform_enabled_summary_pending
                                 else
-                                    R.string.desktop_mode_freeform_enabled_summary
+                                    I18nR.string.desktop_mode_freeform_enabled_summary
                             ),
                             value = freeformPreferenceEnabled,
                             onValueChanged = { viewModel.setFreeformEnabled(it) },
@@ -206,22 +208,22 @@ fun DesktopModeSettingsScreen() {
                         AnimatedVisibility(freeformPreferenceEnabled) {
                             Banner(
                                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                                text = stringResource(R.string.desktop_mode_freeform_warning),
-                                icon = R.drawable.error_24px,
+                                text = stringResource(I18nR.string.desktop_mode_freeform_warning),
+                                icon = BaseR.drawable.error_24px,
                             )
                         }
                         AnimatedVisibility(freeformShizukuUnavailable) {
                             Banner(
                                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                                text = stringResource(R.string.desktop_mode_freeform_shizuku_unavailable),
-                                icon = R.drawable.error_24px,
+                                text = stringResource(I18nR.string.desktop_mode_freeform_shizuku_unavailable),
+                                icon = BaseR.drawable.error_24px,
                             )
                         }
                         AnimatedVisibility(freeformShizukuPermissionDenied) {
                             Banner(
                                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                                text = stringResource(R.string.desktop_mode_freeform_shizuku_denied),
-                                icon = R.drawable.error_24px,
+                                text = stringResource(I18nR.string.desktop_mode_freeform_shizuku_denied),
+                                icon = BaseR.drawable.error_24px,
                             )
                         }
                     }

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.tags
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -47,7 +49,7 @@ fun TagsSettingsScreen() {
     var tagToDelete by rememberSaveable { mutableStateOf<String?>(null) }
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_tags),
+        title = stringResource(I18nR.string.preference_screen_tags),
         helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/concepts/tags"
     ) {
         item {
@@ -71,8 +73,8 @@ fun TagsSettingsScreen() {
                         controls = {
                             IconButton(onClick = { showMenu = true }) {
                                 Icon(
-                                    painterResource(R.drawable.more_vert_24px),
-                                    stringResource(R.string.au3_searchset_more_options)
+                                    painterResource(BaseR.drawable.more_vert_24px),
+                                    stringResource(I18nR.string.au3_searchset_more_options)
                                 )
                             }
                             DropdownMenuPopup(
@@ -83,10 +85,10 @@ fun TagsSettingsScreen() {
                                 ) {
                                     DropdownMenuItem(
                                         shape = MenuDefaults.leadingItemShape,
-                                        text = { Text(stringResource(R.string.duplicate)) },
+                                        text = { Text(stringResource(I18nR.string.duplicate)) },
                                         leadingIcon = {
                                             Icon(
-                                                painterResource(R.drawable.content_copy_24px),
+                                                painterResource(BaseR.drawable.content_copy_24px),
                                                 null
                                             )
                                         },
@@ -97,10 +99,10 @@ fun TagsSettingsScreen() {
                                     )
                                     DropdownMenuItem(
                                         shape = MenuDefaults.trailingItemShape,
-                                        text = { Text(stringResource(R.string.menu_delete)) },
+                                        text = { Text(stringResource(I18nR.string.menu_delete)) },
                                         leadingIcon = {
                                             Icon(
-                                                painterResource(R.drawable.delete_24px),
+                                                painterResource(BaseR.drawable.delete_24px),
                                                 null
                                             )
                                         },
@@ -126,13 +128,13 @@ fun TagsSettingsScreen() {
                         viewModel.createTag.value = true
                     }) {
                     Icon(
-                        painterResource(R.drawable.add_20px),
+                        painterResource(BaseR.drawable.add_20px),
                         null,
                         modifier = Modifier
                             .padding(end = ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.create_tag_title))
+                    Text(stringResource(I18nR.string.create_tag_title))
                 }
                 val autoCategorizing by viewModel.autoCategorizing
                 val context = androidx.compose.ui.platform.LocalContext.current
@@ -143,19 +145,19 @@ fun TagsSettingsScreen() {
                         viewModel.autoCategorizeApps(context)
                     }) {
                     Icon(
-                        painterResource(R.drawable.auto_awesome_24dp),
+                        painterResource(BaseR.drawable.auto_awesome_24dp),
                         null,
                         modifier = Modifier
                             .padding(end = ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.tags_auto_categorize))
+                    Text(stringResource(I18nR.string.tags_auto_categorize))
                 }
             }
         }
         item {
             Text(
-                text = stringResource(R.string.tags_auto_categorize_summary),
+                text = stringResource(I18nR.string.tags_auto_categorize_summary),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 16.dp),
@@ -165,7 +167,7 @@ fun TagsSettingsScreen() {
     tagToDelete?.let { deleting ->
         AlertDialog(
             onDismissRequest = { tagToDelete = null },
-            text = { Text(stringResource(R.string.au3_searchset_tag_delete_confirm, deleting)) },
+            text = { Text(stringResource(I18nR.string.au3_searchset_tag_delete_confirm, deleting)) },
             dismissButton = {
                 TextButton(onClick = { tagToDelete = null }) {
                     Text(stringResource(android.R.string.cancel))
@@ -176,7 +178,7 @@ fun TagsSettingsScreen() {
                     viewModel.deleteTag(deleting)
                     tagToDelete = null
                 }) {
-                    Text(stringResource(R.string.menu_delete))
+                    Text(stringResource(I18nR.string.menu_delete))
                 }
             },
         )

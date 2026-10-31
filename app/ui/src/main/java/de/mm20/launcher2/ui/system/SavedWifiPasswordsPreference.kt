@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.system
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -74,7 +76,7 @@ fun SavedWifiPasswordsPreference() {
         if (uri == null) return@rememberLauncherForActivityResult
         scope.launch {
             val allowed = activity != null && runCatching {
-                AuthManager().authenticateNative(activity, context.getString(R.string.telos_system_unlock_wifi))
+                AuthManager().authenticateNative(activity, context.getString(I18nR.string.telos_system_unlock_wifi))
             }.getOrDefault(false)
             val written = allowed && withContext(Dispatchers.IO) {
                 runCatching {
@@ -91,7 +93,7 @@ fun SavedWifiPasswordsPreference() {
             exportPassword = ""
             if (!written) {
                 withContext(Dispatchers.IO) { runCatching { android.provider.DocumentsContract.deleteDocument(context.contentResolver, uri) } }
-                Toast.makeText(context, R.string.au9_share_failed, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18nR.string.au9_share_failed, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -128,12 +130,12 @@ fun SavedWifiPasswordsPreference() {
     }
 
     Preference(
-        title = stringResource(R.string.telos_system_saved_wifi),
+        title = stringResource(I18nR.string.telos_system_saved_wifi),
         summary = stringResource(
             when {
-                privilege?.privilege == WifiPrivilege.Root -> R.string.telos_system_wifi_privilege_root
-                privilege?.privilege == WifiPrivilege.Shizuku -> R.string.telos_system_wifi_privilege_shizuku
-                else -> R.string.telos_system_wifi_privilege_missing
+                privilege?.privilege == WifiPrivilege.Root -> I18nR.string.telos_system_wifi_privilege_root
+                privilege?.privilege == WifiPrivilege.Shizuku -> I18nR.string.telos_system_wifi_privilege_shizuku
+                else -> I18nR.string.telos_system_wifi_privilege_missing
             },
         ),
         enabled = !loading,
@@ -146,13 +148,13 @@ fun SavedWifiPasswordsPreference() {
                     loading = true
                     try {
                         val authenticated = activity != null && runCatching {
-                            AuthManager().authenticateNative(activity, context.getString(R.string.telos_system_unlock_wifi))
+                            AuthManager().authenticateNative(activity, context.getString(I18nR.string.telos_system_unlock_wifi))
                         }.getOrDefault(false)
                         if (authenticated) {
                             entries = withContext(Dispatchers.IO) { PrivilegedWifiStore.load(context).withNotes(context) }
                         }
                     } catch (_: Exception) {
-                        Toast.makeText(context, R.string.virtual_telemetry_unavailable, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18nR.string.virtual_telemetry_unavailable, Toast.LENGTH_SHORT).show()
                     } finally {
                         loading = false
                     }
@@ -215,7 +217,7 @@ fun SavedWifiPasswordsPreference() {
             onPersist = {
                 scope.launch {
                     val n = withContext(Dispatchers.IO) { PrivilegedWifiStore.persistEphemeral() }
-                    Toast.makeText(context, context.getString(R.string.telos_system_wifi_persisted, n), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(I18nR.string.telos_system_wifi_persisted, n), Toast.LENGTH_SHORT).show()
                 }
             },
             onAutoPersist = { enabled ->
@@ -245,13 +247,13 @@ fun SavedWifiPasswordsPreference() {
     selectedQrPayload?.let { payload ->
         AlertDialog(
             onDismissRequest = { selectedQrPayload = null },
-            title = { Text(stringResource(R.string.hc_qr_code)) },
+            title = { Text(stringResource(I18nR.string.hc_qr_code)) },
             text = {
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                     ContactQrImage(payload, Modifier.size(220.dp).padding(12.dp))
                 }
             },
-            confirmButton = { TextButton(onClick = { selectedQrPayload = null }) { Text(stringResource(R.string.hc_close)) } },
+            confirmButton = { TextButton(onClick = { selectedQrPayload = null }) { Text(stringResource(I18nR.string.hc_close)) } },
         )
     }
 
@@ -259,7 +261,7 @@ fun SavedWifiPasswordsPreference() {
         var draft by remember(target.ssid) { mutableStateOf(PrivilegedWifiStore.noteFor(context, target.ssid)) }
         AlertDialog(
             onDismissRequest = { noteTarget = null },
-            title = { Text(stringResource(R.string.telos_system_wifi_note)) },
+            title = { Text(stringResource(I18nR.string.telos_system_wifi_note)) },
             text = {
                 OutlinedTextField(value = draft, onValueChange = { draft = it }, modifier = Modifier.fillMaxWidth(), minLines = 3)
             },
@@ -268,7 +270,7 @@ fun SavedWifiPasswordsPreference() {
                     PrivilegedWifiStore.saveNote(context, target.ssid, draft)
                     entries = entries?.map { if (it.ssid == target.ssid) it.copy(note = draft.ifBlank { null }) else it }
                     noteTarget = null
-                }) { Text(stringResource(R.string.telos_system_wifi_note_save)) }
+                }) { Text(stringResource(I18nR.string.telos_system_wifi_note_save)) }
             },
             dismissButton = { TextButton(onClick = { noteTarget = null }) { Text(stringResource(android.R.string.cancel)) } },
         )
@@ -277,8 +279,8 @@ fun SavedWifiPasswordsPreference() {
     forgetTarget?.let { target ->
         AlertDialog(
             onDismissRequest = { forgetTarget = null },
-            title = { Text(stringResource(R.string.telos_system_wifi_forget)) },
-            text = { Text(stringResource(R.string.telos_system_wifi_forget_confirm, target.ssid)) },
+            title = { Text(stringResource(I18nR.string.telos_system_wifi_forget)) },
+            text = { Text(stringResource(I18nR.string.telos_system_wifi_forget_confirm, target.ssid)) },
             confirmButton = {
                 TextButton(onClick = {
                     scope.launch {
@@ -289,7 +291,7 @@ fun SavedWifiPasswordsPreference() {
                         }
                         forgetTarget = null
                     }
-                }) { Text(stringResource(R.string.telos_system_wifi_forget)) }
+                }) { Text(stringResource(I18nR.string.telos_system_wifi_forget)) }
             },
             dismissButton = { TextButton(onClick = { forgetTarget = null }) { Text(stringResource(android.R.string.cancel)) } },
         )
@@ -298,8 +300,8 @@ fun SavedWifiPasswordsPreference() {
     if (forgetAll) {
         AlertDialog(
             onDismissRequest = { forgetAll = false },
-            title = { Text(stringResource(R.string.telos_system_wifi_forget_all)) },
-            text = { Text(stringResource(R.string.telos_system_wifi_forget_all_confirm)) },
+            title = { Text(stringResource(I18nR.string.telos_system_wifi_forget_all)) },
+            text = { Text(stringResource(I18nR.string.telos_system_wifi_forget_all_confirm)) },
             confirmButton = {
                 TextButton(onClick = {
                     scope.launch {
@@ -311,7 +313,7 @@ fun SavedWifiPasswordsPreference() {
                         entries = list.map { it.copy(existInSystem = false, networkId = -1) }
                         forgetAll = false
                     }
-                }) { Text(stringResource(R.string.telos_system_wifi_forget_all)) }
+                }) { Text(stringResource(I18nR.string.telos_system_wifi_forget_all)) }
             },
             dismissButton = { TextButton(onClick = { forgetAll = false }) { Text(stringResource(android.R.string.cancel)) } },
         )
@@ -320,12 +322,12 @@ fun SavedWifiPasswordsPreference() {
     pendingImport?.let { bytes ->
         AlertDialog(
             onDismissRequest = { pendingImport = null; importPassword = "" },
-            title = { Text(stringResource(R.string.telos_system_wifi_import)) },
+            title = { Text(stringResource(I18nR.string.telos_system_wifi_import)) },
             text = {
                 OutlinedTextField(
                     value = importPassword,
                     onValueChange = { importPassword = it },
-                    label = { Text(stringResource(R.string.telos_system_wifi_export_password)) },
+                    label = { Text(stringResource(I18nR.string.telos_system_wifi_export_password)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
             },
@@ -340,7 +342,7 @@ fun SavedWifiPasswordsPreference() {
                         pendingImport = null
                         importPassword = ""
                     }
-                }) { Text(stringResource(R.string.telos_system_wifi_import)) }
+                }) { Text(stringResource(I18nR.string.telos_system_wifi_import)) }
             },
             dismissButton = { TextButton(onClick = { pendingImport = null; importPassword = "" }) { Text(stringResource(android.R.string.cancel)) } },
         )
@@ -402,54 +404,54 @@ private fun WifiManagerDialog(
         ) {
             Column(Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(stringResource(R.string.telos_system_saved_wifi), style = MaterialTheme.typography.titleLarge)
+                    Text(stringResource(I18nR.string.telos_system_saved_wifi), style = MaterialTheme.typography.titleLarge)
                     Text(networks.size.toString(), color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
                 }
                 PrivilegeBanner(privilege, onEnableShizuku)
                 OutlinedTextField(
                     value = query,
                     onValueChange = onQuery,
-                    label = { Text(stringResource(R.string.hc_search)) },
+                    label = { Text(stringResource(I18nR.string.hc_search)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                    FilterChip(selected = filter == WifiFilter.All, onClick = { onFilter(WifiFilter.All) }, label = { Text(stringResource(R.string.telos_system_wifi_filter_all)) })
-                    FilterChip(selected = filter == WifiFilter.Device, onClick = { onFilter(WifiFilter.Device) }, label = { Text(stringResource(R.string.telos_system_wifi_filter_device)) })
-                    FilterChip(selected = filter == WifiFilter.App, onClick = { onFilter(WifiFilter.App) }, label = { Text(stringResource(R.string.telos_system_wifi_filter_app)) })
+                    FilterChip(selected = filter == WifiFilter.All, onClick = { onFilter(WifiFilter.All) }, label = { Text(stringResource(I18nR.string.telos_system_wifi_filter_all)) })
+                    FilterChip(selected = filter == WifiFilter.Device, onClick = { onFilter(WifiFilter.Device) }, label = { Text(stringResource(I18nR.string.telos_system_wifi_filter_device)) })
+                    FilterChip(selected = filter == WifiFilter.App, onClick = { onFilter(WifiFilter.App) }, label = { Text(stringResource(I18nR.string.telos_system_wifi_filter_app)) })
                     Spacer(Modifier.weight(1f))
-                    FilterChip(selected = sort == WifiSort.Az, onClick = { onSort(if (sort == WifiSort.Az) WifiSort.Za else WifiSort.Az) }, label = { Text(stringResource(if (sort == WifiSort.Az) R.string.telos_system_wifi_sort_az else R.string.telos_system_wifi_sort_za)) })
+                    FilterChip(selected = sort == WifiSort.Az, onClick = { onSort(if (sort == WifiSort.Az) WifiSort.Za else WifiSort.Az) }, label = { Text(stringResource(if (sort == WifiSort.Az) I18nR.string.telos_system_wifi_sort_az else I18nR.string.telos_system_wifi_sort_za)) })
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                    OutlinedButton(onClick = { onExport(WifiExportKind.Json) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.telos_system_wifi_export)) }
-                    OutlinedButton(onClick = { onExport(WifiExportKind.Gzip) }, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.telos_system_wifi_export_gzip)) }
-                    OutlinedButton(onClick = onImport, modifier = Modifier.weight(1f)) { Text(stringResource(R.string.telos_system_wifi_import)) }
+                    OutlinedButton(onClick = { onExport(WifiExportKind.Json) }, modifier = Modifier.weight(1f)) { Text(stringResource(I18nR.string.telos_system_wifi_export)) }
+                    OutlinedButton(onClick = { onExport(WifiExportKind.Gzip) }, modifier = Modifier.weight(1f)) { Text(stringResource(I18nR.string.telos_system_wifi_export_gzip)) }
+                    OutlinedButton(onClick = onImport, modifier = Modifier.weight(1f)) { Text(stringResource(I18nR.string.telos_system_wifi_import)) }
                 }
                 OutlinedTextField(
                     value = exportPassword,
                     onValueChange = onExportPassword,
-                    label = { Text(stringResource(R.string.telos_system_wifi_export_password)) },
+                    label = { Text(stringResource(I18nR.string.telos_system_wifi_export_password)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 TextButton(onClick = { onExport(WifiExportKind.Encrypted) }, enabled = exportPassword.isNotBlank()) {
-                    Text(stringResource(R.string.telos_system_wifi_export_encrypt))
+                    Text(stringResource(I18nR.string.telos_system_wifi_export_encrypt))
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Switch(checked = autoPersist, onCheckedChange = onAutoPersist)
-                    Text(stringResource(R.string.telos_system_wifi_auto_persist), modifier = Modifier.padding(start = 8.dp))
+                    Text(stringResource(I18nR.string.telos_system_wifi_auto_persist), modifier = Modifier.padding(start = 8.dp))
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    TextButton(onClick = onPersist) { Text(stringResource(R.string.telos_system_wifi_persist_ephemeral)) }
-                    TextButton(onClick = onForgetAll, enabled = networks.any { it.existInSystem }) { Text(stringResource(R.string.telos_system_wifi_forget_all)) }
-                    TextButton(onClick = onRefresh) { Text(stringResource(R.string.hc_refresh)) }
+                    TextButton(onClick = onPersist) { Text(stringResource(I18nR.string.telos_system_wifi_persist_ephemeral)) }
+                    TextButton(onClick = onForgetAll, enabled = networks.any { it.existInSystem }) { Text(stringResource(I18nR.string.telos_system_wifi_forget_all)) }
+                    TextButton(onClick = onRefresh) { Text(stringResource(I18nR.string.hc_refresh)) }
                 }
                 if (loading) {
                     LinearProgressIndicator(Modifier.fillMaxWidth())
                 }
                 if (filtered.isEmpty() && !loading) {
                     Box(Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) {
-                        Text(stringResource(if (privilege?.privilege == WifiPrivilege.None) R.string.telos_system_wifi_privilege_missing else R.string.telos_system_wifi_empty))
+                        Text(stringResource(if (privilege?.privilege == WifiPrivilege.None) I18nR.string.telos_system_wifi_privilege_missing else I18nR.string.telos_system_wifi_empty))
                     }
                 } else {
                     LazyColumn(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -486,11 +488,11 @@ private fun PrivilegeBanner(privilege: WifiPrivilegeState?, onEnableShizuku: () 
             Text(
                 stringResource(
                     when {
-                        privilege?.privilege == WifiPrivilege.Root -> R.string.telos_system_wifi_privilege_root
-                        privilege?.privilege == WifiPrivilege.Shizuku -> R.string.telos_system_wifi_privilege_shizuku
-                        privilege?.shizukuInstalled == true && privilege.shizukuRunning && !privilege.shizukuAuthorized -> R.string.telos_system_wifi_grant_shizuku
-                        privilege?.shizukuInstalled == true && !privilege.shizukuRunning -> R.string.telos_system_wifi_open_shizuku
-                        else -> R.string.telos_system_wifi_enable_shizuku
+                        privilege?.privilege == WifiPrivilege.Root -> I18nR.string.telos_system_wifi_privilege_root
+                        privilege?.privilege == WifiPrivilege.Shizuku -> I18nR.string.telos_system_wifi_privilege_shizuku
+                        privilege?.shizukuInstalled == true && privilege.shizukuRunning && !privilege.shizukuAuthorized -> I18nR.string.telos_system_wifi_grant_shizuku
+                        privilege?.shizukuInstalled == true && !privilege.shizukuRunning -> I18nR.string.telos_system_wifi_open_shizuku
+                        else -> I18nR.string.telos_system_wifi_enable_shizuku
                     },
                 ),
             )
@@ -499,9 +501,9 @@ private fun PrivilegeBanner(privilege: WifiPrivilegeState?, onEnableShizuku: () 
                     Text(
                         stringResource(
                             when {
-                                privilege?.shizukuRunning == true -> R.string.telos_system_wifi_grant_shizuku
-                                privilege?.shizukuInstalled == true -> R.string.telos_system_wifi_open_shizuku
-                                else -> R.string.telos_system_wifi_enable_shizuku
+                                privilege?.shizukuRunning == true -> I18nR.string.telos_system_wifi_grant_shizuku
+                                privilege?.shizukuInstalled == true -> I18nR.string.telos_system_wifi_open_shizuku
+                                else -> I18nR.string.telos_system_wifi_enable_shizuku
                             },
                         ),
                     )
@@ -532,13 +534,13 @@ private fun WifiNetworkCard(
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
                     Text(entry.ssid, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                    if (connected) Text(stringResource(R.string.telos_system_wifi_connected), color = MaterialTheme.colorScheme.primary)
+                    if (connected) Text(stringResource(I18nR.string.telos_system_wifi_connected), color = MaterialTheme.colorScheme.primary)
                     Text(
-                        entry.security.ifBlank { stringResource(R.string.telos_system_wifi_security_open) },
+                        entry.security.ifBlank { stringResource(I18nR.string.telos_system_wifi_security_open) },
                         style = MaterialTheme.typography.labelMedium,
                     )
                     Text(
-                        text = if (passwordVisible) entry.psk ?: stringResource(R.string.virtual_telemetry_unavailable) else "••••••••",
+                        text = if (passwordVisible) entry.psk ?: stringResource(I18nR.string.virtual_telemetry_unavailable) else "••••••••",
                         style = MaterialTheme.typography.bodyMedium,
                         color = if (entry.psk.isNullOrBlank()) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary,
                     )
@@ -546,13 +548,13 @@ private fun WifiNetworkCard(
                         Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     if (!entry.existInSystem) {
-                        Text(stringResource(R.string.telos_system_wifi_filter_app), style = MaterialTheme.typography.labelSmall)
+                        Text(stringResource(I18nR.string.telos_system_wifi_filter_app), style = MaterialTheme.typography.labelSmall)
                     }
                 }
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
-                        painter = painterResource(if (passwordVisible) R.drawable.visibility_24px else R.drawable.visibility_off_24px),
-                        contentDescription = stringResource(R.string.hc_password),
+                        painter = painterResource(if (passwordVisible) BaseR.drawable.visibility_24px else BaseR.drawable.visibility_off_24px),
+                        contentDescription = stringResource(I18nR.string.hc_password),
                     )
                 }
             }
@@ -560,12 +562,12 @@ private fun WifiNetworkCard(
                 TextButton(enabled = !entry.psk.isNullOrBlank(), onClick = {
                     val psk = entry.psk.orEmpty()
                     val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                    val clip = ClipData.newPlainText(context.getString(R.string.hc_password), psk)
+                    val clip = ClipData.newPlainText(context.getString(I18nR.string.hc_password), psk)
                     if (android.os.Build.VERSION.SDK_INT >= 33) clip.description.extras = android.os.PersistableBundle().apply {
                         putBoolean(android.content.ClipDescription.EXTRA_IS_SENSITIVE, true)
                     }
                     cm.setPrimaryClip(clip)
-                }) { Text(stringResource(R.string.hc_copy)) }
+                }) { Text(stringResource(I18nR.string.hc_copy)) }
                 TextButton(enabled = !entry.psk.isNullOrBlank(), onClick = {
                     context.startActivity(
                         Intent.createChooser(
@@ -576,14 +578,14 @@ private fun WifiNetworkCard(
                             null,
                         ),
                     )
-                }) { Text(stringResource(R.string.menu_share)) }
-                TextButton(enabled = !entry.psk.isNullOrBlank(), onClick = onShowQr) { Text(stringResource(R.string.hc_qr_code)) }
-                TextButton(onClick = onNote) { Text(stringResource(R.string.telos_system_wifi_note)) }
+                }) { Text(stringResource(I18nR.string.menu_share)) }
+                TextButton(enabled = !entry.psk.isNullOrBlank(), onClick = onShowQr) { Text(stringResource(I18nR.string.hc_qr_code)) }
+                TextButton(onClick = onNote) { Text(stringResource(I18nR.string.telos_system_wifi_note)) }
                 if (entry.existInSystem) {
                     TextButton(onClick = if (connected) onDisconnect else onConnect) {
-                        Text(stringResource(if (connected) R.string.telos_system_wifi_disconnect else R.string.telos_system_wifi_connect))
+                        Text(stringResource(if (connected) I18nR.string.telos_system_wifi_disconnect else I18nR.string.telos_system_wifi_connect))
                     }
-                    TextButton(onClick = onForget) { Text(stringResource(R.string.telos_system_wifi_forget)) }
+                    TextButton(onClick = onForget) { Text(stringResource(I18nR.string.telos_system_wifi_forget)) }
                 }
             }
         }

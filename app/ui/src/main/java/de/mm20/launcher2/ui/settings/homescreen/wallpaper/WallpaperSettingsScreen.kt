@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.homescreen.wallpaper
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.preferences.SystemBarColors
 import android.content.Intent
@@ -72,7 +74,7 @@ fun WallpaperSettingsScreen() {
     val setResultToast: (Boolean) -> Unit = { ok ->
         Toast.makeText(
             context,
-            if (ok) R.string.wallpaper_set_success else R.string.wallpaper_set_failure,
+            if (ok) I18nR.string.wallpaper_set_success else I18nR.string.wallpaper_set_failure,
             Toast.LENGTH_SHORT,
         ).show()
     }
@@ -111,7 +113,7 @@ fun WallpaperSettingsScreen() {
     pendingImageUri?.let { uri ->
         AlertDialog(
             onDismissRequest = { pendingImageUri = null },
-            title = { Text(stringResource(R.string.wallpaper_target_dialog_title)) },
+            title = { Text(stringResource(I18nR.string.wallpaper_target_dialog_title)) },
             text = {
                 Column {
                     TextButton(
@@ -121,7 +123,7 @@ fun WallpaperSettingsScreen() {
                             pendingImageUri = null
                         },
                     ) {
-                        Text(stringResource(R.string.preference_wallpaper_set_home))
+                        Text(stringResource(I18nR.string.preference_wallpaper_set_home))
                     }
                     TextButton(
                         modifier = Modifier.fillMaxWidth(),
@@ -130,7 +132,7 @@ fun WallpaperSettingsScreen() {
                             pendingImageUri = null
                         },
                     ) {
-                        Text(stringResource(R.string.preference_wallpaper_set_lock))
+                        Text(stringResource(I18nR.string.preference_wallpaper_set_lock))
                     }
                     TextButton(
                         modifier = Modifier.fillMaxWidth(),
@@ -139,7 +141,7 @@ fun WallpaperSettingsScreen() {
                             pendingImageUri = null
                         },
                     ) {
-                        Text(stringResource(R.string.preference_wallpaper_set_both))
+                        Text(stringResource(I18nR.string.preference_wallpaper_set_both))
                     }
                 }
             },
@@ -151,46 +153,46 @@ fun WallpaperSettingsScreen() {
         )
     }
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_wallpaper)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_wallpaper)) {
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_wallpaper)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_wallpaper)) {
                 ListPreference(
-                    title = stringResource(R.string.wallpaper_content_color),
+                    title = stringResource(I18nR.string.wallpaper_content_color),
                     value = textColors,
                     items = listOf(
-                        stringResource(R.string.wallpaper_content_auto) to SystemBarColors.Auto,
-                        stringResource(R.string.wallpaper_content_white) to SystemBarColors.Light,
-                        stringResource(R.string.wallpaper_content_black) to SystemBarColors.Dark,
+                        stringResource(I18nR.string.wallpaper_content_auto) to SystemBarColors.Auto,
+                        stringResource(I18nR.string.wallpaper_content_white) to SystemBarColors.Light,
+                        stringResource(I18nR.string.wallpaper_content_black) to SystemBarColors.Dark,
                     ),
                     onValueChanged = viewModel::setTextColors,
                 )
                 Preference(
-                    icon = R.drawable.wallpaper_24px,
-                    title = stringResource(R.string.preference_wallpaper_change),
-                    summary = stringResource(R.string.frosted_glass_wallpaper_help),
+                    icon = BaseR.drawable.wallpaper_24px,
+                    title = stringResource(I18nR.string.preference_wallpaper_change),
+                    summary = stringResource(I18nR.string.frosted_glass_wallpaper_help),
                     onClick = {
                         wallpaperPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
                     }
                 )
                 Preference(
-                    title = stringResource(R.string.preference_wallpaper_system_picker),
-                    summary = stringResource(R.string.preference_wallpaper_system_picker_summary),
+                    title = stringResource(I18nR.string.preference_wallpaper_system_picker),
+                    summary = stringResource(I18nR.string.preference_wallpaper_system_picker_summary),
                     onClick = {
                         context.tryStartActivity(Intent.createChooser(Intent(Intent.ACTION_SET_WALLPAPER), null))
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_dim_wallpaper),
-                    summary = stringResource(R.string.preference_dim_wallpaper_summary),
+                    title = stringResource(I18nR.string.preference_dim_wallpaper),
+                    summary = stringResource(I18nR.string.preference_dim_wallpaper_summary),
                     value = dimWallpaper,
                     onValueChanged = { viewModel.setDimWallpaper(it) }
                 )
                 val isBlurSupported = remember { viewModel.isBlurAvailable(context) }
                 SwitchPreference(
-                    title = stringResource(R.string.preference_blur_wallpaper),
+                    title = stringResource(I18nR.string.preference_blur_wallpaper),
                     summary = stringResource(
-                        if (isBlurSupported) R.string.preference_blur_wallpaper_summary
-                        else R.string.preference_blur_wallpaper_unsupported
+                        if (isBlurSupported) I18nR.string.preference_blur_wallpaper_summary
+                        else I18nR.string.preference_blur_wallpaper_unsupported
                     ),
                     value = blurWallpaper && isBlurSupported,
                     onValueChanged = { viewModel.setBlurWallpaper(it) },
@@ -198,7 +200,7 @@ fun WallpaperSettingsScreen() {
                 )
                 AnimatedVisibility(blurWallpaper && isBlurSupported) {
                     SliderPreference(
-                        title = stringResource(R.string.preference_blur_wallpaper_radius),
+                        title = stringResource(I18nR.string.preference_blur_wallpaper_radius),
                         value = blurWallpaperRadius,
                         onValueChanged = { viewModel.setBlurWallpaperRadius(it) },
                         min = 4,
@@ -210,41 +212,41 @@ fun WallpaperSettingsScreen() {
         }
         if (viewModel.hasVideoWallpaper) {
             item {
-                PreferenceCategory(title = stringResource(R.string.preference_wallpaper_category_video)) {
+                PreferenceCategory(title = stringResource(I18nR.string.preference_wallpaper_category_video)) {
                     Preference(
-                        title = stringResource(R.string.preference_wallpaper_add_video),
+                        title = stringResource(I18nR.string.preference_wallpaper_add_video),
                         onClick = {
                             appendToPlaylist = true
                             videoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
                         }
                     )
                     Preference(
-                        title = stringResource(R.string.preference_wallpaper_clear_playlist),
+                        title = stringResource(I18nR.string.preference_wallpaper_clear_playlist),
                         onClick = { viewModel.clearVideoPlaylist() }
                     )
                     Preference(
                         title = stringResource(
-                            if (viewModel.isVideoWallpaperActive) R.string.wallpaper_video_active
-                            else R.string.wallpaper_video_inactive
+                            if (viewModel.isVideoWallpaperActive) I18nR.string.wallpaper_video_active
+                            else I18nR.string.wallpaper_video_inactive
                         ),
                         enabled = !viewModel.isVideoWallpaperActive,
                         onClick = { context.tryStartActivity(viewModel.getActivationIntent()) }
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.preference_wallpaper_pause_battery_saver),
-                        summary = stringResource(R.string.preference_wallpaper_pause_battery_saver_summary),
+                        title = stringResource(I18nR.string.preference_wallpaper_pause_battery_saver),
+                        summary = stringResource(I18nR.string.preference_wallpaper_pause_battery_saver_summary),
                         value = pauseOnBatterySaver == true,
                         onValueChanged = { viewModel.setPauseOnBatterySaver(it) }
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.preference_wallpaper_pause_thermal),
-                        summary = stringResource(R.string.preference_wallpaper_pause_thermal_summary),
+                        title = stringResource(I18nR.string.preference_wallpaper_pause_thermal),
+                        summary = stringResource(I18nR.string.preference_wallpaper_pause_thermal_summary),
                         value = pauseOnThermal == true,
                         onValueChanged = { viewModel.setPauseOnThermal(it) }
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.preference_wallpaper_pause_desktop_mode),
-                        summary = stringResource(R.string.preference_wallpaper_pause_desktop_mode_summary),
+                        title = stringResource(I18nR.string.preference_wallpaper_pause_desktop_mode),
+                        summary = stringResource(I18nR.string.preference_wallpaper_pause_desktop_mode_summary),
                         value = pauseOnDesktopMode == true,
                         onValueChanged = { viewModel.setPauseOnDesktopMode(it) }
                     )
@@ -254,70 +256,70 @@ fun WallpaperSettingsScreen() {
         if (viewModel.hasVideoWallpaper && videoTransforms != null) {
             val transforms = videoTransforms!!
             item {
-                PreferenceCategory(title = stringResource(R.string.websearch_dialog_advanced)) {
+                PreferenceCategory(title = stringResource(I18nR.string.websearch_dialog_advanced)) {
                     ListPreference(
-                        title = stringResource(R.string.preference_wallpaper_scaling_mode),
+                        title = stringResource(I18nR.string.preference_wallpaper_scaling_mode),
                         items = listOf(
-                            stringResource(R.string.preference_wallpaper_scaling_mode_fit) to de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Fit,
-                            stringResource(R.string.preference_wallpaper_scaling_mode_fill) to de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Fill,
-                            stringResource(R.string.preference_wallpaper_scaling_mode_stretch) to de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Stretch,
+                            stringResource(I18nR.string.preference_wallpaper_scaling_mode_fit) to de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Fit,
+                            stringResource(I18nR.string.preference_wallpaper_scaling_mode_fill) to de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Fill,
+                            stringResource(I18nR.string.preference_wallpaper_scaling_mode_stretch) to de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Stretch,
                         ),
                         value = transforms.scalingMode,
                         onValueChanged = { if (it != null) viewModel.setVideoScalingMode(it) }
                     )
                     SliderPreference(
-                        title = stringResource(R.string.preference_wallpaper_brightness),
+                        title = stringResource(I18nR.string.preference_wallpaper_brightness),
                         value = transforms.brightness,
                         min = 0f,
                         max = 2f,
                         onValueChanged = { viewModel.setVideoBrightness(it) },
                     )
                     SliderPreference(
-                        title = stringResource(R.string.preference_wallpaper_zoom),
+                        title = stringResource(I18nR.string.preference_wallpaper_zoom),
                         value = transforms.zoom,
                         min = 0.5f,
                         max = 5f,
                         onValueChanged = { viewModel.setVideoZoom(it) },
                     )
                     SliderPreference(
-                        title = stringResource(R.string.preference_wallpaper_position_x),
+                        title = stringResource(I18nR.string.preference_wallpaper_position_x),
                         value = transforms.positionX,
                         min = -1f,
                         max = 1f,
                         onValueChanged = { viewModel.setVideoPosition(it, transforms.positionY) },
                     )
                     SliderPreference(
-                        title = stringResource(R.string.preference_wallpaper_position_y),
+                        title = stringResource(I18nR.string.preference_wallpaper_position_y),
                         value = transforms.positionY,
                         min = -1f,
                         max = 1f,
                         onValueChanged = { viewModel.setVideoPosition(transforms.positionX, it) },
                     )
                     SliderPreference(
-                        title = stringResource(R.string.preference_wallpaper_speed),
+                        title = stringResource(I18nR.string.preference_wallpaper_speed),
                         value = videoSpeed ?: 1f,
                         min = 0.25f,
                         max = 3f,
                         onValueChanged = { viewModel.setVideoSpeed(it) },
                     )
                     ListPreference(
-                        title = stringResource(R.string.preference_wallpaper_start_behavior),
+                        title = stringResource(I18nR.string.preference_wallpaper_start_behavior),
                         items = listOf(
-                            stringResource(R.string.preference_wallpaper_start_behavior_resume) to de.mm20.launcher2.preferences.VideoWallpaperStartBehavior.Resume,
-                            stringResource(R.string.preference_wallpaper_start_behavior_restart) to de.mm20.launcher2.preferences.VideoWallpaperStartBehavior.Restart,
-                            stringResource(R.string.preference_wallpaper_start_behavior_random) to de.mm20.launcher2.preferences.VideoWallpaperStartBehavior.Random,
+                            stringResource(I18nR.string.preference_wallpaper_start_behavior_resume) to de.mm20.launcher2.preferences.VideoWallpaperStartBehavior.Resume,
+                            stringResource(I18nR.string.preference_wallpaper_start_behavior_restart) to de.mm20.launcher2.preferences.VideoWallpaperStartBehavior.Restart,
+                            stringResource(I18nR.string.preference_wallpaper_start_behavior_random) to de.mm20.launcher2.preferences.VideoWallpaperStartBehavior.Random,
                         ),
                         value = videoStartBehavior ?: de.mm20.launcher2.preferences.VideoWallpaperStartBehavior.Resume,
                         onValueChanged = { if (it != null) viewModel.setVideoStartBehavior(it) }
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.preference_wallpaper_parallax),
+                        title = stringResource(I18nR.string.preference_wallpaper_parallax),
                         value = transforms.parallax,
                         onValueChanged = { viewModel.setVideoParallax(it) }
                     )
                     if (transforms.parallax) {
                         SliderPreference(
-                            title = stringResource(R.string.preference_wallpaper_parallax_strength),
+                            title = stringResource(I18nR.string.preference_wallpaper_parallax_strength),
                             value = transforms.parallaxStrength,
                             min = 0.1f,
                             max = 1f,

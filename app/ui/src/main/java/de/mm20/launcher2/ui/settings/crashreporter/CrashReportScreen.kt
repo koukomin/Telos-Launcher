@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.crashreporter
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -41,29 +43,29 @@ fun CrashReportScreen(fileName: String) {
     val notFound by viewModel.notFound
     PreferenceScreen(
         title = when (crashReport?.type) {
-            CrashReportType.Exception -> stringResource(R.string.au3_sysb_crash_type_exception)
-            CrashReportType.Crash -> stringResource(R.string.au3_sysb_crash_type_crash)
+            CrashReportType.Exception -> stringResource(I18nR.string.au3_sysb_crash_type_exception)
+            CrashReportType.Crash -> stringResource(I18nR.string.au3_sysb_crash_type_crash)
             null -> ""
         },
         topBarActions = {
             if (crashReport != null) {
                 IconButton(onClick = { crashReport?.let { viewModel.copyCrashReport(context, it) } }) {
                     Icon(
-                        painterResource(R.drawable.content_copy_24px),
+                        painterResource(BaseR.drawable.content_copy_24px),
                         contentDescription = stringResource(android.R.string.copy)
                     )
                 }
                 IconButton(onClick = { crashReport?.let { viewModel.shareCrashReport(context, it) } }) {
                     Icon(
-                        painterResource(R.drawable.share_24px),
-                        contentDescription = stringResource(R.string.menu_share)
+                        painterResource(BaseR.drawable.share_24px),
+                        contentDescription = stringResource(I18nR.string.menu_share)
                     )
                 }
                 if (crashReport?.type == CrashReportType.Crash) {
                     IconButton(onClick = { crashReport?.let { viewModel.createIssue(context, it) } }) {
                         Icon(
-                            painterResource(R.drawable.bug_report_24px),
-                            contentDescription = stringResource(R.string.au3_sysb_crash_create_issue)
+                            painterResource(BaseR.drawable.bug_report_24px),
+                            contentDescription = stringResource(I18nR.string.au3_sysb_crash_create_issue)
                         )
                     }
                 }
@@ -74,8 +76,8 @@ fun CrashReportScreen(fileName: String) {
                     }
                 }) {
                     Icon(
-                        painterResource(R.drawable.delete_24px),
-                        contentDescription = stringResource(R.string.menu_delete)
+                        painterResource(BaseR.drawable.delete_24px),
+                        contentDescription = stringResource(I18nR.string.menu_delete)
                     )
                 }
             }
@@ -84,7 +86,7 @@ fun CrashReportScreen(fileName: String) {
         if (notFound) {
             item {
                 Text(
-                    text = stringResource(R.string.au3_sysb_crash_not_found),
+                    text = stringResource(I18nR.string.au3_sysb_crash_not_found),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(16.dp)
                 )
@@ -121,7 +123,7 @@ fun CrashReportScreen(fileName: String) {
                     .background(MaterialTheme.colorScheme.surfaceBright, MaterialTheme.shapes.medium)
                     .padding(12.dp),
             ) {
-                Text(text = stringResource(R.string.au3_sysb_crash_device_info), style = MaterialTheme.typography.titleMedium)
+                Text(text = stringResource(I18nR.string.au3_sysb_crash_device_info), style = MaterialTheme.typography.titleMedium)
                 val deviceInformation = remember { viewModel.getDeviceInformation(context) }
                 Text(
                     text = deviceInformation,

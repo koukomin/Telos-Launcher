@@ -1,4 +1,5 @@
 package de.mm20.launcher2.weather.brightsky
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.icu.text.SimpleDateFormat
@@ -8,7 +9,6 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.GeocoderWeatherProvider
-import de.mm20.launcher2.i18n.R
 import kotlin.math.roundToInt
 
 internal class BrightSkyProvider(
@@ -101,16 +101,16 @@ internal class BrightSkyProvider(
 
     private fun getCondition(icon: String): String? {
         val resId = when (icon) {
-            "clear-day", "clear-night" -> R.string.weather_condition_clearsky
-            "partly-cloudy-day", "partly-cloudy-night" -> R.string.weather_condition_partlycloudy
-            "cloudy" -> R.string.weather_condition_cloudy
-            "fog" -> R.string.weather_condition_fog
-            "wind" -> R.string.weather_condition_wind
-            "rain" -> R.string.weather_condition_rain
-            "sleet" -> R.string.weather_condition_sleet
-            "snow" -> R.string.weather_condition_snow
-            "hail" -> R.string.weather_condition_hail
-            "thunderstorm" -> R.string.weather_condition_thunderstorm
+            "clear-day", "clear-night" -> I18nR.string.weather_condition_clearsky
+            "partly-cloudy-day", "partly-cloudy-night" -> I18nR.string.weather_condition_partlycloudy
+            "cloudy" -> I18nR.string.weather_condition_cloudy
+            "fog" -> I18nR.string.weather_condition_fog
+            "wind" -> I18nR.string.weather_condition_wind
+            "rain" -> I18nR.string.weather_condition_rain
+            "sleet" -> I18nR.string.weather_condition_sleet
+            "snow" -> I18nR.string.weather_condition_snow
+            "hail" -> I18nR.string.weather_condition_hail
+            "thunderstorm" -> I18nR.string.weather_condition_thunderstorm
             else -> return null
         }
         return context.getString(resId)

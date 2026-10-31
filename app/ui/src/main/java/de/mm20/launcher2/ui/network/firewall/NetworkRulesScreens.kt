@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network.firewall
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -76,33 +77,33 @@ fun NetworkUniversalRulesScreen() {
         scope.launch { fw.setUniversalRules(change(fw.universalRules.value)) }
     }
 
-    PreferenceScreen(title = stringResource(R.string.netfw_u_title)) {
+    PreferenceScreen(title = stringResource(I18nR.string.netfw_u_title)) {
         item {
             Text(
-                stringResource(R.string.netfw_u_intro),
+                stringResource(I18nR.string.netfw_u_intro),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
         item {
-            PreferenceCategory(stringResource(R.string.netfw_u_networks)) {
-                SwitchPreference(title = stringResource(R.string.netfw_u_wifi), icon = IconsNetworkRulesScreens.wifi_24px, value = u.blockWifi, onValueChanged = { v -> set { it.copy(blockWifi = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_mobile), icon = IconsNetworkRulesScreens.signal_cellular_alt_24px, value = u.blockMobile, onValueChanged = { v -> set { it.copy(blockMobile = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_roaming), icon = IconsNetworkRulesScreens.public_24px, value = u.blockRoaming, onValueChanged = { v -> set { it.copy(blockRoaming = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_metered), icon = IconsNetworkRulesScreens.signal_cellular_off_24px, value = u.blockMetered, onValueChanged = { v -> set { it.copy(blockMetered = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_lan), icon = IconsNetworkRulesScreens.lan_24px, value = u.blockLan, onValueChanged = { v -> set { it.copy(blockLan = v) } })
+            PreferenceCategory(stringResource(I18nR.string.netfw_u_networks)) {
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_wifi), icon = IconsNetworkRulesScreens.wifi_24px, value = u.blockWifi, onValueChanged = { v -> set { it.copy(blockWifi = v) } })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_mobile), icon = IconsNetworkRulesScreens.signal_cellular_alt_24px, value = u.blockMobile, onValueChanged = { v -> set { it.copy(blockMobile = v) } })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_roaming), icon = IconsNetworkRulesScreens.public_24px, value = u.blockRoaming, onValueChanged = { v -> set { it.copy(blockRoaming = v) } })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_metered), icon = IconsNetworkRulesScreens.signal_cellular_off_24px, value = u.blockMetered, onValueChanged = { v -> set { it.copy(blockMetered = v) } })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_lan), icon = IconsNetworkRulesScreens.lan_24px, value = u.blockLan, onValueChanged = { v -> set { it.copy(blockLan = v) } })
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.netfw_u_device)) {
-                SwitchPreference(title = stringResource(R.string.netfw_u_background), icon = IconsNetworkRulesScreens.pause_24px, value = u.blockBackground, onValueChanged = { v -> set { it.copy(blockBackground = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_screen_off), icon = IconsNetworkRulesScreens.schedule_24px, value = u.blockScreenOff, onValueChanged = { v -> set { it.copy(blockScreenOff = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_locked), icon = IconsNetworkRulesScreens.lock_24px, value = u.blockWhenDeviceLocked, onValueChanged = { v -> set { it.copy(blockWhenDeviceLocked = v) } })
+            PreferenceCategory(stringResource(I18nR.string.netfw_u_device)) {
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_background), icon = IconsNetworkRulesScreens.pause_24px, value = u.blockBackground, onValueChanged = { v -> set { it.copy(blockBackground = v) } })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_screen_off), icon = IconsNetworkRulesScreens.schedule_24px, value = u.blockScreenOff, onValueChanged = { v -> set { it.copy(blockScreenOff = v) } })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_locked), icon = IconsNetworkRulesScreens.lock_24px, value = u.blockWhenDeviceLocked, onValueChanged = { v -> set { it.copy(blockWhenDeviceLocked = v) } })
                 if (u.blockBackground && !detection) {
                     val context = LocalContext.current
                     Preference(
-                        title = stringResource(R.string.netfw_usage_needed),
+                        title = stringResource(I18nR.string.netfw_usage_needed),
                         controls = {
                             TextButton(onClick = {
                                 try {
@@ -113,25 +114,25 @@ fun NetworkUniversalRulesScreen() {
                                 } catch (e: Exception) {
                                     // no such settings screen
                                 }
-                            }) { Text(stringResource(R.string.netfw_usage_grant)) }
+                            }) { Text(stringResource(I18nR.string.netfw_usage_grant)) }
                         },
                     )
                 }
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.netfw_u_apps)) {
+            PreferenceCategory(stringResource(I18nR.string.netfw_u_apps)) {
                 SwitchPreference(
-                    title = stringResource(R.string.netfw_u_new_apps),
-                    summary = stringResource(R.string.netfw_u_new_apps_summary),
+                    title = stringResource(I18nR.string.netfw_u_new_apps),
+                    summary = stringResource(I18nR.string.netfw_u_new_apps_summary),
                     icon = IconsNetworkRulesScreens.person_add_24px,
                     value = u.blockNewApps,
                     onValueChanged = { v -> set { it.copy(blockNewApps = v) } },
                 )
-                SwitchPreference(title = stringResource(R.string.netfw_u_unknown), icon = IconsNetworkRulesScreens.person_search_24px, value = u.blockUnknownApps, onValueChanged = { v -> set { it.copy(blockUnknownApps = v) } })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_unknown), icon = IconsNetworkRulesScreens.person_search_24px, value = u.blockUnknownApps, onValueChanged = { v -> set { it.copy(blockUnknownApps = v) } })
                 SwitchPreference(
-                    title = stringResource(R.string.netfw_u_default_deny),
-                    summary = stringResource(R.string.netfw_u_default_deny_summary),
+                    title = stringResource(I18nR.string.netfw_u_default_deny),
+                    summary = stringResource(I18nR.string.netfw_u_default_deny_summary),
                     icon = IconsNetworkRulesScreens.signal_cellular_off_24px,
                     value = u.defaultDeny,
                     onValueChanged = { v -> set { it.copy(defaultDeny = v) } },
@@ -139,24 +140,24 @@ fun NetworkUniversalRulesScreen() {
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.netfw_u_traffic)) {
-                SwitchPreference(title = stringResource(R.string.netfw_u_udp), value = u.blockUdp, onValueChanged = { v -> set { it.copy(blockUdp = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_http), value = u.blockHttp, onValueChanged = { v -> set { it.copy(blockHttp = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_dns_bypass), value = u.blockDnsBypass, onValueChanged = { v -> set { it.copy(blockDnsBypass = v) } })
+            PreferenceCategory(stringResource(I18nR.string.netfw_u_traffic)) {
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_udp), value = u.blockUdp, onValueChanged = { v -> set { it.copy(blockUdp = v) } })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_http), value = u.blockHttp, onValueChanged = { v -> set { it.copy(blockHttp = v) } })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_u_dns_bypass), value = u.blockDnsBypass, onValueChanged = { v -> set { it.copy(blockDnsBypass = v) } })
             }
         }
         if (u.blockNewApps) {
             val waiting = apps.filter { it.hasInternet && fw.isNewAppBlocked(it.appId) && it.appId !in allowedNew }
             if (waiting.isNotEmpty()) {
                 item {
-                    PreferenceCategory(stringResource(R.string.netfw_u_new_apps_list)) {
+                    PreferenceCategory(stringResource(I18nR.string.netfw_u_new_apps_list)) {
                         waiting.forEach { app ->
                             Preference(
                                 title = { Text(app.label) },
                                 icon = { NetAppIcon(app.packageName) },
                                 controls = {
                                     TextButton(onClick = { scope.launch { fw.allowNewApp(app.appId) } }) {
-                                        Text(stringResource(R.string.netfw_u_allow))
+                                        Text(stringResource(I18nR.string.netfw_u_allow))
                                     }
                                 },
                             )
@@ -181,40 +182,40 @@ fun NetworkCustomRulesScreen(appId: Int? = null) {
     var dialog by rememberSaveable { mutableStateOf<Boolean?>(null) } // true = IP rule, false = domain rule
 
     fun scopeText(scope: RuleScope) = when (scope) {
-        RuleScope.System -> context.getString(R.string.netfw_c_all_apps)
+        RuleScope.System -> context.getString(I18nR.string.netfw_c_all_apps)
         is RuleScope.App -> directory.labelFor(scope.appId)
     }
 
-    fun actionText(a: RuleAction) = context.getString(if (a == RuleAction.Block) R.string.netfw_c_action_block else R.string.netfw_c_action_trust)
+    fun actionText(a: RuleAction) = context.getString(if (a == RuleAction.Block) I18nR.string.netfw_c_action_block else I18nR.string.netfw_c_action_trust)
 
     val shownDomains = domainRules.filter { (appId == null || it.scope == RuleScope.App(appId)) && (cq.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(cq, it.domain, scopeText(it.scope))) }
     val shownIps = ipRules.filter { (appId == null || it.scope == RuleScope.App(appId)) && (cq.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(cq, it.address, it.port.takeIf { p -> p != 0 }?.toString(), it.protocol?.name, scopeText(it.scope))) }
 
-    PreferenceScreen(title = stringResource(R.string.netfw_c_title)) {
+    PreferenceScreen(title = stringResource(I18nR.string.netfw_c_title)) {
         item {
-            de.mm20.launcher2.ui.component.TelosSearchBar(cq, { cq = it }, stringResource(R.string.hc_search))
+            de.mm20.launcher2.ui.component.TelosSearchBar(cq, { cq = it }, stringResource(I18nR.string.hc_search))
         }
         if (cq.isNotBlank() && shownDomains.isEmpty() && shownIps.isEmpty()) {
             item { de.mm20.launcher2.ui.component.SearchEmptyState(cq.trim()) }
         }
         item {
             Text(
-                stringResource(R.string.netfw_c_trust_info),
+                stringResource(I18nR.string.netfw_c_trust_info),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
         item {
-            PreferenceCategory(stringResource(R.string.netfw_c_domains)) {
-                Preference(title = stringResource(R.string.netfw_c_add_domain), icon = IconsNetworkRulesScreens.add_24px, onClick = { dialog = false })
+            PreferenceCategory(stringResource(I18nR.string.netfw_c_domains)) {
+                Preference(title = stringResource(I18nR.string.netfw_c_add_domain), icon = IconsNetworkRulesScreens.add_24px, onClick = { dialog = false })
                 shownDomains.forEach { r ->
                     Preference(
                         title = { Text(r.domain) },
                         summary = { Text("${actionText(r.action)} · ${scopeText(r.scope)}") },
                         controls = {
                             IconButton(onClick = { scope.launch { fw.removeDomainRule(r.id) } }) {
-                                Icon(painterResource(IconsNetworkRulesScreens.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+                                Icon(painterResource(IconsNetworkRulesScreens.delete_24px), contentDescription = stringResource(I18nR.string.hc_delete))
                             }
                         },
                     )
@@ -222,8 +223,8 @@ fun NetworkCustomRulesScreen(appId: Int? = null) {
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.netfw_c_ip)) {
-                Preference(title = stringResource(R.string.netfw_c_add_ip), icon = IconsNetworkRulesScreens.add_24px, onClick = { dialog = true })
+            PreferenceCategory(stringResource(I18nR.string.netfw_c_ip)) {
+                Preference(title = stringResource(I18nR.string.netfw_c_add_ip), icon = IconsNetworkRulesScreens.add_24px, onClick = { dialog = true })
                 shownIps.forEach { r ->
                     val where = buildString {
                         append(r.address)
@@ -235,7 +236,7 @@ fun NetworkCustomRulesScreen(appId: Int? = null) {
                         summary = { Text("${actionText(r.action)} · ${scopeText(r.scope)}") },
                         controls = {
                             IconButton(onClick = { scope.launch { fw.removeIpRule(r.id) } }) {
-                                Icon(painterResource(IconsNetworkRulesScreens.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+                                Icon(painterResource(IconsNetworkRulesScreens.delete_24px), contentDescription = stringResource(I18nR.string.hc_delete))
                             }
                         },
                     )
@@ -245,7 +246,7 @@ fun NetworkCustomRulesScreen(appId: Int? = null) {
         if (ipRules.isEmpty() && domainRules.isEmpty()) {
             item {
                 Text(
-                    stringResource(R.string.netfw_c_empty),
+                    stringResource(I18nR.string.netfw_c_empty),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(16.dp),
                 )
@@ -267,7 +268,7 @@ fun NetworkCustomRulesScreen(appId: Int? = null) {
                         fw.addDomainRule(DomainRule(0, ruleScope, value, action)).map { }
                     }
                     if (result.isSuccess) dialog = null
-                    else Toast.makeText(context, context.getString(R.string.netfw_c_invalid), Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(context, context.getString(I18nR.string.netfw_c_invalid), Toast.LENGTH_SHORT).show()
                 }
             },
         )
@@ -296,14 +297,14 @@ internal fun AddRuleDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(title ?: stringResource(if (isIp) R.string.netfw_c_add_ip else R.string.netfw_c_add_domain)) },
+        title = { Text(title ?: stringResource(if (isIp) I18nR.string.netfw_c_add_ip else I18nR.string.netfw_c_add_domain)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(
                     value = value,
                     onValueChange = { value = it },
                     singleLine = true,
-                    label = { Text(stringResource(if (isIp) R.string.netfw_c_address else R.string.netfw_c_domain)) },
+                    label = { Text(stringResource(if (isIp) I18nR.string.netfw_c_address else I18nR.string.netfw_c_domain)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
                 if (isIp) {
@@ -311,25 +312,25 @@ internal fun AddRuleDialog(
                         value = port,
                         onValueChange = { port = it.filter(Char::isDigit).take(5) },
                         singleLine = true,
-                        label = { Text(stringResource(R.string.netfw_c_port)) },
+                        label = { Text(stringResource(I18nR.string.netfw_c_port)) },
                         modifier = Modifier.fillMaxWidth(),
                     )
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        FilterChip(selected = protocol == null, onClick = { protocol = null }, label = { Text(stringResource(R.string.netfw_c_protocol_any)) })
+                        FilterChip(selected = protocol == null, onClick = { protocol = null }, label = { Text(stringResource(I18nR.string.netfw_c_protocol_any)) })
                         FilterChip(selected = protocol == Protocol.Tcp, onClick = { protocol = Protocol.Tcp }, label = { Text("TCP") })
                         FilterChip(selected = protocol == Protocol.Udp, onClick = { protocol = Protocol.Udp }, label = { Text("UDP") })
                     }
                 }
-                Text(stringResource(R.string.netfw_c_scope), style = MaterialTheme.typography.labelLarge)
+                Text(stringResource(I18nR.string.netfw_c_scope), style = MaterialTheme.typography.labelLarge)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(selected = ruleScope == RuleScope.System, onClick = { ruleScope = RuleScope.System }, label = { Text(stringResource(R.string.netfw_c_all_apps)) })
+                    FilterChip(selected = ruleScope == RuleScope.System, onClick = { ruleScope = RuleScope.System }, label = { Text(stringResource(I18nR.string.netfw_c_all_apps)) })
                     FilterChip(
                         selected = ruleScope is RuleScope.App,
                         onClick = { pickApp = true },
                         label = {
                             Text(
                                 (ruleScope as? RuleScope.App)?.let { directory.labelFor(it.appId) }
-                                    ?: stringResource(R.string.netfw_c_one_app)
+                                    ?: stringResource(I18nR.string.netfw_c_one_app)
                             )
                         },
                     )
@@ -337,7 +338,7 @@ internal fun AddRuleDialog(
                 Box {
                     DropdownMenu(expanded = pickApp, onDismissRequest = { pickApp = false }) {
                         var appQuery by remember { mutableStateOf("") }
-                        de.mm20.launcher2.ui.component.TelosSearchBar(appQuery, { appQuery = it }, stringResource(R.string.hc_search))
+                        de.mm20.launcher2.ui.component.TelosSearchBar(appQuery, { appQuery = it }, stringResource(I18nR.string.hc_search))
                         apps.filter { it.hasInternet && de.mm20.launcher2.comms.search.TelosSearch.matches(appQuery, it.label, it.packageName) }.forEach { app ->
                             DropdownMenuItem(
                                 text = { Text(app.label) },
@@ -348,8 +349,8 @@ internal fun AddRuleDialog(
                     }
                 }
                 if (showAction) Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(selected = action == RuleAction.Block, onClick = { action = RuleAction.Block }, label = { Text(stringResource(R.string.netfw_c_action_block)) })
-                    FilterChip(selected = action == RuleAction.Trust, onClick = { action = RuleAction.Trust }, label = { Text(stringResource(R.string.netfw_c_action_trust)) })
+                    FilterChip(selected = action == RuleAction.Block, onClick = { action = RuleAction.Block }, label = { Text(stringResource(I18nR.string.netfw_c_action_block)) })
+                    FilterChip(selected = action == RuleAction.Trust, onClick = { action = RuleAction.Trust }, label = { Text(stringResource(I18nR.string.netfw_c_action_trust)) })
                 }
             }
         },
@@ -357,8 +358,8 @@ internal fun AddRuleDialog(
             TextButton(
                 enabled = value.isNotBlank(),
                 onClick = { onAdd(value.trim(), port.toIntOrNull() ?: 0, protocol, ruleScope, action) },
-            ) { Text(stringResource(R.string.hc_add)) }
+            ) { Text(stringResource(I18nR.string.hc_add)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }

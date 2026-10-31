@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.applock
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.Manifest
 import android.content.Intent
@@ -88,21 +90,21 @@ fun AppLockSettingsScreen() {
     }
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_app_lock),
+        title = stringResource(I18nR.string.preference_screen_app_lock),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         item {
             PreferenceCategory {
                 GuardedPreference(
                     locked = hasOverlayPermission == false,
-                    description = stringResource(R.string.missing_permission_app_lock),
+                    description = stringResource(I18nR.string.missing_permission_app_lock),
                     onUnlock = {
                         (context as? AppCompatActivity)?.let { viewModel.requestOverlayPermission(it) }
                     },
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_app_lock_enabled),
-                        summary = stringResource(R.string.preference_app_lock_enabled_summary),
+                        title = stringResource(I18nR.string.preference_app_lock_enabled),
+                        summary = stringResource(I18nR.string.preference_app_lock_enabled_summary),
                         enabled = hasOverlayPermission != false,
                         value = enabled == true && hasOverlayPermission == true,
                         onValueChanged = {
@@ -117,36 +119,36 @@ fun AppLockSettingsScreen() {
                     )
                 }
                 ListPreference(
-                    title = stringResource(R.string.preference_app_lock_method),
+                    title = stringResource(I18nR.string.preference_app_lock_method),
                     items = listOf(
-                        stringResource(R.string.settings_lock_method_device_credential) to SettingsLockMethod.DeviceCredential,
-                        stringResource(R.string.settings_lock_method_biometrics_only) to SettingsLockMethod.BiometricsOnly,
+                        stringResource(I18nR.string.settings_lock_method_device_credential) to SettingsLockMethod.DeviceCredential,
+                        stringResource(I18nR.string.settings_lock_method_biometrics_only) to SettingsLockMethod.BiometricsOnly,
                     ),
                     value = lockMethod ?: SettingsLockMethod.DeviceCredential,
                     onValueChanged = { viewModel.setLockMethod(it) },
                 )
                 ListPreference(
-                    title = stringResource(R.string.preference_app_lock_detection_mode),
+                    title = stringResource(I18nR.string.preference_app_lock_detection_mode),
                     items = listOf(
-                        stringResource(R.string.app_lock_detection_mode_hybrid) to AppLockDetectionMode.Hybrid,
-                        stringResource(R.string.app_lock_detection_mode_usage_stats) to AppLockDetectionMode.UsageStats,
-                        stringResource(R.string.app_lock_detection_mode_accessibility) to AppLockDetectionMode.Accessibility,
+                        stringResource(I18nR.string.app_lock_detection_mode_hybrid) to AppLockDetectionMode.Hybrid,
+                        stringResource(I18nR.string.app_lock_detection_mode_usage_stats) to AppLockDetectionMode.UsageStats,
+                        stringResource(I18nR.string.app_lock_detection_mode_accessibility) to AppLockDetectionMode.Accessibility,
                     ),
                     value = detectionMode ?: AppLockDetectionMode.Hybrid,
                     summary = if (detectionMode == AppLockDetectionMode.Hybrid || detectionMode == null) {
-                        stringResource(R.string.app_lock_detection_mode_hybrid_summary)
+                        stringResource(I18nR.string.app_lock_detection_mode_hybrid_summary)
                     } else null,
                     onValueChanged = { viewModel.setDetectionMode(it) },
                 )
                 ListPreference(
-                    title = stringResource(R.string.preference_app_lock_default_grace_period),
+                    title = stringResource(I18nR.string.preference_app_lock_default_grace_period),
                     items = gracePeriodOptions(),
                     value = defaultGracePeriodMs ?: 0L,
                     onValueChanged = { viewModel.setDefaultGracePeriodMs(it) },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_app_lock_relock_only_on_screen_off),
-                    summary = stringResource(R.string.preference_app_lock_relock_only_on_screen_off_summary),
+                    title = stringResource(I18nR.string.preference_app_lock_relock_only_on_screen_off),
+                    summary = stringResource(I18nR.string.preference_app_lock_relock_only_on_screen_off_summary),
                     value = relockOnlyOnScreenOff == true,
                     onValueChanged = { viewModel.setRelockOnlyOnScreenOff(it) }
                 )
@@ -155,20 +157,20 @@ fun AppLockSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    title = stringResource(R.string.preference_app_lock_usage_access),
+                    title = stringResource(I18nR.string.preference_app_lock_usage_access),
                     summary = stringResource(
-                        if (usageAccessGranted) R.string.preference_app_lock_usage_access_summary_granted
-                        else R.string.preference_app_lock_usage_access_summary_not_granted
+                        if (usageAccessGranted) I18nR.string.preference_app_lock_usage_access_summary_granted
+                        else I18nR.string.preference_app_lock_usage_access_summary_not_granted
                     ),
                     onClick = {
                         (context as? AppCompatActivity)?.let { viewModel.requestUsageAccess(it) }
                     },
                 )
                 Preference(
-                    title = stringResource(R.string.preference_app_lock_accessibility),
+                    title = stringResource(I18nR.string.preference_app_lock_accessibility),
                     summary = stringResource(
-                        if (accessibilityGranted) R.string.preference_app_lock_accessibility_summary_granted
-                        else R.string.preference_app_lock_accessibility_summary_not_granted
+                        if (accessibilityGranted) I18nR.string.preference_app_lock_accessibility_summary_granted
+                        else I18nR.string.preference_app_lock_accessibility_summary_not_granted
                     ),
                     onClick = {
                         (context as? AppCompatActivity)?.let { viewModel.requestAccessibility(it) }
@@ -179,20 +181,20 @@ fun AppLockSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    icon = R.drawable.lock_24px,
-                    title = stringResource(R.string.preference_category_app_lock_apps),
+                    icon = BaseR.drawable.lock_24px,
+                    title = stringResource(I18nR.string.preference_category_app_lock_apps),
                     summary = pluralStringResource(
-                        R.plurals.app_lock_apps_locked_count,
+                        I18nR.plurals.app_lock_apps_locked_count,
                         lockedPackages.size,
                         lockedPackages.size,
                     ),
                     onClick = { backStack.add(AppLockAppsRoute) },
                 )
                 Preference(
-                    icon = R.drawable.lock_24px,
-                    title = stringResource(R.string.preference_category_app_lock_web_apps),
+                    icon = BaseR.drawable.lock_24px,
+                    title = stringResource(I18nR.string.preference_category_app_lock_web_apps),
                     summary = pluralStringResource(
-                        R.plurals.app_lock_web_apps_locked_count,
+                        I18nR.plurals.app_lock_web_apps_locked_count,
                         lockedWebAppShortcuts.size,
                         lockedWebAppShortcuts.size,
                     ),
@@ -201,47 +203,47 @@ fun AppLockSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_intruder_photo)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_intruder_photo)) {
                 GuardedPreference(
                     locked = cameraPermissionGranted == false,
-                    description = stringResource(R.string.missing_permission_camera),
+                    description = stringResource(I18nR.string.missing_permission_camera),
                     onUnlock = {
                         (context as? AppCompatActivity)?.let { viewModel.requestCameraPermission(it) }
                     },
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_intruder_photo_enabled),
-                        summary = stringResource(R.string.preference_intruder_photo_enabled_summary),
+                        title = stringResource(I18nR.string.preference_intruder_photo_enabled),
+                        summary = stringResource(I18nR.string.preference_intruder_photo_enabled_summary),
                         enabled = cameraPermissionGranted != false,
                         value = intruderPhotoEnabled == true && cameraPermissionGranted == true,
                         onValueChanged = { viewModel.setIntruderPhotoEnabled(it) },
                     )
                 }
                 ListPreference(
-                    title = stringResource(R.string.preference_intruder_photo_retention),
+                    title = stringResource(I18nR.string.preference_intruder_photo_retention),
                     items = intruderPhotoRetentionOptions(),
                     value = intruderPhotoRetentionDays ?: 90,
                     onValueChanged = { viewModel.setIntruderPhotoRetentionDays(it) },
                 )
                 Preference(
-                    title = stringResource(R.string.preference_intruder_photo_storage_location),
+                    title = stringResource(I18nR.string.preference_intruder_photo_storage_location),
                     summary = intruderPhotoStoragePath,
                     onClick = { folderPicker.launch(null) },
                     controls = if (hasCustomStorageFolder != null) {
                         {
                             TextButton(onClick = { viewModel.setCustomStorageFolder(null) }) {
-                                Text(stringResource(R.string.intruder_photo_storage_use_default))
+                                Text(stringResource(I18nR.string.intruder_photo_storage_use_default))
                             }
                         }
                     } else null,
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_intruder_photo_visible_in_gallery),
+                    title = stringResource(I18nR.string.preference_intruder_photo_visible_in_gallery),
                     summary = stringResource(
                         if (hasCustomStorageFolder != null) {
-                            R.string.preference_intruder_photo_visible_in_gallery_summary
+                            I18nR.string.preference_intruder_photo_visible_in_gallery_summary
                         } else {
-                            R.string.preference_intruder_photo_visible_in_gallery_summary_no_folder
+                            I18nR.string.preference_intruder_photo_visible_in_gallery_summary_no_folder
                         }
                     ),
                     enabled = hasCustomStorageFolder != null,
@@ -249,8 +251,8 @@ fun AppLockSettingsScreen() {
                     onValueChanged = { viewModel.setIntruderPhotoVisibleInGallery(it) },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_intruder_photo_notification_enabled),
-                    summary = stringResource(R.string.preference_intruder_photo_notification_enabled_summary),
+                    title = stringResource(I18nR.string.preference_intruder_photo_notification_enabled),
+                    summary = stringResource(I18nR.string.preference_intruder_photo_notification_enabled_summary),
                     value = intruderPhotoNotificationEnabled == true,
                     onValueChanged = { enabled ->
                         val needsPermission = enabled &&
@@ -265,10 +267,10 @@ fun AppLockSettingsScreen() {
                     },
                 )
                 Preference(
-                    icon = R.drawable.photo_24px,
-                    title = stringResource(R.string.preference_intruder_photos_gallery),
+                    icon = BaseR.drawable.photo_24px,
+                    title = stringResource(I18nR.string.preference_intruder_photos_gallery),
                     summary = pluralStringResource(
-                        R.plurals.intruder_photo_count,
+                        I18nR.plurals.intruder_photo_count,
                         intruderPhotoCount,
                         intruderPhotoCount,
                     ),

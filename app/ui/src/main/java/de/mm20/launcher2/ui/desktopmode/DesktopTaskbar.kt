@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.desktopmode
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -103,8 +105,8 @@ internal fun DesktopTaskbar(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Icon(
-                painterResource(R.drawable.apps_24px),
-                contentDescription = stringResource(R.string.desktop_mode_start_menu),
+                painterResource(BaseR.drawable.apps_24px),
+                contentDescription = stringResource(I18nR.string.desktop_mode_start_menu),
                 modifier = Modifier.size(22.dp),
                 tint = if (startMenuOpen) MaterialTheme.colorScheme.onSecondaryContainer
                 else MaterialTheme.colorScheme.onSurface,
@@ -159,7 +161,7 @@ internal fun DesktopTaskbar(
                         )
                     } else {
                         // Fallback icon
-                        Icon(painterResource(R.drawable.android_24px), contentDescription = null, modifier = Modifier.size(32.dp))
+                        Icon(painterResource(BaseR.drawable.android_24px), contentDescription = null, modifier = Modifier.size(32.dp))
                     }
                     
                     // Running Indicator (Dot)
@@ -177,7 +179,7 @@ internal fun DesktopTaskbar(
                         onDismissRequest = { showTaskMenu = false }
                     ) {
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.telos_snap_left)) },
+                            text = { Text(stringResource(I18nR.string.telos_snap_left)) },
                             onClick = {
                                 showTaskMenu = false
                                 scope.launch {
@@ -188,7 +190,7 @@ internal fun DesktopTaskbar(
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.telos_snap_right)) },
+                            text = { Text(stringResource(I18nR.string.telos_snap_right)) },
                             onClick = {
                                 showTaskMenu = false
                                 scope.launch {
@@ -199,7 +201,7 @@ internal fun DesktopTaskbar(
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.telos_maximize)) },
+                            text = { Text(stringResource(I18nR.string.telos_maximize)) },
                             onClick = {
                                 showTaskMenu = false
                                 scope.launch {
@@ -210,14 +212,14 @@ internal fun DesktopTaskbar(
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.telos_close_window)) },
+                            text = { Text(stringResource(I18nR.string.telos_close_window)) },
                             onClick = {
                                 showTaskMenu = false
                                 scope.launch {
                                     windowManager.closeTask(task.taskId)
                                 }
                             },
-                            leadingIcon = { Icon(painterResource(R.drawable.close_24px), null) }
+                            leadingIcon = { Icon(painterResource(BaseR.drawable.close_24px), null) }
                         )
                     }
                     // === TELOS_PENDING_REVIEW_END: desktop_window_snapping ===

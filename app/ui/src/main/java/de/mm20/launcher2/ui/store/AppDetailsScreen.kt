@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.store
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.system.UadRepository
 import de.mm20.launcher2.ui.R
@@ -105,7 +106,7 @@ fun AppDetailsScreen(itemId: String) {
                     Column(Modifier.weight(1f)) {
                         Text(item.displayName, style = MaterialTheme.typography.titleLarge)
                         Text(
-                            if (item.packageName == "unknown.package") stringResource(R.string.hf_store_package_unknown) else item.packageName,
+                            if (item.packageName == "unknown.package") stringResource(I18nR.string.hf_store_package_unknown) else item.packageName,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -145,34 +146,34 @@ fun AppDetailsScreen(itemId: String) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     StoreActionButton(row, installStates[item.id] ?: StoreInstallUiState.Idle) { viewModel.onAppActionClicked(item) }
                     OutlinedButton(onClick = { viewModel.checkOne(item) }, enabled = !checking && row.options.checkForUpdates) {
-                        if (checking) CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp) else Text(stringResource(R.string.hc_check_now))
+                        if (checking) CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp) else Text(stringResource(I18nR.string.hc_check_now))
                     }
                 }
             }
             item { StoreTransferProgress(item.id) }
             item {
-                Card(stringResource(R.string.hf_store_versions)) {
-                    InfoLine(stringResource(R.string.hf_store_installed), item.installedVersionName?.let { "v$it" } ?: if (item.installedVersionCode != null) stringResource(R.string.hf_store_version_code, item.installedVersionCode.toString()) else stringResource(R.string.hf_store_not_installed))
-                    InfoLine(stringResource(R.string.hf_store_latest), item.latestRelease?.version?.let { "v$it" } ?: stringResource(R.string.hf_store_not_checked))
+                Card(stringResource(I18nR.string.hf_store_versions)) {
+                    InfoLine(stringResource(I18nR.string.hf_store_installed), item.installedVersionName?.let { "v$it" } ?: if (item.installedVersionCode != null) stringResource(I18nR.string.hf_store_version_code, item.installedVersionCode.toString()) else stringResource(I18nR.string.hf_store_not_installed))
+                    InfoLine(stringResource(I18nR.string.hf_store_latest), item.latestRelease?.version?.let { "v$it" } ?: stringResource(I18nR.string.hf_store_not_checked))
                     InfoLine("Source Provider", item.source.summary())
-                    item.latestRelease?.size?.let { InfoLine(stringResource(R.string.hf_store_size), formatBytes(it)) }
-                    item.latestRelease?.publishedAt?.let { InfoLine(stringResource(R.string.hf_store_published), DateFormat.getDateInstance().format(Date(it))) }
-                    item.lastCheckedAt?.let { InfoLine(stringResource(R.string.hf_store_last_checked), DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(it))) }
+                    item.latestRelease?.size?.let { InfoLine(stringResource(I18nR.string.hf_store_size), formatBytes(it)) }
+                    item.latestRelease?.publishedAt?.let { InfoLine(stringResource(I18nR.string.hf_store_published), DateFormat.getDateInstance().format(Date(it))) }
+                    item.lastCheckedAt?.let { InfoLine(stringResource(I18nR.string.hf_store_last_checked), DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(it))) }
                     if (row.updateAvailable) {
                         TextButton(onClick = { viewModel.setOptions(item.id) { it.copy(skippedVersion = item.latestRelease?.version) } }, contentPadding = PaddingValues(0.dp)) {
-                            Text(stringResource(R.string.hc_skip_this_version))
+                            Text(stringResource(I18nR.string.hc_skip_this_version))
                         }
                     }
                     if (o.skippedVersion != null) {
                         TextButton(onClick = { viewModel.setOptions(item.id) { it.copy(skippedVersion = null) } }, contentPadding = PaddingValues(0.dp)) {
-                            Text(stringResource(R.string.hc_stop_skipping_version, o.skippedVersion.orEmpty()))
+                            Text(stringResource(I18nR.string.hc_stop_skipping_version, o.skippedVersion.orEmpty()))
                         }
                     }
                 }
             }
             item.latestRelease?.changelog?.takeIf { it.isNotBlank() }?.let { changelog ->
                 item {
-                    Card(stringResource(R.string.hf_store_changelog)) {
+                    Card(stringResource(I18nR.string.hf_store_changelog)) {
                         de.mm20.launcher2.ui.component.markdown.MarkdownText(
                             text = changelog.take(4000),
                             onTextChange = {}, // Read-only viewer
@@ -184,74 +185,74 @@ fun AppDetailsScreen(itemId: String) {
                 OutlinedButton(onClick = {
                     backStack.add(de.mm20.launcher2.ui.system.SystemAppDetailsRoute(item.packageName))
                 }, modifier = Modifier.fillMaxWidth()) {
-                    Text(stringResource(R.string.preference_search_apps_show_details))
+                    Text(stringResource(I18nR.string.preference_search_apps_show_details))
                 }
             }
             item {
-                Card(stringResource(R.string.hf_store_app_settings)) {
+                Card(stringResource(I18nR.string.hf_store_app_settings)) {
                     SwitchLine(
-                        stringResource(R.string.store_check_updates_per_app),
-                        stringResource(R.string.store_check_updates_per_app_summary),
+                        stringResource(I18nR.string.store_check_updates_per_app),
+                        stringResource(I18nR.string.store_check_updates_per_app_summary),
                         o.checkForUpdates,
                     ) { v -> viewModel.setOptions(item.id) { it.copy(checkForUpdates = v) } }
                     if (!item.isTelosLauncher(context.packageName)) {
-                        SwitchLine(stringResource(R.string.telos_store_auto_title), stringResource(R.string.telos_store_auto_explanation), o.autoUpdate ?: viewModel.global.value.autoInstall) { v ->
+                        SwitchLine(stringResource(I18nR.string.telos_store_auto_title), stringResource(I18nR.string.telos_store_auto_explanation), o.autoUpdate ?: viewModel.global.value.autoInstall) { v ->
                             viewModel.setOptions(item.id) { it.copy(autoUpdate = v) }
                         }
                     }
-                    SwitchLine(stringResource(R.string.hf_store_track_only), stringResource(R.string.hf_store_track_only_desc), o.trackOnly) { v ->
+                    SwitchLine(stringResource(I18nR.string.hf_store_track_only), stringResource(I18nR.string.hf_store_track_only_desc), o.trackOnly) { v ->
                         viewModel.setOptions(item.id) { it.copy(trackOnly = v) }
                     }
-                    SwitchLine(stringResource(R.string.hf_store_pin), stringResource(R.string.hf_store_pin_desc), o.pinned) { v ->
+                    SwitchLine(stringResource(I18nR.string.hf_store_pin), stringResource(I18nR.string.hf_store_pin_desc), o.pinned) { v ->
                         viewModel.setOptions(item.id) { it.copy(pinned = v) }
                     }
-                    SwitchLine(stringResource(R.string.hf_store_exclude_bg), stringResource(R.string.hf_store_exclude_bg_desc), o.excludeFromBackground) { v ->
+                    SwitchLine(stringResource(I18nR.string.hf_store_exclude_bg), stringResource(I18nR.string.hf_store_exclude_bg_desc), o.excludeFromBackground) { v ->
                         viewModel.setOptions(item.id) { it.copy(excludeFromBackground = v) }
                     }
                     OutlinedTextField(
                         category, { category = it; viewModel.setOptions(item.id) { o2 -> o2.copy(category = it.trim()) } },
-                        label = { Text(stringResource(R.string.hc_category)) }, singleLine = true, modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                        label = { Text(stringResource(I18nR.string.hc_category)) }, singleLine = true, modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     )
                     OutlinedTextField(
                         note, { note = it; viewModel.setOptions(item.id) { o2 -> o2.copy(note = it) } },
-                        label = { Text(stringResource(R.string.hc_note)) }, modifier = Modifier.fillMaxWidth(),
+                        label = { Text(stringResource(I18nR.string.hc_note)) }, modifier = Modifier.fillMaxWidth(),
                     )
-                    TextButton(onClick = { renaming = true }, contentPadding = PaddingValues(0.dp)) { Text(stringResource(R.string.hc_rename)) }
+                    TextButton(onClick = { renaming = true }, contentPadding = PaddingValues(0.dp)) { Text(stringResource(I18nR.string.hc_rename)) }
                 }
             }
             if (hasFilter(item.source)) {
                 item {
-                    Card(stringResource(R.string.hf_store_which_file)) {
+                    Card(stringResource(I18nR.string.hf_store_which_file)) {
                         OutlinedTextField(
-                            filterText, { filterText = it }, label = { Text(stringResource(R.string.hc_file_name_filter_regular_expression)) }, singleLine = true,
-                            supportingText = { Text(stringResource(R.string.hc_for_example_arm64_or_universal_empty_mea)) },
+                            filterText, { filterText = it }, label = { Text(stringResource(I18nR.string.hc_file_name_filter_regular_expression)) }, singleLine = true,
+                            supportingText = { Text(stringResource(I18nR.string.hc_for_example_arm64_or_universal_empty_mea)) },
                             isError = filterText.isNotBlank() && runCatching { Regex(filterText) }.isFailure,
                             modifier = Modifier.fillMaxWidth(),
                         )
-                        if (hasPrerelease(item.source)) SwitchLine(stringResource(R.string.hf_store_prereleases), null, prerelease) { prerelease = it }
-                        Button(onClick = { viewModel.setSourceFilter(item, filterText, prerelease) }, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.hc_apply_and_check)) }
+                        if (hasPrerelease(item.source)) SwitchLine(stringResource(I18nR.string.hf_store_prereleases), null, prerelease) { prerelease = it }
+                        Button(onClick = { viewModel.setSourceFilter(item, filterText, prerelease) }, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(I18nR.string.hc_apply_and_check)) }
                     }
                 }
             }
             item {
-                Card(stringResource(R.string.hf_store_source)) {
+                Card(stringResource(I18nR.string.hf_store_source)) {
                     Text(StoreUrlParser.toUrl(item.source), style = MaterialTheme.typography.bodyMedium)
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                        OutlinedButton(onClick = { viewModel.openUrl(StoreUrlParser.toUrl(item.source)) }) { Text(stringResource(R.string.hc_open)) }
+                        OutlinedButton(onClick = { viewModel.openUrl(StoreUrlParser.toUrl(item.source)) }) { Text(stringResource(I18nR.string.hc_open)) }
                         OutlinedButton(onClick = {
                             val link = "obtainium://add/" + StoreUrlParser.toUrl(item.source)
                             context.startActivity(
                                 Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, link), null)
                             )
-                        }) { Text(stringResource(R.string.hc_share_link)) }
+                        }) { Text(stringResource(I18nR.string.hc_share_link)) }
                     }
                 }
             }
             item {
                 HorizontalDivider()
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    TextButton(onClick = { confirmRemove = true }) { Text(stringResource(R.string.hc_remove_from_list)) }
-                    if (item.installedVersionCode != null) TextButton(onClick = { viewModel.uninstall(item) }) { Text(stringResource(R.string.hc_uninstall_app)) }
+                    TextButton(onClick = { confirmRemove = true }) { Text(stringResource(I18nR.string.hc_remove_from_list)) }
+                    if (item.installedVersionCode != null) TextButton(onClick = { viewModel.uninstall(item) }) { Text(stringResource(I18nR.string.hc_uninstall_app)) }
                 }
             }
         }
@@ -259,22 +260,22 @@ fun AppDetailsScreen(itemId: String) {
         if (confirmRemove) {
             AlertDialog(
                 onDismissRequest = { confirmRemove = false },
-                title = { Text(stringResource(R.string.hc_remove_item_question, item.displayName)) },
-                text = { Text(stringResource(R.string.hc_it_is_only_removed_from_this_list_the_in)) },
+                title = { Text(stringResource(I18nR.string.hc_remove_item_question, item.displayName)) },
+                text = { Text(stringResource(I18nR.string.hc_it_is_only_removed_from_this_list_the_in)) },
                 confirmButton = {
-                    TextButton(onClick = { viewModel.remove(item); confirmRemove = false; backStack.removeLastOrNull() }) { Text(stringResource(R.string.hc_remove)) }
+                    TextButton(onClick = { viewModel.remove(item); confirmRemove = false; backStack.removeLastOrNull() }) { Text(stringResource(I18nR.string.hc_remove)) }
                 },
-                dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(stringResource(R.string.hc_cancel)) } },
+                dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },
             )
         }
         if (renaming) {
             var name by remember { mutableStateOf(item.displayName) }
             AlertDialog(
                 onDismissRequest = { renaming = false },
-                title = { Text(stringResource(R.string.hc_rename)) },
+                title = { Text(stringResource(I18nR.string.hc_rename)) },
                 text = { OutlinedTextField(name, { name = it }, singleLine = true, modifier = Modifier.fillMaxWidth()) },
-                confirmButton = { TextButton(onClick = { viewModel.rename(item, name); renaming = false }) { Text(stringResource(R.string.hc_save)) } },
-                dismissButton = { TextButton(onClick = { renaming = false }) { Text(stringResource(R.string.hc_cancel)) } },
+                confirmButton = { TextButton(onClick = { viewModel.rename(item, name); renaming = false }) { Text(stringResource(I18nR.string.hc_save)) } },
+                dismissButton = { TextButton(onClick = { renaming = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },
             )
         }
     }
@@ -335,10 +336,10 @@ private fun DetailsActionButton(row: StoreRow, state: StoreInstallUiState, onCli
             Button(onClick = {}, enabled = false) {
                 CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
                 Spacer(Modifier.width(8.dp))
-                Text(if (state == StoreInstallUiState.Downloading) stringResource(R.string.hf_store_downloading_dots) else stringResource(R.string.hf_store_installing_dots))
+                Text(if (state == StoreInstallUiState.Downloading) stringResource(I18nR.string.hf_store_downloading_dots) else stringResource(I18nR.string.hf_store_installing_dots))
             }
         }
-        StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text(stringResource(R.string.hc_failed_try_again)) }
+        StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text(stringResource(I18nR.string.hc_failed_try_again)) }
         StoreInstallUiState.Idle, StoreInstallUiState.Installed -> Button(onClick = onClick) { Text(row.actionLabel()) }
     }
 }

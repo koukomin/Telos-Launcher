@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.weather
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.Manifest
 import android.app.PendingIntent
@@ -70,7 +72,7 @@ fun WeatherIntegrationSettingsScreen() {
     )
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_weatherwidget),
+        title = stringResource(I18nR.string.preference_screen_weatherwidget),
         helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/integrations/weather"
     ) {
         item {
@@ -80,8 +82,8 @@ fun WeatherIntegrationSettingsScreen() {
                     Banner(
                         modifier = Modifier.padding(16.dp),
                         text = state.message
-                            ?: stringResource(R.string.plugin_state_setup_required),
-                        icon = R.drawable.error_24px,
+                            ?: stringResource(I18nR.string.plugin_state_setup_required),
+                        icon = BaseR.drawable.error_24px,
                         primaryAction = {
                             TextButton(onClick = {
                                 try {
@@ -90,13 +92,13 @@ fun WeatherIntegrationSettingsScreen() {
                                     CrashReporter.logException(e)
                                 }
                             }) {
-                                Text(stringResource(R.string.plugin_action_setup))
+                                Text(stringResource(I18nR.string.plugin_action_setup))
                             }
                         }
                     )
                 }
                 ListPreference(
-                    title = stringResource(R.string.preference_weather_provider),
+                    title = stringResource(I18nR.string.preference_weather_provider),
                     items = availableProviders.map {
                         it.name to it.id
                     },
@@ -109,11 +111,11 @@ fun WeatherIntegrationSettingsScreen() {
 
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_location)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_location)) {
                 if (selectedProviderInfo?.id == BreezyWeatherProvider.Id) {
                     Preference(
-                        title = stringResource(R.string.preference_location),
-                        summary = stringResource(R.string.preference_location_breezy),
+                        title = stringResource(I18nR.string.preference_location),
+                        summary = stringResource(I18nR.string.preference_location_breezy),
                         onClick = {
                             val intent =
                                 context.packageManager.getLaunchIntentForPackage("org.breezyweather")
@@ -123,8 +125,8 @@ fun WeatherIntegrationSettingsScreen() {
                     )
                 } else if (selectedProviderInfo?.managedLocation == true) {
                     Preference(
-                        title = stringResource(R.string.preference_location_managed),
-                        summary = stringResource(R.string.preference_location_managed_summary),
+                        title = stringResource(I18nR.string.preference_location_managed),
+                        summary = stringResource(I18nR.string.preference_location_managed_summary),
                         enabled = false
                     )
                 } else {
@@ -132,14 +134,14 @@ fun WeatherIntegrationSettingsScreen() {
                     val autoLocation by viewModel.autoLocation.collectAsState()
                     GuardedPreference(
                         locked = hasPermission == false,
-                        description = stringResource(R.string.missing_permission_auto_location),
+                        description = stringResource(I18nR.string.missing_permission_auto_location),
                         onUnlock = {
                             viewModel.requestLocationPermission(context as AppCompatActivity)
                         }
                     ) {
                         SwitchPreference(
-                            title = stringResource(R.string.preference_automatic_location),
-                            summary = stringResource(R.string.preference_automatic_location_summary),
+                            title = stringResource(I18nR.string.preference_automatic_location),
+                            summary = stringResource(I18nR.string.preference_automatic_location_summary),
                             value = autoLocation,
                             onValueChanged = {
                                 viewModel.setAutoLocation(it)
@@ -148,7 +150,7 @@ fun WeatherIntegrationSettingsScreen() {
                     }
                     val location by viewModel.location.collectAsStateWithLifecycle()
                     LocationPreference(
-                        title = stringResource(R.string.preference_location),
+                        title = stringResource(I18nR.string.preference_location),
                         value = location,
                         enabled = !autoLocation,
                     )
@@ -158,10 +160,10 @@ fun WeatherIntegrationSettingsScreen() {
         item {
             val alerts by viewModel.alerts.collectAsState()
             val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
-            PreferenceCategory(title = stringResource(R.string.preference_category_weather_alerts)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_weather_alerts)) {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_weather_alerts),
-                    summary = stringResource(R.string.preference_weather_alerts_summary),
+                    title = stringResource(I18nR.string.preference_weather_alerts),
+                    summary = stringResource(I18nR.string.preference_weather_alerts_summary),
                     value = alerts.enabled,
                     onValueChanged = { on ->
                         viewModel.updateAlerts { it.copy(enabled = on) }
@@ -174,92 +176,92 @@ fun WeatherIntegrationSettingsScreen() {
                 )
                 if (alerts.enabled) {
                     ListPreference(
-                        title = stringResource(R.string.preference_weather_alerts_hours),
-                        items = listOf(6, 12, 24, 48, 72).map { ListPreferenceItem(stringResource(R.string.preference_weather_alerts_hours_value, it), it) },
+                        title = stringResource(I18nR.string.preference_weather_alerts_hours),
+                        items = listOf(6, 12, 24, 48, 72).map { ListPreferenceItem(stringResource(I18nR.string.preference_weather_alerts_hours_value, it), it) },
                         value = alerts.hours,
                         onValueChanged = { h -> viewModel.updateAlerts { it.copy(hours = h) } },
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.preference_weather_alerts_rain),
+                        title = stringResource(I18nR.string.preference_weather_alerts_rain),
                         value = alerts.rain,
                         onValueChanged = { v -> viewModel.updateAlerts { it.copy(rain = v) } },
                     )
                     if (alerts.rain) {
                         SliderPreference(
-                            title = stringResource(R.string.preference_weather_alerts_rain_probability, alerts.rainProbability),
+                            title = stringResource(I18nR.string.preference_weather_alerts_rain_probability, alerts.rainProbability),
                             value = alerts.rainProbability, min = 30, max = 100, step = 10,
                             onValueChanged = { v -> viewModel.updateAlerts { it.copy(rainProbability = v) } },
                         )
                     }
                     SwitchPreference(
-                        title = stringResource(R.string.preference_weather_alerts_heavy_rain),
+                        title = stringResource(I18nR.string.preference_weather_alerts_heavy_rain),
                         value = alerts.heavyRain,
                         onValueChanged = { v -> viewModel.updateAlerts { it.copy(heavyRain = v) } },
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.preference_weather_alerts_snow),
+                        title = stringResource(I18nR.string.preference_weather_alerts_snow),
                         value = alerts.snow,
                         onValueChanged = { v -> viewModel.updateAlerts { it.copy(snow = v) } },
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.preference_weather_alerts_thunder),
+                        title = stringResource(I18nR.string.preference_weather_alerts_thunder),
                         value = alerts.thunder,
                         onValueChanged = { v -> viewModel.updateAlerts { it.copy(thunder = v) } },
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.preference_weather_alerts_heat),
+                        title = stringResource(I18nR.string.preference_weather_alerts_heat),
                         value = alerts.heat,
                         onValueChanged = { v -> viewModel.updateAlerts { it.copy(heat = v) } },
                     )
                     if (alerts.heat) {
                         SliderPreference(
-                            title = stringResource(R.string.preference_weather_alerts_heat_threshold, alerts.heatTemperature),
+                            title = stringResource(I18nR.string.preference_weather_alerts_heat_threshold, alerts.heatTemperature),
                             value = alerts.heatTemperature, min = 25, max = 50, step = 1,
                             onValueChanged = { v -> viewModel.updateAlerts { it.copy(heatTemperature = v) } },
                         )
                     }
                     SwitchPreference(
-                        title = stringResource(R.string.preference_weather_alerts_frost),
+                        title = stringResource(I18nR.string.preference_weather_alerts_frost),
                         value = alerts.frost,
                         onValueChanged = { v -> viewModel.updateAlerts { it.copy(frost = v) } },
                     )
                     if (alerts.frost) {
                         SliderPreference(
-                            title = stringResource(R.string.preference_weather_alerts_frost_threshold, alerts.frostTemperature),
+                            title = stringResource(I18nR.string.preference_weather_alerts_frost_threshold, alerts.frostTemperature),
                             value = alerts.frostTemperature, min = -15, max = 5, step = 1,
                             onValueChanged = { v -> viewModel.updateAlerts { it.copy(frostTemperature = v) } },
                         )
                     }
                     SwitchPreference(
-                        title = stringResource(R.string.preference_weather_alerts_wind),
+                        title = stringResource(I18nR.string.preference_weather_alerts_wind),
                         value = alerts.wind,
                         onValueChanged = { v -> viewModel.updateAlerts { it.copy(wind = v) } },
                     )
                     if (alerts.wind) {
                         SliderPreference(
-                            title = stringResource(R.string.preference_weather_alerts_wind_threshold, alerts.windSpeed),
+                            title = stringResource(I18nR.string.preference_weather_alerts_wind_threshold, alerts.windSpeed),
                             value = alerts.windSpeed, min = 30, max = 120, step = 10,
                             onValueChanged = { v -> viewModel.updateAlerts { it.copy(windSpeed = v) } },
                         )
                     }
                     SwitchPreference(
-                        title = stringResource(R.string.preference_weather_alerts_uv),
+                        title = stringResource(I18nR.string.preference_weather_alerts_uv),
                         value = alerts.uv,
                         onValueChanged = { v -> viewModel.updateAlerts { it.copy(uv = v) } },
                     )
                     if (alerts.uv) {
                         SliderPreference(
-                            title = stringResource(R.string.preference_weather_alerts_uv_threshold, alerts.uvIndex),
+                            title = stringResource(I18nR.string.preference_weather_alerts_uv_threshold, alerts.uvIndex),
                             value = alerts.uvIndex, min = 5, max = 11, step = 1,
                             onValueChanged = { v -> viewModel.updateAlerts { it.copy(uvIndex = v) } },
                         )
                     }
                     Preference(
-                        title = stringResource(R.string.preference_weather_alerts_test),
-                        summary = stringResource(R.string.preference_weather_alerts_test_summary),
+                        title = stringResource(I18nR.string.preference_weather_alerts_test),
+                        summary = stringResource(I18nR.string.preference_weather_alerts_test_summary),
                         onClick = {
                             viewModel.sendTestAlert { shown ->
-                                if (!shown) Toast.makeText(context, R.string.preference_weather_alerts_test_failed, Toast.LENGTH_LONG).show()
+                                if (!shown) Toast.makeText(context, I18nR.string.preference_weather_alerts_test_failed, Toast.LENGTH_LONG).show()
                             }
                         },
                     )
@@ -269,8 +271,8 @@ fun WeatherIntegrationSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    title = stringResource(R.string.preference_measurement_system),
-                    icon = R.drawable.open_in_new_24px,
+                    title = stringResource(I18nR.string.preference_measurement_system),
+                    icon = BaseR.drawable.open_in_new_24px,
                     onClick = {
                         backStack.add(LocaleSettingsRoute)
                     }
@@ -279,7 +281,7 @@ fun WeatherIntegrationSettingsScreen() {
         }
         if (BuildConfig.DEBUG) {
             item {
-                PreferenceCategory(stringResource(R.string.preference_category_debug)) {
+                PreferenceCategory(stringResource(I18nR.string.preference_category_debug)) {
                     Preference(
                         "Clear weather data",
                         summary = "Remove weather data from database",

@@ -1,5 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: desktop_grid_and_context_menu ===
 package de.mm20.launcher2.ui.desktopmode
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.ActivityOptions
 import android.content.Context
@@ -143,7 +145,7 @@ internal fun DesktopWorkspace(
                             )
                         } else {
                             Icon(
-                                painterResource(R.drawable.android_24px),
+                                painterResource(BaseR.drawable.android_24px),
                                 contentDescription = null,
                                 modifier = Modifier.size(48.dp)
                             )
@@ -170,20 +172,20 @@ internal fun DesktopWorkspace(
                         onDismissRequest = { showAppMenu = false }
                     ) {
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.menu_launch)) },
+                            text = { Text(stringResource(I18nR.string.menu_launch)) },
                             onClick = {
                                 showAppMenu = false
                                 launchOnDisplay(context, app, freeformActive)
                             },
-                            leadingIcon = { Icon(painterResource(R.drawable.open_in_new_24px), null) }
+                            leadingIcon = { Icon(painterResource(BaseR.drawable.open_in_new_24px), null) }
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.menu_favorites_unpin)) },
+                            text = { Text(stringResource(I18nR.string.menu_favorites_unpin)) },
                             onClick = {
                                 showAppMenu = false
                                 viewModel.unpin(app)
                             },
-                            leadingIcon = { Icon(painterResource(R.drawable.star_24px_filled), null) }
+                            leadingIcon = { Icon(painterResource(BaseR.drawable.star_24px_filled), null) }
                         )
                     }
                 }
@@ -200,17 +202,17 @@ internal fun DesktopWorkspace(
                     onDismissRequest = { showContextMenu = false }
                 ) {
                     DropdownMenuItem(
-                        text = { Text(stringResource(R.string.telos_change_wallpaper)) },
+                        text = { Text(stringResource(I18nR.string.telos_change_wallpaper)) },
                         onClick = {
                             showContextMenu = false
                             // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
                             wallpaperPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                             // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
                         },
-                        leadingIcon = { Icon(painterResource(R.drawable.image_search_24px), null) }
+                        leadingIcon = { Icon(painterResource(BaseR.drawable.image_search_24px), null) }
                     )
                     DropdownMenuItem(
-                        text = { Text(stringResource(R.string.telos_desktop_settings)) },
+                        text = { Text(stringResource(I18nR.string.telos_desktop_settings)) },
                         onClick = {
                             showContextMenu = false
                             // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
@@ -223,7 +225,7 @@ internal fun DesktopWorkspace(
                             context.startActivity(intent, options.toBundle())
                             // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
                         },
-                        leadingIcon = { Icon(painterResource(R.drawable.settings_24px), null) }
+                        leadingIcon = { Icon(painterResource(BaseR.drawable.settings_24px), null) }
                     )
                     DropdownMenuItem(
                         text = { Text("Window Theme & Sweet Cursors") },
@@ -231,17 +233,17 @@ internal fun DesktopWorkspace(
                             showContextMenu = false
                             onOpenThemeSettings()
                         },
-                        leadingIcon = { Icon(painterResource(R.drawable.palette_24px), null) }
+                        leadingIcon = { Icon(painterResource(BaseR.drawable.palette_24px), null) }
                     )
                     DropdownMenuItem(
-                        text = { Text(stringResource(R.string.telos_add_shortcut)) },
+                        text = { Text(stringResource(I18nR.string.telos_add_shortcut)) },
                         onClick = {
                             showContextMenu = false
                             // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
                             showAddShortcutPicker = true
                             // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
                         },
-                        leadingIcon = { Icon(painterResource(R.drawable.add_24px), null) }
+                        leadingIcon = { Icon(painterResource(BaseR.drawable.add_24px), null) }
                     )
                 }
             }

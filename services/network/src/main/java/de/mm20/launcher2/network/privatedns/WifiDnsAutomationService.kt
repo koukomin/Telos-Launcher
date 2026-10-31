@@ -1,4 +1,5 @@
 package de.mm20.launcher2.network.privatedns
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.Manifest
 import android.app.Notification
@@ -22,7 +23,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.network.api.NetworkSettings
 import de.mm20.launcher2.network.api.PrivateDnsMode
 import de.mm20.launcher2.network.api.PrivateDnsState

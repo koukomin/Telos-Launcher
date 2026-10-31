@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.ui.res.stringResource
 import android.content.Intent
@@ -51,11 +53,11 @@ fun CallRecordingsScreen() {
     val lock by comms.lockCallRecordings.collectAsStateWithLifecycle(true)
     val unlocked by de.mm20.launcher2.comms.privacy.PrivacySession.recordingsUnlocked.collectAsStateWithLifecycle()
     val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
-    PreferenceScreen(title = { Text(stringResource(R.string.hc_call_recordings)) }) {
+    PreferenceScreen(title = { Text(stringResource(I18nR.string.hc_call_recordings)) }) {
         item {
             de.mm20.launcher2.ui.component.AuthGate(
                 enabled = lock,
-                title = stringResource(R.string.auth_gate_recordings),
+                title = stringResource(I18nR.string.auth_gate_recordings),
                 unlocked = unlocked,
                 onUnlocked = { de.mm20.launcher2.comms.privacy.PrivacySession.unlockRecordings() },
                 onCancelled = { backStack.removeLastOrNull() },
@@ -107,12 +109,12 @@ fun CallRecordingsList(
             .then(if (embeddedSearch) Modifier else Modifier.fillMaxSize().verticalScroll(rememberScrollState())),
     ) {
         if (embeddedSearch && files.isNotEmpty()) {
-            TelosSearchBar(recQuery, { recQuery = it }, stringResource(R.string.tsp_search_call_recordings))
+            TelosSearchBar(recQuery, { recQuery = it }, stringResource(I18nR.string.tsp_search_call_recordings))
         }
         if (shownFiles.isEmpty() && query.isNotBlank()) {
             SearchEmptyState(query)
         } else if (files.isEmpty()) {
-            Text(stringResource(R.string.hc_no_recordings_yet), modifier = Modifier.padding(16.dp))
+            Text(stringResource(I18nR.string.hc_no_recordings_yet), modifier = Modifier.padding(16.dp))
         } else {
             shownFiles.forEach { rec ->
                 RecordingRow(rec, names[rec.file.absolutePath], onChanged = reload)
@@ -128,7 +130,7 @@ private fun RecordingRow(rec: CallRecordingFile, contactName: String?, onChanged
     var confirmDelete by remember { mutableStateOf(false) }
     val whenStr = remember(rec.file) { SimpleDateFormat("d MMM HH:mm", Locale.getDefault()).format(Date(rec.modifiedAtMillis)) }
     // the recorder names a recording without a number "Unknown"
-    val title = contactName ?: if (rec.number == "Unknown") stringResource(R.string.widget_name_unknown) else rec.number
+    val title = contactName ?: if (rec.number == "Unknown") stringResource(I18nR.string.widget_name_unknown) else rec.number
     ListItem(
         headlineContent = { Text(title) },
         supportingContent = {
@@ -159,13 +161,13 @@ private fun RecordingRow(rec: CallRecordingFile, contactName: String?, onChanged
                         context.tryStartActivity(intent)
                     }.getOrDefault(false)
                     if (!opened) {
-                        Toast.makeText(context, context.getString(R.string.hc_cannot_play_recording), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(I18nR.string.hc_cannot_play_recording), Toast.LENGTH_SHORT).show()
                     }
                 }
             },
         trailingContent = {
             IconButton(onClick = { confirmDelete = true }) {
-                Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+                Icon(painterResource(BaseR.drawable.delete_24px), contentDescription = stringResource(I18nR.string.hc_delete))
             }
         },
     )

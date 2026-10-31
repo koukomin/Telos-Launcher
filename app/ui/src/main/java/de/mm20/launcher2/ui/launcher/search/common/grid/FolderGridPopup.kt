@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.common.grid
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.animation.AnimatedVisibility
@@ -141,7 +142,7 @@ fun FolderGridPopup(
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                 TextButton(onClick = { showPicker = true }) {
-                    Text(stringResource(R.string.hf_folder_manage_apps))
+                    Text(stringResource(I18nR.string.hf_folder_manage_apps))
                 }
                 TextButton(onClick = onDismiss) {
                     Text(stringResource(android.R.string.ok))
@@ -184,7 +185,7 @@ fun FolderGridPopup(
                 color = MaterialTheme.colorScheme.surfaceContainerHigh
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text(stringResource(R.string.hf_folder_rename), style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(I18nR.string.hf_folder_rename), style = MaterialTheme.typography.titleMedium)
                     androidx.compose.material3.OutlinedTextField(
                         value = newName,
                         onValueChange = { newName = it },

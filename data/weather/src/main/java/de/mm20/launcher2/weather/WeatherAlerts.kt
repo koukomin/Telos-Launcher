@@ -1,4 +1,5 @@
 package de.mm20.launcher2.weather
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -9,7 +10,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.text.format.DateUtils
 import androidx.core.app.NotificationCompat
-import de.mm20.launcher2.i18n.R
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.database.AppDatabase
@@ -146,7 +146,7 @@ class WeatherAlertManager(
     /** A notification as it looks for rain, so that you can see what to expect */
     suspend fun sendTest(): Boolean {
         val now = System.currentTimeMillis()
-        val location = database.weatherDao().getForecasts(1).first().firstOrNull()?.location ?: context.getString(R.string.weather_alert_test_location)
+        val location = database.weatherDao().getForecasts(1).first().firstOrNull()?.location ?: context.getString(I18nR.string.weather_alert_test_location)
         return notify(WeatherAlert(WeatherAlertType.Rain, now + 2 * 3_600_000L, 80.0, location), now, test = true)
     }
 
@@ -158,7 +158,7 @@ class WeatherAlertManager(
         val manager = context.getSystemService(NotificationManager::class.java)
         if (manager.getNotificationChannel(CHANNEL_ID) == null) {
             manager.createNotificationChannel(
-                NotificationChannel(CHANNEL_ID, context.getString(R.string.weather_alert_channel), NotificationManager.IMPORTANCE_HIGH)
+                NotificationChannel(CHANNEL_ID, context.getString(I18nR.string.weather_alert_channel), NotificationManager.IMPORTANCE_HIGH)
             )
         }
         val system = settings.measurementSystem.first()
@@ -184,32 +184,32 @@ class WeatherAlertManager(
     }
 
     private fun titleRes(type: WeatherAlertType) = when (type) {
-        WeatherAlertType.Rain -> R.string.weather_alert_rain
-        WeatherAlertType.HeavyRain -> R.string.weather_alert_heavy_rain
-        WeatherAlertType.Snow -> R.string.weather_alert_snow
-        WeatherAlertType.Thunder -> R.string.weather_alert_thunder
-        WeatherAlertType.Heat -> R.string.weather_alert_heat
-        WeatherAlertType.Frost -> R.string.weather_alert_frost
-        WeatherAlertType.Wind -> R.string.weather_alert_wind
-        WeatherAlertType.Uv -> R.string.weather_alert_uv
+        WeatherAlertType.Rain -> I18nR.string.weather_alert_rain
+        WeatherAlertType.HeavyRain -> I18nR.string.weather_alert_heavy_rain
+        WeatherAlertType.Snow -> I18nR.string.weather_alert_snow
+        WeatherAlertType.Thunder -> I18nR.string.weather_alert_thunder
+        WeatherAlertType.Heat -> I18nR.string.weather_alert_heat
+        WeatherAlertType.Frost -> I18nR.string.weather_alert_frost
+        WeatherAlertType.Wind -> I18nR.string.weather_alert_wind
+        WeatherAlertType.Uv -> I18nR.string.weather_alert_uv
     }
 
     private fun buildText(alert: WeatherAlert, now: Long, system: MeasurementSystem): String {
         val imperial = system == MeasurementSystem.UnitedStates ||
             (system == MeasurementSystem.System && Locale.getDefault().country in IMPERIAL_COUNTRIES)
         val detail = when (alert.type) {
-            WeatherAlertType.Rain -> alert.value?.let { context.getString(R.string.weather_alert_detail_rain, it.roundToInt()) }
+            WeatherAlertType.Rain -> alert.value?.let { context.getString(I18nR.string.weather_alert_detail_rain, it.roundToInt()) }
             WeatherAlertType.HeavyRain -> alert.value?.let {
-                if (imperial) context.getString(R.string.weather_alert_detail_rain_amount, String.format(Locale.getDefault(), "%.2f", it / 25.4), "in")
-                else context.getString(R.string.weather_alert_detail_rain_amount, String.format(Locale.getDefault(), "%.1f", it), "mm")
+                if (imperial) context.getString(I18nR.string.weather_alert_detail_rain_amount, String.format(Locale.getDefault(), "%.2f", it / 25.4), "in")
+                else context.getString(I18nR.string.weather_alert_detail_rain_amount, String.format(Locale.getDefault(), "%.1f", it), "mm")
             }
-            WeatherAlertType.Heat -> alert.value?.let { context.getString(R.string.weather_alert_detail_heat, temperature(it, imperial)) }
-            WeatherAlertType.Frost -> alert.value?.let { context.getString(R.string.weather_alert_detail_frost, temperature(it, imperial)) }
+            WeatherAlertType.Heat -> alert.value?.let { context.getString(I18nR.string.weather_alert_detail_heat, temperature(it, imperial)) }
+            WeatherAlertType.Frost -> alert.value?.let { context.getString(I18nR.string.weather_alert_detail_frost, temperature(it, imperial)) }
             WeatherAlertType.Wind -> alert.value?.let {
-                if (imperial || system == MeasurementSystem.UnitedKingdom) context.getString(R.string.weather_alert_detail_wind, (it * 2.23694).roundToInt(), "mph")
-                else context.getString(R.string.weather_alert_detail_wind, (it * 3.6).roundToInt(), "km/h")
+                if (imperial || system == MeasurementSystem.UnitedKingdom) context.getString(I18nR.string.weather_alert_detail_wind, (it * 2.23694).roundToInt(), "mph")
+                else context.getString(I18nR.string.weather_alert_detail_wind, (it * 3.6).roundToInt(), "km/h")
             }
-            WeatherAlertType.Uv -> alert.value?.let { context.getString(R.string.weather_alert_detail_uv, it.roundToInt()) }
+            WeatherAlertType.Uv -> alert.value?.let { context.getString(I18nR.string.weather_alert_detail_uv, it.roundToInt()) }
             WeatherAlertType.Snow, WeatherAlertType.Thunder -> null
         }
         val whenText = whenText(alert.time, now)
@@ -220,11 +220,11 @@ class WeatherAlertManager(
         if (imperial) "${(celsius * 9 / 5 + 32).roundToInt()}°F" else "${celsius.roundToInt()}°C"
 
     private fun whenText(time: Long, now: Long): String {
-        if (time <= now + 30 * 60_000L) return context.getString(R.string.weather_alert_now)
+        if (time <= now + 30 * 60_000L) return context.getString(I18nR.string.weather_alert_now)
         val time24 = DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME)
         val sameDay = WeatherAlertEvaluator.isSameDay(now, time)
         val text = if (sameDay) time24 else DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_ABBREV_WEEKDAY)
-        return context.getString(R.string.weather_alert_from, text)
+        return context.getString(I18nR.string.weather_alert_from, text)
     }
 
     companion object {

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
@@ -173,8 +175,8 @@ internal object HomeScreenMenuComponent : ScaffoldComponent() {
             ) {
                 Column(modifier = Modifier.padding(vertical = 8.dp)) {
                     MenuItem(
-                        icon = R.drawable.wallpaper_24px,
-                        label = stringResource(R.string.home_screen_menu_change_wallpaper),
+                        icon = BaseR.drawable.wallpaper_24px,
+                        label = stringResource(I18nR.string.home_screen_menu_change_wallpaper),
                         onClick = {
                             context.startActivity(
                                 Intent(context, SettingsActivity::class.java).apply {
@@ -189,8 +191,8 @@ internal object HomeScreenMenuComponent : ScaffoldComponent() {
                     )
                     if (widgetScopeId != null) {
                         MenuItem(
-                            icon = R.drawable.widgets_24px,
-                            label = stringResource(R.string.widget_add_widget),
+                            icon = BaseR.drawable.widgets_24px,
+                            label = stringResource(I18nR.string.widget_add_widget),
                             onClick = {
                                 val pickIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
                                 val resolvable = context.packageManager.resolveActivity(

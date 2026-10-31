@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.external
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.appwidget.AppWidgetManager
 import androidx.compose.foundation.layout.Box
@@ -57,16 +59,16 @@ fun AppWidget(
         }
         Banner(
             modifier = Modifier.padding(16.dp),
-            text = stringResource(R.string.app_widget_loading_failed),
-            icon = R.drawable.warning_24px,
+            text = stringResource(I18nR.string.app_widget_loading_failed),
+            icon = BaseR.drawable.warning_24px,
             secondaryAction = {
                 OutlinedButton(onClick = onWidgetRemove) {
-                    Text(stringResource(R.string.widget_action_remove))
+                    Text(stringResource(I18nR.string.widget_action_remove))
                 }
             },
             primaryAction = {
                 Button(onClick = { replaceWidget = true }) {
-                    Text(stringResource(R.string.widget_action_replace))
+                    Text(stringResource(I18nR.string.widget_action_replace))
                 }
             }
         )

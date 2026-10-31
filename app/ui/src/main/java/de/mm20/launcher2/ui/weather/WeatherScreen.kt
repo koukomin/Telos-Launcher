@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.weather
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import androidx.compose.foundation.background
@@ -27,8 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.base.R as BaseR
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog

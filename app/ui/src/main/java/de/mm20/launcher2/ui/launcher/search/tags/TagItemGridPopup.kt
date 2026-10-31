@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.tags
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
@@ -89,15 +91,15 @@ fun TagItemGridPopup(
                     )
                     IconButton(onClick = onDismiss) {
                         Icon(
-                            painterResource(R.drawable.close_24px),
-                            contentDescription = stringResource(R.string.close),
+                            painterResource(BaseR.drawable.close_24px),
+                            contentDescription = stringResource(I18nR.string.close),
                         )
                     }
                 }
             }
             if (items.isEmpty()) {
                 Text(
-                    text = stringResource(R.string.tag_folder_empty),
+                    text = stringResource(I18nR.string.tag_folder_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,

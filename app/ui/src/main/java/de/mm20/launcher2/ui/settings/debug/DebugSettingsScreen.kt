@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.debug
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Debug
 import android.widget.Toast
@@ -46,7 +47,7 @@ fun DebugSettingsScreen() {
     val viewModel: DebugSettingsScreenVM = viewModel()
     val backStack = LocalBackStack.current
     PreferenceScreen(
-        stringResource(R.string.preference_screen_debug)
+        stringResource(I18nR.string.preference_screen_debug)
     ) {
         if (dumpingHeap) {
             item {
@@ -58,22 +59,22 @@ fun DebugSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    title = stringResource(R.string.preference_crash_reporter),
-                    summary = stringResource(R.string.preference_crash_reporter_summary),
+                    title = stringResource(I18nR.string.preference_crash_reporter),
+                    summary = stringResource(I18nR.string.preference_crash_reporter_summary),
                     onClick = {
                         backStack.add(CrashReporterRoute)
                     })
 
                 Preference(
-                    title = stringResource(R.string.preference_logs),
-                    summary = stringResource(R.string.preference_logs_summary),
+                    title = stringResource(I18nR.string.preference_logs),
+                    summary = stringResource(I18nR.string.preference_logs_summary),
                     onClick = {
                         backStack.add(LogRoute)
                     })
                 Preference(
-                    title = stringResource(R.string.preference_debug_dump_heap),
-                    summary = if (dumpingHeap) stringResource(R.string.preference_debug_dump_heap_in_progress)
-                    else stringResource(R.string.preference_debug_dump_heap_summary),
+                    title = stringResource(I18nR.string.preference_debug_dump_heap),
+                    summary = if (dumpingHeap) stringResource(I18nR.string.preference_debug_dump_heap_in_progress)
+                    else stringResource(I18nR.string.preference_debug_dump_heap_summary),
                     enabled = !dumpingHeap,
                     onClick = {
                         scope.launch {
@@ -96,7 +97,7 @@ fun DebugSettingsScreen() {
                             if (!success) {
                                 Toast.makeText(
                                     context,
-                                    R.string.au3_sysb_dump_failed,
+                                    I18nR.string.au3_sysb_dump_failed,
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 return@launch
@@ -105,24 +106,24 @@ fun DebugSettingsScreen() {
                                 ShareActions.shareFile(context, File(path), "application/octet-stream")
                             }
                             if (!shared) {
-                                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
                             }
                         }
 
                     }
                 )
             }
-            PreferenceCategory(stringResource(R.string.preference_category_debug_tools)) {
+            PreferenceCategory(stringResource(I18nR.string.preference_category_debug_tools)) {
                 Preference(
-                    title = stringResource(R.string.preference_debug_cleanup_database),
-                    summary = stringResource(R.string.preference_debug_cleanup_database_summary),
+                    title = stringResource(I18nR.string.preference_debug_cleanup_database),
+                    summary = stringResource(I18nR.string.preference_debug_cleanup_database_summary),
                     onClick = {
                         scope.launch {
                             val removedCount = viewModel.cleanUpDatabase()
                             Toast.makeText(
                                 context,
                                 context.resources.getQuantityString(
-                                    R.plurals.debug_cleanup_database_result,
+                                    I18nR.plurals.debug_cleanup_database_result,
                                     removedCount,
                                     removedCount
                                 ),
@@ -131,15 +132,15 @@ fun DebugSettingsScreen() {
                         }
                     })
                 Preference(
-                    title = stringResource(R.string.preference_debug_reinstall_iconpacks),
-                    summary = stringResource(R.string.preference_debug_reinstall_iconpacks_summary),
+                    title = stringResource(I18nR.string.preference_debug_reinstall_iconpacks),
+                    summary = stringResource(I18nR.string.preference_debug_reinstall_iconpacks_summary),
                     onClick = {
                         viewModel.reinstallIconPacks()
                     })
                 if (BuildConfig.DEBUG) {
                     Preference(
-                        title = stringResource(R.string.au3_sysb_normalizer_title),
-                        summary = stringResource(R.string.au3_sysb_normalizer_summary),
+                        title = stringResource(I18nR.string.au3_sysb_normalizer_title),
+                        summary = stringResource(I18nR.string.au3_sysb_normalizer_summary),
                         onClick = {
                             backStack += StringNormalizerTestRoute
                         }

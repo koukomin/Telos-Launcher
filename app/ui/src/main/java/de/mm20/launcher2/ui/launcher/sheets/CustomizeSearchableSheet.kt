@@ -1,6 +1,8 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
 package de.mm20.launcher2.ui.launcher.sheets
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -95,11 +97,11 @@ fun CustomizeSearchableSheet(
                 icon = { icon },
                 badge = {
                     Badge(
-                        icon = BadgeIcon(R.drawable.edit_20px)
+                        icon = BadgeIcon(BaseR.drawable.edit_20px)
                     )
                 },
                 modifier = Modifier.clickable(
-                    onClickLabel = stringResource(R.string.au3_launcher3_change_icon),
+                    onClickLabel = stringResource(I18nR.string.au3_launcher3_change_icon),
                     role = Role.Button,
                 ) {
                     viewModel.openIconPicker()
@@ -119,13 +121,13 @@ fun CustomizeSearchableSheet(
                 },
                 singleLine = true,
                 label = {
-                    Text(stringResource(R.string.customize_item_label))
+                    Text(stringResource(I18nR.string.customize_item_label))
                 },
                 placeholder = {
                     Text(searchable.label)
                 },
                 leadingIcon = {
-                    Icon(painterResource(R.drawable.label_24px), null)
+                    Icon(painterResource(BaseR.drawable.label_24px), null)
                 }
             )
 
@@ -147,13 +149,13 @@ fun CustomizeSearchableSheet(
                     .fillMaxWidth(),
                 tags = tags, onTagsChange = { tags = it.distinct() },
                 label = {
-                    Text(stringResource(R.string.customize_item_tags))
+                    Text(stringResource(I18nR.string.customize_item_tags))
                 },
                 onAutocomplete = {
                     viewModel.autocompleteTags(it).minus(tags.toSet())
                 },
                 leadingIcon = {
-                    Icon(painterResource(R.drawable.tag_24px), null)
+                    Icon(painterResource(BaseR.drawable.tag_24px), null)
                 }
             )
 
@@ -175,17 +177,17 @@ fun CustomizeSearchableSheet(
                     value = when (visibility) {
                         VisibilityLevel.Default -> {
                             when (searchable) {
-                                is Application -> stringResource(R.string.item_visibility_app_default)
-                                is CalendarEvent -> stringResource(R.string.item_visibility_calendar_default)
-                                else -> stringResource(R.string.item_visibility_search_only)
+                                is Application -> stringResource(I18nR.string.item_visibility_app_default)
+                                is CalendarEvent -> stringResource(I18nR.string.item_visibility_calendar_default)
+                                else -> stringResource(I18nR.string.item_visibility_search_only)
                             }
                         }
 
-                        VisibilityLevel.SearchOnly -> stringResource(R.string.item_visibility_search_only)
-                        VisibilityLevel.Hidden -> stringResource(R.string.item_visibility_hidden)
+                        VisibilityLevel.SearchOnly -> stringResource(I18nR.string.item_visibility_search_only)
+                        VisibilityLevel.Hidden -> stringResource(I18nR.string.item_visibility_hidden)
                     },
                     label = {
-                        Text(stringResource(R.string.customize_item_visibility))
+                        Text(stringResource(I18nR.string.customize_item_visibility))
                     },
                     onValueChange = {},
                     readOnly = true,
@@ -195,9 +197,9 @@ fun CustomizeSearchableSheet(
                         Icon(
                             painterResource(
                                 when (visibility) {
-                                    VisibilityLevel.Default -> R.drawable.visibility_24px_filled
-                                    VisibilityLevel.SearchOnly -> R.drawable.visibility_24px
-                                    VisibilityLevel.Hidden -> R.drawable.visibility_off_24px
+                                    VisibilityLevel.Default -> BaseR.drawable.visibility_24px_filled
+                                    VisibilityLevel.SearchOnly -> BaseR.drawable.visibility_24px
+                                    VisibilityLevel.Hidden -> BaseR.drawable.visibility_off_24px
                                 }
                             ),
                             null
@@ -218,10 +220,10 @@ fun CustomizeSearchableSheet(
                                 showDropdown = false
                             },
                             text = {
-                                Text(stringResource(R.string.item_visibility_app_default))
+                                Text(stringResource(I18nR.string.item_visibility_app_default))
                             },
                             leadingIcon = {
-                                Icon(painterResource(R.drawable.visibility_24px_filled), null)
+                                Icon(painterResource(BaseR.drawable.visibility_24px_filled), null)
                             }
                         )
                     } else if (searchable is CalendarEvent) {
@@ -231,10 +233,10 @@ fun CustomizeSearchableSheet(
                                 showDropdown = false
                             },
                             text = {
-                                Text(stringResource(R.string.item_visibility_calendar_default))
+                                Text(stringResource(I18nR.string.item_visibility_calendar_default))
                             },
                             leadingIcon = {
-                                Icon(painterResource(R.drawable.visibility_24px_filled), null)
+                                Icon(painterResource(BaseR.drawable.visibility_24px_filled), null)
                             }
                         )
                     } else {
@@ -244,10 +246,10 @@ fun CustomizeSearchableSheet(
                                 showDropdown = false
                             },
                             text = {
-                                Text(stringResource(R.string.item_visibility_search_only))
+                                Text(stringResource(I18nR.string.item_visibility_search_only))
                             },
                             leadingIcon = {
-                                Icon(painterResource(R.drawable.visibility_24px_filled), null)
+                                Icon(painterResource(BaseR.drawable.visibility_24px_filled), null)
                             }
                         )
                     }
@@ -258,11 +260,11 @@ fun CustomizeSearchableSheet(
                                 showDropdown = false
                             },
                             text = {
-                                Text(stringResource(R.string.item_visibility_search_only))
+                                Text(stringResource(I18nR.string.item_visibility_search_only))
                             },
                             leadingIcon = {
                                 Icon(
-                                    painterResource(R.drawable.visibility_24px),
+                                    painterResource(BaseR.drawable.visibility_24px),
                                     null
                                 )
                             }
@@ -274,10 +276,10 @@ fun CustomizeSearchableSheet(
                             showDropdown = false
                         },
                         text = {
-                            Text(stringResource(R.string.item_visibility_hidden))
+                            Text(stringResource(I18nR.string.item_visibility_hidden))
                         },
                         leadingIcon = {
-                            Icon(painterResource(R.drawable.visibility_off_24px), null)
+                            Icon(painterResource(BaseR.drawable.visibility_off_24px), null)
                         }
                     )
                 }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.music
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ComponentName
 import android.content.Context
@@ -80,7 +81,7 @@ class MusicViewModel : ViewModel() {
     fun saveTags(context: Context, uri: Uri, tags: TagEditor.Tags) {
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { TagEditor.write(context, uri, tags) }
-            _message.value = if (ok) context.getString(R.string.au_music_tags_saved) else context.getString(R.string.au_music_tags_failed)
+            _message.value = if (ok) context.getString(I18nR.string.au_music_tags_saved) else context.getString(I18nR.string.au_music_tags_failed)
             if (ok) loadLibrary(context)
         }
     }
@@ -92,7 +93,7 @@ class MusicViewModel : ViewModel() {
                 val mime = context.contentResolver.getType(image) ?: "image/jpeg"
                 bytes != null && TagEditor.writeCover(context, uri, bytes, mime)
             }
-            _message.value = if (ok) context.getString(R.string.au_music_cover_saved) else context.getString(R.string.au_music_cover_failed)
+            _message.value = if (ok) context.getString(I18nR.string.au_music_cover_saved) else context.getString(I18nR.string.au_music_cover_failed)
             if (ok) loadLibrary(context)
         }
     }

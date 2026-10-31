@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.crashreporter
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.Intent
@@ -77,12 +78,12 @@ class CrashReportScreenVM : ViewModel() {
                     context,
                     File(crashReport.filePath),
                     "*/*",
-                    chooserTitle = context.getString(R.string.au3_sysb_crash_share_via),
+                    chooserTitle = context.getString(I18nR.string.au3_sysb_crash_share_via),
                     text = CrashReporter.getDeviceInformation(context),
                 )
             }
             if (!shared) {
-                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms.radio
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
@@ -131,7 +133,7 @@ internal fun RadioEmptyState(title: String, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Icon(painterResource(R.drawable.radio_24px), null, Modifier.size(72.dp), tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f))
+        Icon(painterResource(BaseR.drawable.radio_24px), null, Modifier.size(72.dp), tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f))
         Text(title, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
     }
 }
@@ -173,28 +175,28 @@ fun RadioNowPlayingBar(stations: List<RadioStation>, onOpen: () -> Unit, modifie
         ) {
             if (station != null) RadioLogo(station, Modifier.size(56.dp), corner = 12.dp, pad = 6.dp)
             else Box(Modifier.size(56.dp).clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.surfaceContainerHighest), contentAlignment = Alignment.Center) {
-                Icon(painterResource(R.drawable.radio_24px), null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Icon(painterResource(BaseR.drawable.radio_24px), null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Column(Modifier.weight(1f)) {
                 Text(
-                    name.ifEmpty { stringResource(R.string.au_radio_unknown_station) },
+                    name.ifEmpty { stringResource(I18nR.string.au_radio_unknown_station) },
                     style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1, overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    track.ifEmpty { stringResource(R.string.au_radio_streaming_live) },
+                    track.ifEmpty { stringResource(I18nR.string.au_radio_streaming_live) },
                     style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1, overflow = TextOverflow.Ellipsis,
                 )
             }
             IconButton(onClick = { player.togglePlayPause() }) {
                 Icon(
-                    painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px),
-                    stringResource(if (isPlaying) R.string.au_radio_pause else R.string.hc_play),
+                    painterResource(if (isPlaying) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px),
+                    stringResource(if (isPlaying) I18nR.string.au_radio_pause else I18nR.string.hc_play),
                 )
             }
             IconButton(onClick = { player.stop() }) {
-                Icon(painterResource(R.drawable.close_24px), stringResource(R.string.hc_stop))
+                Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.hc_stop))
             }
         }
     }
@@ -261,10 +263,10 @@ fun RadioNowPlayingSheet(
             ) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = onDismiss) {
-                        Icon(painterResource(R.drawable.keyboard_arrow_down_24px), stringResource(R.string.hc_close), tint = white)
+                        Icon(painterResource(BaseR.drawable.keyboard_arrow_down_24px), stringResource(I18nR.string.hc_close), tint = white)
                     }
                     Spacer(Modifier.weight(1f))
-                    Text(stringResource(R.string.au14_radioui_now_playing), style = MaterialTheme.typography.labelLarge, color = soft)
+                    Text(stringResource(I18nR.string.au14_radioui_now_playing), style = MaterialTheme.typography.labelLarge, color = soft)
                     Spacer(Modifier.weight(1f))
                     Spacer(Modifier.size(48.dp))
                 }
@@ -276,17 +278,17 @@ fun RadioNowPlayingSheet(
                         Modifier.widthIn(max = 340.dp).fillMaxWidth(0.92f).aspectRatio(1f).clip(RoundedCornerShape(10.dp))
                             .background(Color.White.copy(alpha = 0.10f)),
                         contentAlignment = Alignment.Center,
-                    ) { Icon(painterResource(R.drawable.radio_24px), null, Modifier.size(72.dp), tint = soft) }
+                    ) { Icon(painterResource(BaseR.drawable.radio_24px), null, Modifier.size(72.dp), tint = soft) }
                 }
                 Spacer(Modifier.height(24.dp))
                 Text(
-                    name.ifEmpty { stringResource(R.string.au_radio_unknown_station) },
+                    name.ifEmpty { stringResource(I18nR.string.au_radio_unknown_station) },
                     style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = white,
                     maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth(),
                 )
                 Text(
-                    (if (reconnecting) stringResource(if (waitingForNetwork) R.string.au16_reconnect_waiting else R.string.au16_reconnect_label) else null)
-                        ?: error?.let { stringResource(it) } ?: track.ifEmpty { stringResource(R.string.au_radio_streaming_live) },
+                    (if (reconnecting) stringResource(if (waitingForNetwork) I18nR.string.au16_reconnect_waiting else I18nR.string.au16_reconnect_label) else null)
+                        ?: error?.let { stringResource(it) } ?: track.ifEmpty { stringResource(I18nR.string.au_radio_streaming_live) },
                     style = MaterialTheme.typography.bodyLarge,
                     color = if (error != null && !reconnecting) MaterialTheme.colorScheme.error else soft,
                     maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth(),
@@ -309,32 +311,32 @@ fun RadioNowPlayingSheet(
                         }
                     }
                     if (station != null && onToggleFavorite != null) {
-                        chip(if (isFavorite) R.drawable.star_24px_filled else R.drawable.star_24px, stringResource(R.string.hc_favorite), white) { onToggleFavorite(station) }
+                        chip(if (isFavorite) BaseR.drawable.star_24px_filled else BaseR.drawable.star_24px, stringResource(I18nR.string.hc_favorite), white) { onToggleFavorite(station) }
                     }
                     chip(
-                        if (isRecording) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px,
-                        stringResource(if (isRecording) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record),
+                        if (isRecording) BaseR.drawable.radio_button_checked_24px else BaseR.drawable.radio_button_unchecked_24px,
+                        stringResource(if (isRecording) I18nR.string.au2_radio2_stop_recording else I18nR.string.au2_radio2_record),
                         if (isRecording) MaterialTheme.colorScheme.error else white,
                     ) { player.toggleRecording(context)?.let { Toast.makeText(context, context.getString(it), Toast.LENGTH_SHORT).show() } }
                     Box {
-                        chip(R.drawable.timer_24px, stringResource(R.string.hc_sleep_timer), if (sleepEndsAt > 0) MaterialTheme.colorScheme.primary else white) { sleepMenu = true }
+                        chip(BaseR.drawable.timer_24px, stringResource(I18nR.string.hc_sleep_timer), if (sleepEndsAt > 0) MaterialTheme.colorScheme.primary else white) { sleepMenu = true }
                         DropdownMenu(expanded = sleepMenu, onDismissRequest = { sleepMenu = false }, shape = RoundedCornerShape(20.dp)) {
                             listOf(15, 30, 45, 60, 90).forEach { minutes ->
                                 DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.hc_stop_playback_in_minutes, minutes)) },
+                                    text = { Text(stringResource(I18nR.string.hc_stop_playback_in_minutes, minutes)) },
                                     onClick = { player.setSleepTimer(minutes); sleepMenu = false },
                                 )
                             }
                             if (sleepEndsAt > 0) {
                                 DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.hc_turn_timer_off)) },
+                                    text = { Text(stringResource(I18nR.string.hc_turn_timer_off)) },
                                     onClick = { player.cancelSleepTimer(); sleepMenu = false },
                                 )
                             }
                         }
                     }
                     if (station != null) {
-                        chip(R.drawable.share_24px, stringResource(R.string.au10_radio_share), white) { RadioShare.share(context, station) }
+                        chip(BaseR.drawable.share_24px, stringResource(I18nR.string.au10_radio_share), white) { RadioShare.share(context, station) }
                     }
                 }
                 // a live stream has no position: a full line with a dot at the end instead of a scrubber
@@ -345,15 +347,15 @@ fun RadioNowPlayingSheet(
                 Spacer(Modifier.height(24.dp))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { player.skipStation(-1, skipList) }, enabled = skipList.size > 1, modifier = Modifier.size(56.dp)) {
-                        Icon(painterResource(R.drawable.skip_previous_24px), stringResource(R.string.hc_previous), Modifier.size(32.dp), tint = if (skipList.size > 1) white else soft)
+                        Icon(painterResource(BaseR.drawable.skip_previous_24px), stringResource(I18nR.string.hc_previous), Modifier.size(32.dp), tint = if (skipList.size > 1) white else soft)
                     }
                     Box(
                         Modifier.size(72.dp).clip(CircleShape).background(white).clickable { player.togglePlayPause() },
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
-                            painterResource(if (playWhenReady) R.drawable.pause_24px else R.drawable.play_arrow_24px),
-                            stringResource(if (playWhenReady) R.string.au_radio_pause else R.string.hc_play),
+                            painterResource(if (playWhenReady) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px),
+                            stringResource(if (playWhenReady) I18nR.string.au_radio_pause else I18nR.string.hc_play),
                             Modifier.size(40.dp), tint = Color.Black,
                         )
                         if (loading && playWhenReady) {
@@ -361,7 +363,7 @@ fun RadioNowPlayingSheet(
                         }
                     }
                     IconButton(onClick = { player.skipStation(1, skipList) }, enabled = skipList.size > 1, modifier = Modifier.size(56.dp)) {
-                        Icon(painterResource(R.drawable.skip_next_24px), stringResource(R.string.hc_next), Modifier.size(32.dp), tint = if (skipList.size > 1) white else soft)
+                        Icon(painterResource(BaseR.drawable.skip_next_24px), stringResource(I18nR.string.hc_next), Modifier.size(32.dp), tint = if (skipList.size > 1) white else soft)
                     }
                 }
                 Spacer(Modifier.height(24.dp))

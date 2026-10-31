@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files.remote
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,20 +44,20 @@ fun FilesFtpServerDialog(path: String, onDismiss: () -> Unit) {
     }
     AlertDialog(onDismissRequest = onDismiss, title = { Text("FTP") }, text = {
         Column(Modifier.verticalScroll(rememberScrollState())) {
-            Text(stringResource(R.string.nf_ftp_scope))
+            Text(stringResource(I18nR.string.nf_ftp_scope))
             Text(path, Modifier.padding(vertical = 8.dp))
             Row { Switch(checked = uploads, enabled = server == null && !busy, onCheckedChange = { uploads = it })
-                Text(stringResource(R.string.nf_ftp_uploads), Modifier.padding(8.dp)) }
+                Text(stringResource(I18nR.string.nf_ftp_uploads), Modifier.padding(8.dp)) }
             server?.let { session -> SelectionContainer { Column {
                 Text(session.url)
-                Text(stringResource(R.string.ermis_username) + ": " + session.username)
-                Text(stringResource(R.string.ermis_password) + ": " + session.password)
+                Text(stringResource(I18nR.string.ermis_username) + ": " + session.username)
+                Text(stringResource(I18nR.string.ermis_password) + ": " + session.password)
             } } }
             if (busy) LinearProgressIndicator()
-            if (failed) Text(stringResource(R.string.telos_files_sharing_failed), color = MaterialTheme.colorScheme.error)
+            if (failed) Text(stringResource(I18nR.string.telos_files_sharing_failed), color = MaterialTheme.colorScheme.error)
         }
     }, confirmButton = {
-        if (server != null) TextButton(onClick = { server?.close(); server = null }) { Text(stringResource(R.string.telos_files_sharing_stop)) }
+        if (server != null) TextButton(onClick = { server?.close(); server = null }) { Text(stringResource(I18nR.string.telos_files_sharing_stop)) }
         else TextButton(enabled = !busy, onClick = {
             busy = true; failed = false
             val allowUploads = uploads
@@ -72,6 +73,6 @@ fun FilesFtpServerDialog(path: String, onDismiss: () -> Unit) {
                 else { server = opened?.takeIf { it.isOpen }; failed = server == null }
                 busy = false
             }
-        }) { Text(stringResource(R.string.telos_files_sharing_start)) }
-    }, dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.telos_files_sharing_close)) } })
+        }) { Text(stringResource(I18nR.string.telos_files_sharing_start)) }
+    }, dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.telos_files_sharing_close)) } })
 }

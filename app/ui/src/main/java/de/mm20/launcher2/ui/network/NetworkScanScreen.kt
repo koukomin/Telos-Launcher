@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -74,7 +75,7 @@ fun NetworkScanScreen() {
     var pingError by remember { mutableStateOf<String?>(null) }
 
     PreferenceScreen(title = {
-        Text(stringResource(R.string.net_scan_title), Modifier.padding(horizontal = 16.dp))
+        Text(stringResource(I18nR.string.net_scan_title), Modifier.padding(horizontal = 16.dp))
     }) {
         item {
             Column(
@@ -99,13 +100,13 @@ fun NetworkScanScreen() {
                                 modifier = Modifier.size(28.dp),
                             )
                             Text(
-                                stringResource(R.string.net_scan_title),
+                                stringResource(I18nR.string.net_scan_title),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
                             )
                         }
                         Text(
-                            stringResource(R.string.net_scan_intro),
+                            stringResource(I18nR.string.net_scan_intro),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -125,12 +126,12 @@ fun NetworkScanScreen() {
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                stringResource(R.string.net_scan_bypass_vpn),
+                                stringResource(I18nR.string.net_scan_bypass_vpn),
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.SemiBold,
                             )
                             Text(
-                                stringResource(R.string.net_scan_bypass_vpn_summary),
+                                stringResource(I18nR.string.net_scan_bypass_vpn_summary),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -148,7 +149,7 @@ fun NetworkScanScreen() {
                 ) {
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         Text(
-                            stringResource(R.string.net_scan_subnet),
+                            stringResource(I18nR.string.net_scan_subnet),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                         )
@@ -184,7 +185,7 @@ fun NetworkScanScreen() {
                                 },
                             ) {
                                 Text(
-                                    stringResource(if (isScanningSubnet) R.string.net_scan_stop else R.string.net_scan_start)
+                                    stringResource(if (isScanningSubnet) I18nR.string.net_scan_stop else I18nR.string.net_scan_start)
                                 )
                             }
                         }
@@ -196,7 +197,7 @@ fun NetworkScanScreen() {
                                     modifier = Modifier.fillMaxWidth(),
                                 )
                                 Text(
-                                    stringResource(R.string.net_scan_scanning, scannedCount, totalToScan, foundHosts.size),
+                                    stringResource(I18nR.string.net_scan_scanning, scannedCount, totalToScan, foundHosts.size),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
@@ -208,7 +209,7 @@ fun NetworkScanScreen() {
                 // Discovered Hosts List
                 if (foundHosts.isNotEmpty()) {
                     Text(
-                        stringResource(R.string.net_scan_found_devices, foundHosts.size),
+                        stringResource(I18nR.string.net_scan_found_devices, foundHosts.size),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                     )
@@ -230,7 +231,7 @@ fun NetworkScanScreen() {
                                     )
                                     if (host.isGateway) {
                                         Text(
-                                            stringResource(R.string.net_scan_gateway),
+                                            stringResource(I18nR.string.net_scan_gateway),
                                             style = MaterialTheme.typography.labelSmall,
                                             color = MaterialTheme.colorScheme.primary,
                                         )
@@ -258,7 +259,7 @@ fun NetworkScanScreen() {
                                 }
                                 if (host.openPorts.isNotEmpty()) {
                                     Text(
-                                        stringResource(R.string.net_scan_open_ports, host.openPorts.joinToString()),
+                                        stringResource(I18nR.string.net_scan_open_ports, host.openPorts.joinToString()),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = MaterialTheme.colorScheme.secondary,
                                     )
@@ -277,7 +278,7 @@ fun NetworkScanScreen() {
                 ) {
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         Text(
-                            stringResource(R.string.net_ping_title),
+                            stringResource(I18nR.string.net_ping_title),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                         )
@@ -285,7 +286,7 @@ fun NetworkScanScreen() {
                         OutlinedTextField(
                             value = pingTarget,
                             onValueChange = { pingTarget = it },
-                            label = { Text(stringResource(R.string.net_ping_target_hint)) },
+                            label = { Text(stringResource(I18nR.string.net_ping_target_hint)) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth(),
                         )
@@ -311,7 +312,7 @@ fun NetworkScanScreen() {
                             if (isPinging) {
                                 CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
                             } else {
-                                Text(stringResource(R.string.net_ping_start))
+                                Text(stringResource(I18nR.string.net_ping_start))
                             }
                         }
 
@@ -320,7 +321,7 @@ fun NetworkScanScreen() {
                             if (res.packetsReceived > 0) {
                                 Text(
                                     stringResource(
-                                        R.string.net_ping_result,
+                                        I18nR.string.net_ping_result,
                                         res.target,
                                         resolved,
                                         res.packetsReceived,
@@ -337,7 +338,7 @@ fun NetworkScanScreen() {
 
                         pingError?.let { err ->
                             Text(
-                                stringResource(R.string.net_ping_failed, err),
+                                stringResource(I18nR.string.net_ping_failed, err),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.error,
                             )

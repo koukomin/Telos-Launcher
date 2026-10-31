@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.store
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -23,9 +24,9 @@ internal fun StoreTransferProgress(id: String) {
         else LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
         Text(
             when (transfer.status) {
-                StoreDownloadStatus.Paused -> stringResource(R.string.telos_store_paused)
-                StoreDownloadStatus.WaitingForNetwork -> stringResource(R.string.telos_store_waiting_network)
-                else -> stringResource(R.string.telos_store_transfer, transfer.bytesPerSecond / 1024, transfer.bytes / (1024 * 1024))
+                StoreDownloadStatus.Paused -> stringResource(I18nR.string.telos_store_paused)
+                StoreDownloadStatus.WaitingForNetwork -> stringResource(I18nR.string.telos_store_waiting_network)
+                else -> stringResource(I18nR.string.telos_store_transfer, transfer.bytesPerSecond / 1024, transfer.bytes / (1024 * 1024))
             },
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -39,14 +40,14 @@ internal fun StoreUpdateConsent(viewModel: StoreViewModel) {
     if (pending.isEmpty()) return
     AlertDialog(
         onDismissRequest = viewModel::dismissUpdates,
-        title = { Text(stringResource(R.string.telos_store_auto_title)) },
+        title = { Text(stringResource(I18nR.string.telos_store_auto_title)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(stringResource(R.string.telos_store_auto_explanation))
+                Text(stringResource(I18nR.string.telos_store_auto_explanation))
                 Text(pending.joinToString { it.displayName }, style = MaterialTheme.typography.bodySmall)
             }
         },
-        confirmButton = { TextButton(onClick = { viewModel.confirmUpdates(true) }) { Text(stringResource(R.string.telos_store_auto_enable)) } },
-        dismissButton = { TextButton(onClick = { viewModel.confirmUpdates(false) }) { Text(stringResource(R.string.telos_store_update_once)) } },
+        confirmButton = { TextButton(onClick = { viewModel.confirmUpdates(true) }) { Text(stringResource(I18nR.string.telos_store_auto_enable)) } },
+        dismissButton = { TextButton(onClick = { viewModel.confirmUpdates(false) }) { Text(stringResource(I18nR.string.telos_store_update_once)) } },
     )
 }

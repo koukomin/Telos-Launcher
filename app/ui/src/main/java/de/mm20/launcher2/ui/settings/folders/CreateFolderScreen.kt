@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.folders
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -60,7 +62,7 @@ fun CreateFolderScreen() {
     val selected = rememberSaveable { mutableStateOf(setOf<String>()) }
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_create_folder),
+        title = stringResource(I18nR.string.preference_screen_create_folder),
         topBarActions = {
             if (folderName.isNotBlank() && selected.value.size >= 2) {
                 IconButton(
@@ -68,15 +70,15 @@ fun CreateFolderScreen() {
                         viewModel.createFolder(folderName.trim(), selected.value)
                         Toast.makeText(
                             context,
-                            context.getString(R.string.create_folder_success, folderName.trim()),
+                            context.getString(I18nR.string.create_folder_success, folderName.trim()),
                             Toast.LENGTH_SHORT,
                         ).show()
                         backStack.removeLastOrNull()
                     }
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.check_24px),
-                        contentDescription = stringResource(R.string.create_folder_action),
+                        painter = painterResource(BaseR.drawable.check_24px),
+                        contentDescription = stringResource(I18nR.string.create_folder_action),
                     )
                 }
             }
@@ -86,14 +88,14 @@ fun CreateFolderScreen() {
             OutlinedTextField(
                 value = folderName,
                 onValueChange = { folderName = it },
-                label = { Text(stringResource(R.string.create_folder_name_label)) },
+                label = { Text(stringResource(I18nR.string.create_folder_name_label)) },
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
             )
             Text(
-                text = stringResource(R.string.create_folder_pick_apps_hint),
+                text = stringResource(I18nR.string.create_folder_pick_apps_hint),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),

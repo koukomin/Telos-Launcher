@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.dynamicisland
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -32,19 +33,19 @@ fun DynamicIslandSettingsScreen() {
     val enabled by viewModel.enabled.collectAsStateWithLifecycle(false)
     val showCalls by viewModel.showCalls.collectAsStateWithLifecycle(true)
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_dynamic_island)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_dynamic_island)) {
         item {
             PreferenceCategory {
                 GuardedPreference(
                     locked = hasOverlayPermission == false,
-                    description = stringResource(R.string.missing_permission_dynamic_island),
+                    description = stringResource(I18nR.string.missing_permission_dynamic_island),
                     onUnlock = {
                         viewModel.requestOverlayPermission(context as AppCompatActivity)
                     }
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_dynamic_island),
-                        summary = stringResource(R.string.preference_dynamic_island_summary),
+                        title = stringResource(I18nR.string.preference_dynamic_island),
+                        summary = stringResource(I18nR.string.preference_dynamic_island_summary),
                         enabled = hasOverlayPermission != false,
                         value = enabled && hasOverlayPermission == true,
                         onValueChanged = {
@@ -61,17 +62,17 @@ fun DynamicIslandSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_dynamic_island_sources)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_dynamic_island_sources)) {
                 GuardedPreference(
                     locked = hasPhoneStatePermission == false,
-                    description = stringResource(R.string.missing_permission_dynamic_island_calls),
+                    description = stringResource(I18nR.string.missing_permission_dynamic_island_calls),
                     onUnlock = {
                         viewModel.requestPhoneStatePermission(context as AppCompatActivity)
                     }
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_dynamic_island_calls),
-                        summary = stringResource(R.string.preference_dynamic_island_calls_summary),
+                        title = stringResource(I18nR.string.preference_dynamic_island_calls),
+                        summary = stringResource(I18nR.string.preference_dynamic_island_calls_summary),
                         value = showCalls && hasPhoneStatePermission == true,
                         enabled = hasPhoneStatePermission != false,
                         onValueChanged = { viewModel.setShowCalls(it) },

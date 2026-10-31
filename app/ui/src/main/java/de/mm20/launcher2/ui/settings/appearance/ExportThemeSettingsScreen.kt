@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.appearance
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -70,12 +72,12 @@ fun ExportThemeSettingsScreen() {
         viewModel.init()
     }
     PreferenceScreen(
-        title = stringResource(R.string.theme_export_title)
+        title = stringResource(I18nR.string.theme_export_title)
     ) {
         item {
             PreferenceCategory {
                 TextPreference(
-                    stringResource(R.string.theme_bundle_name),
+                    stringResource(I18nR.string.theme_bundle_name),
                     value = viewModel.themeName,
                     summary = viewModel.themeName.takeIf { it.isNotBlank() },
                     onValueChanged = {
@@ -83,7 +85,7 @@ fun ExportThemeSettingsScreen() {
                     }
                 )
                 TextPreference(
-                    stringResource(R.string.theme_bundle_author),
+                    stringResource(I18nR.string.theme_bundle_author),
                     value = viewModel.themeAuthor,
                     summary = viewModel.themeAuthor.takeIf { it.isNotBlank() },
                     onValueChanged = {
@@ -95,10 +97,10 @@ fun ExportThemeSettingsScreen() {
         item {
             PreferenceCategory {
                 ListPreference(
-                    stringResource(R.string.preference_screen_colors),
-                    icon = R.drawable.palette_24px,
+                    stringResource(I18nR.string.preference_screen_colors),
+                    icon = BaseR.drawable.palette_24px,
                     value = viewModel.colorScheme,
-                    items = listOf(stringResource(R.string.no_selection) to null) + colorSchemes.map {
+                    items = listOf(stringResource(I18nR.string.no_selection) to null) + colorSchemes.map {
                         it.name to it
                     },
                     onValueChanged = { newValue ->
@@ -106,10 +108,10 @@ fun ExportThemeSettingsScreen() {
                     }
                 )
                 ListPreference(
-                    stringResource(R.string.preference_screen_typography),
-                    icon = R.drawable.text_fields_24px,
+                    stringResource(I18nR.string.preference_screen_typography),
+                    icon = BaseR.drawable.text_fields_24px,
                     value = viewModel.typographyScheme,
-                    items = listOf(stringResource(R.string.no_selection) to null) + typographyThemes.map {
+                    items = listOf(stringResource(I18nR.string.no_selection) to null) + typographyThemes.map {
                         it.name to it
                     },
                     onValueChanged = { newValue ->
@@ -117,10 +119,10 @@ fun ExportThemeSettingsScreen() {
                     }
                 )
                 ListPreference(
-                    stringResource(R.string.preference_screen_shapes),
-                    icon = R.drawable.crop_square_24px,
+                    stringResource(I18nR.string.preference_screen_shapes),
+                    icon = BaseR.drawable.crop_square_24px,
                     value = viewModel.shapeScheme,
-                    items = listOf(stringResource(R.string.no_selection) to null) + shapeThemes.map {
+                    items = listOf(stringResource(I18nR.string.no_selection) to null) + shapeThemes.map {
                         it.name to it
                     },
                     onValueChanged = { newValue ->
@@ -128,10 +130,10 @@ fun ExportThemeSettingsScreen() {
                     }
                 )
                 ListPreference(
-                    stringResource(R.string.preference_screen_transparencies),
-                    icon = R.drawable.opacity_24px,
+                    stringResource(I18nR.string.preference_screen_transparencies),
+                    icon = BaseR.drawable.opacity_24px,
                     value = viewModel.transparencyScheme,
-                    items = listOf(stringResource(R.string.no_selection) to null) + transparencySchemes.map {
+                    items = listOf(stringResource(I18nR.string.no_selection) to null) + transparencySchemes.map {
                         it.name to it
                     },
                     onValueChanged = { newValue ->
@@ -161,13 +163,13 @@ fun ExportThemeSettingsScreen() {
                         }
                     ) {
                         Icon(
-                            painterResource(R.drawable.share_20px),
+                            painterResource(BaseR.drawable.share_20px),
                             null,
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(SplitButtonDefaults.LeadingIconSize),
                         )
-                        Text(stringResource(R.string.menu_share))
+                        Text(stringResource(I18nR.string.menu_share))
                     }
                     SplitButtonDefaults.TrailingButton(
                         onClick = {
@@ -180,7 +182,7 @@ fun ExportThemeSettingsScreen() {
                             label = "Trailing Icon Rotation"
                         )
                         Icon(
-                            painterResource(R.drawable.keyboard_arrow_down_24px),
+                            painterResource(BaseR.drawable.keyboard_arrow_down_24px),
                             modifier =
                                 Modifier
                                     .size(SplitButtonDefaults.TrailingIconSize)
@@ -198,14 +200,14 @@ fun ExportThemeSettingsScreen() {
                             ) {
                                 DropdownMenuItem(
                                     shape = MenuDefaults.standaloneItemShape,
-                                    text = { Text(stringResource(R.string.save_as_file)) },
+                                    text = { Text(stringResource(I18nR.string.save_as_file)) },
                                     onClick = {
                                         fileChooserLauncher.launch("${viewModel.fileBaseName}.kvtheme")
                                         showDropdown = false
                                     },
                                     leadingIcon = {
                                         Icon(
-                                            painterResource(R.drawable.save_24px),
+                                            painterResource(BaseR.drawable.save_24px),
                                             contentDescription = null
                                         )
                                     }

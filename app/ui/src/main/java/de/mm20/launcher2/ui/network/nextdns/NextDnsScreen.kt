@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.nextdns
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
@@ -89,28 +91,28 @@ fun NextDnsScreen() {
     }
     val rules = if (tab == 1) state.allowed else state.denied
     val visibleRules = remember(rules, query) { rules.filter { query.isBlank() || it.id.contains(query.trim(), true) } }
-    PreferenceScreen(title = { Text(stringResource(R.string.nd_title)) }, topBarActions = {
+    PreferenceScreen(title = { Text(stringResource(I18nR.string.nd_title)) }, topBarActions = {
         IconButton(enabled = state.connected && !state.loading, onClick = {
             if (tab == 3) vm.loadSettings(settingsPage)
             else if (tab == 4) vm.loadAnalytics()
             else if (tab == 5) vm.loadRewrites()
             else vm.refresh(query, if (blockedOnly) "blocked" else null)
         }) {
-            Icon(painterResource(R.drawable.restart_alt_24px), stringResource(R.string.hc_refresh))
+            Icon(painterResource(BaseR.drawable.restart_alt_24px), stringResource(I18nR.string.hc_refresh))
         }
     }) {
         item {
             ElevatedCard(Modifier.fillMaxWidth().padding(horizontal = 12.dp)) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text(stringResource(R.string.nd_intro), style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(I18nR.string.nd_intro), style = MaterialTheme.typography.bodyMedium)
                     if (state.connected) {
-                        Text("${stringResource(R.string.nd_profile)}: ${state.profileId.orEmpty()}", style = MaterialTheme.typography.titleMedium)
+                        Text("${stringResource(I18nR.string.nd_profile)}: ${state.profileId.orEmpty()}", style = MaterialTheme.typography.titleMedium)
                         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            TextButton(enabled = !state.loading, onClick = { settings = !settings }) { Text(stringResource(R.string.nd_key)) }
-                            TextButton(enabled = !state.loading, onClick = { forget = true }) { Text(stringResource(R.string.nd_disconnect)) }
-                            OutlinedButton(enabled = !state.loading, onClick = vm::applyDns) { Text(stringResource(R.string.nd_apply)) }
+                            TextButton(enabled = !state.loading, onClick = { settings = !settings }) { Text(stringResource(I18nR.string.nd_key)) }
+                            TextButton(enabled = !state.loading, onClick = { forget = true }) { Text(stringResource(I18nR.string.nd_disconnect)) }
+                            OutlinedButton(enabled = !state.loading, onClick = vm::applyDns) { Text(stringResource(I18nR.string.nd_apply)) }
                         }
-                        Text(stringResource(R.string.net_dns_vpn_only), style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.net_dns_vpn_only), style = MaterialTheme.typography.bodySmall)
                     }
                     if (!state.connected || settings) {
                         var loginDialog by remember { mutableStateOf(false) }
@@ -127,15 +129,15 @@ fun NextDnsScreen() {
                             )
                         }
                         
-                        Text(stringResource(R.string.nd_help), style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.nd_help), style = MaterialTheme.typography.bodySmall)
                         OutlinedTextField(profile, { profile = it.trim().take(6) }, enabled = !state.loading,
-                            label = { Text(stringResource(R.string.nd_profile)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                            label = { Text(stringResource(I18nR.string.nd_profile)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                         OutlinedTextField(key, { key = it }, enabled = !state.loading,
-                            label = { Text(stringResource(R.string.nd_key)) }, singleLine = true,
+                            label = { Text(stringResource(I18nR.string.nd_key)) }, singleLine = true,
                             visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth())
                         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Button(enabled = !state.loading && profile.length == 6 && key.isNotBlank(), onClick = { vm.connect(profile, key); key = "" }) {
-                                Text(stringResource(R.string.nd_connect))
+                                Text(stringResource(I18nR.string.nd_connect))
                             }
                             if (!state.connected) {
                                 TextButton(enabled = !state.loading, onClick = { loginDialog = true }) { Text("Web Sign In") }
@@ -143,7 +145,7 @@ fun NextDnsScreen() {
                         }
                     }
                     if (state.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
-                    if (state.dnsApplied) Text(stringResource(R.string.nd_applied), color = MaterialTheme.colorScheme.primary)
+                    if (state.dnsApplied) Text(stringResource(I18nR.string.nd_applied), color = MaterialTheme.colorScheme.primary)
                     state.error?.let { Text(stringResource(errorString(it)), color = MaterialTheme.colorScheme.error) }
                 }
             }
@@ -153,12 +155,12 @@ fun NextDnsScreen() {
                 Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         listOf(
-                            R.string.nd_logs,
-                            R.string.nd_allowlist,
-                            R.string.nd_denylist,
-                            R.string.net_settings_title,
-                            R.string.net_hub_status,
-                            R.string.nd_rule_title,
+                            I18nR.string.nd_logs,
+                            I18nR.string.nd_allowlist,
+                            I18nR.string.nd_denylist,
+                            I18nR.string.net_settings_title,
+                            I18nR.string.net_hub_status,
+                            I18nR.string.nd_rule_title,
                         ).forEachIndexed { index, label ->
                             FilterChip(tab == index, onClick = { tab = index }, label = { Text(stringResource(label)) })
                         }
@@ -173,7 +175,7 @@ fun NextDnsScreen() {
                                 )
                             }
                         }
-                        Text(stringResource(R.string.nd_intro), style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.nd_intro), style = MaterialTheme.typography.bodySmall)
                     } else if (tab == 5) {
                         TextButton(
                             enabled = !state.loading,
@@ -183,15 +185,15 @@ fun NextDnsScreen() {
                                 editRewrite = true
                             },
                         ) {
-                            Text(stringResource(R.string.hc_add))
+                            Text(stringResource(I18nR.string.hc_add))
                         }
                     } else if (tab != 4) {
-                        OutlinedTextField(query, { query = it.take(250) }, label = { Text(stringResource(R.string.hc_search)) }, singleLine = true,
+                        OutlinedTextField(query, { query = it.take(250) }, label = { Text(stringResource(I18nR.string.hc_search)) }, singleLine = true,
                             modifier = Modifier.fillMaxWidth())
                         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            if (tab == 0) FilterChip(blockedOnly, onClick = { blockedOnly = !blockedOnly; vm.refresh(query, if (blockedOnly) "blocked" else null) }, label = { Text(stringResource(R.string.nd_denylist)) })
-                            TextButton(enabled = !state.loading, onClick = { vm.refresh(query, if (blockedOnly) "blocked" else null) }) { Text(stringResource(R.string.hc_search)) }
-                            if (tab != 0) TextButton(enabled = !state.loading, onClick = { editAllow = tab == 1; editDomain = "" }) { Text(stringResource(R.string.hc_add)) }
+                            if (tab == 0) FilterChip(blockedOnly, onClick = { blockedOnly = !blockedOnly; vm.refresh(query, if (blockedOnly) "blocked" else null) }, label = { Text(stringResource(I18nR.string.nd_denylist)) })
+                            TextButton(enabled = !state.loading, onClick = { vm.refresh(query, if (blockedOnly) "blocked" else null) }) { Text(stringResource(I18nR.string.hc_search)) }
+                            if (tab != 0) TextButton(enabled = !state.loading, onClick = { editAllow = tab == 1; editDomain = "" }) { Text(stringResource(I18nR.string.hc_add)) }
                         }
                     }
                 }
@@ -199,16 +201,16 @@ fun NextDnsScreen() {
             when (tab) {
                 0 -> {
                     if (state.logs.isEmpty() && !state.loading) {
-                        item { Text(stringResource(R.string.nd_empty), Modifier.padding(20.dp)) }
+                        item { Text(stringResource(I18nR.string.nd_empty), Modifier.padding(20.dp)) }
                     }
                     itemsIndexed(state.logs, key = { index, log -> "${log.timestamp}:${log.domain}:$index" }) { _, log ->
                         Card(Modifier.fillMaxWidth().padding(horizontal = 12.dp)) {
                             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                                 Text(log.domain, style = MaterialTheme.typography.titleMedium)
                                 val label = when (log.status) {
-                                    "blocked" -> R.string.nd_deny
-                                    "allowed" -> R.string.nd_allow
-                                    else -> R.string.nd_logs
+                                    "blocked" -> I18nR.string.nd_deny
+                                    "allowed" -> I18nR.string.nd_allow
+                                    else -> I18nR.string.nd_logs
                                 }
                                 Text(
                                     stringResource(label),
@@ -226,11 +228,11 @@ fun NextDnsScreen() {
                                     TextButton(
                                         enabled = !state.loading,
                                         onClick = { editAllow = true; editDomain = log.domain },
-                                    ) { Text(stringResource(R.string.nd_allow)) }
+                                    ) { Text(stringResource(I18nR.string.nd_allow)) }
                                     TextButton(
                                         enabled = !state.loading,
                                         onClick = { editAllow = false; editDomain = log.domain },
-                                    ) { Text(stringResource(R.string.nd_deny)) }
+                                    ) { Text(stringResource(I18nR.string.nd_deny)) }
                                 }
                             }
                         }
@@ -241,13 +243,13 @@ fun NextDnsScreen() {
                                 enabled = !state.loading,
                                 onClick = vm::more,
                                 modifier = Modifier.padding(16.dp),
-                            ) { Text(stringResource(R.string.nd_more)) }
+                            ) { Text(stringResource(I18nR.string.nd_more)) }
                         }
                     }
                 }
                 1, 2 -> {
                     if (visibleRules.isEmpty() && !state.loading) {
-                        item { Text(stringResource(R.string.nd_empty), Modifier.padding(20.dp)) }
+                        item { Text(stringResource(I18nR.string.nd_empty), Modifier.padding(20.dp)) }
                     }
                     items(visibleRules, key = { "$tab:${it.id}" }) { rule ->
                         Card(Modifier.fillMaxWidth().padding(horizontal = 12.dp)) {
@@ -266,7 +268,7 @@ fun NextDnsScreen() {
                                     TextButton(
                                         enabled = !state.loading,
                                         onClick = { remove = (tab == 1) to rule.id },
-                                    ) { Text(stringResource(R.string.hc_remove)) }
+                                    ) { Text(stringResource(I18nR.string.hc_remove)) }
                                 }
                             }
                         }
@@ -274,7 +276,7 @@ fun NextDnsScreen() {
                 }
                 3 -> {
                     if ((settingsData == null || booleanSettings.isEmpty()) && !state.loading) {
-                        item { Text(stringResource(R.string.nd_empty), Modifier.padding(20.dp)) }
+                        item { Text(stringResource(I18nR.string.nd_empty), Modifier.padding(20.dp)) }
                     } else {
                         items(booleanSettings, key = { it.path.joinToString(".") }) { setting ->
                             SwitchPreference(
@@ -292,7 +294,7 @@ fun NextDnsScreen() {
                             Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
-                            Text(stringResource(R.string.net_hub_status), style = MaterialTheme.typography.titleMedium)
+                            Text(stringResource(I18nR.string.net_hub_status), style = MaterialTheme.typography.titleMedium)
                             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 NextDnsAnalyticsPeriod.entries.forEach { period ->
                                     FilterChip(
@@ -308,7 +310,7 @@ fun NextDnsScreen() {
                                     selected = state.analyticsDeviceId == null,
                                     onClick = { vm.loadAnalytics(deviceId = null) },
                                     enabled = !state.loading,
-                                    label = { Text(stringResource(R.string.net_dns_filter_all)) },
+                                    label = { Text(stringResource(I18nR.string.net_dns_filter_all)) },
                                 )
                                 state.analyticsDevices.forEach { device ->
                                     FilterChip(
@@ -366,19 +368,19 @@ fun NextDnsScreen() {
                                     enabled = !state.loading,
                                     onClick = vm::moreAnalytics,
                                     modifier = Modifier.padding(16.dp),
-                                ) { Text(stringResource(R.string.nd_more)) }
+                                ) { Text(stringResource(I18nR.string.nd_more)) }
                             }
                         }
                         if (snapshot.rows.isEmpty() && snapshot.series.isEmpty()) {
-                            item { Text(stringResource(R.string.nd_empty), Modifier.padding(20.dp)) }
+                            item { Text(stringResource(I18nR.string.nd_empty), Modifier.padding(20.dp)) }
                         }
                     } else if (!state.loading) {
-                        item { Text(stringResource(R.string.nd_empty), Modifier.padding(20.dp)) }
+                        item { Text(stringResource(I18nR.string.nd_empty), Modifier.padding(20.dp)) }
                     }
                 }
                 5 -> {
                     if (state.rewrites.isEmpty() && !state.loading) {
-                        item { Text(stringResource(R.string.nd_empty), Modifier.padding(20.dp)) }
+                        item { Text(stringResource(I18nR.string.nd_empty), Modifier.padding(20.dp)) }
                     }
                     items(state.rewrites, key = { it.id }) { rewrite ->
                         Card(Modifier.fillMaxWidth().padding(horizontal = 12.dp)) {
@@ -388,7 +390,7 @@ fun NextDnsScreen() {
                                 TextButton(
                                     enabled = !state.loading,
                                     onClick = { removeRewrite = rewrite },
-                                ) { Text(stringResource(R.string.hc_remove)) }
+                                ) { Text(stringResource(I18nR.string.hc_remove)) }
                             }
                         }
                     }
@@ -406,25 +408,25 @@ fun NextDnsScreen() {
                 profileId = state.profileId.orEmpty(),
             )
         }
-    remove?.let { target -> AlertDialog(onDismissRequest = { remove = null }, title = { Text(stringResource(R.string.hc_remove)) }, text = {
-        Text("${state.profileId.orEmpty()} · ${target.second}\n${stringResource(if (target.first) R.string.nd_allowlist else R.string.nd_denylist)}\n${stringResource(R.string.nd_intro)}")
-    }, confirmButton = { TextButton(enabled = !state.loading, onClick = { vm.delete(target.first, target.second); remove = null }) { Text(stringResource(R.string.hc_remove)) } }, dismissButton = { TextButton(onClick = { remove = null }) { Text(stringResource(R.string.hc_cancel)) } }) }
+    remove?.let { target -> AlertDialog(onDismissRequest = { remove = null }, title = { Text(stringResource(I18nR.string.hc_remove)) }, text = {
+        Text("${state.profileId.orEmpty()} · ${target.second}\n${stringResource(if (target.first) I18nR.string.nd_allowlist else I18nR.string.nd_denylist)}\n${stringResource(I18nR.string.nd_intro)}")
+    }, confirmButton = { TextButton(enabled = !state.loading, onClick = { vm.delete(target.first, target.second); remove = null }) { Text(stringResource(I18nR.string.hc_remove)) } }, dismissButton = { TextButton(onClick = { remove = null }) { Text(stringResource(I18nR.string.hc_cancel)) } }) }
     if (editRewrite) AlertDialog(
         onDismissRequest = { editRewrite = false },
-        title = { Text(stringResource(R.string.nd_rule_title)) },
+        title = { Text(stringResource(I18nR.string.nd_rule_title)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedTextField(
                     rewriteName,
                     { rewriteName = it.take(253) },
-                    label = { Text(stringResource(R.string.net_dns_field_name)) },
+                    label = { Text(stringResource(I18nR.string.net_dns_field_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
                     rewriteContent,
                     { rewriteContent = it.take(253) },
-                    label = { Text(stringResource(R.string.net_dns_detail_address)) },
+                    label = { Text(stringResource(I18nR.string.net_dns_detail_address)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -437,16 +439,16 @@ fun NextDnsScreen() {
                     vm.addRewrite(rewriteName, rewriteContent)
                     editRewrite = false
                 },
-            ) { Text(stringResource(R.string.hc_save)) }
+            ) { Text(stringResource(I18nR.string.hc_save)) }
         },
         dismissButton = {
-            TextButton(onClick = { editRewrite = false }) { Text(stringResource(R.string.hc_cancel)) }
+            TextButton(onClick = { editRewrite = false }) { Text(stringResource(I18nR.string.hc_cancel)) }
         },
     )
     removeRewrite?.let { rewrite ->
         AlertDialog(
             onDismissRequest = { removeRewrite = null },
-            title = { Text(stringResource(R.string.hc_remove)) },
+            title = { Text(stringResource(I18nR.string.hc_remove)) },
             text = { Text("${rewrite.name} → ${rewrite.content}") },
             confirmButton = {
                 TextButton(
@@ -455,26 +457,26 @@ fun NextDnsScreen() {
                         vm.deleteRewrite(rewrite.id)
                         removeRewrite = null
                     },
-                ) { Text(stringResource(R.string.hc_remove)) }
+                ) { Text(stringResource(I18nR.string.hc_remove)) }
             },
             dismissButton = {
                 TextButton(onClick = { removeRewrite = null }) {
-                    Text(stringResource(R.string.hc_cancel))
+                    Text(stringResource(I18nR.string.hc_cancel))
                 }
             },
         )
     }
-    if (forget) AlertDialog(onDismissRequest = { forget = false }, title = { Text(stringResource(R.string.nd_disconnect)) }, text = { Text(state.profileId.orEmpty()) },
-        confirmButton = { TextButton(enabled = !state.loading, onClick = { vm.disconnect(); key = ""; settings = false; forget = false }) { Text(stringResource(R.string.hc_remove)) } }, dismissButton = { TextButton(onClick = { forget = false }) { Text(stringResource(R.string.hc_cancel)) } })
+    if (forget) AlertDialog(onDismissRequest = { forget = false }, title = { Text(stringResource(I18nR.string.nd_disconnect)) }, text = { Text(state.profileId.orEmpty()) },
+        confirmButton = { TextButton(enabled = !state.loading, onClick = { vm.disconnect(); key = ""; settings = false; forget = false }) { Text(stringResource(I18nR.string.hc_remove)) } }, dismissButton = { TextButton(onClick = { forget = false }) { Text(stringResource(I18nR.string.hc_cancel)) } })
 }
 
 private fun errorString(kind: NextDnsErrorKind): Int = when (kind) {
-    NextDnsErrorKind.AUTH -> R.string.nd_error_auth
-    NextDnsErrorKind.INVALID -> R.string.nd_error_invalid
-    NextDnsErrorKind.RATE_LIMIT -> R.string.nd_error_rate
-    NextDnsErrorKind.NETWORK -> R.string.nd_error_network
-    NextDnsErrorKind.API -> R.string.nd_error_api
-    NextDnsErrorKind.UNCONFIGURED -> R.string.nd_error_unconfigured
+    NextDnsErrorKind.AUTH -> I18nR.string.nd_error_auth
+    NextDnsErrorKind.INVALID -> I18nR.string.nd_error_invalid
+    NextDnsErrorKind.RATE_LIMIT -> I18nR.string.nd_error_rate
+    NextDnsErrorKind.NETWORK -> I18nR.string.nd_error_network
+    NextDnsErrorKind.API -> I18nR.string.nd_error_api
+    NextDnsErrorKind.UNCONFIGURED -> I18nR.string.nd_error_unconfigured
 }
 
 private val settingWordBoundaryRegex = Regex("([a-z0-9])([A-Z])")
@@ -486,10 +488,10 @@ private fun humanize(value: String): String =
 private fun analyticsMetricLabel(metric: NextDnsAnalyticsMetric): String = metric.id
 
 private fun settingsPageTitle(page: NextDnsSettingsPage): Int = when (page) {
-    NextDnsSettingsPage.SECURITY -> R.string.net_dns_group_malware
-    NextDnsSettingsPage.PRIVACY -> R.string.net_dns_tag_privacy
-    NextDnsSettingsPage.PARENTAL_CONTROL -> R.string.net_dns_group_family
-    NextDnsSettingsPage.GENERAL -> R.string.net_settings_title
+    NextDnsSettingsPage.SECURITY -> I18nR.string.net_dns_group_malware
+    NextDnsSettingsPage.PRIVACY -> I18nR.string.net_dns_tag_privacy
+    NextDnsSettingsPage.PARENTAL_CONTROL -> I18nR.string.net_dns_group_family
+    NextDnsSettingsPage.GENERAL -> I18nR.string.net_settings_title
 }
 
 @Composable
@@ -505,19 +507,19 @@ private fun EditDomainDialog(
     var editAllow by remember(allow) { mutableStateOf(allow) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.nd_rule_title)) },
+        title = { Text(stringResource(I18nR.string.nd_rule_title)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text("${stringResource(R.string.nd_profile)}: $profileId")
-                Text(stringResource(R.string.nd_intro))
-                OutlinedTextField(domain, { domain = it }, label = { Text(stringResource(R.string.nd_domain)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                Text("${stringResource(I18nR.string.nd_profile)}: $profileId")
+                Text(stringResource(I18nR.string.nd_intro))
+                OutlinedTextField(domain, { domain = it }, label = { Text(stringResource(I18nR.string.nd_domain)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(editAllow, onClick = { editAllow = true }, label = { Text(stringResource(R.string.nd_allow)) })
-                    FilterChip(!editAllow, onClick = { editAllow = false }, label = { Text(stringResource(R.string.nd_deny)) })
+                    FilterChip(editAllow, onClick = { editAllow = true }, label = { Text(stringResource(I18nR.string.nd_allow)) })
+                    FilterChip(!editAllow, onClick = { editAllow = false }, label = { Text(stringResource(I18nR.string.nd_deny)) })
                 }
             }
         },
-        confirmButton = { TextButton(enabled = !loading && domain.isNotBlank(), onClick = { onSave(editAllow, domain); onDismiss() }) { Text(stringResource(R.string.hc_save)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        confirmButton = { TextButton(enabled = !loading && domain.isNotBlank(), onClick = { onSave(editAllow, domain); onDismiss() }) { Text(stringResource(I18nR.string.hc_save)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }

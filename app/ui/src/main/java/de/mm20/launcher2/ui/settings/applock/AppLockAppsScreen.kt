@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.applock
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.search.GreekFold
 import androidx.compose.animation.AnimatedVisibility
@@ -64,7 +66,7 @@ fun AppLockAppsScreen() {
     val colorSurface = MaterialTheme.colorScheme.surfaceContainer
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_category_app_lock_apps),
+        title = stringResource(I18nR.string.preference_category_app_lock_apps),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         stickyHeader {
@@ -85,7 +87,7 @@ fun AppLockAppsScreen() {
                 inputField = {
                     SearchBarDefaults.InputField(
                         leadingIcon = {
-                            Icon(painterResource(R.drawable.search_24px), contentDescription = null)
+                            Icon(painterResource(BaseR.drawable.search_24px), contentDescription = null)
                         },
                         trailingIcon = {
                             if (searchQuery.isNotEmpty()) {
@@ -93,7 +95,7 @@ fun AppLockAppsScreen() {
                                     modifier = Modifier.offset(16.dp),
                                     onClick = { searchQuery = "" },
                                 ) {
-                                    Icon(painterResource(R.drawable.close_24px), null)
+                                    Icon(painterResource(BaseR.drawable.close_24px), null)
                                 }
                             }
                         },
@@ -102,7 +104,7 @@ fun AppLockAppsScreen() {
                         onExpandedChange = {},
                         query = searchQuery,
                         onQueryChange = { searchQuery = it },
-                        placeholder = { Text(stringResource(R.string.search_bar_placeholder)) },
+                        placeholder = { Text(stringResource(I18nR.string.search_bar_placeholder)) },
                     )
                 },
             ) {}
@@ -125,7 +127,7 @@ fun AppLockAppsScreen() {
                 )
                 AnimatedVisibility(locked) {
                     ListPreference(
-                        title = stringResource(R.string.preference_app_lock_grace_period_override),
+                        title = stringResource(I18nR.string.preference_app_lock_grace_period_override),
                         items = gracePeriodOverrideOptions,
                         value = gracePeriodOverrides[packageName],
                         onValueChanged = { viewModel.setGracePeriodOverride(packageName, it) },

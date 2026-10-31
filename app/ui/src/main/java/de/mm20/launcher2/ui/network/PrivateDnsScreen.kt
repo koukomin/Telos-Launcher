@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -115,15 +117,15 @@ fun PrivateDnsScreen() {
     }
 
     PreferenceScreen(
-        title = { Text(stringResource(R.string.net_dns_system)) },
+        title = { Text(stringResource(I18nR.string.net_dns_system)) },
         topBarActions = {
             androidx.compose.material3.IconButton(
                 enabled = !state.loading,
                 onClick = vm::refresh,
             ) {
                 androidx.compose.material3.Icon(
-                    painterResource(R.drawable.restart_alt_24px),
-                    contentDescription = stringResource(R.string.hc_refresh),
+                    painterResource(BaseR.drawable.restart_alt_24px),
+                    contentDescription = stringResource(I18nR.string.hc_refresh),
                 )
             }
         },
@@ -133,10 +135,10 @@ fun PrivateDnsScreen() {
                 Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                Text(stringResource(R.string.net_dns_system), style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(I18nR.string.net_dns_system), style = MaterialTheme.typography.titleMedium)
                 state.current?.let { current ->
                     Text(
-                        "${stringResource(R.string.net_dns_detail_provider)}: ${current.hostname ?: modeLabel(current.mode)}",
+                        "${stringResource(I18nR.string.net_dns_detail_provider)}: ${current.hostname ?: modeLabel(current.mode)}",
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
@@ -157,7 +159,7 @@ fun PrivateDnsScreen() {
                     OutlinedTextField(
                         value = hostname,
                         onValueChange = { hostname = it.take(253) },
-                        label = { Text(stringResource(R.string.net_dns_field_dot)) },
+                        label = { Text(stringResource(I18nR.string.net_dns_field_dot)) },
                         singleLine = true,
                         enabled = !state.loading,
                         modifier = Modifier.fillMaxWidth(),
@@ -166,28 +168,28 @@ fun PrivateDnsScreen() {
                         enabled = !state.loading && hostname.isNotBlank(),
                         onClick = { vm.setProvider(hostname) },
                     ) {
-                        Text(stringResource(R.string.net_dns_save))
+                        Text(stringResource(I18nR.string.net_dns_save))
                     }
                 }
                 if (state.error == PrivateDnsError.PERMISSION_REQUIRED ||
                     state.error == PrivateDnsError.SHIZUKU_UNAVAILABLE
                 ) {
                     Text(
-                        stringResource(R.string.net_hub_state_permission),
+                        stringResource(I18nR.string.net_hub_state_permission),
                         color = MaterialTheme.colorScheme.error,
                     )
                     TextButton(enabled = !state.loading, onClick = vm::requestPermission) {
-                        Text(stringResource(R.string.freeze_permission_not_granted))
+                        Text(stringResource(I18nR.string.freeze_permission_not_granted))
                     }
                 } else if (state.permissionDenied) {
                     Text(
-                        stringResource(R.string.freeze_permission_not_granted),
+                        stringResource(I18nR.string.freeze_permission_not_granted),
                         color = MaterialTheme.colorScheme.error,
                     )
                 } else {
                     state.error?.let {
                         Text(
-                            stringResource(R.string.net_dns_test_fail, it.name),
+                            stringResource(I18nR.string.net_dns_test_fail, it.name),
                             color = MaterialTheme.colorScheme.error,
                         )
                     }
@@ -196,10 +198,10 @@ fun PrivateDnsScreen() {
                     androidx.compose.material3.LinearProgressIndicator(Modifier.fillMaxWidth())
                 }
                 androidx.compose.material3.HorizontalDivider(Modifier.padding(vertical = 8.dp))
-                Text(stringResource(R.string.net_wifi_dns_automation), style = MaterialTheme.typography.titleLarge)
+                Text(stringResource(I18nR.string.net_wifi_dns_automation), style = MaterialTheme.typography.titleLarge)
                 SwitchPreference(
-                    title = stringResource(R.string.net_wifi_dns_automation),
-                    summary = stringResource(R.string.net_wifi_dns_automation_summary),
+                    title = stringResource(I18nR.string.net_wifi_dns_automation),
+                    summary = stringResource(I18nR.string.net_wifi_dns_automation_summary),
                     value = config.wifiDnsAutomationEnabled,
                     enabled = !state.loading &&
                         (config.wifiDnsAutomationEnabled || config.wifiDnsRules.isNotEmpty()),
@@ -236,7 +238,7 @@ fun PrivateDnsScreen() {
                 OutlinedTextField(
                     value = ruleSsid,
                     onValueChange = { ruleSsid = it.take(32); ruleError = false },
-                    label = { Text(stringResource(R.string.context_profile_trigger_wifi_ssid)) },
+                    label = { Text(stringResource(I18nR.string.context_profile_trigger_wifi_ssid)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -244,7 +246,7 @@ fun PrivateDnsScreen() {
                     OutlinedTextField(
                         value = ruleHostname,
                         onValueChange = { ruleHostname = it.take(253); ruleError = false },
-                        label = { Text(stringResource(R.string.net_dns_field_dot)) },
+                        label = { Text(stringResource(I18nR.string.net_dns_field_dot)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
@@ -278,17 +280,17 @@ fun PrivateDnsScreen() {
                         }
                     },
                 ) {
-                    Text(stringResource(R.string.hc_add))
+                    Text(stringResource(I18nR.string.hc_add))
                 }
                 if (ruleError) {
                     Text(
-                        stringResource(R.string.net_wifi_dns_invalid_rule),
+                        stringResource(I18nR.string.net_wifi_dns_invalid_rule),
                         color = MaterialTheme.colorScheme.error,
                     )
                 }
                 if (automationPermissionError) {
                     Text(
-                        stringResource(R.string.net_wifi_dns_permission_error),
+                        stringResource(I18nR.string.net_wifi_dns_permission_error),
                         color = MaterialTheme.colorScheme.error,
                     )
                 }
@@ -313,7 +315,7 @@ fun PrivateDnsScreen() {
                                 }
                             },
                         ) {
-                            Text(stringResource(R.string.hc_remove))
+                            Text(stringResource(I18nR.string.hc_remove))
                         }
                     }
                 }
@@ -325,9 +327,9 @@ fun PrivateDnsScreen() {
 @Composable
 private fun modeLabel(mode: PrivateDnsMode): String = stringResource(
     when (mode) {
-        PrivateDnsMode.AUTOMATIC -> R.string.desktop_mode_orientation_auto
-        PrivateDnsMode.OFF -> R.string.hc_off
-        PrivateDnsMode.PROVIDER -> R.string.net_dns_detail_provider
+        PrivateDnsMode.AUTOMATIC -> I18nR.string.desktop_mode_orientation_auto
+        PrivateDnsMode.OFF -> I18nR.string.hc_off
+        PrivateDnsMode.PROVIDER -> I18nR.string.net_dns_detail_provider
     },
 )
 

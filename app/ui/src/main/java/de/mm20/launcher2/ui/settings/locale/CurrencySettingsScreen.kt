@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.locale
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.icu.util.Currency
 import android.icu.util.ULocale
@@ -91,7 +93,7 @@ fun CurrencySettingsScreen() {
 
     DragAndDropPreferenceScreen(
         title = {
-            Text(stringResource(R.string.preference_currencies))
+            Text(stringResource(I18nR.string.preference_currencies))
         },
         lazyColumnState = dragAndDropListState,
     ) {
@@ -104,7 +106,7 @@ fun CurrencySettingsScreen() {
             ) {
                 PreferenceCategory {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_use_system_default),
+                        title = stringResource(I18nR.string.preference_use_system_default),
                         value = currencies?.isEmpty() == true,
                         onValueChanged = {
                             if (it) {
@@ -123,7 +125,7 @@ fun CurrencySettingsScreen() {
                     PreferenceCategory {
                         Preference(
                             title = defaultCurrency.displayName,
-                            icon = R.drawable.euro_24px,
+                            icon = BaseR.drawable.euro_24px,
                             enabled = false
                         )
                     }
@@ -138,7 +140,7 @@ fun CurrencySettingsScreen() {
                         horizontalArrangement = Arrangement.Center,
                     ) {
                         Icon(
-                            painterResource(R.drawable.info_20px), null,
+                            painterResource(BaseR.drawable.info_20px), null,
                             modifier = Modifier
                                 .padding(end = 12.dp)
                                 .size(16.dp),
@@ -146,7 +148,7 @@ fun CurrencySettingsScreen() {
                         )
                         Text(
                             modifier = Modifier,
-                            text = stringResource(R.string.hint_drag_and_drop_reorder),
+                            text = stringResource(I18nR.string.hint_drag_and_drop_reorder),
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.secondary
                         )
@@ -192,8 +194,8 @@ fun CurrencySettingsScreen() {
                                         onClick = { showMenu = true }
                                     ) {
                                         Icon(
-                                            painterResource(R.drawable.more_vert_24px),
-                                            stringResource(R.string.action_more_actions),
+                                            painterResource(BaseR.drawable.more_vert_24px),
+                                            stringResource(I18nR.string.action_more_actions),
                                         )
                                     }
                                     DropdownMenuPopup(
@@ -204,9 +206,9 @@ fun CurrencySettingsScreen() {
                                             shapes = MenuDefaults.groupShapes()
                                         ) {
                                             DropdownMenuItem(
-                                                text = { Text(stringResource(R.string.menu_remove)) },
+                                                text = { Text(stringResource(I18nR.string.menu_remove)) },
                                                 leadingIcon = {
-                                                    Icon(painterResource(R.drawable.delete_24px), null)
+                                                    Icon(painterResource(BaseR.drawable.delete_24px), null)
                                                 },
                                                 onClick = {
                                                     val newCurrencies = currencies!!.toMutableList()
@@ -233,13 +235,13 @@ fun CurrencySettingsScreen() {
                             showModal = true
                         }) {
                         Icon(
-                            painterResource(R.drawable.add_20px),
+                            painterResource(BaseR.drawable.add_20px),
                             null,
                             modifier = Modifier
                                 .padding(end = ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize)
                         )
-                        Text(stringResource(R.string.preference_add_currency))
+                        Text(stringResource(I18nR.string.preference_add_currency))
                     }
 
                     CurrencyPickerSheet(
@@ -263,15 +265,15 @@ private fun getCurrencySymbol(currencyCode: String): Int? {
     return when (currencyCode) {
         "AUD", "BBD", "BMD", "BND", "BSD", "BZD", "CAD", "FJD", "GYD", "HKD", "JMD", "KID", "KYD",
         "LRD", "NAD", "NZD", "SBD", "SGD", "SRD", "TTD", "TVD", "TWD", "USD", "XCD", "ARS", "CLP",
-        "COP", "CUP", "DOP", "MXN", "UYU" -> R.drawable.attach_money_24px
+        "COP", "CUP", "DOP", "MXN", "UYU" -> BaseR.drawable.attach_money_24px
 
-        "EUR" -> R.drawable.euro_24px
-        "EGP", "FKP", "GBP", "GIP", "SHP", "SDG", "SYP" -> R.drawable.currency_pound_24px
-        "JPY" -> R.drawable.currency_yen_24px
-        "CNY" -> R.drawable.currency_yuan_24px
-        "INR" -> R.drawable.currency_rupee_24px
-        "RUB" -> R.drawable.currency_ruble_24px
-        else -> R.drawable.toll_24px
+        "EUR" -> BaseR.drawable.euro_24px
+        "EGP", "FKP", "GBP", "GIP", "SHP", "SDG", "SYP" -> BaseR.drawable.currency_pound_24px
+        "JPY" -> BaseR.drawable.currency_yen_24px
+        "CNY" -> BaseR.drawable.currency_yuan_24px
+        "INR" -> BaseR.drawable.currency_rupee_24px
+        "RUB" -> BaseR.drawable.currency_ruble_24px
+        else -> BaseR.drawable.toll_24px
     }
 }
 

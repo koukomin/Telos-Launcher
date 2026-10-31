@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files.remote
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -158,34 +159,34 @@ internal fun RemotePreviewSettings() {
 
     Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Text(stringResource(R.string.au23_rp_title), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(I18nR.string.au23_rp_title), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
             Switch(checked = enabled, onCheckedChange = { enabled = it; RemotePreviews.setEnabled(context, it) })
         }
-        Text(stringResource(R.string.au23_rp_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(stringResource(I18nR.string.au23_rp_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (enabled) {
-            Text(stringResource(R.string.au23_rp_max_size, formatSize(limit)))
+            Text(stringResource(I18nR.string.au23_rp_max_size, formatSize(limit)))
             Slider(
                 value = index, onValueChange = { index = it.toInt().toFloat() },
                 onValueChangeFinished = { RemotePreviews.setLimit(context, limit) },
                 valueRange = 0f..(RemotePreviews.sizeSteps.size - 1).toFloat(), steps = RemotePreviews.sizeSteps.size - 2,
             )
-            Text(stringResource(R.string.au23_rp_max_size_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(I18nR.string.au23_rp_max_size_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.au23_rp_wifi_only))
-                    Text(stringResource(R.string.au23_rp_wifi_only_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(I18nR.string.au23_rp_wifi_only))
+                    Text(stringResource(I18nR.string.au23_rp_wifi_only_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 Switch(checked = wifi, onCheckedChange = { wifi = it; RemotePreviews.setWifiOnly(context, it) })
             }
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Text(stringResource(R.string.au23_rp_cache_size, formatSize(cache)), Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(I18nR.string.au23_rp_cache_size, formatSize(cache)), Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
             OutlinedButton(onClick = {
                 scope.launch {
                     withContext(Dispatchers.IO) { RemotePreviews.clear(context) }
                     cache = withContext(Dispatchers.IO) { RemotePreviews.cacheSize(context) }
                 }
-            }) { Text(stringResource(R.string.au23_rp_clear)) }
+            }) { Text(stringResource(I18nR.string.au23_rp_clear)) }
         }
     }
 }

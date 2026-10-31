@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.tools
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.Manifest
 import android.content.Context
@@ -85,7 +87,7 @@ fun MagnifierScreen() {
     ) { granted ->
         hasPermission = granted
         if (!granted) {
-            Toast.makeText(context, context.getString(R.string.virtual_magnifier_permission), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(I18nR.string.virtual_magnifier_permission), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -109,10 +111,10 @@ fun MagnifierScreen() {
                     modifier = Modifier.padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(stringResource(R.string.virtual_magnifier_permission), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    Text(stringResource(I18nR.string.virtual_magnifier_permission), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(16.dp))
                     Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
-                        Text(stringResource(R.string.hc_allow))
+                        Text(stringResource(I18nR.string.hc_allow))
                     }
                 }
             }
@@ -274,8 +276,8 @@ fun MagnifierScreen() {
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp)
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.search_24px),
-                        contentDescription = stringResource(R.string.au_video_zoom),
+                        painter = painterResource(BaseR.drawable.search_24px),
+                        contentDescription = stringResource(I18nR.string.au_video_zoom),
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(20.dp)
                     )
@@ -331,7 +333,7 @@ fun MagnifierScreen() {
                             shape = RoundedCornerShape(20.dp)
                         ) {
                             Icon(
-                                painter = painterResource(R.drawable.palette_24px),
+                                painter = painterResource(BaseR.drawable.palette_24px),
                                 contentDescription = null,
                                 modifier = Modifier.size(18.dp)
                             )
@@ -374,8 +376,8 @@ fun MagnifierScreen() {
                         )
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.light_mode_24px),
-                            contentDescription = stringResource(R.string.telos_flashlight_app_label),
+                            painter = painterResource(BaseR.drawable.light_mode_24px),
+                            contentDescription = stringResource(I18nR.string.telos_flashlight_app_label),
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(Modifier.width(6.dp))
@@ -403,7 +405,7 @@ fun MagnifierScreen() {
                         )
                     ) {
                         Icon(
-                            painter = painterResource(if (isFrozen) R.drawable.play_arrow_24px else R.drawable.pause_24px),
+                            painter = painterResource(if (isFrozen) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px),
                             contentDescription = null,
                             modifier = Modifier.size(18.dp)
                         )

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.calendar
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import android.icu.text.DateFormat
@@ -86,8 +88,8 @@ fun CalendarWidget(
         ) {
             IconButton(onClick = { viewModel.previousDay() }) {
                 Icon(
-                    painter = painterResource(R.drawable.chevron_backward_24px),
-                    contentDescription = stringResource(R.string.calendar_widget_previous_day)
+                    painter = painterResource(BaseR.drawable.chevron_backward_24px),
+                    contentDescription = stringResource(I18nR.string.calendar_widget_previous_day)
                 )
             }
             Box(
@@ -104,7 +106,7 @@ fun CalendarWidget(
                         overflow = TextOverflow.Ellipsis
                     )
                     Icon(
-                        painterResource(R.drawable.arrow_drop_down_24px),
+                        painterResource(BaseR.drawable.arrow_drop_down_24px),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurface,
                     )
@@ -125,7 +127,7 @@ fun CalendarWidget(
                                 },
                                 selectedLeadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.check_24px),
+                                        painterResource(BaseR.drawable.check_24px),
                                         null,
                                     )
                                 },
@@ -139,20 +141,20 @@ fun CalendarWidget(
             }
             IconButton(onClick = { viewModel.nextDay() }) {
                 Icon(
-                    painter = painterResource(R.drawable.chevron_forward_24px),
-                    contentDescription = stringResource(R.string.calendar_widget_next_day)
+                    painter = painterResource(BaseR.drawable.chevron_forward_24px),
+                    contentDescription = stringResource(I18nR.string.calendar_widget_next_day)
                 )
             }
             IconButton(onClick = { viewModel.createEvent(context) }) {
                 Icon(
-                    painter = painterResource(R.drawable.add_24px),
-                    contentDescription = stringResource(R.string.calendar_widget_create_event)
+                    painter = painterResource(BaseR.drawable.add_24px),
+                    contentDescription = stringResource(I18nR.string.calendar_widget_create_event)
                 )
             }
             IconButton(onClick = { viewModel.openCalendarApp(context) }) {
                 Icon(
-                    painter = painterResource(R.drawable.open_in_new_24px),
-                    contentDescription = stringResource(R.string.calendar_widget_open_calendar)
+                    painter = painterResource(BaseR.drawable.open_in_new_24px),
+                    contentDescription = stringResource(I18nR.string.calendar_widget_open_calendar)
                 )
             }
         }
@@ -168,7 +170,7 @@ fun CalendarWidget(
                         .fillMaxWidth()
                         .padding(4.dp)
                         .padding(horizontal = 12.dp),
-                    text = stringResource(R.string.missing_permission_calendar_widget),
+                    text = stringResource(I18nR.string.missing_permission_calendar_widget),
                     onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) }
                 )
             }
@@ -221,7 +223,7 @@ fun CalendarWidget(
                         .padding(bottom = 12.dp)
                 ) {
                     if (events.isEmpty() && hasPermission == true) {
-                        Info(text = stringResource(R.string.calendar_widget_no_events))
+                        Info(text = stringResource(I18nR.string.calendar_widget_no_events))
                     }
                     SearchResultList(
                         events,
@@ -231,7 +233,7 @@ fun CalendarWidget(
                     if (runningEvents > 0) {
                         Info(
                             text = pluralStringResource(
-                                R.plurals.calendar_widget_running_events,
+                                I18nR.plurals.calendar_widget_running_events,
                                 runningEvents,
                                 runningEvents
                             ),
@@ -245,7 +247,7 @@ fun CalendarWidget(
                     if (runningTasks > 0) {
                         Info(
                             text = pluralStringResource(
-                                R.plurals.calendar_widget_running_tasks,
+                                I18nR.plurals.calendar_widget_running_tasks,
                                 runningTasks,
                                 runningTasks
                             ),
@@ -257,7 +259,7 @@ fun CalendarWidget(
                     }
                     if (nextEvents.isNotEmpty()) {
                         Text(
-                            stringResource(R.string.calendar_widget_next_events),
+                            stringResource(I18nR.string.calendar_widget_next_events),
                             modifier = Modifier.padding(
                                 start = 4.dp,
                                 end = 4.dp,
@@ -283,7 +285,7 @@ fun CalendarWidget(
                         .padding(bottom = 12.dp)
                 ) {
                     Text(
-                        stringResource(R.string.calendar_widget_pinned_events),
+                        stringResource(I18nR.string.calendar_widget_pinned_events),
                         modifier = Modifier.padding(
                             start = 4.dp,
                             end = 4.dp,
@@ -326,8 +328,8 @@ private fun Info(
 private fun formatDay(context: Context, day: LocalDate, calendar: Calendar): String {
     val today = LocalDate.now()
     return when {
-        today == day -> context.getString(R.string.date_today)
-        today.plusDays(1) == day -> context.getString(R.string.date_tomorrow)
+        today == day -> context.getString(I18nR.string.date_today)
+        today.plusDays(1) == day -> context.getString(I18nR.string.date_tomorrow)
         else -> DateFormat.getInstanceForSkeleton(
             calendar,
             "E MMMM d",

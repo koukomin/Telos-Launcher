@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.voice
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.search.GreekFold
 import android.Manifest
@@ -261,7 +263,7 @@ fun VoiceRecorderScreen() {
                 ShareActions.shareFiles(context, readableFiles)
             }
             if (!shared) {
-                Toast.makeText(context, R.string.voice_share_failed, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18nR.string.voice_share_failed, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -278,7 +280,7 @@ fun VoiceRecorderScreen() {
             player.stop()
             VoiceRecorderService.startRecording(context)
         } else {
-            Toast.makeText(context, R.string.voice_permission_needed, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, I18nR.string.voice_permission_needed, Toast.LENGTH_LONG).show()
         }
     }
     fun startRecording() {
@@ -295,7 +297,7 @@ fun VoiceRecorderScreen() {
     }
     LaunchedEffect(recorder.error) {
         if (recorder.error) {
-            Toast.makeText(context, R.string.voice_start_failed, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, I18nR.string.voice_start_failed, Toast.LENGTH_LONG).show()
             VoiceRecorderEngine.clearError()
         }
     }
@@ -327,12 +329,12 @@ fun VoiceRecorderScreen() {
                         TelosSearchTopBar(
                             value = query,
                             onValueChange = { query = it },
-                            placeholder = stringResource(R.string.tsp_search_recordings),
+                            placeholder = stringResource(I18nR.string.tsp_search_recordings),
                             modifier = Modifier.weight(1f).padding(start = 8.dp),
                             autoFocus = true,
                         )
                         IconButton(onClick = { searching = false; query = "" }) {
-                            Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.close))
+                            Icon(painterResource(BaseR.drawable.close_24px), contentDescription = stringResource(I18nR.string.close))
                         }
                     } else {
                         var showFontDialog by remember { mutableStateOf(false) }
@@ -345,18 +347,18 @@ fun VoiceRecorderScreen() {
                         }
                         Spacer(Modifier.weight(1f))
                         IconButton(onClick = { searching = true }) {
-                            Icon(painterResource(R.drawable.search_24px), contentDescription = stringResource(R.string.voice_search))
+                            Icon(painterResource(BaseR.drawable.search_24px), contentDescription = stringResource(I18nR.string.voice_search))
                         }
                         IconButton(onClick = { showFontDialog = true }) {
-                            Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
+                            Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
                         }
                         Box {
                             IconButton(onClick = { menu = true }) {
-                                Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.voice_more))
+                                Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.voice_more))
                             }
                             DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                                 DropdownMenuItem(
-                                    text = { Text(stringResource(if (speaker) R.string.voice_receiver_mode else R.string.voice_speaker_mode)) },
+                                    text = { Text(stringResource(if (speaker) I18nR.string.voice_receiver_mode else I18nR.string.voice_speaker_mode)) },
                                     onClick = {
                                         menu = false
                                         speaker = !speaker
@@ -365,7 +367,7 @@ fun VoiceRecorderScreen() {
                                     },
                                 )
                                 DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.voice_settings)) },
+                                    text = { Text(stringResource(I18nR.string.voice_settings)) },
                                     onClick = { menu = false; backStack.add(VoiceSettingsRoute) },
                                 )
                             }
@@ -373,7 +375,7 @@ fun VoiceRecorderScreen() {
                     }
                 }
                 Text(
-                    stringResource(R.string.voice_title),
+                    stringResource(I18nR.string.voice_title),
                     style = MaterialTheme.typography.displaySmall,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
@@ -382,29 +384,29 @@ fun VoiceRecorderScreen() {
                     FilterChip(
                         selected = tab == 0,
                         onClick = { tab = 0 },
-                        label = { Text(stringResource(R.string.voice_all_recordings)) },
+                        label = { Text(stringResource(I18nR.string.voice_all_recordings)) },
                     )
                     FilterChip(
                         selected = tab == 1,
                         onClick = { tab = 1 },
                         leadingIcon = {
-                            Icon(painterResource(R.drawable.ic_glyph_voice_recorder), contentDescription = null, modifier = Modifier.size(18.dp))
+                            Icon(painterResource(BaseR.drawable.ic_glyph_voice_recorder), contentDescription = null, modifier = Modifier.size(18.dp))
                         },
-                        label = { Text(stringResource(R.string.voice_voice_recordings)) },
+                        label = { Text(stringResource(I18nR.string.voice_voice_recordings)) },
                     )
                     FilterChip(
                         selected = tab == 2,
                         onClick = { tab = 2 },
                         leadingIcon = {
-                            Icon(painterResource(R.drawable.mic_24px), contentDescription = null, modifier = Modifier.size(18.dp))
+                            Icon(painterResource(BaseR.drawable.mic_24px), contentDescription = null, modifier = Modifier.size(18.dp))
                         },
-                        label = { Text(stringResource(R.string.voice_call_recordings)) },
+                        label = { Text(stringResource(I18nR.string.voice_call_recordings)) },
                     )
                 }
                 Box(Modifier.then(if (scrollPage) Modifier.height(listHeight) else Modifier.weight(1f)).fillMaxWidth()) {
                     de.mm20.launcher2.ui.component.AuthGate(
                         enabled = tab == 2 && lockCalls,
-                        title = stringResource(R.string.auth_gate_recordings),
+                        title = stringResource(I18nR.string.auth_gate_recordings),
                         unlocked = recordingsUnlocked,
                         onUnlocked = { de.mm20.launcher2.comms.privacy.PrivacySession.unlockRecordings() },
                         onCancelled = { tab = 0 },
@@ -452,15 +454,15 @@ fun VoiceRecorderScreen() {
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            stringResource(R.string.au_viewer_items, selectedForShare.size),
+                            stringResource(I18nR.string.au_viewer_items, selectedForShare.size),
                             modifier = Modifier.weight(1f).padding(start = 8.dp),
                             color = MaterialTheme.colorScheme.onSurface,
                         )
                         IconButton(onClick = ::shareSelected) {
-                            Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.hc_share))
+                            Icon(painterResource(BaseR.drawable.share_24px), contentDescription = stringResource(I18nR.string.hc_share))
                         }
                         IconButton(onClick = { selectedForShare = emptySet() }) {
-                            Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_cancel))
+                            Icon(painterResource(BaseR.drawable.close_24px), contentDescription = stringResource(I18nR.string.hc_cancel))
                         }
                     }
                 }
@@ -476,7 +478,7 @@ fun VoiceRecorderScreen() {
         var name by remember(item) { mutableStateOf(item.title) }
         AlertDialog(
             onDismissRequest = { renaming = null },
-            title = { Text(stringResource(R.string.voice_rename)) },
+            title = { Text(stringResource(I18nR.string.voice_rename)) },
             text = { OutlinedTextField(value = name, onValueChange = { name = it }, singleLine = true) },
             confirmButton = {
                 TextButton(onClick = {
@@ -485,12 +487,12 @@ fun VoiceRecorderScreen() {
                         player.stop()
                         reload++
                     } else {
-                        Toast.makeText(context, R.string.voice_rename_failed, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18nR.string.voice_rename_failed, Toast.LENGTH_SHORT).show()
                     }
                     renaming = null
-                }) { Text(stringResource(R.string.voice_save)) }
+                }) { Text(stringResource(I18nR.string.voice_save)) }
             },
-            dismissButton = { TextButton(onClick = { renaming = null }) { Text(stringResource(R.string.voice_cancel)) } },
+            dismissButton = { TextButton(onClick = { renaming = null }) { Text(stringResource(I18nR.string.voice_cancel)) } },
         )
     }
     deleting?.let { item ->
@@ -534,14 +536,14 @@ private fun EmptyState(callsOnly: Boolean = false) {
                 }
             }
             Icon(
-                painterResource(R.drawable.ic_glyph_voice_recorder),
+                painterResource(BaseR.drawable.ic_glyph_voice_recorder),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.85f),
                 modifier = Modifier.size(56.dp),
             )
         }
         Text(
-            stringResource(if (callsOnly) R.string.voice_no_call_recordings else R.string.voice_no_recordings),
+            stringResource(if (callsOnly) I18nR.string.voice_no_call_recordings else I18nR.string.voice_no_recordings),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(top = 16.dp),
         )
@@ -557,7 +559,7 @@ private fun RecordButton(onClick: () -> Unit) {
             .shadow(20.dp, CircleShape, ambientColor = red, spotColor = red)
             .clip(CircleShape)
             .background(Brush.verticalGradient(listOf(Color(0xFFFF7A6E), red)))
-            .clickable(onClickLabel = stringResource(R.string.au_capture_record), onClick = onClick),
+            .clickable(onClickLabel = stringResource(I18nR.string.au_capture_record), onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Box(Modifier.size(24.dp).clip(CircleShape).background(Color.White))
@@ -613,19 +615,19 @@ private fun RecordingRow(
             if (selected) {
                 IconButton(onClick = onClick) {
                     Icon(
-                        painterResource(if (player.playing) R.drawable.ic_voice_pause else R.drawable.ic_voice_play),
-                        contentDescription = stringResource(if (player.playing) R.string.voice_pause else R.string.voice_play),
+                        painterResource(if (player.playing) BaseR.drawable.ic_voice_pause else BaseR.drawable.ic_voice_play),
+                        contentDescription = stringResource(if (player.playing) I18nR.string.voice_pause else I18nR.string.voice_play),
                     )
                 }
             }
             Box {
                 IconButton(onClick = { menu = true }) {
-                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.voice_more))
+                    Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.voice_more))
                 }
                 DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                    if (!item.isCall) DropdownMenuItem(text = { Text(stringResource(R.string.voice_rename)) }, onClick = { menu = false; onRename() })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.voice_share)) }, onClick = { menu = false; onShare() })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.voice_delete)) }, onClick = { menu = false; onDelete() })
+                    if (!item.isCall) DropdownMenuItem(text = { Text(stringResource(I18nR.string.voice_rename)) }, onClick = { menu = false; onRename() })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.voice_share)) }, onClick = { menu = false; onShare() })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.voice_delete)) }, onClick = { menu = false; onDelete() })
                 }
             }
         }
@@ -650,7 +652,7 @@ private suspend fun shareRecording(context: Context, item: RecordingItem) {
         ShareActions.shareFile(context, readable, item.mime, item.file.name)
     }
     if (!shared) {
-        Toast.makeText(context, R.string.voice_share_failed, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, I18nR.string.voice_share_failed, Toast.LENGTH_SHORT).show()
     }
 }
 
@@ -660,7 +662,7 @@ private fun RecordingPage(state: VoiceRecorderState, onPauseResume: () -> Unit, 
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(Modifier.weight(1f))
         Text(
-            stringResource(if (paused) R.string.voice_notification_paused else R.string.voice_notification_recording),
+            stringResource(if (paused) I18nR.string.voice_notification_paused else I18nR.string.voice_notification_recording),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -669,19 +671,19 @@ private fun RecordingPage(state: VoiceRecorderState, onPauseResume: () -> Unit, 
         Spacer(Modifier.weight(1f))
         Row(Modifier.fillMaxWidth().padding(bottom = 24.dp), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onDiscard, modifier = Modifier.size(56.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
-                Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.voice_discard))
+                Icon(painterResource(BaseR.drawable.delete_24px), contentDescription = stringResource(I18nR.string.voice_discard))
             }
             Box(
                 Modifier.size(80.dp).clip(CircleShape).background(Brush.verticalGradient(listOf(Color(0xFFFF7A6E), Color(0xFFE53935))))
-                    .clickable(onClickLabel = stringResource(R.string.voice_stop), onClick = onStop),
+                    .clickable(onClickLabel = stringResource(I18nR.string.voice_stop), onClick = onStop),
                 contentAlignment = Alignment.Center,
             ) {
                 Box(Modifier.size(28.dp).clip(RoundedCornerShape(6.dp)).background(Color.White))
             }
             IconButton(onClick = onPauseResume, modifier = Modifier.size(56.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
                 Icon(
-                    painterResource(if (paused) R.drawable.ic_voice_play else R.drawable.ic_voice_pause),
-                    contentDescription = stringResource(if (paused) R.string.voice_resume else R.string.voice_pause),
+                    painterResource(if (paused) BaseR.drawable.ic_voice_play else BaseR.drawable.ic_voice_pause),
+                    contentDescription = stringResource(if (paused) I18nR.string.voice_resume else I18nR.string.voice_pause),
                 )
             }
         }
@@ -719,11 +721,11 @@ fun VoiceSettingsScreen() {
     val lockCalls by comms.lockCallRecordings.collectAsStateWithLifecycle(true)
     val hideCallFromMedia by comms.hideCallRecordingsFromMedia.collectAsStateWithLifecycle(false)
 
-    PreferenceScreen(title = stringResource(R.string.voice_settings)) {
+    PreferenceScreen(title = stringResource(I18nR.string.voice_settings)) {
         item {
-            PreferenceCategory(title = stringResource(R.string.voice_settings_sound)) {
+            PreferenceCategory(title = stringResource(I18nR.string.voice_settings_sound)) {
                 ListPreference(
-                    title = stringResource(R.string.voice_format),
+                    title = stringResource(I18nR.string.voice_format),
                     items = VoiceFormat.entries.filter { it.available }.map {
                         ListPreferenceItem(if (it == VoiceFormat.Aac) "AAC (.m4a)" else "Opus (.ogg)", it)
                     },
@@ -731,20 +733,20 @@ fun VoiceSettingsScreen() {
                     onValueChanged = { format = it; settings.format = it },
                 )
                 ListPreference(
-                    title = stringResource(R.string.voice_mode),
+                    title = stringResource(I18nR.string.voice_mode),
                     items = listOf(
-                        ListPreferenceItem(stringResource(R.string.voice_mode_standard), VoiceMode.Standard),
-                        ListPreferenceItem(stringResource(R.string.voice_mode_voice), VoiceMode.Voice),
+                        ListPreferenceItem(stringResource(I18nR.string.voice_mode_standard), VoiceMode.Standard),
+                        ListPreferenceItem(stringResource(I18nR.string.voice_mode_voice), VoiceMode.Voice),
                     ),
                     value = mode,
                     onValueChanged = { mode = it; settings.mode = it },
                 )
                 ListPreference(
-                    title = stringResource(R.string.voice_quality),
+                    title = stringResource(I18nR.string.voice_quality),
                     items = listOf(
-                        ListPreferenceItem(stringResource(R.string.voice_quality_compact), RecordingQuality.COMPACT),
-                        ListPreferenceItem(stringResource(R.string.voice_quality_balanced), RecordingQuality.BALANCED),
-                        ListPreferenceItem(stringResource(R.string.voice_quality_high), RecordingQuality.HIGH),
+                        ListPreferenceItem(stringResource(I18nR.string.voice_quality_compact), RecordingQuality.COMPACT),
+                        ListPreferenceItem(stringResource(I18nR.string.voice_quality_balanced), RecordingQuality.BALANCED),
+                        ListPreferenceItem(stringResource(I18nR.string.voice_quality_high), RecordingQuality.HIGH),
                     ),
                     value = quality,
                     onValueChanged = { quality = it; settings.quality = it },
@@ -752,20 +754,20 @@ fun VoiceSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.voice_settings_playback)) {
+            PreferenceCategory(title = stringResource(I18nR.string.voice_settings_playback)) {
                 SwitchPreference(
-                    title = stringResource(R.string.voice_speaker),
-                    summary = stringResource(R.string.voice_speaker_summary),
+                    title = stringResource(I18nR.string.voice_speaker),
+                    summary = stringResource(I18nR.string.voice_speaker_summary),
                     value = speaker,
                     onValueChanged = { speaker = it; settings.speaker = it },
                 )
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.voice_settings_privacy)) {
+            PreferenceCategory(title = stringResource(I18nR.string.voice_settings_privacy)) {
                 SwitchPreference(
-                    title = stringResource(R.string.lock_call_recordings),
-                    summary = stringResource(R.string.lock_call_recordings_summary),
+                    title = stringResource(I18nR.string.lock_call_recordings),
+                    summary = stringResource(I18nR.string.lock_call_recordings_summary),
                     value = lockCalls,
                     onValueChanged = {
                         comms.setLockCallRecordings(it)
@@ -774,8 +776,8 @@ fun VoiceSettingsScreen() {
                     },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.voice_hide_from_media),
-                    summary = stringResource(R.string.voice_hide_from_media_summary),
+                    title = stringResource(I18nR.string.voice_hide_from_media),
+                    summary = stringResource(I18nR.string.voice_hide_from_media_summary),
                     value = hideFromMedia,
                     onValueChanged = {
                         hideFromMedia = it
@@ -784,8 +786,8 @@ fun VoiceSettingsScreen() {
                     },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.call_recordings_hide_from_media),
-                    summary = stringResource(R.string.call_recordings_hide_from_media_summary),
+                    title = stringResource(I18nR.string.call_recordings_hide_from_media),
+                    summary = stringResource(I18nR.string.call_recordings_hide_from_media_summary),
                     value = hideCallFromMedia,
                     onValueChanged = {
                         comms.setHideCallRecordingsFromMedia(it)
@@ -793,7 +795,7 @@ fun VoiceSettingsScreen() {
                     },
                 )
                 Text(
-                    stringResource(R.string.voice_privacy_text),
+                    stringResource(I18nR.string.voice_privacy_text),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(16.dp),
                 )

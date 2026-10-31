@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.parts
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.AlarmManager
 import android.content.BroadcastReceiver
@@ -92,7 +93,7 @@ class AlarmPartProvider : PartProvider {
                     )
                 ) {
                     Icon(
-                        painterResource(R.drawable.alarm_24px),
+                        painterResource(BaseR.drawable.alarm_24px),
                         contentDescription = null
                     )
                     Text(
@@ -116,7 +117,7 @@ class AlarmPartProvider : PartProvider {
                 ) {
                     Icon(
                         modifier = Modifier.padding(end = 8.dp).size(32.dp),
-                        painter = painterResource(R.drawable.alarm_24px),
+                        painter = painterResource(BaseR.drawable.alarm_24px),
                         contentDescription = null
                     )
                     Text(

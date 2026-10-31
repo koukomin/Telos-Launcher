@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -264,12 +265,12 @@ internal fun CommsHistoryRow(call: CallLogEntry) {
     val color = if (missed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
     val typeLabel = stringResource(
         when (call.type) {
-            CallType.Incoming -> R.string.filter_incoming
-            CallType.Outgoing -> R.string.filter_outgoing
-            CallType.Missed -> R.string.filter_missed
-            CallType.Rejected -> R.string.filter_rejected
-            CallType.Blocked -> R.string.au_phonea_blocked
-            CallType.Unknown -> R.string.search_action_call
+            CallType.Incoming -> I18nR.string.filter_incoming
+            CallType.Outgoing -> I18nR.string.filter_outgoing
+            CallType.Missed -> I18nR.string.filter_missed
+            CallType.Rejected -> I18nR.string.filter_rejected
+            CallType.Blocked -> I18nR.string.au_phonea_blocked
+            CallType.Unknown -> I18nR.string.search_action_call
         }
     )
     Row(

@@ -1,7 +1,7 @@
 package de.mm20.launcher2.nextcloud
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Bundle
-import de.mm20.launcher2.i18n.R
 import android.util.Log
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
                             .fillMaxWidth()
                             .padding(vertical = 32.dp),
                         label = {
-                            Text(stringResource(R.string.nextcloud_server_url))
+                            Text(stringResource(I18nR.string.nextcloud_server_url))
                         },
                         value = nextcloudUrl,
                         onValueChange = { nextcloudUrl = it },
@@ -123,13 +123,13 @@ class LoginActivity : AppCompatActivity() {
                                 if (flow != null) {
                                     openLoginPage(flow)
                                 } else {
-                                    error = getString(R.string.nextcloud_server_invalid_url)
+                                    error = getString(I18nR.string.nextcloud_server_invalid_url)
                                 }
                                 loading = false
                             }
                         }
                     ) {
-                        Text(stringResource(R.string.login_flow_continue))
+                        Text(stringResource(I18nR.string.login_flow_continue))
                     }
                 }
 

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.background
@@ -39,13 +40,13 @@ class NetworkRulesGridTest {
             }
         }
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        compose.onNodeWithText(context.getString(R.string.netfw_blocked)).performScrollTo().performClick()
+        compose.onNodeWithText(context.getString(I18nR.string.netfw_blocked)).performScrollTo().performClick()
         compose.runOnIdle { assertTrue(rule.value.blockAll); assertFalse(rule.value.bypassFirewall) }
-        compose.onNodeWithText(context.getString(R.string.netfw_exclude_vpn)).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText(context.getString(I18nR.string.netfw_exclude_vpn)).performScrollTo().assertIsDisplayed()
         val bitmap = compose.onNodeWithTag("network-rule-grid").captureToImage().asAndroidBitmap()
         val directory = java.io.File(android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_PICTURES), "TelosUiValidation").apply { mkdirs() }
         java.io.File(directory, "network-app-grid-font2-dark.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
-        compose.onNodeWithText(context.getString(R.string.netfw_exclude_vpn)).performClick()
+        compose.onNodeWithText(context.getString(I18nR.string.netfw_exclude_vpn)).performClick()
         compose.runOnIdle { assertTrue(rule.value.excludeFromVpn); assertFalse(rule.value.blockAll) }
     }
 }

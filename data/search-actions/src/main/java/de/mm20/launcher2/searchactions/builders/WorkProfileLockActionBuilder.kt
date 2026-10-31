@@ -1,10 +1,10 @@
 package de.mm20.launcher2.searchactions.builders
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.ResultScore
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
@@ -18,7 +18,7 @@ class WorkProfileLockActionBuilder(
 
     private val profileManager: ProfileManager by inject()
 
-    constructor(context: Context) : this(context.getString(R.string.search_query_work_profile))
+    constructor(context: Context) : this(context.getString(I18nR.string.search_query_work_profile))
 
     override val key = "work_profile"
     override val icon = SearchActionIcon.WorkProfile
@@ -27,7 +27,7 @@ class WorkProfileLockActionBuilder(
         val workProfile = profileManager.getProfile(Profile.Type.Work) ?: return null
         val profileState = profileManager.getProfileStateOnce(workProfile) ?: return null
 
-        val keyword = context.getString(R.string.search_query_work_profile).lowercase()
+        val keyword = context.getString(I18nR.string.search_query_work_profile).lowercase()
         val score = ResultScore.from(
             query = classifiedQuery.text.lowercase(),
             primaryFields = listOf(keyword),
@@ -36,8 +36,8 @@ class WorkProfileLockActionBuilder(
 
         return WorkProfileLockAction(
             label = context.getString(
-                if (profileState.locked) R.string.search_action_work_profile_resume
-                else R.string.search_action_work_profile_pause
+                if (profileState.locked) I18nR.string.search_action_work_profile_resume
+                else I18nR.string.search_action_work_profile_pause
             ),
             isPaused = profileState.locked,
             profile = workProfile,

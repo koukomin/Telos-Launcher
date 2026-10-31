@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.search
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
@@ -65,7 +67,7 @@ fun SearchSettingsScreen() {
     val lockViewModel: SettingsLockVM = viewModel()
     val context = LocalContext.current
     val activity = LocalContext.current as? FragmentActivity
-    val promptTitle = stringResource(R.string.settings_lock_prompt_title)
+    val promptTitle = stringResource(I18nR.string.settings_lock_prompt_title)
     val scope = androidx.compose.runtime.rememberCoroutineScope()
 
     val backStack = LocalBackStack.current
@@ -113,13 +115,13 @@ fun SearchSettingsScreen() {
     val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
     val filterBar by viewModel.filterBar.collectAsStateWithLifecycle(null)
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_search)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_search)) {
         item {
             PreferenceCategory {
                 PreferenceWithSwitch(
-                    title = stringResource(R.string.preference_search_favorites),
-                    summary = stringResource(R.string.preference_search_favorites_summary),
-                    icon = R.drawable.star_24px,
+                    title = stringResource(I18nR.string.preference_search_favorites),
+                    summary = stringResource(I18nR.string.preference_search_favorites_summary),
+                    icon = BaseR.drawable.star_24px,
                     switchValue = favorites == true,
                     onSwitchChanged = {
                         viewModel.setFavorites(it)
@@ -129,9 +131,9 @@ fun SearchSettingsScreen() {
                     }
                 )
                 PreferenceWithSwitch(
-                    title = stringResource(R.string.preference_search_apps),
-                    summary = stringResource(R.string.preference_search_apps_summary),
-                    icon = R.drawable.apps_24px,
+                    title = stringResource(I18nR.string.preference_search_apps),
+                    summary = stringResource(I18nR.string.preference_search_apps_summary),
+                    icon = BaseR.drawable.apps_24px,
                     switchValue = allApps == true,
                     onSwitchChanged = {
                         viewModel.setAllApps(it)
@@ -146,9 +148,9 @@ fun SearchSettingsScreen() {
             PreferenceCategory {
 
                 Preference(
-                    title = stringResource(R.string.preference_search_files),
-                    summary = stringResource(R.string.preference_search_files_summary),
-                    icon = R.drawable.description_24px,
+                    title = stringResource(I18nR.string.preference_search_files),
+                    summary = stringResource(I18nR.string.preference_search_files_summary),
+                    icon = BaseR.drawable.description_24px,
                     onClick = {
                         backStack.add(FileSearchSettingsRoute)
                     }
@@ -156,9 +158,9 @@ fun SearchSettingsScreen() {
 
                 if (hasContactPlugins != false) {
                     Preference(
-                        title = stringResource(R.string.preference_search_contacts),
-                        summary = stringResource(R.string.preference_search_contacts_summary),
-                        icon = R.drawable.person_24px,
+                        title = stringResource(I18nR.string.preference_search_contacts),
+                        summary = stringResource(I18nR.string.preference_search_contacts_summary),
+                        icon = BaseR.drawable.person_24px,
                         onClick = {
                             backStack.add(ContactsSettingsRoute)
                         },
@@ -169,12 +171,12 @@ fun SearchSettingsScreen() {
                         onUnlock = {
                             viewModel.requestContactsPermission(context as AppCompatActivity)
                         },
-                        description = stringResource(R.string.missing_permission_contact_search_settings),
+                        description = stringResource(I18nR.string.missing_permission_contact_search_settings),
                     ) {
                         PreferenceWithSwitch(
-                            title = stringResource(R.string.preference_search_contacts),
-                            summary = stringResource(R.string.preference_search_contacts_summary),
-                            icon = R.drawable.person_24px,
+                            title = stringResource(I18nR.string.preference_search_contacts),
+                            summary = stringResource(I18nR.string.preference_search_contacts_summary),
+                            icon = BaseR.drawable.person_24px,
                             switchValue = contacts == true && hasContactsPermission == true,
                             onSwitchChanged = {
                                 viewModel.setContacts(it)
@@ -189,9 +191,9 @@ fun SearchSettingsScreen() {
 
                 if (hasCalendarPlugins != false || isTasksAppInstalled != false) {
                     Preference(
-                        title = stringResource(R.string.preference_search_calendar),
-                        summary = stringResource(R.string.preference_search_calendar_summary),
-                        icon = R.drawable.today_24px,
+                        title = stringResource(I18nR.string.preference_search_calendar),
+                        summary = stringResource(I18nR.string.preference_search_calendar_summary),
+                        icon = BaseR.drawable.today_24px,
                         onClick = {
                             backStack.add(CalendarSearchSettingsRoute)
                         },
@@ -203,16 +205,16 @@ fun SearchSettingsScreen() {
                         onUnlock = {
                             viewModel.requestCalendarPermission(context as AppCompatActivity)
                         },
-                        description = stringResource(R.string.missing_permission_calendar_search_settings),
+                        description = stringResource(I18nR.string.missing_permission_calendar_search_settings),
                     ) {
                         PreferenceWithSwitch(
-                            title = stringResource(R.string.preference_search_calendar),
-                            summary = stringResource(R.string.preference_search_calendar_summary),
+                            title = stringResource(I18nR.string.preference_search_calendar),
+                            summary = stringResource(I18nR.string.preference_search_calendar_summary),
                             switchValue = calendar == true && hasCalendarPermission == true,
                             onSwitchChanged = {
                                 viewModel.setCalendarSearch(it)
                             },
-                            icon = R.drawable.today_24px,
+                            icon = BaseR.drawable.today_24px,
                             enabled = hasCalendarPermission == true,
                             onClick = {
                                 backStack.add(CalendarProviderSettingsRoute(providerId = "local"))
@@ -222,9 +224,9 @@ fun SearchSettingsScreen() {
                 }
 
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_reminders),
-                    summary = stringResource(R.string.preference_search_reminders_summary),
-                    icon = R.drawable.task_alt_24px,
+                    title = stringResource(I18nR.string.preference_search_reminders),
+                    summary = stringResource(I18nR.string.preference_search_reminders_summary),
+                    icon = BaseR.drawable.task_alt_24px,
                     value = reminders == true,
                     onValueChanged = { viewModel.setRemindersSearch(it) }
                 )
@@ -235,14 +237,14 @@ fun SearchSettingsScreen() {
                         viewModel.requestAppShortcutsPermission(context as AppCompatActivity)
                     },
                     description = stringResource(
-                        R.string.missing_permission_appshortcuts_search_settings,
-                        stringResource(R.string.app_name),
+                        I18nR.string.missing_permission_appshortcuts_search_settings,
+                        stringResource(BaseR.string.app_name),
                     ),
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_search_appshortcuts),
-                        summary = stringResource(R.string.preference_search_appshortcuts_summary),
-                        icon = R.drawable.mobile_arrow_up_right_24px,
+                        title = stringResource(I18nR.string.preference_search_appshortcuts),
+                        summary = stringResource(I18nR.string.preference_search_appshortcuts_summary),
+                        icon = BaseR.drawable.mobile_arrow_up_right_24px,
                         value = appShortcuts == true && hasAppShortcutsPermission == true,
                         onValueChanged = {
                             viewModel.setAppShortcuts(it)
@@ -252,9 +254,9 @@ fun SearchSettingsScreen() {
                 }
 
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_calculator),
-                    summary = stringResource(R.string.preference_search_calculator_summary),
-                    icon = R.drawable.calculate_24px,
+                    title = stringResource(I18nR.string.preference_search_calculator),
+                    summary = stringResource(I18nR.string.preference_search_calculator_summary),
+                    icon = BaseR.drawable.calculate_24px,
                     value = calculator == true,
                     onValueChanged = {
                         viewModel.setCalculator(it)
@@ -262,9 +264,9 @@ fun SearchSettingsScreen() {
                 )
 
                 PreferenceWithSwitch(
-                    title = stringResource(R.string.preference_search_unitconverter),
-                    summary = stringResource(R.string.preference_search_unitconverter_summary),
-                    icon = R.drawable.autorenew_24px,
+                    title = stringResource(I18nR.string.preference_search_unitconverter),
+                    summary = stringResource(I18nR.string.preference_search_unitconverter_summary),
+                    icon = BaseR.drawable.autorenew_24px,
                     switchValue = unitConverter == true,
                     onSwitchChanged = {
                         viewModel.setUnitConverter(it)
@@ -275,9 +277,9 @@ fun SearchSettingsScreen() {
                 )
 
                 PreferenceWithSwitch(
-                    title = stringResource(R.string.preference_search_wikipedia),
-                    summary = stringResource(R.string.preference_search_wikipedia_summary),
-                    icon = R.drawable.wikipedia,
+                    title = stringResource(I18nR.string.preference_search_wikipedia),
+                    summary = stringResource(I18nR.string.preference_search_wikipedia_summary),
+                    icon = BaseR.drawable.wikipedia,
                     switchValue = wikipedia == true,
                     onSwitchChanged = {
                         viewModel.setWikipedia(it)
@@ -288,27 +290,27 @@ fun SearchSettingsScreen() {
                 )
 
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_websites),
-                    summary = stringResource(R.string.preference_search_websites_summary),
-                    icon = R.drawable.public_24px,
+                    title = stringResource(I18nR.string.preference_search_websites),
+                    summary = stringResource(I18nR.string.preference_search_websites_summary),
+                    icon = BaseR.drawable.public_24px,
                     value = websites == true,
                     onValueChanged = {
                         viewModel.setWebsites(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.au5_radiosearch_pref_title),
-                    summary = stringResource(R.string.au5_radiosearch_pref_summary),
-                    icon = R.drawable.music_note_24px,
+                    title = stringResource(I18nR.string.au5_radiosearch_pref_title),
+                    summary = stringResource(I18nR.string.au5_radiosearch_pref_summary),
+                    icon = BaseR.drawable.music_note_24px,
                     value = radioStations == true,
                     onValueChanged = {
                         viewModel.setRadioStationsInSearch(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.au12_tvsearch_pref_title),
-                    summary = stringResource(R.string.au12_tvsearch_pref_summary),
-                    icon = R.drawable.tv_24px,
+                    title = stringResource(I18nR.string.au12_tvsearch_pref_title),
+                    summary = stringResource(I18nR.string.au12_tvsearch_pref_summary),
+                    icon = BaseR.drawable.tv_24px,
                     value = tvChannels == true,
                     onValueChanged = {
                         viewModel.setTvChannelsInSearch(it)
@@ -319,13 +321,13 @@ fun SearchSettingsScreen() {
                     onUnlock = {
                         viewModel.requestLocationPermission(context as AppCompatActivity)
                     },
-                    description = stringResource(R.string.missing_permission_location_search),
+                    description = stringResource(I18nR.string.missing_permission_location_search),
                 ) {
                     if (hasLocationPlugins != false) {
                         Preference(
-                            title = stringResource(R.string.preference_search_locations),
-                            summary = stringResource(R.string.preference_search_locations_summary),
-                            icon = R.drawable.location_on_24px,
+                            title = stringResource(I18nR.string.preference_search_locations),
+                            summary = stringResource(I18nR.string.preference_search_locations_summary),
+                            icon = BaseR.drawable.location_on_24px,
                             enabled = hasLocationPermission == true,
                             onClick = {
                                 backStack.add(LocationsSettingsRoute)
@@ -333,9 +335,9 @@ fun SearchSettingsScreen() {
                         )
                     } else {
                         PreferenceWithSwitch(
-                            title = stringResource(R.string.preference_search_locations),
-                            summary = stringResource(R.string.preference_search_locations_summary),
-                            icon = R.drawable.location_on_24px,
+                            title = stringResource(I18nR.string.preference_search_locations),
+                            summary = stringResource(I18nR.string.preference_search_locations_summary),
+                            icon = BaseR.drawable.location_on_24px,
                             onClick = {
                                 backStack.add(LocationsSettingsRoute)
                             },
@@ -349,17 +351,17 @@ fun SearchSettingsScreen() {
                 }
 
                 Preference(
-                    title = stringResource(R.string.preference_screen_search_actions),
-                    summary = stringResource(R.string.preference_search_search_actions_summary),
-                    icon = R.drawable.arrow_outward_24px,
+                    title = stringResource(I18nR.string.preference_screen_search_actions),
+                    summary = stringResource(I18nR.string.preference_search_search_actions_summary),
+                    icon = BaseR.drawable.arrow_outward_24px,
                     onClick = {
                         backStack.add(SearchActionsSettingsRoute)
                     }
                 )
                 Preference(
-                    title = stringResource(R.string.preference_screen_agents),
-                    summary = stringResource(R.string.preference_screen_agents_summary),
-                    icon = R.drawable.search_24px,
+                    title = stringResource(I18nR.string.preference_screen_agents),
+                    summary = stringResource(I18nR.string.preference_screen_agents_summary),
+                    icon = BaseR.drawable.search_24px,
                     onClick = {
                         backStack.add(AgentsSettingsRoute)
                     }
@@ -369,17 +371,17 @@ fun SearchSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    title = stringResource(R.string.preference_hidden_items),
-                    summary = stringResource(R.string.preference_hidden_items_summary),
-                    icon = R.drawable.visibility_off_24px,
+                    title = stringResource(I18nR.string.preference_hidden_items),
+                    summary = stringResource(I18nR.string.preference_hidden_items_summary),
+                    icon = BaseR.drawable.visibility_off_24px,
                     onClick = {
                         backStack.add(HiddenItemsSettingsRoute)
                     }
                 )
                 Preference(
-                    title = stringResource(R.string.preference_screen_tags),
-                    summary = stringResource(R.string.preference_screen_tags_summary),
-                    icon = R.drawable.tag_24px,
+                    title = stringResource(I18nR.string.preference_screen_tags),
+                    summary = stringResource(I18nR.string.preference_screen_tags_summary),
+                    icon = BaseR.drawable.tag_24px,
                     onClick = {
                         backStack.add(TagsSettingsRoute)
                     }
@@ -387,14 +389,14 @@ fun SearchSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_protection)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_protection)) {
                 val lockViewModel: SettingsLockVM = viewModel()
                 val lockSettings by lockViewModel.lockSensitiveSettings.collectAsStateWithLifecycle()
                 val lockMethod by lockViewModel.lockMethod.collectAsStateWithLifecycle()
                 val useCustomLock by lockViewModel.useCustomLock.collectAsStateWithLifecycle()
                 val customLockHashed by lockViewModel.customLockHashed.collectAsStateWithLifecycle()
                 val activity = LocalContext.current as? FragmentActivity
-                val promptTitle = stringResource(R.string.settings_lock_prompt_title)
+                val promptTitle = stringResource(I18nR.string.settings_lock_prompt_title)
                 val scope = androidx.compose.runtime.rememberCoroutineScope()
 
                 var onUnlockAction by remember { mutableStateOf<(() -> Unit)?>(null) }
@@ -402,7 +404,7 @@ fun SearchSettingsScreen() {
 
                 if (onUnlockAction != null) {
                     de.mm20.launcher2.ui.settings.protection.CustomLockDialog(
-                        title = stringResource(R.string.custom_lock_dialog_title),
+                        title = stringResource(I18nR.string.custom_lock_dialog_title),
                         onConfirm = { pin ->
                             scope.launch {
                                 if (lockViewModel.verifyCustomLock(pin)) {
@@ -417,8 +419,8 @@ fun SearchSettingsScreen() {
 
                 if (showSetPinDialog) {
                     de.mm20.launcher2.ui.settings.protection.CustomLockDialog(
-                        title = stringResource(R.string.custom_lock_dialog_title),
-                        confirmTitle = stringResource(R.string.custom_lock_dialog_confirm_title),
+                        title = stringResource(I18nR.string.custom_lock_dialog_title),
+                        confirmTitle = stringResource(I18nR.string.custom_lock_dialog_confirm_title),
                         onConfirm = { pin ->
                             lockViewModel.setCustomLock(pin)
                             lockViewModel.setUseCustomLock(true)
@@ -429,9 +431,9 @@ fun SearchSettingsScreen() {
                 }
 
                 SwitchPreference(
-                    title = stringResource(R.string.preference_lock_sensitive_settings),
-                    summary = stringResource(R.string.preference_lock_sensitive_settings_summary),
-                    icon = R.drawable.lock_24px,
+                    title = stringResource(I18nR.string.preference_lock_sensitive_settings),
+                    summary = stringResource(I18nR.string.preference_lock_sensitive_settings_summary),
+                    icon = BaseR.drawable.lock_24px,
                     value = lockSettings == true,
                     onValueChanged = { newValue ->
                         if (newValue) {
@@ -451,8 +453,8 @@ fun SearchSettingsScreen() {
                 AnimatedVisibility(lockSettings == true) {
                     Column {
                         SwitchPreference(
-                            title = stringResource(R.string.preference_use_custom_lock),
-                            summary = stringResource(R.string.preference_use_custom_lock_summary),
+                            title = stringResource(I18nR.string.preference_use_custom_lock),
+                            summary = stringResource(I18nR.string.preference_use_custom_lock_summary),
                             iconPadding = true,
                             value = useCustomLock == true,
                             onValueChanged = { use ->
@@ -465,15 +467,15 @@ fun SearchSettingsScreen() {
                         )
                         if (useCustomLock != true) {
                             ListPreference(
-                                title = stringResource(R.string.preference_settings_lock_method),
+                                title = stringResource(I18nR.string.preference_settings_lock_method),
                                 iconPadding = true,
                                 items = listOf(
                                     ListPreferenceItem(
-                                        stringResource(R.string.settings_lock_method_device_credential),
+                                        stringResource(I18nR.string.settings_lock_method_device_credential),
                                         SettingsLockMethod.DeviceCredential,
                                     ),
                                     ListPreferenceItem(
-                                        stringResource(R.string.settings_lock_method_biometrics_only),
+                                        stringResource(I18nR.string.settings_lock_method_biometrics_only),
                                         SettingsLockMethod.BiometricsOnly,
                                     ),
                                 ),
@@ -490,9 +492,9 @@ fun SearchSettingsScreen() {
                             )
                         } else {
                             Preference(
-                                title = stringResource(R.string.preference_set_custom_lock),
+                                title = stringResource(I18nR.string.preference_set_custom_lock),
                                 // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
-                                summary = stringResource(if (customLockHashed != null) R.string.custom_lock_pin_set else R.string.custom_lock_no_pin),
+                                summary = stringResource(if (customLockHashed != null) I18nR.string.custom_lock_pin_set else I18nR.string.custom_lock_no_pin),
                                 // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
                                 iconPadding = true,
                                 onClick = { showSetPinDialog = true }
@@ -503,12 +505,12 @@ fun SearchSettingsScreen() {
 
                 val lockLauncher by lockViewModel.lockLauncher.collectAsStateWithLifecycle()
                 SwitchPreference(
-                    title = stringResource(R.string.preference_lock_launcher),
+                    title = stringResource(I18nR.string.preference_lock_launcher),
                     summary = stringResource(
-                        R.string.preference_lock_launcher_summary,
-                        stringResource(R.string.app_name),
+                        I18nR.string.preference_lock_launcher_summary,
+                        stringResource(BaseR.string.app_name),
                     ),
-                    icon = R.drawable.lock_24px,
+                    icon = BaseR.drawable.lock_24px,
                     value = lockLauncher == true,
                     onValueChanged = { newValue ->
                         if (newValue) {
@@ -530,9 +532,9 @@ fun SearchSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    title = stringResource(R.string.preference_default_filter),
-                    summary = stringResource(R.string.preference_default_filter_summary),
-                    icon = R.drawable.filter_alt_24px,
+                    title = stringResource(I18nR.string.preference_default_filter),
+                    summary = stringResource(I18nR.string.preference_default_filter_summary),
+                    icon = BaseR.drawable.filter_alt_24px,
                     onClick = {
                         if (lockSettings == true && activity != null) {
                             if (useCustomLock == true) {
@@ -548,9 +550,9 @@ fun SearchSettingsScreen() {
                     },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_filter_bar),
+                    title = stringResource(I18nR.string.preference_filter_bar),
                     iconPadding = true,
-                    summary = stringResource(R.string.preference_filter_bar_summary),
+                    summary = stringResource(I18nR.string.preference_filter_bar_summary),
                     value = filterBar == true,
                     onValueChanged = {
                         viewModel.setFilterBar(it)
@@ -558,9 +560,9 @@ fun SearchSettingsScreen() {
                 )
                 AnimatedVisibility(filterBar == true) {
                     Preference(
-                        title = stringResource(R.string.preference_customize_filter_bar),
+                        title = stringResource(I18nR.string.preference_customize_filter_bar),
                         iconPadding = true,
-                        summary = stringResource(R.string.preference_customize_filter_bar_summary),
+                        summary = stringResource(I18nR.string.preference_customize_filter_bar_summary),
                         onClick = {
                             backStack.add(FilterBarSettingsRoute)
                         }
@@ -571,27 +573,27 @@ fun SearchSettingsScreen() {
         item {
             PreferenceCategory {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_bar_auto_focus),
-                    summary = stringResource(R.string.preference_search_bar_auto_focus_summary),
-                    icon = R.drawable.keyboard_24px,
+                    title = stringResource(I18nR.string.preference_search_bar_auto_focus),
+                    summary = stringResource(I18nR.string.preference_search_bar_auto_focus_summary),
+                    icon = BaseR.drawable.keyboard_24px,
                     value = autoFocus == true,
                     onValueChanged = {
                         viewModel.setAutoFocus(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_bar_launch_on_enter),
+                    title = stringResource(I18nR.string.preference_search_bar_launch_on_enter),
                     iconPadding = true,
-                    summary = stringResource(R.string.preference_search_bar_launch_on_enter_summary),
+                    summary = stringResource(I18nR.string.preference_search_bar_launch_on_enter_summary),
                     value = launchOnEnter == true,
                     onValueChanged = {
                         viewModel.setLaunchOnEnter(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_private_keyboard),
+                    title = stringResource(I18nR.string.preference_private_keyboard),
                     iconPadding = true,
-                    summary = stringResource(R.string.preference_private_keyboard_summary),
+                    summary = stringResource(I18nR.string.preference_private_keyboard_summary),
                     value = privateKeyboard == true,
                     onValueChanged = {
                         viewModel.setPrivateKeyboard(it)
@@ -602,16 +604,16 @@ fun SearchSettingsScreen() {
         item {
             PreferenceCategory {
                 ListPreference(
-                    title = stringResource(R.string.preference_layout_search_results),
+                    title = stringResource(I18nR.string.preference_layout_search_results),
                     items = listOf(
-                        stringResource(R.string.search_results_order_top_down) to false,
-                        stringResource(R.string.search_results_order_bottom_up) to true,
+                        stringResource(I18nR.string.search_results_order_top_down) to false,
+                        stringResource(I18nR.string.search_results_order_bottom_up) to true,
                     ),
                     value = reverseSearchResults,
                     onValueChanged = {
                         if (it != null) viewModel.setReverseSearchResults(it)
                     },
-                    icon = R.drawable.sort_24px
+                    icon = BaseR.drawable.sort_24px
                 )
             }
         }
@@ -630,8 +632,8 @@ fun SearchSettingsScreen() {
             AnimatedVisibility(filters.allowNetwork) {
                 SmallMessage(
                     modifier = Modifier.padding(bottom = 16.dp),
-                    icon = R.drawable.warning_24px,
-                    text = stringResource(R.string.filter_settings_network_warning)
+                    icon = BaseR.drawable.warning_24px,
+                    text = stringResource(I18nR.string.filter_settings_network_warning)
                 )
             }
             SearchFilters(

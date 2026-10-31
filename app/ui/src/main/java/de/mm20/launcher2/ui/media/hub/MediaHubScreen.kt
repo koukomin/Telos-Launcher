@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.hub
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -129,13 +131,13 @@ private enum class MediaSpace(
     @DrawableRes val icon: Int,
     @StringRes val label: Int,
 ) {
-    Music("music", "telos_music_app://music", R.drawable.headphones_24px, R.string.au9_mediahub_space_music),
-    Radio("radio", "telos_radio_app://radio", R.drawable.ic_glyph_radio, R.string.au9_mediahub_space_radio),
-    Video("video", "telos_video_app://video", R.drawable.video_library_24px, R.string.au9_mediahub_space_video),
-    Tv("tv", "telos_tv_app://tv", R.drawable.tv_24px, R.string.au12_tvui_space_tv),
-    YouTube("youtube", "telos_youtube_app://youtube", de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg, R.string.telos_youtube_label),
-    YouTubeMusic("youtube_music", "telos_youtube_music_app://youtube_music", de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg, R.string.telos_youtube_music_label),
-    Stremio("stremio", "telos_media_app://stremio", R.drawable.theaters_24px, R.string.au22_stremio_label),
+    Music("music", "telos_music_app://music", BaseR.drawable.headphones_24px, I18nR.string.au9_mediahub_space_music),
+    Radio("radio", "telos_radio_app://radio", BaseR.drawable.ic_glyph_radio, I18nR.string.au9_mediahub_space_radio),
+    Video("video", "telos_video_app://video", BaseR.drawable.video_library_24px, I18nR.string.au9_mediahub_space_video),
+    Tv("tv", "telos_tv_app://tv", BaseR.drawable.tv_24px, I18nR.string.au12_tvui_space_tv),
+    YouTube("youtube", "telos_youtube_app://youtube", de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg, I18nR.string.telos_youtube_label),
+    YouTubeMusic("youtube_music", "telos_youtube_music_app://youtube_music", de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg, I18nR.string.telos_youtube_music_label),
+    Stremio("stremio", "telos_media_app://stremio", BaseR.drawable.theaters_24px, I18nR.string.au22_stremio_label),
 }
 
 private val MediaSpace.group: String get() = when (this) {
@@ -143,14 +145,14 @@ private val MediaSpace.group: String get() = when (this) {
     MediaSpace.Video, MediaSpace.YouTube, MediaSpace.Stremio, MediaSpace.Tv -> "watch"
 }
 private val MediaSpace.groupLabel: Int get() = when (group) {
-    "listen" -> R.string.telos_media_listen
-    "watch" -> R.string.telos_media_watch
-    else -> R.string.telos_media_live
+    "listen" -> I18nR.string.telos_media_listen
+    "watch" -> I18nR.string.telos_media_watch
+    else -> I18nR.string.telos_media_live
 }
 private val MediaSpace.groupIcon: Int get() = when (group) {
-    "listen" -> R.drawable.headphones_24px
-    "watch" -> R.drawable.video_library_24px
-    else -> R.drawable.tv_24px
+    "listen" -> BaseR.drawable.headphones_24px
+    "watch" -> BaseR.drawable.video_library_24px
+    else -> BaseR.drawable.tv_24px
 }
 
 /**
@@ -416,10 +418,10 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Music)
                 },
                 icon = {
-                    Icon(painterResource(R.drawable.headphones_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    Icon(painterResource(BaseR.drawable.headphones_24px), contentDescription = null, modifier = Modifier.size(22.dp))
                 },
                 label = {
-                    Text(stringResource(R.string.au9_mediahub_space_music))
+                    Text(stringResource(I18nR.string.au9_mediahub_space_music))
                 },
             )
             AdaptiveNavigationItem(
@@ -429,10 +431,10 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Radio)
                 },
                 icon = {
-                    Icon(painterResource(R.drawable.ic_glyph_radio), contentDescription = null, modifier = Modifier.size(22.dp))
+                    Icon(painterResource(BaseR.drawable.ic_glyph_radio), contentDescription = null, modifier = Modifier.size(22.dp))
                 },
                 label = {
-                    Text(stringResource(R.string.au9_mediahub_space_radio))
+                    Text(stringResource(I18nR.string.au9_mediahub_space_radio))
                 },
             )
             AdaptiveNavigationItem(
@@ -455,10 +457,10 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Video)
                 },
                 icon = {
-                    Icon(painterResource(R.drawable.video_library_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    Icon(painterResource(BaseR.drawable.video_library_24px), contentDescription = null, modifier = Modifier.size(22.dp))
                 },
                 label = {
-                    Text(stringResource(R.string.telos_media_watch))
+                    Text(stringResource(I18nR.string.telos_media_watch))
                 },
             )
         } else {
@@ -469,10 +471,10 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Music)
                 },
                 icon = {
-                    Icon(painterResource(R.drawable.headphones_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    Icon(painterResource(BaseR.drawable.headphones_24px), contentDescription = null, modifier = Modifier.size(22.dp))
                 },
                 label = {
-                    Text(stringResource(R.string.telos_media_listen))
+                    Text(stringResource(I18nR.string.telos_media_listen))
                 },
             )
             AdaptiveNavigationItem(
@@ -482,10 +484,10 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Video)
                 },
                 icon = {
-                    Icon(painterResource(R.drawable.video_library_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    Icon(painterResource(BaseR.drawable.video_library_24px), contentDescription = null, modifier = Modifier.size(22.dp))
                 },
                 label = {
-                    Text(stringResource(R.string.au9_mediahub_space_video))
+                    Text(stringResource(I18nR.string.au9_mediahub_space_video))
                 },
             )
             AdaptiveNavigationItem(
@@ -508,10 +510,10 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Tv)
                 },
                 icon = {
-                    Icon(painterResource(R.drawable.tv_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    Icon(painterResource(BaseR.drawable.tv_24px), contentDescription = null, modifier = Modifier.size(22.dp))
                 },
                 label = {
-                    Text(stringResource(R.string.au12_tvui_space_tv))
+                    Text(stringResource(I18nR.string.au12_tvui_space_tv))
                 },
             )
             AdaptiveNavigationItem(
@@ -521,7 +523,7 @@ private fun HubBottomBar(
                     onSelect(MediaSpace.Stremio)
                 },
                 icon = {
-                    Icon(painterResource(R.drawable.theaters_24px), contentDescription = null, modifier = Modifier.size(22.dp))
+                    Icon(painterResource(BaseR.drawable.theaters_24px), contentDescription = null, modifier = Modifier.size(22.dp))
                 },
                 label = {
                     Text("Stremio")
@@ -587,9 +589,9 @@ private fun HubMiniPlayer(
         val isMusic = display == MediaSpace.Music
         val isTv = display == MediaSpace.Tv
         val playing = if (isMusic) musicPlaying else if (isTv) tvPlaying else radioPlaying
-        val unknownStation = stringResource(R.string.au_radio_unknown_station)
-        val unknownTitle = stringResource(R.string.au9_mediahub_unknown_title)
-        val tvSubtitle = stringResource(R.string.au12_tvui_mini_subtitle)
+        val unknownStation = stringResource(I18nR.string.au_radio_unknown_station)
+        val unknownTitle = stringResource(I18nR.string.au9_mediahub_unknown_title)
+        val tvSubtitle = stringResource(I18nR.string.au12_tvui_mini_subtitle)
         // the last TV channel stays while the bar slides out
         var lastTv by remember { mutableStateOf<de.mm20.launcher2.comms.tv.TvChannel?>(null) }
         if (tvChannel != null) lastTv = tvChannel
@@ -626,7 +628,7 @@ private fun HubMiniPlayer(
                     modifier = Modifier
                         .weight(1f)
                         .clip(RoundedCornerShape(12.dp))
-                        .clickable(onClickLabel = stringResource(R.string.au9_mediahub_open_player)) { onOpen(display) }
+                        .clickable(onClickLabel = stringResource(I18nR.string.au9_mediahub_open_player)) { onOpen(display) }
                         .padding(2.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -635,7 +637,7 @@ private fun HubMiniPlayer(
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
-                            painterResource(if (isMusic) R.drawable.music_note_24px else if (isTv) R.drawable.tv_24px else R.drawable.ic_glyph_radio),
+                            painterResource(if (isMusic) BaseR.drawable.music_note_24px else if (isTv) BaseR.drawable.tv_24px else BaseR.drawable.ic_glyph_radio),
                             contentDescription = null,
                             tint = scheme.onSecondaryContainer,
                         )
@@ -675,13 +677,13 @@ private fun HubMiniPlayer(
                     }
                 ) {
                     Icon(
-                        painterResource(if (playing) R.drawable.pause_24px else R.drawable.play_arrow_24px),
-                        contentDescription = stringResource(if (playing) R.string.au_music_pause else R.string.hc_play),
+                        painterResource(if (playing) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px),
+                        contentDescription = stringResource(if (playing) I18nR.string.au_music_pause else I18nR.string.hc_play),
                     )
                 }
                 if (isMusic) {
                     IconButton(onClick = { musicVm.next() }) {
-                        Icon(painterResource(R.drawable.skip_next_24px), contentDescription = stringResource(R.string.hc_next))
+                        Icon(painterResource(BaseR.drawable.skip_next_24px), contentDescription = stringResource(I18nR.string.hc_next))
                     }
                 } else {
                     if (!isTv) {
@@ -689,15 +691,15 @@ private fun HubMiniPlayer(
                             radioVm.toggleRecording(context)?.let { android.widget.Toast.makeText(context, context.getString(it), android.widget.Toast.LENGTH_SHORT).show() }
                         }) {
                             Icon(
-                                painterResource(if (isRecording) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px),
-                                contentDescription = stringResource(if (isRecording) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record),
+                                painterResource(if (isRecording) BaseR.drawable.radio_button_checked_24px else BaseR.drawable.radio_button_unchecked_24px),
+                                contentDescription = stringResource(if (isRecording) I18nR.string.au2_radio2_stop_recording else I18nR.string.au2_radio2_record),
                                 tint = if (isRecording) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                     }
                     // a radio or TV stream has no next track: stop ends it and removes the bar
                     IconButton(onClick = { if (isTv) tvVm.stop() else radioVm.stop() }) {
-                        Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_stop))
+                        Icon(painterResource(BaseR.drawable.close_24px), contentDescription = stringResource(I18nR.string.hc_stop))
                     }
                 }
             }

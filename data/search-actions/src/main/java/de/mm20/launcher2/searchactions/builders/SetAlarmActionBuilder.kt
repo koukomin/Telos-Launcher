@@ -1,7 +1,7 @@
 package de.mm20.launcher2.searchactions.builders
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
@@ -12,7 +12,7 @@ class SetAlarmActionBuilder(
     override val label: String
 ) : SearchActionBuilder {
 
-    constructor(context: Context) : this(context.getString(R.string.search_action_alarm))
+    constructor(context: Context) : this(context.getString(I18nR.string.search_action_alarm))
 
     override val key: String
         get() = "alarm"
@@ -22,7 +22,7 @@ class SetAlarmActionBuilder(
     override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction? {
         if (classifiedQuery.time != null) {
             return SetAlarmAction(
-                context.getString(R.string.search_action_alarm), classifiedQuery.time
+                context.getString(I18nR.string.search_action_alarm), classifiedQuery.time
             )
         }
         return null

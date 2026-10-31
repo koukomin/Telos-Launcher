@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network.nextdns
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.annotation.SuppressLint
 import android.webkit.CookieManager
@@ -22,7 +23,7 @@ fun NextDnsLoginDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.au7_trakt_sign_in) + " · NextDNS") },
+        title = { Text(androidx.compose.ui.res.stringResource(I18nR.string.au7_trakt_sign_in) + " · NextDNS") },
         text = {
             AndroidView(
                 onRelease = { it.stopLoading(); it.webViewClient = WebViewClient(); it.destroy() },
@@ -74,7 +75,7 @@ fun NextDnsLoginDialog(
             )
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.hc_close)) }
+            TextButton(onClick = onDismiss) { Text(androidx.compose.ui.res.stringResource(I18nR.string.hc_close)) }
         }
     )
 }

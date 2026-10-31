@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.stremio
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -120,40 +122,40 @@ fun StremioScreen() {
 
     if (showNetworkRules) androidx.compose.material3.AlertDialog(
         onDismissRequest = { showNetworkRules = false },
-        title = { Text(stringResource(R.string.dl_settings_rules)) },
+        title = { Text(stringResource(I18nR.string.dl_settings_rules)) },
         text = { Column(Modifier.verticalScroll(rememberScrollState())) {
             de.mm20.launcher2.ui.downloads.TransferNetworkPreferences("torrent")
         } },
-        confirmButton = { TextButton(onClick = { showNetworkRules = false }) { Text(stringResource(R.string.hc_close)) } },
+        confirmButton = { TextButton(onClick = { showNetworkRules = false }) { Text(stringResource(I18nR.string.hc_close)) } },
     )
-    MediaFrame(stringResource(R.string.au22_stremio_label), actions = {
+    MediaFrame(stringResource(I18nR.string.au22_stremio_label), actions = {
         Box {
             IconButton(onClick = { showActions = true }) {
-                Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+                Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_more))
             }
             androidx.compose.material3.DropdownMenu(expanded = showActions, onDismissRequest = { showActions = false }) {
                 androidx.compose.material3.DropdownMenuItem(
-                    text = { Text(stringResource(R.string.settings)) },
+                    text = { Text(stringResource(I18nR.string.settings)) },
                     onClick = { showActions = false; showPlaybackSettings = true },
                 )
                 androidx.compose.material3.DropdownMenuItem(
-                    text = { Text(stringResource(R.string.stremio_http_cache)) },
+                    text = { Text(stringResource(I18nR.string.stremio_http_cache)) },
                     onClick = { showActions = false; showCacheSettings = true },
                 )
                 androidx.compose.material3.DropdownMenuItem(
-                    text = { Text(stringResource(R.string.dl_settings_rules)) },
+                    text = { Text(stringResource(I18nR.string.dl_settings_rules)) },
                     onClick = { showActions = false; showNetworkRules = true },
                 )
                 if (email != null) androidx.compose.material3.DropdownMenuItem(
-                    text = { Text(stringResource(R.string.au22_stremio_account)) },
+                    text = { Text(stringResource(I18nR.string.au22_stremio_account)) },
                     onClick = { showActions = false; showAccount = true },
                 )
                 androidx.compose.material3.DropdownMenuItem(
-                    text = { Text(stringResource(R.string.au7_trakt_title)) },
+                    text = { Text(stringResource(I18nR.string.au7_trakt_title)) },
                     onClick = { showActions = false; showTrakt = true },
                 )
                 if (accepted && email != null) androidx.compose.material3.DropdownMenuItem(
-                    text = { Text(stringResource(R.string.au22_stremio_addons)) },
+                    text = { Text(stringResource(I18nR.string.au22_stremio_addons)) },
                     onClick = { showActions = false; showAddons = true },
                 )
             }
@@ -162,7 +164,7 @@ fun StremioScreen() {
         Box(Modifier.fillMaxSize()) {
             when {
                 email == null -> Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(stringResource(R.string.au22_stremio_fork_intro), style = MaterialTheme.typography.bodyLarge)
+                    Text(stringResource(I18nR.string.au22_stremio_fork_intro), style = MaterialTheme.typography.bodyLarge)
                     AccountSection(vm)
                 }
                 !accepted -> NoticeCard(onAccept = { vm.acceptNotice() })
@@ -189,9 +191,9 @@ private fun NoticeCard(onAccept: () -> Unit) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.Center) {
         Card(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(stringResource(R.string.au22_stremio_notice_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                Text(stringResource(R.string.au22_stremio_notice_text), style = MaterialTheme.typography.bodyMedium)
-                Button(onClick = onAccept, modifier = Modifier.align(Alignment.End)) { Text(stringResource(R.string.au22_stremio_notice_accept)) }
+                Text(stringResource(I18nR.string.au22_stremio_notice_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                Text(stringResource(I18nR.string.au22_stremio_notice_text), style = MaterialTheme.typography.bodyMedium)
+                Button(onClick = onAccept, modifier = Modifier.align(Alignment.End)) { Text(stringResource(I18nR.string.au22_stremio_notice_accept)) }
             }
         }
     }
@@ -200,7 +202,7 @@ private fun NoticeCard(onAccept: () -> Unit) {
 @Composable
 private fun EmptyAddons(vm: StremioViewModel) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(stringResource(R.string.au22_stremio_empty), style = MaterialTheme.typography.bodyLarge)
+        Text(stringResource(I18nR.string.au22_stremio_empty), style = MaterialTheme.typography.bodyLarge)
         AddAddonForm(vm, showSuggestion = true)
     }
 }
@@ -224,20 +226,20 @@ private fun AddAddonForm(vm: StremioViewModel, showSuggestion: Boolean) {
         OutlinedTextField(
             value = text,
             onValueChange = { text = it },
-            label = { Text(stringResource(R.string.au22_stremio_addon_address)) },
-            placeholder = { Text(stringResource(R.string.au22_stremio_addon_address_hint)) },
+            label = { Text(stringResource(I18nR.string.au22_stremio_addon_address)) },
+            placeholder = { Text(stringResource(I18nR.string.au22_stremio_addon_address_hint)) },
             singleLine = true,
             isError = error != null,
             supportingText = if (shownError != null) { { Text(shownError) } } else null,
             modifier = Modifier.fillMaxWidth(),
         )
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            Button(onClick = { add(text) }, enabled = text.isNotBlank() && !busy) { Text(stringResource(R.string.au22_stremio_add_addon)) }
+            Button(onClick = { add(text) }, enabled = text.isNotBlank() && !busy) { Text(stringResource(I18nR.string.au22_stremio_add_addon)) }
             if (busy) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
         }
         if (showSuggestion) {
             OutlinedButton(onClick = { add(StremioAddons.CINEMETA) }, enabled = !busy) {
-                Text(stringResource(R.string.au22_stremio_add_cinemeta))
+                Text(stringResource(I18nR.string.au22_stremio_add_cinemeta))
             }
         }
     }
@@ -262,7 +264,7 @@ private fun StremioHome(vm: StremioViewModel) {
             LazyColumn(contentPadding = PaddingValues(bottom = 112.dp), verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxSize()) {
                 if (query.isBlank() && watching.isNotEmpty()) item(key = "continue") {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        RowTitle(stringResource(R.string.au22_stremio_continue))
+                        RowTitle(stringResource(I18nR.string.au22_stremio_continue))
                         LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                             items(watching, key = { it.id }) { p ->
                                 Poster(vm, MetaPreview(p.id, p.type, p.name, p.poster), caption = p.videoTitle, onClick = { vm.openProgress(p) })
@@ -277,7 +279,7 @@ private fun StremioHome(vm: StremioViewModel) {
                         if (list == null) {
                             Box(Modifier.fillMaxWidth().height(120.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp) }
                         } else if (list.isEmpty()) {
-                            Text(stringResource(R.string.au22_stremio_no_results), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 16.dp))
+                            Text(stringResource(I18nR.string.au22_stremio_no_results), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 16.dp))
                         } else {
                             LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 items(list, key = { it.id }) { m -> Poster(vm, m, onClick = { vm.open(m) }) }
@@ -288,7 +290,7 @@ private fun StremioHome(vm: StremioViewModel) {
             }
         } else {
             if (saved.isEmpty()) {
-                Text(stringResource(R.string.au22_stremio_library_empty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(16.dp))
+                Text(stringResource(I18nR.string.au22_stremio_library_empty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(16.dp))
             } else {
                 LazyVerticalGrid(
                     columns = GridCells.Adaptive(164.dp),
@@ -312,15 +314,15 @@ internal fun StremioBrowseControls(
     Column {
         Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Row(Modifier.weight(1f).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterChip(selected = tab == 0, onClick = { onTab(0) }, label = { Text(stringResource(R.string.au22_stremio_home)) }, shape = MaterialTheme.shapes.large)
-                FilterChip(selected = tab == 1, onClick = { onTab(1) }, label = { Text(stringResource(R.string.au22_stremio_library)) }, shape = MaterialTheme.shapes.large)
+                FilterChip(selected = tab == 0, onClick = { onTab(0) }, label = { Text(stringResource(I18nR.string.au22_stremio_home)) }, shape = MaterialTheme.shapes.large)
+                FilterChip(selected = tab == 1, onClick = { onTab(1) }, label = { Text(stringResource(I18nR.string.au22_stremio_library)) }, shape = MaterialTheme.shapes.large)
             }
             if (tab == 0) de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, query.isNotBlank()) {
                 if (searchExpanded) onQuery("")
                 onSearchExpanded(!searchExpanded)
             }
         }
-        if (tab == 0) de.mm20.launcher2.ui.media.MediaSearchBar(query, onQuery, stringResource(R.string.au22_stremio_search_hint),
+        if (tab == 0) de.mm20.launcher2.ui.media.MediaSearchBar(query, onQuery, stringResource(I18nR.string.au22_stremio_search_hint),
             expanded = searchExpanded, onClose = { onQuery(""); onSearchExpanded(false) })
     }
 }
@@ -370,7 +372,7 @@ private fun DetailPage(vm: StremioViewModel, d: DetailState) {
                 )
                 Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color.Black.copy(alpha = 0.25f), MaterialTheme.colorScheme.surfaceContainerLow))))
                 IconButton(onClick = { vm.closeDetail() }, modifier = Modifier.align(Alignment.TopStart).padding(8.dp)) {
-                    Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back), tint = Color.White)
+                    Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back), tint = Color.White)
                 }
             }
             Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -384,16 +386,16 @@ private fun DetailPage(vm: StremioViewModel, d: DetailState) {
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         if (!meta.isSeries) {
                             Button(onClick = { vm.showStreams(meta, null) }) {
-                                Icon(painterResource(R.drawable.play_arrow_24px), contentDescription = null, modifier = Modifier.size(18.dp))
+                                Icon(painterResource(BaseR.drawable.play_arrow_24px), contentDescription = null, modifier = Modifier.size(18.dp))
                                 Spacer(Modifier.width(6.dp))
-                                Text(stringResource(R.string.hc_play))
+                                Text(stringResource(I18nR.string.hc_play))
                             }
                         }
                         val isSaved = saved.any { it.id == meta.id }
                         FilledTonalButton(onClick = { vm.toggleSaved(meta) }) {
-                            Icon(painterResource(if (isSaved) R.drawable.star_24px_filled else R.drawable.star_24px), contentDescription = null, modifier = Modifier.size(18.dp))
+                            Icon(painterResource(if (isSaved) BaseR.drawable.star_24px_filled else BaseR.drawable.star_24px), contentDescription = null, modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(6.dp))
-                            Text(stringResource(if (isSaved) R.string.au22_stremio_saved else R.string.au22_stremio_save))
+                            Text(stringResource(if (isSaved) I18nR.string.au22_stremio_saved else I18nR.string.au22_stremio_save))
                         }
                     }
                     meta.description?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
@@ -414,7 +416,7 @@ private fun Episodes(vm: StremioViewModel, meta: Meta) {
     if (seasons.size > 1) {
         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             items(seasons) { s ->
-                FilterChip(selected = season == s, onClick = { season = s }, label = { Text(stringResource(R.string.au22_stremio_season, s)) }, shape = CircleShape)
+                FilterChip(selected = season == s, onClick = { season = s }, label = { Text(stringResource(I18nR.string.au22_stremio_season, s)) }, shape = CircleShape)
             }
         }
     }
@@ -455,19 +457,19 @@ private fun StreamsSheet(vm: StremioViewModel, state: StreamsState) {
     }
     ModalBottomSheet(onDismissRequest = { vm.closeStreams() }) {
         Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp).padding(bottom = 24.dp)) {
-            Text(stringResource(R.string.au22_stremio_streams), style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(I18nR.string.au22_stremio_streams), style = MaterialTheme.typography.titleLarge)
             Text(state.title, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(bottom = 8.dp))
             if (state.loading) {
                 Box(Modifier.fillMaxWidth().height(96.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
             } else if (state.items.isEmpty()) {
-                Text(stringResource(R.string.au22_stremio_no_streams), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(vertical = 16.dp))
+                Text(stringResource(I18nR.string.au22_stremio_no_streams), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(vertical = 16.dp))
             } else {
                 LazyColumn(modifier = Modifier.fillMaxWidth().height(420.dp)) {
                     items(visibleStreams, key = { it.streamKey() + "#" + state.items.indexOf(it) }) { s ->
                         StreamRow(s, last = s.streamKey() == state.lastUsed) {
                             vm.play(context, s, state) { opened ->
                                 if (opened) vm.closeStreams()
-                                else Toast.makeText(context, R.string.au22_stremio_unsupported, Toast.LENGTH_SHORT).show()
+                                else Toast.makeText(context, I18nR.string.au22_stremio_unsupported, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -486,14 +488,14 @@ private fun StreamRow(s: StreamItem, last: Boolean, onClick: () -> Unit) {
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(s.name ?: s.addonName, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f, fill = false), maxLines = 1, overflow = TextOverflow.Ellipsis)
-            if (last) Text(stringResource(R.string.au22_stremio_last_used), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            if (last) Text(stringResource(I18nR.string.au22_stremio_last_used), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         }
         s.description?.let { Text(it, style = MaterialTheme.typography.bodySmall, maxLines = 3, overflow = TextOverflow.Ellipsis) }
         Text(
             when (s.kind) {
-                StreamItem.Kind.Torrent -> stringResource(R.string.au22_stremio_p2p_warning)
-                StreamItem.Kind.External -> stringResource(R.string.au22_stremio_opens_browser)
-                StreamItem.Kind.Unsupported -> stringResource(R.string.au22_stremio_unsupported)
+                StreamItem.Kind.Torrent -> stringResource(I18nR.string.au22_stremio_p2p_warning)
+                StreamItem.Kind.External -> stringResource(I18nR.string.au22_stremio_opens_browser)
+                StreamItem.Kind.Unsupported -> stringResource(I18nR.string.au22_stremio_unsupported)
                 else -> s.addonName
             },
             style = MaterialTheme.typography.labelSmall,
@@ -515,12 +517,12 @@ private fun AddonsSheet(vm: StremioViewModel, onDismiss: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(stringResource(R.string.au22_stremio_addons), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
-                TextButton(onClick = { vm.refreshAddons() }) { Text(stringResource(R.string.au22_stremio_refresh)) }
+                Text(stringResource(I18nR.string.au22_stremio_addons), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                TextButton(onClick = { vm.refreshAddons() }) { Text(stringResource(I18nR.string.au22_stremio_refresh)) }
             }
             addons.forEach { a -> AddonRow(a, onRemove = { vm.removeAddon(a.baseUrl) }) }
             AddAddonForm(vm, showSuggestion = addons.none { it.baseUrl == StremioAddons.CINEMETA })
-            OutlinedButton(onClick = { showDirectory = true; vm.loadDirectory() }) { Text(stringResource(R.string.au22_stremio_directory)) }
+            OutlinedButton(onClick = { showDirectory = true; vm.loadDirectory() }) { Text(stringResource(I18nR.string.au22_stremio_directory)) }
         }
     }
     if (showDirectory) DirectorySheet(vm, onDismiss = { showDirectory = false })
@@ -546,13 +548,13 @@ private fun AccountSection(vm: StremioViewModel) {
     var password by remember { mutableStateOf("") }
     var working by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
-    val syncedText = stringResource(R.string.au22_stremio_synced)
+    val syncedText = stringResource(I18nR.string.au22_stremio_synced)
     val shownError = error
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(stringResource(R.string.au22_stremio_account), style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(I18nR.string.au22_stremio_account), style = MaterialTheme.typography.titleMedium)
             if (email != null) {
-                Text(stringResource(R.string.au22_stremio_signed_in, email!!), style = MaterialTheme.typography.bodyMedium)
+                Text(stringResource(I18nR.string.au22_stremio_signed_in, email!!), style = MaterialTheme.typography.bodyMedium)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                     Button(
                         enabled = !busy && !working,
@@ -563,20 +565,20 @@ private fun AccountSection(vm: StremioViewModel) {
                                 Toast.makeText(context, result ?: syncedText, Toast.LENGTH_SHORT).show()
                             }
                         },
-                    ) { Text(stringResource(R.string.au22_stremio_sync_now)) }
-                    TextButton(enabled = !busy && !working, onClick = { vm.signOut() }) { Text(stringResource(R.string.au22_stremio_sign_out)) }
+                    ) { Text(stringResource(I18nR.string.au22_stremio_sync_now)) }
+                    TextButton(enabled = !busy && !working, onClick = { vm.signOut() }) { Text(stringResource(I18nR.string.au22_stremio_sign_out)) }
                     if (busy || working) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
                 }
             } else {
-                Text(stringResource(R.string.au22_stremio_account_intro), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(I18nR.string.au22_stremio_account_intro), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 OutlinedTextField(
                     value = mail, onValueChange = { mail = it }, singleLine = true, modifier = Modifier.fillMaxWidth(),
-                    label = { Text(stringResource(R.string.au22_stremio_email)) },
+                    label = { Text(stringResource(I18nR.string.au22_stremio_email)) },
                     keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Email),
                 )
                 OutlinedTextField(
                     value = password, onValueChange = { password = it }, singleLine = true, modifier = Modifier.fillMaxWidth(),
-                    label = { Text(stringResource(R.string.au22_stremio_password)) },
+                    label = { Text(stringResource(I18nR.string.au22_stremio_password)) },
                     visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
                     keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Password),
                     isError = shownError != null,
@@ -593,7 +595,7 @@ private fun AccountSection(vm: StremioViewModel) {
                                 if (result == null) password = "" else error = result
                             }
                         },
-                    ) { Text(stringResource(R.string.au22_stremio_sign_in)) }
+                    ) { Text(stringResource(I18nR.string.au22_stremio_sign_in)) }
                     if (working) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
                 }
             }
@@ -609,9 +611,9 @@ private fun DirectorySheet(vm: StremioViewModel, onDismiss: () -> Unit) {
     val installed by vm.addons.collectAsStateWithLifecycle()
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp).padding(bottom = 24.dp)) {
-            Text(stringResource(R.string.au22_stremio_directory), style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(I18nR.string.au22_stremio_directory), style = MaterialTheme.typography.titleLarge)
             Text(
-                stringResource(R.string.au22_stremio_directory_hint),
+                stringResource(I18nR.string.au22_stremio_directory_hint),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 8.dp),
@@ -620,7 +622,7 @@ private fun DirectorySheet(vm: StremioViewModel, onDismiss: () -> Unit) {
             if (list == null) {
                 Box(Modifier.fillMaxWidth().height(96.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
             } else if (list.isEmpty()) {
-                Text(stringResource(R.string.au22_stremio_directory_empty), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(vertical = 16.dp))
+                Text(stringResource(I18nR.string.au22_stremio_directory_empty), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(vertical = 16.dp))
             } else {
                 LazyColumn(Modifier.fillMaxWidth().height(460.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(list, key = { it.baseUrl }) { d ->
@@ -630,10 +632,10 @@ private fun DirectorySheet(vm: StremioViewModel, onDismiss: () -> Unit) {
                                 Column(Modifier.weight(1f)) {
                                     Text("${d.manifest.name} ${d.manifest.version}".trim(), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                                     if (d.manifest.description.isNotBlank()) Text(d.manifest.description, style = MaterialTheme.typography.bodySmall, maxLines = 3, overflow = TextOverflow.Ellipsis)
-                                    if (d.manifest.p2p) Text(stringResource(R.string.au22_stremio_p2p_warning), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
+                                    if (d.manifest.p2p) Text(stringResource(I18nR.string.au22_stremio_p2p_warning), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
                                 }
-                                if (isInstalled) OutlinedButton(onClick = {}, enabled = false) { Text(stringResource(R.string.hf_store_installed)) }
-                                else Button(onClick = { vm.installDirectory(d) }) { Text(stringResource(R.string.hc_install)) }
+                                if (isInstalled) OutlinedButton(onClick = {}, enabled = false) { Text(stringResource(I18nR.string.hf_store_installed)) }
+                                else Button(onClick = { vm.installDirectory(d) }) { Text(stringResource(I18nR.string.hc_install)) }
                             }
                         }
                     }
@@ -650,10 +652,10 @@ private fun AddonRow(a: Addon, onRemove: () -> Unit) {
             Column(Modifier.weight(1f)) {
                 Text("${a.manifest.name} ${a.manifest.version}".trim(), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                 if (a.manifest.description.isNotBlank()) Text(a.manifest.description, style = MaterialTheme.typography.bodySmall, maxLines = 3, overflow = TextOverflow.Ellipsis)
-                if (a.manifest.p2p) Text(stringResource(R.string.au22_stremio_p2p_warning), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
+                if (a.manifest.p2p) Text(stringResource(I18nR.string.au22_stremio_p2p_warning), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
                 Text(a.baseUrl, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
-            TextButton(onClick = onRemove) { Text(stringResource(R.string.hc_remove)) }
+            TextButton(onClick = onRemove) { Text(stringResource(I18nR.string.hc_remove)) }
         }
     }
 }
@@ -675,7 +677,7 @@ private fun WatchMark(vm: StremioViewModel, id: String, videoId: String? = null,
     }
     if (stremio || trakt) {
         val sources = listOfNotNull(if (stremio) "Stremio" else null, if (trakt) "Trakt" else null).joinToString(" · ")
-        Text(stringResource(R.string.au22_stremio_watched_sources, sources), style = MaterialTheme.typography.labelMedium,
+        Text(stringResource(I18nR.string.au22_stremio_watched_sources, sources), style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(vertical = 4.dp))
     }
 }

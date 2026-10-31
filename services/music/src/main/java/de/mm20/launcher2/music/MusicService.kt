@@ -1,4 +1,5 @@
 package de.mm20.launcher2.music
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.PendingIntent
 import android.content.Context
@@ -21,7 +22,6 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.preferences.media.MediaSettings
 import kotlinx.coroutines.CoroutineScope
@@ -255,7 +255,7 @@ internal class MusicServiceImpl(
                 ?: currentMediaController.firstOrNull()?.packageName?.let { pkg ->
                     getAppLabel(pkg)?.let {
                         context.getString(
-                            R.string.music_widget_default_title,
+                            I18nR.string.music_widget_default_title,
                             it
                         )
                     }

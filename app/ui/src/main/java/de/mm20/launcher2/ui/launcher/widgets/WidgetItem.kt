@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.ui.theme.rememberWallpaperContentStyle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -124,8 +126,8 @@ fun WidgetItem(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painterResource(R.drawable.drag_indicator_24px),
-                        contentDescription = stringResource(R.string.au3_launcher3_drag_handle),
+                        painterResource(BaseR.drawable.drag_indicator_24px),
+                        contentDescription = stringResource(I18nR.string.au3_launcher3_drag_handle),
                         modifier = Modifier
                             .draggable(
                                 state = draggableState,
@@ -155,23 +157,23 @@ fun WidgetItem(
                             configure = true
                         }) {
                             Icon(
-                                painterResource(R.drawable.tune_24px),
-                                contentDescription = stringResource(R.string.settings)
+                                painterResource(BaseR.drawable.tune_24px),
+                                contentDescription = stringResource(I18nR.string.settings)
                             )
                         }
                     }
                     if (onAddToStack != null) {
                         IconButton(onClick = onAddToStack) {
                             Icon(
-                                painterResource(R.drawable.add_24px),
-                                contentDescription = stringResource(R.string.widget_stack_action_add)
+                                painterResource(BaseR.drawable.add_24px),
+                                contentDescription = stringResource(I18nR.string.widget_stack_action_add)
                             )
                         }
                     }
                     IconButton(onClick = { onWidgetRemove() }) {
                         Icon(
-                            painterResource(R.drawable.delete_24px),
-                            contentDescription = stringResource(R.string.widget_action_remove)
+                            painterResource(BaseR.drawable.delete_24px),
+                            contentDescription = stringResource(I18nR.string.widget_action_remove)
                         )
                     }
                 }

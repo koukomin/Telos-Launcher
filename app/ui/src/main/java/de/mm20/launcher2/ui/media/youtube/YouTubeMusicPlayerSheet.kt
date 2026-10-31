@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.youtube
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -102,18 +104,18 @@ internal fun YouTubeMusicPlayerContent(
             Text(time, style = MaterialTheme.typography.labelMedium)
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { onTrack(index - 1) }, enabled = index > 0 && index <= tracks.lastIndex) {
-                    Icon(painterResource(R.drawable.skip_previous_24px), stringResource(R.string.hc_previous))
+                    Icon(painterResource(BaseR.drawable.skip_previous_24px), stringResource(I18nR.string.hc_previous))
                 }
                 FilledIconButton(onClick = onToggle, modifier = Modifier.size(64.dp)) {
-                    Icon(painterResource(if (playing) R.drawable.pause_24px else R.drawable.play_arrow_24px),
-                        stringResource(if (playing) R.string.au_music_pause else R.string.hc_play))
+                    Icon(painterResource(if (playing) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px),
+                        stringResource(if (playing) I18nR.string.au_music_pause else I18nR.string.hc_play))
                 }
                 IconButton(onClick = { onTrack(index + 1) }, enabled = index >= 0 && index < tracks.lastIndex) {
-                    Icon(painterResource(R.drawable.skip_next_24px), stringResource(R.string.hc_next))
+                    Icon(painterResource(BaseR.drawable.skip_next_24px), stringResource(I18nR.string.hc_next))
                 }
-                IconButton(onClick = onStop) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.hc_stop)) }
+                IconButton(onClick = onStop) { Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.hc_stop)) }
             }
-            if (tracks.isNotEmpty()) Text(stringResource(R.string.au10_music_up_next), style = MaterialTheme.typography.titleMedium)
+            if (tracks.isNotEmpty()) Text(stringResource(I18nR.string.au10_music_up_next), style = MaterialTheme.typography.titleMedium)
         }
     }
     BoxWithConstraints(modifier) {
@@ -126,7 +128,7 @@ internal fun YouTubeMusicPlayerContent(
                 item { controls() }
                 itemsIndexed(tracks, key = { at, track -> "$at:${track.url}" }) { at, track ->
                     ListItem(headlineContent = { Text(track.title) }, supportingContent = { Text(track.artist) },
-                        leadingContent = { if (at == index) Icon(painterResource(R.drawable.play_arrow_24px), null) else Text((at + 1).toString()) },
+                        leadingContent = { if (at == index) Icon(painterResource(BaseR.drawable.play_arrow_24px), null) else Text((at + 1).toString()) },
                         modifier = Modifier.selectable(selected = at == index, role = Role.Button, onClick = { onTrack(at) }),
                         colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainer))
                 }

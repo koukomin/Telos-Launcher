@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,16 +18,16 @@ internal fun torrentWgStatusText(route: TorrentRoute): String? {
     val configs by wg.configs.collectAsState()
     return when (route) {
         is TorrentRoute.Wireguard -> stringResource(
-            R.string.au5_wgtorrent_status_ready,
-            configs.firstOrNull { it.id == route.configId }?.name ?: stringResource(R.string.au5_wgtorrent_removed),
+            I18nR.string.au5_wgtorrent_status_ready,
+            configs.firstOrNull { it.id == route.configId }?.name ?: stringResource(I18nR.string.au5_wgtorrent_removed),
         )
         is TorrentRoute.WireguardBlocked -> stringResource(
             when (route.reason) {
-                LocalProxyBlock.VpnOff -> R.string.au5_wgtorrent_blocked_vpn_off
-                LocalProxyBlock.ConfigMissing -> R.string.au5_wgtorrent_blocked_missing
-                LocalProxyBlock.ConfigDisabled -> R.string.au5_wgtorrent_blocked_disabled
-                LocalProxyBlock.TunnelDown -> R.string.au5_wgtorrent_blocked_down
-                LocalProxyBlock.EngineError -> R.string.au5_wgtorrent_blocked_error
+                LocalProxyBlock.VpnOff -> I18nR.string.au5_wgtorrent_blocked_vpn_off
+                LocalProxyBlock.ConfigMissing -> I18nR.string.au5_wgtorrent_blocked_missing
+                LocalProxyBlock.ConfigDisabled -> I18nR.string.au5_wgtorrent_blocked_disabled
+                LocalProxyBlock.TunnelDown -> I18nR.string.au5_wgtorrent_blocked_down
+                LocalProxyBlock.EngineError -> I18nR.string.au5_wgtorrent_blocked_error
             }
         )
         else -> null

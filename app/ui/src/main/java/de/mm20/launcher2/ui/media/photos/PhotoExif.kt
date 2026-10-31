@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.photos
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ContentResolver
 import android.content.Context
@@ -15,18 +16,18 @@ object PhotoExif {
 
     /** Tags that are shown and can be edited or removed. String resource of the label to tag. */
     val tags: List<Pair<Int, String>> = listOf(
-        R.string.au_viewer_exif_date_taken to ExifInterface.TAG_DATETIME_ORIGINAL,
-        R.string.au_viewer_exif_make to ExifInterface.TAG_MAKE,
-        R.string.au_viewer_exif_model to ExifInterface.TAG_MODEL,
-        R.string.au_viewer_exif_lens to ExifInterface.TAG_LENS_MODEL,
-        R.string.au_viewer_exif_exposure to ExifInterface.TAG_EXPOSURE_TIME,
-        R.string.au_viewer_exif_aperture to ExifInterface.TAG_F_NUMBER,
-        R.string.au_viewer_exif_iso to ExifInterface.TAG_PHOTOGRAPHIC_SENSITIVITY,
-        R.string.au_viewer_exif_focal_length to ExifInterface.TAG_FOCAL_LENGTH,
-        R.string.au_viewer_exif_software to ExifInterface.TAG_SOFTWARE,
-        R.string.au_viewer_exif_artist to ExifInterface.TAG_ARTIST,
-        R.string.au_viewer_exif_description to ExifInterface.TAG_IMAGE_DESCRIPTION,
-        R.string.au_viewer_exif_copyright to ExifInterface.TAG_COPYRIGHT,
+        I18nR.string.au_viewer_exif_date_taken to ExifInterface.TAG_DATETIME_ORIGINAL,
+        I18nR.string.au_viewer_exif_make to ExifInterface.TAG_MAKE,
+        I18nR.string.au_viewer_exif_model to ExifInterface.TAG_MODEL,
+        I18nR.string.au_viewer_exif_lens to ExifInterface.TAG_LENS_MODEL,
+        I18nR.string.au_viewer_exif_exposure to ExifInterface.TAG_EXPOSURE_TIME,
+        I18nR.string.au_viewer_exif_aperture to ExifInterface.TAG_F_NUMBER,
+        I18nR.string.au_viewer_exif_iso to ExifInterface.TAG_PHOTOGRAPHIC_SENSITIVITY,
+        I18nR.string.au_viewer_exif_focal_length to ExifInterface.TAG_FOCAL_LENGTH,
+        I18nR.string.au_viewer_exif_software to ExifInterface.TAG_SOFTWARE,
+        I18nR.string.au_viewer_exif_artist to ExifInterface.TAG_ARTIST,
+        I18nR.string.au_viewer_exif_description to ExifInterface.TAG_IMAGE_DESCRIPTION,
+        I18nR.string.au_viewer_exif_copyright to ExifInterface.TAG_COPYRIGHT,
     )
 
     private val gpsTags = listOf(

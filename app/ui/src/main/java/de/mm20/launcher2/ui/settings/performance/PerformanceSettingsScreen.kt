@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.performance
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
@@ -46,29 +48,29 @@ fun PerformanceSettingsScreen() {
     val iconCacheSize by viewModel.iconCacheSize.collectAsStateWithLifecycle()
     val bouncePhysics by viewModel.bouncePhysics.collectAsStateWithLifecycle()
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_performance)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_performance)) {
         item {
             PreferenceCategory {
                 Preference(
-                    icon = R.drawable.bolt_24px,
-                    title = stringResource(R.string.art_optimizer_title),
-                    summary = stringResource(R.string.art_optimizer_summary),
+                    icon = BaseR.drawable.bolt_24px,
+                    title = stringResource(I18nR.string.art_optimizer_title),
+                    summary = stringResource(I18nR.string.art_optimizer_summary),
                     onClick = { backStack.add(ArtOptimizerRoute) },
                 )
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_performance_category_animations)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_performance_category_animations)) {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_performance_reduce_animations),
-                    summary = stringResource(R.string.preference_performance_reduce_animations_summary),
+                    title = stringResource(I18nR.string.preference_performance_reduce_animations),
+                    summary = stringResource(I18nR.string.preference_performance_reduce_animations_summary),
                     value = reduceAnimations == true,
                     onValueChanged = { viewModel.setReduceAnimations(it) },
                 )
                 AnimatedVisibility(reduceAnimations == false) {
                     androidx.compose.foundation.layout.Column {
                         SliderPreference(
-                            title = stringResource(R.string.preference_performance_animation_speed),
+                            title = stringResource(I18nR.string.preference_performance_animation_speed),
                             value = animationSpeed ?: 1f,
                             min = 0.5f,
                             max = 2f,
@@ -77,7 +79,7 @@ fun PerformanceSettingsScreen() {
                             label = { Text("${it}x") }
                         )
                         SliderPreference(
-                            title = stringResource(R.string.preference_performance_bounce_physics),
+                            title = stringResource(I18nR.string.preference_performance_bounce_physics),
                             value = (((1f - (bouncePhysics ?: 1f)) / 0.7f) * 100).roundToInt().coerceIn(0, 100),
                             min = 0,
                             max = 100,
@@ -90,31 +92,31 @@ fun PerformanceSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_performance_category_search)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_performance_category_search)) {
                 SliderPreference(
-                    title = stringResource(R.string.preference_performance_search_debounce),
+                    title = stringResource(I18nR.string.preference_performance_search_debounce),
                     value = searchDebounceMs ?: 0,
                     min = 0,
                     max = 500,
                     step = 50,
                     onValueChanged = { viewModel.setSearchDebounceMs(it) },
-                    label = { Text(if (it == 0) stringResource(R.string.preference_performance_debounce_off) else "${it}ms") }
+                    label = { Text(if (it == 0) stringResource(I18nR.string.preference_performance_debounce_off) else "${it}ms") }
                 )
-                SettingHint(stringResource(R.string.preference_performance_search_debounce_summary))
+                SettingHint(stringResource(I18nR.string.preference_performance_search_debounce_summary))
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_performance_category_caching)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_performance_category_caching)) {
                 SliderPreference(
-                    title = stringResource(R.string.preference_performance_icon_cache_size),
+                    title = stringResource(I18nR.string.preference_performance_icon_cache_size),
                     value = iconCacheSize ?: 200,
                     min = 50,
                     max = 500,
                     step = 50,
                     onValueChanged = { viewModel.setIconCacheSize(it) },
                 )
-                SettingHint(stringResource(R.string.preference_performance_icon_cache_size_summary))
-                SettingHint(stringResource(R.string.preference_performance_background_note))
+                SettingHint(stringResource(I18nR.string.preference_performance_icon_cache_size_summary))
+                SettingHint(stringResource(I18nR.string.preference_performance_background_note))
             }
         }
     }

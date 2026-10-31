@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
@@ -64,12 +65,12 @@ class MissedCallPopupActivity : BaseActivity() {
                     Surface(tonalElevation = 6.dp) {
                         Column(Modifier.padding(20.dp).fillMaxWidth()) {
                             Text(
-                                text = resolvedName?.ifBlank { null } ?: number.ifBlank { stringResource(R.string.widget_name_unknown) },
+                                text = resolvedName?.ifBlank { null } ?: number.ifBlank { stringResource(I18nR.string.widget_name_unknown) },
                                 style = MaterialTheme.typography.titleLarge,
                             )
                             if (ringMs > 0) {
                                 Text(
-                                    text = stringResource(R.string.hc_rang_for_seconds, (ringMs / 1000).toInt()),
+                                    text = stringResource(I18nR.string.hc_rang_for_seconds, (ringMs / 1000).toInt()),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
@@ -81,12 +82,12 @@ class MissedCallPopupActivity : BaseActivity() {
                                 Modifier.fillMaxWidth().padding(top = 16.dp),
                                 horizontalArrangement = Arrangement.SpaceBetween,
                             ) {
-                                TextButton(onClick = { finish() }) { Text(stringResource(R.string.hc_dismiss)) }
+                                TextButton(onClick = { finish() }) { Text(stringResource(I18nR.string.hc_dismiss)) }
                                 if (template.isNotBlank() && number.isNotBlank()) {
                                     TextButton(onClick = {
                                         QuickSms.send(this@MissedCallPopupActivity, number, template)
                                         finish()
-                                    }) { Text(stringResource(R.string.hc_message)) }
+                                    }) { Text(stringResource(I18nR.string.hc_message)) }
                                 }
                                 FilledTonalButton(onClick = {
                                     // the popup stays open until the call is placed, so the dial screen may still start
@@ -94,16 +95,16 @@ class MissedCallPopupActivity : BaseActivity() {
                                         if (number.isNotBlank()) SimRouter.placeAwait(this@MissedCallPopupActivity, number)
                                         finish()
                                     }
-                                }) { Text(stringResource(R.string.hc_call)) }
+                                }) { Text(stringResource(I18nR.string.hc_call)) }
                             }
                             if (number.isNotBlank()) {
                                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                     TextButton(onClick = {
                                         tryStartActivity(MessengerIntentUtils.whatsApp(number))
-                                    }) { Text(stringResource(R.string.action_whatsapp)) }
+                                    }) { Text(stringResource(I18nR.string.action_whatsapp)) }
                                     TextButton(onClick = {
                                         tryStartActivity(MessengerIntentUtils.telegram(number))
-                                    }) { Text(stringResource(R.string.action_telegram)) }
+                                    }) { Text(stringResource(I18nR.string.action_telegram)) }
                                 }
                             }
                         }

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.appearance.presets
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,13 +26,13 @@ fun PresetsSettingsScreen() {
     val presets by viewModel.presets.collectAsStateWithLifecycle()
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_presets),
+        title = stringResource(I18nR.string.preference_screen_presets),
     ) {
         item {
             PreferenceCategory {
                 for (bundle in presets) {
                     Preference(
-                        icon = R.drawable.palette_24px,
+                        icon = BaseR.drawable.palette_24px,
                         title = bundle.name,
                         summary = bundle.author?.takeIf { it.isNotBlank() },
                         controls = {

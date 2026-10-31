@@ -1,4 +1,5 @@
 package de.mm20.launcher2.comms.radio
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -11,7 +12,6 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-import de.mm20.launcher2.i18n.R as I18nR
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

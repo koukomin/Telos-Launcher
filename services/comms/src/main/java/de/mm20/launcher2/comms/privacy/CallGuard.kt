@@ -1,4 +1,5 @@
 package de.mm20.launcher2.comms.privacy
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.widget.Toast
@@ -7,7 +8,6 @@ import kotlinx.coroutines.withContext
 import android.telecom.PhoneAccountHandle
 import androidx.fragment.app.FragmentActivity
 import de.mm20.launcher2.comms.AuthManager
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.comms.telephony.SimRouter
 import de.mm20.launcher2.comms.telephony.TelosDialer
 import de.mm20.launcher2.preferences.comms.CommsSettings

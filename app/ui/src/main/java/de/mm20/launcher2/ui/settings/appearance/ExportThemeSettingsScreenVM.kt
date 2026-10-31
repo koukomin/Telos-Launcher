@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.appearance
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.net.Uri
@@ -122,7 +123,7 @@ class ExportThemeSettingsScreenVM: ViewModel(), KoinComponent {
                 ShareActions.shareFile(context, file, "application/json")
             }
             if (!shared) {
-                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
             }
         }
     }

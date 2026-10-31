@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -33,12 +35,12 @@ fun RadioPlayButton(station: RadioStation, player: RadioViewModel, modifier: Mod
     FilledTonalIconButton(onClick = { player.toggleStation(station) }, modifier = modifier) {
         Box(Modifier.size(24.dp), contentAlignment = Alignment.Center) {
             Icon(
-                painter = painterResource(if (active) R.drawable.pause_24px else R.drawable.play_arrow_24px),
+                painter = painterResource(if (active) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px),
                 contentDescription = stringResource(
                     when {
-                        loading -> R.string.au6_radio2_loading
-                        active -> R.string.au6_radio2_pause
-                        else -> R.string.au5_radiosearch_play
+                        loading -> I18nR.string.au6_radio2_loading
+                        active -> I18nR.string.au6_radio2_pause
+                        else -> I18nR.string.au5_radiosearch_play
                     },
                     station.name,
                 ),

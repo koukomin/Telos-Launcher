@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.locations
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.PendingIntent
 import android.content.Context
@@ -65,12 +67,12 @@ fun LocationsSettingsScreen() {
     val anyLocationProviderEnabled = osmLocations ?: false || enabledPlugins.isNullOrEmpty().not()
 
 
-    PreferenceScreen(title = stringResource(R.string.preference_search_locations)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_search_locations)) {
         item {
             PreferenceCategory {
                 PreferenceWithSwitch(
-                    title = stringResource(R.string.preference_search_osm_locations),
-                    summary = stringResource(R.string.preference_search_osm_locations_summary),
+                    title = stringResource(I18nR.string.preference_search_osm_locations),
+                    summary = stringResource(I18nR.string.preference_search_osm_locations_summary),
                     switchValue = osmLocations == true,
                     onSwitchChanged = {
                         viewModel.setOsmLocations(it)
@@ -93,9 +95,9 @@ fun LocationsSettingsScreen() {
                             }
                         },
                         description = (state as? PluginState.SetupRequired)?.message
-                            ?: stringResource(id = R.string.plugin_state_setup_required),
-                        icon = R.drawable.error_24px,
-                        unlockLabel = stringResource(id = R.string.plugin_action_setup),
+                            ?: stringResource(id = I18nR.string.plugin_state_setup_required),
+                        icon = BaseR.drawable.error_24px,
+                        unlockLabel = stringResource(id = I18nR.string.plugin_action_setup),
                     ) {
                         SwitchPreference(
                             title = plugin.plugin.label,
@@ -115,7 +117,7 @@ fun LocationsSettingsScreen() {
         item {
             PreferenceCategory {
                 SliderPreference(
-                    title = stringResource(R.string.preference_search_locations_radius),
+                    title = stringResource(I18nR.string.preference_search_locations_radius),
                     value = radius,
                     min = 500,
                     max = 10000,
@@ -139,8 +141,8 @@ fun LocationsSettingsScreen() {
         item {
             PreferenceCategory {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_locations_show_map),
-                    summary = stringResource(R.string.preference_search_locations_show_map_summary),
+                    title = stringResource(I18nR.string.preference_search_locations_show_map),
+                    summary = stringResource(I18nR.string.preference_search_locations_show_map_summary),
                     enabled = anyLocationProviderEnabled,
                     value = showMap == true,
                     onValueChanged = {
@@ -148,8 +150,8 @@ fun LocationsSettingsScreen() {
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_locations_theme_map),
-                    summary = stringResource(R.string.preference_search_locations_theme_map_summary),
+                    title = stringResource(I18nR.string.preference_search_locations_theme_map),
+                    summary = stringResource(I18nR.string.preference_search_locations_theme_map_summary),
                     value = themeMap == true,
                     enabled = anyLocationProviderEnabled && showMap == true,
                     onValueChanged = {
@@ -160,9 +162,9 @@ fun LocationsSettingsScreen() {
 
         }
         item {
-            PreferenceCategory(stringResource(R.string.preference_category_advanced)) {
+            PreferenceCategory(stringResource(I18nR.string.preference_category_advanced)) {
                 TextPreference(
-                    title = stringResource(R.string.preference_search_location_custom_tile_server_url),
+                    title = stringResource(I18nR.string.preference_search_location_custom_tile_server_url),
                     value = customTileServerUrl ?: "",
                     placeholder = LocationSearchSettings.DefaultTileServerUrl,
                     summary = customTileServerUrl?.takeIf { it.isNotBlank() }

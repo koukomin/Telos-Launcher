@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.applock
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -37,13 +38,13 @@ fun AppLockWebAppsScreen() {
     val lockedShortcuts by viewModel.lockedShortcuts.collectAsStateWithLifecycle()
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_category_app_lock_web_apps),
+        title = stringResource(I18nR.string.preference_category_app_lock_web_apps),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         if (shortcuts.isEmpty()) {
             item {
                 Text(
-                    text = stringResource(R.string.au3_secplug_applock_web_apps_empty),
+                    text = stringResource(I18nR.string.au3_secplug_applock_web_apps_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(16.dp),

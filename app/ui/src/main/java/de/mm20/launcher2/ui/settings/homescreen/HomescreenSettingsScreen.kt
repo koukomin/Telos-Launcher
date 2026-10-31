@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.homescreen
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
@@ -93,38 +95,38 @@ fun HomescreenSettingsScreen() {
     val homeScreenPageCount by viewModel.homeScreenPageCount.collectAsStateWithLifecycle(null)
     val desktopLocked by viewModel.desktopLocked.collectAsStateWithLifecycle(false)
 
-    PreferenceScreen(title = stringResource(id = R.string.preference_screen_homescreen)) {
+    PreferenceScreen(title = stringResource(id = I18nR.string.preference_screen_homescreen)) {
         item {
             PreferenceCategory {
                 // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 // Wallpaper removed from here, moved to AppearanceSettingsScreen
                 // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
                 Preference(
-                    icon = R.drawable.splitscreen_right_20px,
-                    title = stringResource(id = R.string.preference_screen_desktop_mode),
-                    summary = stringResource(id = R.string.preference_screen_desktop_mode_summary),
+                    icon = BaseR.drawable.splitscreen_right_20px,
+                    title = stringResource(id = I18nR.string.preference_screen_desktop_mode),
+                    summary = stringResource(id = I18nR.string.preference_screen_desktop_mode_summary),
                     onClick = {
                         backStack.add(DesktopModeSettingsRoute)
                     }
                 )
                 Preference(
-                    icon = R.drawable.today_24px,
-                    title = stringResource(R.string.preference_screen_dock),
-                    summary = stringResource(R.string.preference_screen_dock_summary),
+                    icon = BaseR.drawable.today_24px,
+                    title = stringResource(I18nR.string.preference_screen_dock),
+                    summary = stringResource(I18nR.string.preference_screen_dock_summary),
                     onClick = {
                         backStack.add(DockSettingsRoute)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_desktop_lock),
-                    summary = stringResource(R.string.preference_desktop_lock_summary),
-                    icon = R.drawable.lock_24px,
+                    title = stringResource(I18nR.string.preference_desktop_lock),
+                    summary = stringResource(I18nR.string.preference_desktop_lock_summary),
+                    icon = BaseR.drawable.lock_24px,
                     value = desktopLocked,
                     onValueChanged = { viewModel.setDesktopLocked(it) }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_layout_fixed_rotation),
-                    summary = stringResource(R.string.preference_layout_fixed_rotation_summary),
+                    title = stringResource(I18nR.string.preference_layout_fixed_rotation),
+                    summary = stringResource(I18nR.string.preference_layout_fixed_rotation_summary),
                     value = fixedRotation == true,
                     onValueChanged = {
                         viewModel.setFixedRotation(it)
@@ -135,7 +137,7 @@ fun HomescreenSettingsScreen() {
                 // way to turn it on, rather than left visible but non-functional.
                 if (EXTRA_HOME_SCREENS_ENABLED) {
                     SliderPreference(
-                        title = stringResource(R.string.preference_home_screen_page_count),
+                        title = stringResource(I18nR.string.preference_home_screen_page_count),
                         value = homeScreenPageCount ?: 1,
                         min = 1,
                         max = 9,
@@ -146,8 +148,8 @@ fun HomescreenSettingsScreen() {
                     AnimatedVisibility((homeScreenPageCount ?: 1) > 1) {
                         Banner(
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                            text = stringResource(R.string.preference_home_screen_page_count_warning),
-                            icon = R.drawable.info_24px,
+                            text = stringResource(I18nR.string.preference_home_screen_page_count_warning),
+                            icon = BaseR.drawable.info_24px,
                         )
                     }
                 }
@@ -155,32 +157,32 @@ fun HomescreenSettingsScreen() {
         }
         item {
             PreferenceCategory(
-                title = stringResource(id = R.string.preference_category_widgets)
+                title = stringResource(id = I18nR.string.preference_category_widgets)
             ) {
                 Preference(
-                    title = stringResource(R.string.preference_screen_clockwidget),
-                    summary = stringResource(R.string.preference_screen_clockwidget_summary),
+                    title = stringResource(I18nR.string.preference_screen_clockwidget),
+                    summary = stringResource(I18nR.string.preference_screen_clockwidget_summary),
                     onClick = {
                         viewModel.showClockWidgetSheet = true
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_widgets_on_home_screen),
-                    summary = stringResource(R.string.preference_widgets_on_home_screen_summary),
+                    title = stringResource(I18nR.string.preference_widgets_on_home_screen),
+                    summary = stringResource(I18nR.string.preference_widgets_on_home_screen_summary),
                     value = widgetsOnHomeScreen == true,
                     onValueChanged = {
                         viewModel.setWidgetsOnHomeScreen(it)
                     })
                 SwitchPreference(
-                    title = stringResource(id = R.string.preference_edit_button),
-                    summary = stringResource(id = R.string.preference_widgets_edit_button_summary),
+                    title = stringResource(id = I18nR.string.preference_edit_button),
+                    summary = stringResource(id = I18nR.string.preference_widgets_edit_button_summary),
                     value = editButton == true,
                     onValueChanged = {
                         viewModel.setWidgetEditButton(it)
                     })
                 Preference(
-                    title = stringResource(R.string.preference_reset_widgets_tutorial),
-                    summary = stringResource(R.string.preference_reset_widgets_tutorial_summary),
+                    title = stringResource(I18nR.string.preference_reset_widgets_tutorial),
+                    summary = stringResource(I18nR.string.preference_reset_widgets_tutorial_summary),
                     onClick = {
                         viewModel.resetWidgetsTutorial()
                     }
@@ -189,10 +191,10 @@ fun HomescreenSettingsScreen() {
 
         }
         item {
-            PreferenceCategory(stringResource(R.string.preference_category_searchbar)) {
+            PreferenceCategory(stringResource(I18nR.string.preference_category_searchbar)) {
                 SearchBarStylePreference(
-                    title = stringResource(R.string.preference_search_bar_style),
-                    summary = stringResource(R.string.preference_search_bar_style_summary),
+                    title = stringResource(I18nR.string.preference_search_bar_style),
+                    summary = stringResource(I18nR.string.preference_search_bar_style_summary),
                     value = searchBarStyle,
                     colors = searchBarColor,
                     onStyleChanged = {
@@ -203,8 +205,8 @@ fun HomescreenSettingsScreen() {
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_bar_colors_drawer_override),
-                    summary = stringResource(R.string.preference_search_bar_colors_drawer_override_summary),
+                    title = stringResource(I18nR.string.preference_search_bar_colors_drawer_override),
+                    summary = stringResource(I18nR.string.preference_search_bar_colors_drawer_override_summary),
                     value = searchBarColorDrawer != null,
                     onValueChanged = {
                         viewModel.setSearchBarColorDrawer(if (it) SearchBarColors.Auto else null)
@@ -223,7 +225,7 @@ fun HomescreenSettingsScreen() {
                             onCheckedChange = { viewModel.setSearchBarColorDrawer(SearchBarColors.Auto) },
                             shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                         ) {
-                            Icon(painterResource(R.drawable.auto_awesome_20dp), contentDescription = null)
+                            Icon(painterResource(BaseR.drawable.auto_awesome_20dp), contentDescription = null)
                         }
                         ToggleButton(
                             modifier = Modifier.weight(1f),
@@ -231,7 +233,7 @@ fun HomescreenSettingsScreen() {
                             onCheckedChange = { viewModel.setSearchBarColorDrawer(SearchBarColors.Light) },
                             shapes = ButtonGroupDefaults.connectedMiddleButtonShapes(),
                         ) {
-                            Icon(painterResource(R.drawable.light_mode_24px), contentDescription = null)
+                            Icon(painterResource(BaseR.drawable.light_mode_24px), contentDescription = null)
                         }
                         ToggleButton(
                             modifier = Modifier.weight(1f),
@@ -239,16 +241,16 @@ fun HomescreenSettingsScreen() {
                             onCheckedChange = { viewModel.setSearchBarColorDrawer(SearchBarColors.Dark) },
                             shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
                         ) {
-                            Icon(painterResource(R.drawable.dark_mode_24px), contentDescription = null)
+                            Icon(painterResource(BaseR.drawable.dark_mode_24px), contentDescription = null)
                         }
                     }
                 }
 
                 ListPreference(
-                    title = stringResource(R.string.preference_layout_search_bar_position),
+                    title = stringResource(I18nR.string.preference_layout_search_bar_position),
                     items = listOf(
-                        stringResource(R.string.search_bar_position_top) to false,
-                        stringResource(R.string.search_bar_position_bottom) to true,
+                        stringResource(I18nR.string.search_bar_position_top) to false,
+                        stringResource(I18nR.string.search_bar_position_bottom) to true,
                     ),
                     value = bottomSearchBar,
                     onValueChanged = {
@@ -256,16 +258,16 @@ fun HomescreenSettingsScreen() {
                     },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_layout_fixed_search_bar),
-                    summary = stringResource(R.string.preference_layout_fixed_search_bar_summary),
+                    title = stringResource(I18nR.string.preference_layout_fixed_search_bar),
+                    summary = stringResource(I18nR.string.preference_layout_fixed_search_bar_summary),
                     value = fixedSearchBar == true,
                     onValueChanged = {
                         viewModel.setFixedSearchBar(it)
                     },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_remember_scroll_position),
-                    summary = stringResource(R.string.preference_search_remember_scroll_position_summary),
+                    title = stringResource(I18nR.string.preference_search_remember_scroll_position),
+                    summary = stringResource(I18nR.string.preference_search_remember_scroll_position_summary),
                     value = rememberScrollPosition == true,
                     onValueChanged = {
                         viewModel.setRememberScrollPosition(it)
@@ -274,10 +276,10 @@ fun HomescreenSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.preference_category_animations)) {
+            PreferenceCategory(stringResource(I18nR.string.preference_category_animations)) {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_charging_animation),
-                    summary = stringResource(R.string.preference_charging_animation_summary),
+                    title = stringResource(I18nR.string.preference_charging_animation),
+                    summary = stringResource(I18nR.string.preference_charging_animation_summary),
                     value = chargingAnimation == true,
                     onValueChanged = {
                         viewModel.setChargingAnimation(it)
@@ -287,40 +289,40 @@ fun HomescreenSettingsScreen() {
         }
         item {
 
-            PreferenceCategory(stringResource(R.string.preference_category_system_bars)) {
+            PreferenceCategory(stringResource(I18nR.string.preference_category_system_bars)) {
                 ListPreference(
-                    title = stringResource(R.string.preference_status_bar_icons),
+                    title = stringResource(I18nR.string.preference_status_bar_icons),
                     value = lightStatusBar,
                     items = listOf(
-                        stringResource(R.string.preference_system_bar_icons_auto) to SystemBarColors.Auto,
-                        stringResource(R.string.preference_system_bar_icons_light) to SystemBarColors.Light,
-                        stringResource(R.string.preference_system_bar_icons_dark) to SystemBarColors.Dark,
+                        stringResource(I18nR.string.preference_system_bar_icons_auto) to SystemBarColors.Auto,
+                        stringResource(I18nR.string.preference_system_bar_icons_light) to SystemBarColors.Light,
+                        stringResource(I18nR.string.preference_system_bar_icons_dark) to SystemBarColors.Dark,
                     ),
                     onValueChanged = {
                         if (it != null) viewModel.setLightStatusBar(it)
                     }
                 )
                 ListPreference(
-                    title = stringResource(R.string.preference_nav_bar_icons),
+                    title = stringResource(I18nR.string.preference_nav_bar_icons),
                     value = lightNavBar,
                     items = listOf(
-                        stringResource(R.string.preference_system_bar_icons_auto) to SystemBarColors.Auto,
-                        stringResource(R.string.preference_system_bar_icons_light) to SystemBarColors.Light,
-                        stringResource(R.string.preference_system_bar_icons_dark) to SystemBarColors.Dark,
+                        stringResource(I18nR.string.preference_system_bar_icons_auto) to SystemBarColors.Auto,
+                        stringResource(I18nR.string.preference_system_bar_icons_light) to SystemBarColors.Light,
+                        stringResource(I18nR.string.preference_system_bar_icons_dark) to SystemBarColors.Dark,
                     ),
                     onValueChanged = {
                         if (it != null) viewModel.setLightNavBar(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_hide_status_bar),
+                    title = stringResource(I18nR.string.preference_hide_status_bar),
                     value = hideStatusBar == true,
                     onValueChanged = {
                         viewModel.setHideStatusBar(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_hide_nav_bar),
+                    title = stringResource(I18nR.string.preference_hide_nav_bar),
                     value = hideNavBar == true,
                     onValueChanged = {
                         viewModel.setHideNavBar(it)
@@ -378,9 +380,9 @@ fun SearchBarStylePreference(
                             Text(
                                 text = stringResource(
                                     when (style) {
-                                        SearchBarStyle.Transparent -> R.string.preference_search_bar_style_transparent
-                                        SearchBarStyle.Solid -> R.string.preference_search_bar_style_solid
-                                        SearchBarStyle.Hidden -> R.string.preference_search_bar_style_hidden
+                                        SearchBarStyle.Transparent -> I18nR.string.preference_search_bar_style_transparent
+                                        SearchBarStyle.Solid -> I18nR.string.preference_search_bar_style_solid
+                                        SearchBarStyle.Hidden -> I18nR.string.preference_search_bar_style_hidden
                                     }
                                 ),
                                 style = MaterialTheme.typography.titleSmall,
@@ -394,8 +396,8 @@ fun SearchBarStylePreference(
                             ) {
                                 Icon(
                                     painterResource(
-                                        if (style == value) R.drawable.check_circle_24px_filled
-                                        else R.drawable.circle_24px
+                                        if (style == value) BaseR.drawable.check_circle_24px_filled
+                                        else BaseR.drawable.circle_24px
                                     ),
                                     contentDescription = null,
                                     tint = if (style == value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
@@ -453,7 +455,7 @@ fun SearchBarStylePreference(
                                     shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                                 ) {
                                     Icon(
-                                        painterResource(R.drawable.auto_awesome_20dp),
+                                        painterResource(BaseR.drawable.auto_awesome_20dp),
                                         contentDescription = null,
                                     )
                                 }
@@ -466,7 +468,7 @@ fun SearchBarStylePreference(
                                     shapes = ButtonGroupDefaults.connectedMiddleButtonShapes(),
                                 ) {
                                     Icon(
-                                        painterResource(R.drawable.light_mode_24px),
+                                        painterResource(BaseR.drawable.light_mode_24px),
                                         contentDescription = null,
                                     )
                                 }
@@ -479,7 +481,7 @@ fun SearchBarStylePreference(
                                     shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
                                 ) {
                                     Icon(
-                                        painterResource(R.drawable.dark_mode_24px),
+                                        painterResource(BaseR.drawable.dark_mode_24px),
                                         contentDescription = null,
                                     )
                                 }

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.ui.theme.LocalOnWallpaper
 import de.mm20.launcher2.ui.theme.rememberWallpaperContentStyle
@@ -141,7 +143,7 @@ fun ClockWidget(
                     ) {
                         Box(modifier = Modifier.size(24.dp))
                         Text(
-                            text = stringResource(id = R.string.preference_screen_clockwidget),
+                            text = stringResource(id = I18nR.string.preference_screen_clockwidget),
                             style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier
                                 .weight(1f)
@@ -153,8 +155,8 @@ fun ClockWidget(
                             configure = true
                         }) {
                             Icon(
-                                painterResource(R.drawable.tune_24px),
-                                contentDescription = stringResource(R.string.settings)
+                                painterResource(BaseR.drawable.tune_24px),
+                                contentDescription = stringResource(I18nR.string.settings)
                             )
                         }
                     }
@@ -428,13 +430,13 @@ fun ConfigureClockWidgetSheet(
                     shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                 ) {
                     Icon(
-                        painterResource(if (compact == false) R.drawable.check_20px else R.drawable.splitscreen_top_20px),
+                        painterResource(if (compact == false) BaseR.drawable.check_20px else BaseR.drawable.splitscreen_top_20px),
                         null,
                         modifier = Modifier
                             .padding(end = ToggleButtonDefaults.IconSpacing)
                             .size(ToggleButtonDefaults.IconSize)
                     )
-                    Text(text = stringResource(R.string.preference_clockwidget_layout_vertical))
+                    Text(text = stringResource(I18nR.string.preference_clockwidget_layout_vertical))
                 }
                 ToggleButton(
                     modifier = Modifier.weight(1f),
@@ -445,13 +447,13 @@ fun ConfigureClockWidgetSheet(
                     shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
                 ) {
                     Icon(
-                        painterResource(if (compact == true) R.drawable.check_20px else R.drawable.splitscreen_right_20px),
+                        painterResource(if (compact == true) BaseR.drawable.check_20px else BaseR.drawable.splitscreen_right_20px),
                         null,
                         modifier = Modifier
                             .padding(end = ToggleButtonDefaults.IconSpacing)
                             .size(ToggleButtonDefaults.IconSize)
                     )
-                    Text(text = stringResource(R.string.preference_clockwidget_layout_horizontal))
+                    Text(text = stringResource(I18nR.string.preference_clockwidget_layout_horizontal))
                 }
             }
 
@@ -482,8 +484,8 @@ fun ConfigureClockWidgetSheet(
                     shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                 ) {
                     Icon(
-                        painterResource(R.drawable.auto_awesome_24dp),
-                        contentDescription = stringResource(R.string.preference_system_bar_icons_auto),
+                        painterResource(BaseR.drawable.auto_awesome_24dp),
+                        contentDescription = stringResource(I18nR.string.preference_system_bar_icons_auto),
                     )
                 }
                 ToggleButton(
@@ -495,8 +497,8 @@ fun ConfigureClockWidgetSheet(
                     shapes = ButtonGroupDefaults.connectedMiddleButtonShapes(),
                 ) {
                     Icon(
-                        painterResource(R.drawable.light_mode_24px),
-                        contentDescription = stringResource(R.string.preference_system_bar_icons_dark),
+                        painterResource(BaseR.drawable.light_mode_24px),
+                        contentDescription = stringResource(I18nR.string.preference_system_bar_icons_dark),
                     )
                 }
                 ToggleButton(
@@ -508,8 +510,8 @@ fun ConfigureClockWidgetSheet(
                     shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
                 ) {
                     Icon(
-                        painterResource(R.drawable.dark_mode_24px),
-                        contentDescription = stringResource(R.string.preference_system_bar_icons_light),
+                        painterResource(BaseR.drawable.dark_mode_24px),
+                        contentDescription = stringResource(I18nR.string.preference_system_bar_icons_light),
                     )
                 }
             }
@@ -520,8 +522,8 @@ fun ConfigureClockWidgetSheet(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.widget_use_theme_colors),
-                        icon = R.drawable.palette_24px,
+                        title = stringResource(I18nR.string.widget_use_theme_colors),
+                        icon = BaseR.drawable.palette_24px,
                         value = useAccentColor,
                         onValueChanged = {
                             viewModel.setUseThemeColor(it)
@@ -529,8 +531,8 @@ fun ConfigureClockWidgetSheet(
                     )
                     AnimatedVisibility(compact == false && style !is ClockWidgetStyle.Custom) {
                         SwitchPreference(
-                            title = stringResource(R.string.preference_clock_widget_show_seconds),
-                            icon = R.drawable.timer_24px,
+                            title = stringResource(I18nR.string.preference_clock_widget_show_seconds),
+                            icon = BaseR.drawable.timer_24px,
                             value = showSeconds,
                             onValueChanged = {
                                 viewModel.setShowSeconds(it)
@@ -543,8 +545,8 @@ fun ConfigureClockWidgetSheet(
                                 style is ClockWidgetStyle.Orbit
                     ) {
                         SwitchPreference(
-                            title = stringResource(R.string.preference_clock_widget_monospaced),
-                            icon = R.drawable._123_24px,
+                            title = stringResource(I18nR.string.preference_clock_widget_monospaced),
+                            icon = BaseR.drawable._123_24px,
                             value = monospaced,
                             onValueChanged = {
                                 viewModel.setMonospaced(it)
@@ -560,8 +562,8 @@ fun ConfigureClockWidgetSheet(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_clock_widget_fill_height),
-                        icon = R.drawable.fit_page_height_24px,
+                        title = stringResource(I18nR.string.preference_clock_widget_fill_height),
+                        icon = BaseR.drawable.fit_page_height_24px,
                         value = fillHeight == true || widgetsOnHome == false,
                         onValueChanged = {
                             viewModel.setFillHeight(it)
@@ -570,16 +572,16 @@ fun ConfigureClockWidgetSheet(
                     )
                     var showDropdown by remember { mutableStateOf(false) }
                     Preference(
-                        title = stringResource(R.string.preference_clock_widget_alignment),
+                        title = stringResource(I18nR.string.preference_clock_widget_alignment),
                         summary = when (alignment) {
-                            ClockWidgetAlignment.Top -> stringResource(R.string.preference_clock_widget_alignment_top)
-                            ClockWidgetAlignment.Center -> stringResource(R.string.preference_clock_widget_alignment_center)
-                            else -> stringResource(R.string.preference_clock_widget_alignment_bottom)
+                            ClockWidgetAlignment.Top -> stringResource(I18nR.string.preference_clock_widget_alignment_top)
+                            ClockWidgetAlignment.Center -> stringResource(I18nR.string.preference_clock_widget_alignment_center)
+                            else -> stringResource(I18nR.string.preference_clock_widget_alignment_bottom)
                         },
                         icon = when (alignment) {
-                            ClockWidgetAlignment.Top -> R.drawable.align_vertical_top_24px
-                            ClockWidgetAlignment.Center -> R.drawable.align_vertical_center_24px
-                            else -> R.drawable.align_vertical_bottom_24px
+                            ClockWidgetAlignment.Top -> BaseR.drawable.align_vertical_top_24px
+                            ClockWidgetAlignment.Center -> BaseR.drawable.align_vertical_center_24px
+                            else -> BaseR.drawable.align_vertical_bottom_24px
                         },
                         onClick = {
                             showDropdown = true
@@ -597,17 +599,17 @@ fun ConfigureClockWidgetSheet(
                                 selected = alignment == ClockWidgetAlignment.Top,
                                 selectedLeadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.check_24px),
+                                        painterResource(BaseR.drawable.check_24px),
                                         null
                                     )
                                 },
                                 leadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.align_vertical_top_24px),
+                                        painterResource(BaseR.drawable.align_vertical_top_24px),
                                         null
                                     )
                                 },
-                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_top)) },
+                                text = { Text(stringResource(I18nR.string.preference_clock_widget_alignment_top)) },
                                 onClick = {
                                     viewModel.setAlignment(ClockWidgetAlignment.Top)
                                     showDropdown = false
@@ -618,17 +620,17 @@ fun ConfigureClockWidgetSheet(
                                 selected = alignment == ClockWidgetAlignment.Center,
                                 selectedLeadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.check_24px),
+                                        painterResource(BaseR.drawable.check_24px),
                                         null
                                     )
                                 },
                                 leadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.align_vertical_center_24px),
+                                        painterResource(BaseR.drawable.align_vertical_center_24px),
                                         null
                                     )
                                 },
-                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_center)) },
+                                text = { Text(stringResource(I18nR.string.preference_clock_widget_alignment_center)) },
                                 onClick = {
                                     viewModel.setAlignment(ClockWidgetAlignment.Center)
                                     showDropdown = false
@@ -638,17 +640,17 @@ fun ConfigureClockWidgetSheet(
                                 selected = alignment == ClockWidgetAlignment.Bottom,
                                 selectedLeadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.check_24px),
+                                        painterResource(BaseR.drawable.check_24px),
                                         null
                                     )
                                 },
                                 leadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.align_vertical_bottom_24px),
+                                        painterResource(BaseR.drawable.align_vertical_bottom_24px),
                                         null
                                     )
                                 },
-                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_bottom)) },
+                                text = { Text(stringResource(I18nR.string.preference_clock_widget_alignment_bottom)) },
                                 onClick = {
                                     viewModel.setAlignment(ClockWidgetAlignment.Bottom)
                                     showDropdown = false
@@ -661,7 +663,7 @@ fun ConfigureClockWidgetSheet(
                 modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.secondary,
-                text = stringResource(R.string.preference_clockwidget_dynamic_zone)
+                text = stringResource(I18nR.string.preference_clockwidget_dynamic_zone)
             )
             OutlinedCard(
                 modifier = Modifier,
@@ -672,33 +674,33 @@ fun ConfigureClockWidgetSheet(
                     if (smartspacer == true) {
                         Banner(
                             modifier = Modifier.padding(16.dp),
-                            text = stringResource(R.string.preference_clockwidget_smartspacer),
-                            icon = R.drawable.info_24px,
+                            text = stringResource(I18nR.string.preference_clockwidget_smartspacer),
+                            icon = BaseR.drawable.info_24px,
                             primaryAction = {
                                 Button(
                                     onClick = {
                                         viewModel.disableSmartspacer()
                                     }
                                 ) {
-                                    Text(stringResource(R.string.turn_off))
+                                    Text(stringResource(I18nR.string.turn_off))
                                 }
                             }
                         )
                     }
                     if (smartspacer == false) {
                         SwitchPreference(
-                            title = stringResource(R.string.preference_clockwidget_date_part),
-                            summary = stringResource(R.string.preference_clockwidget_date_part_summary),
-                            icon = R.drawable.today_24px,
+                            title = stringResource(I18nR.string.preference_clockwidget_date_part),
+                            summary = stringResource(I18nR.string.preference_clockwidget_date_part_summary),
+                            icon = BaseR.drawable.today_24px,
                             value = parts?.date == true,
                             onValueChanged = {
                                 viewModel.setDatePart(it)
                             }
                         )
                         SwitchPreference(
-                            title = stringResource(R.string.preference_clockwidget_weather_part),
-                            summary = stringResource(R.string.preference_clockwidget_weather_part_summary),
-                            icon = R.drawable.light_mode_24px,
+                            title = stringResource(I18nR.string.preference_clockwidget_weather_part),
+                            summary = stringResource(I18nR.string.preference_clockwidget_weather_part_summary),
+                            icon = BaseR.drawable.light_mode_24px,
                             value = parts?.weather == true,
                             onValueChanged = {
                                 val activity = context as? AppCompatActivity
@@ -708,34 +710,34 @@ fun ConfigureClockWidgetSheet(
                             }
                         )
                         SwitchPreference(
-                            title = stringResource(R.string.preference_clockwidget_music_part),
-                            summary = stringResource(R.string.preference_clockwidget_music_part_summary),
-                            icon = R.drawable.music_note_24px,
+                            title = stringResource(I18nR.string.preference_clockwidget_music_part),
+                            summary = stringResource(I18nR.string.preference_clockwidget_music_part_summary),
+                            icon = BaseR.drawable.music_note_24px,
                             value = parts?.music == true,
                             onValueChanged = {
                                 viewModel.setMusicPart(it)
                             }
                         )
                         SwitchPreference(
-                            title = stringResource(R.string.preference_clockwidget_alarm_part),
-                            summary = stringResource(R.string.preference_clockwidget_alarm_part_summary),
-                            icon = R.drawable.alarm_24px,
+                            title = stringResource(I18nR.string.preference_clockwidget_alarm_part),
+                            summary = stringResource(I18nR.string.preference_clockwidget_alarm_part_summary),
+                            icon = BaseR.drawable.alarm_24px,
                             value = parts?.alarm == true,
                             onValueChanged = {
                                 viewModel.setAlarmPart(it)
                             }
                         )
                         ListPreference(
-                            title = stringResource(R.string.preference_clockwidget_battery_part),
-                            icon = R.drawable.battery_full_24px,
+                            title = stringResource(I18nR.string.preference_clockwidget_battery_part),
+                            icon = BaseR.drawable.battery_full_24px,
                             value = parts?.battery,
                             onValueChanged = {
                                     if (it != null) viewModel.setBatteryPart(it)
                             },
                             items = listOf(
-                                stringResource(R.string.preference_clockwidget_battery_part_hide) to BatteryStatusVisibility.Hide,
-                                stringResource(R.string.preference_clockwidget_battery_part_show) to BatteryStatusVisibility.Show,
-                                stringResource(R.string.preference_clockwidget_battery_part_always_show) to BatteryStatusVisibility.Always
+                                stringResource(I18nR.string.preference_clockwidget_battery_part_hide) to BatteryStatusVisibility.Hide,
+                                stringResource(I18nR.string.preference_clockwidget_battery_part_show) to BatteryStatusVisibility.Show,
+                                stringResource(I18nR.string.preference_clockwidget_battery_part_always_show) to BatteryStatusVisibility.Always
                             )
                         )
                     }

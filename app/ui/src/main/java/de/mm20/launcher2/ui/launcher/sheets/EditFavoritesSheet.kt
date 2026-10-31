@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.sheets
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Activity
 import android.util.Log
@@ -267,12 +269,12 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                         shape = MenuDefaults.standaloneItemShape,
                                         leadingIcon = {
                                             Icon(
-                                                painterResource(R.drawable.delete_24px),
+                                                painterResource(BaseR.drawable.delete_24px),
                                                 contentDescription = null
                                             )
                                         },
                                         text = {
-                                            Text(stringResource(R.string.menu_remove))
+                                            Text(stringResource(I18nR.string.menu_remove))
                                         }, onClick = {
                                             contextMenuItemKey?.let { viewModel.remove(it) }
                                             contextMenuItemKey = null
@@ -286,9 +288,9 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
 
                 is FavoritesSheetGridItem.Divider -> {
                     val title = when (it.section) {
-                        FavoritesSheetSection.ManuallySorted -> R.string.edit_favorites_dialog_pinned_sorted
-                        FavoritesSheetSection.AutomaticallySorted -> R.string.edit_favorites_dialog_pinned_unsorted
-                        FavoritesSheetSection.FrequentlyUsed -> R.string.edit_favorites_dialog_unpinned
+                        FavoritesSheetSection.ManuallySorted -> I18nR.string.edit_favorites_dialog_pinned_sorted
+                        FavoritesSheetSection.AutomaticallySorted -> I18nR.string.edit_favorites_dialog_pinned_unsorted
+                        FavoritesSheetSection.FrequentlyUsed -> I18nR.string.edit_favorites_dialog_unpinned
                     }
                     var showSettings by remember { mutableStateOf(false) }
                     Column(modifier = Modifier.fillMaxWidth()) {
@@ -313,10 +315,10 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                     onCheckedChange = { showSettings = it }) {
                                     Icon(
                                         painterResource(
-                                            if (showSettings) R.drawable.settings_24px_filled
-                                            else R.drawable.settings_24px
+                                            if (showSettings) BaseR.drawable.settings_24px_filled
+                                            else BaseR.drawable.settings_24px
                                         ),
-                                        contentDescription = stringResource(R.string.settings)
+                                        contentDescription = stringResource(I18nR.string.settings)
                                     )
                                 }
                             } else {
@@ -326,8 +328,8 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                         viewModel.pickShortcut(it.section)
                                     }) {
                                     Icon(
-                                        painterResource(R.drawable.add_24px),
-                                        contentDescription = stringResource(R.string.au3_launcher3_add_shortcut)
+                                        painterResource(BaseR.drawable.add_24px),
+                                        contentDescription = stringResource(I18nR.string.au3_launcher3_add_shortcut)
                                     )
                                 }
                             }
@@ -356,7 +358,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                             modifier = Modifier
                                                 .weight(1f)
                                                 .padding(end = 16.dp),
-                                            text = stringResource(R.string.frequently_used_show_in_favorites),
+                                            text = stringResource(I18nR.string.frequently_used_show_in_favorites),
                                             style = MaterialTheme.typography.labelMedium
                                         )
                                         Switch(
@@ -376,7 +378,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                         ) {
                                             Text(
                                                 modifier = Modifier.fillMaxWidth(),
-                                                text = stringResource(R.string.frequently_used_rows),
+                                                text = stringResource(I18nR.string.frequently_used_rows),
                                                 style = MaterialTheme.typography.labelMedium
                                             )
                                             Row(
@@ -449,7 +451,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                     horizontal = 16.dp,
                                     vertical = 24.dp,
                                 ),
-                            text = stringResource(R.string.edit_favorites_dialog_empty_section),
+                            text = stringResource(I18nR.string.edit_favorites_dialog_empty_section),
                             style = MaterialTheme.typography.labelSmall,
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.outline
@@ -478,7 +480,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                     .padding(end = 16.dp),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
-                                text = stringResource(R.string.edit_favorites_dialog_tags),
+                                text = stringResource(I18nR.string.edit_favorites_dialog_tags),
                                 style = MaterialTheme.typography.titleSmall,
                                 color = MaterialTheme.colorScheme.secondary
                             )
@@ -489,8 +491,8 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                         showAddMenu = true
                                     }) {
                                     Icon(
-                                        painterResource(R.drawable.add_24px),
-                                        contentDescription = stringResource(R.string.edit_favorites_dialog_new_tag)
+                                        painterResource(BaseR.drawable.add_24px),
+                                        contentDescription = stringResource(I18nR.string.edit_favorites_dialog_new_tag)
                                     )
                                 }
                                 DropdownMenuPopup(
@@ -510,7 +512,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                                     },
                                                     leadingIcon = {
                                                         Icon(
-                                                            painterResource(R.drawable.tag_24px),
+                                                            painterResource(BaseR.drawable.tag_24px),
                                                             null
                                                         )
                                                     },
@@ -534,11 +536,11 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                         DropdownMenuItem(
                                             shape = MenuDefaults.standaloneItemShape,
                                             leadingIcon = {
-                                                Icon(painterResource(R.drawable.add_24px), null)
+                                                Icon(painterResource(BaseR.drawable.add_24px), null)
                                             },
                                             text = {
                                                 Text(
-                                                    stringResource(R.string.edit_favorites_dialog_new_tag),
+                                                    stringResource(I18nR.string.edit_favorites_dialog_new_tag),
                                                 )
                                             },
                                             onClick = {
@@ -588,7 +590,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 4.dp),
-                                text = stringResource(R.string.edit_favorites_dialog_tag_section_empty),
+                                text = stringResource(I18nR.string.edit_favorites_dialog_tag_section_empty),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.outline
                             )
@@ -666,8 +668,8 @@ fun ShortcutPicker(viewModel: EditFavoritesSheetVM, paddingValues: PaddingValues
                 MissingPermissionBanner(
                     modifier = Modifier.padding(bottom = 16.dp),
                     text = stringResource(
-                        R.string.missing_permission_appshortcuts_create,
-                        stringResource(R.string.app_name)
+                        I18nR.string.missing_permission_appshortcuts_create,
+                        stringResource(BaseR.string.app_name)
                     ),
                     onClick = { viewModel.requestShortcutPermission(activity) })
             }

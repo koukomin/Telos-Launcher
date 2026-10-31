@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.appearance
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -73,34 +75,34 @@ fun AppearanceSettingsScreen() {
         backStack.add(ImportThemeSettingsRoute(it))
     }
 
-    PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
+    PreferenceScreen(title = stringResource(id = I18nR.string.preference_screen_appearance)) {
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_drawer_background)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_drawer_background)) {
                 de.mm20.launcher2.ui.component.preferences.SwitchPreference(
-                    title = stringResource(R.string.preference_drawer_background),
-                    summary = stringResource(R.string.preference_grid_glass_summary),
+                    title = stringResource(I18nR.string.preference_drawer_background),
+                    summary = stringResource(I18nR.string.preference_grid_glass_summary),
                     value = drawerBackground,
                     onValueChanged = uiSettings::setDrawerBackgroundEnabled,
                 )
                 AnimatedVisibility(drawerBackground) {
                     Column {
                         SliderPreference(
-                            title = stringResource(R.string.preference_dock_background_blur),
+                            title = stringResource(I18nR.string.preference_dock_background_blur),
                             value = drawerBlur, min = 0, max = 100,
                             onValueChanged = uiSettings::setDrawerBackgroundBlur,
                         )
                         SliderPreference(
-                            title = stringResource(R.string.preference_dock_background_opacity),
+                            title = stringResource(I18nR.string.preference_dock_background_opacity),
                             value = (drawerOpacity * 100).roundToInt(), min = 0, max = 100,
                             onValueChanged = { uiSettings.setDrawerBackgroundOpacity(it / 100f) },
                         )
                     }
                 }
             }
-            PreferenceCategory(title = stringResource(R.string.preference_category_widgets)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_widgets)) {
                 de.mm20.launcher2.ui.component.preferences.SwitchPreference(
-                    title = stringResource(R.string.preference_blur_wallpaper),
-                    summary = stringResource(R.string.preference_blur_wallpaper_summary),
+                    title = stringResource(I18nR.string.preference_blur_wallpaper),
+                    summary = stringResource(I18nR.string.preference_blur_wallpaper_summary),
                     value = glassWidgets,
                     onValueChanged = uiSettings::setWidgetsGlassBackground,
                 )
@@ -110,9 +112,9 @@ fun AppearanceSettingsScreen() {
             PreferenceCategory {
                 // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 Preference(
-                    icon = R.drawable.wallpaper_24px,
-                    title = stringResource(id = R.string.wallpaper),
-                    summary = stringResource(id = R.string.frosted_glass_wallpaper_help),
+                    icon = BaseR.drawable.wallpaper_24px,
+                    title = stringResource(id = I18nR.string.wallpaper),
+                    summary = stringResource(id = I18nR.string.frosted_glass_wallpaper_help),
                     onClick = {
                         backStack.add(WallpaperSettingsRoute)
                     }
@@ -121,12 +123,12 @@ fun AppearanceSettingsScreen() {
                 
                 val theme by viewModel.colorScheme.collectAsState()
                 ListPreference(
-                    title = stringResource(id = R.string.preference_theme),
+                    title = stringResource(id = I18nR.string.preference_theme),
                     items = listOf(
-                        stringResource(id = R.string.preference_theme_system) to ColorScheme.System,
-                        stringResource(id = R.string.preference_theme_light) to ColorScheme.Light,
-                        stringResource(id = R.string.preference_theme_dark) to ColorScheme.Dark,
-                        stringResource(id = R.string.preference_theme_time) to ColorScheme.Time,
+                        stringResource(id = I18nR.string.preference_theme_system) to ColorScheme.System,
+                        stringResource(id = I18nR.string.preference_theme_light) to ColorScheme.Light,
+                        stringResource(id = I18nR.string.preference_theme_dark) to ColorScheme.Dark,
+                        stringResource(id = I18nR.string.preference_theme_time) to ColorScheme.Time,
                     ),
                     value = theme,
                     onValueChanged = { newValue ->
@@ -139,7 +141,7 @@ fun AppearanceSettingsScreen() {
                         val nightStart by viewModel.colorSchemeNightStart.collectAsState()
                         val dayStart by viewModel.colorSchemeDayStart.collectAsState()
                         SliderPreference(
-                            title = stringResource(id = R.string.preference_theme_night_start),
+                            title = stringResource(id = I18nR.string.preference_theme_night_start),
                             value = nightStart ?: 20,
                             min = 0,
                             max = 23,
@@ -148,7 +150,7 @@ fun AppearanceSettingsScreen() {
                             label = { Text(formatHour(it)) },
                         )
                         SliderPreference(
-                            title = stringResource(id = R.string.preference_theme_day_start),
+                            title = stringResource(id = I18nR.string.preference_theme_day_start),
                             value = dayStart ?: 7,
                             min = 0,
                             max = 23,
@@ -163,11 +165,11 @@ fun AppearanceSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    title = stringResource(id = R.string.preference_screen_presets),
+                    title = stringResource(id = I18nR.string.preference_screen_presets),
                     onClick = {
                         backStack.add(PresetsSettingsRoute)
                     },
-                    icon = R.drawable.auto_awesome_24dp,
+                    icon = BaseR.drawable.auto_awesome_24dp,
                 )
             }
         }
@@ -175,42 +177,42 @@ fun AppearanceSettingsScreen() {
             PreferenceCategory {
                 val amoledSaver by uiSettings.amoledOnPowerSave.collectAsStateWithLifecycle(false)
                 de.mm20.launcher2.ui.component.preferences.SwitchPreference(
-                    title = stringResource(R.string.theme_amoled_powersave),
-                    summary = stringResource(R.string.theme_amoled_powersave_sum),
+                    title = stringResource(I18nR.string.theme_amoled_powersave),
+                    summary = stringResource(I18nR.string.theme_amoled_powersave_sum),
                     value = amoledSaver,
                     onValueChanged = { uiSettings.setAmoledOnPowerSave(it) },
                 )
                 Preference(
-                    title = stringResource(id = R.string.preference_screen_colors),
+                    title = stringResource(id = I18nR.string.preference_screen_colors),
                     summary = colorThemeName,
                     onClick = {
                         backStack.add(ColorSchemesSettingsRoute)
                     },
-                    icon = R.drawable.palette_24px,
+                    icon = BaseR.drawable.palette_24px,
                 )
                 Preference(
-                    title = stringResource(id = R.string.preference_screen_typography),
+                    title = stringResource(id = I18nR.string.preference_screen_typography),
                     summary = typographyThemeName,
                     onClick = {
                         backStack.add(TypographiesSettingsRoute)
                     },
-                    icon = R.drawable.text_fields_24px,
+                    icon = BaseR.drawable.text_fields_24px,
                 )
                 Preference(
-                    title = stringResource(id = R.string.preference_screen_shapes),
+                    title = stringResource(id = I18nR.string.preference_screen_shapes),
                     summary = shapeThemeName,
                     onClick = {
                         backStack.add(ShapeSchemesSettingsRoute)
                     },
-                    icon = R.drawable.crop_square_24px,
+                    icon = BaseR.drawable.crop_square_24px,
                 )
                 Preference(
-                    title = stringResource(id = R.string.preference_screen_transparencies),
+                    title = stringResource(id = I18nR.string.preference_screen_transparencies),
                     summary = transparencyThemeName,
                     onClick = {
                         backStack.add(TransparencySchemesSettingsRoute)
                     },
-                    icon = R.drawable.opacity_24px,
+                    icon = BaseR.drawable.opacity_24px,
                 )
             }
         }
@@ -220,7 +222,7 @@ fun AppearanceSettingsScreen() {
                 var liveFontScale by remember(committedFontScale) { mutableFloatStateOf(committedFontScale) }
                 FontScalePreview(fontScale = liveFontScale)
                 SliderPreference(
-                    title = stringResource(R.string.preference_font_scale),
+                    title = stringResource(I18nR.string.preference_font_scale),
                     value = committedFontScale,
                     min = 0.8f,
                     max = 2f,
@@ -235,15 +237,15 @@ fun AppearanceSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    title = stringResource(R.string.theme_import_title),
-                    icon = R.drawable.arrow_circle_down_24px,
+                    title = stringResource(I18nR.string.theme_import_title),
+                    icon = BaseR.drawable.arrow_circle_down_24px,
                     onClick = {
                         importLauncher.launch(arrayOf("*/*"))
                     }
                 )
                 Preference(
-                    title = stringResource(R.string.theme_export_title),
-                    icon = R.drawable.arrow_circle_up_24px,
+                    title = stringResource(I18nR.string.theme_export_title),
+                    icon = BaseR.drawable.arrow_circle_up_24px,
                     onClick = {
                         backStack.add(ExportThemeSettingsRoute)
                     }
@@ -253,12 +255,12 @@ fun AppearanceSettingsScreen() {
 
         if (isAtLeastApiLevel(31)) {
             item {
-                PreferenceCategory(stringResource(R.string.preference_category_advanced)) {
+                PreferenceCategory(stringResource(I18nR.string.preference_category_advanced)) {
                     ListPreference(
-                        title = stringResource(R.string.preference_mdy_color_source),
+                        title = stringResource(I18nR.string.preference_mdy_color_source),
                         items = listOf(
-                            stringResource(R.string.preference_mdy_color_source_system) to false,
-                            stringResource(R.string.preference_mdy_color_source_wallpaper) to true,
+                            stringResource(I18nR.string.preference_mdy_color_source_system) to false,
+                            stringResource(I18nR.string.preference_mdy_color_source_wallpaper) to true,
                         ),
                         value = compatModeColors,
                         onValueChanged = {
@@ -296,7 +298,7 @@ private fun FontScalePreview(fontScale: Float) {
             ) {
                 // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 androidx.compose.material3.Icon(
-                    painter = androidx.compose.ui.res.painterResource(de.mm20.launcher2.ui.R.drawable.photo_24px), // Fallback icon
+                    painter = androidx.compose.ui.res.painterResource(BaseR.drawable.photo_24px), // Fallback icon
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
@@ -306,7 +308,7 @@ private fun FontScalePreview(fontScale: Float) {
                 LocalDensity provides Density(baseDensity.density, baseDensity.fontScale * fontScale),
             ) {
                 Text(
-                    text = stringResource(R.string.preference_font_scale_preview_label),
+                    text = stringResource(I18nR.string.preference_font_scale_preview_label),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 8.dp),

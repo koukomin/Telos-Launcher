@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.kmp
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -7,7 +8,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.uikmp.CalculatorEngine
 import de.mm20.launcher2.uikmp.SharedCalculatorScreen
 import de.mm20.launcher2.uikmp.SharedCalendarScreen

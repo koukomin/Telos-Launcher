@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.text.format.DateFormat
 import android.widget.Toast
@@ -52,67 +53,67 @@ internal fun TaskDetailSheet(task: DownloadTask, manager: DownloadManager, onDis
             Text(stateLabel(task) + " · " + progressText(task), color = MaterialTheme.colorScheme.onSurfaceVariant)
 
             if (task.segments.size > 1) {
-                Text(stringResource(R.string.dl_detail_segments, task.segments.size), style = MaterialTheme.typography.labelLarge)
+                Text(stringResource(I18nR.string.dl_detail_segments, task.segments.size), style = MaterialTheme.typography.labelLarge)
                 SegmentBars(task)
             }
 
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 when (task.state) {
                     DownloadState.Completed -> {
-                        Button(onClick = { if (!openDownload(context, task)) Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show() }) { Text(stringResource(R.string.dl_open)) }
+                        Button(onClick = { if (!openDownload(context, task)) Toast.makeText(context, I18nR.string.dl_no_app, Toast.LENGTH_SHORT).show() }) { Text(stringResource(I18nR.string.dl_open)) }
                         OutlinedButton(onClick = {
                             scope.launch {
                                 if (!shareDownload(context, task)) {
-                                    Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, I18nR.string.dl_no_app, Toast.LENGTH_SHORT).show()
                                 }
                             }
-                        }) { Text(stringResource(R.string.dl_share)) }
+                        }) { Text(stringResource(I18nR.string.dl_share)) }
                     }
-                    DownloadState.Paused -> Button(onClick = { manager.resume(task.id) }) { Text(stringResource(R.string.dl_resume)) }
-                    DownloadState.Failed -> Button(onClick = { manager.resume(task.id) }) { Text(stringResource(R.string.dl_retry)) }
-                    else -> Button(onClick = { manager.pause(task.id) }) { Text(stringResource(R.string.dl_pause)) }
+                    DownloadState.Paused -> Button(onClick = { manager.resume(task.id) }) { Text(stringResource(I18nR.string.dl_resume)) }
+                    DownloadState.Failed -> Button(onClick = { manager.resume(task.id) }) { Text(stringResource(I18nR.string.dl_retry)) }
+                    else -> Button(onClick = { manager.pause(task.id) }) { Text(stringResource(I18nR.string.dl_pause)) }
                 }
                 if (task.state == DownloadState.Queued || task.state == DownloadState.Paused) {
-                    OutlinedButton(onClick = { manager.moveToTop(task.id) }) { Text(stringResource(R.string.dl_p3_move_top)) }
-                    OutlinedButton(onClick = { manager.moveToBottom(task.id) }) { Text(stringResource(R.string.dl_p3_move_bottom)) }
+                    OutlinedButton(onClick = { manager.moveToTop(task.id) }) { Text(stringResource(I18nR.string.dl_p3_move_top)) }
+                    OutlinedButton(onClick = { manager.moveToBottom(task.id) }) { Text(stringResource(I18nR.string.dl_p3_move_bottom)) }
                 }
                 if (task.state == DownloadState.Completed && ArchiveLogic.isZip(task.name) && !task.fileMissing && task.extractState != "running") {
-                    OutlinedButton(onClick = { manager.extract(task.id) }) { Text(stringResource(R.string.dl_p3_extract)) }
+                    OutlinedButton(onClick = { manager.extract(task.id) }) { Text(stringResource(I18nR.string.dl_p3_extract)) }
                 }
-                OutlinedButton(onClick = { copyLink(context, task.url) }) { Text(stringResource(R.string.dl_copy_link)) }
-                OutlinedButton(onClick = onDelete) { Text(stringResource(R.string.dl_delete)) }
+                OutlinedButton(onClick = { copyLink(context, task.url) }) { Text(stringResource(I18nR.string.dl_copy_link)) }
+                OutlinedButton(onClick = onDelete) { Text(stringResource(I18nR.string.dl_delete)) }
             }
 
             val fmt = { t: Long -> DateFormat.getMediumDateFormat(context).format(Date(t)) + " " + DateFormat.getTimeFormat(context).format(Date(t)) }
             when (task.extractState) {
-                "running" -> Info(R.string.dl_p3_extract, stringResource(R.string.dl_p3_extract_running))
-                "done" -> Info(R.string.dl_p3_extract, stringResource(R.string.dl_p3_extract_done))
-                "failed" -> Info(R.string.dl_p3_extract, stringResource(R.string.dl_p3_extract_failed))
+                "running" -> Info(I18nR.string.dl_p3_extract, stringResource(I18nR.string.dl_p3_extract_running))
+                "done" -> Info(I18nR.string.dl_p3_extract, stringResource(I18nR.string.dl_p3_extract_done))
+                "failed" -> Info(I18nR.string.dl_p3_extract, stringResource(I18nR.string.dl_p3_extract_failed))
             }
             task.media?.let { m ->
-                if (m.uploader.isNotBlank()) Info(R.string.dl_m_tab, m.uploader)
+                if (m.uploader.isNotBlank()) Info(I18nR.string.dl_m_tab, m.uploader)
             }
-            Info(R.string.dl_detail_url, task.url)
-            task.resolvedUrl?.takeIf { it != task.url }?.let { Info(R.string.dl_detail_final_url, it) }
-            if (task.mirrors.isNotEmpty()) Info(R.string.dl_detail_mirrors, task.mirrors.joinToString("\n"))
-            Info(R.string.dl_detail_size, if (task.totalBytes >= 0) Formatting.size(task.totalBytes) else "?")
-            task.category?.let { Info(R.string.dl_category, categoryLabel(it)) }
-            task.mimeType?.let { Info(R.string.dl_detail_mime, it) }
-            task.fileUri?.let { Info(R.string.dl_detail_saved_to, android.net.Uri.decode(it)) }
-            Info(R.string.dl_detail_resume_support, stringResource(if (task.acceptRanges) R.string.dl_yes else R.string.dl_no))
-            if (task.createdAt > 0) Info(R.string.dl_detail_created, fmt(task.createdAt))
-            if (task.completedAt > 0) Info(R.string.dl_detail_completed, fmt(task.completedAt))
-            if (task.retryCount > 0) Info(R.string.dl_detail_retries, task.retryCount.toString())
-            task.checksum?.let { Info(R.string.dl_detail_checksum, it) }
+            Info(I18nR.string.dl_detail_url, task.url)
+            task.resolvedUrl?.takeIf { it != task.url }?.let { Info(I18nR.string.dl_detail_final_url, it) }
+            if (task.mirrors.isNotEmpty()) Info(I18nR.string.dl_detail_mirrors, task.mirrors.joinToString("\n"))
+            Info(I18nR.string.dl_detail_size, if (task.totalBytes >= 0) Formatting.size(task.totalBytes) else "?")
+            task.category?.let { Info(I18nR.string.dl_category, categoryLabel(it)) }
+            task.mimeType?.let { Info(I18nR.string.dl_detail_mime, it) }
+            task.fileUri?.let { Info(I18nR.string.dl_detail_saved_to, android.net.Uri.decode(it)) }
+            Info(I18nR.string.dl_detail_resume_support, stringResource(if (task.acceptRanges) I18nR.string.dl_yes else I18nR.string.dl_no))
+            if (task.createdAt > 0) Info(I18nR.string.dl_detail_created, fmt(task.createdAt))
+            if (task.completedAt > 0) Info(I18nR.string.dl_detail_completed, fmt(task.completedAt))
+            if (task.retryCount > 0) Info(I18nR.string.dl_detail_retries, task.retryCount.toString())
+            task.checksum?.let { Info(I18nR.string.dl_detail_checksum, it) }
             task.etag?.let { Info("ETag", it) }
-            if (!task.error.isNullOrBlank()) Info(R.string.dl_detail_error, task.error!!)
+            if (!task.error.isNullOrBlank()) Info(I18nR.string.dl_detail_error, task.error!!)
             val headerText = buildString {
                 task.userAgent?.let { appendLine("User-Agent: $it") }
                 task.referer?.let { appendLine("Referer: $it") }
                 if (!task.cookies.isNullOrBlank()) appendLine("Cookie: ***")
                 task.headers.forEach { (k, v) -> appendLine("$k: ${if (k.equals("Authorization", true) || k.equals("Cookie", true)) "***" else v}") }
             }.trim()
-            if (headerText.isNotEmpty()) Info(R.string.dl_detail_headers, headerText, mono = true)
+            if (headerText.isNotEmpty()) Info(I18nR.string.dl_detail_headers, headerText, mono = true)
             Spacer(Modifier.size(16.dp))
         }
     }

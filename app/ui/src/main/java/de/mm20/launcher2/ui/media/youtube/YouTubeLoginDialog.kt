@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.youtube
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
@@ -34,7 +35,7 @@ fun YouTubeLoginDialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false),
         modifier = Modifier.fillMaxWidth(0.95f),
-        title = { Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.au7_trakt_sign_in) + " · YouTube") },
+        title = { Text(androidx.compose.ui.res.stringResource(I18nR.string.au7_trakt_sign_in) + " · YouTube") },
         text = {
             AndroidView(
                 modifier = Modifier
@@ -109,7 +110,7 @@ fun YouTubeLoginDialog(
             )
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.hc_close)) }
+            TextButton(onClick = onDismiss) { Text(androidx.compose.ui.res.stringResource(I18nR.string.hc_close)) }
         }
     )
 }

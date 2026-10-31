@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.screenshot
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -134,7 +136,7 @@ private fun ScreenshotEditor(uri: Uri?, path: String?, partial: Boolean, onClose
             }
         }
         if (bitmap == null) {
-            Toast.makeText(context, R.string.screenshot_cannot_open, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18nR.string.screenshot_cannot_open, Toast.LENGTH_SHORT).show()
             onClose()
         }
     }
@@ -154,13 +156,13 @@ private fun ScreenshotEditor(uri: Uri?, path: String?, partial: Boolean, onClose
     Column(Modifier.fillMaxSize().background(Color.Black).systemBarsPadding()) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onClose) {
-                Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.close), tint = Color.White)
+                Icon(painterResource(BaseR.drawable.close_24px), contentDescription = stringResource(I18nR.string.close), tint = Color.White)
             }
             Box(Modifier.weight(1f))
             TextButton(
                 onClick = { undo.removeLastOrNull()?.let { bitmap = it; resetSelection() } },
                 enabled = undo.isNotEmpty(),
-            ) { Text(stringResource(R.string.screenshot_undo), color = if (undo.isNotEmpty()) Color.White else Color.Gray) }
+            ) { Text(stringResource(I18nR.string.screenshot_undo), color = if (undo.isNotEmpty()) Color.White else Color.Gray) }
             TextButton(enabled = !saving, onClick = {
                 val b = bitmap ?: return@TextButton
                 saving = true
@@ -168,17 +170,17 @@ private fun ScreenshotEditor(uri: Uri?, path: String?, partial: Boolean, onClose
                     val saved = withContext(Dispatchers.IO) { ScreenshotStore.save(context, b) }
                     saving = false
                     if (saved == null) {
-                        Toast.makeText(context, R.string.screenshot_save_failed, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18nR.string.screenshot_save_failed, Toast.LENGTH_SHORT).show()
                     } else {
                         val shared = withContext(Dispatchers.IO) {
                             ShareActions.shareUris(context, listOf(saved), "image/*")
                         }
                         if (!shared) {
-                            Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
-            }) { Text(stringResource(R.string.voice_share), color = if (saving) Color.Gray else Color.White) }
+            }) { Text(stringResource(I18nR.string.voice_share), color = if (saving) Color.Gray else Color.White) }
             TextButton(enabled = !saving, onClick = {
                 val b = bitmap ?: return@TextButton
                 saving = true
@@ -186,14 +188,14 @@ private fun ScreenshotEditor(uri: Uri?, path: String?, partial: Boolean, onClose
                     val saved = withContext(Dispatchers.IO) { ScreenshotStore.save(context, b) }
                     saving = false
                     if (saved != null) {
-                        Toast.makeText(context, R.string.screenshot_saved, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18nR.string.screenshot_saved, Toast.LENGTH_SHORT).show()
                         path?.let { File(it).delete() }
                         onClose()
                     } else {
-                        Toast.makeText(context, R.string.screenshot_save_failed, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, I18nR.string.screenshot_save_failed, Toast.LENGTH_SHORT).show()
                     }
                 }
-            }) { Text(stringResource(R.string.voice_save), color = if (saving) Color.Gray else MaterialTheme.colorScheme.primary) }
+            }) { Text(stringResource(I18nR.string.voice_save), color = if (saving) Color.Gray else MaterialTheme.colorScheme.primary) }
         }
 
         BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
@@ -300,7 +302,7 @@ private fun ScreenshotEditor(uri: Uri?, path: String?, partial: Boolean, onClose
                 val canApply = selectionDone && (tool == EditTool.Crop || tool == EditTool.Select)
                 if (canApply) {
                     Row(Modifier.align(Alignment.BottomCenter).padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        TextButton(onClick = { resetSelection() }) { Text(stringResource(R.string.voice_cancel), color = Color.White) }
+                        TextButton(onClick = { resetSelection() }) { Text(stringResource(I18nR.string.voice_cancel), color = Color.White) }
                         TextButton(onClick = {
                             val r = selectionRect()
                             if (r != null && r.width() > 8 && r.height() > 8) {
@@ -312,7 +314,7 @@ private fun ScreenshotEditor(uri: Uri?, path: String?, partial: Boolean, onClose
                                 push(result)
                             }
                             resetSelection()
-                        }) { Text(stringResource(R.string.screenshot_apply), color = MaterialTheme.colorScheme.primary) }
+                        }) { Text(stringResource(I18nR.string.screenshot_apply), color = MaterialTheme.colorScheme.primary) }
                     }
                 }
             }
@@ -321,9 +323,9 @@ private fun ScreenshotEditor(uri: Uri?, path: String?, partial: Boolean, onClose
         Column(Modifier.fillMaxWidth().background(Color(0xFF1B1B1B)).padding(vertical = 8.dp)) {
             if (tool == EditTool.Select) {
                 Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(selected = shape == SelectShape.Rectangle, onClick = { shape = SelectShape.Rectangle; resetSelection() }, label = { Text(stringResource(R.string.screenshot_shape_rectangle)) })
-                    FilterChip(selected = shape == SelectShape.Oval, onClick = { shape = SelectShape.Oval; resetSelection() }, label = { Text(stringResource(R.string.screenshot_shape_oval)) })
-                    FilterChip(selected = shape == SelectShape.Freeform, onClick = { shape = SelectShape.Freeform; resetSelection() }, label = { Text(stringResource(R.string.screenshot_shape_freeform)) })
+                    FilterChip(selected = shape == SelectShape.Rectangle, onClick = { shape = SelectShape.Rectangle; resetSelection() }, label = { Text(stringResource(I18nR.string.screenshot_shape_rectangle)) })
+                    FilterChip(selected = shape == SelectShape.Oval, onClick = { shape = SelectShape.Oval; resetSelection() }, label = { Text(stringResource(I18nR.string.screenshot_shape_oval)) })
+                    FilterChip(selected = shape == SelectShape.Freeform, onClick = { shape = SelectShape.Freeform; resetSelection() }, label = { Text(stringResource(I18nR.string.screenshot_shape_freeform)) })
                 }
             }
             if (tool == EditTool.Draw) {
@@ -337,19 +339,19 @@ private fun ScreenshotEditor(uri: Uri?, path: String?, partial: Boolean, onClose
                 }
             }
             Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 12.dp, vertical = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                if (partial) FilterChip(selected = tool == EditTool.Select, onClick = { tool = EditTool.Select; resetSelection() }, label = { Text(stringResource(R.string.screenshot_tool_select)) })
-                FilterChip(selected = tool == EditTool.Crop, onClick = { tool = EditTool.Crop; resetSelection() }, label = { Text(stringResource(R.string.screenshot_tool_crop)) })
-                FilterChip(selected = tool == EditTool.Pixelate, onClick = { tool = EditTool.Pixelate; resetSelection() }, label = { Text(stringResource(R.string.screenshot_tool_pixelate)) })
-                FilterChip(selected = tool == EditTool.Blur, onClick = { tool = EditTool.Blur; resetSelection() }, label = { Text(stringResource(R.string.screenshot_tool_blur)) })
-                FilterChip(selected = tool == EditTool.Draw, onClick = { tool = EditTool.Draw; resetSelection() }, label = { Text(stringResource(R.string.screenshot_tool_draw)) })
+                if (partial) FilterChip(selected = tool == EditTool.Select, onClick = { tool = EditTool.Select; resetSelection() }, label = { Text(stringResource(I18nR.string.screenshot_tool_select)) })
+                FilterChip(selected = tool == EditTool.Crop, onClick = { tool = EditTool.Crop; resetSelection() }, label = { Text(stringResource(I18nR.string.screenshot_tool_crop)) })
+                FilterChip(selected = tool == EditTool.Pixelate, onClick = { tool = EditTool.Pixelate; resetSelection() }, label = { Text(stringResource(I18nR.string.screenshot_tool_pixelate)) })
+                FilterChip(selected = tool == EditTool.Blur, onClick = { tool = EditTool.Blur; resetSelection() }, label = { Text(stringResource(I18nR.string.screenshot_tool_blur)) })
+                FilterChip(selected = tool == EditTool.Draw, onClick = { tool = EditTool.Draw; resetSelection() }, label = { Text(stringResource(I18nR.string.screenshot_tool_draw)) })
             }
             Text(
                 stringResource(
                     when (tool) {
-                        EditTool.Select -> R.string.screenshot_hint_select
-                        EditTool.Crop -> R.string.screenshot_hint_crop
-                        EditTool.Pixelate, EditTool.Blur -> R.string.screenshot_hint_obscure
-                        EditTool.Draw -> R.string.screenshot_hint_draw
+                        EditTool.Select -> I18nR.string.screenshot_hint_select
+                        EditTool.Crop -> I18nR.string.screenshot_hint_crop
+                        EditTool.Pixelate, EditTool.Blur -> I18nR.string.screenshot_hint_obscure
+                        EditTool.Draw -> I18nR.string.screenshot_hint_draw
                     }
                 ),
                 color = Color.Gray,

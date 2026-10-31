@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.website
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -220,8 +222,8 @@ fun WebsiteItem(
                         val isPinned by viewModel.isPinned.collectAsState(false)
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_unpin),
-                                icon = R.drawable.star_24px_filled,
+                                label = stringResource(I18nR.string.menu_favorites_unpin),
+                                icon = BaseR.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                     onBack?.invoke()
@@ -229,8 +231,8 @@ fun WebsiteItem(
                             )
                         } else {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_pin),
-                                icon = R.drawable.star_24px,
+                                label = stringResource(I18nR.string.menu_favorites_pin),
+                                icon = BaseR.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                     onBack?.invoke()
@@ -241,8 +243,8 @@ fun WebsiteItem(
 
                     toolbarActions.add(
                         DefaultToolbarAction(
-                            label = stringResource(R.string.menu_share),
-                            icon = R.drawable.share_24px,
+                            label = stringResource(I18nR.string.menu_share),
+                            icon = BaseR.drawable.share_24px,
                             action = {
                                 website.share(context)
                             }
@@ -252,16 +254,16 @@ fun WebsiteItem(
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(
                         DefaultToolbarAction(
-                        label = stringResource(R.string.menu_customize),
-                        icon = R.drawable.tune_24px,
+                        label = stringResource(I18nR.string.menu_customize),
+                        icon = BaseR.drawable.tune_24px,
                         action = { sheetManager.showCustomizeSearchableModal(website) }
                     ))
 
                     Toolbar(
                         leftActions = if (onBack != null) listOf(
                             DefaultToolbarAction(
-                                stringResource(id = R.string.menu_back),
-                                icon = R.drawable.arrow_back_24px,
+                                stringResource(id = I18nR.string.menu_back),
+                                icon = BaseR.drawable.arrow_back_24px,
                                 action = onBack
                             )
                         ) else emptyList(),

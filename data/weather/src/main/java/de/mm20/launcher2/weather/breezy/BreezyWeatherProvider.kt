@@ -1,11 +1,11 @@
 package de.mm20.launcher2.weather.breezy
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.pm.PackageManager
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.weather.WeatherIcon
 import de.mm20.launcher2.weather.WeatherProvider
 import kotlinx.coroutines.Dispatchers
@@ -119,19 +119,19 @@ class BreezyWeatherProvider(
 
     private fun textForId(id: Int): String {
         val resId = when (id) {
-            800 -> R.string.weather_condition_clearsky
-            801, 802, 803 -> R.string.weather_condition_partlycloudy
-            804 -> R.string.weather_condition_cloudy
-            500 -> R.string.weather_condition_rain
-            600 -> R.string.weather_condition_snow
-            771 -> R.string.weather_condition_wind
-            741 -> R.string.weather_condition_fog
-            721, 751 -> R.string.weather_condition_haze
-            616 -> R.string.weather_condition_sleet
-            611 -> R.string.weather_condition_hail
-            210 -> R.string.weather_condition_thunder
-            211 -> R.string.weather_condition_thunderstorm
-            else -> R.string.weather_condition_unknown
+            800 -> I18nR.string.weather_condition_clearsky
+            801, 802, 803 -> I18nR.string.weather_condition_partlycloudy
+            804 -> I18nR.string.weather_condition_cloudy
+            500 -> I18nR.string.weather_condition_rain
+            600 -> I18nR.string.weather_condition_snow
+            771 -> I18nR.string.weather_condition_wind
+            741 -> I18nR.string.weather_condition_fog
+            721, 751 -> I18nR.string.weather_condition_haze
+            616 -> I18nR.string.weather_condition_sleet
+            611 -> I18nR.string.weather_condition_hail
+            210 -> I18nR.string.weather_condition_thunder
+            211 -> I18nR.string.weather_condition_thunderstorm
+            else -> I18nR.string.weather_condition_unknown
         }
         return context.getString(resId)
     }

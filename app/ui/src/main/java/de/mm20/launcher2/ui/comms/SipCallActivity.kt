@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.os.Bundle
 import android.view.WindowManager
@@ -83,11 +85,11 @@ private fun SipCallScreen(call: de.mm20.launcher2.comms.sip.SipCall) {
     }
 
     val status = when (call.state) {
-        SipCallState.Incoming -> stringResource(R.string.au_phoneb_sip_incoming)
-        SipCallState.Outgoing -> stringResource(R.string.comms_calling)
-        SipCallState.Ringing -> stringResource(R.string.au_phoneb_ringing)
+        SipCallState.Incoming -> stringResource(I18nR.string.au_phoneb_sip_incoming)
+        SipCallState.Outgoing -> stringResource(I18nR.string.comms_calling)
+        SipCallState.Ringing -> stringResource(I18nR.string.au_phoneb_ringing)
         SipCallState.Established -> "%d:%02d".format(seconds / 60, seconds % 60)
-        SipCallState.None -> stringResource(R.string.au_phoneb_call_ended)
+        SipCallState.None -> stringResource(I18nR.string.au_phoneb_call_ended)
     }
 
     Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
@@ -129,15 +131,15 @@ private fun SipCallScreen(call: de.mm20.launcher2.comms.sip.SipCall) {
 
             if (call.state == SipCallState.Established) {
                 Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
-                    ToggleButton(R.drawable.mic_off_24px, stringResource(R.string.comms_mute), muted) {
+                    ToggleButton(BaseR.drawable.mic_off_24px, stringResource(I18nR.string.comms_mute), muted) {
                         muted = !muted
                         SipEngine.setMuted(muted)
                     }
-                    ToggleButton(R.drawable.volume_up_24px, stringResource(R.string.comms_speaker), speaker) {
+                    ToggleButton(BaseR.drawable.volume_up_24px, stringResource(I18nR.string.comms_speaker), speaker) {
                         speaker = !speaker
                         audio.setSpeaker(speaker)
                     }
-                    ToggleButton(R.drawable.dialpad_24px, stringResource(R.string.comms_keypad), keypad) { keypad = !keypad }
+                    ToggleButton(BaseR.drawable.dialpad_24px, stringResource(I18nR.string.comms_keypad), keypad) { keypad = !keypad }
                 }
                 Spacer(Modifier.height(32.dp))
             }
@@ -145,13 +147,13 @@ private fun SipCallScreen(call: de.mm20.launcher2.comms.sip.SipCall) {
             Row(horizontalArrangement = Arrangement.spacedBy(64.dp), verticalAlignment = Alignment.CenterVertically) {
                 RoundCallButton(
                     RdRedCall,
-                    R.drawable.rd_ic_phone_down_red_vector,
-                    stringResource(if (call.state == SipCallState.Incoming) R.string.comms_reject else R.string.comms_hangup),
+                    BaseR.drawable.rd_ic_phone_down_red_vector,
+                    stringResource(if (call.state == SipCallState.Incoming) I18nR.string.comms_reject else I18nR.string.comms_hangup),
                 ) {
                     SipEngine.hangUp()
                 }
                 if (call.state == SipCallState.Incoming) {
-                    RoundCallButton(RdCallGreen, R.drawable.rd_ic_phone_green_vector, stringResource(R.string.comms_answer)) {
+                    RoundCallButton(RdCallGreen, BaseR.drawable.rd_ic_phone_green_vector, stringResource(I18nR.string.comms_answer)) {
                         SipEngine.answer()
                     }
                 }

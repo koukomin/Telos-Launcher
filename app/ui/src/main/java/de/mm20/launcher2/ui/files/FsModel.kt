@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.ui.graphics.Color
 import de.mm20.launcher2.ui.R
@@ -9,15 +10,15 @@ import java.util.Locale
 
 /** What kind of file something is, decides its icon, its colour and what happens when it is opened. */
 enum class FileKind(val labelRes: Int, val color: Color, val icon: Int) {
-    Folder(R.string.au_files_kind_folder, Color(0xFFF4B400), de.mm20.launcher2.base.R.drawable.folder_24px),
-    Image(R.string.au_files_kind_image, Color(0xFFAB47BC), de.mm20.launcher2.base.R.drawable.photo_24px),
-    Video(R.string.au_files_kind_video, Color(0xFFEF5350), de.mm20.launcher2.base.R.drawable.videocam_24px),
-    Audio(R.string.au_files_kind_audio, Color(0xFF26A69A), de.mm20.launcher2.base.R.drawable.music_note_24px),
-    Document(R.string.au_files_kind_document, Color(0xFF42A5F5), de.mm20.launcher2.base.R.drawable.description_24px),
-    Archive(R.string.au_files_kind_archive, Color(0xFFFF9800), de.mm20.launcher2.base.R.drawable.folder_zip_24px),
-    Apk(R.string.au_files_kind_app, Color(0xFF66BB6A), de.mm20.launcher2.base.R.drawable.apk_document_24px),
-    Code(R.string.au_files_kind_code, Color(0xFF26C6DA), de.mm20.launcher2.base.R.drawable.code_24px),
-    Other(R.string.au_files_kind_file, Color(0xFF90A4AE), de.mm20.launcher2.base.R.drawable.description_24px);
+    Folder(I18nR.string.au_files_kind_folder, Color(0xFFF4B400), de.mm20.launcher2.base.R.drawable.folder_24px),
+    Image(I18nR.string.au_files_kind_image, Color(0xFFAB47BC), de.mm20.launcher2.base.R.drawable.photo_24px),
+    Video(I18nR.string.au_files_kind_video, Color(0xFFEF5350), de.mm20.launcher2.base.R.drawable.videocam_24px),
+    Audio(I18nR.string.au_files_kind_audio, Color(0xFF26A69A), de.mm20.launcher2.base.R.drawable.music_note_24px),
+    Document(I18nR.string.au_files_kind_document, Color(0xFF42A5F5), de.mm20.launcher2.base.R.drawable.description_24px),
+    Archive(I18nR.string.au_files_kind_archive, Color(0xFFFF9800), de.mm20.launcher2.base.R.drawable.folder_zip_24px),
+    Apk(I18nR.string.au_files_kind_app, Color(0xFF66BB6A), de.mm20.launcher2.base.R.drawable.apk_document_24px),
+    Code(I18nR.string.au_files_kind_code, Color(0xFF26C6DA), de.mm20.launcher2.base.R.drawable.code_24px),
+    Other(I18nR.string.au_files_kind_file, Color(0xFF90A4AE), de.mm20.launcher2.base.R.drawable.description_24px);
 
     companion object {
         private val images = setOf("jpg", "jpeg", "png", "gif", "webp", "bmp", "heic", "heif", "hif", "avif", "svg", "ico", "tif", "tiff", "dng", "raw", "arw", "cr2", "cr3", "nef", "nrw", "orf", "raf", "rw2", "pef", "sr2", "jxl", "psd", "ai", "cdr")
@@ -66,7 +67,7 @@ data class FsEntry(
 }
 
 enum class SortKey(val labelRes: Int) {
-    Name(R.string.au_files_sort_name), Modified(R.string.au_files_sort_date), Size(R.string.au_files_sort_size), Type(R.string.au_files_sort_type)
+    Name(I18nR.string.au_files_sort_name), Modified(I18nR.string.au_files_sort_date), Size(I18nR.string.au_files_sort_size), Type(I18nR.string.au_files_sort_type)
 }
 
 data class SortSpec(val key: SortKey = SortKey.Name, val ascending: Boolean = true, val foldersFirst: Boolean = true)

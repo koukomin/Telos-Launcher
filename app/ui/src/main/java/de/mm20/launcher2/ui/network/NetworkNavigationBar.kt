@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -19,11 +20,11 @@ internal enum class NetworkSection { Home, Stats, Logs, Apps, Settings }
 internal fun NetworkNavigationBar(selected: NetworkSection) {
     val backStack = LocalBackStack.current
     val entries = listOf(
-        Triple(NetworkSection.Home, R.string.net_hub_title, de.mm20.launcher2.base.R.drawable.ic_glyph_network),
-        Triple(NetworkSection.Stats, R.string.netstats_title, de.mm20.launcher2.base.R.drawable.bar_chart_24px),
-        Triple(NetworkSection.Logs, R.string.net_hub_logs, de.mm20.launcher2.base.R.drawable.manage_search_24px),
-        Triple(NetworkSection.Apps, R.string.netfw_l_apps, de.mm20.launcher2.base.R.drawable.apps_24px),
-        Triple(NetworkSection.Settings, R.string.net_hub_settings, de.mm20.launcher2.base.R.drawable.settings_24px),
+        Triple(NetworkSection.Home, I18nR.string.net_hub_title, de.mm20.launcher2.base.R.drawable.ic_glyph_network),
+        Triple(NetworkSection.Stats, I18nR.string.netstats_title, de.mm20.launcher2.base.R.drawable.bar_chart_24px),
+        Triple(NetworkSection.Logs, I18nR.string.net_hub_logs, de.mm20.launcher2.base.R.drawable.manage_search_24px),
+        Triple(NetworkSection.Apps, I18nR.string.netfw_l_apps, de.mm20.launcher2.base.R.drawable.apps_24px),
+        Triple(NetworkSection.Settings, I18nR.string.net_hub_settings, de.mm20.launcher2.base.R.drawable.settings_24px),
     )
     AdaptiveNavigationBar {
         entries.forEach { (section, title, glyph) ->

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.comms.model.isInAccounts
 import android.content.Intent
@@ -120,7 +122,7 @@ fun ContactsScreen(
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                stringResource(R.string.comms_contacts_permission),
+                stringResource(I18nR.string.comms_contacts_permission),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -130,7 +132,7 @@ fun ContactsScreen(
                     permissionsManager.requestPermission(it, PermissionGroup.Contacts)
                 }
             }) {
-                Text(stringResource(R.string.permission_grant))
+                Text(stringResource(I18nR.string.permission_grant))
             }
         }
         return
@@ -161,21 +163,21 @@ fun ContactsScreen(
         Column(Modifier.fillMaxSize()) {
             androidx.compose.material3.AssistChip(
                 onClick = { showAccounts = true },
-                label = { Text(if (selectedAccounts == null) stringResource(R.string.contacts_accounts_all)
-                    else stringResource(R.string.contacts_accounts_selected, selectedAccounts!!.size)) },
+                label = { Text(if (selectedAccounts == null) stringResource(I18nR.string.contacts_accounts_all)
+                    else stringResource(I18nR.string.contacts_accounts_selected, selectedAccounts!!.size)) },
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
             if (showLocalSearch) TelosSearchBar(
                 value = localQuery,
                 onValueChange = { localQuery = it },
-                placeholder = stringResource(R.string.tsp_search_contacts),
+                placeholder = stringResource(I18nR.string.tsp_search_contacts),
                 trailing = {
                     IconButton(onClick = { localStarred = !localStarred }) {
                         Icon(
                             painterResource(
-                                if (localStarred) R.drawable.star_24px_filled else R.drawable.star_24px_outlined
+                                if (localStarred) BaseR.drawable.star_24px_filled else BaseR.drawable.star_24px_outlined
                             ),
-                            contentDescription = stringResource(R.string.filter_starred),
+                            contentDescription = stringResource(I18nR.string.filter_starred),
                             tint = if (localStarred) MaterialTheme.colorScheme.primary
                             else MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -218,8 +220,8 @@ fun ContactsScreen(
             ) {
                 IconButton(onClick = { gridMode = !gridMode }) {
                     Icon(
-                        painterResource(if (gridMode) R.drawable.person_24px else R.drawable.apps_24px),
-                        contentDescription = stringResource(R.string.au_phonea_toggle_grid),
+                        painterResource(if (gridMode) BaseR.drawable.person_24px else BaseR.drawable.apps_24px),
+                        contentDescription = stringResource(I18nR.string.au_phonea_toggle_grid),
                     )
                 }
             }
@@ -227,8 +229,8 @@ fun ContactsScreen(
                 SearchEmptyState(query)
             } else if (filtered.isEmpty()) {
                 EmptyCommsTab(
-                    title = stringResource(R.string.contacts_empty_title),
-                    message = stringResource(R.string.contacts_empty_msg),
+                    title = stringResource(I18nR.string.contacts_empty_title),
+                    message = stringResource(I18nR.string.contacts_empty_msg),
                 )
             } else {
                 Box(Modifier.weight(1f)) {
@@ -331,21 +333,21 @@ fun ContactsScreen(
             contentColor = Color.White,
         ) {
             Icon(
-                painterResource(R.drawable.person_add_24px),
-                contentDescription = stringResource(R.string.comms_create_contact),
+                painterResource(BaseR.drawable.person_add_24px),
+                contentDescription = stringResource(I18nR.string.comms_create_contact),
             )
         }
 
         pendingCall?.let { number ->
             AlertDialog(
                 onDismissRequest = { pendingCall = null },
-                title = { Text(stringResource(R.string.hc_place_call)) },
+                title = { Text(stringResource(I18nR.string.hc_place_call)) },
                 text = { Text(number) },
                 confirmButton = {
                     TextButton(onClick = {
                         viewModel.dial(context, number)
                         pendingCall = null
-                    }) { Text(stringResource(R.string.search_action_call)) }
+                    }) { Text(stringResource(I18nR.string.search_action_call)) }
                 },
                 dismissButton = {
                     TextButton(onClick = { pendingCall = null }) { Text(stringResource(android.R.string.cancel)) }
@@ -354,14 +356,14 @@ fun ContactsScreen(
         }
         if (showAccounts) AlertDialog(
             onDismissRequest = { showAccounts = false },
-            title = { Text(stringResource(R.string.contacts_accounts)) },
+            title = { Text(stringResource(I18nR.string.contacts_accounts)) },
             text = {
                 androidx.compose.foundation.rememberScrollState().let { scroll ->
                     Column(Modifier.heightIn(max = 420.dp).verticalScroll(scroll)) {
                         TextButton(onClick = {
                             selectedAccounts = null
                             accountPrefs.edit().remove("accounts").apply()
-                        }) { Text(stringResource(R.string.contacts_accounts_all)) }
+                        }) { Text(stringResource(I18nR.string.contacts_accounts_all)) }
                         accounts.forEach { account ->
                             Row(Modifier.fillMaxWidth().clickable {
                                 val next = (selectedAccounts ?: accounts.map { it.key }.toSet()).toMutableSet()
@@ -373,7 +375,7 @@ fun ContactsScreen(
                                     checked = selectedAccounts?.contains(account.key) ?: true, onCheckedChange = null,
                                 )
                                 Column(Modifier.weight(1f).padding(vertical = 8.dp)) {
-                                    Text(account.name ?: stringResource(R.string.contacts_account_device))
+                                    Text(account.name ?: stringResource(I18nR.string.contacts_account_device))
                                     account.type?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
                                 }
                             }
@@ -386,34 +388,34 @@ fun ContactsScreen(
         deleteContact?.let { DeleteContactDialog(it) { deleteContact = null } }
         cabContact?.let { selected ->
             val number = viewModel.numberFor(selected)
-            val callLabel = stringResource(R.string.search_action_call)
-            val messageLabel = stringResource(R.string.search_action_message)
-            val detailsLabel = stringResource(R.string.contact_details_title)
-            val editLabel = stringResource(R.string.net_dns_action_edit)
-            val deleteLabel = stringResource(R.string.hc_delete)
-            val shareLabel = stringResource(R.string.search_action_share)
-            val blockLabel = stringResource(R.string.comms_block_number)
+            val callLabel = stringResource(I18nR.string.search_action_call)
+            val messageLabel = stringResource(I18nR.string.search_action_message)
+            val detailsLabel = stringResource(I18nR.string.contact_details_title)
+            val editLabel = stringResource(I18nR.string.net_dns_action_edit)
+            val deleteLabel = stringResource(I18nR.string.hc_delete)
+            val shareLabel = stringResource(I18nR.string.search_action_share)
+            val blockLabel = stringResource(I18nR.string.comms_block_number)
             CommsCabSheet(
                 title = selected.displayName,
                 actions = buildList {
                     if (number.isNotEmpty()) {
-                        add(CommsCabAction(R.drawable.rd_ic_phone_green_vector, callLabel) {
+                        add(CommsCabAction(BaseR.drawable.rd_ic_phone_green_vector, callLabel) {
                             viewModel.dial(context, number)
                         })
-                        add(CommsCabAction(R.drawable.rd_ic_messages, messageLabel) {
+                        add(CommsCabAction(BaseR.drawable.rd_ic_messages, messageLabel) {
                             context.tryStartActivity(MessengerIntentUtils.sms(number))
                         })
                     }
-                    add(CommsCabAction(R.drawable.info_24px, detailsLabel) {
+                    add(CommsCabAction(BaseR.drawable.info_24px, detailsLabel) {
                         backStack.add(ContactDetailsRoute(contactId = selected.id))
                     })
-                    add(CommsCabAction(R.drawable.edit_24px, editLabel) { ContactActions.edit(context, selected.id) })
-                    add(CommsCabAction(R.drawable.delete_24px, deleteLabel, destructive = true) { deleteContact = selected })
-                    add(CommsCabAction(R.drawable.share_24px, shareLabel) {
+                    add(CommsCabAction(BaseR.drawable.edit_24px, editLabel) { ContactActions.edit(context, selected.id) })
+                    add(CommsCabAction(BaseR.drawable.delete_24px, deleteLabel, destructive = true) { deleteContact = selected })
+                    add(CommsCabAction(BaseR.drawable.share_24px, shareLabel) {
                         viewModel.share(context, selected)
                     })
                     if (number.isNotEmpty()) {
-                        add(CommsCabAction(R.drawable.delete_24px, blockLabel, destructive = true) {
+                        add(CommsCabAction(BaseR.drawable.delete_24px, blockLabel, destructive = true) {
                             viewModel.block(context, number)
                         })
                     }
@@ -434,7 +436,7 @@ internal fun ContactRow(
     onSms: () -> Unit,
     onLongPress: () -> Unit,
 ) {
-    val dismissState = rememberSwipeToDismissBoxState(COMPILED_CODE, { it * 0.4f })
+    val dismissState = rememberSwipeToDismissBoxState()
     SwipeToDismissBox(
         state = dismissState,
         backgroundContent = {
@@ -452,8 +454,8 @@ internal fun ContactRow(
                 else -> Alignment.Center
             }
             val icon = when (dismissState.dismissDirection) {
-                SwipeToDismissBoxValue.StartToEnd -> R.drawable.rd_ic_messages
-                else -> R.drawable.rd_ic_phone_green_vector
+                SwipeToDismissBoxValue.StartToEnd -> BaseR.drawable.rd_ic_messages
+                else -> BaseR.drawable.rd_ic_phone_green_vector
             }
             Box(
                 Modifier
@@ -498,8 +500,8 @@ internal fun ContactRow(
                     )
                     if (contact.starred) {
                         Icon(
-                            painterResource(R.drawable.rd_ic_star_vector),
-                            contentDescription = stringResource(R.string.favorites),
+                            painterResource(BaseR.drawable.rd_ic_star_vector),
+                            contentDescription = stringResource(I18nR.string.favorites),
                             tint = MaterialTheme.colorScheme.tertiary,
                             modifier = Modifier
                                 .padding(start = 6.dp)
@@ -518,8 +520,8 @@ internal fun ContactRow(
             }
             IconButton(onClick = onCall, enabled = contact.phoneNumbers.isNotEmpty()) {
                 Icon(
-                    painterResource(R.drawable.rd_ic_phone_green_vector),
-                    contentDescription = stringResource(R.string.search_action_call),
+                    painterResource(BaseR.drawable.rd_ic_phone_green_vector),
+                    contentDescription = stringResource(I18nR.string.search_action_call),
                     tint = RdGreenCall,
                 )
             }

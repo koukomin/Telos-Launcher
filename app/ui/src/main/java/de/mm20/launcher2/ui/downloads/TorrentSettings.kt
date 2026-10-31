@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,7 +38,7 @@ private val SPEED_CHOICES = listOf(0, 128, 256, 512, 1024, 2048, 5120, 10240)
 
 @Composable
 private fun speedLabel(kbps: Int) = when {
-    kbps == 0 -> stringResource(R.string.dl_limit_none)
+    kbps == 0 -> stringResource(I18nR.string.dl_limit_none)
     kbps >= 1024 -> "${kbps / 1024} MB/s"
     else -> "$kbps KB/s"
 }
@@ -48,7 +49,7 @@ fun LazyListScope.torrentSettingsItems() {
     item { TorrentLimitsCategory() }
     item { TorrentSeedingCategory() }
     item {
-        PreferenceCategory(title = stringResource(R.string.dl_t_set_blocklists)) {
+        PreferenceCategory(title = stringResource(I18nR.string.dl_t_set_blocklists)) {
             Surface(
                 color = MaterialTheme.colorScheme.surfaceBright,
                 shape = RoundedCornerShape(4.dp),
@@ -60,7 +61,7 @@ fun LazyListScope.torrentSettingsItems() {
     }
     item {
         Text(
-            stringResource(R.string.dl_t_set_shared_note) + "\n\n" + stringResource(R.string.dl_t_set_staging_note),
+            stringResource(I18nR.string.dl_t_set_shared_note) + "\n\n" + stringResource(I18nR.string.dl_t_set_staging_note),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = 16.dp),
         )
@@ -72,45 +73,45 @@ private fun TorrentNetworkCategory() {
     val context = LocalContext.current
     val c by TorrentSession.config.collectAsState()
     var editPort by remember { mutableStateOf(false) }
-    PreferenceCategory(title = stringResource(R.string.dl_t_settings_title)) {
+    PreferenceCategory(title = stringResource(I18nR.string.dl_t_settings_title)) {
         TransferNetworkPreferences("torrent")
         SwitchPreference(
-            title = stringResource(R.string.dl_t_set_dht), summary = stringResource(R.string.dl_t_set_dht_s),
+            title = stringResource(I18nR.string.dl_t_set_dht), summary = stringResource(I18nR.string.dl_t_set_dht_s),
             value = c.dht, onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(dht = v) } },
         )
         SwitchPreference(
-            title = stringResource(R.string.dl_t_set_pex), summary = stringResource(R.string.dl_t_set_pex_s),
+            title = stringResource(I18nR.string.dl_t_set_pex), summary = stringResource(I18nR.string.dl_t_set_pex_s),
             value = c.pex, onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(pex = v) } },
         )
         SwitchPreference(
-            title = stringResource(R.string.dl_t_set_lsd), summary = stringResource(R.string.dl_t_set_lsd_s),
+            title = stringResource(I18nR.string.dl_t_set_lsd), summary = stringResource(I18nR.string.dl_t_set_lsd_s),
             value = c.lsd, onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(lsd = v) } },
         )
         SwitchPreference(
-            title = stringResource(R.string.dl_t_set_utp), summary = stringResource(R.string.dl_t_set_utp_s),
+            title = stringResource(I18nR.string.dl_t_set_utp), summary = stringResource(I18nR.string.dl_t_set_utp_s),
             value = c.utp, onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(utp = v) } },
         )
         ListPreference(
-            title = stringResource(R.string.dl_t_set_enc),
+            title = stringResource(I18nR.string.dl_t_set_enc),
             items = listOf(
-                ListPreferenceItem(stringResource(R.string.dl_t_enc_prefer), TorrentEncryption.Prefer),
-                ListPreferenceItem(stringResource(R.string.dl_t_enc_require), TorrentEncryption.Require),
-                ListPreferenceItem(stringResource(R.string.dl_t_enc_disable), TorrentEncryption.Disable),
+                ListPreferenceItem(stringResource(I18nR.string.dl_t_enc_prefer), TorrentEncryption.Prefer),
+                ListPreferenceItem(stringResource(I18nR.string.dl_t_enc_require), TorrentEncryption.Require),
+                ListPreferenceItem(stringResource(I18nR.string.dl_t_enc_disable), TorrentEncryption.Disable),
             ),
             value = c.encryption,
             onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(encryption = v) } },
         )
         Preference(
-            title = stringResource(R.string.dl_t_set_port),
-            summary = if (c.listenPort == 0) stringResource(R.string.dl_t_port_random) else stringResource(R.string.dl_t_port_fixed, c.listenPort),
+            title = stringResource(I18nR.string.dl_t_set_port),
+            summary = if (c.listenPort == 0) stringResource(I18nR.string.dl_t_port_random) else stringResource(I18nR.string.dl_t_port_fixed, c.listenPort),
             onClick = { editPort = true },
         )
         SwitchPreference(
-            title = stringResource(R.string.dl_t_set_upnp), summary = stringResource(R.string.dl_t_set_upnp_s),
+            title = stringResource(I18nR.string.dl_t_set_upnp), summary = stringResource(I18nR.string.dl_t_set_upnp_s),
             value = c.upnp, onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(upnp = v) } },
         )
         SwitchPreference(
-            title = stringResource(R.string.dl_t_set_natpmp),
+            title = stringResource(I18nR.string.dl_t_set_natpmp),
             value = c.natPmp, onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(natPmp = v) } },
         )
     }
@@ -120,20 +121,20 @@ private fun TorrentNetworkCategory() {
         val valid = text.isEmpty() || (value != null && value in 1024..65535)
         AlertDialog(
             onDismissRequest = { editPort = false },
-            title = { Text(stringResource(R.string.dl_t_set_port)) },
+            title = { Text(stringResource(I18nR.string.dl_t_set_port)) },
             text = {
                 OutlinedTextField(
                     text, { text = it.filter(Char::isDigit).take(5) }, Modifier.fillMaxWidth(), singleLine = true, isError = !valid,
-                    label = { Text(stringResource(R.string.dl_t_port_hint)) },
-                    supportingText = { Text(stringResource(R.string.dl_t_port_info)) },
+                    label = { Text(stringResource(I18nR.string.dl_t_port_hint)) },
+                    supportingText = { Text(stringResource(I18nR.string.dl_t_port_info)) },
                 )
             },
             confirmButton = {
                 TextButton(enabled = valid, onClick = { TorrentSession.updateConfig(context) { it.copy(listenPort = value ?: 0) }; editPort = false }) {
-                    Text(stringResource(R.string.dl_save))
+                    Text(stringResource(I18nR.string.dl_save))
                 }
             },
-            dismissButton = { TextButton(onClick = { editPort = false }) { Text(stringResource(R.string.dl_cancel)) } },
+            dismissButton = { TextButton(onClick = { editPort = false }) { Text(stringResource(I18nR.string.dl_cancel)) } },
         )
     }
 }
@@ -142,31 +143,31 @@ private fun TorrentNetworkCategory() {
 private fun TorrentLimitsCategory() {
     val context = LocalContext.current
     val c by TorrentSession.config.collectAsState()
-    PreferenceCategory(title = stringResource(R.string.dl_t_set_limits)) {
+    PreferenceCategory(title = stringResource(I18nR.string.dl_t_set_limits)) {
         ListPreference(
-            title = stringResource(R.string.dl_t_set_down_limit),
+            title = stringResource(I18nR.string.dl_t_set_down_limit),
             items = SPEED_CHOICES.map { ListPreferenceItem(speedLabel(it), it) },
             value = c.downloadLimitKBps, summary = speedLabel(c.downloadLimitKBps),
             onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(downloadLimitKBps = v) } },
         )
         ListPreference(
-            title = stringResource(R.string.dl_t_set_up_limit),
+            title = stringResource(I18nR.string.dl_t_set_up_limit),
             items = SPEED_CHOICES.map { ListPreferenceItem(speedLabel(it), it) },
             value = c.uploadLimitKBps, summary = speedLabel(c.uploadLimitKBps),
             onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(uploadLimitKBps = v) } },
         )
         SliderPreference(
-            title = stringResource(R.string.dl_t_set_max_active), value = c.maxActiveDownloads, min = 1, max = 10,
+            title = stringResource(I18nR.string.dl_t_set_max_active), value = c.maxActiveDownloads, min = 1, max = 10,
             onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(maxActiveDownloads = v) } },
             label = { Text(it.toString()) },
         )
         SliderPreference(
-            title = stringResource(R.string.dl_t_set_max_seeds), value = c.maxActiveSeeds, min = 0, max = 10,
+            title = stringResource(I18nR.string.dl_t_set_max_seeds), value = c.maxActiveSeeds, min = 0, max = 10,
             onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(maxActiveSeeds = v) } },
             label = { Text(it.toString()) },
         )
         SliderPreference(
-            title = stringResource(R.string.dl_t_set_max_conn), value = c.maxConnections / 50, min = 1, max = 20,
+            title = stringResource(I18nR.string.dl_t_set_max_conn), value = c.maxConnections / 50, min = 1, max = 20,
             onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(maxConnections = v * 50) } },
             label = { Text((it * 50).toString()) },
         )
@@ -177,25 +178,25 @@ private fun TorrentLimitsCategory() {
 private fun TorrentSeedingCategory() {
     val context = LocalContext.current
     val c by TorrentSession.config.collectAsState()
-    PreferenceCategory(title = stringResource(R.string.dl_t_set_seed_defaults)) {
+    PreferenceCategory(title = stringResource(I18nR.string.dl_t_set_seed_defaults)) {
         SwitchPreference(
-            title = stringResource(R.string.dl_t_set_stop_done), summary = stringResource(R.string.dl_t_set_stop_done_s),
+            title = stringResource(I18nR.string.dl_t_set_stop_done), summary = stringResource(I18nR.string.dl_t_set_stop_done_s),
             value = c.stopAtDone, onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(stopAtDone = v) } },
         )
         ListPreference(
-            title = stringResource(R.string.dl_t_set_ratio),
+            title = stringResource(I18nR.string.dl_t_set_ratio),
             items = RATIO_CHOICES.map { ListPreferenceItem(ratioLabel(it), it) },
             value = c.seedRatioX100, summary = ratioLabel(c.seedRatioX100), enabled = !c.stopAtDone,
             onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(seedRatioX100 = v) } },
         )
         ListPreference(
-            title = stringResource(R.string.dl_t_set_minutes),
+            title = stringResource(I18nR.string.dl_t_set_minutes),
             items = MINUTE_CHOICES.map { ListPreferenceItem(minutesLabel(it), it) },
             value = c.seedMinutes, summary = minutesLabel(c.seedMinutes), enabled = !c.stopAtDone,
             onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(seedMinutes = v) } },
         )
         SwitchPreference(
-            title = stringResource(R.string.dl_t_set_sequential_default),
+            title = stringResource(I18nR.string.dl_t_set_sequential_default),
             value = c.sequentialByDefault, onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(sequentialByDefault = v) } },
         )
     }

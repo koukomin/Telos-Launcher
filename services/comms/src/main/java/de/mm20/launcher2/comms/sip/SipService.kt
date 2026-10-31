@@ -1,4 +1,5 @@
 package de.mm20.launcher2.comms.sip
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.base.containedScope
 import android.app.Notification
@@ -23,7 +24,6 @@ import android.provider.CallLog
 import android.telephony.TelephonyManager
 import androidx.core.app.NotificationCompat
 import de.mm20.launcher2.comms.remote.SecretBox
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

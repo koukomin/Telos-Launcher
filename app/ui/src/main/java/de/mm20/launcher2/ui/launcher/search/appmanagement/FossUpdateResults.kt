@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.appmanagement
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
@@ -28,7 +30,7 @@ fun LazyListScope.FossUpdateResults(
 
     item(key = "foss_updates_header") {
         Text(
-            text = stringResource(R.string.hf_available_updates),
+            text = stringResource(I18nR.string.hf_available_updates),
             style = MaterialTheme.typography.titleSmall,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
@@ -52,7 +54,7 @@ fun LazyListScope.FossUpdateResults(
                     onShowDetails = {},
                 )
                 IconButton(onClick = { onDismiss(app) }) {
-                    Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_dismiss))
+                    Icon(painterResource(BaseR.drawable.close_24px), contentDescription = stringResource(I18nR.string.hc_dismiss))
                 }
             }
         }

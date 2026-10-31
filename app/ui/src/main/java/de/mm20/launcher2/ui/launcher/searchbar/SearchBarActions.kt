@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.searchbar
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
@@ -65,7 +67,7 @@ fun ColumnScope.SearchBarActions(
                         onClick = {
                             AgentLauncher.send(context, searchQuery, agentId, transport)
                         },
-                        label = { Text(stringResource(R.string.agent_ask, stringResource(agent.labelRes))) },
+                        label = { Text(stringResource(I18nR.string.agent_ask, stringResource(agent.labelRes))) },
                     )
                 }
             }
@@ -112,8 +114,8 @@ fun ColumnScope.SearchBarActions(
                 ) {
 
                     Icon(
-                        painterResource(R.drawable.edit_24px),
-                        contentDescription = stringResource(R.string.preference_screen_search_actions)
+                        painterResource(BaseR.drawable.edit_24px),
+                        contentDescription = stringResource(I18nR.string.preference_screen_search_actions)
                     )
                 }
             }

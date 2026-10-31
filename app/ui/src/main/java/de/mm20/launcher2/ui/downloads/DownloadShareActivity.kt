@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Activity
 import android.content.Intent
@@ -49,7 +50,7 @@ class DownloadShareActivity : Activity() {
             }
         }
         if (links.isEmpty()) {
-            Toast.makeText(this, R.string.dl_invalid_links, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, I18nR.string.dl_invalid_links, Toast.LENGTH_SHORT).show()
         } else {
             startActivity(
                 Intent().setClassName(packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)

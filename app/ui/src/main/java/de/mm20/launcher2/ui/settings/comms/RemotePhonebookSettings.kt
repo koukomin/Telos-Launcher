@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
@@ -39,15 +40,15 @@ fun RemotePhonebookSettings() {
     var showDialog by rememberSaveable { mutableStateOf(false) }
     var busy by remember { mutableStateOf(false) }
     var status by remember { mutableStateOf<String?>(null) }
-    val syncingText = stringResource(R.string.au3_commsfreeze_syncing)
+    val syncingText = stringResource(I18nR.string.au3_commsfreeze_syncing)
     val resources = androidx.compose.ui.platform.LocalContext.current.resources
-    val syncedText: (Int) -> String = { resources.getString(R.string.au3_commsfreeze_synced_count, it) }
-    val failedText: (String) -> String = { resources.getString(R.string.au3_commsfreeze_sync_failed, it) }
+    val syncedText: (Int) -> String = { resources.getString(I18nR.string.au3_commsfreeze_synced_count, it) }
+    val failedText: (String) -> String = { resources.getString(I18nR.string.au3_commsfreeze_sync_failed, it) }
 
-    PreferenceCategory(title = stringResource(R.string.hc_remote_phonebook_fritz_box)) {
+    PreferenceCategory(title = stringResource(I18nR.string.hc_remote_phonebook_fritz_box)) {
         SwitchPreference(
-            title = stringResource(R.string.hc_identify_callers_from_fritz_box),
-            summary = stringResource(R.string.hc_show_names_from_the_fritz_box_telephone),
+            title = stringResource(I18nR.string.hc_identify_callers_from_fritz_box),
+            summary = stringResource(I18nR.string.hc_show_names_from_the_fritz_box_telephone),
             value = enabled,
             onValueChanged = {
                 settings.setRemotePhonebook(it, host, user, passwordEnc)
@@ -55,15 +56,15 @@ fun RemotePhonebookSettings() {
             },
         )
         Preference(
-            title = stringResource(R.string.hc_connection),
-            summary = if (user.isBlank()) stringResource(R.string.au3_commsfreeze_not_configured) else "$user @ $host",
+            title = stringResource(I18nR.string.hc_connection),
+            summary = if (user.isBlank()) stringResource(I18nR.string.au3_commsfreeze_not_configured) else "$user @ $host",
             onClick = { showDialog = true },
         )
         Preference(
-            title = stringResource(R.string.hc_sync_now),
+            title = stringResource(I18nR.string.hc_sync_now),
             summary = status ?: RemotePhonebook.lastSyncMillis.takeIf { it > 0 }?.let {
-                stringResource(R.string.au3_commsfreeze_last_sync, DateFormat.getDateTimeInstance().format(Date(it)))
-            } ?: stringResource(R.string.au3_commsfreeze_never_synced),
+                stringResource(I18nR.string.au3_commsfreeze_last_sync, DateFormat.getDateTimeInstance().format(Date(it)))
+            } ?: stringResource(I18nR.string.au3_commsfreeze_never_synced),
             onClick = {
                 if (busy || !enabled || user.isBlank()) return@Preference
                 busy = true
@@ -86,27 +87,27 @@ fun RemotePhonebookSettings() {
         var passInput by remember { mutableStateOf(SecretBox.decrypt(passwordEnc)) }
         AlertDialog(
             onDismissRequest = { showDialog = false },
-            title = { Text(stringResource(R.string.hc_fritz_box_connection)) },
+            title = { Text(stringResource(I18nR.string.hc_fritz_box_connection)) },
             text = {
                 Column {
                     OutlinedTextField(
                         value = hostInput,
                         onValueChange = { hostInput = it },
-                        label = { Text(stringResource(R.string.hc_address_e_g_fritz_box_or_192_168_178_1)) },
+                        label = { Text(stringResource(I18nR.string.hc_address_e_g_fritz_box_or_192_168_178_1)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     OutlinedTextField(
                         value = userInput,
                         onValueChange = { userInput = it },
-                        label = { Text(stringResource(R.string.hc_user)) },
+                        label = { Text(stringResource(I18nR.string.hc_user)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     OutlinedTextField(
                         value = passInput,
                         onValueChange = { passInput = it },
-                        label = { Text(stringResource(R.string.hc_password)) },
+                        label = { Text(stringResource(I18nR.string.hc_password)) },
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth(),
@@ -122,10 +123,10 @@ fun RemotePhonebookSettings() {
                         passwordEnc = SecretBox.encrypt(passInput),
                     )
                     showDialog = false
-                }) { Text(stringResource(R.string.hc_save)) }
+                }) { Text(stringResource(I18nR.string.hc_save)) }
             },
             dismissButton = {
-                TextButton(onClick = { showDialog = false }) { Text(stringResource(R.string.hc_cancel)) }
+                TextButton(onClick = { showDialog = false }) { Text(stringResource(I18nR.string.hc_cancel)) }
             },
         )
     }

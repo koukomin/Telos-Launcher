@@ -1,6 +1,6 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
-import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
@@ -42,11 +42,11 @@ fun HiddenContactsScreen() {
         }
     }
     val backStack = LocalBackStack.current
-    PreferenceScreen(title = { Text(stringResource(R.string.hc_hidden_contacts)) }) {
+    PreferenceScreen(title = { Text(stringResource(I18nR.string.hc_hidden_contacts)) }) {
         if (hidden.isEmpty()) {
             item {
                 Text(
-                    stringResource(R.string.hc_dial_pin_on_the_keypad_to_unlock_hide_a),
+                    stringResource(I18nR.string.hc_dial_pin_on_the_keypad_to_unlock_hide_a),
                     modifier = Modifier.padding(16.dp),
                 )
             }
@@ -58,7 +58,7 @@ fun HiddenContactsScreen() {
                     supportingContent = { Text(numbers.joinToString(" · ")) },
                     trailingContent = {
                         TextButton(onClick = { commsSettings.setHiddenNumbers(numbers, false) }) {
-                            Text(stringResource(R.string.hc_unhide))
+                            Text(stringResource(I18nR.string.hc_unhide))
                         }
                     },
                     modifier = Modifier.padding(0.dp),
@@ -69,7 +69,7 @@ fun HiddenContactsScreen() {
             TextButton(onClick = {
                 de.mm20.launcher2.comms.privacy.PrivacySession.lockHider()
                 backStack.removeLastOrNull()
-            }) { Text(stringResource(R.string.hc_lock_hidden_contacts)) }
+            }) { Text(stringResource(I18nR.string.hc_lock_hidden_contacts)) }
         }
     }
 }

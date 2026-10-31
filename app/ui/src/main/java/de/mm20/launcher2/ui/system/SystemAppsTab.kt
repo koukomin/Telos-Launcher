@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.system
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -94,7 +96,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                         value = query,
                         onValueChange = { query = it },
                         modifier = Modifier.weight(1f).height(56.dp),
-                        placeholder = { Text(stringResource(R.string.hc_search)) },
+                        placeholder = { Text(stringResource(I18nR.string.hc_search)) },
                         singleLine = true,
                         shape = MaterialTheme.shapes.extraLarge,
                         trailingIcon = {
@@ -105,24 +107,24 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                     )
                 } else {
                     Text(
-                        text = stringResource(R.string.hc_apps),
+                        text = stringResource(I18nR.string.hc_apps),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                         modifier = Modifier.weight(1f).padding(start = 8.dp)
                     )
                     IconButton(onClick = { searchExpanded = true }) {
-                        Icon(Icons.Default.Search, contentDescription = stringResource(R.string.hc_search))
+                        Icon(Icons.Default.Search, contentDescription = stringResource(I18nR.string.hc_search))
                     }
                     IconButton(onClick = { frozenOnly = !frozenOnly }) {
                         Icon(
-                            painter = androidx.compose.ui.res.painterResource(if (frozenOnly) R.drawable.ac_unit_24px else R.drawable.apps_24px),
+                            painter = androidx.compose.ui.res.painterResource(if (frozenOnly) BaseR.drawable.ac_unit_24px else BaseR.drawable.apps_24px),
                             contentDescription = "Frozen Only",
                             tint = if (frozenOnly) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                         )
                     }
                     IconButton(onClick = { showSystem = !showSystem }) {
                         Icon(
-                            painter = androidx.compose.ui.res.painterResource(if (showSystem) R.drawable.visibility_24px else R.drawable.visibility_off_24px),
+                            painter = androidx.compose.ui.res.painterResource(if (showSystem) BaseR.drawable.visibility_24px else BaseR.drawable.visibility_off_24px),
                             contentDescription = "System Apps"
                         )
                     }
@@ -133,7 +135,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
         }
         outcome?.let { Text(it, Modifier.padding(horizontal = 16.dp)) }
         if (loading) LinearProgressIndicator(Modifier.fillMaxWidth())
-        if (!loading && visible.isEmpty()) EmptyMessage(stringResource(R.string.hf_store_no_apps_match), stringResource(R.string.hf_store_change_filter))
+        if (!loading && visible.isEmpty()) EmptyMessage(stringResource(I18nR.string.hf_store_no_apps_match), stringResource(I18nR.string.hf_store_change_filter))
         LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 96.dp)) {
             items(visible, key = { it.pkg }) { app ->
                 Surface(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp), shape = MaterialTheme.shapes.medium,
@@ -144,14 +146,14 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                             Column(Modifier.padding(start = 12.dp).weight(1f)) {
                                 Text(app.label, style = MaterialTheme.typography.titleMedium)
                                 Text("${app.pkg} · ${app.size}", style = MaterialTheme.typography.bodySmall)
-                                if (app.frozen) Text(stringResource(R.string.hf_freeze_frozen), color = MaterialTheme.colorScheme.primary)
+                                if (app.frozen) Text(stringResource(I18nR.string.hf_freeze_frozen), color = MaterialTheme.colorScheme.primary)
                             }
                         }
                         uad[app.pkg]?.let { info ->
                             Spacer(Modifier.height(8.dp))
                             Surface(color = MaterialTheme.colorScheme.surfaceContainerHighest, shape = MaterialTheme.shapes.small) {
                                 Column(Modifier.padding(8.dp)) {
-                                    Text(stringResource(R.string.freeze_hub_uad_help), style = MaterialTheme.typography.labelSmall)
+                                    Text(stringResource(I18nR.string.freeze_hub_uad_help), style = MaterialTheme.typography.labelSmall)
                                     Text(info.recommendation, style = MaterialTheme.typography.labelMedium)
                                     Text(info.description, maxLines = 4, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, style = MaterialTheme.typography.bodySmall)
                                 }
@@ -174,7 +176,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                                     scope.launch {
                                         try {
                                             val ok = withContext(Dispatchers.IO) { if (app.frozen) freeze.unfreeze(app.pkg) else freeze.freeze(app.pkg) }
-                                            outcome = context.getString(R.string.freeze_hub_result, if (app.pkg in ok) 1 else 0, 1)
+                                            outcome = context.getString(I18nR.string.freeze_hub_result, if (app.pkg in ok) 1 else 0, 1)
                                             revision++
                                         } finally { busy = false }
                                     }
@@ -182,7 +184,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                                 enabled = !busy
                             ) {
                                 Icon(
-                                    androidx.compose.ui.res.painterResource(if (app.frozen) R.drawable.play_arrow_24px else R.drawable.ac_unit_24px),
+                                    androidx.compose.ui.res.painterResource(if (app.frozen) BaseR.drawable.play_arrow_24px else BaseR.drawable.ac_unit_24px),
                                     contentDescription = "Freeze/Unfreeze",
                                     tint = if (app.frozen) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                                 )

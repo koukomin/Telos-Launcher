@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.shortcut
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 
 import android.content.Intent
@@ -160,8 +162,8 @@ fun AppShortcutItem(
                                     trailingIcon = if (LocalFavoritesEnabled.current) {
                                         {
                                             Icon(
-                                                painterResource(if (isPinned) R.drawable.star_20px_filled else R.drawable.star_20px),
-                                                stringResource(if (isPinned) R.string.menu_favorites_unpin else R.string.menu_favorites_pin),
+                                                painterResource(if (isPinned) BaseR.drawable.star_20px_filled else BaseR.drawable.star_20px),
+                                                stringResource(if (isPinned) I18nR.string.menu_favorites_unpin else I18nR.string.menu_favorites_pin),
                                                 modifier = Modifier
                                                     .clip(CircleShape)
                                                     .requiredSize(InputChipDefaults.IconSize)
@@ -196,8 +198,8 @@ fun AppShortcutItem(
                         MissingPermissionBanner(
                             modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
                             text = stringResource(
-                                R.string.shortcut_unavailable_description,
-                                stringResource(R.string.app_name)
+                                I18nR.string.shortcut_unavailable_description,
+                                stringResource(BaseR.string.app_name)
                             ),
                             onClick = {
                                 viewModel.requestShortcutPermission(context as AppCompatActivity)
@@ -211,16 +213,16 @@ fun AppShortcutItem(
                         val isPinned by viewModel.isPinned.collectAsState(false)
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_unpin),
-                                icon = R.drawable.star_24px_filled,
+                                label = stringResource(I18nR.string.menu_favorites_unpin),
+                                icon = BaseR.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
                             )
                         } else {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_pin),
-                                icon = R.drawable.star_24px,
+                                label = stringResource(I18nR.string.menu_favorites_pin),
+                                icon = BaseR.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -232,8 +234,8 @@ fun AppShortcutItem(
                     if (packageName != null) {
                         toolbarActions.add(
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_app_info),
-                                icon = R.drawable.info_24px,
+                                label = stringResource(I18nR.string.menu_app_info),
+                                icon = BaseR.drawable.info_24px,
                             ) {
                                 context.tryStartActivity(
                                     Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -248,16 +250,16 @@ fun AppShortcutItem(
                     val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(
                         DefaultToolbarAction(
-                            label = stringResource(R.string.menu_customize),
-                            icon = R.drawable.tune_24px,
+                            label = stringResource(I18nR.string.menu_customize),
+                            icon = BaseR.drawable.tune_24px,
                             action = { sheetManager.showCustomizeSearchableModal(shortcut) }
                         ))
 
                     if (shortcut.canDelete) {
                         toolbarActions.add(
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_delete),
-                                icon = R.drawable.delete_24px,
+                                label = stringResource(I18nR.string.menu_delete),
+                                icon = BaseR.drawable.delete_24px,
                                 action = { requestDelete = true }
                             ))
                     }
@@ -265,8 +267,8 @@ fun AppShortcutItem(
                     Toolbar(
                         leftActions = listOf(
                             DefaultToolbarAction(
-                                label = stringResource(id = R.string.menu_back),
-                                icon = R.drawable.arrow_back_24px,
+                                label = stringResource(id = I18nR.string.menu_back),
+                                icon = BaseR.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }
@@ -301,7 +303,7 @@ fun AppShortcutItem(
                         )
                         shortcut.appName?.let {
                             Text(
-                                text = stringResource(R.string.shortcut_summary, it),
+                                text = stringResource(I18nR.string.shortcut_summary, it),
                                 style = MaterialTheme.typography.bodySmall,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
@@ -328,7 +330,7 @@ fun AppShortcutItem(
     if (requestDelete) {
         AlertDialog(
             onDismissRequest = { requestDelete = false },
-            text = { Text(stringResource(R.string.alert_delete_shortcut, shortcut.label)) },
+            text = { Text(stringResource(I18nR.string.alert_delete_shortcut, shortcut.label)) },
             confirmButton = {
                 TextButton(onClick = {
                     viewModel.delete(context)

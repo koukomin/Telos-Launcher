@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.backup
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -34,18 +35,18 @@ fun BackupSettingsScreen() {
         }
     )
 
-    PreferenceScreen(stringResource(R.string.preference_screen_backup)) {
+    PreferenceScreen(stringResource(I18nR.string.preference_screen_backup)) {
         item {
             PreferenceCategory {
                 Preference(
-                    title = stringResource(id = R.string.preference_backup),
-                    summary = stringResource(id = R.string.preference_backup_summary),
+                    title = stringResource(id = I18nR.string.preference_backup),
+                    summary = stringResource(id = I18nR.string.preference_backup_summary),
                     onClick = {
                         showBackupSheet = true
                     })
                 Preference(
-                    title = stringResource(id = R.string.preference_restore),
-                    summary = stringResource(id = R.string.preference_restore_summary),
+                    title = stringResource(id = I18nR.string.preference_restore),
+                    summary = stringResource(id = I18nR.string.preference_restore_summary),
                     onClick = {
                         restoreLauncher.launch(arrayOf("*/*"))
                     })

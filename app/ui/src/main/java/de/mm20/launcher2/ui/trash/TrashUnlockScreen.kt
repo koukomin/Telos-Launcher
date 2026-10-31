@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.trash
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Box
@@ -35,7 +36,7 @@ data object TrashUnlockRoute : NavKey
 fun TrashUnlockScreen() {
     val activity = LocalActivity.current as? FragmentActivity
     val backStack = LocalBackStack.current
-    val title = stringResource(R.string.telos_trash_unlock)
+    val title = stringResource(I18nR.string.telos_trash_unlock)
     val state: TrashUnlockState = viewModel()
     val unlocked = state.unlocked
     // Recreating BiometricPrompt reconnects its callback to AndroidX's retained prompt.

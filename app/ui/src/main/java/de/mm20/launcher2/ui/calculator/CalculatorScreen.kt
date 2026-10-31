@@ -1,7 +1,7 @@
 package de.mm20.launcher2.ui.calculator
-
-import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
+
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context

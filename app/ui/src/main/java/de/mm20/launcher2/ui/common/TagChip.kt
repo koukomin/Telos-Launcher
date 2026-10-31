@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.common
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
@@ -167,8 +169,8 @@ fun TagChip(
                         onClear?.invoke()
                     }
                     .size(FilterChipDefaults.IconSize),
-                painter = painterResource(R.drawable.close_20px),
-                contentDescription = androidx.compose.ui.res.stringResource(R.string.menu_remove),
+                painter = painterResource(BaseR.drawable.close_20px),
+                contentDescription = androidx.compose.ui.res.stringResource(I18nR.string.menu_remove),
             )
         }
     }

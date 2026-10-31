@@ -1,10 +1,10 @@
 package de.mm20.launcher2.themes.typography
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.themes.DefaultThemeId
 import de.mm20.launcher2.themes.MonospaceId
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.themes.RoundedTypographyId
 import de.mm20.launcher2.themes.SerifId
 import de.mm20.launcher2.themes.SystemFontId
@@ -103,7 +103,7 @@ class TypographyRepository(
         get() = Typography(
             id = SystemFontId,
             builtIn = true,
-            name = context.getString(R.string.preference_value_system_default),
+            name = context.getString(I18nR.string.preference_value_system_default),
             fonts = mapOf(
                 "brand" to FontFamily.DeviceHeadline,
                 "plain" to FontFamily.DeviceBody,

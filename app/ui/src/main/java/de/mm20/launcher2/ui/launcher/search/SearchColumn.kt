@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.activity.compose.BackHandler
 import androidx.appcompat.app.AppCompatActivity
@@ -131,7 +132,7 @@ fun SearchColumn(
     val appLockSettings: AppLockSettings = koinInject()
     val lockWorkProfileToggle by appLockSettings.lockWorkProfileToggle.collectAsState(false)
     val appLockMethod by appLockSettings.lockMethod.collectAsState(SettingsLockMethod.DeviceCredential)
-    val workProfilePromptTitle = stringResource(R.string.app_lock_work_profile_prompt_title)
+    val workProfilePromptTitle = stringResource(I18nR.string.app_lock_work_profile_prompt_title)
     fun changeProfileLock(profile: Profile?, locked: Boolean) {
         val activity = context as? FragmentActivity
         if (lockWorkProfileToggle && activity != null && canAuthenticateSettings(activity, appLockMethod)) {

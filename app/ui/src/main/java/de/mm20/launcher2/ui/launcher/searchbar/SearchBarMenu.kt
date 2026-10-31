@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.searchbar
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
@@ -57,7 +59,7 @@ fun RowScope.SearchBarMenu(
     val context = LocalContext.current
     val density = LocalDensity.current
     var showOverflowMenu by remember { mutableStateOf(false) }
-    val rightIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_menu_clear)
+    val rightIcon = AnimatedImageVector.animatedVectorResource(BaseR.drawable.anim_ic_menu_clear)
 
     // Same "whichever home screen page is currently visible" targeting as the long-press home
     // screen menu's own "Add widget" entry - see currentHomeScreenWidgetScopeId's kdoc.
@@ -111,7 +113,7 @@ fun RowScope.SearchBarMenu(
                     rightIcon,
                     atEnd = searchBarValue.isNotEmpty()
                 ),
-                contentDescription = stringResource(if (searchBarValue.isNotBlank()) R.string.action_clear else R.string.action_more_actions),
+                contentDescription = stringResource(if (searchBarValue.isNotBlank()) I18nR.string.action_clear else I18nR.string.action_more_actions),
                 tint = LocalContentColor.current
             )
         }
@@ -136,10 +138,10 @@ fun RowScope.SearchBarMenu(
                         showOverflowMenu = false
                     },
                     text = {
-                        Text(stringResource(R.string.wallpaper))
+                        Text(stringResource(I18nR.string.wallpaper))
                     },
                     leadingIcon = {
-                        Icon(painterResource(R.drawable.wallpaper_24px), contentDescription = null)
+                        Icon(painterResource(BaseR.drawable.wallpaper_24px), contentDescription = null)
                     }
                 )
                 DropdownMenuItem(
@@ -152,10 +154,10 @@ fun RowScope.SearchBarMenu(
                         showOverflowMenu = false
                     },
                     text = {
-                        Text(stringResource(R.string.settings))
+                        Text(stringResource(I18nR.string.settings))
                     },
                     leadingIcon = {
-                        Icon(painterResource(R.drawable.settings_24px), contentDescription = null)
+                        Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = null)
                     }
                 )
                 if (widgetScopeId != null) {
@@ -178,10 +180,10 @@ fun RowScope.SearchBarMenu(
                             }
                         },
                         text = {
-                            Text(stringResource(R.string.widget_add_widget))
+                            Text(stringResource(I18nR.string.widget_add_widget))
                         },
                         leadingIcon = {
-                            Icon(painterResource(R.drawable.widgets_24px), contentDescription = null)
+                            Icon(painterResource(BaseR.drawable.widgets_24px), contentDescription = null)
                         }
                     )
                 }
@@ -204,10 +206,10 @@ fun RowScope.SearchBarMenu(
                         showOverflowMenu = false
                     },
                     text = {
-                        Text(stringResource(R.string.help))
+                        Text(stringResource(I18nR.string.help))
                     },
                     leadingIcon = {
-                        Icon(painterResource(R.drawable.help_24px), contentDescription = null)
+                        Icon(painterResource(BaseR.drawable.help_24px), contentDescription = null)
                     }
                 )
             }

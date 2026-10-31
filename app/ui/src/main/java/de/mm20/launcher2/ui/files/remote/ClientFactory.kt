@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files.remote
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import java.io.IOException
@@ -22,7 +23,7 @@ object ClientFactory {
             RemoteType.Owncloud -> WebDavClient("$scheme://$authority/remote.php/webdav${sub.trimEnd('/')}", c.user, c.password, context.cacheDir)
             RemoteType.Sftp -> SftpRemoteClient(c) { fingerprint -> if (persist) ConnectionStore(context).save(c.copy(fingerprint = fingerprint)) }
             RemoteType.Smb -> SmbRemoteClient(c)
-            RemoteType.Ftp -> FtpRemoteClient(c, context.getString(de.mm20.launcher2.ui.R.string.au2_dlsec_ftps_hostname_failed, c.host.trim()))
+            RemoteType.Ftp -> FtpRemoteClient(c, context.getString(I18nR.string.au2_dlsec_ftps_hostname_failed, c.host.trim()))
             RemoteType.System -> SafClient(context, c.host)
             RemoteType.Dropbox -> DropboxClient(tokens(context, c, persist), context.cacheDir)
             RemoteType.GoogleDrive -> GoogleDriveClient(tokens(context, c, persist), context.cacheDir)

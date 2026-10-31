@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -53,11 +55,11 @@ internal val TASK_SHAPE = RoundedCornerShape(20.dp)
 
 /** Priorities the user can choose in the UI; libtorrent has 0 to 7 */
 internal enum class FilePriority(val value: Int, val label: Int) {
-    Skip(0, R.string.dl_t_prio_skip),
-    Low(1, R.string.dl_t_prio_low),
-    Normal(4, R.string.dl_t_prio_normal),
-    High(6, R.string.dl_t_prio_high),
-    Max(7, R.string.dl_t_prio_max);
+    Skip(0, I18nR.string.dl_t_prio_skip),
+    Low(1, I18nR.string.dl_t_prio_low),
+    Normal(4, I18nR.string.dl_t_prio_normal),
+    High(6, I18nR.string.dl_t_prio_high),
+    Max(7, I18nR.string.dl_t_prio_max);
 
     companion object {
         fun of(value: Int): FilePriority = when {
@@ -118,10 +120,10 @@ internal fun TorrentFileList(
 internal fun torrentStateLabel(t: DownloadTask): String {
     val d = t.torrent
     return when {
-        d != null && d.moving -> stringResource(R.string.dl_t_state_moving)
-        t.state == DownloadState.Seeding -> stringResource(R.string.dl_t_state_seeding)
-        d != null && d.inQueue && t.state.isActive -> stringResource(R.string.dl_t_state_queue)
-        t.state == DownloadState.Connecting && d != null && d.files.isEmpty() -> stringResource(R.string.dl_t_state_metadata)
+        d != null && d.moving -> stringResource(I18nR.string.dl_t_state_moving)
+        t.state == DownloadState.Seeding -> stringResource(I18nR.string.dl_t_state_seeding)
+        d != null && d.inQueue && t.state.isActive -> stringResource(I18nR.string.dl_t_state_queue)
+        t.state == DownloadState.Connecting && d != null && d.files.isEmpty() -> stringResource(I18nR.string.dl_t_state_metadata)
         else -> stateLabel(t)
     }
 }
@@ -137,11 +139,11 @@ internal fun TorrentSpeedHeader(tasks: List<DownloadTask>) {
         Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(painterResource(R.drawable.swap_vert_24px), null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+        Icon(painterResource(BaseR.drawable.swap_vert_24px), null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.width(8.dp))
         Text(
-            pluralStringResource(R.plurals.dl_t_header_torrents, active.size, active.size) + " · " +
-                stringResource(R.string.dl_t_header_speed, Formatting.speed(down), Formatting.speed(up)),
+            pluralStringResource(I18nR.plurals.dl_t_header_torrents, active.size, active.size) + " · " +
+                stringResource(I18nR.string.dl_t_header_speed, Formatting.speed(down), Formatting.speed(up)),
             style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary,
         )
     }
@@ -164,7 +166,7 @@ internal fun TorrentCard(task: DownloadTask, manager: DownloadManager, onOpenDet
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        painterResource(if (failed) R.drawable.error_24px else R.drawable.swap_vert_24px), null,
+                        painterResource(if (failed) BaseR.drawable.error_24px else BaseR.drawable.swap_vert_24px), null,
                         tint = if (failed) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onPrimaryContainer,
                     )
                 }
@@ -180,15 +182,15 @@ internal fun TorrentCard(task: DownloadTask, manager: DownloadManager, onOpenDet
                 }
                 when (task.state) {
                     DownloadState.Failed -> IconButton(onClick = { manager.resume(task.id) }) {
-                        Icon(painterResource(R.drawable.restart_alt_24px), stringResource(R.string.dl_retry))
+                        Icon(painterResource(BaseR.drawable.restart_alt_24px), stringResource(I18nR.string.dl_retry))
                     }
-                    DownloadState.Completed -> IconButton(onClick = onDelete) { Icon(painterResource(R.drawable.delete_24px), stringResource(R.string.dl_delete)) }
+                    DownloadState.Completed -> IconButton(onClick = onDelete) { Icon(painterResource(BaseR.drawable.delete_24px), stringResource(I18nR.string.dl_delete)) }
                     else -> {
                         val paused = task.state == DownloadState.Paused
                         IconButton(onClick = { if (paused) manager.resume(task.id) else manager.pause(task.id) }) {
                             Icon(
-                                painterResource(if (paused) R.drawable.play_arrow_24px else R.drawable.pause_24px),
-                                stringResource(if (paused) R.string.dl_resume else R.string.dl_pause),
+                                painterResource(if (paused) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px),
+                                stringResource(if (paused) I18nR.string.dl_resume else I18nR.string.dl_pause),
                             )
                         }
                     }
@@ -208,13 +210,13 @@ internal fun TorrentCard(task: DownloadTask, manager: DownloadManager, onOpenDet
                     buildString {
                         append("↓ ").append(Formatting.speed(if (task.state == DownloadState.Seeding) 0 else task.speedBps))
                         append("  ↑ ").append(Formatting.speed(d.uploadBps))
-                        append(" · ").append(stringResource(R.string.dl_t_ratio, SeedRules.formatRatio(d.ratio)))
+                        append(" · ").append(stringResource(I18nR.string.dl_t_ratio, SeedRules.formatRatio(d.ratio)))
                     },
                     style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 if (task.state.isActive) {
                     Text(
-                        stringResource(R.string.dl_t_peers, d.seeds, (d.peers - d.seeds).coerceAtLeast(0)),
+                        stringResource(I18nR.string.dl_t_peers, d.seeds, (d.peers - d.seeds).coerceAtLeast(0)),
                         style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }

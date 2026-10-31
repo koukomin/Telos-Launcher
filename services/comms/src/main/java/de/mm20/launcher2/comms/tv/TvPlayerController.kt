@@ -1,4 +1,5 @@
 package de.mm20.launcher2.comms.tv
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Activity
 import android.app.Application
@@ -26,7 +27,6 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.base.containedScope
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.comms.media.PlaybackCoordinator
 import de.mm20.launcher2.comms.media.ReconnectPolicy
 import kotlinx.coroutines.Dispatchers

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.screenrec
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -82,8 +83,8 @@ class ScreenRecorderService : Service() {
                     // started with startForegroundService(): startForeground() is mandatory within a few seconds, or the app crashes
                     startInForeground()
                     when (current) {
-                        ScreenRecStatus.Recording -> notify(buildNotification(getString(R.string.screenrec_recording), chronometer = true, paused = false))
-                        ScreenRecStatus.Paused -> notify(buildNotification(getString(R.string.screenrec_paused), chronometer = false, paused = true))
+                        ScreenRecStatus.Recording -> notify(buildNotification(getString(I18nR.string.screenrec_recording), chronometer = true, paused = false))
+                        ScreenRecStatus.Paused -> notify(buildNotification(getString(I18nR.string.screenrec_paused), chronometer = false, paused = true))
                         else -> {}
                     }
                     return START_NOT_STICKY
@@ -105,7 +106,7 @@ class ScreenRecorderService : Service() {
         val settings = ScreenRecorderSettings(this)
         for (second in settings.countdown downTo 1) {
             ScreenRecorderState.set(ScreenRecState(ScreenRecStatus.Countdown, countdown = second))
-            notify(buildNotification(getString(R.string.screenrec_countdown, second), chronometer = false, paused = false, actions = false))
+            notify(buildNotification(getString(I18nR.string.screenrec_countdown, second), chronometer = false, paused = false, actions = false))
             delay(1000)
         }
         if (!startRecording(resultCode, data, settings)) fail()
@@ -157,7 +158,7 @@ class ScreenRecorderService : Service() {
             if (settings.showTouches) setShowTouches(true)
             if (settings.stopOnScreenOff) registerScreenOff()
             ScreenRecorderState.set(ScreenRecState(ScreenRecStatus.Recording))
-            notify(buildNotification(getString(R.string.screenrec_recording), chronometer = true, paused = false))
+            notify(buildNotification(getString(I18nR.string.screenrec_recording), chronometer = true, paused = false))
             timer = scope.launch {
                 while (isActive) {
                     delay(500)
@@ -231,12 +232,12 @@ class ScreenRecorderService : Service() {
                 rec.pause()
                 accumulated += System.currentTimeMillis() - segmentStart
                 ScreenRecorderState.update { it.copy(status = ScreenRecStatus.Paused, elapsedMs = accumulated) }
-                notify(buildNotification(getString(R.string.screenrec_paused), chronometer = false, paused = true))
+                notify(buildNotification(getString(I18nR.string.screenrec_paused), chronometer = false, paused = true))
             } else if (status == ScreenRecStatus.Paused) {
                 rec.resume()
                 segmentStart = System.currentTimeMillis()
                 ScreenRecorderState.update { it.copy(status = ScreenRecStatus.Recording) }
-                notify(buildNotification(getString(R.string.screenrec_recording), chronometer = true, paused = false))
+                notify(buildNotification(getString(I18nR.string.screenrec_recording), chronometer = true, paused = false))
             }
         } catch (_: Exception) {
         }
@@ -269,14 +270,14 @@ class ScreenRecorderService : Service() {
             saved = false
         }
         cleanup(deleteOutput = !saved)
-        if (saved) Toast.makeText(this, R.string.screenrec_saved, Toast.LENGTH_SHORT).show()
+        if (saved) Toast.makeText(this, I18nR.string.screenrec_saved, Toast.LENGTH_SHORT).show()
         stopSelf()
     }
 
     private fun fail() {
         cleanup(deleteOutput = true)
         ScreenRecorderState.set(ScreenRecState(error = true))
-        Toast.makeText(this, R.string.screenrec_start_failed, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, I18nR.string.screenrec_start_failed, Toast.LENGTH_LONG).show()
         stopSelf()
     }
 
@@ -329,7 +330,7 @@ class ScreenRecorderService : Service() {
     }
 
     private fun startInForeground() {
-        val notification = buildNotification(getString(R.string.screenrec_starting), chronometer = false, paused = false, actions = false)
+        val notification = buildNotification(getString(I18nR.string.screenrec_starting), chronometer = false, paused = false, actions = false)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION)
         } else {
@@ -344,7 +345,7 @@ class ScreenRecorderService : Service() {
     private fun buildNotification(text: String, chronometer: Boolean, paused: Boolean, actions: Boolean = true): Notification {
         val nm = getSystemService(NotificationManager::class.java)
         if (nm.getNotificationChannel(CHANNEL_ID) == null) {
-            nm.createNotificationChannel(NotificationChannel(CHANNEL_ID, getString(R.string.screenrec_notification_channel), NotificationManager.IMPORTANCE_LOW))
+            nm.createNotificationChannel(NotificationChannel(CHANNEL_ID, getString(I18nR.string.screenrec_notification_channel), NotificationManager.IMPORTANCE_LOW))
         }
         fun action(action: String, request: Int) = PendingIntent.getService(
             this, request, Intent(this, ScreenRecorderService::class.java).setAction(action), PendingIntent.FLAG_IMMUTABLE,
@@ -368,8 +369,8 @@ class ScreenRecorderService : Service() {
             builder.setUsesChronometer(true).setWhen(System.currentTimeMillis() - ScreenRecorderState.state.value.elapsedMs)
         }
         if (actions) {
-            builder.addAction(0, getString(if (paused) R.string.voice_resume else R.string.voice_pause), action(ACTION_TOGGLE_PAUSE, 1))
-            builder.addAction(0, getString(R.string.voice_stop), action(ACTION_STOP, 2))
+            builder.addAction(0, getString(if (paused) I18nR.string.voice_resume else I18nR.string.voice_pause), action(ACTION_TOGGLE_PAUSE, 1))
+            builder.addAction(0, getString(I18nR.string.voice_stop), action(ACTION_STOP, 2))
         }
         return builder.build()
     }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.agents
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -6,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
-import de.mm20.launcher2.i18n.R
 import java.net.URLEncoder
 
 object AgentLauncher {
@@ -21,7 +21,7 @@ object AgentLauncher {
             else -> openApp(context, agent, trimmed) || openWeb(context, agent, trimmed)
         }
         if (!ok) {
-            Toast.makeText(context, R.string.agent_launch_failed, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, I18nR.string.agent_launch_failed, Toast.LENGTH_SHORT).show()
         }
         return ok
     }

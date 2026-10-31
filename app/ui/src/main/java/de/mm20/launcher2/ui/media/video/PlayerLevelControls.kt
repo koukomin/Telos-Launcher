@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import android.media.AudioManager
@@ -89,8 +91,8 @@ internal fun PlayerLevelControls(
             val railHeight = (maxHeight * 0.55f).coerceIn(160.dp, 280.dp)
             LevelRail(
                 value = light,
-                icon = R.drawable.light_mode_24px,
-                label = stringResource(R.string.au_video_brightness, (light * 100).roundToInt()),
+                icon = BaseR.drawable.light_mode_24px,
+                label = stringResource(I18nR.string.au_video_brightness, (light * 100).roundToInt()),
                 height = railHeight,
                 modifier = Modifier.align(Alignment.CenterStart),
                 fill = Color(0xFFFFE082),
@@ -110,8 +112,8 @@ internal fun PlayerLevelControls(
 
             LevelRail(
                 value = (sound / (if (onVolumeBoost != null) 2f else 1f)).coerceIn(0f, 1f),
-                icon = if (sound == 0f) R.drawable.volume_off_24px else R.drawable.volume_up_24px,
-                label = stringResource(R.string.au_video_volume, (sound * 100).roundToInt()),
+                icon = if (sound == 0f) BaseR.drawable.volume_off_24px else BaseR.drawable.volume_up_24px,
+                label = stringResource(I18nR.string.au_video_volume, (sound * 100).roundToInt()),
                 height = railHeight,
                 modifier = Modifier.align(Alignment.CenterEnd),
                 fill = volumeColor,
@@ -133,8 +135,8 @@ internal fun PlayerLevelControls(
             if (showBoostWarning) {
                 androidx.compose.material3.AlertDialog(
                     onDismissRequest = { showBoostWarning = false },
-                    title = { Text(stringResource(R.string.hc_high_volume_warning_title)) },
-                    text = { Text(stringResource(R.string.hc_high_volume_warning_text)) },
+                    title = { Text(stringResource(I18nR.string.hc_high_volume_warning_title)) },
+                    text = { Text(stringResource(I18nR.string.hc_high_volume_warning_text)) },
                     confirmButton = {
                         androidx.compose.material3.TextButton(onClick = { showBoostWarning = false }) {
                             Text(stringResource(android.R.string.ok))

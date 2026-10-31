@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.ui.res.stringResource
 import android.net.Uri
@@ -81,7 +83,7 @@ fun VideoPlayerScreen(
                 .onSuccess { opened ->
                     if (context.findActivity()?.intent?.getBooleanExtra("stremio_auto_continuation", false) == true &&
                         opened.videos.none { it.index == torrentFileIdx }) {
-                        error = context.getString(R.string.au_video_torrent_failed)
+                        error = context.getString(I18nR.string.au_video_torrent_failed)
                         context.findActivity()?.let { TorrentStreamer.release(it) }
                         return@onSuccess
                     }
@@ -97,8 +99,8 @@ fun VideoPlayerScreen(
                 }
                 .onFailure {
                     error = if (it is de.mm20.launcher2.comms.media.video.torrent.TorrentRouteNotReadyException) {
-                        context.getString(R.string.au6_wgvideo_route_not_ready)
-                    } else it.message ?: context.getString(R.string.au_video_torrent_failed)
+                        context.getString(I18nR.string.au6_wgvideo_route_not_ready)
+                    } else it.message ?: context.getString(I18nR.string.au_video_torrent_failed)
                 }
         }
         LaunchedEffect(torrentSource) {
@@ -116,7 +118,7 @@ fun VideoPlayerScreen(
                 if (error == null) CircularProgressIndicator(color = Color.White)
                 Text(
                     text = error ?: stringResource(
-                        if (torrent.stage == TorrentState.Stage.FindingPeers) R.string.au_video_finding_peers else R.string.au_video_opening
+                        if (torrent.stage == TorrentState.Stage.FindingPeers) I18nR.string.au_video_finding_peers else I18nR.string.au_video_opening
                     ),
                     color = Color.White,
                     style = MaterialTheme.typography.bodyLarge,
@@ -124,10 +126,10 @@ fun VideoPlayerScreen(
                 )
                 if (error == null && torrent.stage == TorrentState.Stage.FindingPeers) {
                     TorrentConnectionCard(torrent)
-                    Text(stringResource(R.string.hc_this_can_take_a_minute), color = Color(0xB3FFFFFF), style = MaterialTheme.typography.bodySmall)
+                    Text(stringResource(I18nR.string.hc_this_can_take_a_minute), color = Color(0xB3FFFFFF), style = MaterialTheme.typography.bodySmall)
                 }
                 TextButton(onClick = onClose, modifier = Modifier.padding(top = 16.dp)) {
-                    Text(stringResource(if (error != null) R.string.hc_close else R.string.hc_cancel), color = Color.White)
+                    Text(stringResource(if (error != null) I18nR.string.hc_close else I18nR.string.hc_cancel), color = Color.White)
                 }
             }
         }
@@ -142,11 +144,11 @@ private fun TorrentConnectionCard(torrent: TorrentState, modifier: Modifier = Mo
         modifier.background(Color(0xCC17202B), androidx.compose.foundation.shape.RoundedCornerShape(20.dp)).padding(20.dp),
         verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp),
     ) {
-        Text(stringResource(R.string.telos_torrent_connecting), color = Color.White, style = MaterialTheme.typography.titleMedium)
-        Text(stringResource(R.string.telos_torrent_peers, torrent.peers, torrent.seeds), color = Color.White)
-        Text(stringResource(R.string.telos_torrent_speed, torrent.downloadBytesPerSecond / 1024), color = Color.White)
-        Text(stringResource(R.string.telos_torrent_trackers, torrent.workingTrackers, torrent.trackers, torrent.failedTrackers), color = Color(0xCCFFFFFF), style = MaterialTheme.typography.bodySmall)
-        Text(stringResource(R.string.telos_torrent_dht, torrent.dhtNodes, torrent.elapsedSeconds), color = Color(0xCCFFFFFF), style = MaterialTheme.typography.bodySmall)
+        Text(stringResource(I18nR.string.telos_torrent_connecting), color = Color.White, style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(I18nR.string.telos_torrent_peers, torrent.peers, torrent.seeds), color = Color.White)
+        Text(stringResource(I18nR.string.telos_torrent_speed, torrent.downloadBytesPerSecond / 1024), color = Color.White)
+        Text(stringResource(I18nR.string.telos_torrent_trackers, torrent.workingTrackers, torrent.trackers, torrent.failedTrackers), color = Color(0xCCFFFFFF), style = MaterialTheme.typography.bodySmall)
+        Text(stringResource(I18nR.string.telos_torrent_dht, torrent.dhtNodes, torrent.elapsedSeconds), color = Color(0xCCFFFFFF), style = MaterialTheme.typography.bodySmall)
     }
 }
 
@@ -277,7 +279,7 @@ private fun PlayerContent(
                 resumePlayback = player.playWhenReady
                 player.stop()
                 blocked = true
-                android.widget.Toast.makeText(context, R.string.netfw_blocked, android.widget.Toast.LENGTH_LONG).show()
+                android.widget.Toast.makeText(context, I18nR.string.netfw_blocked, android.widget.Toast.LENGTH_LONG).show()
             } else if (networkGate.allowed.value && blocked) {
                 resumePlayback = player.playWhenReady
                 player.prepare()
@@ -582,7 +584,7 @@ private fun PlayerContent(
                         SubtitleFiles.import(context, name, bytes, lang, currentVideoKey)
                     }
                 }.onSuccess { loadSubtitleFile(it, null) }
-                    .onFailure { toast(context, context.getString(R.string.au_video_subtitle_failed)) }
+                    .onFailure { toast(context, context.getString(I18nR.string.au_video_subtitle_failed)) }
             }
         }
     }
@@ -767,7 +769,7 @@ private fun PlayerContent(
             ) {
                 CircularProgressIndicator(color = Color.White, strokeWidth = 2.dp, modifier = Modifier.size(18.dp))
                 Text(
-                    text = stringResource(if (waitingForNetwork) R.string.au16_reconnect_waiting else R.string.au16_reconnect_label),
+                    text = stringResource(if (waitingForNetwork) I18nR.string.au16_reconnect_waiting else I18nR.string.au16_reconnect_label),
                     color = Color.White,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = 12.dp),
@@ -776,7 +778,7 @@ private fun PlayerContent(
         } else if (playbackError && !inPictureInPicture) {
             val remote = player.currentMediaItem?.localConfiguration?.uri?.let { RemoteVideo.isRemote(it) } == true
             Text(
-                text = stringResource(if (remote) R.string.vn_network_open_failed else R.string.au_video_playback_error),
+                text = stringResource(if (remote) I18nR.string.vn_network_open_failed else I18nR.string.au_video_playback_error),
                 color = Color.White,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.align(Alignment.Center).padding(horizontal = 32.dp)
@@ -798,7 +800,7 @@ private fun PlayerContent(
         if (isTorrent && !inPictureInPicture && (controlsVisible || torrent.downloadBytesPerSecond < 50_000)) {
             Text(
                 text = stringResource(
-                    R.string.au_video_torrent_stats, torrent.peers, torrent.downloadBytesPerSecond / 1024, (torrent.progress * 100).toInt()
+                    I18nR.string.au_video_torrent_stats, torrent.peers, torrent.downloadBytesPerSecond / 1024, (torrent.progress * 100).toInt()
                 ),
                 color = Color(0xCCFFFFFF),
                 style = MaterialTheme.typography.labelMedium,
@@ -815,7 +817,7 @@ private fun PlayerContent(
             ) {
                 IconButton(onClick = { player.pause(); onClose() },
                     modifier = Modifier.background(Color(0xB31A1A1A), androidx.compose.foundation.shape.CircleShape)) {
-                    Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back), tint = Color.White)
+                    Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back), tint = Color.White)
                 }
                 Text(
                     text = title,
@@ -827,11 +829,11 @@ private fun PlayerContent(
                 )
                 Box {
                     TextButton(onClick = { subtitleMenu = true }) {
-                        Text(stringResource(R.string.hc_subtitles_2), color = Color.White)
+                        Text(stringResource(I18nR.string.hc_subtitles_2), color = Color.White)
                     }
                 }
                 IconButton(onClick = { showMenu = true }) {
-                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_playback_options), tint = Color.White)
+                    Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_playback_options), tint = Color.White)
                 }
             }
         }
@@ -851,7 +853,7 @@ private fun OnlineSubtitleDialog(
     onFile: (java.io.File, String) -> Unit,
 ) {
     val context = LocalContext.current
-    var status by remember { mutableStateOf(context.getString(R.string.vn_searching)) }
+    var status by remember { mutableStateOf(context.getString(I18nR.string.vn_searching)) }
     var results by remember { mutableStateOf<List<SubtitleResult>>(emptyList()) }
     var config by remember { mutableStateOf<de.mm20.launcher2.comms.media.video.VideoServicesConfig?>(null) }
     var query by remember { mutableStateOf<de.mm20.launcher2.comms.media.video.SubtitleQuery?>(null) }
@@ -862,11 +864,11 @@ private fun OnlineSubtitleDialog(
 
     LaunchedEffect(rawTitle, searchAll) {
         busy = true
-        status = context.getString(R.string.vn_searching)
+        status = context.getString(I18nR.string.vn_searching)
         val c = VideoServices.config()
         config = c
         if (!SubtitleService.available(context, c)) {
-            status = context.getString(R.string.vn_no_sources)
+            status = context.getString(I18nR.string.vn_no_sources)
             busy = false
             return@LaunchedEffect
         }
@@ -878,18 +880,18 @@ private fun OnlineSubtitleDialog(
             results = o.results
             source = o.source
             status = when {
-                o.results.isEmpty() && o.errors.isNotEmpty() -> context.getString(R.string.vn_some_sources_failed, o.errors.joinToString("; "))
-                o.results.isEmpty() -> context.getString(R.string.vn_no_subtitles_found, cleanTitle(rawTitle))
-                o.errors.isNotEmpty() -> context.getString(R.string.vn_some_sources_failed, o.errors.joinToString("; "))
+                o.results.isEmpty() && o.errors.isNotEmpty() -> context.getString(I18nR.string.vn_some_sources_failed, o.errors.joinToString("; "))
+                o.results.isEmpty() -> context.getString(I18nR.string.vn_no_subtitles_found, cleanTitle(rawTitle))
+                o.errors.isNotEmpty() -> context.getString(I18nR.string.vn_some_sources_failed, o.errors.joinToString("; "))
                 else -> ""
             }
-        }.onFailure { status = (it.message ?: context.getString(R.string.au_video_unknown_error)) }
+        }.onFailure { status = (it.message ?: context.getString(I18nR.string.au_video_unknown_error)) }
         busy = false
     }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.hc_subtitles)) },
+        title = { Text(stringResource(I18nR.string.hc_subtitles)) },
         text = {
             Column {
                 if (status.isNotEmpty()) Text(status, style = MaterialTheme.typography.bodyMedium)
@@ -901,13 +903,13 @@ private fun OnlineSubtitleDialog(
                                 val c = config ?: return@clickable
                                 val p = SubtitleService.provider(context, c, r.provider) ?: return@clickable
                                 busy = true
-                                status = context.getString(R.string.vn_downloading)
+                                status = context.getString(I18nR.string.vn_downloading)
                                 scope.launch {
                                     runCatching { SubtitleFiles.fetch(context, p, r, videoKey) }
                                         .onSuccess { onFile(it, r.language.uppercase()) }
                                         .onFailure {
                                             busy = false
-                                            status = (it.message ?: context.getString(R.string.au_video_unknown_error))
+                                            status = (it.message ?: context.getString(I18nR.string.au_video_unknown_error))
                                         }
                                 }
                             }.padding(vertical = 8.dp)
@@ -916,9 +918,9 @@ private fun OnlineSubtitleDialog(
                             Text(
                                 listOfNotNull(
                                     r.language.uppercase(),
-                                    r.downloads.takeIf { it > 0 }?.let { context.getString(R.string.au_video_downloads_count, it) },
-                                    if (r.hearingImpaired) context.getString(R.string.au_video_hearing_impaired_short) else null,
-                                    if (r.hashMatch) context.getString(R.string.vn_exact_match) else null,
+                                    r.downloads.takeIf { it > 0 }?.let { context.getString(I18nR.string.au_video_downloads_count, it) },
+                                    if (r.hearingImpaired) context.getString(I18nR.string.au_video_hearing_impaired_short) else null,
+                                    if (r.hashMatch) context.getString(I18nR.string.vn_exact_match) else null,
                                     r.provider.replace('_', ' '),
                                 ).joinToString(" · "),
                                 style = MaterialTheme.typography.bodySmall,
@@ -930,9 +932,9 @@ private fun OnlineSubtitleDialog(
             }
         },
         dismissButton = {
-            TextButton(enabled = !busy && !searchAll, onClick = { searchAll = true }) { Text(stringResource(R.string.vn_search_all_sources)) }
+            TextButton(enabled = !busy && !searchAll, onClick = { searchAll = true }) { Text(stringResource(I18nR.string.vn_search_all_sources)) }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_close)) } },
     )
 }
 

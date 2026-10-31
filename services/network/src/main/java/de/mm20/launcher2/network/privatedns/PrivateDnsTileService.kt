@@ -1,4 +1,5 @@
 package de.mm20.launcher2.network.privatedns
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.PendingIntent
 import android.content.Intent
@@ -7,7 +8,6 @@ import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.network.R
 import de.mm20.launcher2.network.api.PrivateDnsMode
 import de.mm20.launcher2.network.api.PrivateDnsState

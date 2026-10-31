@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network.dns
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -67,18 +68,18 @@ internal fun DnsServerForm(
 
     val urlLabel = stringResource(
         when (kind) {
-            DnsKind.Doh -> R.string.net_dns_field_doh
-            DnsKind.Dot -> R.string.net_dns_field_dot
-            DnsKind.DnsCrypt -> R.string.net_dns_field_stamp
-            DnsKind.Odoh -> R.string.net_dns_field_odoh_target
-            DnsKind.DnsProxy -> R.string.net_dns_field_proxy
-            else -> R.string.net_dns_field_plain
+            DnsKind.Doh -> I18nR.string.net_dns_field_doh
+            DnsKind.Dot -> I18nR.string.net_dns_field_dot
+            DnsKind.DnsCrypt -> I18nR.string.net_dns_field_stamp
+            DnsKind.Odoh -> I18nR.string.net_dns_field_odoh_target
+            DnsKind.DnsProxy -> I18nR.string.net_dns_field_proxy
+            else -> I18nR.string.net_dns_field_plain
         }
     )
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(if (isNew) R.string.net_dns_form_add else R.string.net_dns_form_edit)) },
+        title = { Text(stringResource(if (isNew) I18nR.string.net_dns_form_add else I18nR.string.net_dns_form_edit)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -88,18 +89,18 @@ internal fun DnsServerForm(
                 }
                 OutlinedTextField(
                     value = name, onValueChange = { name = it }, singleLine = true,
-                    label = { Text(stringResource(R.string.net_dns_field_name)) }, modifier = Modifier.fillMaxWidth(),
+                    label = { Text(stringResource(I18nR.string.net_dns_field_name)) }, modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
                     value = url, onValueChange = { url = it; error = false; insecure = false },
                     label = { Text(urlLabel) }, modifier = Modifier.fillMaxWidth(),
                     isError = error, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
-                    supportingText = if (error) ({ Text(stringResource(if (insecure) R.string.au2_netsec_http_not_allowed else R.string.net_dns_invalid)) }) else null,
+                    supportingText = if (error) ({ Text(stringResource(if (insecure) I18nR.string.au2_netsec_http_not_allowed else I18nR.string.net_dns_invalid)) }) else null,
                 )
                 if (kind == DnsKind.DnsCrypt) {
-                    Text(stringResource(R.string.net_dns_field_relay), style = MaterialTheme.typography.labelMedium)
+                    Text(stringResource(I18nR.string.net_dns_field_relay), style = MaterialTheme.typography.labelMedium)
                     Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        FilterChip(selected = relay.isEmpty(), onClick = { relay = "" }, label = { Text(stringResource(R.string.net_dns_relay_none)) })
+                        FilterChip(selected = relay.isEmpty(), onClick = { relay = "" }, label = { Text(stringResource(I18nR.string.net_dns_relay_none)) })
                         DnsCatalog.dnscryptRelays.forEach { r ->
                             FilterChip(selected = relay == r.stamp, onClick = { relay = r.stamp }, label = { Text(r.name) })
                         }
@@ -108,30 +109,30 @@ internal fun DnsServerForm(
                 if (kind == DnsKind.DnsCrypt || kind == DnsKind.Odoh) {
                     OutlinedTextField(
                         value = relay, onValueChange = { relay = it; error = false },
-                        label = { Text(stringResource(if (kind == DnsKind.Odoh) R.string.net_dns_field_odoh_relay else R.string.net_dns_field_relay_stamp)) },
+                        label = { Text(stringResource(if (kind == DnsKind.Odoh) I18nR.string.net_dns_field_odoh_relay else I18nR.string.net_dns_field_relay_stamp)) },
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
                 if (kind == DnsKind.Doh || kind == DnsKind.Dot) {
                     OutlinedTextField(
                         value = bootstrap, onValueChange = { bootstrap = it },
-                        label = { Text(stringResource(R.string.net_dns_field_bootstrap)) }, modifier = Modifier.fillMaxWidth(),
+                        label = { Text(stringResource(I18nR.string.net_dns_field_bootstrap)) }, modifier = Modifier.fillMaxWidth(),
                     )
                 }
                 when {
-                    testing -> Text(stringResource(R.string.net_dns_test_running))
+                    testing -> Text(stringResource(I18nR.string.net_dns_test_running))
                     testResult != null -> {
                         val r = testResult!!
                         Text(
                             r.fold(
-                                { stringResource(R.string.net_dns_test_ok, it) },
-                                { stringResource(R.string.net_dns_test_fail, it.message ?: it.toString()) },
+                                { stringResource(I18nR.string.net_dns_test_ok, it) },
+                                { stringResource(I18nR.string.net_dns_test_fail, it.message ?: it.toString()) },
                             ),
                             color = if (r.isSuccess) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
                         )
                     }
                 }
-                Text(stringResource(R.string.net_dns_vpn_only), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(I18nR.string.net_dns_vpn_only), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         },
         confirmButton = {
@@ -143,7 +144,7 @@ internal fun DnsServerForm(
                 else onSave(s) { r ->
                     if (r.isFailure) { insecure = r.exceptionOrNull() is InsecureDnsUrlException; error = true }
                 }
-            }) { Text(stringResource(R.string.net_dns_save)) }
+            }) { Text(stringResource(I18nR.string.net_dns_save)) }
         },
         dismissButton = {
             Row {
@@ -160,8 +161,8 @@ internal fun DnsServerForm(
                         testing = true
                         scope.launch { testResult = test(s); testing = false }
                     },
-                ) { Text(stringResource(R.string.net_dns_action_test)) }
-                TextButton(onClick = onDismiss) { Text(stringResource(R.string.net_dns_cancel)) }
+                ) { Text(stringResource(I18nR.string.net_dns_action_test)) }
+                TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.net_dns_cancel)) }
             }
         },
     )
@@ -174,23 +175,23 @@ internal fun NextDnsDialog(onAdd: (DnsServer) -> Unit, onDismiss: () -> Unit) {
     var device by remember { mutableStateOf("") }
     var dot by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf(false) }
-    val nameTemplate = stringResource(R.string.net_dns_nextdns_name, "%s")
+    val nameTemplate = stringResource(I18nR.string.net_dns_nextdns_name, "%s")
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.net_dns_nextdns)) },
+        title = { Text(stringResource(I18nR.string.net_dns_nextdns)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(stringResource(R.string.net_dns_nextdns_intro), style = MaterialTheme.typography.bodyMedium)
+                Text(stringResource(I18nR.string.net_dns_nextdns_intro), style = MaterialTheme.typography.bodyMedium)
                 OutlinedTextField(
                     value = id, onValueChange = { id = it; error = false }, singleLine = true,
-                    label = { Text(stringResource(R.string.net_dns_nextdns_id)) }, modifier = Modifier.fillMaxWidth(),
+                    label = { Text(stringResource(I18nR.string.net_dns_nextdns_id)) }, modifier = Modifier.fillMaxWidth(),
                     isError = error,
-                    supportingText = if (error) ({ Text(stringResource(R.string.net_dns_nextdns_bad_id)) }) else null,
+                    supportingText = if (error) ({ Text(stringResource(I18nR.string.net_dns_nextdns_bad_id)) }) else null,
                 )
                 OutlinedTextField(
                     value = device, onValueChange = { device = it }, singleLine = true,
-                    label = { Text(stringResource(R.string.net_dns_nextdns_device)) }, modifier = Modifier.fillMaxWidth(),
+                    label = { Text(stringResource(I18nR.string.net_dns_nextdns_device)) }, modifier = Modifier.fillMaxWidth(),
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilterChip(selected = !dot, onClick = { dot = false }, label = { Text("DoH") })
@@ -202,7 +203,7 @@ internal fun NextDnsDialog(onAdd: (DnsServer) -> Unit, onDismiss: () -> Unit) {
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
-                Text(stringResource(R.string.net_dns_vpn_only), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(I18nR.string.net_dns_vpn_only), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         },
         confirmButton = {
@@ -212,8 +213,8 @@ internal fun NextDnsDialog(onAdd: (DnsServer) -> Unit, onDismiss: () -> Unit) {
                     val name = nameTemplate.replace("%s", id.trim())
                     onAdd(if (dot) NextDns.dot(id, device, name) else NextDns.doh(id, device, name))
                 }
-            }) { Text(stringResource(R.string.net_dns_nextdns_add)) }
+            }) { Text(stringResource(I18nR.string.net_dns_nextdns_add)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.net_dns_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.net_dns_cancel)) } },
     )
 }

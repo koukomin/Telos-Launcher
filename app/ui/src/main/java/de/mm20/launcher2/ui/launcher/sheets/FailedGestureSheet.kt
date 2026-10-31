@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.sheets
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
@@ -42,28 +43,28 @@ fun FailedGestureSheet(
         val hasAttemptedPermissionRequest by viewModel.hasAttemptedPermissionRequest.collectAsState(false)
 
         val actionName = stringResource(when(it.action) {
-            is GestureAction.Search -> R.string.gesture_action_open_search
-            is GestureAction.Notifications -> R.string.gesture_action_notifications
-            is GestureAction.ScreenLock -> R.string.gesture_action_lock_screen
-            is GestureAction.QuickSettings -> R.string.gesture_action_quick_settings
-            is GestureAction.Recents -> R.string.gesture_action_recents
-            is GestureAction.PowerMenu -> R.string.gesture_action_power_menu
-            is GestureAction.WebAppsPanel -> R.string.gesture_action_web_apps_panel
-            is GestureAction.HomeScreenMenu -> R.string.gesture_action_home_screen_menu
-            else -> R.string.gesture_action_none
+            is GestureAction.Search -> I18nR.string.gesture_action_open_search
+            is GestureAction.Notifications -> I18nR.string.gesture_action_notifications
+            is GestureAction.ScreenLock -> I18nR.string.gesture_action_lock_screen
+            is GestureAction.QuickSettings -> I18nR.string.gesture_action_quick_settings
+            is GestureAction.Recents -> I18nR.string.gesture_action_recents
+            is GestureAction.PowerMenu -> I18nR.string.gesture_action_power_menu
+            is GestureAction.WebAppsPanel -> I18nR.string.gesture_action_web_apps_panel
+            is GestureAction.HomeScreenMenu -> I18nR.string.gesture_action_home_screen_menu
+            else -> I18nR.string.gesture_action_none
         })
         val gestureName = stringResource(when(it.gesture) {
-            Gesture.DoubleTap -> R.string.preference_gesture_double_tap
-            Gesture.LongPress -> R.string.preference_gesture_long_press
-            Gesture.SwipeDown -> R.string.preference_gesture_swipe_down
-            Gesture.SwipeLeft -> R.string.preference_gesture_swipe_left
-            Gesture.SwipeRight -> R.string.preference_gesture_swipe_right
-            Gesture.SwipeUp -> R.string.preference_gesture_swipe_up
-            Gesture.HomeButton -> R.string.preference_gesture_home_button
-            Gesture.PinchIn -> R.string.preference_gesture_pinch_in
-            Gesture.PinchOut -> R.string.preference_gesture_pinch_out
-            Gesture.TwoFingerSwipeUp -> R.string.preference_gesture_two_finger_swipe_up
-            Gesture.TwoFingerSwipeDown -> R.string.preference_gesture_two_finger_swipe_down
+            Gesture.DoubleTap -> I18nR.string.preference_gesture_double_tap
+            Gesture.LongPress -> I18nR.string.preference_gesture_long_press
+            Gesture.SwipeDown -> I18nR.string.preference_gesture_swipe_down
+            Gesture.SwipeLeft -> I18nR.string.preference_gesture_swipe_left
+            Gesture.SwipeRight -> I18nR.string.preference_gesture_swipe_right
+            Gesture.SwipeUp -> I18nR.string.preference_gesture_swipe_up
+            Gesture.HomeButton -> I18nR.string.preference_gesture_home_button
+            Gesture.PinchIn -> I18nR.string.preference_gesture_pinch_in
+            Gesture.PinchOut -> I18nR.string.preference_gesture_pinch_out
+            Gesture.TwoFingerSwipeUp -> I18nR.string.preference_gesture_two_finger_swipe_up
+            Gesture.TwoFingerSwipeDown -> I18nR.string.preference_gesture_two_finger_swipe_down
             else -> throw IllegalArgumentException("Unknown gesture: ${it.gesture}")
         })
 
@@ -74,19 +75,19 @@ fun FailedGestureSheet(
                 .navigationBarsPadding()
         ) {
             Text(
-                stringResource(R.string.gesture_failed_message, gestureName, actionName),
+                stringResource(I18nR.string.gesture_failed_message, gestureName, actionName),
                 style = MaterialTheme.typography.bodySmall
             )
             val context = LocalLifecycleOwner.current
             MissingPermissionBanner(
                 modifier = Modifier.padding(vertical = 16.dp),
-                text = stringResource(id = R.string.missing_permission_accessibility_gesture_failed),
+                text = stringResource(id = I18nR.string.missing_permission_accessibility_gesture_failed),
                 secondaryAction = {
                     OutlinedButton(onClick = {
                         viewModel.disableGesture(it.gesture)
                         onDismiss()
                     }) {
-                        Text(stringResource(R.string.turn_off))
+                        Text(stringResource(I18nR.string.turn_off))
                     }
                 },
                 onClick = {

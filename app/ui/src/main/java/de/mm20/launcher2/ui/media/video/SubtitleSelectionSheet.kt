@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -47,10 +48,10 @@ internal fun SubtitleSelectionSheet(player: Player, onDismiss: () -> Unit, onFil
     val disabled = player.trackSelectionParameters.disabledTrackTypes.contains(C.TRACK_TYPE_TEXT)
     ModalBottomSheet(onDismissRequest = onDismiss, containerColor = MaterialTheme.colorScheme.surfaceContainer) {
         Column(Modifier.fillMaxWidth().fillMaxHeight(0.9f).navigationBarsPadding().padding(horizontal = 16.dp)) {
-            Text(stringResource(R.string.hc_subtitles), style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(I18nR.string.hc_subtitles), style = MaterialTheme.typography.titleLarge)
             LazyColumn(Modifier.fillMaxWidth().weight(1f)) {
                 item {
-                    OutlinedTextField(query, { query = it }, label = { Text(stringResource(R.string.hc_search)) },
+                    OutlinedTextField(query, { query = it }, label = { Text(stringResource(I18nR.string.hc_search)) },
                         singleLine = true, modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp))
                 }
                 item {
@@ -60,7 +61,7 @@ internal fun SubtitleSelectionSheet(player: Player, onDismiss: () -> Unit, onFil
                         onDismiss()
                     }.padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                         RadioButton(selected = disabled, onClick = null)
-                        Text(stringResource(R.string.dl_t_select_none))
+                        Text(stringResource(I18nR.string.dl_t_select_none))
                     }
                 }
                 items(choices, key = { it.key }) { choice ->
@@ -78,8 +79,8 @@ internal fun SubtitleSelectionSheet(player: Player, onDismiss: () -> Unit, onFil
                     }
                 }
             }
-            TextButton(onClick = onOnline, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.hc_search_online)) }
-            TextButton(onClick = onFile, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.hc_from_a_file)) }
+            TextButton(onClick = onOnline, modifier = Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.hc_search_online)) }
+            TextButton(onClick = onFile, modifier = Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.hc_from_a_file)) }
             Spacer(Modifier.height(16.dp))
         }
     }

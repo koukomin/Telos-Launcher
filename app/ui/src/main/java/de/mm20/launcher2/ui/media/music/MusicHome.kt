@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.music
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -113,7 +114,7 @@ internal fun MusicHome(
             .map { (name, l) -> TrackGroup(name, songsFormat.format(l.size), l.sortedBy { it.title.lowercase() }) }
             .sortedByDescending { it.tracks.size }.take(30)
     }
-    val decadeFormat = stringResource(R.string.au10_music_decade_format)
+    val decadeFormat = stringResource(I18nR.string.au10_music_decade_format)
     val decades = remember(tracks, decadeFormat) {
         tracks.filter { it.year > 1900 }.groupBy { it.year / 10 * 10 }.toSortedMap(compareByDescending<Int> { it })
             .map { (d, l) -> TrackGroup(decadeFormat.format(d), songsFormat.format(l.size), l.sortedBy { it.year }) }
@@ -128,7 +129,7 @@ internal fun MusicHome(
         if (genres.isNotEmpty()) item(key = "genres") {
             LazyRow(contentPadding = PaddingValues(horizontal = 20.dp, vertical = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 item(key = "all") {
-                    GenrePill(stringResource(R.string.au10_music_genre_all), genre == null, reduceAnimations) {
+                    GenrePill(stringResource(I18nR.string.au10_music_genre_all), genre == null, reduceAnimations) {
                         haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove); onGenre(null)
                     }
                 }
@@ -142,7 +143,7 @@ internal fun MusicHome(
         }
         if (quickSongs.isNotEmpty()) item(key = "picks") {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                ShelfTitle(stringResource(R.string.au10_music_quick_picks))
+                ShelfTitle(stringResource(I18nR.string.au10_music_quick_picks))
                 Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     quickSongs.forEachIndexed { index, t ->
                         Row(
@@ -161,7 +162,7 @@ internal fun MusicHome(
         }
         if (recent.isNotEmpty()) item(key = "recent") {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                ShelfTitle(stringResource(R.string.au10_music_recent))
+                ShelfTitle(stringResource(I18nR.string.au10_music_recent))
                 LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     items(recent.size, key = { recent[it].id }) { i ->
                         val t = recent[i]
@@ -172,7 +173,7 @@ internal fun MusicHome(
         }
         if (albums.isNotEmpty()) item(key = "albums") {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                ShelfTitle(stringResource(R.string.hc_albums))
+                ShelfTitle(stringResource(I18nR.string.hc_albums))
                 LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     items(albums, key = { it.tracks.first().albumId }) { a ->
                         ArtCard(a.tracks.first().albumArtUri.toString(), a.title, a.subtitle, reduceAnimations, onClick = { onOpenGroup(a) }, onLongClick = { onShareGroup(a) })
@@ -182,7 +183,7 @@ internal fun MusicHome(
         }
         if (artists.isNotEmpty()) item(key = "artists") {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                ShelfTitle(stringResource(R.string.au_music_tab_artists))
+                ShelfTitle(stringResource(I18nR.string.au_music_tab_artists))
                 LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     items(artists, key = { it.title }) { a ->
                         Column(
@@ -206,7 +207,7 @@ internal fun MusicHome(
                 )
             }
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                ShelfTitle(stringResource(R.string.au10_music_decades))
+                ShelfTitle(stringResource(I18nR.string.au10_music_decades))
                 LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     items(decades.size, key = { decades[it].title }) { i ->
                         val d = decades[i]

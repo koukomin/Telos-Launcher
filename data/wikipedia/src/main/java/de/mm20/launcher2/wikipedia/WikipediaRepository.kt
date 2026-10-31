@@ -1,7 +1,7 @@
 package de.mm20.launcher2.wikipedia
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.search.Article
@@ -30,7 +30,7 @@ internal class WikipediaRepository(
             if (!enabled || query.isBlank()) return@combineTransform
 
             val baseUrl =
-                url.takeIf { !it.isNullOrBlank() } ?: context.getString(R.string.wikipedia_url)
+                url.takeIf { !it.isNullOrBlank() } ?: context.getString(I18nR.string.wikipedia_url)
 
             val results = queryWikipedia(baseUrl, query)
             if (results != null) {
@@ -63,7 +63,7 @@ internal class WikipediaRepository(
             imageUrl = image,
             sourceUrl = page.fullurl,
             wikipediaUrl = baseUrl,
-            sourceName = context.getString(R.string.wikipedia_source),
+            sourceName = context.getString(I18nR.string.wikipedia_source),
         )
     }
 

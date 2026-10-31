@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.common
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.updateTransition
@@ -91,7 +93,7 @@ fun SearchablePicker(
                     SearchBarDefaults.InputField(
                         leadingIcon = {
                             Icon(
-                                painterResource(R.drawable.search_24px),
+                                painterResource(BaseR.drawable.search_24px),
                                 contentDescription = null
                             )
                         },
@@ -102,7 +104,7 @@ fun SearchablePicker(
                                     onClick = {
                                         viewModel.onSearchQueryChanged("")
                                     }) {
-                                    Icon(painterResource(R.drawable.close_24px), stringResource(R.string.action_clear))
+                                    Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.action_clear))
                                 }
                             }
                         },
@@ -114,7 +116,7 @@ fun SearchablePicker(
                             viewModel.onSearchQueryChanged(it)
                         },
                         placeholder = {
-                            Text(stringResource(R.string.search_bar_placeholder))
+                            Text(stringResource(I18nR.string.search_bar_placeholder))
                         },
                     )
                 }
@@ -195,7 +197,7 @@ fun SearchablePicker(
                     )
                     if (selected) {
                         Icon(
-                            painterResource(R.drawable.check_24px),
+                            painterResource(BaseR.drawable.check_24px),
                             contentDescription = null,
                             modifier = Modifier.padding(16.dp),
                             tint = foreground,

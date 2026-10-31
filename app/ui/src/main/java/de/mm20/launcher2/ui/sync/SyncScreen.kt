@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.sync
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.net.Uri
@@ -66,7 +67,7 @@ fun SyncScreen() {
                     },
                     actions = {
                         IconButton(onClick = { showFontDialog = true }) {
-                            Icon(painterResource(R.drawable.text_fields_24px), contentDescription = "Font Size")
+                            Icon(painterResource(BaseR.drawable.text_fields_24px), contentDescription = "Font Size")
                         }
                         TextButton(
                             onClick = {
@@ -74,7 +75,7 @@ fun SyncScreen() {
                                 runCatching { context.startActivity(intent) }
                             }
                         ) {
-                            Icon(painterResource(R.drawable.open_in_new_24px), contentDescription = null)
+                            Icon(painterResource(BaseR.drawable.open_in_new_24px), contentDescription = null)
                             Spacer(Modifier.width(4.dp))
                             Text("Web UI")
                         }
@@ -87,14 +88,14 @@ fun SyncScreen() {
                         onClick = { showAddFolderDialog = true },
                         containerColor = MaterialTheme.colorScheme.primary
                     ) {
-                        Icon(painterResource(R.drawable.add_24px), contentDescription = "Add Folder")
+                        Icon(painterResource(BaseR.drawable.add_24px), contentDescription = "Add Folder")
                     }
                 } else if (selectedTab == 1) {
                     FloatingActionButton(
                         onClick = { showAddDeviceDialog = true },
                         containerColor = MaterialTheme.colorScheme.primary
                     ) {
-                        Icon(painterResource(R.drawable.add_24px), contentDescription = "Add Device")
+                        Icon(painterResource(BaseR.drawable.add_24px), contentDescription = "Add Device")
                     }
                 }
             }
@@ -277,7 +278,7 @@ private fun FoldersTab(folders: List<SyncthingFolder>, onTogglePause: (String) -
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.folder_24px),
+                        painter = painterResource(BaseR.drawable.folder_24px),
                         contentDescription = null,
                         modifier = Modifier.size(32.dp),
                         tint = MaterialTheme.colorScheme.primary
@@ -294,7 +295,7 @@ private fun FoldersTab(folders: List<SyncthingFolder>, onTogglePause: (String) -
                     }
                     IconButton(onClick = { onTogglePause(folder.id) }) {
                         Icon(
-                            painter = painterResource(if (folder.isPaused) R.drawable.play_arrow_24px else R.drawable.pause_24px),
+                            painter = painterResource(if (folder.isPaused) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px),
                             contentDescription = "Toggle Pause"
                         )
                     }
@@ -322,7 +323,7 @@ private fun DevicesTab(devices: List<SyncthingDevice>, onTogglePause: (String) -
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.hard_disk_24px),
+                        painter = painterResource(BaseR.drawable.hard_disk_24px),
                         contentDescription = null,
                         modifier = Modifier.size(32.dp),
                         tint = MaterialTheme.colorScheme.primary
@@ -341,7 +342,7 @@ private fun DevicesTab(devices: List<SyncthingDevice>, onTogglePause: (String) -
                     }
                     IconButton(onClick = { onTogglePause(device.id) }) {
                         Icon(
-                            painter = painterResource(if (device.isPaused) R.drawable.play_arrow_24px else R.drawable.pause_24px),
+                            painter = painterResource(if (device.isPaused) BaseR.drawable.play_arrow_24px else BaseR.drawable.pause_24px),
                             contentDescription = "Toggle Pause"
                         )
                     }

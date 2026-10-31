@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.text.format.Formatter
 import androidx.compose.foundation.horizontalScroll
@@ -43,10 +44,10 @@ fun NetworkStatsScreen() {
     }.collectAsState(NetworkTrafficTotals())
     val appIndex = remember(apps) { apps.associateBy { it.appId } }
     val format = remember(context) { { bytes: Long -> Formatter.formatShortFileSize(context, bytes) } }
-    PreferenceScreen(title = stringResource(R.string.netstats_title), bottomBar = { NetworkNavigationBar(NetworkSection.Stats) }) {
+    PreferenceScreen(title = stringResource(I18nR.string.netstats_title), bottomBar = { NetworkNavigationBar(NetworkSection.Stats) }) {
         item {
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                listOf(1 to R.string.netfw_temp_1h, 24 to R.string.netstats_day, 168 to R.string.intruder_photo_retention_7d).forEach { (value, label) ->
+                listOf(1 to I18nR.string.netfw_temp_1h, 24 to I18nR.string.netstats_day, 168 to I18nR.string.intruder_photo_retention_7d).forEach { (value, label) ->
                     FilterChip(selected = hours == value, onClick = { hours = value; now = System.currentTimeMillis() }, label = { Text(stringResource(label)) })
                 }
             }
@@ -64,23 +65,23 @@ fun NetworkStatsScreen() {
                             Text(stringResource(label), style = MaterialTheme.typography.bodyMedium)
                         }
                     }
-                    Total(R.string.netstats_unmetered, totals.unmetered)
-                    Total(R.string.netstats_metered, totals.metered)
-                    Total(R.string.netstats_total, totals.bytes)
-                    if (totals.unknownMetering > 0) Total(R.string.netstats_unknown, totals.unknownMetering)
+                    Total(I18nR.string.netstats_unmetered, totals.unmetered)
+                    Total(I18nR.string.netstats_metered, totals.metered)
+                    Total(I18nR.string.netstats_total, totals.bytes)
+                    if (totals.unknownMetering > 0) Total(I18nR.string.netstats_unknown, totals.unknownMetering)
                 }
             }
         }
         item {
-            Text(stringResource(R.string.netstats_note), Modifier.padding(horizontal = 8.dp), style = MaterialTheme.typography.bodySmall)
-            Text(stringResource(R.string.netfw_l_stats, totals.connections - totals.blocked, totals.blocked), Modifier.padding(8.dp))
+            Text(stringResource(I18nR.string.netstats_note), Modifier.padding(horizontal = 8.dp), style = MaterialTheme.typography.bodySmall)
+            Text(stringResource(I18nR.string.netfw_l_stats, totals.connections - totals.blocked, totals.blocked), Modifier.padding(8.dp))
         }
         items(totals.apps.size, key = { totals.apps[it].appId }) { index ->
             val traffic = totals.apps[index]
             val app = appIndex[traffic.appId]
             Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)) {
                 Preference(title = app?.label ?: directory.labelFor(traffic.appId),
-                    summary = stringResource(R.string.nwg_traffic, format(traffic.received), format(traffic.sent)),
+                    summary = stringResource(I18nR.string.nwg_traffic, format(traffic.received), format(traffic.sent)),
                     icon = { NetAppIcon(app?.packageName) },
                     onClick = { app?.packageName?.let { backStack.add(NetworkPackageFirewallRoute(it)) } })
                 LinearProgressIndicator(progress = { if (totals.bytes <= 0) 0f else (traffic.bytes.toDouble() / totals.bytes).toFloat().coerceIn(0f,1f) },

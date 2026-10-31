@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms.radio
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.os.Bundle
 import android.widget.Toast
@@ -41,7 +42,7 @@ class RadioAddActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         val candidate = RadioShare.parse(intent)
         if (candidate == null) {
-            Toast.makeText(this, R.string.au10_radio_invalid_link, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, I18nR.string.au10_radio_invalid_link, Toast.LENGTH_LONG).show()
             finish()
             return
         }
@@ -61,20 +62,20 @@ class RadioAddActivity : BaseActivity() {
         val cleanUrl = RadioShare.cleanUrl(url)
         AlertDialog(
             onDismissRequest = { finish() },
-            title = { Text(stringResource(R.string.au10_radio_add_title, RadioShare.cleanName(name))) },
+            title = { Text(stringResource(I18nR.string.au10_radio_add_title, RadioShare.cleanName(name))) },
             text = {
                 Column {
                     OutlinedTextField(
                         value = name,
                         onValueChange = { name = it.take(RadioShare.MAX_NAME) },
-                        label = { Text(stringResource(R.string.au10_radio_name)) },
+                        label = { Text(stringResource(I18nR.string.au10_radio_name)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     OutlinedTextField(
                         value = url,
                         onValueChange = { url = it.take(RadioShare.MAX_URL) },
-                        label = { Text(stringResource(R.string.au10_radio_stream_url)) },
+                        label = { Text(stringResource(I18nR.string.au10_radio_stream_url)) },
                         isError = cleanUrl == null,
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
@@ -85,9 +86,9 @@ class RadioAddActivity : BaseActivity() {
                 TextButton(
                     enabled = cleanUrl != null && RadioShare.cleanName(name).isNotBlank(),
                     onClick = { save(RadioShare.cleanName(name), cleanUrl ?: return@TextButton, candidate.logo) },
-                ) { Text(stringResource(R.string.hc_add)) }
+                ) { Text(stringResource(I18nR.string.hc_add)) }
             },
-            dismissButton = { TextButton(onClick = { finish() }) { Text(stringResource(R.string.hc_cancel)) } },
+            dismissButton = { TextButton(onClick = { finish() }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
     }
 
@@ -96,7 +97,7 @@ class RadioAddActivity : BaseActivity() {
         lifecycleScope.launch {
             val exists = runCatching { repository.observeFavorites().first().any { it.streamUrl == url } }.getOrDefault(false)
             val msg = if (exists) {
-                getString(R.string.au10_radio_already_added)
+                getString(I18nR.string.au10_radio_already_added)
             } else {
                 runCatching {
                     repository.saveStation(
@@ -108,7 +109,7 @@ class RadioAddActivity : BaseActivity() {
                             nameManuallySet = true,
                         )
                     )
-                }.fold({ getString(R.string.au_radio_station_added, name) }, { getString(R.string.au_radio_add_failed) })
+                }.fold({ getString(I18nR.string.au_radio_station_added, name) }, { getString(I18nR.string.au_radio_add_failed) })
             }
             Toast.makeText(app, msg, Toast.LENGTH_SHORT).show()
             finish()

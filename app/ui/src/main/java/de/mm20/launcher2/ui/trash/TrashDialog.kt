@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.trash
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -45,22 +46,22 @@ fun TrashDialog(onDismiss: () -> Unit, onChanged: () -> Unit = {}) {
         }, { confirmDelete = null })
     }
     AlertDialog(onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.telos_trash_title)) },
+        title = { Text(stringResource(I18nR.string.telos_trash_title)) },
         text = { Column(Modifier.heightIn(max = 500.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
-            if (error) Text(stringResource(R.string.telos_trash_restore_failed), color = MaterialTheme.colorScheme.error)
-            if (items.isEmpty() && systemItems.isEmpty() && !busy) Text(stringResource(R.string.telos_trash_empty))
+            if (error) Text(stringResource(I18nR.string.telos_trash_restore_failed), color = MaterialTheme.colorScheme.error)
+            if (items.isEmpty() && systemItems.isEmpty() && !busy) Text(stringResource(I18nR.string.telos_trash_empty))
             LazyColumn {
                 items(items, key = { it.entry.file.path }) { item ->
                     Column(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
                         Text(item.entry.name, style = MaterialTheme.typography.titleSmall)
                         Text(item.entry.original, style = MaterialTheme.typography.bodySmall)
-                        Text(stringResource(R.string.telos_trash_expires, DateFormat.getDateInstance().format(Date(item.entry.expiresAt))), style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.telos_trash_expires, DateFormat.getDateInstance().format(Date(item.entry.expiresAt))), style = MaterialTheme.typography.bodySmall)
                         Row {
                             TextButton(enabled = !busy, onClick = { scope.launch {
                                 busy = true; error = !trash.restore(item); items = trash.entries(); busy = false; onChanged()
-                            } }) { Text(stringResource(R.string.telos_trash_restore)) }
-                            TextButton(enabled = !busy, onClick = { confirmDelete = item }) { Text(stringResource(R.string.telos_trash_permanent), color = MaterialTheme.colorScheme.error) }
+                            } }) { Text(stringResource(I18nR.string.telos_trash_restore)) }
+                            TextButton(enabled = !busy, onClick = { confirmDelete = item }) { Text(stringResource(I18nR.string.telos_trash_permanent), color = MaterialTheme.colorScheme.error) }
                         }
                         HorizontalDivider()
                     }
@@ -69,10 +70,10 @@ fun TrashDialog(onDismiss: () -> Unit, onChanged: () -> Unit = {}) {
                     Column(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
                         Text(item.name, style = MaterialTheme.typography.titleSmall)
                         Text(item.original, style = MaterialTheme.typography.bodySmall)
-                        Text(stringResource(R.string.telos_trash_expires, DateFormat.getDateInstance().format(Date(item.expiresAt))), style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.telos_trash_expires, DateFormat.getDateInstance().format(Date(item.expiresAt))), style = MaterialTheme.typography.bodySmall)
                         Row {
-                            TextButton(enabled = !busy, onClick = { systemAction(item, false) }) { Text(stringResource(R.string.telos_trash_restore)) }
-                            TextButton(enabled = !busy, onClick = { confirmSystemDelete = item }) { Text(stringResource(R.string.telos_trash_permanent), color = MaterialTheme.colorScheme.error) }
+                            TextButton(enabled = !busy, onClick = { systemAction(item, false) }) { Text(stringResource(I18nR.string.telos_trash_restore)) }
+                            TextButton(enabled = !busy, onClick = { confirmSystemDelete = item }) { Text(stringResource(I18nR.string.telos_trash_permanent), color = MaterialTheme.colorScheme.error) }
                         }
                         HorizontalDivider()
                     }
@@ -93,8 +94,8 @@ fun TrashDialog(onDismiss: () -> Unit, onChanged: () -> Unit = {}) {
                         busy = false
                         onChanged()
                     }
-                }, enabled = !busy) { Text(stringResource(R.string.trash_fill_bin)) }
-                TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) }
+                }, enabled = !busy) { Text(stringResource(I18nR.string.trash_fill_bin)) }
+                TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_close)) }
             }
         })
 }

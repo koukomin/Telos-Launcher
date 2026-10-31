@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.trim
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import androidx.core.content.FileProvider
@@ -144,7 +145,7 @@ fun MediaTrimmerScreen(
                     IconButton(onClick = onClose) {
                         Icon(
                             painterResource(de.mm20.launcher2.base.R.drawable.arrow_back_24px),
-                            contentDescription = stringResource(R.string.hc_back),
+                            contentDescription = stringResource(I18nR.string.hc_back),
                         )
                     }
                 },
@@ -380,7 +381,7 @@ fun MediaTrimmerScreen(
                                             )
                                         }
                                         if (!shared) {
-                                            Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
                                         }
                                     }
                                 },

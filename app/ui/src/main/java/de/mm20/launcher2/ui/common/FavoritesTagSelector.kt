@@ -1,7 +1,7 @@
 package de.mm20.launcher2.ui.common
-
-import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
+
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.core.animateFloat

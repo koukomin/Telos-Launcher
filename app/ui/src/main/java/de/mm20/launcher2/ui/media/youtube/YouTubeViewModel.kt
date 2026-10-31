@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.youtube
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ComponentName
 import android.content.Context
@@ -53,7 +54,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
             searching.value = true; message.value = null
             try { results.value = results.value + (music to repository.search(query.trim(), music)) }
             catch (e: CancellationException) { throw e }
-            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            catch (_: Exception) { message.value = context.getString(I18nR.string.telos_youtube_search_failed) }
             finally { searching.value = false }
         }
     }
@@ -61,7 +62,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
         controller.value?.let { return it }
         connectJob?.let { return it.await() }
         val app = context.applicationContext
-        playbackErrorMessage = app.getString(R.string.telos_youtube_player_error)
+        playbackErrorMessage = app.getString(I18nR.string.telos_youtube_player_error)
         val deferred = viewModelScope.async {
             val pending = MediaController.Builder(app, SessionToken(app, ComponentName(app, YouTubePlayerService::class.java))).buildAsync()
             future = pending
@@ -104,7 +105,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
                     userPlaylists.value = emptyList()
                 }
             } catch (cancelled: CancellationException) { throw cancelled }
-            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            catch (_: Exception) { message.value = context.getString(I18nR.string.telos_youtube_search_failed) }
             finally {
                 isLoadingPlaylists.value = false
             }
@@ -123,7 +124,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
             } catch (e: CancellationException) {
                 throw e
             } catch (_: Exception) {
-                message.value = context.getString(R.string.telos_youtube_search_failed)
+                message.value = context.getString(I18nR.string.telos_youtube_search_failed)
             } finally {
                 searching.value = false
             }
@@ -137,7 +138,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
             searching.value = true; message.value = null
             try { results.value = results.value + (music to if (music) repository.fetchMusicHome() else repository.fetchHomeFeed()) }
             catch (cancelled: CancellationException) { throw cancelled }
-            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            catch (_: Exception) { message.value = context.getString(I18nR.string.telos_youtube_search_failed) }
             finally { searching.value = false }
         }
     }
@@ -167,7 +168,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
                 c.setMediaItem(MediaItem.Builder().setMediaId(entry.url).setUri(playback.streamUrl).setMediaMetadata(metadata).build())
                 c.prepare(); c.play()
             } catch (e: CancellationException) { throw e }
-            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_play_failed) }
+            catch (_: Exception) { message.value = context.getString(I18nR.string.telos_youtube_play_failed) }
             finally { resolving.value = false }
         }
     }
@@ -179,7 +180,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
                 val pair = repository.fetchPlaylist(url)
                 results.value = results.value + (true to pair.second)
             } catch (e: CancellationException) { throw e }
-            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            catch (_: Exception) { message.value = context.getString(I18nR.string.telos_youtube_search_failed) }
             finally { searching.value = false }
         }
     }
@@ -211,7 +212,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
                 results.value = results.value + (true to tracks)
                 if (tracks.isNotEmpty()) play(context, tracks.first(), true, tracks)
             } catch (e: CancellationException) { throw e }
-            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_radio_failed) }
+            catch (_: Exception) { message.value = context.getString(I18nR.string.telos_youtube_radio_failed) }
             finally { searching.value = false }
         }
     }
@@ -225,7 +226,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
                 results.value = results.value + (true to tracks)
                 if (tracks.isNotEmpty()) play(context, tracks.first(), true, tracks)
             } catch (e: CancellationException) { throw e }
-            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            catch (_: Exception) { message.value = context.getString(I18nR.string.telos_youtube_search_failed) }
             finally { searching.value = false }
         }
     }

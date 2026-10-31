@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.desktopmode
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.PendingIntent
 import androidx.compose.foundation.background
@@ -48,8 +50,8 @@ internal fun DesktopNotificationsTrayIcon() {
 
     Box {
         DesktopTrayIconButton(
-            icon = R.drawable.notifications_24px,
-            contentDescription = stringResource(R.string.desktop_mode_tray_notifications),
+            icon = BaseR.drawable.notifications_24px,
+            contentDescription = stringResource(I18nR.string.desktop_mode_tray_notifications),
             caption = if (notifications.isNotEmpty()) notifications.size.toString() else null,
             active = expanded,
             onClick = { expanded = !expanded },
@@ -71,7 +73,7 @@ internal fun DesktopNotificationsTrayIcon() {
             ) {
                 if (notifications.isEmpty()) {
                     Text(
-                        text = stringResource(R.string.desktop_mode_tray_notifications_empty),
+                        text = stringResource(I18nR.string.desktop_mode_tray_notifications_empty),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(16.dp),
                     )
@@ -141,7 +143,7 @@ private fun DesktopNotificationRow(
         }
         if (notification.isClearable) {
             Text(
-                text = stringResource(R.string.close),
+                text = stringResource(I18nR.string.close),
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier.clickable(onClick = onClear),
             )

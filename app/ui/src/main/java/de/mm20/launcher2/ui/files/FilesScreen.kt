@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
@@ -317,19 +319,19 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                             onFilters = { showSearchFilters = true },
                         )
                         else -> TopAppBar(
-                            title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else if (de.mm20.launcher2.ui.files.vault.VaultPath.isRoot(it)) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(it)) else nameOf(it) } ?: stringResource(R.string.hc_telos_files), maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                            title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else if (de.mm20.launcher2.ui.files.vault.VaultPath.isRoot(it)) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(it)) else nameOf(it) } ?: stringResource(I18nR.string.hc_telos_files), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                             navigationIcon = {
                                 IconButton(onClick = { scope.launch { drawer.open() } }) {
-                                    Icon(painterResource(Icons.storage_24px), contentDescription = stringResource(R.string.hc_storage))
+                                    Icon(painterResource(Icons.storage_24px), contentDescription = stringResource(I18nR.string.hc_storage))
                                 }
                             },
                             actions = {
                                 if (vm.path != null) {
                                     IconButton(onClick = { vm.path?.let { dialog = FilesDialog.TelosDrop(it) } }) {
-                                        Icon(painterResource(R.drawable.share_24px), contentDescription = "Telos Drop")
+                                        Icon(painterResource(BaseR.drawable.share_24px), contentDescription = "Telos Drop")
                                     }
                                     IconButton(onClick = { searching = true }) {
-                                        Icon(painterResource(Icons.search_24px), contentDescription = stringResource(R.string.hc_search))
+                                        Icon(painterResource(Icons.search_24px), contentDescription = stringResource(I18nR.string.hc_search))
                                     }
                                 }
                                 toolbarConfig.actions.forEach { action ->
@@ -337,14 +339,14 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                     IconButton(onClick = { viewMenu = true }) {
                                         Icon(
                                             painterResource(when (vm.viewMode) { 1 -> Icons.apps_24px; 2 -> Icons.dashboard_2_24px; else -> Icons.table_rows_24px }),
-                                            contentDescription = stringResource(R.string.au22_files_view_mode),
+                                            contentDescription = stringResource(I18nR.string.au22_files_view_mode),
                                         )
                                     }
                                     DropdownMenu(expanded = viewMenu, onDismissRequest = { viewMenu = false }) {
                                         listOf(
-                                            Triple(0, R.string.au22_files_view_list, Icons.table_rows_24px),
-                                            Triple(1, R.string.au22_files_view_grid_medium, Icons.apps_24px),
-                                            Triple(2, R.string.au22_files_view_grid_large, Icons.dashboard_2_24px),
+                                            Triple(0, I18nR.string.au22_files_view_list, Icons.table_rows_24px),
+                                            Triple(1, I18nR.string.au22_files_view_grid_medium, Icons.apps_24px),
+                                            Triple(2, I18nR.string.au22_files_view_grid_large, Icons.dashboard_2_24px),
                                         ).forEach { (mode, label, icon) ->
                                             DropdownMenuItem(
                                                 text = { Text(stringResource(label)) },
@@ -357,9 +359,9 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                 }
                                 if (action != FilesToolbarAction.View) {
                                     val label = when (action) {
-                                        FilesToolbarAction.Sort -> R.string.hc_sort_by_2
-                                        FilesToolbarAction.Hidden -> if (vm.showHidden) R.string.hf_files_hide_hidden else R.string.hf_files_show_hidden
-                                        else -> R.string.hc_refresh
+                                        FilesToolbarAction.Sort -> I18nR.string.hc_sort_by_2
+                                        FilesToolbarAction.Hidden -> if (vm.showHidden) I18nR.string.hf_files_hide_hidden else I18nR.string.hf_files_show_hidden
+                                        else -> I18nR.string.hc_refresh
                                     }
                                     IconButton(onClick = { when (action) {
                                         FilesToolbarAction.Sort -> dialog = FilesDialog.Sort
@@ -376,19 +378,19 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                 }
                                 Box {
                                     IconButton(onClick = { menuOpen = true }) {
-                                        Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+                                        Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_more))
                                     }
                                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_collections)) }, onClick = { menuOpen = false; showCollections = true })
-                                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_apps)) }, onClick = { menuOpen = false; showApps = true })
+                                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_collections)) }, onClick = { menuOpen = false; showCollections = true })
+                                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_apps)) }, onClick = { menuOpen = false; showApps = true })
                                         vm.path?.takeIf { !vm.rootMode && !RemotePath.isRemote(it) && !ArchivePath.isArchive(it) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { folder ->
-                                            DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_sharing_title)) }, onClick = { menuOpen = false; sharingPath = folder })
+                                            DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_sharing_title)) }, onClick = { menuOpen = false; sharingPath = folder })
                                             DropdownMenuItem(text = { Text("FTP") }, onClick = { menuOpen = false; ftpPath = folder })
                                         }
-                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_transfers_title)) }, onClick = { menuOpen = false; showTransfers = true })
-                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_toolbar_title)) }, onClick = { menuOpen = false; showToolbarSettings = true })
+                                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_transfers_title)) }, onClick = { menuOpen = false; showTransfers = true })
+                                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_toolbar_title)) }, onClick = { menuOpen = false; showToolbarSettings = true })
                                         DropdownMenuItem(
-                                            text = { Text(stringResource(if (lockOnOpen) R.string.telos_files_lock_on_open_off else R.string.telos_files_lock_on_open)) },
+                                            text = { Text(stringResource(if (lockOnOpen) I18nR.string.telos_files_lock_on_open_off else I18nR.string.telos_files_lock_on_open)) },
                                             onClick = {
                                                 menuOpen = false
                                                 val next = !lockOnOpen
@@ -397,32 +399,32 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                             },
                                         )
                                         if (vm.path != null && FilesToolbarAction.View !in toolbarConfig.actions) {
-                                            listOf(0 to R.string.au22_files_view_list, 1 to R.string.au22_files_view_grid_medium, 2 to R.string.au22_files_view_grid_large).forEach { (mode, label) ->
+                                            listOf(0 to I18nR.string.au22_files_view_list, 1 to I18nR.string.au22_files_view_grid_medium, 2 to I18nR.string.au22_files_view_grid_large).forEach { (mode, label) ->
                                                 DropdownMenuItem(text = { Text(stringResource(label)) }, onClick = { menuOpen = false; vm.updateViewMode(mode) })
                                             }
                                         }
-                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_trash_title)) }, onClick = { menuOpen = false; showTrash = true })
-                                        if (vm.path != null) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_search_filters)) }, onClick = { menuOpen = false; searching = true; showSearchFilters = true })
+                                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_trash_title)) }, onClick = { menuOpen = false; showTrash = true })
+                                        if (vm.path != null) DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_search_filters)) }, onClick = { menuOpen = false; searching = true; showSearchFilters = true })
                                         if (vm.path != null && !vm.rootMode && !RemotePath.isRemote(vm.path!!) && !ArchivePath.isArchive(vm.path!!) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(vm.path!!))
-                                            DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_analyze)) }, onClick = { menuOpen = false; analysisPath = vm.path })
-                                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_sort_by_2)) }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
-                                        DropdownMenuItem(text = { Text(if (vm.showHidden) stringResource(R.string.hf_files_hide_hidden) else stringResource(R.string.hf_files_show_hidden)) }, onClick = { menuOpen = false; vm.toggleHidden() })
+                                            DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_analyze)) }, onClick = { menuOpen = false; analysisPath = vm.path })
+                                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_sort_by_2)) }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
+                                        DropdownMenuItem(text = { Text(if (vm.showHidden) stringResource(I18nR.string.hf_files_hide_hidden) else stringResource(I18nR.string.hf_files_show_hidden)) }, onClick = { menuOpen = false; vm.toggleHidden() })
                                         vm.path?.takeIf { de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { vp ->
-                                            DropdownMenuItem(text = { Text(stringResource(R.string.hc_lock_vault)) }, onClick = { menuOpen = false; vm.lockVault(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(vp)) })
+                                            DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_lock_vault)) }, onClick = { menuOpen = false; vm.lockVault(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(vp)) })
                                         }
-                                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_refresh)) }, onClick = { menuOpen = false; vm.reload(); vm.refreshVolumes() })
+                                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_refresh)) }, onClick = { menuOpen = false; vm.reload(); vm.refreshVolumes() })
                                         vm.path?.let { p ->
                                             DropdownMenuItem(
-                                                text = { Text(if (vm.isBookmarked(p)) stringResource(R.string.hf_files_remove_favorite) else stringResource(R.string.hc_add_to_favorites)) },
+                                                text = { Text(if (vm.isBookmarked(p)) stringResource(I18nR.string.hf_files_remove_favorite) else stringResource(I18nR.string.hc_add_to_favorites)) },
                                                 onClick = { menuOpen = false; vm.toggleBookmark(p) },
                                             )
                                         }
                                         DropdownMenuItem(
-                                            text = { Text(if (vm.shizukuMode) stringResource(R.string.telos_files_shizuku) else if (vm.rootMode) stringResource(R.string.hf_files_root_off) else stringResource(R.string.hf_files_root_menu)) },
+                                            text = { Text(if (vm.shizukuMode) stringResource(I18nR.string.telos_files_shizuku) else if (vm.rootMode) stringResource(I18nR.string.hf_files_root_off) else stringResource(I18nR.string.hf_files_root_menu)) },
                                             onClick = { menuOpen = false; if (vm.rootMode) vm.disableRoot() else dialog = FilesDialog.EnableRoot },
                                         )
                                         if (!vm.rootMode) DropdownMenuItem(
-                                            text = { Text(stringResource(R.string.telos_files_shizuku)) },
+                                            text = { Text(stringResource(I18nR.string.telos_files_shizuku)) },
                                             onClick = { menuOpen = false; vm.enableShizuku() },
                                         )
                                     }
@@ -436,16 +438,16 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                     }
                     if (vm.path != null && !selecting) Breadcrumbs(vm) { vm.open(it) }
                     if (vm.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
-                    if (vm.searchLimited) Text(stringResource(if (vm.path?.let { RemotePath.isRemote(it) } == true) R.string.telos_files_remote_search_partial else R.string.telos_files_search_limited), Modifier.padding(horizontal = 16.dp), style = MaterialTheme.typography.labelSmall)
+                    if (vm.searchLimited) Text(stringResource(if (vm.path?.let { RemotePath.isRemote(it) } == true) I18nR.string.telos_files_remote_search_partial else I18nR.string.telos_files_search_limited), Modifier.padding(horizontal = 16.dp), style = MaterialTheme.typography.labelSmall)
                 }
             },
             floatingActionButton = {
                 if (vm.path != null && !selecting && vm.error == null) {
                     Box(Modifier.windowInsetsPadding(WindowInsets.navigationBars).padding(bottom = 12.dp)) {
-                        FloatingActionButton(onClick = { addMenu = true }) { Icon(painterResource(Icons.add_24px), contentDescription = stringResource(R.string.hc_new)) }
+                        FloatingActionButton(onClick = { addMenu = true }) { Icon(painterResource(Icons.add_24px), contentDescription = stringResource(I18nR.string.hc_new)) }
                         DropdownMenu(expanded = addMenu, onDismissRequest = { addMenu = false }) {
-                            DropdownMenuItem(text = { Text(stringResource(R.string.hc_new_folder)) }, onClick = { addMenu = false; dialog = FilesDialog.NewFolder })
-                            DropdownMenuItem(text = { Text(stringResource(R.string.hc_new_file)) }, onClick = { addMenu = false; dialog = FilesDialog.NewFile })
+                            DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_new_folder)) }, onClick = { addMenu = false; dialog = FilesDialog.NewFolder })
+                            DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_new_file)) }, onClick = { addMenu = false; dialog = FilesDialog.NewFile })
                         }
                     }
                 }
@@ -454,7 +456,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                 Column(Modifier.windowInsetsPadding(WindowInsets.navigationBars)) {
                     vm.task?.let { TaskBar(it) }
                     if (localTransfers.any { it.status in setOf(FilesTransferQueue.Status.RUNNING, FilesTransferQueue.Status.QUEUED, FilesTransferQueue.Status.PAUSED) })
-                        TextButton(onClick = { showTransfers = true }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.telos_files_transfers_title)) }
+                        TextButton(onClick = { showTransfers = true }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(I18nR.string.telos_files_transfers_title)) }
                     val clip = vm.clipboard
                     if (clip != null && vm.path != null && vm.task == null) PasteBar(
                         count = clip.paths.size, cut = clip.cut,
@@ -473,7 +475,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                         FolderFilmstrip(shown) { onOpenEntry(it) }
                         if (shown.isEmpty() && !vm.loading) {
                             if (vm.query.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(vm.query.trim(), Modifier.fillMaxSize())
-                            else EmptyPage(stringResource(R.string.hf_files_folder_empty))
+                            else EmptyPage(stringResource(I18nR.string.hf_files_folder_empty))
                         } else {
                             val unique = remember(shown) { shown.distinctBy { it.path } }
                             Crossfade(targetState = gridMode, animationSpec = if (reduceAnimations) snap() else tween(200), label = "filesView") { isGrid ->
@@ -540,9 +542,9 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
     val scope = rememberCoroutineScope()
     when (dialog) {
         null -> {}
-        FilesDialog.NewFolder -> NameDialog(stringResource(R.string.hc_new_folder), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFolder(it); onDismiss() }
-        FilesDialog.NewFile -> NameDialog(stringResource(R.string.hc_new_file), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFile(it); onDismiss() }
-        is FilesDialog.Rename -> NameDialog(stringResource(R.string.hc_rename), dialog.entry.name, stringResource(R.string.hc_rename), onDismiss) { vm.rename(dialog.entry, it); onDismiss() }
+        FilesDialog.NewFolder -> NameDialog(stringResource(I18nR.string.hc_new_folder), "", stringResource(I18nR.string.hf_files_create), onDismiss) { vm.newFolder(it); onDismiss() }
+        FilesDialog.NewFile -> NameDialog(stringResource(I18nR.string.hc_new_file), "", stringResource(I18nR.string.hf_files_create), onDismiss) { vm.newFile(it); onDismiss() }
+        is FilesDialog.Rename -> NameDialog(stringResource(I18nR.string.hc_rename), dialog.entry.name, stringResource(I18nR.string.hc_rename), onDismiss) { vm.rename(dialog.entry, it); onDismiss() }
         is FilesDialog.BatchRename -> BatchRenameDialog(vm, dialog.entries, onDismiss)
         is FilesDialog.Compress -> CompressDialog(vm, dialog.entries, onDismiss)
         is FilesDialog.Delete -> de.mm20.launcher2.ui.trash.TrashDeleteDialog(
@@ -551,26 +553,26 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
             onTrash = { vm.moveToTrash(dialog.entries) },
             onPermanent = { vm.delete(dialog.entries) },
             onDismiss = onDismiss,
-            warning = if (dialog.entries.any { FileActions.isSystemPath(it.path, vm.rootMode) }) stringResource(R.string.hf_files_delete_system_warning) else null,
+            warning = if (dialog.entries.any { FileActions.isSystemPath(it.path, vm.rootMode) }) stringResource(I18nR.string.hf_files_delete_system_warning) else null,
         )
         is FilesDialog.ShareLarge -> AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text(stringResource(R.string.au9_share_large_title)) },
-            text = { Text(stringResource(R.string.au9_share_large_message, formatSize(dialog.bytes))) },
-            confirmButton = { TextButton(onClick = { vm.shareEntries(dialog.entries); onDismiss() }) { Text(stringResource(R.string.au9_share_large_confirm)) } },
-            dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+            title = { Text(stringResource(I18nR.string.au9_share_large_title)) },
+            text = { Text(stringResource(I18nR.string.au9_share_large_message, formatSize(dialog.bytes))) },
+            confirmButton = { TextButton(onClick = { vm.shareEntries(dialog.entries); onDismiss() }) { Text(stringResource(I18nR.string.au9_share_large_confirm)) } },
+            dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
         FilesDialog.Sort -> SortDialog(vm, onDismiss)
         FilesDialog.EnableRoot -> RootWarningDialog(onDismiss) { vm.enableRoot { onDismiss() } }
         is FilesDialog.Archive -> AlertDialog(
             onDismissRequest = onDismiss,
             title = { Text(dialog.entry.name) },
-            text = { Text(stringResource(R.string.hc_look_inside_the_archive_or_unpack_it_int)) },
-            confirmButton = { TextButton(onClick = { vm.open(ArchivePath.build(dialog.entry.path, "/")); onDismiss() }) { Text(stringResource(R.string.hc_browse)) } },
+            text = { Text(stringResource(I18nR.string.hc_look_inside_the_archive_or_unpack_it_int)) },
+            confirmButton = { TextButton(onClick = { vm.open(ArchivePath.build(dialog.entry.path, "/")); onDismiss() }) { Text(stringResource(I18nR.string.hc_browse)) } },
             dismissButton = {
                 Row {
-                    TextButton(onClick = { vm.extract(dialog.entry); onDismiss() }) { Text(stringResource(R.string.hc_extract_here)) }
-                    TextButton(onClick = { scope.launch { FileActions.openWith(context, dialog.entry, vm.rootMode, vm.shizukuMode); onDismiss() } }) { Text(stringResource(R.string.hc_open_with_2)) }
+                    TextButton(onClick = { vm.extract(dialog.entry); onDismiss() }) { Text(stringResource(I18nR.string.hc_extract_here)) }
+                    TextButton(onClick = { scope.launch { FileActions.openWith(context, dialog.entry, vm.rootMode, vm.shizukuMode); onDismiss() } }) { Text(stringResource(I18nR.string.hc_open_with_2)) }
                 }
             },
         )
@@ -589,14 +591,14 @@ private fun ArchivePasswordDialog(vm: FilesViewModel, prompt: ArchivePrompt) {
     var busy by remember(prompt) { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = { if (!busy) vm.cancelArchivePrompt() },
-        title = { Text(stringResource(R.string.au21_arch_pw_title)) },
+        title = { Text(stringResource(I18nR.string.au21_arch_pw_title)) },
         text = {
             Column {
-                Text(stringResource(R.string.au21_arch_pw_info, nameOf(prompt.archive)))
+                Text(stringResource(I18nR.string.au21_arch_pw_info, nameOf(prompt.archive)))
                 OutlinedTextField(
-                    password, { password = it; error = null }, label = { Text(stringResource(R.string.hc_password)) }, singleLine = true,
+                    password, { password = it; error = null }, label = { Text(stringResource(I18nR.string.hc_password)) }, singleLine = true,
                     visualTransformation = if (visible) androidx.compose.ui.text.input.VisualTransformation.None else androidx.compose.ui.text.input.PasswordVisualTransformation(),
-                    trailingIcon = { TextButton(onClick = { visible = !visible }) { Text(stringResource(if (visible) R.string.au21_arch_hide else R.string.au21_arch_show)) } },
+                    trailingIcon = { TextButton(onClick = { visible = !visible }) { Text(stringResource(if (visible) I18nR.string.au21_arch_hide else I18nR.string.au21_arch_show)) } },
                     isError = error != null, supportingText = error?.let { { Text(it) } },
                     modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
                 )
@@ -606,9 +608,9 @@ private fun ArchivePasswordDialog(vm: FilesViewModel, prompt: ArchivePrompt) {
             TextButton(enabled = password.isNotEmpty() && !busy, onClick = {
                 busy = true
                 vm.unlockArchive(password.toCharArray(), onError = { error = it; busy = false }, onDone = { busy = false })
-            }) { Text(if (busy) stringResource(R.string.au21_arch_checking) else stringResource(R.string.au21_arch_ok)) }
+            }) { Text(if (busy) stringResource(I18nR.string.au21_arch_checking) else stringResource(I18nR.string.au21_arch_ok)) }
         },
-        dismissButton = { TextButton(enabled = !busy, onClick = { vm.cancelArchivePrompt() }) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(enabled = !busy, onClick = { vm.cancelArchivePrompt() }) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }
 
@@ -628,19 +630,19 @@ private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss
     val hide = if (visible) androidx.compose.ui.text.input.VisualTransformation.None else androidx.compose.ui.text.input.PasswordVisualTransformation()
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.au21_arch_compress)) },
+        title = { Text(stringResource(I18nR.string.au21_arch_compress)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 OutlinedTextField(name, { name = it }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                Text(stringResource(R.string.au21_arch_format), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 12.dp))
+                Text(stringResource(I18nR.string.au21_arch_format), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 12.dp))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                     CompressFormat.values().forEach { f ->
                         Row(Modifier.clickable { format = f }, verticalAlignment = Alignment.CenterVertically) {
                             androidx.compose.material3.RadioButton(selected = format == f, onClick = { format = f })
                             Text(stringResource(when (f) {
-                                CompressFormat.Zip -> R.string.au21_arch_fmt_zip
-                                CompressFormat.SevenZ -> R.string.au21_arch_fmt_7z
-                                CompressFormat.TarGz -> R.string.au21_arch_fmt_targz
+                                CompressFormat.Zip -> I18nR.string.au21_arch_fmt_zip
+                                CompressFormat.SevenZ -> I18nR.string.au21_arch_fmt_7z
+                                CompressFormat.TarGz -> I18nR.string.au21_arch_fmt_targz
                             }))
                         }
                     }
@@ -648,22 +650,22 @@ private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss
                 if (format == CompressFormat.Zip) SplitZipOptions(split, { split = it }, partMiB, { partMiB = it })
                 if (format.supportsPassword) {
                     OutlinedTextField(
-                        password, { password = it }, label = { Text(stringResource(R.string.au21_arch_pw_optional)) }, singleLine = true,
+                        password, { password = it }, label = { Text(stringResource(I18nR.string.au21_arch_pw_optional)) }, singleLine = true,
                         visualTransformation = hide,
-                        trailingIcon = { TextButton(onClick = { visible = !visible }) { Text(stringResource(if (visible) R.string.au21_arch_hide else R.string.au21_arch_show)) } },
+                        trailingIcon = { TextButton(onClick = { visible = !visible }) { Text(stringResource(if (visible) I18nR.string.au21_arch_hide else I18nR.string.au21_arch_show)) } },
                         modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     )
                     if (password.isNotEmpty()) {
                         OutlinedTextField(
-                            repeat, { repeat = it }, label = { Text(stringResource(R.string.au21_arch_pw_repeat)) }, singleLine = true,
+                            repeat, { repeat = it }, label = { Text(stringResource(I18nR.string.au21_arch_pw_repeat)) }, singleLine = true,
                             visualTransformation = hide,
-                            isError = mismatch, supportingText = if (mismatch) { { Text(stringResource(R.string.au21_arch_pw_mismatch)) } } else null,
+                            isError = mismatch, supportingText = if (mismatch) { { Text(stringResource(I18nR.string.au21_arch_pw_mismatch)) } } else null,
                             modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                         )
                     }
-                    Text(stringResource(R.string.au21_arch_zip_note), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
+                    Text(stringResource(I18nR.string.au21_arch_zip_note), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
                 } else {
-                    Text(stringResource(R.string.au21_arch_no_pw_note), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 12.dp))
+                    Text(stringResource(I18nR.string.au21_arch_no_pw_note), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 12.dp))
                 }
             }
         },
@@ -673,9 +675,9 @@ private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss
                 vm.compress(entries, name.trim(), format, secret, splitBytes)
                 vm.clearSelection()
                 onDismiss()
-            }) { Text(stringResource(R.string.hf_files_compress_action)) }
+            }) { Text(stringResource(I18nR.string.hf_files_compress_action)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }
 
@@ -687,7 +689,7 @@ private fun NameDialog(title: String, initial: String, action: String, onDismiss
         title = { Text(title) },
         text = { OutlinedTextField(text, { text = it }, singleLine = true, modifier = Modifier.fillMaxWidth()) },
         confirmButton = { TextButton(enabled = text.isNotBlank() && '/' !in text, onClick = { onDone(text.trim()) }) { Text(action) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }
 
@@ -695,7 +697,7 @@ private fun NameDialog(title: String, initial: String, action: String, onDismiss
 private fun SortDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.hc_sort_by)) },
+        title = { Text(stringResource(I18nR.string.hc_sort_by)) },
         text = {
             Column {
                 SortKey.values().forEach { key ->
@@ -708,11 +710,11 @@ private fun SortDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
                     }
                 }
                 HorizontalDivider(Modifier.padding(vertical = 8.dp))
-                SwitchRow(stringResource(R.string.hf_files_sort_descending), !vm.sort.ascending) { vm.updateSort(vm.sort.copy(ascending = !it)) }
-                SwitchRow(stringResource(R.string.hf_files_sort_folders_first), vm.sort.foldersFirst) { vm.updateSort(vm.sort.copy(foldersFirst = it)) }
+                SwitchRow(stringResource(I18nR.string.hf_files_sort_descending), !vm.sort.ascending) { vm.updateSort(vm.sort.copy(ascending = !it)) }
+                SwitchRow(stringResource(I18nR.string.hf_files_sort_folders_first), vm.sort.foldersFirst) { vm.updateSort(vm.sort.copy(foldersFirst = it)) }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_done)) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_done)) } },
     )
 }
 
@@ -730,24 +732,24 @@ private fun RootWarningDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         icon = { Icon(painterResource(Icons.terminal_24px), contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-        title = { Text(stringResource(R.string.hc_root_explorer)) },
+        title = { Text(stringResource(I18nR.string.hc_root_explorer)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(stringResource(R.string.hc_telos_files_will_ask_for_superuser_acces))
+                Text(stringResource(I18nR.string.hc_telos_files_will_ask_for_superuser_acces))
                 Text(
-                    stringResource(R.string.hc_careless_changes_here_can_stop_apps_from) +
-                        stringResource(R.string.hf_files_root_warning_tail),
+                    stringResource(I18nR.string.hc_careless_changes_here_can_stop_apps_from) +
+                        stringResource(I18nR.string.hf_files_root_warning_tail),
                     color = MaterialTheme.colorScheme.error,
                 )
-                Text(stringResource(R.string.hc_your_root_manager_magisk_kernelsu_will_a))
+                Text(stringResource(I18nR.string.hc_your_root_manager_magisk_kernelsu_will_a))
                 Row(Modifier.clickable { understood = !understood }, verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = understood, onCheckedChange = { understood = it })
-                    Text(stringResource(R.string.hc_i_understand_the_risks))
+                    Text(stringResource(I18nR.string.hc_i_understand_the_risks))
                 }
             }
         },
-        confirmButton = { TextButton(enabled = understood, onClick = onConfirm) { Text(stringResource(R.string.hc_continue)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        confirmButton = { TextButton(enabled = understood, onClick = onConfirm) { Text(stringResource(I18nR.string.hc_continue)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }
 
@@ -758,7 +760,7 @@ private fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () -
     var count by remember { mutableStateOf<Int?>(null) }
     var hashes by remember { mutableStateOf<Map<String, String>>(emptyMap()) }
     var mode by remember { mutableStateOf("") }
-    val unavailableLabel = stringResource(R.string.au_files_unavailable)
+    val unavailableLabel = stringResource(I18nR.string.au_files_unavailable)
     val scope = rememberCoroutineScope()
     LaunchedEffect(entry.path) {
         size = vm.sizeOf(entry)
@@ -769,42 +771,42 @@ private fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () -
         title = { Text(entry.name, maxLines = 2, overflow = TextOverflow.Ellipsis) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Detail(stringResource(R.string.hf_files_prop_type), stringResource(entry.kind.labelRes) + if (entry.extension.isNotEmpty()) " (.${entry.extension})" else "")
-                Detail(stringResource(R.string.hf_files_prop_location), parentOf(entry.path) ?: "/")
-                Detail(stringResource(R.string.hf_files_prop_size), size?.let { if (it < 0) stringResource(R.string.hf_files_unknown) else formatSize(it) + if (it >= 1024) " (" + stringResource(R.string.hf_files_bytes_exact, it) + ")" else "" } ?: stringResource(R.string.hf_files_calculating))
-                count?.let { if (it >= 0) Detail(stringResource(R.string.hf_files_prop_contains), "$it") }
-                Detail(stringResource(R.string.hf_files_prop_modified), formatDate(entry.modified).ifEmpty { stringResource(R.string.hf_files_unknown) })
-                if (entry.permissions.isNotEmpty()) Detail(stringResource(R.string.hf_files_prop_permissions), entry.permissions)
-                if (entry.owner.isNotEmpty()) Detail(stringResource(R.string.hf_files_prop_owner), entry.owner)
-                entry.linkTarget?.takeIf { it.isNotEmpty() }?.let { Detail(stringResource(R.string.hf_files_prop_link_to), it) }
+                Detail(stringResource(I18nR.string.hf_files_prop_type), stringResource(entry.kind.labelRes) + if (entry.extension.isNotEmpty()) " (.${entry.extension})" else "")
+                Detail(stringResource(I18nR.string.hf_files_prop_location), parentOf(entry.path) ?: "/")
+                Detail(stringResource(I18nR.string.hf_files_prop_size), size?.let { if (it < 0) stringResource(I18nR.string.hf_files_unknown) else formatSize(it) + if (it >= 1024) " (" + stringResource(I18nR.string.hf_files_bytes_exact, it) + ")" else "" } ?: stringResource(I18nR.string.hf_files_calculating))
+                count?.let { if (it >= 0) Detail(stringResource(I18nR.string.hf_files_prop_contains), "$it") }
+                Detail(stringResource(I18nR.string.hf_files_prop_modified), formatDate(entry.modified).ifEmpty { stringResource(I18nR.string.hf_files_unknown) })
+                if (entry.permissions.isNotEmpty()) Detail(stringResource(I18nR.string.hf_files_prop_permissions), entry.permissions)
+                if (entry.owner.isNotEmpty()) Detail(stringResource(I18nR.string.hf_files_prop_owner), entry.owner)
+                entry.linkTarget?.takeIf { it.isNotEmpty() }?.let { Detail(stringResource(I18nR.string.hf_files_prop_link_to), it) }
                 if (!entry.isDir) {
                     HorizontalDivider()
-                    Text(stringResource(R.string.hc_checksums), style = MaterialTheme.typography.labelLarge)
+                    Text(stringResource(I18nR.string.hc_checksums), style = MaterialTheme.typography.labelLarge)
                     listOf("MD5" to "MD5", "SHA-1" to "SHA-1", "SHA-256" to "SHA-256").forEach { (label, algorithm) ->
                         val value = hashes[label]
                         if (value == null) {
-                            TextButton(onClick = { scope.launch { hashes = hashes + (label to vm.checksum(entry, algorithm).ifEmpty { unavailableLabel }) } }) { Text(stringResource(R.string.hc_calculate_label, label)) }
+                            TextButton(onClick = { scope.launch { hashes = hashes + (label to vm.checksum(entry, algorithm).ifEmpty { unavailableLabel }) } }) { Text(stringResource(I18nR.string.hc_calculate_label, label)) }
                         } else Detail(label, value)
                     }
                 }
                 if (vm.rootMode) {
                     HorizontalDivider()
-                    Text(stringResource(R.string.hc_change_permissions_octal_for_example_644), style = MaterialTheme.typography.labelLarge)
+                    Text(stringResource(I18nR.string.hc_change_permissions_octal_for_example_644), style = MaterialTheme.typography.labelLarge)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         OutlinedTextField(mode, { mode = it.filter { c -> c in '0'..'7' }.take(4) }, singleLine = true, modifier = Modifier.weight(1f))
-                        TextButton(enabled = mode.length >= 3, onClick = { vm.chmod(entry, mode); onDismiss() }) { Text(stringResource(R.string.hc_apply)) }
+                        TextButton(enabled = mode.length >= 3, onClick = { vm.chmod(entry, mode); onDismiss() }) { Text(stringResource(I18nR.string.hc_apply)) }
                     }
                     if (FileActions.isSystemPath(entry.path, true)) {
-                        Text(stringResource(R.string.hc_this_is_a_system_location_a_wrong_permis), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.hc_this_is_a_system_location_a_wrong_permis), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
                     }
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_close)) } },
         dismissButton = {
             if (!entry.isDir) Row {
-                TextButton(onClick = { scope.launch { FileActions.openWith(context, entry, vm.rootMode, vm.shizukuMode) } }) { Text(stringResource(R.string.hc_open_with_2)) }
-                TextButton(onClick = { vm.shareEntries(listOf(entry)) }) { Text(stringResource(R.string.hc_share)) }
+                TextButton(onClick = { scope.launch { FileActions.openWith(context, entry, vm.rootMode, vm.shizukuMode) } }) { Text(stringResource(I18nR.string.hc_open_with_2)) }
+                TextButton(onClick = { vm.shareEntries(listOf(entry)) }) { Text(stringResource(I18nR.string.hc_share)) }
             }
         },
     )
@@ -830,26 +832,26 @@ private fun SelectionBar(
 ) {
     var more by remember { mutableStateOf(false) }
     TopAppBar(
-        title = { Text(stringResource(R.string.au_files_selected_count, count)) },
-        navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.close_24px), contentDescription = stringResource(R.string.hc_close)) } },
+        title = { Text(stringResource(I18nR.string.au_files_selected_count, count)) },
+        navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.close_24px), contentDescription = stringResource(I18nR.string.hc_close)) } },
         actions = {
-            IconButton(onClick = onShare) { Icon(painterResource(Icons.share_24px), contentDescription = stringResource(R.string.hc_share)) }
-            IconButton(onClick = onCopy) { Icon(painterResource(Icons.content_copy_24px), contentDescription = stringResource(R.string.hc_copy)) }
-            IconButton(onClick = onCut) { Icon(painterResource(Icons.content_cut_24px), contentDescription = stringResource(R.string.hc_cut)) }
-            IconButton(onClick = onDelete) { Icon(painterResource(Icons.delete_24px), contentDescription = stringResource(R.string.hc_delete)) }
+            IconButton(onClick = onShare) { Icon(painterResource(Icons.share_24px), contentDescription = stringResource(I18nR.string.hc_share)) }
+            IconButton(onClick = onCopy) { Icon(painterResource(Icons.content_copy_24px), contentDescription = stringResource(I18nR.string.hc_copy)) }
+            IconButton(onClick = onCut) { Icon(painterResource(Icons.content_cut_24px), contentDescription = stringResource(I18nR.string.hc_cut)) }
+            IconButton(onClick = onDelete) { Icon(painterResource(Icons.delete_24px), contentDescription = stringResource(I18nR.string.hc_delete)) }
             Box {
-                IconButton(onClick = { more = true }) { Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more)) }
+                IconButton(onClick = { more = true }) { Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_more)) }
                 DropdownMenu(expanded = more, onDismissRequest = { more = false }) {
-                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_select_all)) }, onClick = { more = false; onSelectAll() })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_share)) }, onClick = { more = false; onShare() })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.au21_arch_compress)) }, onClick = { more = false; onCompress() })
-                    if (onEncrypt != null) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_encrypt)) }, onClick = { more = false; onEncrypt() })
-                    if (onDecrypt != null) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_decrypt)) }, onClick = { more = false; onDecrypt() })
-                    if (onOpenAsArchive != null) DropdownMenuItem(text = { Text(stringResource(R.string.au22_files_open_as_archive)) }, onClick = { more = false; onOpenAsArchive() })
-                    DropdownMenuItem(text = { Text(stringResource(if (single != null) R.string.hc_rename else R.string.telos_files_batch_rename)) }, onClick = { more = false; onRename() })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_select_all)) }, onClick = { more = false; onSelectAll() })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_share)) }, onClick = { more = false; onShare() })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.au21_arch_compress)) }, onClick = { more = false; onCompress() })
+                    if (onEncrypt != null) DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_encrypt)) }, onClick = { more = false; onEncrypt() })
+                    if (onDecrypt != null) DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_decrypt)) }, onClick = { more = false; onDecrypt() })
+                    if (onOpenAsArchive != null) DropdownMenuItem(text = { Text(stringResource(I18nR.string.au22_files_open_as_archive)) }, onClick = { more = false; onOpenAsArchive() })
+                    DropdownMenuItem(text = { Text(stringResource(if (single != null) I18nR.string.hc_rename else I18nR.string.telos_files_batch_rename)) }, onClick = { more = false; onRename() })
                     if (single != null) {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_properties)) }, onClick = { more = false; onProperties() })
-                        if (single.isDir) DropdownMenuItem(text = { Text(stringResource(R.string.hc_add_to_favorites)) }, onClick = { more = false; onBookmark() })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_properties)) }, onClick = { more = false; onProperties() })
+                        if (single.isDir) DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_add_to_favorites)) }, onClick = { more = false; onBookmark() })
                     }
                 }
             }
@@ -868,12 +870,12 @@ private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> U
         title = {
             de.mm20.launcher2.ui.component.TelosSearchTopBar(
                 value = query, onValueChange = onQuery,
-                placeholder = stringResource(R.string.hc_search_in_this_folder),
+                placeholder = stringResource(I18nR.string.hc_search_in_this_folder),
                 autoFocus = true,
             )
         },
-        navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) } },
-        actions = { IconButton(onClick = onFilters) { Icon(painterResource(Icons.tune_24px), contentDescription = stringResource(R.string.telos_files_search_filters)) } },
+        navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back)) } },
+        actions = { IconButton(onClick = onFilters) { Icon(painterResource(Icons.tune_24px), contentDescription = stringResource(I18nR.string.telos_files_search_filters)) } },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent,
@@ -889,8 +891,8 @@ private fun Breadcrumbs(vm: FilesViewModel, onGo: (String?) -> Unit) {
     val remote = RemotePath.isRemote(p)
     val volume = if (!vm.rootMode && !remote && !inArchive && !inVault) vm.volumes.firstOrNull { p == it.path || p.startsWith(it.path + "/") } else null
     val base = if (remote) "rem://" + RemotePath.idOf(p) else if (inArchive) ArchivePath.build(ArchivePath.archiveOf(p), "/").trimEnd('/') else if (inVault) de.mm20.launcher2.ui.files.vault.VaultPath.build(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(p), "/").trimEnd('/') else volume?.path ?: "/"
-    val homeLabel = stringResource(R.string.hf_files_home)
-    val storageLabel = stringResource(R.string.hc_storage)
+    val homeLabel = stringResource(I18nR.string.hf_files_home)
+    val storageLabel = stringResource(I18nR.string.hc_storage)
     val crumbs = buildList<Pair<String, String?>> {
         add(homeLabel to null)
         add((if (remote) vm.connectionName(p) ?: storageLabel else if (inArchive) nameOf(ArchivePath.archiveOf(p)) else if (inVault) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(p)) else volume?.name?.substringBefore(" (") ?: "/") to base)
@@ -925,7 +927,7 @@ private fun TaskBar(task: TaskState) {
         Column(Modifier.fillMaxWidth().padding(16.dp, 10.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(task.title + "…", Modifier.weight(1f), style = MaterialTheme.typography.titleSmall)
-                TextButton(onClick = { task.cancel.cancelled = true }) { Text(stringResource(R.string.hc_cancel)) }
+                TextButton(onClick = { task.cancel.cancelled = true }) { Text(stringResource(I18nR.string.hc_cancel)) }
             }
             if (task.progress != null) LinearProgressIndicator(progress = { task.progress }, Modifier.fillMaxWidth())
             else LinearProgressIndicator(Modifier.fillMaxWidth())
@@ -938,11 +940,11 @@ private fun PasteBar(count: Int, cut: Boolean, onPaste: () -> Unit, onCancel: ()
     Surface(color = MaterialTheme.colorScheme.tertiaryContainer, tonalElevation = 3.dp) {
         Row(Modifier.fillMaxWidth().padding(16.dp, 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(
-                if (cut) stringResource(R.string.hf_files_paste_to_move, count) else stringResource(R.string.hf_files_paste_to_copy, count), Modifier.weight(1f),
+                if (cut) stringResource(I18nR.string.hf_files_paste_to_move, count) else stringResource(I18nR.string.hf_files_paste_to_copy, count), Modifier.weight(1f),
                 color = MaterialTheme.colorScheme.onTertiaryContainer, style = MaterialTheme.typography.titleSmall,
             )
-            TextButton(onClick = onCancel) { Text(stringResource(R.string.hc_cancel)) }
-            Button(onClick = onPaste) { Text(if (cut) stringResource(R.string.hf_files_move_here) else stringResource(R.string.hf_files_paste_here)) }
+            TextButton(onClick = onCancel) { Text(stringResource(I18nR.string.hc_cancel)) }
+            Button(onClick = onPaste) { Text(if (cut) stringResource(I18nR.string.hf_files_move_here) else stringResource(I18nR.string.hf_files_paste_here)) }
         }
     }
 }
@@ -953,7 +955,7 @@ private fun RootBanner() {
         Row(Modifier.fillMaxWidth().padding(16.dp, 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Icon(painterResource(Icons.terminal_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer, modifier = Modifier.size(20.dp))
             Text(
-                stringResource(R.string.hc_system_files_changes_here_can_break_the), Modifier.padding(start = 12.dp),
+                stringResource(I18nR.string.hc_system_files_changes_here_can_break_the), Modifier.padding(start = 12.dp),
                 style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onErrorContainer,
             )
         }
@@ -973,14 +975,14 @@ private fun AccessGate(onAllow: () -> Unit) {
             Box(Modifier.size(88.dp).clip(CircleShape).background(FileKind.Folder.color.copy(alpha = 0.18f)), contentAlignment = Alignment.Center) {
                 Icon(painterResource(Icons.folder_24px), contentDescription = null, tint = FileKind.Folder.color, modifier = Modifier.size(44.dp))
             }
-            Text(stringResource(R.string.hc_telos_files), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 20.dp))
+            Text(stringResource(I18nR.string.hc_telos_files), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 20.dp))
             Text(
-                stringResource(R.string.hc_to_show_and_manage_the_files_on_your_pho),
+                stringResource(I18nR.string.hc_to_show_and_manage_the_files_on_your_pho),
                 style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 12.dp),
             )
-            Button(onClick = onAllow) { Text(stringResource(R.string.hc_allow_access)) }
-            TextButton(onClick = { backStack.removeLastOrNull() }) { Text(stringResource(R.string.hc_not_now)) }
+            Button(onClick = onAllow) { Text(stringResource(I18nR.string.hc_allow_access)) }
+            TextButton(onClick = { backStack.removeLastOrNull() }) { Text(stringResource(I18nR.string.hc_not_now)) }
         }
     }
 }
@@ -998,18 +1000,18 @@ private fun ErrorPage(error: String, rootMode: Boolean, onRoot: () -> Unit) {
     Column(Modifier.fillMaxSize().padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Icon(painterResource(Icons.lock_24px), contentDescription = null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(48.dp))
         Text(error, Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
-        if (!rootMode) TextButton(onClick = onRoot) { Text(stringResource(R.string.hc_open_with_root_explorer)) }
+        if (!rootMode) TextButton(onClick = onRoot) { Text(stringResource(I18nR.string.hc_open_with_root_explorer)) }
     }
 }
 
 @Composable
 private fun HomePage(vm: FilesViewModel) {
-    val lblDownloads = stringResource(R.string.hf_files_dir_downloads)
-    val lblCamera = stringResource(R.string.hf_files_dir_camera)
-    val lblPictures = stringResource(R.string.hf_files_dir_pictures)
-    val lblMusic = stringResource(R.string.hf_files_dir_music)
-    val lblMovies = stringResource(R.string.hf_files_dir_movies)
-    val lblDocuments = stringResource(R.string.hf_files_dir_documents)
+    val lblDownloads = stringResource(I18nR.string.hf_files_dir_downloads)
+    val lblCamera = stringResource(I18nR.string.hf_files_dir_camera)
+    val lblPictures = stringResource(I18nR.string.hf_files_dir_pictures)
+    val lblMusic = stringResource(I18nR.string.hf_files_dir_music)
+    val lblMovies = stringResource(I18nR.string.hf_files_dir_movies)
+    val lblDocuments = stringResource(I18nR.string.hf_files_dir_documents)
     val shortcuts = remember(lblDownloads) {
         listOf(
             lblDownloads to Environment.DIRECTORY_DOWNLOADS, lblCamera to Environment.DIRECTORY_DCIM, lblPictures to Environment.DIRECTORY_PICTURES,
@@ -1019,9 +1021,9 @@ private fun HomePage(vm: FilesViewModel) {
     val colors = listOf(FileKind.Archive.color, FileKind.Image.color, FileKind.Video.color, FileKind.Audio.color, FileKind.Document.color, FileKind.Apk.color)
     val icons = listOf(Icons.download_24px, Icons.photo_24px, Icons.photo_24px, Icons.music_note_24px, Icons.videocam_24px, Icons.description_24px)
     LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 32.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        item { SectionTitle(stringResource(R.string.hc_storage)) }
+        item { SectionTitle(stringResource(I18nR.string.hc_storage)) }
         items(vm.volumes, key = { it.path }) { v -> StorageCard(v) { vm.open(v.path) } }
-        item { SectionTitle(stringResource(R.string.hf_files_quick_access)) }
+        item { SectionTitle(stringResource(I18nR.string.hf_files_quick_access)) }
         item {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 shortcuts.chunked(3).forEachIndexed { row, chunk ->
@@ -1042,7 +1044,7 @@ private fun HomePage(vm: FilesViewModel) {
             }
         }
         if (vm.bookmarks.isNotEmpty()) {
-            item { SectionTitle(stringResource(R.string.hc_favorites)) }
+            item { SectionTitle(stringResource(I18nR.string.hc_favorites)) }
             items(vm.bookmarks, key = { "b$it" }) { b ->
                 Row(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).clickable { vm.open(b) }.padding(8.dp),
@@ -1053,12 +1055,12 @@ private fun HomePage(vm: FilesViewModel) {
                         Text(nameOf(b), maxLines = 1, overflow = TextOverflow.Ellipsis)
                         Text(b, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
-                    IconButton(onClick = { vm.toggleBookmark(b) }) { Icon(painterResource(Icons.close_20px), contentDescription = stringResource(R.string.hc_remove)) }
+                    IconButton(onClick = { vm.toggleBookmark(b) }) { Icon(painterResource(Icons.close_20px), contentDescription = stringResource(I18nR.string.hc_remove)) }
                 }
             }
         }
         if (vm.connections.isNotEmpty()) {
-            item { SectionTitle(stringResource(R.string.hc_network_and_cloud)) }
+            item { SectionTitle(stringResource(I18nR.string.hc_network_and_cloud)) }
             items(vm.connections, key = { "c" + it.id }) { c ->
                 Row(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).clickable { vm.open(RemotePath.build(c.id, "/")) }.padding(8.dp),
@@ -1071,7 +1073,7 @@ private fun HomePage(vm: FilesViewModel) {
                         Text(c.name, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         val space = vm.remoteSpaces[c.id]
                         Text(
-                            if (space != null && space.total > 0) stringResource(R.string.au_files_free_of, formatSize(space.free), formatSize(space.total))
+                            if (space != null && space.total > 0) stringResource(I18nR.string.au_files_free_of, formatSize(space.free), formatSize(space.total))
                             else c.type.label,
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -1079,7 +1081,7 @@ private fun HomePage(vm: FilesViewModel) {
                 }
             }
         }
-        item { SectionTitle(stringResource(R.string.hc_tools)) }
+        item { SectionTitle(stringResource(I18nR.string.hc_tools)) }
         item {
             Card(
                 onClick = { vm.open("/") }, enabled = vm.rootMode,
@@ -1088,9 +1090,9 @@ private fun HomePage(vm: FilesViewModel) {
                 Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(painterResource(Icons.terminal_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer)
                     Column(Modifier.padding(start = 16.dp).weight(1f)) {
-                        Text(stringResource(R.string.hc_root_file_system), fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onErrorContainer)
+                        Text(stringResource(I18nR.string.hc_root_file_system), fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onErrorContainer)
                         Text(
-                            if (vm.rootMode) stringResource(R.string.hf_files_root_on_hint) else stringResource(R.string.hf_files_root_off_hint),
+                            if (vm.rootMode) stringResource(I18nR.string.hf_files_root_on_hint) else stringResource(I18nR.string.hf_files_root_off_hint),
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer,
                         )
                     }
@@ -1122,7 +1124,7 @@ private fun StorageCard(v: StorageVolume, onClick: () -> Unit) {
                 }
                 Column(Modifier.padding(start = 12.dp).weight(1f)) {
                     Text(v.name, style = MaterialTheme.typography.titleMedium)
-                    Text(stringResource(R.string.au_files_free_of, formatSize(v.free), formatSize(v.total)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(I18nR.string.au_files_free_of, formatSize(v.free), formatSize(v.total)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             LinearProgressIndicator(progress = { fraction }, Modifier.fillMaxWidth().padding(top = 14.dp).height(8.dp).clip(RoundedCornerShape(4.dp)))
@@ -1133,32 +1135,32 @@ private fun StorageCard(v: StorageVolume, onClick: () -> Unit) {
 @Composable
 private fun StorageDrawer(vm: FilesViewModel, onGo: (String?) -> Unit, onRoot: () -> Unit, onManage: () -> Unit) {
     Column(Modifier.verticalScroll(rememberScrollState()).padding(12.dp)) {
-        Text(stringResource(R.string.hc_telos_files), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp))
-        DrawerItem(Icons.home_24px, stringResource(R.string.hf_files_home), null, vm.path == null) { onGo(null) }
-        Text(stringResource(R.string.hc_storage), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
+        Text(stringResource(I18nR.string.hc_telos_files), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp))
+        DrawerItem(Icons.home_24px, stringResource(I18nR.string.hf_files_home), null, vm.path == null) { onGo(null) }
+        Text(stringResource(I18nR.string.hc_storage), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
         vm.volumes.forEach { v ->
-            DrawerItem(Icons.storage_24px, v.name, stringResource(R.string.au_files_free, formatSize(v.free)), vm.path?.startsWith(v.path) == true && !vm.rootMode) { onGo(v.path) }
+            DrawerItem(Icons.storage_24px, v.name, stringResource(I18nR.string.au_files_free, formatSize(v.free)), vm.path?.startsWith(v.path) == true && !vm.rootMode) { onGo(v.path) }
         }
         if (vm.bookmarks.isNotEmpty()) {
-            Text(stringResource(R.string.hc_favorites), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
+            Text(stringResource(I18nR.string.hc_favorites), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
             vm.bookmarks.forEach { b -> DrawerItem(Icons.star_24px_filled, nameOf(b), null, vm.path == b) { onGo(b) } }
         }
-        Text(stringResource(R.string.hc_network_and_cloud), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
+        Text(stringResource(I18nR.string.hc_network_and_cloud), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
         vm.connections.forEach { c ->
             DrawerItem(
                 if (c.type.cloud) Icons.cloud_20px else Icons.storage_24px,
                 c.name,
-                vm.remoteSpaces[c.id]?.let { if (it.total > 0) stringResource(R.string.au_files_free_of, formatSize(it.free), formatSize(it.total)) else c.type.label } ?: c.type.label,
+                vm.remoteSpaces[c.id]?.let { if (it.total > 0) stringResource(I18nR.string.au_files_free_of, formatSize(it.free), formatSize(it.total)) else c.type.label } ?: c.type.label,
                 vm.path?.startsWith("rem://" + c.id) == true,
             ) { onGo(RemotePath.build(c.id, "/")) }
         }
-        DrawerItem(Icons.add_24px, stringResource(R.string.hf_files_add_or_manage), null, false, onManage)
-        Text(stringResource(R.string.hc_tools), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
-        DrawerItem(Icons.terminal_24px, if (vm.shizukuMode) stringResource(R.string.telos_files_shizuku) else if (vm.rootMode) stringResource(R.string.hf_files_root_explorer_on) else stringResource(R.string.hc_root_explorer), if (vm.rootMode) stringResource(R.string.hf_files_tap_to_turn_off) else stringResource(R.string.hf_files_needs_root), vm.rootMode, onRoot)
+        DrawerItem(Icons.add_24px, stringResource(I18nR.string.hf_files_add_or_manage), null, false, onManage)
+        Text(stringResource(I18nR.string.hc_tools), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
+        DrawerItem(Icons.terminal_24px, if (vm.shizukuMode) stringResource(I18nR.string.telos_files_shizuku) else if (vm.rootMode) stringResource(I18nR.string.hf_files_root_explorer_on) else stringResource(I18nR.string.hc_root_explorer), if (vm.rootMode) stringResource(I18nR.string.hf_files_tap_to_turn_off) else stringResource(I18nR.string.hf_files_needs_root), vm.rootMode, onRoot)
         if (vm.rootMode) {
-            DrawerItem(Icons.folder_24px, stringResource(R.string.hf_files_root_fs), stringResource(R.string.hf_files_system_files), vm.path == "/") { onGo("/") }
-            if (!vm.shizukuMode) DrawerItem(Icons.lock_24px, stringResource(R.string.hf_files_system_writable), stringResource(R.string.hf_files_careful), false) { vm.remount("/system", true) }
-            if (!vm.shizukuMode) DrawerItem(Icons.lock_open_20px, stringResource(R.string.hf_files_system_readonly), null, false) { vm.remount("/system", false) }
+            DrawerItem(Icons.folder_24px, stringResource(I18nR.string.hf_files_root_fs), stringResource(I18nR.string.hf_files_system_files), vm.path == "/") { onGo("/") }
+            if (!vm.shizukuMode) DrawerItem(Icons.lock_24px, stringResource(I18nR.string.hf_files_system_writable), stringResource(I18nR.string.hf_files_careful), false) { vm.remount("/system", true) }
+            if (!vm.shizukuMode) DrawerItem(Icons.lock_open_20px, stringResource(I18nR.string.hf_files_system_readonly), null, false) { vm.remount("/system", false) }
         }
     }
 }
@@ -1245,12 +1247,12 @@ private fun UnlockVaultDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () 
     var busy by remember { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
-        title = { Text(stringResource(R.string.hc_unlock_vault)) },
+        title = { Text(stringResource(I18nR.string.hc_unlock_vault)) },
         text = {
             Column {
-                Text(stringResource(R.string.hf_files_vault_info, entry.name))
+                Text(stringResource(I18nR.string.hf_files_vault_info, entry.name))
                 OutlinedTextField(
-                    password, { password = it; error = null }, label = { Text(stringResource(R.string.hc_password)) }, singleLine = true,
+                    password, { password = it; error = null }, label = { Text(stringResource(I18nR.string.hc_password)) }, singleLine = true,
                     visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
                     isError = error != null, supportingText = error?.let { { Text(it) } },
                     modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
@@ -1261,8 +1263,8 @@ private fun UnlockVaultDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () 
             TextButton(enabled = password.isNotEmpty() && !busy, onClick = {
                 busy = true
                 vm.unlockVault(entry.path, password, onError = { error = it; busy = false }) { busy = false; onDismiss() }
-            }) { Text(if (busy) stringResource(R.string.hf_files_unlocking) else stringResource(R.string.hc_unlock)) }
+            }) { Text(if (busy) stringResource(I18nR.string.hf_files_unlocking) else stringResource(I18nR.string.hc_unlock)) }
         },
-        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }

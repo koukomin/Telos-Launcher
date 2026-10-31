@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.floating
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -75,19 +76,19 @@ fun FloatingLauncherSettingsScreen() {
     val fileDock by viewModel.fileDock.collectAsStateWithLifecycle(true)
     val zones by viewModel.zones.collectAsStateWithLifecycle(emptyMap<FloatingLauncherZone, Boolean>())
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_floating_launcher)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_floating_launcher)) {
         item {
             PreferenceCategory {
                 GuardedPreference(
                     locked = hasOverlayPermission == false,
-                    description = stringResource(R.string.missing_permission_floating_launcher),
+                    description = stringResource(I18nR.string.missing_permission_floating_launcher),
                     onUnlock = {
                         viewModel.requestOverlayPermission(context as AppCompatActivity)
                     }
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_floating_launcher),
-                        summary = stringResource(R.string.preference_floating_launcher_summary),
+                        title = stringResource(I18nR.string.preference_floating_launcher),
+                        summary = stringResource(I18nR.string.preference_floating_launcher_summary),
                         enabled = hasOverlayPermission != false,
                         value = enabled && hasOverlayPermission == true,
                         onValueChanged = {
@@ -102,8 +103,8 @@ fun FloatingLauncherSettingsScreen() {
                     )
                 }
                 Preference(
-                    title = stringResource(R.string.preference_floating_launcher_edit),
-                    summary = stringResource(R.string.preference_floating_launcher_edit_summary),
+                    title = stringResource(I18nR.string.preference_floating_launcher_edit),
+                    summary = stringResource(I18nR.string.preference_floating_launcher_edit_summary),
                     enabled = enabled && hasOverlayPermission == true,
                     onClick = {
                         // the editor is part of the sidebar service
@@ -117,25 +118,25 @@ fun FloatingLauncherSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_floating_bar)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_floating_bar)) {
                 Text(
-                    text = stringResource(R.string.preference_floating_launcher_preview),
+                    text = stringResource(I18nR.string.preference_floating_launcher_preview),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 4.dp),
                 )
                 TabPreview(side = side, y = handleY, height = handleHeight, color = color, alpha = if (hideIndicator) 0f else alpha)
                 ListPreference(
-                    title = stringResource(R.string.preference_floating_launcher_side),
+                    title = stringResource(I18nR.string.preference_floating_launcher_side),
                     items = listOf(
-                        ListPreferenceItem(stringResource(R.string.preference_floating_launcher_side_left), FloatingLauncherEdge.Left),
-                        ListPreferenceItem(stringResource(R.string.preference_floating_launcher_side_right), FloatingLauncherEdge.Right),
+                        ListPreferenceItem(stringResource(I18nR.string.preference_floating_launcher_side_left), FloatingLauncherEdge.Left),
+                        ListPreferenceItem(stringResource(I18nR.string.preference_floating_launcher_side_right), FloatingLauncherEdge.Right),
                     ),
                     value = side,
                     onValueChanged = { viewModel.setSide(it) },
                 )
                 SliderPreference(
-                    title = stringResource(R.string.preference_floating_launcher_position),
+                    title = stringResource(I18nR.string.preference_floating_launcher_position),
                     value = (handleY * 100).roundToInt(),
                     min = 5,
                     max = 95,
@@ -143,7 +144,7 @@ fun FloatingLauncherSettingsScreen() {
                     onValueChanged = { viewModel.setHandleY(it / 100f) },
                 )
                 SliderPreference(
-                    title = stringResource(R.string.preference_floating_launcher_handle_height),
+                    title = stringResource(I18nR.string.preference_floating_launcher_handle_height),
                     value = handleHeight,
                     min = 48,
                     max = 160,
@@ -151,7 +152,7 @@ fun FloatingLauncherSettingsScreen() {
                     onValueChanged = { viewModel.setHandleHeight(it) },
                 )
                 SliderPreference(
-                    title = stringResource(R.string.preference_floating_launcher_thickness),
+                    title = stringResource(I18nR.string.preference_floating_launcher_thickness),
                     value = thickness,
                     min = 12,
                     max = 48,
@@ -159,48 +160,48 @@ fun FloatingLauncherSettingsScreen() {
                     onValueChanged = { viewModel.setThickness(it) },
                 )
                 ColorPreference(
-                    title = stringResource(R.string.preference_floating_launcher_color),
+                    title = stringResource(I18nR.string.preference_floating_launcher_color),
                     value = Color(color),
                     onValueChanged = { viewModel.setColor((it ?: Color(0xFF9E9E9E)).toArgb()) },
                 )
                 SliderPreference(
-                    title = stringResource(R.string.preference_floating_launcher_alpha),
+                    title = stringResource(I18nR.string.preference_floating_launcher_alpha),
                     value = alpha,
                     min = 0.1f,
                     max = 1f,
                     onValueChanged = { viewModel.setAlpha(it) },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_floating_launcher_hide_indicator),
-                    summary = stringResource(R.string.preference_floating_launcher_hide_indicator_summary),
+                    title = stringResource(I18nR.string.preference_floating_launcher_hide_indicator),
+                    summary = stringResource(I18nR.string.preference_floating_launcher_hide_indicator_summary),
                     value = hideIndicator,
                     onValueChanged = { viewModel.setHideIndicator(it) },
                 )
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_sidebar_style)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_sidebar_style)) {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_floating_launcher_columns),
-                    summary = stringResource(R.string.preference_floating_launcher_columns_summary),
+                    title = stringResource(I18nR.string.preference_floating_launcher_columns),
+                    summary = stringResource(I18nR.string.preference_floating_launcher_columns_summary),
                     value = columns == 2,
                     onValueChanged = { viewModel.setColumns(if (it) 2 else 1) },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_floating_launcher_show_labels),
-                    summary = stringResource(R.string.preference_floating_launcher_show_labels_summary),
+                    title = stringResource(I18nR.string.preference_floating_launcher_show_labels),
+                    summary = stringResource(I18nR.string.preference_floating_launcher_show_labels_summary),
                     value = showLabels,
                     onValueChanged = { viewModel.setShowLabels(it) },
                 )
                 SliderPreference(
-                    title = stringResource(R.string.preference_floating_launcher_panel_alpha),
+                    title = stringResource(I18nR.string.preference_floating_launcher_panel_alpha),
                     value = panelAlpha,
                     min = 0.3f,
                     max = 1f,
                     onValueChanged = { viewModel.setPanelAlpha(it) },
                 )
                 SliderPreference(
-                    title = stringResource(R.string.preference_floating_launcher_icon_size),
+                    title = stringResource(I18nR.string.preference_floating_launcher_icon_size),
                     value = iconSize,
                     min = 32,
                     max = 72,
@@ -208,7 +209,7 @@ fun FloatingLauncherSettingsScreen() {
                     onValueChanged = { viewModel.setIconSize(it) },
                 )
                 SliderPreference(
-                    title = stringResource(R.string.preference_floating_launcher_max_per_column),
+                    title = stringResource(I18nR.string.preference_floating_launcher_max_per_column),
                     value = maxPerColumn,
                     min = 3,
                     max = 20,
@@ -218,10 +219,10 @@ fun FloatingLauncherSettingsScreen() {
         }
         item {
             PreferenceCategory(
-                title = stringResource(R.string.preference_category_floating_launcher_zones),
+                title = stringResource(I18nR.string.preference_category_floating_launcher_zones),
             ) {
                 Text(
-                    text = stringResource(R.string.preference_floating_launcher_zones_summary),
+                    text = stringResource(I18nR.string.preference_floating_launcher_zones_summary),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
@@ -237,39 +238,39 @@ fun FloatingLauncherSettingsScreen() {
         }
         item {
             PreferenceCategory(
-                title = stringResource(R.string.preference_floating_launcher_tools),
+                title = stringResource(I18nR.string.preference_floating_launcher_tools),
             ) {
                 Text(
-                    text = stringResource(R.string.preference_floating_launcher_tools_summary),
+                    text = stringResource(I18nR.string.preference_floating_launcher_tools_summary),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_floating_launcher_file_dock),
-                    summary = stringResource(R.string.preference_floating_launcher_file_dock_summary),
+                    title = stringResource(I18nR.string.preference_floating_launcher_file_dock),
+                    summary = stringResource(I18nR.string.preference_floating_launcher_file_dock_summary),
                     value = fileDock,
                     onValueChanged = { viewModel.setFileDock(it) },
                 )
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_behavior)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_behavior)) {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_floating_launcher_floating_windows),
-                    summary = stringResource(R.string.preference_floating_launcher_floating_windows_summary),
+                    title = stringResource(I18nR.string.preference_floating_launcher_floating_windows),
+                    summary = stringResource(I18nR.string.preference_floating_launcher_floating_windows_summary),
                     value = floatingWindows,
                     onValueChanged = { viewModel.setFloatingWindows(it) },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_floating_launcher_haptic_feedback),
-                    summary = stringResource(R.string.preference_floating_launcher_haptic_feedback_summary),
+                    title = stringResource(I18nR.string.preference_floating_launcher_haptic_feedback),
+                    summary = stringResource(I18nR.string.preference_floating_launcher_haptic_feedback_summary),
                     value = hapticFeedback,
                     onValueChanged = { viewModel.setHapticFeedback(it) },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_floating_launcher_auto_hide_gaming),
-                    summary = stringResource(R.string.preference_floating_launcher_auto_hide_gaming_summary),
+                    title = stringResource(I18nR.string.preference_floating_launcher_auto_hide_gaming),
+                    summary = stringResource(I18nR.string.preference_floating_launcher_auto_hide_gaming_summary),
                     value = autoHideGaming,
                     onValueChanged = { viewModel.setAutoHideGaming(it) },
                 )
@@ -305,10 +306,10 @@ private fun TabPreview(side: FloatingLauncherEdge, y: Float, height: Int, color:
 }
 
 internal fun zoneLabelRes(zone: FloatingLauncherZone): Int = when (zone) {
-    FloatingLauncherZone.LeftTop -> R.string.floating_launcher_zone_left_top
-    FloatingLauncherZone.LeftMiddle -> R.string.floating_launcher_zone_left_middle
-    FloatingLauncherZone.LeftBottom -> R.string.floating_launcher_zone_left_bottom
-    FloatingLauncherZone.RightTop -> R.string.floating_launcher_zone_right_top
-    FloatingLauncherZone.RightMiddle -> R.string.floating_launcher_zone_right_middle
-    FloatingLauncherZone.RightBottom -> R.string.floating_launcher_zone_right_bottom
+    FloatingLauncherZone.LeftTop -> I18nR.string.floating_launcher_zone_left_top
+    FloatingLauncherZone.LeftMiddle -> I18nR.string.floating_launcher_zone_left_middle
+    FloatingLauncherZone.LeftBottom -> I18nR.string.floating_launcher_zone_left_bottom
+    FloatingLauncherZone.RightTop -> I18nR.string.floating_launcher_zone_right_top
+    FloatingLauncherZone.RightMiddle -> I18nR.string.floating_launcher_zone_right_middle
+    FloatingLauncherZone.RightBottom -> I18nR.string.floating_launcher_zone_right_bottom
 }

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.trash
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -115,15 +117,15 @@ fun TrashScreen() {
             containerColor = Color.Transparent,
             topBar = {
                 TopAppBar(
-                    title = { Text(stringResource(R.string.telos_trash_title)) },
+                    title = { Text(stringResource(I18nR.string.telos_trash_title)) },
                     navigationIcon = {
                         IconButton(onClick = { backStack.removeLastOrNull() }) {
-                            Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = null)
+                            Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = null)
                         }
                     },
                     actions = {
                         TextButton(onClick = { showSchedule = !showSchedule }) {
-                            Text(stringResource(R.string.trash_clean_schedule))
+                            Text(stringResource(I18nR.string.trash_clean_schedule))
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(containerColor = bar),
@@ -160,14 +162,14 @@ fun TrashScreen() {
                             },
                             enabled = !busy,
                             modifier = Modifier.weight(1f),
-                        ) { Text(stringResource(R.string.trash_scan)) }
+                        ) { Text(stringResource(I18nR.string.trash_scan)) }
                         Button(
                             onClick = {
                                 scope.launch {
                                     busy = true
                                     val chosen = junk.filter { selected[it.kind] != false }
                                     val r = withContext(Dispatchers.IO) { cleaner.fillTrash(trash, chosen) }
-                                    status = context.getString(R.string.trash_clean_done, r.moved, r.deleted, r.bytes / 1024 / 1024)
+                                    status = context.getString(I18nR.string.trash_clean_done, r.moved, r.deleted, r.bytes / 1024 / 1024)
                                     junk = emptyList()
                                     reloadBin()
                                     busy = false
@@ -175,7 +177,7 @@ fun TrashScreen() {
                             },
                             enabled = !busy && junk.isNotEmpty() && selectedCount > 0,
                             modifier = Modifier.weight(1f),
-                        ) { Text(stringResource(R.string.trash_fill_bin)) }
+                        ) { Text(stringResource(I18nR.string.trash_fill_bin)) }
                     }
                     AnimatedVisibility(scanning || busy) {
                         LinearProgressIndicator(Modifier.fillMaxWidth().padding(top = 10.dp))
@@ -186,7 +188,7 @@ fun TrashScreen() {
                 }
                 if (groups.isNotEmpty()) {
                     item {
-                        Text(stringResource(R.string.trash_found), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+                        Text(stringResource(I18nR.string.trash_found), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                     }
                     items(groups, key = { it.first.name }) { (kind, count, bytes) ->
                         val on = selected[kind] != false
@@ -202,7 +204,7 @@ fun TrashScreen() {
                             Column(Modifier.weight(1f).padding(start = 4.dp)) {
                                 Text(kindLabel(kind), fontWeight = FontWeight.Medium)
                                 Text(
-                                    stringResource(R.string.trash_kind_count, count, formatBytes(bytes)),
+                                    stringResource(I18nR.string.trash_kind_count, count, formatBytes(bytes)),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
@@ -214,18 +216,18 @@ fun TrashScreen() {
                     AnimatedVisibility(showSchedule) {
                         Column(Modifier.fillMaxWidth().background(card, RoundedCornerShape(20.dp)).padding(8.dp)) {
                             Text(
-                                stringResource(R.string.trash_clean_schedule),
+                                stringResource(I18nR.string.trash_clean_schedule),
                                 style = MaterialTheme.typography.titleSmall,
                                 modifier = Modifier.padding(12.dp),
                             )
                             ListPreference(
-                                title = stringResource(R.string.trash_clean_interval),
+                                title = stringResource(I18nR.string.trash_clean_interval),
                                 items = listOf(
-                                    stringResource(R.string.trash_clean_off) to 0,
-                                    stringResource(R.string.trash_clean_hourly) to 1,
-                                    stringResource(R.string.trash_clean_daily) to 24,
-                                    stringResource(R.string.trash_clean_weekly) to 24 * 7,
-                                    stringResource(R.string.trash_clean_monthly) to 24 * 30,
+                                    stringResource(I18nR.string.trash_clean_off) to 0,
+                                    stringResource(I18nR.string.trash_clean_hourly) to 1,
+                                    stringResource(I18nR.string.trash_clean_daily) to 24,
+                                    stringResource(I18nR.string.trash_clean_weekly) to 24 * 7,
+                                    stringResource(I18nR.string.trash_clean_monthly) to 24 * 30,
                                 ),
                                 value = interval,
                                 onValueChanged = {
@@ -235,8 +237,8 @@ fun TrashScreen() {
                                 },
                             )
                             SwitchPreference(
-                                title = stringResource(R.string.trash_clean_charging),
-                                summary = stringResource(R.string.trash_clean_charging_sum),
+                                title = stringResource(I18nR.string.trash_clean_charging),
+                                summary = stringResource(I18nR.string.trash_clean_charging_sum),
                                 value = charging,
                                 onValueChanged = {
                                     charging = it
@@ -245,14 +247,14 @@ fun TrashScreen() {
                                 },
                             )
                             SwitchPreference(
-                                title = stringResource(R.string.trash_clean_powersave),
-                                summary = stringResource(R.string.trash_clean_powersave_sum),
+                                title = stringResource(I18nR.string.trash_clean_powersave),
+                                summary = stringResource(I18nR.string.trash_clean_powersave_sum),
                                 value = skipSave,
                                 onValueChanged = { skipSave = it; cleaner.skipPowerSave = it },
                             )
                             SwitchPreference(
-                                title = stringResource(R.string.trash_clean_privileged),
-                                summary = stringResource(R.string.trash_clean_privileged_sum),
+                                title = stringResource(I18nR.string.trash_clean_privileged),
+                                summary = stringResource(I18nR.string.trash_clean_privileged_sum),
                                 value = priv,
                                 onValueChanged = {
                                     if (it) warnPriv = true else {
@@ -266,7 +268,7 @@ fun TrashScreen() {
                 }
                 item {
                     Text(
-                        stringResource(R.string.trash_in_bin),
+                        stringResource(I18nR.string.trash_in_bin),
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(top = 8.dp),
@@ -275,7 +277,7 @@ fun TrashScreen() {
                 if (bin.isEmpty() && !busy) {
                     item {
                         Text(
-                            stringResource(R.string.telos_trash_empty),
+                            stringResource(I18nR.string.telos_trash_empty),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(vertical = 8.dp),
                         )
@@ -291,16 +293,16 @@ fun TrashScreen() {
                         Text(item.entry.name, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         Text(item.entry.original, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         Text(
-                            stringResource(R.string.telos_trash_expires, DateFormat.getDateInstance().format(Date(item.entry.expiresAt))),
+                            stringResource(I18nR.string.telos_trash_expires, DateFormat.getDateInstance().format(Date(item.entry.expiresAt))),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Row {
                             TextButton(onClick = { scope.launch { trash.restore(item); reloadBin() } }) {
-                                Text(stringResource(R.string.telos_trash_restore))
+                                Text(stringResource(I18nR.string.telos_trash_restore))
                             }
                             TextButton(onClick = { scope.launch { trash.deletePermanently(item); reloadBin() } }) {
-                                Text(stringResource(R.string.telos_trash_permanent), color = MaterialTheme.colorScheme.error)
+                                Text(stringResource(I18nR.string.telos_trash_permanent), color = MaterialTheme.colorScheme.error)
                             }
                         }
                     }
@@ -312,14 +314,14 @@ fun TrashScreen() {
     if (warnPriv) {
         AlertDialog(
             onDismissRequest = { warnPriv = false },
-            title = { Text(stringResource(R.string.trash_clean_priv_warn_title)) },
-            text = { Text(stringResource(R.string.trash_clean_priv_warn_text)) },
+            title = { Text(stringResource(I18nR.string.trash_clean_priv_warn_title)) },
+            text = { Text(stringResource(I18nR.string.trash_clean_priv_warn_text)) },
             confirmButton = {
                 TextButton(onClick = {
                     priv = true
                     cleaner.privileged = true
                     warnPriv = false
-                }) { Text(stringResource(R.string.trash_clean_priv_confirm)) }
+                }) { Text(stringResource(I18nR.string.trash_clean_priv_confirm)) }
             },
             dismissButton = { TextButton(onClick = { warnPriv = false }) { Text(stringResource(android.R.string.cancel)) } },
         )
@@ -335,7 +337,7 @@ private fun HeroCard(card: Color, readyBytes: Long, readyCount: Int, binCount: I
             .padding(24.dp),
     ) {
         Text(
-            if (scanned) stringResource(R.string.trash_hero_ready) else stringResource(R.string.trash_hero_bin),
+            if (scanned) stringResource(I18nR.string.trash_hero_ready) else stringResource(I18nR.string.trash_hero_bin),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -346,8 +348,8 @@ private fun HeroCard(card: Color, readyBytes: Long, readyCount: Int, binCount: I
             modifier = Modifier.padding(top = 4.dp),
         )
         Text(
-            if (scanned) stringResource(R.string.trash_hero_items, readyCount)
-            else stringResource(R.string.trash_hero_stored, binCount),
+            if (scanned) stringResource(I18nR.string.trash_hero_items, readyCount)
+            else stringResource(I18nR.string.trash_hero_stored, binCount),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -358,7 +360,7 @@ private fun HeroCard(card: Color, readyBytes: Long, readyCount: Int, binCount: I
                 .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.15f), CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(painterResource(R.drawable.delete_24px), contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+            Icon(painterResource(BaseR.drawable.delete_24px), contentDescription = null, tint = MaterialTheme.colorScheme.primary)
         }
     }
 }
@@ -366,13 +368,13 @@ private fun HeroCard(card: Color, readyBytes: Long, readyCount: Int, binCount: I
 @Composable
 private fun kindLabel(kind: DiskCleaner.Kind): String = stringResource(
     when (kind) {
-        DiskCleaner.Kind.Cache -> R.string.trash_kind_cache
-        DiskCleaner.Kind.Temp -> R.string.trash_kind_temp
-        DiskCleaner.Kind.Log -> R.string.trash_kind_log
-        DiskCleaner.Kind.Thumbnail -> R.string.trash_kind_thumb
-        DiskCleaner.Kind.Apk -> R.string.trash_kind_apk
-        DiskCleaner.Kind.EmptyDir -> R.string.trash_kind_empty
-        DiskCleaner.Kind.Corpse -> R.string.trash_kind_corpse
+        DiskCleaner.Kind.Cache -> I18nR.string.trash_kind_cache
+        DiskCleaner.Kind.Temp -> I18nR.string.trash_kind_temp
+        DiskCleaner.Kind.Log -> I18nR.string.trash_kind_log
+        DiskCleaner.Kind.Thumbnail -> I18nR.string.trash_kind_thumb
+        DiskCleaner.Kind.Apk -> I18nR.string.trash_kind_apk
+        DiskCleaner.Kind.EmptyDir -> I18nR.string.trash_kind_empty
+        DiskCleaner.Kind.Corpse -> I18nR.string.trash_kind_corpse
     }
 )
 

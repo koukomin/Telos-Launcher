@@ -1,4 +1,7 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.parts
+import com.kieronquinn.app.smartspacer.sdk.client.R as SmartspacerR
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import android.content.Intent
@@ -157,11 +160,11 @@ class SmartspacerPartProvider : PartProvider {
                                     else -> MenuDefaults.middleItemShape
                                 },
                                 text = {
-                                    Text(stringResource(R.string.smartspace_long_press_popup_settings))
+                                    Text(stringResource(SmartspacerR.string.smartspace_long_press_popup_settings))
                                 },
                                 leadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.settings_24px),
+                                        painterResource(BaseR.drawable.settings_24px),
                                         null,
                                     )
                                 },
@@ -183,11 +186,11 @@ class SmartspacerPartProvider : PartProvider {
                                     else -> MenuDefaults.middleItemShape
                                 },
                                 text = {
-                                    Text(stringResource(R.string.smartspace_long_press_popup_feedback))
+                                    Text(stringResource(SmartspacerR.string.smartspace_long_press_popup_feedback))
                                 },
                                 leadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.feedback_24px),
+                                        painterResource(BaseR.drawable.feedback_24px),
                                         null,
                                     )
                                 },
@@ -209,11 +212,11 @@ class SmartspacerPartProvider : PartProvider {
                                     else -> MenuDefaults.middleItemShape
                                 },
                                 text = {
-                                    Text(stringResource(R.string.smartspace_long_press_popup_about))
+                                    Text(stringResource(SmartspacerR.string.smartspace_long_press_popup_about))
                                 },
                                 leadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.info_24px),
+                                        painterResource(BaseR.drawable.info_24px),
                                         null,
                                     )
                                 },
@@ -235,11 +238,11 @@ class SmartspacerPartProvider : PartProvider {
                                     else -> MenuDefaults.middleItemShape
                                 },
                                 text = {
-                                    Text(stringResource(R.string.smartspace_long_press_popup_dismiss))
+                                    Text(stringResource(SmartspacerR.string.smartspace_long_press_popup_dismiss))
                                 },
                                 leadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.close_24px),
+                                        painterResource(BaseR.drawable.close_24px),
                                         null,
                                     )
                                 },

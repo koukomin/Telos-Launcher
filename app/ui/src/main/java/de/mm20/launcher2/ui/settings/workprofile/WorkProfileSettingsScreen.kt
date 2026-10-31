@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.workprofile
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.provider.Settings
@@ -47,7 +49,7 @@ fun WorkProfileSettingsScreen() {
     val lockWorkProfileToggle by viewModel.lockWorkProfileToggle.collectAsStateWithLifecycle()
     val lockMethod by viewModel.lockMethod.collectAsStateWithLifecycle()
 
-    val promptTitle = stringResource(R.string.app_lock_work_profile_prompt_title)
+    val promptTitle = stringResource(I18nR.string.app_lock_work_profile_prompt_title)
 
     fun setPaused(paused: Boolean) {
         val activity = context as? FragmentActivity ?: return
@@ -67,39 +69,39 @@ fun WorkProfileSettingsScreen() {
     }
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_work_profile),
+        title = stringResource(I18nR.string.preference_screen_work_profile),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         item {
             PreferenceCategory {
                 Preference(
-                    icon = R.drawable.enterprise_24px,
-                    title = stringResource(R.string.work_profile_status_title),
+                    icon = BaseR.drawable.enterprise_24px,
+                    title = stringResource(I18nR.string.work_profile_status_title),
                     summary = stringResource(
                         when {
-                            workProfile == null -> R.string.work_profile_status_not_set_up
-                            workProfileState?.locked == true -> R.string.work_profile_status_paused
-                            else -> R.string.work_profile_status_active
+                            workProfile == null -> I18nR.string.work_profile_status_not_set_up
+                            workProfileState?.locked == true -> I18nR.string.work_profile_status_paused
+                            else -> I18nR.string.work_profile_status_active
                         }
                     ),
                 )
                 Preference(
                     title = stringResource(
-                        if (workProfile == null) R.string.work_profile_setup_button
-                        else R.string.work_profile_manage_button
+                        if (workProfile == null) I18nR.string.work_profile_setup_button
+                        else I18nR.string.work_profile_manage_button
                     ),
                     summary = stringResource(
-                        if (workProfile == null) R.string.work_profile_setup_description
-                        else R.string.work_profile_manage_description
+                        if (workProfile == null) I18nR.string.work_profile_setup_description
+                        else I18nR.string.work_profile_manage_description
                     ),
                     onClick = { openSystemUserSettings() },
                 )
                 // === TELOS_PENDING_REVIEW_START: sandbox_provisioning ===
                 if (workProfile == null) {
                     Preference(
-                        icon = R.drawable.add_24px,
-                        title = stringResource(R.string.telos_setup_sandbox_title),
-                        summary = stringResource(R.string.telos_setup_sandbox_summary),
+                        icon = BaseR.drawable.add_24px,
+                        title = stringResource(I18nR.string.telos_setup_sandbox_title),
+                        summary = stringResource(I18nR.string.telos_setup_sandbox_summary),
                         onClick = {
                             val activity = context as? Activity
                             if (activity != null) {
@@ -116,7 +118,7 @@ fun WorkProfileSettingsScreen() {
                 PreferenceCategory {
                     GuardedPreference(
                         locked = hasManageProfilesPermission == false,
-                        description = stringResource(R.string.missing_permission_manage_profiles),
+                        description = stringResource(I18nR.string.missing_permission_manage_profiles),
                         onUnlock = {
                             (context as? AppCompatActivity)?.let {
                                 viewModel.requestManageProfilesPermission(it)
@@ -125,16 +127,16 @@ fun WorkProfileSettingsScreen() {
                     ) {
                         // === TELOS_PENDING_REVIEW_START: work_profile_quiet_mode_toggle ===
                         SwitchPreference(
-                            title = stringResource(R.string.preference_work_profile_pause),
-                            summary = stringResource(R.string.preference_work_profile_pause_summary),
+                            title = stringResource(I18nR.string.preference_work_profile_pause),
+                            summary = stringResource(I18nR.string.preference_work_profile_pause_summary),
                             enabled = hasManageProfilesPermission == true && android.os.Build.VERSION.SDK_INT >= 28,
                             value = workProfileState?.locked != true,
                             onValueChanged = { setPaused(!it) },
                         )
                         // === TELOS_PENDING_REVIEW_END: work_profile_quiet_mode_toggle ===
                         SwitchPreference(
-                            title = stringResource(R.string.preference_app_lock_work_profile_toggle),
-                            summary = stringResource(R.string.preference_app_lock_work_profile_toggle_summary),
+                            title = stringResource(I18nR.string.preference_app_lock_work_profile_toggle),
+                            summary = stringResource(I18nR.string.preference_app_lock_work_profile_toggle_summary),
                             enabled = hasManageProfilesPermission == true,
                             value = lockWorkProfileToggle == true,
                             onValueChanged = { viewModel.setLockWorkProfileToggle(it) },

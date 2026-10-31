@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.stremio
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.Intent
@@ -263,7 +264,7 @@ class StremioViewModel : ViewModel(), KoinComponent {
             launch { account.saveChanged(meta.type, meta.id, meta.name, meta.poster, !desired) }
             val updated = de.mm20.launcher2.comms.media.video.trakt.Trakt.setWatchlistId(appContext, meta.type, meta.id, meta.name, desired, traktSession)
             if (updated == false) android.widget.Toast.makeText(appContext,
-                appContext.getString(de.mm20.launcher2.ui.R.string.au7_trakt_title) + " · " + appContext.getString(de.mm20.launcher2.ui.R.string.pdft_error_title),
+                appContext.getString(I18nR.string.au7_trakt_title) + " · " + appContext.getString(I18nR.string.pdft_error_title),
                 android.widget.Toast.LENGTH_LONG).show()
         }
     }
@@ -327,7 +328,7 @@ class StremioViewModel : ViewModel(), KoinComponent {
                 } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
                 catch (_: Exception) {
                     _streams.update { it?.copy(loading = false) }
-                    android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.stremio_shared_unavailable, android.widget.Toast.LENGTH_LONG).show()
+                    android.widget.Toast.makeText(context, I18nR.string.stremio_shared_unavailable, android.widget.Toast.LENGTH_LONG).show()
                     onDone(false)
                     return@launch
                 }

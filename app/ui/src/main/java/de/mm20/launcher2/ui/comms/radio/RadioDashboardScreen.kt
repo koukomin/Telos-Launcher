@@ -1,5 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: radio_browser_ktor ===
 package de.mm20.launcher2.ui.comms.radio
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.ui.res.stringResource
 import android.widget.Toast
@@ -128,34 +130,34 @@ private fun RadioDashboardContent(
     }
     pendingRestore?.let { uri ->
         AlertDialog(onDismissRequest = { pendingRestore = null },
-            title = { Text(stringResource(R.string.hc_restore_backup)) },
-            text = { Text(stringResource(R.string.radio_restore_replace_summary)) },
-            confirmButton = { TextButton(onClick = { viewModel.restoreBackup(context, uri, replace = true); pendingRestore = null }) { Text(stringResource(R.string.hc_restore_backup)) } },
-            dismissButton = { TextButton(onClick = { pendingRestore = null }) { Text(stringResource(R.string.hc_cancel)) } })
+            title = { Text(stringResource(I18nR.string.hc_restore_backup)) },
+            text = { Text(stringResource(I18nR.string.radio_restore_replace_summary)) },
+            confirmButton = { TextButton(onClick = { viewModel.restoreBackup(context, uri, replace = true); pendingRestore = null }) { Text(stringResource(I18nR.string.hc_restore_backup)) } },
+            dismissButton = { TextButton(onClick = { pendingRestore = null }) { Text(stringResource(I18nR.string.hc_cancel)) } })
     }
 
-    de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.hc_radio), askNotifications = true, guardKey = "telos_radio_app://radio", actions = {
+    de.mm20.launcher2.ui.media.MediaFrame(stringResource(I18nR.string.hc_radio), askNotifications = true, guardKey = "telos_radio_app://radio", actions = {
         de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, searchQuery.isNotBlank()) {
             searchExpanded = !searchExpanded
             if (!searchExpanded) viewModel.updateSearchQuery("")
         }
         IconButton(onClick = { showAdd = true }) {
-            Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.hc_add_station))
+            Icon(painterResource(BaseR.drawable.add_24px), contentDescription = stringResource(I18nR.string.hc_add_station))
         }
         Box {
             IconButton(onClick = { menuOpen = true }) {
-                Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+                Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_more))
             }
             DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                DropdownMenuItem(text = { Text(stringResource(R.string.tsm_search_my_stations)) },
-                    leadingIcon = { Icon(painterResource(R.drawable.search_24px), null) },
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.tsm_search_my_stations)) },
+                    leadingIcon = { Icon(painterResource(BaseR.drawable.search_24px), null) },
                     onClick = { menuOpen = false; searchExpanded = false; selectedTabIndex = 0; collectionSearchExpanded = true })
-                DropdownMenuItem(text = { Text(stringResource(R.string.hc_settings)) },
-                    leadingIcon = { Icon(painterResource(R.drawable.settings_24px), null) },
+                DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_settings)) },
+                    leadingIcon = { Icon(painterResource(BaseR.drawable.settings_24px), null) },
                     onClick = { menuOpen = false; showSettings = true })
                 DropdownMenuItem(
-                    text = { Text(stringResource(if (isRecording) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record)) },
-                    leadingIcon = { Icon(painterResource(R.drawable.radio_button_checked_24px), null,
+                    text = { Text(stringResource(if (isRecording) I18nR.string.au2_radio2_stop_recording else I18nR.string.au2_radio2_record)) },
+                    leadingIcon = { Icon(painterResource(BaseR.drawable.radio_button_checked_24px), null,
                         tint = if (isRecording) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant) },
                     onClick = {
                         menuOpen = false
@@ -163,48 +165,48 @@ private fun RadioDashboardContent(
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.hc_sleep_timer)) },
-                    leadingIcon = { Icon(painterResource(R.drawable.timer_24px), null,
+                    text = { Text(stringResource(I18nR.string.hc_sleep_timer)) },
+                    leadingIcon = { Icon(painterResource(BaseR.drawable.timer_24px), null,
                         tint = if (sleepEndsAt > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
                     onClick = { menuOpen = false; showSleep = true },
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.au2_radio2_recordings)) },
+                    text = { Text(stringResource(I18nR.string.au2_radio2_recordings)) },
                     onClick = {
                         menuOpen = false
                         showRecordings = true
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.hc_scrobbling)) },
+                    text = { Text(stringResource(I18nR.string.hc_scrobbling)) },
                     onClick = {
                         menuOpen = false
                         backStack.add(de.mm20.launcher2.ui.settings.comms.ScrobbleSettingsRoute)
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.hc_import_playlist_m3u_pls)) },
+                    text = { Text(stringResource(I18nR.string.hc_import_playlist_m3u_pls)) },
                     onClick = {
                         menuOpen = false
                         importLauncher.launch(arrayOf("*/*"))
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.hc_export_playlist_m3u)) },
+                    text = { Text(stringResource(I18nR.string.hc_export_playlist_m3u)) },
                     onClick = {
                         menuOpen = false
                         exportM3uLauncher.launch("telos-radio.m3u")
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.hc_back_up_collection)) },
+                    text = { Text(stringResource(I18nR.string.hc_back_up_collection)) },
                     onClick = {
                         menuOpen = false
                         backupLauncher.launch("telos-radio-backup.zip")
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.hc_restore_backup)) },
+                    text = { Text(stringResource(I18nR.string.hc_restore_backup)) },
                     onClick = {
                         menuOpen = false
                         restoreLauncher.launch(arrayOf("*/*"))
@@ -225,7 +227,7 @@ private fun RadioDashboardContent(
                 Column(modifier = Modifier.fillMaxSize()) {
                 if (favorites.isNotEmpty()) {
                     de.mm20.launcher2.ui.media.MediaSearchBar(
-                        collectionQuery, { collectionQuery = it }, stringResource(R.string.tsm_search_my_stations),
+                        collectionQuery, { collectionQuery = it }, stringResource(I18nR.string.tsm_search_my_stations),
                         expanded = collectionSearchExpanded, onClose = { collectionQuery = ""; collectionSearchExpanded = false },
                     )
                 }
@@ -244,7 +246,7 @@ private fun RadioDashboardContent(
                                 de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery)
                             }
                             if (favorites.isEmpty()) {
-                                RadioEmptyState(stringResource(R.string.hc_no_stations_yet_search_for_a_station_add))
+                                RadioEmptyState(stringResource(I18nR.string.hc_no_stations_yet_search_for_a_station_add))
                             }
                         }
                     },
@@ -255,7 +257,7 @@ private fun RadioDashboardContent(
             1 -> {
                 Column(modifier = Modifier.fillMaxSize()) {
                     de.mm20.launcher2.ui.media.MediaSearchBar(
-                        searchQuery, { viewModel.updateSearchQuery(it) }, stringResource(R.string.tsm_search_radio_browser),
+                        searchQuery, { viewModel.updateSearchQuery(it) }, stringResource(I18nR.string.tsm_search_radio_browser),
                         expanded = searchExpanded, onClose = { viewModel.updateSearchQuery(""); searchExpanded = false },
                     )
                     val reduceAnim by org.koin.compose.koinInject<de.mm20.launcher2.preferences.ui.PerformanceSettings>().reduceAnimations.collectAsState(false)
@@ -273,7 +275,7 @@ private fun RadioDashboardContent(
                         )
                     }
                     if (!isSearching && searchError == null && searchQuery.isNotBlank() && searchResults.isEmpty()) {
-                        RadioEmptyState(stringResource(R.string.hc_no_stations_found))
+                        RadioEmptyState(stringResource(I18nR.string.hc_no_stations_found))
                     }
 
                     LazyColumn(
@@ -307,7 +309,7 @@ private fun RadioDashboardContent(
                     if (history.isEmpty()) {
                         item {
                             Text(
-                                text = stringResource(R.string.hc_tracks_announced_by_the_stations_you_lis),
+                                text = stringResource(I18nR.string.hc_tracks_announced_by_the_stations_you_lis),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(16.dp)
@@ -315,7 +317,7 @@ private fun RadioDashboardContent(
                         }
                     } else {
                         item {
-                            TextButton(onClick = { viewModel.clearHistory() }) { Text(stringResource(R.string.hc_clear_history)) }
+                            TextButton(onClick = { viewModel.clearHistory() }) { Text(stringResource(I18nR.string.hc_clear_history)) }
                         }
                     }
                     items(history, key = { it.id }) { entry ->
@@ -364,20 +366,20 @@ private fun RadioDashboardContent(
         var address by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { showAdd = false },
-            title = { Text(stringResource(R.string.hc_add_station)) },
+            title = { Text(stringResource(I18nR.string.hc_add_station)) },
             text = {
                 Column {
                     OutlinedTextField(
                         value = address,
                         onValueChange = { address = it },
-                        label = { Text(stringResource(R.string.hc_stream_or_playlist_address)) },
+                        label = { Text(stringResource(I18nR.string.hc_stream_or_playlist_address)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     OutlinedTextField(
                         value = name,
                         onValueChange = { name = it },
-                        label = { Text(stringResource(R.string.hc_name_optional)) },
+                        label = { Text(stringResource(I18nR.string.hc_name_optional)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     )
@@ -387,34 +389,34 @@ private fun RadioDashboardContent(
                 TextButton(onClick = {
                     viewModel.addStation(name, address)
                     showAdd = false
-                }) { Text(stringResource(R.string.hc_add)) }
+                }) { Text(stringResource(I18nR.string.hc_add)) }
             },
-            dismissButton = { TextButton(onClick = { showAdd = false }) { Text(stringResource(R.string.hc_cancel)) } },
+            dismissButton = { TextButton(onClick = { showAdd = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
     }
 
     if (showSleep) {
         AlertDialog(
             onDismissRequest = { showSleep = false },
-            title = { Text(stringResource(R.string.hc_sleep_timer)) },
+            title = { Text(stringResource(I18nR.string.hc_sleep_timer)) },
             text = {
                 Column {
                     listOf(15, 30, 45, 60, 90).forEach { minutes ->
                         TextButton(onClick = {
                             playerViewModel.setSleepTimer(minutes)
                             showSleep = false
-                        }) { Text(stringResource(R.string.hc_stop_playback_in_minutes, minutes)) }
+                        }) { Text(stringResource(I18nR.string.hc_stop_playback_in_minutes, minutes)) }
                     }
                     if (sleepEndsAt > 0) {
                         TextButton(onClick = {
                             playerViewModel.cancelSleepTimer()
                             showSleep = false
-                        }) { Text(stringResource(R.string.hc_turn_timer_off)) }
+                        }) { Text(stringResource(I18nR.string.hc_turn_timer_off)) }
                     }
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showSleep = false }) { Text(stringResource(R.string.hc_close)) } },
+            dismissButton = { TextButton(onClick = { showSleep = false }) { Text(stringResource(I18nR.string.hc_close)) } },
         )
     }
 
@@ -434,28 +436,28 @@ private fun RadioDashboardContent(
                         TextButton(onClick = {
                             de.mm20.launcher2.ui.comms.radio.RadioShare.share(context, station)
                             editTarget = null
-                        }) { Text(stringResource(R.string.au10_radio_share)) }
+                        }) { Text(stringResource(I18nR.string.au10_radio_share)) }
                         if (saved) {
-                            TextButton(onClick = { renaming = true }) { Text(stringResource(if (values.editMetadata || values.editStreamUrls) R.string.hc_edit else R.string.hc_rename)) }
+                            TextButton(onClick = { renaming = true }) { Text(stringResource(if (values.editMetadata || values.editStreamUrls) I18nR.string.hc_edit else I18nR.string.hc_rename)) }
                             TextButton(onClick = {
                                 viewModel.deleteStation(station.id)
                                 editTarget = null
-                            }) { Text(stringResource(R.string.hc_remove)) }
+                            }) { Text(stringResource(I18nR.string.hc_remove)) }
                         } else {
                             TextButton(onClick = {
                                 viewModel.toggleFavorite(station)
                                 editTarget = null
-                            }) { Text(stringResource(R.string.hc_favorite)) }
+                            }) { Text(stringResource(I18nR.string.hc_favorite)) }
                         }
                     }
                 },
                 confirmButton = {},
-                dismissButton = { TextButton(onClick = { editTarget = null }) { Text(stringResource(R.string.hc_close)) } },
+                dismissButton = { TextButton(onClick = { editTarget = null }) { Text(stringResource(I18nR.string.hc_close)) } },
             )
         } else {
             AlertDialog(
                 onDismissRequest = { editTarget = null },
-                title = { Text(stringResource(if (values.editMetadata || values.editStreamUrls) R.string.hc_edit else R.string.hc_rename_station)) },
+                title = { Text(stringResource(if (values.editMetadata || values.editStreamUrls) I18nR.string.hc_edit else I18nR.string.hc_rename_station)) },
                 text = {
                     Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(
@@ -465,9 +467,9 @@ private fun RadioDashboardContent(
                         modifier = Modifier.fillMaxWidth(),
                     )
                     if (values.editMetadata) OutlinedTextField(value = newImage, onValueChange = { newImage = it },
-                        label = { Text(stringResource(R.string.radio_station_image_url)) }, modifier = Modifier.fillMaxWidth())
+                        label = { Text(stringResource(I18nR.string.radio_station_image_url)) }, modifier = Modifier.fillMaxWidth())
                     if (values.editStreamUrls) OutlinedTextField(value = newUrl, onValueChange = { newUrl = it },
-                        label = { Text(stringResource(R.string.hc_stream_or_playlist_address)) }, modifier = Modifier.fillMaxWidth())
+                        label = { Text(stringResource(I18nR.string.hc_stream_or_playlist_address)) }, modifier = Modifier.fillMaxWidth())
                     }
                 },
                 confirmButton = {
@@ -476,9 +478,9 @@ private fun RadioDashboardContent(
                             faviconUrl = if (values.editMetadata) newImage.trim() else station.faviconUrl,
                             streamUrl = if (values.editStreamUrls) newUrl.trim().ifBlank { station.streamUrl } else station.streamUrl))
                         editTarget = null
-                    }) { Text(stringResource(R.string.hc_save)) }
+                    }) { Text(stringResource(I18nR.string.hc_save)) }
                 },
-                dismissButton = { TextButton(onClick = { editTarget = null }) { Text(stringResource(R.string.hc_cancel)) } },
+                dismissButton = { TextButton(onClick = { editTarget = null }) { Text(stringResource(I18nR.string.hc_cancel)) } },
             )
         }
     }
@@ -534,8 +536,8 @@ private fun StationRow(
             // Favorite Button
             IconButton(onClick = onFavoriteClick) {
                 Icon(
-                    painter = painterResource(if (isFavorite) R.drawable.star_24px_filled else R.drawable.star_24px),
-                    contentDescription = stringResource(R.string.hc_favorite),
+                    painter = painterResource(if (isFavorite) BaseR.drawable.star_24px_filled else BaseR.drawable.star_24px),
+                    contentDescription = stringResource(I18nR.string.hc_favorite),
                     tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }

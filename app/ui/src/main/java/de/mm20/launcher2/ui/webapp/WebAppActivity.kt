@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.webapp
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.DownloadManager
 import android.app.NotificationChannel
@@ -145,8 +147,8 @@ class WebAppActivity : BaseActivity() {
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.notification_channel_web_apps)
-            val descriptionText = getString(R.string.notification_channel_web_apps_description)
+            val name = getString(I18nR.string.notification_channel_web_apps)
+            val descriptionText = getString(I18nR.string.notification_channel_web_apps_description)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
@@ -190,7 +192,7 @@ class WebAppActivity : BaseActivity() {
             )
 
             val notification = NotificationCompat.Builder(this@WebAppActivity, CHANNEL_ID)
-                .setSmallIcon(R.drawable.language_24px)
+                .setSmallIcon(BaseR.drawable.language_24px)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setSubText(label)
@@ -408,14 +410,14 @@ private fun WebAppScreen(
             ) {
                 IconButton(onClick = onClose) {
                     Icon(
-                        painterResource(R.drawable.close_24px),
-                        contentDescription = stringResource(R.string.menu_back),
+                        painterResource(BaseR.drawable.close_24px),
+                        contentDescription = stringResource(I18nR.string.menu_back),
                     )
                 }
                 IconButton(onClick = { activeWebView?.goBack() }, enabled = canGoBack) {
                     Icon(
-                        painterResource(R.drawable.arrow_back_24px),
-                        contentDescription = stringResource(R.string.web_app_go_back),
+                        painterResource(BaseR.drawable.arrow_back_24px),
+                        contentDescription = stringResource(I18nR.string.web_app_go_back),
                     )
                 }
                 Text(
@@ -430,15 +432,15 @@ private fun WebAppScreen(
                 )
                 IconButton(onClick = { activeWebView?.goForward() }, enabled = canGoForward) {
                     Icon(
-                        painterResource(R.drawable.arrow_forward_24px),
-                        contentDescription = stringResource(R.string.web_app_go_forward),
+                        painterResource(BaseR.drawable.arrow_forward_24px),
+                        contentDescription = stringResource(I18nR.string.web_app_go_forward),
                     )
                 }
                 Box {
                     IconButton(onClick = { showMenu = true }) {
                         Icon(
-                            painterResource(R.drawable.more_vert_24px),
-                            contentDescription = stringResource(R.string.action_more_actions),
+                            painterResource(BaseR.drawable.more_vert_24px),
+                            contentDescription = stringResource(I18nR.string.action_more_actions),
                         )
                     }
                     DropdownMenuPopup(
@@ -451,21 +453,21 @@ private fun WebAppScreen(
                         // showing, so e.g. white page content made the menu's own text unreadable.
                         DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.web_app_open_externally)) },
+                                text = { Text(stringResource(I18nR.string.web_app_open_externally)) },
                                 onClick = {
                                     showMenu = false
                                     onOpenExternally(currentUrl)
                                 },
                             )
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.dl_p3_download_with_telos)) },
+                                text = { Text(stringResource(I18nR.string.dl_p3_download_with_telos)) },
                                 onClick = {
                                     showMenu = false
                                     de.mm20.launcher2.ui.downloads.openInTelosDownloads(context, currentUrl)
                                 },
                             )
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.web_app_settings)) },
+                                text = { Text(stringResource(I18nR.string.web_app_settings)) },
                                 onClick = {
                                     showMenu = false
                                     context.startActivity(
@@ -480,7 +482,7 @@ private fun WebAppScreen(
                             )
                             if (editTarget != null) {
                                 DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.web_app_shortcut_edit)) },
+                                    text = { Text(stringResource(I18nR.string.web_app_shortcut_edit)) },
                                     onClick = {
                                         showMenu = false
                                         showEditSheet = true
@@ -612,7 +614,7 @@ private fun WebAppScreen(
                                     context.getSystemService<DownloadManager>()?.enqueue(request)
                                     Toast.makeText(
                                         context,
-                                        context.getString(R.string.web_app_download_started, fileName),
+                                        context.getString(I18nR.string.web_app_download_started, fileName),
                                         Toast.LENGTH_SHORT,
                                     ).show()
                                 } catch (e: Exception) {

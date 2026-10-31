@@ -1,6 +1,6 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
-import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -35,18 +35,18 @@ data object FakeCallSettingsRoute : NavKey
 @Composable
 fun FakeCallSettingsScreen() {
     val context = LocalContext.current
-    val boss = stringResource(R.string.au_phoneb_preset_boss)
+    val boss = stringResource(I18nR.string.au_phoneb_preset_boss)
     val presets = listOf(
         boss to "+30 210 555 0100",
-        stringResource(R.string.au_phoneb_preset_mom) to "+30 697 555 0101",
-        stringResource(R.string.au_phoneb_preset_doctor) to "+30 210 555 0199",
+        stringResource(I18nR.string.au_phoneb_preset_mom) to "+30 697 555 0101",
+        stringResource(I18nR.string.au_phoneb_preset_doctor) to "+30 210 555 0199",
     )
     // kept over rotation
     var name by rememberSaveable { mutableStateOf(boss) }
     var number by rememberSaveable { mutableStateOf("+30") }
     var delaySec by rememberSaveable { mutableStateOf("10") }
-    val incomingLabel = stringResource(R.string.comms_incoming_call)
-    PreferenceScreen(title = { Text(stringResource(R.string.hc_fake_call)) }) {
+    val incomingLabel = stringResource(I18nR.string.comms_incoming_call)
+    PreferenceScreen(title = { Text(stringResource(I18nR.string.hc_fake_call)) }) {
         item {
             Column(
                 Modifier.padding(16.dp),
@@ -55,7 +55,7 @@ fun FakeCallSettingsScreen() {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text(stringResource(R.string.hc_caller_name)) },
+                    label = { Text(stringResource(I18nR.string.hc_caller_name)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                 )
@@ -71,7 +71,7 @@ fun FakeCallSettingsScreen() {
                 OutlinedTextField(
                     value = number,
                     onValueChange = { number = it },
-                    label = { Text(stringResource(R.string.hc_number)) },
+                    label = { Text(stringResource(I18nR.string.hc_number)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
@@ -79,7 +79,7 @@ fun FakeCallSettingsScreen() {
                 OutlinedTextField(
                     value = delaySec,
                     onValueChange = { delaySec = it.filter { ch -> ch.isDigit() } },
-                    label = { Text(stringResource(R.string.hc_delay_seconds)) },
+                    label = { Text(stringResource(I18nR.string.hc_delay_seconds)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
@@ -97,15 +97,15 @@ fun FakeCallSettingsScreen() {
                     onClick = {
                         val delay = (delaySec.toIntOrNull() ?: 10).coerceIn(1, 3600)
                         FakeCallScheduler.schedule(context, name.ifBlank { incomingLabel }, number, delay)
-                        Toast.makeText(context, context.getString(R.string.hc_fake_call_in_seconds, delay), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(I18nR.string.hc_fake_call_in_seconds, delay), Toast.LENGTH_SHORT).show()
                     },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = number.isNotBlank(),
                 ) {
-                    Text(stringResource(R.string.hc_schedule_fake_call))
+                    Text(stringResource(I18nR.string.hc_schedule_fake_call))
                 }
                 TextButton(onClick = { FakeCallScheduler.cancel(context) }) {
-                    Text(stringResource(R.string.hc_cancel_scheduled))
+                    Text(stringResource(I18nR.string.hc_cancel_scheduled))
                 }
             }
         }

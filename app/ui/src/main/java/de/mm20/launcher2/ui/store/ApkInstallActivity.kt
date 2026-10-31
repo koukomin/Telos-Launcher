@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.store
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
@@ -122,7 +123,7 @@ private fun ApkInstallerScreen(
 
         if (isScanning) {
             CircularProgressIndicator()
-            Text(stringResource(R.string.hf_appinfo_permissions))
+            Text(stringResource(I18nR.string.hf_appinfo_permissions))
         } else {
             val report = reportState
             if (report != null) {
@@ -140,7 +141,7 @@ private fun ApkInstallerScreen(
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(report.packageName, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                         Text("Version: ${report.versionName ?: "Code " + report.versionCode}")
-                        Text(stringResource(R.string.hf_appinfo_permissions) + ": ${report.dangerousPermissions.size}", color = riskColor, fontWeight = FontWeight.Bold)
+                        Text(stringResource(I18nR.string.hf_appinfo_permissions) + ": ${report.dangerousPermissions.size}", color = riskColor, fontWeight = FontWeight.Bold)
                         Text("SHA-256: ${report.sha256.take(24)}...", style = MaterialTheme.typography.bodySmall)
 
                         if (report.dangerousPermissions.isNotEmpty()) {
@@ -154,7 +155,7 @@ private fun ApkInstallerScreen(
 
                 if (isInstalling) {
                     CircularProgressIndicator()
-                    Text(stringResource(R.string.hf_store_installing_dots))
+                    Text(stringResource(I18nR.string.hf_store_installing_dots))
                 } else {
                     Button(
                         onClick = {

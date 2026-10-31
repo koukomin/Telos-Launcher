@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.net.Uri
@@ -107,14 +109,14 @@ internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onD
             Modifier.verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).navigationBarsPadding(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text(stringResource(R.string.dl_add_title), style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(I18nR.string.dl_add_title), style = MaterialTheme.typography.titleLarge)
 
             clip?.let { c ->
                 if (!text.contains(c)) {
                     AssistChip(
                         onClick = { text = if (text.isBlank()) c else text.trimEnd() + "\n" + c },
-                        label = { Text(stringResource(R.string.dl_clipboard_link, c.take(48)), maxLines = 1) },
-                        leadingIcon = { Icon(painterResource(R.drawable.link_24px), null, Modifier.size(18.dp)) },
+                        label = { Text(stringResource(I18nR.string.dl_clipboard_link, c.take(48)), maxLines = 1) },
+                        leadingIcon = { Icon(painterResource(BaseR.drawable.link_24px), null, Modifier.size(18.dp)) },
                     )
                 }
             }
@@ -124,49 +126,49 @@ internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onD
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 2,
                 maxLines = 6,
-                label = { Text(stringResource(R.string.dl_links_hint)) },
+                label = { Text(stringResource(I18nR.string.dl_links_hint)) },
                 isError = text.isNotBlank() && links.isEmpty(),
                 supportingText = {
-                    if (text.isNotBlank() && links.isEmpty()) Text(stringResource(R.string.dl_invalid_links))
-                    else if (links.size > 1) Text(pluralStringResource(R.plurals.dl_links_found, links.size, links.size))
+                    if (text.isNotBlank() && links.isEmpty()) Text(stringResource(I18nR.string.dl_invalid_links))
+                    else if (links.size > 1) Text(pluralStringResource(I18nR.plurals.dl_links_found, links.size, links.size))
                 },
                 trailingIcon = {
                     IconButton(onClick = {
                         val c = clipboardLink(context)
                         if (c != null) text = if (text.isBlank()) c else text.trimEnd() + "\n" + c
-                    }) { Icon(painterResource(R.drawable.content_copy_24px), stringResource(R.string.dl_paste)) }
+                    }) { Icon(painterResource(BaseR.drawable.content_copy_24px), stringResource(I18nR.string.dl_paste)) }
                 },
             )
 
-            TextButton(onClick = { onMedia(links.firstOrNull().orEmpty()) }) { Text(stringResource(R.string.dl_m_open)) }
+            TextButton(onClick = { onMedia(links.firstOrNull().orEmpty()) }) { Text(stringResource(I18nR.string.dl_m_open)) }
 
-            Text(stringResource(R.string.dl_folder), style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(I18nR.string.dl_folder), style = MaterialTheme.typography.labelLarge)
             Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-                Icon(painterResource(R.drawable.folder_24px), null, Modifier.size(20.dp))
+                Icon(painterResource(BaseR.drawable.folder_24px), null, Modifier.size(20.dp))
                 Spacer(Modifier.width(8.dp))
                 Text(
                     folder?.let { Uri.parse(it).lastPathSegment?.substringAfterLast(':') ?: it }
                         ?: settings.defaultFolder.takeIf { it.isNotEmpty() }?.let { Uri.parse(it).lastPathSegment?.substringAfterLast(':') }
-                        ?: stringResource(R.string.dl_folder_default),
+                        ?: stringResource(I18nR.string.dl_folder_default),
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 1,
                 )
-                TextButton(onClick = { picker.launch(null) }) { Text(stringResource(R.string.dl_folder_choose)) }
-                if (folder != null) TextButton(onClick = { folder = null }) { Text(stringResource(R.string.dl_reset)) }
+                TextButton(onClick = { picker.launch(null) }) { Text(stringResource(I18nR.string.dl_folder_choose)) }
+                if (folder != null) TextButton(onClick = { folder = null }) { Text(stringResource(I18nR.string.dl_reset)) }
             }
 
-            Text(stringResource(R.string.dl_category), style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(I18nR.string.dl_category), style = MaterialTheme.typography.labelLarge)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterChip(selected = category == null, onClick = { category = null }, label = { Text(stringResource(R.string.dl_category_auto)) })
+                FilterChip(selected = category == null, onClick = { category = null }, label = { Text(stringResource(I18nR.string.dl_category_auto)) })
                 for (c in DownloadCategory.entries) {
                     FilterChip(selected = category == c, onClick = { category = c }, label = { Text(categoryLabel(c)) })
                 }
             }
 
             Text(
-                if (connections == 0) stringResource(R.string.dl_connections_default, settings.connections)
-                else stringResource(R.string.dl_connections_count, connections),
+                if (connections == 0) stringResource(I18nR.string.dl_connections_default, settings.connections)
+                else stringResource(I18nR.string.dl_connections_count, connections),
                 style = MaterialTheme.typography.labelLarge,
             )
             Slider(
@@ -176,21 +178,21 @@ internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onD
                 steps = 15,
             )
 
-            TextButton(onClick = { advanced = !advanced }) { Text(stringResource(R.string.dl_advanced)) }
+            TextButton(onClick = { advanced = !advanced }) { Text(stringResource(I18nR.string.dl_advanced)) }
             AnimatedVisibility(advanced) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    if (links.size <= 1) Field(name, { name = it }, R.string.dl_name)
-                    Field(userAgent, { userAgent = it }, R.string.dl_user_agent)
-                    Field(referer, { referer = it }, R.string.dl_referer)
-                    Field(cookies, { cookies = it }, R.string.dl_cookies)
-                    Field(headers, { headers = it }, R.string.dl_headers, singleLine = false)
-                    Field(mirrors, { mirrors = it }, R.string.dl_mirrors, singleLine = false)
-                    Field(checksum, { checksum = it }, R.string.dl_checksum, error = checksumInvalid)
-                    Field(limit, { limit = it.filter(Char::isDigit) }, R.string.dl_speed_limit_task)
+                    if (links.size <= 1) Field(name, { name = it }, I18nR.string.dl_name)
+                    Field(userAgent, { userAgent = it }, I18nR.string.dl_user_agent)
+                    Field(referer, { referer = it }, I18nR.string.dl_referer)
+                    Field(cookies, { cookies = it }, I18nR.string.dl_cookies)
+                    Field(headers, { headers = it }, I18nR.string.dl_headers, singleLine = false)
+                    Field(mirrors, { mirrors = it }, I18nR.string.dl_mirrors, singleLine = false)
+                    Field(checksum, { checksum = it }, I18nR.string.dl_checksum, error = checksumInvalid)
+                    Field(limit, { limit = it.filter(Char::isDigit) }, I18nR.string.dl_speed_limit_task)
                     Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
                         androidx.compose.material3.Switch(checked = startPaused, onCheckedChange = { startPaused = it })
                         Spacer(Modifier.width(12.dp))
-                        Text(stringResource(R.string.dl_start_paused))
+                        Text(stringResource(I18nR.string.dl_start_paused))
                     }
                 }
             }
@@ -217,7 +219,7 @@ internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onD
                 enabled = links.isNotEmpty() && !checksumInvalid,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text(pluralStringResource(R.plurals.dl_add_count, links.size.coerceAtLeast(1), links.size.coerceAtLeast(1)))
+                Text(pluralStringResource(I18nR.plurals.dl_add_count, links.size.coerceAtLeast(1), links.size.coerceAtLeast(1)))
             }
             Spacer(Modifier.size(16.dp))
         }

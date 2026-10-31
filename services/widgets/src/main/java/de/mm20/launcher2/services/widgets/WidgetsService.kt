@@ -1,7 +1,7 @@
 package de.mm20.launcher2.services.widgets
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.appwidget.AppWidgetManager
-import de.mm20.launcher2.i18n.R
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
 import android.content.pm.LauncherApps
@@ -58,23 +58,23 @@ class WidgetsService(
         return listOf(
             BuiltInWidgetInfo(
                 type = AtAGlanceWidget.Type,
-                label = context.getString(R.string.widget_name_at_a_glance),
+                label = context.getString(I18nR.string.widget_name_at_a_glance),
             ),
             BuiltInWidgetInfo(
                 type = WeatherWidget.Type,
-                label = context.getString(R.string.widget_name_weather),
+                label = context.getString(I18nR.string.widget_name_weather),
             ),
             BuiltInWidgetInfo(
                 type = MusicWidget.Type,
-                label = context.getString(R.string.widget_name_music),
+                label = context.getString(I18nR.string.widget_name_music),
             ),
             BuiltInWidgetInfo(
                 type = CalendarWidget.Type,
-                label = context.getString(R.string.widget_name_calendar),
+                label = context.getString(I18nR.string.widget_name_calendar),
             ),
             BuiltInWidgetInfo(
                 type = RemindersWidget.Type,
-                label = context.getString(R.string.widget_name_reminders),
+                label = context.getString(I18nR.string.widget_name_reminders),
             ),
             // AppsWidget ("Favorites") is intentionally not offered here - favorites are meant
             // to live only in the app grid/drawer's own Favorites section, not duplicated onto
@@ -82,19 +82,19 @@ class WidgetsService(
             // schema, just no longer pickable.
             BuiltInWidgetInfo(
                 type = NotesWidget.Type,
-                label = context.getString(R.string.widget_name_notes),
+                label = context.getString(I18nR.string.widget_name_notes),
             ),
             BuiltInWidgetInfo(
                 type = BatteryWidget.Type,
-                label = context.getString(R.string.widget_name_battery),
+                label = context.getString(I18nR.string.widget_name_battery),
             ),
             BuiltInWidgetInfo(
                 type = SystemWidget.Type,
-                label = context.getString(R.string.widget_name_system),
+                label = context.getString(I18nR.string.widget_name_system),
             ),
             BuiltInWidgetInfo(
                 type = FreezeWidget.Type,
-                label = context.getString(R.string.widget_name_freeze),
+                label = context.getString(I18nR.string.widget_name_freeze),
             ),
         )
     }

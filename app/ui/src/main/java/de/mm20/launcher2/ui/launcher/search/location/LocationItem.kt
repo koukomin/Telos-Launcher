@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.location
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import android.content.Intent
@@ -217,7 +219,7 @@ fun LocationItem(
                             .fastFilterNotNull()
                             .joinToString(" • ")
                         val isOpenString = location.openingSchedule?.isOpen()
-                            ?.let { stringResource(if (it) R.string.location_open else R.string.location_closed) }
+                            ?.let { stringResource(if (it) I18nR.string.location_open else I18nR.string.location_closed) }
 
                         Row(modifier = Modifier.padding(top = 2.dp)) {
                             if (sublabel.isNotBlank()) {
@@ -364,8 +366,8 @@ fun LocationItem(
                                         Icon(
                                             painterResource(
                                                 when (method) {
-                                                    PaymentMethod.Cash -> if (available) R.drawable.toll_20px else R.drawable.toll_off_20px
-                                                    PaymentMethod.Card -> if (available) R.drawable.credit_card_20px else R.drawable.credit_card_off_20px
+                                                    PaymentMethod.Cash -> if (available) BaseR.drawable.toll_20px else BaseR.drawable.toll_off_20px
+                                                    PaymentMethod.Card -> if (available) BaseR.drawable.credit_card_20px else BaseR.drawable.credit_card_off_20px
                                                 }
                                             ),
                                             contentDescription = null,
@@ -486,10 +488,10 @@ fun LocationItem(
                             AssistChip(
                                 modifier = Modifier.padding(end = 12.dp),
                                 onClick = { context.tryStartActivity(navigationIntent) },
-                                label = { Text(stringResource(R.string.menu_navigation)) },
+                                label = { Text(stringResource(I18nR.string.menu_navigation)) },
                                 leadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.directions_20px), null,
+                                        painterResource(BaseR.drawable.directions_20px), null,
                                         modifier = Modifier.size(AssistChipDefaults.IconSize)
                                     )
                                 }
@@ -506,10 +508,10 @@ fun LocationItem(
                                         )
                                     )
                                 },
-                                label = { Text(stringResource(R.string.menu_dial)) },
+                                label = { Text(stringResource(I18nR.string.menu_dial)) },
                                 leadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.call_20px), null,
+                                        painterResource(BaseR.drawable.call_20px), null,
                                         modifier = Modifier.size(AssistChipDefaults.IconSize)
                                     )
                                 }
@@ -526,10 +528,10 @@ fun LocationItem(
                                         )
                                     )
                                 },
-                                label = { Text(stringResource(R.string.menu_website)) },
+                                label = { Text(stringResource(I18nR.string.menu_website)) },
                                 leadingIcon = {
                                     Icon(
-                                        painterResource(R.drawable.language_20px), null,
+                                        painterResource(BaseR.drawable.language_20px), null,
                                         modifier = Modifier.size(AssistChipDefaults.IconSize)
                                     )
                                 }
@@ -544,16 +546,16 @@ fun LocationItem(
                         val isPinned by viewModel.isPinned.collectAsState(false)
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_unpin),
-                                icon = R.drawable.star_24px_filled,
+                                label = stringResource(I18nR.string.menu_favorites_unpin),
+                                icon = BaseR.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
                             )
                         } else {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_pin),
-                                icon = R.drawable.star_24px,
+                                label = stringResource(I18nR.string.menu_favorites_pin),
+                                icon = BaseR.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -562,8 +564,8 @@ fun LocationItem(
                     }
 
                     toolbarActions += DefaultToolbarAction(
-                        label = stringResource(id = R.string.menu_map),
-                        icon = R.drawable.open_in_new_24px,
+                        label = stringResource(id = I18nR.string.menu_map),
+                        icon = BaseR.drawable.open_in_new_24px,
                     ) {
                         viewModel.launch(context)
                     }
@@ -572,15 +574,15 @@ fun LocationItem(
 
                     toolbarActions.add(
                         DefaultToolbarAction(
-                            label = stringResource(R.string.menu_customize),
-                            icon = R.drawable.tune_24px,
+                            label = stringResource(I18nR.string.menu_customize),
+                            icon = BaseR.drawable.tune_24px,
                             action = { sheetManager.showCustomizeSearchableModal(location) }
                         ))
 
                     if (location.fixMeUrl != null) {
                         toolbarActions += DefaultToolbarAction(
-                            label = stringResource(id = R.string.menu_bugreport),
-                            icon = R.drawable.bug_report_24px,
+                            label = stringResource(id = I18nR.string.menu_bugreport),
+                            icon = BaseR.drawable.bug_report_24px,
                         ) {
                             context.tryStartActivity(
                                 Intent(
@@ -594,8 +596,8 @@ fun LocationItem(
                         modifier = Modifier.fillMaxWidth(),
                         leftActions = listOf(
                             DefaultToolbarAction(
-                                label = stringResource(id = R.string.menu_back),
-                                icon = R.drawable.arrow_back_24px,
+                                label = stringResource(id = I18nR.string.menu_back),
+                                icon = BaseR.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }),
@@ -663,7 +665,7 @@ private fun Departures(
                             style = MaterialTheme.typography.labelSmall,
                             modifier = Modifier.padding(end = 12.dp)
                         )
-                        Icon(painterResource(R.drawable.chevron_forward_24px), null)
+                        Icon(painterResource(BaseR.drawable.chevron_forward_24px), null)
                     }
                 } else {
                     val (lines, groupedDepartures) = remember(departures) {
@@ -820,7 +822,7 @@ private fun OpeningSchedule(
                     when (openingSchedule) {
                         is OpeningSchedule.TwentyFourSeven -> {
                             Text(
-                                text = stringResource(R.string.location_open_24_7),
+                                text = stringResource(I18nR.string.location_open_24_7),
                                 style = MaterialTheme.typography.labelMedium,
                             )
                         }
@@ -840,7 +842,7 @@ private fun OpeningSchedule(
                                         timeFormat.format(currentOpeningTime.startTime + currentOpeningTime.duration)
                                     val closingTime = if (isSameDay) {
                                         context.getString(
-                                            R.string.location_closes,
+                                            I18nR.string.location_closes,
                                             formattedTime
                                         )
                                     } else {
@@ -850,14 +852,14 @@ private fun OpeningSchedule(
                                                 Locale.getDefault()
                                             )
                                         context.getString(
-                                            R.string.location_closes_other_day,
+                                            I18nR.string.location_closes_other_day,
                                             dow,
                                             formattedTime
                                         )
                                     }
-                                    "${context.getString(R.string.location_open)} • $closingTime"
+                                    "${context.getString(I18nR.string.location_open)} • $closingTime"
                                 } else if (openingSchedule.openingHours.isEmpty()) {
-                                    context.getString(R.string.location_closed)
+                                    context.getString(I18nR.string.location_closed)
                                 } else {
                                     val nextOpeningTime =
                                         openingSchedule.getNextOpeningHours()
@@ -867,7 +869,7 @@ private fun OpeningSchedule(
                                         timeFormat.format(nextOpeningTime.startTime)
                                     val openingTime = if (isSameDay) {
                                         context.getString(
-                                            R.string.location_opens,
+                                            I18nR.string.location_opens,
                                             formattedTime
                                         )
                                     } else {
@@ -877,12 +879,12 @@ private fun OpeningSchedule(
                                                 Locale.getDefault()
                                             )
                                         context.getString(
-                                            R.string.location_opens_other_day,
+                                            I18nR.string.location_opens_other_day,
                                             dow,
                                             formattedTime
                                         )
                                     }
-                                    "${context.getString(R.string.location_closed)} • $openingTime"
+                                    "${context.getString(I18nR.string.location_closed)} • $openingTime"
                                 }
                             }
 
@@ -892,7 +894,7 @@ private fun OpeningSchedule(
                                 modifier = Modifier.weight(1f)
                             )
 
-                            Icon(painterResource(R.drawable.chevron_forward_24px), null)
+                            Icon(painterResource(BaseR.drawable.chevron_forward_24px), null)
                         }
                     }
                 }
@@ -965,7 +967,7 @@ private fun Compass(
     ) {
         if (targetHeading != null) {
             Icon(
-                painterResource(R.drawable.assistant_navigation_24px),
+                painterResource(BaseR.drawable.assistant_navigation_24px),
                 null,
                 modifier = Modifier
                     .size(20f / 48f * size)
@@ -1078,17 +1080,17 @@ fun LineTypeIcon(
 ) = Icon(
     painter = painterResource(
         when (lineType) {
-            LineType.Bus -> R.drawable.directions_bus_20px
-            LineType.Tram -> R.drawable.tram_20px
-            LineType.Subway -> R.drawable.subway_20px
-            LineType.Monorail -> R.drawable.monorail_20px
-            LineType.CommuterTrain -> R.drawable.directions_railway_20px
-            LineType.Train, LineType.RegionalTrain, LineType.HighSpeedTrain -> R.drawable.train_20px
-            LineType.Boat -> R.drawable.directions_boat_20px
-            LineType.CableCar -> R.drawable.cable_car_20px
-            LineType.AerialTramway -> R.drawable.gondola_lift_20px
-            LineType.Airplane -> R.drawable.flight_20px
-            null -> R.drawable.commute_20px
+            LineType.Bus -> BaseR.drawable.directions_bus_20px
+            LineType.Tram -> BaseR.drawable.tram_20px
+            LineType.Subway -> BaseR.drawable.subway_20px
+            LineType.Monorail -> BaseR.drawable.monorail_20px
+            LineType.CommuterTrain -> BaseR.drawable.directions_railway_20px
+            LineType.Train, LineType.RegionalTrain, LineType.HighSpeedTrain -> BaseR.drawable.train_20px
+            LineType.Boat -> BaseR.drawable.directions_boat_20px
+            LineType.CableCar -> BaseR.drawable.cable_car_20px
+            LineType.AerialTramway -> BaseR.drawable.gondola_lift_20px
+            LineType.Airplane -> BaseR.drawable.flight_20px
+            null -> BaseR.drawable.commute_20px
         }
     ),
     contentDescription = null, // decorative: the line name is always shown next to the icon
@@ -1321,16 +1323,16 @@ private fun departureInMinutes(context: Context, departure: Departure): String {
     val now = ZonedDateTime.now()
 
     if (delayedDepartureTime < now)
-        return context.getString(R.string.departure_time_departed)
+        return context.getString(I18nR.string.departure_time_departed)
 
     val timeLeft =
         Duration.between(now, delayedDepartureTime)
             .toMinutes().toInt()
     return if (timeLeft < 1) {
-        context.getString(R.string.departure_time_now)
+        context.getString(I18nR.string.departure_time_now)
     } else {
         context.resources.getQuantityString(
-            R.plurals.departure_time_in,
+            I18nR.plurals.departure_time_in,
             timeLeft,
             timeLeft
         )

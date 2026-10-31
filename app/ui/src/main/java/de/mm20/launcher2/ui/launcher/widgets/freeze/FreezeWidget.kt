@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.freeze
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -49,20 +51,20 @@ fun FreezeWidget(widget: de.mm20.launcher2.widgets.FreezeWidget) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                painter = painterResource(R.drawable.ac_unit_24px),
+                painter = painterResource(BaseR.drawable.ac_unit_24px),
                 contentDescription = null,
                 modifier = Modifier.size(40.dp),
             )
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(
-                    text = stringResource(R.string.widget_name_freeze),
+                    text = stringResource(I18nR.string.widget_name_freeze),
                     style = MaterialTheme.typography.titleLarge,
                 )
                 Text(
                     text = if (candidates.isEmpty()) {
-                        stringResource(R.string.freeze_widget_no_candidates)
+                        stringResource(I18nR.string.freeze_widget_no_candidates)
                     } else {
-                        stringResource(R.string.freeze_widget_frozen_now, frozenCount, candidates.size)
+                        stringResource(I18nR.string.freeze_widget_frozen_now, frozenCount, candidates.size)
                     },
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -75,7 +77,7 @@ fun FreezeWidget(widget: de.mm20.launcher2.widgets.FreezeWidget) {
             enabled = candidates.isNotEmpty(),
             onClick = { viewModel.freezeAllNow() },
         ) {
-            Text(stringResource(R.string.freeze_widget_freeze_now))
+            Text(stringResource(I18nR.string.freeze_widget_freeze_now))
         }
     }
 }

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.typography
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -60,7 +62,7 @@ fun TypographiesSettingsScreen() {
 
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_typography),
+        title = stringResource(I18nR.string.preference_screen_typography),
     ) {
         item {
             PreferenceCategory {
@@ -71,7 +73,7 @@ fun TypographiesSettingsScreen() {
                         icon = {
                             Icon(
                                 painterResource(
-                                    if (theme.id == selectedTheme) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px
+                                    if (theme.id == selectedTheme) BaseR.drawable.radio_button_checked_24px else BaseR.drawable.radio_button_unchecked_24px
                                 ),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary
@@ -92,7 +94,7 @@ fun TypographiesSettingsScreen() {
                                 IconButton(
                                     modifier = Modifier.padding(start = 12.dp),
                                     onClick = { showMenu = true }) {
-                                    Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
+                                    Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.action_more_actions))
                                 }
                                 DropdownMenuPopup(
                                     expanded = showMenu,
@@ -105,11 +107,11 @@ fun TypographiesSettingsScreen() {
                                             shape = MenuDefaults.standaloneItemShape,
                                             leadingIcon = {
                                                 Icon(
-                                                    painterResource(R.drawable.content_copy_24px),
+                                                    painterResource(BaseR.drawable.content_copy_24px),
                                                     null
                                                 )
                                             },
-                                            text = { Text(stringResource(R.string.duplicate)) },
+                                            text = { Text(stringResource(I18nR.string.duplicate)) },
                                             onClick = {
                                                 viewModel.duplicate(theme)
                                                 showMenu = false
@@ -136,7 +138,7 @@ fun TypographiesSettingsScreen() {
                             icon = {
                                 Icon(
                                     painterResource(
-                                        if (theme.id == selectedTheme) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px
+                                        if (theme.id == selectedTheme) BaseR.drawable.radio_button_checked_24px else BaseR.drawable.radio_button_unchecked_24px
                                     ),
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.primary
@@ -157,7 +159,7 @@ fun TypographiesSettingsScreen() {
                                     IconButton(
                                         modifier = Modifier.padding(start = 12.dp),
                                         onClick = { showMenu = true }) {
-                                        Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
+                                        Icon(painterResource(BaseR.drawable.more_vert_24px), stringResource(I18nR.string.action_more_actions))
                                     }
                                     DropdownMenuPopup(
                                         expanded = showMenu,
@@ -170,11 +172,11 @@ fun TypographiesSettingsScreen() {
                                                 shape = MenuDefaults.leadingItemShape,
                                                 leadingIcon = {
                                                     Icon(
-                                                        painterResource(R.drawable.edit_24px),
+                                                        painterResource(BaseR.drawable.edit_24px),
                                                         null
                                                     )
                                                 },
-                                                text = { Text(stringResource(R.string.edit)) },
+                                                text = { Text(stringResource(I18nR.string.edit)) },
                                                 onClick = {
                                                     backStack.add(TypographySettingsRoute(theme.id))
                                                     showMenu = false
@@ -184,11 +186,11 @@ fun TypographiesSettingsScreen() {
                                                 shape = MenuDefaults.middleItemShape,
                                                 leadingIcon = {
                                                     Icon(
-                                                        painterResource(R.drawable.content_copy_24px),
+                                                        painterResource(BaseR.drawable.content_copy_24px),
                                                         null
                                                     )
                                                 },
-                                                text = { Text(stringResource(R.string.duplicate)) },
+                                                text = { Text(stringResource(I18nR.string.duplicate)) },
                                                 onClick = {
                                                     viewModel.duplicate(theme)
                                                     showMenu = false
@@ -198,11 +200,11 @@ fun TypographiesSettingsScreen() {
                                                 shape = MenuDefaults.trailingItemShape,
                                                 leadingIcon = {
                                                     Icon(
-                                                        painterResource(R.drawable.delete_24px),
+                                                        painterResource(BaseR.drawable.delete_24px),
                                                         null
                                                     )
                                                 },
-                                                text = { Text(stringResource(R.string.menu_delete)) },
+                                                text = { Text(stringResource(I18nR.string.menu_delete)) },
                                                 onClick = {
                                                     deleteTypography = theme
                                                     showMenu = false
@@ -229,11 +231,11 @@ fun TypographiesSettingsScreen() {
                         backStack.add(TypographySettingsRoute(uuid))
                     }) {
                     Icon(
-                        painterResource(R.drawable.add_20px),
+                        painterResource(BaseR.drawable.add_20px),
                         null,
                         modifier = Modifier.padding(end = ButtonDefaults.IconSpacing).size(ButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.preference_create_typography))
+                    Text(stringResource(I18nR.string.preference_create_typography))
                 }
             }
         }
@@ -244,7 +246,7 @@ fun TypographiesSettingsScreen() {
             text = {
                 Text(
                     stringResource(
-                        R.string.confirmation_delete_typography_scheme,
+                        I18nR.string.confirmation_delete_typography_scheme,
                         deleteTypography!!.name
                     )
                 )
@@ -278,11 +280,11 @@ private fun TypographyPreview(typography: androidx.compose.material3.Typography)
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = stringResource(R.string.typo_preview_short1),
+            text = stringResource(I18nR.string.typo_preview_short1),
             style = typography.titleSmall,
         )
         Text(
-            text = stringResource(R.string.typo_preview_short2),
+            text = stringResource(I18nR.string.typo_preview_short2),
             style = typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
         )

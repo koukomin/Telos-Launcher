@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.searchactions
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.net.Uri
 import androidx.activity.compose.LocalActivity
@@ -99,7 +101,7 @@ fun SearchActionsSettingsScreen() {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        stringResource(id = R.string.preference_screen_search_actions),
+                        stringResource(id = I18nR.string.preference_screen_search_actions),
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(horizontal = 16.dp),
                         maxLines = 1
@@ -118,8 +120,8 @@ fun SearchActionsSettingsScreen() {
                         }
                     }) {
                         Icon(
-                            painterResource(R.drawable.arrow_back_24px),
-                            contentDescription = stringResource(R.string.menu_back)
+                            painterResource(BaseR.drawable.arrow_back_24px),
+                            contentDescription = stringResource(I18nR.string.menu_back)
                         )
                     }
                 },
@@ -138,8 +140,8 @@ fun SearchActionsSettingsScreen() {
                             )
                     }) {
                         Icon(
-                            painterResource(R.drawable.help_24px),
-                            contentDescription = stringResource(R.string.help)
+                            painterResource(BaseR.drawable.help_24px),
+                            contentDescription = stringResource(I18nR.string.help)
                         )
                     }
                 },
@@ -169,7 +171,7 @@ fun SearchActionsSettingsScreen() {
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Icon(
-                        painterResource(R.drawable.info_20px), null,
+                        painterResource(BaseR.drawable.info_20px), null,
                         modifier = Modifier
                             .padding(end = 12.dp)
                             .size(16.dp),
@@ -177,7 +179,7 @@ fun SearchActionsSettingsScreen() {
                     )
                     Text(
                         modifier = Modifier,
-                        text = stringResource(R.string.hint_drag_and_drop_reorder),
+                        text = stringResource(I18nR.string.hint_drag_and_drop_reorder),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.secondary
                     )
@@ -223,8 +225,8 @@ fun SearchActionsSettingsScreen() {
                                         }
                                     ) {
                                         Icon(
-                                            painterResource(R.drawable.more_vert_24px),
-                                            stringResource(R.string.edit)
+                                            painterResource(BaseR.drawable.more_vert_24px),
+                                            stringResource(I18nR.string.edit)
                                         )
                                         DropdownMenuPopup(
                                             expanded = showDropdown,
@@ -237,12 +239,12 @@ fun SearchActionsSettingsScreen() {
                                                     shape = MenuDefaults.leadingItemShape,
                                                     leadingIcon = {
                                                         Icon(
-                                                            painterResource(R.drawable.edit_24px),
+                                                            painterResource(BaseR.drawable.edit_24px),
                                                             contentDescription = null
                                                         )
                                                     },
                                                     text = {
-                                                        Text(stringResource(R.string.edit))
+                                                        Text(stringResource(I18nR.string.edit))
                                                     },
                                                     onClick = {
                                                         viewModel.editAction(item)
@@ -253,12 +255,12 @@ fun SearchActionsSettingsScreen() {
                                                     shape = MenuDefaults.trailingItemShape,
                                                     leadingIcon = {
                                                         Icon(
-                                                            painterResource(R.drawable.delete_24px),
+                                                            painterResource(BaseR.drawable.delete_24px),
                                                             contentDescription = null
                                                         )
                                                     },
                                                     text = {
-                                                        Text(stringResource(R.string.menu_delete))
+                                                        Text(stringResource(I18nR.string.menu_delete))
                                                     },
                                                     onClick = {
                                                         viewModel.removeAction(item)
@@ -321,13 +323,13 @@ fun SearchActionsSettingsScreen() {
                         viewModel.createAction()
                     }) {
                     Icon(
-                        painterResource(R.drawable.add_20px),
+                        painterResource(BaseR.drawable.add_20px),
                         null,
                         modifier = Modifier
                             .padding(end = ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.create_search_action_title))
+                    Text(stringResource(I18nR.string.create_search_action_title))
                 }
             }
         }

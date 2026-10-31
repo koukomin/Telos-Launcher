@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.pm.PackageManager
 import android.provider.DocumentsContract
@@ -69,7 +70,7 @@ fun FilesAppManagerDialog(onDismiss: () -> Unit) {
                     require(initial.lastUpdateTime == after.lastUpdateTime && paths == listOf(current.sourceDir) + current.splitSourceDirs.orEmpty().sorted())
                     complete = true
                 }
-                Toast.makeText(context, context.getString(R.string.hc_backup_saved), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getString(I18nR.string.hc_backup_saved), Toast.LENGTH_LONG).show()
             } catch (cancelled: CancellationException) { throw cancelled }
             catch (_: Exception) { failed = true }
             finally {
@@ -81,13 +82,13 @@ fun FilesAppManagerDialog(onDismiss: () -> Unit) {
         }
     }
     val shown = remember(apps, query) { apps.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.label, it.packageName) } }
-    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(R.string.hc_apps)) }, text = {
+    AlertDialog(onDismissRequest = onDismiss, title = { Text(stringResource(I18nR.string.hc_apps)) }, text = {
         LazyColumn(Modifier.fillMaxWidth().heightIn(max = 500.dp)) {
             item {
-                Text(stringResource(R.string.nf_apk_export_scope))
-                OutlinedTextField(query, { query = it }, label = { Text(stringResource(R.string.hc_search)) }, singleLine = true)
+                Text(stringResource(I18nR.string.nf_apk_export_scope))
+                OutlinedTextField(query, { query = it }, label = { Text(stringResource(I18nR.string.hc_search)) }, singleLine = true)
                 if (loading || busy) LinearProgressIndicator(Modifier.fillMaxWidth())
-                if (failed) Text(stringResource(R.string.hc_export_failed), color = MaterialTheme.colorScheme.error)
+                if (failed) Text(stringResource(I18nR.string.hc_export_failed), color = MaterialTheme.colorScheme.error)
             }
             items(shown, key = { it.packageName }) { app ->
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -105,9 +106,9 @@ fun FilesAppManagerDialog(onDismiss: () -> Unit) {
                             else try { pendingBundle = split; picker.launch(app.packageName + if (split) ".zip" else ".apk") }
                             catch (_: Exception) { pending = null; failed = true }
                         }
-                    }) { Text(stringResource(R.string.hc_export)) }
+                    }) { Text(stringResource(I18nR.string.hc_export)) }
                 }
             }
         }
-    }, confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } })
+    }, confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_close)) } })
 }

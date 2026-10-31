@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.system
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.ActivityManager
 import android.content.Context
@@ -188,23 +190,23 @@ fun SystemDashboardScreen() {
         Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Vertical))) {
             Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { backStack.removeLastOrNull() }) {
-                    Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
+                    Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
                 }
-                Text(stringResource(R.string.telos_system_label), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                Text(stringResource(I18nR.string.telos_system_label), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
                 IconButton(onClick = { showFontDialog = true }) {
-                    Icon(painterResource(R.drawable.settings_24px), contentDescription = "Font Settings")
+                    Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
                 }
             }
             androidx.compose.material3.TabRow(selectedTabIndex = currentTab, containerColor = Color.Transparent) {
                 androidx.compose.material3.Tab(
                     selected = currentTab == 0,
                     onClick = { currentTab = 0 },
-                    text = { Text(stringResource(R.string.telos_system_label)) }
+                    text = { Text(stringResource(I18nR.string.telos_system_label)) }
                 )
                 androidx.compose.material3.Tab(
                     selected = currentTab == 1,
                     onClick = { currentTab = 1 },
-                    text = { Text(stringResource(R.string.hc_apps)) }
+                    text = { Text(stringResource(I18nR.string.hc_apps)) }
                 )
                 androidx.compose.material3.Tab(
                     selected = currentTab == 2,
@@ -228,21 +230,21 @@ fun SystemDashboardScreen() {
                     GlassCard {
                         Text("${Build.MANUFACTURER} ${Build.MODEL}", style = MaterialTheme.typography.titleMedium)
                         Text("Android ${Build.VERSION.RELEASE} · API ${Build.VERSION.SDK_INT} · ${Build.HARDWARE} · ${Build.SUPPORTED_ABIS.firstOrNull().orEmpty()}")
-                        Text(stringResource(R.string.telos_system_uptime, formatUptime(SystemClock.elapsedRealtime())))
+                        Text(stringResource(I18nR.string.telos_system_uptime, formatUptime(SystemClock.elapsedRealtime())))
                     }
                 }
                 item {
                     GlassCard {
-                        Text(stringResource(R.string.hc_graphics_api), style = MaterialTheme.typography.titleMedium)
+                        Text(stringResource(I18nR.string.hc_graphics_api), style = MaterialTheme.typography.titleMedium)
                         Text(
-                            stringResource(R.string.hc_graphics_current) + ": " + when (liveRenderer) {
-                                HwuiRenderer.MODE_VULKAN -> stringResource(R.string.hc_graphics_vulkan)
-                                HwuiRenderer.MODE_OPENGL -> stringResource(R.string.hc_graphics_opengl)
-                                else -> stringResource(R.string.hc_graphics_default)
+                            stringResource(I18nR.string.hc_graphics_current) + ": " + when (liveRenderer) {
+                                HwuiRenderer.MODE_VULKAN -> stringResource(I18nR.string.hc_graphics_vulkan)
+                                HwuiRenderer.MODE_OPENGL -> stringResource(I18nR.string.hc_graphics_opengl)
+                                else -> stringResource(I18nR.string.hc_graphics_default)
                             },
                             color = if (liveRenderer == HwuiRenderer.MODE_VULKAN) scheme.primary else scheme.primary,
                         )
-                        Text(stringResource(R.string.hc_graphics_api_about_summary), style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.hc_graphics_api_about_summary), style = MaterialTheme.typography.bodySmall)
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             FilterChip(
                                 selected = liveRenderer == HwuiRenderer.MODE_VULKAN,
@@ -253,7 +255,7 @@ fun SystemDashboardScreen() {
                                         liveRenderer = HwuiRenderer.current()
                                     }
                                 },
-                                label = { Text(stringResource(R.string.hc_graphics_vulkan)) },
+                                label = { Text(stringResource(I18nR.string.hc_graphics_vulkan)) },
                             )
                             FilterChip(
                                 selected = liveRenderer == HwuiRenderer.MODE_OPENGL,
@@ -264,7 +266,7 @@ fun SystemDashboardScreen() {
                                         liveRenderer = HwuiRenderer.current()
                                     }
                                 },
-                                label = { Text(stringResource(R.string.hc_graphics_opengl)) },
+                                label = { Text(stringResource(I18nR.string.hc_graphics_opengl)) },
                             )
                         }
                         Row(
@@ -272,20 +274,20 @@ fun SystemDashboardScreen() {
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Text(stringResource(R.string.hc_system_widget_enable), modifier = Modifier.weight(1f))
+                            Text(stringResource(I18nR.string.hc_system_widget_enable), modifier = Modifier.weight(1f))
                             Switch(checked = systemWidgetOn, onCheckedChange = { uiSettings.setSystemWidgetEnabled(it) })
                         }
-                        Text(stringResource(R.string.hc_system_widget_enable_summary), style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.hc_system_widget_enable_summary), style = MaterialTheme.typography.bodySmall)
                     }
                 }
                 item {
                     GlassCard {
-                        Text(stringResource(R.string.telos_system_cpu), style = MaterialTheme.typography.labelLarge)
+                        Text(stringResource(I18nR.string.telos_system_cpu), style = MaterialTheme.typography.labelLarge)
                         cpu?.let { usage ->
                             LinearProgressIndicator(progress = { usage }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)))
                             Text("${(usage * 100).toInt()}%")
-                        } ?: Text(stringResource(R.string.virtual_telemetry_unavailable))
-                        Text(stringResource(R.string.telos_system_ram), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
+                        } ?: Text(stringResource(I18nR.string.virtual_telemetry_unavailable))
+                        Text(stringResource(I18nR.string.telos_system_ram), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
                         val ramF = if (ramTotal == 0L) 0f else ramUsed.toFloat() / ramTotal
                         LinearProgressIndicator(progress = { ramF }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)))
                         Text("${Formatter.formatFileSize(context, ramUsed)} / ${Formatter.formatFileSize(context, ramTotal)}")
@@ -293,16 +295,16 @@ fun SystemDashboardScreen() {
                 }
                 item {
                     GlassCard {
-                        Text(stringResource(R.string.telos_system_network), style = MaterialTheme.typography.titleMedium)
+                        Text(stringResource(I18nR.string.telos_system_network), style = MaterialTheme.typography.titleMedium)
                         val vpnOn = netState is NetState.On
                         Text(
-                            stringResource(R.string.net_hub_title) + " · " + stringResource(
-                                if (vpnOn) R.string.net_hub_state_on else R.string.net_hub_state_off,
+                            stringResource(I18nR.string.net_hub_title) + " · " + stringResource(
+                                if (vpnOn) I18nR.string.net_hub_state_on else I18nR.string.net_hub_state_off,
                             ),
                             color = if (vpnOn) scheme.primary else scheme.onSurfaceVariant,
                         )
-                        Text("${stringResource(R.string.net_hub_stat_dns)} ${dnsServer.name}")
-                        Text("${stringResource(R.string.net_hub_stat_blocked_dns)} ${netStats.dnsBlocked}  ·  ${stringResource(R.string.net_hub_stat_blocked_conn)} ${netStats.connectionsBlocked}")
+                        Text("${stringResource(I18nR.string.net_hub_stat_dns)} ${dnsServer.name}")
+                        Text("${stringResource(I18nR.string.net_hub_stat_blocked_dns)} ${netStats.dnsBlocked}  ·  ${stringResource(I18nR.string.net_hub_stat_blocked_conn)} ${netStats.connectionsBlocked}")
                         Text("SSID: ${wifiSsid ?: "—"}")
                         ips.forEach { Text(it) }
                         if (showPsk && wifiPsk != null) {
@@ -314,24 +316,24 @@ fun SystemDashboardScreen() {
                             wifiReadJob?.cancel()
                             wifiReadJob = scope.launch {
                                 val act = activity ?: return@launch
-                                val ok = AuthManager().authenticateNative(act, context.getString(R.string.telos_system_unlock_wifi))
+                                val ok = AuthManager().authenticateNative(act, context.getString(I18nR.string.telos_system_unlock_wifi))
                                 if (!ok) return@launch
-                                status = context.getString(R.string.telos_system_reading_wifi)
+                                status = context.getString(I18nR.string.telos_system_reading_wifi)
                                 val list = try { withContext(Dispatchers.IO) { readWifiStore(context) } }
                                 catch (e: kotlinx.coroutines.CancellationException) { throw e }
-                                catch (_: Exception) { status = context.getString(R.string.virtual_telemetry_unavailable); return@launch }
+                                catch (_: Exception) { status = context.getString(I18nR.string.virtual_telemetry_unavailable); return@launch }
                                 networks = list
                                 wifiPsk = list.firstOrNull { it.ssid == wifiSsid }?.psk
                                 showPsk = true
-                                status = if (list.isEmpty()) context.getString(R.string.telos_system_wifi_need_root) else null
+                                status = if (list.isEmpty()) context.getString(I18nR.string.telos_system_wifi_need_root) else null
                             }
-                        }) { Text(stringResource(R.string.telos_system_reveal_wifi)) }
+                        }) { Text(stringResource(I18nR.string.telos_system_reveal_wifi)) }
                         status?.let { Text(it, color = scheme.error) }
                     }
                 }
                 item { SavedWifiPasswordsPreference() }
                 if (networks.isNotEmpty()) {
-                    item { Text(stringResource(R.string.telos_system_saved_wifi), style = MaterialTheme.typography.titleMedium) }
+                    item { Text(stringResource(I18nR.string.telos_system_saved_wifi), style = MaterialTheme.typography.titleMedium) }
                     items(networks, key = { it.ssid }) { n ->
                         GlassCard {
                             Text(n.ssid, style = MaterialTheme.typography.titleSmall)
@@ -339,7 +341,7 @@ fun SystemDashboardScreen() {
                         }
                     }
                 }
-                item { Text(stringResource(R.string.telos_system_processes), style = MaterialTheme.typography.titleMedium) }
+                item { Text(stringResource(I18nR.string.telos_system_processes), style = MaterialTheme.typography.titleMedium) }
                 items(processes.take(40), key = { it.pid }) { p ->
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                         Text("${p.pid}  ${p.name}", modifier = Modifier.weight(1f), maxLines = 1)

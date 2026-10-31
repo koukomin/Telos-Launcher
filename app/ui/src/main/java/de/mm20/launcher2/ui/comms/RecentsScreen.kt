@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.search.GreekFold
 import androidx.appcompat.app.AppCompatActivity
@@ -92,8 +94,8 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
     if (!hasCallLogPermission) {
         Box(Modifier.fillMaxSize()) {
             EmptyCommsTab(
-                title = stringResource(R.string.permission_call_log_req),
-                message = stringResource(R.string.permission_call_log_msg),
+                title = stringResource(I18nR.string.permission_call_log_req),
+                message = stringResource(I18nR.string.permission_call_log_msg),
             )
             Button(
                 onClick = {
@@ -103,7 +105,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                     .align(Alignment.BottomCenter)
                     .padding(32.dp),
             ) {
-                Text(stringResource(R.string.permission_grant))
+                Text(stringResource(I18nR.string.permission_grant))
             }
         }
         return
@@ -144,7 +146,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
             horizontalArrangement = Arrangement.End,
         ) {
             IconButton(onClick = { viewModel.export(context, filtered) }) {
-                Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.hc_export))
+                Icon(painterResource(BaseR.drawable.share_24px), contentDescription = stringResource(I18nR.string.hc_export))
             }
         }
         if (showFilters || filter != RecentsFilter.All) LazyRow(
@@ -155,42 +157,42 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                 FilterChip(
                     selected = filter == RecentsFilter.All,
                     onClick = { filter = RecentsFilter.All },
-                    label = { Text(stringResource(R.string.filter_all)) },
+                    label = { Text(stringResource(I18nR.string.filter_all)) },
                 )
             }
             item {
                 FilterChip(
                     selected = filter == RecentsFilter.Today,
                     onClick = { filter = RecentsFilter.Today },
-                    label = { Text(stringResource(R.string.hc_today)) },
+                    label = { Text(stringResource(I18nR.string.hc_today)) },
                 )
             }
             item {
                 FilterChip(
                     selected = filter == RecentsFilter.Missed,
                     onClick = { filter = RecentsFilter.Missed },
-                    label = { Text(stringResource(R.string.filter_missed)) },
+                    label = { Text(stringResource(I18nR.string.filter_missed)) },
                 )
             }
             item {
                 FilterChip(
                     selected = filter == RecentsFilter.Incoming,
                     onClick = { filter = RecentsFilter.Incoming },
-                    label = { Text(stringResource(R.string.filter_incoming)) },
+                    label = { Text(stringResource(I18nR.string.filter_incoming)) },
                 )
             }
             item {
                 FilterChip(
                     selected = filter == RecentsFilter.Outgoing,
                     onClick = { filter = RecentsFilter.Outgoing },
-                    label = { Text(stringResource(R.string.filter_outgoing)) },
+                    label = { Text(stringResource(I18nR.string.filter_outgoing)) },
                 )
             }
             item {
                 FilterChip(
                     selected = filter == RecentsFilter.Rejected,
                     onClick = { filter = RecentsFilter.Rejected },
-                    label = { Text(stringResource(R.string.filter_rejected)) },
+                    label = { Text(stringResource(I18nR.string.filter_rejected)) },
                 )
             }
             item {
@@ -198,7 +200,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                 FilterChip(
                     selected = filter == RecentsFilter.TalkTime,
                     onClick = { filter = RecentsFilter.TalkTime },
-                    label = { Text(stringResource(R.string.hc_talk_duration, formatCallDuration(talk))) },
+                    label = { Text(stringResource(I18nR.string.hc_talk_duration, formatCallDuration(talk))) },
                 )
             }
         }
@@ -212,17 +214,17 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                 tm?.defaultDialerPackage == pkg
             }
             EmptyCommsTab(
-                title = stringResource(R.string.recents_empty_title),
+                title = stringResource(I18nR.string.recents_empty_title),
                 message = if (isDefaultDialer) {
-                    stringResource(R.string.recents_empty_msg)
+                    stringResource(I18nR.string.recents_empty_msg)
                 } else {
-                    stringResource(R.string.au_phonea_history_empty_hint)
+                    stringResource(I18nR.string.au_phonea_history_empty_hint)
                 },
             )
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 if (searchQuery.isNotBlank() && collapsed.isNotEmpty()) item(key = "recents-heading") {
-                    Text(stringResource(R.string.au_phonea_recents), Modifier.padding(16.dp),
+                    Text(stringResource(I18nR.string.au_phonea_recents), Modifier.padding(16.dp),
                         style = MaterialTheme.typography.titleSmall)
                 }
                 items(collapsed, key = { it.call.id }) { group ->
@@ -254,7 +256,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                     )
                 }
                 if (matchingContacts.isNotEmpty()) item(key = "contacts-heading") {
-                    Text(stringResource(R.string.preference_search_contacts), Modifier.padding(16.dp),
+                    Text(stringResource(I18nR.string.preference_search_contacts), Modifier.padding(16.dp),
                         style = MaterialTheme.typography.titleSmall)
                 }
                 items(matchingContacts, key = { "contact-${it.id}" }) { contact ->
@@ -276,13 +278,13 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
         pendingCall?.let { number ->
             AlertDialog(
                 onDismissRequest = { pendingCall = null },
-                title = { Text(stringResource(R.string.hc_place_call)) },
+                title = { Text(stringResource(I18nR.string.hc_place_call)) },
                 text = { Text(number) },
                 confirmButton = {
                     TextButton(onClick = {
                         viewModel.dial(context, number)
                         pendingCall = null
-                    }) { Text(stringResource(R.string.search_action_call)) }
+                    }) { Text(stringResource(I18nR.string.search_action_call)) }
                 },
                 dismissButton = {
                     TextButton(onClick = { pendingCall = null }) { Text(stringResource(android.R.string.cancel)) }
@@ -294,16 +296,16 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
             CommsCabSheet(
                 title = selected.displayName?.ifBlank { null } ?: selected.phoneNumber,
                 actions = listOf(
-                    CommsCabAction(R.drawable.rd_ic_phone_green_vector, stringResource(R.string.search_action_call)) {
+                    CommsCabAction(BaseR.drawable.rd_ic_phone_green_vector, stringResource(I18nR.string.search_action_call)) {
                         viewModel.dial(context, selected.phoneNumber)
                     },
-                    CommsCabAction(R.drawable.rd_ic_messages, stringResource(R.string.search_action_message)) {
+                    CommsCabAction(BaseR.drawable.rd_ic_messages, stringResource(I18nR.string.search_action_message)) {
                         context.tryStartActivity(MessengerIntentUtils.sms(selected.phoneNumber))
                     },
-                    CommsCabAction(R.drawable.info_24px, stringResource(R.string.contact_details_title)) {
+                    CommsCabAction(BaseR.drawable.info_24px, stringResource(I18nR.string.contact_details_title)) {
                         backStack.add(ContactDetailsRoute(phoneNumber = selected.phoneNumber))
                     },
-                    CommsCabAction(R.drawable.share_24px, stringResource(R.string.search_action_share)) {
+                    CommsCabAction(BaseR.drawable.share_24px, stringResource(I18nR.string.search_action_share)) {
                         de.mm20.launcher2.ui.common.share.ShareActions.shareContactVcard(
                             context,
                             selected.displayName?.ifBlank { null } ?: selected.phoneNumber,
@@ -311,7 +313,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                             emptyList(),
                         )
                     },
-                    CommsCabAction(R.drawable.delete_24px, stringResource(R.string.comms_clear_history_confirm), destructive = true) {
+                    CommsCabAction(BaseR.drawable.delete_24px, stringResource(I18nR.string.comms_clear_history_confirm), destructive = true) {
                         selectedGroup.calls.forEach { viewModel.delete(it) }
                     },
                 ),
@@ -338,14 +340,29 @@ internal fun RecentCallRow(
     val missed = call.type == CallType.Missed || call.type == CallType.Rejected
     val nameColor = if (missed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
     val typeIcon = when (call.type) {
-        CallType.Outgoing -> R.drawable.rd_ic_call_made_vector
-        CallType.Missed, CallType.Rejected -> R.drawable.rd_ic_call_missed_vector
-        else -> R.drawable.rd_ic_call_received_vector
+        CallType.Outgoing -> BaseR.drawable.rd_ic_call_made_vector
+        CallType.Missed, CallType.Rejected -> BaseR.drawable.rd_ic_call_missed_vector
+        else -> BaseR.drawable.rd_ic_call_received_vector
     }
     
     val dismissState = // the row leaves the list when the call log changes; if deleting is not
         // allowed it springs back instead of staying dismissed
-        rememberSwipeToDismissBoxState(COMPILED_CODE, { it * 0.4f })
+        rememberSwipeToDismissBoxState(
+            confirmValueChange = { value ->
+                when (value) {
+                    SwipeToDismissBoxValue.EndToStart -> {
+                        onDelete()
+                        true
+                    }
+                    SwipeToDismissBoxValue.StartToEnd -> {
+                        onSms()
+                        false
+                    }
+                    else -> false
+                }
+            },
+            positionalThreshold = { it * 0.4f },
+        )
 
     SwipeToDismissBox(
         state = dismissState,
@@ -364,8 +381,8 @@ internal fun RecentCallRow(
                 else -> Alignment.Center
             }
             val icon = when (dismissState.dismissDirection) {
-                SwipeToDismissBoxValue.StartToEnd -> R.drawable.rd_ic_messages
-                else -> R.drawable.delete_24px
+                SwipeToDismissBoxValue.StartToEnd -> BaseR.drawable.rd_ic_messages
+                else -> BaseR.drawable.delete_24px
             }
             Box(
                 Modifier
@@ -401,7 +418,7 @@ internal fun RecentCallRow(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
                 ) {
                     val callerLabel = if (call.callerNameSuggested && !call.displayName.isNullOrBlank())
-                        stringResource(R.string.caller_suggested_name, call.displayName!!) else call.displayName?.ifBlank { null } ?: call.phoneNumber
+                        stringResource(I18nR.string.caller_suggested_name, call.displayName!!) else call.displayName?.ifBlank { null } ?: call.phoneNumber
                     Text(
                         text = buildString {
                             append(callerLabel)
@@ -460,8 +477,8 @@ internal fun RecentCallRow(
             )
             IconButton(onClick = onDetails, modifier = Modifier.padding(end = 4.dp)) {
                 Icon(
-                    painterResource(R.drawable.info_24px),
-                    contentDescription = stringResource(R.string.contact_details_title),
+                    painterResource(BaseR.drawable.info_24px),
+                    contentDescription = stringResource(I18nR.string.contact_details_title),
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
@@ -499,8 +516,8 @@ private fun formatDayHeader(day: Long): String {
     val today = dayKey(System.currentTimeMillis())
     val yesterday = today - 24L * 60 * 60 * 1000
     return when (day) {
-        today -> stringResource(R.string.comms_today)
-        yesterday -> stringResource(R.string.comms_yesterday)
+        today -> stringResource(I18nR.string.comms_today)
+        yesterday -> stringResource(I18nR.string.comms_yesterday)
         else -> SimpleDateFormat("d MMMM yyyy", Locale.getDefault()).format(Date(day))
     }
 }

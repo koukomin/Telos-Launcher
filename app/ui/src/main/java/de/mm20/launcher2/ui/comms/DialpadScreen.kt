@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.media.AudioManager
@@ -110,7 +112,7 @@ fun DialpadScreen(initialNumber: String = "") {
     val sipOffered = sipEnabled && sipMode != "off" &&
         sipRegistration == de.mm20.launcher2.comms.sip.SipRegistration.Registered
 
-    val vaultTitle = stringResource(R.string.hc_hidden_contacts)
+    val vaultTitle = stringResource(I18nR.string.hc_hidden_contacts)
     LaunchedEffect(vaultUnlocked) {
         if (vaultUnlocked) {
             // consume the event: coming back to this screen must not open the hidden contacts again
@@ -175,7 +177,7 @@ fun DialpadScreen(initialNumber: String = "") {
                 } else if (digit.first().isDigit()) {
                     val number = speedDials[digit.toInt()]
                     if (number != null) viewModel.dial(context, number)
-                    else Toast.makeText(context, context.getString(R.string.hc_speed_dial_not_assigned), Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(context, context.getString(I18nR.string.hc_speed_dial_not_assigned), Toast.LENGTH_SHORT).show()
                 }
             } else {
                 playTone(digit.first())
@@ -188,8 +190,8 @@ fun DialpadScreen(initialNumber: String = "") {
                 if (input.isBlank()) {
                     if (recents.isEmpty()) {
                         EmptyCommsTab(
-                            title = stringResource(R.string.recents_empty_title),
-                            message = stringResource(R.string.recents_empty_msg),
+                            title = stringResource(I18nR.string.recents_empty_title),
+                            message = stringResource(I18nR.string.recents_empty_msg),
                         )
                     } else {
                         LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -209,7 +211,7 @@ fun DialpadScreen(initialNumber: String = "") {
                 } else {
                     if (t9Results.isEmpty()) {
                         Text(
-                            text = stringResource(R.string.hc_no_contacts_found),
+                            text = stringResource(I18nR.string.hc_no_contacts_found),
                             style = MaterialTheme.typography.bodyLarge,
                             fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
@@ -300,8 +302,8 @@ fun DialpadScreen(initialNumber: String = "") {
                                 shape = CircleShape,
                             ) {
                                 Icon(
-                                    painterResource(R.drawable.rd_ic_phone_green_vector),
-                                    contentDescription = stringResource(R.string.search_action_call),
+                                    painterResource(BaseR.drawable.rd_ic_phone_green_vector),
+                                    contentDescription = stringResource(I18nR.string.search_action_call),
                                     modifier = Modifier.size(28.dp),
                                 )
                             }
@@ -346,8 +348,8 @@ fun DialpadScreen(initialNumber: String = "") {
                             contentAlignment = Alignment.Center,
                         ) {
                             Icon(
-                                painterResource(R.drawable.rd_ic_backspace),
-                                contentDescription = stringResource(R.string.au_phonea_backspace),
+                                painterResource(BaseR.drawable.rd_ic_backspace),
+                                contentDescription = stringResource(I18nR.string.au_phonea_backspace),
                                 tint = MaterialTheme.colorScheme.onSurface,
                             )
                         }
@@ -385,7 +387,7 @@ fun DialpadScreen(initialNumber: String = "") {
                 )
                 if (input.isNotBlank()) {
                     Text(
-                        text = stringResource(R.string.search_action_contact),
+                        text = stringResource(I18nR.string.search_action_contact),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
                         textAlign = TextAlign.Center,
@@ -513,8 +515,8 @@ private fun T9ContactRow(
         }
         IconButton(onClick = onCall) {
             Icon(
-                painterResource(R.drawable.rd_ic_phone_green_vector),
-                contentDescription = stringResource(R.string.search_action_call),
+                painterResource(BaseR.drawable.rd_ic_phone_green_vector),
+                contentDescription = stringResource(I18nR.string.search_action_call),
                 tint = RdGreenCall,
             )
         }

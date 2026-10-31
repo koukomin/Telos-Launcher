@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.docs.office
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -69,15 +70,15 @@ internal fun OfficeView(c: OfficeController, onConvert: () -> Unit, modifier: Mo
         val note = when {
             doc is LegacyDoc -> null
             c.editing -> null
-            doc.kind == OfficeKind.Slides -> stringResource(R.string.od_slides_note)
-            else -> stringResource(R.string.od_layout_note)
+            doc.kind == OfficeKind.Slides -> stringResource(I18nR.string.od_slides_note)
+            else -> stringResource(I18nR.string.od_layout_note)
         }
         if (doc is LegacyDoc) {
             Surface(Modifier.fillMaxWidth().padding(12.dp, 8.dp), color = MaterialTheme.colorScheme.tertiaryContainer, shape = MaterialTheme.shapes.large) {
                 Column(Modifier.padding(16.dp, 12.dp)) {
-                    Text(stringResource(R.string.od_legacy_readonly), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onTertiaryContainer)
-                    Text(stringResource(R.string.od_convert_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onTertiaryContainer, modifier = Modifier.padding(top = 4.dp))
-                    Button(onClick = onConvert, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.od_convert_action, doc.targetExt)) }
+                    Text(stringResource(I18nR.string.od_legacy_readonly), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onTertiaryContainer)
+                    Text(stringResource(I18nR.string.od_convert_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onTertiaryContainer, modifier = Modifier.padding(top = 4.dp))
+                    Button(onClick = onConvert, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(I18nR.string.od_convert_action, doc.targetExt)) }
                 }
             }
         } else if (note != null) {
@@ -91,7 +92,7 @@ internal fun OfficeView(c: OfficeController, onConvert: () -> Unit, modifier: Mo
             }
         }
         if (moreInFile) {
-            Text(stringResource(R.string.au_office_truncated), Modifier.fillMaxWidth().padding(16.dp, 4.dp), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.tertiary)
+            Text(stringResource(I18nR.string.au_office_truncated), Modifier.fillMaxWidth().padding(16.dp, 4.dp), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.tertiary)
         }
         Box(Modifier.weight(1f)) {
             when (doc.kind) {
@@ -121,7 +122,7 @@ private fun OfficeImage(doc: OfficeDoc, entry: String, modifier: Modifier = Modi
         value = withContext(Dispatchers.IO) { runCatching { decodeImage(doc.imageBytes(entry)) }.getOrNull() }
     }
     bmp?.let {
-        Image(it.asImageBitmap(), stringResource(R.string.od_image), modifier.fillMaxWidth().heightIn(max = 420.dp).padding(vertical = 4.dp), contentScale = ContentScale.Fit)
+        Image(it.asImageBitmap(), stringResource(I18nR.string.od_image), modifier.fillMaxWidth().heightIn(max = 420.dp).padding(vertical = 4.dp), contentScale = ContentScale.Fit)
     }
 }
 
@@ -203,7 +204,7 @@ private fun ParaView(doc: OfficeDoc, p: OfficeBlock.Para, style: androidx.compos
 @Composable
 private fun ParaEditor(c: OfficeController, p: OfficeBlock.Para) {
     var text by remember(c.version, p.id) { mutableStateOf(p.text) }
-    val tableLabel: (@Composable () -> Unit)? = if (p.inTable) { { Text(stringResource(R.string.od_table_cell)) } } else null
+    val tableLabel: (@Composable () -> Unit)? = if (p.inTable) { { Text(stringResource(I18nR.string.od_table_cell)) } } else null
     Surface(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surfaceContainerLow) {
         Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
         OutlinedTextField(
@@ -218,11 +219,11 @@ private fun ParaEditor(c: OfficeController, p: OfficeBlock.Para) {
         )
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
             if (c.doc.kind == OfficeKind.Text) {
-                FilterChip(selected = p.bold, onClick = { c.mutate { toggleBold(p.id) } }, label = { Text(stringResource(R.string.od_bold), fontWeight = FontWeight.Bold) })
-                FilterChip(selected = p.italic, onClick = { c.mutate { toggleItalic(p.id) } }, label = { Text(stringResource(R.string.od_italic), fontStyle = FontStyle.Italic) })
+                FilterChip(selected = p.bold, onClick = { c.mutate { toggleBold(p.id) } }, label = { Text(stringResource(I18nR.string.od_bold), fontWeight = FontWeight.Bold) })
+                FilterChip(selected = p.italic, onClick = { c.mutate { toggleItalic(p.id) } }, label = { Text(stringResource(I18nR.string.od_italic), fontStyle = FontStyle.Italic) })
             }
-            TextButton(onClick = { c.mutate { addParagraphAfter(p.id) } }) { Text(stringResource(R.string.od_add_paragraph)) }
-            TextButton(onClick = { c.mutate { deleteParagraph(p.id) } }) { Text(stringResource(R.string.od_delete_paragraph)) }
+            TextButton(onClick = { c.mutate { addParagraphAfter(p.id) } }) { Text(stringResource(I18nR.string.od_add_paragraph)) }
+            TextButton(onClick = { c.mutate { deleteParagraph(p.id) } }) { Text(stringResource(I18nR.string.od_delete_paragraph)) }
         }
         }
     }
@@ -237,7 +238,7 @@ private fun SheetView(c: OfficeController) {
     val shownRows = remember { mutableStateMapOf<Int, Int>() }
     var editCell by remember { mutableStateOf<Pair<Int, Int>?>(null) }
     if (sheets.isEmpty()) {
-        Text(stringResource(R.string.od_nothing_to_show), Modifier.padding(24.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(stringResource(I18nR.string.od_nothing_to_show), Modifier.padding(24.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
         return
     }
     val index = selected.coerceIn(0, sheets.lastIndex)
@@ -249,9 +250,9 @@ private fun SheetView(c: OfficeController) {
     Column(Modifier.fillMaxSize()) {
         Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
             sheets.forEachIndexed { i, s ->
-                FilterChip(selected = i == index, onClick = { selected = i }, label = { Text(s.name.ifEmpty { stringResource(R.string.od_sheet_n, i + 1) }, maxLines = 1) })
+                FilterChip(selected = i == index, onClick = { selected = i }, label = { Text(s.name.ifEmpty { stringResource(I18nR.string.od_sheet_n, i + 1) }, maxLines = 1) })
             }
-            if (c.editing) TextButton(onClick = { shownRows[index] = rows + 1 }) { Text(stringResource(R.string.od_add_row)) }
+            if (c.editing) TextButton(onClick = { shownRows[index] = rows + 1 }) { Text(stringResource(I18nR.string.od_add_row)) }
         }
         Box(Modifier.weight(1f).horizontalScroll(rememberScrollState())) {
             LazyColumn(Modifier.width(rw + cw * cols)) {
@@ -290,14 +291,14 @@ private fun SheetView(c: OfficeController) {
         var text by remember(r, col, index) { mutableStateOf(initial) }
         AlertDialog(
             onDismissRequest = { editCell = null },
-            title = { Text(stringResource(R.string.od_edit_cell, colName(col) + (r + 1))) },
+            title = { Text(stringResource(I18nR.string.od_edit_cell, colName(col) + (r + 1))) },
             text = {
                 Column {
-                    OutlinedTextField(text, { text = it }, label = { Text(stringResource(R.string.od_cell_value)) }, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(text, { text = it }, label = { Text(stringResource(I18nR.string.od_cell_value)) }, modifier = Modifier.fillMaxWidth())
                     if (formula != null && !sheet.formulaEditable) {
-                        Text(stringResource(R.string.od_formula_replaced, formula), Modifier.padding(top = 8.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(I18nR.string.od_formula_replaced, formula), Modifier.padding(top = 8.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     } else if (sheet.formulaEditable) {
-                        Text(stringResource(R.string.od_cell_hint), Modifier.padding(top = 8.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(I18nR.string.od_cell_hint), Modifier.padding(top = 8.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             },
@@ -305,9 +306,9 @@ private fun SheetView(c: OfficeController) {
                 TextButton(onClick = {
                     if (text != initial) c.mutate { setCell(index, r, col, text) }
                     editCell = null
-                }) { Text(stringResource(R.string.od_ok)) }
+                }) { Text(stringResource(I18nR.string.od_ok)) }
             },
-            dismissButton = { TextButton(onClick = { editCell = null }) { Text(stringResource(R.string.hc_cancel)) } },
+            dismissButton = { TextButton(onClick = { editCell = null }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
     }
 }
@@ -319,7 +320,7 @@ private fun SlidesView(c: OfficeController) {
     val doc = c.doc
     val slides = remember(doc, c.version) { doc.slides() }
     if (slides.isEmpty()) {
-        Text(stringResource(R.string.od_no_slides), Modifier.padding(24.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(stringResource(I18nR.string.od_no_slides), Modifier.padding(24.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
         return
     }
     val pager = rememberPagerState { slides.size }
@@ -327,7 +328,7 @@ private fun SlidesView(c: OfficeController) {
     LaunchedEffect(pager.currentPage) { if (c.editing) c.commit() }
     Column(Modifier.fillMaxSize()) {
         Text(
-            stringResource(R.string.od_slide_of, current + 1, slides.size), Modifier.padding(16.dp, 4.dp),
+            stringResource(I18nR.string.od_slide_of, current + 1, slides.size), Modifier.padding(16.dp, 4.dp),
             style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         HorizontalPager(pager, Modifier.weight(1f)) { i ->
@@ -345,10 +346,10 @@ private fun SlidesView(c: OfficeController) {
                             if (it == b.text) c.pendingBoxes.remove(current to b.id) else c.pendingBoxes[current to b.id] = it
                         },
                         modifier = Modifier.fillMaxWidth(),
-                        label = { Text(if (b.title) stringResource(R.string.od_title_box) else stringResource(R.string.od_text_box_n, n + 1)) },
+                        label = { Text(if (b.title) stringResource(I18nR.string.od_title_box) else stringResource(I18nR.string.od_text_box_n, n + 1)) },
                     )
                 }
-                if (slides.size > 1) TextButton(onClick = { c.mutate { deleteSlide(current) } }) { Text(stringResource(R.string.od_delete_slide)) }
+                if (slides.size > 1) TextButton(onClick = { c.mutate { deleteSlide(current) } }) { Text(stringResource(I18nR.string.od_delete_slide)) }
             }
         }
     }

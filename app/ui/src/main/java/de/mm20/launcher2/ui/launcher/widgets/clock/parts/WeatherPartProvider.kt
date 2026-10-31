@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.parts
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.ComponentName
 import android.content.Context
@@ -24,7 +26,6 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIconDefaults
 import de.mm20.launcher2.ui.launcher.widgets.weather.weatherIconById
@@ -75,7 +76,7 @@ class WeatherPartProvider : PartProvider, KoinComponent {
                     contentDescription = null,
                 )
                 Text(
-                    text = stringResource(R.string.clockwidget_weather_part_grant_location),
+                    text = stringResource(I18nR.string.clockwidget_weather_part_grant_location),
                     style = MaterialTheme.typography.titleMedium,
                 )
             }

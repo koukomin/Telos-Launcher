@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.docs
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.Intent
@@ -76,7 +77,7 @@ object GoogleShortcuts {
         val started = target != null && runCatching {
             context.startActivity(Intent(Intent.ACTION_VIEW, target).addCategory(Intent.CATEGORY_BROWSABLE).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }.isSuccess
-        if (!started) Toast.makeText(context, context.getString(R.string.au22_files_gshortcut_failed), Toast.LENGTH_LONG).show()
+        if (!started) Toast.makeText(context, context.getString(I18nR.string.au22_files_gshortcut_failed), Toast.LENGTH_LONG).show()
         return started
     }
 }

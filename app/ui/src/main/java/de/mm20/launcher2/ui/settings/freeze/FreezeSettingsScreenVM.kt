@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.freeze
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.pm.ApplicationInfo
@@ -342,14 +343,14 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
                     }
                     if (ok) done++
                 }
-                _bulkResult.value = context.getString(de.mm20.launcher2.ui.R.string.freeze_hub_result, done, apps.size)
+                _bulkResult.value = context.getString(I18nR.string.freeze_hub_result, done, apps.size)
             } finally { _bulkBusy.value = false; refresh.value++ }
         }
     }
     fun refreshAppStates() { refresh.value++ }
 
     private fun showPolicyError() {
-        android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.pdft_error_title,
+        android.widget.Toast.makeText(context, I18nR.string.pdft_error_title,
             android.widget.Toast.LENGTH_LONG).show()
     }
 

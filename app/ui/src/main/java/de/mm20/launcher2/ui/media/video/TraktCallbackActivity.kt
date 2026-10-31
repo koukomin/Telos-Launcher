@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Activity
 import android.os.Bundle
@@ -26,11 +27,11 @@ class TraktCallbackActivity : Activity() {
         thread {
             val result = runCatching { Trakt.finishWebLogin(app, code, state, error) }.getOrDefault(Trakt.WebResult.Failed)
             val msg = when (result) {
-                Trakt.WebResult.Connected -> R.string.au_video_trakt_connected
-                Trakt.WebResult.Denied -> R.string.au8_traktweb_denied
-                Trakt.WebResult.StateMismatch -> R.string.au8_traktweb_state_mismatch
-                Trakt.WebResult.Expired -> R.string.au8_traktweb_expired
-                Trakt.WebResult.Failed -> R.string.au_video_trakt_signin_failed
+                Trakt.WebResult.Connected -> I18nR.string.au_video_trakt_connected
+                Trakt.WebResult.Denied -> I18nR.string.au8_traktweb_denied
+                Trakt.WebResult.StateMismatch -> I18nR.string.au8_traktweb_state_mismatch
+                Trakt.WebResult.Expired -> I18nR.string.au8_traktweb_expired
+                Trakt.WebResult.Failed -> I18nR.string.au_video_trakt_signin_failed
             }
             runOnUiThread {
                 Toast.makeText(app, msg, Toast.LENGTH_LONG).show()

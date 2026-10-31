@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.screenshot
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -44,7 +45,7 @@ object ScreenshotController {
             val bitmap = grab()
             if (bitmap == null) {
                 // below Android 11, or the service cannot give the picture: the system takes it
-                if (!actions().takeScreenshot()) toast(app, R.string.screenshot_needs_accessibility)
+                if (!actions().takeScreenshot()) toast(app, I18nR.string.screenshot_needs_accessibility)
                 return@launch
             }
             saveOffMainThread(app, bitmap)
@@ -58,7 +59,7 @@ object ScreenshotController {
             waitBeforeCapture(app, true)
             val bitmap = grab()
             if (bitmap == null) {
-                toast(app, R.string.screenshot_needs_android11)
+                toast(app, I18nR.string.screenshot_needs_android11)
                 return@launch
             }
             val file = withContext(Dispatchers.IO) {
@@ -86,10 +87,10 @@ object ScreenshotController {
                 waitBeforeCapture(app, true)
                 val first = grab()
                 if (first == null) {
-                    toast(app, R.string.screenshot_needs_android11)
+                    toast(app, I18nR.string.screenshot_needs_android11)
                     return@launch
                 }
-                toast(app, R.string.screenshot_scrolling_started)
+                toast(app, I18nR.string.screenshot_scrolling_started)
                 val metrics = app.resources.displayMetrics
                 // the bars at the top and the bottom are the same in every frame, they are kept once
                 val top = statusBarHeight(app)
@@ -142,17 +143,17 @@ object ScreenshotController {
 
     private fun afterSave(context: Context, uri: Uri?, bitmap: Bitmap) {
         if (uri == null) {
-            toast(context, R.string.screenshot_save_failed)
+            toast(context, I18nR.string.screenshot_save_failed)
             return
         }
         if (ScreenshotSettings(context).notify && context.getSystemService(NotificationManager::class.java).areNotificationsEnabled()) notifySaved(context, uri, bitmap)
-        else toast(context, R.string.screenshot_saved)
+        else toast(context, I18nR.string.screenshot_saved)
     }
 
     private fun notifySaved(context: Context, uri: Uri, bitmap: Bitmap) {
         val nm = context.getSystemService(NotificationManager::class.java)
         if (nm.getNotificationChannel(CHANNEL_ID) == null) {
-            nm.createNotificationChannel(NotificationChannel(CHANNEL_ID, context.getString(R.string.screenshot_notification_channel), NotificationManager.IMPORTANCE_LOW))
+            nm.createNotificationChannel(NotificationChannel(CHANNEL_ID, context.getString(I18nR.string.screenshot_notification_channel), NotificationManager.IMPORTANCE_LOW))
         }
         val id = (System.currentTimeMillis() % 100000).toInt() + 8000
         val edit = PendingIntent.getActivity(
@@ -177,14 +178,14 @@ object ScreenshotController {
             id,
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_screenshot_app") }
-                .setContentTitle(context.getString(R.string.screenshot_saved))
-                .setContentText(context.getString(R.string.screenshot_notification_text))
+                .setContentTitle(context.getString(I18nR.string.screenshot_saved))
+                .setContentText(context.getString(I18nR.string.screenshot_notification_text))
                 .setStyle(NotificationCompat.BigPictureStyle().bigPicture(thumb))
                 .setContentIntent(edit)
                 .setAutoCancel(true)
-                .addAction(0, context.getString(R.string.voice_share), share)
-                .addAction(0, context.getString(R.string.screenshot_edit), edit)
-                .addAction(0, context.getString(R.string.voice_delete), delete)
+                .addAction(0, context.getString(I18nR.string.voice_share), share)
+                .addAction(0, context.getString(I18nR.string.screenshot_edit), edit)
+                .addAction(0, context.getString(I18nR.string.voice_delete), delete)
                 .build()
         )
     }

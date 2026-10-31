@@ -14,6 +14,8 @@
  */
 
 package de.mm20.launcher2.ui.media.docs.pdf
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.graphics.Bitmap
 import android.net.Uri
@@ -100,7 +102,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -194,29 +195,29 @@ internal fun ColumnScope.WatermarkBody(vm: PdfToolsViewModel, src: PdfSource) {
             }
         }
         ChoiceRow(
-            listOf(false to stringResource(R.string.pdft_watermark_text), true to stringResource(R.string.pdft_watermark_image)),
+            listOf(false to stringResource(I18nR.string.pdft_watermark_text), true to stringResource(I18nR.string.pdft_watermark_image)),
             useImage,
         ) { useImage = it }
         if (useImage) {
             Row(Modifier.padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                FilledTonalButton(onClick = pickImage) { Text(stringResource(R.string.pdft_choose_image)) }
-                if (imageUri != null) Text(stringResource(R.string.pdft_image_chosen), Modifier.padding(start = 12.dp), style = MaterialTheme.typography.bodySmall)
+                FilledTonalButton(onClick = pickImage) { Text(stringResource(I18nR.string.pdft_choose_image)) }
+                if (imageUri != null) Text(stringResource(I18nR.string.pdft_image_chosen), Modifier.padding(start = 12.dp), style = MaterialTheme.typography.bodySmall)
             }
         } else {
             OutlinedTextField(
                 value = text, onValueChange = { text = it.take(80) }, singleLine = true,
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                label = { Text(stringResource(R.string.pdft_watermark_text_label)) },
+                label = { Text(stringResource(I18nR.string.pdft_watermark_text_label)) },
             )
-            SectionLabel(stringResource(R.string.pdft_color))
+            SectionLabel(stringResource(I18nR.string.pdft_color))
             ColorRow(markColors, color) { color = it }
         }
-        LabeledSlider(stringResource(R.string.pdft_size), size, 0.1f..1f, { size = it }, "${(size * 100).roundToInt()}%")
-        LabeledSlider(stringResource(R.string.pdft_opacity), opacity, 0.05f..1f, { opacity = it }, "${(opacity * 100).roundToInt()}%")
-        LabeledSlider(stringResource(R.string.pdft_rotation), rotation, -180f..180f, { rotation = it }, "${rotation.roundToInt()}°")
-        SwitchRow(stringResource(R.string.pdft_watermark_tiled), tiled) { tiled = it }
+        LabeledSlider(stringResource(I18nR.string.pdft_size), size, 0.1f..1f, { size = it }, "${(size * 100).roundToInt()}%")
+        LabeledSlider(stringResource(I18nR.string.pdft_opacity), opacity, 0.05f..1f, { opacity = it }, "${(opacity * 100).roundToInt()}%")
+        LabeledSlider(stringResource(I18nR.string.pdft_rotation), rotation, -180f..180f, { rotation = it }, "${rotation.roundToInt()}°")
+        SwitchRow(stringResource(I18nR.string.pdft_watermark_tiled), tiled) { tiled = it }
     }
-    ActionBar(stringResource(R.string.pdft_apply), mark != null, onClick = {
+    ActionBar(stringResource(I18nR.string.pdft_apply), mark != null, onClick = {
         val m = mark ?: return@ActionBar
         val s = size
         val r = rotation
@@ -240,7 +241,7 @@ internal fun ColumnScope.PageNumbersBody(vm: PdfToolsViewModel, src: PdfSource) 
     val sample = format.replace("{n}", startNumber.toString()).replace("{total}", (startNumber + src.pageCount - skipFirst - 1).toString())
 
     Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp)) {
-        SectionLabel(stringResource(R.string.pdft_numbers_format))
+        SectionLabel(stringResource(I18nR.string.pdft_numbers_format))
         ChoiceRow(
             listOf("{n}" to "1", "{n} / {total}" to "1 / N", "- {n} -" to "- 1 -").map { it.first to it.second },
             format,
@@ -248,41 +249,41 @@ internal fun ColumnScope.PageNumbersBody(vm: PdfToolsViewModel, src: PdfSource) 
         OutlinedTextField(
             value = format, onValueChange = { format = it }, singleLine = true,
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-            label = { Text(stringResource(R.string.pdft_numbers_format_label)) },
-            supportingText = { Text(stringResource(R.string.pdft_numbers_format_hint)) },
+            label = { Text(stringResource(I18nR.string.pdft_numbers_format_label)) },
+            supportingText = { Text(stringResource(I18nR.string.pdft_numbers_format_hint)) },
         )
-        Text(stringResource(R.string.pdft_numbers_sample, sample), style = MaterialTheme.typography.bodyMedium)
-        SectionLabel(stringResource(R.string.pdft_position))
+        Text(stringResource(I18nR.string.pdft_numbers_sample, sample), style = MaterialTheme.typography.bodyMedium)
+        SectionLabel(stringResource(I18nR.string.pdft_position))
         ChoiceRow(
             listOf(
-                NumberPosition.TOP_LEFT to stringResource(R.string.pdft_pos_top_left),
-                NumberPosition.TOP_CENTER to stringResource(R.string.pdft_pos_top_center),
-                NumberPosition.TOP_RIGHT to stringResource(R.string.pdft_pos_top_right),
-                NumberPosition.BOTTOM_LEFT to stringResource(R.string.pdft_pos_bottom_left),
-                NumberPosition.BOTTOM_CENTER to stringResource(R.string.pdft_pos_bottom_center),
-                NumberPosition.BOTTOM_RIGHT to stringResource(R.string.pdft_pos_bottom_right),
+                NumberPosition.TOP_LEFT to stringResource(I18nR.string.pdft_pos_top_left),
+                NumberPosition.TOP_CENTER to stringResource(I18nR.string.pdft_pos_top_center),
+                NumberPosition.TOP_RIGHT to stringResource(I18nR.string.pdft_pos_top_right),
+                NumberPosition.BOTTOM_LEFT to stringResource(I18nR.string.pdft_pos_bottom_left),
+                NumberPosition.BOTTOM_CENTER to stringResource(I18nR.string.pdft_pos_bottom_center),
+                NumberPosition.BOTTOM_RIGHT to stringResource(I18nR.string.pdft_pos_bottom_right),
             ),
             position,
         ) { position = it }
-        LabeledSlider(stringResource(R.string.pdft_size), fontSize, 8f..32f, { fontSize = it }, "${fontSize.roundToInt()}")
-        SectionLabel(stringResource(R.string.pdft_color))
+        LabeledSlider(stringResource(I18nR.string.pdft_size), fontSize, 8f..32f, { fontSize = it }, "${fontSize.roundToInt()}")
+        SectionLabel(stringResource(I18nR.string.pdft_color))
         ColorRow(markColors, color) { color = it }
         Row(Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OutlinedTextField(
                 value = start, onValueChange = { start = digitsOnly(it) }, singleLine = true,
                 modifier = Modifier.weight(1f),
-                label = { Text(stringResource(R.string.pdft_numbers_start)) },
+                label = { Text(stringResource(I18nR.string.pdft_numbers_start)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
             OutlinedTextField(
                 value = skip, onValueChange = { skip = digitsOnly(it) }, singleLine = true,
                 modifier = Modifier.weight(1f),
-                label = { Text(stringResource(R.string.pdft_numbers_skip)) },
+                label = { Text(stringResource(I18nR.string.pdft_numbers_skip)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
         }
     }
-    ActionBar(stringResource(R.string.pdft_apply), format.isNotBlank() && start.isNotEmpty(), onClick = {
+    ActionBar(stringResource(I18nR.string.pdft_apply), format.isNotBlank() && start.isNotEmpty(), onClick = {
         val f = format
         val pos = position
         val fs = fontSize
@@ -330,12 +331,12 @@ internal fun ColumnScope.SignBody(vm: PdfToolsViewModel, src: PdfSource) {
     if (sig == null) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp)) {
             ChoiceRow(
-                listOf(false to stringResource(R.string.pdft_sign_draw), true to stringResource(R.string.pdft_sign_image)),
+                listOf(false to stringResource(I18nR.string.pdft_sign_draw), true to stringResource(I18nR.string.pdft_sign_image)),
                 fromImage,
             ) { fromImage = it }
             if (!fromImage) {
                 Text(
-                    stringResource(R.string.pdft_sign_draw_hint),
+                    stringResource(I18nR.string.pdft_sign_draw_hint),
                     Modifier.padding(vertical = 8.dp),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -349,15 +350,15 @@ internal fun ColumnScope.SignBody(vm: PdfToolsViewModel, src: PdfSource) {
                 ColorRow(inkColors, ink) { ink = it }
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedButton(onClick = { if (strokes.isNotEmpty()) strokes.removeAt(strokes.lastIndex) }, enabled = strokes.isNotEmpty()) {
-                        Text(stringResource(R.string.pdft_undo))
+                        Text(stringResource(I18nR.string.pdft_undo))
                     }
-                    OutlinedButton(onClick = { strokes.clear() }, enabled = strokes.isNotEmpty()) { Text(stringResource(R.string.pdft_clear)) }
+                    OutlinedButton(onClick = { strokes.clear() }, enabled = strokes.isNotEmpty()) { Text(stringResource(I18nR.string.pdft_clear)) }
                 }
             } else {
                 Row(Modifier.padding(top = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                    FilledTonalButton(onClick = pickImage) { Text(stringResource(R.string.pdft_choose_image)) }
+                    FilledTonalButton(onClick = pickImage) { Text(stringResource(I18nR.string.pdft_choose_image)) }
                 }
-                SwitchRow(stringResource(R.string.pdft_sign_remove_bg), transparentBg) { transparentBg = it }
+                SwitchRow(stringResource(I18nR.string.pdft_sign_remove_bg), transparentBg) { transparentBg = it }
                 rawImage?.let { raw ->
                     Image(
                         raw.asImageBitmap(), null,
@@ -368,7 +369,7 @@ internal fun ColumnScope.SignBody(vm: PdfToolsViewModel, src: PdfSource) {
             }
         }
         val ready = if (fromImage) rawImage != null else strokes.isNotEmpty()
-        ActionBar(stringResource(R.string.pdft_sign_use), ready, onClick = {
+        ActionBar(stringResource(I18nR.string.pdft_sign_use), ready, onClick = {
             scope.launch {
                 signature = withContext(Dispatchers.IO) {
                     if (fromImage) rawImage?.let { if (transparentBg) whiteToTransparent(it) else it }
@@ -378,7 +379,7 @@ internal fun ColumnScope.SignBody(vm: PdfToolsViewModel, src: PdfSource) {
         })
     } else {
         Text(
-            stringResource(R.string.pdft_sign_place_hint),
+            stringResource(I18nR.string.pdft_sign_place_hint),
             Modifier.padding(horizontal = 16.dp),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -388,30 +389,30 @@ internal fun ColumnScope.SignBody(vm: PdfToolsViewModel, src: PdfSource) {
         }
         Row(Modifier.padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = { page = (page - 1).coerceAtLeast(0) }, enabled = page > 0) {
-                Ico(BaseR.drawable.arrow_back_24px, description = stringResource(R.string.pdft_previous))
+                Ico(BaseR.drawable.arrow_back_24px, description = stringResource(I18nR.string.pdft_previous))
             }
-            Text(stringResource(R.string.pdft_page_of, page + 1, src.pageCount), style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(I18nR.string.pdft_page_of, page + 1, src.pageCount), style = MaterialTheme.typography.labelLarge)
             IconButton(onClick = { page = (page + 1).coerceAtMost(src.pageCount - 1) }, enabled = page < src.pageCount - 1) {
-                Ico(BaseR.drawable.arrow_forward_24px, description = stringResource(R.string.pdft_next))
+                Ico(BaseR.drawable.arrow_forward_24px, description = stringResource(I18nR.string.pdft_next))
             }
             Spacer(Modifier.weight(1f))
-            TextButton(onClick = { signature = null }) { Text(stringResource(R.string.pdft_sign_change)) }
+            TextButton(onClick = { signature = null }) { Text(stringResource(I18nR.string.pdft_sign_change)) }
         }
         Column(Modifier.padding(horizontal = 16.dp)) {
             ChoiceRow(
                 listOf(
-                    SignScope.THIS_PAGE to stringResource(R.string.pdft_sign_scope_this),
-                    SignScope.ALL_PAGES to stringResource(R.string.pdft_sign_scope_all),
-                    SignScope.LAST_PAGE to stringResource(R.string.pdft_sign_scope_last),
+                    SignScope.THIS_PAGE to stringResource(I18nR.string.pdft_sign_scope_this),
+                    SignScope.ALL_PAGES to stringResource(I18nR.string.pdft_sign_scope_all),
+                    SignScope.LAST_PAGE to stringResource(I18nR.string.pdft_sign_scope_last),
                 ),
                 signScope,
             ) { signScope = it }
             LabeledSlider(
-                stringResource(R.string.pdft_rotation), placement.rot, -180f..180f, { placement.rot = it },
+                stringResource(I18nR.string.pdft_rotation), placement.rot, -180f..180f, { placement.rot = it },
                 "${placement.rot.roundToInt()}°",
             )
         }
-        ActionBar(stringResource(R.string.pdft_apply), true, onClick = {
+        ActionBar(stringResource(I18nR.string.pdft_apply), true, onClick = {
             val target = when (signScope) {
                 SignScope.THIS_PAGE -> page
                 SignScope.ALL_PAGES -> -1
@@ -575,22 +576,22 @@ internal fun ColumnScope.MetadataBody(vm: PdfToolsViewModel, src: PdfSource) {
     }
     Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp)) {
         meta?.let { m ->
-            SectionLabel(stringResource(R.string.pdft_meta_info))
-            val unknown = stringResource(R.string.pdft_meta_unknown)
-            Text(stringResource(R.string.pdft_meta_pages_version, m.pages, m.version.toString()), style = MaterialTheme.typography.bodyMedium)
-            Text(stringResource(R.string.pdft_meta_created, m.created.ifEmpty { unknown }), style = MaterialTheme.typography.bodyMedium)
-            Text(stringResource(R.string.pdft_meta_modified, m.modified.ifEmpty { unknown }), style = MaterialTheme.typography.bodyMedium)
+            SectionLabel(stringResource(I18nR.string.pdft_meta_info))
+            val unknown = stringResource(I18nR.string.pdft_meta_unknown)
+            Text(stringResource(I18nR.string.pdft_meta_pages_version, m.pages, m.version.toString()), style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(I18nR.string.pdft_meta_created, m.created.ifEmpty { unknown }), style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(I18nR.string.pdft_meta_modified, m.modified.ifEmpty { unknown }), style = MaterialTheme.typography.bodyMedium)
         }
         val fieldModifier = Modifier.fillMaxWidth().padding(top = 8.dp)
-        OutlinedTextField(title, { title = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(R.string.pdft_meta_title)) })
-        OutlinedTextField(author, { author = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(R.string.pdft_meta_author)) })
-        OutlinedTextField(subject, { subject = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(R.string.pdft_meta_subject)) })
-        OutlinedTextField(keywords, { keywords = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(R.string.pdft_meta_keywords)) })
-        OutlinedTextField(creator, { creator = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(R.string.pdft_meta_creator)) })
-        OutlinedTextField(producer, { producer = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(R.string.pdft_meta_producer)) })
-        SwitchRow(stringResource(R.string.pdft_meta_clear), clearAll) { clearAll = it }
+        OutlinedTextField(title, { title = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(I18nR.string.pdft_meta_title)) })
+        OutlinedTextField(author, { author = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(I18nR.string.pdft_meta_author)) })
+        OutlinedTextField(subject, { subject = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(I18nR.string.pdft_meta_subject)) })
+        OutlinedTextField(keywords, { keywords = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(I18nR.string.pdft_meta_keywords)) })
+        OutlinedTextField(creator, { creator = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(I18nR.string.pdft_meta_creator)) })
+        OutlinedTextField(producer, { producer = it }, fieldModifier, enabled = !clearAll, singleLine = true, label = { Text(stringResource(I18nR.string.pdft_meta_producer)) })
+        SwitchRow(stringResource(I18nR.string.pdft_meta_clear), clearAll) { clearAll = it }
     }
-    ActionBar(stringResource(R.string.pdft_apply), meta != null, onClick = {
+    ActionBar(stringResource(I18nR.string.pdft_apply), meta != null, onClick = {
         val ca = clearAll
         vm.run(PdfTool.METADATA, src.sizeBytes) { p ->
             PdfEngine.writeMetadata(vm.context, src, title, author, subject, keywords, creator, producer, ca).also { p(1, 1) }
@@ -608,13 +609,13 @@ internal fun ImagesToPdfScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostStat
     var quality by remember { mutableFloatStateOf(0.85f) }
     var margin by remember { mutableFloatStateOf(0f) }
     var name by remember { mutableStateOf("") }
-    val defaultName = stringResource(R.string.pdft_default_name_images)
+    val defaultName = stringResource(I18nR.string.pdft_default_name_images)
     val images = vm.images
     ToolFrame(stringResource(PdfTool.IMAGES_TO_PDF.title), onBack = { vm.back {} }, snackbar = snackbar) { padding ->
         Column(Modifier.padding(padding).fillMaxSize()) {
             if (images.isEmpty()) {
                 Box(Modifier.weight(1f)) {
-                    EmptyPick(stringResource(R.string.pdft_images_hint), stringResource(R.string.pdft_add_images), pick)
+                    EmptyPick(stringResource(I18nR.string.pdft_images_hint), stringResource(I18nR.string.pdft_add_images), pick)
                 }
             } else {
                 LazyColumn(Modifier.weight(1f), contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -632,56 +633,56 @@ internal fun ImagesToPdfScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostStat
                                     Text("${index + 1}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
                                 IconButton(onClick = { val x = images.removeAt(index); images.add(index - 1, x) }, enabled = index > 0) {
-                                    Ico(BaseR.drawable.keyboard_arrow_up_24px, description = stringResource(R.string.pdft_move_up))
+                                    Ico(BaseR.drawable.keyboard_arrow_up_24px, description = stringResource(I18nR.string.pdft_move_up))
                                 }
                                 IconButton(onClick = { val x = images.removeAt(index); images.add(index + 1, x) }, enabled = index < images.lastIndex) {
-                                    Ico(BaseR.drawable.keyboard_arrow_down_24px, description = stringResource(R.string.pdft_move_down))
+                                    Ico(BaseR.drawable.keyboard_arrow_down_24px, description = stringResource(I18nR.string.pdft_move_down))
                                 }
                                 IconButton(onClick = { images.removeAt(index) }) {
-                                    Ico(BaseR.drawable.close_24px, description = stringResource(R.string.pdft_remove))
+                                    Ico(BaseR.drawable.close_24px, description = stringResource(I18nR.string.pdft_remove))
                                 }
                             }
                         }
                     }
                 }
                 Column(Modifier.heightIn(max = 230.dp).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp)) {
-                    SectionLabel(stringResource(R.string.pdft_images_page_size))
+                    SectionLabel(stringResource(I18nR.string.pdft_images_page_size))
                     ChoiceRow(
                         listOf(
-                            PageSizeMode.FIT_IMAGE to stringResource(R.string.pdft_page_size_fit),
+                            PageSizeMode.FIT_IMAGE to stringResource(I18nR.string.pdft_page_size_fit),
                             PageSizeMode.A4 to "A4",
                             PageSizeMode.LETTER to "Letter",
                         ),
                         mode,
                     ) { mode = it }
-                    SectionLabel(stringResource(R.string.pdft_images_margin))
+                    SectionLabel(stringResource(I18nR.string.pdft_images_margin))
                     ChoiceRow(
                         listOf(
-                            0f to stringResource(R.string.pdft_margin_none),
-                            18f to stringResource(R.string.pdft_margin_small),
-                            36f to stringResource(R.string.pdft_margin_medium),
+                            0f to stringResource(I18nR.string.pdft_margin_none),
+                            18f to stringResource(I18nR.string.pdft_margin_small),
+                            36f to stringResource(I18nR.string.pdft_margin_medium),
                         ),
                         margin,
                     ) { margin = it }
-                    SectionLabel(stringResource(R.string.pdft_quality))
+                    SectionLabel(stringResource(I18nR.string.pdft_quality))
                     ChoiceRow(
                         listOf(
-                            0.7f to stringResource(R.string.pdft_quality_standard),
-                            0.85f to stringResource(R.string.pdft_quality_high),
-                            0.95f to stringResource(R.string.pdft_quality_max),
+                            0.7f to stringResource(I18nR.string.pdft_quality_standard),
+                            0.85f to stringResource(I18nR.string.pdft_quality_high),
+                            0.95f to stringResource(I18nR.string.pdft_quality_max),
                         ),
                         quality,
                     ) { quality = it }
                     OutlinedTextField(
                         value = name, onValueChange = { name = it }, singleLine = true,
                         modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 8.dp),
-                        label = { Text(stringResource(R.string.pdft_output_name)) },
+                        label = { Text(stringResource(I18nR.string.pdft_output_name)) },
                         placeholder = { Text(defaultName) },
                     )
                 }
             }
             ActionBar(
-                stringResource(R.string.pdft_images_action, images.size),
+                stringResource(I18nR.string.pdft_images_action, images.size),
                 images.isNotEmpty(),
                 onClick = {
                     val list = images.toList()
@@ -691,7 +692,7 @@ internal fun ImagesToPdfScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostStat
                     val outName = name.trim().ifEmpty { defaultName }.removeSuffix(".pdf") + ".pdf"
                     vm.run(PdfTool.IMAGES_TO_PDF, 0L) { p -> PdfEngine.imagesToPdf(context.applicationContext, list, m, q, mg, outName, p) }
                 },
-                secondary = { OutlinedButton(onClick = pick) { Text(stringResource(R.string.pdft_add)) } },
+                secondary = { OutlinedButton(onClick = pick) { Text(stringResource(I18nR.string.pdft_add)) } },
             )
         }
     }
@@ -707,9 +708,9 @@ internal fun ColumnScope.PdfToImagesBody(vm: PdfToolsViewModel, src: PdfSource) 
     var scale by remember { mutableFloatStateOf(2f) }
     var zip by remember { mutableStateOf(true) }
     Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-        Text(stringResource(R.string.pdft_selected_count, selected.size), Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
-        TextButton(onClick = { selected.clear(); selected.addAll(0 until src.pageCount) }) { Text(stringResource(R.string.pdft_select_all)) }
-        TextButton(onClick = { selected.clear() }) { Text(stringResource(R.string.pdft_select_none)) }
+        Text(stringResource(I18nR.string.pdft_selected_count, selected.size), Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+        TextButton(onClick = { selected.clear(); selected.addAll(0 until src.pageCount) }) { Text(stringResource(I18nR.string.pdft_select_all)) }
+        TextButton(onClick = { selected.clear() }) { Text(stringResource(I18nR.string.pdft_select_none)) }
     }
     Box(Modifier.weight(1f)) {
         if (pages != null) {
@@ -725,15 +726,15 @@ internal fun ColumnScope.PdfToImagesBody(vm: PdfToolsViewModel, src: PdfSource) 
         ) { format = it }
         ChoiceRow(
             listOf(
-                1.5f to stringResource(R.string.pdft_quality_standard),
-                2f to stringResource(R.string.pdft_quality_high),
-                3f to stringResource(R.string.pdft_quality_max),
+                1.5f to stringResource(I18nR.string.pdft_quality_standard),
+                2f to stringResource(I18nR.string.pdft_quality_high),
+                3f to stringResource(I18nR.string.pdft_quality_max),
             ),
             scale,
         ) { scale = it }
-        SwitchRow(stringResource(R.string.pdft_images_zip), zip) { zip = it }
+        SwitchRow(stringResource(I18nR.string.pdft_images_zip), zip) { zip = it }
     }
-    ActionBar(stringResource(R.string.pdft_to_images_action, selected.size), selected.isNotEmpty(), onClick = {
+    ActionBar(stringResource(I18nR.string.pdft_to_images_action, selected.size), selected.isNotEmpty(), onClick = {
         val list = selected.sorted()
         val f = format
         val s = scale
@@ -757,11 +758,11 @@ internal fun ColumnScope.ExtractImagesBody(vm: PdfToolsViewModel, src: PdfSource
     val list = infos
     Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
         Text(
-            if (list == null) stringResource(R.string.pdft_scanning) else stringResource(R.string.pdft_images_found, list.size),
+            if (list == null) stringResource(I18nR.string.pdft_scanning) else stringResource(I18nR.string.pdft_images_found, list.size),
             Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium,
         )
-        TextButton(onClick = { selected.clear(); selected.addAll(list?.map { it.index } ?: emptyList()) }) { Text(stringResource(R.string.pdft_select_all)) }
-        TextButton(onClick = { selected.clear() }) { Text(stringResource(R.string.pdft_select_none)) }
+        TextButton(onClick = { selected.clear(); selected.addAll(list?.map { it.index } ?: emptyList()) }) { Text(stringResource(I18nR.string.pdft_select_all)) }
+        TextButton(onClick = { selected.clear() }) { Text(stringResource(I18nR.string.pdft_select_none)) }
     }
     LazyColumn(Modifier.weight(1f), contentPadding = PaddingValues(horizontal = 12.dp)) {
         items(list ?: emptyList(), key = { it.index }) { info ->
@@ -771,7 +772,7 @@ internal fun ColumnScope.ExtractImagesBody(vm: PdfToolsViewModel, src: PdfSource
             ) {
                 Checkbox(checked = info.index in selected, onCheckedChange = { if (it) selected.add(info.index) else selected.remove(info.index) })
                 Column {
-                    Text(stringResource(R.string.pdft_image_row, info.index + 1, info.page + 1), style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(I18nR.string.pdft_image_row, info.index + 1, info.page + 1), style = MaterialTheme.typography.bodyMedium)
                     Text(
                         "${info.width} x ${info.height}  ${info.suffix.uppercase()}",
                         style = MaterialTheme.typography.bodySmall,
@@ -783,7 +784,7 @@ internal fun ColumnScope.ExtractImagesBody(vm: PdfToolsViewModel, src: PdfSource
         if (list != null && list.isEmpty()) {
             item {
                 Text(
-                    stringResource(R.string.pdft_no_images),
+                    stringResource(I18nR.string.pdft_no_images),
                     Modifier.padding(16.dp),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -791,7 +792,7 @@ internal fun ColumnScope.ExtractImagesBody(vm: PdfToolsViewModel, src: PdfSource
             }
         }
     }
-    ActionBar(stringResource(R.string.pdft_extract_action, selected.size), selected.isNotEmpty(), onClick = {
+    ActionBar(stringResource(I18nR.string.pdft_extract_action, selected.size), selected.isNotEmpty(), onClick = {
         val sel = selected.toSet()
         vm.run(PdfTool.EXTRACT_IMAGES, src.sizeBytes) { p -> PdfEngine.extractImages(vm.context, src, sel, p) }
     })
@@ -804,12 +805,12 @@ internal fun ColumnScope.PdfToTextBody(vm: PdfToolsViewModel, src: PdfSource) {
     val pages = rememberPdfPages(src.file)
     val selected = remember { mutableStateListOf<Int>().also { it.addAll(0 until src.pageCount) } }
     var markers by remember { mutableStateOf(true) }
-    val markerFormat = stringResource(R.string.pdft_page_marker)
-    val noText = stringResource(R.string.pdft_no_text)
+    val markerFormat = stringResource(I18nR.string.pdft_page_marker)
+    val noText = stringResource(I18nR.string.pdft_no_text)
     Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-        Text(stringResource(R.string.pdft_selected_count, selected.size), Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
-        TextButton(onClick = { selected.clear(); selected.addAll(0 until src.pageCount) }) { Text(stringResource(R.string.pdft_select_all)) }
-        TextButton(onClick = { selected.clear() }) { Text(stringResource(R.string.pdft_select_none)) }
+        Text(stringResource(I18nR.string.pdft_selected_count, selected.size), Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+        TextButton(onClick = { selected.clear(); selected.addAll(0 until src.pageCount) }) { Text(stringResource(I18nR.string.pdft_select_all)) }
+        TextButton(onClick = { selected.clear() }) { Text(stringResource(I18nR.string.pdft_select_none)) }
     }
     Box(Modifier.weight(1f)) {
         if (pages != null) {
@@ -819,9 +820,9 @@ internal fun ColumnScope.PdfToTextBody(vm: PdfToolsViewModel, src: PdfSource) {
         }
     }
     Column(Modifier.padding(horizontal = 16.dp)) {
-        SwitchRow(stringResource(R.string.pdft_text_markers), markers) { markers = it }
+        SwitchRow(stringResource(I18nR.string.pdft_text_markers), markers) { markers = it }
     }
-    ActionBar(stringResource(R.string.pdft_apply), selected.isNotEmpty(), onClick = {
+    ActionBar(stringResource(I18nR.string.pdft_apply), selected.isNotEmpty(), onClick = {
         val list = selected.sorted()
         val mk = markers
         vm.run(PdfTool.PDF_TO_TEXT, src.sizeBytes) { p ->
@@ -839,7 +840,7 @@ internal fun ColumnScope.PreviewBody(src: PdfSource) {
     val pages = rememberPdfPages(src.file)
     var open by remember { mutableStateOf<Int?>(null) }
     Text(
-        stringResource(R.string.pdft_preview_hint),
+        stringResource(I18nR.string.pdft_preview_hint),
         Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -893,13 +894,13 @@ internal fun CompareScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
     ToolFrame(stringResource(PdfTool.COMPARE.title), onBack = { vm.back {} }, snackbar = snackbar) { padding ->
         Column(Modifier.padding(padding).fillMaxSize()) {
             Row(Modifier.padding(horizontal = 12.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                CompareSlot(stringResource(R.string.pdft_compare_original), a, pickA, Modifier.weight(1f))
-                CompareSlot(stringResource(R.string.pdft_compare_revised), b, pickB, Modifier.weight(1f))
+                CompareSlot(stringResource(I18nR.string.pdft_compare_original), a, pickA, Modifier.weight(1f))
+                CompareSlot(stringResource(I18nR.string.pdft_compare_revised), b, pickB, Modifier.weight(1f))
             }
             if (a == null || b == null) {
                 Box(Modifier.weight(1f).fillMaxWidth()) {
                     Text(
-                        stringResource(R.string.pdft_compare_hint),
+                        stringResource(I18nR.string.pdft_compare_hint),
                         Modifier.padding(32.dp).align(Alignment.Center),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -911,11 +912,11 @@ internal fun CompareScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                     val pr = progress
                     Text(
                         when {
-                            r != null && r.differing.isEmpty() -> stringResource(R.string.pdft_compare_same_text)
-                            r != null -> stringResource(R.string.pdft_compare_summary, r.differing.size, max(r.pagesA, r.pagesB))
-                            compareFailed -> stringResource(R.string.pdft_error_title)
-                            pr != null -> stringResource(R.string.pdft_progress, pr.first.coerceAtMost(pr.second), pr.second)
-                            else -> stringResource(R.string.pdft_working)
+                            r != null && r.differing.isEmpty() -> stringResource(I18nR.string.pdft_compare_same_text)
+                            r != null -> stringResource(I18nR.string.pdft_compare_summary, r.differing.size, max(r.pagesA, r.pagesB))
+                            compareFailed -> stringResource(I18nR.string.pdft_error_title)
+                            pr != null -> stringResource(I18nR.string.pdft_progress, pr.first.coerceAtMost(pr.second), pr.second)
+                            else -> stringResource(I18nR.string.pdft_working)
                         },
                         style = MaterialTheme.typography.bodyMedium,
                     )
@@ -928,19 +929,19 @@ internal fun CompareScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                     }
                     ChoiceRow(
                         listOf(
-                            CompareMode.SIDE_BY_SIDE to stringResource(R.string.pdft_compare_side),
-                            CompareMode.DIFFERENCE to stringResource(R.string.pdft_compare_diff),
+                            CompareMode.SIDE_BY_SIDE to stringResource(I18nR.string.pdft_compare_side),
+                            CompareMode.DIFFERENCE to stringResource(I18nR.string.pdft_compare_diff),
                         ),
                         mode,
                     ) { mode = it }
                 }
                 Row(Modifier.padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { page = (page - 1).coerceAtLeast(0) }, enabled = page > 0) {
-                        Ico(BaseR.drawable.arrow_back_24px, description = stringResource(R.string.pdft_previous))
+                        Ico(BaseR.drawable.arrow_back_24px, description = stringResource(I18nR.string.pdft_previous))
                     }
-                    Text(stringResource(R.string.pdft_page_of, page + 1, maxPages), style = MaterialTheme.typography.labelLarge)
+                    Text(stringResource(I18nR.string.pdft_page_of, page + 1, maxPages), style = MaterialTheme.typography.labelLarge)
                     IconButton(onClick = { page = (page + 1).coerceAtMost((maxPages - 1).coerceAtLeast(0)) }, enabled = page < maxPages - 1) {
-                        Ico(BaseR.drawable.arrow_forward_24px, description = stringResource(R.string.pdft_next))
+                        Ico(BaseR.drawable.arrow_forward_24px, description = stringResource(I18nR.string.pdft_next))
                     }
                 }
                 Box(Modifier.weight(1f).fillMaxWidth().padding(8.dp)) {
@@ -968,14 +969,14 @@ private fun CompareSlot(label: String, src: PdfSource?, onPick: () -> Unit, modi
         Column(Modifier.padding(12.dp)) {
             Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Text(
-                src?.name ?: stringResource(R.string.pdft_choose_pdf),
+                src?.name ?: stringResource(I18nR.string.pdft_choose_pdf),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
             if (src != null) {
                 Text(
-                    stringResource(R.string.pdft_pages_count, src.pageCount),
+                    stringResource(I18nR.string.pdft_pages_count, src.pageCount),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -990,7 +991,7 @@ private fun ComparePage(pages: PdfPages?, page: Int, modifier: Modifier, onClick
         if (pages != null && page < pages.count) {
             PdfThumb(pages, page, Modifier.fillMaxSize(), widthPx = 700)
         } else {
-            Text(stringResource(R.string.pdft_compare_missing), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(I18nR.string.pdft_compare_missing), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
@@ -1010,7 +1011,7 @@ private fun DiffPage(pagesA: PdfPages?, pagesB: PdfPages?, page: Int, modifier: 
         if (d != null) {
             Image(d.asImageBitmap(), null, Modifier.fillMaxSize(), contentScale = ContentScale.Fit)
         } else {
-            Text(stringResource(R.string.pdft_compare_missing), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(I18nR.string.pdft_compare_missing), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }

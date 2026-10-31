@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.media
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
@@ -55,7 +56,7 @@ fun MediaIntegrationSettingsScreen() {
     }
 
     PreferenceScreen(
-        stringResource(R.string.preference_media_integration),
+        stringResource(I18nR.string.preference_media_integration),
         helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/integrations/mediacontrol"
     ) {
         if (loading) {
@@ -68,7 +69,7 @@ fun MediaIntegrationSettingsScreen() {
         if (hasPermission == false) {
             item {
                 MissingPermissionBanner(
-                    text = stringResource(R.string.missing_permission_music_widget),
+                    text = stringResource(I18nR.string.missing_permission_music_widget),
                     onClick = {
                         viewModel.requestNotificationPermission(context as AppCompatActivity)
                     },
@@ -95,7 +96,7 @@ fun MediaIntegrationSettingsScreen() {
         }
         item {
             PreferenceCategory(
-                stringResource(R.string.preference_category_media_apps)
+                stringResource(I18nR.string.preference_category_media_apps)
             ) {
                 val apps by viewModel.appList
                 for (app in apps) {
@@ -116,10 +117,10 @@ fun MediaIntegrationSettingsScreen() {
 
         if (BuildConfig.DEBUG) {
             item {
-                PreferenceCategory(stringResource(R.string.preference_category_debug)) {
+                PreferenceCategory(stringResource(I18nR.string.preference_category_debug)) {
                     Preference(
-                        title = stringResource(R.string.hc_reset_widget),
-                        summary = stringResource(R.string.hc_clear_all_music_data),
+                        title = stringResource(I18nR.string.hc_reset_widget),
+                        summary = stringResource(I18nR.string.hc_clear_all_music_data),
                         onClick = {
                             viewModel.resetWidget()
                         }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.music
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -100,7 +101,7 @@ internal fun MusicHomeSkeleton(reduce: Boolean) {
 @Composable
 internal fun MusicEmptyState(title: String, modifier: Modifier = Modifier) {
     Column(modifier.padding(32.dp), verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically), horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(painterResource(R.drawable.music_note_48px), contentDescription = null, modifier = Modifier.size(72.dp), tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f))
+        Icon(painterResource(BaseR.drawable.music_note_48px), contentDescription = null, modifier = Modifier.size(72.dp), tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f))
         Text(title, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
     }
 }

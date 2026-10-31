@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.docs
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.Intent
@@ -160,7 +161,7 @@ class DocumentViewerActivity : BaseActivity() {
                 contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { if (it.moveToFirst()) return it.getString(0) }
             }
         }
-        return uri.lastPathSegment?.substringAfterLast('/') ?: getString(R.string.od_default_name)
+        return uri.lastPathSegment?.substringAfterLast('/') ?: getString(I18nR.string.od_default_name)
     }
 }
 
@@ -285,8 +286,8 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
         }
     }
 
-    fun savedMessage() { message = context.getString(R.string.od_saved) }
-    fun failedMessage() { message = context.getString(R.string.od_save_failed) }
+    fun savedMessage() { message = context.getString(I18nR.string.od_saved) }
+    fun failedMessage() { message = context.getString(I18nR.string.od_save_failed) }
 
     fun openWith() {
         val view = Intent(Intent.ACTION_VIEW).setDataAndType(curUri, context.contentResolver.getType(curUri) ?: "*/*").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -327,7 +328,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
             when (val r = c.save()) {
                 SaveOutcome.Saved -> savedMessage()
                 is SaveOutcome.NeedSaveAs -> askTarget(c.name, DocFiles.mimeFor(c.name)) { target ->
-                    scope.launch { if (c.finishSaveAs(r.file, target)) message = context.getString(R.string.od_saved_copy) else failedMessage() }
+                    scope.launch { if (c.finishSaveAs(r.file, target)) message = context.getString(I18nR.string.od_saved_copy) else failedMessage() }
                 }
                 SaveOutcome.Failed -> failedMessage()
             }
@@ -340,7 +341,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
             val tmp = c.build()
             if (tmp == null) { failedMessage(); return@launch }
             askTarget(c.name, DocFiles.mimeFor(c.name)) { target ->
-                scope.launch { if (c.finishSaveAs(tmp, target)) message = context.getString(R.string.od_saved_copy) else failedMessage() }
+                scope.launch { if (c.finishSaveAs(tmp, target)) message = context.getString(I18nR.string.od_saved_copy) else failedMessage() }
             }
         }
     }
@@ -348,7 +349,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
     fun convertLegacy(c: OfficeController) {
         scope.launch {
             val converted = c.convertLegacy()
-            if (converted == null) { message = context.getString(R.string.od_convert_failed); return@launch }
+            if (converted == null) { message = context.getString(I18nR.string.od_convert_failed); return@launch }
             val (tmp, newName) = converted
             askTarget(newName, DocFiles.mimeFor(newName)) { target ->
                 scope.launch {
@@ -361,7 +362,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
                     nc.editing = true
                     curUri = target; curName = newName
                     state = DocState.Office(nc)
-                    message = context.getString(R.string.od_converted)
+                    message = context.getString(I18nR.string.od_converted)
                 }
             }
         }
@@ -376,14 +377,14 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
                 modifier = Modifier.virtualAppGlass(blur, bar),
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = androidx.compose.ui.graphics.Color.Transparent),
                 title = { Text(curName, maxLines = 1) },
-                navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(de.mm20.launcher2.base.R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) } },
+                navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(de.mm20.launcher2.base.R.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back)) } },
                 actions = {
                     val s = state
                     when {
-                        s is DocState.Text && !editing -> TextButton(onClick = { editText = s.text; editing = true }) { Text(stringResource(R.string.hc_edit)) }
+                        s is DocState.Text && !editing -> TextButton(onClick = { editText = s.text; editing = true }) { Text(stringResource(I18nR.string.hc_edit)) }
                         s is DocState.Text && editing -> {
-                            TextButton(onClick = { saveText(s) }) { Text(stringResource(R.string.hc_save)) }
-                            TextButton(onClick = { editing = false; if (s.copyOf != null) state = DocState.BigText(s.copyOf) }) { Text(stringResource(R.string.hc_cancel)) }
+                            TextButton(onClick = { saveText(s) }) { Text(stringResource(I18nR.string.hc_save)) }
+                            TextButton(onClick = { editing = false; if (s.copyOf != null) state = DocState.BigText(s.copyOf) }) { Text(stringResource(I18nR.string.hc_cancel)) }
                         }
                         s is DocState.Pdf -> TextButton(onClick = {
                             runCatching {
@@ -392,46 +393,46 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
                                         .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
                                 )
                             }
-                        }) { Text(stringResource(R.string.od_pdf_tools)) }
+                        }) { Text(stringResource(I18nR.string.od_pdf_tools)) }
                         s is DocState.Office && s.controller.editing -> {
-                            TextButton(onClick = { saveOffice(s.controller) }) { Text(stringResource(R.string.hc_save)) }
-                            TextButton(onClick = { if (s.controller.isDirty) confirmDiscard = true else s.controller.discard() }) { Text(stringResource(R.string.hc_cancel)) }
+                            TextButton(onClick = { saveOffice(s.controller) }) { Text(stringResource(I18nR.string.hc_save)) }
+                            TextButton(onClick = { if (s.controller.isDirty) confirmDiscard = true else s.controller.discard() }) { Text(stringResource(I18nR.string.hc_cancel)) }
                         }
-                        s is DocState.Office && s.controller.canEdit -> TextButton(onClick = { s.controller.editing = true }) { Text(stringResource(R.string.hc_edit)) }
+                        s is DocState.Office && s.controller.canEdit -> TextButton(onClick = { s.controller.editing = true }) { Text(stringResource(I18nR.string.hc_edit)) }
                     }
                     Box {
                         IconButton(onClick = { menu = true }) { Text("⋮", style = MaterialTheme.typography.titleLarge) }
                         DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                             if (s is DocState.Pdf) {
-                                DropdownMenuItem(text = { Text(stringResource(R.string.od_search_pdf)) }, onClick = { menu = false; showSearch = true })
-                                DropdownMenuItem(text = { Text(stringResource(R.string.od_go_to_page)) }, onClick = { menu = false; showJump = true })
-                                DropdownMenuItem(text = { Text(stringResource(R.string.viewer_pdf_night)) }, onClick = { menu = false; pdfNight = !pdfNight })
-                                DropdownMenuItem(text = { Text(stringResource(R.string.viewer_pdf_highlight)) }, onClick = { menu = false; highlightMode = !highlightMode })
+                                DropdownMenuItem(text = { Text(stringResource(I18nR.string.od_search_pdf)) }, onClick = { menu = false; showSearch = true })
+                                DropdownMenuItem(text = { Text(stringResource(I18nR.string.od_go_to_page)) }, onClick = { menu = false; showJump = true })
+                                DropdownMenuItem(text = { Text(stringResource(I18nR.string.viewer_pdf_night)) }, onClick = { menu = false; pdfNight = !pdfNight })
+                                DropdownMenuItem(text = { Text(stringResource(I18nR.string.viewer_pdf_highlight)) }, onClick = { menu = false; highlightMode = !highlightMode })
                             }
                             if (DocumentTypes.ext(curName) == "epub") {
-                                DropdownMenuItem(text = { Text(stringResource(R.string.viewer_epub_larger)) }, onClick = {
+                                DropdownMenuItem(text = { Text(stringResource(I18nR.string.viewer_epub_larger)) }, onClick = {
                                     menu = false
                                     epubStyle = epubStyle.copy(fontSp = (epubStyle.fontSp + 2).coerceAtMost(32))
                                     ViewerLibrary.saveEpubStyle(context, epubStyle)
                                 })
-                                DropdownMenuItem(text = { Text(stringResource(R.string.viewer_epub_smaller)) }, onClick = {
+                                DropdownMenuItem(text = { Text(stringResource(I18nR.string.viewer_epub_smaller)) }, onClick = {
                                     menu = false
                                     epubStyle = epubStyle.copy(fontSp = (epubStyle.fontSp - 2).coerceAtLeast(12))
                                     ViewerLibrary.saveEpubStyle(context, epubStyle)
                                 })
-                                DropdownMenuItem(text = { Text(stringResource(R.string.viewer_epub_serif)) }, onClick = {
+                                DropdownMenuItem(text = { Text(stringResource(I18nR.string.viewer_epub_serif)) }, onClick = {
                                     menu = false
                                     epubStyle = epubStyle.copy(serif = !epubStyle.serif)
                                     ViewerLibrary.saveEpubStyle(context, epubStyle)
                                 })
-                                DropdownMenuItem(text = { Text(stringResource(R.string.viewer_epub_night)) }, onClick = {
+                                DropdownMenuItem(text = { Text(stringResource(I18nR.string.viewer_epub_night)) }, onClick = {
                                     menu = false
                                     epubStyle = epubStyle.copy(night = !epubStyle.night)
                                     ViewerLibrary.saveEpubStyle(context, epubStyle)
                                 })
                             }
                             if (s is DocState.BigText) {
-                                DropdownMenuItem(text = { Text(stringResource(R.string.od_edit_copy)) }, onClick = {
+                                DropdownMenuItem(text = { Text(stringResource(I18nR.string.od_edit_copy)) }, onClick = {
                                     menu = false
                                     scope.launch {
                                         val text = withContext(Dispatchers.IO) { s.big.head(TEXT_EDIT_LIMIT) }
@@ -441,7 +442,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
                                 })
                             }
                             if (s is DocState.Text && !editing && textUndo) {
-                                DropdownMenuItem(text = { Text(stringResource(R.string.od_undo_save)) }, onClick = {
+                                DropdownMenuItem(text = { Text(stringResource(I18nR.string.od_undo_save)) }, onClick = {
                                     menu = false
                                     scope.launch {
                                         val ok = withContext(Dispatchers.IO) {
@@ -453,25 +454,25 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
                                         if (ok) {
                                             textUndo = false
                                             state = withContext(Dispatchers.IO) { load(context, curUri, curName) }
-                                            message = context.getString(R.string.od_undo_done)
-                                        } else message = context.getString(R.string.od_undo_failed)
+                                            message = context.getString(I18nR.string.od_undo_done)
+                                        } else message = context.getString(I18nR.string.od_undo_failed)
                                     }
                                 })
                             }
                             if (s is DocState.Office) {
                                 if (s.controller.editing) {
-                                    DropdownMenuItem(text = { Text(stringResource(R.string.od_save_copy)) }, onClick = { menu = false; saveOfficeCopy(s.controller) })
+                                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.od_save_copy)) }, onClick = { menu = false; saveOfficeCopy(s.controller) })
                                 } else if (s.controller.hasUndo) {
-                                    DropdownMenuItem(text = { Text(stringResource(R.string.od_undo_save)) }, onClick = {
+                                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.od_undo_save)) }, onClick = {
                                         menu = false
                                         scope.launch {
-                                            message = context.getString(if (s.controller.undoLastSave()) R.string.od_undo_done else R.string.od_undo_failed)
+                                            message = context.getString(if (s.controller.undoLastSave()) I18nR.string.od_undo_done else I18nR.string.od_undo_failed)
                                         }
                                     })
                                 }
                             }
                             if (!editing && office?.editing != true) {
-                                DropdownMenuItem(text = { Text(stringResource(R.string.hc_open_with)) }, onClick = { menu = false; openWith() })
+                                DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_open_with)) }, onClick = { menu = false; openWith() })
                                 de.mm20.launcher2.ui.common.share.ShareMenuItem(onClick = {
                                     menu = false
                                     val shareUri = curUri
@@ -480,7 +481,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
                                         val ok = withContext(Dispatchers.IO) {
                                             de.mm20.launcher2.ui.common.share.ShareActions.shareFile(context, shareUri, context.contentResolver.getType(shareUri), shareName)
                                         }
-                                        if (!ok) message = context.getString(R.string.au9_share_failed)
+                                        if (!ok) message = context.getString(I18nR.string.au9_share_failed)
                                     }
                                 })
                             }
@@ -502,7 +503,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
                 is DocState.Office -> OfficeView(s.controller, onConvert = { convertLegacy(s.controller) })
                 is DocState.Text -> if (editing) {
                     Column(Modifier.fillMaxSize()) {
-                        if (s.copyOf != null) Text(stringResource(R.string.od_copy_hint), Modifier.padding(12.dp, 6.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+                        if (s.copyOf != null) Text(stringResource(I18nR.string.od_copy_hint), Modifier.padding(12.dp, 6.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
                         OutlinedTextField(
                             value = editText, onValueChange = { editText = it }, modifier = Modifier.fillMaxSize().padding(8.dp),
                             textStyle = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
@@ -522,10 +523,10 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
     if (confirmDiscard && (office != null || editing)) {
         AlertDialog(
             onDismissRequest = { confirmDiscard = false },
-            title = { Text(stringResource(R.string.od_discard_title)) },
-            text = { Text(stringResource(R.string.od_discard_text)) },
-            confirmButton = { TextButton(onClick = { confirmDiscard = false; if (office != null) office.discard() else editing = false }) { Text(stringResource(R.string.od_discard)) } },
-            dismissButton = { TextButton(onClick = { confirmDiscard = false }) { Text(stringResource(R.string.od_keep_editing)) } },
+            title = { Text(stringResource(I18nR.string.od_discard_title)) },
+            text = { Text(stringResource(I18nR.string.od_discard_text)) },
+            confirmButton = { TextButton(onClick = { confirmDiscard = false; if (office != null) office.discard() else editing = false }) { Text(stringResource(I18nR.string.od_discard)) } },
+            dismissButton = { TextButton(onClick = { confirmDiscard = false }) { Text(stringResource(I18nR.string.od_keep_editing)) } },
         )
     }
     val pdf = (state as? DocState.Pdf)?.doc
@@ -551,7 +552,7 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
                         extra.forEach { ViewerLibrary.addMark(context, key, it) }
                         extra.size
                     }
-                    message = context.getString(R.string.viewer_highlight_added, added)
+                    message = context.getString(I18nR.string.viewer_highlight_added, added)
                 }
             },
             onDismiss = { showSearch = false },
@@ -565,17 +566,17 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
         }
         AlertDialog(
             onDismissRequest = { showJump = false },
-            title = { Text(stringResource(R.string.od_go_to_page)) },
+            title = { Text(stringResource(I18nR.string.od_go_to_page)) },
             text = {
                 OutlinedTextField(
                     input, { input = it.filter { c -> c.isDigit() }.take(6) }, singleLine = true,
-                    label = { Text(stringResource(R.string.od_page_range, pdf.count)) },
+                    label = { Text(stringResource(I18nR.string.od_page_range, pdf.count)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Go),
                     keyboardActions = KeyboardActions(onGo = { go() }),
                 )
             },
-            confirmButton = { TextButton(onClick = { go() }) { Text(stringResource(R.string.od_go)) } },
-            dismissButton = { TextButton(onClick = { showJump = false }) { Text(stringResource(R.string.hc_cancel)) } },
+            confirmButton = { TextButton(onClick = { go() }) { Text(stringResource(I18nR.string.od_go)) } },
+            dismissButton = { TextButton(onClick = { showJump = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
     }
 }
@@ -603,11 +604,11 @@ private fun PdfSearchDialog(
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.od_search_pdf)) },
+        title = { Text(stringResource(I18nR.string.od_search_pdf)) },
         text = {
             Column {
                 de.mm20.launcher2.ui.component.TelosSearchBar(
-                    query, { query = it }, stringResource(R.string.od_search_hint),
+                    query, { query = it }, stringResource(I18nR.string.od_search_hint),
                     modifier = Modifier.padding(horizontal = 0.dp),
                     autoFocus = true,
                     onSearch = { run() },
@@ -616,16 +617,16 @@ private fun PdfSearchDialog(
                 when {
                     busy -> Row(Modifier.padding(top = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                         CircularProgressIndicator(Modifier.width(20.dp).aspectRatio(1f), strokeWidth = 2.dp)
-                        Text(stringResource(R.string.od_searching, progress), Modifier.padding(start = 12.dp), style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(I18nR.string.od_searching, progress), Modifier.padding(start = 12.dp), style = MaterialTheme.typography.bodySmall)
                     }
-                    r != null && noText -> Text(stringResource(R.string.od_no_text_layer), Modifier.padding(top = 12.dp), style = MaterialTheme.typography.bodySmall)
-                    r != null && r.isEmpty() -> Text(stringResource(R.string.od_no_results), Modifier.padding(top = 12.dp), style = MaterialTheme.typography.bodySmall)
+                    r != null && noText -> Text(stringResource(I18nR.string.od_no_text_layer), Modifier.padding(top = 12.dp), style = MaterialTheme.typography.bodySmall)
+                    r != null && r.isEmpty() -> Text(stringResource(I18nR.string.od_no_results), Modifier.padding(top = 12.dp), style = MaterialTheme.typography.bodySmall)
                     r != null -> {
-                        Text(stringResource(R.string.od_results_count, r.size), Modifier.padding(top = 12.dp, bottom = 4.dp), style = MaterialTheme.typography.labelMedium)
+                        Text(stringResource(I18nR.string.od_results_count, r.size), Modifier.padding(top = 12.dp, bottom = 4.dp), style = MaterialTheme.typography.labelMedium)
                         LazyColumn(Modifier.heightIn(max = 320.dp)) {
                             items(r.size) { i ->
                                 Column(Modifier.fillMaxWidth().clickable { onJump(r[i].page) }.padding(vertical = 6.dp)) {
-                                    Text(stringResource(R.string.hc_page_number, r[i].page + 1), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                                    Text(stringResource(I18nR.string.hc_page_number, r[i].page + 1), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
                                     Text(r[i].snippet, style = MaterialTheme.typography.bodySmall, maxLines = 3)
                                 }
                             }
@@ -636,13 +637,13 @@ private fun PdfSearchDialog(
         },
         confirmButton = {
             Row {
-                TextButton(onClick = { run() }) { Text(stringResource(R.string.hc_search)) }
+                TextButton(onClick = { run() }) { Text(stringResource(I18nR.string.hc_search)) }
                 if (!query.isBlank()) {
-                    TextButton(onClick = { onHighlightAll(query) }) { Text(stringResource(R.string.viewer_highlight_all)) }
+                    TextButton(onClick = { onHighlightAll(query) }) { Text(stringResource(I18nR.string.viewer_highlight_all)) }
                 }
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_close)) } },
     )
 }
 
@@ -658,49 +659,49 @@ private fun load(context: Context, uri: Uri, name: String): DocState = runCatchi
         DocumentTypes.isComic(name) -> {
             val pagesDir = File(dir, "comic_${file.name}")
             val pages = ComicArchive.extract(file, name, pagesDir)
-            if (pages.isEmpty()) DocState.Failed(context.getString(R.string.viewer_comic_empty))
+            if (pages.isEmpty()) DocState.Failed(context.getString(I18nR.string.viewer_comic_empty))
             else DocState.Comic(pages)
         }
         DocumentTypes.isGraphic(name) -> {
             val ext = DocumentTypes.ext(name)
             when (ext) {
-                "svg" -> DocState.Graphic(null, file, true, context.getString(R.string.viewer_preview_svg))
+                "svg" -> DocState.Graphic(null, file, true, context.getString(I18nR.string.viewer_preview_svg))
                 "psd" -> DocState.Graphic(
                     GraphicPreviews.psdThumbnail(file),
                     file,
                     false,
-                    context.getString(R.string.viewer_preview_psd),
+                    context.getString(I18nR.string.viewer_preview_psd),
                 )
                 "cdr" -> DocState.Graphic(
                     GraphicPreviews.embeddedRaster(file),
                     file,
                     false,
-                    context.getString(R.string.viewer_preview_cdr),
+                    context.getString(I18nR.string.viewer_preview_cdr),
                 )
                 else -> DocState.Graphic(
                     GraphicPreviews.embeddedRaster(file),
                     file,
                     false,
-                    context.getString(R.string.viewer_preview_ai),
+                    context.getString(I18nR.string.viewer_preview_ai),
                 )
             }.let { g ->
-                if (!g.svg && g.bitmap == null) DocState.Failed(context.getString(R.string.viewer_preview_none))
+                if (!g.svg && g.bitmap == null) DocState.Failed(context.getString(I18nR.string.viewer_preview_none))
                 else g
             }
         }
         DocumentTypes.isOfficeModel(name) -> {
             val doc = runCatching { OfficeDocs.open(file, name) }.getOrNull()
             if (doc != null) DocState.Office(OfficeController(context, uri, name, doc))
-            else if (DocumentTypes.isLegacyOffice(name)) DocState.Failed(context.getString(R.string.od_legacy_failed))
+            else if (DocumentTypes.isLegacyOffice(name)) DocState.Failed(context.getString(I18nR.string.od_legacy_failed))
             else {
                 // the structure could not be read: fall back to the plain text and tables
-                val blocks = DocumentReaders.read(file, name, DocLabels({ context.getString(R.string.od_sheet_n, it) }, { context.getString(R.string.au_office_slide_n, it) }))
-                if (blocks.isEmpty()) DocState.Failed(context.getString(R.string.od_nothing_to_show)) else DocState.Blocks(flatten(blocks))
+                val blocks = DocumentReaders.read(file, name, DocLabels({ context.getString(I18nR.string.od_sheet_n, it) }, { context.getString(I18nR.string.au_office_slide_n, it) }))
+                if (blocks.isEmpty()) DocState.Failed(context.getString(I18nR.string.od_nothing_to_show)) else DocState.Blocks(flatten(blocks))
             }
         }
         DocumentTypes.isOffice(name) -> {
-            val blocks = DocumentReaders.read(file, name, DocLabels({ context.getString(R.string.od_sheet_n, it) }, { context.getString(R.string.au_office_slide_n, it) }))
-            if (blocks.isEmpty()) DocState.Failed(context.getString(R.string.od_nothing_to_show))
+            val blocks = DocumentReaders.read(file, name, DocLabels({ context.getString(I18nR.string.od_sheet_n, it) }, { context.getString(I18nR.string.au_office_slide_n, it) }))
+            if (blocks.isEmpty()) DocState.Failed(context.getString(I18nR.string.od_nothing_to_show))
             else DocState.Blocks(flatten(blocks))
         }
         else -> {
@@ -710,11 +711,11 @@ private fun load(context: Context, uri: Uri, name: String): DocState = runCatchi
     }
 }.getOrElse {
     DocState.Failed(
-        if (it is EncryptedDocumentException) context.getString(R.string.au_office_encrypted)
-        else if (it is ArchiveRarUnavailableException) context.getString(R.string.viewer_cbr_fdroid)
-        else if (it is de.mm20.launcher2.ui.files.ArchiveRarEncryptedException) context.getString(R.string.viewer_cbr_encrypted)
-        else if (it is SecurityException) context.getString(R.string.od_pdf_protected)
-        else context.getString(R.string.od_cannot_open, it.message ?: it.javaClass.simpleName),
+        if (it is EncryptedDocumentException) context.getString(I18nR.string.au_office_encrypted)
+        else if (it is ArchiveRarUnavailableException) context.getString(I18nR.string.viewer_cbr_fdroid)
+        else if (it is de.mm20.launcher2.ui.files.ArchiveRarEncryptedException) context.getString(I18nR.string.viewer_cbr_encrypted)
+        else if (it is SecurityException) context.getString(I18nR.string.od_pdf_protected)
+        else context.getString(I18nR.string.od_cannot_open, it.message ?: it.javaClass.simpleName),
     )
 }
 
@@ -828,7 +829,7 @@ private fun PdfPage(
         if (shown != null) {
             Image(
                 shown.asImageBitmap(),
-                contentDescription = stringResource(R.string.hc_page_number, index + 1),
+                contentDescription = stringResource(I18nR.string.hc_page_number, index + 1),
                 modifier = Modifier.fillMaxSize().then(
                     if (highlight) Modifier.pointerInput(glyphs, fileKey, index) {
                         detectDragGestures(
@@ -923,7 +924,7 @@ private fun ComicView(pages: List<File>) {
         HorizontalPager(state = pager, modifier = Modifier.weight(1f).fillMaxWidth()) { i ->
             AsyncImage(
                 model = pages[i],
-                contentDescription = stringResource(R.string.hc_page_number, i + 1),
+                contentDescription = stringResource(I18nR.string.hc_page_number, i + 1),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Fit,
             )
@@ -985,7 +986,7 @@ private fun TextView(text: String) {
 private fun BigTextView(big: BigTextFile) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(12.dp)) {
         item {
-            Text(stringResource(R.string.od_text_too_big), Modifier.padding(bottom = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+            Text(stringResource(I18nR.string.od_text_too_big), Modifier.padding(bottom = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
         }
         items(big.lines) { i ->
             Text(big.line(i).ifEmpty { " " }, fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 18.sp, maxLines = 6)

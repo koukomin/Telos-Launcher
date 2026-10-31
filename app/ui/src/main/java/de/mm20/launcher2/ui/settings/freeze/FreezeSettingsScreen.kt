@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.freeze
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -115,26 +117,26 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
     val backStack = LocalBackStack.current
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_freeze),
+        title = stringResource(I18nR.string.preference_screen_freeze),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         item { tabs() }
         if (section == 2) item {
             val autoUpdate by viewModel.bloatAutoUpdate.collectAsStateWithLifecycle()
             val updateStatus by viewModel.bloatUpdateStatus.collectAsStateWithLifecycle()
-            SwitchPreference(title = stringResource(R.string.freeze_hub_auto_update),
-                summary = stringResource(R.string.freeze_hub_auto_update_help), value = autoUpdate,
+            SwitchPreference(title = stringResource(I18nR.string.freeze_hub_auto_update),
+                summary = stringResource(I18nR.string.freeze_hub_auto_update_help), value = autoUpdate,
                 onValueChanged = viewModel::setBloatAutoUpdate)
             if (updateStatus == de.mm20.launcher2.freeze.BloatUpdateStatus.Failed)
-                Text(stringResource(R.string.freeze_hub_update_failed))
+                Text(stringResource(I18nR.string.freeze_hub_update_failed))
             if (updateStatus == de.mm20.launcher2.freeze.BloatUpdateStatus.Updating)
                 androidx.compose.material3.LinearProgressIndicator()
-            PreferenceCategory(title = stringResource(R.string.freeze_maintenance_title)) {
-                SwitchPreference(title = stringResource(R.string.netfw_filter_user), value = includeUsers,
+            PreferenceCategory(title = stringResource(I18nR.string.freeze_maintenance_title)) {
+                SwitchPreference(title = stringResource(I18nR.string.netfw_filter_user), value = includeUsers,
                     onValueChanged = { includeUsers = it }, enabled = !maintenanceBusy)
-                SwitchPreference(title = stringResource(R.string.netfw_filter_system), value = includeSystem,
+                SwitchPreference(title = stringResource(I18nR.string.netfw_filter_system), value = includeSystem,
                     onValueChanged = { includeSystem = it }, enabled = !maintenanceBusy)
-                SwitchPreference(title = stringResource(R.string.freeze_system_iconless), value = includeIconless,
+                SwitchPreference(title = stringResource(I18nR.string.freeze_system_iconless), value = includeIconless,
                     onValueChanged = { includeIconless = it }, enabled = !maintenanceBusy)
                 val groups = buildSet {
                     if (includeUsers) add(de.mm20.launcher2.freeze.FrozenAppGroup.User)
@@ -142,64 +144,64 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                     if (includeIconless) add(de.mm20.launcher2.freeze.FrozenAppGroup.SystemWithoutLauncher)
                 }
                 val selectedCount = frozenInventory.count { it.group in groups }
-                Preference(title = stringResource(R.string.freeze_unfreeze_all),
-                    summary = stringResource(R.string.hf_freeze_frozen_apps) + ": " + selectedCount,
+                Preference(title = stringResource(I18nR.string.freeze_unfreeze_all),
+                    summary = stringResource(I18nR.string.hf_freeze_frozen_apps) + ": " + selectedCount,
                     enabled = !maintenanceBusy && selectedCount > 0 && hasPermission == true && activeBackend != FreezeBackendType.Island,
                     onClick = { viewModel.unfreezeAll(groups) },
                     controls = { if (maintenanceBusy) androidx.compose.material3.CircularProgressIndicator(
                         modifier = androidx.compose.ui.Modifier) })
-                Preference(title = stringResource(R.string.freeze_restore_all),
-                    summary = stringResource(R.string.hc_restore) + ": " + maintenanceEntries.size,
+                Preference(title = stringResource(I18nR.string.freeze_restore_all),
+                    summary = stringResource(I18nR.string.hc_restore) + ": " + maintenanceEntries.size,
                     enabled = !maintenanceBusy && maintenanceEntries.isNotEmpty(),
                     onClick = { viewModel.restoreFrozenApps() })
             }
         }
         if (section == 2) item {
             Preference(
-                icon = R.drawable.bar_chart_24px,
-                title = stringResource(R.string.preference_freeze_dashboard),
-                summary = stringResource(R.string.preference_freeze_dashboard_summary),
+                icon = BaseR.drawable.bar_chart_24px,
+                title = stringResource(I18nR.string.preference_freeze_dashboard),
+                summary = stringResource(I18nR.string.preference_freeze_dashboard_summary),
                 onClick = { backStack.add(FreezeDashboardRoute) }
             )
         }
         if (section == 2) item {
-            PreferenceCategory(title = stringResource(R.string.preference_freeze_backend_category)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_freeze_backend_category)) {
                 ListPreference(
-                    title = stringResource(R.string.preference_freeze_backend),
+                    title = stringResource(I18nR.string.preference_freeze_backend),
                     items = listOf(
-                        stringResource(R.string.preference_value_system_default) to FreezeBackendPreference.Auto,
-                        stringResource(R.string.freeze_backend_shizuku) to FreezeBackendPreference.ShizukuOnly,
-                        stringResource(R.string.telos_freeze_backend_dhizuku) to FreezeBackendPreference.DhizukuOnly,
-                        stringResource(R.string.freeze_backend_root) to FreezeBackendPreference.RootOnly,
-                        stringResource(R.string.freeze_backend_island) to FreezeBackendPreference.Island,
-                        stringResource(R.string.freeze_backend_device_owner) to FreezeBackendPreference.DeviceOwnerOnly,
+                        stringResource(I18nR.string.preference_value_system_default) to FreezeBackendPreference.Auto,
+                        stringResource(I18nR.string.freeze_backend_shizuku) to FreezeBackendPreference.ShizukuOnly,
+                        stringResource(I18nR.string.telos_freeze_backend_dhizuku) to FreezeBackendPreference.DhizukuOnly,
+                        stringResource(I18nR.string.freeze_backend_root) to FreezeBackendPreference.RootOnly,
+                        stringResource(I18nR.string.freeze_backend_island) to FreezeBackendPreference.Island,
+                        stringResource(I18nR.string.freeze_backend_device_owner) to FreezeBackendPreference.DeviceOwnerOnly,
                     ),
                     value = backend,
                     onValueChanged = { viewModel.setBackend(it) }
                 )
                 if (activeBackend == null) {
                     Banner(
-                        text = stringResource(R.string.freeze_no_backend_available),
-                        icon = R.drawable.error_24px,
+                        text = stringResource(I18nR.string.freeze_no_backend_available),
+                        icon = BaseR.drawable.error_24px,
                     )
                 } else {
                     Preference(
-                        icon = R.drawable.ac_unit_24px,
+                        icon = BaseR.drawable.ac_unit_24px,
                         title = stringResource(
                             when (activeBackend) {
-                                FreezeBackendType.Shizuku -> R.string.freeze_backend_shizuku
+                                FreezeBackendType.Shizuku -> I18nR.string.freeze_backend_shizuku
                                 // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
-                                FreezeBackendType.Dhizuku -> R.string.telos_freeze_backend_dhizuku
+                                FreezeBackendType.Dhizuku -> I18nR.string.telos_freeze_backend_dhizuku
                                 // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
-                                FreezeBackendType.Root -> R.string.freeze_backend_root
-                                FreezeBackendType.Island -> R.string.freeze_backend_island
-                                FreezeBackendType.DeviceOwner -> R.string.freeze_backend_device_owner
-                                null -> R.string.freeze_backend_none
+                                FreezeBackendType.Root -> I18nR.string.freeze_backend_root
+                                FreezeBackendType.Island -> I18nR.string.freeze_backend_island
+                                FreezeBackendType.DeviceOwner -> I18nR.string.freeze_backend_device_owner
+                                null -> I18nR.string.freeze_backend_none
                             }
                         ),
                         summary = stringResource(
-                            if (hasPermission == true) R.string.freeze_permission_granted
-                            else R.string.freeze_permission_not_granted
+                            if (hasPermission == true) I18nR.string.freeze_permission_granted
+                            else I18nR.string.freeze_permission_not_granted
                         ),
                         onClick = {
                             (context as? AppCompatActivity)?.let { viewModel.requestPermission(it) }
@@ -207,8 +209,8 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                     )
                 }
                 Preference(
-                    icon = R.drawable.lock_24px,
-                    title = stringResource(R.string.freeze_device_owner_setup_title),
+                    icon = BaseR.drawable.lock_24px,
+                    title = stringResource(I18nR.string.freeze_device_owner_setup_title),
                     onClick = { backStack.add(DeviceOwnerSetupRoute) },
                 )
             }
@@ -216,34 +218,34 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
         if (section == 1) item {
             val recentsEnabled by viewModel.freezeOnRecentsRemoval.collectAsStateWithLifecycle()
             val recentsConnected by viewModel.recentsConnected.collectAsStateWithLifecycle()
-            SwitchPreference(title = stringResource(R.string.freeze_hub_recents),
-                summary = stringResource(R.string.freeze_hub_recents_help), value = recentsEnabled,
+            SwitchPreference(title = stringResource(I18nR.string.freeze_hub_recents),
+                summary = stringResource(I18nR.string.freeze_hub_recents_help), value = recentsEnabled,
                 onValueChanged = viewModel::setFreezeOnRecentsRemoval)
-            if (recentsEnabled && !recentsConnected) Text(stringResource(R.string.freeze_hub_recents_unavailable))
-            PreferenceCategory(title = stringResource(R.string.preference_freeze_auto_category)) {
+            if (recentsEnabled && !recentsConnected) Text(stringResource(I18nR.string.freeze_hub_recents_unavailable))
+            PreferenceCategory(title = stringResource(I18nR.string.preference_freeze_auto_category)) {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_freeze_auto_enabled),
-                    summary = stringResource(R.string.preference_freeze_auto_enabled_summary),
+                    title = stringResource(I18nR.string.preference_freeze_auto_enabled),
+                    summary = stringResource(I18nR.string.preference_freeze_auto_enabled_summary),
                     value = autoFreezeEnabled == true,
                     onValueChanged = { viewModel.setAutoFreezeEnabled(it) }
                 )
                 AnimatedVisibility(autoFreezeEnabled == true) {
                     Column {
                         ListPreference(
-                            title = stringResource(R.string.preference_freeze_profile),
+                            title = stringResource(I18nR.string.preference_freeze_profile),
                             items = listOf(
-                                stringResource(R.string.freeze_profile_battery_saver) to FreezeProfile.BatterySaver,
-                                stringResource(R.string.freeze_profile_balanced) to FreezeProfile.Balanced,
-                                stringResource(R.string.freeze_profile_aggressive) to FreezeProfile.Aggressive,
-                                stringResource(R.string.freeze_profile_ultra_aggressive) to FreezeProfile.UltraAggressive,
-                                stringResource(R.string.freeze_profile_custom) to FreezeProfile.Custom,
+                                stringResource(I18nR.string.freeze_profile_battery_saver) to FreezeProfile.BatterySaver,
+                                stringResource(I18nR.string.freeze_profile_balanced) to FreezeProfile.Balanced,
+                                stringResource(I18nR.string.freeze_profile_aggressive) to FreezeProfile.Aggressive,
+                                stringResource(I18nR.string.freeze_profile_ultra_aggressive) to FreezeProfile.UltraAggressive,
+                                stringResource(I18nR.string.freeze_profile_custom) to FreezeProfile.Custom,
                             ),
                             value = profile ?: FreezeProfile.Balanced,
                             summary = when (profile) {
-                                FreezeProfile.BatterySaver -> stringResource(R.string.freeze_profile_battery_saver_summary)
-                                FreezeProfile.Balanced -> stringResource(R.string.freeze_profile_balanced_summary)
-                                FreezeProfile.Aggressive -> stringResource(R.string.freeze_profile_aggressive_summary)
-                                FreezeProfile.UltraAggressive -> stringResource(R.string.freeze_profile_ultra_aggressive_summary)
+                                FreezeProfile.BatterySaver -> stringResource(I18nR.string.freeze_profile_battery_saver_summary)
+                                FreezeProfile.Balanced -> stringResource(I18nR.string.freeze_profile_balanced_summary)
+                                FreezeProfile.Aggressive -> stringResource(I18nR.string.freeze_profile_aggressive_summary)
+                                FreezeProfile.UltraAggressive -> stringResource(I18nR.string.freeze_profile_ultra_aggressive_summary)
                                 else -> null
                             },
                             onValueChanged = { viewModel.setProfile(it) }
@@ -251,36 +253,36 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                         AnimatedVisibility(profile == FreezeProfile.Custom) {
                             Column {
                                 SwitchPreference(
-                                    title = stringResource(R.string.preference_freeze_on_screen_off),
+                                    title = stringResource(I18nR.string.preference_freeze_on_screen_off),
                                     value = freezeOnScreenOff == true,
                                     onValueChanged = { viewModel.setFreezeOnScreenOff(it) }
                                 )
                                 SwitchPreference(
-                                    title = stringResource(R.string.preference_freeze_on_idle),
+                                    title = stringResource(I18nR.string.preference_freeze_on_idle),
                                     value = freezeOnIdle == true,
                                     onValueChanged = { viewModel.setFreezeOnIdle(it) }
                                 )
                                 AnimatedVisibility(freezeOnIdle == true) {
                                     SliderPreference(
-                                        title = stringResource(R.string.preference_freeze_idle_timeout),
+                                        title = stringResource(I18nR.string.preference_freeze_idle_timeout),
                                         value = idleTimeoutMinutes ?: 15,
                                         min = 1,
                                         max = 120,
                                         step = 1,
                                         onValueChanged = { viewModel.setIdleTimeoutMinutes(it) },
-                                        label = { Text(stringResource(R.string.au3_commsfreeze_minutes, it)) }
+                                        label = { Text(stringResource(I18nR.string.au3_commsfreeze_minutes, it)) }
                                     )
                                 }
                                 SwitchPreference(
-                                    title = stringResource(R.string.preference_freeze_on_battery_saver),
+                                    title = stringResource(I18nR.string.preference_freeze_on_battery_saver),
                                     value = freezeOnBatterySaver == true,
                                     onValueChanged = { viewModel.setFreezeOnBatterySaver(it) }
                                 )
                                 ListPreference(
-                                    title = stringResource(R.string.preference_freeze_exclusion_strictness),
+                                    title = stringResource(I18nR.string.preference_freeze_exclusion_strictness),
                                     items = listOf(
-                                        stringResource(R.string.freeze_exclusion_strictness_strict) to FreezeExclusionStrictness.Strict,
-                                        stringResource(R.string.freeze_exclusion_strictness_relaxed) to FreezeExclusionStrictness.Relaxed,
+                                        stringResource(I18nR.string.freeze_exclusion_strictness_strict) to FreezeExclusionStrictness.Strict,
+                                        stringResource(I18nR.string.freeze_exclusion_strictness_relaxed) to FreezeExclusionStrictness.Relaxed,
                                     ),
                                     value = exclusionStrictness ?: FreezeExclusionStrictness.Strict,
                                     onValueChanged = { viewModel.setExclusionStrictness(it) }
@@ -288,8 +290,8 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                             }
                         }
                         SwitchPreference(
-                            title = stringResource(R.string.freeze_exclude_foreground),
-                            summary = stringResource(R.string.freeze_exclude_foreground_summary),
+                            title = stringResource(I18nR.string.freeze_exclude_foreground),
+                            summary = stringResource(I18nR.string.freeze_exclude_foreground_summary),
                             value = excludeForeground,
                             onValueChanged = {
                                 viewModel.setExcludeForeground(it)
@@ -297,42 +299,42 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                             },
                         )
                         if (excludeForeground) Preference(
-                            title = stringResource(R.string.preference_freeze_usage_access),
-                            summary = stringResource(if (usageAccessGranted) R.string.preference_freeze_usage_access_summary_granted else R.string.preference_freeze_usage_access_summary_not_granted),
+                            title = stringResource(I18nR.string.preference_freeze_usage_access),
+                            summary = stringResource(if (usageAccessGranted) I18nR.string.preference_freeze_usage_access_summary_granted else I18nR.string.preference_freeze_usage_access_summary_not_granted),
                             onClick = { (context as? AppCompatActivity)?.let(viewModel::requestUsageAccess) },
                         )
                         ListPreference(
-                            title = stringResource(R.string.preference_freeze_exclusion_strictness),
-                            summary = stringResource(R.string.preference_freeze_exclusion_strictness_summary),
+                            title = stringResource(I18nR.string.preference_freeze_exclusion_strictness),
+                            summary = stringResource(I18nR.string.preference_freeze_exclusion_strictness_summary),
                             items = listOf(
-                                de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(stringResource(R.string.preference_freeze_on_idle), 0),
-                                de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(stringResource(R.string.preference_freeze_on_battery_saver), 1),
-                                de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(stringResource(R.string.preference_freeze_on_screen_off), 2)
+                                de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(stringResource(I18nR.string.preference_freeze_on_idle), 0),
+                                de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(stringResource(I18nR.string.preference_freeze_on_battery_saver), 1),
+                                de.mm20.launcher2.ui.component.preferences.ListPreferenceItem(stringResource(I18nR.string.preference_freeze_on_screen_off), 2)
                             ),
                             value = 1,
                             onValueChanged = { } // Just visual UI integration placeholder to show the key
                         )
                         SwitchPreference(
-                            title = stringResource(R.string.preference_freeze_exclude_music),
-                            summary = stringResource(R.string.preference_freeze_exclude_music_summary),
+                            title = stringResource(I18nR.string.preference_freeze_exclude_music),
+                            summary = stringResource(I18nR.string.preference_freeze_exclude_music_summary),
                             value = excludeMusic == true,
                             onValueChanged = { viewModel.setExcludeMusic(it) }
                         )
                         SwitchPreference(
-                            title = stringResource(R.string.preference_freeze_exclude_network),
-                            summary = stringResource(R.string.preference_freeze_exclude_network_summary),
+                            title = stringResource(I18nR.string.preference_freeze_exclude_network),
+                            summary = stringResource(I18nR.string.preference_freeze_exclude_network_summary),
                             value = excludeNetwork == true,
                             onValueChanged = { viewModel.setExcludeNetwork(it) }
                         )
                         AnimatedVisibility(excludeNetwork == true) {
                             SliderPreference(
-                                title = stringResource(R.string.preference_freeze_network_threshold),
+                                title = stringResource(I18nR.string.preference_freeze_network_threshold),
                                 value = networkThresholdKb ?: 100,
                                 min = 10,
                                 max = 1000,
                                 step = 10,
                                 onValueChanged = { viewModel.setNetworkThresholdKb(it) },
-                                label = { Text(stringResource(R.string.preference_freeze_network_threshold_summary) + " (" + stringResource(R.string.au_freeze_kbps, it) + ")") }
+                                label = { Text(stringResource(I18nR.string.preference_freeze_network_threshold_summary) + " (" + stringResource(I18nR.string.au_freeze_kbps, it) + ")") }
                             )
                         }
 
@@ -341,48 +343,48 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
             }
         }
         if (section == 2) item {
-            PreferenceCategory(title = stringResource(R.string.preference_freeze_apps_category)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_freeze_apps_category)) {
                 Text(
-                    text = stringResource(R.string.preference_freeze_apps_summary),
+                    text = stringResource(I18nR.string.preference_freeze_apps_summary),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_freeze_show_system_apps),
-                    summary = stringResource(R.string.preference_freeze_show_system_apps_summary),
+                    title = stringResource(I18nR.string.preference_freeze_show_system_apps),
+                    summary = stringResource(I18nR.string.preference_freeze_show_system_apps_summary),
                     value = showSystemApps,
                     onValueChanged = { viewModel.setShowSystemApps(it) }
                 )
                 AnimatedVisibility(showSystemApps) {
                     Banner(
-                        text = stringResource(R.string.freeze_system_apps_warning),
-                        icon = R.drawable.error_24px,
+                        text = stringResource(I18nR.string.freeze_system_apps_warning),
+                        icon = BaseR.drawable.error_24px,
                     )
                 }
                 SwitchPreference(
-                    title = stringResource(R.string.preference_freeze_show_iconless_apps),
-                    summary = stringResource(R.string.preference_freeze_show_iconless_apps_summary),
+                    title = stringResource(I18nR.string.preference_freeze_show_iconless_apps),
+                    summary = stringResource(I18nR.string.preference_freeze_show_iconless_apps_summary),
                     value = showIconlessApps,
                     onValueChanged = { viewModel.setShowIconlessApps(it) }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_freeze_advanced_features),
-                    summary = stringResource(R.string.preference_freeze_advanced_features_summary),
+                    title = stringResource(I18nR.string.preference_freeze_advanced_features),
+                    summary = stringResource(I18nR.string.preference_freeze_advanced_features_summary),
                     value = advancedFeaturesEnabled,
                     onValueChanged = { viewModel.setAdvancedFeaturesEnabled(it) }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_freeze_hide_from_launcher),
-                    summary = stringResource(R.string.preference_freeze_hide_from_launcher_summary),
+                    title = stringResource(I18nR.string.preference_freeze_hide_from_launcher),
+                    summary = stringResource(I18nR.string.preference_freeze_hide_from_launcher_summary),
                     value = hideFromLauncher,
                     onValueChanged = { viewModel.setHideFromLauncher(it) }
                 )
                 // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
                 ListPreference(
-                    title = stringResource(R.string.preference_frozen_app_style),
+                    title = stringResource(I18nR.string.preference_frozen_app_style),
                     items = listOf(
-                        stringResource(R.string.preference_frozen_app_style_grayscale) to FrozenAppStyle.Grayscale,
-                        stringResource(R.string.preference_frozen_app_style_snowflake) to FrozenAppStyle.SnowflakeBadge
+                        stringResource(I18nR.string.preference_frozen_app_style_grayscale) to FrozenAppStyle.Grayscale,
+                        stringResource(I18nR.string.preference_frozen_app_style_snowflake) to FrozenAppStyle.SnowflakeBadge
                     ),
                     value = frozenAppStyle,
                     onValueChanged = { if (it != null) viewModel.setFrozenAppStyle(it) }

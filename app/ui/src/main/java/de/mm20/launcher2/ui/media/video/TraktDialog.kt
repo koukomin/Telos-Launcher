@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -79,7 +80,7 @@ internal fun TraktDialog(onDismiss: () -> Unit) {
             if (e == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
                 scope.launch {
                     reload()
-                    if (login?.connected == true && waitingBrowser) { waitingBrowser = false; message = context.getString(R.string.au_video_trakt_connected) }
+                    if (login?.connected == true && waitingBrowser) { waitingBrowser = false; message = context.getString(I18nR.string.au_video_trakt_connected) }
                 }
             }
         }
@@ -90,23 +91,23 @@ internal fun TraktDialog(onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = { job?.cancel(); onDismiss() },
-        title = { Text(stringResource(R.string.au7_trakt_title)) },
+        title = { Text(stringResource(I18nR.string.au7_trakt_title)) },
         text = {
             Column(verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp), modifier = Modifier.verticalScroll(rememberScrollState())) {
-                Text(stringResource(R.string.au8_traktweb_howto), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text(stringResource(R.string.au7_trakt_privacy), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(I18nR.string.au8_traktweb_howto), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(I18nR.string.au7_trakt_privacy), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 if (l.connected) {
-                    Text(stringResource(R.string.au7_trakt_signed_in), style = MaterialTheme.typography.titleSmall)
+                    Text(stringResource(I18nR.string.au7_trakt_signed_in), style = MaterialTheme.typography.titleSmall)
                     if (syncing) {
                         LinearProgressIndicator(Modifier.fillMaxWidth())
-                        Text(stringResource(R.string.ermis_loading))
+                        Text(stringResource(I18nR.string.ermis_loading))
                     }
-                    if (syncFailed) Text(stringResource(R.string.pdft_error_title), color = MaterialTheme.colorScheme.error)
+                    if (syncFailed) Text(stringResource(I18nR.string.pdft_error_title), color = MaterialTheme.colorScheme.error)
                     TextButton(enabled = !syncing, onClick = { scope.launch { Trakt.refreshLibrary(context.applicationContext, force = true); reload() } }) {
-                        Text(stringResource(R.string.hc_sync_now))
+                        Text(stringResource(I18nR.string.hc_sync_now))
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(stringResource(R.string.au7_trakt_switch), modifier = Modifier.weight(1f))
+                        Text(stringResource(I18nR.string.au7_trakt_switch), modifier = Modifier.weight(1f))
                         Switch(checked = l.enabled, onCheckedChange = { on ->
                             scope.launch {
                                 withContext(Dispatchers.IO) { Trakt.setEnabled(context, on) }
@@ -115,14 +116,14 @@ internal fun TraktDialog(onDismiss: () -> Unit) {
                         })
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(stringResource(R.string.au7_trakt_queue, queue), modifier = Modifier.weight(1f))
+                        Text(stringResource(I18nR.string.au7_trakt_queue, queue), modifier = Modifier.weight(1f))
                         TextButton(enabled = queue > 0, onClick = {
                             scope.launch { withContext(Dispatchers.IO) { Trakt.clearQueue(context) }; reload() }
-                        }) { Text(stringResource(R.string.au7_trakt_clear_queue)) }
+                        }) { Text(stringResource(I18nR.string.au7_trakt_clear_queue)) }
                     }
                     TextButton(onClick = {
                         scope.launch { withContext(Dispatchers.IO) { Trakt.signOut(context) }; reload() }
-                    }) { Text(stringResource(R.string.au7_trakt_sign_out)) }
+                    }) { Text(stringResource(I18nR.string.au7_trakt_sign_out)) }
                 } else {
                     var showAdvanced by remember { mutableStateOf(false) }
 
@@ -145,57 +146,57 @@ internal fun TraktDialog(onDismiss: () -> Unit) {
                                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                                 }.isSuccess
                                 waitingBrowser = ok
-                                message = context.getString(if (ok) R.string.au8_traktweb_waiting_browser else R.string.au8_traktweb_no_browser)
+                                message = context.getString(if (ok) I18nR.string.au8_traktweb_waiting_browser else I18nR.string.au8_traktweb_no_browser)
                             }
                         },
-                    ) { Text(stringResource(R.string.au8_traktweb_sign_in_browser)) }
+                    ) { Text(stringResource(I18nR.string.au8_traktweb_sign_in_browser)) }
                     if (!useCode && code == null) {
-                        TextButton(onClick = { useCode = true }) { Text(stringResource(R.string.au8_traktweb_use_code)) }
+                        TextButton(onClick = { useCode = true }) { Text(stringResource(I18nR.string.au8_traktweb_use_code)) }
                     }
                     val pending = code
                     if (!useCode && pending == null) {
                         // device code sign in is hidden until asked for
                     } else if (pending == null) {
                         TextButton(enabled = clientId.isNotBlank() && secret.isNotBlank(), onClick = {
-                            message = context.getString(R.string.au_video_trakt_contacting)
+                            message = context.getString(I18nR.string.au_video_trakt_contacting)
                             job = scope.launch {
                                 withContext(Dispatchers.IO) { Trakt.saveApp(context, clientId, secret) }
                                 runCatching { Trakt.startDeviceLogin(clientId.trim()) }
                                     .onSuccess { c ->
                                         code = c
-                                        message = context.getString(R.string.au7_trakt_waiting, c.verificationUrl)
+                                        message = context.getString(I18nR.string.au7_trakt_waiting, c.verificationUrl)
                                         try {
                                             Trakt.finishDeviceLogin(context, clientId.trim(), secret.trim(), c)
-                                            message = context.getString(R.string.au_video_trakt_connected)
+                                            message = context.getString(I18nR.string.au_video_trakt_connected)
                                             reload()
                                         } catch (e: CancellationException) {
                                             throw e
                                         } catch (e: Exception) {
-                                            message = context.getString(R.string.au_video_trakt_signin_failed)
+                                            message = context.getString(I18nR.string.au_video_trakt_signin_failed)
                                         } finally {
                                             code = null
                                         }
                                     }
-                                    .onFailure { if (it is CancellationException) throw it; message = context.getString(R.string.au_video_trakt_unreachable) }
+                                    .onFailure { if (it is CancellationException) throw it; message = context.getString(I18nR.string.au_video_trakt_unreachable) }
                             }
-                        }) { Text(stringResource(R.string.au7_trakt_sign_in)) }
+                        }) { Text(stringResource(I18nR.string.au7_trakt_sign_in)) }
                     } else {
-                        Text(stringResource(R.string.au_video_trakt_open_and_enter, pending.verificationUrl), style = MaterialTheme.typography.bodyMedium)
+                        Text(stringResource(I18nR.string.au_video_trakt_open_and_enter, pending.verificationUrl), style = MaterialTheme.typography.bodyMedium)
                         Text(pending.userCode, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary)
                         Row {
-                            TextButton(onClick = { copyCode(context, pending.userCode) }) { Text(stringResource(R.string.au7_trakt_copy)) }
+                            TextButton(onClick = { copyCode(context, pending.userCode) }) { Text(stringResource(I18nR.string.au7_trakt_copy)) }
                             TextButton(onClick = {
                                 runCatching {
                                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(pending.verificationUrl)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                                 }
-                            }) { Text(stringResource(R.string.hc_open_trakt_tv_activate)) }
+                            }) { Text(stringResource(I18nR.string.hc_open_trakt_tv_activate)) }
                         }
                     }
                 }
                 if (message.isNotEmpty()) Text(message, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
             }
         },
-        confirmButton = { TextButton(onClick = { job?.cancel(); onDismiss() }) { Text(stringResource(R.string.close)) } },
+        confirmButton = { TextButton(onClick = { job?.cancel(); onDismiss() }) { Text(stringResource(I18nR.string.close)) } },
     )
 }
 

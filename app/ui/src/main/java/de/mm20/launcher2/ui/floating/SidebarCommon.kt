@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.floating
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -186,17 +188,17 @@ internal enum class SidebarTool(
     val icon: Int,
     val color: Color,
 ) {
-    Screenshot("screenshot", R.string.floating_launcher_tool_screenshot, R.drawable.ic_sidebar_screenshot, Color(0xFF1A6DFF)),
-    PartialScreenshot("partial_screenshot", R.string.floating_launcher_tool_partial_screenshot, R.drawable.ic_sidebar_partial_screenshot, Color(0xFF1A6DFF)),
-    ScrollingScreenshot("scrolling_screenshot", R.string.floating_launcher_tool_scrolling_screenshot, R.drawable.ic_sidebar_scrolling_screenshot, Color(0xFF1A6DFF)),
-    ScreenRecorder("screen_recorder", R.string.floating_launcher_tool_screen_recorder, R.drawable.ic_glyph_screen_recorder, Color(0xFFE64A19)),
-    VoiceRecorder("voice_recorder", R.string.floating_launcher_tool_voice_recorder, R.drawable.ic_glyph_voice_recorder, Color(0xFF00838F)),
-    RecentFiles("recent_files", R.string.floating_launcher_recent_files, R.drawable.schedule_24px, Color(0xFF3D8BFF)),
-    Flashlight("flashlight", R.string.floating_launcher_tool_flashlight, R.drawable.bolt_24px, Color(0xFFF59E0B)),
-    QuickSettings("quick_settings", R.string.floating_launcher_tool_quick_settings, R.drawable.tune_24px, Color(0xFF7C4DFF)),
-    Notifications("notifications", R.string.floating_launcher_tool_notifications, R.drawable.notifications_24px, Color(0xFF00897B)),
-    LockScreen("lock_screen", R.string.floating_launcher_tool_lock_screen, R.drawable.lock_24px, Color(0xFF546E7A)),
-    PowerMenu("power_menu", R.string.floating_launcher_tool_power_menu, R.drawable.power_settings_new_24px, Color(0xFFD32F2F));
+    Screenshot("screenshot", I18nR.string.floating_launcher_tool_screenshot, BaseR.drawable.ic_sidebar_screenshot, Color(0xFF1A6DFF)),
+    PartialScreenshot("partial_screenshot", I18nR.string.floating_launcher_tool_partial_screenshot, BaseR.drawable.ic_sidebar_partial_screenshot, Color(0xFF1A6DFF)),
+    ScrollingScreenshot("scrolling_screenshot", I18nR.string.floating_launcher_tool_scrolling_screenshot, BaseR.drawable.ic_sidebar_scrolling_screenshot, Color(0xFF1A6DFF)),
+    ScreenRecorder("screen_recorder", I18nR.string.floating_launcher_tool_screen_recorder, BaseR.drawable.ic_glyph_screen_recorder, Color(0xFFE64A19)),
+    VoiceRecorder("voice_recorder", I18nR.string.floating_launcher_tool_voice_recorder, BaseR.drawable.ic_glyph_voice_recorder, Color(0xFF00838F)),
+    RecentFiles("recent_files", I18nR.string.floating_launcher_recent_files, BaseR.drawable.schedule_24px, Color(0xFF3D8BFF)),
+    Flashlight("flashlight", I18nR.string.floating_launcher_tool_flashlight, BaseR.drawable.bolt_24px, Color(0xFFF59E0B)),
+    QuickSettings("quick_settings", I18nR.string.floating_launcher_tool_quick_settings, BaseR.drawable.tune_24px, Color(0xFF7C4DFF)),
+    Notifications("notifications", I18nR.string.floating_launcher_tool_notifications, BaseR.drawable.notifications_24px, Color(0xFF00897B)),
+    LockScreen("lock_screen", I18nR.string.floating_launcher_tool_lock_screen, BaseR.drawable.lock_24px, Color(0xFF546E7A)),
+    PowerMenu("power_menu", I18nR.string.floating_launcher_tool_power_menu, BaseR.drawable.power_settings_new_24px, Color(0xFFD32F2F));
 
     val key: String get() = KEY_PREFIX + id
 
@@ -303,7 +305,7 @@ internal fun SidebarEditIcon(size: Dp) {
         Modifier.size(size).clip(RoundedCornerShape(size * 0.3f)).background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(painterResource(R.drawable.edit_24px), contentDescription = null, modifier = Modifier.size(size * 0.5f))
+        Icon(painterResource(BaseR.drawable.edit_24px), contentDescription = null, modifier = Modifier.size(size * 0.5f))
     }
 }
 
@@ -329,7 +331,7 @@ internal fun SidebarAllToolsIcon(size: Dp) {
 /** The list opened by the "All" tile: every tool */
 @Composable
 internal fun SidebarToolsOverlay(onTool: (SidebarTool) -> Unit, onDismiss: () -> Unit) {
-    SidebarSheet(title = stringResource(R.string.floating_launcher_tools_all), onDismiss = onDismiss) {
+    SidebarSheet(title = stringResource(I18nR.string.floating_launcher_tools_all), onDismiss = onDismiss) {
         val style = LocalSidebarStyle.current
         for (row in SidebarTool.entries.chunked(3)) {
             Row(
@@ -470,8 +472,8 @@ internal fun FavoriteIcon(
                     .background(MaterialTheme.colorScheme.errorContainer),
             ) {
                 Icon(
-                    painterResource(R.drawable.close_20px),
-                    contentDescription = stringResource(R.string.floating_launcher_remove_app),
+                    painterResource(BaseR.drawable.close_20px),
+                    contentDescription = stringResource(I18nR.string.floating_launcher_remove_app),
                     tint = MaterialTheme.colorScheme.onErrorContainer,
                     modifier = Modifier.size(14.dp),
                 )
@@ -535,7 +537,7 @@ internal fun FileDockOverlay(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = stringResource(R.string.floating_launcher_file_dock),
+                        text = stringResource(I18nR.string.floating_launcher_file_dock),
                         style = MaterialTheme.typography.titleSmall,
                         modifier = Modifier.weight(1f),
                         maxLines = 1,
@@ -543,14 +545,14 @@ internal fun FileDockOverlay(
                     )
                     IconButton(onClick = onDismiss) {
                         Icon(
-                            painterResource(R.drawable.close_24px),
-                            contentDescription = stringResource(R.string.close),
+                            painterResource(BaseR.drawable.close_24px),
+                            contentDescription = stringResource(I18nR.string.close),
                         )
                     }
                 }
                 if (items.isEmpty()) {
                     Text(
-                        text = stringResource(R.string.floating_launcher_file_dock_empty),
+                        text = stringResource(I18nR.string.floating_launcher_file_dock_empty),
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     )
@@ -570,7 +572,7 @@ internal fun FileDockOverlay(
                                                 }
                                                 Toast.makeText(
                                                     context,
-                                                    context.getString(R.string.floating_launcher_file_dock_copied),
+                                                    context.getString(I18nR.string.floating_launcher_file_dock_copied),
                                                     Toast.LENGTH_SHORT,
                                                 ).show()
                                             }
@@ -586,7 +588,7 @@ internal fun FileDockOverlay(
                                                         )
                                                     }
                                                     if (!shared) {
-                                                        Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                                                        Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
                                                     }
                                                 }
                                             }
@@ -599,8 +601,8 @@ internal fun FileDockOverlay(
                                 Icon(
                                     painterResource(
                                         when (dockItem) {
-                                            is FileDockItem.TextItem -> R.drawable.description_24px
-                                            is FileDockItem.MediaItem -> R.drawable.attach_file_24px
+                                            is FileDockItem.TextItem -> BaseR.drawable.description_24px
+                                            is FileDockItem.MediaItem -> BaseR.drawable.attach_file_24px
                                         }
                                     ),
                                     contentDescription = null,
@@ -620,8 +622,8 @@ internal fun FileDockOverlay(
                                     modifier = Modifier.size(32.dp),
                                 ) {
                                     Icon(
-                                        painterResource(R.drawable.close_20px),
-                                        contentDescription = stringResource(R.string.floating_launcher_remove_app),
+                                        painterResource(BaseR.drawable.close_20px),
+                                        contentDescription = stringResource(I18nR.string.floating_launcher_remove_app),
                                         modifier = Modifier.size(18.dp),
                                     )
                                 }
@@ -748,8 +750,8 @@ internal fun SidebarSheet(title: String, onDismiss: () -> Unit, content: @Compos
                     Text(text = title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
                     IconButton(onClick = onDismiss) {
                         Icon(
-                            painterResource(R.drawable.close_24px),
-                            contentDescription = stringResource(R.string.close),
+                            painterResource(BaseR.drawable.close_24px),
+                            contentDescription = stringResource(I18nR.string.close),
                         )
                     }
                 }
@@ -798,12 +800,12 @@ internal fun RecentFilesOverlay(onOpened: () -> Unit, onDismiss: () -> Unit) {
     val files by produceState<List<RecentFile>?>(null) {
         value = withContext(Dispatchers.IO) { runCatching { queryRecentFiles(context) }.getOrDefault(emptyList()) }
     }
-    SidebarSheet(title = stringResource(R.string.floating_launcher_recent_files), onDismiss = onDismiss) {
+    SidebarSheet(title = stringResource(I18nR.string.floating_launcher_recent_files), onDismiss = onDismiss) {
         val list = files
         when {
             list == null -> Unit
             list.isEmpty() -> Text(
-                text = stringResource(R.string.floating_launcher_recent_files_empty),
+                text = stringResource(I18nR.string.floating_launcher_recent_files_empty),
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
             )
@@ -821,7 +823,7 @@ internal fun RecentFilesOverlay(onOpened: () -> Unit, onDismiss: () -> Unit) {
                                     context.startActivity(intent)
                                     onOpened()
                                 } catch (_: Exception) {
-                                    Toast.makeText(context, R.string.floating_launcher_recent_files_no_app, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, I18nR.string.floating_launcher_recent_files_no_app, Toast.LENGTH_SHORT).show()
                                 }
                             }
                             .padding(horizontal = 16.dp, vertical = 10.dp)

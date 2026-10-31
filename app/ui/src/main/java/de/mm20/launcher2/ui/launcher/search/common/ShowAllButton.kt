@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.common
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
@@ -28,7 +29,7 @@ fun ColumnScope.ShowAllButton(
         onClick = onShowAll,
         contentPadding = ButtonDefaults.TextButtonWithTrailingIconContentPadding,
     ) {
-        Text(stringResource(R.string.show_all))
+        Text(stringResource(I18nR.string.show_all))
         Icon(
             Icons.AutoMirrored.Rounded.ArrowForward,
             null,

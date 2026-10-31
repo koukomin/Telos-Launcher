@@ -1,10 +1,10 @@
 package de.mm20.launcher2.comms.sip
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.util.Log
 import com.tutpro.baresip.Api
 import com.tutpro.baresip.BaresipService
-import de.mm20.launcher2.i18n.R as I18nR
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.io.File

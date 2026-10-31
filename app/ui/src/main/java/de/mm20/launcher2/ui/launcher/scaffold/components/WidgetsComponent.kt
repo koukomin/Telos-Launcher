@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -160,7 +161,7 @@ internal class WidgetsComponent(
             exit = shrinkVertically(shrinkTowards = Alignment.Top) + fadeOut(),
         ) {
             CenterAlignedTopAppBar(
-                title = { Text(stringResource(R.string.menu_edit_widgets)) },
+                title = { Text(stringResource(I18nR.string.menu_edit_widgets)) },
                 navigationIcon = {
                     IconButton(
                         onClick = {
@@ -168,7 +169,7 @@ internal class WidgetsComponent(
                             scope.launch { state.unlock() }
                         }
                     ) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.action_done))
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(I18nR.string.action_done))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

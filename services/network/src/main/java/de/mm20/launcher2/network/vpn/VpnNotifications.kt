@@ -1,4 +1,5 @@
 package de.mm20.launcher2.network.vpn
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.Manifest
 import android.app.Notification
@@ -11,7 +12,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.network.api.NetworkSettingsValues
 import de.mm20.launcher2.network.api.NotificationDetail
 

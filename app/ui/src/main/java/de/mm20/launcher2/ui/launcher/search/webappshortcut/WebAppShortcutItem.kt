@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.webappshortcut
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
@@ -81,8 +83,8 @@ fun WebAppShortcutItem(
             val isPinned by viewModel.isPinned.collectAsState(false)
             val favAction = if (isPinned) {
                 DefaultToolbarAction(
-                    label = stringResource(R.string.menu_favorites_unpin),
-                    icon = R.drawable.star_24px_filled,
+                    label = stringResource(I18nR.string.menu_favorites_unpin),
+                    icon = BaseR.drawable.star_24px_filled,
                     action = {
                         viewModel.unpin()
                         onBack?.invoke()
@@ -90,8 +92,8 @@ fun WebAppShortcutItem(
                 )
             } else {
                 DefaultToolbarAction(
-                    label = stringResource(R.string.menu_favorites_pin),
-                    icon = R.drawable.star_24px,
+                    label = stringResource(I18nR.string.menu_favorites_pin),
+                    icon = BaseR.drawable.star_24px,
                     action = {
                         viewModel.pin()
                         onBack?.invoke()
@@ -103,8 +105,8 @@ fun WebAppShortcutItem(
         var showEditSheet by remember { mutableStateOf(false) }
         toolbarActions.add(
             DefaultToolbarAction(
-                label = stringResource(R.string.web_app_shortcut_edit),
-                icon = R.drawable.tune_24px,
+                label = stringResource(I18nR.string.web_app_shortcut_edit),
+                icon = BaseR.drawable.tune_24px,
                 action = { showEditSheet = true }
             )
         )
@@ -112,8 +114,8 @@ fun WebAppShortcutItem(
         var showDeleteDialog by remember { mutableStateOf(false) }
         toolbarActions.add(
             DefaultToolbarAction(
-                label = stringResource(R.string.menu_delete),
-                icon = R.drawable.delete_24px,
+                label = stringResource(I18nR.string.menu_delete),
+                icon = BaseR.drawable.delete_24px,
                 action = { showDeleteDialog = true }
             )
         )
@@ -121,8 +123,8 @@ fun WebAppShortcutItem(
         if (inDock) {
             toolbarActions.add(
                 DefaultToolbarAction(
-                    label = stringResource(R.string.dock_menu_remove),
-                    icon = R.drawable.delete_24px,
+                    label = stringResource(I18nR.string.dock_menu_remove),
+                    icon = BaseR.drawable.delete_24px,
                     action = {
                         onRemoveFromDock?.invoke()
                         onBack?.invoke()
@@ -131,8 +133,8 @@ fun WebAppShortcutItem(
             )
             toolbarActions.add(
                 DefaultToolbarAction(
-                    label = stringResource(R.string.dock_menu_replace),
-                    icon = R.drawable.autorenew_24px,
+                    label = stringResource(I18nR.string.dock_menu_replace),
+                    icon = BaseR.drawable.autorenew_24px,
                     action = {
                         onReplaceInDock?.invoke()
                         onBack?.invoke()
@@ -144,8 +146,8 @@ fun WebAppShortcutItem(
         Toolbar(
             leftActions = if (onBack != null) listOf(
                 DefaultToolbarAction(
-                    stringResource(id = R.string.menu_back),
-                    icon = R.drawable.arrow_back_24px,
+                    stringResource(id = I18nR.string.menu_back),
+                    icon = BaseR.drawable.arrow_back_24px,
                     action = onBack
                 )
             ) else emptyList(),
@@ -157,14 +159,14 @@ fun WebAppShortcutItem(
         if (showDeleteDialog) {
             AlertDialog(
                 onDismissRequest = { showDeleteDialog = false },
-                title = { Text(stringResource(R.string.web_app_delete_title)) },
-                text = { Text(stringResource(R.string.web_app_delete_message, shortcut.labelOverride ?: shortcut.label)) },
+                title = { Text(stringResource(I18nR.string.web_app_delete_title)) },
+                text = { Text(stringResource(I18nR.string.web_app_delete_message, shortcut.labelOverride ?: shortcut.label)) },
                 confirmButton = {
                     TextButton(onClick = {
                         showDeleteDialog = false
                         panelManager.delete(shortcut)
                         onBack?.invoke()
-                    }) { Text(stringResource(R.string.menu_delete)) }
+                    }) { Text(stringResource(I18nR.string.menu_delete)) }
                 },
                 dismissButton = {
                     TextButton(onClick = { showDeleteDialog = false }) {

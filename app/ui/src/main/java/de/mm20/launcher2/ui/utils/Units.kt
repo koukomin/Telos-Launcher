@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.utils
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.icu.number.NumberFormatter
@@ -60,7 +61,7 @@ private fun formatMeters(
         val formatted = NumberFormat.getInstance().apply {
             maximumFractionDigits = 0
         }.format(meters)
-        return "$formatted ${context.getString(R.string.unit_meter_symbol)}"
+        return "$formatted ${context.getString(I18nR.string.unit_meter_symbol)}"
     }
 }
 
@@ -79,7 +80,7 @@ private fun formatKilometers(
         val formatted = NumberFormat.getInstance().apply {
             maximumFractionDigits = 1
         }.format(kilometers)
-        return "$formatted ${context.getString(R.string.unit_kilometer_symbol)}"
+        return "$formatted ${context.getString(I18nR.string.unit_kilometer_symbol)}"
     }
 }
 
@@ -99,7 +100,7 @@ private fun formatFeet(
         val formatted = NumberFormat.getInstance().apply {
             maximumFractionDigits = 0
         }.format(feet)
-        return "$formatted ${context.getString(R.string.unit_foot_symbol)}"
+        return "$formatted ${context.getString(I18nR.string.unit_foot_symbol)}"
     }
 }
 
@@ -118,7 +119,7 @@ private fun formatYards(
         val formatted = NumberFormat.getInstance().apply {
             maximumFractionDigits = 0
         }.format(yards)
-        return "$formatted ${context.getString(R.string.unit_yard_symbol)}"
+        return "$formatted ${context.getString(I18nR.string.unit_yard_symbol)}"
     }
 }
 
@@ -137,7 +138,7 @@ private fun formatMiles(
         val formatted = NumberFormat.getInstance().apply {
             maximumFractionDigits = 1
         }.format(miles)
-        return "$formatted ${context.getString(R.string.unit_mile_symbol)}"
+        return "$formatted ${context.getString(I18nR.string.unit_mile_symbol)}"
     }
 }
 
@@ -168,7 +169,7 @@ private fun formatKmH(
         val formatted = NumberFormat.getInstance().apply {
             maximumFractionDigits = 0
         }.format(kmH)
-        return "$formatted ${context.getString(R.string.unit_kilometer_per_hour_symbol)}"
+        return "$formatted ${context.getString(I18nR.string.unit_kilometer_per_hour_symbol)}"
     }
 }
 
@@ -187,7 +188,7 @@ private fun formatMpH(
         val formatted = NumberFormat.getInstance().apply {
             maximumFractionDigits = 0
         }.format(mph)
-        return "$formatted ${context.getString(R.string.unit_mile_per_hour_symbol)}"
+        return "$formatted ${context.getString(I18nR.string.unit_mile_per_hour_symbol)}"
     }
 }
 
@@ -269,7 +270,7 @@ private fun formatMillimeters(
         val formatted = NumberFormat.getInstance().apply {
             maximumFractionDigits = 1
         }.format(millimeters)
-        return "$formatted ${context.getString(R.string.unit_millimeter_symbol)}"
+        return "$formatted ${context.getString(I18nR.string.unit_millimeter_symbol)}"
     }
 }
 
@@ -288,6 +289,6 @@ private fun formatInches(
         val formatted = NumberFormat.getInstance().apply {
             maximumFractionDigits = 1
         }.format(inches)
-        return "$formatted ${context.getString(R.string.unit_inch_symbol)}"
+        return "$formatted ${context.getString(I18nR.string.unit_inch_symbol)}"
     }
 }

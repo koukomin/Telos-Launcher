@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.apps
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.PendingIntent
 import android.content.Intent
@@ -146,7 +148,7 @@ fun AppItem(
                                 if (showAppDetails) {
                                     app.versionName?.let {
                                         Text(
-                                            text = stringResource(R.string.app_info_version, it),
+                                            text = stringResource(I18nR.string.app_info_version, it),
                                             style = MaterialTheme.typography.bodySmall,
                                             modifier = Modifier.padding(top = 4.dp),
                                             maxLines = 1,
@@ -163,7 +165,7 @@ fun AppItem(
                                 }
                             } else {
                                 Text(
-                                    stringResource(R.string.profile_private_profile_state_locked),
+                                    stringResource(I18nR.string.profile_private_profile_state_locked),
                                     style = MaterialTheme.typography.bodySmall,
                                     modifier = Modifier.padding(top = 8.dp),
                                     color = MaterialTheme.colorScheme.secondary,
@@ -273,7 +275,7 @@ fun AppItem(
                                                         viewModel.clearNotification(not)
                                                     }
                                                 ) {
-                                                    Icon(painterResource(R.drawable.close_24px), null)
+                                                    Icon(painterResource(BaseR.drawable.close_24px), null)
                                                 }
                                             }
                                         }
@@ -289,13 +291,13 @@ fun AppItem(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(
-                                        painterResource(R.drawable.notifications_24px),
+                                        painterResource(BaseR.drawable.notifications_24px),
                                         null,
                                         modifier = Modifier.padding(horizontal = 16.dp)
                                     )
                                     Text(
                                         pluralStringResource(
-                                            R.plurals.app_info_notifications,
+                                            I18nR.plurals.app_info_notifications,
                                             notifications.size,
                                             notifications.size
                                         ),
@@ -303,7 +305,7 @@ fun AppItem(
                                         modifier = Modifier.weight(1f),
                                     )
                                     Icon(
-                                        painterResource(R.drawable.chevron_forward_24px),
+                                        painterResource(BaseR.drawable.chevron_forward_24px),
                                         null,
                                         modifier = Modifier.padding(horizontal = 12.dp)
                                     )
@@ -382,10 +384,10 @@ fun AppItem(
                                     ) {
                                         Icon(
                                             painterResource(
-                                                if (isPinned) R.drawable.star_24px_filled
-                                                else R.drawable.star_24px
+                                                if (isPinned) BaseR.drawable.star_24px_filled
+                                                else BaseR.drawable.star_24px
                                             ),
-                                            stringResource(if (isPinned) R.string.menu_favorites_unpin else R.string.menu_favorites_pin),
+                                            stringResource(if (isPinned) I18nR.string.menu_favorites_unpin else I18nR.string.menu_favorites_pin),
                                         )
                                     }
                                 }
@@ -401,16 +403,16 @@ fun AppItem(
                         val isPinned by viewModel.isPinned.collectAsState(false)
                         val favAction = if (isPinned) {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_unpin),
-                                icon = R.drawable.star_24px_filled,
+                                label = stringResource(I18nR.string.menu_favorites_unpin),
+                                icon = BaseR.drawable.star_24px_filled,
                                 action = {
                                     viewModel.unpin()
                                 }
                             )
                         } else {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_pin),
-                                icon = R.drawable.star_24px,
+                                label = stringResource(I18nR.string.menu_favorites_pin),
+                                icon = BaseR.drawable.star_24px,
                                 action = {
                                     viewModel.pin()
                                 })
@@ -421,8 +423,8 @@ fun AppItem(
                     if (!app.isPrivate) {
                         toolbarActions.add(
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_app_info),
-                                icon = R.drawable.info_24px,
+                                label = stringResource(I18nR.string.menu_app_info),
+                                icon = BaseR.drawable.info_24px,
                             ) {
                                 sheetManager.showAppInfoModal(app)
                             })
@@ -430,8 +432,8 @@ fun AppItem(
 
                     toolbarActions.add(
                         DefaultToolbarAction(
-                            label = stringResource(R.string.menu_launch),
-                            icon = R.drawable.open_in_new_24px,
+                            label = stringResource(I18nR.string.menu_launch),
+                            icon = BaseR.drawable.open_in_new_24px,
                             action = {
                                 viewModel.launch(context)
                             }
@@ -441,8 +443,8 @@ fun AppItem(
                     if (!app.isPrivate) {
                         toolbarActions.add(
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_customize),
-                                icon = R.drawable.tune_24px,
+                                label = stringResource(I18nR.string.menu_customize),
+                                icon = BaseR.drawable.tune_24px,
                                 action = { sheetManager.showCustomizeSearchableModal(app) }
                             ))
                     }
@@ -451,8 +453,8 @@ fun AppItem(
                         val storeDetails = remember(app) { app.getStoreDetails(context) }
                         val shareAction = if (storeDetails == null) {
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_share),
-                                icon = R.drawable.share_24px,
+                                label = stringResource(I18nR.string.menu_share),
+                                icon = BaseR.drawable.share_24px,
                             ) {
                                 scope.launch {
                                     app.shareApkFile(context)
@@ -460,15 +462,15 @@ fun AppItem(
                             }
                         } else {
                             SubmenuToolbarAction(
-                                label = stringResource(R.string.menu_share),
-                                icon = R.drawable.share_24px,
+                                label = stringResource(I18nR.string.menu_share),
+                                icon = BaseR.drawable.share_24px,
                                 children = listOf(
                                     DefaultToolbarAction(
                                         label = stringResource(
-                                            R.string.menu_share_store_link,
+                                            I18nR.string.menu_share_store_link,
                                             storeDetails.label
                                         ),
-                                        icon = R.drawable.link_24px,
+                                        icon = BaseR.drawable.link_24px,
                                         action = {
                                             val shareIntent = Intent(Intent.ACTION_SEND)
                                             shareIntent.putExtra(
@@ -485,8 +487,8 @@ fun AppItem(
                                         }
                                     ),
                                     DefaultToolbarAction(
-                                        label = stringResource(R.string.menu_share_apk_file),
-                                        icon = R.drawable.apk_document_24px,
+                                        label = stringResource(I18nR.string.menu_share_apk_file),
+                                        icon = BaseR.drawable.apk_document_24px,
                                     ) {
                                         scope.launch {
                                             app.shareApkFile(context)
@@ -501,8 +503,8 @@ fun AppItem(
                     if (app.canUninstall) {
                         toolbarActions.add(
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_uninstall),
-                                icon = R.drawable.delete_24px,
+                                label = stringResource(I18nR.string.menu_uninstall),
+                                icon = BaseR.drawable.delete_24px,
                             ) {
                                 app.uninstall(context)
                                 onBack()
@@ -514,18 +516,18 @@ fun AppItem(
                         toolbarActions.add(
                             DefaultToolbarAction(
                                 label = stringResource(
-                                    if (shutterKey != null) R.string.menu_shutter_change
-                                    else R.string.menu_shutter_set
+                                    if (shutterKey != null) I18nR.string.menu_shutter_change
+                                    else I18nR.string.menu_shutter_set
                                 ),
-                                icon = R.drawable.swipe_up_alt_24px,
+                                icon = BaseR.drawable.swipe_up_alt_24px,
                                 action = { showShutterPicker = true }
                             )
                         )
                         if (shutterKey != null) {
                             toolbarActions.add(
                                 DefaultToolbarAction(
-                                    label = stringResource(R.string.menu_shutter_remove),
-                                    icon = R.drawable.close_24px,
+                                    label = stringResource(I18nR.string.menu_shutter_remove),
+                                    icon = BaseR.drawable.close_24px,
                                     action = {
                                         shutterSettings.setApp(
                                             ShutterSettings.hostKey(app.key, app.componentName.packageName),
@@ -541,9 +543,9 @@ fun AppItem(
                     toolbarActions.add(
                         DefaultToolbarAction(
                             label = stringResource(
-                                if (isSuspended) R.string.telos_unfreeze_app else R.string.telos_freeze_app
+                                if (isSuspended) I18nR.string.telos_unfreeze_app else I18nR.string.telos_freeze_app
                             ),
-                            icon = if (isSuspended) R.drawable.play_arrow_24px else R.drawable.ac_unit_24px,
+                            icon = if (isSuspended) BaseR.drawable.play_arrow_24px else BaseR.drawable.ac_unit_24px,
                             action = {
                                 if (isSuspended) viewModel.unfreeze() else viewModel.freeze()
                             }
@@ -559,8 +561,8 @@ fun AppItem(
                         if (workProfile != null && app.user != workProfile.userHandle) {
                             toolbarActions.add(
                                 DefaultToolbarAction(
-                                    label = stringResource(R.string.telos_clone_app),
-                                    icon = R.drawable.content_copy_24px,
+                                    label = stringResource(I18nR.string.telos_clone_app),
+                                    icon = BaseR.drawable.content_copy_24px,
                                     action = {
                                         viewModel.cloneToSandbox(context, workProfile.userHandle)
                                     }
@@ -571,8 +573,8 @@ fun AppItem(
 
                         toolbarActions.add(
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_force_stop),
-                                icon = R.drawable.close_24px,
+                                label = stringResource(I18nR.string.menu_force_stop),
+                                icon = BaseR.drawable.close_24px,
                                 action = {
                                     viewModel.forceStop()
                                 }
@@ -580,8 +582,8 @@ fun AppItem(
                         )
                         toolbarActions.add(
                             DefaultToolbarAction(
-                                label = stringResource(R.string.menu_clear_cache),
-                                icon = R.drawable.autorenew_24px,
+                                label = stringResource(I18nR.string.menu_clear_cache),
+                                icon = BaseR.drawable.autorenew_24px,
                                 action = {
                                     viewModel.clearCache()
                                 }
@@ -592,8 +594,8 @@ fun AppItem(
                     if (inDock) {
             toolbarActions.add(
                 DefaultToolbarAction(
-                    label = stringResource(R.string.dock_menu_remove),
-                    icon = R.drawable.delete_24px,
+                    label = stringResource(I18nR.string.dock_menu_remove),
+                    icon = BaseR.drawable.delete_24px,
                     action = {
                         onRemoveFromDock?.invoke()
                         onBack()
@@ -602,8 +604,8 @@ fun AppItem(
             )
             toolbarActions.add(
                 DefaultToolbarAction(
-                    label = stringResource(R.string.dock_menu_replace),
-                    icon = R.drawable.autorenew_24px,
+                    label = stringResource(I18nR.string.dock_menu_replace),
+                    icon = BaseR.drawable.autorenew_24px,
                     action = {
                         onReplaceInDock?.invoke()
                         onBack()
@@ -615,8 +617,8 @@ fun AppItem(
         Toolbar(
                         leftActions = listOf(
                             DefaultToolbarAction(
-                                label = stringResource(id = R.string.menu_back),
-                                icon = R.drawable.arrow_back_24px,
+                                label = stringResource(id = I18nR.string.menu_back),
+                                icon = BaseR.drawable.arrow_back_24px,
                             ) {
                                 onBack()
                             }

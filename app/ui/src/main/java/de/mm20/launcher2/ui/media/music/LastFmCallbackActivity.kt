@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.music
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Activity
 import android.os.Bundle
@@ -25,10 +26,10 @@ class LastFmCallbackActivity : Activity() {
         thread {
             val result = runCatching { LastFm.finishWebLogin(app, token) }.getOrDefault(LastFm.Companion.WebResult.Failed)
             val msg = when (result) {
-                LastFm.Companion.WebResult.Connected -> R.string.au_music_lastfm_connected
-                LastFm.Companion.WebResult.NotPending -> R.string.au12_lastfmweb_not_pending
-                LastFm.Companion.WebResult.Expired -> R.string.au12_lastfmweb_expired
-                LastFm.Companion.WebResult.Failed -> R.string.au12_lastfmweb_failed
+                LastFm.Companion.WebResult.Connected -> I18nR.string.au_music_lastfm_connected
+                LastFm.Companion.WebResult.NotPending -> I18nR.string.au12_lastfmweb_not_pending
+                LastFm.Companion.WebResult.Expired -> I18nR.string.au12_lastfmweb_expired
+                LastFm.Companion.WebResult.Failed -> I18nR.string.au12_lastfmweb_failed
             }
             runOnUiThread {
                 Toast.makeText(app, msg, Toast.LENGTH_LONG).show()

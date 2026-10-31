@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files.remote
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
@@ -76,13 +77,13 @@ fun ConnectionsScreen() {
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.hc_cloud_and_network_storage)) },
-                navigationIcon = { IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) } },
+                title = { Text(stringResource(I18nR.string.hc_cloud_and_network_storage)) },
+                navigationIcon = { IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back)) } },
             )
         },
         floatingActionButton = {
             Box {
-                FloatingActionButton(onClick = { picking = true }) { Icon(painterResource(Icons.add_24px), contentDescription = stringResource(R.string.hc_add)) }
+                FloatingActionButton(onClick = { picking = true }) { Icon(painterResource(Icons.add_24px), contentDescription = stringResource(I18nR.string.hc_add)) }
                 DropdownMenu(expanded = picking, onDismissRequest = { picking = false }) {
                     RemoteType.values().forEach { type ->
                         DropdownMenuItem(
@@ -97,10 +98,10 @@ fun ConnectionsScreen() {
         if (list.isEmpty()) {
             Column(Modifier.fillMaxSize().padding(padding).padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 Icon(painterResource(Icons.cloud_20px), contentDescription = null, tint = MaterialTheme.colorScheme.outline, modifier = Modifier.size(48.dp))
-                Text(stringResource(R.string.hc_add_a_nextcloud_owncloud_webdav_sftp_smb), Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(I18nR.string.hc_add_a_nextcloud_owncloud_webdav_sftp_smb), Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         } else Column(Modifier.fillMaxSize().padding(padding)) {
-          de.mm20.launcher2.ui.component.TelosSearchBar(cq, { cq = it }, stringResource(R.string.hc_search))
+          de.mm20.launcher2.ui.component.TelosSearchBar(cq, { cq = it }, stringResource(I18nR.string.hc_search))
           if (shownList.isEmpty()) de.mm20.launcher2.ui.component.SearchEmptyState(cq.trim())
           else LazyColumn(Modifier.fillMaxSize()) {
             item(key = "remote_previews") { RemotePreviewSettings() }
@@ -134,18 +135,18 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
     var c by remember { mutableStateOf(initial) }
     var status by remember { mutableStateOf<String?>(null) }
     var statusOk by remember { mutableStateOf(false) }
-    val connectingText = stringResource(R.string.au_files_connecting)
-    val cloudName = stringResource(R.string.au_files_cloud_default_name)
+    val connectingText = stringResource(I18nR.string.au_files_connecting)
+    val cloudName = stringResource(I18nR.string.au_files_cloud_default_name)
     var busy by remember { mutableStateOf(false) }
     val type = c.type
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (isNew) stringResource(R.string.hf_remote_new_connection, type.label) else c.name) },
+        title = { Text(if (isNew) stringResource(I18nR.string.hf_remote_new_connection, type.label) else c.name) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(type.hint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Field(stringResource(R.string.hf_remote_name), c.name) { c = c.copy(name = it) }
+                Field(stringResource(I18nR.string.hf_remote_name), c.name) { c = c.copy(name = it) }
                 if (type == RemoteType.System) {
                     val picker = androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocumentTree()) { uri ->
                         if (uri != null) {
@@ -153,14 +154,14 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                             c = c.copy(host = uri.toString(), name = c.name.ifBlank { Uri.decode(uri.toString()).substringAfterLast(':').substringAfterLast('/').ifBlank { cloudName } })
                         }
                     }
-                    Text(if (c.host.isBlank()) stringResource(R.string.hf_remote_no_folder) else Uri.decode(c.host).substringAfter("tree/"), style = MaterialTheme.typography.bodySmall, maxLines = 2)
-                    OutlinedButton(onClick = { picker.launch(null) }) { Text(if (c.host.isBlank()) stringResource(R.string.hf_remote_choose_folder) else stringResource(R.string.hf_remote_choose_other_folder)) }
+                    Text(if (c.host.isBlank()) stringResource(I18nR.string.hf_remote_no_folder) else Uri.decode(c.host).substringAfter("tree/"), style = MaterialTheme.typography.bodySmall, maxLines = 2)
+                    OutlinedButton(onClick = { picker.launch(null) }) { Text(if (c.host.isBlank()) stringResource(I18nR.string.hf_remote_choose_folder) else stringResource(I18nR.string.hf_remote_choose_other_folder)) }
                 } else if (!type.cloud) {
-                    Field(stringResource(R.string.hc_server), c.host, if (type == RemoteType.Smb) "nas.local or 192.168.1.10 or smb://nas/share" else "cloud.example.com") { c = c.copy(host = it, fingerprint = if (it == c.host) c.fingerprint else "") }
+                    Field(stringResource(I18nR.string.hc_server), c.host, if (type == RemoteType.Smb) "nas.local or 192.168.1.10 or smb://nas/share" else "cloud.example.com") { c = c.copy(host = it, fingerprint = if (it == c.host) c.fingerprint else "") }
                     if (type == RemoteType.Smb) {
                         val hosts by remember { SmbLan.discover(context) }.collectAsState(emptyList())
                         if (hosts.isNotEmpty()) {
-                            Text(stringResource(R.string.telos_files_smb_nearby), style = MaterialTheme.typography.labelMedium)
+                            Text(stringResource(I18nR.string.telos_files_smb_nearby), style = MaterialTheme.typography.labelMedium)
                             hosts.take(12).forEach { h ->
                                 TextButton(onClick = { c = c.copy(host = h.host, port = h.port, name = c.name.ifBlank { h.name }) }) {
                                     Text("${h.name}  (${h.host})")
@@ -168,30 +169,30 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                             }
                         }
                     }
-                    Field(stringResource(R.string.hf_remote_port), if (c.port > 0) c.port.toString() else "", type.defaultPort.toString()) { c = c.copy(port = it.filter(Char::isDigit).toIntOrNull() ?: 0) }
-                    Field(stringResource(R.string.hc_user_name), c.user) { c = c.copy(user = it) }
-                    Field(if (type == RemoteType.Sftp && c.privateKey.isNotBlank()) stringResource(R.string.hf_remote_key_password) else stringResource(R.string.hc_password), c.password, password = true) { c = c.copy(password = it) }
+                    Field(stringResource(I18nR.string.hf_remote_port), if (c.port > 0) c.port.toString() else "", type.defaultPort.toString()) { c = c.copy(port = it.filter(Char::isDigit).toIntOrNull() ?: 0) }
+                    Field(stringResource(I18nR.string.hc_user_name), c.user) { c = c.copy(user = it) }
+                    Field(if (type == RemoteType.Sftp && c.privateKey.isNotBlank()) stringResource(I18nR.string.hf_remote_key_password) else stringResource(I18nR.string.hc_password), c.password, password = true) { c = c.copy(password = it) }
                     Field(
-                        when (type) { RemoteType.Smb -> stringResource(R.string.hf_remote_share_name); RemoteType.Sftp, RemoteType.Ftp -> stringResource(R.string.hf_remote_start_folder); else -> stringResource(R.string.hf_remote_server_folder) },
+                        when (type) { RemoteType.Smb -> stringResource(I18nR.string.hf_remote_share_name); RemoteType.Sftp, RemoteType.Ftp -> stringResource(I18nR.string.hf_remote_start_folder); else -> stringResource(I18nR.string.hf_remote_server_folder) },
                         c.path,
                     ) { c = c.copy(path = it) }
                     if (type != RemoteType.Sftp && type != RemoteType.Smb) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(if (type == RemoteType.Ftp) stringResource(R.string.hf_remote_ftps) else stringResource(R.string.hf_remote_use_https), Modifier.weight(1f))
+                            Text(if (type == RemoteType.Ftp) stringResource(I18nR.string.hf_remote_ftps) else stringResource(I18nR.string.hf_remote_use_https), Modifier.weight(1f))
                             Switch(checked = c.tls, onCheckedChange = { c = c.copy(tls = it) })
                         }
                     }
                     if (type == RemoteType.Ftp && c.tls) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Column(Modifier.weight(1f)) {
-                                Text(stringResource(R.string.au2_dlsec_ftps_anyhost))
-                                Text(stringResource(R.string.au2_dlsec_ftps_anyhost_summary), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Text(stringResource(I18nR.string.au2_dlsec_ftps_anyhost))
+                                Text(stringResource(I18nR.string.au2_dlsec_ftps_anyhost_summary), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                             Switch(checked = c.acceptAnyHost, onCheckedChange = { c = c.copy(acceptAnyHost = it) })
                         }
                     }
                     if (type == RemoteType.Sftp) {
-                        Field(stringResource(R.string.hf_remote_private_key), c.privateKey, minLines = 3) { c = c.copy(privateKey = it) }
+                        Field(stringResource(I18nR.string.hf_remote_private_key), c.privateKey, minLines = 3) { c = c.copy(privateKey = it) }
                         val publicKey = remember(c.privateKey, c.user, c.host) { SshKeys.publicLine(c.privateKey, "${c.user.ifBlank { "telos" }}@telos") }
                         val clipboard = androidx.compose.ui.platform.LocalClipboardManager.current
                         val keyScope = rememberCoroutineScope()
@@ -204,13 +205,13 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                                         c = c.copy(privateKey = pem, password = "")
                                     } finally { busy = false }
                                 }
-                            }, enabled = !busy) { Text(stringResource(R.string.telos_files_ssh_generate_key)) }
+                            }, enabled = !busy) { Text(stringResource(I18nR.string.telos_files_ssh_generate_key)) }
                             if (publicKey != null) TextButton(onClick = { clipboard.setText(androidx.compose.ui.text.AnnotatedString(publicKey)) }) {
-                                Text(stringResource(R.string.telos_files_ssh_copy_public_key))
+                                Text(stringResource(I18nR.string.telos_files_ssh_copy_public_key))
                             }
                         }
-                        if (publicKey != null) Text(stringResource(R.string.telos_files_ssh_public_key_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        if (c.fingerprint.isNotEmpty()) Text(stringResource(R.string.hc_server_key, c.fingerprint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        if (publicKey != null) Text(stringResource(I18nR.string.telos_files_ssh_public_key_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        if (c.fingerprint.isNotEmpty()) Text(stringResource(I18nR.string.hc_server_key, c.fingerprint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 } else {
                     CloudFields(c, onChange = { c = it }, onStatus = { text, ok -> status = text; statusOk = ok })
@@ -218,10 +219,10 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                 status?.let { Text(it, color = if (statusOk) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error) }
             }
         },
-        confirmButton = { TextButton(enabled = c.name.isNotBlank() && !busy && (type != RemoteType.System || c.host.isNotBlank()), onClick = { onSave(c) }) { Text(stringResource(R.string.hc_save)) } },
+        confirmButton = { TextButton(enabled = c.name.isNotBlank() && !busy && (type != RemoteType.System || c.host.isNotBlank()), onClick = { onSave(c) }) { Text(stringResource(I18nR.string.hc_save)) } },
         dismissButton = {
             Row {
-                if (!isNew) TextButton(onClick = onDelete) { Text(stringResource(R.string.hc_delete), color = MaterialTheme.colorScheme.error) }
+                if (!isNew) TextButton(onClick = onDelete) { Text(stringResource(I18nR.string.hc_delete), color = MaterialTheme.colorScheme.error) }
                 TextButton(enabled = !busy, onClick = {
                     busy = true; statusOk = true; status = connectingText
                     scope.launch {
@@ -233,10 +234,10 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                         }
                         busy = false
                         statusOk = result.isSuccess
-                        status = result.fold({ context.getString(R.string.au_files_connected_items, it) }, { context.getString(R.string.au_files_connect_failed, it.message.orEmpty()) })
+                        status = result.fold({ context.getString(I18nR.string.au_files_connected_items, it) }, { context.getString(I18nR.string.au_files_connect_failed, it.message.orEmpty()) })
                     }
-                }) { Text(stringResource(R.string.hc_test)) }
-                TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) }
+                }) { Text(stringResource(I18nR.string.hc_test)) }
+                TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) }
             }
         },
     )

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.parts
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.ui.theme.rememberWallpaperContentStyle
 import android.content.Context
@@ -296,7 +298,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                                             } else {
                                                                 // Placeholder icon
                                                                 Icon(
-                                                                    painter = androidx.compose.ui.res.painterResource(R.drawable.add_24px),
+                                                                    painter = androidx.compose.ui.res.painterResource(BaseR.drawable.add_24px),
                                                                     contentDescription = null,
                                                                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                                                                 )
@@ -357,15 +359,15 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
             ) {
                 Column(modifier = Modifier.padding(16.dp).navigationBarsPadding()) {
                     Preference(
-                        title = stringResource(R.string.hc_add_app),
-                        icon = R.drawable.add_24px,
+                        title = stringResource(I18nR.string.hc_add_app),
+                        icon = BaseR.drawable.add_24px,
                         onClick = {
                             showSearchablePickerForSlot = pageIdx to itemIdx
                             showSlotMenuForSlot = null
                         }
                     )
                     Preference(
-                        title = stringResource(R.string.hf_add_folder),
+                        title = stringResource(I18nR.string.hf_add_folder),
                         icon = de.mm20.launcher2.base.R.drawable.folder_24px,
                         onClick = {
                             showFolderCreationForSlot = pageIdx to itemIdx
@@ -398,7 +400,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                             if (!persistable) {
                                 android.widget.Toast.makeText(
                                     context,
-                                    context.getString(R.string.au17_dock_save_failed),
+                                    context.getString(I18nR.string.au17_dock_save_failed),
                                     android.widget.Toast.LENGTH_LONG
                                 ).show()
                                 showSearchablePickerForSlot = null
@@ -460,16 +462,16 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
             ) {
                 Column(modifier = Modifier.padding(16.dp).navigationBarsPadding()) {
                     Preference(
-                        title = stringResource(R.string.dock_menu_replace),
-                        icon = R.drawable.autorenew_24px,
+                        title = stringResource(I18nR.string.dock_menu_replace),
+                        icon = BaseR.drawable.autorenew_24px,
                         onClick = {
                             showWidgetPickerForSlot = pageIdx to itemIdx
                             showWidgetActionsForSlot = null
                         }
                     )
                     Preference(
-                        title = stringResource(R.string.dock_menu_remove),
-                        icon = R.drawable.delete_24px,
+                        title = stringResource(I18nR.string.dock_menu_remove),
+                        icon = BaseR.drawable.delete_24px,
                         onClick = {
                             val updated = dockPages.toMutableList()
                             val page = updated[pageIdx].toMutableList()

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.appearance
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -90,14 +92,14 @@ fun ImportThemeSettingsScreen(
         viewModel.init(context, fromUri)
     }
 
-    PreferenceScreen(title = stringResource(R.string.theme_import_title)) {
+    PreferenceScreen(title = stringResource(I18nR.string.theme_import_title)) {
 
         if (viewModel.error) {
             item {
                 PreferenceCategory {
                     Banner(
-                        text = stringResource(R.string.import_theme_error),
-                        icon = R.drawable.error_24px,
+                        text = stringResource(I18nR.string.import_theme_error),
+                        icon = BaseR.drawable.error_24px,
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.surface)
                             .padding(16.dp),
@@ -137,17 +139,17 @@ fun ImportThemeSettingsScreen(
                 }
             }
             item {
-                PreferenceCategory(stringResource(R.string.import_theme_contents)) {
+                PreferenceCategory(stringResource(I18nR.string.import_theme_contents)) {
                     if (themeBundle.colors != null) {
                         Preference(
-                            icon = R.drawable.palette_24px,
-                            title = stringResource(R.string.preference_screen_colors),
+                            icon = BaseR.drawable.palette_24px,
+                            title = stringResource(I18nR.string.preference_screen_colors),
                             summary = themeBundle.colors?.name,
                             controls = if (viewModel.colorsExists) {
                                 {
                                     Icon(
-                                        painterResource(R.drawable.change_circle_24px),
-                                        stringResource(R.string.import_theme_exists)
+                                        painterResource(BaseR.drawable.change_circle_24px),
+                                        stringResource(I18nR.string.import_theme_exists)
                                     )
                                 }
                             } else null,
@@ -155,14 +157,14 @@ fun ImportThemeSettingsScreen(
                     }
                     if (themeBundle.typography != null) {
                         Preference(
-                            icon = R.drawable.text_fields_24px,
-                            title = stringResource(R.string.preference_screen_typography),
+                            icon = BaseR.drawable.text_fields_24px,
+                            title = stringResource(I18nR.string.preference_screen_typography),
                             summary = themeBundle.typography?.name,
                             controls = if (viewModel.typographyExists) {
                                 {
                                     Icon(
-                                        painterResource(R.drawable.change_circle_24px),
-                                        stringResource(R.string.import_theme_exists)
+                                        painterResource(BaseR.drawable.change_circle_24px),
+                                        stringResource(I18nR.string.import_theme_exists)
                                     )
                                 }
                             } else null,
@@ -170,14 +172,14 @@ fun ImportThemeSettingsScreen(
                     }
                     if (themeBundle.shapes != null) {
                         Preference(
-                            icon = R.drawable.crop_square_24px,
-                            title = stringResource(R.string.preference_screen_shapes),
+                            icon = BaseR.drawable.crop_square_24px,
+                            title = stringResource(I18nR.string.preference_screen_shapes),
                             summary = themeBundle.shapes?.name,
                             controls = if (viewModel.shapesExists) {
                                 {
                                     Icon(
-                                        painterResource(R.drawable.change_circle_24px),
-                                        stringResource(R.string.import_theme_exists)
+                                        painterResource(BaseR.drawable.change_circle_24px),
+                                        stringResource(I18nR.string.import_theme_exists)
                                     )
                                 }
                             } else null,
@@ -185,14 +187,14 @@ fun ImportThemeSettingsScreen(
                     }
                     if (themeBundle.transparencies != null) {
                         Preference(
-                            icon = R.drawable.opacity_24px,
-                            title = stringResource(R.string.preference_screen_transparencies),
+                            icon = BaseR.drawable.opacity_24px,
+                            title = stringResource(I18nR.string.preference_screen_transparencies),
                             summary = themeBundle.transparencies?.name,
                             controls = if (viewModel.transparenciesExists) {
                                 {
                                     Icon(
-                                        painterResource(R.drawable.change_circle_24px),
-                                        stringResource(R.string.import_theme_exists)
+                                        painterResource(BaseR.drawable.change_circle_24px),
+                                        stringResource(I18nR.string.import_theme_exists)
                                     )
                                 }
                             } else null,
@@ -206,8 +208,8 @@ fun ImportThemeSettingsScreen(
                                     MaterialTheme.shapes.extraSmall
                                 )
                                 .padding(16.dp),
-                            icon = R.drawable.change_circle_24px,
-                            text = stringResource(R.string.import_theme_exists)
+                            icon = BaseR.drawable.change_circle_24px,
+                            text = stringResource(I18nR.string.import_theme_exists)
                         )
                     }
                 }
@@ -215,7 +217,7 @@ fun ImportThemeSettingsScreen(
             item {
                 PreferenceCategory {
                     SwitchPreference(
-                        title = stringResource(R.string.import_theme_apply),
+                        title = stringResource(I18nR.string.import_theme_apply),
                         value = viewModel.applyTheme,
                         onValueChanged = { viewModel.applyTheme = it },
                     )
@@ -236,7 +238,7 @@ fun ImportThemeSettingsScreen(
 
                         }
                     ) {
-                        Text(stringResource(R.string.action_import))
+                        Text(stringResource(I18nR.string.action_import))
                     }
                 }
             }
@@ -280,7 +282,7 @@ private fun ThemePreview(
             readOnly = true,
             menu = {
                 IconButton(onClick = {}) {
-                    Icon(painterResource(R.drawable.more_vert_24px), null)
+                    Icon(painterResource(BaseR.drawable.more_vert_24px), null)
                 }
             }
         )
@@ -309,17 +311,17 @@ private fun ThemePreview(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
-                        stringResource(R.string.typo_preview_medium1),
+                        stringResource(I18nR.string.typo_preview_medium1),
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
-                        stringResource(R.string.typo_preview_medium2),
+                        stringResource(I18nR.string.typo_preview_medium2),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.secondary
                     )
                     Text(
-                        stringResource(R.string.typo_preview_long),
+                        stringResource(I18nR.string.typo_preview_long),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(top = 4.dp),
                         color = MaterialTheme.colorScheme.onSurface,
@@ -334,10 +336,10 @@ private fun ThemePreview(
             ) {
                 FilterChip(
                     selected = true,
-                    label = { Text(stringResource(R.string.typo_preview_short1)) },
+                    label = { Text(stringResource(I18nR.string.typo_preview_short1)) },
                     leadingIcon = {
                         Icon(
-                            painterResource(R.drawable.star_20px), null,
+                            painterResource(BaseR.drawable.star_20px), null,
                             modifier = Modifier.size(FilterChipDefaults.IconSize)
                         )
                     },
@@ -345,10 +347,10 @@ private fun ThemePreview(
                 )
                 FilterChip(
                     selected = false,
-                    label = { Text(stringResource(R.string.typo_preview_short2)) },
+                    label = { Text(stringResource(I18nR.string.typo_preview_short2)) },
                     leadingIcon = {
                         Icon(
-                            painterResource(R.drawable.star_20px), null,
+                            painterResource(BaseR.drawable.star_20px), null,
                             modifier = Modifier.size(FilterChipDefaults.IconSize)
                         )
                     },
@@ -356,7 +358,7 @@ private fun ThemePreview(
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 FilledTonalIconButton(onClick = {}) {
-                    Icon(painterResource(R.drawable.edit_24px), null)
+                    Icon(painterResource(BaseR.drawable.edit_24px), null)
                 }
             }
             HorizontalDivider(
@@ -366,8 +368,8 @@ private fun ThemePreview(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
             ) {
-                Button(onClick = {}) { Text(stringResource(R.string.typo_preview_medium1)) }
-                OutlinedButton(onClick = {}) { Text(stringResource(R.string.typo_preview_medium2)) }
+                Button(onClick = {}) { Text(stringResource(I18nR.string.typo_preview_medium1)) }
+                OutlinedButton(onClick = {}) { Text(stringResource(I18nR.string.typo_preview_medium2)) }
             }
         }
         Box(
@@ -386,7 +388,7 @@ private fun ThemePreview(
                     },
                     shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
                 ) {
-                    Icon(painterResource(R.drawable.light_mode_24px), null)
+                    Icon(painterResource(BaseR.drawable.light_mode_24px), null)
                 }
                 ToggleButton(
                     checked = darkMode,
@@ -395,7 +397,7 @@ private fun ThemePreview(
                     },
                     shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
                 ) {
-                    Icon(painterResource(R.drawable.dark_mode_24px), null)
+                    Icon(painterResource(BaseR.drawable.dark_mode_24px), null)
                 }
             }
         }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.freeze
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -63,22 +64,22 @@ fun FreezeDashboardScreen() {
     val frozen = rows.filter { it.isFrozen }
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_freeze_dashboard),
+        title = stringResource(I18nR.string.preference_freeze_dashboard),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         item {
-            PreferenceCategory(title = stringResource(R.string.au3_commsfreeze_overview)) {
+            PreferenceCategory(title = stringResource(I18nR.string.au3_commsfreeze_overview)) {
                 Preference(
-                    title = stringResource(R.string.freeze_dashboard_counts, totalFreezes, totalUnfreezes),
-                    summary = stringResource(R.string.preference_freeze_dashboard_summary),
+                    title = stringResource(I18nR.string.freeze_dashboard_counts, totalFreezes, totalUnfreezes),
+                    summary = stringResource(I18nR.string.preference_freeze_dashboard_summary),
                 )
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.freeze_dashboard_currently_frozen)) {
+            PreferenceCategory(title = stringResource(I18nR.string.freeze_dashboard_currently_frozen)) {
                 if (frozen.isEmpty()) {
                     Text(
-                        text = stringResource(R.string.freeze_dashboard_none_frozen),
+                        text = stringResource(I18nR.string.freeze_dashboard_none_frozen),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -90,14 +91,14 @@ fun FreezeDashboardScreen() {
             Preference(
                 title = row.app.label,
                 icon = { ShapedLauncherIcon(size = 32.dp, icon = { icon }) },
-                summary = "❄ " + stringResource(R.string.freeze_dashboard_frozen_badge),
+                summary = "❄ " + stringResource(I18nR.string.freeze_dashboard_frozen_badge),
             )
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.freeze_dashboard_history)) {
+            PreferenceCategory(title = stringResource(I18nR.string.freeze_dashboard_history)) {
                 if (rows.isEmpty()) {
                     Text(
-                        text = stringResource(R.string.freeze_dashboard_no_history),
+                        text = stringResource(I18nR.string.freeze_dashboard_no_history),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -109,13 +110,13 @@ fun FreezeDashboardScreen() {
             val lastFrozenAt = row.lastFrozenAt ?: 0L
             val lastUnfrozenAt = row.lastUnfrozenAt ?: 0L
             val lastAt = maxOf(lastFrozenAt, lastUnfrozenAt)
-            val countsLine = stringResource(R.string.freeze_dashboard_counts, row.freezeCount, row.unfreezeCount)
+            val countsLine = stringResource(I18nR.string.freeze_dashboard_counts, row.freezeCount, row.unfreezeCount)
             val summary = if (lastAt > 0L) {
                 val relativeTime = DateUtils.getRelativeTimeSpanString(lastAt).toString()
                 val lastActionLine = if (lastFrozenAt >= lastUnfrozenAt) {
-                    stringResource(R.string.freeze_dashboard_last_frozen, relativeTime)
+                    stringResource(I18nR.string.freeze_dashboard_last_frozen, relativeTime)
                 } else {
-                    stringResource(R.string.freeze_dashboard_last_unfrozen, relativeTime)
+                    stringResource(I18nR.string.freeze_dashboard_last_unfrozen, relativeTime)
                 }
                 "$countsLine\n$lastActionLine"
             } else {
@@ -128,18 +129,18 @@ fun FreezeDashboardScreen() {
             )
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.freeze_dashboard_app_status)) {
+            PreferenceCategory(title = stringResource(I18nR.string.freeze_dashboard_app_status)) {
                 if (!hasUsageAccess) {
                     MissingPermissionBanner(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                        text = stringResource(R.string.preference_freeze_usage_access_summary_not_granted),
+                        text = stringResource(I18nR.string.preference_freeze_usage_access_summary_not_granted),
                         onClick = {
                             (context as? AppCompatActivity)?.let { viewModel.requestUsageAccess(it) }
                         }
                     )
                 } else {
                     Text(
-                        text = stringResource(R.string.freeze_dashboard_app_status_summary),
+                        text = stringResource(I18nR.string.freeze_dashboard_app_status_summary),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(horizontal = 16.dp),
@@ -170,7 +171,7 @@ fun FreezeDashboardScreen() {
                         IconButton(onClick = { viewModel.refresh() }) {
                             Icon(
                                 Icons.Rounded.Refresh,
-                                contentDescription = stringResource(R.string.freeze_dashboard_refresh),
+                                contentDescription = stringResource(I18nR.string.freeze_dashboard_refresh),
                             )
                         }
                     }
@@ -182,7 +183,7 @@ fun FreezeDashboardScreen() {
             if (filteredRuntimeRows.isEmpty()) {
                 item {
                     Text(
-                        text = stringResource(R.string.freeze_dashboard_no_apps_in_category),
+                        text = stringResource(I18nR.string.freeze_dashboard_no_apps_in_category),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(horizontal = 16.dp),
@@ -195,12 +196,12 @@ fun FreezeDashboardScreen() {
             ) { _, row ->
                 val icon by viewModel.getIcon(row.app, 32.dp.value.toInt()).collectAsStateWithLifecycle(null)
                 val runtimeText = if (row.totalTimeMs <= 0L) {
-                    stringResource(R.string.freeze_dashboard_not_used_today)
+                    stringResource(I18nR.string.freeze_dashboard_not_used_today)
                 } else {
-                    stringResource(R.string.freeze_dashboard_runtime_today, formatDuration(row.totalTimeMs))
+                    stringResource(I18nR.string.freeze_dashboard_runtime_today, formatDuration(row.totalTimeMs))
                 }
                 val summary = if (row.isRunning) {
-                    "$runtimeText • " + stringResource(R.string.freeze_dashboard_running_now)
+                    "$runtimeText • " + stringResource(I18nR.string.freeze_dashboard_running_now)
                 } else {
                     runtimeText
                 }
@@ -216,10 +217,10 @@ fun FreezeDashboardScreen() {
 
 @Composable
 private fun stateLabel(state: AppFreezeState): String = when (state) {
-    AppFreezeState.Normal -> stringResource(R.string.freeze_dashboard_state_normal)
-    AppFreezeState.Suspended -> stringResource(R.string.freeze_dashboard_state_suspended)
-    AppFreezeState.Disabled -> stringResource(R.string.freeze_dashboard_state_disabled)
-    AppFreezeState.Hidden -> stringResource(R.string.freeze_dashboard_state_hidden)
+    AppFreezeState.Normal -> stringResource(I18nR.string.freeze_dashboard_state_normal)
+    AppFreezeState.Suspended -> stringResource(I18nR.string.freeze_dashboard_state_suspended)
+    AppFreezeState.Disabled -> stringResource(I18nR.string.freeze_dashboard_state_disabled)
+    AppFreezeState.Hidden -> stringResource(I18nR.string.freeze_dashboard_state_hidden)
 }
 
 @Composable
@@ -228,8 +229,8 @@ private fun formatDuration(ms: Long): String {
     val hours = totalMinutes / 60
     val minutes = totalMinutes % 60
     return when {
-        hours > 0 -> stringResource(R.string.freeze_dashboard_runtime_hours_minutes, hours, minutes)
-        totalMinutes > 0 -> stringResource(R.string.freeze_dashboard_runtime_minutes, totalMinutes)
-        else -> stringResource(R.string.freeze_dashboard_runtime_under_a_minute)
+        hours > 0 -> stringResource(I18nR.string.freeze_dashboard_runtime_hours_minutes, hours, minutes)
+        totalMinutes > 0 -> stringResource(I18nR.string.freeze_dashboard_runtime_minutes, totalMinutes)
+        else -> stringResource(I18nR.string.freeze_dashboard_runtime_under_a_minute)
     }
 }

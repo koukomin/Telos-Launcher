@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.calendarsearch
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CheckboxDefaults
@@ -41,7 +42,7 @@ fun CalendarProviderSettingsScreen(providerId: String) {
     val providerAvailable = providerId == "local" || providerId == "tasks.org" || pluginState != null
 
     PreferenceScreen(
-        title = pluginState?.plugin?.label ?: stringResource(R.string.preference_search_calendar)
+        title = pluginState?.plugin?.label ?: stringResource(I18nR.string.preference_search_calendar)
     ) {
         if (!providerAvailable) {
             return@PreferenceScreen
@@ -50,12 +51,12 @@ fun CalendarProviderSettingsScreen(providerId: String) {
             PreferenceCategory {
                 SwitchPreference(
                     title =
-                        if (providerId == "local") stringResource(R.string.preference_search_calendar)
-                        else if (providerId == "tasks.org") stringResource(R.string.preference_search_tasks)
+                        if (providerId == "local") stringResource(I18nR.string.preference_search_calendar)
+                        else if (providerId == "tasks.org") stringResource(I18nR.string.preference_search_tasks)
                         else pluginState?.plugin?.label ?: "",
                     summary =
-                        if (providerId == "local") stringResource(R.string.preference_search_local_calendar_summary)
-                        else if (providerId == "tasks.org") stringResource(R.string.preference_search_tasks_summary)
+                        if (providerId == "local") stringResource(I18nR.string.preference_search_local_calendar_summary)
+                        else if (providerId == "tasks.org") stringResource(I18nR.string.preference_search_tasks_summary)
                         else (pluginState?.state as? PluginState.Ready)?.text
                             ?: pluginState?.plugin?.description,
                     value = enabled && (pluginState == null || pluginState?.state is PluginState.Ready),

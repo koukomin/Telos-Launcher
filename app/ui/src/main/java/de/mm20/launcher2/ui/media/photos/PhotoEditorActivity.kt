@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.photos
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
@@ -77,7 +78,7 @@ private class Adjust(
     val aspect: Float?,
 )
 
-private val filters = listOf(R.string.au_viewer_filter_original, R.string.au_viewer_filter_mono, R.string.au_viewer_filter_sepia, R.string.au_viewer_filter_warm, R.string.au_viewer_filter_cool, R.string.au_viewer_filter_invert)
+private val filters = listOf(I18nR.string.au_viewer_filter_original, I18nR.string.au_viewer_filter_mono, I18nR.string.au_viewer_filter_sepia, I18nR.string.au_viewer_filter_warm, I18nR.string.au_viewer_filter_cool, I18nR.string.au_viewer_filter_invert)
 private val aspects = listOf<Pair<String?, Float?>>(null to null, "1:1" to 1f, "4:3" to 4f / 3f, "3:4" to 3f / 4f, "16:9" to 16f / 9f, "9:16" to 9f / 16f)
 
 private fun matrixFor(a: Adjust): ColorMatrix {
@@ -202,7 +203,7 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
 
     Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).navigationBarsPadding()) {
         Row(Modifier.fillMaxWidth().statusBarsPadding().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-            TextButton(onClick = onClose) { Text(stringResource(R.string.hc_cancel)) }
+            TextButton(onClick = onClose) { Text(stringResource(I18nR.string.hc_cancel)) }
             Spacer(Modifier.weight(1f))
             Button(enabled = bmp != null && !saving, onClick = {
                 saving = true
@@ -210,10 +211,10 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
                 scope.launch {
                     val saved = withContext(Dispatchers.IO) { runCatching { renderAndSave(context, uri, a) }.getOrNull() }
                     saving = false
-                    Toast.makeText(context, context.getString(if (saved != null) R.string.au_viewer_saved_to_telos else R.string.au_viewer_save_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(if (saved != null) I18nR.string.au_viewer_saved_to_telos else I18nR.string.au_viewer_save_failed), Toast.LENGTH_SHORT).show()
                     if (saved != null) onClose()
                 }
-            }) { Text(stringResource(if (saving) R.string.au_viewer_saving else R.string.au_viewer_save_copy)) }
+            }) { Text(stringResource(if (saving) I18nR.string.au_viewer_saving else I18nR.string.au_viewer_save_copy)) }
         }
         Box(Modifier.weight(1f).fillMaxWidth().clipToBounds(), contentAlignment = Alignment.Center) {
             if (bmp != null) {
@@ -232,13 +233,13 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
         }
         Column(Modifier.fillMaxWidth().heightIn(max = 280.dp).verticalScroll(rememberScrollState()).padding(12.dp)) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                AssistChip(onClick = { rotation = (rotation + 270) % 360 }, label = { Text(stringResource(R.string.hc_rotate_left)) })
-                AssistChip(onClick = { rotation = (rotation + 90) % 360 }, label = { Text(stringResource(R.string.hc_rotate_right)) })
-                AssistChip(onClick = { flipH = !flipH }, label = { Text(stringResource(R.string.hc_flip)) })
+                AssistChip(onClick = { rotation = (rotation + 270) % 360 }, label = { Text(stringResource(I18nR.string.hc_rotate_left)) })
+                AssistChip(onClick = { rotation = (rotation + 90) % 360 }, label = { Text(stringResource(I18nR.string.hc_rotate_right)) })
+                AssistChip(onClick = { flipH = !flipH }, label = { Text(stringResource(I18nR.string.hc_flip)) })
             }
             androidx.compose.foundation.lazy.LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(aspects.size) { i ->
-                    FilterChip(selected = aspectIndex == i, onClick = { aspectIndex = i }, label = { Text(aspects[i].first ?: stringResource(R.string.au_viewer_aspect_free)) })
+                    FilterChip(selected = aspectIndex == i, onClick = { aspectIndex = i }, label = { Text(aspects[i].first ?: stringResource(I18nR.string.au_viewer_aspect_free)) })
                 }
             }
             androidx.compose.foundation.lazy.LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -246,11 +247,11 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
                     FilterChip(selected = filter == i, onClick = { filter = i }, label = { Text(stringResource(filters[i])) })
                 }
             }
-            Text(stringResource(R.string.hc_brightness), style = MaterialTheme.typography.labelMedium)
+            Text(stringResource(I18nR.string.hc_brightness), style = MaterialTheme.typography.labelMedium)
             Slider(value = brightness, onValueChange = { brightness = it }, valueRange = -100f..100f)
-            Text(stringResource(R.string.hc_contrast), style = MaterialTheme.typography.labelMedium)
+            Text(stringResource(I18nR.string.hc_contrast), style = MaterialTheme.typography.labelMedium)
             Slider(value = contrast, onValueChange = { contrast = it }, valueRange = 0.5f..1.8f)
-            Text(stringResource(R.string.hc_saturation), style = MaterialTheme.typography.labelMedium)
+            Text(stringResource(I18nR.string.hc_saturation), style = MaterialTheme.typography.labelMedium)
             Slider(value = saturation, onValueChange = { saturation = it }, valueRange = 0f..2f)
         }
     }

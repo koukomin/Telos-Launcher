@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.shortcut
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -48,14 +50,14 @@ fun LazyListScope.ShortcutResults(
                 MissingPermissionBanner(
                     modifier = Modifier.padding(8.dp),
                     text = stringResource(
-                        R.string.missing_permission_appshortcuts_search,
-                        stringResource(R.string.app_name)
+                        I18nR.string.missing_permission_appshortcuts_search,
+                        stringResource(BaseR.string.app_name)
                     ),
                     onClick = onPermissionRequest,
                     secondaryAction = {
                         OutlinedButton(onClick = onPermissionRequestRejected) {
                             Text(
-                                stringResource(R.string.turn_off),
+                                stringResource(I18nR.string.turn_off),
                             )
                         }
                     }

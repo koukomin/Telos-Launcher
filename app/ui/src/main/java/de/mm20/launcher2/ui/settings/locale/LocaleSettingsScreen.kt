@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.locale
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.icu.text.ListFormatter
@@ -76,7 +78,7 @@ fun LocaleSettingsScreen() {
     // Language picker for Android < 13 (newer versions use the system per-app language settings).
     // Lists only the languages Telos ships (the values-xx folders of core/i18n) plus English, with
     // their native names. AppCompat recreates the activities after setApplicationLocales.
-    val systemDefaultLabel = stringResource(R.string.preference_value_system_default)
+    val systemDefaultLabel = stringResource(I18nR.string.preference_value_system_default)
     val languageItems: List<Pair<String, String>> = remember(systemDefaultLabel) {
         if (isAtLeastApiLevel(33)) return@remember emptyList()
         val named = supportedLanguageTags.map { tag ->
@@ -90,14 +92,14 @@ fun LocaleSettingsScreen() {
     val transliterators: List<Pair<String, String?>> = remember(locales) {
         if (!isAtLeastApiLevel(29)) return@remember listOf()
 
-        if (locales?.isEmpty == true) return@remember listOf(resources.getString(R.string.preference_value_disabled) to null)
+        if (locales?.isEmpty == true) return@remember listOf(resources.getString(I18nR.string.preference_value_disabled) to null)
 
         val scripts = mutableSetOf<String>()
         val languages = mutableSetOf<String>()
 
         val transliterators = mutableMapOf<String?, String>(
-            null to resources.getString(R.string.preference_value_disabled),
-            "" to resources.getString(R.string.preference_transliteration_auto),
+            null to resources.getString(I18nR.string.preference_value_disabled),
+            "" to resources.getString(I18nR.string.preference_transliteration_auto),
         )
 
         val availableIds = Transliterator.getAvailableIDs().toList()
@@ -147,16 +149,16 @@ fun LocaleSettingsScreen() {
 
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_locale)
+        title = stringResource(I18nR.string.preference_screen_locale)
     ) {
         item {
             PreferenceCategory {
                 if (isAtLeastApiLevel(33)) {
                     Preference(
-                        icon = R.drawable.flag_24px,
-                        title = stringResource(R.string.preference_language),
+                        icon = BaseR.drawable.flag_24px,
+                        title = stringResource(I18nR.string.preference_language),
                         summary = if (selectedLocale == null) {
-                            stringResource(R.string.preference_value_system_default)
+                            stringResource(I18nR.string.preference_value_system_default)
                         } else {
                             selectedLocale.getDisplayName(selectedLocale)
                                 .replaceFirstChar { it.uppercase(selectedLocale) }
@@ -171,8 +173,8 @@ fun LocaleSettingsScreen() {
                     )
                 } else {
                     ListPreference(
-                        icon = R.drawable.flag_24px,
-                        title = stringResource(R.string.preference_language),
+                        icon = BaseR.drawable.flag_24px,
+                        title = stringResource(I18nR.string.preference_language),
                         value = selectedLocale?.toLanguageTag() ?: "",
                         items = languageItems,
                         onValueChanged = {
@@ -185,8 +187,8 @@ fun LocaleSettingsScreen() {
                 }
                 if (currentLocale?.language in languagesWithFormOfAddress) {
                     ListPreference(
-                        icon = R.drawable.wc_24px,
-                        title = stringResource(R.string.preference_form_of_address),
+                        icon = BaseR.drawable.wc_24px,
+                        title = stringResource(I18nR.string.preference_form_of_address),
                         value = GrammaticalInflectionManagerCompat.getApplicationGrammaticalGender(
                             context
                         ).let {
@@ -204,16 +206,16 @@ fun LocaleSettingsScreen() {
                         },
                         enabled = isAtLeastApiLevel(34),
                         items = listOf(
-                            stringResource(R.string.preference_form_of_address_neutral) to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_NEUTRAL,
-                            stringResource(R.string.preference_form_of_address_fem) to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_FEMININE,
-                            stringResource(R.string.preference_form_of_address_masc) to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_MASCULINE,
+                            stringResource(I18nR.string.preference_form_of_address_neutral) to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_NEUTRAL,
+                            stringResource(I18nR.string.preference_form_of_address_fem) to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_FEMININE,
+                            stringResource(I18nR.string.preference_form_of_address_masc) to GrammaticalInflectionManagerCompat.GRAMMATICAL_GENDER_MASCULINE,
                         )
                     )
                 }
                 if (isAtLeastApiLevel(29) && transliterators.size > 2) {
                     ListPreference(
-                        icon = R.drawable.translate_24px,
-                        title = stringResource(R.string.preference_transliteration),
+                        icon = BaseR.drawable.translate_24px,
+                        title = stringResource(I18nR.string.preference_transliteration),
                         items = transliterators,
                         value = transliterator,
                         onValueChanged = {
@@ -226,35 +228,35 @@ fun LocaleSettingsScreen() {
         item {
             PreferenceCategory {
                 ListPreference(
-                    icon = R.drawable.schedule_24px,
-                    title = stringResource(R.string.preference_clock_widget_time_format),
+                    icon = BaseR.drawable.schedule_24px,
+                    title = stringResource(I18nR.string.preference_clock_widget_time_format),
                     value = timeFormat,
                     onValueChanged = {
                         if (it != null) viewModel.setTimeFormat(it)
                     },
                     items = listOf(
-                        stringResource(R.string.preference_value_system_default) to TimeFormat.System,
-                        stringResource(R.string.preference_clock_widget_time_format_12h) to TimeFormat.TwelveHour,
-                        stringResource(R.string.preference_clock_widget_time_format_24h) to TimeFormat.TwentyFourHour,
+                        stringResource(I18nR.string.preference_value_system_default) to TimeFormat.System,
+                        stringResource(I18nR.string.preference_clock_widget_time_format_12h) to TimeFormat.TwelveHour,
+                        stringResource(I18nR.string.preference_clock_widget_time_format_24h) to TimeFormat.TwentyFourHour,
                     )
                 )
                 ListPreference(
-                    icon = R.drawable.measuring_tape_24px,
-                    title = stringResource(R.string.preference_measurement_system),
+                    icon = BaseR.drawable.measuring_tape_24px,
+                    title = stringResource(I18nR.string.preference_measurement_system),
                     value = measurementSystem,
                     onValueChanged = {
                         if (it != null) viewModel.setMeasurementSystem(it)
                     },
                     items = listOf(
-                        stringResource(R.string.preference_value_system_default) to MeasurementSystem.System,
-                        stringResource(R.string.preference_measurement_system_metric) to MeasurementSystem.Metric,
-                        stringResource(R.string.preference_measurement_system_uk) to MeasurementSystem.UnitedKingdom,
-                        stringResource(R.string.preference_measurement_system_us) to MeasurementSystem.UnitedStates,
+                        stringResource(I18nR.string.preference_value_system_default) to MeasurementSystem.System,
+                        stringResource(I18nR.string.preference_measurement_system_metric) to MeasurementSystem.Metric,
+                        stringResource(I18nR.string.preference_measurement_system_uk) to MeasurementSystem.UnitedKingdom,
+                        stringResource(I18nR.string.preference_measurement_system_us) to MeasurementSystem.UnitedStates,
                     )
                 )
                 Preference(
-                    title = stringResource(R.string.preference_calendar_system),
-                    icon = R.drawable.calendar_today_24px,
+                    title = stringResource(I18nR.string.preference_calendar_system),
+                    icon = BaseR.drawable.calendar_today_24px,
                     onClick = {
                         backstack += CalendarSettingsRoute
                     },
@@ -263,7 +265,7 @@ fun LocaleSettingsScreen() {
                         val secondary = calendars.getOrNull(1)
 
                         val primaryName = if (primary == null) {
-                            resources.getString(R.string.preference_value_system_default)
+                            resources.getString(I18nR.string.preference_value_system_default)
                         } else {
                             ULocale.getDefault().setKeywordValue("calendar", primary)
                                 .getDisplayKeywordValue("calendar")
@@ -282,10 +284,10 @@ fun LocaleSettingsScreen() {
                     }
                 )
                 Preference(
-                    title = stringResource(R.string.preference_currencies),
+                    title = stringResource(I18nR.string.preference_currencies),
                     summary = currencies?.let {
                         if (it.isEmpty()) {
-                            return@let stringResource(R.string.preference_value_system_default)
+                            return@let stringResource(I18nR.string.preference_value_system_default)
                         }
 
                         val names = it.map {
@@ -298,7 +300,7 @@ fun LocaleSettingsScreen() {
 
                         ListFormatter.getInstance().format(names)
                     },
-                    icon = R.drawable.toll_24px,
+                    icon = BaseR.drawable.toll_24px,
                     onClick = {
                         backstack += CurrencySettingsRoute
                     },

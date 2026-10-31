@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -166,7 +167,7 @@ internal class ClockAndWidgetsHomeComponent(
                     exit = shrinkVertically(shrinkTowards = Alignment.Top) + fadeOut(),
                 ) {
                     CenterAlignedTopAppBar(
-                        title = { Text(stringResource(R.string.menu_edit_widgets)) },
+                        title = { Text(stringResource(I18nR.string.menu_edit_widgets)) },
                         navigationIcon = {
                             IconButton(
                                 onClick = {
@@ -176,7 +177,7 @@ internal class ClockAndWidgetsHomeComponent(
                             ) {
                                 Icon(
                                     Icons.AutoMirrored.Rounded.ArrowBack,
-                                    stringResource(R.string.action_done)
+                                    stringResource(I18nR.string.action_done)
                                 )
                             }
                         },

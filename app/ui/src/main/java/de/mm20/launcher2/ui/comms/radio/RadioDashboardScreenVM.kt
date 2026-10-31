@@ -1,5 +1,6 @@
 // === TELOS_PENDING_REVIEW_START: radio_browser_ktor ===
 package de.mm20.launcher2.ui.comms.radio
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.net.Uri
@@ -89,7 +90,7 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
                 throw e
             } catch (e: Exception) {
                 _searchResults.value = emptyList()
-                _searchError.value = RadioText(R.string.au_radio_search_failed, e.message ?: e.javaClass.simpleName)
+                _searchError.value = RadioText(I18nR.string.au_radio_search_failed, e.message ?: e.javaClass.simpleName)
             }
             _isSearching.value = false
         }
@@ -121,8 +122,8 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
                     val image = withContext(Dispatchers.IO) { saveImage(context, bytes) }
                     repository.saveStation(station.copy(faviconUrl = image))
                 }
-            }.onSuccess { _message.value = RadioText(R.string.hc_done) }
-                .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it else _message.value = RadioText(R.string.au_radio_import_failed) }
+            }.onSuccess { _message.value = RadioText(I18nR.string.hc_done) }
+                .onFailure { if (it is kotlinx.coroutines.CancellationException) throw it else _message.value = RadioText(I18nR.string.au_radio_import_failed) }
         }
     }
 
@@ -135,7 +136,7 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             val url = address.trim()
             if (!url.startsWith("http", ignoreCase = true)) {
-                _message.value = RadioText(R.string.au_radio_enter_http_address)
+                _message.value = RadioText(I18nR.string.au_radio_enter_http_address)
                 return@launch
             }
             val resolved = StreamResolver.resolve(url)
@@ -151,11 +152,11 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
             )
             _message.value = try {
                 repository.saveStation(station)
-                RadioText(R.string.au_radio_station_added, station.name)
+                RadioText(I18nR.string.au_radio_station_added, station.name)
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e
             } catch (e: Exception) {
-                RadioText(R.string.au_radio_add_failed)
+                RadioText(I18nR.string.au_radio_add_failed)
             }
         }
     }
@@ -166,14 +167,14 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
                 if (it is kotlinx.coroutines.CancellationException) throw it
                 null
             }
-            _message.value = if (count == null) RadioText(R.string.au_radio_import_failed) else RadioText(R.string.au_radio_imported, count)
+            _message.value = if (count == null) RadioText(I18nR.string.au_radio_import_failed) else RadioText(I18nR.string.au_radio_imported, count)
         }
     }
 
     fun exportM3u(context: Context, uri: Uri) {
         viewModelScope.launch {
             val ok = runCatching { writeText(context, uri, repository.exportM3u()) }.isSuccess
-            _message.value = if (ok) RadioText(R.string.au_radio_playlist_saved) else RadioText(R.string.au_radio_playlist_save_failed)
+            _message.value = if (ok) RadioText(I18nR.string.au_radio_playlist_saved) else RadioText(I18nR.string.au_radio_playlist_save_failed)
         }
     }
 
@@ -186,7 +187,7 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
                     RadioArchives.write(stations, output) { station -> loadImage(context, station.faviconUrl) }
                 }
             }.getOrElse { if (it is kotlinx.coroutines.CancellationException) throw it; null } != null
-            _message.value = if (ok) RadioText(R.string.au_radio_backup_saved) else RadioText(R.string.au_radio_backup_save_failed)
+            _message.value = if (ok) RadioText(I18nR.string.au_radio_backup_saved) else RadioText(I18nR.string.au_radio_backup_save_failed)
         }
     }
 
@@ -197,7 +198,7 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
                 if (it is kotlinx.coroutines.CancellationException) throw it
                 null
             }
-            _message.value = if (count == null) RadioText(R.string.au_radio_restore_failed) else RadioText(R.string.au_radio_restored, count)
+            _message.value = if (count == null) RadioText(I18nR.string.au_radio_restore_failed) else RadioText(I18nR.string.au_radio_restored, count)
         }
     }
 

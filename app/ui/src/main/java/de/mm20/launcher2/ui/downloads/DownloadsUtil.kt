@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.ClipboardManager
 import android.content.Context
@@ -18,49 +20,49 @@ import de.mm20.launcher2.ui.R
 import java.io.File
 
 internal fun categoryIcon(c: DownloadCategory?): Int = when (c) {
-    DownloadCategory.Video -> R.drawable.movie_24px
-    DownloadCategory.Audio -> R.drawable.music_note_24px
-    DownloadCategory.Documents -> R.drawable.description_24px
-    DownloadCategory.Archives -> R.drawable.folder_zip_24px
-    DownloadCategory.Programs -> R.drawable.apk_document_24px
-    else -> R.drawable.download_24px
+    DownloadCategory.Video -> BaseR.drawable.movie_24px
+    DownloadCategory.Audio -> BaseR.drawable.music_note_24px
+    DownloadCategory.Documents -> BaseR.drawable.description_24px
+    DownloadCategory.Archives -> BaseR.drawable.folder_zip_24px
+    DownloadCategory.Programs -> BaseR.drawable.apk_document_24px
+    else -> BaseR.drawable.download_24px
 }
 
 @Composable
 internal fun categoryLabel(c: DownloadCategory): String = stringResource(
     when (c) {
-        DownloadCategory.Video -> R.string.dl_category_video
-        DownloadCategory.Audio -> R.string.dl_category_audio
-        DownloadCategory.Documents -> R.string.dl_category_documents
-        DownloadCategory.Archives -> R.string.dl_category_archives
-        DownloadCategory.Programs -> R.string.dl_category_programs
-        DownloadCategory.Other -> R.string.dl_category_other
+        DownloadCategory.Video -> I18nR.string.dl_category_video
+        DownloadCategory.Audio -> I18nR.string.dl_category_audio
+        DownloadCategory.Documents -> I18nR.string.dl_category_documents
+        DownloadCategory.Archives -> I18nR.string.dl_category_archives
+        DownloadCategory.Programs -> I18nR.string.dl_category_programs
+        DownloadCategory.Other -> I18nR.string.dl_category_other
     }
 )
 
 @Composable
 internal fun stateLabel(t: DownloadTask): String = when (t.state) {
     DownloadState.Queued -> if (t.retryCount > 0 && t.nextRetryAt > System.currentTimeMillis()) {
-        stringResource(R.string.dl_state_waiting_retry, t.retryCount)
-    } else stringResource(R.string.dl_state_queued)
-    DownloadState.Connecting -> mediaStageLabel(t) ?: stringResource(R.string.dl_state_connecting)
-    DownloadState.Downloading -> mediaStageLabel(t) ?: stringResource(R.string.dl_state_downloading)
-    DownloadState.Verifying -> mediaStageLabel(t) ?: stringResource(R.string.dl_state_verifying)
-    DownloadState.Seeding -> stringResource(R.string.dl_t_state_seeding)
-    DownloadState.Paused -> stringResource(R.string.dl_state_paused)
-    DownloadState.Completed -> stringResource(R.string.dl_state_completed) + if (t.fileMissing) " · " + stringResource(R.string.dl_p3_file_missing) else ""
-    DownloadState.Failed -> stringResource(R.string.dl_state_failed)
+        stringResource(I18nR.string.dl_state_waiting_retry, t.retryCount)
+    } else stringResource(I18nR.string.dl_state_queued)
+    DownloadState.Connecting -> mediaStageLabel(t) ?: stringResource(I18nR.string.dl_state_connecting)
+    DownloadState.Downloading -> mediaStageLabel(t) ?: stringResource(I18nR.string.dl_state_downloading)
+    DownloadState.Verifying -> mediaStageLabel(t) ?: stringResource(I18nR.string.dl_state_verifying)
+    DownloadState.Seeding -> stringResource(I18nR.string.dl_t_state_seeding)
+    DownloadState.Paused -> stringResource(I18nR.string.dl_state_paused)
+    DownloadState.Completed -> stringResource(I18nR.string.dl_state_completed) + if (t.fileMissing) " · " + stringResource(I18nR.string.dl_p3_file_missing) else ""
+    DownloadState.Failed -> stringResource(I18nR.string.dl_state_failed)
 }
 
 /** What the media engine is doing (merging, extracting audio ...) instead of the plain state, null for other tasks */
 @Composable
 private fun mediaStageLabel(t: DownloadTask): String? = when (t.media?.stage) {
-    MediaStage.Starting -> R.string.dl_m_stage_starting
-    MediaStage.Downloading -> R.string.dl_m_stage_downloading
-    MediaStage.Merging -> R.string.dl_m_stage_merging
-    MediaStage.ExtractingAudio -> R.string.dl_m_stage_audio
-    MediaStage.Embedding -> R.string.dl_m_stage_embedding
-    MediaStage.Copying -> R.string.dl_m_stage_copying
+    MediaStage.Starting -> I18nR.string.dl_m_stage_starting
+    MediaStage.Downloading -> I18nR.string.dl_m_stage_downloading
+    MediaStage.Merging -> I18nR.string.dl_m_stage_merging
+    MediaStage.ExtractingAudio -> I18nR.string.dl_m_stage_audio
+    MediaStage.Embedding -> I18nR.string.dl_m_stage_embedding
+    MediaStage.Copying -> I18nR.string.dl_m_stage_copying
     else -> null
 }?.let { stringResource(it) }
 
@@ -120,7 +122,7 @@ internal suspend fun shareDownload(context: Context, task: DownloadTask): Boolea
 internal fun copyLink(context: Context, link: String) {
     val cm = context.getSystemService(ClipboardManager::class.java)
     cm.setPrimaryClip(android.content.ClipData.newPlainText("link", link))
-    Toast.makeText(context, R.string.dl_link_copied, Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, I18nR.string.dl_link_copied, Toast.LENGTH_SHORT).show()
 }
 
 /** Opens Telos Downloads with the add sheet for [url] (the same way the share target does) */

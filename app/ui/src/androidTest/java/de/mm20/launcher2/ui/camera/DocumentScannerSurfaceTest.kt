@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.camera
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Application
 import android.graphics.Bitmap
@@ -53,13 +54,13 @@ class DocumentScannerSurfaceTest {
                 }
             }
             val context = instrumentation.targetContext
-            val title = context.getString(R.string.camera_scan_pdf)
+            val title = context.getString(I18nR.string.camera_scan_pdf)
             val layouts = mutableListOf<androidx.compose.ui.text.TextLayoutResult>()
             compose.onNodeWithText(title).performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.GetTextLayoutResult) { it(layouts) }
             assertEquals(2f, layouts.single().layoutInput.density.fontScale, 0.01f)
-            val capture = context.getString(R.string.camera_scan_add_page)
-            val save = context.getString(R.string.pdft_save_as)
-            val page = context.getString(R.string.hc_page_number,1)
+            val capture = context.getString(I18nR.string.camera_scan_add_page)
+            val save = context.getString(I18nR.string.pdft_save_as)
+            val page = context.getString(I18nR.string.hc_page_number,1)
             for (isLight in listOf(false,true)) for (isWide in listOf(false,true)) {
                 compose.runOnIdle { light.value = isLight; wide.value = isWide }
                 compose.onNode(hasContentDescription(capture) or hasText(capture)).assertIsDisplayed().performClick()

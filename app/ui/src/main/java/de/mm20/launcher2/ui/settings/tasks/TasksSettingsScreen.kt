@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.tasks
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.activity.compose.LocalActivity
 import androidx.appcompat.app.AppCompatActivity
@@ -40,17 +42,17 @@ fun TasksIntegrationSettingsScreen() {
     val isTasksSearchEnabled by viewModel.isTasksSearchEnabled.collectAsStateWithLifecycle(false)
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_tasks_integration)
+        title = stringResource(I18nR.string.preference_tasks_integration)
     ) {
         if (isTasksInstalled == false) {
             item {
                 PreferenceCategory {
                     Banner(
                         text = stringResource(
-                            R.string.preference_tasks_integration_description,
-                            stringResource(R.string.app_name)
+                            I18nR.string.preference_tasks_integration_description,
+                            stringResource(BaseR.string.app_name)
                         ),
-                        icon = R.drawable.info_24px,
+                        icon = BaseR.drawable.info_24px,
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.surface)
                             .padding(16.dp),
@@ -58,7 +60,7 @@ fun TasksIntegrationSettingsScreen() {
                             Button(onClick = {
                                 viewModel.downloadTasksApp(activity as AppCompatActivity)
                             }) {
-                                Text(stringResource(R.string.action_install))
+                                Text(stringResource(I18nR.string.action_install))
                             }
                         }
                     )
@@ -70,8 +72,8 @@ fun TasksIntegrationSettingsScreen() {
                 PreferenceCategory {
                     if (hasTasksPermission == true) {
                         Banner(
-                            text = stringResource(R.string.preference_tasks_integration_ready),
-                            icon = R.drawable.check_circle_24px,
+                            text = stringResource(I18nR.string.preference_tasks_integration_ready),
+                            icon = BaseR.drawable.check_circle_24px,
                             modifier = Modifier
                                 .background(
                                     MaterialTheme.colorScheme.surface,
@@ -85,12 +87,12 @@ fun TasksIntegrationSettingsScreen() {
                         onUnlock = {
                             viewModel.requestTasksPermission(activity as AppCompatActivity)
                         },
-                        description = stringResource(R.string.missing_permission_tasks_integration),
+                        description = stringResource(I18nR.string.missing_permission_tasks_integration),
                     ) {
                         PreferenceWithSwitch(
-                            icon = R.drawable.task_alt_24px,
-                            title = stringResource(R.string.preference_search_tasks),
-                            summary = stringResource(R.string.preference_search_tasks_summary),
+                            icon = BaseR.drawable.task_alt_24px,
+                            title = stringResource(I18nR.string.preference_search_tasks),
+                            summary = stringResource(I18nR.string.preference_search_tasks_summary),
                             switchValue = isTasksSearchEnabled == true && hasTasksPermission == true,
                             onSwitchChanged = {
                                 viewModel.setTasksSearchEnabled(it)
@@ -102,8 +104,8 @@ fun TasksIntegrationSettingsScreen() {
                         )
                     }
                     Preference(
-                        title = stringResource(R.string.preference_launch_tasks_app),
-                        icon = R.drawable.open_in_new_24px,
+                        title = stringResource(I18nR.string.preference_launch_tasks_app),
+                        icon = BaseR.drawable.open_in_new_24px,
                         onClick = {
                             viewModel.launchTasksApp(activity as AppCompatActivity)
                         }

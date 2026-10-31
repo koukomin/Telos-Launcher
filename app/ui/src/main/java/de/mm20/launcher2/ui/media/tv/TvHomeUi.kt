@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.tv
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.core.LinearEasing
@@ -56,35 +58,35 @@ import de.mm20.launcher2.ui.R
 /** Localized name of an iptv-org category id; the catalog's English name for unknown ids */
 @StringRes
 private fun categoryRes(id: String): Int? = when (id) {
-    "animation" -> R.string.au14_tvhome_cat_animation
-    "auto" -> R.string.au14_tvhome_cat_auto
-    "business" -> R.string.au14_tvhome_cat_business
-    "classic" -> R.string.au14_tvhome_cat_classic
-    "comedy" -> R.string.au14_tvhome_cat_comedy
-    "cooking" -> R.string.au14_tvhome_cat_cooking
-    "culture" -> R.string.au14_tvhome_cat_culture
-    "documentary" -> R.string.au14_tvhome_cat_documentary
-    "education" -> R.string.au14_tvhome_cat_education
-    "entertainment" -> R.string.au14_tvhome_cat_entertainment
-    "family" -> R.string.au14_tvhome_cat_family
-    "general" -> R.string.au14_tvhome_cat_general
-    "interactive" -> R.string.au14_tvhome_cat_interactive
-    "kids" -> R.string.au14_tvhome_cat_kids
-    "legislative" -> R.string.au14_tvhome_cat_legislative
-    "lifestyle" -> R.string.au14_tvhome_cat_lifestyle
-    "movies" -> R.string.au14_tvhome_cat_movies
-    "music" -> R.string.au14_tvhome_cat_music
-    "news" -> R.string.au14_tvhome_cat_news
-    "outdoor" -> R.string.au14_tvhome_cat_outdoor
-    "public" -> R.string.au14_tvhome_cat_public
-    "relax" -> R.string.au14_tvhome_cat_relax
-    "religious" -> R.string.au14_tvhome_cat_religious
-    "series" -> R.string.au14_tvhome_cat_series
-    "science" -> R.string.au14_tvhome_cat_science
-    "shop" -> R.string.au14_tvhome_cat_shop
-    "sports" -> R.string.au14_tvhome_cat_sports
-    "travel" -> R.string.au14_tvhome_cat_travel
-    "weather" -> R.string.au14_tvhome_cat_weather
+    "animation" -> I18nR.string.au14_tvhome_cat_animation
+    "auto" -> I18nR.string.au14_tvhome_cat_auto
+    "business" -> I18nR.string.au14_tvhome_cat_business
+    "classic" -> I18nR.string.au14_tvhome_cat_classic
+    "comedy" -> I18nR.string.au14_tvhome_cat_comedy
+    "cooking" -> I18nR.string.au14_tvhome_cat_cooking
+    "culture" -> I18nR.string.au14_tvhome_cat_culture
+    "documentary" -> I18nR.string.au14_tvhome_cat_documentary
+    "education" -> I18nR.string.au14_tvhome_cat_education
+    "entertainment" -> I18nR.string.au14_tvhome_cat_entertainment
+    "family" -> I18nR.string.au14_tvhome_cat_family
+    "general" -> I18nR.string.au14_tvhome_cat_general
+    "interactive" -> I18nR.string.au14_tvhome_cat_interactive
+    "kids" -> I18nR.string.au14_tvhome_cat_kids
+    "legislative" -> I18nR.string.au14_tvhome_cat_legislative
+    "lifestyle" -> I18nR.string.au14_tvhome_cat_lifestyle
+    "movies" -> I18nR.string.au14_tvhome_cat_movies
+    "music" -> I18nR.string.au14_tvhome_cat_music
+    "news" -> I18nR.string.au14_tvhome_cat_news
+    "outdoor" -> I18nR.string.au14_tvhome_cat_outdoor
+    "public" -> I18nR.string.au14_tvhome_cat_public
+    "relax" -> I18nR.string.au14_tvhome_cat_relax
+    "religious" -> I18nR.string.au14_tvhome_cat_religious
+    "series" -> I18nR.string.au14_tvhome_cat_series
+    "science" -> I18nR.string.au14_tvhome_cat_science
+    "shop" -> I18nR.string.au14_tvhome_cat_shop
+    "sports" -> I18nR.string.au14_tvhome_cat_sports
+    "travel" -> I18nR.string.au14_tvhome_cat_travel
+    "weather" -> I18nR.string.au14_tvhome_cat_weather
     else -> null
 }
 
@@ -224,7 +226,7 @@ fun TvHeroCard(
         ) {
             Box(Modifier.size(8.dp).clip(CircleShape).background(MaterialTheme.colorScheme.error))
             Text(
-                stringResource(R.string.au12_tvui_live),
+                stringResource(I18nR.string.au12_tvui_live),
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onErrorContainer,
@@ -237,7 +239,7 @@ fun TvHeroCard(
         ) {
             Column(Modifier.weight(1f)) {
                 Text(
-                    stringResource(R.string.au14_tvhome_continue_watching),
+                    stringResource(I18nR.string.au14_tvhome_continue_watching),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -250,7 +252,7 @@ fun TvHeroCard(
                 )
                 if (nowTitle != null) {
                     Text(
-                        stringResource(R.string.au13_tvextraui_now_line, nowTitle),
+                        stringResource(I18nR.string.au13_tvextraui_now_line, nowTitle),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1,
@@ -267,8 +269,8 @@ fun TvHeroCard(
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    painterResource(R.drawable.play_arrow_24px),
-                    contentDescription = stringResource(R.string.au14_tvhome_play),
+                    painterResource(BaseR.drawable.play_arrow_24px),
+                    contentDescription = stringResource(I18nR.string.au14_tvhome_play),
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.size(30.dp),
                 )
@@ -342,12 +344,12 @@ fun TvStarHint(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            painterResource(R.drawable.star_24px_outlined), null,
+            painterResource(BaseR.drawable.star_24px_outlined), null,
             tint = MaterialTheme.colorScheme.onSecondaryContainer,
             modifier = Modifier.size(24.dp),
         )
         Text(
-            stringResource(R.string.au14_tvhome_hint_star),
+            stringResource(I18nR.string.au14_tvhome_hint_star),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             modifier = Modifier.padding(start = 12.dp),

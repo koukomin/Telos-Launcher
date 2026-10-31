@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Intent
 import android.net.Uri
@@ -72,62 +73,62 @@ fun DownloadsSettingsScreen() {
         }
     }
 
-    PreferenceScreen(title = stringResource(R.string.dl_settings_title)) {
+    PreferenceScreen(title = stringResource(I18nR.string.dl_settings_title)) {
         item {
-            PreferenceCategory(title = stringResource(R.string.dl_settings_queue)) {
+            PreferenceCategory(title = stringResource(I18nR.string.dl_settings_queue)) {
                 SliderPreference(
-                    title = stringResource(R.string.dl_max_parallel), value = s.maxParallel, min = 1, max = 10,
+                    title = stringResource(I18nR.string.dl_max_parallel), value = s.maxParallel, min = 1, max = 10,
                     onValueChanged = { v -> store.update { it.copy(maxParallel = v) } },
                     label = { Text(it.toString()) },
                 )
                 SliderPreference(
-                    title = stringResource(R.string.dl_default_connections), value = s.connections, min = 1, max = 16,
+                    title = stringResource(I18nR.string.dl_default_connections), value = s.connections, min = 1, max = 16,
                     onValueChanged = { v -> store.update { it.copy(connections = v) } },
                     label = { Text(it.toString()) },
                 )
                 ListPreference(
-                    title = stringResource(R.string.dl_global_limit),
+                    title = stringResource(I18nR.string.dl_global_limit),
                     items = listOf(0, 256, 512, 1024, 2048, 5120, 10240).map {
-                        ListPreferenceItem(if (it == 0) stringResource(R.string.dl_limit_none) else if (it >= 1024) "${it / 1024} MB/s" else "$it KB/s", it)
+                        ListPreferenceItem(if (it == 0) stringResource(I18nR.string.dl_limit_none) else if (it >= 1024) "${it / 1024} MB/s" else "$it KB/s", it)
                     },
                     value = s.speedLimitKBps,
-                    summary = if (s.speedLimitKBps == 0) stringResource(R.string.dl_limit_none) else if (s.speedLimitKBps >= 1024) "${s.speedLimitKBps / 1024} MB/s" else "${s.speedLimitKBps} KB/s",
+                    summary = if (s.speedLimitKBps == 0) stringResource(I18nR.string.dl_limit_none) else if (s.speedLimitKBps >= 1024) "${s.speedLimitKBps / 1024} MB/s" else "${s.speedLimitKBps} KB/s",
                     onValueChanged = { v -> store.update { it.copy(speedLimitKBps = v) } },
                 )
                 SliderPreference(
-                    title = stringResource(R.string.dl_retries), value = s.maxRetries, min = 0, max = 20,
+                    title = stringResource(I18nR.string.dl_retries), value = s.maxRetries, min = 0, max = 20,
                     onValueChanged = { v -> store.update { it.copy(maxRetries = v) } },
                     label = { Text(it.toString()) },
                 )
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.dl_settings_rules)) {
+            PreferenceCategory(title = stringResource(I18nR.string.dl_settings_rules)) {
                 TransferNetworkPreferences("downloads")
                 SwitchPreference(
-                    title = stringResource(R.string.dl_low_battery), summary = stringResource(R.string.dl_low_battery_summary, s.lowBatteryPercent),
+                    title = stringResource(I18nR.string.dl_low_battery), summary = stringResource(I18nR.string.dl_low_battery_summary, s.lowBatteryPercent),
                     value = s.pauseOnLowBattery, onValueChanged = { v -> store.update { it.copy(pauseOnLowBattery = v) } },
                 )
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.dl_p3_schedule_title)) {
+            PreferenceCategory(title = stringResource(I18nR.string.dl_p3_schedule_title)) {
                 SwitchPreference(
-                    title = stringResource(R.string.dl_p3_schedule_enable), summary = stringResource(R.string.dl_p3_schedule_sum),
+                    title = stringResource(I18nR.string.dl_p3_schedule_enable), summary = stringResource(I18nR.string.dl_p3_schedule_sum),
                     value = s.scheduleEnabled, onValueChanged = { v -> store.update { it.copy(scheduleEnabled = v) } },
                 )
                 if (s.scheduleEnabled) {
                     Preference(
-                        title = stringResource(R.string.dl_p3_schedule_from, clock(s.scheduleStartMinute)),
+                        title = stringResource(I18nR.string.dl_p3_schedule_from, clock(s.scheduleStartMinute)),
                         onClick = { pickTime(s.scheduleStartMinute) { m -> store.update { it.copy(scheduleStartMinute = m) } } },
                     )
                     Preference(
-                        title = stringResource(R.string.dl_p3_schedule_to, clock(s.scheduleEndMinute)),
+                        title = stringResource(I18nR.string.dl_p3_schedule_to, clock(s.scheduleEndMinute)),
                         onClick = { pickTime(s.scheduleEndMinute) { m -> store.update { it.copy(scheduleEndMinute = m) } } },
                     )
-                    Text(stringResource(R.string.dl_p3_schedule_days), style = androidx.compose.material3.MaterialTheme.typography.labelLarge, modifier = Modifier.padding(horizontal = 16.dp))
+                    Text(stringResource(I18nR.string.dl_p3_schedule_days), style = androidx.compose.material3.MaterialTheme.typography.labelLarge, modifier = Modifier.padding(horizontal = 16.dp))
                     androidx.compose.foundation.layout.FlowRow(Modifier.padding(horizontal = 16.dp)) {
-                        val names = listOf(R.string.dl_p3_day_1, R.string.dl_p3_day_2, R.string.dl_p3_day_3, R.string.dl_p3_day_4, R.string.dl_p3_day_5, R.string.dl_p3_day_6, R.string.dl_p3_day_7)
+                        val names = listOf(I18nR.string.dl_p3_day_1, I18nR.string.dl_p3_day_2, I18nR.string.dl_p3_day_3, I18nR.string.dl_p3_day_4, I18nR.string.dl_p3_day_5, I18nR.string.dl_p3_day_6, I18nR.string.dl_p3_day_7)
                         for (d in 0..6) {
                             androidx.compose.material3.FilterChip(
                                 selected = (s.scheduleDays shr d) and 1 == 1,
@@ -141,23 +142,23 @@ fun DownloadsSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.dl_m_settings_title)) {
+            PreferenceCategory(title = stringResource(I18nR.string.dl_m_settings_title)) {
                 if (!runtime.isAvailable) {
-                    Preference(title = stringResource(R.string.dl_m_settings_unavailable), summary = stringResource(R.string.dl_m_missing_text))
+                    Preference(title = stringResource(I18nR.string.dl_m_settings_unavailable), summary = stringResource(I18nR.string.dl_m_missing_text))
                 } else {
                     Preference(
-                        title = stringResource(R.string.dl_m_update),
-                        summary = if (updating) stringResource(R.string.dl_m_updating) else stringResource(R.string.dl_m_update_sum),
+                        title = stringResource(I18nR.string.dl_m_update),
+                        summary = if (updating) stringResource(I18nR.string.dl_m_updating) else stringResource(I18nR.string.dl_m_update_sum),
                         enabled = !updating,
                         onClick = {
                             updating = true
                             scope.launch {
                                 val msg = try {
-                                    context.getString(R.string.dl_m_updated, runtime.update())
+                                    context.getString(I18nR.string.dl_m_updated, runtime.update())
                                 } catch (e: kotlinx.coroutines.CancellationException) {
                                     throw e
                                 } catch (e: Exception) {
-                                    context.getString(R.string.dl_m_update_failed, e.message.orEmpty())
+                                    context.getString(I18nR.string.dl_m_update_failed, e.message.orEmpty())
                                 }
                                 updatedAt = runtime.lastUpdate
                                 updating = false
@@ -167,20 +168,20 @@ fun DownloadsSettingsScreen() {
                     )
                     var autoUpdate by remember { mutableStateOf(runtime.autoUpdate) }
                     SwitchPreference(
-                        title = stringResource(R.string.dl_m_auto_update),
-                        summary = stringResource(R.string.dl_m_auto_update_sum),
+                        title = stringResource(I18nR.string.dl_m_auto_update),
+                        summary = stringResource(I18nR.string.dl_m_auto_update_sum),
                         value = autoUpdate,
                         onValueChanged = { autoUpdate = it; runtime.autoUpdate = it },
                     )
                     Preference(
-                        title = stringResource(R.string.dl_m_version, version ?: "?"),
+                        title = stringResource(I18nR.string.dl_m_version, version ?: "?"),
                         summary = stringResource(
-                            R.string.dl_m_last_update,
-                            if (updatedAt > 0) android.text.format.DateFormat.getMediumDateFormat(context).format(java.util.Date(updatedAt)) else stringResource(R.string.dl_m_never),
+                            I18nR.string.dl_m_last_update,
+                            if (updatedAt > 0) android.text.format.DateFormat.getMediumDateFormat(context).format(java.util.Date(updatedAt)) else stringResource(I18nR.string.dl_m_never),
                         ),
                     )
                     Preference(
-                        title = stringResource(R.string.dl_m_sites),
+                        title = stringResource(I18nR.string.dl_m_sites),
                         summary = "github.com/yt-dlp/yt-dlp",
                         onClick = {
                             runCatching {
@@ -189,41 +190,41 @@ fun DownloadsSettingsScreen() {
                         },
                     )
                     val has = remember(cookiesVersion) { runtime.hasCookies }
-                    Preference(title = stringResource(if (has) R.string.dl_m_cookies_present else R.string.dl_m_cookies_absent))
+                    Preference(title = stringResource(if (has) I18nR.string.dl_m_cookies_present else I18nR.string.dl_m_cookies_absent))
                     Column(Modifier.padding(horizontal = 16.dp)) {
                         MediaCookieControls(runtime, null, onChanged = { cookiesVersion++ })
                     }
                 }
-                Text(stringResource(R.string.dl_m_notice), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(16.dp))
+                Text(stringResource(I18nR.string.dl_m_notice), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(16.dp))
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.dl_settings_storage)) {
+            PreferenceCategory(title = stringResource(I18nR.string.dl_settings_storage)) {
                 Preference(
-                    title = stringResource(R.string.dl_default_folder),
-                    summary = s.defaultFolder.takeIf { it.isNotEmpty() }?.let { Uri.decode(it).substringAfterLast(':') } ?: stringResource(R.string.dl_folder_default),
+                    title = stringResource(I18nR.string.dl_default_folder),
+                    summary = s.defaultFolder.takeIf { it.isNotEmpty() }?.let { Uri.decode(it).substringAfterLast(':') } ?: stringResource(I18nR.string.dl_folder_default),
                     onClick = { picker.launch(null) },
                 )
                 if (s.defaultFolder.isNotEmpty()) {
                     Preference(
-                        title = stringResource(R.string.dl_default_folder_reset),
+                        title = stringResource(I18nR.string.dl_default_folder_reset),
                         onClick = { store.update { it.copy(defaultFolder = "") } },
                     )
                 }
                 SwitchPreference(
-                    title = stringResource(R.string.dl_p3_auto_extract), summary = stringResource(R.string.dl_p3_auto_extract_sum),
+                    title = stringResource(I18nR.string.dl_p3_auto_extract), summary = stringResource(I18nR.string.dl_p3_auto_extract_sum),
                     value = s.autoExtract, onValueChanged = { v -> store.update { it.copy(autoExtract = v) } },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.dl_p3_detect_clipboard), summary = stringResource(R.string.dl_p3_detect_clipboard_sum),
+                    title = stringResource(I18nR.string.dl_p3_detect_clipboard), summary = stringResource(I18nR.string.dl_p3_detect_clipboard_sum),
                     value = s.detectClipboard, onValueChanged = { v -> store.update { it.copy(detectClipboard = v) } },
                 )
                 ListPreference(
-                    title = stringResource(R.string.dl_after_finish),
+                    title = stringResource(I18nR.string.dl_after_finish),
                     items = listOf(
-                        ListPreferenceItem(stringResource(R.string.dl_after_nothing), AfterFinish.Nothing),
-                        ListPreferenceItem(stringResource(R.string.dl_after_open), AfterFinish.Open),
-                        ListPreferenceItem(stringResource(R.string.dl_after_share), AfterFinish.Share),
+                        ListPreferenceItem(stringResource(I18nR.string.dl_after_nothing), AfterFinish.Nothing),
+                        ListPreferenceItem(stringResource(I18nR.string.dl_after_open), AfterFinish.Open),
+                        ListPreferenceItem(stringResource(I18nR.string.dl_after_share), AfterFinish.Share),
                     ),
                     value = s.afterFinish,
                     onValueChanged = { v -> store.update { it.copy(afterFinish = v) } },
@@ -231,22 +232,22 @@ fun DownloadsSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.dl_settings_network)) {
+            PreferenceCategory(title = stringResource(I18nR.string.dl_settings_network)) {
                 Preference(
-                    title = stringResource(R.string.dl_user_agent),
-                    summary = s.userAgent.ifBlank { stringResource(R.string.dl_user_agent_default) },
+                    title = stringResource(I18nR.string.dl_user_agent),
+                    summary = s.userAgent.ifBlank { stringResource(I18nR.string.dl_user_agent_default) },
                     onClick = { editUserAgent = true },
                 )
                 Preference(
-                    title = stringResource(R.string.dl_proxy),
+                    title = stringResource(I18nR.string.dl_proxy),
                     summary = when (s.proxyType) {
-                        ProxyType.None -> stringResource(R.string.dl_proxy_none)
+                        ProxyType.None -> stringResource(I18nR.string.dl_proxy_none)
                         ProxyType.Http -> "HTTP ${s.proxyHost}:${s.proxyPort}"
                         ProxyType.Socks -> "SOCKS ${s.proxyHost}:${s.proxyPort}"
                     } + if (s.torrentWgConfigId > 0) {
                         "\n" + stringResource(
-                            R.string.au5_wgtorrent_summary,
-                            wgConfigs.firstOrNull { it.id == s.torrentWgConfigId }?.name ?: stringResource(R.string.au5_wgtorrent_removed),
+                            I18nR.string.au5_wgtorrent_summary,
+                            wgConfigs.firstOrNull { it.id == s.torrentWgConfigId }?.name ?: stringResource(I18nR.string.au5_wgtorrent_removed),
                         )
                     } else "",
                     onClick = { editProxy = true },
@@ -255,9 +256,9 @@ fun DownloadsSettingsScreen() {
         }
         torrentSettingsItems()
         item {
-            PreferenceCategory(title = stringResource(R.string.dl_settings_notifications)) {
+            PreferenceCategory(title = stringResource(I18nR.string.dl_settings_notifications)) {
                 SwitchPreference(
-                    title = stringResource(R.string.dl_notifications),
+                    title = stringResource(I18nR.string.dl_notifications),
                     value = s.notifications, onValueChanged = { v -> store.update { it.copy(notifications = v) } },
                 )
             }
@@ -268,12 +269,12 @@ fun DownloadsSettingsScreen() {
         var text by remember { mutableStateOf(s.userAgent) }
         AlertDialog(
             onDismissRequest = { editUserAgent = false },
-            title = { Text(stringResource(R.string.dl_user_agent)) },
+            title = { Text(stringResource(I18nR.string.dl_user_agent)) },
             text = {
-                OutlinedTextField(text, { text = it }, Modifier.fillMaxWidth(), placeholder = { Text(stringResource(R.string.dl_user_agent_default)) })
+                OutlinedTextField(text, { text = it }, Modifier.fillMaxWidth(), placeholder = { Text(stringResource(I18nR.string.dl_user_agent_default)) })
             },
-            confirmButton = { TextButton(onClick = { store.update { it.copy(userAgent = text.trim()) }; editUserAgent = false }) { Text(stringResource(R.string.dl_save)) } },
-            dismissButton = { TextButton(onClick = { editUserAgent = false }) { Text(stringResource(R.string.dl_cancel)) } },
+            confirmButton = { TextButton(onClick = { store.update { it.copy(userAgent = text.trim()) }; editUserAgent = false }) { Text(stringResource(I18nR.string.dl_save)) } },
+            dismissButton = { TextButton(onClick = { editUserAgent = false }) { Text(stringResource(I18nR.string.dl_cancel)) } },
         )
     }
     if (editProxy) {
@@ -283,29 +284,29 @@ fun DownloadsSettingsScreen() {
         var wgId by remember { mutableStateOf(s.torrentWgConfigId) }
         AlertDialog(
             onDismissRequest = { editProxy = false },
-            title = { Text(stringResource(R.string.dl_proxy)) },
+            title = { Text(stringResource(I18nR.string.dl_proxy)) },
             text = {
                 Column {
                     androidx.compose.foundation.layout.FlowRow {
                         for (t in ProxyType.entries) {
                             androidx.compose.material3.FilterChip(
                                 selected = type == t, onClick = { type = t },
-                                label = { Text(when (t) { ProxyType.None -> stringResource(R.string.dl_proxy_none); ProxyType.Http -> "HTTP"; ProxyType.Socks -> "SOCKS" }) },
+                                label = { Text(when (t) { ProxyType.None -> stringResource(I18nR.string.dl_proxy_none); ProxyType.Http -> "HTTP"; ProxyType.Socks -> "SOCKS" }) },
                                 modifier = Modifier.padding(end = 8.dp),
                             )
                         }
                     }
                     if (type != ProxyType.None) {
-                        Text(stringResource(if (type == ProxyType.Http) R.string.au4_torrentproxy_note_http else R.string.au4_torrentproxy_note_socks), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(vertical = 8.dp))
-                        OutlinedTextField(host, { host = it }, Modifier.fillMaxWidth(), singleLine = true, label = { Text(stringResource(R.string.dl_proxy_host)) })
-                        OutlinedTextField(port, { port = it.filter(Char::isDigit).take(5) }, Modifier.fillMaxWidth(), singleLine = true, label = { Text(stringResource(R.string.dl_proxy_port)) })
+                        Text(stringResource(if (type == ProxyType.Http) I18nR.string.au4_torrentproxy_note_http else I18nR.string.au4_torrentproxy_note_socks), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(vertical = 8.dp))
+                        OutlinedTextField(host, { host = it }, Modifier.fillMaxWidth(), singleLine = true, label = { Text(stringResource(I18nR.string.dl_proxy_host)) })
+                        OutlinedTextField(port, { port = it.filter(Char::isDigit).take(5) }, Modifier.fillMaxWidth(), singleLine = true, label = { Text(stringResource(I18nR.string.dl_proxy_port)) })
                     }
-                    Text(stringResource(R.string.au5_wgtorrent_title), style = androidx.compose.material3.MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
-                    Text(stringResource(R.string.au5_wgtorrent_desc), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(vertical = 8.dp))
+                    Text(stringResource(I18nR.string.au5_wgtorrent_title), style = androidx.compose.material3.MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                    Text(stringResource(I18nR.string.au5_wgtorrent_desc), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(vertical = 8.dp))
                     androidx.compose.foundation.layout.FlowRow {
                         androidx.compose.material3.FilterChip(
                             selected = wgId <= 0, onClick = { wgId = 0 },
-                            label = { Text(stringResource(R.string.au5_wgtorrent_none)) },
+                            label = { Text(stringResource(I18nR.string.au5_wgtorrent_none)) },
                             modifier = Modifier.padding(end = 8.dp),
                         )
                         for (c in wgConfigs) {
@@ -317,7 +318,7 @@ fun DownloadsSettingsScreen() {
                         }
                     }
                     if (wgConfigs.isEmpty()) {
-                        Text(stringResource(R.string.au5_wgtorrent_no_configs), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
+                        Text(stringResource(I18nR.string.au5_wgtorrent_no_configs), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
                     }
                     torrentWgStatusText(torrentRoute)?.let {
                         Text(it, style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
@@ -329,9 +330,9 @@ fun DownloadsSettingsScreen() {
                 TextButton(enabled = type == ProxyType.None || (host.isNotBlank() && port.toIntOrNull() in 1..65535), onClick = {
                     store.update { it.copy(proxyType = type, proxyHost = host.trim(), proxyPort = port.toIntOrNull() ?: 0, torrentWgConfigId = wgId) }
                     editProxy = false
-                }) { Text(stringResource(R.string.dl_save)) }
+                }) { Text(stringResource(I18nR.string.dl_save)) }
             },
-            dismissButton = { TextButton(onClick = { editProxy = false }) { Text(stringResource(R.string.dl_cancel)) } },
+            dismissButton = { TextButton(onClick = { editProxy = false }) { Text(stringResource(I18nR.string.dl_cancel)) } },
         )
     }
 }

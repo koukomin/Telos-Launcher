@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.colorscheme
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -92,8 +94,8 @@ fun CorePaletteColorPreference(
                 .navigationBarsPadding()
         ) {
             SwitchPreference(
-                icon = R.drawable.rule_settings_24px,
-                title = stringResource(R.string.preference_use_system_default),
+                icon = BaseR.drawable.rule_settings_24px,
+                title = stringResource(I18nR.string.preference_use_system_default),
                 value = currentValue == null,
                 onValueChanged = {
                     currentValue = if (it) null else defaultValue
@@ -145,12 +147,12 @@ fun CorePaletteColorPreference(
                             }
                         ) {
                             Icon(
-                                painterResource(R.drawable.wand_stars_20px), null,
+                                painterResource(BaseR.drawable.wand_stars_20px), null,
                                 modifier = Modifier
                                     .padding(ButtonDefaults.IconSpacing)
                                     .size(ButtonDefaults.IconSize)
                             )
-                            Text(stringResource(R.string.theme_color_scheme_autogenerate))
+                            Text(stringResource(I18nR.string.theme_color_scheme_autogenerate))
                         }
                     }
                 }

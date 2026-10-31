@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.favorites
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -50,9 +52,9 @@ fun AppsWidget(widget: AppsWidget) {
             Banner(
                 modifier = Modifier.padding(16.dp),
                 text = stringResource(
-                    if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
+                    if (selectedTag == null) I18nR.string.favorites_empty else I18nR.string.favorites_empty_tag
                 ),
-                icon = if (selectedTag == null) R.drawable.star_24px else R.drawable.tag_24px,
+                icon = if (selectedTag == null) BaseR.drawable.star_24px else BaseR.drawable.tag_24px,
             )
         }
         if (favoritesEditButton || (!customTags && pinnedTags.isNotEmpty()) || (customTags && widget.config.tagList.size > 1)) {

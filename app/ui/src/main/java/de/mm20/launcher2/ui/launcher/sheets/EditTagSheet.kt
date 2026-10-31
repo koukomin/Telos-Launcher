@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.sheets
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
@@ -117,11 +119,11 @@ fun EditTagSheet(
                         confirmDismiss = false
                         onDismiss()
                     }) {
-                        Text(stringResource(R.string.action_quit))
+                        Text(stringResource(I18nR.string.action_quit))
                     }
                 },
                 text = {
-                    Text(stringResource(R.string.dialog_discard_unsaved))
+                    Text(stringResource(I18nR.string.dialog_discard_unsaved))
                 }
             )
         }
@@ -132,11 +134,11 @@ fun EditTagSheet(
                     when (viewModel.page) {
                         EditTagSheetPage.CreateTag,
                         EditTagSheetPage.CustomizeTag -> {
-                            Text(stringResource(if (isCreatingNewTag) R.string.create_tag_title else R.string.edit_tag_title))
+                            Text(stringResource(if (isCreatingNewTag) I18nR.string.create_tag_title else I18nR.string.edit_tag_title))
                         }
 
                         EditTagSheetPage.PickItems -> {
-                            Text(stringResource(R.string.tag_select_items))
+                            Text(stringResource(I18nR.string.tag_select_items))
                         }
 
                         else -> {}
@@ -148,8 +150,8 @@ fun EditTagSheet(
                             viewModel.closeItemPicker()
                         }) {
                             Icon(
-                                painterResource(R.drawable.arrow_back_24px),
-                                stringResource(R.string.menu_back)
+                                painterResource(BaseR.drawable.arrow_back_24px),
+                                stringResource(I18nR.string.menu_back)
                             )
                         }
                     }
@@ -158,8 +160,8 @@ fun EditTagSheet(
                             viewModel.closeItemPicker()
                         }) {
                             Icon(
-                                painterResource(R.drawable.arrow_back_24px),
-                                stringResource(R.string.menu_back)
+                                painterResource(BaseR.drawable.arrow_back_24px),
+                                stringResource(I18nR.string.menu_back)
                             )
                         }
                     }
@@ -176,8 +178,8 @@ fun EditTagSheet(
                             },
                         ) {
                             Icon(
-                                painterResource(R.drawable.close_24px),
-                                stringResource(R.string.close)
+                                painterResource(BaseR.drawable.close_24px),
+                                stringResource(I18nR.string.close)
                             )
                         }
                     }
@@ -209,7 +211,7 @@ fun EditTagSheet(
                                 modifier = Modifier.navigationBarsPadding(),
                                 enabled = (viewModel.tagName.isNotBlank() && viewModel.page == EditTagSheetPage.CreateTag && !viewModel.tagNameExists),
                                 onClick = { viewModel.onClickContinue() }) {
-                                Text(stringResource(R.string.action_next))
+                                Text(stringResource(I18nR.string.action_next))
                             }
                         }
 
@@ -218,7 +220,7 @@ fun EditTagSheet(
                                 modifier = Modifier.navigationBarsPadding(),
                                 enabled = viewModel.taggedItems.isNotEmpty() || viewModel.wasOnLastPage,
                                 onClick = { viewModel.onClickContinue() }) {
-                                Text(stringResource(if (viewModel.wasOnLastPage) R.string.action_done else R.string.action_next))
+                                Text(stringResource(if (viewModel.wasOnLastPage) I18nR.string.action_done else I18nR.string.action_next))
                             }
                         }
 
@@ -232,7 +234,7 @@ fun EditTagSheet(
                                     onDismiss()
                                 }) {
                                 Text(
-                                    stringResource(if(viewModel.taggedItems.isEmpty()) R.string.menu_delete else R.string.save)
+                                    stringResource(if(viewModel.taggedItems.isEmpty()) I18nR.string.menu_delete else I18nR.string.save)
                                 )
                             }
                         }
@@ -263,8 +265,8 @@ fun CreateNewTagPage(viewModel: EditTagSheetVM) {
                 }
             ),
             isError = viewModel.tagNameExists,
-            supportingText = { if (viewModel.tagNameExists) Text(stringResource(id = R.string.tag_exists_error)) },
-            label = { Text(stringResource(R.string.tag_name)) },
+            supportingText = { if (viewModel.tagNameExists) Text(stringResource(id = I18nR.string.tag_exists_error)) },
+            label = { Text(stringResource(I18nR.string.tag_name)) },
             value = viewModel.tagName,
             onValueChange = { viewModel.tagName = it }
         )
@@ -353,7 +355,7 @@ fun ListItem(
                     shape = CircleShape,
                 ) {
                     Icon(
-                        painterResource(R.drawable.check_20px),
+                        painterResource(BaseR.drawable.check_20px),
                         null,
                         modifier = Modifier.padding(4.dp)
                     )
@@ -393,7 +395,7 @@ fun CustomizeTag(viewModel: EditTagSheetVM) {
                     .padding(end = 16.dp)
                     .clip(CircleShape)
                     .clickable(
-                        onClickLabel = stringResource(R.string.au3_launcher3_change_icon),
+                        onClickLabel = stringResource(I18nR.string.au3_launcher3_change_icon),
                         role = Role.Button,
                     ) {
                         viewModel.openIconPicker()
@@ -432,7 +434,7 @@ fun CustomizeTag(viewModel: EditTagSheetVM) {
                     )
                 } else {
                     Icon(
-                        painterResource(R.drawable.tag_24px),
+                        painterResource(BaseR.drawable.tag_24px),
                         null,
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -442,7 +444,7 @@ fun CustomizeTag(viewModel: EditTagSheetVM) {
             OutlinedTextField(
                 modifier = Modifier.weight(1f),
                 singleLine = true,
-                label = { Text(stringResource(R.string.tag_name)) },
+                label = { Text(stringResource(I18nR.string.tag_name)) },
                 value = viewModel.tagName,
                 onValueChange = { viewModel.tagName = it },
                 isError = viewModel.tagName.isBlank(),
@@ -450,8 +452,8 @@ fun CustomizeTag(viewModel: EditTagSheetVM) {
                     {
                         Text(
                             stringResource(
-                            if (viewModel.tagNameExists) R.string.tag_exists_message
-                            else R.string.tag_name_empty_error)
+                            if (viewModel.tagNameExists) I18nR.string.tag_exists_message
+                            else I18nR.string.tag_name_empty_error)
                         )
                     }
                 } else null
@@ -481,7 +483,7 @@ fun CustomizeTag(viewModel: EditTagSheetVM) {
             Text(
                 modifier = Modifier.weight(1f),
                 text = pluralStringResource(
-                    R.plurals.tag_selected_items,
+                    I18nR.plurals.tag_selected_items,
                     viewModel.taggedItems.size,
                     viewModel.taggedItems.size
                 )
@@ -554,7 +556,7 @@ fun PickIcon(
             ) {
                 Icon(
                     painterResource(
-                        if (selectedTabIndex.intValue == 0) R.drawable.check_20px else R.drawable.apps_20px
+                        if (selectedTabIndex.intValue == 0) BaseR.drawable.check_20px else BaseR.drawable.apps_20px
                     ),
                     null,
                     modifier = Modifier
@@ -563,7 +565,7 @@ fun PickIcon(
                             ToggleButtonDefaults.IconSize
                         )
                 )
-                Text(stringResource(R.string.tag_icon_customicon))
+                Text(stringResource(I18nR.string.tag_icon_customicon))
             }
             ToggleButton(
                 modifier = Modifier.weight(1f),
@@ -573,14 +575,14 @@ fun PickIcon(
             ) {
                 Icon(
                     painterResource(
-                        if (selectedTabIndex.intValue == 1) R.drawable.check_20px else R.drawable.mood_20px
+                        if (selectedTabIndex.intValue == 1) BaseR.drawable.check_20px else BaseR.drawable.mood_20px
                     ),
                     null,
                     modifier = Modifier
                         .padding(end = ToggleButtonDefaults.IconSpacing)
                         .size(ToggleButtonDefaults.IconSize)
                 )
-                Text(stringResource(R.string.tag_icon_emoji))
+                Text(stringResource(I18nR.string.tag_icon_emoji))
             }
         }
         AnimatedContent(

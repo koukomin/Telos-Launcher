@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -177,7 +179,7 @@ private fun SearchPill(
         ) {
             Box(Modifier.size(if (leading != null) de.mm20.launcher2.ui.layout.UiSpacing.TouchTarget else 40.dp), contentAlignment = Alignment.Center) {
                 if (leading != null) leading() else Icon(
-                    painterResource(R.drawable.search_24px),
+                    painterResource(BaseR.drawable.search_24px),
                     contentDescription = null,
                     modifier = Modifier.size(22.dp),
                 )
@@ -223,8 +225,8 @@ private fun SearchPill(
             ) {
                 IconButton(onClick = { onValueChange("") }, modifier = Modifier.size(de.mm20.launcher2.ui.layout.UiSpacing.TouchTarget)) {
                     Icon(
-                        painterResource(R.drawable.close_24px),
-                        contentDescription = stringResource(R.string.ts_clear),
+                        painterResource(BaseR.drawable.close_24px),
+                        contentDescription = stringResource(I18nR.string.ts_clear),
                         modifier = Modifier.size(20.dp),
                     )
                 }
@@ -243,13 +245,13 @@ fun SearchEmptyState(query: String, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
     ) {
         Icon(
-            painterResource(R.drawable.search_24px),
+            painterResource(BaseR.drawable.search_24px),
             contentDescription = null,
             modifier = Modifier.size(48.dp),
             tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
         )
         Text(
-            stringResource(R.string.ts_no_results, query),
+            stringResource(I18nR.string.ts_no_results, query),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,

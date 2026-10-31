@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -42,7 +43,7 @@ class RecentsWidgetProvider : AppWidgetProvider(), KoinComponent {
                     val views = RemoteViews(context.packageName, R.layout.widget_recents)
                     views.setTextViewText(
                         R.id.widget_recents_body,
-                        lines.ifBlank { context.getString(R.string.recents_empty_title) },
+                        lines.ifBlank { context.getString(I18nR.string.recents_empty_title) },
                     )
                     views.setOnClickPendingIntent(R.id.widget_recents_title, open)
                     views.setOnClickPendingIntent(R.id.widget_recents_body, open)
@@ -78,7 +79,7 @@ class RecentsWidgetProvider : AppWidgetProvider(), KoinComponent {
                 names.joinToString("\n")
             }.orEmpty()
         } catch (_: SecurityException) {
-            context.getString(R.string.au_phonea_grant_calllog)
+            context.getString(I18nR.string.au_phonea_grant_calllog)
         } catch (_: RuntimeException) {
             ""
         }

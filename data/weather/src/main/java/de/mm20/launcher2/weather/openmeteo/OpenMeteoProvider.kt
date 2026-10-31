@@ -1,4 +1,5 @@
 package de.mm20.launcher2.weather.openmeteo
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.icu.text.SimpleDateFormat
@@ -8,8 +9,6 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.GeocoderWeatherProvider
-import de.mm20.launcher2.i18n.R
-
 /**
  * Open-Meteo (https://open-meteo.com/) - the default weather provider: free for non-commercial
  * use, no API key or contact-info configuration needed (unlike MetNo/OpenWeatherMap in this
@@ -101,17 +100,17 @@ internal class OpenMeteoProvider(
 
     private fun conditionForCode(code: Int): String {
         val resId = when (code) {
-            0, 1 -> R.string.weather_condition_clearsky
-            2 -> R.string.weather_condition_partlycloudy
-            3 -> R.string.weather_condition_cloudy
-            45, 48 -> R.string.weather_condition_fog
-            51, 61, 80 -> R.string.weather_condition_lightrain
-            53, 63, 81 -> R.string.weather_condition_rain
-            55, 65, 82 -> R.string.weather_condition_heavyrain
-            56, 57, 66, 67 -> R.string.weather_condition_sleet
-            71, 73, 75, 77, 85, 86 -> R.string.weather_condition_snow
-            95, 96, 99 -> R.string.weather_condition_thunderstorm
-            else -> R.string.weather_condition_unknown
+            0, 1 -> I18nR.string.weather_condition_clearsky
+            2 -> I18nR.string.weather_condition_partlycloudy
+            3 -> I18nR.string.weather_condition_cloudy
+            45, 48 -> I18nR.string.weather_condition_fog
+            51, 61, 80 -> I18nR.string.weather_condition_lightrain
+            53, 63, 81 -> I18nR.string.weather_condition_rain
+            55, 65, 82 -> I18nR.string.weather_condition_heavyrain
+            56, 57, 66, 67 -> I18nR.string.weather_condition_sleet
+            71, 73, 75, 77, 85, 86 -> I18nR.string.weather_condition_snow
+            95, 96, 99 -> I18nR.string.weather_condition_thunderstorm
+            else -> I18nR.string.weather_condition_unknown
         }
         return context.getString(resId)
     }

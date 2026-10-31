@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.widgets
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
@@ -12,10 +13,10 @@ import androidx.compose.ui.res.stringResource
 import de.mm20.launcher2.ui.R
 
 private val steps = listOf(
-    R.string.widgets_tutorial_add_title to R.string.au3_launcher3_tutorial_add_text,
-    R.string.widgets_tutorial_move_title to R.string.widgets_tutorial_move_text,
-    R.string.widgets_tutorial_resize_title to R.string.widgets_tutorial_resize_text,
-    R.string.widgets_tutorial_stack_title to R.string.widgets_tutorial_stack_text,
+    I18nR.string.widgets_tutorial_add_title to I18nR.string.au3_launcher3_tutorial_add_text,
+    I18nR.string.widgets_tutorial_move_title to I18nR.string.widgets_tutorial_move_text,
+    I18nR.string.widgets_tutorial_resize_title to I18nR.string.widgets_tutorial_resize_text,
+    I18nR.string.widgets_tutorial_stack_title to I18nR.string.widgets_tutorial_stack_text,
 )
 
 /**
@@ -40,15 +41,15 @@ fun WidgetsTutorialOverlay(onFinished: () -> Unit) {
             }) {
                 Text(
                     stringResource(
-                        if (step < steps.lastIndex) R.string.widgets_tutorial_next
-                        else R.string.widgets_tutorial_done
+                        if (step < steps.lastIndex) I18nR.string.widgets_tutorial_next
+                        else I18nR.string.widgets_tutorial_done
                     )
                 )
             }
         },
         dismissButton = {
             TextButton(onClick = onFinished) {
-                Text(stringResource(R.string.widgets_tutorial_skip))
+                Text(stringResource(I18nR.string.widgets_tutorial_skip))
             }
         }
     )

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.common
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.net.Uri
 import android.text.format.DateUtils
@@ -66,13 +68,13 @@ fun RestoreBackupSheet(
         ) {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(stringResource(R.string.preference_restore))
+                    Text(stringResource(I18nR.string.preference_restore))
                 },
                 actions = {
                     FilledTonalIconButton(
                         onClick = onDismissRequest
                     ) {
-                        Icon(painterResource(R.drawable.close_24px), stringResource(R.string.close))
+                        Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.close))
                     }
                 }
             )
@@ -99,16 +101,16 @@ fun RestoreBackupSheet(
                     RestoreBackupState.InvalidFile -> {
                         LargeMessage(
                             modifier = Modifier.navigationBarsPadding(),
-                            icon = R.drawable.error_48px,
-                            text = stringResource(id = R.string.restore_invalid_file)
+                            icon = BaseR.drawable.error_48px,
+                            text = stringResource(id = I18nR.string.restore_invalid_file)
                         )
                     }
 
                     RestoreBackupState.Failed -> {
                         LargeMessage(
                             modifier = Modifier.navigationBarsPadding(),
-                            icon = R.drawable.error_48px,
-                            text = stringResource(id = R.string.au3_sysa_restore_failed)
+                            icon = BaseR.drawable.error_48px,
+                            text = stringResource(id = I18nR.string.au3_sysa_restore_failed)
                         )
                     }
 
@@ -117,8 +119,8 @@ fun RestoreBackupSheet(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .navigationBarsPadding(),
-                            icon = R.drawable.warning_24px,
-                            text = stringResource(id = R.string.au3_sysa_restore_partial)
+                            icon = BaseR.drawable.warning_24px,
+                            text = stringResource(id = I18nR.string.au3_sysa_restore_partial)
                         )
                     }
 
@@ -134,21 +136,21 @@ fun RestoreBackupSheet(
                                         .fillMaxWidth()
                                         .navigationBarsPadding()
                                         .wrapContentHeight(),
-                                    icon = R.drawable.info_24px,
+                                    icon = BaseR.drawable.info_24px,
                                     text = stringResource(
-                                        R.string.restore_meta,
+                                        I18nR.string.restore_meta,
                                         DateUtils.formatDateTime(
                                             LocalContext.current,
                                             metadata!!.timestamp,
                                             DateUtils.FORMAT_ABBREV_ALL or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
                                         ),
                                         metadata!!.deviceName,
-                                        stringResource(R.string.app_name) + " " + metadata!!.appVersionName,
+                                        stringResource(BaseR.string.app_name) + " " + metadata!!.appVersionName,
                                     )
                                 )
                                 if (compatibility != BackupCompatibility.Incompatible) {
                                     Text(
-                                        stringResource(R.string.restore_choose_parts),
+                                        stringResource(I18nR.string.restore_choose_parts),
                                         style = MaterialTheme.typography.titleMedium,
                                         modifier = Modifier.padding(top = 12.dp, bottom = 4.dp),
                                     )
@@ -164,10 +166,10 @@ fun RestoreBackupSheet(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .navigationBarsPadding(),
-                                        icon = R.drawable.error_48px,
+                                        icon = BaseR.drawable.error_48px,
                                         text = stringResource(
-                                            id = R.string.restore_incompatible_file,
-                                            stringResource(R.string.app_name)
+                                            id = I18nR.string.restore_incompatible_file,
+                                            stringResource(BaseR.string.app_name)
                                         )
                                     )
                                 } else {
@@ -177,11 +179,11 @@ fun RestoreBackupSheet(
                                             modifier = Modifier
                                                 .fillMaxWidth()
                                                 .navigationBarsPadding(),
-                                            icon = R.drawable.warning_24px,
+                                            icon = BaseR.drawable.warning_24px,
                                             text =
                                                 stringResource(
-                                                    R.string.restore_different_minor_version,
-                                                    stringResource(R.string.app_name)
+                                                    I18nR.string.restore_different_minor_version,
+                                                    stringResource(BaseR.string.app_name)
                                                 )
                                         )
                                     }
@@ -195,9 +197,9 @@ fun RestoreBackupSheet(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .navigationBarsPadding(),
-                            icon = R.drawable.check_circle_48px,
+                            icon = BaseR.drawable.check_circle_48px,
                             text = stringResource(
-                                id = R.string.restore_complete
+                                id = I18nR.string.restore_complete
                             )
                         )
                     }
@@ -213,7 +215,7 @@ fun RestoreBackupSheet(
                         enabled = viewModel.selected.value.isNotEmpty(),
                         modifier = Modifier.navigationBarsPadding(),
                     ) {
-                        Text(stringResource(R.string.preference_restore))
+                        Text(stringResource(I18nR.string.preference_restore))
                     }
                 }
             }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Intent
 import android.net.Uri
@@ -87,8 +88,8 @@ internal fun TorrentDetailSheet(
             if (d != null) {
                 Text(
                     "↓ ${Formatting.speed(if (task.state == DownloadState.Seeding) 0 else task.speedBps)}  ↑ ${Formatting.speed(d.uploadBps)} · " +
-                        stringResource(R.string.dl_t_ratio, SeedRules.formatRatio(d.ratio)) + " · " +
-                        stringResource(R.string.dl_t_peers, d.seeds, (d.peers - d.seeds).coerceAtLeast(0)),
+                        stringResource(I18nR.string.dl_t_ratio, SeedRules.formatRatio(d.ratio)) + " · " +
+                        stringResource(I18nR.string.dl_t_peers, d.seeds, (d.peers - d.seeds).coerceAtLeast(0)),
                     style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -96,21 +97,21 @@ internal fun TorrentDetailSheet(
 
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 when (task.state) {
-                    DownloadState.Paused -> Button(onClick = { manager.resume(task.id) }) { Text(stringResource(R.string.dl_resume)) }
-                    DownloadState.Failed -> Button(onClick = { manager.resume(task.id) }) { Text(stringResource(R.string.dl_retry)) }
+                    DownloadState.Paused -> Button(onClick = { manager.resume(task.id) }) { Text(stringResource(I18nR.string.dl_resume)) }
+                    DownloadState.Failed -> Button(onClick = { manager.resume(task.id) }) { Text(stringResource(I18nR.string.dl_retry)) }
                     DownloadState.Completed -> {}
-                    else -> Button(onClick = { manager.pause(task.id) }) { Text(stringResource(R.string.dl_pause)) }
+                    else -> Button(onClick = { manager.pause(task.id) }) { Text(stringResource(I18nR.string.dl_pause)) }
                 }
-                OutlinedButton(enabled = running, onClick = { scope.launch { controller.forceRecheck(task.id) } }) { Text(stringResource(R.string.dl_t_recheck)) }
-                OutlinedButton(enabled = running, onClick = { scope.launch { controller.forceReannounce(task.id) } }) { Text(stringResource(R.string.dl_t_reannounce)) }
-                OutlinedButton(onClick = onDelete) { Text(stringResource(R.string.dl_delete)) }
+                OutlinedButton(enabled = running, onClick = { scope.launch { controller.forceRecheck(task.id) } }) { Text(stringResource(I18nR.string.dl_t_recheck)) }
+                OutlinedButton(enabled = running, onClick = { scope.launch { controller.forceReannounce(task.id) } }) { Text(stringResource(I18nR.string.dl_t_reannounce)) }
+                OutlinedButton(onClick = onDelete) { Text(stringResource(I18nR.string.dl_delete)) }
             }
             if (d != null) {
-                SwitchRow(stringResource(R.string.dl_t_sequential), d.sequential) { on -> scope.launch { controller.setSequential(task.id, on) } }
+                SwitchRow(stringResource(I18nR.string.dl_t_sequential), d.sequential) { on -> scope.launch { controller.setSequential(task.id, on) } }
             }
 
             PrimaryTabRow(selectedTabIndex = tab) {
-                for ((i, label) in listOf(R.string.dl_t_tab_files, R.string.dl_t_tab_peers, R.string.dl_t_tab_trackers, R.string.dl_t_tab_info).withIndex()) {
+                for ((i, label) in listOf(I18nR.string.dl_t_tab_files, I18nR.string.dl_t_tab_peers, I18nR.string.dl_t_tab_trackers, I18nR.string.dl_t_tab_info).withIndex()) {
                     Tab(selected = tab == i, onClick = { tab = i }, text = { Text(stringResource(label)) })
                 }
             }
@@ -126,7 +127,7 @@ internal fun TorrentDetailSheet(
     if (addTracker) AddTrackerDialog(onDismiss = { addTracker = false }) { url ->
         scope.launch {
             if (controller.addTracker(task.id, url)) addTracker = false
-            else Toast.makeText(context, R.string.dl_t_tracker_failed, Toast.LENGTH_LONG).show()
+            else Toast.makeText(context, I18nR.string.dl_t_tracker_failed, Toast.LENGTH_LONG).show()
         }
     }
 }
@@ -137,13 +138,13 @@ private fun FilesTab(task: DownloadTask, controller: TorrentController, openFile
     val context = LocalContext.current
     val files = task.torrent?.files.orEmpty()
     if (files.isEmpty()) {
-        Text(stringResource(R.string.dl_t_files_wait), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(vertical = 16.dp))
+        Text(stringResource(I18nR.string.dl_t_files_wait), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(vertical = 16.dp))
         return
     }
     TorrentFileList(
         files = files,
         onChange = { changes ->
-            scope.launch { if (!controller.setFilePriorities(task.id, changes)) Toast.makeText(context, R.string.dl_t_keep_one_file, Toast.LENGTH_SHORT).show() }
+            scope.launch { if (!controller.setFilePriorities(task.id, changes)) Toast.makeText(context, I18nR.string.dl_t_keep_one_file, Toast.LENGTH_SHORT).show() }
         },
         showProgress = true,
         onOpen = openFile,
@@ -156,13 +157,13 @@ private fun PeersTab(task: DownloadTask, controller: TorrentController) {
     val peers = rememberPolled(task.id, task.state, emptyList<PeerRow>()) { controller.peers(task.id) }
     if (peers.isEmpty()) {
         Text(
-            stringResource(if (task.state.isActive) R.string.dl_t_peers_empty else R.string.dl_t_not_running),
+            stringResource(if (task.state.isActive) I18nR.string.dl_t_peers_empty else I18nR.string.dl_t_not_running),
             color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(vertical = 16.dp),
         )
         return
     }
     Column {
-        Text(stringResource(R.string.dl_t_flags_legend), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(stringResource(I18nR.string.dl_t_flags_legend), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         LazyColumn(Modifier.fillMaxWidth().height(320.dp)) {
             items(peers) { p -> PeerItem(p) }
         }
@@ -186,7 +187,7 @@ private fun TrackersTab(task: DownloadTask, controller: TorrentController, onAdd
     Column {
         if (trackers.isEmpty()) {
             Text(
-                stringResource(if (task.state.isActive) R.string.dl_t_trackers_empty else R.string.dl_t_not_running),
+                stringResource(if (task.state.isActive) I18nR.string.dl_t_trackers_empty else I18nR.string.dl_t_not_running),
                 color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(vertical = 16.dp),
             )
         } else {
@@ -194,7 +195,7 @@ private fun TrackersTab(task: DownloadTask, controller: TorrentController, onAdd
                 items(trackers) { t -> TrackerItem(t) }
             }
         }
-        TextButton(onClick = onAdd, enabled = task.state.isActive) { Text(stringResource(R.string.dl_t_add_tracker)) }
+        TextButton(onClick = onAdd, enabled = task.state.isActive) { Text(stringResource(I18nR.string.dl_t_add_tracker)) }
     }
 }
 
@@ -203,10 +204,10 @@ private fun TrackerItem(t: TrackerRow) {
     Column(Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
         Text(t.url, style = MaterialTheme.typography.bodyMedium, maxLines = 2)
         val status = when (t.status) {
-            TrackerStatus.Working -> stringResource(R.string.dl_t_tracker_working)
-            TrackerStatus.Updating -> stringResource(R.string.dl_t_tracker_updating)
-            TrackerStatus.NotContacted -> stringResource(R.string.dl_t_tracker_idle)
-            TrackerStatus.Error -> stringResource(R.string.dl_t_tracker_error, t.fails)
+            TrackerStatus.Working -> stringResource(I18nR.string.dl_t_tracker_working)
+            TrackerStatus.Updating -> stringResource(I18nR.string.dl_t_tracker_updating)
+            TrackerStatus.NotContacted -> stringResource(I18nR.string.dl_t_tracker_idle)
+            TrackerStatus.Error -> stringResource(I18nR.string.dl_t_tracker_error, t.fails)
         }
         Text(
             "Tier ${t.tier} · $status" + if (t.message.isNotBlank()) " · ${t.message}" else "",
@@ -221,16 +222,16 @@ private fun AddTrackerDialog(onDismiss: () -> Unit, onAdd: (String) -> Unit) {
     var url by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.dl_t_add_tracker)) },
+        title = { Text(stringResource(I18nR.string.dl_t_add_tracker)) },
         text = {
             OutlinedTextField(
                 url, { url = it }, Modifier.fillMaxWidth(), singleLine = true,
-                label = { Text(stringResource(R.string.dl_t_tracker_url)) },
-                supportingText = { Text(stringResource(R.string.dl_t_tracker_hint)) },
+                label = { Text(stringResource(I18nR.string.dl_t_tracker_url)) },
+                supportingText = { Text(stringResource(I18nR.string.dl_t_tracker_hint)) },
             )
         },
-        confirmButton = { TextButton(enabled = TorrentController.isTrackerUrl(url.trim()), onClick = { onAdd(url.trim()) }) { Text(stringResource(R.string.dl_t_add_tracker)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.dl_cancel)) } },
+        confirmButton = { TextButton(enabled = TorrentController.isTrackerUrl(url.trim()), onClick = { onAdd(url.trim()) }) { Text(stringResource(I18nR.string.dl_t_add_tracker)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.dl_cancel)) } },
     )
 }
 
@@ -242,36 +243,36 @@ private fun InfoTab(task: DownloadTask, controller: TorrentController, manager: 
     var editSeed by remember { mutableStateOf(false) }
     var limit by remember(task.id) { mutableStateOf((task.speedLimitBps / 1024).takeIf { it > 0 }?.toString().orEmpty()) }
     Column(Modifier.fillMaxWidth().height(340.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        InfoLine(R.string.dl_detail_size, if (task.totalBytes >= 0) Formatting.size(task.totalBytes) else "?")
-        if (d.infoHash.isNotEmpty()) InfoLine(R.string.dl_t_info_hash, d.infoHash, mono = true)
-        if (d.numPieces > 0) InfoLine(R.string.dl_t_info_pieces, "${d.numPieces} × ${Formatting.size(d.pieceLength.toLong())}")
-        if (d.isPrivate) InfoLine(R.string.dl_t_info_private, stringResource(R.string.dl_yes))
-        InfoLine(R.string.dl_t_info_uploaded, Formatting.size(d.uploadedBytes))
-        InfoLine(R.string.dl_t_info_received, Formatting.size(d.receivedBytes))
-        InfoLine(R.string.dl_t_info_ratio, SeedRules.formatRatio(d.ratio))
-        if (d.seedingSeconds > 0) InfoLine(R.string.dl_t_info_seeding_time, Formatting.duration(d.seedingSeconds))
+        InfoLine(I18nR.string.dl_detail_size, if (task.totalBytes >= 0) Formatting.size(task.totalBytes) else "?")
+        if (d.infoHash.isNotEmpty()) InfoLine(I18nR.string.dl_t_info_hash, d.infoHash, mono = true)
+        if (d.numPieces > 0) InfoLine(I18nR.string.dl_t_info_pieces, "${d.numPieces} × ${Formatting.size(d.pieceLength.toLong())}")
+        if (d.isPrivate) InfoLine(I18nR.string.dl_t_info_private, stringResource(I18nR.string.dl_yes))
+        InfoLine(I18nR.string.dl_t_info_uploaded, Formatting.size(d.uploadedBytes))
+        InfoLine(I18nR.string.dl_t_info_received, Formatting.size(d.receivedBytes))
+        InfoLine(I18nR.string.dl_t_info_ratio, SeedRules.formatRatio(d.ratio))
+        if (d.seedingSeconds > 0) InfoLine(I18nR.string.dl_t_info_seeding_time, Formatting.duration(d.seedingSeconds))
         InfoLine(
-            R.string.dl_t_info_seed_limits,
-            if (d.stopAtDone) stringResource(R.string.dl_t_stop_at_done)
-            else stringResource(R.string.dl_t_ratio_limit) + ": " + ratioLabel(d.seedRatioX100) + " · " + stringResource(R.string.dl_t_time_limit) + ": " + minutesLabel(d.seedMinutes),
+            I18nR.string.dl_t_info_seed_limits,
+            if (d.stopAtDone) stringResource(I18nR.string.dl_t_stop_at_done)
+            else stringResource(I18nR.string.dl_t_ratio_limit) + ": " + ratioLabel(d.seedRatioX100) + " · " + stringResource(I18nR.string.dl_t_time_limit) + ": " + minutesLabel(d.seedMinutes),
         )
-        TextButton(onClick = { editSeed = true }) { Text(stringResource(R.string.dl_t_seed_edit)) }
+        TextButton(onClick = { editSeed = true }) { Text(stringResource(I18nR.string.dl_t_seed_edit)) }
         OutlinedTextField(
             value = limit, onValueChange = { v -> limit = v.filter(Char::isDigit).take(7); manager.setSpeedLimit(task.id, (limit.toLongOrNull() ?: 0L) * 1024) },
-            singleLine = true, modifier = Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.dl_p3_torrent_limit)) },
+            singleLine = true, modifier = Modifier.fillMaxWidth(), label = { Text(stringResource(I18nR.string.dl_p3_torrent_limit)) },
         )
-        d.stagingPath?.let { InfoLine(R.string.dl_t_info_staging, it, mono = true) }
-        task.fileUri?.let { InfoLine(R.string.dl_detail_saved_to, Uri.decode(it)) }
+        d.stagingPath?.let { InfoLine(I18nR.string.dl_t_info_staging, it, mono = true) }
+        task.fileUri?.let { InfoLine(I18nR.string.dl_detail_saved_to, Uri.decode(it)) }
         if (d.magnet.isNotEmpty()) {
-            InfoLine(R.string.dl_t_info_magnet, d.magnet, mono = true)
-            TextButton(onClick = { copyLink(context, d.magnet) }) { Text(stringResource(R.string.dl_t_copy_magnet)) }
+            InfoLine(I18nR.string.dl_t_info_magnet, d.magnet, mono = true)
+            TextButton(onClick = { copyLink(context, d.magnet) }) { Text(stringResource(I18nR.string.dl_t_copy_magnet)) }
         }
         if (task.treeUri != null || task.fileUri != null) {
-            TextButton(onClick = { if (!openFolder(context, task)) Toast.makeText(context, R.string.dl_no_app, Toast.LENGTH_SHORT).show() }) {
-                Text(stringResource(R.string.dl_t_open_folder))
+            TextButton(onClick = { if (!openFolder(context, task)) Toast.makeText(context, I18nR.string.dl_no_app, Toast.LENGTH_SHORT).show() }) {
+                Text(stringResource(I18nR.string.dl_t_open_folder))
             }
         }
-        if (!task.error.isNullOrBlank()) InfoLine(R.string.dl_detail_error, task.error!!)
+        if (!task.error.isNullOrBlank()) InfoLine(I18nR.string.dl_detail_error, task.error!!)
     }
     if (editSeed) SeedLimitsDialog(d.seedRatioX100, d.seedMinutes, d.stopAtDone, onDismiss = { editSeed = false }) { r, m, s ->
         controller.setSeedLimits(task.id, r, m, s)
@@ -286,24 +287,24 @@ private fun SeedLimitsDialog(ratio: Int, minutes: Int, stop: Boolean, onDismiss:
     var s by remember { mutableStateOf(stop) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.dl_t_seed_edit)) },
+        title = { Text(stringResource(I18nR.string.dl_t_seed_edit)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                SwitchRow(stringResource(R.string.dl_t_stop_at_done), s) { s = it }
+                SwitchRow(stringResource(I18nR.string.dl_t_stop_at_done), s) { s = it }
                 if (!s) {
-                    Text(stringResource(R.string.dl_t_ratio_limit), style = MaterialTheme.typography.labelMedium)
+                    Text(stringResource(I18nR.string.dl_t_ratio_limit), style = MaterialTheme.typography.labelMedium)
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         for (x in RATIO_CHOICES) FilterChip(selected = r == x, onClick = { r = x }, label = { Text(ratioLabel(x)) })
                     }
-                    Text(stringResource(R.string.dl_t_time_limit), style = MaterialTheme.typography.labelMedium)
+                    Text(stringResource(I18nR.string.dl_t_time_limit), style = MaterialTheme.typography.labelMedium)
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         for (x in MINUTE_CHOICES) FilterChip(selected = m == x, onClick = { m = x }, label = { Text(minutesLabel(x)) })
                     }
                 }
             }
         },
-        confirmButton = { TextButton(onClick = { onSave(r, m, s) }) { Text(stringResource(R.string.dl_save)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.dl_cancel)) } },
+        confirmButton = { TextButton(onClick = { onSave(r, m, s) }) { Text(stringResource(I18nR.string.dl_save)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.dl_cancel)) } },
     )
 }
 
@@ -323,7 +324,7 @@ private fun PieceMapBar(task: DownloadTask, controller: TorrentController) {
     val missing = MaterialTheme.colorScheme.surfaceVariant
     if (cells.isEmpty()) return
     Column {
-        Text(stringResource(R.string.dl_t_piece_map), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(stringResource(I18nR.string.dl_t_piece_map), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Canvas(Modifier.fillMaxWidth().height(14.dp)) {
             val w = size.width / cells.size
             for ((i, f) in cells.withIndex()) {

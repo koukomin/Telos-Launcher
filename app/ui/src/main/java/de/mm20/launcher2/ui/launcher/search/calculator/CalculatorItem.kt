@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.calculator
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -52,7 +54,7 @@ fun CalculatorItem(
         clipboardManager.setText(AnnotatedString(text))
         hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            Toast.makeText(context, context.getString(R.string.calculator_copied, text), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(I18nR.string.calculator_copied, text), Toast.LENGTH_SHORT).show()
         }
     }
     Column(
@@ -84,8 +86,8 @@ fun CalculatorItem(
             )
             IconButton(onClick = { copy() }) {
                 Icon(
-                    painterResource(R.drawable.content_copy_24px),
-                    contentDescription = stringResource(R.string.calculator_copy_result),
+                    painterResource(BaseR.drawable.content_copy_24px),
+                    contentDescription = stringResource(I18nR.string.calculator_copy_result),
                 )
             }
         }

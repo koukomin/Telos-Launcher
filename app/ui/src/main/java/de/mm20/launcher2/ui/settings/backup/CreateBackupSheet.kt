@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.backup
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -69,7 +71,7 @@ fun CreateBackupSheet(
         ) {
             if (it == CreateBackupState.Ready) {
                 Column(Modifier.fillMaxWidth()) {
-                    Text(stringResource(R.string.backup_choose_parts), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(bottom = 8.dp))
+                    Text(stringResource(I18nR.string.backup_choose_parts), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(bottom = 8.dp))
                     BackupGroupList(
                         available = BackupGroup.entries.toList(),
                         selected = viewModel.selected.value,
@@ -80,7 +82,7 @@ fun CreateBackupSheet(
                         onClick = ::chooseFile,
                         enabled = viewModel.selected.value.isNotEmpty(),
                         modifier = Modifier.padding(top = 16.dp).navigationBarsPadding(),
-                    ) { Text(stringResource(if (viewModel.selected.value.isEmpty()) R.string.backup_nothing_selected else R.string.backup_create)) }
+                    ) { Text(stringResource(if (viewModel.selected.value.isEmpty()) I18nR.string.backup_nothing_selected else I18nR.string.backup_create)) }
                 }
             } else if (it == CreateBackupState.BackingUp) {
                 Box(
@@ -99,20 +101,20 @@ fun CreateBackupSheet(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     LargeMessage(
-                        icon = R.drawable.error_48px,
-                        text = stringResource(R.string.au3_sysa_backup_failed)
+                        icon = BaseR.drawable.error_48px,
+                        text = stringResource(I18nR.string.au3_sysa_backup_failed)
                     )
                     Button(
                         onClick = viewModel::retry,
                         modifier = Modifier.padding(top = 16.dp),
-                    ) { Text(stringResource(R.string.au3_sysa_try_again)) }
+                    ) { Text(stringResource(I18nR.string.au3_sysa_try_again)) }
                 }
             } else if (it == CreateBackupState.BackedUp) {
                 LargeMessage(
                     modifier = Modifier.aspectRatio(1f),
-                    icon = R.drawable.check_circle_48px,
+                    icon = BaseR.drawable.check_circle_48px,
                     text = stringResource(
-                        id = R.string.backup_complete
+                        id = I18nR.string.backup_complete
                     )
                 )
             }

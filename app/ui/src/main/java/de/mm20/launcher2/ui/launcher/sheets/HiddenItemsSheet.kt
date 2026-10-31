@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.sheets
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -26,7 +27,7 @@ fun HiddenItemsSheet(
     DismissableBottomSheet(expanded = expanded, onDismissRequest = onDismiss) {
         if (items.isEmpty()) {
             Text(
-                text = stringResource(R.string.au3_launcher3_hidden_empty),
+                text = stringResource(I18nR.string.au3_launcher3_hidden_empty),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.network.firewall
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -38,12 +40,12 @@ internal fun NetworkAppRuleGrid(rule: AppRule, allowExclusion: Boolean, onRule: 
                 }
             }
             val editable = !rule.blockAll && !rule.bypassFirewall && !rule.excludeFromVpn
-            Tile(R.string.netstats_unmetered, R.drawable.wifi_24px, !rule.blockUnmetered, editable) { onRule(rule.copy(blockUnmetered = !rule.blockUnmetered)) }
-            Tile(R.string.netstats_metered, R.drawable.signal_cellular_alt_24px, !rule.blockMetered, editable) { onRule(rule.copy(blockMetered = !rule.blockMetered)) }
-            Tile(R.string.netfw_blocked, R.drawable.rule_settings_24px, rule.blockAll) { onRule(if (rule.blockAll) rule.copy(blockAll = false) else rule.copy(blockAll = true, bypassFirewall = false, excludeFromVpn = false)) }
-            Tile(R.string.netfw_bypass_firewall, R.drawable.check_circle_24px, rule.bypassFirewall) { onRule(if (rule.bypassFirewall) rule.copy(bypassFirewall = false) else rule.copy(bypassFirewall = true, blockAll = false, excludeFromVpn = false)) }
-            Tile(R.string.netfw_ignore_universal, R.drawable.public_24px, rule.ignoreUniversalRules) { onRule(rule.copy(ignoreUniversalRules = !rule.ignoreUniversalRules)) }
-            Tile(R.string.netfw_exclude_vpn, R.drawable.close_24px, rule.excludeFromVpn, allowExclusion) { onRule(if (rule.excludeFromVpn) rule.copy(excludeFromVpn = false) else rule.copy(excludeFromVpn = true, blockAll = false, bypassFirewall = false)) }
+            Tile(I18nR.string.netstats_unmetered, BaseR.drawable.wifi_24px, !rule.blockUnmetered, editable) { onRule(rule.copy(blockUnmetered = !rule.blockUnmetered)) }
+            Tile(I18nR.string.netstats_metered, BaseR.drawable.signal_cellular_alt_24px, !rule.blockMetered, editable) { onRule(rule.copy(blockMetered = !rule.blockMetered)) }
+            Tile(I18nR.string.netfw_blocked, BaseR.drawable.rule_settings_24px, rule.blockAll) { onRule(if (rule.blockAll) rule.copy(blockAll = false) else rule.copy(blockAll = true, bypassFirewall = false, excludeFromVpn = false)) }
+            Tile(I18nR.string.netfw_bypass_firewall, BaseR.drawable.check_circle_24px, rule.bypassFirewall) { onRule(if (rule.bypassFirewall) rule.copy(bypassFirewall = false) else rule.copy(bypassFirewall = true, blockAll = false, excludeFromVpn = false)) }
+            Tile(I18nR.string.netfw_ignore_universal, BaseR.drawable.public_24px, rule.ignoreUniversalRules) { onRule(rule.copy(ignoreUniversalRules = !rule.ignoreUniversalRules)) }
+            Tile(I18nR.string.netfw_exclude_vpn, BaseR.drawable.close_24px, rule.excludeFromVpn, allowExclusion) { onRule(if (rule.excludeFromVpn) rule.copy(excludeFromVpn = false) else rule.copy(excludeFromVpn = true, blockAll = false, bypassFirewall = false)) }
         }
     }
 }

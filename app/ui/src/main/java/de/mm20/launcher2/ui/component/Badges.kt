@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,6 @@ import de.mm20.launcher2.ui.R
 @Composable
 fun ExperimentalBadge(modifier: Modifier = Modifier) {
     Box(modifier = modifier.background(MaterialTheme.colorScheme.primary, MaterialTheme.shapes.small).padding(4.dp)) {
-        Text(stringResource(id = R.string.experimental_feature), color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.labelSmall)
+        Text(stringResource(id = I18nR.string.experimental_feature), color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.labelSmall)
     }
 }

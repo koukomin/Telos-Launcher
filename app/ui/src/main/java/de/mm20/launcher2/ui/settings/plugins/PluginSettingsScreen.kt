@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.plugins
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Activity
 import android.app.PendingIntent
@@ -150,8 +152,8 @@ fun PluginSettingsScreen(pluginId: String) {
                         }
                     }) {
                         Icon(
-                            painterResource(R.drawable.arrow_back_24px),
-                            contentDescription = stringResource(R.string.menu_back)
+                            painterResource(BaseR.drawable.arrow_back_24px),
+                            contentDescription = stringResource(I18nR.string.menu_back)
                         )
                     }
                 },
@@ -163,8 +165,8 @@ fun PluginSettingsScreen(pluginId: String) {
                             }
                         }) {
                             Icon(
-                                painterResource(R.drawable.settings_24px),
-                                contentDescription = stringResource(R.string.settings)
+                                painterResource(BaseR.drawable.settings_24px),
+                                contentDescription = stringResource(I18nR.string.settings)
                             )
                         }
                     }
@@ -172,16 +174,16 @@ fun PluginSettingsScreen(pluginId: String) {
                         viewModel.openAppInfo(context)
                     }) {
                         Icon(
-                            painterResource(R.drawable.info_24px),
-                            contentDescription = stringResource(R.string.menu_app_info)
+                            painterResource(BaseR.drawable.info_24px),
+                            contentDescription = stringResource(I18nR.string.menu_app_info)
                         )
                     }
                     var confirmUninstall by remember { mutableStateOf(false) }
                     if (confirmUninstall) {
                         AlertDialog(
                             onDismissRequest = { confirmUninstall = false },
-                            title = { Text(stringResource(R.string.au4_confirms_plugin_title)) },
-                            text = { Text(stringResource(R.string.au4_confirms_plugin_message)) },
+                            title = { Text(stringResource(I18nR.string.au4_confirms_plugin_title)) },
+                            text = { Text(stringResource(I18nR.string.au4_confirms_plugin_message)) },
                             confirmButton = {
                                 TextButton(onClick = {
                                     confirmUninstall = false
@@ -191,17 +193,17 @@ fun PluginSettingsScreen(pluginId: String) {
                 } else {
                     backStack.removeLastOrNull()
                 }
-                                }) { Text(stringResource(R.string.au4_confirms_confirm)) }
+                                }) { Text(stringResource(I18nR.string.au4_confirms_confirm)) }
                             },
-                            dismissButton = { TextButton(onClick = { confirmUninstall = false }) { Text(stringResource(R.string.au4_confirms_cancel)) } },
+                            dismissButton = { TextButton(onClick = { confirmUninstall = false }) { Text(stringResource(I18nR.string.au4_confirms_cancel)) } },
                         )
                     }
                     IconButton(onClick = {
                         confirmUninstall = true
                     }) {
                         Icon(
-                            painterResource(R.drawable.delete_24px),
-                            contentDescription = stringResource(R.string.menu_uninstall)
+                            painterResource(BaseR.drawable.delete_24px),
+                            contentDescription = stringResource(I18nR.string.menu_uninstall)
                         )
                     }
                 }
@@ -252,7 +254,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     )
                                     if (pluginPackage?.isVerified == true) {
                                         Icon(
-                                            painterResource(R.drawable.verified_20px), null,
+                                            painterResource(BaseR.drawable.verified_20px), null,
                                             modifier = Modifier
                                                 .padding(start = 4.dp)
                                                 .size(16.dp),
@@ -286,7 +288,7 @@ fun PluginSettingsScreen(pluginId: String) {
             ) {
                 MainSwitchPreference(
                     enabled = pluginPackage != null && hasPermission != null,
-                    title = stringResource(R.string.preference_plugin_enable),
+                    title = stringResource(I18nR.string.preference_plugin_enable),
                     value = pluginPackage?.enabled == true && hasPermission == true,
                     onValueChanged = {
                         if (hasPermission == true) {
@@ -310,22 +312,22 @@ fun PluginSettingsScreen(pluginId: String) {
                     ) {
                         if (filePlugins.isNotEmpty()) {
                             PreferenceCategory(
-                                stringResource(R.string.plugin_type_filesearch),
+                                stringResource(I18nR.string.plugin_type_filesearch),
                                 iconPadding = false,
                             ) {
                                 for (plugin in filePlugins) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
+                                        icon = if (state is PluginState.Error) BaseR.drawable.error_24px else BaseR.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
-                                                stringResource(R.string.plugin_state_error)
+                                                stringResource(I18nR.string.plugin_state_error)
                                             }
 
                                             is PluginState.SetupRequired -> {
                                                 state.message
-                                                    ?: stringResource(R.string.plugin_state_setup_required)
+                                                    ?: stringResource(I18nR.string.plugin_state_setup_required)
                                             }
 
                                             else -> ""
@@ -365,22 +367,22 @@ fun PluginSettingsScreen(pluginId: String) {
                         }
                         if (contactPlugins.isNotEmpty()) {
                             PreferenceCategory(
-                                stringResource(R.string.plugin_type_contacts),
+                                stringResource(I18nR.string.plugin_type_contacts),
                                 iconPadding = false,
                             ) {
                                 for (plugin in contactPlugins) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
+                                        icon = if (state is PluginState.Error) BaseR.drawable.error_24px else BaseR.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
-                                                stringResource(R.string.plugin_state_error)
+                                                stringResource(I18nR.string.plugin_state_error)
                                             }
 
                                             is PluginState.SetupRequired -> {
                                                 state.message
-                                                    ?: stringResource(R.string.plugin_state_setup_required)
+                                                    ?: stringResource(I18nR.string.plugin_state_setup_required)
                                             }
 
                                             else -> ""
@@ -419,22 +421,22 @@ fun PluginSettingsScreen(pluginId: String) {
                         }
                         if (locationPlugins.isNotEmpty()) {
                             PreferenceCategory(
-                                stringResource(R.string.plugin_type_locationsearch),
+                                stringResource(I18nR.string.plugin_type_locationsearch),
                                 iconPadding = false,
                             ) {
                                 for (plugin in locationPlugins) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
+                                        icon = if (state is PluginState.Error) BaseR.drawable.error_24px else BaseR.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
-                                                stringResource(R.string.plugin_state_error)
+                                                stringResource(I18nR.string.plugin_state_error)
                                             }
 
                                             is PluginState.SetupRequired -> {
                                                 state.message
-                                                    ?: stringResource(R.string.plugin_state_setup_required)
+                                                    ?: stringResource(I18nR.string.plugin_state_setup_required)
                                             }
 
                                             else -> ""
@@ -473,7 +475,7 @@ fun PluginSettingsScreen(pluginId: String) {
                         }
                         if (calendarPlugins.isNotEmpty()) {
                             PreferenceCategory(
-                                stringResource(R.string.plugin_type_calendar),
+                                stringResource(I18nR.string.plugin_type_calendar),
                                 iconPadding = false,
                             ) {
                                 val excludedCalendars by viewModel.excludedCalendars.collectAsState(
@@ -498,15 +500,15 @@ fun PluginSettingsScreen(pluginId: String) {
                                         }
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
+                                        icon = if (state is PluginState.Error) BaseR.drawable.error_24px else BaseR.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
-                                                stringResource(R.string.plugin_state_error)
+                                                stringResource(I18nR.string.plugin_state_error)
                                             }
 
                                             is PluginState.SetupRequired -> {
                                                 state.message
-                                                    ?: stringResource(R.string.plugin_state_setup_required)
+                                                    ?: stringResource(I18nR.string.plugin_state_setup_required)
                                             }
 
                                             else -> ""
@@ -530,7 +532,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                             summary = (state as? PluginState.SetupRequired)?.message
                                                 ?: if (selectedCalendars != null && calendarLists != null) {
                                                     pluralStringResource(
-                                                        R.plurals.calendar_search_enabled_lists,
+                                                        I18nR.plurals.calendar_search_enabled_lists,
                                                         selectedCalendars,
                                                         selectedCalendars
                                                     )
@@ -560,22 +562,22 @@ fun PluginSettingsScreen(pluginId: String) {
                         }
                         if (weatherPlugins.isNotEmpty()) {
                             PreferenceCategory(
-                                stringResource(R.string.plugin_type_weather),
+                                stringResource(I18nR.string.plugin_type_weather),
                                 iconPadding = false,
                             ) {
                                 for (plugin in weatherPlugins) {
                                     val state = plugin.state
                                     GuardedPreference(
                                         locked = state is PluginState.Error || state is PluginState.SetupRequired,
-                                        icon = if (state is PluginState.Error) R.drawable.error_24px else R.drawable.info_24px,
+                                        icon = if (state is PluginState.Error) BaseR.drawable.error_24px else BaseR.drawable.info_24px,
                                         description = when (state) {
                                             is PluginState.Error -> {
-                                                stringResource(R.string.plugin_state_error)
+                                                stringResource(I18nR.string.plugin_state_error)
                                             }
 
                                             is PluginState.SetupRequired -> {
                                                 state.message
-                                                    ?: stringResource(R.string.plugin_state_setup_required)
+                                                    ?: stringResource(I18nR.string.plugin_state_setup_required)
                                             }
 
                                             else -> ""
@@ -598,9 +600,9 @@ fun PluginSettingsScreen(pluginId: String) {
                                             enabled = state is PluginState.Ready && weatherProviderId != plugin.plugin.authority,
                                             iconPadding = false,
                                             summary = if (weatherProviderId != plugin.plugin.authority) {
-                                                stringResource(R.string.plugin_weather_provider_enable)
+                                                stringResource(I18nR.string.plugin_weather_provider_enable)
                                             } else {
-                                                stringResource(R.string.plugin_weather_provider_enabled)
+                                                stringResource(I18nR.string.plugin_weather_provider_enabled)
                                             },
                                             onClick = {
                                                 viewModel.setWeatherProvider(plugin.plugin.authority)
@@ -609,8 +611,8 @@ fun PluginSettingsScreen(pluginId: String) {
                                     }
                                 }
                                 Preference(
-                                    title = stringResource(R.string.widget_config_weather_integration_settings),
-                                    icon = R.drawable.open_in_new_24px,
+                                    title = stringResource(I18nR.string.widget_config_weather_integration_settings),
+                                    icon = BaseR.drawable.open_in_new_24px,
                                     onClick = {
                                         backStack.add(WeatherIntegrationSettingsRoute)
                                     }

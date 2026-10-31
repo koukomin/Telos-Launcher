@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
@@ -98,7 +100,7 @@ fun MediaFrame(
                 title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 navigationIcon = {
                     IconButton(onClick = { backStack.removeLastOrNull() }) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
+                        Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back))
                     }
                 },
                 actions = actions,
@@ -115,8 +117,8 @@ fun MediaFrame(
 @Composable
 fun MediaSearchAction(expanded: Boolean, hasQuery: Boolean = false, onClick: () -> Unit) {
     IconButton(onClick = onClick, modifier = Modifier.size(48.dp).semantics { selected = expanded || hasQuery }) {
-        Icon(painterResource(R.drawable.search_24px),
-            contentDescription = stringResource(R.string.hc_search),
+        Icon(painterResource(BaseR.drawable.search_24px),
+            contentDescription = stringResource(I18nR.string.hc_search),
             tint = if (expanded || hasQuery) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface)
     }
 }
@@ -152,11 +154,11 @@ fun MediaSearchBar(
                 onSearch = onSearch,
                 leading = {
                     IconButton(onClick = close, modifier = Modifier.size(48.dp)) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_close))
+                        Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_close))
                     }
                 }, trailing = {
                     if (onSearch != null) IconButton(onClick = { keyboard?.hide(); focus.clearFocus(); onSearch() }, enabled = value.isNotBlank() && searchEnabled) {
-                        Icon(painterResource(R.drawable.search_24px), stringResource(R.string.hc_search))
+                        Icon(painterResource(BaseR.drawable.search_24px), stringResource(I18nR.string.hc_search))
                     }
                 })
         }

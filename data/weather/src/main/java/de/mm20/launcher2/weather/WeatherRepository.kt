@@ -1,7 +1,7 @@
 package de.mm20.launcher2.weather
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
-import de.mm20.launcher2.i18n.R
 import android.util.Log
 import androidx.work.*
 import de.mm20.launcher2.database.AppDatabase
@@ -169,20 +169,20 @@ internal class WeatherRepositoryImpl(
         providers.add(
             WeatherProviderInfo(
                 OpenMeteoProvider.Id,
-                context.getString(R.string.provider_openmeteo)
+                context.getString(I18nR.string.provider_openmeteo)
             )
         )
         providers.add(
             WeatherProviderInfo(
                 BrightSkyProvider.Id,
-                context.getString(R.string.provider_brightsky)
+                context.getString(I18nR.string.provider_brightsky)
             )
         )
         if (OpenWeatherMapProvider.isAvailable(context)) {
             providers.add(
                 WeatherProviderInfo(
                     OpenWeatherMapProvider.Id,
-                    context.getString(R.string.provider_openweathermap)
+                    context.getString(I18nR.string.provider_openweathermap)
                 )
             )
         }
@@ -190,7 +190,7 @@ internal class WeatherRepositoryImpl(
             providers.add(
                 WeatherProviderInfo(
                     MetNoProvider.Id,
-                    context.getString(R.string.provider_metno)
+                    context.getString(I18nR.string.provider_metno)
                 )
             )
         }
@@ -198,7 +198,7 @@ internal class WeatherRepositoryImpl(
             providers.add(
                 WeatherProviderInfo(
                     BreezyWeatherProvider.Id,
-                    context.getString(R.string.provider_breezy),
+                    context.getString(I18nR.string.provider_breezy),
                     managedLocation = true
                 )
             )

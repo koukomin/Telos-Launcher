@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component.emojipicker
+import androidx.emoji2.emojipicker.R as EmojiR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -54,37 +56,37 @@ fun EmojiPicker(
 
     val categories = remember {
         val typedArray =
-            context.resources.obtainTypedArray(R.array.emoji_by_category_raw_resources_gender_inclusive)
+            context.resources.obtainTypedArray(EmojiR.array.emoji_by_category_raw_resources_gender_inclusive)
         IntArray(typedArray.length()) { typedArray.getResourceId(it, 0) }.also {
             typedArray.recycle()
         }
     }
-    val categoryNames = stringArrayResource(R.array.category_names)
+    val categoryNames = stringArrayResource(EmojiR.array.category_names)
 
     val categoryIcons = remember {
         listOf(
-            R.drawable.mood_24px,
-            R.drawable.emoji_people_24px,
-            R.drawable.emoji_nature_24px,
-            R.drawable.emoji_food_beverage_24px,
-            R.drawable.emoji_transportation_24px,
-            R.drawable.trophy_24px,
-            R.drawable.emoji_objects_24px,
-            R.drawable.emoji_symbols_24px,
-            R.drawable.flag_24px,
+            BaseR.drawable.mood_24px,
+            BaseR.drawable.emoji_people_24px,
+            BaseR.drawable.emoji_nature_24px,
+            BaseR.drawable.emoji_food_beverage_24px,
+            BaseR.drawable.emoji_transportation_24px,
+            BaseR.drawable.trophy_24px,
+            BaseR.drawable.emoji_objects_24px,
+            BaseR.drawable.emoji_symbols_24px,
+            BaseR.drawable.flag_24px,
         )
     }
     val categoryIconsFilled = remember {
         listOf(
-            R.drawable.mood_24px_filled,
-            R.drawable.emoji_people_24px_filled,
-            R.drawable.emoji_nature_24px_filled,
-            R.drawable.emoji_food_beverage_24px_filled,
-            R.drawable.emoji_transportation_24px_filled,
-            R.drawable.trophy_24px_filled,
-            R.drawable.emoji_objects_24px_filled,
-            R.drawable.emoji_symbols_24px_filled,
-            R.drawable.flag_24px_filled,
+            BaseR.drawable.mood_24px_filled,
+            BaseR.drawable.emoji_people_24px_filled,
+            BaseR.drawable.emoji_nature_24px_filled,
+            BaseR.drawable.emoji_food_beverage_24px_filled,
+            BaseR.drawable.emoji_transportation_24px_filled,
+            BaseR.drawable.trophy_24px_filled,
+            BaseR.drawable.emoji_objects_24px_filled,
+            BaseR.drawable.emoji_symbols_24px_filled,
+            BaseR.drawable.flag_24px_filled,
         )
     }
 

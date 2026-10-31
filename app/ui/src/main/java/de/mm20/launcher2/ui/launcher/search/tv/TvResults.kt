@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.tv
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import androidx.annotation.DrawableRes
@@ -77,7 +79,7 @@ fun LazyListScope.TvResults(channels: List<TvChannel>, reverse: Boolean, onPlay:
                                 )
                             }
                         }
-                        MediaTypeIcon(R.drawable.tv_24px, Modifier.align(Alignment.BottomEnd))
+                        MediaTypeIcon(BaseR.drawable.tv_24px, Modifier.align(Alignment.BottomEnd))
                     }
                     Column(Modifier.weight(1f).padding(horizontal = 16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -89,7 +91,7 @@ fun LazyListScope.TvResults(channels: List<TvChannel>, reverse: Boolean, onPlay:
                                 overflow = TextOverflow.Ellipsis,
                                 modifier = Modifier.weight(1f, fill = false),
                             )
-                            MediaTypeLabel(stringResource(R.string.au12_tvsearch_badge_tv), Modifier.padding(start = 8.dp))
+                            MediaTypeLabel(stringResource(I18nR.string.au12_tvsearch_badge_tv), Modifier.padding(start = 8.dp))
                         }
                         if (secondary.isNotEmpty()) {
                             Text(

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
@@ -64,13 +65,13 @@ fun ScheduledSmsScreen() {
         if (sims.size >= 2) simId = SmsSims.preselected(context, number.trim(), sims)?.subId ?: sims.first().subId
     }
     val canSave = number.isNotBlank() && body.isNotBlank()
-    PreferenceScreen(title = { Text(stringResource(R.string.hc_scheduled_sms)) }) {
+    PreferenceScreen(title = { Text(stringResource(I18nR.string.hc_scheduled_sms)) }) {
         if (!smsGranted) {
             item {
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.au_messages_scheduled_permission)) },
+                    headlineContent = { Text(stringResource(I18nR.string.au_messages_scheduled_permission)) },
                     trailingContent = {
-                        TextButton(onClick = { smsLauncher.launch(Manifest.permission.SEND_SMS) }) { Text(stringResource(R.string.hc_allow)) }
+                        TextButton(onClick = { smsLauncher.launch(Manifest.permission.SEND_SMS) }) { Text(stringResource(I18nR.string.hc_allow)) }
                     },
                 )
             }
@@ -78,8 +79,8 @@ fun ScheduledSmsScreen() {
         if (!exact) {
             item {
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.hc_exact_time)) },
-                    supportingContent = { Text(stringResource(R.string.hf_sms_exact_alarm_hint)) },
+                    headlineContent = { Text(stringResource(I18nR.string.hc_exact_time)) },
+                    supportingContent = { Text(stringResource(I18nR.string.hf_sms_exact_alarm_hint)) },
                     trailingContent = {
                         TextButton(onClick = {
                             runCatching {
@@ -90,7 +91,7 @@ fun ScheduledSmsScreen() {
                                     )
                                 )
                             }
-                        }) { Text(stringResource(R.string.hc_allow)) }
+                        }) { Text(stringResource(I18nR.string.hc_allow)) }
                     },
                 )
             }
@@ -99,7 +100,7 @@ fun ScheduledSmsScreen() {
             OutlinedTextField(
                 value = number,
                 onValueChange = { number = it },
-                label = { Text(stringResource(R.string.hc_number)) },
+                label = { Text(stringResource(I18nR.string.hc_number)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
@@ -109,7 +110,7 @@ fun ScheduledSmsScreen() {
             OutlinedTextField(
                 value = body,
                 onValueChange = { body = it },
-                label = { Text(stringResource(R.string.hc_message)) },
+                label = { Text(stringResource(I18nR.string.hc_message)) },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
             )
         }
@@ -119,7 +120,7 @@ fun ScheduledSmsScreen() {
         item {
             Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             if (!canSave) Text(
-                stringResource(R.string.au_messages_scheduled_fill_fields),
+                stringResource(I18nR.string.au_messages_scheduled_fill_fields),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -139,7 +140,7 @@ fun ScheduledSmsScreen() {
                                 cal.set(Calendar.SECOND, 0)
                                 cal.set(Calendar.MILLISECOND, 0)
                                 if (cal.timeInMillis <= System.currentTimeMillis()) {
-                                    Toast.makeText(context, R.string.au_messages_scheduled_past, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, I18nR.string.au_messages_scheduled_past, Toast.LENGTH_SHORT).show()
                                 } else if (canSave) {
                                     val sub = if (sims.size >= 2) simId else -1
                                     if (sub >= 0) SmsSims.remember(context, number.trim(), sub)
@@ -147,7 +148,7 @@ fun ScheduledSmsScreen() {
                                     items = ScheduledSmsStore.list(context)
                                     number = ""
                                     body = ""
-                                    Toast.makeText(context, R.string.au_messages_scheduled_saved, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, I18nR.string.au_messages_scheduled_saved, Toast.LENGTH_SHORT).show()
                                 }
                             },
                             cal.get(Calendar.HOUR_OF_DAY),
@@ -159,15 +160,15 @@ fun ScheduledSmsScreen() {
                     cal.get(Calendar.MONTH),
                     cal.get(Calendar.DAY_OF_MONTH),
                 ).show()
-            }) { Text(stringResource(R.string.hc_pick_time_and_save)) }
+            }) { Text(stringResource(I18nR.string.hc_pick_time_and_save)) }
             }
         }
         if (items.isEmpty()) {
             item {
                 Column(Modifier.fillMaxWidth().padding(32.dp), horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
-                    Text(stringResource(R.string.au_messages_scheduled_empty_title), style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(I18nR.string.au_messages_scheduled_empty_title), style = MaterialTheme.typography.titleMedium)
                     Text(
-                        stringResource(R.string.au_messages_scheduled_empty_hint),
+                        stringResource(I18nR.string.au_messages_scheduled_empty_hint),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -186,7 +187,7 @@ fun ScheduledSmsScreen() {
                         TextButton(onClick = {
                             ScheduledSmsStore.remove(context, sms.id)
                             items = ScheduledSmsStore.list(context)
-                        }) { Text(stringResource(R.string.hc_cancel)) }
+                        }) { Text(stringResource(I18nR.string.hc_cancel)) }
                     },
                 )
             }

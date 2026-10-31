@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.lock
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -82,7 +84,7 @@ fun LauncherLockGate(
 
     var unlocked by remember { mutableStateOf(false) }
     val activity = LocalContext.current as? FragmentActivity
-    val promptTitle = stringResource(R.string.launcher_lock_prompt_title)
+    val promptTitle = stringResource(I18nR.string.launcher_lock_prompt_title)
 
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
@@ -124,15 +126,15 @@ fun LauncherLockGate(
                     verticalArrangement = Arrangement.Center,
                 ) {
                     Icon(
-                        painterResource(R.drawable.lock_48px),
+                        painterResource(BaseR.drawable.lock_48px),
                         contentDescription = null,
                         modifier = Modifier.size(48.dp),
                         tint = MaterialTheme.colorScheme.primary,
                     )
                     Text(
                         text = stringResource(
-                            if (authAvailable) R.string.launcher_locked_message
-                            else R.string.settings_locked_no_authenticator
+                            if (authAvailable) I18nR.string.launcher_locked_message
+                            else I18nR.string.settings_locked_no_authenticator
                         ),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
@@ -144,7 +146,7 @@ fun LauncherLockGate(
                                 unlocked = it
                             }
                         }) {
-                            Text(stringResource(R.string.settings_locked_unlock))
+                            Text(stringResource(I18nR.string.settings_locked_unlock))
                         }
                     }
                 }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
@@ -47,7 +48,7 @@ fun SipSettings() {
         androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions()
     ) { result ->
         if (result[android.Manifest.permission.RECORD_AUDIO] != false) settings.setSipEnabled(true)
-        else android.widget.Toast.makeText(context, context.getString(R.string.hc_sip_calls_need_the_microphone_permission), android.widget.Toast.LENGTH_LONG).show()
+        else android.widget.Toast.makeText(context, context.getString(I18nR.string.hc_sip_calls_need_the_microphone_permission), android.widget.Toast.LENGTH_LONG).show()
     }
     fun enable() {
         val needed = buildList {
@@ -61,36 +62,36 @@ fun SipSettings() {
     }
 
     val status = when {
-        !SipEngine.available -> stringResource(R.string.au3_commsfreeze_sip_unavailable)
-        !current.sipEnabled -> stringResource(R.string.au3_commsfreeze_sip_off)
-        registration == SipRegistration.Registered -> stringResource(R.string.au3_commsfreeze_sip_registered)
-        registration == SipRegistration.Registering -> stringResource(R.string.au3_commsfreeze_sip_connecting)
+        !SipEngine.available -> stringResource(I18nR.string.au3_commsfreeze_sip_unavailable)
+        !current.sipEnabled -> stringResource(I18nR.string.au3_commsfreeze_sip_off)
+        registration == SipRegistration.Registered -> stringResource(I18nR.string.au3_commsfreeze_sip_registered)
+        registration == SipRegistration.Registering -> stringResource(I18nR.string.au3_commsfreeze_sip_connecting)
         registration == SipRegistration.Failed ->
-            if (error.isNotBlank()) stringResource(R.string.au3_commsfreeze_sip_failed_error, error)
-            else stringResource(R.string.au3_commsfreeze_sip_failed)
-        else -> stringResource(R.string.au3_commsfreeze_sip_starting)
+            if (error.isNotBlank()) stringResource(I18nR.string.au3_commsfreeze_sip_failed_error, error)
+            else stringResource(I18nR.string.au3_commsfreeze_sip_failed)
+        else -> stringResource(I18nR.string.au3_commsfreeze_sip_starting)
     }
 
-    PreferenceCategory(title = stringResource(R.string.hc_sip_voip_account)) {
+    PreferenceCategory(title = stringResource(I18nR.string.hc_sip_voip_account)) {
         SwitchPreference(
-            title = stringResource(R.string.hc_use_sip_account),
-            summary = stringResource(R.string.hc_sip_keep_registered_summary, status),
+            title = stringResource(I18nR.string.hc_use_sip_account),
+            summary = stringResource(I18nR.string.hc_sip_keep_registered_summary, status),
             value = current.sipEnabled,
             enabled = SipEngine.available && current.sipUser.isNotBlank(),
             onValueChanged = { if (it) enable() else settings.setSipEnabled(false) },
         )
         Preference(
-            title = stringResource(R.string.hc_account),
-            summary = if (current.sipUser.isBlank()) stringResource(R.string.au3_commsfreeze_not_configured)
+            title = stringResource(I18nR.string.hc_account),
+            summary = if (current.sipUser.isBlank()) stringResource(I18nR.string.au3_commsfreeze_not_configured)
             else "${current.sipUser} @ ${current.sipDomain}",
             onClick = { showDialog = true },
         )
         ListPreference(
-            title = stringResource(R.string.hc_outgoing_calls),
+            title = stringResource(I18nR.string.hc_outgoing_calls),
             items = listOf(
-                stringResource(R.string.au3_commsfreeze_sip_out_off) to "off",
-                stringResource(R.string.au3_commsfreeze_sip_out_choose) to "choose",
-                stringResource(R.string.au3_commsfreeze_sip_out_default) to "default",
+                stringResource(I18nR.string.au3_commsfreeze_sip_out_off) to "off",
+                stringResource(I18nR.string.au3_commsfreeze_sip_out_choose) to "choose",
+                stringResource(I18nR.string.au3_commsfreeze_sip_out_default) to "default",
             ),
             value = current.sipOutgoing,
             onValueChanged = { settings.setSipOutgoing(it) },
@@ -106,27 +107,27 @@ fun SipSettings() {
         var verify by remember { mutableStateOf(if (current.sipUser.isBlank()) true else current.sipVerifyServer) }
         AlertDialog(
             onDismissRequest = { showDialog = false },
-            title = { Text(stringResource(R.string.hc_sip_account)) },
+            title = { Text(stringResource(I18nR.string.hc_sip_account)) },
             text = {
                 Column {
                     OutlinedTextField(
                         value = domain,
                         onValueChange = { domain = it },
-                        label = { Text(stringResource(R.string.hc_server_fritz_box_fritz_box)) },
+                        label = { Text(stringResource(I18nR.string.hc_server_fritz_box_fritz_box)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     OutlinedTextField(
                         value = user,
                         onValueChange = { user = it },
-                        label = { Text(stringResource(R.string.hc_user_name_fritz_box_the_ip_phone_user)) },
+                        label = { Text(stringResource(I18nR.string.hc_user_name_fritz_box_the_ip_phone_user)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     OutlinedTextField(
                         value = pass,
                         onValueChange = { pass = it },
-                        label = { Text(stringResource(R.string.hc_password)) },
+                        label = { Text(stringResource(I18nR.string.hc_password)) },
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth(),
@@ -134,7 +135,7 @@ fun SipSettings() {
                     OutlinedTextField(
                         value = name,
                         onValueChange = { name = it },
-                        label = { Text(stringResource(R.string.hc_display_name_optional)) },
+                        label = { Text(stringResource(I18nR.string.hc_display_name_optional)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
@@ -143,9 +144,9 @@ fun SipSettings() {
                         modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     ) {
                         Column(Modifier.weight(1f)) {
-                            Text(stringResource(R.string.au2_callsec_sip_verify))
+                            Text(stringResource(I18nR.string.au2_callsec_sip_verify))
                             Text(
-                                stringResource(R.string.au2_callsec_sip_verify_hint),
+                                stringResource(I18nR.string.au2_callsec_sip_verify_hint),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -158,9 +159,9 @@ fun SipSettings() {
                 TextButton(enabled = domain.isNotBlank() && domain.all { it.isLetterOrDigit() || it == '.' || it == '-' || it == ':' || it == '_' }, onClick = {
                     settings.setSipAccount(user, domain, name, SecretBox.encrypt(pass), verify)
                     showDialog = false
-                }) { Text(stringResource(R.string.hc_save)) }
+                }) { Text(stringResource(I18nR.string.hc_save)) }
             },
-            dismissButton = { TextButton(onClick = { showDialog = false }) { Text(stringResource(R.string.hc_cancel)) } },
+            dismissButton = { TextButton(onClick = { showDialog = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
     }
 }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.downloads
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,17 +29,17 @@ fun TransferNetworkPreferences(scope: String) {
     val saved by gate.policy.collectAsStateWithLifecycle()
     val policy = saved
     Column(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
-        Text(stringResource(R.string.dl_settings_rules), style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(I18nR.string.dl_settings_rules), style = MaterialTheme.typography.titleSmall)
         @Composable fun Rule(label: Int, blocked: Boolean, change: (TransferNetworkPolicy, Boolean) -> TransferNetworkPolicy) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(label), Modifier.weight(1f).padding(end = 8.dp))
                 Switch(checked = blocked, onCheckedChange = { gate.update(change(policy, it)) })
             }
         }
-        Rule(R.string.netfw_block_wifi, !policy.wifi) { p, blocked -> p.copy(wifi = !blocked) }
-        Rule(R.string.netfw_block_mobile, !policy.mobile) { p, blocked -> p.copy(mobile = !blocked) }
-        Rule(R.string.netfw_block_roaming, !policy.roaming) { p, blocked -> p.copy(roaming = !blocked) }
-        Rule(R.string.netfw_u_metered, !policy.metered) { p, blocked -> p.copy(metered = !blocked) }
-        if (scope == "torrent") Text(stringResource(R.string.dl_t_set_shared_note), style = MaterialTheme.typography.bodySmall)
+        Rule(I18nR.string.netfw_block_wifi, !policy.wifi) { p, blocked -> p.copy(wifi = !blocked) }
+        Rule(I18nR.string.netfw_block_mobile, !policy.mobile) { p, blocked -> p.copy(mobile = !blocked) }
+        Rule(I18nR.string.netfw_block_roaming, !policy.roaming) { p, blocked -> p.copy(roaming = !blocked) }
+        Rule(I18nR.string.netfw_u_metered, !policy.metered) { p, blocked -> p.copy(metered = !blocked) }
+        if (scope == "torrent") Text(stringResource(I18nR.string.dl_t_set_shared_note), style = MaterialTheme.typography.bodySmall)
     }
 }

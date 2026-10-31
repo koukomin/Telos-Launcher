@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.webapps
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
@@ -80,16 +82,16 @@ fun WebAppsSettingsScreen() {
     val context = androidx.compose.ui.platform.LocalContext.current
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_web_app_shortcuts),
+        title = stringResource(I18nR.string.preference_screen_web_app_shortcuts),
     ) {
         if (de.mm20.launcher2.webapp.IronewolfRuntime.isBundled(context)) {
             item {
-                PreferenceCategory(title = stringResource(R.string.web_app_shortcut_renderer_embedded)) {
+                PreferenceCategory(title = stringResource(I18nR.string.web_app_shortcut_renderer_embedded)) {
                     ListPreference(
-                        title = stringResource(R.string.web_app_shortcut_renderer),
+                        title = stringResource(I18nR.string.web_app_shortcut_renderer),
                         items = listOf(
-                            ListPreferenceItem(stringResource(R.string.ironewolf_name), "ironewolf"),
-                            ListPreferenceItem(stringResource(R.string.android_webview_name), "webview"),
+                            ListPreferenceItem(stringResource(I18nR.string.ironewolf_name), "ironewolf"),
+                            ListPreferenceItem(stringResource(I18nR.string.android_webview_name), "webview"),
                         ),
                         value = embeddedEngine,
                         onValueChanged = { if (it != null) viewModel.setEmbeddedEngine(it) },
@@ -98,19 +100,19 @@ fun WebAppsSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_screen_web_apps_panel)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_screen_web_apps_panel)) {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_web_apps_panel),
-                    summary = stringResource(R.string.preference_web_apps_panel_summary),
+                    title = stringResource(I18nR.string.preference_web_apps_panel),
+                    summary = stringResource(I18nR.string.preference_web_apps_panel_summary),
                     value = direction != null,
                     onValueChanged = { viewModel.setEnabled(it) },
                 )
                 if (direction != null) {
                     ListPreference(
-                        title = stringResource(R.string.web_apps_panel_direction),
+                        title = stringResource(I18nR.string.web_apps_panel_direction),
                         items = listOf(
-                            ListPreferenceItem(stringResource(R.string.web_apps_panel_direction_left), PanelDirection.Left),
-                            ListPreferenceItem(stringResource(R.string.web_apps_panel_direction_right), PanelDirection.Right),
+                            ListPreferenceItem(stringResource(I18nR.string.web_apps_panel_direction_left), PanelDirection.Left),
+                            ListPreferenceItem(stringResource(I18nR.string.web_apps_panel_direction_right), PanelDirection.Right),
                         ),
                         value = direction ?: PanelDirection.Right,
                         onValueChanged = { if (it != null) viewModel.setDirection(it) },
@@ -119,17 +121,17 @@ fun WebAppsSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.web_app_groups_title)) {
+            PreferenceCategory(title = stringResource(I18nR.string.web_app_groups_title)) {
                 SwitchPreference(
-                    title = stringResource(R.string.web_app_groups_enable),
-                    summary = stringResource(R.string.web_app_groups_enable_summary),
+                    title = stringResource(I18nR.string.web_app_groups_enable),
+                    summary = stringResource(I18nR.string.web_app_groups_enable_summary),
                     value = groupsEnabled,
                     onValueChanged = { viewModel.setGroupsEnabled(it) },
                 )
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.blocklists_web_title)) {
+            PreferenceCategory(title = stringResource(I18nR.string.blocklists_web_title)) {
                 de.mm20.launcher2.ui.component.BlockListsSection(
                     de.mm20.launcher2.comms.blocklist.BlockListKind.WEB,
                     Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -137,9 +139,9 @@ fun WebAppsSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.web_app_presets_title)) {
+            PreferenceCategory(title = stringResource(I18nR.string.web_app_presets_title)) {
                 Text(
-                    text = stringResource(R.string.web_app_presets_summary),
+                    text = stringResource(I18nR.string.web_app_presets_summary),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
@@ -152,13 +154,13 @@ fun WebAppsSettingsScreen() {
                         onClick = { presetToAdd = category },
                         controls = {
                             TextButton(onClick = { presetToAdd = category }) {
-                                Text(stringResource(R.string.web_app_preset_add))
+                                Text(stringResource(I18nR.string.web_app_preset_add))
                             }
                         }
                     )
                 }
                 Text(
-                    text = stringResource(R.string.web_app_presets_login_note),
+                    text = stringResource(I18nR.string.web_app_presets_login_note),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
@@ -167,12 +169,12 @@ fun WebAppsSettingsScreen() {
         }
         if (groupsEnabled) {
             item {
-                PreferenceCategory(title = stringResource(R.string.web_app_groups_manage)) {
+                PreferenceCategory(title = stringResource(I18nR.string.web_app_groups_manage)) {
                     for (group in groups) {
                         Preference(
-                            icon = WebAppPresets.byId(group.category)?.iconRes ?: R.drawable.folder_24px,
+                            icon = WebAppPresets.byId(group.category)?.iconRes ?: BaseR.drawable.folder_24px,
                             title = group.name,
-                            summary = stringResource(R.string.web_app_group_apps_count, group.appKeys.size),
+                            summary = stringResource(I18nR.string.web_app_group_apps_count, group.appKeys.size),
                             onClick = { groupToRename = group },
                             controls = {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -181,12 +183,12 @@ fun WebAppsSettingsScreen() {
                                             checked = group.notificationsEnabled,
                                             onCheckedChange = { viewModel.toggleGroupNotifications(group.id, it) }
                                         )
-                                        Text(stringResource(R.string.web_app_group_notifications), style = MaterialTheme.typography.labelSmall)
+                                        Text(stringResource(I18nR.string.web_app_group_notifications), style = MaterialTheme.typography.labelSmall)
                                     }
                                     IconButton(onClick = { groupToDelete = group }) {
                                         Icon(
-                                            painterResource(R.drawable.delete_24px),
-                                            contentDescription = stringResource(R.string.menu_delete),
+                                            painterResource(BaseR.drawable.delete_24px),
+                                            contentDescription = stringResource(I18nR.string.menu_delete),
                                         )
                                     }
                                 }
@@ -194,54 +196,54 @@ fun WebAppsSettingsScreen() {
                         )
                     }
                     Preference(
-                        icon = R.drawable.add_24px,
-                        title = stringResource(R.string.web_app_group_create),
+                        icon = BaseR.drawable.add_24px,
+                        title = stringResource(I18nR.string.web_app_group_create),
                         onClick = { showCreateGroupDialog = true }
                     )
                 }
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_web_app_browsing)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_web_app_browsing)) {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_web_app_ad_block),
-                    summary = stringResource(R.string.preference_web_app_ad_block_summary),
+                    title = stringResource(I18nR.string.preference_web_app_ad_block),
+                    summary = stringResource(I18nR.string.preference_web_app_ad_block_summary),
                     value = adBlockEnabled,
                     onValueChanged = { viewModel.setAdBlockEnabled(it) },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_web_app_zoom_controls),
-                    summary = stringResource(R.string.preference_web_app_zoom_controls_summary),
+                    title = stringResource(I18nR.string.preference_web_app_zoom_controls),
+                    summary = stringResource(I18nR.string.preference_web_app_zoom_controls_summary),
                     value = zoomControlsEnabled,
                     onValueChanged = { viewModel.setZoomControlsEnabled(it) },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_web_app_tracking_param_stripping),
-                    summary = stringResource(R.string.preference_web_app_tracking_param_stripping_summary),
+                    title = stringResource(I18nR.string.preference_web_app_tracking_param_stripping),
+                    summary = stringResource(I18nR.string.preference_web_app_tracking_param_stripping_summary),
                     value = trackingParamStrippingEnabled,
                     onValueChanged = { viewModel.setTrackingParamStrippingEnabled(it) },
                 )
                 ListPreference(
-                    title = stringResource(R.string.preference_web_app_top_bar_position),
+                    title = stringResource(I18nR.string.preference_web_app_top_bar_position),
                     items = listOf(
-                        ListPreferenceItem(stringResource(R.string.search_bar_position_top), false),
-                        ListPreferenceItem(stringResource(R.string.search_bar_position_bottom), true),
+                        ListPreferenceItem(stringResource(I18nR.string.search_bar_position_top), false),
+                        ListPreferenceItem(stringResource(I18nR.string.search_bar_position_bottom), true),
                     ),
                     value = topBarAtBottom,
                     onValueChanged = { if (it != null) viewModel.setTopBarAtBottom(it) },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_web_app_swipe_to_switch),
-                    summary = stringResource(R.string.preference_web_app_swipe_to_switch_summary),
+                    title = stringResource(I18nR.string.preference_web_app_swipe_to_switch),
+                    summary = stringResource(I18nR.string.preference_web_app_swipe_to_switch_summary),
                     value = swipeToSwitchEnabled,
                     onValueChanged = { viewModel.setSwipeToSwitchEnabled(it) },
                 )
                 ListPreference(
-                    title = stringResource(R.string.au4_webapps2_user_agent),
+                    title = stringResource(I18nR.string.au4_webapps2_user_agent),
                     items = listOf(
-                        ListPreferenceItem(stringResource(R.string.au4_webapps2_user_agent_default), WebAppUserAgents.MODE_DEFAULT),
-                        ListPreferenceItem(stringResource(R.string.au4_webapps2_user_agent_desktop), WebAppUserAgents.MODE_DESKTOP),
-                        ListPreferenceItem(stringResource(R.string.au4_webapps2_user_agent_custom), WebAppUserAgents.MODE_CUSTOM),
+                        ListPreferenceItem(stringResource(I18nR.string.au4_webapps2_user_agent_default), WebAppUserAgents.MODE_DEFAULT),
+                        ListPreferenceItem(stringResource(I18nR.string.au4_webapps2_user_agent_desktop), WebAppUserAgents.MODE_DESKTOP),
+                        ListPreferenceItem(stringResource(I18nR.string.au4_webapps2_user_agent_custom), WebAppUserAgents.MODE_CUSTOM),
                     ),
                     value = userAgentMode,
                     onValueChanged = {
@@ -253,36 +255,36 @@ fun WebAppsSettingsScreen() {
                 )
                 if (userAgentMode == WebAppUserAgents.MODE_CUSTOM) {
                     Preference(
-                        title = stringResource(R.string.au4_webapps2_user_agent_custom_title),
-                        summary = customUserAgent.ifEmpty { stringResource(R.string.au4_webapps2_user_agent_default) },
+                        title = stringResource(I18nR.string.au4_webapps2_user_agent_custom_title),
+                        summary = customUserAgent.ifEmpty { stringResource(I18nR.string.au4_webapps2_user_agent_default) },
                         onClick = { showCustomUserAgentDialog = true },
                     )
                 }
                 SwitchPreference(
-                    title = stringResource(R.string.au4_webapps2_cookies),
-                    summary = stringResource(R.string.au4_webapps2_cookies_summary),
+                    title = stringResource(I18nR.string.au4_webapps2_cookies),
+                    summary = stringResource(I18nR.string.au4_webapps2_cookies_summary),
                     value = cookiesEnabled,
                     onValueChanged = { viewModel.setCookiesEnabled(it) },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.au4_webapps2_third_party_cookies),
-                    summary = stringResource(R.string.au4_webapps2_third_party_cookies_summary),
+                    title = stringResource(I18nR.string.au4_webapps2_third_party_cookies),
+                    summary = stringResource(I18nR.string.au4_webapps2_third_party_cookies_summary),
                     enabled = cookiesEnabled,
                     value = thirdPartyCookiesEnabled && cookiesEnabled,
                     onValueChanged = { viewModel.setThirdPartyCookiesEnabled(it) },
                 )
                 Preference(
-                    title = stringResource(R.string.au4_webapps2_clear_cookies),
-                    summary = stringResource(R.string.au4_webapps2_clear_cookies_summary),
+                    title = stringResource(I18nR.string.au4_webapps2_clear_cookies),
+                    summary = stringResource(I18nR.string.au4_webapps2_clear_cookies_summary),
                     onClick = { showClearCookiesDialog = true },
                 )
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.web_apps_panel_items)) {
+            PreferenceCategory(title = stringResource(I18nR.string.web_apps_panel_items)) {
                 if (shortcuts.isEmpty()) {
                     Text(
-                        text = stringResource(R.string.au3_secplug_web_apps_empty),
+                        text = stringResource(I18nR.string.au3_secplug_web_apps_empty),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
@@ -305,7 +307,7 @@ fun WebAppsSettingsScreen() {
                                     groups.find { it.appKeys.contains(shortcut.key) }?.category
                                 )?.iconRes
                                 Icon(
-                                    painterResource(categoryIcon ?: R.drawable.language_24px),
+                                    painterResource(categoryIcon ?: BaseR.drawable.language_24px),
                                     contentDescription = null,
                                 )
                             }
@@ -322,25 +324,25 @@ fun WebAppsSettingsScreen() {
                                         checked = shortcut.showInGrid,
                                         onCheckedChange = { viewModel.setPlacement(shortcut, it, shortcut.showInPanel) }
                                     )
-                                    Text(stringResource(R.string.search_filter_apps), style = MaterialTheme.typography.labelSmall)
+                                    Text(stringResource(I18nR.string.search_filter_apps), style = MaterialTheme.typography.labelSmall)
                                 }
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                     Checkbox(
                                         checked = shortcut.showInPanel,
                                         onCheckedChange = { viewModel.setPlacement(shortcut, shortcut.showInGrid, it) }
                                     )
-                                    Text(stringResource(R.string.preference_screen_web_apps_panel), style = MaterialTheme.typography.labelSmall)
+                                    Text(stringResource(I18nR.string.preference_screen_web_apps_panel), style = MaterialTheme.typography.labelSmall)
                                 }
                                 IconButton(onClick = { viewModel.duplicate(shortcut) }) {
                                     Icon(
-                                        painterResource(R.drawable.content_copy_24px),
-                                        contentDescription = stringResource(R.string.duplicate),
+                                        painterResource(BaseR.drawable.content_copy_24px),
+                                        contentDescription = stringResource(I18nR.string.duplicate),
                                     )
                                 }
                                 IconButton(onClick = { shortcutToDelete = shortcut }) {
                                     Icon(
-                                        painterResource(R.drawable.delete_24px),
-                                        contentDescription = stringResource(R.string.menu_delete),
+                                        painterResource(BaseR.drawable.delete_24px),
+                                        contentDescription = stringResource(I18nR.string.menu_delete),
                                     )
                                 }
                             }
@@ -360,13 +362,13 @@ fun WebAppsSettingsScreen() {
                         viewModel.createShortcut()
                     }) {
                     Icon(
-                        painterResource(R.drawable.add_20px),
+                        painterResource(BaseR.drawable.add_20px),
                         null,
                         modifier = Modifier
                             .padding(end = ButtonDefaults.IconSpacing)
                             .size(ButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.web_app_shortcut_create))
+                    Text(stringResource(I18nR.string.web_app_shortcut_create))
                 }
             }
         }
@@ -402,12 +404,12 @@ fun WebAppsSettingsScreen() {
         var userAgentText by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(customUserAgent) }
         AlertDialog(
             onDismissRequest = { showCustomUserAgentDialog = false },
-            title = { Text(stringResource(R.string.au4_webapps2_user_agent_custom_title)) },
+            title = { Text(stringResource(I18nR.string.au4_webapps2_user_agent_custom_title)) },
             text = {
                 OutlinedTextField(
                     value = userAgentText,
                     onValueChange = { userAgentText = it },
-                    label = { Text(stringResource(R.string.au4_webapps2_user_agent_custom_hint)) },
+                    label = { Text(stringResource(I18nR.string.au4_webapps2_user_agent_custom_hint)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -429,19 +431,19 @@ fun WebAppsSettingsScreen() {
     if (showClearCookiesDialog) {
         AlertDialog(
             onDismissRequest = { showClearCookiesDialog = false },
-            title = { Text(stringResource(R.string.au4_webapps2_clear_cookies)) },
-            text = { Text(stringResource(R.string.au4_webapps2_clear_cookies_confirm)) },
+            title = { Text(stringResource(I18nR.string.au4_webapps2_clear_cookies)) },
+            text = { Text(stringResource(I18nR.string.au4_webapps2_clear_cookies_confirm)) },
             confirmButton = {
                 TextButton(onClick = {
                     showClearCookiesDialog = false
                     viewModel.clearCookiesAndSiteData {
                         android.widget.Toast.makeText(
                             context,
-                            context.getString(R.string.au4_webapps2_clear_cookies_done),
+                            context.getString(I18nR.string.au4_webapps2_clear_cookies_done),
                             android.widget.Toast.LENGTH_SHORT,
                         ).show()
                     }
-                }) { Text(stringResource(R.string.au4_webapps2_clear_cookies_action)) }
+                }) { Text(stringResource(I18nR.string.au4_webapps2_clear_cookies_action)) }
             },
             dismissButton = {
                 TextButton(onClick = { showClearCookiesDialog = false }) {
@@ -455,12 +457,12 @@ fun WebAppsSettingsScreen() {
         var groupName by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { showCreateGroupDialog = false },
-            title = { Text(stringResource(R.string.web_app_group_create_title)) },
+            title = { Text(stringResource(I18nR.string.web_app_group_create_title)) },
             text = {
                 OutlinedTextField(
                     value = groupName,
                     onValueChange = { groupName = it },
-                    label = { Text(stringResource(R.string.web_app_group_name)) },
+                    label = { Text(stringResource(I18nR.string.web_app_group_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -473,7 +475,7 @@ fun WebAppsSettingsScreen() {
                         showCreateGroupDialog = false
                     }
                 ) {
-                    Text(stringResource(R.string.web_app_group_create_confirm))
+                    Text(stringResource(I18nR.string.web_app_group_create_confirm))
                 }
             },
             dismissButton = {
@@ -488,12 +490,12 @@ fun WebAppsSettingsScreen() {
         var groupName by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(groupToRename!!.name) }
         AlertDialog(
             onDismissRequest = { groupToRename = null },
-            title = { Text(stringResource(R.string.web_app_group_rename_title)) },
+            title = { Text(stringResource(I18nR.string.web_app_group_rename_title)) },
             text = {
                 OutlinedTextField(
                     value = groupName,
                     onValueChange = { groupName = it },
-                    label = { Text(stringResource(R.string.web_app_group_name)) },
+                    label = { Text(stringResource(I18nR.string.web_app_group_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -506,7 +508,7 @@ fun WebAppsSettingsScreen() {
                         groupToRename = null
                     }
                 ) {
-                    Text(stringResource(R.string.web_app_group_rename_confirm))
+                    Text(stringResource(I18nR.string.web_app_group_rename_confirm))
                 }
             },
             dismissButton = {
@@ -520,13 +522,13 @@ fun WebAppsSettingsScreen() {
     groupToDelete?.let { group ->
         AlertDialog(
             onDismissRequest = { groupToDelete = null },
-            title = { Text(stringResource(R.string.web_app_group_delete_title)) },
-            text = { Text(stringResource(R.string.web_app_group_delete_message, group.name)) },
+            title = { Text(stringResource(I18nR.string.web_app_group_delete_title)) },
+            text = { Text(stringResource(I18nR.string.web_app_group_delete_message, group.name)) },
             confirmButton = {
                 TextButton(onClick = {
                     viewModel.deleteGroup(group.id)
                     groupToDelete = null
-                }) { Text(stringResource(R.string.menu_delete)) }
+                }) { Text(stringResource(I18nR.string.menu_delete)) }
             },
             dismissButton = {
                 TextButton(onClick = { groupToDelete = null }) {
@@ -539,13 +541,13 @@ fun WebAppsSettingsScreen() {
     shortcutToDelete?.let { shortcut ->
         AlertDialog(
             onDismissRequest = { shortcutToDelete = null },
-            title = { Text(stringResource(R.string.web_app_delete_title)) },
-            text = { Text(stringResource(R.string.web_app_delete_message, shortcut.labelOverride ?: shortcut.label)) },
+            title = { Text(stringResource(I18nR.string.web_app_delete_title)) },
+            text = { Text(stringResource(I18nR.string.web_app_delete_message, shortcut.labelOverride ?: shortcut.label)) },
             confirmButton = {
                 TextButton(onClick = {
                     viewModel.delete(shortcut)
                     shortcutToDelete = null
-                }) { Text(stringResource(R.string.menu_delete)) }
+                }) { Text(stringResource(I18nR.string.menu_delete)) }
             },
             dismissButton = {
                 TextButton(onClick = { shortcutToDelete = null }) {
@@ -562,11 +564,11 @@ fun WebAppsSettingsScreen() {
         AlertDialog(
             onDismissRequest = { presetToAdd = null },
             icon = { Icon(painterResource(category.iconRes), null) },
-            title = { Text(stringResource(R.string.web_app_preset_dialog_title, categoryName)) },
+            title = { Text(stringResource(I18nR.string.web_app_preset_dialog_title, categoryName)) },
             text = {
                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                     Text(
-                        stringResource(R.string.web_app_preset_dialog_summary),
+                        stringResource(I18nR.string.web_app_preset_dialog_summary),
                         style = MaterialTheme.typography.bodySmall,
                     )
                     for (app in category.apps) {
@@ -586,7 +588,7 @@ fun WebAppsSettingsScreen() {
                                 Text(app.name, style = MaterialTheme.typography.bodyMedium)
                                 if (WebAppPresets.comparableUrl(app.url) in existingUrls) {
                                     Text(
-                                        stringResource(R.string.web_app_preset_exists),
+                                        stringResource(I18nR.string.web_app_preset_exists),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
@@ -595,7 +597,7 @@ fun WebAppsSettingsScreen() {
                         }
                     }
                     Text(
-                        stringResource(R.string.web_app_presets_login_note),
+                        stringResource(I18nR.string.web_app_presets_login_note),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(top = 8.dp),
@@ -609,13 +611,13 @@ fun WebAppsSettingsScreen() {
                         viewModel.addPreset(category, selected.toList()) {
                             android.widget.Toast.makeText(
                                 context,
-                                context.getString(R.string.web_app_preset_added, categoryName),
+                                context.getString(I18nR.string.web_app_preset_added, categoryName),
                                 android.widget.Toast.LENGTH_SHORT,
                             ).show()
                         }
                         presetToAdd = null
                     }
-                ) { Text(stringResource(R.string.web_app_preset_confirm)) }
+                ) { Text(stringResource(I18nR.string.web_app_preset_confirm)) }
             },
             dismissButton = {
                 TextButton(onClick = { presetToAdd = null }) {

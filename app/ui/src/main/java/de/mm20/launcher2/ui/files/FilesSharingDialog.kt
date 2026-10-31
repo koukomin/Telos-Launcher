@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -49,13 +51,13 @@ fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    painter = painterResource(R.drawable.share_24px),
+                    painter = painterResource(BaseR.drawable.share_24px),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(Modifier.width(8.dp))
-                Text(stringResource(R.string.telos_drop_title), fontWeight = FontWeight.Bold)
+                Text(stringResource(I18nR.string.telos_drop_title), fontWeight = FontWeight.Bold)
             }
         },
         text = {
@@ -65,7 +67,7 @@ fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.telos_drop_desc),
+                    text = stringResource(I18nR.string.telos_drop_desc),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -110,7 +112,7 @@ fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
 
                 if (failed) {
                     Text(
-                        stringResource(R.string.telos_files_sharing_failed),
+                        stringResource(I18nR.string.telos_files_sharing_failed),
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodySmall
                     )
@@ -126,7 +128,7 @@ fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
                     onClick = { server?.close(); server = null },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.errorContainer, contentColor = MaterialTheme.colorScheme.onErrorContainer)
                 ) {
-                    Text(stringResource(R.string.telos_drop_stop))
+                    Text(stringResource(I18nR.string.telos_drop_stop))
                 }
             } else {
                 Button(
@@ -148,13 +150,13 @@ fun FilesSharingDialog(path: String, onDismiss: () -> Unit) {
                         }
                     }
                 ) {
-                    Text(stringResource(R.string.telos_drop_start))
+                    Text(stringResource(I18nR.string.telos_drop_start))
                 }
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.telos_files_sharing_close))
+                Text(stringResource(I18nR.string.telos_files_sharing_close))
             }
         }
     )

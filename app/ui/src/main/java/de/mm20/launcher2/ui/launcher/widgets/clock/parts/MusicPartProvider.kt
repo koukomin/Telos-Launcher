@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.parts
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.PendingIntent
 import android.content.Context
@@ -122,14 +124,14 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         ) {
                             if (it) {
                                 Icon(
-                                    painterResource(R.drawable.pause_24px),
-                                    stringResource(R.string.music_widget_pause),
+                                    painterResource(BaseR.drawable.pause_24px),
+                                    stringResource(I18nR.string.music_widget_pause),
                                     modifier = Modifier.rotate(-90f)
                                 )
                             } else {
                                 Icon(
-                                    painterResource(R.drawable.play_arrow_24px),
-                                    stringResource(R.string.music_widget_play),
+                                    painterResource(BaseR.drawable.play_arrow_24px),
+                                    stringResource(I18nR.string.music_widget_play),
                                 )
                             }
                         }
@@ -137,8 +139,8 @@ class MusicPartProvider : PartProvider, KoinComponent {
                     if (supportedActions.skipToNext) {
                         IconButton(onClick = { musicService.next() }) {
                             Icon(
-                                painterResource(R.drawable.skip_next_24px),
-                                contentDescription = stringResource(R.string.music_widget_next_track)
+                                painterResource(BaseR.drawable.skip_next_24px),
+                                contentDescription = stringResource(I18nR.string.music_widget_next_track)
                             )
                         }
                     }
@@ -192,8 +194,8 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         if (supportedActions.skipToPrevious) {
                             IconButton(onClick = { musicService.previous() }) {
                                 Icon(
-                                    painterResource(R.drawable.skip_previous_24px),
-                                    contentDescription = stringResource(R.string.music_widget_previous_track)
+                                    painterResource(BaseR.drawable.skip_previous_24px),
+                                    contentDescription = stringResource(I18nR.string.music_widget_previous_track)
                                 )
                             }
                         }
@@ -211,14 +213,14 @@ class MusicPartProvider : PartProvider, KoinComponent {
                             ) {
                                 if (it) {
                                     Icon(
-                                        painterResource(R.drawable.pause_24px),
-                                        stringResource(R.string.music_widget_pause),
+                                        painterResource(BaseR.drawable.pause_24px),
+                                        stringResource(I18nR.string.music_widget_pause),
                                         modifier = Modifier.rotate(-90f)
                                     )
                                 } else {
                                     Icon(
-                                        painterResource(R.drawable.play_arrow_24px),
-                                        stringResource(R.string.music_widget_play),
+                                        painterResource(BaseR.drawable.play_arrow_24px),
+                                        stringResource(I18nR.string.music_widget_play),
                                     )
                                 }
                             }
@@ -226,8 +228,8 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         if (supportedActions.skipToNext) {
                             IconButton(onClick = { musicService.next() }) {
                                 Icon(
-                                    painterResource(R.drawable.skip_next_24px),
-                                    contentDescription = stringResource(R.string.music_widget_next_track)
+                                    painterResource(BaseR.drawable.skip_next_24px),
+                                    contentDescription = stringResource(I18nR.string.music_widget_next_track)
                                 )
                             }
                         }

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.icons
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
@@ -123,11 +125,11 @@ fun IconsSettingsScreen() {
         emptyList()
     )
 
-    PreferenceScreen(title = stringResource(id = R.string.preference_screen_icons)) {
+    PreferenceScreen(title = stringResource(id = I18nR.string.preference_screen_icons)) {
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_grid)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_grid)) {
                 SliderPreference(
-                    title = stringResource(R.string.preference_grid_icon_size),
+                    title = stringResource(I18nR.string.preference_grid_icon_size),
                     value = grid.iconSize,
                     step = 8,
                     min = 32,
@@ -137,8 +139,8 @@ fun IconsSettingsScreen() {
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_grid_labels),
-                    summary = stringResource(R.string.preference_grid_labels_summary),
+                    title = stringResource(I18nR.string.preference_grid_labels),
+                    summary = stringResource(I18nR.string.preference_grid_labels_summary),
                     value = grid.showLabels,
                     onValueChanged = {
                         viewModel.setShowLabels(it)
@@ -147,33 +149,33 @@ fun IconsSettingsScreen() {
                 AnimatedVisibility(grid.showLabels) {
                     Column {
                         SliderPreference(
-                            title = stringResource(R.string.preference_grid_label_size),
+                            title = stringResource(I18nR.string.preference_grid_label_size),
                             value = grid.labelSize.toInt(),
                             min = 8,
                             max = 24,
                             onValueChanged = { viewModel.setGridLabelSize(it.toFloat()) }
                         )
                         ListPreference(
-                            title = stringResource(R.string.preference_grid_label_max_lines),
+                            title = stringResource(I18nR.string.preference_grid_label_max_lines),
                             items = listOf("1" to 1, "2" to 2),
                             value = grid.labelMaxLines,
                             onValueChanged = { if (it != null) viewModel.setGridLabelMaxLines(it) }
                         )
                         SwitchPreference(
-                            title = stringResource(R.string.preference_grid_label_shadow),
+                            title = stringResource(I18nR.string.preference_grid_label_shadow),
                             value = grid.labelShadow,
                             onValueChanged = { viewModel.setGridLabelShadow(it) }
                         )
                         ColorPreference(
-                            title = stringResource(R.string.preference_grid_label_color),
+                            title = stringResource(I18nR.string.preference_grid_label_color),
                             value = grid.labelColor?.let { Color(it) },
                             onValueChanged = { viewModel.setGridLabelColor(it?.toArgb()) }
                         )
                     }
                 }
                 SwitchPreference(
-                    title = stringResource(R.string.preference_grid_list_style),
-                    summary = stringResource(R.string.preference_grid_list_style_summary),
+                    title = stringResource(I18nR.string.preference_grid_list_style),
+                    summary = stringResource(I18nR.string.preference_grid_list_style_summary),
                     value = grid.showList,
                     onValueChanged = {
                         viewModel.setShowList(it)
@@ -183,8 +185,8 @@ fun IconsSettingsScreen() {
                     grid.showList
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_grid_list_icons),
-                        summary = stringResource(R.string.preference_grid_list_icons_summary),
+                        title = stringResource(I18nR.string.preference_grid_list_icons),
+                        summary = stringResource(I18nR.string.preference_grid_list_icons_summary),
                         value = grid.showListIcons,
                         onValueChanged = {
                             viewModel.setShowListIcons(it)
@@ -192,7 +194,7 @@ fun IconsSettingsScreen() {
                     )
                 }
                 SliderPreference(
-                    title = stringResource(R.string.preference_grid_column_count),
+                    title = stringResource(I18nR.string.preference_grid_column_count),
                     value = grid.columnCount,
                     min = 3,
                     max = 12,
@@ -203,14 +205,14 @@ fun IconsSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_grid_home)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_grid_home)) {
                 var override by remember { mutableStateOf(false) }
                 LaunchedEffect(homeGrid) {
                     override = homeGrid.columnCount != grid.columnCount || homeGrid.iconSize != grid.iconSize
                 }
                 // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 SwitchPreference(
-                    title = stringResource(R.string.preference_override_home_grid),
+                    title = stringResource(I18nR.string.preference_override_home_grid),
                     value = override,
                     onValueChanged = {
                 // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
@@ -224,14 +226,14 @@ fun IconsSettingsScreen() {
                 AnimatedVisibility(override) {
                     Column {
                         SliderPreference(
-                            title = stringResource(R.string.preference_grid_column_count),
+                            title = stringResource(I18nR.string.preference_grid_column_count),
                             value = homeGrid.columnCount,
                             min = 3,
                             max = 12,
                             onValueChanged = { viewModel.setHomeGridColumnCount(it) }
                         )
                         SliderPreference(
-                            title = stringResource(R.string.preference_grid_icon_size),
+                            title = stringResource(I18nR.string.preference_grid_icon_size),
                             value = homeGrid.iconSize,
                             step = 8,
                             min = 32,
@@ -243,9 +245,9 @@ fun IconsSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_grid_drawer)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_grid_drawer)) {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_drawer_full_width),
+                    title = stringResource(I18nR.string.preference_drawer_full_width),
                     value = drawerFullWidth,
                     onValueChanged = viewModel::setDrawerFullWidth,
                 )
@@ -255,7 +257,7 @@ fun IconsSettingsScreen() {
                 }
                 // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 SwitchPreference(
-                    title = stringResource(R.string.preference_override_search_grid),
+                    title = stringResource(I18nR.string.preference_override_search_grid),
                     value = override,
                     onValueChanged = {
                 // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
@@ -269,7 +271,7 @@ fun IconsSettingsScreen() {
                 AnimatedVisibility(override || !drawerFullWidth) {
                     Column {
                         SliderPreference(
-                            title = stringResource(R.string.preference_grid_column_count),
+                            title = stringResource(I18nR.string.preference_grid_column_count),
                             value = drawerGrid.columnCount,
                             min = 3,
                             max = 12,
@@ -280,7 +282,7 @@ fun IconsSettingsScreen() {
                 AnimatedVisibility(override) {
                     Column {
                         SliderPreference(
-                            title = stringResource(R.string.preference_grid_icon_size),
+                            title = stringResource(I18nR.string.preference_grid_icon_size),
                             value = drawerGrid.iconSize,
                             step = 8,
                             min = 32,
@@ -290,26 +292,26 @@ fun IconsSettingsScreen() {
                     }
                 }
                 SwitchPreference(
-                    title = stringResource(R.string.preference_drawer_background),
-                    summary = stringResource(R.string.preference_drawer_background_summary),
+                    title = stringResource(I18nR.string.preference_drawer_background),
+                    summary = stringResource(I18nR.string.preference_drawer_background_summary),
                     value = drawerBackgroundEnabled,
                     onValueChanged = { viewModel.setDrawerBackgroundEnabled(it) }
                 )
                 AnimatedVisibility(drawerBackgroundEnabled) {
                     Column {
                         SliderPreference(
-                            title = stringResource(R.string.preference_dock_background_blur),
+                            title = stringResource(I18nR.string.preference_dock_background_blur),
                             value = drawerBackgroundBlur,
                             min = 0, max = 100,
                             onValueChanged = viewModel::setDrawerBackgroundBlur,
                         )
                         ColorPreference(
-                            title = stringResource(R.string.preference_dock_background_color),
+                            title = stringResource(I18nR.string.preference_dock_background_color),
                             value = drawerBackgroundColor?.let { Color(it) },
                             onValueChanged = { viewModel.setDrawerBackgroundColor(it?.toArgb()) }
                         )
                         SliderPreference(
-                            title = stringResource(R.string.preference_dock_background_opacity),
+                            title = stringResource(I18nR.string.preference_dock_background_opacity),
                             value = (drawerBackgroundOpacity * 100).roundToInt(),
                             min = 0,
                             max = 100,
@@ -320,27 +322,27 @@ fun IconsSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_grid_folders)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_grid_folders)) {
                 Preference(
-                    title = stringResource(R.string.preference_screen_create_folder),
-                    summary = stringResource(R.string.preference_create_folder_summary),
+                    title = stringResource(I18nR.string.preference_screen_create_folder),
+                    summary = stringResource(I18nR.string.preference_create_folder_summary),
                     onClick = { backStack.add(CreateFolderRoute) },
                 )
                 ColorPreference(
-                    title = stringResource(R.string.preference_folder_background_color),
+                    title = stringResource(I18nR.string.preference_folder_background_color),
                     value = folderBackgroundColor?.let { Color(it) },
                     onValueChanged = { viewModel.setFolderBackgroundColor(it?.toArgb()) }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_folder_cover),
-                    summary = stringResource(R.string.preference_folder_cover_summary),
+                    title = stringResource(I18nR.string.preference_folder_cover),
+                    summary = stringResource(I18nR.string.preference_folder_cover_summary),
                     value = folderCoverEnabled,
                     onValueChanged = { viewModel.setFolderCoverEnabled(it) }
                 )
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.preference_category_icons)) {
+            PreferenceCategory(stringResource(I18nR.string.preference_category_icons)) {
                 if (previewIcons.value.isNotEmpty()) {
                     Row(
                         modifier = Modifier
@@ -361,7 +363,7 @@ fun IconsSettingsScreen() {
                     }
                 }
                 IconShapePreference(
-                    title = stringResource(R.string.preference_icon_shape),
+                    title = stringResource(I18nR.string.preference_icon_shape),
                     summary = getShapeName(iconShape),
                     value = iconShape,
                     onValueChanged = {
@@ -369,24 +371,24 @@ fun IconsSettingsScreen() {
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_enforce_icon_shape),
-                    summary = stringResource(R.string.preference_enforce_icon_shape_summary),
+                    title = stringResource(I18nR.string.preference_enforce_icon_shape),
+                    summary = stringResource(I18nR.string.preference_enforce_icon_shape_summary),
                     value = icons?.adaptify == true,
                     onValueChanged = {
                         viewModel.setAdaptifyLegacyIcons(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_themed_icons),
-                    summary = stringResource(R.string.preference_themed_icons_summary),
+                    title = stringResource(I18nR.string.preference_themed_icons),
+                    summary = stringResource(I18nR.string.preference_themed_icons_summary),
                     value = icons?.themedIcons == true,
                     onValueChanged = {
                         viewModel.setThemedIcons(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_force_themed_icons),
-                    summary = stringResource(R.string.preference_force_themed_icons_summary),
+                    title = stringResource(I18nR.string.preference_force_themed_icons),
+                    summary = stringResource(I18nR.string.preference_force_themed_icons_summary),
                     value = icons?.forceThemed == true,
                     enabled = icons?.themedIcons == true,
                     onValueChanged = {
@@ -400,11 +402,11 @@ fun IconsSettingsScreen() {
                     it.name to it
                 }
                 Preference(
-                    title = stringResource(R.string.preference_icon_pack),
+                    title = stringResource(I18nR.string.preference_icon_pack),
                     summary = if (items.size <= 1) {
-                        stringResource(R.string.preference_icon_pack_summary_empty)
+                        stringResource(I18nR.string.preference_icon_pack_summary_empty)
                     } else {
-                        iconPack?.let { iconPackName(it) } ?: stringResource(R.string.preference_value_system_default)
+                        iconPack?.let { iconPackName(it) } ?: stringResource(I18nR.string.preference_value_system_default)
                     },
                     enabled = installedIconPacks.size > 1,
                     onClick = {
@@ -415,19 +417,19 @@ fun IconsSettingsScreen() {
         }
         item {
             PreferenceCategory(
-                title = stringResource(R.string.preference_category_badges),
+                title = stringResource(I18nR.string.preference_category_badges),
             ) {
                 GuardedPreference(
                     locked = hasNotificationsPermission == false,
-                    description = stringResource(R.string.missing_permission_notification_badges),
+                    description = stringResource(I18nR.string.missing_permission_notification_badges),
                     onUnlock = {
                         viewModel.requestNotificationsPermission(context as AppCompatActivity)
                     },
                     showRestrictedSettingsHint = hasAttemptedNotificationsPermissionRequest,
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_notification_badges),
-                        summary = stringResource(R.string.preference_notification_badges_summary),
+                        title = stringResource(I18nR.string.preference_notification_badges),
+                        summary = stringResource(I18nR.string.preference_notification_badges_summary),
                         enabled = hasNotificationsPermission != false,
                         value = notificationBadges == true && hasNotificationsPermission == true,
                         onValueChanged = {
@@ -438,50 +440,50 @@ fun IconsSettingsScreen() {
                 AnimatedVisibility(notificationBadges == true && hasNotificationsPermission == true) {
                     Column {
                         ListPreference(
-                            title = stringResource(R.string.preference_notification_badge_style),
+                            title = stringResource(I18nR.string.preference_notification_badge_style),
                             iconPadding = true,
                             items = listOf(
-                                stringResource(R.string.preference_badge_style_dot) to NotificationBadgeStyle.Dot,
-                                stringResource(R.string.preference_badge_style_count) to NotificationBadgeStyle.Count,
+                                stringResource(I18nR.string.preference_badge_style_dot) to NotificationBadgeStyle.Dot,
+                                stringResource(I18nR.string.preference_badge_style_count) to NotificationBadgeStyle.Count,
                             ),
                             value = notificationBadgeStyle ?: NotificationBadgeStyle.Dot,
                             onValueChanged = { viewModel.setNotificationBadgeStyle(it) },
                         )
                         ColorPreference(
-                            title = stringResource(R.string.preference_badge_color),
-                            summary = stringResource(R.string.preference_badge_color_summary),
+                            title = stringResource(I18nR.string.preference_badge_color),
+                            summary = stringResource(I18nR.string.preference_badge_color_summary),
                             value = notificationBadgeColor?.let { Color(it) },
                             onValueChanged = { viewModel.setNotificationBadgeColor(it?.toArgb()) },
                         )
                     }
                 }
                 SwitchPreference(
-                    title = stringResource(R.string.preference_cloud_badges),
-                    summary = stringResource(R.string.preference_cloud_badges_summary),
+                    title = stringResource(I18nR.string.preference_cloud_badges),
+                    summary = stringResource(I18nR.string.preference_cloud_badges_summary),
                     value = cloudFileBadges == true,
                     onValueChanged = {
                         viewModel.setCloudFiles(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_suspended_badges),
-                    summary = stringResource(R.string.preference_suspended_badges_summary),
+                    title = stringResource(I18nR.string.preference_suspended_badges),
+                    summary = stringResource(I18nR.string.preference_suspended_badges_summary),
                     value = suspendedAppBadges == true,
                     onValueChanged = {
                         viewModel.setSuspendedApps(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_shortcut_badges),
-                    summary = stringResource(R.string.preference_shortcut_badges_summary),
+                    title = stringResource(I18nR.string.preference_shortcut_badges),
+                    summary = stringResource(I18nR.string.preference_shortcut_badges_summary),
                     value = shortcutBadges == true,
                     onValueChanged = {
                         viewModel.setShortcuts(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_plugin_badges),
-                    summary = stringResource(R.string.preference_plugin_badges_summary),
+                    title = stringResource(I18nR.string.preference_plugin_badges),
+                    summary = stringResource(I18nR.string.preference_plugin_badges_summary),
                     value = pluginBadges == true,
                     onValueChanged = {
                         viewModel.setPluginBadges(it)
@@ -618,7 +620,7 @@ private fun IconPackSelectorSheet(
                                 modifier = Modifier
                                     .padding(end = 8.dp)
                                     .size(20.dp),
-                                painter = painterResource(R.drawable.check_24px),
+                                painter = painterResource(BaseR.drawable.check_24px),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -627,7 +629,7 @@ private fun IconPackSelectorSheet(
                             Icon(
                                 modifier = Modifier
                                     .size(20.dp),
-                                painter = painterResource(R.drawable.palette_20px),
+                                painter = painterResource(BaseR.drawable.palette_20px),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary
                             )
@@ -719,16 +721,16 @@ fun IconShapePreference(
 private fun getShapeName(shape: IconShape?): String? {
     return stringResource(
         when (shape) {
-            IconShape.Triangle -> R.string.preference_icon_shape_triangle
-            IconShape.Hexagon -> R.string.preference_icon_shape_hexagon
-            IconShape.RoundedSquare -> R.string.preference_icon_shape_rounded_square
-            IconShape.Squircle -> R.string.preference_icon_shape_squircle
-            IconShape.Square -> R.string.preference_icon_shape_square
-            IconShape.Pentagon -> R.string.preference_icon_shape_pentagon
-            IconShape.PlatformDefault -> R.string.preference_value_system_default
-            IconShape.Circle -> R.string.preference_icon_shape_circle
-            IconShape.Teardrop -> R.string.preference_icon_shape_teardrop
-            IconShape.Pebble -> R.string.preference_icon_shape_pebble
+            IconShape.Triangle -> I18nR.string.preference_icon_shape_triangle
+            IconShape.Hexagon -> I18nR.string.preference_icon_shape_hexagon
+            IconShape.RoundedSquare -> I18nR.string.preference_icon_shape_rounded_square
+            IconShape.Squircle -> I18nR.string.preference_icon_shape_squircle
+            IconShape.Square -> I18nR.string.preference_icon_shape_square
+            IconShape.Pentagon -> I18nR.string.preference_icon_shape_pentagon
+            IconShape.PlatformDefault -> I18nR.string.preference_value_system_default
+            IconShape.Circle -> I18nR.string.preference_icon_shape_circle
+            IconShape.Teardrop -> I18nR.string.preference_icon_shape_teardrop
+            IconShape.Pebble -> I18nR.string.preference_icon_shape_pebble
             else -> return null
         }
     )
@@ -736,4 +738,4 @@ private fun getShapeName(shape: IconShape?): String? {
 
 @Composable
 private fun iconPackName(pack: IconPack): String =
-    if (pack.packageName.isEmpty()) stringResource(R.string.preference_value_system_default) else pack.name
+    if (pack.packageName.isEmpty()) stringResource(I18nR.string.preference_value_system_default) else pack.name

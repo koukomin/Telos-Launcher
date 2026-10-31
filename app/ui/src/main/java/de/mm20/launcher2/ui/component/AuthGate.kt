@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Arrangement
@@ -71,7 +73,7 @@ fun AuthGate(
 
     if (showPin) {
         CustomLockDialog(
-            title = stringResource(R.string.custom_lock_dialog_title),
+            title = stringResource(I18nR.string.custom_lock_dialog_title),
             onConfirm = { pin ->
                 scope.launch {
                     val ok = lockVm.verifyCustomLock(pin)
@@ -84,7 +86,7 @@ fun AuthGate(
                     }
                 }
             },
-            errorMessage = if (pinWrong) stringResource(R.string.au3_secplug_wrong_pin) else null,
+            errorMessage = if (pinWrong) stringResource(I18nR.string.au3_secplug_wrong_pin) else null,
             onPinChanged = { pinWrong = false },
             onDismiss = {
                 showPin = false
@@ -99,19 +101,19 @@ fun AuthGate(
         verticalArrangement = Arrangement.Center,
     ) {
         Icon(
-            painterResource(R.drawable.lock_48px),
+            painterResource(BaseR.drawable.lock_48px),
             contentDescription = null,
             modifier = Modifier.size(48.dp),
             tint = MaterialTheme.colorScheme.primary,
         )
         Text(
-            stringResource(R.string.auth_gate_message),
+            stringResource(I18nR.string.auth_gate_message),
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(top = 16.dp),
         )
         Button(onClick = { if (custom) showPin = true else promptSystem() }, modifier = Modifier.padding(top = 16.dp)) {
-            Text(stringResource(R.string.auth_gate_unlock))
+            Text(stringResource(I18nR.string.auth_gate_unlock))
         }
     }
 }

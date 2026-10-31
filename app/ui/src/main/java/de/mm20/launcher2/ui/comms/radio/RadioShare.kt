@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms.radio
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.Intent
@@ -52,7 +53,7 @@ object RadioShare {
             putExtra(Intent.EXTRA_TEXT, shareText(station))
         }
         context.startActivity(
-            Intent.createChooser(send, context.getString(R.string.au10_radio_share)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            Intent.createChooser(send, context.getString(I18nR.string.au10_radio_share)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
 

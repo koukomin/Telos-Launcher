@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.text.format.Formatter
 import androidx.compose.foundation.Image
@@ -65,11 +67,11 @@ data class TelosBadgeData(
 )
 
 enum class SharedAppFilter(val labelRes: Int) {
-    ALL(R.string.art_optimizer_filter_all),
-    USER(R.string.store_tab_installed_apps),
-    SYSTEM(R.string.store_show_system_apps),
-    FROZEN(R.string.art_optimizer_filter_frozen),
-    NEEDS_ATTENTION(R.string.art_optimizer_filter_needed),
+    ALL(I18nR.string.art_optimizer_filter_all),
+    USER(I18nR.string.store_tab_installed_apps),
+    SYSTEM(I18nR.string.store_show_system_apps),
+    FROZEN(I18nR.string.art_optimizer_filter_frozen),
+    NEEDS_ATTENTION(I18nR.string.art_optimizer_filter_needed),
 }
 
 /**
@@ -181,7 +183,7 @@ fun TelosAppListRow(
                                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                             ) {
                                 Text(
-                                    text = "❄ " + stringResource(R.string.art_optimizer_filter_frozen),
+                                    text = "❄ " + stringResource(I18nR.string.art_optimizer_filter_frozen),
                                     style = MaterialTheme.typography.labelSmall,
                                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
                                 )
@@ -222,7 +224,7 @@ fun TelosWarningCard(
     message: String,
     modifier: Modifier = Modifier,
     isError: Boolean = false,
-    iconRes: Int = if (isError) R.drawable.error_24px else R.drawable.info_24px,
+    iconRes: Int = if (isError) BaseR.drawable.error_24px else BaseR.drawable.info_24px,
 ) {
     val containerColor = if (isError) {
         MaterialTheme.colorScheme.errorContainer
@@ -290,7 +292,7 @@ fun TelosSearchAndFilterBar(
     onFilterChange: (SharedAppFilter) -> Unit,
     modifier: Modifier = Modifier,
     availableFilters: List<SharedAppFilter> = SharedAppFilter.entries,
-    placeholder: String = stringResource(R.string.art_optimizer_search_apps_hint),
+    placeholder: String = stringResource(I18nR.string.art_optimizer_search_apps_hint),
 ) {
     val haptics = LocalHapticFeedback.current
     Column(

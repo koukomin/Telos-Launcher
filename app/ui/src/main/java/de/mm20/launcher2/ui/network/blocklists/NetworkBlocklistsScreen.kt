@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network.blocklists
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.text.format.Formatter
 import androidx.compose.animation.AnimatedVisibility
@@ -81,10 +82,10 @@ fun NetworkBlocklistsScreen() {
         TS.matches(bq, b.domain, (b.scope as? RuleScope.App)?.let { directory.labelFor(it.appId) })
     }
 
-    PreferenceScreen(title = stringResource(R.string.netfw_b_title)) {
+    PreferenceScreen(title = stringResource(I18nR.string.netfw_b_title)) {
         item {
             Text(
-                stringResource(R.string.netfw_b_intro),
+                stringResource(I18nR.string.netfw_b_intro),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 16.dp),
@@ -95,23 +96,23 @@ fun NetworkBlocklistsScreen() {
                 val busy = state is BlocklistUpdateState.Downloading
                 val summary = when (val st = state) {
                     is BlocklistUpdateState.Downloading ->
-                        if (st.progress < 0f) stringResource(R.string.netfw_b_updating)
-                        else stringResource(R.string.netfw_b_updating_pct, (st.progress * 100).toInt())
-                    is BlocklistUpdateState.Failed -> stringResource(R.string.netfw_b_failed, st.message)
+                        if (st.progress < 0f) stringResource(I18nR.string.netfw_b_updating)
+                        else stringResource(I18nR.string.netfw_b_updating_pct, (st.progress * 100).toInt())
+                    is BlocklistUpdateState.Failed -> stringResource(I18nR.string.netfw_b_failed, st.message)
                     BlocklistUpdateState.Idle -> when {
-                        !installed -> stringResource(R.string.netfw_b_not_installed)
-                        updateAvailable -> stringResource(R.string.netfw_b_update_available)
-                        checked == false -> stringResource(R.string.netfw_b_up_to_date)
-                        lastUpdated > 0 -> stringResource(R.string.netfw_b_updated, formatDateTime(context, lastUpdated))
-                        else -> stringResource(R.string.netfw_b_never)
+                        !installed -> stringResource(I18nR.string.netfw_b_not_installed)
+                        updateAvailable -> stringResource(I18nR.string.netfw_b_update_available)
+                        checked == false -> stringResource(I18nR.string.netfw_b_up_to_date)
+                        lastUpdated > 0 -> stringResource(I18nR.string.netfw_b_updated, formatDateTime(context, lastUpdated))
+                        else -> stringResource(I18nR.string.netfw_b_never)
                     }
                 }
                 Preference(
                     title = stringResource(
                         when {
-                            !installed -> R.string.netfw_b_download
-                            updateAvailable -> R.string.netfw_b_update_now
-                            else -> R.string.netfw_b_check
+                            !installed -> I18nR.string.netfw_b_download
+                            updateAvailable -> I18nR.string.netfw_b_update_now
+                            else -> I18nR.string.netfw_b_check
                         }
                     ),
                     summary = summary,
@@ -127,7 +128,7 @@ fun NetworkBlocklistsScreen() {
                                 check.exceptionOrNull()?.let { e ->
                                     android.widget.Toast.makeText(
                                         context,
-                                        context.getString(R.string.netfw_b_failed, e.message ?: e.javaClass.simpleName),
+                                        context.getString(I18nR.string.netfw_b_failed, e.message ?: e.javaClass.simpleName),
                                         android.widget.Toast.LENGTH_LONG,
                                     ).show()
                                 }
@@ -144,15 +145,15 @@ fun NetworkBlocklistsScreen() {
                 }
                 if (installed) {
                     SwitchPreference(
-                        title = stringResource(R.string.netfw_b_auto),
-                        summary = stringResource(R.string.netfw_b_auto_summary),
+                        title = stringResource(I18nR.string.netfw_b_auto),
+                        summary = stringResource(I18nR.string.netfw_b_auto_summary),
                         icon = IconsNetworkBlocklistsScreen.schedule_24px,
                         value = auto,
                         onValueChanged = { v -> scope.launch { blocklists.setAutoUpdate(v) } },
                     )
                     Preference(
-                        title = stringResource(R.string.netfw_b_remove),
-                        summary = stringResource(R.string.netfw_b_storage, Formatter.formatShortFileSize(context, storage)),
+                        title = stringResource(I18nR.string.netfw_b_remove),
+                        summary = stringResource(I18nR.string.netfw_b_storage, Formatter.formatShortFileSize(context, storage)),
                         icon = IconsNetworkBlocklistsScreen.delete_24px,
                         onClick = { scope.launch { blocklists.removeDownloaded() } },
                     )
@@ -160,16 +161,16 @@ fun NetworkBlocklistsScreen() {
             }
         }
         if (installed) item {
-            de.mm20.launcher2.ui.component.TelosSearchBar(bq, { bq = it }, stringResource(R.string.hc_search))
+            de.mm20.launcher2.ui.component.TelosSearchBar(bq, { bq = it }, stringResource(I18nR.string.hc_search))
         }
         if (installed) {
             val sections = listOf(
-                "parentalcontrol" to R.string.netfw_b_sec_parental,
-                "security" to R.string.netfw_b_sec_security,
-                "privacy" to R.string.netfw_b_sec_privacy,
+                "parentalcontrol" to I18nR.string.netfw_b_sec_parental,
+                "security" to I18nR.string.netfw_b_sec_security,
+                "privacy" to I18nR.string.netfw_b_sec_privacy,
             )
             val known = sections.map { it.first }.toSet()
-            val all = sections + ("" to R.string.netfw_b_sec_other)
+            val all = sections + ("" to I18nR.string.netfw_b_sec_other)
             all.forEach { (section, title) ->
                 val inSection = groups.filter { (if (section.isEmpty()) it.section !in known else it.section == section) && (groupHit(it) || it.lists.any { l -> listHit(it, l) }) }
                 if (inSection.isEmpty()) return@forEach
@@ -199,20 +200,20 @@ fun NetworkBlocklistsScreen() {
                 if (confirmResetCounts) {
                     AlertDialog(
                         onDismissRequest = { confirmResetCounts = false },
-                        title = { Text(stringResource(R.string.au4_confirms_counts_title)) },
-                        text = { Text(stringResource(R.string.au4_confirms_counts_message)) },
+                        title = { Text(stringResource(I18nR.string.au4_confirms_counts_title)) },
+                        text = { Text(stringResource(I18nR.string.au4_confirms_counts_message)) },
                         confirmButton = {
                             TextButton(onClick = {
                                 confirmResetCounts = false
                                 scope.launch { blocklists.resetCounts() }
-                            }) { Text(stringResource(R.string.au4_confirms_confirm)) }
+                            }) { Text(stringResource(I18nR.string.au4_confirms_confirm)) }
                         },
-                        dismissButton = { TextButton(onClick = { confirmResetCounts = false }) { Text(stringResource(R.string.au4_confirms_cancel)) } },
+                        dismissButton = { TextButton(onClick = { confirmResetCounts = false }) { Text(stringResource(I18nR.string.au4_confirms_cancel)) } },
                     )
                 }
                 PreferenceCategory {
                     Preference(
-                        title = stringResource(R.string.netfw_b_reset_counts),
+                        title = stringResource(I18nR.string.netfw_b_reset_counts),
                         icon = IconsNetworkBlocklistsScreen.settings_backup_restore_24px,
                         onClick = { confirmResetCounts = true },
                     )
@@ -220,35 +221,35 @@ fun NetworkBlocklistsScreen() {
             }
         }
         item {
-            PreferenceCategory(stringResource(R.string.netfw_b_bypass)) {
+            PreferenceCategory(stringResource(I18nR.string.netfw_b_bypass)) {
                 Text(
-                    stringResource(R.string.netfw_b_bypass_info),
+                    stringResource(I18nR.string.netfw_b_bypass_info),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 )
-                Preference(title = stringResource(R.string.netfw_b_bypass_add), icon = IconsNetworkBlocklistsScreen.add_24px, onClick = { addBypass = true })
+                Preference(title = stringResource(I18nR.string.netfw_b_bypass_add), icon = IconsNetworkBlocklistsScreen.add_24px, onClick = { addBypass = true })
                 shownBypass.forEach { b ->
                     Preference(
                         title = { Text(b.domain) },
                         summary = {
                             Text(
                                 when (val s = b.scope) {
-                                    RuleScope.System -> stringResource(R.string.netfw_c_all_apps)
+                                    RuleScope.System -> stringResource(I18nR.string.netfw_c_all_apps)
                                     is RuleScope.App -> directory.labelFor(s.appId)
                                 }
                             )
                         },
                         controls = {
                             IconButton(onClick = { scope.launch { blocklists.removeBypass(b.id) } }) {
-                                Icon(painterResource(IconsNetworkBlocklistsScreen.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+                                Icon(painterResource(IconsNetworkBlocklistsScreen.delete_24px), contentDescription = stringResource(I18nR.string.hc_delete))
                             }
                         },
                     )
                 }
                 if (bypass.isEmpty() && bq.isBlank()) {
                     Text(
-                        stringResource(R.string.netfw_b_bypass_empty),
+                        stringResource(I18nR.string.netfw_b_bypass_empty),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(16.dp),
                     )
@@ -261,13 +262,13 @@ fun NetworkBlocklistsScreen() {
         AddRuleDialog(
             isIp = false,
             directory = directory,
-            title = stringResource(R.string.netfw_b_bypass_add),
+            title = stringResource(I18nR.string.netfw_b_bypass_add),
             showAction = false,
             onDismiss = { addBypass = false },
             onAdd = { domain, _, _, ruleScope, _ ->
                 scope.launch {
                     if (blocklists.addBypass(ruleScope, domain).isSuccess) addBypass = false
-                    else android.widget.Toast.makeText(context, context.getString(R.string.netfw_c_invalid), android.widget.Toast.LENGTH_SHORT).show()
+                    else android.widget.Toast.makeText(context, context.getString(I18nR.string.netfw_c_invalid), android.widget.Toast.LENGTH_SHORT).show()
                 }
             },
         )
@@ -291,8 +292,8 @@ private fun GroupRows(
     Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
         Preference(
             title = groupName(group),
-            summary = stringResource(R.string.netfw_b_selected, on, group.lists.size) + " · " +
-                stringResource(R.string.netfw_b_entries, number.format(domains)),
+            summary = stringResource(I18nR.string.netfw_b_selected, on, group.lists.size) + " · " +
+                stringResource(I18nR.string.netfw_b_entries, number.format(domains)),
             onClick = onToggleExpanded,
             controls = { Switch(checked = on == group.lists.size, onCheckedChange = onGroup) },
         )
@@ -302,8 +303,8 @@ private fun GroupRows(
                     val blocked = counts[list.id] ?: 0L
                     SwitchPreference(
                         title = list.name,
-                        summary = stringResource(R.string.netfw_b_entries, number.format(list.entryCount)) +
-                            if (blocked > 0) " · " + stringResource(R.string.netfw_b_blocked_count, number.format(blocked)) else "",
+                        summary = stringResource(I18nR.string.netfw_b_entries, number.format(list.entryCount)) +
+                            if (blocked > 0) " · " + stringResource(I18nR.string.netfw_b_blocked_count, number.format(blocked)) else "",
                         value = list.id in enabled,
                         onValueChanged = { onList(list.id, it) },
                     )
@@ -317,20 +318,20 @@ private fun GroupRows(
 private fun groupName(group: BlocklistGroup): String {
     val sub = group.id.substringAfter('/')
     val res = when (sub) {
-        "porn" -> R.string.netfw_g_porn
-        "piracy" -> R.string.netfw_g_piracy
-        "gambling" -> R.string.netfw_g_gambling
-        "services" -> R.string.netfw_g_services
-        "threat-intelligence-feeds" -> R.string.netfw_g_threat
-        "cryptojacking" -> R.string.netfw_g_cryptojacking
-        "bypass-methods" -> R.string.netfw_g_bypass_methods
-        "safesearch" -> R.string.netfw_g_safesearch
-        "dating" -> R.string.netfw_g_dating
-        "social-networks" -> R.string.netfw_g_social
-        "tracking-domains" -> R.string.netfw_g_tracking
-        "rethinkdns-recommended" -> R.string.netfw_g_recommended
-        "native" -> R.string.netfw_g_native
-        "others" -> R.string.netfw_g_others
+        "porn" -> I18nR.string.netfw_g_porn
+        "piracy" -> I18nR.string.netfw_g_piracy
+        "gambling" -> I18nR.string.netfw_g_gambling
+        "services" -> I18nR.string.netfw_g_services
+        "threat-intelligence-feeds" -> I18nR.string.netfw_g_threat
+        "cryptojacking" -> I18nR.string.netfw_g_cryptojacking
+        "bypass-methods" -> I18nR.string.netfw_g_bypass_methods
+        "safesearch" -> I18nR.string.netfw_g_safesearch
+        "dating" -> I18nR.string.netfw_g_dating
+        "social-networks" -> I18nR.string.netfw_g_social
+        "tracking-domains" -> I18nR.string.netfw_g_tracking
+        "rethinkdns-recommended" -> I18nR.string.netfw_g_recommended
+        "native" -> I18nR.string.netfw_g_native
+        "others" -> I18nR.string.netfw_g_others
         else -> null
     }
     return if (res != null) stringResource(res) else group.name

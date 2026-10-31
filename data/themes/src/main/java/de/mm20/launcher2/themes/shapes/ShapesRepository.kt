@@ -1,11 +1,11 @@
 package de.mm20.launcher2.themes.shapes
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.themes.CutShapesId
 import de.mm20.launcher2.themes.DefaultThemeId
 import de.mm20.launcher2.themes.ExtraRoundShapesId
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.themes.RectShapesId
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -74,7 +74,7 @@ class ShapesRepository(
         get() = Shapes(
             id = DefaultThemeId,
             builtIn = true,
-            name = context.getString(R.string.preference_shapes_default),
+            name = context.getString(I18nR.string.preference_shapes_default),
             baseShape = Shape(
                 corners = CornerStyle.Rounded,
                 radii = intArrayOf(12, 12, 12, 12),
@@ -85,7 +85,7 @@ class ShapesRepository(
         get() = Shapes(
             id = CutShapesId,
             builtIn = true,
-            name = context.getString(R.string.preference_cards_shape_cut),
+            name = context.getString(I18nR.string.preference_cards_shape_cut),
             baseShape = Shape(
                 corners = CornerStyle.Cut,
                 radii = intArrayOf(12, 12, 12, 12),
@@ -96,7 +96,7 @@ class ShapesRepository(
         get() = Shapes(
             id = ExtraRoundShapesId,
             builtIn = true,
-            name = context.getString(R.string.preference_shapes_extra_round),
+            name = context.getString(I18nR.string.preference_shapes_extra_round),
             baseShape = Shape(
                 corners = CornerStyle.Rounded,
                 radii = intArrayOf(24, 24, 24, 24),
@@ -120,7 +120,7 @@ class ShapesRepository(
         get() = Shapes(
             id = RectShapesId,
             builtIn = true,
-            name = context.getString(R.string.preference_shapes_rect),
+            name = context.getString(I18nR.string.preference_shapes_rect),
             baseShape = Shape(
                 corners = CornerStyle.Rounded,
                 radii = intArrayOf(0, 0, 0, 0),

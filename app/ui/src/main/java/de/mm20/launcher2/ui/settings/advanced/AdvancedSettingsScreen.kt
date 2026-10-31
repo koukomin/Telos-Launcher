@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.advanced
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.ClipboardManager
 import android.content.Context
@@ -75,10 +77,10 @@ fun AdvancedSettingsScreen() {
     }
 
     PreferenceScreen(
-        title = { Text(stringResource(R.string.preference_screen_advanced)) },
+        title = { Text(stringResource(I18nR.string.preference_screen_advanced)) },
     ) {
         item {
-            PreferenceCategory(title = stringResource(R.string.settings_system_automation)) {
+            PreferenceCategory(title = stringResource(I18nR.string.settings_system_automation)) {
                 val currentStatus = status
                 val isInstalled = currentStatus?.isShizukuInstalled == true
                 val summaryText = if (isInstalled) {
@@ -94,7 +96,7 @@ fun AdvancedSettingsScreen() {
 
                 if (isInstalled) {
                     SwitchPreference(
-                        title = stringResource(R.string.settings_shizuku_autostart),
+                        title = stringResource(I18nR.string.settings_shizuku_autostart),
                         summary = summaryText,
                         value = shizukuAutoStart,
                         onValueChanged = { enabled ->
@@ -117,7 +119,7 @@ fun AdvancedSettingsScreen() {
                         }
                     ) {
                         Preference(
-                            title = stringResource(R.string.settings_shizuku_autostart),
+                            title = stringResource(I18nR.string.settings_shizuku_autostart),
                             summary = summaryText,
                             enabled = false,
                         )
@@ -125,9 +127,9 @@ fun AdvancedSettingsScreen() {
                 }
 
                 Preference(
-                    icon = R.drawable.settings_24px,
-                    title = stringResource(R.string.settings_shizuku_diagnostics),
-                    summary = stringResource(R.string.settings_shizuku_diagnostics_summary),
+                    icon = BaseR.drawable.settings_24px,
+                    title = stringResource(I18nR.string.settings_shizuku_diagnostics),
+                    summary = stringResource(I18nR.string.settings_shizuku_diagnostics_summary),
                     onClick = { showDiagnosticDialog = true }
                 )
             }
@@ -141,66 +143,66 @@ fun AdvancedSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
-                    icon = R.drawable.speed_24px,
-                    title = stringResource(id = R.string.preference_screen_performance),
-                    summary = stringResource(id = R.string.preference_screen_performance_summary),
+                    icon = BaseR.drawable.speed_24px,
+                    title = stringResource(id = I18nR.string.preference_screen_performance),
+                    summary = stringResource(id = I18nR.string.preference_screen_performance_summary),
                     onClick = {
                         backStack.add(PerformanceSettingsRoute)
                     }
                 )
                 Preference(
-                    icon = R.drawable.bolt_24px,
-                    title = stringResource(id = R.string.art_optimizer_title),
-                    summary = stringResource(id = R.string.art_optimizer_summary),
+                    icon = BaseR.drawable.bolt_24px,
+                    title = stringResource(id = I18nR.string.art_optimizer_title),
+                    summary = stringResource(id = I18nR.string.art_optimizer_summary),
                     onClick = {
                         backStack.add(ArtOptimizerRoute)
                     }
                 )
                 Preference(
-                    icon = R.drawable.dashboard_2_24px,
-                    title = stringResource(id = R.string.preference_screen_context_profiles),
-                    summary = stringResource(id = R.string.preference_screen_context_profiles_summary),
+                    icon = BaseR.drawable.dashboard_2_24px,
+                    title = stringResource(id = I18nR.string.preference_screen_context_profiles),
+                    summary = stringResource(id = I18nR.string.preference_screen_context_profiles_summary),
                     onClick = {
                         backStack.add(ContextProfilesSettingsRoute)
                     }
                 )
                 Preference(
-                    icon = R.drawable.extension_24px,
-                    title = stringResource(id = R.string.preference_screen_plugins),
-                    summary = stringResource(id = R.string.preference_screen_plugins_summary),
+                    icon = BaseR.drawable.extension_24px,
+                    title = stringResource(id = I18nR.string.preference_screen_plugins),
+                    summary = stringResource(id = I18nR.string.preference_screen_plugins_summary),
                     onClick = {
                         backStack.add(PluginsSettingsRoute)
                     }
                 )
 
                 Preference(
-                    icon = R.drawable.lock_24px,
-                    title = stringResource(id = R.string.preference_screen_app_lock),
-                    summary = stringResource(id = R.string.preference_screen_app_lock_summary),
+                    icon = BaseR.drawable.lock_24px,
+                    title = stringResource(id = I18nR.string.preference_screen_app_lock),
+                    summary = stringResource(id = I18nR.string.preference_screen_app_lock_summary),
                     onClick = {
                         backStack.add(AppLockSettingsRoute)
                     }
                 )
                 Preference(
-                    icon = R.drawable.enterprise_24px,
-                    title = stringResource(id = R.string.preference_screen_work_profile),
-                    summary = stringResource(id = R.string.preference_screen_work_profile_summary),
+                    icon = BaseR.drawable.enterprise_24px,
+                    title = stringResource(id = I18nR.string.preference_screen_work_profile),
+                    summary = stringResource(id = I18nR.string.preference_screen_work_profile_summary),
                     onClick = {
                         backStack.add(WorkProfileSettingsRoute)
                     }
                 )
                 Preference(
-                    icon = R.drawable.settings_backup_restore_24px,
-                    title = stringResource(id = R.string.preference_screen_backup),
-                    summary = stringResource(id = R.string.preference_screen_backup_summary),
+                    icon = BaseR.drawable.settings_backup_restore_24px,
+                    title = stringResource(id = I18nR.string.preference_screen_backup),
+                    summary = stringResource(id = I18nR.string.preference_screen_backup_summary),
                     onClick = {
                         backStack.add(BackupSettingsRoute)
                     }
                 )
                 Preference(
-                    icon = R.drawable.bug_report_24px,
-                    title = stringResource(id = R.string.preference_screen_debug),
-                    summary = stringResource(id = R.string.preference_screen_debug_summary),
+                    icon = BaseR.drawable.bug_report_24px,
+                    title = stringResource(id = I18nR.string.preference_screen_debug),
+                    summary = stringResource(id = I18nR.string.preference_screen_debug_summary),
                     onClick = {
                         backStack.add(DebugSettingsRoute)
                     }
@@ -299,7 +301,7 @@ private fun ShizukuDiagnosticDialog(
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.hc_close))
+                Text(stringResource(I18nR.string.hc_close))
             }
         }
     )

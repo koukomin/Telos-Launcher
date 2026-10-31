@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.calendar
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -48,12 +49,12 @@ fun LazyListScope.CalendarResults(
             {
                 MissingPermissionBanner(
                     modifier = Modifier.padding(8.dp),
-                    text = stringResource(R.string.missing_permission_calendar_search),
+                    text = stringResource(I18nR.string.missing_permission_calendar_search),
                     onClick = onPermissionRequest,
                     secondaryAction = {
                         OutlinedButton(onClick = onPermissionRequestRejected) {
                             Text(
-                                stringResource(R.string.turn_off),
+                                stringResource(I18nR.string.turn_off),
                             )
                         }
                     }

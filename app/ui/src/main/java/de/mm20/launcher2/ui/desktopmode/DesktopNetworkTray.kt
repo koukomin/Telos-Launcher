@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.desktopmode
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import android.content.Intent
@@ -35,13 +37,13 @@ internal fun DesktopNetworkTrayIcon() {
 
     DesktopTrayIconButton(
         icon = if (!state.connected) {
-            R.drawable.wifi_off_24px
+            BaseR.drawable.wifi_off_24px
         } else if (state.transport == DesktopNetworkTransport.Ethernet) {
-            R.drawable.lan_24px
+            BaseR.drawable.lan_24px
         } else {
-            R.drawable.wifi_24px
+            BaseR.drawable.wifi_24px
         },
-        contentDescription = stringResource(R.string.desktop_mode_tray_network),
+        contentDescription = stringResource(I18nR.string.desktop_mode_tray_network),
         onClick = {
             context.tryStartActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS))
         },

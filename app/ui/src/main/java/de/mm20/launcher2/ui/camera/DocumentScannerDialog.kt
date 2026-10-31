@@ -1,7 +1,7 @@
 package de.mm20.launcher2.ui.camera
-
-import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
+
 import android.graphics.Bitmap
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult

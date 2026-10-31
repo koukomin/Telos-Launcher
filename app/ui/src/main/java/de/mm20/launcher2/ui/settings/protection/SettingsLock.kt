@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.protection
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators
@@ -206,12 +208,12 @@ fun ProtectedSettingsScreen(
     var showPinDialog by remember { mutableStateOf(false) }
     var pinWrong by remember { mutableStateOf(false) }
     val activity = LocalContext.current as? FragmentActivity
-    val promptTitle = stringResource(R.string.settings_lock_prompt_title)
+    val promptTitle = stringResource(I18nR.string.settings_lock_prompt_title)
     val scope = androidx.compose.runtime.rememberCoroutineScope()
 
     if (showPinDialog) {
         CustomLockDialog(
-            title = stringResource(R.string.custom_lock_dialog_title),
+            title = stringResource(I18nR.string.custom_lock_dialog_title),
             onConfirm = { pin ->
                 scope.launch {
                     if (viewModel.verifyCustomLock(pin)) {
@@ -225,7 +227,7 @@ fun ProtectedSettingsScreen(
                     }
                 }
             },
-            errorMessage = if (pinWrong) stringResource(R.string.au3_secplug_wrong_pin) else null,
+            errorMessage = if (pinWrong) stringResource(I18nR.string.au3_secplug_wrong_pin) else null,
             onPinChanged = { pinWrong = false },
             onDismiss = {
                 pinWrong = false
@@ -264,15 +266,15 @@ fun ProtectedSettingsScreen(
                 verticalArrangement = Arrangement.Center,
             ) {
                 Icon(
-                    painterResource(R.drawable.lock_48px),
+                    painterResource(BaseR.drawable.lock_48px),
                     contentDescription = null,
                     modifier = Modifier.size(48.dp),
                     tint = MaterialTheme.colorScheme.primary,
                 )
                 Text(
                     text = stringResource(
-                        if (authAvailable) R.string.settings_locked_message
-                        else R.string.settings_locked_no_authenticator
+                        if (authAvailable) I18nR.string.settings_locked_message
+                        else I18nR.string.settings_locked_no_authenticator
                     ),
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
@@ -288,7 +290,7 @@ fun ProtectedSettingsScreen(
                             }
                         }
                     }) {
-                        Text(stringResource(R.string.settings_locked_unlock))
+                        Text(stringResource(I18nR.string.settings_locked_unlock))
                     }
                 }
             }

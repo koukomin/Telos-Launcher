@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -184,7 +186,7 @@ internal fun WatchedBadge(modifier: Modifier = Modifier) {
         modifier.size(22.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(painterResource(R.drawable.check_24px), contentDescription = stringResource(R.string.au14_videoui_watched), tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(14.dp))
+        Icon(painterResource(BaseR.drawable.check_24px), contentDescription = stringResource(I18nR.string.au14_videoui_watched), tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(14.dp))
     }
 }
 

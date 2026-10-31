@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.widget.Toast
@@ -17,7 +18,7 @@ internal suspend fun updateBlockedWithFeedback(context: Context, spam: SpamRepos
     } catch (cancelled: CancellationException) { throw cancelled }
     catch (error: Exception) {
         withContext(Dispatchers.Main) {
-            Toast.makeText(context, if (error is SystemBlockUpdateException) R.string.caller_block_partial else R.string.hc_failed_try_again,
+            Toast.makeText(context, if (error is SystemBlockUpdateException) I18nR.string.caller_block_partial else I18nR.string.hc_failed_try_again,
                 Toast.LENGTH_LONG).show()
         }
         false

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.component.preferences
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -77,7 +78,7 @@ fun ColorPreference(
                     onValueChanged(null)
                     showDialog = false
                 }) {
-                    Text(stringResource(R.string.reset))
+                    Text(stringResource(I18nR.string.reset))
                 }
             }
         )

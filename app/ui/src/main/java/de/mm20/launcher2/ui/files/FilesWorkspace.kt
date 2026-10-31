@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.app.Application
 import androidx.compose.foundation.background
@@ -142,7 +143,7 @@ fun FilesScreen() {
     val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
     de.mm20.launcher2.ui.component.AuthGate(
         enabled = lockOnOpen,
-        title = stringResource(R.string.auth_gate_files),
+        title = stringResource(I18nR.string.auth_gate_files),
         unlocked = filesUnlocked,
         onUnlocked = { de.mm20.launcher2.comms.privacy.PrivacySession.unlockFiles() },
         onCancelled = { backStack.removeLastOrNull() },
@@ -157,12 +158,12 @@ private fun FilesScreenBody() {
     var dropped by remember { mutableStateOf<Triple<FilesViewModel, FilesInternalDrag, String>?>(null) }
     val dragScope = remember(workspace) { FilesDragScope(java.util.UUID.randomUUID().toString()) { target, data -> target.path?.let { dropped = Triple(target, data, it) } } }
     dropped?.let { (target, data, destination) ->
-        AlertDialog(onDismissRequest = { dropped = null }, title = { Text(stringResource(R.string.telos_files_drop_title, data.paths.size)) },
+        AlertDialog(onDismissRequest = { dropped = null }, title = { Text(stringResource(I18nR.string.telos_files_drop_title, data.paths.size)) },
             text = { Text(nameOf(destination)) },
-            confirmButton = { TextButton(onClick = { target.transferDragged(data.paths, data.root, false, destination, data.shizuku); dropped = null }) { Text(stringResource(R.string.hf_files_paste_here)) } },
+            confirmButton = { TextButton(onClick = { target.transferDragged(data.paths, data.root, false, destination, data.shizuku); dropped = null }) { Text(stringResource(I18nR.string.hf_files_paste_here)) } },
             dismissButton = { Row {
-                TextButton(onClick = { target.transferDragged(data.paths, data.root, true, destination, data.shizuku); dropped = null }) { Text(stringResource(R.string.hf_files_move_here)) }
-                TextButton(onClick = { dropped = null }) { Text(stringResource(R.string.hc_cancel)) }
+                TextButton(onClick = { target.transferDragged(data.paths, data.root, true, destination, data.shizuku); dropped = null }) { Text(stringResource(I18nR.string.hf_files_move_here)) }
+                TextButton(onClick = { dropped = null }) { Text(stringResource(I18nR.string.hc_cancel)) }
             } })
     }
     CompositionLocalProvider(LocalFilesDragScope provides dragScope) {
@@ -227,7 +228,7 @@ private fun FilesWorkspaceChrome(workspace: FilesWorkspaceViewModel) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        tab.browser.path?.let { nameOf(it) } ?: stringResource(R.string.telos_files_tab, index + 1),
+                        tab.browser.path?.let { nameOf(it) } ?: stringResource(I18nR.string.telos_files_tab, index + 1),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.widthIn(max = 128.dp),
@@ -238,7 +239,7 @@ private fun FilesWorkspaceChrome(workspace: FilesWorkspaceViewModel) {
                     if (workspace.tabs.size > 1) {
                         Icon(
                             painterResource(WsIcons.close_24px),
-                            contentDescription = stringResource(R.string.telos_files_close_tab, index + 1),
+                            contentDescription = stringResource(I18nR.string.telos_files_close_tab, index + 1),
                             tint = if (selected) scheme.onPrimary else scheme.onSurfaceVariant,
                             modifier = Modifier
                                 .padding(start = 2.dp)
@@ -255,14 +256,14 @@ private fun FilesWorkspaceChrome(workspace: FilesWorkspaceViewModel) {
             verticalAlignment = Alignment.CenterVertically) {
         ChromeIcon(
             icon = WsIcons.add_24px,
-            label = stringResource(R.string.telos_files_new_tab),
+            label = stringResource(I18nR.string.telos_files_new_tab),
             enabled = workspace.tabs.size < FilesSettingsTransfer.MaxTabs,
             selected = false,
             onClick = workspace::addTab,
         )
         ChromeIcon(
             icon = WsIcons.dashboard_2_24px,
-            label = stringResource(R.string.telos_files_two_panels),
+            label = stringResource(I18nR.string.telos_files_two_panels),
             enabled = true,
             selected = workspace.dual,
             onClick = workspace::togglePanels,

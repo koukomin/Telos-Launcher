@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.layout
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -68,8 +69,8 @@ class PreferenceAdaptiveTest {
         }
         for (mode in 0..2) for (fontScale in listOf(0.85f, 1f, 1.3f, 2f)) {
             compose.runOnIdle { heightMode.intValue = mode; scale.floatValue = fontScale }
-            compose.onNodeWithText(context.getString(de.mm20.launcher2.ui.R.string.settings)).assertIsDisplayed()
-            compose.onNodeWithText(context.getString(de.mm20.launcher2.ui.R.string.preference_screen_appearance)).assertIsDisplayed()
+            compose.onNodeWithText(context.getString(I18nR.string.settings)).assertIsDisplayed()
+            compose.onNodeWithText(context.getString(I18nR.string.preference_screen_appearance)).assertIsDisplayed()
             saveScreenshot("settings-line-height-$mode-$fontScale.png")
         }
     }

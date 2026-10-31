@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.protection
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -53,7 +54,7 @@ fun CustomLockDialog(
                     singleLine = true,
                     isError = showError || errorMessage != null,
                     supportingText = if (showError) {
-                        { Text(stringResource(R.string.custom_lock_error_mismatch)) }
+                        { Text(stringResource(I18nR.string.custom_lock_error_mismatch)) }
                     } else if (errorMessage != null) {
                         { Text(errorMessage) }
                     } else null
@@ -75,7 +76,7 @@ fun CustomLockDialog(
                 },
                 enabled = (if (isConfirming) confirmPin else pin).length >= 4
             ) {
-                Text(stringResource(if (confirmTitle != null && !isConfirming) R.string.action_next else android.R.string.ok))
+                Text(stringResource(if (confirmTitle != null && !isConfirming) I18nR.string.action_next else android.R.string.ok))
             }
         },
         dismissButton = {

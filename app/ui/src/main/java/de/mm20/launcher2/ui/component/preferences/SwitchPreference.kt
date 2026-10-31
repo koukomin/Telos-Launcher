@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.component.preferences
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.size
@@ -38,7 +39,7 @@ fun SwitchPreference(
                 enabled = enabled, checked = value, onCheckedChange = null,
                 thumbContent = {
                     Icon(
-                        painterResource(if (value) R.drawable.check_20px else R.drawable.close_20px),
+                        painterResource(if (value) BaseR.drawable.check_20px else BaseR.drawable.close_20px),
                         modifier = Modifier.size(SwitchDefaults.IconSize),
                         contentDescription = null,
                     )

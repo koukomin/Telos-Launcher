@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.common
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.os.UserHandle
@@ -173,7 +174,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     /** Shared entry for icons, shutters and folder children, including app lock and thawing. */
     fun launchTarget(context: Context, searchable: SavableSearchable, bounds: IntRect? = null): Boolean {
         val activity = context as? AppCompatActivity
-        val promptTitle = context.getString(R.string.app_lock_prompt_title, searchable.label)
+        val promptTitle = context.getString(I18nR.string.app_lock_prompt_title, searchable.label)
 
         if (searchable is Application) {
             val packageName = searchable.componentName.packageName
@@ -249,11 +250,11 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                     }
                     if (!started) freezeManager.releaseCompanions(pkg, searchable.user.hashCode())
                     if (started) reportUsage(searchable) else android.widget.Toast.makeText(context,
-                        de.mm20.launcher2.ui.R.string.pdft_error_title, android.widget.Toast.LENGTH_LONG).show()
+                        I18nR.string.pdft_error_title, android.widget.Toast.LENGTH_LONG).show()
                 } catch (error: Exception) {
                     freezeManager.releaseCompanions(pkg, searchable.user.hashCode())
                     android.util.Log.e("AppLaunch", "Could not launch frozen app", error)
-                    android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.pdft_error_title,
+                    android.widget.Toast.makeText(context, I18nR.string.pdft_error_title,
                         android.widget.Toast.LENGTH_LONG).show()
                 }
             }
@@ -417,7 +418,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                             favoritesService.delete(searchable)
                             Toast.makeText(
                                 context,
-                                R.string.unavailable_searchable,
+                                I18nR.string.unavailable_searchable,
                                 Toast.LENGTH_LONG
                             ).show()
                             Log.d("requestUpdatedSearchable", "PermanentlyUnavailable", this.cause)

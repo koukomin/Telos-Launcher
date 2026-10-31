@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.colorscheme
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Canvas
@@ -133,14 +135,14 @@ fun ThemeColorPreference(
                 ) {
                     Icon(
                         painterResource(
-                            if (actualValue is ColorRef) R.drawable.check_20px else R.drawable.palette_20px
+                            if (actualValue is ColorRef) BaseR.drawable.check_20px else BaseR.drawable.palette_20px
                         ),
                         null,
                         modifier = Modifier
                             .padding(end = ToggleButtonDefaults.IconSpacing)
                             .size(ToggleButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.theme_color_scheme_palette_color))
+                    Text(stringResource(I18nR.string.theme_color_scheme_palette_color))
                 }
                 ToggleButton(
                     modifier = Modifier.weight(1f),
@@ -152,14 +154,14 @@ fun ThemeColorPreference(
                 ) {
                     Icon(
                         painterResource(
-                            if (actualValue is StaticColor) R.drawable.check_20px else R.drawable.colorize_20px
+                            if (actualValue is StaticColor) BaseR.drawable.check_20px else BaseR.drawable.colorize_20px
                         ),
                         null,
                         modifier = Modifier
                             .padding(end = ToggleButtonDefaults.IconSpacing)
                             .size(ToggleButtonDefaults.IconSize)
                     )
-                    Text(stringResource(R.string.theme_color_scheme_custom_color))
+                    Text(stringResource(I18nR.string.theme_color_scheme_custom_color))
                 }
             }
             AnimatedContent(
@@ -425,13 +427,13 @@ fun ThemeColorPreference(
                         onClick = { currentValue = null }
                     ) {
                         Icon(
-                            painterResource(R.drawable.restart_alt_20px),
+                            painterResource(BaseR.drawable.restart_alt_20px),
                             null,
                             modifier = Modifier
                                 .padding(ButtonDefaults.IconSpacing)
                                 .size(ButtonDefaults.IconSize)
                         )
-                        Text(stringResource(R.string.preference_restore_default))
+                        Text(stringResource(I18nR.string.preference_restore_default))
                     }
                 }
             }

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.crashreporter
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.text.format.DateUtils
 import androidx.compose.foundation.clickable
@@ -41,19 +43,19 @@ fun CrashReporterScreen() {
     val context = LocalContext.current
     LaunchedEffect(Unit) { viewModel.reload() }
     PreferenceScreen(
-        title = stringResource(R.string.preference_crash_reporter),
+        title = stringResource(I18nR.string.preference_crash_reporter),
         helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/troubleshooting/crashreporter"
     ) {
         item {
             SwitchPreference(
-                title = stringResource(R.string.au4_settingsnew1_crash_enable),
-                summary = stringResource(R.string.au4_settingsnew1_crash_enable_summary),
+                title = stringResource(I18nR.string.au4_settingsnew1_crash_enable),
+                summary = stringResource(I18nR.string.au4_settingsnew1_crash_enable_summary),
                 value = reporterEnabled,
                 onValueChanged = { viewModel.setEnabled(context, it) },
             )
             Preference(
-                title = stringResource(R.string.au4_settingsnew1_crash_delete_all),
-                summary = stringResource(R.string.au4_settingsnew1_crash_delete_all_summary),
+                title = stringResource(I18nR.string.au4_settingsnew1_crash_delete_all),
+                summary = stringResource(I18nR.string.au4_settingsnew1_crash_delete_all_summary),
                 onClick = { viewModel.deleteAll() },
             )
         }
@@ -68,8 +70,8 @@ fun CrashReporterScreen() {
                         viewModel.setShowExceptions(value)
                     }) {
                         Icon(
-                            painterResource(if (showExceptions) R.drawable.warning_24px_filled else R.drawable.warning_24px),
-                            contentDescription = stringResource(R.string.au3_sysb_crash_show_exceptions),
+                            painterResource(if (showExceptions) BaseR.drawable.warning_24px_filled else BaseR.drawable.warning_24px),
+                            contentDescription = stringResource(I18nR.string.au3_sysb_crash_show_exceptions),
                             modifier = Modifier.alpha(if (showExceptions) 1f else 0.5f)
                         )
                     }
@@ -77,8 +79,8 @@ fun CrashReporterScreen() {
                         viewModel.setShowCrashes(value)
                     }) {
                         Icon(
-                            painterResource(if (showCrashes) R.drawable.error_24px_filled else R.drawable.error_24px),
-                            contentDescription = stringResource(R.string.au3_sysb_crash_show_crashes),
+                            painterResource(if (showCrashes) BaseR.drawable.error_24px_filled else BaseR.drawable.error_24px),
+                            contentDescription = stringResource(I18nR.string.au3_sysb_crash_show_crashes),
                             modifier = Modifier.alpha(if (showCrashes) 1f else 0.5f)
                         )
                     }
@@ -87,7 +89,7 @@ fun CrashReporterScreen() {
             if (it.isEmpty()) {
                 item {
                     Text(
-                        text = stringResource(R.string.au3_sysb_crash_empty),
+                        text = stringResource(I18nR.string.au3_sysb_crash_empty),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.fillMaxWidth().padding(16.dp)
@@ -125,12 +127,12 @@ fun CrashReporterScreen() {
                                 Icon(
                                     modifier = Modifier.padding(end = 8.dp),
                                     painter = painterResource(
-                                        if (it.type == CrashReportType.Exception) R.drawable.warning_24px else R.drawable.error_24px
+                                        if (it.type == CrashReportType.Exception) BaseR.drawable.warning_24px else BaseR.drawable.error_24px
                                     ),
                                     contentDescription = null
                                 )
                                 Text(
-                                    text = stringResource(if (it.type == CrashReportType.Exception) R.string.au3_sysb_crash_type_exception else R.string.au3_sysb_crash_type_crash),
+                                    text = stringResource(if (it.type == CrashReportType.Exception) I18nR.string.au3_sysb_crash_type_exception else I18nR.string.au3_sysb_crash_type_crash),
                                     style = MaterialTheme.typography.titleMedium
                                 )
                             }

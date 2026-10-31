@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
@@ -67,22 +68,22 @@ internal fun OpenSourceDialog(onDismiss: () -> Unit) {
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.hc_play_from_the_web)) },
+        title = { Text(stringResource(I18nR.string.hc_play_from_the_web)) },
         text = {
             Column {
                 Text(
-                    stringResource(R.string.hc_web_address_of_a_video_or_stream_hls_das),
+                    stringResource(I18nR.string.hc_web_address_of_a_video_or_stream_hls_das),
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 OutlinedTextField(
                     value = text,
                     onValueChange = { text = it },
-                    label = { Text(stringResource(R.string.hc_address_or_magnet_link)) },
+                    label = { Text(stringResource(I18nR.string.hc_address_or_magnet_link)) },
                     modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    TextButton(onClick = { clipboard.getText()?.text?.let { text = it } }) { Text(stringResource(R.string.hc_paste)) }
-                    TextButton(onClick = { torrentPicker.launch(arrayOf("*/*")) }) { Text(stringResource(R.string.hc_choose_torrent_file)) }
+                    TextButton(onClick = { clipboard.getText()?.text?.let { text = it } }) { Text(stringResource(I18nR.string.hc_paste)) }
+                    TextButton(onClick = { torrentPicker.launch(arrayOf("*/*")) }) { Text(stringResource(I18nR.string.hc_choose_torrent_file)) }
                 }
                 // magnet links and .torrent addresses can also be kept and seeded by Telos Downloads
                 if (de.mm20.launcher2.downloads.logic.TorrentSources.containsTorrent(text)) {
@@ -97,10 +98,10 @@ internal fun OpenSourceDialog(onDismiss: () -> Unit) {
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
                         onDismiss()
-                    }) { Text(stringResource(R.string.dl_t_download_in_downloads)) }
+                    }) { Text(stringResource(I18nR.string.dl_t_download_in_downloads)) }
                 }
                 Text(
-                    stringResource(R.string.hc_torrents_are_downloaded_while_they_play),
+                    stringResource(I18nR.string.hc_torrents_are_downloaded_while_they_play),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 8.dp),
@@ -114,9 +115,9 @@ internal fun OpenSourceDialog(onDismiss: () -> Unit) {
                     openSource(context, text)
                     onDismiss()
                 },
-            ) { Text(stringResource(R.string.hc_play)) }
+            ) { Text(stringResource(I18nR.string.hc_play)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }
 
@@ -144,25 +145,25 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.hc_video_services)) },
+        title = { Text(stringResource(I18nR.string.hc_video_services)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
-                Text(stringResource(R.string.hc_posters_and_descriptions), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(I18nR.string.hc_posters_and_descriptions), style = MaterialTheme.typography.titleSmall)
                 Text(
-                    stringResource(R.string.hc_posters_work_without_a_key_from_wikipedi),
+                    stringResource(I18nR.string.hc_posters_work_without_a_key_from_wikipedi),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                OutlinedTextField(tmdb, { tmdb = it }, label = { Text(stringResource(R.string.hc_tmdb_api_key)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(tmdb, { tmdb = it }, label = { Text(stringResource(I18nR.string.hc_tmdb_api_key)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
 
-                Text(stringResource(R.string.vn_subtitle_sources), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                Text(stringResource(I18nR.string.vn_subtitle_sources), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 Text(
-                    stringResource(R.string.vn_subtitle_sources_help),
+                    stringResource(I18nR.string.vn_subtitle_sources_help),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                val moveUp = stringResource(R.string.vn_move_up)
-                val moveDown = stringResource(R.string.vn_move_down)
+                val moveUp = stringResource(I18nR.string.vn_move_up)
+                val moveDown = stringResource(I18nR.string.vn_move_down)
                 sources.forEachIndexed { i, src ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Switch(
@@ -172,9 +173,9 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                         Text(
                             stringResource(
                                 when (src.id) {
-                                    de.mm20.launcher2.comms.media.video.PodnapisiProvider.ID -> R.string.vn_source_podnapisi
-                                    de.mm20.launcher2.comms.media.video.OpenSubtitlesComProvider.ID -> R.string.vn_source_os_com
-                                    else -> R.string.vn_source_os_legacy
+                                    de.mm20.launcher2.comms.media.video.PodnapisiProvider.ID -> I18nR.string.vn_source_podnapisi
+                                    de.mm20.launcher2.comms.media.video.OpenSubtitlesComProvider.ID -> I18nR.string.vn_source_os_com
+                                    else -> I18nR.string.vn_source_os_legacy
                                 }
                             ),
                             modifier = Modifier.weight(1f).padding(start = 8.dp),
@@ -190,49 +191,49 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                     }
                 }
                 OutlinedTextField(
-                    userAgent, { userAgent = it }, label = { Text(stringResource(R.string.vn_os_user_agent)) }, singleLine = true,
-                    supportingText = { Text(stringResource(R.string.vn_os_user_agent_help)) }, modifier = Modifier.fillMaxWidth(),
+                    userAgent, { userAgent = it }, label = { Text(stringResource(I18nR.string.vn_os_user_agent)) }, singleLine = true,
+                    supportingText = { Text(stringResource(I18nR.string.vn_os_user_agent_help)) }, modifier = Modifier.fillMaxWidth(),
                 )
-                Text(stringResource(R.string.hc_subtitles), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                Text(stringResource(I18nR.string.hc_subtitles), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 Text(
-                    stringResource(R.string.hc_opensubtitles_api_key_opensubtitles_com),
+                    stringResource(I18nR.string.hc_opensubtitles_api_key_opensubtitles_com),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                OutlinedTextField(subKey, { subKey = it }, label = { Text(stringResource(R.string.hc_opensubtitles_api_key)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(subUser, { subUser = it }, label = { Text(stringResource(R.string.hc_user_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(subKey, { subKey = it }, label = { Text(stringResource(I18nR.string.hc_opensubtitles_api_key)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(subUser, { subUser = it }, label = { Text(stringResource(I18nR.string.hc_user_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(
-                    subPass, { subPass = it }, label = { Text(stringResource(R.string.hc_password)) }, singleLine = true,
+                    subPass, { subPass = it }, label = { Text(stringResource(I18nR.string.hc_password)) }, singleLine = true,
                     visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
-                    languages, { languages = it }, label = { Text(stringResource(R.string.hc_languages_e_g_el_en)) }, singleLine = true,
+                    languages, { languages = it }, label = { Text(stringResource(I18nR.string.hc_languages_e_g_el_en)) }, singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
-                    Text(stringResource(R.string.hc_download_subtitles_automatically), modifier = Modifier.weight(1f))
+                    Text(stringResource(I18nR.string.hc_download_subtitles_automatically), modifier = Modifier.weight(1f))
                     Switch(checked = auto, onCheckedChange = { auto = it })
                 }
 
                 TextButton(onClick = { showTrakt = true }, modifier = Modifier.padding(top = 8.dp)) {
-                    Text(stringResource(R.string.au7_trakt_open_settings))
+                    Text(stringResource(I18nR.string.au7_trakt_open_settings))
                 }
 
-                Text(stringResource(R.string.vn_network_folders), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
-                TextButton(onClick = { showNetwork = true }) { Text(stringResource(R.string.vn_network_scan_title)) }
+                Text(stringResource(I18nR.string.vn_network_folders), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                TextButton(onClick = { showNetwork = true }) { Text(stringResource(I18nR.string.vn_network_scan_title)) }
 
-                Text(stringResource(R.string.dl_tab_torrents), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                Text(stringResource(I18nR.string.dl_tab_torrents), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 de.mm20.launcher2.ui.downloads.TransferNetworkPreferences("torrent")
-                Text(stringResource(R.string.blocklists_torrent_title), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 12.dp))
+                Text(stringResource(I18nR.string.blocklists_torrent_title), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 12.dp))
                 de.mm20.launcher2.ui.component.BlockListsSection(de.mm20.launcher2.comms.blocklist.BlockListKind.TORRENT_IP)
 
-                Text(stringResource(R.string.hc_player), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                Text(stringResource(I18nR.string.hc_player), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(stringResource(R.string.hc_play_in_a_separate_process), modifier = Modifier.weight(1f))
+                    Text(stringResource(I18nR.string.hc_play_in_a_separate_process), modifier = Modifier.weight(1f))
                     Switch(checked = isolated, onCheckedChange = { isolated = it })
                 }
                 Text(
-                    stringResource(R.string.hc_experimental_a_crash_of_the_player_then),
+                    stringResource(I18nR.string.hc_experimental_a_crash_of_the_player_then),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -245,9 +246,9 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                 with(de.mm20.launcher2.comms.media.video.VideoPrefs) { appContext.legacyUserAgent = userAgent }
                 VideoServices.save(VideoServicesConfig(tmdb, subKey, subUser, subPass, languages, auto, wifiOnly))
                 onDismiss()
-            }) { Text(stringResource(R.string.hc_save)) }
+            }) { Text(stringResource(I18nR.string.hc_save)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }
 

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.hub
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.layout.*
@@ -42,13 +44,13 @@ class MediaChromeTest {
                     Surface(Modifier.requiredSize(if (wide) 720.dp else 320.dp, if (wide) 420.dp else 800.dp).testTag("media-chrome")) {
                         Column {
                             MediaToolbarHeader(source, {}, { sourceMenu = true }, actions = {
-                                IconButton(onClick = {}) { Icon(painterResource(R.drawable.autorenew_24px), context.getString(R.string.hc_refresh)) }
-                                IconButton(onClick = {}) { Icon(painterResource(R.drawable.settings_24px), context.getString(R.string.settings)) }
+                                IconButton(onClick = {}) { Icon(painterResource(BaseR.drawable.autorenew_24px), context.getString(I18nR.string.hc_refresh)) }
+                                IconButton(onClick = {}) { Icon(painterResource(BaseR.drawable.settings_24px), context.getString(I18nR.string.settings)) }
                                 IconButton(onClick = { more = true }) {
-                                    Icon(painterResource(R.drawable.more_vert_24px), context.getString(R.string.hc_more))
+                                    Icon(painterResource(BaseR.drawable.more_vert_24px), context.getString(I18nR.string.hc_more))
                                 }
                                 DropdownMenu(more, { more = false }) {
-                                    DropdownMenuItem(text = { Text(context.getString(R.string.settings)) }, onClick = { more = false })
+                                    DropdownMenuItem(text = { Text(context.getString(I18nR.string.settings)) }, onClick = { more = false })
                                 }
                             }, sourceMenu = {
                                 DropdownMenu(sourceMenu, { sourceMenu = false }) {
@@ -56,9 +58,9 @@ class MediaChromeTest {
                                 }
                             })
                             androidx.compose.foundation.lazy.LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                item { de.mm20.launcher2.ui.media.MediaFilterButton(true, {}, context.getString(R.string.au9_mediahub_space_music), R.drawable.music_note_24px) }
-                                item { de.mm20.launcher2.ui.media.MediaFilterButton(false, {}, context.getString(R.string.hc_radio), R.drawable.ic_glyph_radio) }
-                                item { de.mm20.launcher2.ui.media.MediaFilterButton(false, {}, context.getString(R.string.telos_youtube_music_label), R.drawable.play_arrow_24px) }
+                                item { de.mm20.launcher2.ui.media.MediaFilterButton(true, {}, context.getString(I18nR.string.au9_mediahub_space_music), BaseR.drawable.music_note_24px) }
+                                item { de.mm20.launcher2.ui.media.MediaFilterButton(false, {}, context.getString(I18nR.string.hc_radio), BaseR.drawable.ic_glyph_radio) }
+                                item { de.mm20.launcher2.ui.media.MediaFilterButton(false, {}, context.getString(I18nR.string.telos_youtube_music_label), BaseR.drawable.play_arrow_24px) }
                             }
                             StremioBrowseControls(tab, { tab = it }, query, { query = it }, expanded, { expanded = it })
                             Text("Συνέχεια παρακολούθησης", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(16.dp))
@@ -67,40 +69,40 @@ class MediaChromeTest {
                 }
             }
         }
-        val hint = context.getString(R.string.au22_stremio_search_hint)
-        compose.onAllNodesWithContentDescription(context.getString(R.string.hc_more)).assertCountEquals(1)
+        val hint = context.getString(I18nR.string.au22_stremio_search_hint)
+        compose.onAllNodesWithContentDescription(context.getString(I18nR.string.hc_more)).assertCountEquals(1)
         compose.onNodeWithContentDescription(hint).assertDoesNotExist()
-        compose.onNodeWithContentDescription(context.getString(R.string.hc_search)).performClick()
+        compose.onNodeWithContentDescription(context.getString(I18nR.string.hc_search)).performClick()
         compose.onNodeWithContentDescription(hint).assertIsDisplayed().performTextInput("Δοκιμή")
         compose.runOnIdle { assertEquals("Δοκιμή", query) }
-        compose.onAllNodesWithContentDescription(context.getString(R.string.hc_close)).assertCountEquals(1)
-        val closeBounds = compose.onNodeWithContentDescription(context.getString(R.string.hc_close)).fetchSemanticsNode().boundsInRoot
+        compose.onAllNodesWithContentDescription(context.getString(I18nR.string.hc_close)).assertCountEquals(1)
+        val closeBounds = compose.onNodeWithContentDescription(context.getString(I18nR.string.hc_close)).fetchSemanticsNode().boundsInRoot
         val inputBounds = compose.onNodeWithContentDescription(hint).fetchSemanticsNode().boundsInRoot
         assertTrue("Close must lead the input, not duplicate its clear action", closeBounds.right <= inputBounds.left + 1f)
-        compose.onNodeWithContentDescription(context.getString(R.string.ts_clear)).assertIsDisplayed()
-        compose.onAllNodesWithContentDescription(context.getString(R.string.hc_close)).onFirst().performClick()
+        compose.onNodeWithContentDescription(context.getString(I18nR.string.ts_clear)).assertIsDisplayed()
+        compose.onAllNodesWithContentDescription(context.getString(I18nR.string.hc_close)).onFirst().performClick()
         compose.waitForIdle()
         compose.onNodeWithContentDescription(hint).assertDoesNotExist()
         compose.runOnIdle { assertEquals("", query) }
         compose.onNodeWithTag("media-source-selector").performClick()
         compose.onNodeWithText("TV").performClick()
         compose.runOnIdle { assertEquals("TV", source); source = "Stremio Fork" }
-        compose.onNodeWithContentDescription(context.getString(R.string.hc_more)).performClick()
-        compose.onNodeWithText(context.getString(R.string.settings)).assertIsDisplayed().performClick()
+        compose.onNodeWithContentDescription(context.getString(I18nR.string.hc_more)).performClick()
+        compose.onNodeWithText(context.getString(I18nR.string.settings)).assertIsDisplayed().performClick()
         for (font2 in listOf(false, true)) for (isLight in listOf(false, true)) for (landscape in listOf(false, true)) {
             compose.runOnIdle { large = font2; light = isLight; wide = landscape }
-            compose.onAllNodesWithContentDescription(context.getString(R.string.hc_more)).assertCountEquals(1)
+            compose.onAllNodesWithContentDescription(context.getString(I18nR.string.hc_more)).assertCountEquals(1)
             val selector = compose.onNodeWithTag("media-source-selector").fetchSemanticsNode().boundsInRoot
-            val action = compose.onNodeWithContentDescription(context.getString(R.string.hc_more)).fetchSemanticsNode().boundsInRoot
+            val action = compose.onNodeWithContentDescription(context.getString(I18nR.string.hc_more)).fetchSemanticsNode().boundsInRoot
             assertTrue("Source selector overlaps overflow", selector.right <= action.left + 1f)
-            compose.onNodeWithContentDescription(context.getString(R.string.hc_search)).assertIsDisplayed()
-            compose.onNodeWithContentDescription(context.getString(R.string.hc_refresh)).assertIsDisplayed()
-            compose.onNodeWithContentDescription(context.getString(R.string.settings)).assertIsDisplayed()
+            compose.onNodeWithContentDescription(context.getString(I18nR.string.hc_search)).assertIsDisplayed()
+            compose.onNodeWithContentDescription(context.getString(I18nR.string.hc_refresh)).assertIsDisplayed()
+            compose.onNodeWithContentDescription(context.getString(I18nR.string.settings)).assertIsDisplayed()
             screenshot("media-chrome-font${if (font2) 2 else 1}-${if (isLight) "light" else "dark"}-${if (landscape) "wide" else "portrait"}.png")
-            compose.onNodeWithContentDescription(context.getString(R.string.hc_search)).performClick()
+            compose.onNodeWithContentDescription(context.getString(I18nR.string.hc_search)).performClick()
             compose.onNodeWithContentDescription(hint).assertIsDisplayed().performTextInput("Σύντομη αναζήτηση")
             screenshot("media-chrome-search-font${if (font2) 2 else 1}-${if (isLight) "light" else "dark"}-${if (landscape) "wide" else "portrait"}.png")
-            compose.onAllNodesWithContentDescription(context.getString(R.string.hc_close)).onFirst().performClick()
+            compose.onAllNodesWithContentDescription(context.getString(I18nR.string.hc_close)).onFirst().performClick()
             compose.waitForIdle()
         }
     }

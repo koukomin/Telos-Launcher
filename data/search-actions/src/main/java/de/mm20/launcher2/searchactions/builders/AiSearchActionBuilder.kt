@@ -1,7 +1,7 @@
 package de.mm20.launcher2.searchactions.builders
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.AiSearchAction
 import de.mm20.launcher2.searchactions.actions.SearchAction
@@ -11,7 +11,7 @@ class AiSearchActionBuilder(
     override val label: String
 ) : SearchActionBuilder {
 
-    constructor(context: Context) : this(context.getString(R.string.search_action_websearch))
+    constructor(context: Context) : this(context.getString(I18nR.string.search_action_websearch))
 
     override val key: String
         get() = "ai_search"

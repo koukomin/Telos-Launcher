@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.typography
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -54,7 +55,7 @@ class TypographySettingsScreenVM : ViewModel(), KoinComponent {
         themeRepository.typographies.create(
             Typography(
                 id = uuid,
-                name = context.getString(R.string.new_theme_name)
+                name = context.getString(I18nR.string.new_theme_name)
             )
         )
         return uuid

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.downloads
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.Manifest
 import android.app.Notification
@@ -13,10 +15,8 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
-import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.downloads.logic.BlockReason
 import de.mm20.launcher2.downloads.logic.Formatting
-import de.mm20.launcher2.i18n.R as I18nR
 
 /** Builds the notifications of Telos Downloads: one summary (the foreground notification), one per active download, and results. */
 class DownloadNotifier(private val context: Context, private val settings: DownloadSettings) {

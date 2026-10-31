@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.searchbar
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -107,10 +109,10 @@ fun LauncherSearchBar(
                     ) {
                         Icon(
                             painter = painterResource(
-                                if (sheetManager.hiddenItemsSheetShown.value) R.drawable.visibility_off_24px_filled
-                                else R.drawable.visibility_off_24px
+                                if (sheetManager.hiddenItemsSheetShown.value) BaseR.drawable.visibility_off_24px_filled
+                                else BaseR.drawable.visibility_off_24px
                             ),
-                            contentDescription = stringResource(R.string.preference_hidden_items)
+                            contentDescription = stringResource(I18nR.string.preference_hidden_items)
                         )
                     }
                 }
@@ -128,11 +130,11 @@ fun LauncherSearchBar(
                         Box {
                             Icon(
                                 painter = painterResource(
-                                    if (searchVM.showFilters.value)R.drawable.filter_alt_24px_filled
-                                    else R.drawable.filter_alt_24px
+                                    if (searchVM.showFilters.value)BaseR.drawable.filter_alt_24px_filled
+                                    else BaseR.drawable.filter_alt_24px
                                 ),
                                 contentDescription = stringResource(
-                                    if (searchVM.showFilters.value) R.string.menu_hide_filters else R.string.menu_show_filters
+                                    if (searchVM.showFilters.value) I18nR.string.menu_hide_filters else I18nR.string.menu_show_filters
                                 )
                             )
                             androidx.compose.animation.AnimatedVisibility(
@@ -183,7 +185,7 @@ fun LauncherSearchBar(
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.mic_24px),
-                            contentDescription = stringResource(R.string.search_bar_voice),
+                            contentDescription = stringResource(I18nR.string.search_bar_voice),
                         )
                     }
                 }

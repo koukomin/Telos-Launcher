@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.webapps
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -22,7 +24,7 @@ data class WebAppPresetCategory(
 object WebAppPresets {
     val categories: List<WebAppPresetCategory> = listOf(
         WebAppPresetCategory(
-            "social", R.string.web_app_preset_category_social, R.drawable.ic_webcat_social,
+            "social", I18nR.string.web_app_preset_category_social, BaseR.drawable.ic_webcat_social,
             listOf(
                 WebAppPreset("Facebook", "https://www.facebook.com/"),
                 WebAppPreset("Instagram", "https://www.instagram.com/"),
@@ -35,7 +37,7 @@ object WebAppPresets {
             ),
         ),
         WebAppPresetCategory(
-            "email", R.string.web_app_preset_category_email, R.drawable.ic_webcat_email,
+            "email", I18nR.string.web_app_preset_category_email, BaseR.drawable.ic_webcat_email,
             listOf(
                 WebAppPreset("Gmail", "https://mail.google.com/"),
                 WebAppPreset("Outlook", "https://outlook.live.com/mail/"),
@@ -47,7 +49,7 @@ object WebAppPresets {
             ),
         ),
         WebAppPresetCategory(
-            "messaging", R.string.web_app_preset_category_messaging, R.drawable.ic_webcat_messaging,
+            "messaging", I18nR.string.web_app_preset_category_messaging, BaseR.drawable.ic_webcat_messaging,
             listOf(
                 WebAppPreset("WhatsApp Web", "https://web.whatsapp.com/"),
                 WebAppPreset("Telegram Web", "https://web.telegram.org/"),
@@ -59,7 +61,7 @@ object WebAppPresets {
             ),
         ),
         WebAppPresetCategory(
-            "video", R.string.web_app_preset_category_video, R.drawable.ic_webcat_video,
+            "video", I18nR.string.web_app_preset_category_video, BaseR.drawable.ic_webcat_video,
             listOf(
                 WebAppPreset("YouTube", "https://www.youtube.com/"),
                 WebAppPreset("YouTube Music", "https://music.youtube.com/"),
@@ -67,7 +69,7 @@ object WebAppPresets {
             ),
         ),
         WebAppPresetCategory(
-            "work", R.string.web_app_preset_category_work, R.drawable.ic_webcat_work,
+            "work", I18nR.string.web_app_preset_category_work, BaseR.drawable.ic_webcat_work,
             listOf(
                 WebAppPreset("Google Drive", "https://drive.google.com/"),
                 WebAppPreset("Google Docs", "https://docs.google.com/"),

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.youtube
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.rememberScrollState
@@ -78,7 +80,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val now by vm.nowPlaying.collectAsStateWithLifecycle()
 
     de.mm20.launcher2.ui.media.MediaFrame(
-        stringResource(if (music) R.string.telos_youtube_music_label else R.string.telos_youtube_label),
+        stringResource(if (music) I18nR.string.telos_youtube_music_label else I18nR.string.telos_youtube_label),
         actions = {
             de.mm20.launcher2.ui.media.MediaSearchAction(searchExpanded, query.isNotBlank()) {
                 searchExpanded = !searchExpanded
@@ -86,8 +88,8 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
             }
             IconButton(onClick = { accountPanel = true }) {
                 Icon(
-                    painterResource(R.drawable.person_24px),
-                    stringResource(R.string.hc_account)
+                    painterResource(BaseR.drawable.person_24px),
+                    stringResource(I18nR.string.hc_account)
                 )
             }
         },
@@ -126,19 +128,19 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    text = stringResource(R.string.hf_remote_sign_in_again),
+                                    text = stringResource(I18nR.string.hf_remote_sign_in_again),
                                     style = MaterialTheme.typography.titleSmall,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onErrorContainer
                                 )
                                 Text(
-                                    text = stringResource(R.string.media_native_account_help),
+                                    text = stringResource(I18nR.string.media_native_account_help),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.8f)
                                 )
                             }
                             TextButton(onClick = { accountPanel = true }) {
-                                Text(stringResource(R.string.hf_remote_sign_in), color = MaterialTheme.colorScheme.onErrorContainer, fontWeight = FontWeight.Bold)
+                                Text(stringResource(I18nR.string.hf_remote_sign_in), color = MaterialTheme.colorScheme.onErrorContainer, fontWeight = FontWeight.Bold)
                             }
                         }
                     }
@@ -147,7 +149,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     de.mm20.launcher2.ui.media.MediaSearchBar(
-                        query, { query = it }, stringResource(R.string.telos_youtube_search),
+                        query, { query = it }, stringResource(I18nR.string.telos_youtube_search),
                         expanded = searchExpanded, onClose = { searchExpanded = false }, searchEnabled = !searching,
                         onSearch = {
                             if (query.isNotBlank() && !searching) {
@@ -176,12 +178,12 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                                 de.mm20.launcher2.ui.media.MediaFilterButton(
                                     selected = shelf == "search" && query.isBlank(),
                                     onClick = { shelf = "search"; query = ""; vm.loadHome(context, music, refresh = true) },
-                                    label = stringResource(R.string.au10_music_tab_home))
+                                    label = stringResource(I18nR.string.au10_music_tab_home))
                             }
                             item {
                                 de.mm20.launcher2.ui.media.MediaFilterButton(
                                     selected = shelf == "favorites",
-                                    onClick = { shelf = "favorites" }, label = stringResource(R.string.hc_favorites))
+                                    onClick = { shelf = "favorites" }, label = stringResource(I18nR.string.hc_favorites))
                             }
                             items(playlists.keys.toList(), key = { it }) { name ->
                                 InputChip(
@@ -196,8 +198,8 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                                             if (shelf == "playlist:$name") shelf = "search"
                                         }) {
                                             Icon(
-                                                painterResource(R.drawable.close_24px),
-                                                stringResource(R.string.hc_delete),
+                                                painterResource(BaseR.drawable.close_24px),
+                                                stringResource(I18nR.string.hc_delete),
                                                 Modifier.size(16.dp)
                                             )
                                         }
@@ -211,16 +213,16 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(16.dp)
                             ) {
-                                Icon(painterResource(R.drawable.play_arrow_24px), contentDescription = null)
+                                Icon(painterResource(BaseR.drawable.play_arrow_24px), contentDescription = null)
                                 Spacer(Modifier.width(8.dp))
-                                Text(stringResource(R.string.hc_play))
+                                Text(stringResource(I18nR.string.hc_play))
                             }
                         }
                     }
 
                     if (shelf == "favorites" || shelf.startsWith("playlist:")) {
                         Text(
-                            stringResource(R.string.telos_youtube_library_local),
+                            stringResource(I18nR.string.telos_youtube_library_local),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold
@@ -230,8 +232,8 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                     if (searching || resolving || buffering || loadingAccount) {
                         LinearProgressIndicator(Modifier.fillMaxWidth())
                         Text(
-                            stringResource(if (resolving || buffering) R.string.telos_youtube_preparing
-                                else if (loadingAccount && !searching) R.string.telos_youtube_tab_playlists else R.string.telos_youtube_searching),
+                            stringResource(if (resolving || buffering) I18nR.string.telos_youtube_preparing
+                                else if (loadingAccount && !searching) I18nR.string.telos_youtube_tab_playlists else I18nR.string.telos_youtube_searching),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -241,7 +243,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
 
                     if (entries.isEmpty() && !searching) {
                         Text(
-                            stringResource(R.string.telos_youtube_intro),
+                            stringResource(I18nR.string.telos_youtube_intro),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -277,13 +279,13 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     playlistTarget?.let { entry ->
         AlertDialog(
             onDismissRequest = { playlistTarget = null },
-            title = { Text(stringResource(R.string.telos_youtube_add_playlist)) },
+            title = { Text(stringResource(I18nR.string.telos_youtube_add_playlist)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     OutlinedTextField(
                         playlistName,
                         { playlistName = it },
-                        label = { Text(stringResource(R.string.telos_youtube_playlist_name)) },
+                        label = { Text(stringResource(I18nR.string.telos_youtube_playlist_name)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -310,12 +312,12 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                         playlistTarget = null
                     }
                 ) {
-                    Text(stringResource(R.string.hc_add))
+                    Text(stringResource(I18nR.string.hc_add))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { playlistTarget = null }) {
-                    Text(stringResource(R.string.hc_cancel))
+                    Text(stringResource(I18nR.string.hc_cancel))
                 }
             }
         )
@@ -340,20 +342,20 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
 
         AlertDialog(
             onDismissRequest = { accountPanel = false },
-            title = { Text(stringResource(R.string.hc_account)) },
+            title = { Text(stringResource(I18nR.string.hc_account)) },
             text = {
                 Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text(stringResource(R.string.media_native_account_help), style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(I18nR.string.media_native_account_help), style = MaterialTheme.typography.bodyMedium)
 
                     Button(
                         onClick = { loginPanel = true },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(stringResource(R.string.hf_remote_sign_in))
+                        Text(stringResource(I18nR.string.hf_remote_sign_in))
                     }
 
                     if (browserUnavailable) {
-                        Text(stringResource(R.string.telos_youtube_browser_unavailable), color = MaterialTheme.colorScheme.error)
+                        Text(stringResource(I18nR.string.telos_youtube_browser_unavailable), color = MaterialTheme.colorScheme.error)
                     }
                     listOf(false, true).forEach { browserMusic ->
                         OutlinedButton(
@@ -362,7 +364,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(stringResource(if (browserMusic) R.string.telos_youtube_browser_music else R.string.telos_youtube_browser_video))
+                            Text(stringResource(if (browserMusic) I18nR.string.telos_youtube_browser_music else I18nR.string.telos_youtube_browser_video))
                         }
                     }
 
@@ -385,13 +387,13 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                             vm.results.value = emptyMap()
                             vm.loadHome(context, music, refresh = true)
                         }
-                    }) { Text(stringResource(R.string.hc_sign_out)) }
+                    }) { Text(stringResource(I18nR.string.hc_sign_out)) }
                     HorizontalDivider()
-                    Text("${stringResource(R.string.action_import)} · ${stringResource(R.string.telos_youtube_tab_playlists)}", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                    Text("${stringResource(I18nR.string.action_import)} · ${stringResource(I18nR.string.telos_youtube_tab_playlists)}", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
                     OutlinedTextField(
                         value = importUrl,
                         onValueChange = { importUrl = it },
-                        label = { Text(stringResource(R.string.dl_detail_url)) },
+                        label = { Text(stringResource(I18nR.string.dl_detail_url)) },
                         placeholder = { Text("https://www.youtube.com/playlist?list=...") },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
@@ -403,22 +405,22 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                             vm.importPlaylistUrl(importUrl) { ok ->
                                 importing = false
                                 if (ok) {
-                                    android.widget.Toast.makeText(context, context.getString(R.string.hc_done), android.widget.Toast.LENGTH_SHORT).show()
+                                    android.widget.Toast.makeText(context, context.getString(I18nR.string.hc_done), android.widget.Toast.LENGTH_SHORT).show()
                                     accountPanel = false
                                 } else {
-                                    android.widget.Toast.makeText(context, context.getString(R.string.hc_failed_try_again), android.widget.Toast.LENGTH_SHORT).show()
+                                    android.widget.Toast.makeText(context, context.getString(I18nR.string.hc_failed_try_again), android.widget.Toast.LENGTH_SHORT).show()
                                 }
                             }
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        if (importing) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp) else Text(stringResource(R.string.action_import))
+                        if (importing) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp) else Text(stringResource(I18nR.string.action_import))
                     }
                 }
             },
             confirmButton = {
                 TextButton(onClick = { accountPanel = false }) {
-                    Text(stringResource(R.string.telos_youtube_browser_close))
+                    Text(stringResource(I18nR.string.telos_youtube_browser_close))
                 }
             }
         )
@@ -464,22 +466,22 @@ internal fun FlowMediaCard(
             Box {
                 IconButton(onClick = { menuOpen = true }) {
                     Icon(
-                        painterResource(R.drawable.more_vert_24px),
-                        contentDescription = stringResource(R.string.au10_music_more)
+                        painterResource(BaseR.drawable.more_vert_24px),
+                        contentDescription = stringResource(I18nR.string.au10_music_more)
                     )
                 }
                 DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                     DropdownMenuItem(
-                        text = { Text(stringResource(if (isFavorite) R.string.hf_files_remove_favorite else R.string.hc_add_to_favorites)) },
+                        text = { Text(stringResource(if (isFavorite) I18nR.string.hf_files_remove_favorite else I18nR.string.hc_add_to_favorites)) },
                         onClick = { onFavorite(); menuOpen = false }
                     )
                     if (music) {
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.telos_youtube_add_playlist)) },
+                            text = { Text(stringResource(I18nR.string.telos_youtube_add_playlist)) },
                             onClick = { onAddPlaylist(); menuOpen = false }
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.telos_youtube_artist_radio)) },
+                            text = { Text(stringResource(I18nR.string.telos_youtube_artist_radio)) },
                             onClick = { onRadio(); menuOpen = false }
                         )
                         DropdownMenuItem(
@@ -496,7 +498,7 @@ internal fun FlowMediaCard(
                         )
                     }
                     if (canRemoveFromPlaylist) DropdownMenuItem(
-                        text = { Text(stringResource(R.string.hc_delete)) },
+                        text = { Text(stringResource(I18nR.string.hc_delete)) },
                         onClick = { onDeleteFromPlaylist(); menuOpen = false }
                     )
                 }
@@ -516,18 +518,18 @@ fun YouTubePlaylistChipsRow(
     if (userPlaylists.isEmpty()) return
 
     Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(stringResource(R.string.telos_youtube_tab_playlists), style = MaterialTheme.typography.headlineSmall,
+        Text(stringResource(I18nR.string.telos_youtube_tab_playlists), style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold)
         LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp), contentPadding = PaddingValues(horizontal = 2.dp)) {
             items(userPlaylists, key = { it.id }) { pl ->
                 val isSelected = selectedUrl == pl.url
                 val title = when (pl.id) {
-                    "LM", "LL" -> stringResource(R.string.hc_favorites)
+                    "LM", "LL" -> stringResource(I18nR.string.hc_favorites)
                     else -> pl.title
                 }
                 val subtitle = when (pl.id) {
-                    "LM" -> stringResource(R.string.telos_youtube_music_label)
-                    "LL" -> stringResource(R.string.telos_youtube_label)
+                    "LM" -> stringResource(I18nR.string.telos_youtube_music_label)
+                    "LL" -> stringResource(I18nR.string.telos_youtube_label)
                     else -> pl.subtitle
                 }
                 Surface(onClick = { onSelectPlaylist(pl) }, shape = RoundedCornerShape(8.dp),
@@ -538,7 +540,7 @@ fun YouTubePlaylistChipsRow(
                         Box(Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(8.dp))
                             .background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
                             if (pl.thumbnail != null) AsyncImage(pl.thumbnail, null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-                            else Icon(painterResource(if (pl.id == "LL") R.drawable.video_library_24px else R.drawable.music_note_24px), null,
+                            else Icon(painterResource(if (pl.id == "LL") BaseR.drawable.video_library_24px else BaseR.drawable.music_note_24px), null,
                                 tint = MaterialTheme.colorScheme.onSecondaryContainer, modifier = Modifier.size(40.dp))
                         }
                         Text(title, style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
@@ -612,13 +614,13 @@ fun YouTubeMiniPlayer(vm: YouTubeViewModel, music: Boolean, onOpen: (Boolean) ->
             }
             IconButton(onClick = { if (matches) vm.toggle() else saved?.let { vm.play(context, it, music) } }) {
                 Icon(
-                    painterResource(if (playing && matches) R.drawable.pause_24px else R.drawable.play_arrow_24px),
-                    stringResource(if (playing && matches) R.string.au_music_pause else R.string.hc_play)
+                    painterResource(if (playing && matches) BaseR.drawable.pause_24px else BaseR.drawable.play_arrow_24px),
+                    stringResource(if (playing && matches) I18nR.string.au_music_pause else I18nR.string.hc_play)
                 )
             }
             if (matches) {
                 IconButton(onClick = vm::stop) {
-                    Icon(painterResource(R.drawable.close_24px), stringResource(R.string.hc_stop))
+                    Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.hc_stop))
                 }
             }
         }

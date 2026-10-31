@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network.wireguard
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -95,52 +96,52 @@ internal fun WireguardEditor(initial: WireguardConfig, isNew: Boolean, wg: Wireg
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(if (isNew) R.string.nwg_new_title else R.string.nwg_edit_title)) },
+        title = { Text(stringResource(if (isNew) I18nR.string.nwg_new_title else I18nR.string.nwg_edit_title)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Field(stringResource(R.string.nwg_name), name) { name = it }
-                Field(stringResource(R.string.nwg_private_key), privateKey, password = true) { privateKey = it.trim() }
+                Field(stringResource(I18nR.string.nwg_name), name) { name = it }
+                Field(stringResource(I18nR.string.nwg_private_key), privateKey, password = true) { privateKey = it.trim() }
                 publicKey?.let {
-                    Text(stringResource(R.string.nwg_public_key, it), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(I18nR.string.nwg_public_key, it), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 TextButton(onClick = {
                     scope.launch { wg.generatePrivateKey().onSuccess { privateKey = it } }
-                }) { Text(stringResource(R.string.nwg_generate)) }
-                Field(stringResource(R.string.nwg_addresses), addresses, "10.2.0.2/32") { addresses = it }
-                Field(stringResource(R.string.nwg_dns), dns, "1.1.1.1") { dns = it }
-                Field(stringResource(R.string.nwg_mtu), mtu, number = true) { mtu = it.filter(Char::isDigit) }
+                }) { Text(stringResource(I18nR.string.nwg_generate)) }
+                Field(stringResource(I18nR.string.nwg_addresses), addresses, "10.2.0.2/32") { addresses = it }
+                Field(stringResource(I18nR.string.nwg_dns), dns, "1.1.1.1") { dns = it }
+                Field(stringResource(I18nR.string.nwg_mtu), mtu, number = true) { mtu = it.filter(Char::isDigit) }
                 peers.forEachIndexed { index, p ->
                     HorizontalDivider(Modifier.padding(top = 8.dp))
-                    Text(stringResource(R.string.nwg_peer, index + 1), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-                    Field(stringResource(R.string.nwg_peer_public_key), p.publicKey) { p.publicKey = it.trim() }
-                    Field(stringResource(R.string.nwg_preshared), p.preshared, password = true) { p.preshared = it.trim() }
-                    TextButton(onClick = { p.preshared = wg.generatePresharedKey() }) { Text(stringResource(R.string.nwg_generate)) }
-                    Field(stringResource(R.string.nwg_endpoint), p.endpoint, "vpn.example.com:51820") { p.endpoint = it }
-                    Field(stringResource(R.string.nwg_allowed_ips), p.allowed, "0.0.0.0/0, ::/0") { p.allowed = it }
-                    Field(stringResource(R.string.nwg_keepalive), p.keepalive, number = true) { p.keepalive = it.filter(Char::isDigit) }
-                    if (peers.size > 1) TextButton(onClick = { peers.removeAt(index) }) { Text(stringResource(R.string.nwg_remove_peer)) }
+                    Text(stringResource(I18nR.string.nwg_peer, index + 1), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                    Field(stringResource(I18nR.string.nwg_peer_public_key), p.publicKey) { p.publicKey = it.trim() }
+                    Field(stringResource(I18nR.string.nwg_preshared), p.preshared, password = true) { p.preshared = it.trim() }
+                    TextButton(onClick = { p.preshared = wg.generatePresharedKey() }) { Text(stringResource(I18nR.string.nwg_generate)) }
+                    Field(stringResource(I18nR.string.nwg_endpoint), p.endpoint, "vpn.example.com:51820") { p.endpoint = it }
+                    Field(stringResource(I18nR.string.nwg_allowed_ips), p.allowed, "0.0.0.0/0, ::/0") { p.allowed = it }
+                    Field(stringResource(I18nR.string.nwg_keepalive), p.keepalive, number = true) { p.keepalive = it.filter(Char::isDigit) }
+                    if (peers.size > 1) TextButton(onClick = { peers.removeAt(index) }) { Text(stringResource(I18nR.string.nwg_remove_peer)) }
                 }
                 TextButton(onClick = {
                     peers.add(PeerDraft(WgPeer(publicKey = "", allowedIps = listOf("0.0.0.0/0", "::/0"), persistentKeepalive = 25)))
-                }) { Text(stringResource(R.string.nwg_add_peer)) }
+                }) { Text(stringResource(I18nR.string.nwg_add_peer)) }
                 HorizontalDivider()
-                val hopOptions = listOf(de.mm20.launcher2.ui.component.preferences.ListPreferenceItem<Int?>(stringResource(R.string.dl_t_select_none), null)) +
+                val hopOptions = listOf(de.mm20.launcher2.ui.component.preferences.ListPreferenceItem<Int?>(stringResource(I18nR.string.dl_t_select_none), null)) +
                     configurations.filter { it.id != initial.id && it.hopVia == null }.map { de.mm20.launcher2.ui.component.preferences.ListPreferenceItem<Int?>(it.name, it.id) }
-                de.mm20.launcher2.ui.component.preferences.ListPreference(title = stringResource(R.string.nwg_hop_via), items = hopOptions, value = hopVia, onValueChanged = { hopVia = it })
-                Text(stringResource(R.string.nwg_hop_hint), style = MaterialTheme.typography.bodySmall)
+                de.mm20.launcher2.ui.component.preferences.ListPreference(title = stringResource(I18nR.string.nwg_hop_via), items = hopOptions, value = hopVia, onValueChanged = { hopVia = it })
+                Text(stringResource(I18nR.string.nwg_hop_hint), style = MaterialTheme.typography.bodySmall)
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(stringResource(R.string.nwg_mobile_only), Modifier.weight(1f))
+                    Text(stringResource(I18nR.string.nwg_mobile_only), Modifier.weight(1f))
                     Switch(checked = mobileOnly, onCheckedChange = { mobileOnly = it })
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(stringResource(R.string.nwg_lockdown), Modifier.weight(1f))
+                    Text(stringResource(I18nR.string.nwg_lockdown), Modifier.weight(1f))
                     Switch(checked = lockdown, onCheckedChange = { lockdown = it })
                 }
                 if (!isNew) {
                     TextButton(onClick = {
                         wg.exportConf(initial.id)?.let { shareText(context, it) }
-                    }) { Text(stringResource(R.string.nwg_share)) }
-                    Text(stringResource(R.string.nwg_share_warning), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }) { Text(stringResource(I18nR.string.nwg_share)) }
+                    Text(stringResource(I18nR.string.nwg_share_warning), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         },
@@ -154,14 +155,14 @@ internal fun WireguardEditor(initial: WireguardConfig, isNew: Boolean, wg: Wireg
                         onFailure = { Toast.makeText(context, errorText(context, it), Toast.LENGTH_LONG).show() },
                     )
                 }
-            }) { Text(stringResource(R.string.nwg_save)) }
+            }) { Text(stringResource(I18nR.string.nwg_save)) }
         },
         dismissButton = {
             Row {
                 if (!isNew) TextButton(onClick = { confirmDelete = true }) {
-                    Text(stringResource(R.string.nwg_delete), color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(I18nR.string.nwg_delete), color = MaterialTheme.colorScheme.error)
                 }
-                TextButton(onClick = onDismiss) { Text(stringResource(R.string.nwg_cancel)) }
+                TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.nwg_cancel)) }
             }
         },
     )
@@ -169,15 +170,15 @@ internal fun WireguardEditor(initial: WireguardConfig, isNew: Boolean, wg: Wireg
     if (confirmDelete) {
         AlertDialog(
             onDismissRequest = { confirmDelete = false },
-            title = { Text(stringResource(R.string.nwg_delete)) },
+            title = { Text(stringResource(I18nR.string.nwg_delete)) },
             text = { Text(initial.name) },
             confirmButton = {
                 TextButton(onClick = {
                     confirmDelete = false
                     scope.launch { wg.remove(initial.id); onDismiss() }
-                }) { Text(stringResource(R.string.nwg_delete), color = MaterialTheme.colorScheme.error) }
+                }) { Text(stringResource(I18nR.string.nwg_delete), color = MaterialTheme.colorScheme.error) }
             },
-            dismissButton = { TextButton(onClick = { confirmDelete = false }) { Text(stringResource(R.string.nwg_cancel)) } },
+            dismissButton = { TextButton(onClick = { confirmDelete = false }) { Text(stringResource(I18nR.string.nwg_cancel)) } },
         )
     }
 }

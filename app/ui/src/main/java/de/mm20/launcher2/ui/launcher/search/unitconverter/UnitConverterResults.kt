@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.unitconverter
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.icu.text.DateFormat
 import androidx.compose.foundation.background
@@ -81,7 +83,7 @@ fun LazyListScope.UnitConverterResults(
                                     style = MaterialTheme.typography.labelSmall,
                                 )
                                 Text(
-                                    text = stringResource(id = R.string.disclaimer),
+                                    text = stringResource(id = I18nR.string.disclaimer),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.clickable {
@@ -94,14 +96,14 @@ fun LazyListScope.UnitConverterResults(
                                     onDismissRequest = { showDisclaimer = false },
                                     confirmButton = {
                                         TextButton(onClick = { showDisclaimer = false }) {
-                                            Text(text = stringResource(id = R.string.close))
+                                            Text(text = stringResource(id = I18nR.string.close))
                                         }
                                     },
-                                    title = { Text(stringResource(id = R.string.disclaimer)) },
+                                    title = { Text(stringResource(id = I18nR.string.disclaimer)) },
                                     text = {
                                         Text(
                                             stringResource(
-                                                id = R.string.disclaimer_currency_converter,
+                                                id = I18nR.string.disclaimer_currency_converter,
                                                 df.format(Date(converter.updateTimestamp))
                                             )
                                         )
@@ -208,18 +210,18 @@ fun LazyListScope.UnitConverterResults(
 
 fun getDimensionIcon(dimension: Dimension): Int {
     return when (dimension) {
-        Dimension.Mass -> R.drawable.weight_24px
-        Dimension.Length -> R.drawable.straighten_24px
-        Dimension.Velocity -> R.drawable.speed_24px
-        Dimension.Volume -> R.drawable.deployed_code_24px
-        Dimension.Area -> R.drawable.square_foot_24px
-        Dimension.Currency -> R.drawable.payments_24px
-        Dimension.Data -> R.drawable.hard_disk_24px
+        Dimension.Mass -> BaseR.drawable.weight_24px
+        Dimension.Length -> BaseR.drawable.straighten_24px
+        Dimension.Velocity -> BaseR.drawable.speed_24px
+        Dimension.Volume -> BaseR.drawable.deployed_code_24px
+        Dimension.Area -> BaseR.drawable.square_foot_24px
+        Dimension.Currency -> BaseR.drawable.payments_24px
+        Dimension.Data -> BaseR.drawable.hard_disk_24px
         Dimension.Bitrate -> TODO()
         Dimension.Pressure -> TODO()
-        Dimension.Energy -> R.drawable.bolt_24px
+        Dimension.Energy -> BaseR.drawable.bolt_24px
         Dimension.Frequency -> TODO()
-        Dimension.Temperature -> R.drawable.device_thermostat_24px
-        Dimension.Time -> R.drawable.schedule_24px
+        Dimension.Temperature -> BaseR.drawable.device_thermostat_24px
+        Dimension.Time -> BaseR.drawable.schedule_24px
     }
 }

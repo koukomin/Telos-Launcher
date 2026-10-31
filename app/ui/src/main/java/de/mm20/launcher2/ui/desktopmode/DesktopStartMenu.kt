@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.desktopmode
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.ActivityOptions
 import android.content.Context
@@ -193,11 +195,11 @@ internal fun DesktopStartMenu(onDismiss: () -> Unit) {
                                             onDismissRequest = { appContextMenuOpen = false }
                                         ) {
                                             androidx.compose.material3.DropdownMenuItem(
-                                                text = { Text(stringResource(R.string.hc_edit)) },
+                                                text = { Text(stringResource(I18nR.string.hc_edit)) },
                                                 onClick = {
                                                     appContextMenuOpen = false
                                                 },
-                                                leadingIcon = { Icon(painterResource(R.drawable.edit_24px), null) }
+                                                leadingIcon = { Icon(painterResource(BaseR.drawable.edit_24px), null) }
                                             )
                                             androidx.compose.material3.DropdownMenuItem(
                                                 text = { Text("App Info") },
@@ -209,7 +211,7 @@ internal fun DesktopStartMenu(onDismiss: () -> Unit) {
                                                     }
                                                     runCatching { context.startActivity(intent) }
                                                 },
-                                                leadingIcon = { Icon(painterResource(R.drawable.info_24px), null) }
+                                                leadingIcon = { Icon(painterResource(BaseR.drawable.info_24px), null) }
                                             )
                                         }
                                     }
@@ -228,10 +230,10 @@ internal fun DesktopStartMenu(onDismiss: () -> Unit) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton(onClick = { onDismiss() }) {
-                        Icon(painterResource(R.drawable.lock_24px), contentDescription = "Lock")
+                        Icon(painterResource(BaseR.drawable.lock_24px), contentDescription = "Lock")
                     }
                     IconButton(onClick = { onDismiss() }) {
-                        Icon(painterResource(R.drawable.settings_24px), contentDescription = "Settings")
+                        Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Settings")
                     }
                 }
             }

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component.preferences
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.activity.compose.LocalActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
@@ -224,8 +226,8 @@ private fun PreferenceScreenTopBar(
                 }
             }) {
                 Icon(
-                    painter = painterResource(R.drawable.arrow_back_24px),
-                    contentDescription = stringResource(R.string.menu_back)
+                    painter = painterResource(BaseR.drawable.arrow_back_24px),
+                    contentDescription = stringResource(I18nR.string.menu_back)
                 )
             }
         },
@@ -242,8 +244,8 @@ private fun PreferenceScreenTopBar(
                         .build().launchUrl(context, helpUrl.toUri())
                 }) {
                     Icon(
-                        painter = painterResource(R.drawable.help_24px),
-                        contentDescription = stringResource(R.string.help)
+                        painter = painterResource(BaseR.drawable.help_24px),
+                        contentDescription = stringResource(I18nR.string.help)
                     )
                 }
             }

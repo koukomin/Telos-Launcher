@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
 import androidx.compose.foundation.layout.Box
@@ -222,7 +224,7 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
                 android.widget.Toast.makeText(
                     context,
                     de.mm20.launcher2.comms.sip.SipDialer.lastFailure
-                        .ifBlank { context.getString(R.string.au_phoneb_sip_err_not_connected) },
+                        .ifBlank { context.getString(I18nR.string.au_phoneb_sip_err_not_connected) },
                     android.widget.Toast.LENGTH_SHORT,
                 ).show()
             }
@@ -341,7 +343,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 scope.launch {
                     if (!ContactActions.setRingtone(context, it.id, picked)) {
                         android.widget.Toast.makeText(
-                            context, R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT,
+                            context, I18nR.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT,
                         ).show()
                     }
                 }
@@ -365,15 +367,15 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
             ) {
                 IconButton(onClick = { backStack.removeLastOrNull() }) {
                     Icon(
-                        painterResource(R.drawable.arrow_back_24px),
-                        contentDescription = stringResource(R.string.hc_back),
+                        painterResource(BaseR.drawable.arrow_back_24px),
+                        contentDescription = stringResource(I18nR.string.hc_back),
                         tint = MaterialTheme.colorScheme.primary,
                     )
                 }
                 Spacer(Modifier.weight(1f))
                 if (contact != null && contact.id >= 0) {
                     IconButton(onClick = { ContactActions.edit(context, contact.id) }) {
-                        Icon(painterResource(R.drawable.edit_24px), contentDescription = stringResource(R.string.net_dns_action_edit))
+                        Icon(painterResource(BaseR.drawable.edit_24px), contentDescription = stringResource(I18nR.string.net_dns_action_edit))
                     }
                 }
                 val starred = starOverride ?: (contact?.starred == true)
@@ -384,7 +386,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                             viewModel.setStarred(context, it.id, !starred) {
                                 starOverride = null
                                 android.widget.Toast.makeText(
-                                    context, R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT,
+                                    context, I18nR.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT,
                                 ).show()
                             }
                         }
@@ -393,9 +395,9 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 ) {
                     Icon(
                         painterResource(
-                            if (starred) R.drawable.star_24px_filled else R.drawable.star_24px_outlined
+                            if (starred) BaseR.drawable.star_24px_filled else BaseR.drawable.star_24px_outlined
                         ),
-                        contentDescription = stringResource(R.string.favorites),
+                        contentDescription = stringResource(I18nR.string.favorites),
                         tint = MaterialTheme.colorScheme.primary,
                     )
                 }
@@ -404,24 +406,24 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     enabled = contact != null,
                 ) {
                     Icon(
-                        painterResource(R.drawable.share_24px),
-                        contentDescription = stringResource(R.string.search_action_share),
+                        painterResource(BaseR.drawable.share_24px),
+                        contentDescription = stringResource(I18nR.string.search_action_share),
                         tint = MaterialTheme.colorScheme.onSurface,
                     )
                 }
                 if (contact != null && contact.id >= 0) {
                     IconButton(onClick = { deleteContact = contact }) {
-                        Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+                        Icon(painterResource(BaseR.drawable.delete_24px), contentDescription = stringResource(I18nR.string.hc_delete))
                     }
                 }
                 var more by remember { mutableStateOf(false) }
                 Box {
                     IconButton(onClick = { more = true }) {
-                        Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+                        Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_more))
                     }
                     androidx.compose.material3.DropdownMenu(expanded = more, onDismissRequest = { more = false }) {
                         androidx.compose.material3.DropdownMenuItem(
-                            text = { Text(stringResource(R.string.comms_clear_history)) },
+                            text = { Text(stringResource(I18nR.string.comms_clear_history)) },
                             enabled = contact != null && ui.recents.isNotEmpty(),
                             onClick = { more = false; confirmDelete = true },
                         )
@@ -432,8 +434,8 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     ) { padding ->
         if (contact == null) {
             EmptyCommsTab(
-                title = stringResource(R.string.contact_details_title),
-                message = stringResource(R.string.contacts_empty_msg),
+                title = stringResource(I18nR.string.contact_details_title),
+                message = stringResource(I18nR.string.contacts_empty_msg),
             )
             return@Scaffold
         }
@@ -499,29 +501,29 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         CommsActionCard(
-                            icon = R.drawable.rd_ic_messages,
-                            label = stringResource(R.string.search_action_message).uppercase(),
+                            icon = BaseR.drawable.rd_ic_messages,
+                            label = stringResource(I18nR.string.search_action_message).uppercase(),
                             enabled = primary.isNotEmpty(),
                             onClick = { context.tryStartActivity(MessengerIntentUtils.sms(primary)) },
                             modifier = Modifier.weight(1f),
                         )
                         CommsActionCard(
-                            icon = R.drawable.rd_ic_phone_green_vector,
-                            label = stringResource(R.string.search_action_call).uppercase(),
+                            icon = BaseR.drawable.rd_ic_phone_green_vector,
+                            label = stringResource(I18nR.string.search_action_call).uppercase(),
                             enabled = primary.isNotEmpty(),
                             onClick = { viewModel.dial(context, primary) },
                             modifier = Modifier.weight(1f),
                         )
                         CommsActionCard(
-                            icon = R.drawable.videocam_24px,
-                            label = stringResource(R.string.comms_action_video).uppercase(),
+                            icon = BaseR.drawable.videocam_24px,
+                            label = stringResource(I18nR.string.comms_action_video).uppercase(),
                             enabled = primary.isNotEmpty(),
                             onClick = { context.tryStartActivity(MessengerIntentUtils.whatsApp(primary)) },
                             modifier = Modifier.weight(1f),
                         )
                         CommsActionCard(
-                            icon = R.drawable.mail_24px,
-                            label = stringResource(R.string.search_action_email).uppercase(),
+                            icon = BaseR.drawable.mail_24px,
+                            label = stringResource(I18nR.string.search_action_email).uppercase(),
                             enabled = hasEmail,
                             onClick = {
                                 contact.emails.firstOrNull()?.let {
@@ -538,7 +540,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 CommsDetailCard {
                     if (ui.recents.isEmpty()) {
                         Text(
-                            text = stringResource(R.string.comms_no_previous_calls),
+                            text = stringResource(I18nR.string.comms_no_previous_calls),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier
@@ -559,7 +561,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(
-                                text = stringResource(R.string.hc_mobile),
+                                text = stringResource(I18nR.string.hc_mobile),
                                 style = MaterialTheme.typography.bodyLarge,
                             )
                             Text(
@@ -570,14 +572,14 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                             )
                             if (contact.phoneNumbers.size > 1) {
                                 TextButton(onClick = { viewModel.setDefaultNumber(contact.id, number) }) {
-                                    Text(stringResource(if (isDefault) R.string.au_phonea_default_number else R.string.au_phonea_set_default))
+                                    Text(stringResource(if (isDefault) I18nR.string.au_phonea_default_number else I18nR.string.au_phonea_set_default))
                                 }
                             }
                         }
                         IconButton(onClick = { viewModel.dial(context, number) }) {
                             Icon(
-                                painterResource(R.drawable.rd_ic_phone_green_vector),
-                                contentDescription = stringResource(R.string.search_action_call),
+                                painterResource(BaseR.drawable.rd_ic_phone_green_vector),
+                                contentDescription = stringResource(I18nR.string.search_action_call),
                                 tint = RdGreenCall,
                             )
                         }
@@ -603,53 +605,53 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                         if (action == null) null else ({ context.tryStartActivity(action.intent()); Unit })
                     CommsDetailCard {
                         Text(
-                            text = stringResource(R.string.comms_integrations),
+                            text = stringResource(I18nR.string.comms_integrations),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Spacer(Modifier.height(4.dp))
                         MessengerRow(
-                            label = stringResource(R.string.action_whatsapp),
-                            icon = R.drawable.rd_ic_whatsapp_vector,
+                            label = stringResource(I18nR.string.action_whatsapp),
+                            icon = BaseR.drawable.rd_ic_whatsapp_vector,
                             onChat = { context.tryStartActivity(MessengerIntentUtils.whatsApp(primary)) },
                             onCall = launcher(actions["wa_call"]),
                             onVideo = launcher(actions["wa_video"]),
                         )
                         MessengerRow(
-                            label = stringResource(R.string.action_telegram),
-                            icon = R.drawable.rd_ic_telegram_vector,
+                            label = stringResource(I18nR.string.action_telegram),
+                            icon = BaseR.drawable.rd_ic_telegram_vector,
                             onChat = { context.tryStartActivity(MessengerIntentUtils.telegram(primary)) },
                             onCall = launcher(actions["tg_call"]),
                             onVideo = null,
                         )
                         MessengerRow(
-                            label = stringResource(R.string.action_signal),
-                            icon = R.drawable.rd_ic_signal_vector,
+                            label = stringResource(I18nR.string.action_signal),
+                            icon = BaseR.drawable.rd_ic_signal_vector,
                             onChat = { context.tryStartActivity(MessengerIntentUtils.signal(primary)) },
                             onCall = launcher(actions["sg_call"]),
                             onVideo = null,
                         )
                         MessengerRow(
-                            label = stringResource(R.string.action_viber),
-                            icon = R.drawable.rd_ic_viber_vector,
+                            label = stringResource(I18nR.string.action_viber),
+                            icon = BaseR.drawable.rd_ic_viber_vector,
                             onChat = { context.tryStartActivity(MessengerIntentUtils.viber(primary)) },
                             onCall = launcher(actions["vb_call"]),
                             onVideo = null,
                         )
                         Spacer(Modifier.height(12.dp))
                         Text(
-                            text = stringResource(R.string.comms_pref_default_call),
+                            text = stringResource(I18nR.string.comms_pref_default_call),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         ChannelChips(
                             selected = de.mm20.launcher2.comms.intent.MessengerApps.resolvePref(defaultCallApp, primary).id,
                             options = listOf(
-                                "phone" to stringResource(R.string.comms_channel_phone),
-                                "signal" to stringResource(R.string.action_signal),
-                                "whatsapp" to stringResource(R.string.action_whatsapp),
-                                "telegram" to stringResource(R.string.action_telegram),
-                                "viber" to stringResource(R.string.action_viber),
+                                "phone" to stringResource(I18nR.string.comms_channel_phone),
+                                "signal" to stringResource(I18nR.string.action_signal),
+                                "whatsapp" to stringResource(I18nR.string.action_whatsapp),
+                                "telegram" to stringResource(I18nR.string.action_telegram),
+                                "viber" to stringResource(I18nR.string.action_viber),
                             ).filter { (id, _) ->
                                 id == "phone" || de.mm20.launcher2.comms.intent.MessengerApps.installedPackage(
                                     context,
@@ -660,7 +662,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                         )
                         Spacer(Modifier.height(8.dp))
                         Text(
-                            text = stringResource(R.string.comms_pref_default_message),
+                            text = stringResource(I18nR.string.comms_pref_default_message),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -669,11 +671,11 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                                 if (it == de.mm20.launcher2.comms.intent.MessengerChannel.Phone) "sms" else it.id
                             },
                             options = listOf(
-                                "sms" to stringResource(R.string.comms_channel_sms),
-                                "signal" to stringResource(R.string.action_signal),
-                                "whatsapp" to stringResource(R.string.action_whatsapp),
-                                "telegram" to stringResource(R.string.action_telegram),
-                                "viber" to stringResource(R.string.action_viber),
+                                "sms" to stringResource(I18nR.string.comms_channel_sms),
+                                "signal" to stringResource(I18nR.string.action_signal),
+                                "whatsapp" to stringResource(I18nR.string.action_whatsapp),
+                                "telegram" to stringResource(I18nR.string.action_telegram),
+                                "viber" to stringResource(I18nR.string.action_viber),
                             ).filter { (id, _) ->
                                 id == "sms" || de.mm20.launcher2.comms.intent.MessengerApps.installedPackage(
                                     context,
@@ -705,12 +707,12 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Column(Modifier.weight(1f)) {
                                 Text(
-                                    text = stringResource(R.string.hc_account),
+                                    text = stringResource(I18nR.string.hc_account),
                                     style = MaterialTheme.typography.labelLarge,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                                 Spacer(Modifier.height(2.dp))
-                                val deviceAccountStr = stringResource(R.string.contacts_account_device)
+                                val deviceAccountStr = stringResource(I18nR.string.contacts_account_device)
                                 val accountSummary = if (currentContact.accounts.isEmpty()) {
                                     deviceAccountStr
                                 } else {
@@ -723,7 +725,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                                 )
                             }
                             Icon(
-                                painterResource(R.drawable.open_in_new_24px),
+                                painterResource(BaseR.drawable.open_in_new_24px),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary,
                             )
@@ -741,7 +743,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                         CommsDetailCard {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
-                                    text = stringResource(R.string.hc_always_use_this_sim_for_this_number),
+                                    text = stringResource(I18nR.string.hc_always_use_this_sim_for_this_number),
                                     style = MaterialTheme.typography.bodyLarge,
                                     modifier = Modifier.weight(1f),
                                 )
@@ -783,7 +785,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     ) {
                         CommsDetailCard(onClick = { viewModel.dialSip(context, primary) }) {
                             Text(
-                                text = stringResource(R.string.hc_call_over_sip),
+                                text = stringResource(I18nR.string.hc_call_over_sip),
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.primary,
                             )
@@ -794,7 +796,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     val note = notes[primary]
                     CommsDetailCard(onClick = { editingNote = true }) {
                         Text(
-                            text = if (note.isNullOrBlank()) stringResource(R.string.au_phonea_add_notes) else note,
+                            text = if (note.isNullOrBlank()) stringResource(I18nR.string.au_phonea_add_notes) else note,
                             style = MaterialTheme.typography.bodyLarge,
                             color = if (note.isNullOrBlank()) MaterialTheme.colorScheme.onSurfaceVariant
                             else MaterialTheme.colorScheme.onSurface,
@@ -804,7 +806,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 item {
                     CommsDetailCard {
                         Text(
-                            text = stringResource(R.string.hc_more),
+                            text = stringResource(I18nR.string.hc_more),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -814,29 +816,30 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                                 androidx.compose.material3.AssistChip(
                                     onClick = {
                                         val clipboard = context.getSystemService(android.content.ClipboardManager::class.java)
-                                        clipboard?.primaryClip =
+                                        clipboard?.setPrimaryClip(
                                             android.content.ClipData.newPlainText("number", primary)
-                                        android.widget.Toast.makeText(context, context.getString(R.string.hc_copied), android.widget.Toast.LENGTH_SHORT).show()
+                                        )
+                                        android.widget.Toast.makeText(context, context.getString(I18nR.string.hc_copied), android.widget.Toast.LENGTH_SHORT).show()
                                     },
-                                    label = { Text(stringResource(R.string.hc_copy_number)) },
+                                    label = { Text(stringResource(I18nR.string.hc_copy_number)) },
                                 )
                             }
                             item {
                                 androidx.compose.material3.AssistChip(
                                     onClick = { showReminder = true },
-                                    label = { Text(stringResource(R.string.hc_remind_me)) },
+                                    label = { Text(stringResource(I18nR.string.hc_remind_me)) },
                                 )
                             }
                             item {
                                 androidx.compose.material3.AssistChip(
                                     onClick = { showQr = true },
-                                    label = { Text(stringResource(R.string.hc_qr_code)) },
+                                    label = { Text(stringResource(I18nR.string.hc_qr_code)) },
                                 )
                             }
                             item {
                                 androidx.compose.material3.AssistChip(
                                     onClick = { showSpeedDial = true },
-                                    label = { Text(stringResource(R.string.hc_speed_dial)) },
+                                    label = { Text(stringResource(I18nR.string.hc_speed_dial)) },
                                 )
                             }
                             if (contact.id >= 0) item {
@@ -854,7 +857,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                                                 )
                                         )
                                     },
-                                    label = { Text(stringResource(R.string.hc_ringtone)) },
+                                    label = { Text(stringResource(I18nR.string.hc_ringtone)) },
                                 )
                             }
                         }
@@ -864,7 +867,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     val hidden = de.mm20.launcher2.comms.privacy.HiddenContacts.contactHidden(contact, hiddenNumbers)
                     CommsDetailCard(onClick = { viewModel.setHidden(contact.phoneNumbers, !hidden) }) {
                         Text(
-                            text = stringResource(if (hidden) R.string.au_phonea_unhide_contact else R.string.au_phonea_hide_contact),
+                            text = stringResource(if (hidden) I18nR.string.au_phonea_unhide_contact else I18nR.string.au_phonea_hide_contact),
                             style = MaterialTheme.typography.titleMedium,
                         )
                     }
@@ -873,7 +876,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     val guarded = de.mm20.launcher2.comms.privacy.HiddenContacts.matches(primary, protectedNumbers)
                     CommsDetailCard(onClick = { viewModel.setCallProtected(primary, !guarded) }) {
                         Text(
-                            text = stringResource(if (guarded) R.string.au_phonea_unprotect_call else R.string.au_phonea_protect_call),
+                            text = stringResource(if (guarded) I18nR.string.au_phonea_unprotect_call else I18nR.string.au_phonea_protect_call),
                             style = MaterialTheme.typography.titleMedium,
                         )
                     }
@@ -885,9 +888,9 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                         }
                     } else if (ui.blockStatus == ContactBlockStatus.Unavailable) {
                         CommsDetailCard {
-                            Text(stringResource(R.string.comms_block_number))
-                            Text(stringResource(R.string.shortcut_label_unavailable), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            TextButton(onClick = viewModel::retryBlockStatus) { Text(stringResource(R.string.hc_retry)) }
+                            Text(stringResource(I18nR.string.comms_block_number))
+                            Text(stringResource(I18nR.string.shortcut_label_unavailable), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            TextButton(onClick = viewModel::retryBlockStatus) { Text(stringResource(I18nR.string.hc_retry)) }
                         }
                     } else CommsDetailCard(
                         onClick = {
@@ -897,7 +900,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     ) {
                         Text(
                             text = stringResource(
-                                if (blocked) R.string.comms_unblock_number else R.string.comms_block_number
+                                if (blocked) I18nR.string.comms_unblock_number else I18nR.string.comms_block_number
                             ),
                             style = MaterialTheme.typography.titleMedium,
                             color = if (blocked) {
@@ -915,7 +918,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     if (showReminder && contact != null) {
         AlertDialog(
             onDismissRequest = { showReminder = false },
-            title = { Text(stringResource(R.string.hc_remind_me_to_call_back)) },
+            title = { Text(stringResource(I18nR.string.hc_remind_me_to_call_back)) },
             text = {
                 Column {
                     listOf(5, 15, 30, 60, 180).forEach { minutes ->
@@ -926,15 +929,15 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                             showReminder = false
                         }) {
                             Text(
-                                if (minutes < 60) stringResource(R.string.au_phonea_in_minutes, minutes)
-                                else stringResource(R.string.au_phonea_in_hours, minutes / 60)
+                                if (minutes < 60) stringResource(I18nR.string.au_phonea_in_minutes, minutes)
+                                else stringResource(I18nR.string.au_phonea_in_hours, minutes / 60)
                             )
                         }
                     }
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showReminder = false }) { Text(stringResource(R.string.hc_cancel)) } },
+            dismissButton = { TextButton(onClick = { showReminder = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
     }
 
@@ -948,17 +951,17 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     modifier = Modifier.size(240.dp),
                 )
             },
-            confirmButton = { TextButton(onClick = { showQr = false }) { Text(stringResource(R.string.hc_close)) } },
+            confirmButton = { TextButton(onClick = { showQr = false }) { Text(stringResource(I18nR.string.hc_close)) } },
         )
     }
 
     if (showSpeedDial && contact != null) {
         AlertDialog(
             onDismissRequest = { showSpeedDial = false },
-            title = { Text(stringResource(R.string.hc_assign_to_speed_dial)) },
+            title = { Text(stringResource(I18nR.string.hc_assign_to_speed_dial)) },
             text = {
                 Column {
-                    Text(stringResource(R.string.hc_long_press_digit_to_call, contact.displayName))
+                    Text(stringResource(I18nR.string.hc_long_press_digit_to_call, contact.displayName))
                     (2..9).chunked(4).forEach { digits ->
                         Row(
                             modifier = Modifier.padding(top = 8.dp),
@@ -979,7 +982,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showSpeedDial = false }) { Text(stringResource(R.string.hc_cancel)) } },
+            dismissButton = { TextButton(onClick = { showSpeedDial = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
     }
 
@@ -987,7 +990,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
         val accounts = remember { android.accounts.AccountManager.get(context).accounts }
         AlertDialog(
             onDismissRequest = { showMoveAccount = false },
-            title = { Text(stringResource(R.string.hc_account)) },
+            title = { Text(stringResource(I18nR.string.hc_account)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     TextButton(
@@ -996,13 +999,13 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                             haptics.performHapticFeedback(HapticFeedbackType.LongPress)
                             scope.launch {
                                 viewModel.moveContactToAccount(contact.id, null, null) { ok ->
-                                    if (!ok) android.widget.Toast.makeText(context, R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT).show()
+                                    if (!ok) android.widget.Toast.makeText(context, I18nR.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT).show()
                                 }
                             }
                         },
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        Text(stringResource(R.string.contacts_account_device))
+                        Text(stringResource(I18nR.string.contacts_account_device))
                     }
                     accounts.forEach { acc ->
                         TextButton(
@@ -1011,7 +1014,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                                 haptics.performHapticFeedback(HapticFeedbackType.LongPress)
                                 scope.launch {
                                     viewModel.moveContactToAccount(contact.id, acc.name, acc.type) { ok ->
-                                        if (!ok) android.widget.Toast.makeText(context, R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT).show()
+                                        if (!ok) android.widget.Toast.makeText(context, I18nR.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT).show()
                                     }
                                 }
                             },
@@ -1023,7 +1026,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showMoveAccount = false }) { Text(stringResource(R.string.hc_cancel)) } },
+            dismissButton = { TextButton(onClick = { showMoveAccount = false }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
     }
 
@@ -1032,7 +1035,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
         var draft by remember(primary) { mutableStateOf(notes[primary].orEmpty()) }
         AlertDialog(
             onDismissRequest = { editingNote = false },
-            title = { Text(stringResource(R.string.hc_notes)) },
+            title = { Text(stringResource(I18nR.string.hc_notes)) },
             text = {
                 OutlinedTextField(
                     value = draft,
@@ -1045,7 +1048,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 TextButton(onClick = {
                     viewModel.setNote(primary, draft)
                     editingNote = false
-                }) { Text(stringResource(R.string.action_done)) }
+                }) { Text(stringResource(I18nR.string.action_done)) }
             },
             dismissButton = {
                 TextButton(onClick = { editingNote = false }) {
@@ -1058,12 +1061,12 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     if (confirmDelete && contact != null) {
         AlertDialog(
             onDismissRequest = { confirmDelete = false },
-            title = { Text(stringResource(R.string.comms_clear_history)) },
+            title = { Text(stringResource(I18nR.string.comms_clear_history)) },
             confirmButton = {
                 TextButton(onClick = {
                     viewModel.deleteHistory(contact.phoneNumbers)
                     confirmDelete = false
-                }) { Text(stringResource(R.string.comms_clear_history_confirm)) }
+                }) { Text(stringResource(I18nR.string.comms_clear_history_confirm)) }
             },
             dismissButton = {
                 TextButton(onClick = { confirmDelete = false }) {
@@ -1120,9 +1123,9 @@ private fun MessengerRow(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
         )
-        if (onVideo != null) MessengerButton(R.drawable.videocam_24px, stringResource(R.string.au_phonea_video_call), onVideo)
-        if (onCall != null) MessengerButton(R.drawable.call_24px, stringResource(R.string.search_action_call), onCall)
-        MessengerButton(R.drawable.rd_ic_messages, stringResource(R.string.search_action_message), onChat)
+        if (onVideo != null) MessengerButton(BaseR.drawable.videocam_24px, stringResource(I18nR.string.au_phonea_video_call), onVideo)
+        if (onCall != null) MessengerButton(BaseR.drawable.call_24px, stringResource(I18nR.string.search_action_call), onCall)
+        MessengerButton(BaseR.drawable.rd_ic_messages, stringResource(I18nR.string.search_action_message), onChat)
     }
 }
 
@@ -1177,18 +1180,18 @@ private fun CallerLookupCard(number: String, hidden: Map<String, String>) {
     if (key == null || isHidden) return
     CommsDetailCard {
         de.mm20.launcher2.ui.component.preferences.SwitchPreference(
-            title = stringResource(R.string.caller_online_lookup),
-            summary = stringResource(R.string.caller_online_disclosure),
+            title = stringResource(I18nR.string.caller_online_lookup),
+            summary = stringResource(I18nR.string.caller_online_disclosure),
             value = enabled, onValueChanged = settings::setOnlineCallerLookup,
         )
         val result = results[key].takeIf { enabled }
         if (loading) androidx.compose.material3.CircularProgressIndicator(Modifier.size(24.dp))
         else if (result != null) {
-            result.suggestedName?.let { Text(stringResource(R.string.caller_suggested_name, it)) }
-            if (result.likelySpam) Text(stringResource(R.string.caller_likely_spam), color = MaterialTheme.colorScheme.error)
+            result.suggestedName?.let { Text(stringResource(I18nR.string.caller_suggested_name, it)) }
+            if (result.likelySpam) Text(stringResource(I18nR.string.caller_likely_spam), color = MaterialTheme.colorScheme.error)
             TextButton(onClick = { context.tryStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(result.sourceUrl))) }) {
                 Text("white-pages.gr")
             }
-        } else if (enabled) Text(stringResource(R.string.shortcut_label_unavailable), color = MaterialTheme.colorScheme.onSurfaceVariant)
+        } else if (enabled) Text(stringResource(I18nR.string.shortcut_label_unavailable), color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }

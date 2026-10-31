@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network.firewall
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Intent
 import android.provider.Settings
@@ -154,19 +155,19 @@ fun NetworkFirewallScreen(packageName: String? = null) {
     fun bulk(change: (AppRule) -> AppRule) {
         scope.launch {
             fw.setAppRules(shown.map { change(rules[it.appId] ?: AppRule(it.appId)) })
-            Toast.makeText(context, context.getString(R.string.netfw_bulk_done, shown.size), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(I18nR.string.netfw_bulk_done, shown.size), Toast.LENGTH_SHORT).show()
         }
     }
 
     pendingBulk?.let { kind ->
         AlertDialog(
             onDismissRequest = { pendingBulk = null },
-            title = { Text(stringResource(R.string.au4_confirms_bulk_title)) },
+            title = { Text(stringResource(I18nR.string.au4_confirms_bulk_title)) },
             text = { Text(stringResource(when (kind) {
-                0 -> R.string.au4_confirms_bulk_block_all
-                1 -> R.string.au4_confirms_bulk_allow_all
-                2 -> R.string.au4_confirms_bulk_block_wifi
-                else -> R.string.au4_confirms_bulk_block_mobile
+                0 -> I18nR.string.au4_confirms_bulk_block_all
+                1 -> I18nR.string.au4_confirms_bulk_allow_all
+                2 -> I18nR.string.au4_confirms_bulk_block_wifi
+                else -> I18nR.string.au4_confirms_bulk_block_mobile
             }, shown.size)) },
             confirmButton = {
                 TextButton(onClick = {
@@ -177,55 +178,55 @@ fun NetworkFirewallScreen(packageName: String? = null) {
                         2 -> bulk { it.copy(blockWifi = true) }
                         else -> bulk { it.copy(blockMobile = true) }
                     }
-                }) { Text(stringResource(R.string.au4_confirms_confirm)) }
+                }) { Text(stringResource(I18nR.string.au4_confirms_confirm)) }
             },
-            dismissButton = { TextButton(onClick = { pendingBulk = null }) { Text(stringResource(R.string.au4_confirms_cancel)) } },
+            dismissButton = { TextButton(onClick = { pendingBulk = null }) { Text(stringResource(I18nR.string.au4_confirms_cancel)) } },
         )
     }
 
     if (confirmReset) {
         AlertDialog(
             onDismissRequest = { confirmReset = false },
-            title = { Text(stringResource(R.string.netfw_bulk_reset)) },
-            text = { Text(stringResource(R.string.au2_netsec_reset_message, shown.size)) },
+            title = { Text(stringResource(I18nR.string.netfw_bulk_reset)) },
+            text = { Text(stringResource(I18nR.string.au2_netsec_reset_message, shown.size)) },
             confirmButton = {
                 TextButton(onClick = {
                     confirmReset = false
                     bulk { AppRule(it.appId) }
-                }) { Text(stringResource(R.string.au2_netsec_confirm_reset)) }
+                }) { Text(stringResource(I18nR.string.au2_netsec_confirm_reset)) }
             },
-            dismissButton = { TextButton(onClick = { confirmReset = false }) { Text(stringResource(R.string.au2_netsec_cancel)) } },
+            dismissButton = { TextButton(onClick = { confirmReset = false }) { Text(stringResource(I18nR.string.au2_netsec_cancel)) } },
         )
     }
 
     PreferenceScreen(
         bottomBar = { de.mm20.launcher2.ui.network.NetworkNavigationBar(de.mm20.launcher2.ui.network.NetworkSection.Apps) },
-        title = stringResource(R.string.netfw_title),
+        title = stringResource(I18nR.string.netfw_title),
         topBarActions = {
             Box {
                 IconButton(onClick = { menu = true }) {
-                    Icon(painterResource(IconsNetworkFirewallScreen.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+                    Icon(painterResource(IconsNetworkFirewallScreen.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_more))
                 }
                 DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     if (packageName == null) {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.netfw_filter_all)) }, onClick = { category = null; menu = false })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.netfw_filter_all)) }, onClick = { category = null; menu = false })
                         categories.forEach { (value, label) ->
                             DropdownMenuItem(text = { Text(label) }, onClick = { category = value; menu = false },
                                 trailingIcon = { if (category == value) Icon(painterResource(IconsNetworkFirewallScreen.check_circle_24px), null) })
                         }
                     }
                     Text(
-                        stringResource(R.string.netfw_bulk),
+                        stringResource(I18nR.string.netfw_bulk),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                     )
-                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_block_all)) }, onClick = { menu = false; pendingBulk = 0 })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_allow_all)) }, onClick = { menu = false; pendingBulk = 1 })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_block_wifi)) }, onClick = { menu = false; pendingBulk = 2 })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_block_mobile)) }, onClick = { menu = false; pendingBulk = 3 })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.netfw_bulk_block_all)) }, onClick = { menu = false; pendingBulk = 0 })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.netfw_bulk_allow_all)) }, onClick = { menu = false; pendingBulk = 1 })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.netfw_bulk_block_wifi)) }, onClick = { menu = false; pendingBulk = 2 })
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.netfw_bulk_block_mobile)) }, onClick = { menu = false; pendingBulk = 3 })
                     DropdownMenuItem(
-                        text = { Text(stringResource(R.string.netfw_bulk_reset)) },
+                        text = { Text(stringResource(I18nR.string.netfw_bulk_reset)) },
                         onClick = { menu = false; confirmReset = true },
                     )
                 }
@@ -234,28 +235,28 @@ fun NetworkFirewallScreen(packageName: String? = null) {
     ) {
         if (packageName == null) {
         item {
-            Preference(title = stringResource(R.string.net_hub_title),
-                summary = stringResource(if (engineState is de.mm20.launcher2.network.NetState.On) R.string.net_hub_state_on else R.string.net_hub_summary_off),
+            Preference(title = stringResource(I18nR.string.net_hub_title),
+                summary = stringResource(if (engineState is de.mm20.launcher2.network.NetState.On) I18nR.string.net_hub_state_on else I18nR.string.net_hub_summary_off),
                 onClick = { backStack.add(de.mm20.launcher2.ui.network.NetworkRoute) })
         }
         item {
             PreferenceCategory {
                 Preference(
-                    title = stringResource(R.string.netfw_universal_rules),
-                    summary = stringResource(R.string.netfw_universal_rules_summary),
+                    title = stringResource(I18nR.string.netfw_universal_rules),
+                    summary = stringResource(I18nR.string.netfw_universal_rules_summary),
                     icon = IconsNetworkFirewallScreen.rule_settings_24px,
                     onClick = { backStack.add(NetworkUniversalRulesRoute) },
                 )
                 Preference(
-                    title = stringResource(R.string.netfw_custom_rules),
-                    summary = stringResource(R.string.netfw_custom_rules_summary),
+                    title = stringResource(I18nR.string.netfw_custom_rules),
+                    summary = stringResource(I18nR.string.netfw_custom_rules_summary),
                     icon = IconsNetworkFirewallScreen.tune_24px,
                     onClick = { backStack.add(NetworkCustomRulesRoute) },
                 )
             }
         }
         item {
-            de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.netfw_search_apps))
+            de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(I18nR.string.netfw_search_apps))
         }
         item {
             Row(
@@ -263,12 +264,12 @@ fun NetworkFirewallScreen(packageName: String? = null) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 listOf(
-                    FILTER_ALL to R.string.netfw_filter_all,
-                    FILTER_ALLOWED to R.string.netfw_r_default,
-                    FILTER_BLOCKED to R.string.netfw_blocked,
-                    FILTER_USER to R.string.netfw_filter_user,
-                    FILTER_SYSTEM to R.string.netfw_filter_system,
-                    FILTER_RULES to R.string.netfw_filter_rules,
+                    FILTER_ALL to I18nR.string.netfw_filter_all,
+                    FILTER_ALLOWED to I18nR.string.netfw_r_default,
+                    FILTER_BLOCKED to I18nR.string.netfw_blocked,
+                    FILTER_USER to I18nR.string.netfw_filter_user,
+                    FILTER_SYSTEM to I18nR.string.netfw_filter_system,
+                    FILTER_RULES to I18nR.string.netfw_filter_rules,
                 ).forEach { (id, label) ->
                     FilterChip(selected = filter == id, onClick = { filter = id }, label = { Text(stringResource(label)) })
                 }
@@ -286,13 +287,13 @@ fun NetworkFirewallScreen(packageName: String? = null) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
-                    Text(stringResource(R.string.au_netui_loading_apps), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(I18nR.string.au_netui_loading_apps), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         } else if (shown.isEmpty()) {
             item {
                 Text(
-                    stringResource(R.string.netfw_no_apps),
+                    stringResource(I18nR.string.netfw_no_apps),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(16.dp),
                 )
@@ -370,20 +371,20 @@ private fun AppRuleRow(
 ) {
     val context = LocalContext.current
     val blockedTypes = buildList {
-        if (rule.blockWifi) add(stringResource(R.string.netfw_t_wifi))
-        if (rule.blockMobile) add(stringResource(R.string.netfw_t_mobile))
-        if (rule.blockRoaming) add(stringResource(R.string.netfw_t_roaming))
-        if (rule.blockLan) add(stringResource(R.string.netfw_t_lan))
-        if (rule.blockVpn) add(stringResource(R.string.netfw_t_vpn))
-        if (rule.blockBackground) add(stringResource(R.string.netfw_t_background))
-        if (rule.blockScreenOff) add(stringResource(R.string.netfw_t_screen_off))
+        if (rule.blockWifi) add(stringResource(I18nR.string.netfw_t_wifi))
+        if (rule.blockMobile) add(stringResource(I18nR.string.netfw_t_mobile))
+        if (rule.blockRoaming) add(stringResource(I18nR.string.netfw_t_roaming))
+        if (rule.blockLan) add(stringResource(I18nR.string.netfw_t_lan))
+        if (rule.blockVpn) add(stringResource(I18nR.string.netfw_t_vpn))
+        if (rule.blockBackground) add(stringResource(I18nR.string.netfw_t_background))
+        if (rule.blockScreenOff) add(stringResource(I18nR.string.netfw_t_screen_off))
     }
     val summary = when {
-        tempUntilMs != null -> stringResource(R.string.netfw_temp_allowed_until, formatClock(context, tempUntilMs))
-        rule.blockAll -> stringResource(R.string.netfw_blocked)
-        newAppBlocked -> stringResource(R.string.netfw_new_app_blocked)
-        blockedTypes.isNotEmpty() -> stringResource(R.string.netfw_summary_blocked_on, blockedTypes.joinToString(", "))
-        else -> stringResource(R.string.netfw_no_rules)
+        tempUntilMs != null -> stringResource(I18nR.string.netfw_temp_allowed_until, formatClock(context, tempUntilMs))
+        rule.blockAll -> stringResource(I18nR.string.netfw_blocked)
+        newAppBlocked -> stringResource(I18nR.string.netfw_new_app_blocked)
+        blockedTypes.isNotEmpty() -> stringResource(I18nR.string.netfw_summary_blocked_on, blockedTypes.joinToString(", "))
+        else -> stringResource(I18nR.string.netfw_no_rules)
     }
 
     Column(
@@ -412,9 +413,9 @@ private fun AppRuleRow(
             controls = {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     val editable = !rule.blockAll && !rule.bypassFirewall && !rule.excludeFromVpn
-                    NetworkRuleToggle(R.string.netfw_t_wifi, !rule.blockWifi, editable,
+                    NetworkRuleToggle(I18nR.string.netfw_t_wifi, !rule.blockWifi, editable,
                         IconsNetworkFirewallScreen.wifi_24px, IconsNetworkFirewallScreen.wifi_off_24px) { onRule(rule.copy(blockWifi = !it)) }
-                    NetworkRuleToggle(R.string.netfw_t_mobile, !rule.blockMobile, editable,
+                    NetworkRuleToggle(I18nR.string.netfw_t_mobile, !rule.blockMobile, editable,
                         IconsNetworkFirewallScreen.signal_cellular_alt_24px, IconsNetworkFirewallScreen.signal_cellular_off_24px) { onRule(rule.copy(blockMobile = !it)) }
                 }
             },
@@ -424,76 +425,76 @@ private fun AppRuleRow(
                 FilterChip(selected = !blocked, onClick = change, enabled = enabled, label = { Text(stringResource(label)) })
             }
             FilterChip(selected = rule.excludeFromVpn, enabled = allowVpnExclusion,
-                onClick = { onRule(rule.copy(excludeFromVpn = !rule.excludeFromVpn)) }, label = { Text(stringResource(R.string.netfw_vpn_bypass)) })
-            AllowChip(R.string.netfw_t_wifi, rule.blockWifi, { onRule(rule.copy(blockWifi = !rule.blockWifi)) })
-            AllowChip(R.string.netfw_t_mobile, rule.blockMobile, { onRule(rule.copy(blockMobile = !rule.blockMobile)) })
-            AllowChip(R.string.netfw_t_lan, rule.blockLan, { onRule(rule.copy(blockLan = !rule.blockLan)) })
-            AllowChip(R.string.netfw_t_vpn, rule.blockVpn, { onRule(rule.copy(blockVpn = !rule.blockVpn)) })
+                onClick = { onRule(rule.copy(excludeFromVpn = !rule.excludeFromVpn)) }, label = { Text(stringResource(I18nR.string.netfw_vpn_bypass)) })
+            AllowChip(I18nR.string.netfw_t_wifi, rule.blockWifi, { onRule(rule.copy(blockWifi = !rule.blockWifi)) })
+            AllowChip(I18nR.string.netfw_t_mobile, rule.blockMobile, { onRule(rule.copy(blockMobile = !rule.blockMobile)) })
+            AllowChip(I18nR.string.netfw_t_lan, rule.blockLan, { onRule(rule.copy(blockLan = !rule.blockLan)) })
+            AllowChip(I18nR.string.netfw_t_vpn, rule.blockVpn, { onRule(rule.copy(blockVpn = !rule.blockVpn)) })
         }
         AnimatedVisibility(visible = expanded) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_blocked), value = rule.blockAll,
+                if (!detail) SwitchPreference(title = stringResource(I18nR.string.netfw_blocked), value = rule.blockAll,
                     onValueChanged = { onRule(rule.copy(blockAll = it)) })
                 if (newAppBlocked) {
                     Preference(
-                        title = stringResource(R.string.netfw_new_app_allow),
+                        title = stringResource(I18nR.string.netfw_new_app_allow),
                         onClick = onAllowNew,
                     )
                 }
                 if (detail) {
-                    SwitchPreference(title = stringResource(R.string.netfw_t_wifi), value = !rule.blockWifi, onValueChanged = { onRule(rule.copy(blockWifi = !it)) })
-                    SwitchPreference(title = stringResource(R.string.netfw_t_mobile), value = !rule.blockMobile, onValueChanged = { onRule(rule.copy(blockMobile = !it)) })
-                    SwitchPreference(title = stringResource(R.string.netfw_t_lan), value = !rule.blockLan, onValueChanged = { onRule(rule.copy(blockLan = !it)) })
-                    SwitchPreference(title = stringResource(R.string.netfw_t_vpn), value = !rule.blockVpn, onValueChanged = { onRule(rule.copy(blockVpn = !it)) })
+                    SwitchPreference(title = stringResource(I18nR.string.netfw_t_wifi), value = !rule.blockWifi, onValueChanged = { onRule(rule.copy(blockWifi = !it)) })
+                    SwitchPreference(title = stringResource(I18nR.string.netfw_t_mobile), value = !rule.blockMobile, onValueChanged = { onRule(rule.copy(blockMobile = !it)) })
+                    SwitchPreference(title = stringResource(I18nR.string.netfw_t_lan), value = !rule.blockLan, onValueChanged = { onRule(rule.copy(blockLan = !it)) })
+                    SwitchPreference(title = stringResource(I18nR.string.netfw_t_vpn), value = !rule.blockVpn, onValueChanged = { onRule(rule.copy(blockVpn = !it)) })
                 }
-                SwitchPreference(title = stringResource(R.string.netfw_block_roaming), icon = IconsNetworkFirewallScreen.public_24px, value = rule.blockRoaming, onValueChanged = { onRule(rule.copy(blockRoaming = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_block_background), icon = IconsNetworkFirewallScreen.pause_24px, value = rule.blockBackground, onValueChanged = { onRule(rule.copy(blockBackground = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_block_screen_off), icon = IconsNetworkFirewallScreen.schedule_24px, value = rule.blockScreenOff, onValueChanged = { onRule(rule.copy(blockScreenOff = it)) })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_block_roaming), icon = IconsNetworkFirewallScreen.public_24px, value = rule.blockRoaming, onValueChanged = { onRule(rule.copy(blockRoaming = it)) })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_block_background), icon = IconsNetworkFirewallScreen.pause_24px, value = rule.blockBackground, onValueChanged = { onRule(rule.copy(blockBackground = it)) })
+                SwitchPreference(title = stringResource(I18nR.string.netfw_block_screen_off), icon = IconsNetworkFirewallScreen.schedule_24px, value = rule.blockScreenOff, onValueChanged = { onRule(rule.copy(blockScreenOff = it)) })
                 if (!backgroundDetection && rule.blockBackground) {
                     Preference(
-                        title = stringResource(R.string.netfw_usage_needed),
-                        controls = { TextButton(onClick = onGrantUsageAccess) { Text(stringResource(R.string.netfw_usage_grant)) } },
+                        title = stringResource(I18nR.string.netfw_usage_needed),
+                        controls = { TextButton(onClick = onGrantUsageAccess) { Text(stringResource(I18nR.string.netfw_usage_grant)) } },
                     )
                 }
-                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_u_metered), value = rule.blockMetered, onValueChanged = { onRule(rule.copy(blockMetered = it)) })
-                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_u_unmetered), value = rule.blockUnmetered, onValueChanged = { onRule(rule.copy(blockUnmetered = it)) })
+                if (!detail) SwitchPreference(title = stringResource(I18nR.string.netfw_u_metered), value = rule.blockMetered, onValueChanged = { onRule(rule.copy(blockMetered = it)) })
+                if (!detail) SwitchPreference(title = stringResource(I18nR.string.netfw_u_unmetered), value = rule.blockUnmetered, onValueChanged = { onRule(rule.copy(blockUnmetered = it)) })
                 de.mm20.launcher2.ui.network.NetworkProxyAssignmentPreference(app.appId)
-                SwitchPreference(title = stringResource(R.string.nwg_direct), value = direct, onValueChanged = onDirect)
+                SwitchPreference(title = stringResource(I18nR.string.nwg_direct), value = direct, onValueChanged = onDirect)
                 FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    TextButton(onClick = onCustomRules) { Text("$ipCount · " + stringResource(R.string.netfw_r_ip)) }
-                    TextButton(onClick = onCustomRules) { Text("$domainCount · " + stringResource(R.string.netfw_r_domain)) }
+                    TextButton(onClick = onCustomRules) { Text("$ipCount · " + stringResource(I18nR.string.netfw_r_ip)) }
+                    TextButton(onClick = onCustomRules) { Text("$domainCount · " + stringResource(I18nR.string.netfw_r_domain)) }
                 }
                 var editNote by remember { mutableStateOf(false) }
-                Preference(title = stringResource(R.string.hc_notes), summary = rule.note, onClick = { editNote = true })
+                Preference(title = stringResource(I18nR.string.hc_notes), summary = rule.note, onClick = { editNote = true })
                 if (editNote) {
                     var note by remember { mutableStateOf(rule.note) }
                     AlertDialog(onDismissRequest = { editNote = false },
-                        title = { Text(stringResource(R.string.hc_notes)) },
+                        title = { Text(stringResource(I18nR.string.hc_notes)) },
                         text = { OutlinedTextField(note, { note = it }, modifier = Modifier.fillMaxWidth()) },
-                        confirmButton = { TextButton(onClick = { onRule(rule.copy(note = note.trim())); editNote = false }) { Text(stringResource(R.string.hc_save)) } },
-                        dismissButton = { TextButton(onClick = { editNote = false }) { Text(stringResource(R.string.hc_cancel)) } })
+                        confirmButton = { TextButton(onClick = { onRule(rule.copy(note = note.trim())); editNote = false }) { Text(stringResource(I18nR.string.hc_save)) } },
+                        dismissButton = { TextButton(onClick = { editNote = false }) { Text(stringResource(I18nR.string.hc_cancel)) } })
                 }
-                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_ignore_universal), value = rule.ignoreUniversalRules, onValueChanged = { onRule(rule.copy(ignoreUniversalRules = it)) })
-                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_bypass_firewall), value = rule.bypassFirewall, onValueChanged = { onRule(rule.copy(bypassFirewall = it)) })
-                if (!detail) SwitchPreference(title = stringResource(R.string.netfw_exclude_vpn), enabled = allowVpnExclusion, value = rule.excludeFromVpn, onValueChanged = { onRule(rule.copy(excludeFromVpn = it)) })
+                if (!detail) SwitchPreference(title = stringResource(I18nR.string.netfw_ignore_universal), value = rule.ignoreUniversalRules, onValueChanged = { onRule(rule.copy(ignoreUniversalRules = it)) })
+                if (!detail) SwitchPreference(title = stringResource(I18nR.string.netfw_bypass_firewall), value = rule.bypassFirewall, onValueChanged = { onRule(rule.copy(bypassFirewall = it)) })
+                if (!detail) SwitchPreference(title = stringResource(I18nR.string.netfw_exclude_vpn), enabled = allowVpnExclusion, value = rule.excludeFromVpn, onValueChanged = { onRule(rule.copy(excludeFromVpn = it)) })
                 if (tempUntilMs != null) {
                     Preference(
-                        title = stringResource(R.string.netfw_temp_allowed_until, formatClock(context, tempUntilMs)),
-                        controls = { TextButton(onClick = onCancelTemp) { Text(stringResource(R.string.netfw_temp_cancel)) } },
+                        title = stringResource(I18nR.string.netfw_temp_allowed_until, formatClock(context, tempUntilMs)),
+                        controls = { TextButton(onClick = onCancelTemp) { Text(stringResource(I18nR.string.netfw_temp_cancel)) } },
                     )
                 } else {
                     var open by remember { mutableStateOf(false) }
                     Box {
                         Preference(
-                            title = stringResource(R.string.netfw_temp_allow),
+                            title = stringResource(I18nR.string.netfw_temp_allow),
                             icon = IconsNetworkFirewallScreen.timer_24px,
                             onClick = { open = true },
                         )
                         DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
                             listOf(
-                                R.string.netfw_temp_15m to 15L * 60_000,
-                                R.string.netfw_temp_1h to 60L * 60_000,
-                                R.string.netfw_temp_8h to 8L * 60 * 60_000,
+                                I18nR.string.netfw_temp_15m to 15L * 60_000,
+                                I18nR.string.netfw_temp_1h to 60L * 60_000,
+                                I18nR.string.netfw_temp_8h to 8L * 60 * 60_000,
                             ).forEach { (label, ms) ->
                                 DropdownMenuItem(text = { Text(stringResource(label)) }, onClick = { open = false; onTempAllow(ms) })
                             }

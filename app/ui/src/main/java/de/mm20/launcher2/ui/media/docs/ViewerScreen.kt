@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.docs
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.Manifest
 import android.content.Context
@@ -69,18 +71,18 @@ data object ViewerRoute : NavKey
 
 /** Categories of the library (the chips). [exts] are the file extensions that belong to it. */
 internal enum class DocCategory(val labelRes: Int, val exts: Set<String>) {
-    All(R.string.au20_viewer_cat_all, emptySet()),
-    Images(R.string.file_search_type_images, setOf("jpg", "jpeg", "png", "webp", "gif", "heic", "avif", "bmp")),
-    Videos(R.string.file_search_type_videos, setOf("mp4", "mkv", "webm", "mov", "3gp", "avi", "m4v")),
-    Documents(R.string.au20_viewer_cat_documents, setOf("doc", "docx", "odt", "rtf", "txt", "md", "markdown", "gdoc")),
-    Pdf(R.string.au20_viewer_cat_pdf, setOf("pdf")),
-    Sheets(R.string.au20_viewer_cat_sheets, setOf("xls", "xlsx", "ods", "csv", "tsv", "gsheet")),
-    Slides(R.string.au20_viewer_cat_slides, setOf("ppt", "pptx", "odp", "gslides")),
-    Ebooks(R.string.au20_viewer_cat_ebooks, setOf("epub")),
-    Comics(R.string.au20_viewer_cat_comics, setOf("cbz", "cbr", "cbt", "cb7")),
-    Graphics(R.string.au20_viewer_cat_graphics, setOf("svg", "psd", "ai", "cdr")),
+    All(I18nR.string.au20_viewer_cat_all, emptySet()),
+    Images(I18nR.string.file_search_type_images, setOf("jpg", "jpeg", "png", "webp", "gif", "heic", "avif", "bmp")),
+    Videos(I18nR.string.file_search_type_videos, setOf("mp4", "mkv", "webm", "mov", "3gp", "avi", "m4v")),
+    Documents(I18nR.string.au20_viewer_cat_documents, setOf("doc", "docx", "odt", "rtf", "txt", "md", "markdown", "gdoc")),
+    Pdf(I18nR.string.au20_viewer_cat_pdf, setOf("pdf")),
+    Sheets(I18nR.string.au20_viewer_cat_sheets, setOf("xls", "xlsx", "ods", "csv", "tsv", "gsheet")),
+    Slides(I18nR.string.au20_viewer_cat_slides, setOf("ppt", "pptx", "odp", "gslides")),
+    Ebooks(I18nR.string.au20_viewer_cat_ebooks, setOf("epub")),
+    Comics(I18nR.string.au20_viewer_cat_comics, setOf("cbz", "cbr", "cbt", "cb7")),
+    Graphics(I18nR.string.au20_viewer_cat_graphics, setOf("svg", "psd", "ai", "cdr")),
     Other(
-        R.string.au20_viewer_cat_other,
+        I18nR.string.au20_viewer_cat_other,
         setOf("json", "xml", "html", "htm", "log", "yml", "yaml", "ini", "conf", "srt", "vtt", "gpx", "kml", "tex", "gdraw", "gform", "gsite"),
     );
 
@@ -91,9 +93,9 @@ internal enum class DocCategory(val labelRes: Int, val exts: Set<String>) {
 }
 
 private enum class DocSort(val labelRes: Int) {
-    Date(R.string.au20_viewer_sort_date),
-    Name(R.string.au20_viewer_sort_name),
-    Size(R.string.au20_viewer_sort_size),
+    Date(I18nR.string.au20_viewer_sort_date),
+    Name(I18nR.string.au20_viewer_sort_name),
+    Size(I18nR.string.au20_viewer_sort_size),
 }
 
 /** A document found by the scan */
@@ -276,14 +278,14 @@ private fun openDocument(context: Context, uri: Uri, name: String) {
         context.startActivity(
             Intent(context, mediaActivity).setData(uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         )
-    }.onFailure { Toast.makeText(context, R.string.au20_viewer_open_failed, Toast.LENGTH_SHORT).show() }
+    }.onFailure { Toast.makeText(context, I18nR.string.au20_viewer_open_failed, Toast.LENGTH_SHORT).show() }
 }
 
 private fun openWith(context: Context, uri: Uri, name: String) {
     val intent = Intent(Intent.ACTION_VIEW).setDataAndType(uri, ShareActions.mimeOf(name))
         .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     runCatching { context.startActivity(Intent.createChooser(intent, null)) }
-        .onFailure { Toast.makeText(context, R.string.au20_viewer_open_failed, Toast.LENGTH_SHORT).show() }
+        .onFailure { Toast.makeText(context, I18nR.string.au20_viewer_open_failed, Toast.LENGTH_SHORT).show() }
 }
 
 /** Name and size of a picked document (blocking, call off the main thread) */
@@ -298,7 +300,7 @@ private fun describe(context: Context, uri: Uri): Pair<String, Long> {
             }
         }
     }
-    return (name ?: uri.lastPathSegment?.substringAfterLast('/') ?: context.getString(R.string.od_default_name)) to size
+    return (name ?: uri.lastPathSegment?.substringAfterLast('/') ?: context.getString(I18nR.string.od_default_name)) to size
 }
 
 private fun tileColor(ext: String): Color = when (ext) {
@@ -356,8 +358,8 @@ fun ViewerScreen() {
             containerColor = Color.Transparent,
             modifier = Modifier.virtualAppGlass(blur, bar),
         ) {
-            androidx.compose.material3.Tab(selected = tab == 0, onClick = { select(0) }, text = { Text(stringResource(R.string.hc_photos)) })
-            androidx.compose.material3.Tab(selected = tab == 1, onClick = { select(1) }, text = { Text(stringResource(R.string.au20_viewer_cat_documents)) })
+            androidx.compose.material3.Tab(selected = tab == 0, onClick = { select(0) }, text = { Text(stringResource(I18nR.string.hc_photos)) })
+            androidx.compose.material3.Tab(selected = tab == 1, onClick = { select(1) }, text = { Text(stringResource(I18nR.string.au20_viewer_cat_documents)) })
         }
         Box(Modifier.weight(1f).fillMaxWidth()) {
             if (tab == 0) de.mm20.launcher2.ui.media.photos.PhotosScreen(embedded = true) else DocumentsScreen(embedded = true)
@@ -437,7 +439,7 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
     fun share(t: DocTarget) {
         scope.launch {
             val ok = withContext(Dispatchers.IO) { ShareActions.shareFile(context, t.uri, ShareActions.mimeOf(t.name), t.name) }
-            if (!ok) Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+            if (!ok) Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -445,7 +447,7 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
         val uris = selected.map(Uri::parse)
         scope.launch {
             val ok = withContext(Dispatchers.IO) { ShareActions.shareUris(context, uris) }
-            if (!ok) Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+            if (!ok) Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -462,13 +464,13 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
             ) {
                 Column(Modifier.weight(1f)) {
                     if (!embedded) Text(
-                        stringResource(R.string.au20_viewer_title),
+                        stringResource(I18nR.string.au20_viewer_title),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.SemiBold,
                     )
                     if (files != null) {
                         Text(
-                            stringResource(R.string.au20_viewer_count, shown.size),
+                            stringResource(I18nR.string.au20_viewer_count, shown.size),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -477,23 +479,23 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                 if (selected.isNotEmpty()) {
                     Text(selected.size.toString())
                     IconButton(onClick = { shareSelected() }) {
-                        Icon(painterResource(R.drawable.share_24px), stringResource(R.string.hc_share))
+                        Icon(painterResource(BaseR.drawable.share_24px), stringResource(I18nR.string.hc_share))
                     }
-                    IconButton(onClick = { deleteSelected = true }) { Icon(painterResource(R.drawable.delete_24px), stringResource(R.string.hc_delete)) }
-                    IconButton(onClick = { selected = emptyList() }) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.hc_cancel)) }
+                    IconButton(onClick = { deleteSelected = true }) { Icon(painterResource(BaseR.drawable.delete_24px), stringResource(I18nR.string.hc_delete)) }
+                    IconButton(onClick = { selected = emptyList() }) { Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.hc_cancel)) }
                 }
                 if (selected.isNotEmpty()) {
                     IconButton(onClick = { picker.launch(arrayOf("*/*")) }) {
                         Icon(
-                            painterResource(R.drawable.folder_24px),
-                            contentDescription = stringResource(R.string.au20_viewer_open_file),
+                            painterResource(BaseR.drawable.folder_24px),
+                            contentDescription = stringResource(I18nR.string.au20_viewer_open_file),
                         )
                     }
                 } else {
                     FilledTonalButton(onClick = { picker.launch(arrayOf("*/*")) }) {
-                        Icon(painterResource(R.drawable.folder_24px), contentDescription = null, modifier = Modifier.size(18.dp))
+                        Icon(painterResource(BaseR.drawable.folder_24px), contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(8.dp))
-                        Text(stringResource(R.string.au20_viewer_open_file))
+                        Text(stringResource(I18nR.string.au20_viewer_open_file))
                     }
                 }
             }
@@ -501,13 +503,13 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
             de.mm20.launcher2.ui.component.TelosSearchBar(
                 value = query,
                 onValueChange = { query = it },
-                placeholder = stringResource(R.string.au20_viewer_search_hint),
+                placeholder = stringResource(I18nR.string.au20_viewer_search_hint),
                 trailing = {
-                    TextButton(onClick = { showTrash = true }) { Text(stringResource(R.string.telos_trash_title)) }
+                    TextButton(onClick = { showTrash = true }) { Text(stringResource(I18nR.string.telos_trash_title)) }
                     var sortMenu by remember { mutableStateOf(false) }
                     Box {
                         IconButton(onClick = { sortMenu = true }) {
-                            Icon(painterResource(R.drawable.sort_24px), contentDescription = stringResource(R.string.au20_viewer_sort))
+                            Icon(painterResource(BaseR.drawable.sort_24px), contentDescription = stringResource(I18nR.string.au20_viewer_sort))
                         }
                         DropdownMenu(expanded = sortMenu, onDismissRequest = { sortMenu = false }) {
                             DocSort.values().forEach { s ->
@@ -563,12 +565,12 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                     item(key = "recent_title") {
                         Row(Modifier.fillMaxWidth().padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                stringResource(R.string.au20_viewer_recent),
+                                stringResource(I18nR.string.au20_viewer_recent),
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.SemiBold,
                                 modifier = Modifier.weight(1f).padding(start = 4.dp),
                             )
-                            TextButton(onClick = { vm.clearRecents(context) }) { Text(stringResource(R.string.au20_viewer_clear_recent)) }
+                            TextButton(onClick = { vm.clearRecents(context) }) { Text(stringResource(I18nR.string.au20_viewer_clear_recent)) }
                         }
                     }
                     item(key = "recent_row") {
@@ -591,7 +593,7 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                     }
                     item(key = "all_title") {
                         Text(
-                            stringResource(R.string.au20_viewer_cat_all),
+                            stringResource(I18nR.string.au20_viewer_cat_all),
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.padding(start = 4.dp, top = 16.dp),
@@ -616,14 +618,14 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                                 verticalArrangement = Arrangement.spacedBy(8.dp),
                             ) {
                                 Icon(
-                                    painterResource(R.drawable.description_24px),
+                                    painterResource(BaseR.drawable.description_24px),
                                     contentDescription = null,
                                     modifier = Modifier.size(72.dp),
                                     tint = MaterialTheme.colorScheme.primary,
                                 )
-                                Text(stringResource(R.string.au20_viewer_empty_title), style = MaterialTheme.typography.titleMedium)
+                                Text(stringResource(I18nR.string.au20_viewer_empty_title), style = MaterialTheme.typography.titleMedium)
                                 Text(
-                                    stringResource(R.string.au20_viewer_empty_text),
+                                    stringResource(I18nR.string.au20_viewer_empty_text),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     textAlign = TextAlign.Center,
@@ -662,10 +664,10 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                 val ext = DocumentTypes.ext(t.name)
                 val cat = DocCategory.of(ext)?.let { stringResource(it.labelRes) }
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    InfoLine(stringResource(R.string.au20_viewer_info_type), listOfNotNull(ext.uppercase().ifEmpty { null }, cat).joinToString(" · "))
-                    if (t.folder.isNotEmpty()) InfoLine(stringResource(R.string.au20_viewer_info_folder), t.folder)
-                    if (t.size > 0) InfoLine(stringResource(R.string.au20_viewer_info_size), Formatter.formatFileSize(context, t.size))
-                    if (t.date > 0) InfoLine(stringResource(R.string.au20_viewer_info_date), dateText(context, t.date))
+                    InfoLine(stringResource(I18nR.string.au20_viewer_info_type), listOfNotNull(ext.uppercase().ifEmpty { null }, cat).joinToString(" · "))
+                    if (t.folder.isNotEmpty()) InfoLine(stringResource(I18nR.string.au20_viewer_info_folder), t.folder)
+                    if (t.size > 0) InfoLine(stringResource(I18nR.string.au20_viewer_info_size), Formatter.formatFileSize(context, t.size))
+                    if (t.date > 0) InfoLine(stringResource(I18nR.string.au20_viewer_info_date), dateText(context, t.date))
                 }
             },
         )
@@ -689,18 +691,18 @@ private fun AccessCard(onAllow: () -> Unit) {
     ) {
         Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Icon(
-                painterResource(R.drawable.folder_24px),
+                painterResource(BaseR.drawable.folder_24px),
                 contentDescription = null,
                 modifier = Modifier.size(40.dp),
                 tint = MaterialTheme.colorScheme.primary,
             )
-            Text(stringResource(R.string.au20_viewer_access_title), style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(I18nR.string.au20_viewer_access_title), style = MaterialTheme.typography.titleMedium)
             Text(
-                stringResource(R.string.au20_viewer_access_text),
+                stringResource(I18nR.string.au20_viewer_access_text),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            Button(onClick = onAllow, modifier = Modifier.padding(top = 4.dp)) { Text(stringResource(R.string.au20_viewer_access_button)) }
+            Button(onClick = onAllow, modifier = Modifier.padding(top = 4.dp)) { Text(stringResource(I18nR.string.au20_viewer_access_button)) }
         }
     }
 }
@@ -813,26 +815,26 @@ private fun DocMenu(
 ) {
     DropdownMenu(expanded = expanded, onDismissRequest = onDismiss) {
         DropdownMenuItem(
-            text = { Text(stringResource(R.string.au20_viewer_share)) },
-            leadingIcon = { Icon(painterResource(R.drawable.share_24px), contentDescription = null, modifier = Modifier.size(24.dp)) },
+            text = { Text(stringResource(I18nR.string.au20_viewer_share)) },
+            leadingIcon = { Icon(painterResource(BaseR.drawable.share_24px), contentDescription = null, modifier = Modifier.size(24.dp)) },
             onClick = { onDismiss(); onShare() },
         )
         DropdownMenuItem(
-            text = { Text(stringResource(R.string.au20_viewer_open_with)) },
-            leadingIcon = { Icon(painterResource(R.drawable.open_in_new_24px), contentDescription = null, modifier = Modifier.size(24.dp)) },
+            text = { Text(stringResource(I18nR.string.au20_viewer_open_with)) },
+            leadingIcon = { Icon(painterResource(BaseR.drawable.open_in_new_24px), contentDescription = null, modifier = Modifier.size(24.dp)) },
             onClick = { onDismiss(); onOpenWith() },
         )
         DropdownMenuItem(
-            text = { Text(stringResource(R.string.au20_viewer_info)) },
-            leadingIcon = { Icon(painterResource(R.drawable.info_24px), contentDescription = null, modifier = Modifier.size(24.dp)) },
+            text = { Text(stringResource(I18nR.string.au20_viewer_info)) },
+            leadingIcon = { Icon(painterResource(BaseR.drawable.info_24px), contentDescription = null, modifier = Modifier.size(24.dp)) },
             onClick = { onDismiss(); onInfo() },
         )
-        if (onDelete != null) DropdownMenuItem(text = { Text(stringResource(R.string.hc_delete)) },
-            leadingIcon = { Icon(painterResource(R.drawable.delete_24px), null) }, onClick = { onDismiss(); onDelete() })
+        if (onDelete != null) DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_delete)) },
+            leadingIcon = { Icon(painterResource(BaseR.drawable.delete_24px), null) }, onClick = { onDismiss(); onDelete() })
         if (onRemove != null) {
             DropdownMenuItem(
-                text = { Text(stringResource(R.string.au20_viewer_remove_recent)) },
-                leadingIcon = { Icon(painterResource(R.drawable.close_24px), contentDescription = null, modifier = Modifier.size(24.dp)) },
+                text = { Text(stringResource(I18nR.string.au20_viewer_remove_recent)) },
+                leadingIcon = { Icon(painterResource(BaseR.drawable.close_24px), contentDescription = null, modifier = Modifier.size(24.dp)) },
                 onClick = { onDismiss(); onRemove() },
             )
         }

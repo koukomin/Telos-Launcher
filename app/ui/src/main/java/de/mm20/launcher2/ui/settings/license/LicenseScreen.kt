@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.license
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.ActivityNotFoundException
 import android.net.Uri
@@ -64,7 +66,7 @@ fun LicenseScreen(libraryName: String?) {
                     IconButton(onClick = {
                         backStack.removeLastOrNull()
                     }) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.menu_back))
+                        Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.menu_back))
                     }
                 },
                 scrollBehavior = scrollBehavior,
@@ -79,13 +81,13 @@ fun LicenseScreen(libraryName: String?) {
                                 .build()
                                 .launchUrl(context, Uri.parse(library.url))
                         } catch (e: ActivityNotFoundException) {
-                            Toast.makeText(context, R.string.au3_sysb_no_browser, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18nR.string.au3_sysb_no_browser, Toast.LENGTH_SHORT).show()
                         }
                     }) {
                         Icon(
-                            painterResource(R.drawable.open_in_browser_24px),
+                            painterResource(BaseR.drawable.open_in_browser_24px),
                             contentDescription = stringResource(
-                                R.string.open_webpage
+                                I18nR.string.open_webpage
                             )
                         )
                     }

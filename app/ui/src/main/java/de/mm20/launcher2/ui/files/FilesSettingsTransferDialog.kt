@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.files
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,7 +31,7 @@ internal fun FilesSettingsTransferButton(workspace: FilesWorkspaceViewModel) {
             scope.launch {
                 result = withContext(Dispatchers.IO) { runCatching {
                     context.contentResolver.openOutputStream(uri, "wt")?.bufferedWriter()?.use { it.write(text.getOrThrow()) } ?: error("Cannot write")
-                }.fold({ R.string.telos_files_settings_exported }, { R.string.telos_files_settings_failed }) }
+                }.fold({ I18nR.string.telos_files_settings_exported }, { I18nR.string.telos_files_settings_failed }) }
                 busy = false
             }
         }
@@ -45,7 +46,7 @@ internal fun FilesSettingsTransferButton(workspace: FilesWorkspaceViewModel) {
                     } ?: error("Cannot read")
                 } }
                 pending = parsed.getOrNull()
-                if (parsed.isFailure) result = R.string.telos_files_settings_failed
+                if (parsed.isFailure) result = I18nR.string.telos_files_settings_failed
                 busy = false
             }
         }
@@ -53,25 +54,25 @@ internal fun FilesSettingsTransferButton(workspace: FilesWorkspaceViewModel) {
     Box {
     ChromeIcon(
         icon = de.mm20.launcher2.base.R.drawable.settings_24px,
-        label = stringResource(R.string.telos_files_settings_transfer),
+        label = stringResource(I18nR.string.telos_files_settings_transfer),
         enabled = !busy,
         selected = menu,
         onClick = { menu = true },
     )
     DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-        if (!importAllowed) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_settings_busy)) }, enabled = false, onClick = {})
-        DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_settings_export)) }, onClick = { menu = false; export.launch("telos-files-settings.json") })
-        DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_settings_import)) }, enabled = importAllowed, onClick = { menu = false; import.launch(arrayOf("application/json", "text/plain")) })
+        if (!importAllowed) DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_settings_busy)) }, enabled = false, onClick = {})
+        DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_settings_export)) }, onClick = { menu = false; export.launch("telos-files-settings.json") })
+        DropdownMenuItem(text = { Text(stringResource(I18nR.string.telos_files_settings_import)) }, enabled = importAllowed, onClick = { menu = false; import.launch(arrayOf("application/json", "text/plain")) })
     }
     }
     pending?.let { settings ->
-        AlertDialog(onDismissRequest = { pending = null }, title = { Text(stringResource(R.string.telos_files_settings_import)) },
-            text = { Text(stringResource(R.string.telos_files_settings_confirm) + if (!importAllowed) "\n\n" + stringResource(R.string.telos_files_settings_busy) else "") },
+        AlertDialog(onDismissRequest = { pending = null }, title = { Text(stringResource(I18nR.string.telos_files_settings_import)) },
+            text = { Text(stringResource(I18nR.string.telos_files_settings_confirm) + if (!importAllowed) "\n\n" + stringResource(I18nR.string.telos_files_settings_busy) else "") },
             confirmButton = { TextButton(enabled = importAllowed, onClick = {
-                result = runCatching { workspace.importSettings(settings) }.fold({ R.string.telos_files_settings_imported }, { R.string.telos_files_settings_failed })
+                result = runCatching { workspace.importSettings(settings) }.fold({ I18nR.string.telos_files_settings_imported }, { I18nR.string.telos_files_settings_failed })
                 pending = null
-            }) { Text(stringResource(R.string.telos_files_settings_import)) } },
-            dismissButton = { TextButton(onClick = { pending = null }) { Text(stringResource(R.string.hc_cancel)) } })
+            }) { Text(stringResource(I18nR.string.telos_files_settings_import)) } },
+            dismissButton = { TextButton(onClick = { pending = null }) { Text(stringResource(I18nR.string.hc_cancel)) } })
     }
     result?.let { message -> AlertDialog(onDismissRequest = { result = null }, text = { Text(stringResource(message)) },
         confirmButton = { TextButton(onClick = { result = null }) { Text(stringResource(android.R.string.ok)) } }) }

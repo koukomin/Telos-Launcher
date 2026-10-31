@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.video
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
@@ -106,7 +108,7 @@ internal fun attachGestures(
                     attrs.screenBrightness = (current + distanceY / view.height).coerceIn(0.02f, 1f)
                     window.attributes = attrs
                     onLevels(attrs.screenBrightness, null, true)
-                    onHint(context.getString(R.string.au_video_brightness, (attrs.screenBrightness * 100).toInt()))
+                    onHint(context.getString(I18nR.string.au_video_brightness, (attrs.screenBrightness * 100).toInt()))
                 }
                 3 -> {
                     val max = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
@@ -119,7 +121,7 @@ internal fun attachGestures(
                     }
                     val vol = if (max > 0) audio.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat() / max else 0f
                     onLevels(null, vol, true)
-                    onHint(context.getString(R.string.au_video_volume, if (max > 0) audio.getStreamVolume(AudioManager.STREAM_MUSIC) * 100 / max else 0))
+                    onHint(context.getString(I18nR.string.au_video_volume, if (max > 0) audio.getStreamVolume(AudioManager.STREAM_MUSIC) * 100 / max else 0))
                 }
             }
             return true
@@ -129,7 +131,7 @@ internal fun attachGestures(
             doubleTapped = true
             val forward = e.x > view.width / 2f
             player.seekTo((player.currentPosition + if (forward) 10_000 else -10_000).coerceAtLeast(0))
-            onHint(context.getString(if (forward) R.string.au_video_skip_forward else R.string.au_video_skip_back))
+            onHint(context.getString(if (forward) I18nR.string.au_video_skip_forward else I18nR.string.au_video_skip_back))
             return true
         }
 
@@ -188,16 +190,16 @@ internal fun PlaybackMenu(
 
     fun label(g: androidx.media3.common.Tracks.Group, fallback: String): String {
         val f = g.getTrackFormat(0)
-        return listOfNotNull(f.label, f.language?.uppercase(), f.codecs?.takeIf { g.type == C.TRACK_TYPE_AUDIO }, f.channelCount.takeIf { it > 0 && g.type == C.TRACK_TYPE_AUDIO }?.let { context.getString(R.string.au_video_channels, it) })
+        return listOfNotNull(f.label, f.language?.uppercase(), f.codecs?.takeIf { g.type == C.TRACK_TYPE_AUDIO }, f.channelCount.takeIf { it > 0 && g.type == C.TRACK_TYPE_AUDIO }?.let { context.getString(I18nR.string.au_video_channels, it) })
             .joinToString(" · ").ifBlank { fallback }
     }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.hc_playback)) },
+        title = { Text(stringResource(I18nR.string.hc_playback)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
-                Text(stringResource(R.string.hc_speed), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(I18nR.string.hc_speed), style = MaterialTheme.typography.titleSmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
                     listOf(0.25f, 0.5f, 0.75f, 1f, 1.25f, 1.5f, 2f, 3f, 4f).forEach { v ->
                         FilterChip(selected = speed == v, onClick = { onSpeed(v) }, label = { Text("${v}×".replace(".0×", "×")) })
@@ -213,14 +215,14 @@ internal fun PlaybackMenu(
                         Text("⏭ +1 Frame")
                     }
                 }
-                Text(stringResource(R.string.hc_picture), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+                Text(stringResource(I18nR.string.hc_picture), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
                     listOf(
-                        stringResource(R.string.au_video_fit) to AspectRatioFrameLayout.RESIZE_MODE_FIT,
-                        stringResource(R.string.au_video_fill) to AspectRatioFrameLayout.RESIZE_MODE_FILL,
-                        stringResource(R.string.au_video_zoom) to AspectRatioFrameLayout.RESIZE_MODE_ZOOM,
-                        stringResource(R.string.vn_fixed_width) to AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH,
-                        stringResource(R.string.vn_fixed_height) to AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT,
+                        stringResource(I18nR.string.au_video_fit) to AspectRatioFrameLayout.RESIZE_MODE_FIT,
+                        stringResource(I18nR.string.au_video_fill) to AspectRatioFrameLayout.RESIZE_MODE_FILL,
+                        stringResource(I18nR.string.au_video_zoom) to AspectRatioFrameLayout.RESIZE_MODE_ZOOM,
+                        stringResource(I18nR.string.vn_fixed_width) to AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH,
+                        stringResource(I18nR.string.vn_fixed_height) to AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT,
                     ).forEach { (name, mode) ->
                         FilterChip(
                             selected = aspect == mode,
@@ -234,12 +236,12 @@ internal fun PlaybackMenu(
                     }
                 }
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
-                    Text(stringResource(R.string.vn_match_frame_rate), modifier = Modifier.weight(1f))
+                    Text(stringResource(I18nR.string.vn_match_frame_rate), modifier = Modifier.weight(1f))
                     Switch(checked = matchFps, onCheckedChange = onMatchFps)
                 }
                 var resumeAfter by remember { mutableStateOf(de.mm20.launcher2.comms.media.video.VideoPrefs.resumeAfterVideo(context)) }
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
-                    Text(stringResource(R.string.au9_playback_resume_after_video), modifier = Modifier.weight(1f))
+                    Text(stringResource(I18nR.string.au9_playback_resume_after_video), modifier = Modifier.weight(1f))
                     Switch(
                         checked = resumeAfter,
                         onCheckedChange = {
@@ -257,14 +259,14 @@ internal fun PlaybackMenu(
                     onClick = { showAudioFx = true },
                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
                 ) {
-                    Icon(painterResource(R.drawable.settings_24px), contentDescription = null)
+                    Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = null)
                     Spacer(Modifier.padding(horizontal = 4.dp))
                     Text("Audio Effects & 200% Boost")
                 }
 
                 val audio = groups.filter { it.type == C.TRACK_TYPE_AUDIO }
                 if (audio.size > 1) {
-                    Text(stringResource(R.string.hc_audio), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+                    Text(stringResource(I18nR.string.hc_audio), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
                     audio.forEachIndexed { i, g ->
                         FilterChip(
                             selected = g.isSelected,
@@ -273,14 +275,14 @@ internal fun PlaybackMenu(
                                     .setOverrideForType(TrackSelectionOverride(g.mediaTrackGroup, 0)).build()
                                 refresh++
                             },
-                            label = { Text(label(g, stringResource(R.string.au_video_track_n, i + 1))) },
+                            label = { Text(label(g, stringResource(I18nR.string.au_video_track_n, i + 1))) },
                             modifier = Modifier.padding(vertical = 2.dp),
                         )
                     }
                 }
                 val text = groups.filter { it.type == C.TRACK_TYPE_TEXT }
                 if (text.isNotEmpty()) {
-                    Text(stringResource(R.string.hc_subtitles), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+                    Text(stringResource(I18nR.string.hc_subtitles), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
                     FilterChip(
                         selected = textDisabled,
                         onClick = {
@@ -288,7 +290,7 @@ internal fun PlaybackMenu(
                                 .setTrackTypeDisabled(C.TRACK_TYPE_TEXT, true).build()
                             refresh++
                         },
-                        label = { Text(stringResource(R.string.hc_off)) },
+                        label = { Text(stringResource(I18nR.string.hc_off)) },
                         modifier = Modifier.padding(vertical = 2.dp),
                     )
                     text.forEachIndexed { i, g ->
@@ -300,65 +302,65 @@ internal fun PlaybackMenu(
                                     .setOverrideForType(TrackSelectionOverride(g.mediaTrackGroup, 0)).build()
                                 refresh++
                             },
-                            label = { Text(label(g, stringResource(R.string.au_video_subtitle_n, i + 1))) },
+                            label = { Text(label(g, stringResource(I18nR.string.au_video_subtitle_n, i + 1))) },
                             modifier = Modifier.padding(vertical = 2.dp),
                         )
                     }
                 }
 
-                Text(stringResource(R.string.vn_subtitle_delay), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 12.dp))
+                Text(stringResource(I18nR.string.vn_subtitle_delay), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 12.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs - 500) }) { Text(stringResource(R.string.au_video_seconds_signed, -0.5f)) }
+                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs - 500) }) { Text(stringResource(I18nR.string.au_video_seconds_signed, -0.5f)) }
                     TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs - 100) }) { Text("-0.1") }
-                    Text(stringResource(R.string.au_video_seconds_signed, subDelayMs / 1000f), modifier = Modifier.weight(1f))
+                    Text(stringResource(I18nR.string.au_video_seconds_signed, subDelayMs / 1000f), modifier = Modifier.weight(1f))
                     TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs + 100) }) { Text("+0.1") }
-                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs + 500) }) { Text(stringResource(R.string.au_video_seconds_signed, 0.5f)) }
+                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs + 500) }) { Text(stringResource(I18nR.string.au_video_seconds_signed, 0.5f)) }
                 }
-                Text(stringResource(R.string.vn_subtitle_delay_help), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(I18nR.string.vn_subtitle_delay_help), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
-                Text(stringResource(R.string.vn_subtitle_size), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+                Text(stringResource(I18nR.string.vn_subtitle_size), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
                     listOf(
-                        R.string.vn_size_small to 0.75f, R.string.vn_size_normal to 1f,
-                        R.string.vn_size_large to 1.4f, R.string.vn_size_huge to 1.9f,
+                        I18nR.string.vn_size_small to 0.75f, I18nR.string.vn_size_normal to 1f,
+                        I18nR.string.vn_size_large to 1.4f, I18nR.string.vn_size_huge to 1.9f,
                     ).forEach { (name, v) ->
                         FilterChip(selected = subStyle.scale == v, onClick = { onSubStyle(subStyle.copy(scale = v)) }, label = { Text(stringResource(name)) })
                     }
                 }
-                Text(stringResource(R.string.vn_subtitle_color), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(I18nR.string.vn_subtitle_color), style = MaterialTheme.typography.titleSmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
                     listOf(
-                        R.string.vn_color_white to 0xFFFFFFFF.toInt(), R.string.vn_color_yellow to 0xFFFFEB3B.toInt(),
-                        R.string.vn_color_green to 0xFF8BC34A.toInt(), R.string.vn_color_cyan to 0xFF4DD0E1.toInt(),
+                        I18nR.string.vn_color_white to 0xFFFFFFFF.toInt(), I18nR.string.vn_color_yellow to 0xFFFFEB3B.toInt(),
+                        I18nR.string.vn_color_green to 0xFF8BC34A.toInt(), I18nR.string.vn_color_cyan to 0xFF4DD0E1.toInt(),
                     ).forEach { (name, c) ->
                         FilterChip(selected = subStyle.color == c, onClick = { onSubStyle(subStyle.copy(color = c)) }, label = { Text(stringResource(name)) })
                     }
                 }
-                Text(stringResource(R.string.vn_subtitle_edge), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(I18nR.string.vn_subtitle_edge), style = MaterialTheme.typography.titleSmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
                     listOf(
-                        R.string.vn_edge_none to 0, R.string.vn_edge_outline to 1,
-                        R.string.vn_edge_shadow to 2, R.string.vn_edge_box to 3,
+                        I18nR.string.vn_edge_none to 0, I18nR.string.vn_edge_outline to 1,
+                        I18nR.string.vn_edge_shadow to 2, I18nR.string.vn_edge_box to 3,
                     ).forEach { (name, e) ->
                         FilterChip(selected = subStyle.edge == e, onClick = { onSubStyle(subStyle.copy(edge = e)) }, label = { Text(stringResource(name)) })
                     }
                 }
 
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 12.dp)) {
-                    Text(stringResource(R.string.hc_repeat_this_video), modifier = Modifier.weight(1f))
+                    Text(stringResource(I18nR.string.hc_repeat_this_video), modifier = Modifier.weight(1f))
                     Switch(checked = loop, onCheckedChange = {
                         loop = it
                         player.repeatMode = if (it) Player.REPEAT_MODE_ONE else Player.REPEAT_MODE_OFF
                     })
                 }
-                Text(stringResource(R.string.hc_sleep_timer), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+                Text(stringResource(I18nR.string.hc_sleep_timer), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
                     listOf(0, 15, 30, 60).forEach { m ->
-                        FilterChip(selected = sleepMinutes == m, onClick = { onSleep(m) }, label = { Text(if (m == 0) stringResource(R.string.hc_off) else stringResource(R.string.au_video_minutes, m)) })
+                        FilterChip(selected = sleepMinutes == m, onClick = { onSleep(m) }, label = { Text(if (m == 0) stringResource(I18nR.string.hc_off) else stringResource(I18nR.string.au_video_minutes, m)) })
                     }
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_done)) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_done)) } },
     )
 }

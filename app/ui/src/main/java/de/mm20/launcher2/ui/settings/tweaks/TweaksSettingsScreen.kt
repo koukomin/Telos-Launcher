@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.tweaks
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -40,19 +42,19 @@ fun TweaksSettingsScreen() {
 
     val hasPrivilegedBackend = state.isShizukuAvailable || state.isRootAvailable
     val backendStatusSummary = when {
-        state.isRootAvailable && state.isShizukuAvailable -> stringResource(R.string.freeze_backend_root) + " · " + stringResource(R.string.freeze_backend_shizuku)
-        state.isRootAvailable -> stringResource(R.string.freeze_backend_root)
-        state.isShizukuAvailable -> stringResource(R.string.freeze_backend_shizuku)
-        else -> stringResource(R.string.hf_freeze_disconnected)
+        state.isRootAvailable && state.isShizukuAvailable -> stringResource(I18nR.string.freeze_backend_root) + " · " + stringResource(I18nR.string.freeze_backend_shizuku)
+        state.isRootAvailable -> stringResource(I18nR.string.freeze_backend_root)
+        state.isShizukuAvailable -> stringResource(I18nR.string.freeze_backend_shizuku)
+        else -> stringResource(I18nR.string.hf_freeze_disconnected)
     }
 
     PreferenceScreen(
-        title = { Text(stringResource(R.string.tweaks_title)) },
+        title = { Text(stringResource(I18nR.string.tweaks_title)) },
     ) {
         item {
             Banner(
-                text = stringResource(R.string.tweaks_banner) + " " + backendStatusSummary,
-                icon = R.drawable.settings_24px,
+                text = stringResource(I18nR.string.tweaks_banner) + " " + backendStatusSummary,
+                icon = BaseR.drawable.settings_24px,
             )
         }
 
@@ -79,7 +81,7 @@ fun TweaksSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = stringResource(R.string.tweaks_cat_display)) {
+            PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_display)) {
                 SwitchPreference(
                     title = "Show Seconds in Status Bar Clock",
                     summary = if (hasPrivilegedBackend) "Displays seconds on the status bar clock" else "Requires Shizuku or Root",
@@ -89,7 +91,7 @@ fun TweaksSettingsScreen() {
                 )
                 SwitchPreference(
                     title = "Hide Gesture Navigation Bar (Pill)",
-                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.toggleHideNavPill(it) },
@@ -112,10 +114,10 @@ fun TweaksSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = stringResource(R.string.tweaks_cat_sound)) {
+            PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_sound)) {
                 SwitchPreference(
                     title = "Extended 30-Step Volume Control",
-                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.toggleVolume30Steps(it) },
@@ -138,10 +140,10 @@ fun TweaksSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = stringResource(R.string.tweaks_cat_notifications)) {
+            PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_notifications)) {
                 SwitchPreference(
                     title = "Flashlight Pulse on Call Alert",
-                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.toggleFlashPulseCall(it) },
@@ -150,7 +152,7 @@ fun TweaksSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = stringResource(R.string.tweaks_cat_network)) {
+            PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_network)) {
                 SwitchPreference(
                     title = "Mobile Data Always Active",
                     summary = if (hasPrivilegedBackend) "Keeps mobile data connected in background during Wi-Fi for fast switching" else "Requires Shizuku or Root",
@@ -162,31 +164,31 @@ fun TweaksSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = stringResource(R.string.tweaks_cat_battery)) {
+            PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_battery)) {
                 SwitchPreference(
                     title = "Aggressive Doze Mode",
-                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.toggleForceDoze(it) },
                 )
                 SwitchPreference(
                     title = "Caffeinate (Keep Screen Awake)",
-                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.toggleCaffeinate(it) },
                 )
                 SwitchPreference(
                     title = "Pocket Mode",
-                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.togglePocketMode(it) },
                 )
                 SwitchPreference(
                     title = "Double-Tap Status Bar to Sleep",
-                    summary = stringResource(R.string.virtual_telemetry_unavailable),
+                    summary = stringResource(I18nR.string.virtual_telemetry_unavailable),
                     value = false,
                     enabled = false,
                     onValueChanged = { vm.toggleDoubleTapSleep(it) },

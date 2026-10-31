@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.reminders
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
@@ -53,14 +55,14 @@ fun RemindersWidget(widget: RemindersWidget) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
-                text = stringResource(R.string.missing_permission_reminders_widget),
+                text = stringResource(I18nR.string.missing_permission_reminders_widget),
                 onClick = { viewModel.requestTasksPermission(context as AppCompatActivity) }
             )
         } else if (tasks.isEmpty()) {
             Banner(
                 modifier = Modifier.padding(vertical = 4.dp),
-                text = stringResource(R.string.reminders_widget_empty),
-                icon = R.drawable.task_alt_24px,
+                text = stringResource(I18nR.string.reminders_widget_empty),
+                icon = BaseR.drawable.task_alt_24px,
             )
         } else {
             SearchResultList(

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.settings.locale
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.icu.util.Calendar
 import android.icu.util.ULocale
@@ -41,14 +42,14 @@ fun CalendarSettingsScreen() {
     }
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_calendar_system),
+        title = stringResource(I18nR.string.preference_calendar_system),
     ) {
         item {
             PreferenceCategory {
                 ListPreference(
-                    title = stringResource(R.string.preference_calendar_system_primary),
+                    title = stringResource(I18nR.string.preference_calendar_system_primary),
                     items = listOf(
-                        stringResource(R.string.preference_value_system_default) to null,
+                        stringResource(I18nR.string.preference_value_system_default) to null,
                     ) + calendars,
                     value = primaryCalendar,
                     onValueChanged = {
@@ -56,9 +57,9 @@ fun CalendarSettingsScreen() {
                     }
                 )
                 ListPreference(
-                    title = stringResource(R.string.preference_calendar_system_secondary),
+                    title = stringResource(I18nR.string.preference_calendar_system_secondary),
                     items = listOf(
-                        stringResource(R.string.preference_value_disabled) to null
+                        stringResource(I18nR.string.preference_value_disabled) to null
                     ) + calendars,
                     value = secondaryCalendar,
                     onValueChanged = {

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.media.photos
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.ui.res.stringResource
 import android.Manifest
@@ -146,8 +148,8 @@ private fun dayLabel(context: Context, millis: Long): String {
     val sameYear = now.get(java.util.Calendar.YEAR) == then.get(java.util.Calendar.YEAR)
     val dayDiff = now.get(java.util.Calendar.DAY_OF_YEAR) - then.get(java.util.Calendar.DAY_OF_YEAR)
     return when {
-        sameYear && dayDiff == 0 -> context.getString(R.string.hc_today)
-        sameYear && dayDiff == 1 -> context.getString(R.string.au_viewer_yesterday)
+        sameYear && dayDiff == 0 -> context.getString(I18nR.string.hc_today)
+        sameYear && dayDiff == 1 -> context.getString(I18nR.string.au_viewer_yesterday)
         else -> java.text.SimpleDateFormat(if (sameYear) "EEE, d MMM" else "d MMM yyyy", java.util.Locale.getDefault())
             .format(java.util.Date(millis))
     }
@@ -210,7 +212,7 @@ fun PhotosScreen(embedded: Boolean = false) {
         }
     }
     val albums = remember(filteredItems) {
-        filteredItems.groupBy { it.folder }.map { (name, list) -> Album(name.ifBlank { context.getString(R.string.au_viewer_other) }, list) }
+        filteredItems.groupBy { it.folder }.map { (name, list) -> Album(name.ifBlank { context.getString(I18nR.string.au_viewer_other) }, list) }
             .sortedByDescending { it.items.size }
     }
     val shown = remember(album, filteredItems) {
@@ -221,11 +223,11 @@ fun PhotosScreen(embedded: Boolean = false) {
     val favUris = remember(shown) { ViewerLibrary.favorites(context) }
     val stories = remember(shown, favUris) {
         listOfNotNull(
-            shown.take(12).takeIf { it.isNotEmpty() }?.let { Album(context.getString(R.string.viewer_story_recents), it) },
+            shown.take(12).takeIf { it.isNotEmpty() }?.let { Album(context.getString(I18nR.string.viewer_story_recents), it) },
             shown.filter { it.folder.contains("screenshot", true) }.takeIf { it.isNotEmpty() }
-                ?.let { Album(context.getString(R.string.viewer_story_screenshots), it) },
+                ?.let { Album(context.getString(I18nR.string.viewer_story_screenshots), it) },
             shown.filter { it.uri.toString() in favUris }.takeIf { it.isNotEmpty() }
-                ?.let { Album(context.getString(R.string.viewer_story_favorites), it) },
+                ?.let { Album(context.getString(I18nR.string.viewer_story_favorites), it) },
         )
     }
 
@@ -247,31 +249,31 @@ fun PhotosScreen(embedded: Boolean = false) {
                                     ShareActions.shareUris(context, selectedUris)
                                 }
                                 if (!ok) {
-                                    Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
                                 }
                             }
                         },
-                        icon = { Icon(painterResource(R.drawable.share_24px), contentDescription = null) },
-                        label = { Text(stringResource(R.string.hc_share)) },
+                        icon = { Icon(painterResource(BaseR.drawable.share_24px), contentDescription = null) },
+                        label = { Text(stringResource(I18nR.string.hc_share)) },
                     )
                     NavigationBarItem(
                         selected = false,
                         onClick = { selected = emptySet() },
-                        icon = { Icon(painterResource(R.drawable.close_24px), contentDescription = null) },
-                        label = { Text(stringResource(R.string.hc_cancel)) },
+                        icon = { Icon(painterResource(BaseR.drawable.close_24px), contentDescription = null) },
+                        label = { Text(stringResource(I18nR.string.hc_cancel)) },
                     )
                 }
             } else if (album == null) {
                 NavigationBar(modifier = Modifier.virtualAppGlass(blur, bar), containerColor = androidx.compose.ui.graphics.Color.Transparent) {
                     NavigationBarItem(
                         selected = tab == 0, onClick = { tab = 0 },
-                        icon = { Icon(painterResource(R.drawable.photo_24px), contentDescription = null) },
-                        label = { Text(stringResource(R.string.hc_photos)) },
+                        icon = { Icon(painterResource(BaseR.drawable.photo_24px), contentDescription = null) },
+                        label = { Text(stringResource(I18nR.string.hc_photos)) },
                     )
                     NavigationBarItem(
                         selected = tab == 1, onClick = { tab = 1 },
-                        icon = { Icon(painterResource(R.drawable.crop_square_24px), contentDescription = null) },
-                        label = { Text(stringResource(R.string.hc_albums)) },
+                        icon = { Icon(painterResource(BaseR.drawable.crop_square_24px), contentDescription = null) },
+                        label = { Text(stringResource(I18nR.string.hc_albums)) },
                     )
                 }
             }
@@ -284,17 +286,17 @@ fun PhotosScreen(embedded: Boolean = false) {
             ) {
                 if (album != null) {
                     IconButton(onClick = { album = null }) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
+                        Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back))
                     }
                 }
                 Column {
                     if (!embedded || album != null) Text(
-                        album?.name ?: stringResource(R.string.hc_photos),
+                        album?.name ?: stringResource(I18nR.string.hc_photos),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.SemiBold,
                     )
                     Text(
-                        stringResource(R.string.au_viewer_items, shown.size),
+                        stringResource(I18nR.string.au_viewer_items, shown.size),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -302,7 +304,7 @@ fun PhotosScreen(embedded: Boolean = false) {
             }
 
             if (hasPermission && items.isNotEmpty()) {
-                de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_photos))
+                de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(I18nR.string.tsm_search_photos))
             }
             if (hasPermission && query.isNotBlank() && shown.isEmpty()) {
                 de.mm20.launcher2.ui.component.SearchEmptyState(query)
@@ -312,11 +314,11 @@ fun PhotosScreen(embedded: Boolean = false) {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Text(stringResource(R.string.hc_allow_access_to_your_photos), style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(I18nR.string.hc_allow_access_to_your_photos), style = MaterialTheme.typography.titleMedium)
                     Button(
                         onClick = { launcher.launch(arrayOf(permission, videoPermission).distinct().toTypedArray()) },
                         modifier = Modifier.padding(top = 16.dp),
-                    ) { Text(stringResource(R.string.hc_allow)) }
+                    ) { Text(stringResource(I18nR.string.hc_allow)) }
                 }
             } else if (tab == 1 && album == null) {
                 LazyVerticalGrid(
@@ -404,7 +406,7 @@ fun PhotosScreen(embedded: Boolean = false) {
                                 )
                                 if (item.isVideo) {
                                     Icon(
-                                        painterResource(R.drawable.play_arrow_24px),
+                                        painterResource(BaseR.drawable.play_arrow_24px),
                                         contentDescription = null,
                                         tint = androidx.compose.ui.graphics.Color.White,
                                         modifier = Modifier.align(Alignment.BottomStart).padding(6.dp),

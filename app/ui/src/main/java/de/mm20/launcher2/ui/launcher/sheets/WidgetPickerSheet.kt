@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher.sheets
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Activity
 import android.app.ActivityOptions
@@ -288,7 +290,7 @@ fun WidgetPickerSheet(
     expanded: Boolean,
     includeBuiltinWidgets: Boolean = true,
     filter1x1: Boolean = false,
-    title: String = stringResource(R.string.widget_pick_widget),
+    title: String = stringResource(I18nR.string.widget_pick_widget),
     onWidgetSelected: (Widget) -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -364,7 +366,7 @@ fun WidgetPickerSheet(
                         SearchBarDefaults.InputField(
                             leadingIcon = {
                                 Icon(
-                                    painterResource(R.drawable.search_24px),
+                                    painterResource(BaseR.drawable.search_24px),
                                     contentDescription = null
                                 )
                             },
@@ -374,7 +376,7 @@ fun WidgetPickerSheet(
                                         modifier = Modifier.offset(16.dp),
                                         onClick = { viewModel.search("") }
                                     ) {
-                                        Icon(painterResource(R.drawable.close_24px), stringResource(R.string.action_clear))
+                                        Icon(painterResource(BaseR.drawable.close_24px), stringResource(I18nR.string.action_clear))
                                     }
                                 }
                             },
@@ -386,7 +388,7 @@ fun WidgetPickerSheet(
                                 viewModel.search(it)
                             },
                             placeholder = {
-                                Text(stringResource(R.string.search_bar_placeholder))
+                                Text(stringResource(I18nR.string.search_bar_placeholder))
                             },
                         )
                     }
@@ -428,17 +430,17 @@ fun WidgetPickerSheet(
                             painter =
                                 painterResource(
                                     when (it.type) {
-                                        AtAGlanceWidget.Type -> R.drawable.visibility_24px
-                                        WeatherWidget.Type -> R.drawable.light_mode_24px
-                                        CalendarWidget.Type -> R.drawable.today_24px
-                                        MusicWidget.Type -> R.drawable.music_note_24px
-                                        AppsWidget.Type -> R.drawable.apps_24px
-                                        NotesWidget.Type -> R.drawable.sticky_note_2_24px
-                                        BatteryWidget.Type -> R.drawable.battery_full_24px
-                                        SystemWidget.Type -> R.drawable.memory_24px
-                                        RemindersWidget.Type -> R.drawable.task_alt_24px
-                                        FreezeWidget.Type -> R.drawable.ac_unit_24px
-                                        else -> R.drawable.widgets_24px
+                                        AtAGlanceWidget.Type -> BaseR.drawable.visibility_24px
+                                        WeatherWidget.Type -> BaseR.drawable.light_mode_24px
+                                        CalendarWidget.Type -> BaseR.drawable.today_24px
+                                        MusicWidget.Type -> BaseR.drawable.music_note_24px
+                                        AppsWidget.Type -> BaseR.drawable.apps_24px
+                                        NotesWidget.Type -> BaseR.drawable.sticky_note_2_24px
+                                        BatteryWidget.Type -> BaseR.drawable.battery_full_24px
+                                        SystemWidget.Type -> BaseR.drawable.memory_24px
+                                        RemindersWidget.Type -> BaseR.drawable.task_alt_24px
+                                        FreezeWidget.Type -> BaseR.drawable.ac_unit_24px
+                                        else -> BaseR.drawable.widgets_24px
                                     }
                                 ),
                             contentDescription = null,
@@ -477,7 +479,7 @@ fun WidgetPickerSheet(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.extension_24px),
+                            painter = painterResource(BaseR.drawable.extension_24px),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
                         )
@@ -492,7 +494,7 @@ fun WidgetPickerSheet(
             if (query.isNotBlank() && !hasBuiltIn && appWidgetGroups.isEmpty()) {
                 item(key = "empty") {
                     Text(
-                        text = stringResource(R.string.au3_launcher3_widgets_none_found),
+                        text = stringResource(I18nR.string.au3_launcher3_widgets_none_found),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center,
@@ -546,7 +548,7 @@ fun WidgetPickerSheet(
                         if (!expandAllGroups) {
                             Icon(
                                 modifier = Modifier.rotate(rotate),
-                                painter = painterResource(R.drawable.keyboard_arrow_down_24px),
+                                painter = painterResource(BaseR.drawable.keyboard_arrow_down_24px),
                                 contentDescription = null
                             )
                         }
@@ -623,7 +625,7 @@ fun WidgetPickerSheet(
                                             .clip(CircleShape)
                                             .background(MaterialTheme.colorScheme.tertiaryContainer)
                                             .padding(4.dp),
-                                        painter = painterResource(R.drawable.enterprise_24px),
+                                        painter = painterResource(BaseR.drawable.enterprise_24px),
                                         contentDescription = null,
                                         tint = MaterialTheme.colorScheme.onTertiaryContainer
                                     )

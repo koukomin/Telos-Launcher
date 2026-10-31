@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.comms
+import de.mm20.launcher2.i18n.R as I18nR
 
 import androidx.compose.ui.res.pluralStringResource
 import de.mm20.launcher2.ui.R
@@ -91,8 +92,8 @@ fun DuplicateContactsScreen() {
         val count = viewModel.idsToDelete(toClean).size
         androidx.compose.material3.AlertDialog(
             onDismissRequest = { pending = null },
-            title = { Text(pluralStringResource(R.plurals.hc_delete_contacts_question, count, count)) },
-            text = { Text(stringResource(R.string.hc_delete_duplicates_message, count)) },
+            title = { Text(pluralStringResource(I18nR.plurals.hc_delete_contacts_question, count, count)) },
+            text = { Text(stringResource(I18nR.string.hc_delete_duplicates_message, count)) },
             confirmButton = {
                 TextButton(onClick = {
                     pending = null
@@ -101,16 +102,16 @@ fun DuplicateContactsScreen() {
                         val failed = viewModel.keepFirst(toClean)
                         groups = viewModel.load()
                         if (failed > 0) {
-                            Toast.makeText(context, R.string.au_phonea_action_failed, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, I18nR.string.au_phonea_action_failed, Toast.LENGTH_SHORT).show()
                         }
                     }
-                }) { Text(stringResource(R.string.hc_delete)) }
+                }) { Text(stringResource(I18nR.string.hc_delete)) }
             },
-            dismissButton = { TextButton(onClick = { pending = null }) { Text(stringResource(R.string.hc_cancel)) } },
+            dismissButton = { TextButton(onClick = { pending = null }) { Text(stringResource(I18nR.string.hc_cancel)) } },
         )
     }
 
-    PreferenceScreen(title = { Text(stringResource(R.string.hc_duplicate_contacts)) }) {
+    PreferenceScreen(title = { Text(stringResource(I18nR.string.hc_duplicate_contacts)) }) {
         if (!loaded) {
             item {
                 Box(Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
@@ -121,7 +122,7 @@ fun DuplicateContactsScreen() {
         if (loaded && groups.isEmpty()) {
             item {
                 Text(
-                    stringResource(R.string.hc_no_duplicate_numbers_found),
+                    stringResource(I18nR.string.hc_no_duplicate_numbers_found),
                     modifier = Modifier.padding(16.dp),
                 )
             }
@@ -139,7 +140,7 @@ fun DuplicateContactsScreen() {
                 ) {
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(
-                            stringResource(R.string.hc_group_number_phone, index + 1, group.first().phoneNumbers.firstOrNull().orEmpty()),
+                            stringResource(I18nR.string.hc_group_number_phone, index + 1, group.first().phoneNumbers.firstOrNull().orEmpty()),
                             style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
                             color = androidx.compose.material3.MaterialTheme.colorScheme.primary,
                         )
@@ -151,7 +152,7 @@ fun DuplicateContactsScreen() {
                                     Text("${contact.displayName} · ${contact.phoneNumbers.joinToString()}")
                                     contact.accounts.forEach { account ->
                                         Text(
-                                            "${account.name ?: stringResource(R.string.contacts_account_device)}${account.type?.let { " · $it" }.orEmpty()}",
+                                            "${account.name ?: stringResource(I18nR.string.contacts_account_device)}${account.type?.let { " · $it" }.orEmpty()}",
                                             style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
                                             color = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
@@ -163,7 +164,7 @@ fun DuplicateContactsScreen() {
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
                             OutlinedButton(
                                 onClick = { backStack.add(ContactDetailsRoute(contactId = group.first().id)) }
-                            ) { Text(stringResource(R.string.hc_open)) }
+                            ) { Text(stringResource(I18nR.string.hc_open)) }
                             OutlinedButton(
                                 onClick = {
                                     haptics.performHapticFeedback(HapticFeedbackType.LongPress)
@@ -171,14 +172,14 @@ fun DuplicateContactsScreen() {
                                         val ok = viewModel.mergeGroup(group)
                                         groups = viewModel.load()
                                         if (!ok) {
-                                            Toast.makeText(context, R.string.au_phonea_action_failed, Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context, I18nR.string.au_phonea_action_failed, Toast.LENGTH_SHORT).show()
                                         }
                                     }
                                 }
-                            ) { Text(stringResource(R.string.comms_merge)) }
+                            ) { Text(stringResource(I18nR.string.comms_merge)) }
                             Button(
                                 onClick = { pending = listOf(group) }
-                            ) { Text(stringResource(R.string.hc_keep_first_delete_extras)) }
+                            ) { Text(stringResource(I18nR.string.hc_keep_first_delete_extras)) }
                         }
                     }
                 }
@@ -196,11 +197,11 @@ fun DuplicateContactsScreen() {
                             }
                         },
                         modifier = Modifier.fillMaxWidth(),
-                    ) { Text(stringResource(R.string.comms_merge)) }
+                    ) { Text(stringResource(I18nR.string.comms_merge)) }
                     TextButton(
                         onClick = { pending = groups },
                         modifier = Modifier.fillMaxWidth(),
-                    ) { Text(stringResource(R.string.hc_keep_first_in_every_group_delete_extras)) }
+                    ) { Text(stringResource(I18nR.string.hc_keep_first_in_every_group_delete_extras)) }
                 }
             }
         }

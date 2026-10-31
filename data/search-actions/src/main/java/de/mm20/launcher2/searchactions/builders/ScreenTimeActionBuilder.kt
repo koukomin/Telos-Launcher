@@ -1,7 +1,7 @@
 package de.mm20.launcher2.searchactions.builders
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
@@ -11,7 +11,7 @@ class ScreenTimeActionBuilder(
     override val label: String
 ) : SearchActionBuilder {
 
-    constructor(context: Context) : this(context.getString(R.string.search_action_screentime))
+    constructor(context: Context) : this(context.getString(I18nR.string.search_action_screentime))
 
     override val key: String
         get() = "screentime"

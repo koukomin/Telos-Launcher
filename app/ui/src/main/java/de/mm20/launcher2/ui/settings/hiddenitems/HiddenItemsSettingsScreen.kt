@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.hiddenitems
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -61,14 +63,14 @@ fun HiddenItemsSettingsScreen() {
     val showButton by viewModel.hiddenItemsButton.collectAsState()
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_hidden_items),
+        title = stringResource(I18nR.string.preference_hidden_items),
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         item {
             PreferenceCategory {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_hidden_items_reveal_button),
-                    summary = stringResource(R.string.preference_hidden_items_reveal_button_summary),
+                    title = stringResource(I18nR.string.preference_hidden_items_reveal_button),
+                    summary = stringResource(I18nR.string.preference_hidden_items_reveal_button_summary),
                     value = showButton,
                     onValueChanged = { viewModel.setHiddenItemsButton(it) }
                 )
@@ -221,7 +223,7 @@ private fun VisibilityDropdown(
             shapes = MenuDefaults.groupShapes(),
         ) {
             Text(
-                text = stringResource(R.string.customize_item_visibility),
+                text = stringResource(I18nR.string.customize_item_visibility),
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -234,22 +236,22 @@ private fun VisibilityDropdown(
                 shapes = MenuDefaults.itemShape(0, count),
                 leadingIcon = {
                     Icon(
-                        painterResource(R.drawable.visibility_24px_filled),
+                        painterResource(BaseR.drawable.visibility_24px_filled),
                         contentDescription = null
                     )
                 },
                 selectedLeadingIcon = {
                     Icon(
-                        painterResource(R.drawable.check_24px),
+                        painterResource(BaseR.drawable.check_24px),
                         contentDescription = null
                     )
                 },
                 text = {
                     Text(
                         when (item) {
-                            is Application -> stringResource(R.string.item_visibility_app_default)
-                            is CalendarEvent -> stringResource(R.string.item_visibility_calendar_default)
-                            else -> stringResource(R.string.item_visibility_search_only)
+                            is Application -> stringResource(I18nR.string.item_visibility_app_default)
+                            is CalendarEvent -> stringResource(I18nR.string.item_visibility_calendar_default)
+                            else -> stringResource(I18nR.string.item_visibility_search_only)
                         }
                     )
                 },
@@ -263,18 +265,18 @@ private fun VisibilityDropdown(
                     shapes = MenuDefaults.itemShape(1, count),
                     leadingIcon = {
                         Icon(
-                            painterResource(R.drawable.visibility_24px),
+                            painterResource(BaseR.drawable.visibility_24px),
                             contentDescription = null
                         )
                     },
                     selectedLeadingIcon = {
                         Icon(
-                            painterResource(R.drawable.check_24px),
+                            painterResource(BaseR.drawable.check_24px),
                             contentDescription = null
                         )
                     },
                     text = {
-                        Text(stringResource(R.string.item_visibility_search_only))
+                        Text(stringResource(I18nR.string.item_visibility_search_only))
                     },
                     onClick = {
                         onValueChanged(VisibilityLevel.SearchOnly)
@@ -286,18 +288,18 @@ private fun VisibilityDropdown(
                 shapes = MenuDefaults.itemShape(count - 1, count),
                 leadingIcon = {
                     Icon(
-                        painterResource(R.drawable.visibility_off_24px),
+                        painterResource(BaseR.drawable.visibility_off_24px),
                         contentDescription = null
                     )
                 },
                 selectedLeadingIcon = {
                     Icon(
-                        painterResource(R.drawable.check_24px),
+                        painterResource(BaseR.drawable.check_24px),
                         contentDescription = null
                     )
                 },
                 text = {
-                    Text(stringResource(R.string.item_visibility_hidden))
+                    Text(stringResource(I18nR.string.item_visibility_hidden))
                 },
                 onClick = {
                     onValueChanged(VisibilityLevel.Hidden)
@@ -334,9 +336,9 @@ private fun HiddenItem(
                 modifier = Modifier.alpha(if (visibility == VisibilityLevel.Hidden) 0.3f else 1f),
                 painter = painterResource(
                     when (visibility) {
-                    VisibilityLevel.Hidden -> R.drawable.visibility_off_24px
-                    VisibilityLevel.Default -> R.drawable.visibility_24px_filled
-                    VisibilityLevel.SearchOnly -> R.drawable.visibility_24px
+                    VisibilityLevel.Hidden -> BaseR.drawable.visibility_off_24px
+                    VisibilityLevel.Default -> BaseR.drawable.visibility_24px_filled
+                    VisibilityLevel.SearchOnly -> BaseR.drawable.visibility_24px
                 }),
                 tint = if (visibility == VisibilityLevel.Default) MaterialTheme.colorScheme.primary
                 else MaterialTheme.colorScheme.onSurfaceVariant,

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network.wireguard
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.content.Intent
@@ -105,14 +106,14 @@ fun NetworkWireguardScreen() {
     val filePicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri != null) scope.launch {
             val text = withContext(Dispatchers.IO) { readText(context, uri) }
-            if (text == null) Toast.makeText(context, context.getString(R.string.nwg_err_other), Toast.LENGTH_LONG).show()
+            if (text == null) Toast.makeText(context, context.getString(I18nR.string.nwg_err_other), Toast.LENGTH_LONG).show()
             else report(wg.importConf(text, null))
         }
     }
     val qrPicker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) scope.launch {
             val text = withContext(Dispatchers.IO) { decodeQr(context, uri) }
-            if (text == null) Toast.makeText(context, context.getString(R.string.nwg_qr_not_found), Toast.LENGTH_LONG).show()
+            if (text == null) Toast.makeText(context, context.getString(I18nR.string.nwg_qr_not_found), Toast.LENGTH_LONG).show()
             else report(wg.importConf(text, null))
         }
     }
@@ -122,10 +123,10 @@ fun NetworkWireguardScreen() {
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-                title = { Text(stringResource(R.string.nwg_title)) },
+                title = { Text(stringResource(I18nR.string.nwg_title)) },
                 navigationIcon = {
                     IconButton(onClick = { backStack.removeLastOrNull() }) {
-                        Icon(painterResource(IconsNetworkWireguardScreen.arrow_back_24px), contentDescription = stringResource(R.string.nwg_back))
+                        Icon(painterResource(IconsNetworkWireguardScreen.arrow_back_24px), contentDescription = stringResource(I18nR.string.nwg_back))
                     }
                 },
             )
@@ -133,10 +134,10 @@ fun NetworkWireguardScreen() {
         floatingActionButton = {
             Box {
                 FloatingActionButton(onClick = { addMenu = true }) {
-                    Icon(painterResource(IconsNetworkWireguardScreen.add_24px), contentDescription = stringResource(R.string.nwg_add))
+                    Icon(painterResource(IconsNetworkWireguardScreen.add_24px), contentDescription = stringResource(I18nR.string.nwg_add))
                 }
                 DropdownMenu(expanded = addMenu, onDismissRequest = { addMenu = false }) {
-                    DropdownMenuItem(text = { Text(stringResource(R.string.nwg_add_new)) }, onClick = {
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.nwg_add_new)) }, onClick = {
                         addMenu = false
                         editingIsNew = true
                         editing = WireguardConfig(
@@ -144,13 +145,13 @@ fun NetworkWireguardScreen() {
                             peers = listOf(WgPeer(publicKey = "", allowedIps = listOf("0.0.0.0/0", "::/0"), persistentKeepalive = 25)),
                         )
                     })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.nwg_add_file)) }, onClick = {
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.nwg_add_file)) }, onClick = {
                         addMenu = false; filePicker.launch(arrayOf("*/*"))
                     })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.nwg_add_qr)) }, onClick = {
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.nwg_add_qr)) }, onClick = {
                         addMenu = false; qrPicker.launch("image/*")
                     })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.nwg_add_paste)) }, onClick = {
+                    DropdownMenuItem(text = { Text(stringResource(I18nR.string.nwg_add_paste)) }, onClick = {
                         addMenu = false; pasting = true
                     })
                 }
@@ -164,8 +165,8 @@ fun NetworkWireguardScreen() {
             item { de.mm20.launcher2.ui.network.NetworkRouteChooser() }
             item {
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.nwg_apps)) },
-                    supportingContent = { Text(stringResource(R.string.nwg_apps_summary)) },
+                    headlineContent = { Text(stringResource(I18nR.string.nwg_apps)) },
+                    supportingContent = { Text(stringResource(I18nR.string.nwg_apps_summary)) },
                     leadingContent = { Icon(painterResource(IconsNetworkWireguardScreen.apps_24px), contentDescription = null) },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                     modifier = Modifier.clickable { backStack.add(NetworkWireguardAppsRoute) },
@@ -174,7 +175,7 @@ fun NetworkWireguardScreen() {
             }
             item {
                 Text(
-                    stringResource(R.string.nwg_configs),
+                    stringResource(I18nR.string.nwg_configs),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 4.dp),
@@ -183,7 +184,7 @@ fun NetworkWireguardScreen() {
             if (configs.isEmpty()) {
                 item {
                     Text(
-                        stringResource(R.string.nwg_empty),
+                        stringResource(I18nR.string.nwg_empty),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(16.dp),
                     )
@@ -198,9 +199,9 @@ fun NetworkWireguardScreen() {
                         Column {
                             Text(statusText(st), color = if (st == WgStatus.Up) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
                             if (s != null && st != WgStatus.Off) {
-                                Text(stringResource(R.string.nwg_traffic, Formatter.formatShortFileSize(context, s.rxBytes), Formatter.formatShortFileSize(context, s.txBytes)))
+                                Text(stringResource(I18nR.string.nwg_traffic, Formatter.formatShortFileSize(context, s.rxBytes), Formatter.formatShortFileSize(context, s.txBytes)))
                                 if (s.lastHandshakeMs > 0) {
-                                    Text(stringResource(R.string.nwg_handshake, DateUtils.getRelativeTimeSpanString(s.lastHandshakeMs, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString()))
+                                    Text(stringResource(I18nR.string.nwg_handshake, DateUtils.getRelativeTimeSpanString(s.lastHandshakeMs, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString()))
                                 }
                             }
                         }
@@ -215,7 +216,7 @@ fun NetworkWireguardScreen() {
             item {
                 if (configs.any { it.enabled } && status.isEmpty()) {
                     Text(
-                        stringResource(R.string.nwg_vpn_off_hint),
+                        stringResource(I18nR.string.nwg_vpn_off_hint),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(16.dp),
                     )
@@ -237,7 +238,7 @@ fun NetworkWireguardScreen() {
         var text by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { pasting = false },
-            title = { Text(stringResource(R.string.nwg_add_paste)) },
+            title = { Text(stringResource(I18nR.string.nwg_add_paste)) },
             text = {
                 OutlinedTextField(value = text, onValueChange = { text = it }, minLines = 6, modifier = Modifier.fillMaxWidth())
             },
@@ -245,9 +246,9 @@ fun NetworkWireguardScreen() {
                 TextButton(enabled = text.isNotBlank(), onClick = {
                     pasting = false
                     scope.launch { report(wg.importConf(text, null)) }
-                }) { Text(stringResource(R.string.nwg_import)) }
+                }) { Text(stringResource(I18nR.string.nwg_import)) }
             },
-            dismissButton = { TextButton(onClick = { pasting = false }) { Text(stringResource(R.string.nwg_cancel)) } },
+            dismissButton = { TextButton(onClick = { pasting = false }) { Text(stringResource(I18nR.string.nwg_cancel)) } },
         )
     }
 }
@@ -255,33 +256,33 @@ fun NetworkWireguardScreen() {
 @Composable
 private fun statusText(st: WgStatus): String = stringResource(
     when (st) {
-        WgStatus.Off -> R.string.nwg_status_off
-        WgStatus.Connecting -> R.string.nwg_status_connecting
-        WgStatus.Up -> R.string.nwg_status_up
-        WgStatus.Down -> R.string.nwg_status_down
-        WgStatus.Error -> R.string.nwg_status_error
+        WgStatus.Off -> I18nR.string.nwg_status_off
+        WgStatus.Connecting -> I18nR.string.nwg_status_connecting
+        WgStatus.Up -> I18nR.string.nwg_status_up
+        WgStatus.Down -> I18nR.string.nwg_status_down
+        WgStatus.Error -> I18nR.string.nwg_status_error
     }
 )
 
 internal fun errorText(context: Context, t: Throwable): String {
-    val e = t as? WgConfigException ?: return context.getString(R.string.nwg_err_other)
+    val e = t as? WgConfigException ?: return context.getString(I18nR.string.nwg_err_other)
     val d = e.detail
     return when (e.error) {
-        WgConfigError.Syntax -> context.getString(R.string.nwg_err_syntax, d)
-        WgConfigError.MissingInterface -> context.getString(R.string.nwg_err_missing, "[Interface]")
-        WgConfigError.MissingPrivateKey -> context.getString(R.string.nwg_err_missing, "PrivateKey")
-        WgConfigError.MissingAddress -> context.getString(R.string.nwg_err_missing, "Address")
-        WgConfigError.MissingPeer -> context.getString(R.string.nwg_err_missing, "[Peer]")
-        WgConfigError.MissingPublicKey -> context.getString(R.string.nwg_err_missing, "PublicKey")
-        WgConfigError.MissingAllowedIps -> context.getString(R.string.nwg_err_missing, "AllowedIPs")
-        WgConfigError.InvalidKey -> context.getString(R.string.nwg_err_invalid_key, d)
+        WgConfigError.Syntax -> context.getString(I18nR.string.nwg_err_syntax, d)
+        WgConfigError.MissingInterface -> context.getString(I18nR.string.nwg_err_missing, "[Interface]")
+        WgConfigError.MissingPrivateKey -> context.getString(I18nR.string.nwg_err_missing, "PrivateKey")
+        WgConfigError.MissingAddress -> context.getString(I18nR.string.nwg_err_missing, "Address")
+        WgConfigError.MissingPeer -> context.getString(I18nR.string.nwg_err_missing, "[Peer]")
+        WgConfigError.MissingPublicKey -> context.getString(I18nR.string.nwg_err_missing, "PublicKey")
+        WgConfigError.MissingAllowedIps -> context.getString(I18nR.string.nwg_err_missing, "AllowedIPs")
+        WgConfigError.InvalidKey -> context.getString(I18nR.string.nwg_err_invalid_key, d)
         WgConfigError.InvalidAddress, WgConfigError.InvalidDns, WgConfigError.InvalidAllowedIps,
-        WgConfigError.InvalidEndpoint, WgConfigError.InvalidNumber -> context.getString(R.string.nwg_err_invalid_value, d)
-        WgConfigError.InvalidHop -> context.getString(R.string.nwg_err_invalid_hop)
-        WgConfigError.InvalidName -> context.getString(R.string.nwg_err_invalid_name)
-        WgConfigError.NotFound -> context.getString(R.string.nwg_err_not_found)
-        WgConfigError.Storage -> context.getString(R.string.nwg_err_storage, d)
-        WgConfigError.TooLarge, WgConfigError.Other -> context.getString(R.string.nwg_err_other)
+        WgConfigError.InvalidEndpoint, WgConfigError.InvalidNumber -> context.getString(I18nR.string.nwg_err_invalid_value, d)
+        WgConfigError.InvalidHop -> context.getString(I18nR.string.nwg_err_invalid_hop)
+        WgConfigError.InvalidName -> context.getString(I18nR.string.nwg_err_invalid_name)
+        WgConfigError.NotFound -> context.getString(I18nR.string.nwg_err_not_found)
+        WgConfigError.Storage -> context.getString(I18nR.string.nwg_err_storage, d)
+        WgConfigError.TooLarge, WgConfigError.Other -> context.getString(I18nR.string.nwg_err_other)
     }
 }
 

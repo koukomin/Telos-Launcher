@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.desktopmode
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.media.AudioManager
 import androidx.compose.foundation.layout.padding
@@ -39,8 +41,8 @@ internal fun DesktopVolumeTrayIcon() {
     var showSlider by remember { mutableStateOf(false) }
 
     DesktopTrayIconButton(
-        icon = if (volume <= 0f) R.drawable.volume_off_24px else R.drawable.volume_up_24px,
-        contentDescription = stringResource(R.string.desktop_mode_tray_volume),
+        icon = if (volume <= 0f) BaseR.drawable.volume_off_24px else BaseR.drawable.volume_up_24px,
+        contentDescription = stringResource(I18nR.string.desktop_mode_tray_volume),
         active = showSlider,
         onClick = { showSlider = !showSlider },
     )

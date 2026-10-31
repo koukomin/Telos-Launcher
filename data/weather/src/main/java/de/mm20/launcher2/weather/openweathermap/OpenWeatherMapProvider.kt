@@ -1,11 +1,11 @@
 package de.mm20.launcher2.weather.openweathermap
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
-import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.weather.WeatherProvider
 import java.util.Locale
 
@@ -88,7 +88,7 @@ internal class OpenWeatherMapProvider(
                     currentWeather.dt > sunset || currentWeather.dt < sunrise
                 },
                 location = loc,
-                provider = context.getString(R.string.provider_openweathermap),
+                provider = context.getString(I18nR.string.provider_openweathermap),
                 providerUrl = "https://openweathermap.org/city/$cityId",
                 updateTime = System.currentTimeMillis()
             )
@@ -112,7 +112,7 @@ internal class OpenWeatherMapProvider(
                     windDirection = it.wind?.deg ?: -1.0,
                     night = it.sys?.pod == "n",
                     location = loc,
-                    provider = context.getString(R.string.provider_openweathermap),
+                    provider = context.getString(I18nR.string.provider_openweathermap),
                     providerUrl = "https://openweathermap.org/city/$cityId",
                     updateTime = System.currentTimeMillis()
                 )

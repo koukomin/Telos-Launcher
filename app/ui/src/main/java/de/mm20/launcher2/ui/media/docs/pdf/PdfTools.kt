@@ -14,6 +14,8 @@
  */
 
 package de.mm20.launcher2.ui.media.docs.pdf
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Activity
 import android.content.Context
@@ -23,19 +25,18 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.base.R as BaseR
 import java.io.File
 
 /** What a tool needs as input. */
 enum class ToolInput { ONE_PDF, MANY_PDF, TWO_PDF, IMAGES }
 
 enum class ToolGroup(@StringRes val title: Int) {
-    ORGANIZE(R.string.pdft_group_organize),
-    OPTIMIZE(R.string.pdft_group_optimize),
-    SECURITY(R.string.pdft_group_security),
-    EDIT(R.string.pdft_group_edit),
-    CONVERT(R.string.pdft_group_convert),
-    VIEW(R.string.pdft_group_view),
+    ORGANIZE(I18nR.string.pdft_group_organize),
+    OPTIMIZE(I18nR.string.pdft_group_optimize),
+    SECURITY(I18nR.string.pdft_group_security),
+    EDIT(I18nR.string.pdft_group_edit),
+    CONVERT(I18nR.string.pdft_group_convert),
+    VIEW(I18nR.string.pdft_group_view),
 }
 
 enum class PdfTool(
@@ -46,32 +47,32 @@ enum class PdfTool(
     @StringRes val description: Int,
     @DrawableRes val icon: Int,
 ) {
-    MERGE("merge", ToolGroup.ORGANIZE, ToolInput.MANY_PDF, R.string.pdft_tool_merge, R.string.pdft_tool_merge_desc, BaseR.drawable.attach_file_24px),
-    SPLIT("split", ToolGroup.ORGANIZE, ToolInput.ONE_PDF, R.string.pdft_tool_split, R.string.pdft_tool_split_desc, BaseR.drawable.content_cut_24px),
-    ROTATE("rotate", ToolGroup.ORGANIZE, ToolInput.ONE_PDF, R.string.pdft_tool_rotate, R.string.pdft_tool_rotate_desc, BaseR.drawable.autorenew_24px),
-    REARRANGE("rearrange", ToolGroup.ORGANIZE, ToolInput.ONE_PDF, R.string.pdft_tool_rearrange, R.string.pdft_tool_rearrange_desc, BaseR.drawable.swap_horiz_24px),
-    DELETE("delete", ToolGroup.ORGANIZE, ToolInput.ONE_PDF, R.string.pdft_tool_delete, R.string.pdft_tool_delete_desc, BaseR.drawable.delete_24px),
-    BOOKMARKS("bookmarks", ToolGroup.ORGANIZE, ToolInput.ONE_PDF, R.string.pdft_tool_bookmarks, R.string.pdft_tool_bookmarks_desc, BaseR.drawable.label_24px),
+    MERGE("merge", ToolGroup.ORGANIZE, ToolInput.MANY_PDF, I18nR.string.pdft_tool_merge, I18nR.string.pdft_tool_merge_desc, BaseR.drawable.attach_file_24px),
+    SPLIT("split", ToolGroup.ORGANIZE, ToolInput.ONE_PDF, I18nR.string.pdft_tool_split, I18nR.string.pdft_tool_split_desc, BaseR.drawable.content_cut_24px),
+    ROTATE("rotate", ToolGroup.ORGANIZE, ToolInput.ONE_PDF, I18nR.string.pdft_tool_rotate, I18nR.string.pdft_tool_rotate_desc, BaseR.drawable.autorenew_24px),
+    REARRANGE("rearrange", ToolGroup.ORGANIZE, ToolInput.ONE_PDF, I18nR.string.pdft_tool_rearrange, I18nR.string.pdft_tool_rearrange_desc, BaseR.drawable.swap_horiz_24px),
+    DELETE("delete", ToolGroup.ORGANIZE, ToolInput.ONE_PDF, I18nR.string.pdft_tool_delete, I18nR.string.pdft_tool_delete_desc, BaseR.drawable.delete_24px),
+    BOOKMARKS("bookmarks", ToolGroup.ORGANIZE, ToolInput.ONE_PDF, I18nR.string.pdft_tool_bookmarks, I18nR.string.pdft_tool_bookmarks_desc, BaseR.drawable.label_24px),
 
-    COMPRESS("compress", ToolGroup.OPTIMIZE, ToolInput.ONE_PDF, R.string.pdft_tool_compress, R.string.pdft_tool_compress_desc, BaseR.drawable.archive_24px),
-    GRAYSCALE("grayscale", ToolGroup.OPTIMIZE, ToolInput.ONE_PDF, R.string.pdft_tool_grayscale, R.string.pdft_tool_grayscale_desc, BaseR.drawable.palette_24px),
-    REPAIR("repair", ToolGroup.OPTIMIZE, ToolInput.ONE_PDF, R.string.pdft_tool_repair, R.string.pdft_tool_repair_desc, BaseR.drawable.handyman_24px),
+    COMPRESS("compress", ToolGroup.OPTIMIZE, ToolInput.ONE_PDF, I18nR.string.pdft_tool_compress, I18nR.string.pdft_tool_compress_desc, BaseR.drawable.archive_24px),
+    GRAYSCALE("grayscale", ToolGroup.OPTIMIZE, ToolInput.ONE_PDF, I18nR.string.pdft_tool_grayscale, I18nR.string.pdft_tool_grayscale_desc, BaseR.drawable.palette_24px),
+    REPAIR("repair", ToolGroup.OPTIMIZE, ToolInput.ONE_PDF, I18nR.string.pdft_tool_repair, I18nR.string.pdft_tool_repair_desc, BaseR.drawable.handyman_24px),
 
-    PROTECT("protect", ToolGroup.SECURITY, ToolInput.ONE_PDF, R.string.pdft_tool_protect, R.string.pdft_tool_protect_desc, BaseR.drawable.lock_24px),
-    UNLOCK("unlock", ToolGroup.SECURITY, ToolInput.ONE_PDF, R.string.pdft_tool_unlock, R.string.pdft_tool_unlock_desc, BaseR.drawable.encrypted_24px),
+    PROTECT("protect", ToolGroup.SECURITY, ToolInput.ONE_PDF, I18nR.string.pdft_tool_protect, I18nR.string.pdft_tool_protect_desc, BaseR.drawable.lock_24px),
+    UNLOCK("unlock", ToolGroup.SECURITY, ToolInput.ONE_PDF, I18nR.string.pdft_tool_unlock, I18nR.string.pdft_tool_unlock_desc, BaseR.drawable.encrypted_24px),
 
-    WATERMARK("watermark", ToolGroup.EDIT, ToolInput.ONE_PDF, R.string.pdft_tool_watermark, R.string.pdft_tool_watermark_desc, BaseR.drawable.opacity_24px),
-    PAGE_NUMBERS("page_numbers", ToolGroup.EDIT, ToolInput.ONE_PDF, R.string.pdft_tool_page_numbers, R.string.pdft_tool_page_numbers_desc, BaseR.drawable._123_24px),
-    SIGN("sign", ToolGroup.EDIT, ToolInput.ONE_PDF, R.string.pdft_tool_sign, R.string.pdft_tool_sign_desc, BaseR.drawable.gesture_24px),
-    METADATA("metadata", ToolGroup.EDIT, ToolInput.ONE_PDF, R.string.pdft_tool_metadata, R.string.pdft_tool_metadata_desc, BaseR.drawable.info_24px),
+    WATERMARK("watermark", ToolGroup.EDIT, ToolInput.ONE_PDF, I18nR.string.pdft_tool_watermark, I18nR.string.pdft_tool_watermark_desc, BaseR.drawable.opacity_24px),
+    PAGE_NUMBERS("page_numbers", ToolGroup.EDIT, ToolInput.ONE_PDF, I18nR.string.pdft_tool_page_numbers, I18nR.string.pdft_tool_page_numbers_desc, BaseR.drawable._123_24px),
+    SIGN("sign", ToolGroup.EDIT, ToolInput.ONE_PDF, I18nR.string.pdft_tool_sign, I18nR.string.pdft_tool_sign_desc, BaseR.drawable.gesture_24px),
+    METADATA("metadata", ToolGroup.EDIT, ToolInput.ONE_PDF, I18nR.string.pdft_tool_metadata, I18nR.string.pdft_tool_metadata_desc, BaseR.drawable.info_24px),
 
-    IMAGES_TO_PDF("images_to_pdf", ToolGroup.CONVERT, ToolInput.IMAGES, R.string.pdft_tool_images_to_pdf, R.string.pdft_tool_images_to_pdf_desc, BaseR.drawable.photo_24px),
-    PDF_TO_IMAGES("pdf_to_images", ToolGroup.CONVERT, ToolInput.ONE_PDF, R.string.pdft_tool_pdf_to_images, R.string.pdft_tool_pdf_to_images_desc, BaseR.drawable.wallpaper_24px),
-    EXTRACT_IMAGES("extract_images", ToolGroup.CONVERT, ToolInput.ONE_PDF, R.string.pdft_tool_extract_images, R.string.pdft_tool_extract_images_desc, BaseR.drawable.image_search_24px),
-    PDF_TO_TEXT("pdf_to_text", ToolGroup.CONVERT, ToolInput.ONE_PDF, R.string.pdft_tool_pdf_to_text, R.string.pdft_tool_pdf_to_text_desc, BaseR.drawable.text_fields_24px),
+    IMAGES_TO_PDF("images_to_pdf", ToolGroup.CONVERT, ToolInput.IMAGES, I18nR.string.pdft_tool_images_to_pdf, I18nR.string.pdft_tool_images_to_pdf_desc, BaseR.drawable.photo_24px),
+    PDF_TO_IMAGES("pdf_to_images", ToolGroup.CONVERT, ToolInput.ONE_PDF, I18nR.string.pdft_tool_pdf_to_images, I18nR.string.pdft_tool_pdf_to_images_desc, BaseR.drawable.wallpaper_24px),
+    EXTRACT_IMAGES("extract_images", ToolGroup.CONVERT, ToolInput.ONE_PDF, I18nR.string.pdft_tool_extract_images, I18nR.string.pdft_tool_extract_images_desc, BaseR.drawable.image_search_24px),
+    PDF_TO_TEXT("pdf_to_text", ToolGroup.CONVERT, ToolInput.ONE_PDF, I18nR.string.pdft_tool_pdf_to_text, I18nR.string.pdft_tool_pdf_to_text_desc, BaseR.drawable.text_fields_24px),
 
-    PREVIEW("preview", ToolGroup.VIEW, ToolInput.ONE_PDF, R.string.pdft_tool_preview, R.string.pdft_tool_preview_desc, BaseR.drawable.visibility_24px),
-    COMPARE("compare", ToolGroup.VIEW, ToolInput.TWO_PDF, R.string.pdft_tool_compare, R.string.pdft_tool_compare_desc, BaseR.drawable.swap_vert_24px);
+    PREVIEW("preview", ToolGroup.VIEW, ToolInput.ONE_PDF, I18nR.string.pdft_tool_preview, I18nR.string.pdft_tool_preview_desc, BaseR.drawable.visibility_24px),
+    COMPARE("compare", ToolGroup.VIEW, ToolInput.TWO_PDF, I18nR.string.pdft_tool_compare, I18nR.string.pdft_tool_compare_desc, BaseR.drawable.swap_vert_24px);
 
     companion object {
         fun fromKey(key: String?): PdfTool? = entries.firstOrNull { it.key == key }

@@ -1,13 +1,13 @@
 @file:Suppress("ClassName")
 
 package de.mm20.launcher2.database
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import de.mm20.launcher2.i18n.R
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.asExecutor
 import de.mm20.launcher2.database.daos.PluginDao
@@ -129,16 +129,16 @@ abstract class AppDatabase : RoomDatabase() {
                                 arrayOf<Any?>(
                                     9,
                                     "url",
-                                    context.getString(R.string.default_websearch_2_url),
-                                    context.getString(R.string.default_websearch_2_name),
+                                    context.getString(I18nR.string.default_websearch_2_url),
+                                    context.getString(I18nR.string.default_websearch_2_name),
                                     0,
                                     0,
                                     null,
                                     null,
                                     10,
                                     "url",
-                                    context.getString(R.string.default_websearch_3_url),
-                                    context.getString(R.string.default_websearch_3_name),
+                                    context.getString(I18nR.string.default_websearch_3_url),
+                                    context.getString(I18nR.string.default_websearch_3_name),
                                     0,
                                     0,
                                     null,

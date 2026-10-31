@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.comms.radio
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -146,7 +148,7 @@ internal fun RadioLogo(station: RadioStation, modifier: Modifier, corner: Dp = 2
                 modifier = Modifier.fillMaxSize().padding(pad),
             )
         } else {
-            Icon(painterResource(R.drawable.music_note_24px), null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(40.dp))
+            Icon(painterResource(BaseR.drawable.music_note_24px), null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(40.dp))
         }
     }
 }
@@ -242,10 +244,10 @@ fun RadioHome(
                         onClick = { onChip(c) },
                         label = stringResource(
                             when (c) {
-                                RadioChip.All -> R.string.au10_radio_chip_all
-                                RadioChip.Recent -> R.string.au10_radio_chip_recent
-                                RadioChip.Mine -> R.string.au10_radio_chip_mine
-                                RadioChip.Browser -> R.string.au10_radio_chip_browser
+                                RadioChip.All -> I18nR.string.au10_radio_chip_all
+                                RadioChip.Recent -> I18nR.string.au10_radio_chip_recent
+                                RadioChip.Mine -> I18nR.string.au10_radio_chip_mine
+                                RadioChip.Browser -> I18nR.string.au10_radio_chip_browser
                             }
                         ),
                     )
@@ -256,7 +258,7 @@ fun RadioHome(
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Column(Modifier.padding(top = 12.dp)) {
                     Text(
-                        stringResource(R.string.au10_radio_recent_title),
+                        stringResource(I18nR.string.au10_radio_recent_title),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(bottom = 12.dp),

@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.gestures
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
@@ -84,24 +86,24 @@ fun GestureSettingsScreen() {
     val context = LocalContext.current
     val telosNavigation by viewModel.telosNavigation.collectAsStateWithLifecycle(false)
     val telosRecents by viewModel.telosRecents.collectAsStateWithLifecycle(false)
-    PreferenceScreen(title = stringResource(R.string.preference_screen_gestures)) {
+    PreferenceScreen(title = stringResource(I18nR.string.preference_screen_gestures)) {
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_telos_navigation)) {
+            PreferenceCategory(title = stringResource(I18nR.string.preference_category_telos_navigation)) {
                 GuardedPreference(
                     locked = hasPermission == false,
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_telos_navigation),
-                        summary = stringResource(R.string.preference_telos_navigation_summary),
+                        title = stringResource(I18nR.string.preference_telos_navigation),
+                        summary = stringResource(I18nR.string.preference_telos_navigation_summary),
                         value = telosNavigation,
                         onValueChanged = viewModel::setTelosNavigation,
                     )
                     SwitchPreference(
-                        title = stringResource(R.string.preference_telos_recents),
-                        summary = stringResource(R.string.preference_telos_recents_summary),
+                        title = stringResource(I18nR.string.preference_telos_recents),
+                        summary = stringResource(I18nR.string.preference_telos_recents_summary),
                         value = telosRecents,
                         onValueChanged = viewModel::setTelosRecents,
                     )
@@ -113,13 +115,13 @@ fun GestureSettingsScreen() {
                 val swipeDown by viewModel.swipeDown.collectAsStateWithLifecycle(null)
                 GuardedPreference(
                     locked = hasPermission == false && requiresAccessibilityService(swipeDown),
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
-                        title = stringResource(R.string.preference_gesture_swipe_down),
-                        icon = R.drawable.swipe_down_alt_24px,
+                        title = stringResource(I18nR.string.preference_gesture_swipe_down),
+                        icon = BaseR.drawable.swipe_down_alt_24px,
                         value = swipeDown,
                         onValueChanged = viewModel::setSwipeDown,
                         options = options,
@@ -133,13 +135,13 @@ fun GestureSettingsScreen() {
                 val swipeLeft by viewModel.swipeLeft.collectAsStateWithLifecycle(null)
                 GuardedPreference(
                     locked = hasPermission == false && requiresAccessibilityService(swipeLeft),
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
-                        title = stringResource(R.string.preference_gesture_swipe_left),
-                        icon = R.drawable.swipe_left_alt_24px,
+                        title = stringResource(I18nR.string.preference_gesture_swipe_left),
+                        icon = BaseR.drawable.swipe_left_alt_24px,
                         value = swipeLeft,
                         onValueChanged = viewModel::setSwipeLeft,
                         options = options,
@@ -153,13 +155,13 @@ fun GestureSettingsScreen() {
                 val swipeRight by viewModel.swipeRight.collectAsStateWithLifecycle(null)
                 GuardedPreference(
                     locked = hasPermission == false && requiresAccessibilityService(swipeRight),
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
-                        title = stringResource(R.string.preference_gesture_swipe_right),
-                        icon = R.drawable.swipe_right_alt_24px,
+                        title = stringResource(I18nR.string.preference_gesture_swipe_right),
+                        icon = BaseR.drawable.swipe_right_alt_24px,
                         value = swipeRight,
                         onValueChanged = viewModel::setSwipeRight,
                         options = optionsWithFeed,
@@ -173,13 +175,13 @@ fun GestureSettingsScreen() {
                 val swipeUp by viewModel.swipeUp.collectAsStateWithLifecycle(null)
                 GuardedPreference(
                     locked = hasPermission == false && requiresAccessibilityService(swipeUp),
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
-                        title = stringResource(R.string.preference_gesture_swipe_up),
-                        icon = R.drawable.swipe_up_alt_24px,
+                        title = stringResource(I18nR.string.preference_gesture_swipe_up),
+                        icon = BaseR.drawable.swipe_up_alt_24px,
                         value = swipeUp,
                         onValueChanged = viewModel::setSwipeUp,
                         options = options,
@@ -193,13 +195,13 @@ fun GestureSettingsScreen() {
                 val doubleTap by viewModel.doubleTap.collectAsStateWithLifecycle(null)
                 GuardedPreference(
                     locked = hasPermission == false && requiresAccessibilityService(doubleTap),
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
-                        title = stringResource(R.string.preference_gesture_double_tap),
-                        icon = R.drawable.adjust_24px,
+                        title = stringResource(I18nR.string.preference_gesture_double_tap),
+                        icon = BaseR.drawable.adjust_24px,
                         value = doubleTap,
                         onValueChanged = viewModel::setDoubleTap,
                         options = options,
@@ -213,13 +215,13 @@ fun GestureSettingsScreen() {
                 val longPress by viewModel.longPress.collectAsStateWithLifecycle(null)
                 GuardedPreference(
                     locked = hasPermission == false && requiresAccessibilityService(longPress),
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
-                        title = stringResource(R.string.preference_gesture_long_press),
-                        icon = R.drawable.circle_24px,
+                        title = stringResource(I18nR.string.preference_gesture_long_press),
+                        icon = BaseR.drawable.circle_24px,
                         value = longPress,
                         onValueChanged = viewModel::setLongPress,
                         options = options,
@@ -232,13 +234,13 @@ fun GestureSettingsScreen() {
                 val homeButton by viewModel.homeButton.collectAsStateWithLifecycle(null)
                 GuardedPreference(
                     locked = hasPermission == false && requiresAccessibilityService(homeButton),
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
-                        title = stringResource(R.string.preference_gesture_home_button),
-                        icon = R.drawable.home_24px,
+                        title = stringResource(I18nR.string.preference_gesture_home_button),
+                        icon = BaseR.drawable.home_24px,
                         value = homeButton,
                         onValueChanged = viewModel::setHomeButton,
                         options = options,
@@ -252,13 +254,13 @@ fun GestureSettingsScreen() {
                 val pinchIn by viewModel.pinchIn.collectAsStateWithLifecycle(null)
                 GuardedPreference(
                     locked = hasPermission == false && requiresAccessibilityService(pinchIn),
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
-                        title = stringResource(R.string.preference_gesture_pinch_in),
-                        icon = R.drawable.pinch_zoom_in_24px,
+                        title = stringResource(I18nR.string.preference_gesture_pinch_in),
+                        icon = BaseR.drawable.pinch_zoom_in_24px,
                         value = pinchIn,
                         onValueChanged = viewModel::setPinchIn,
                         options = options,
@@ -272,13 +274,13 @@ fun GestureSettingsScreen() {
                 val pinchOut by viewModel.pinchOut.collectAsStateWithLifecycle(null)
                 GuardedPreference(
                     locked = hasPermission == false && requiresAccessibilityService(pinchOut),
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
-                        title = stringResource(R.string.preference_gesture_pinch_out),
-                        icon = R.drawable.pinch_zoom_out_24px,
+                        title = stringResource(I18nR.string.preference_gesture_pinch_out),
+                        icon = BaseR.drawable.pinch_zoom_out_24px,
                         value = pinchOut,
                         onValueChanged = viewModel::setPinchOut,
                         options = options,
@@ -292,13 +294,13 @@ fun GestureSettingsScreen() {
                 val twoFingerSwipeUp by viewModel.twoFingerSwipeUp.collectAsStateWithLifecycle(null)
                 GuardedPreference(
                     locked = hasPermission == false && requiresAccessibilityService(twoFingerSwipeUp),
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
-                        title = stringResource(R.string.preference_gesture_two_finger_swipe_up),
-                        icon = R.drawable.swipe_vertical_24px,
+                        title = stringResource(I18nR.string.preference_gesture_two_finger_swipe_up),
+                        icon = BaseR.drawable.swipe_vertical_24px,
                         value = twoFingerSwipeUp,
                         onValueChanged = viewModel::setTwoFingerSwipeUp,
                         options = options,
@@ -312,13 +314,13 @@ fun GestureSettingsScreen() {
                 val twoFingerSwipeDown by viewModel.twoFingerSwipeDown.collectAsStateWithLifecycle(null)
                 GuardedPreference(
                     locked = hasPermission == false && requiresAccessibilityService(twoFingerSwipeDown),
-                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    description = stringResource(I18nR.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
                     showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
-                        title = stringResource(R.string.preference_gesture_two_finger_swipe_down),
-                        icon = R.drawable.swipe_vertical_24px,
+                        title = stringResource(I18nR.string.preference_gesture_two_finger_swipe_down),
+                        icon = BaseR.drawable.swipe_vertical_24px,
                         value = twoFingerSwipeDown,
                         onValueChanged = viewModel::setTwoFingerSwipeDown,
                         options = options,
@@ -377,7 +379,7 @@ fun requiresAccessibilityService(action: GestureAction?): Boolean {
 //
 //                        else -> value?.javaClass == option.second.javaClass
 //                    }
-//                }?.first ?: stringResource(R.string.gesture_action_none),
+//                }?.first ?: stringResource(I18nR.string.gesture_action_none),
 //                onValueChanged = { if (it != null) onValueChanged(it) },
 //            )
 //        }
@@ -408,7 +410,7 @@ fun requiresAccessibilityService(action: GestureAction?): Boolean {
 //                modifier = Modifier.padding(4.dp),
 //                onClick = {}
 //            ) {
-//                Icon(painterResource(R.drawable.tune_24px), "")
+//                Icon(painterResource(BaseR.drawable.tune_24px), "")
 //            }
 //        }
 //    }

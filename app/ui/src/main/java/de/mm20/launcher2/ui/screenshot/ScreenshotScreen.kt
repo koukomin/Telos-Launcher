@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.screenshot
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.app.Activity
 import android.content.Intent
@@ -123,7 +125,7 @@ fun ScreenshotScreen() {
                 ShareActions.shareUris(context, uris, "image/*")
             }
             if (!shared) {
-                Toast.makeText(context, R.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, I18nR.string.au20_viewer_share_failed, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -140,13 +142,13 @@ fun ScreenshotScreen() {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        stringResource(R.string.screenshot_title),
+                        stringResource(I18nR.string.screenshot_title),
                         style = MaterialTheme.typography.displaySmall,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.weight(1f).padding(start = 8.dp, top = 16.dp, bottom = 8.dp),
                     )
                     IconButton(onClick = { backStack.add(ScreenshotSettingsRoute) }) {
-                        Icon(painterResource(R.drawable.settings_24px), contentDescription = stringResource(R.string.voice_settings))
+                        Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.voice_settings))
                     }
                 }
             }
@@ -155,41 +157,41 @@ fun ScreenshotScreen() {
                     Column(
                         Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.errorContainer).padding(16.dp),
                     ) {
-                        Text(stringResource(R.string.screenshot_accessibility_banner), color = MaterialTheme.colorScheme.onErrorContainer)
+                        Text(stringResource(I18nR.string.screenshot_accessibility_banner), color = MaterialTheme.colorScheme.onErrorContainer)
                         Button(
                             onClick = { context.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) },
                             modifier = Modifier.padding(top = 8.dp),
-                        ) { Text(stringResource(R.string.screenshot_open_accessibility)) }
+                        ) { Text(stringResource(I18nR.string.screenshot_open_accessibility)) }
                     }
                 }
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(vertical = 8.dp)) {
-                    CaptureCard(R.drawable.ic_sidebar_screenshot, R.string.screenshot_full, R.string.screenshot_full_summary) {
+                    CaptureCard(BaseR.drawable.ic_sidebar_screenshot, I18nR.string.screenshot_full, I18nR.string.screenshot_full_summary) {
                         capture { ScreenshotController.captureFull(context) }
                     }
-                    CaptureCard(R.drawable.ic_sidebar_partial_screenshot, R.string.screenshot_partial, R.string.screenshot_partial_summary) {
+                    CaptureCard(BaseR.drawable.ic_sidebar_partial_screenshot, I18nR.string.screenshot_partial, I18nR.string.screenshot_partial_summary) {
                         capture { ScreenshotController.capturePartial(context) }
                     }
-                    CaptureCard(R.drawable.ic_sidebar_scrolling_screenshot, R.string.screenshot_scrolling, R.string.screenshot_scrolling_summary) {
+                    CaptureCard(BaseR.drawable.ic_sidebar_scrolling_screenshot, I18nR.string.screenshot_scrolling, I18nR.string.screenshot_scrolling_summary) {
                         capture { ScreenshotController.captureScrolling(context) }
                     }
                 }
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Text(
-                    stringResource(R.string.screenshot_screenshots),
+                    stringResource(I18nR.string.screenshot_screenshots),
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(start = 8.dp, top = 8.dp, bottom = 4.dp),
                 )
             }
             if (shots.isEmpty()) {
                 item(span = { GridItemSpan(maxLineSpan) }) {
-                    Text(stringResource(R.string.screenshot_none), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(8.dp))
+                    Text(stringResource(I18nR.string.screenshot_none), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(8.dp))
                 }
             } else {
                 item(span = { GridItemSpan(maxLineSpan) }) {
-                    TelosSearchBar(shotQuery, { shotQuery = it }, stringResource(R.string.tsp_search_screenshots), Modifier.padding(horizontal = 0.dp))
+                    TelosSearchBar(shotQuery, { shotQuery = it }, stringResource(I18nR.string.tsp_search_screenshots), Modifier.padding(horizontal = 0.dp))
                 }
                 if (shownShots.isEmpty() && shotQuery.isNotBlank()) {
                     item(span = { GridItemSpan(maxLineSpan) }) { SearchEmptyState(shotQuery) }
@@ -245,15 +247,15 @@ fun ScreenshotScreen() {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    stringResource(R.string.au_viewer_items, selectedShots.size),
+                    stringResource(I18nR.string.au_viewer_items, selectedShots.size),
                     modifier = Modifier.weight(1f).padding(start = 8.dp),
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 IconButton(onClick = ::shareSelected) {
-                    Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.hc_share))
+                    Icon(painterResource(BaseR.drawable.share_24px), contentDescription = stringResource(I18nR.string.hc_share))
                 }
                 IconButton(onClick = { selectedShots = emptySet() }) {
-                    Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_cancel))
+                    Icon(painterResource(BaseR.drawable.close_24px), contentDescription = stringResource(I18nR.string.hc_cancel))
                 }
             }
         }
@@ -292,37 +294,37 @@ fun ScreenshotSettingsScreen() {
     var delay by remember { mutableStateOf(settings.delay) }
     var notify by remember { mutableStateOf(settings.notify) }
 
-    PreferenceScreen(title = stringResource(R.string.voice_settings)) {
+    PreferenceScreen(title = stringResource(I18nR.string.voice_settings)) {
         item {
-            PreferenceCategory(title = stringResource(R.string.screenshot_settings_capture)) {
+            PreferenceCategory(title = stringResource(I18nR.string.screenshot_settings_capture)) {
                 ListPreference(
-                    title = stringResource(R.string.screenshot_format),
+                    title = stringResource(I18nR.string.screenshot_format),
                     items = listOf(ListPreferenceItem("PNG", ScreenshotFormat.Png), ListPreferenceItem("JPEG", ScreenshotFormat.Jpeg)),
                     value = format,
                     onValueChanged = { format = it; settings.format = it },
                 )
                 ListPreference(
-                    title = stringResource(R.string.screenshot_delay),
+                    title = stringResource(I18nR.string.screenshot_delay),
                     items = listOf(
-                        ListPreferenceItem(stringResource(R.string.screenshot_delay_none), 0),
-                        ListPreferenceItem(stringResource(R.string.au_capture_seconds, 3), 3),
-                        ListPreferenceItem(stringResource(R.string.au_capture_seconds, 5), 5),
-                        ListPreferenceItem(stringResource(R.string.au_capture_seconds, 10), 10),
+                        ListPreferenceItem(stringResource(I18nR.string.screenshot_delay_none), 0),
+                        ListPreferenceItem(stringResource(I18nR.string.au_capture_seconds, 3), 3),
+                        ListPreferenceItem(stringResource(I18nR.string.au_capture_seconds, 5), 5),
+                        ListPreferenceItem(stringResource(I18nR.string.au_capture_seconds, 10), 10),
                     ),
                     value = delay,
                     onValueChanged = { delay = it; settings.delay = it },
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.screenshot_notify),
-                    summary = stringResource(R.string.screenshot_notify_summary),
+                    title = stringResource(I18nR.string.screenshot_notify),
+                    summary = stringResource(I18nR.string.screenshot_notify_summary),
                     value = notify,
                     onValueChanged = { notify = it; settings.notify = it },
                 )
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.voice_settings_privacy)) {
-                Text(stringResource(R.string.screenshot_privacy), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(16.dp))
+            PreferenceCategory(title = stringResource(I18nR.string.voice_settings_privacy)) {
+                Text(stringResource(I18nR.string.screenshot_privacy), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(16.dp))
             }
         }
     }

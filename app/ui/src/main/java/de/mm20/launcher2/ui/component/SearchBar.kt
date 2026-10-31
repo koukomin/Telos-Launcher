@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.component
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.ui.theme.panelContentColor
 import de.mm20.launcher2.ui.theme.rememberWallpaperContentStyle
@@ -153,7 +155,7 @@ fun SearchBar(
                 ) {
                     Icon(
                         modifier = Modifier.padding(12.dp),
-                        painter = painterResource(R.drawable.search_24px),
+                        painter = painterResource(BaseR.drawable.search_24px),
                         contentDescription = null,
                         tint = resolvedContentColor
                     )
@@ -162,7 +164,7 @@ fun SearchBar(
                     ) {
                         if (value.isEmpty()) {
                             Text(
-                                text = stringResource(R.string.search_bar_placeholder),
+                                text = stringResource(I18nR.string.search_bar_placeholder),
                                 style = MaterialTheme.typography.titleMedium,
                                 color = resolvedContentColor
                             )
@@ -175,7 +177,7 @@ fun SearchBar(
                                 .focusRequester(focusRequester)
                                 .fillMaxWidth()
                                 .semantics {
-                                    contentDescription = context.getString(R.string.search_bar_placeholder)
+                                    contentDescription = context.getString(I18nR.string.search_bar_placeholder)
                                 },
                             textStyle = MaterialTheme.typography.titleMedium.copy(
                                 color = resolvedContentColor

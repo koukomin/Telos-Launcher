@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.launcher
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import android.os.Bundle
@@ -39,18 +41,18 @@ class TelosRecentsActivity : BaseActivity() {
                         Scaffold(
                             topBar = {
                                 TopAppBar(
-                                    title = { Text(stringResource(R.string.telos_recents_title)) },
+                                    title = { Text(stringResource(I18nR.string.telos_recents_title)) },
                                     navigationIcon = {
                                         IconButton(onClick = { finish() }) {
                                             Icon(
-                                                painter = painterResource(R.drawable.arrow_back_24px),
+                                                painter = painterResource(BaseR.drawable.arrow_back_24px),
                                                 contentDescription = null,
                                             )
                                         }
                                     },
                                     actions = {
                                         TextButton(onClick = { RecentsStore.clear() }) {
-                                            Text(stringResource(R.string.telos_recents_clear))
+                                            Text(stringResource(I18nR.string.telos_recents_clear))
                                         }
                                     },
                                 )

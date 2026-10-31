@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.settings.apps
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
@@ -30,22 +32,22 @@ fun AppSearchSettingsScreen() {
     // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 
     PreferenceScreen(
-        title = stringResource(R.string.preference_search_apps)
+        title = stringResource(I18nR.string.preference_search_apps)
     ) {
         item {
             PreferenceCategory {
                 SwitchPreference(
-                    icon = R.drawable.apps_24px,
-                    title = stringResource(R.string.preference_search_apps),
-                    summary = stringResource(R.string.preference_search_apps_summary),
+                    icon = BaseR.drawable.apps_24px,
+                    title = stringResource(I18nR.string.preference_search_apps),
+                    summary = stringResource(I18nR.string.preference_search_apps_summary),
                     value = allApps == true,
                     onValueChanged = {
                         viewModel.setAllApps(it)
                     }
                 )
                 SwitchPreference(
-                    title = stringResource(R.string.preference_search_apps_show_details),
-                    summary = stringResource(R.string.preference_search_apps_show_details_summary),
+                    title = stringResource(I18nR.string.preference_search_apps_show_details),
+                    summary = stringResource(I18nR.string.preference_search_apps_show_details_summary),
                     value = showAppDetails == true,
                     onValueChanged = {
                         viewModel.setHideAppDetails(it)
@@ -56,8 +58,8 @@ fun AppSearchSettingsScreen() {
         item {
             PreferenceCategory {
                 SwitchPreference(
-                    title = stringResource(R.string.preference_grid_list_style),
-                    summary = stringResource(R.string.preference_grid_list_style_summary),
+                    title = stringResource(I18nR.string.preference_grid_list_style),
+                    summary = stringResource(I18nR.string.preference_grid_list_style_summary),
                     value = showList == true,
                     onValueChanged = {
                         viewModel.setShowList(it)
@@ -65,8 +67,8 @@ fun AppSearchSettingsScreen() {
                 )
                 AnimatedVisibility(showList == true) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_grid_list_icons),
-                        summary = stringResource(R.string.preference_grid_list_icons_summary),
+                        title = stringResource(I18nR.string.preference_grid_list_icons),
+                        summary = stringResource(I18nR.string.preference_grid_list_icons_summary),
                         value = showListIcons == true,
                         onValueChanged = {
                             viewModel.setShowListIcons(it)
@@ -76,8 +78,8 @@ fun AppSearchSettingsScreen() {
                 
                 // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 SwitchPreference(
-                    title = stringResource(R.string.preference_drawer_frozen_to_end),
-                    summary = stringResource(R.string.preference_drawer_frozen_to_end_summary),
+                    title = stringResource(I18nR.string.preference_drawer_frozen_to_end),
+                    summary = stringResource(I18nR.string.preference_drawer_frozen_to_end_summary),
                     value = moveFrozenAppsToEnd == true,
                     onValueChanged = {
                         viewModel.setMoveFrozenAppsToEnd(it)

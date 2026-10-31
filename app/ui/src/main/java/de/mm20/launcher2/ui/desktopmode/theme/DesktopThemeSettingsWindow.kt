@@ -1,5 +1,6 @@
 // === TELOS_PENDING_REVIEW_START: desktop_wm_klassy_sweet_theming ===
 package de.mm20.launcher2.ui.desktopmode.theme
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -60,7 +61,7 @@ fun DesktopThemeSettingsWindow(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.palette_24px),
+                        painter = painterResource(BaseR.drawable.palette_24px),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(20.dp)
@@ -73,7 +74,7 @@ fun DesktopThemeSettingsWindow(
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = onDismiss) {
-                        Icon(painterResource(R.drawable.close_24px), contentDescription = "Close")
+                        Icon(painterResource(BaseR.drawable.close_24px), contentDescription = "Close")
                     }
                 }
             }

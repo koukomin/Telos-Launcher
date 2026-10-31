@@ -1,4 +1,5 @@
 package de.mm20.launcher2.ui.network.logs
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -139,7 +140,7 @@ fun NetworkLogsScreen() {
                 }
                 Toast.makeText(
                     context,
-                    context.getString(if (written) R.string.hc_done else R.string.au_netui_export_failed),
+                    context.getString(if (written) I18nR.string.hc_done else I18nR.string.au_netui_export_failed),
                     Toast.LENGTH_SHORT,
                 ).show()
             }
@@ -149,8 +150,8 @@ fun NetworkLogsScreen() {
     if (confirmClear) {
         AlertDialog(
             onDismissRequest = { confirmClear = false },
-            title = { Text(stringResource(R.string.netfw_l_clear)) },
-            text = { Text(stringResource(R.string.au2_netsec_clear_logs_message)) },
+            title = { Text(stringResource(I18nR.string.netfw_l_clear)) },
+            text = { Text(stringResource(I18nR.string.au2_netsec_clear_logs_message)) },
             confirmButton = {
                 TextButton(onClick = {
                     confirmClear = false
@@ -161,38 +162,38 @@ fun NetworkLogsScreen() {
                             else -> logs.clearAll()
                         }
                     }
-                }) { Text(stringResource(R.string.au2_netsec_confirm_clear)) }
+                }) { Text(stringResource(I18nR.string.au2_netsec_confirm_clear)) }
             },
-            dismissButton = { TextButton(onClick = { confirmClear = false }) { Text(stringResource(R.string.au2_netsec_cancel)) } },
+            dismissButton = { TextButton(onClick = { confirmClear = false }) { Text(stringResource(I18nR.string.au2_netsec_cancel)) } },
         )
     }
     confirmClearApp?.let { id ->
         AlertDialog(
             onDismissRequest = { confirmClearApp = null },
-            title = { Text(stringResource(R.string.netfw_l_clear_app, directory.labelFor(id))) },
-            text = { Text(stringResource(R.string.au2_netsec_clear_app_logs_message, directory.labelFor(id))) },
+            title = { Text(stringResource(I18nR.string.netfw_l_clear_app, directory.labelFor(id))) },
+            text = { Text(stringResource(I18nR.string.au2_netsec_clear_app_logs_message, directory.labelFor(id))) },
             confirmButton = {
                 TextButton(onClick = {
                     confirmClearApp = null
                     scope.launch { logs.clearApp(id) }
-                }) { Text(stringResource(R.string.au2_netsec_confirm_clear)) }
+                }) { Text(stringResource(I18nR.string.au2_netsec_confirm_clear)) }
             },
-            dismissButton = { TextButton(onClick = { confirmClearApp = null }) { Text(stringResource(R.string.au2_netsec_cancel)) } },
+            dismissButton = { TextButton(onClick = { confirmClearApp = null }) { Text(stringResource(I18nR.string.au2_netsec_cancel)) } },
         )
     }
 
     PreferenceScreen(
         bottomBar = { de.mm20.launcher2.ui.network.NetworkNavigationBar(de.mm20.launcher2.ui.network.NetworkSection.Logs) },
-        title = stringResource(R.string.netfw_l_title),
+        title = stringResource(I18nR.string.netfw_l_title),
         topBarActions = {
             Box {
                 IconButton(onClick = { menu = true }) {
-                    Icon(painterResource(IconsNetworkLogsScreen.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+                    Icon(painterResource(IconsNetworkLogsScreen.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_more))
                 }
                 DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     if (tab != TAB_APPS) {
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.netfw_l_export)) },
+                            text = { Text(stringResource(I18nR.string.netfw_l_export)) },
                             onClick = {
                                 menu = false
                                 exportDns = tab == TAB_DNS
@@ -201,7 +202,7 @@ fun NetworkLogsScreen() {
                         )
                     }
                     DropdownMenuItem(
-                        text = { Text(stringResource(R.string.netfw_l_clear)) },
+                        text = { Text(stringResource(I18nR.string.netfw_l_clear)) },
                         onClick = {
                             menu = false
                             confirmClear = true
@@ -209,7 +210,7 @@ fun NetworkLogsScreen() {
                     )
                     appFilter?.let { id ->
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.netfw_l_clear_app, directory.labelFor(id))) },
+                            text = { Text(stringResource(I18nR.string.netfw_l_clear_app, directory.labelFor(id))) },
                             onClick = { menu = false; confirmClearApp = id },
                         )
                     }
@@ -222,15 +223,15 @@ fun NetworkLogsScreen() {
                 modifier = Modifier.horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                FilterChip(selected = tab == TAB_CONNECTIONS, onClick = { tab = TAB_CONNECTIONS }, label = { Text(stringResource(R.string.netfw_l_connections)) })
-                FilterChip(selected = tab == TAB_DNS, onClick = { tab = TAB_DNS }, label = { Text(stringResource(R.string.netfw_l_dns)) })
-                FilterChip(selected = tab == TAB_APPS, onClick = { tab = TAB_APPS }, label = { Text(stringResource(R.string.netfw_l_apps)) })
+                FilterChip(selected = tab == TAB_CONNECTIONS, onClick = { tab = TAB_CONNECTIONS }, label = { Text(stringResource(I18nR.string.netfw_l_connections)) })
+                FilterChip(selected = tab == TAB_DNS, onClick = { tab = TAB_DNS }, label = { Text(stringResource(I18nR.string.netfw_l_dns)) })
+                FilterChip(selected = tab == TAB_APPS, onClick = { tab = TAB_APPS }, label = { Text(stringResource(I18nR.string.netfw_l_apps)) })
             }
         }
         item {
             Text(
                 stringResource(
-                    R.string.netfw_l_stats,
+                    I18nR.string.netfw_l_stats,
                     if (tab == TAB_DNS) stats.dnsAllowed else stats.connectionsAllowed,
                     if (tab == TAB_DNS) stats.dnsBlocked else stats.connectionsBlocked,
                 ),
@@ -242,7 +243,7 @@ fun NetworkLogsScreen() {
         if ((tab == TAB_CONNECTIONS && !values.logConnections) || (tab == TAB_DNS && !values.logDns)) {
             item {
                 Text(
-                    stringResource(R.string.netfw_l_logging_off),
+                    stringResource(I18nR.string.netfw_l_logging_off),
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.padding(horizontal = 16.dp),
                 )
@@ -251,14 +252,14 @@ fun NetworkLogsScreen() {
         run {
             item {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.netfw_l_search))
+                    de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(I18nR.string.netfw_l_search))
                     if (tab != TAB_APPS) Row(
                         modifier = Modifier.horizontalScroll(rememberScrollState()),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        FilterChip(selected = blockedFilter == 0, onClick = { blockedFilter = 0 }, label = { Text(stringResource(R.string.netfw_l_all)) })
-                        FilterChip(selected = blockedFilter == 1, onClick = { blockedFilter = 1 }, label = { Text(stringResource(R.string.netfw_l_blocked)) })
-                        FilterChip(selected = blockedFilter == 2, onClick = { blockedFilter = 2 }, label = { Text(stringResource(R.string.netfw_l_allowed)) })
+                        FilterChip(selected = blockedFilter == 0, onClick = { blockedFilter = 0 }, label = { Text(stringResource(I18nR.string.netfw_l_all)) })
+                        FilterChip(selected = blockedFilter == 1, onClick = { blockedFilter = 1 }, label = { Text(stringResource(I18nR.string.netfw_l_blocked)) })
+                        FilterChip(selected = blockedFilter == 2, onClick = { blockedFilter = 2 }, label = { Text(stringResource(I18nR.string.netfw_l_allowed)) })
                         appFilter?.let { id ->
                             FilterChip(
                                 selected = true,
@@ -319,7 +320,7 @@ fun NetworkLogsScreen() {
                         title = { Text(directory.labelFor(s.appId)) },
                         summary = {
                             Text(
-                                stringResource(R.string.netfw_l_app_summary, s.connections, s.connectionsBlocked, s.dnsQueries, s.dnsBlocked) +
+                                stringResource(I18nR.string.netfw_l_app_summary, s.connections, s.connectionsBlocked, s.dnsQueries, s.dnsBlocked) +
                                     if (s.bytes > 0) " · " + Formatter.formatShortFileSize(context, s.bytes) else ""
                             )
                         },
@@ -334,19 +335,19 @@ fun NetworkLogsScreen() {
         }
     }
 
-    fun toast() = Toast.makeText(context, context.getString(R.string.hc_done), Toast.LENGTH_SHORT).show()
+    fun toast() = Toast.makeText(context, context.getString(I18nR.string.hc_done), Toast.LENGTH_SHORT).show()
 
     connDetail?.let { e ->
         val actions = connectionActions(context, e, fw, blocklists, ::toast)
         DetailDialog(
             rows = listOf(
-                stringResource(R.string.netfw_l_d_app) to directory.labelFor(e.uid),
-                stringResource(R.string.netfw_l_d_destination) to "${e.domain?.let { "$it, " } ?: ""}${e.destIp}:${e.destPort} (${e.protocol.name.uppercase()})",
-                stringResource(R.string.netfw_l_d_reason) to (if (e.verdict == Verdict.Block) stringResource(R.string.netfw_l_blocked) else stringResource(R.string.netfw_l_allowed)) + ": " + reasonText(e.reason),
-                stringResource(R.string.netfw_l_d_network) to networkText(e.network),
-                stringResource(R.string.netfw_l_d_lists) to e.blocklists.joinToString(", "),
-                stringResource(R.string.netfw_l_d_traffic) to if (e.bytesReceived + e.bytesSent > 0) "↓ ${Formatter.formatShortFileSize(context, e.bytesReceived)}  ↑ ${Formatter.formatShortFileSize(context, e.bytesSent)}" else "",
-                stringResource(R.string.netfw_l_d_time) to formatDateTime(context, e.timeMs),
+                stringResource(I18nR.string.netfw_l_d_app) to directory.labelFor(e.uid),
+                stringResource(I18nR.string.netfw_l_d_destination) to "${e.domain?.let { "$it, " } ?: ""}${e.destIp}:${e.destPort} (${e.protocol.name.uppercase()})",
+                stringResource(I18nR.string.netfw_l_d_reason) to (if (e.verdict == Verdict.Block) stringResource(I18nR.string.netfw_l_blocked) else stringResource(I18nR.string.netfw_l_allowed)) + ": " + reasonText(e.reason),
+                stringResource(I18nR.string.netfw_l_d_network) to networkText(e.network),
+                stringResource(I18nR.string.netfw_l_d_lists) to e.blocklists.joinToString(", "),
+                stringResource(I18nR.string.netfw_l_d_traffic) to if (e.bytesReceived + e.bytesSent > 0) "↓ ${Formatter.formatShortFileSize(context, e.bytesReceived)}  ↑ ${Formatter.formatShortFileSize(context, e.bytesSent)}" else "",
+                stringResource(I18nR.string.netfw_l_d_time) to formatDateTime(context, e.timeMs),
             ),
             actions = actions,
             onDismiss = { connDetail = null },
@@ -356,14 +357,14 @@ fun NetworkLogsScreen() {
         val actions = dnsActions(context, e, fw, blocklists, ::toast)
         DetailDialog(
             rows = listOf(
-                stringResource(R.string.netfw_l_d_app) to directory.labelFor(e.uid),
-                stringResource(R.string.netfw_l_d_destination) to "${e.domain} (${dnsTypeName(e.type)})",
-                stringResource(R.string.netfw_l_d_reason) to if (e.blocked) stringResource(R.string.netfw_l_blocked) else stringResource(R.string.netfw_l_allowed),
-                stringResource(R.string.netfw_l_d_lists) to e.blocklists.joinToString(", "),
-                stringResource(R.string.netfw_l_d_server) to e.server,
-                stringResource(R.string.netfw_l_d_answers) to e.answers.joinToString(", "),
-                stringResource(R.string.netfw_l_d_time) to formatDateTime(context, e.timeMs),
-                stringResource(R.string.netfw_l_d_error) to (e.error ?: ""),
+                stringResource(I18nR.string.netfw_l_d_app) to directory.labelFor(e.uid),
+                stringResource(I18nR.string.netfw_l_d_destination) to "${e.domain} (${dnsTypeName(e.type)})",
+                stringResource(I18nR.string.netfw_l_d_reason) to if (e.blocked) stringResource(I18nR.string.netfw_l_blocked) else stringResource(I18nR.string.netfw_l_allowed),
+                stringResource(I18nR.string.netfw_l_d_lists) to e.blocklists.joinToString(", "),
+                stringResource(I18nR.string.netfw_l_d_server) to e.server,
+                stringResource(I18nR.string.netfw_l_d_answers) to e.answers.joinToString(", "),
+                stringResource(I18nR.string.netfw_l_d_time) to formatDateTime(context, e.timeMs),
+                stringResource(I18nR.string.netfw_l_d_error) to (e.error ?: ""),
             ),
             actions = actions,
             onDismiss = { dnsDetail = null },
@@ -374,12 +375,12 @@ fun NetworkLogsScreen() {
 @Composable
 private fun networkText(type: ConnectionType): String = stringResource(
     when (type) {
-        ConnectionType.Wifi -> R.string.netfw_t_wifi
-        ConnectionType.Mobile -> R.string.netfw_t_mobile
-        ConnectionType.Vpn -> R.string.netfw_t_vpn
-        ConnectionType.Ethernet -> R.string.au_netui_net_ethernet
-        ConnectionType.Other -> R.string.au_netui_net_other
-        ConnectionType.None -> R.string.au_netui_net_none
+        ConnectionType.Wifi -> I18nR.string.netfw_t_wifi
+        ConnectionType.Mobile -> I18nR.string.netfw_t_mobile
+        ConnectionType.Vpn -> I18nR.string.netfw_t_vpn
+        ConnectionType.Ethernet -> I18nR.string.au_netui_net_ethernet
+        ConnectionType.Other -> I18nR.string.au_netui_net_other
+        ConnectionType.None -> I18nR.string.au_netui_net_none
     }
 )
 
@@ -387,7 +388,7 @@ private fun networkText(type: ConnectionType): String = stringResource(
 private fun EmptyLog(query: String = "") {
     if (query.isNotBlank()) { de.mm20.launcher2.ui.component.SearchEmptyState(query.trim()); return }
     Text(
-        stringResource(R.string.netfw_l_empty),
+        stringResource(I18nR.string.netfw_l_empty),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = Modifier.padding(16.dp),
     )
@@ -407,7 +408,7 @@ private fun DetailDialog(rows: List<Pair<String, String>>, actions: List<LogActi
     val scope = rememberCoroutineScope()
     AlertDialog(
         onDismissRequest = onDismiss,
-        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(I18nR.string.hc_close)) } },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 rows.filter { it.second.isNotBlank() }.forEach { (label, value) ->
@@ -430,18 +431,18 @@ private fun DetailDialog(rows: List<Pair<String, String>>, actions: List<LogActi
 @Composable
 private fun reasonText(reason: DecisionReason): String = stringResource(
     when (reason) {
-        DecisionReason.Default -> R.string.netfw_r_default
-        DecisionReason.AppRule -> R.string.netfw_r_app_rule
-        DecisionReason.ConnectionTypeRule -> R.string.netfw_r_conn_type
-        DecisionReason.BackgroundRule -> R.string.netfw_r_background
-        DecisionReason.ScreenOffRule -> R.string.netfw_r_screen_off
-        DecisionReason.UniversalRule -> R.string.netfw_r_universal
-        DecisionReason.DomainRule -> R.string.netfw_r_domain
-        DecisionReason.IpRule -> R.string.netfw_r_ip
-        DecisionReason.Blocklist -> R.string.netfw_r_blocklist
-        DecisionReason.Trusted -> R.string.netfw_r_trusted
-        DecisionReason.Internal -> R.string.netfw_r_internal
-        DecisionReason.EngineError -> R.string.netfw_r_error
+        DecisionReason.Default -> I18nR.string.netfw_r_default
+        DecisionReason.AppRule -> I18nR.string.netfw_r_app_rule
+        DecisionReason.ConnectionTypeRule -> I18nR.string.netfw_r_conn_type
+        DecisionReason.BackgroundRule -> I18nR.string.netfw_r_background
+        DecisionReason.ScreenOffRule -> I18nR.string.netfw_r_screen_off
+        DecisionReason.UniversalRule -> I18nR.string.netfw_r_universal
+        DecisionReason.DomainRule -> I18nR.string.netfw_r_domain
+        DecisionReason.IpRule -> I18nR.string.netfw_r_ip
+        DecisionReason.Blocklist -> I18nR.string.netfw_r_blocklist
+        DecisionReason.Trusted -> I18nR.string.netfw_r_trusted
+        DecisionReason.Internal -> I18nR.string.netfw_r_internal
+        DecisionReason.EngineError -> I18nR.string.netfw_r_error
     }
 )
 
@@ -476,27 +477,27 @@ private fun connectionActions(
     if (e.verdict == Verdict.Block) {
         when {
             e.reason == DecisionReason.Blocklist && domain != null -> scopes(e.uid).forEach { (app, sc) ->
-                actions += LogAction(context.getString(if (app) R.string.netfw_l_a_allow_app else R.string.netfw_l_a_allow_all, name)) {
+                actions += LogAction(context.getString(if (app) I18nR.string.netfw_l_a_allow_app else I18nR.string.netfw_l_a_allow_all, name)) {
                     blocklists.addBypass(sc, domain); done()
                 }
             }
             e.reason == DecisionReason.DomainRule && domain != null -> scopes(e.uid).forEach { (app, sc) ->
-                actions += LogAction(context.getString(if (app) R.string.netfw_l_a_allow_app else R.string.netfw_l_a_allow_all, name)) {
+                actions += LogAction(context.getString(if (app) I18nR.string.netfw_l_a_allow_app else I18nR.string.netfw_l_a_allow_all, name)) {
                     fw.addDomainRule(DomainRule(0, sc, domain, RuleAction.Trust)); done()
                 }
             }
             e.reason == DecisionReason.IpRule -> scopes(e.uid).forEach { (app, sc) ->
-                actions += LogAction(context.getString(if (app) R.string.netfw_l_a_allow_app else R.string.netfw_l_a_allow_all, e.destIp)) {
+                actions += LogAction(context.getString(if (app) I18nR.string.netfw_l_a_allow_app else I18nR.string.netfw_l_a_allow_all, e.destIp)) {
                     fw.addIpRule(IpRule(0, sc, e.destIp, e.destPort, e.protocol, RuleAction.Trust)); done()
                 }
             }
-            e.uid >= 0 -> actions += LogAction(context.getString(R.string.netfw_l_a_temp)) {
+            e.uid >= 0 -> actions += LogAction(context.getString(I18nR.string.netfw_l_a_temp)) {
                 fw.allowTemporarily(e.uid % FlowInfo.PER_USER_RANGE, 15L * 60_000); done()
             }
         }
     } else {
         scopes(e.uid).forEach { (app, sc) ->
-            actions += LogAction(context.getString(if (app) R.string.netfw_l_a_block_app else R.string.netfw_l_a_block_all, name)) {
+            actions += LogAction(context.getString(if (app) I18nR.string.netfw_l_a_block_app else I18nR.string.netfw_l_a_block_all, name)) {
                 if (domain != null) fw.addDomainRule(DomainRule(0, sc, domain, RuleAction.Block))
                 else fw.addIpRule(IpRule(0, sc, e.destIp, 0, null, RuleAction.Block))
                 done()
@@ -516,13 +517,13 @@ private fun dnsActions(
     val actions = mutableListOf<LogAction>()
     scopes(e.uid).forEach { (app, sc) ->
         if (e.blocked) {
-            actions += LogAction(context.getString(if (app) R.string.netfw_l_a_allow_app else R.string.netfw_l_a_allow_all, e.domain)) {
+            actions += LogAction(context.getString(if (app) I18nR.string.netfw_l_a_allow_app else I18nR.string.netfw_l_a_allow_all, e.domain)) {
                 if (e.blocklists.isNotEmpty()) blocklists.addBypass(sc, e.domain)
                 else fw.addDomainRule(DomainRule(0, sc, e.domain, RuleAction.Trust))
                 done()
             }
         } else {
-            actions += LogAction(context.getString(if (app) R.string.netfw_l_a_block_app else R.string.netfw_l_a_block_all, e.domain)) {
+            actions += LogAction(context.getString(if (app) I18nR.string.netfw_l_a_block_app else I18nR.string.netfw_l_a_block_all, e.domain)) {
                 fw.addDomainRule(DomainRule(0, sc, e.domain, RuleAction.Block)); done()
             }
         }
@@ -533,7 +534,7 @@ private fun dnsActions(
 /** The icon edits app rules; the surrounding row retains the connection details. */
 @Composable
 internal fun LogAppIcon(packageName: String?, openRules: (String) -> Unit) {
-    val rulesLabel = stringResource(R.string.netfw_title)
+    val rulesLabel = stringResource(I18nR.string.netfw_title)
     IconButton(enabled = packageName != null, onClick = { packageName?.let(openRules) },
         modifier = Modifier.semantics { contentDescription = rulesLabel }) {
         NetAppIcon(packageName)

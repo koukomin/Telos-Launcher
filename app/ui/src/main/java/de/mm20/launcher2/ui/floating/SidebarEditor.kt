@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.floating
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import de.mm20.launcher2.search.GreekFold
 import androidx.compose.foundation.background
@@ -72,16 +74,16 @@ import java.util.UUID
 
 /** The widgets of the launcher that can be put into the sidebar, with the icon the widget picker uses */
 private val SIDEBAR_WIDGET_TYPES = listOf(
-    WeatherWidget.Type to R.drawable.light_mode_24px,
-    CalendarWidget.Type to R.drawable.today_24px,
-    MusicWidget.Type to R.drawable.music_note_24px,
-    NotesWidget.Type to R.drawable.sticky_note_2_24px,
-    BatteryWidget.Type to R.drawable.battery_full_24px,
-    AtAGlanceWidget.Type to R.drawable.visibility_24px,
-    RemindersWidget.Type to R.drawable.task_alt_24px,
-    SystemWidget.Type to R.drawable.memory_24px,
-    FreezeWidget.Type to R.drawable.ac_unit_24px,
-    AppsWidget.Type to R.drawable.apps_24px,
+    WeatherWidget.Type to BaseR.drawable.light_mode_24px,
+    CalendarWidget.Type to BaseR.drawable.today_24px,
+    MusicWidget.Type to BaseR.drawable.music_note_24px,
+    NotesWidget.Type to BaseR.drawable.sticky_note_2_24px,
+    BatteryWidget.Type to BaseR.drawable.battery_full_24px,
+    AtAGlanceWidget.Type to BaseR.drawable.visibility_24px,
+    RemindersWidget.Type to BaseR.drawable.task_alt_24px,
+    SystemWidget.Type to BaseR.drawable.memory_24px,
+    FreezeWidget.Type to BaseR.drawable.ac_unit_24px,
+    AppsWidget.Type to BaseR.drawable.apps_24px,
 )
 
 private fun newSidebarWidget(type: String): Widget? {
@@ -136,15 +138,15 @@ internal fun SidebarEditor(
             Column(Modifier.weight(1f).fillMaxHeight().padding(start = 20.dp, end = 8.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        stringResource(R.string.floating_launcher_edit),
+                        stringResource(I18nR.string.floating_launcher_edit),
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
                         modifier = Modifier.weight(1f),
                     )
                     IconButton(onClick = onOpenSettings) {
                         Icon(
-                            painterResource(R.drawable.settings_24px),
-                            contentDescription = stringResource(R.string.floating_launcher_panel_settings),
+                            painterResource(BaseR.drawable.settings_24px),
+                            contentDescription = stringResource(I18nR.string.floating_launcher_panel_settings),
                             tint = Color.White,
                         )
                     }
@@ -155,11 +157,11 @@ internal fun SidebarEditor(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                 ) {
                     Row(Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Icon(painterResource(R.drawable.search_24px), contentDescription = null, tint = Color.White.copy(alpha = 0.8f))
+                        Icon(painterResource(BaseR.drawable.search_24px), contentDescription = null, tint = Color.White.copy(alpha = 0.8f))
                         Box(Modifier.padding(start = 12.dp).weight(1f)) {
                             if (query.isEmpty()) {
                                 Text(
-                                    stringResource(R.string.floating_launcher_search_hint),
+                                    stringResource(I18nR.string.floating_launcher_search_hint),
                                     color = Color.White.copy(alpha = 0.6f),
                                     style = MaterialTheme.typography.bodyMedium,
                                     maxLines = 1,
@@ -185,7 +187,7 @@ internal fun SidebarEditor(
                     ) {
                         val tools = SidebarTool.entries.filter { q.isEmpty() || GreekFold.contains(context.getString(it.label), q) }
                         if (tools.isNotEmpty()) {
-                            item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(R.string.floating_launcher_section_tools) }
+                            item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(I18nR.string.floating_launcher_section_tools) }
                             items(tools, key = { "t-" + it.id }) { tool ->
                                 val added = tool.key in addedKeys
                                 AddableTile(added = added, onAdd = { settings.addItem(tool.key) }) {
@@ -199,7 +201,7 @@ internal fun SidebarEditor(
                             if (q.isNotEmpty() && !GreekFold.contains(label, q)) null else Triple(type, icon, label)
                         }
                         if (widgetTypes.isNotEmpty()) {
-                            item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(R.string.floating_launcher_section_widgets) }
+                            item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(I18nR.string.floating_launcher_section_widgets) }
                             items(widgetTypes, key = { "w-" + it.first }) { (type, icon, label) ->
                                 AddableTile(added = false, onAdd = {
                                     val widget = newSidebarWidget(type) ?: return@AddableTile
@@ -212,7 +214,7 @@ internal fun SidebarEditor(
                         }
                         val shownApps = sortedApps.filter { q.isEmpty() || GreekFold.contains(it.labelOverride ?: it.label, q) }
                         if (shownApps.isNotEmpty()) {
-                            item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(R.string.floating_launcher_section_apps) }
+                            item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(I18nR.string.floating_launcher_section_apps) }
                             items(shownApps, key = { "a-" + it.key }) { app ->
                                 val added = app.key in addedKeys
                                 AddableTile(added = added, onAdd = { settings.addItem(app.key) }) {
@@ -243,7 +245,7 @@ internal fun SidebarEditor(
             modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 32.dp).width(220.dp),
         ) {
             Text(
-                stringResource(R.string.floating_launcher_done),
+                stringResource(I18nR.string.floating_launcher_done),
                 color = Color.White,
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center,
@@ -293,7 +295,7 @@ private fun AddableTile(added: Boolean, onAdd: () -> Unit, content: @Composable 
                     .background(Color.White),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.floating_launcher_add), tint = Color.Black, modifier = Modifier.size(18.dp))
+                Icon(painterResource(BaseR.drawable.add_24px), contentDescription = stringResource(I18nR.string.floating_launcher_add), tint = Color.Black, modifier = Modifier.size(18.dp))
             }
         }
     }
@@ -389,15 +391,15 @@ private fun RemovableTile(onRemove: () -> Unit, content: @Composable () -> Unit)
 }
 
 private fun widgetIcon(widget: Widget): Int = when (widget) {
-    is WeatherWidget -> R.drawable.light_mode_24px
-    is CalendarWidget -> R.drawable.today_24px
-    is MusicWidget -> R.drawable.music_note_24px
-    is NotesWidget -> R.drawable.sticky_note_2_24px
-    is BatteryWidget -> R.drawable.battery_full_24px
-    is AtAGlanceWidget -> R.drawable.visibility_24px
-    is RemindersWidget -> R.drawable.task_alt_24px
-    is SystemWidget -> R.drawable.memory_24px
-    is FreezeWidget -> R.drawable.ac_unit_24px
-    is AppsWidget -> R.drawable.apps_24px
-    else -> R.drawable.widgets_24px
+    is WeatherWidget -> BaseR.drawable.light_mode_24px
+    is CalendarWidget -> BaseR.drawable.today_24px
+    is MusicWidget -> BaseR.drawable.music_note_24px
+    is NotesWidget -> BaseR.drawable.sticky_note_2_24px
+    is BatteryWidget -> BaseR.drawable.battery_full_24px
+    is AtAGlanceWidget -> BaseR.drawable.visibility_24px
+    is RemindersWidget -> BaseR.drawable.task_alt_24px
+    is SystemWidget -> BaseR.drawable.memory_24px
+    is FreezeWidget -> BaseR.drawable.ac_unit_24px
+    is AppsWidget -> BaseR.drawable.apps_24px
+    else -> BaseR.drawable.widgets_24px
 }

@@ -1,4 +1,5 @@
 package de.mm20.launcher2.network.impl
+import de.mm20.launcher2.i18n.R as I18nR
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -10,7 +11,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Process
 import androidx.core.content.ContextCompat
-import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.network.api.AppDirectory
 import de.mm20.launcher2.network.api.AppEntry
 import de.mm20.launcher2.network.api.FlowInfo

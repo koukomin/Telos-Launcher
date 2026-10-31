@@ -1,4 +1,6 @@
 package de.mm20.launcher2.ui.store
+import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.base.R as BaseR
 
 import androidx.compose.ui.res.stringResource
 import android.content.Intent
@@ -169,12 +171,12 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
 
     installationError?.let { error ->
         AlertDialog(onDismissRequest = viewModel::consumeInstallationError,
-            title = { Text(stringResource(R.string.au_store_msg_install_failed)) },
+            title = { Text(stringResource(I18nR.string.au_store_msg_install_failed)) },
             text = { androidx.compose.foundation.text.selection.SelectionContainer {
                 Text(error, modifier = Modifier.verticalScroll(rememberScrollState()))
             } },
             confirmButton = { TextButton(onClick = viewModel::consumeInstallationError) {
-                Text(stringResource(R.string.hc_close))
+                Text(stringResource(I18nR.string.hc_close))
             } })
     }
     val importPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
@@ -184,7 +186,7 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
         if (uri != null) viewModel.export(uri)
     }
 
-    MediaFrame(stringResource(R.string.hf_store_title), askNotifications = true, actions = {
+    MediaFrame(stringResource(I18nR.string.hf_store_title), askNotifications = true, actions = {
         if (tab == 0 || tab == playTabIndex) {
             IconButton(
                 onClick = {
@@ -195,21 +197,21 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                 if ((tab == playTabIndex && playChecking) || (tab == 0 && checking)) {
                     CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
                 } else {
-                    Icon(painterResource(R.drawable.download_24px), contentDescription = stringResource(R.string.hc_check_for_updates))
+                    Icon(painterResource(BaseR.drawable.download_24px), contentDescription = stringResource(I18nR.string.hc_check_for_updates))
                 }
             }
             Box {
                 IconButton(onClick = { menuOpen = true }) {
-                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+                    Icon(painterResource(BaseR.drawable.more_vert_24px), contentDescription = stringResource(I18nR.string.hc_more))
                 }
                 DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                     if (tab == 0) {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_add_installed_apps)) }, onClick = { menuOpen = false; showInstalled = true })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_import_obtainium_file)) }, onClick = { menuOpen = false; importPicker.launch(arrayOf("*/*")) })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_export_obtainium_file)) }, onClick = { menuOpen = false; exportPicker.launch("telos-store-export.json") })
-                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_store_settings)) }, onClick = { menuOpen = false; showSettings = true })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_add_installed_apps)) }, onClick = { menuOpen = false; showInstalled = true })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_import_obtainium_file)) }, onClick = { menuOpen = false; importPicker.launch(arrayOf("*/*")) })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_export_obtainium_file)) }, onClick = { menuOpen = false; exportPicker.launch("telos-store-export.json") })
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.hc_store_settings)) }, onClick = { menuOpen = false; showSettings = true })
                     } else {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.store_play_open_my_apps)) }, onClick = {
+                        DropdownMenuItem(text = { Text(stringResource(I18nR.string.store_play_open_my_apps)) }, onClick = {
                             menuOpen = false
                             PlayStoreInventory.openPlayUpdates(context)
                         })
@@ -226,7 +228,7 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                         modifier = Modifier.fillMaxWidth().height(2.dp)
                     )
                     Text(
-                        text = stringResource(R.string.store_checking_updates),
+                        text = stringResource(I18nR.string.store_checking_updates),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp)
@@ -234,7 +236,7 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                 } else if (global.lastCheckMillis > 0L) {
                     Text(
                         text = stringResource(
-                            R.string.store_last_check,
+                            I18nR.string.store_last_check,
                             android.text.format.DateUtils.getRelativeTimeSpanString(global.lastCheckMillis),
                         ),
                         style = MaterialTheme.typography.labelSmall,
@@ -250,9 +252,9 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                 val playTabIndex = if (showStoreTab) 3 else -1
 
                 PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 16.dp) {
-                    Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.hc_apps), maxLines = 1) })
-                    Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.hc_telos_apps), maxLines = 1) })
-                    Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(R.string.recommendation_tab_label), maxLines = 1) })
+                    Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(I18nR.string.hc_apps), maxLines = 1) })
+                    Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(I18nR.string.hc_telos_apps), maxLines = 1) })
+                    Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(I18nR.string.recommendation_tab_label), maxLines = 1) })
                     if (showStoreTab) {
                         Tab(
                             selected = tab == playTabIndex,
@@ -314,14 +316,14 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                     onClick = { addPrefill = ""; showAdd = true },
                     modifier = Modifier.align(Alignment.BottomEnd).padding(24.dp),
                 ) {
-                    Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.hc_add_app))
+                    Icon(painterResource(BaseR.drawable.add_24px), contentDescription = stringResource(I18nR.string.hc_add_app))
                 }
             } else if (playStoreInstalled && tab == playTabIndex) {
                 FloatingActionButton(
                     onClick = { viewModel.updateAllPlayApps() },
                     modifier = Modifier.align(Alignment.BottomEnd).padding(24.dp),
                 ) {
-                    Icon(painterResource(R.drawable.download_24px), contentDescription = stringResource(R.string.store_play_unfreeze_update))
+                    Icon(painterResource(BaseR.drawable.download_24px), contentDescription = stringResource(I18nR.string.store_play_unfreeze_update))
                 }
             }
         }
@@ -352,14 +354,14 @@ private fun PlayStoreTab(
     onOpen: (PlayStoreApp) -> Unit,
 ) {
     Column(Modifier.fillMaxSize()) {
-        de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(R.string.hf_store_search))
+        de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(I18nR.string.hf_store_search))
         Button(
             onClick = onUpdateAll,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
         ) {
-            Icon(painterResource(R.drawable.download_24px), contentDescription = null, modifier = Modifier.size(18.dp))
+            Icon(painterResource(BaseR.drawable.download_24px), contentDescription = null, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(8.dp))
-            Text(stringResource(R.string.store_play_unfreeze_update))
+            Text(stringResource(I18nR.string.store_play_unfreeze_update))
         }
         Row(
             Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
@@ -369,24 +371,24 @@ private fun PlayStoreTab(
             FilterChip(
                 selected = filterUpdates,
                 onClick = { onFilterUpdates(!filterUpdates) },
-                label = { Text(stringResource(R.string.hf_store_filter_updates, updateCount)) },
+                label = { Text(stringResource(I18nR.string.hf_store_filter_updates, updateCount)) },
             )
             if (frozenCount > 0) {
                 FilterChip(
                     selected = false,
                     onClick = {},
                     enabled = false,
-                    label = { Text(stringResource(R.string.store_play_frozen_count, frozenCount)) },
+                    label = { Text(stringResource(I18nR.string.store_play_frozen_count, frozenCount)) },
                 )
             }
             if (updateCount > 0) {
                 FilledTonalButton(onClick = onUpdateAll) {
-                    Text(stringResource(R.string.hc_update_all_count, updateCount))
+                    Text(stringResource(I18nR.string.hc_update_all_count, updateCount))
                 }
             }
         }
         Text(
-            stringResource(R.string.store_play_hint),
+            stringResource(I18nR.string.store_play_hint),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
@@ -396,8 +398,8 @@ private fun PlayStoreTab(
                 de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
             } else if (apps.isEmpty()) {
                 EmptyMessage(
-                    stringResource(R.string.store_play_empty),
-                    stringResource(R.string.store_play_empty_hint),
+                    stringResource(I18nR.string.store_play_empty),
+                    stringResource(I18nR.string.store_play_empty_hint),
                 )
             } else {
                 val updates = apps.filter { it.updateAvailable == true }
@@ -405,19 +407,19 @@ private fun PlayStoreTab(
                 val rest = apps.filter { !it.frozen && it.updateAvailable != true }
                 LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
                     if (updates.isNotEmpty()) {
-                        item { StoreSectionHeader(stringResource(R.string.store_section_updates, updates.size)) }
+                        item { StoreSectionHeader(stringResource(I18nR.string.store_section_updates, updates.size)) }
                         items(updates, key = { "u-${it.packageName}" }) { app ->
                             SwipePlayRow(app, onOpen, onUpdate)
                         }
                     }
                     if (frozen.isNotEmpty()) {
-                        item { StoreSectionHeader(stringResource(R.string.store_section_frozen, frozen.size)) }
+                        item { StoreSectionHeader(stringResource(I18nR.string.store_section_frozen, frozen.size)) }
                         items(frozen, key = { "f-${it.packageName}" }) { app ->
                             SwipePlayRow(app, onOpen, onUpdate)
                         }
                     }
                     if (rest.isNotEmpty()) {
-                        item { StoreSectionHeader(stringResource(R.string.store_section_uptodate, rest.size)) }
+                        item { StoreSectionHeader(stringResource(I18nR.string.store_section_uptodate, rest.size)) }
                         items(rest, key = { "r-${it.packageName}" }) { app ->
                             SwipePlayRow(app, onOpen, onUpdate)
                         }
@@ -465,7 +467,7 @@ private fun SwipePlayRow(app: PlayStoreApp, onOpen: (PlayStoreApp) -> Unit, onUp
                 contentAlignment = if (toEnd) Alignment.CenterStart else Alignment.CenterEnd,
             ) {
                 Text(
-                    if (toEnd) stringResource(R.string.store_play_update) else stringResource(R.string.store_play_open_my_apps),
+                    if (toEnd) stringResource(I18nR.string.store_play_update) else stringResource(I18nR.string.store_play_open_my_apps),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.labelLarge,
                 )
@@ -521,9 +523,9 @@ private fun PlayStoreAppRow(app: PlayStoreApp, onOpen: () -> Unit, onUpdate: () 
                     Text(versionLine, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 val status = when (app.updateAvailable) {
-                    true -> stringResource(R.string.store_play_update_available)
-                    false -> stringResource(R.string.store_play_up_to_date)
-                    null -> stringResource(R.string.store_play_update_unknown)
+                    true -> stringResource(I18nR.string.store_play_update_available)
+                    false -> stringResource(I18nR.string.store_play_up_to_date)
+                    null -> stringResource(I18nR.string.store_play_update_unknown)
                 }
                 Text(
                     status,
@@ -532,7 +534,7 @@ private fun PlayStoreAppRow(app: PlayStoreApp, onOpen: () -> Unit, onUpdate: () 
                 )
             }
             OutlinedButton(onClick = onUpdate) {
-                Text(stringResource(R.string.store_play_update))
+                Text(stringResource(I18nR.string.store_play_update))
             }
         }
     }
@@ -560,33 +562,33 @@ private fun AppsTab(
 ) {
     val context = LocalContext.current
     Column(Modifier.fillMaxSize()) {
-        de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(R.string.hf_store_search))
+        de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(I18nR.string.hf_store_search))
         var showFilters by rememberSaveable { mutableStateOf(false) }
         OutlinedButton(onClick = { showFilters = true }, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-            Text(stringResource(R.string.telos_store_filters))
+            Text(stringResource(I18nR.string.telos_store_filters))
         }
         if (showFilters) AlertDialog(
             onDismissRequest = { showFilters = false },
-            title = { Text(stringResource(R.string.telos_store_filters)) },
+            title = { Text(stringResource(I18nR.string.telos_store_filters)) },
             text = {
                 Column(Modifier.verticalScroll(rememberScrollState())) {
                     StoreFilter.entries.forEach { f ->
                         Row(Modifier.fillMaxWidth().clickable { onFilter(f) }, verticalAlignment = Alignment.CenterVertically) {
                             androidx.compose.material3.RadioButton(selected = filter == f, onClick = { onFilter(f) })
                             Text(when (f) {
-                                StoreFilter.All -> stringResource(R.string.hf_store_filter_all)
-                                StoreFilter.Updates -> stringResource(R.string.hf_store_filter_updates, updateCount)
-                                StoreFilter.Installed -> stringResource(R.string.hf_store_installed)
-                                StoreFilter.NotInstalled -> stringResource(R.string.hf_store_not_installed)
-                                StoreFilter.TrackOnly -> stringResource(R.string.hf_store_track_only)
+                                StoreFilter.All -> stringResource(I18nR.string.hf_store_filter_all)
+                                StoreFilter.Updates -> stringResource(I18nR.string.hf_store_filter_updates, updateCount)
+                                StoreFilter.Installed -> stringResource(I18nR.string.hf_store_installed)
+                                StoreFilter.NotInstalled -> stringResource(I18nR.string.hf_store_not_installed)
+                                StoreFilter.TrackOnly -> stringResource(I18nR.string.hf_store_track_only)
                             }, modifier = Modifier.weight(1f))
                         }
                     }
                     if (categories.isNotEmpty()) {
-                        Text(stringResource(R.string.hc_category), style = MaterialTheme.typography.titleSmall)
+                        Text(stringResource(I18nR.string.hc_category), style = MaterialTheme.typography.titleSmall)
                         Row(Modifier.fillMaxWidth().clickable { onCategory(null) }, verticalAlignment = Alignment.CenterVertically) {
                             androidx.compose.material3.RadioButton(selected = category == null, onClick = { onCategory(null) })
-                            Text(stringResource(R.string.hf_store_filter_all))
+                            Text(stringResource(I18nR.string.hf_store_filter_all))
                         }
                         categories.forEach { c ->
                             Row(Modifier.fillMaxWidth().clickable { onCategory(c) }, verticalAlignment = Alignment.CenterVertically) {
@@ -597,19 +599,19 @@ private fun AppsTab(
                     }
                 }
             },
-            confirmButton = { TextButton(onClick = { showFilters = false }) { Text(stringResource(R.string.hc_close)) } },
+            confirmButton = { TextButton(onClick = { showFilters = false }) { Text(stringResource(I18nR.string.hc_close)) } },
         )
         if (updateCount > 0) {
             FilledTonalButton(onClick = onUpdateAll, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-                Text(stringResource(R.string.hc_update_all_count, updateCount))
+                Text(stringResource(I18nR.string.hc_update_all_count, updateCount))
             }
         }
         if (rows.isEmpty() && query.isNotBlank()) {
             de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
         } else if (rows.isEmpty()) {
             EmptyMessage(
-                if (totalCount == 0) stringResource(R.string.hf_store_no_apps_yet) else stringResource(R.string.hf_store_no_apps_match),
-                if (totalCount == 0) stringResource(R.string.hf_store_empty_hint) else stringResource(R.string.hf_store_change_filter),
+                if (totalCount == 0) stringResource(I18nR.string.hf_store_no_apps_yet) else stringResource(I18nR.string.hf_store_no_apps_match),
+                if (totalCount == 0) stringResource(I18nR.string.hf_store_empty_hint) else stringResource(I18nR.string.hf_store_change_filter),
             )
         } else {
             PullToRefreshBox(isRefreshing = checking, onRefresh = onRefresh, modifier = Modifier.weight(1f)) {
@@ -618,7 +620,7 @@ private fun AppsTab(
             LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
                 if (updates.isNotEmpty()) {
                     item(key = "hdr-updates") {
-                        StoreSectionHeader(stringResource(R.string.store_section_updates, updates.size))
+                        StoreSectionHeader(stringResource(I18nR.string.store_section_updates, updates.size))
                     }
                     items(updates, key = { it.item.id }) { row ->
                         StoreItemRow(
@@ -633,7 +635,7 @@ private fun AppsTab(
                 if (rest.isNotEmpty()) {
                     if (updates.isNotEmpty()) {
                         item(key = "hdr-rest") {
-                            StoreSectionHeader(stringResource(R.string.store_section_uptodate, rest.size))
+                            StoreSectionHeader(stringResource(I18nR.string.store_section_uptodate, rest.size))
                         }
                     }
                     items(rest, key = { it.item.id }) { row ->
@@ -664,10 +666,10 @@ private fun RecommendedTab(tracked: Set<String>, onAdd: (RecommendedApp, () -> U
                 Text(
                     stringResource(
                         when (category) {
-                            RecommendedCategory.Stores -> R.string.au21_store_cat_stores
-                            RecommendedCategory.Tools -> R.string.hc_tools
-                            RecommendedCategory.Browsers -> R.string.recommendation_category_browsers
-                            RecommendedCategory.Media -> R.string.dl_m_tab
+                            RecommendedCategory.Stores -> I18nR.string.au21_store_cat_stores
+                            RecommendedCategory.Tools -> I18nR.string.hc_tools
+                            RecommendedCategory.Browsers -> I18nR.string.recommendation_category_browsers
+                            RecommendedCategory.Media -> I18nR.string.dl_m_tab
                         }
                     ),
                     style = MaterialTheme.typography.titleMedium,
@@ -695,7 +697,7 @@ private fun RecommendedTab(tracked: Set<String>, onAdd: (RecommendedApp, () -> U
                     }
                     Box(Modifier.align(Alignment.End)) {
                         if (isTracked) {
-                            OutlinedButton(onClick = {}, enabled = false) { Text(stringResource(R.string.dl_detail_created)) }
+                            OutlinedButton(onClick = {}, enabled = false) { Text(stringResource(I18nR.string.dl_detail_created)) }
                         } else if (app.name in adding) {
                             OutlinedButton(onClick = {}, enabled = false) { CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp) }
                         } else {
@@ -703,7 +705,7 @@ private fun RecommendedTab(tracked: Set<String>, onAdd: (RecommendedApp, () -> U
                                 adding = adding + app.name
                                 // the button comes back when adding is done (it then shows "Added", or "Add" again after an error)
                                 onAdd(app) { adding = adding - app.name }
-                            }) { Text(stringResource(R.string.hc_add)) }
+                            }) { Text(stringResource(I18nR.string.hc_add)) }
                         }
                     }
                     }
@@ -757,22 +759,22 @@ internal fun StoreItemRow(
                         color = if (row.updateAvailable) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
                     val sizeText = item.latestRelease?.size?.let { formatBytes(it) }
                     Text(listOfNotNull(item.source.summary(), sizeText, row.options.category.ifBlank { null },
-                        if (row.options.trackOnly) stringResource(R.string.hf_store_track_only) else null,
-                        if (row.options.pinned) stringResource(R.string.au_store_pinned) else null).joinToString(" · "),
+                        if (row.options.trackOnly) stringResource(I18nR.string.hf_store_track_only) else null,
+                        if (row.options.pinned) stringResource(I18nR.string.au_store_pinned) else null).joinToString(" · "),
                         style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             StoreTransferProgress(item.id)
             FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
                 verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                TextButton(onClick = onDetailsClick) { Text(stringResource(R.string.hc_details)) }
+                TextButton(onClick = onDetailsClick) { Text(stringResource(I18nR.string.hc_details)) }
                 StoreActionButton(row, installState, onActionClick)
             }
         }
     }
     DropdownMenu(menu, { menu = false }) {
         DropdownMenuItem(
-            text = { Text(stringResource(R.string.hc_share_link)) },
+            text = { Text(stringResource(I18nR.string.hc_share_link)) },
             onClick = {
                 menu = false
                 de.mm20.launcher2.ui.common.share.ShareActions.shareText(context, de.mm20.launcher2.store.parser.StoreUrlParser.toUrl(item.source))
@@ -780,12 +782,12 @@ internal fun StoreItemRow(
         )
         // the APK can only be shared for an app that is installed
         if (item.installedVersionCode != null) DropdownMenuItem(
-            text = { Text(stringResource(R.string.menu_share_apk_file)) },
+            text = { Text(stringResource(I18nR.string.menu_share_apk_file)) },
             onClick = {
                 menu = false
                 scope.launch {
                     val ok = withContext(Dispatchers.IO) { de.mm20.launcher2.ui.common.share.ShareActions.shareApk(context, item.packageName) }
-                    if (!ok) android.widget.Toast.makeText(context, context.getString(R.string.au9_share_apk_failed), android.widget.Toast.LENGTH_SHORT).show()
+                    if (!ok) android.widget.Toast.makeText(context, context.getString(I18nR.string.au9_share_apk_failed), android.widget.Toast.LENGTH_SHORT).show()
                 }
             },
         )
@@ -799,8 +801,8 @@ private fun StoreItem.versionLine(update: Boolean): String {
     val installed = installedVersionName ?: installedVersionCode?.toString()
     val latest = latestRelease?.version?.takeIf { it != "unknown" }
     return when {
-        installed == null && latest != null -> stringResource(R.string.au_store_version_available, latest)
-        installed == null -> stringResource(R.string.hf_store_not_installed)
+        installed == null && latest != null -> stringResource(I18nR.string.au_store_version_available, latest)
+        installed == null -> stringResource(I18nR.string.hf_store_not_installed)
         update && latest != null -> "v$installed → v$latest"
         else -> "v$installed"
     }
@@ -891,16 +893,16 @@ internal fun StoreActionButton(row: StoreRow, state: StoreInstallUiState, onClic
         OutlinedButton(onClick = {
             if (paused) { downloader.resume(row.item.id); onClick() }
             else downloader.pause(row.item.id)
-        }) { Text(stringResource(if (paused) R.string.telos_store_resume else R.string.telos_store_pause)) }
+        }) { Text(stringResource(if (paused) I18nR.string.telos_store_resume else I18nR.string.telos_store_pause)) }
         return
     }
     when (state) {
         StoreInstallUiState.Installing -> OutlinedButton(onClick = {}, enabled = false) {
             CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
             Spacer(Modifier.width(8.dp))
-            Text(stringResource(R.string.hf_store_installing))
+            Text(stringResource(I18nR.string.hf_store_installing))
         }
-        StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text(stringResource(R.string.hc_retry)) }
+        StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text(stringResource(I18nR.string.hc_retry)) }
         else -> {
             val label = row.actionLabel()
             if (row.isOpenAction()) OutlinedButton(onClick = onClick) { Text(label) } else Button(onClick = onClick) { Text(label) }
@@ -912,11 +914,11 @@ internal fun StoreActionButton(row: StoreRow, state: StoreInstallUiState, onClic
 /** "Install", "Update", "Open", or "Get" for apps that are only tracked (their page opens) */
 @Composable
 internal fun StoreRow.actionLabel(): String = when {
-    item.installedVersionCode == null && options.trackOnly -> stringResource(R.string.au_store_action_page)
-    item.installedVersionCode == null -> stringResource(R.string.hc_install)
-    updateAvailable && options.trackOnly -> stringResource(R.string.au_store_action_page)
-    updateAvailable -> stringResource(R.string.au_store_action_update)
-    else -> stringResource(R.string.hc_open)
+    item.installedVersionCode == null && options.trackOnly -> stringResource(I18nR.string.au_store_action_page)
+    item.installedVersionCode == null -> stringResource(I18nR.string.hc_install)
+    updateAvailable && options.trackOnly -> stringResource(I18nR.string.au_store_action_page)
+    updateAvailable -> stringResource(I18nR.string.au_store_action_update)
+    else -> stringResource(I18nR.string.hc_open)
 }
 
 /** The app is installed and current, so the button launches it */
@@ -930,9 +932,9 @@ internal fun AppSource.summary(): String = when (this) {
     is AppSource.FDroid -> if (repoUrl.contains("izzysoft")) "IzzyOnDroid" else if (repoUrl.contains("f-droid.org")) "F-Droid" else repoUrl.substringAfter("://").substringBefore('/')
     is AppSource.SourceForge -> "$project · SourceForge"
     is AppSource.Html -> pageUrl.substringAfter("://").substringBefore('/')
-    is AppSource.DirectApk -> stringResource(R.string.au_store_src_direct)
-    is AppSource.AffiliatePlayStore -> stringResource(R.string.au_store_src_play)
-    is AppSource.AffiliateDirect -> stringResource(R.string.au_store_src_direct)
+    is AppSource.DirectApk -> stringResource(I18nR.string.au_store_src_direct)
+    is AppSource.AffiliatePlayStore -> stringResource(I18nR.string.au_store_src_play)
+    is AppSource.AffiliateDirect -> stringResource(I18nR.string.au_store_src_direct)
 }
 
 @Composable
@@ -977,7 +979,7 @@ private fun InstalledAppsTab(
     }
 
     Column(Modifier.fillMaxSize()) {
-        de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.hf_store_search))
+        de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(I18nR.string.hf_store_search))
 
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
@@ -992,19 +994,19 @@ private fun InstalledAppsTab(
             FilterChip(
                 selected = showSystem,
                 onClick = { showSystem = !showSystem },
-                label = { Text(stringResource(R.string.store_show_system_apps)) },
+                label = { Text(stringResource(I18nR.string.store_show_system_apps)) },
             )
             FilterChip(
                 selected = showVirtual,
                 onClick = { showVirtual = !showVirtual },
-                label = { Text(stringResource(R.string.store_show_virtual_apps)) },
+                label = { Text(stringResource(I18nR.string.store_show_virtual_apps)) },
             )
         }
 
         if (visibleApps.isEmpty()) {
             EmptyMessage(
-                stringResource(R.string.hf_store_no_apps_match),
-                stringResource(R.string.hf_store_change_filter),
+                stringResource(I18nR.string.hf_store_no_apps_match),
+                stringResource(I18nR.string.hf_store_change_filter),
             )
         } else {
             LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
@@ -1071,12 +1073,12 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
     val appConfiguration = androidx.compose.ui.platform.LocalConfiguration.current
     val shownApps = remember(tq, appConfiguration) { TelosApps.all.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(tq, it.localizedName(appContext.resources), it.name, it.description, it.features.joinToString(" "), it.keywords.joinToString(" ")) } }
     Column(Modifier.fillMaxSize()) {
-    de.mm20.launcher2.ui.component.TelosSearchBar(tq, { tq = it }, stringResource(R.string.hf_store_search))
+    de.mm20.launcher2.ui.component.TelosSearchBar(tq, { tq = it }, stringResource(I18nR.string.hf_store_search))
     if (shownApps.isEmpty()) de.mm20.launcher2.ui.component.SearchEmptyState(tq.trim())
     else LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 32.dp), verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxSize()) {
         item {
             Text(
-                stringResource(R.string.hc_the_apps_that_are_part_of_telos_installi),
+                stringResource(I18nR.string.hc_the_apps_that_are_part_of_telos_installi),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -1094,25 +1096,25 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
                             Text(app.localizedName(appContext.resources), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                            Text(if (installed) stringResource(R.string.hf_store_installed) else stringResource(R.string.hf_store_not_installed), style = MaterialTheme.typography.labelMedium, color = if (installed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(if (installed) stringResource(I18nR.string.hf_store_installed) else stringResource(I18nR.string.hf_store_not_installed), style = MaterialTheme.typography.labelMedium, color = if (installed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                     val context = androidx.compose.ui.platform.LocalContext.current
                     if (!installed && de.mm20.launcher2.base.VirtualAppGuard.isTripped(context, app.key)) {
                         Text(
-                            stringResource(R.string.hc_switched_off_automatically_because_it_cr),
+                            stringResource(I18nR.string.hc_switched_off_automatically_because_it_cr),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.error,
                             modifier = Modifier.padding(top = 10.dp),
                         )
                     }
                     Text(when (app.key) {
-                        "telos_youtube_app://youtube", "telos_youtube_music_app://youtube_music" -> stringResource(R.string.telos_youtube_store_description)
-                        "telos_media_app://media" -> stringResource(R.string.telos_media_store_description)
+                        "telos_youtube_app://youtube", "telos_youtube_music_app://youtube_music" -> stringResource(I18nR.string.telos_youtube_store_description)
+                        "telos_media_app://media" -> stringResource(I18nR.string.telos_media_store_description)
                         else -> app.description
                     }, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 10.dp))
                     Text(
-                        if (app.key.startsWith("telos_youtube")) stringResource(R.string.telos_youtube_store_features)
+                        if (app.key.startsWith("telos_youtube")) stringResource(I18nR.string.telos_youtube_store_features)
                         else app.features.joinToString(" · "),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -1120,10 +1122,10 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                     )
                     Row(Modifier.padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         if (installed) {
-                            if (app.key.substringBefore("://") != "telos_store_app") OutlinedButton(onClick = { onOpen(app) }) { Text(stringResource(R.string.hc_open)) }
-                            if (app.removable) TextButton(onClick = { onToggle(app, false) }) { Text(stringResource(R.string.hc_remove)) }
+                            if (app.key.substringBefore("://") != "telos_store_app") OutlinedButton(onClick = { onOpen(app) }) { Text(stringResource(I18nR.string.hc_open)) }
+                            if (app.removable) TextButton(onClick = { onToggle(app, false) }) { Text(stringResource(I18nR.string.hc_remove)) }
                         } else {
-                            Button(onClick = { onToggle(app, true) }) { Text(stringResource(R.string.hc_install)) }
+                            Button(onClick = { onToggle(app, true) }) { Text(stringResource(I18nR.string.hc_install)) }
                         }
                     }
                 }
@@ -1147,18 +1149,18 @@ private fun AddAppDialog(viewModel: StoreViewModel, prefill: String, onDismiss: 
     var busy by remember { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
-        title = { Text(stringResource(R.string.hc_add_an_app)) },
+        title = { Text(stringResource(I18nR.string.hc_add_an_app)) },
         text = {
             Column {
                 Text(
-                    stringResource(R.string.hc_github_gitlab_codeberg_forgejo_gitea_f_d),
+                    stringResource(I18nR.string.hc_github_gitlab_codeberg_forgejo_gitea_f_d),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                OutlinedTextField(url, { url = it; error = null }, label = { Text(stringResource(R.string.hc_address)) }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp), isError = error != null)
+                OutlinedTextField(url, { url = it; error = null }, label = { Text(stringResource(I18nR.string.hc_address)) }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp), isError = error != null)
                 OutlinedTextField(
-                    pkg, { pkg = it }, label = { Text(stringResource(R.string.hc_package_name_optional)) }, singleLine = true,
-                    supportingText = { Text(stringResource(R.string.hc_fill_this_in_if_the_app_is_already_insta)) },
+                    pkg, { pkg = it }, label = { Text(stringResource(I18nR.string.hc_package_name_optional)) }, singleLine = true,
+                    supportingText = { Text(stringResource(I18nR.string.hc_fill_this_in_if_the_app_is_already_insta)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
                 error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp)) }
@@ -1172,9 +1174,9 @@ private fun AddAppDialog(viewModel: StoreViewModel, prefill: String, onDismiss: 
                     busy = false
                     if (result == null) onDismiss() else error = result
                 }
-            }) { Text(stringResource(R.string.hc_add)) }
+            }) { Text(stringResource(I18nR.string.hc_add)) }
         },
-        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }
 
@@ -1185,23 +1187,23 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
     val artPostInstall by uiSettings.artOptimizationStorePostInstall.collectAsStateWithLifecycle(false)
     val g by viewModel.global.collectAsStateWithLifecycle()
     var token by remember { mutableStateOf(g.githubToken) }
-    val neverLabel = stringResource(R.string.hf_store_never)
-    val dailyLabel = stringResource(R.string.hf_store_daily)
-    val hoursLabel = { h: Int -> context.getString(R.string.au_store_hours_short, h) }
+    val neverLabel = stringResource(I18nR.string.hf_store_never)
+    val dailyLabel = stringResource(I18nR.string.hf_store_daily)
+    val hoursLabel = { h: Int -> context.getString(I18nR.string.au_store_hours_short, h) }
     AlertDialog(
         onDismissRequest = { viewModel.setGlobal { it.copy(githubToken = token.trim()) }; onDismiss() },
-        title = { Text(stringResource(R.string.hc_store_settings)) },
+        title = { Text(stringResource(I18nR.string.hc_store_settings)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
-                Text(stringResource(R.string.hc_check_for_updates), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(I18nR.string.hc_check_for_updates), style = MaterialTheme.typography.titleSmall)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(vertical = 4.dp)) {
                     items(listOf(0 to neverLabel, 1 to hoursLabel(1), 3 to hoursLabel(3), 6 to hoursLabel(6), 12 to hoursLabel(12), 24 to dailyLabel)) { (hours, label) ->
                         FilterChip(selected = g.checkIntervalHours == hours, onClick = { viewModel.setGlobal { it.copy(checkIntervalHours = hours) } }, label = { Text(label) })
                     }
                 }
-                Text(stringResource(R.string.store_installer_method), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(I18nR.string.store_installer_method), style = MaterialTheme.typography.titleSmall)
                 val choices = listOf(
-                    de.mm20.launcher2.store.installer.InstallerChoice("session", stringResource(R.string.store_installer_session)),
+                    de.mm20.launcher2.store.installer.InstallerChoice("session", stringResource(I18nR.string.store_installer_session)),
                     de.mm20.launcher2.store.installer.InstallerChoice("shizuku", "Shizuku"),
                     de.mm20.launcher2.store.installer.InstallerChoice("root", "Root"),
                 ) + viewModel.externalInstallers()
@@ -1211,20 +1213,20 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                         Text(choice.label)
                     }
                 }
-                Text(stringResource(R.string.store_installer_external_summary), style = MaterialTheme.typography.bodySmall)
-                ToggleRow(stringResource(R.string.hc_only_on_wi_fi), g.wifiOnly) { v -> viewModel.setGlobal { it.copy(wifiOnly = v) } }
-                ToggleRow(stringResource(R.string.hf_store_notify), g.notifyUpdates) { v -> viewModel.setGlobal { it.copy(notifyUpdates = v) } }
-                ToggleRow(stringResource(R.string.store_update_frozen), g.updateFrozenApps) { v -> viewModel.setGlobal { it.copy(updateFrozenApps = v) } }
-                ToggleRow(stringResource(R.string.store_play_block_network), g.playUpdateBlockNetwork) { v ->
+                Text(stringResource(I18nR.string.store_installer_external_summary), style = MaterialTheme.typography.bodySmall)
+                ToggleRow(stringResource(I18nR.string.hc_only_on_wi_fi), g.wifiOnly) { v -> viewModel.setGlobal { it.copy(wifiOnly = v) } }
+                ToggleRow(stringResource(I18nR.string.hf_store_notify), g.notifyUpdates) { v -> viewModel.setGlobal { it.copy(notifyUpdates = v) } }
+                ToggleRow(stringResource(I18nR.string.store_update_frozen), g.updateFrozenApps) { v -> viewModel.setGlobal { it.copy(updateFrozenApps = v) } }
+                ToggleRow(stringResource(I18nR.string.store_play_block_network), g.playUpdateBlockNetwork) { v ->
                     viewModel.setGlobal { it.copy(playUpdateBlockNetwork = v) }
                 }
                 Text(
-                    stringResource(R.string.store_play_block_network_summary),
+                    stringResource(I18nR.string.store_play_block_network_summary),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
                 )
-                ToggleRow(stringResource(R.string.hf_store_auto_install), g.autoInstall) { v -> viewModel.setGlobal { it.copy(autoInstall = v) } }
+                ToggleRow(stringResource(I18nR.string.hf_store_auto_install), g.autoInstall) { v -> viewModel.setGlobal { it.copy(autoInstall = v) } }
                 ToggleRow("Allow Version Downgrades (-d)", g.allowDowngrade) { v -> viewModel.setGlobal { it.copy(allowDowngrade = v) } }
                 Text(
                     "Allow installing updates even if the package version code is lower than installed (default: Disabled)",
@@ -1232,39 +1234,39 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
                 )
-                ToggleRow(stringResource(R.string.store_parallel_updates), g.parallelUpdates) { v ->
+                ToggleRow(stringResource(I18nR.string.store_parallel_updates), g.parallelUpdates) { v ->
                     viewModel.setGlobal { it.copy(parallelUpdates = v) }
                 }
                 Text(
-                    stringResource(R.string.store_parallel_updates_summary),
+                    stringResource(I18nR.string.store_parallel_updates_summary),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
                 )
-                ToggleRow(stringResource(R.string.art_optimizer_store_post_install), artPostInstall) { v ->
+                ToggleRow(stringResource(I18nR.string.art_optimizer_store_post_install), artPostInstall) { v ->
                     uiSettings.setArtOptimizationStorePostInstall(v)
                 }
                 Text(
-                    stringResource(R.string.art_optimizer_store_post_install_summary),
+                    stringResource(I18nR.string.art_optimizer_store_post_install_summary),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
                 )
                 Text(
-                    stringResource(R.string.freeze_backend_shizuku) + " / " + stringResource(R.string.freeze_backend_root) +
-                        " / " + stringResource(R.string.freeze_backend_device_owner),
+                    stringResource(I18nR.string.freeze_backend_shizuku) + " / " + stringResource(I18nR.string.freeze_backend_root) +
+                        " / " + stringResource(I18nR.string.freeze_backend_device_owner),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 OutlinedTextField(
-                    token, { token = it }, label = { Text(stringResource(R.string.hc_github_token_optional)) }, singleLine = true,
-                    supportingText = { Text(stringResource(R.string.hc_raises_github_s_limit_from_60_to_5000_re)) },
+                    token, { token = it }, label = { Text(stringResource(I18nR.string.hc_github_token_optional)) }, singleLine = true,
+                    supportingText = { Text(stringResource(I18nR.string.hc_raises_github_s_limit_from_60_to_5000_re)) },
                     visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 )
             }
         },
-        confirmButton = { TextButton(onClick = { viewModel.setGlobal { it.copy(githubToken = token.trim()) }; onDismiss() }) { Text(stringResource(R.string.hc_done)) } },
+        confirmButton = { TextButton(onClick = { viewModel.setGlobal { it.copy(githubToken = token.trim()) }; onDismiss() }) { Text(stringResource(I18nR.string.hc_done)) } },
     )
 }
 
@@ -1286,22 +1288,22 @@ private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
     LaunchedEffect(Unit) { candidates = viewModel.installedCandidates() }
     AlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
-        title = { Text(stringResource(R.string.hc_add_installed_apps)) },
+        title = { Text(stringResource(I18nR.string.hc_add_installed_apps)) },
         text = {
             Column {
                 Text(
-                    stringResource(R.string.hc_choose_apps_you_already_have_telos_looks),
+                    stringResource(I18nR.string.hc_choose_apps_you_already_have_telos_looks),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 var iq by remember { mutableStateOf("") }
-                de.mm20.launcher2.ui.component.TelosSearchBar(iq, { iq = it }, stringResource(R.string.hf_store_search))
+                de.mm20.launcher2.ui.component.TelosSearchBar(iq, { iq = it }, stringResource(I18nR.string.hf_store_search))
                 val list = candidates?.let { c -> if (iq.isBlank()) c else c.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(iq, it.label, it.packageName) } }
                 if (list == null) {
                     CircularProgressIndicator(Modifier.padding(16.dp))
                 } else {
                     if (list.isEmpty() && iq.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(iq.trim())
-                    else if (list.isEmpty()) Text(stringResource(R.string.au_store_no_installed_candidates), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(16.dp))
+                    else if (list.isEmpty()) Text(stringResource(I18nR.string.au_store_no_installed_candidates), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(16.dp))
                     else LazyColumn(Modifier.height(320.dp)) {
                         items(list, key = { it.packageName }) { app ->
                             Row(
@@ -1325,12 +1327,12 @@ private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                 busy = true
                 val chosen = candidates.orEmpty().filter { it.packageName in selected }
                 viewModel.importInstalled(chosen) { found ->
-                    Toast.makeText(context, context.getString(R.string.au_store_msg_installed_found, found, chosen.size), Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, context.getString(I18nR.string.au_store_msg_installed_found, found, chosen.size), Toast.LENGTH_LONG).show()
                     onDismiss()
                 }
-            }) { Text(stringResource(R.string.hc_add_count, selected.size)) }
+            }) { Text(stringResource(I18nR.string.hc_add_count, selected.size)) }
         },
-        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(I18nR.string.hc_cancel)) } },
     )
 }
 
