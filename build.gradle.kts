@@ -23,6 +23,11 @@ subprojects {
             )
         }
     }
+    
+    tasks.withType<AbstractArchiveTask>().configureEach {
+        isPreserveFileTimestamps = false
+        isReproducibleFileOrder = true
+    }
 }
 
 dependencies {

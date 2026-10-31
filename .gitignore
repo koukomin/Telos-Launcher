@@ -305,3 +305,4 @@ desktop-linux/build/
 # Native SIP libraries (downloaded by CI or built with sip-native/Makefile)
 sip-native/distribution/
 sip-native/*/
+\n# Compiled outputs\n*.apk\n*.jar\n*.so\n*.dex\n\n# Temporary telos backups\n*.telos_backup\n

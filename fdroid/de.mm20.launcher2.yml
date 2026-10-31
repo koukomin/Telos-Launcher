@@ -1,0 +1,20 @@
+Builds:
+  - versionName: 1.43.77
+    versionCode: 2026110501
+    commit: main
+    subdir: app
+    sudo:
+      - apt-get update || true
+      - apt-get install -y libgl1-mesa-dev libx11-dev
+    gradle:
+      - yes
+    gradleProps:
+      - fdroidBuild=true
+    ndk: r27b
+    build:
+      - $$GRADLE$$ -PfdroidBuild=true assembleRelease
+
+AutoUpdateMode: None
+UpdateCheckMode: None
+CurrentVersion: 1.43.77
+CurrentVersionCode: 2026110501

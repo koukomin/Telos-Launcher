@@ -33,6 +33,11 @@ android {
         )
     }
 
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
         resources.excludes.add("META-INF/DEPENDENCIES.txt")

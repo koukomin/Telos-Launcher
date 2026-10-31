@@ -1,8 +1,8 @@
-Telos Launcher is a search-focused, privacy-first, free and open-source Android launcher and virtual app ecosystem (GPLv3).
+Telos Launcher is a privacy-first, fully open-source (GPLv3) Android launcher built with Kotlin and Jetpack Compose.
 
-Features:
-- Search-centric home screen with instant access to apps, contacts, files, bookmarks, web search, and unit conversion.
-- Privacy-first virtual app suite (Telos Comms, Network, Sync, Backup, Calculator, Ermis Mail, Notes, Downloads, System).
-- Expressive Material 3 UI with dynamic Material You theming and edge-to-edge support.
-- Zero telemetry, zero analytics, zero ads.
-- Built-in FOSS ecosystem integration.
+Features include:
+• Powerful Unified Search (contacts, files, apps, calculations)
+• Virtual Apps System and Workspace Profiles
+• Native Shizuku automation for system-level anti-kill protection, advanced background suspension, and true root-less control.
+• Memory-optimized architecture with automated DEX AOT Compilation.
+• Deep F-Droid compliance and reproducible build pipeline.
