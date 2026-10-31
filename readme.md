@@ -605,6 +605,10 @@ Full catalogues: [Dynamic Island, web apps and weather](https://koukomin.github.
 
 Telos stays light by doing little at startup and by disabling what you do not use. It also includes an advanced **ART App Optimizer (Dex2Oat)** under Settings > Advanced > Performance to pre-compile installed apps into native AOT machine code using Shizuku or root.
 
+**Stealth and banking cloak** (Settings → Advanced) can hide Developer Options and ADB from banking, wallet, government and anti-cheat apps before they launch. Telos uses its in-package privileged UserService (shell UID 2000) or Shizuku, then `WRITE_SECURE_SETTINGS` for a same-process `Settings.Global` write. The external Shizuku app can be hidden after the daemon is running. A running shell daemon keeps working after those flags are set to 0. Instant cloak needs the grant; otherwise the write is queued on a background dispatcher.
+
+**Shizuku & Privacy Shield** (Settings → Advanced, Telos System → Privacy Shield, and the search-bar shield pill) lists Shizuku client apps, grants or revokes their API access, freezes the external Shizuku package, scrubs the clipboard before launching blocked apps (strict or smart IBAN/card/wallet/OTP patterns) into an in-memory vault, and can set `READ_CLIPBOARD` to ignore via app-ops. App long-press menus expose stealth cloak and clipboard-block toggles.
+
 | Setting (Settings > Advanced > Performance) | Default | Range |
 | --- | --- | --- |
 | Reduce animations | Off | On or off (also switches the bounce off) |

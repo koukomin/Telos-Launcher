@@ -9,6 +9,8 @@ import android.app.WallpaperManager
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -104,6 +106,7 @@ abstract class SharedLauncherActivity(
 
     override fun onResume() {
         super.onResume()
+        de.mm20.launcher2.security.AppLaunchGate.notifyHomeResumed(this)
         val koin = org.koin.mp.KoinPlatform.getKoin()
         if (koin.get<de.mm20.launcher2.network.api.NetworkSettings>().current.engineWanted) {
             koin.get<de.mm20.launcher2.network.NetworkEngine>().restoreIfWanted()
@@ -111,6 +114,10 @@ abstract class SharedLauncherActivity(
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        de.mm20.launcher2.ui.performance.TelosSelfOptimizer.boostUiThreadPriority()
+        lifecycleScope.launch {
+            de.mm20.launcher2.ui.performance.TelosSelfOptimizer.runBackgroundOptimizations(this@SharedLauncherActivity)
+        }
         enableEdgeToEdge()
         if (isAtLeastApiLevel(29)) {
             window.isNavigationBarContrastEnforced = false

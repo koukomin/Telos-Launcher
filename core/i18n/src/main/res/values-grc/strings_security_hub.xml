@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="security_hub_title">Shizuku &amp; Privacy Shield</string>
+    <string name="security_hub_summary">Shizuku clients, banking cloak, and clipboard privacy</string>
+    <string name="security_hub_tab_title">Privacy Shield</string>
+    <string name="security_hub_engine_status">Shizuku engine: %1$s • UID %2$d</string>
+    <string name="security_hub_active">Active</string>
+    <string name="security_hub_inactive">Inactive</string>
+    <string name="security_hub_cloak_status">Stealth cloak: 0.2ms instant cloak</string>
+    <string name="security_hub_selinux">SELinux: %1$s</string>
+    <string name="security_hub_freeze_shizuku">Freeze external Shizuku app</string>
+    <string name="security_hub_freeze_shizuku_summary">Disable or hide moe.shizuku.privileged.api while Telos keeps the shell session</string>
+    <string name="security_hub_grant_self">Grant Telos privileged settings</string>
+    <string name="security_hub_restore_clip">Restore clipboard</string>
+    <string name="security_hub_tab_shizuku">Shizuku apps</string>
+    <string name="security_hub_tab_cloak">Banking cloak</string>
+    <string name="security_hub_tab_clipboard">Clipboard shield</string>
+    <string name="security_hub_search_clients">Search Shizuku client apps</string>
+    <string name="security_hub_no_clients">No installed apps request Shizuku access</string>
+    <string name="security_hub_client_meta">%1$s · AppOps %2$s</string>
+    <string name="security_hub_allow">Allow</string>
+    <string name="security_hub_deny">Deny</string>
+    <string name="security_hub_force_stop">Force stop</string>
+    <string name="security_hub_scrub_mode">Clipboard scrub mode</string>
+    <string name="security_hub_scrub_off">Off</string>
+    <string name="security_hub_scrub_smart">Smart sensitive patterns</string>
+    <string name="security_hub_scrub_strict">Strict (always clear)</string>
+    <string name="security_hub_auto_clear">Clear clipboard after 60 seconds</string>
+    <string name="security_hub_auto_clear_summary">Automatically wipe the system clipboard after a copy</string>
+    <string name="security_hub_auto_restore">Restore clipboard on home</string>
+    <string name="security_hub_auto_restore_summary">Put the vaulted clip back when you return to Telos</string>
+    <string name="security_hub_appops">OS READ_CLIPBOARD lockdown</string>
+    <string name="security_hub_appops_summary">cmd appops set READ_CLIPBOARD ignore for blocked apps</string>
+    <string name="security_hub_search_blocked">Search apps for clipboard rules</string>
+    <string name="security_hub_read_clipboard_rule">Block READ_CLIPBOARD</string>
+    <string name="security_hub_cloak_on">Stealth cloak on</string>
+    <string name="security_hub_cloak_off">Stealth cloak</string>
+    <string name="security_hub_clip_on">Clipboard blocked</string>
+    <string name="security_hub_clip_off">Block clipboard access</string>
+</resources>

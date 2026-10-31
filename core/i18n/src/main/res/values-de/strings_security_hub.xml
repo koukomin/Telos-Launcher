@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="security_hub_title">Shizuku &amp; Datenschutzschild</string>
+    <string name="security_hub_summary">Shizuku-Clients, Banken-Tarnung und Zwischenablage-Datenschutz</string>
+    <string name="security_hub_tab_title">Datenschutzschild</string>
+    <string name="security_hub_engine_status">Shizuku-Engine: %1$s • UID %2$d</string>
+    <string name="security_hub_active">Aktiv</string>
+    <string name="security_hub_inactive">Inaktiv</string>
+    <string name="security_hub_cloak_status">Stealth-Tarnung: 0,2 ms sofort</string>
+    <string name="security_hub_selinux">SELinux: %1$s</string>
+    <string name="security_hub_freeze_shizuku">Externe Shizuku-App einfrieren</string>
+    <string name="security_hub_freeze_shizuku_summary">Deaktiviert oder versteckt moe.shizuku.privileged.api, während Telos die Shell behält</string>
+    <string name="security_hub_grant_self">Telos privilegierte Rechte erteilen</string>
+    <string name="security_hub_restore_clip">Zwischenablage wiederherstellen</string>
+    <string name="security_hub_tab_shizuku">Shizuku-Apps</string>
+    <string name="security_hub_tab_cloak">Banken-Tarnung</string>
+    <string name="security_hub_tab_clipboard">Zwischenablage-Schild</string>
+    <string name="security_hub_search_clients">Shizuku-Client-Apps suchen</string>
+    <string name="security_hub_no_clients">Keine installierte App fordert Shizuku an</string>
+    <string name="security_hub_client_meta">%1$s · AppOps %2$s</string>
+    <string name="security_hub_allow">Zulassen</string>
+    <string name="security_hub_deny">Verweigern</string>
+    <string name="security_hub_force_stop">Beenden erzwingen</string>
+    <string name="security_hub_scrub_mode">Zwischenablage-Löschmodus</string>
+    <string name="security_hub_scrub_off">Aus</string>
+    <string name="security_hub_scrub_smart">Intelligente sensible Muster</string>
+    <string name="security_hub_scrub_strict">Streng (immer leeren)</string>
+    <string name="security_hub_auto_clear">Zwischenablage nach 60 Sekunden leeren</string>
+    <string name="security_hub_auto_clear_summary">Leert die Systemzwischenablage nach dem Kopieren automatisch</string>
+    <string name="security_hub_auto_restore">Zwischenablage auf dem Startbildschirm wiederherstellen</string>
+    <string name="security_hub_auto_restore_summary">Legt den Tresorinhalt zurück, wenn Sie zu Telos zurückkehren</string>
+    <string name="security_hub_appops">OS-Sperre READ_CLIPBOARD</string>
+    <string name="security_hub_appops_summary">cmd appops set READ_CLIPBOARD ignore für gesperrte Apps</string>
+    <string name="security_hub_search_blocked">Apps für Zwischenablageregeln suchen</string>
+    <string name="security_hub_read_clipboard_rule">READ_CLIPBOARD sperren</string>
+    <string name="security_hub_cloak_on">Stealth-Tarnung an</string>
+    <string name="security_hub_cloak_off">Stealth-Tarnung</string>
+    <string name="security_hub_clip_on">Zwischenablage gesperrt</string>
+    <string name="security_hub_clip_off">Zwischenablagezugriff sperren</string>
+</resources>

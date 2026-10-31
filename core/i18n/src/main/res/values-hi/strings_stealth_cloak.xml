@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">बैंकिंग स्टेल्थ क्लोक</string>
+    <string name="stealth_cloak_summary">बैंकिंग, वॉलेट और एंटी-चीट ऐप्स से डेवलपर विकल्प और ADB छिपाएँ</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: दिया गया (0.2ms तुरंत क्लोक)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: नहीं है (Telos डेमन से दें)</string>
+    <string name="stealth_cloak_devopts_state">डेवलपर विकल्प: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">डेमन मोड: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">बाहरी Shizuku (moe.shizuku.privileged.api) अभी भी इंस्टॉल है</string>
+    <string name="stealth_cloak_hide_shizuku">बाहरी Shizuku छिपाएँ या बंद करें</string>
+    <string name="stealth_cloak_permanent">स्थायी स्टेल्थ मोड</string>
+    <string name="stealth_cloak_permanent_summary">Telos डेमन चलते समय डेवलपर विकल्प और ADB बंद रखें</string>
+    <string name="stealth_cloak_hide_shizuku_auto">सुरक्षित ऐप खोलते समय Shizuku छिपाएँ</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">बैंकिंग ऐप से पहले moe.shizuku.privileged.api पर pm hide / disable-user चलाता है</string>
+    <string name="stealth_cloak_search">इंस्टॉल ऐप खोजें</string>
+    <string name="stealth_cloak_protected_badge">सुरक्षित</string>
+    <string name="stealth_cloak_new_detected">%1$d नई संवेदनशील ऐप क्लोक सूची में जोड़ी गईं</string>
+</resources>

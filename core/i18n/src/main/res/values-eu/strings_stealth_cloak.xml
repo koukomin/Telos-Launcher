@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">Capa furtiva para banca</string>
+    <string name="stealth_cloak_summary">Oculta Opciones de desarrollador y ADB a banca, carteras y anti-trampas</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: concedido (capa 0,2 ms)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: falta (conceder con el demonio Telos)</string>
+    <string name="stealth_cloak_devopts_state">Opciones de desarrollador: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">Modo demonio: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">Shizuku externo (moe.shizuku.privileged.api) sigue instalado</string>
+    <string name="stealth_cloak_hide_shizuku">Ocultar o desactivar Shizuku externo</string>
+    <string name="stealth_cloak_permanent">Modo furtivo permanente</string>
+    <string name="stealth_cloak_permanent_summary">Mantener Opciones de desarrollador y ADB apagados mientras corre el demonio Telos</string>
+    <string name="stealth_cloak_hide_shizuku_auto">Ocultar Shizuku al abrir apps protegidas</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">Ejecuta pm hide / disable-user en moe.shizuku.privileged.api antes de apps bancarias</string>
+    <string name="stealth_cloak_search">Buscar apps instaladas</string>
+    <string name="stealth_cloak_protected_badge">Protegida</string>
+    <string name="stealth_cloak_new_detected">Se añadieron %1$d apps sensibles nuevas a la lista</string>
+</resources>

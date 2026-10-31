@@ -165,6 +165,7 @@ internal data class LauncherApp(
     }
 
     override fun launch(context: Context, options: Bundle?): Boolean {
+        de.mm20.launcher2.security.AppLaunchGate.notifyPreLaunch(context, componentName.packageName)
         val launcherApps = context.getSystemService<LauncherApps>()!!
         if (isAtLeastApiLevel(31)) {
             options?.putInt("android.activity.splashScreenStyle", 1)

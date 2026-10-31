@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">Tarnung für Banking-Apps</string>
+    <string name="stealth_cloak_summary">Entwickleroptionen und ADB vor Banking-, Wallet- und Anti-Cheat-Apps verbergen</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: Erteilt (0,2 ms sofortige Tarnung)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: Fehlt (über Telos-Daemon gewähren)</string>
+    <string name="stealth_cloak_devopts_state">Entwickleroptionen: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">Daemon-Modus: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">Externes Shizuku (moe.shizuku.privileged.api) ist noch installiert</string>
+    <string name="stealth_cloak_hide_shizuku">Externes Shizuku ausblenden oder deaktivieren</string>
+    <string name="stealth_cloak_permanent">Dauerhafte Tarnung</string>
+    <string name="stealth_cloak_permanent_summary">Entwickleroptionen und ADB aus lassen, während der Telos-Daemon läuft</string>
+    <string name="stealth_cloak_hide_shizuku_auto">Shizuku beim Öffnen geschützter Apps ausblenden</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">Führt pm hide / disable-user für moe.shizuku.privileged.api vor Banking-Apps aus</string>
+    <string name="stealth_cloak_search">Installierte Apps durchsuchen</string>
+    <string name="stealth_cloak_protected_badge">Geschützt</string>
+    <string name="stealth_cloak_new_detected">%1$d neu erkannte sensible Apps wurden zur Tarnliste hinzugefügt</string>
+</resources>

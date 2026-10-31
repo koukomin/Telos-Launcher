@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">Panganduse varjutus</string>
+    <string name="stealth_cloak_summary">Peidab arendaja suvandid ja ADB pankade, rahakottide ja anti-cheati eest</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: verleend (0,2 ms directe cloak)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: ontbreekt (verleenen via Telos-daemon)</string>
+    <string name="stealth_cloak_devopts_state">Ontwikkelaarsopties: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">Daemonmodus: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">Externe Shizuku (moe.shizuku.privileged.api) is nog geïnstalleerd</string>
+    <string name="stealth_cloak_hide_shizuku">Externe Shizuku verbergen of uitschakelen</string>
+    <string name="stealth_cloak_permanent">Permanente stealthmodus</string>
+    <string name="stealth_cloak_permanent_summary">Ontwikkelaarsopties en ADB uit laten terwijl de Telos-daemon draait</string>
+    <string name="stealth_cloak_hide_shizuku_auto">Shizuku verbergen bij het openen van beschermde apps</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">Voert pm hide / disable-user uit op moe.shizuku.privileged.api vóór bankapps</string>
+    <string name="stealth_cloak_search">Geïnstalleerde apps zoeken</string>
+    <string name="stealth_cloak_protected_badge">Beschermd</string>
+    <string name="stealth_cloak_new_detected">%1$d nieuw gedetecteerde gevoelige apps zijn aan de lijst toegevoegd</string>
+</resources>

@@ -123,6 +123,10 @@ import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsRoute
 import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsScreen
 import de.mm20.launcher2.ui.settings.art.ArtOptimizerRoute
 import de.mm20.launcher2.ui.settings.art.ArtOptimizerScreen
+import de.mm20.launcher2.ui.settings.stealth.StealthCloakRoute
+import de.mm20.launcher2.ui.settings.stealth.StealthCloakScreen
+import de.mm20.launcher2.ui.settings.security.TelosSecurityHubRoute
+import de.mm20.launcher2.ui.settings.security.TelosSecurityHubScreen
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsRoute
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsScreen
 import de.mm20.launcher2.ui.settings.protection.ProtectedSettingsScreen
@@ -616,6 +620,12 @@ open class SettingsActivity : BaseActivity() {
             entry<ArtOptimizerRoute> {
                 ArtOptimizerScreen()
             }
+            entry<StealthCloakRoute> {
+                StealthCloakScreen()
+            }
+            entry<TelosSecurityHubRoute> {
+                TelosSecurityHubScreen()
+            }
             entry<FloatingLauncherSettingsRoute> {
                 FloatingLauncherSettingsScreen()
             }
@@ -871,6 +881,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_SEARCH_ACTIONS -> SearchActionsSettingsRoute
             ROUTE_HIDDEN_ITEMS -> HiddenItemsSettingsRoute
             ROUTE_FLOATING_LAUNCHER -> FloatingLauncherSettingsRoute
+            ROUTE_SECURITY_HUB -> TelosSecurityHubRoute
             ROUTE_WALLPAPER -> WallpaperSettingsRoute
             ROUTE_WEB_APPS -> WebAppsSettingsRoute
             ROUTE_INTRUDER_PHOTOS -> IntruderPhotosRoute
@@ -933,6 +944,7 @@ open class SettingsActivity : BaseActivity() {
         const val ROUTE_SEARCH_ACTIONS = "settings/search/searchactions"
         const val ROUTE_HIDDEN_ITEMS = "settings/search/hiddenitems"
         const val ROUTE_FLOATING_LAUNCHER = "settings/floatinglauncher"
+        const val ROUTE_SECURITY_HUB = "settings/security-hub"
         const val ROUTE_WALLPAPER = "settings/wallpaper"
         const val ROUTE_WEB_APPS = "settings/webapps"
         // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===

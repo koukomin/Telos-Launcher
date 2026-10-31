@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">Banka gizleme örtüsü</string>
+    <string name="stealth_cloak_summary">Geliştirici seçeneklerini ve ADB’yi banka, cüzdan ve hile önleme uygulamalarından gizler</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: verildi (0,2 ms anında gizleme)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: yok (Telos ayrıcalıklı hizmetiyle verin)</string>
+    <string name="stealth_cloak_devopts_state">Geliştirici seçenekleri: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">Hizmet kipi: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">Harici Shizuku (moe.shizuku.privileged.api) hâlâ yüklü</string>
+    <string name="stealth_cloak_hide_shizuku">Harici Shizuku’yu gizle veya devre dışı bırak</string>
+    <string name="stealth_cloak_permanent">Kalıcı gizleme kipi</string>
+    <string name="stealth_cloak_permanent_summary">Telos ayrıcalıklı hizmeti çalışırken Geliştirici seçenekleri ve ADB kapalı kalsın</string>
+    <string name="stealth_cloak_hide_shizuku_auto">Korumalı uygulamalar açılırken Shizuku’yu gizle</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">Banka uygulamalarından önce moe.shizuku.privileged.api üzerinde pm hide / disable-user çalıştırır</string>
+    <string name="stealth_cloak_search">Yüklü uygulamaları ara</string>
+    <string name="stealth_cloak_protected_badge">Korumalı</string>
+    <string name="stealth_cloak_new_detected">Yeni algılanan %1$d hassas uygulama gizleme listesine eklendi</string>
+</resources>

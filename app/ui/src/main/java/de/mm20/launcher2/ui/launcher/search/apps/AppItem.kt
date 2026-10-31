@@ -420,7 +420,38 @@ fun AppItem(
                         toolbarActions.add(favAction)
                     }
 
+                    val pkg = app.componentName.packageName
+                    var cloakOn by remember(pkg) {
+                        mutableStateOf(de.mm20.launcher2.appmanagement.stealth.TelosStealthBlacklist.isProtected(context, pkg))
+                    }
+                    var clipOn by remember(pkg) {
+                        mutableStateOf(de.mm20.launcher2.appmanagement.clipboard.TelosClipboardShield.isBlocked(context, pkg))
+                    }
                     if (!app.isPrivate) {
+                        toolbarActions.add(
+                            DefaultToolbarAction(
+                                label = stringResource(
+                                    if (cloakOn) I18nR.string.security_hub_cloak_on else I18nR.string.security_hub_cloak_off
+                                ),
+                                icon = BaseR.drawable.lock_24px,
+                            ) {
+                                val next = !cloakOn
+                                de.mm20.launcher2.appmanagement.stealth.TelosStealthBlacklist.setProtected(context, pkg, next)
+                                cloakOn = next
+                            },
+                        )
+                        toolbarActions.add(
+                            DefaultToolbarAction(
+                                label = stringResource(
+                                    if (clipOn) I18nR.string.security_hub_clip_on else I18nR.string.security_hub_clip_off
+                                ),
+                                icon = BaseR.drawable.content_copy_24px,
+                            ) {
+                                val next = !clipOn
+                                de.mm20.launcher2.appmanagement.clipboard.TelosClipboardShield.setBlocked(context, pkg, next)
+                                clipOn = next
+                            },
+                        )
                         toolbarActions.add(
                             DefaultToolbarAction(
                                 label = stringResource(I18nR.string.menu_app_info),

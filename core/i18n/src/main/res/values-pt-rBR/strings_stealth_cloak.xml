@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">Manto furtivo bancário</string>
+    <string name="stealth_cloak_summary">Oculta Opções do programador e ADB de bancos, carteiras e anti-cheat</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: concedida (manto 0,2 ms)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: em falta (conceder pelo demónio Telos)</string>
+    <string name="stealth_cloak_devopts_state">Opções do programador: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">Modo do demónio: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">O Shizuku externo (moe.shizuku.privileged.api) ainda está instalado</string>
+    <string name="stealth_cloak_hide_shizuku">Ocultar ou desativar o Shizuku externo</string>
+    <string name="stealth_cloak_permanent">Modo furtivo permanente</string>
+    <string name="stealth_cloak_permanent_summary">Manter Opções do programador e ADB desligados enquanto o demónio Telos corre</string>
+    <string name="stealth_cloak_hide_shizuku_auto">Ocultar o Shizuku ao abrir apps protegidas</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">Executa pm hide / disable-user em moe.shizuku.privileged.api antes de apps bancárias</string>
+    <string name="stealth_cloak_search">Pesquisar apps instaladas</string>
+    <string name="stealth_cloak_protected_badge">Protegida</string>
+    <string name="stealth_cloak_new_detected">%1$d apps sensíveis detetadas de novo foram adicionadas à lista</string>
+</resources>

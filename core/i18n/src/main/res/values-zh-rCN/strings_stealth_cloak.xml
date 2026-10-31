@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">银行隐身斗篷</string>
+    <string name="stealth_cloak_summary">对银行、钱包和反作弊应用隐藏开发者选项和 ADB</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS：已授予（0.2 毫秒即时隐藏）</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS：缺失（通过 Telos 特权守护进程授予）</string>
+    <string name="stealth_cloak_devopts_state">开发者选项：%1$s · ADB：%2$s</string>
+    <string name="stealth_cloak_mode">守护进程模式：%1$s</string>
+    <string name="stealth_cloak_shizuku_installed">外部 Shizuku（moe.shizuku.privileged.api）仍已安装</string>
+    <string name="stealth_cloak_hide_shizuku">隐藏或停用外部 Shizuku</string>
+    <string name="stealth_cloak_permanent">永久隐身模式</string>
+    <string name="stealth_cloak_permanent_summary">在 Telos 特权守护进程运行期间保持开发者选项和 ADB 关闭</string>
+    <string name="stealth_cloak_hide_shizuku_auto">打开受保护应用时隐藏 Shizuku</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">在银行应用启动前对 moe.shizuku.privileged.api 执行 pm hide / disable-user</string>
+    <string name="stealth_cloak_search">搜索已安装应用</string>
+    <string name="stealth_cloak_protected_badge">受保护</string>
+    <string name="stealth_cloak_new_detected">已将 %1$d 个新检测到的敏感应用加入隐藏列表</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="security_hub_title">Shizuku και ασπίδα απορρήτου</string>
+    <string name="security_hub_summary">Πελάτες Shizuku, απόκρυψη τραπεζών και απόρρητο προχείρου</string>
+    <string name="security_hub_tab_title">Ασπίδα απορρήτου</string>
+    <string name="security_hub_engine_status">Μηχανή Shizuku: %1$s • UID %2$d</string>
+    <string name="security_hub_active">Ενεργή</string>
+    <string name="security_hub_inactive">Ανενεργή</string>
+    <string name="security_hub_cloak_status">Απόκρυψη stealth: άμεση απόκρυψη 0,2 ms</string>
+    <string name="security_hub_selinux">SELinux: %1$s</string>
+    <string name="security_hub_freeze_shizuku">Πάγωμα εξωτερικής εφαρμογής Shizuku</string>
+    <string name="security_hub_freeze_shizuku_summary">Απενεργοποιεί ή κρύβει το moe.shizuku.privileged.api ενώ το Telos κρατά το κέλυφος</string>
+    <string name="security_hub_grant_self">Χορήγηση προνομίων Telos</string>
+    <string name="security_hub_restore_clip">Επαναφορά προχείρου</string>
+    <string name="security_hub_tab_shizuku">Εφαρμογές Shizuku</string>
+    <string name="security_hub_tab_cloak">Απόκρυψη τραπεζών</string>
+    <string name="security_hub_tab_clipboard">Ασπίδα προχείρου</string>
+    <string name="security_hub_search_clients">Αναζήτηση εφαρμογών Shizuku</string>
+    <string name="security_hub_no_clients">Καμία εγκατεστημένη εφαρμογή δεν ζητά πρόσβαση Shizuku</string>
+    <string name="security_hub_client_meta">%1$s · AppOps %2$s</string>
+    <string name="security_hub_allow">Αποδοχή</string>
+    <string name="security_hub_deny">Άρνηση</string>
+    <string name="security_hub_force_stop">Αναγκαστική διακοπή</string>
+    <string name="security_hub_scrub_mode">Λειτουργία καθαρισμού προχείρου</string>
+    <string name="security_hub_scrub_off">Ανενεργό</string>
+    <string name="security_hub_scrub_smart">Έξυπνα ευαίσθητα μοτίβα</string>
+    <string name="security_hub_scrub_strict">Αυστηρό (πάντα καθαρισμός)</string>
+    <string name="security_hub_auto_clear">Καθαρισμός προχείρου μετά από 60 δευτερόλεπτα</string>
+    <string name="security_hub_auto_clear_summary">Σβήνει αυτόματα το πρόχειρο του συστήματος μετά από αντιγραφή</string>
+    <string name="security_hub_auto_restore">Επαναφορά προχείρου στην αρχική</string>
+    <string name="security_hub_auto_restore_summary">Επιστρέφει το αποθηκευμένο κείμενο όταν γυρίζετε στο Telos</string>
+    <string name="security_hub_appops">Κλείδωμα OS READ_CLIPBOARD</string>
+    <string name="security_hub_appops_summary">cmd appops set READ_CLIPBOARD ignore για αποκλεισμένες εφαρμογές</string>
+    <string name="security_hub_search_blocked">Αναζήτηση κανόνων προχείρου</string>
+    <string name="security_hub_read_clipboard_rule">Αποκλεισμός READ_CLIPBOARD</string>
+    <string name="security_hub_cloak_on">Stealth cloak ενεργό</string>
+    <string name="security_hub_cloak_off">Stealth cloak</string>
+    <string name="security_hub_clip_on">Πρόχειρο αποκλεισμένο</string>
+    <string name="security_hub_clip_off">Αποκλεισμός πρόσβασης προχείρου</string>
+</resources>

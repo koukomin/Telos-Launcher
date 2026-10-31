@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">Stealth and banking cloak</string>
+    <string name="stealth_cloak_summary">Hide Developer Options and ADB from banking, wallet and anti-cheat apps</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: Granted (0.2ms instant cloak)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: Missing (grant via Telos privileged daemon)</string>
+    <string name="stealth_cloak_devopts_state">Developer Options: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">Daemon mode: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">External Shizuku (moe.shizuku.privileged.api) is still installed</string>
+    <string name="stealth_cloak_hide_shizuku">Hide or disable external Shizuku</string>
+    <string name="stealth_cloak_permanent">Permanent stealth mode</string>
+    <string name="stealth_cloak_permanent_summary">Keep Developer Options and ADB off while the Telos privileged daemon stays running</string>
+    <string name="stealth_cloak_hide_shizuku_auto">Hide Shizuku when opening protected apps</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">Runs pm hide / disable-user on moe.shizuku.privileged.api before banking apps</string>
+    <string name="stealth_cloak_search">Search installed apps</string>
+    <string name="stealth_cloak_protected_badge">Protected</string>
+    <string name="stealth_cloak_new_detected">%1$d newly detected sensitive apps were added to the cloak list</string>
+</resources>

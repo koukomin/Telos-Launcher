@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">Приховування від банківських програм</string>
+    <string name="stealth_cloak_summary">Приховує параметри розробника та ADB від банків, гаманців і античиту</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: надано (миттєве приховування 0,2 мс)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: немає (надати через демон Telos)</string>
+    <string name="stealth_cloak_devopts_state">Параметри розробника: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">Режим демона: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">Зовнішній Shizuku (moe.shizuku.privileged.api) досі встановлено</string>
+    <string name="stealth_cloak_hide_shizuku">Приховати або вимкнути зовнішній Shizuku</string>
+    <string name="stealth_cloak_permanent">Постійний прихований режим</string>
+    <string name="stealth_cloak_permanent_summary">Тримати параметри розробника та ADB вимкненими, поки працює демон Telos</string>
+    <string name="stealth_cloak_hide_shizuku_auto">Приховувати Shizuku під час відкриття захищених програм</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">Виконує pm hide / disable-user для moe.shizuku.privileged.api перед банківськими програмами</string>
+    <string name="stealth_cloak_search">Пошук установлених програм</string>
+    <string name="stealth_cloak_protected_badge">Захищено</string>
+    <string name="stealth_cloak_new_detected">До списку приховування додано нових чутливих програм: %1$d</string>
+</resources>

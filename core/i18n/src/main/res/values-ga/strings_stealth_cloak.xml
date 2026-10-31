@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">Clóca ceilte bainc</string>
+    <string name="stealth_cloak_summary">Folaíonn Roghanna Forbróra agus ADB ó aipeanna bainc, sparán agus frithchaimiléireachta</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: concessa (manto 0,2 ms)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: assente (concedi col demone Telos)</string>
+    <string name="stealth_cloak_devopts_state">Opzioni sviluppatore: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">Modalità demone: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">Shizuku esterno (moe.shizuku.privileged.api) è ancora installato</string>
+    <string name="stealth_cloak_hide_shizuku">Nascondi o disattiva Shizuku esterno</string>
+    <string name="stealth_cloak_permanent">Modalità stealth permanente</string>
+    <string name="stealth_cloak_permanent_summary">Tieni Opzioni sviluppatore e ADB spenti mentre il demone Telos resta attivo</string>
+    <string name="stealth_cloak_hide_shizuku_auto">Nascondi Shizuku all’apertura delle app protette</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">Esegue pm hide / disable-user su moe.shizuku.privileged.api prima delle app bancarie</string>
+    <string name="stealth_cloak_search">Cerca app installate</string>
+    <string name="stealth_cloak_protected_badge">Protetta</string>
+    <string name="stealth_cloak_new_detected">%1$d app sensibili appena rilevate sono state aggiunte all’elenco</string>
+</resources>

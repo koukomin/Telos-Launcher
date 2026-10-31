@@ -49,6 +49,7 @@ import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.settings.applock.AppLockSettingsRoute
 import de.mm20.launcher2.ui.settings.art.ArtOptimizerRoute
+import de.mm20.launcher2.ui.settings.stealth.StealthCloakRoute
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsRoute
 import de.mm20.launcher2.ui.settings.contextprofiles.ContextProfilesSettingsRoute
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsRoute
@@ -156,6 +157,22 @@ fun AdvancedSettingsScreen() {
                     summary = stringResource(id = I18nR.string.art_optimizer_summary),
                     onClick = {
                         backStack.add(ArtOptimizerRoute)
+                    }
+                )
+                Preference(
+                    icon = BaseR.drawable.lock_24px,
+                    title = stringResource(id = I18nR.string.stealth_cloak_title),
+                    summary = stringResource(id = I18nR.string.stealth_cloak_summary),
+                    onClick = {
+                        backStack.add(StealthCloakRoute)
+                    }
+                )
+                Preference(
+                    icon = BaseR.drawable.encrypted_24px,
+                    title = stringResource(id = I18nR.string.security_hub_title),
+                    summary = stringResource(id = I18nR.string.security_hub_summary),
+                    onClick = {
+                        backStack.add(de.mm20.launcher2.ui.settings.security.TelosSecurityHubRoute)
                     }
                 )
                 Preference(

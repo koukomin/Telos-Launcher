@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">Maskowanie bankowe</string>
+    <string name="stealth_cloak_summary">Ukrywa opcje programisty i ADB przed aplikacjami bankowymi, portfelami i anti-cheat</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: przyznane (natychmiastowe maskowanie 0,2 ms)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: brak (nadaj przez demona Telos)</string>
+    <string name="stealth_cloak_devopts_state">Opcje programisty: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">Tryb demona: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">Zewnętrzny Shizuku (moe.shizuku.privileged.api) jest nadal zainstalowany</string>
+    <string name="stealth_cloak_hide_shizuku">Ukryj lub wyłącz zewnętrzny Shizuku</string>
+    <string name="stealth_cloak_permanent">Trwały tryb ukrycia</string>
+    <string name="stealth_cloak_permanent_summary">Pozostaw opcje programisty i ADB wyłączone, gdy demon Telos działa</string>
+    <string name="stealth_cloak_hide_shizuku_auto">Ukrywaj Shizuku przy otwieraniu chronionych aplikacji</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">Uruchamia pm hide / disable-user na moe.shizuku.privileged.api przed aplikacjami bankowymi</string>
+    <string name="stealth_cloak_search">Szukaj zainstalowanych aplikacji</string>
+    <string name="stealth_cloak_protected_badge">Chroniona</string>
+    <string name="stealth_cloak_new_detected">Dodano %1$d nowo wykrytych wrażliwych aplikacji do listy</string>
+</resources>

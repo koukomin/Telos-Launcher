@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">عباءة التخفي المصرفية</string>
+    <string name="stealth_cloak_summary">إخفاء خيارات المطوّر وADB عن تطبيقات البنوك والمحافظ ومكافحة الغش</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: ممنوح (إخفاء فوري 0.2 مللي ثانية)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: غير ممنوح (امنحه عبر عفريت Telos)</string>
+    <string name="stealth_cloak_devopts_state">خيارات المطوّر: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">وضع العفريت: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">ما زال Shizuku الخارجي (moe.shizuku.privileged.api) مثبتًا</string>
+    <string name="stealth_cloak_hide_shizuku">إخفاء أو تعطيل Shizuku الخارجي</string>
+    <string name="stealth_cloak_permanent">وضع التخفي الدائم</string>
+    <string name="stealth_cloak_permanent_summary">إبقاء خيارات المطوّر وADB مطفأين أثناء تشغيل عفريت Telos</string>
+    <string name="stealth_cloak_hide_shizuku_auto">إخفاء Shizuku عند فتح التطبيقات المحمية</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">يشغّل pm hide / disable-user على moe.shizuku.privileged.api قبل تطبيقات البنوك</string>
+    <string name="stealth_cloak_search">البحث في التطبيقات المثبتة</string>
+    <string name="stealth_cloak_protected_badge">محمي</string>
+    <string name="stealth_cloak_new_detected">أُضيفت %1$d تطبيقات حسّاسة مكتشفة حديثًا إلى قائمة الإخفاء</string>
+</resources>

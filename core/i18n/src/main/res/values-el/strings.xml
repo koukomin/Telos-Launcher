@@ -1904,6 +1904,22 @@
     <string name="quick_event_hint">π.χ. Καφές αύριο στις 6</string>
     <string name="quick_event_create">Δημιουργία Συμβάντος</string>
 
+    <string name="stealth_cloak_title">Αόρατο πέπλο τραπεζών</string>
+    <string name="stealth_cloak_summary">Απόκρυψη επιλογών προγραμματιστή και ADB από τράπεζες, πορτοφόλια και παιχνίδια</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: Χορηγήθηκε (άμεσο πέπλο 0,2 ms)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: Λείπει (χορήγηση μέσω του προνομιούχου δαίμονα Telos)</string>
+    <string name="stealth_cloak_devopts_state">Επιλογές προγραμματιστή: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">Λειτουργία δαίμονα: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">Το εξωτερικό Shizuku (moe.shizuku.privileged.api) είναι ακόμα εγκατεστημένο</string>
+    <string name="stealth_cloak_hide_shizuku">Απόκρυψη ή απενεργοποίηση εξωτερικού Shizuku</string>
+    <string name="stealth_cloak_permanent">Μόνιμη λειτουργία αορατότητας</string>
+    <string name="stealth_cloak_permanent_summary">Διατήρηση των επιλογών προγραμματιστή και του ADB απενεργοποιημένων όσο τρέχει ο προνομιούχος δαίμονας Telos</string>
+    <string name="stealth_cloak_hide_shizuku_auto">Απόκρυψη Shizuku στο άνοιγμα προστατευμένων εφαρμογών</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">Εκτελεί pm hide / disable-user στο moe.shizuku.privileged.api πριν από τραπεζικές εφαρμογές</string>
+    <string name="stealth_cloak_search">Αναζήτηση εγκατεστημένων εφαρμογών</string>
+    <string name="stealth_cloak_protected_badge">Προστατευμένη</string>
+    <string name="stealth_cloak_new_detected">%1$d νέες ευαίσθητες εφαρμογές προστέθηκαν στη λίστα πέπλου</string>
+
     <string name="art_optimizer_title">Βελτιστοποίηση Εφαρμογών ART (Dex2Oat)</string>
     <string name="art_optimizer_summary">Μεταγλώττιση κώδικα εφαρμογών σε τοπικό κώδικα μηχανής μέσω Shizuku</string>
     <string name="art_optimizer_master_toggle">Ενεργοποίηση Βελτιστοποιητή ART</string>

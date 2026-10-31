@@ -22,6 +22,7 @@ another way, is not stopped by them.
 | [Online results off](#network-privacy) | Your queries | The Online results filter |
 | [Crash guard](#crash-guard) | The launcher, from bugs in Telos apps | Automatic |
 | [Backup](#backup-and-restore) | Your setup | Settings > Advanced > Backup and restore |
+| [Shizuku and Privacy Shield](#shizuku-and-privacy-shield) | Clipboard, Shizuku clients, banking cloak | Settings > Advanced, Telos System, search-bar shield pill |
 
 ## Settings lock
 
@@ -207,6 +208,22 @@ with a warning that some data may be lost. A failed backup shows an error with *
 
 On restore, secrets that live on the device (passwords, keys, hidden numbers) are kept from the device,
 not taken from the file, and an account without its password is switched off.
+
+## Shizuku and Privacy Shield
+
+The **Shizuku & Privacy Shield** hub lives in Settings → Advanced, as the **Privacy Shield** tab of Telos System, and behind the shield indicator on the search bar.
+
+| Control | What it does |
+| --- | --- |
+| Shizuku engine status | Shows binder alive state, UID, version and SELinux context, plus Telos's in-package shell session |
+| Freeze external Shizuku | `pm disable-user` / hide `moe.shizuku.privileged.api` while Telos keeps privileged commands |
+| Shizuku apps | Installed packages that request `API_V23` or declare `moe.shizuku.client.V3_SUPPORT`; grant or revoke and force-stop |
+| Banking cloak | Same Developer Options / ADB hide list as Stealth cloak, including Greek banks, Revolut and wallets |
+| Clipboard shield | Strict or smart scrub (IBAN, cards, wallets, OTP, password-like text) into an in-memory vault, optional 60s auto-clear, `READ_CLIPBOARD` app-op ignore for blocked apps |
+
+Long-press an app icon to toggle **Stealth cloak** and **Block clipboard access** for that package. Returning to the home screen can restore the vaulted clip.
+
+Privileged `pm` / `cmd appops` calls need a live Shizuku or root session.
 
 ## Limitations
 

@@ -8,6 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.launch
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -51,6 +53,22 @@ fun PerformanceSettingsScreen() {
     PreferenceScreen(title = stringResource(I18nR.string.preference_screen_performance)) {
         item {
             PreferenceCategory {
+                val context = androidx.compose.ui.platform.LocalContext.current
+                val scope = androidx.compose.runtime.rememberCoroutineScope()
+                var forcing by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+                Preference(
+                    icon = BaseR.drawable.memory_24px,
+                    title = "Telos Automated Self-Tuning Engine",
+                    summary = if (forcing) "Optimizing System Environment..." else "Force Re-Optimize Now (Thread Priority, Memory Pin, JIT)",
+                    onClick = {
+                        forcing = true
+                        scope.launch {
+                            val success = de.mm20.launcher2.ui.performance.TelosSelfOptimizer.forceOptimizeNow(context)
+                            android.widget.Toast.makeText(context, if (success) "Optimization Applied!" else "Shizuku Unreachable or Failed", android.widget.Toast.LENGTH_SHORT).show()
+                            forcing = false
+                        }
+                    },
+                )
                 Preference(
                     icon = BaseR.drawable.bolt_24px,
                     title = stringResource(I18nR.string.art_optimizer_title),

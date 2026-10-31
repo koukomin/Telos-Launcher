@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">은행 스텔스 클로크</string>
+    <string name="stealth_cloak_summary">은행, 지갑, 치트 방지 앱에서 개발자 옵션과 ADB를 숨깁니다</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: 허용됨 (0.2ms 즉시 은폐)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: 없음 (Telos 특권 데몬으로 부여)</string>
+    <string name="stealth_cloak_devopts_state">개발자 옵션: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">데몬 모드: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">외부 Shizuku(moe.shizuku.privileged.api)가 아직 설치되어 있습니다</string>
+    <string name="stealth_cloak_hide_shizuku">외부 Shizuku 숨기기 또는 사용 중지</string>
+    <string name="stealth_cloak_permanent">상시 스텔스 모드</string>
+    <string name="stealth_cloak_permanent_summary">Telos 특권 데몬이 실행되는 동안 개발자 옵션과 ADB를 꺼 둡니다</string>
+    <string name="stealth_cloak_hide_shizuku_auto">보호된 앱을 열 때 Shizuku 숨기기</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">은행 앱 실행 전에 moe.shizuku.privileged.api에 pm hide / disable-user를 실행합니다</string>
+    <string name="stealth_cloak_search">설치된 앱 검색</string>
+    <string name="stealth_cloak_protected_badge">보호됨</string>
+    <string name="stealth_cloak_new_detected">새로 감지된 민감 앱 %1$d개가 은폐 목록에 추가되었습니다</string>
+</resources>

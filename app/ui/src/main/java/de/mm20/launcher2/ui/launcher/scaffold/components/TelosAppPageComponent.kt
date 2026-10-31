@@ -147,6 +147,7 @@ internal object TelosPages {
         entry<de.mm20.launcher2.ui.network.NetworkStatsRoute> { de.mm20.launcher2.ui.network.NetworkStatsScreen() }
         entry<de.mm20.launcher2.ui.network.logs.NetworkLogsRoute> { de.mm20.launcher2.ui.network.logs.NetworkLogsScreen() }
         entry<de.mm20.launcher2.ui.system.SystemDashboardRoute> { de.mm20.launcher2.ui.system.SystemDashboardScreen() }
+        entry<de.mm20.launcher2.ui.settings.security.TelosSecurityHubRoute> { de.mm20.launcher2.ui.settings.security.TelosSecurityHubScreen() }
         entry<de.mm20.launcher2.ui.trash.TrashUnlockRoute> { de.mm20.launcher2.ui.trash.TrashUnlockScreen() }
         entry<de.mm20.launcher2.ui.notes.NotesRoute> { de.mm20.launcher2.ui.notes.NotesScreen() }
         entry<de.mm20.launcher2.ui.calendar.CalendarRoute> { de.mm20.launcher2.ui.calendar.CalendarScreen() }

@@ -105,6 +105,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
 
         // Self-optimize Telos bytecode via ART speed profile in background if updated
         de.mm20.launcher2.art.TelosSelfOptimizer.checkAndSelfCompileAsync(this, this)
+        de.mm20.launcher2.appmanagement.stealth.TelosDevOptsCloak.start(this)
 
         launch(Dispatchers.IO) { de.mm20.launcher2.ui.system.restoreSystemAppOps(this@LauncherApplication) }
 

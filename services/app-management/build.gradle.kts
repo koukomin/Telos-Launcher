@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    buildFeatures { aidl = true }
     compileSdk {
         version = release(libs.versions.compileSdk.get().toInt()) {
             minorApiLevel = libs.versions.compileSdkMinor.get().toInt()

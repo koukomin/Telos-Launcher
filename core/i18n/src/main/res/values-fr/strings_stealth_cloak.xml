@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">Cape furtive bancaire</string>
+    <string name="stealth_cloak_summary">Masque les options développeur et ADB aux apps bancaires, portefeuilles et anti-triche</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS : accordée (cape 0,2 ms)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS : absente (accorder via le démon Telos)</string>
+    <string name="stealth_cloak_devopts_state">Options développeur : %1$s · ADB : %2$s</string>
+    <string name="stealth_cloak_mode">Mode démon : %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">Shizuku externe (moe.shizuku.privileged.api) est encore installé</string>
+    <string name="stealth_cloak_hide_shizuku">Masquer ou désactiver Shizuku externe</string>
+    <string name="stealth_cloak_permanent">Mode furtif permanent</string>
+    <string name="stealth_cloak_permanent_summary">Garder les options développeur et ADB désactivés tant que le démon Telos tourne</string>
+    <string name="stealth_cloak_hide_shizuku_auto">Masquer Shizuku à l’ouverture des apps protégées</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">Exécute pm hide / disable-user sur moe.shizuku.privileged.api avant les apps bancaires</string>
+    <string name="stealth_cloak_search">Rechercher les applications installées</string>
+    <string name="stealth_cloak_protected_badge">Protégée</string>
+    <string name="stealth_cloak_new_detected">%1$d applications sensibles nouvellement détectées ont été ajoutées à la liste</string>
+</resources>

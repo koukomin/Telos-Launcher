@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="stealth_cloak_title">ব্যাংকিং স্টেলথ ক্লোক</string>
+    <string name="stealth_cloak_summary">ব্যাংক, ওয়ালেট ও অ্যান্টি-চিট অ্যাপ থেকে ডেভেলপার অপশন ও ADB লুকান</string>
+    <string name="stealth_cloak_wss_granted">WRITE_SECURE_SETTINGS: মঞ্জুর (০.২ms তাৎক্ষণিক ক্লোক)</string>
+    <string name="stealth_cloak_wss_missing">WRITE_SECURE_SETTINGS: নেই (Telos ডেমন দিয়ে দিন)</string>
+    <string name="stealth_cloak_devopts_state">ডেভেলপার অপশন: %1$s · ADB: %2$s</string>
+    <string name="stealth_cloak_mode">ডেমন মোড: %1$s</string>
+    <string name="stealth_cloak_shizuku_installed">বাহ্যিক Shizuku (moe.shizuku.privileged.api) এখনও ইনস্টল আছে</string>
+    <string name="stealth_cloak_hide_shizuku">বাহ্যিক Shizuku লুকান বা নিষ্ক্রিয় করুন</string>
+    <string name="stealth_cloak_permanent">স্থায়ী স্টেলথ মোড</string>
+    <string name="stealth_cloak_permanent_summary">Telos ডেমন চলাকালীন ডেভেলপার অপশন ও ADB বন্ধ রাখুন</string>
+    <string name="stealth_cloak_hide_shizuku_auto">সুরক্ষিত অ্যাপ খোলার সময় Shizuku লুকান</string>
+    <string name="stealth_cloak_hide_shizuku_auto_summary">ব্যাংকিং অ্যাপের আগে moe.shizuku.privileged.api-এ pm hide / disable-user চালায়</string>
+    <string name="stealth_cloak_search">ইনস্টল করা অ্যাপ খুঁজুন</string>
+    <string name="stealth_cloak_protected_badge">সুরক্ষিত</string>
+    <string name="stealth_cloak_new_detected">%1$dটি নতুন সংবেদনশীল অ্যাপ ক্লোক তালিকায় যোগ করা হয়েছে</string>
+</resources>

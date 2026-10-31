@@ -197,7 +197,7 @@ fun SystemDashboardScreen() {
                     Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
                 }
             }
-            androidx.compose.material3.TabRow(selectedTabIndex = currentTab, containerColor = Color.Transparent) {
+            androidx.compose.material3.ScrollableTabRow(selectedTabIndex = currentTab, containerColor = Color.Transparent, edgePadding = 8.dp) {
                 androidx.compose.material3.Tab(
                     selected = currentTab == 0,
                     onClick = { currentTab = 0 },
@@ -213,11 +213,20 @@ fun SystemDashboardScreen() {
                     onClick = { currentTab = 2 },
                     text = { Text("Tweaks") }
                 )
+                androidx.compose.material3.Tab(
+                    selected = currentTab == 3,
+                    onClick = { currentTab = 3 },
+                    text = { Text(stringResource(I18nR.string.security_hub_tab_title)) }
+                )
             }
             if (currentTab == 1) {
                 SystemAppsTab(onOpenDetails = { pkg -> backStack.add(SystemAppDetailsRoute(pkg)) })
             } else if (currentTab == 2) {
                 de.mm20.launcher2.ui.settings.tweaks.TweaksSettingsScreen()
+            } else if (currentTab == 3) {
+                androidx.compose.foundation.lazy.LazyColumn(Modifier.fillMaxSize()) {
+                    item { de.mm20.launcher2.ui.settings.security.TelosSecurityHubBody() }
+                }
             } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),

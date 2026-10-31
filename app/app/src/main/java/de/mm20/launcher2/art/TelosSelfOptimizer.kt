@@ -45,6 +45,10 @@ object TelosSelfOptimizer {
             return@withContext
         }
 
+        runCatching {
+            de.mm20.launcher2.appmanagement.stealth.TelosPrivilegedDaemon.grantWriteSecureSettings(context)
+        }
+
         if (!TelosShellEngine.isPrivilegedAvailable(context)) {
             Log.d(TAG, "Privileged shell unavailable; skipping self-compilation for now")
             return@withContext

@@ -81,6 +81,24 @@ interface between the processes.
 - Package metadata is read from `TelosPackageRepository` on the disk dispatcher; Compose grids use cached labels/icons. `PackageManager` / `LauncherApps` Binder calls stay off the UI thread during scrolling.
 - `app/app/src/main/baseline-prof.txt` plus `androidx.profileinstaller` AOT-compile `de.mm20.launcher2` and `com.telos` launcher classes on install.
 
+## Stealth cloak and privileged daemon
+
+Code: `services/app-management/.../stealth/` (`TelosPrivilegedDaemon`, `TelosStealthBlacklist`, `TelosDevOptsCloak`), UI in Settings → Advanced → Stealth and banking cloak.
+
+- `TelosPrivilegedDaemonService` is not exported. Binder callers must be the Telos UID (`Binder.getCallingUid() == Process.myUid()`).
+- Commands run through the existing Telos `ShizukuCommandService` UserService (Telos package name, shell UID 2000) or Shizuku/root fallback. That UserService is the internal daemon; the `moe.shizuku.privileged.api` UI can be hidden after it is bound.
+- Before a protected app is launched from the launcher, `AppLaunchGate` cloaks `development_settings_enabled`, `adb_enabled` and `adb_wifi_enabled`. With `WRITE_SECURE_SETTINGS` this is a Java `Settings.Global.putInt`. Returning to the home screen restores the previous values unless permanent stealth is on.
+- The seeded package list covers Greek banks/gov, common fintech, Play/GMS/Intune/Authenticator, and several anti-cheat titles. Heuristics (`CATEGORY_FINANCE` and bank/wallet/pay/gov/intune/authenticator labels) add further packages. Users can toggle any installed app.
+
+## Shizuku manager and clipboard shield
+
+Code: `services/app-management/.../shizuku/TelosShizukuManager.kt`, `.../clipboard/TelosClipboardShield.kt`, UI `TelosSecurityHubScreen`.
+
+- Client scan uses `GET_PERMISSIONS` and `GET_META_DATA` for `moe.shizuku.manager.permission.API_V23`, `rikka.shizuku.permission.API_V23`, and `moe.shizuku.client.V3_SUPPORT`.
+- Package enable/disable, `pm grant`/`revoke`, `am force-stop`, and `cmd appops set READ_CLIPBOARD` run on `TelosDispatchers.Disk` through `TelosPrivilegedDaemon` / `TelosShellEngine`.
+- Pre-launch clipboard work stays on the launch path (ClipboardManager). Pattern matching is compiled once. The vault is process memory only.
+- `AppLaunchGate.preLaunch` chains cloak then clipboard scrub; `onHomeResumed` restores cloak flags and optionally the vault.
+
 ## ART App Optimizer and Dex2Oat Architecture
 
 The ART App Optimizer subsystem resides in `:services:app-management` (`de.mm20.launcher2.appmanagement.art`) with UI in `:app:ui`:

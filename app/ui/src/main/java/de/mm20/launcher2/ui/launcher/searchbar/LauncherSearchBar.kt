@@ -152,6 +152,7 @@ fun LauncherSearchBar(
                         }
                     }
                 }
+                SecurityHubStatusPill()
                 SearchBarMenu(searchBarValue = value, onInputClear = {
                     searchVM.reset()
                 })
