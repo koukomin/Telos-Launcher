@@ -57,7 +57,7 @@ JDK: Android and Linux continue to build with the project's JDK 21 toolchain.
 Documentation builds select `lts/*` with `check-latest: true` for the installed
 Node.js version. Actions use their maintained major tags to receive compatible
 patch/minor updates. `.github/dependabot.yml` checks for new Action versions daily
-at 06:00 Europe/Athens, including major updates, and groups them into a PR for CI.
+at 06:00 Europe/Athens, including weekends and major updates, and groups them into a PR for CI.
 On forks, enable **Settings > Advanced Security > Dependabot version updates**
 once; committing a config alone does not activate version updates on a fork.
 
