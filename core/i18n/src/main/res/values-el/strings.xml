@@ -1066,6 +1066,7 @@
     <string name="preference_freeze_exclusion_strictness">Αυστηρότητα εξαίρεσης</string>
     <string name="preference_freeze_exclusion_strictness_summary">Οι εφαρμογές στο προσκήνιο, οι ενεργές ειδοποιήσεις, οι υπηρεσίες προσκηνίου και το Android Auto προστατεύονται πάντα, σε κάθε προφίλ. Αυτό επηρεάζει μόνο τον έλεγχο ενεργής περιόδου πολυμέσων.</string>
     <string name="preference_freeze_hide_from_launcher">Απόκρυψη παγωμένων εφαρμογών</string>
+  <string name="preference_freeze_show_in_launcher">Εμφάνιση παγωμένων εφαρμογών</string>
     <string name="preference_freeze_hide_from_launcher_summary">Οι παγωμένες εφαρμογές αφαιρούνται εντελώς από την αρχική οθόνη, το συρτάρι εφαρμογών και την αναζήτηση, αντί να εμφανίζονται γκριζαρισμένες. Παραμένουν πλήρως διαχειρίσιμες εδώ, στη Διαχείριση Πάγωσης.</string>
     <string name="preference_freeze_idle_timeout">Λεπτά μετά το σβήσιμο της οθόνης</string>
     <string name="preference_freeze_network_threshold">Όριο δικτύου</string>

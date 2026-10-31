@@ -440,8 +440,7 @@ class SearchVM : ViewModel(), KoinComponent {
                     previousResults,
                 )
                     .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }
-                    .combine(freezeSettings.hideFromLauncher) { (results, hiddenKeys), hideFrozen -> Triple(results, hiddenKeys, hideFrozen) }
-                    .collectLatest { (results, hiddenKeys, hideFrozen) ->
+                    .collectLatest { (results, hiddenKeys) ->
                         previousResults = results
 
                         hiddenResults.clear()
@@ -450,7 +449,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
                         appResults.updateItems(
                             results.apps
-                            ?.filterNot { hiddenKeys.contains(it.key) || (hideFrozen && it.isSuspended) }
+                            ?.filterNot { hiddenKeys.contains(it.key) }
                             ?.applyRanking(query)
                         )
                         appShortcutResults.updateItems(
