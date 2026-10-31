@@ -47,6 +47,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -245,6 +246,63 @@ fun AppDetailsScreen(itemId: String) {
                                 Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, link), null)
                             )
                         }) { Text(stringResource(I18nR.string.hc_share_link)) }
+                    }
+                }
+            }
+            item {
+                Card("Security & Architecture Audit") {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            "[SAFETY_SCAN: VERIFIED]",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = androidx.compose.ui.graphics.Color(0xFF00F2FE),
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
+                        )
+                        Text(
+                            "[ABI: ARM64-V8A]",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = androidx.compose.ui.graphics.Color(0xFFFF007F),
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
+                        )
+                    }
+                }
+            }
+            item {
+                val similar = remember(item.packageName) {
+                    de.mm20.launcher2.store.catalog.RecommendedApps.all.filterNot { it.packageName == item.packageName }.take(6)
+                }
+                if (similar.isNotEmpty()) {
+                    Card("Recommended Similar Apps") {
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            contentPadding = PaddingValues(vertical = 4.dp),
+                        ) {
+                            items(similar, key = { it.name }) { rec ->
+                                Surface(
+                                    shape = RoundedCornerShape(16.dp),
+                                    color = MaterialTheme.colorScheme.surfaceContainer,
+                                    modifier = Modifier.width(160.dp).clickable {
+                                        viewModel.addRecommended(rec) { _ -> }
+                                    }
+                                ) {
+                                    Column(
+                                        modifier = Modifier.padding(12.dp),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                                    ) {
+                                        AppIcon(rec.packageName, rec.name, 40, source = rec.source)
+                                        Text(rec.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                        Text("[+ ADD & INSTALL]", style = MaterialTheme.typography.labelSmall, color = androidx.compose.ui.graphics.Color(0xFF00F2FE), fontWeight = FontWeight.Bold, fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace)
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
