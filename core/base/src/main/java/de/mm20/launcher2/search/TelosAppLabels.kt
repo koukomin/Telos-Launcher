@@ -10,7 +10,6 @@ object TelosAppLabels {
         "telos_akou_app" -> I18nR.string.telos_akou_app_label
         "telos_magnifier_app" -> I18nR.string.telos_magnifier_app_label
         "telos_flashlight_app" -> I18nR.string.telos_flashlight_app_label
-        "telos_ironewolf_app" -> I18nR.string.ironewolf_name
         "telos_phone_app" -> I18nR.string.virtual_app_phone
         "telos_messages_app" -> I18nR.string.hc_messages
         "telos_radio_app" -> I18nR.string.hc_radio

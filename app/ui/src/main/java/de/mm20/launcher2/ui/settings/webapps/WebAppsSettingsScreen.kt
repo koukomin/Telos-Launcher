@@ -57,7 +57,6 @@ data object WebAppsSettingsRoute : NavKey
 @Composable
 fun WebAppsSettingsScreen() {
     val viewModel: WebAppsSettingsScreenVM = viewModel()
-    val embeddedEngine by viewModel.embeddedEngine.collectAsState()
     val shortcuts by viewModel.shortcuts.collectAsState()
     val direction by viewModel.direction.collectAsState()
     val adBlockEnabled by viewModel.adBlockEnabled.collectAsState()
@@ -84,21 +83,6 @@ fun WebAppsSettingsScreen() {
     PreferenceScreen(
         title = stringResource(I18nR.string.preference_screen_web_app_shortcuts),
     ) {
-        if (de.mm20.launcher2.webapp.IronewolfRuntime.isBundled(context)) {
-            item {
-                PreferenceCategory(title = stringResource(I18nR.string.web_app_shortcut_renderer_embedded)) {
-                    ListPreference(
-                        title = stringResource(I18nR.string.web_app_shortcut_renderer),
-                        items = listOf(
-                            ListPreferenceItem(stringResource(I18nR.string.ironewolf_name), "ironewolf"),
-                            ListPreferenceItem(stringResource(I18nR.string.android_webview_name), "webview"),
-                        ),
-                        value = embeddedEngine,
-                        onValueChanged = { if (it != null) viewModel.setEmbeddedEngine(it) },
-                    )
-                }
-            }
-        }
         item {
             PreferenceCategory(title = stringResource(I18nR.string.preference_screen_web_apps_panel)) {
                 SwitchPreference(

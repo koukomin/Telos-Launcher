@@ -292,16 +292,31 @@ fun SystemDashboardScreen() {
                     }
                 }
                 item {
-                    GlassCard {
-                        Text(stringResource(I18nR.string.telos_system_cpu), style = MaterialTheme.typography.labelLarge)
-                        cpu?.let { usage ->
-                            LinearProgressIndicator(progress = { usage }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)))
-                            Text("${(usage * 100).toInt()}%")
-                        } ?: Text(stringResource(I18nR.string.virtual_telemetry_unavailable))
-                        Text(stringResource(I18nR.string.telos_system_ram), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        val cpuUsage = cpu ?: 0f
+                        de.mm20.launcher2.ui.component.CyberRadialGauge(
+                            title = stringResource(I18nR.string.telos_system_cpu),
+                            value = cpuUsage,
+                            valueText = "${(cpuUsage * 100).toInt()}%",
+                            subtitle = if (cpu != null) "OCTA-CORE CORE" else stringResource(I18nR.string.virtual_telemetry_unavailable),
+                            modifier = Modifier.weight(1f),
+                            primaryColor = Color(0xFF00F2FE),
+                            accentColor = Color(0xFFFF007F),
+                        )
+
                         val ramF = if (ramTotal == 0L) 0f else ramUsed.toFloat() / ramTotal
-                        LinearProgressIndicator(progress = { ramF }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)))
-                        Text("${Formatter.formatFileSize(context, ramUsed)} / ${Formatter.formatFileSize(context, ramTotal)}")
+                        de.mm20.launcher2.ui.component.CyberRadialGauge(
+                            title = stringResource(I18nR.string.telos_system_ram),
+                            value = ramF,
+                            valueText = "${(ramF * 100).toInt()}%",
+                            subtitle = "${Formatter.formatFileSize(context, ramUsed)} / ${Formatter.formatFileSize(context, ramTotal)}",
+                            modifier = Modifier.weight(1f),
+                            primaryColor = Color(0xFF8A2BE2),
+                            accentColor = Color(0xFF00F2FE),
+                        )
                     }
                 }
                 item {

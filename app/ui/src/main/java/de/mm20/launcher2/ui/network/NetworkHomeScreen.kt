@@ -211,6 +211,20 @@ fun NetworkHomeScreen() {
                             TextButton(onClick = { engine.acknowledgeError() }) { Text(stringResource(I18nR.string.net_hub_dismiss)) }
                         }
 
+                        val sampleHistory = remember {
+                            listOf(
+                                10L to 5L, 45L to 18L, 120L to 35L, 85L to 40L,
+                                210L to 90L, 160L to 75L, 340L to 110L, 290L to 95L,
+                                420L to 180L, 380L to 150L, 510L to 210L, 460L to 190L
+                            )
+                        }
+                        de.mm20.launcher2.ui.component.CyberWaveformChart(
+                            downloadKb = stats.dnsAllowed + stats.connectionsAllowed,
+                            uploadKb = stats.dnsBlocked + stats.connectionsBlocked,
+                            history = sampleHistory,
+                            modifier = Modifier.padding(top = 12.dp)
+                        )
+
                         FlowRow(
                             modifier = Modifier.padding(top = 16.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),

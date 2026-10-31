@@ -4,5 +4,5 @@ object EmbeddedBrowserPolicy {
     const val WebView = "webview"
     const val Default = WebView
 
-    fun select(preference: String, ironewolfBundled: Boolean): String = WebView
+    fun select(preference: String): String = WebView
 }
