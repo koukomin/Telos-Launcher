@@ -50,19 +50,19 @@ fun DhizukuSettingsScreen() {
     }
 
     PreferenceScreen(
-        title = { Text("Dhizuku Device Policy Hub") },
+        title = { Text(stringResource(I18nR.string.dhizuku_hub_title)) },
     ) {
         item {
-            PreferenceCategory(title = "Dhizuku Status") {
+            PreferenceCategory(title = stringResource(I18nR.string.dhizuku_status)) {
                 if (!isAvailable) {
                     Banner(
-                        text = "Dhizuku is not running or selected. Install and set up Dhizuku from Store to grant Device Owner delegation.",
+                        text = stringResource(I18nR.string.dhizuku_not_running),
                         icon = BaseR.drawable.error_24px,
                     )
                     Preference(
                         icon = BaseR.drawable.download_24px,
-                        title = "Get Dhizuku from Telos Store",
-                        summary = "Download and install the official Dhizuku app",
+                        title = stringResource(I18nR.string.dhizuku_get_from_store),
+                        summary = stringResource(I18nR.string.dhizuku_download_summary),
                         onClick = {
                             context.startActivity(
                                 Intent(context, SettingsActivity::class.java)
@@ -74,8 +74,8 @@ fun DhizukuSettingsScreen() {
                 } else {
                     Preference(
                         icon = BaseR.drawable.lock_24px,
-                        title = "Dhizuku Device Owner Active",
-                        summary = if (hasPermission) "Permission Granted (Device Owner Delegated)" else "Tap to grant Dhizuku permission",
+                        title = stringResource(I18nR.string.dhizuku_active_title),
+                        summary = if (hasPermission) stringResource(I18nR.string.freeze_permission_granted) else stringResource(I18nR.string.freeze_permission_not_granted),
                         onClick = {
                             if (!hasPermission) {
                                 (context as? AppCompatActivity)?.let {
@@ -92,11 +92,11 @@ fun DhizukuSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Device Owner Delegated Capabilities") {
+            PreferenceCategory(title = stringResource(I18nR.string.dhizuku_capabilities)) {
                 Preference(
                     icon = BaseR.drawable.ac_unit_24px,
-                    title = "App Suspension & Hiding",
-                    summary = "Suspend and hide applications via Dhizuku DevicePolicyManager",
+                    title = stringResource(I18nR.string.dhizuku_suspension_hiding),
+                    summary = stringResource(I18nR.string.dhizuku_suspension_summary),
                     onClick = {
                         context.startActivity(
                             Intent(context, SettingsActivity::class.java)

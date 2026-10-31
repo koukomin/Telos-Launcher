@@ -250,7 +250,7 @@ fun AppDetailsScreen(itemId: String) {
                 }
             }
             item {
-                Card("Security & Architecture Audit") {
+                Card(stringResource(I18nR.string.store_security_audit_title)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -278,7 +278,7 @@ fun AppDetailsScreen(itemId: String) {
                     de.mm20.launcher2.store.catalog.RecommendedApps.all.filterNot { it.packageName == item.packageName }.take(6)
                 }
                 if (similar.isNotEmpty()) {
-                    Card("Recommended Similar Apps") {
+                    Card(stringResource(I18nR.string.store_similar_apps_title)) {
                         LazyRow(
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             contentPadding = PaddingValues(vertical = 4.dp),
