@@ -176,16 +176,27 @@ internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAcces
     }
     // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
+    @Volatile private var cachedPm: Any? = null
+
     private fun packageManager(): Any? {
+        val existing = cachedPm
+        if (existing != null && runCatching { (existing as? android.os.IInterface)?.asBinder()?.isBinderAlive }.getOrDefault(true) == true) {
+            return existing
+        }
         return runCatching {
             val binder = ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package"))
             val stub = Class.forName("android.content.pm.IPackageManager\$Stub")
-            if (isAtLeastApiLevel(Build.VERSION_CODES.P)) {
+            val pm = if (isAtLeastApiLevel(Build.VERSION_CODES.P)) {
                 HiddenApiBypass.invoke(stub, null, "asInterface", binder)
             } else {
                 stub.getMethod("asInterface", IBinder::class.java).invoke(null, binder)
             }
-        }.onFailure { Log.e(TAG, "Could not obtain IPackageManager", it) }.getOrNull()
+            cachedPm = pm
+            pm
+        }.onFailure { 
+            cachedPm = null
+            Log.e(TAG, "Could not obtain IPackageManager", it) 
+        }.getOrNull()
     }
 
     /** @return true if the package ended up in the requested state. */

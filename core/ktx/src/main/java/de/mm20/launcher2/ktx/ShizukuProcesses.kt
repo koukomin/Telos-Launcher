@@ -62,7 +62,32 @@ object ShizukuProcesses {
         }
         check(current.ready.await(8, TimeUnit.SECONDS)) { "Shizuku UserService connection timed out" }
         val service = checkNotNull(current.service) { "Shizuku UserService unavailable" }
-        val remote = IRemoteProcess.Stub.asInterface(service.start(args, environment, directory))
+        val remote = runCatching {
+            IRemoteProcess.Stub.asInterface(service.start(args, environment, directory))
+        }.getOrElse {
+            synchronized(monitor) { binding = null }
+            val retriedState = synchronized(monitor) {
+                Binding().also { state ->
+                    binding = state
+                    val serviceArgs = Shizuku.UserServiceArgs(ComponentName(context.packageName, ShizukuCommandService::class.java.name))
+                        .daemon(false).processNameSuffix("telos-command").version(1)
+                        .debuggable(context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE != 0)
+                    val connection = object : ServiceConnection {
+                        override fun onServiceConnected(name: ComponentName, binder: IBinder?) {
+                            state.service = runCatching { ICommandService.Stub.asInterface(binder)?.takeIf { it.uid == 0 || it.uid == 2000 } }.getOrNull()
+                            state.ready.countDown()
+                        }
+                        override fun onServiceDisconnected(name: ComponentName) { state.service = null; state.ready.countDown() }
+                    }
+                    Handler(Looper.getMainLooper()).post {
+                        runCatching { Shizuku.bindUserService(serviceArgs, connection) }.onFailure { state.ready.countDown() }
+                    }
+                }
+            }
+            retriedState.ready.await(8, TimeUnit.SECONDS)
+            val retryService = checkNotNull(retriedState.service) { "Shizuku UserService unavailable on retry" }
+            IRemoteProcess.Stub.asInterface(retryService.start(args, environment, directory))
+        }
         return fromRemoteProcess(requireNotNull(remote))
     }
 
