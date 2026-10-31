@@ -1,6 +1,6 @@
 Builds:
-  - versionName: 1.43.79
-    versionCode: 2026110503
+  - versionName: 1.43.80
+    versionCode: 2026110504
     commit: main
     subdir: app
     sudo:
@@ -16,5 +16,5 @@ Builds:
 
 AutoUpdateMode: None
 UpdateCheckMode: None
-CurrentVersion: 1.43.79
-CurrentVersionCode: 2026110503
+CurrentVersion: 1.43.80
+CurrentVersionCode: 2026110504

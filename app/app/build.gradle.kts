@@ -75,9 +75,9 @@ android {
         applicationId = "com.dimitris.telos"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026110503
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026110504
         // release builds get the version of their tag (v1.41.0 -> 1.41.0), otherwise the update check would always find the tag newer
-        versionName = System.getenv("VERSION_NAME_OVERRIDE")?.takeIf { it.isNotBlank() } ?: "1.43.79"
+        versionName = System.getenv("VERSION_NAME_OVERRIDE")?.takeIf { it.isNotBlank() } ?: "1.43.80"
         signingConfig = signingConfigs.getByName("debug")
 
         // Only the CPU types we ship: without this the x86 and x86_64 builds of the FFmpeg decoders

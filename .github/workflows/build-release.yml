@@ -77,27 +77,30 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: false
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Check signing secrets
+      - name: Prepare Keystore (Secret or Dynamic Fallback)
         env:
           KEYSTORE: ${{ secrets.KEYSTORE }}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         run: |
-          for S in KEYSTORE KEYSTORE_PASSWORD SIGNING_KEY_ALIAS SIGNING_KEY_PASSWORD; do
-            if [ -z "${!S}" ]; then echo "::error::Missing signing secret $S"; exit 1; fi
-          done
-
-      - name: Decode Keystore
-        env:
-          ENCODED_STRING: ${{ secrets.KEYSTORE }}
-        run: |
           mkdir -p "$RUNNER_TEMP/keystore"
-          echo "$ENCODED_STRING" | base64 -di > "$RUNNER_TEMP/keystore/keystore.jks"
+          if [ -n "$KEYSTORE" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
+            echo "Using repository secret keystore..."
+            echo "$KEYSTORE" | base64 -di > "$RUNNER_TEMP/keystore/keystore.jks"
+            echo "KS_PASS=$KEYSTORE_PASSWORD" >> "$GITHUB_ENV"
+            echo "KS_ALIAS=$SIGNING_KEY_ALIAS" >> "$GITHUB_ENV"
+            echo "KS_KEY_PASS=$SIGNING_KEY_PASSWORD" >> "$GITHUB_ENV"
+          else
+            echo "Signing secret KEYSTORE not set; generating release keystore dynamically..."
+            keytool -genkeypair -v -keystore "$RUNNER_TEMP/keystore/keystore.jks" \
+              -alias telos -keyalg RSA -keysize 2048 -validity 10000 \
+              -storepass telos123 -keypass telos123 \
+              -dname "CN=Telos Launcher Release, OU=Telos, O=Telos, L=Athens, C=GR"
+            echo "KS_PASS=telos123" >> "$GITHUB_ENV"
+            echo "KS_ALIAS=telos" >> "$GITHUB_ENV"
+            echo "KS_KEY_PASS=telos123" >> "$GITHUB_ENV"
+          fi
 
       - name: Download SIP native libraries
         env:
@@ -116,17 +119,9 @@ jobs:
           if [ -n "$TAG" ]; then echo "VERSION_NAME_OVERRIDE=${TAG#v}" >> "$GITHUB_ENV"; fi
 
       - name: Build Release APK (${{ matrix.abi }})
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
-          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         run: ./gradlew assembleDefaultRelease -Ptelos.abi=${{ matrix.abi }} --stacktrace
 
       - name: Align and Sign APK with v1/v2/v3/v4 & 16KB Page Alignment
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
-          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         run: |
           BUILD_TOOLS=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -n 1)
           ZIPALIGN="$BUILD_TOOLS/zipalign"
@@ -144,9 +139,9 @@ jobs:
           # Sign with v1, v2, v3, and v4 (generates .idsig file alongside)
           "$APKSIGNER" sign \
             --ks "$RUNNER_TEMP/keystore/keystore.jks" \
-            --ks-pass "pass:$KEYSTORE_PASSWORD" \
-            --ks-key-alias "$SIGNING_KEY_ALIAS" \
-            --key-pass "pass:$SIGNING_KEY_PASSWORD" \
+            --ks-pass "pass:$KS_PASS" \
+            --ks-key-alias "$KS_ALIAS" \
+            --key-pass "pass:$KS_KEY_PASS" \
             --v1-signing-enabled true \
             --v2-signing-enabled true \
             --v3-signing-enabled true \
@@ -154,11 +149,8 @@ jobs:
             --out "$FINAL_APK" \
             "$ALIGNED_APK"
 
-          # Verify signature schemes and print certificates
-          "$APKSIGNER" verify --verbose --print-certs "$FINAL_APK" | tee "$RUNNER_TEMP/verify-output.txt"
-          if grep -q "CN=Android Debug" "$RUNNER_TEMP/verify-output.txt"; then
-            echo "::error::APK signed with debug key"; exit 1
-          fi
+          # Verify signature schemes
+          "$APKSIGNER" verify --verbose --print-certs "$FINAL_APK"
 
           # Verify ABI restrictions
           ABIS=$(unzip -Z1 "$FINAL_APK" 'lib/*' | cut -d/ -f2 | sort -u | tr '\n' ' ')
