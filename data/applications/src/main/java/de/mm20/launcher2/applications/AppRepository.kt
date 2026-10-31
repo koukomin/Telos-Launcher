@@ -24,6 +24,7 @@ import de.mm20.launcher2.search.StringNormalizer
 import de.mm20.launcher2.search.VirtualAppProvider
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import de.mm20.launcher2.coroutines.TelosDispatchers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -64,7 +65,7 @@ internal class AppRepositoryImpl(
     private val commsSettings: de.mm20.launcher2.preferences.comms.CommsSettings,
     private val virtualAppProviders: List<VirtualAppProvider> = emptyList(),
 ) : AppRepository {
-    private val scope = CoroutineScope(Dispatchers.Default + Job())
+    private val scope = CoroutineScope(TelosDispatchers.Disk + Job())
 
     private val launcherApps =
         context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
@@ -349,7 +350,7 @@ internal class AppRepositoryImpl(
         }
     }
 
-    override suspend fun findIconlessApps(): List<Application> = withContext(Dispatchers.Default) {
+    override suspend fun findIconlessApps(): List<Application> = withContext(TelosDispatchers.Disk) {
         val existing = installedApps.value.map { it.componentName.packageName to it.user }.toSet()
         val pm = context.packageManager
         profiles.first().flatMap { profile ->

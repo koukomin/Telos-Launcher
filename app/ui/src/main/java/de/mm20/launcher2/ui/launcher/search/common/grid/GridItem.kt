@@ -364,7 +364,7 @@ fun GridItem(
                         blurRadius = 2f
                     ) else null
                 ),
-                maxLines = gridSettings.labelMaxLines,
+                maxLines = gridSettings.labelMaxLines.coerceIn(1, 2),
                 overflow = TextOverflow.Ellipsis,
                 color = gridSettings.labelColor?.let { androidx.compose.ui.graphics.Color(it) }
                     ?: labelStyle?.color ?: androidx.compose.material3.LocalContentColor.current,

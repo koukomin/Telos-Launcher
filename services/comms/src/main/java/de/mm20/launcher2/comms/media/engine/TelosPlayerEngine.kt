@@ -19,7 +19,8 @@ import androidx.media3.exoplayer.audio.DefaultAudioSink
 import java.io.File
 
 /**
- * Singleton/Service-backed ExoPlayer instance tuned for extreme efficiency.
+ * Lazy ExoPlayer factory: no player, cache, or decoder is allocated until a Media
+ * virtual app actually opens. Call [releaseCache] when the last player is released.
  * - Hardware video decoding only (no software rendering lag)
  * - DSP Audio Offload (Media3 AudioOffloadPreferences) for screen-off YT Music battery savings.
  * - Aggressive buffering strategy (instant start, limited RAM max).

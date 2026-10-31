@@ -17,7 +17,7 @@ internal class ThemedDynamicCalendarIcon(
     val resourceIds: IntArray,
     private var transformations: List<LauncherIconTransformation> = emptyList(),
 ) : DynamicLauncherIcon, TransformableDynamicLauncherIcon {
-    override suspend fun getIcon(time: Long): StaticLauncherIcon = withContext(Dispatchers.IO) {
+    override suspend fun getIcon(time: Long): StaticLauncherIcon = withContext(de.mm20.launcher2.coroutines.TelosDispatchers.Icon) {
         val day = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).dayOfMonth
         val resId = resourceIds[day - 1]
 

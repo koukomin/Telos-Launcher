@@ -12,8 +12,8 @@ import androidx.core.content.pm.PackageInfoCompat
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import de.mm20.launcher2.coroutines.TelosDispatchers
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -55,7 +55,7 @@ data class TelosAppEntry(
 class TelosPackageRepository private constructor(context: Context) {
 
     private val appContext: Context = context.applicationContext
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope = CoroutineScope(SupervisorJob() + TelosDispatchers.Disk)
     private val updateMutex = Mutex()
     private val entriesByPkg = ConcurrentHashMap<String, TelosAppEntry>(256)
 
@@ -102,7 +102,7 @@ class TelosPackageRepository private constructor(context: Context) {
      * immutable snapshot off the main thread.
      */
     suspend fun awaitPackages(forceFullReload: Boolean = false): List<TelosAppEntry> =
-        withContext(Dispatchers.IO) {
+        withContext(TelosDispatchers.Disk) {
             ensureReceiverRegistered()
             if (!forceFullReload && initialLoadCompleted.get()) {
                 return@withContext _packages.value

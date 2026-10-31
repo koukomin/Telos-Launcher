@@ -10,7 +10,8 @@ import android.os.Build
 import android.util.LruCache
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import kotlinx.coroutines.Dispatchers
+import androidx.collection.ArraySet
+import de.mm20.launcher2.coroutines.TelosDispatchers
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
@@ -50,7 +51,7 @@ object TelosIconCache {
     }
 
     fun setPinnedPackages(packages: Set<String>) {
-        pinnedPackages = packages.toSet()
+        pinnedPackages = ArraySet<String>(packages.size).apply { addAll(packages) }
     }
 
     fun getPinnedPackages(): Set<String> = pinnedPackages
@@ -75,7 +76,7 @@ object TelosIconCache {
         }?.let { return it }
 
         val appContext = context.applicationContext
-        return withContext(Dispatchers.IO) {
+        return withContext(TelosDispatchers.Disk) {
             decodeGate.withPermit {
                 synchronized(lock) {
                     memoryCache.get(memKey)

@@ -64,9 +64,11 @@ internal data class LocalFile(
         if (!JavaIOFile(path).exists()) return null
         when {
             mimeType.startsWith("image/") -> {
-                val thumbnail = withContext(Dispatchers.IO) {
+                val thumbnail = withContext(de.mm20.launcher2.coroutines.TelosDispatchers.Disk) {
                     ThumbnailUtils.extractThumbnail(
-                        BitmapFactory.decodeFile(path),
+                        BitmapFactory.decodeFile(path, BitmapFactory.Options().apply {
+                            inPreferredConfig = android.graphics.Bitmap.Config.RGB_565
+                        }),
                         size, size
                     )
                 } ?: return null
@@ -81,7 +83,7 @@ internal data class LocalFile(
             }
 
             mimeType.startsWith("video/") -> {
-                val thumbnail = withContext(Dispatchers.IO) {
+                val thumbnail = withContext(de.mm20.launcher2.coroutines.TelosDispatchers.Disk) {
                     ThumbnailUtilsCompat.createVideoThumbnail(
                         JavaIOFile(path),
                         Size(size, size)
@@ -98,7 +100,7 @@ internal data class LocalFile(
             }
 
             mimeType.startsWith("audio/") -> {
-                val thumbnail = withContext(Dispatchers.IO) {
+                val thumbnail = withContext(de.mm20.launcher2.coroutines.TelosDispatchers.Disk) {
                     val mediaMetadataRetriever = MediaMetadataRetriever()
                     try {
                         mediaMetadataRetriever.setDataSource(path)

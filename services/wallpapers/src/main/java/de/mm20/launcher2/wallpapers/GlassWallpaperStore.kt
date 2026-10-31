@@ -103,13 +103,16 @@ internal class GlassWallpaperStore(private val context: Context) {
             val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
             BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
             require(bounds.outWidth in 1..GlassPixels.MAX_EDGE && bounds.outHeight in 1..GlassPixels.MAX_EDGE)
-            BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            BitmapFactory.decodeByteArray(bytes, 0, bytes.size, BitmapFactory.Options().apply {
+                inSampleSize = GlassPixels.BLUR_SAMPLE
+                inPreferredConfig = Bitmap.Config.RGB_565
+            })
         } ?: return@withLock null
         try {
             val pixels = IntArray(bitmap.width * bitmap.height)
             bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
             val radius = GlassPixels.sourceRadius(radiusDp, bitmap.width, bitmap.height, widthDp, heightDp)
-            val result = Bitmap.createBitmap(GlassPixels.blur(pixels, bitmap.width, bitmap.height, radius), bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
+            val result = Bitmap.createBitmap(GlassPixels.blur(pixels, bitmap.width, bitmap.height, radius), bitmap.width, bitmap.height, Bitmap.Config.RGB_565)
             if (manager.wallpaperInfo != null || manager.getWallpaperId(WallpaperManager.FLAG_SYSTEM) != id) {
                 result.recycle(); return@withLock null
             }

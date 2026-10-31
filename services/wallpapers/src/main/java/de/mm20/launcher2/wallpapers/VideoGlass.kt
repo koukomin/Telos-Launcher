@@ -84,11 +84,19 @@ internal suspend fun blurVideoGlass(bitmap: Bitmap, requests: List<VideoGlassReq
             val height = bitmap.height
             val pixels = IntArray(width * height)
             bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
-            val radii = HashMap<Int, Bitmap>()
+            val radii = androidx.collection.SparseArrayCompat<Bitmap>()
             requests.associateWith { request ->
                 val radius = GlassPixels.sourceRadius(request.radius, width, height, request.widthDp, request.heightDp)
-                radii.getOrPut(radius) {
-                    Bitmap.createBitmap(GlassPixels.blur(pixels, width, height, radius), width, height, Bitmap.Config.ARGB_8888)
+                val cached = radii.get(radius)
+                if (cached != null) cached else {
+                    val created = Bitmap.createBitmap(
+                        GlassPixels.blur(pixels, width, height, radius),
+                        width,
+                        height,
+                        Bitmap.Config.RGB_565,
+                    )
+                    radii.put(radius, created)
+                    created
                 }
             }
         }

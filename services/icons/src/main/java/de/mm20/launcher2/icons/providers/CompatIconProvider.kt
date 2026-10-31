@@ -19,7 +19,7 @@ class CompatIconProvider(
         if (searchable !is Application) return null
         val component = searchable.componentName
 
-        val icon = withContext(Dispatchers.IO) {
+        val icon = withContext(de.mm20.launcher2.coroutines.TelosDispatchers.Icon) {
             val activityInfo = try {
                 context.packageManager.getActivityInfo(component, 0)
             } catch (e: PackageManager.NameNotFoundException) {

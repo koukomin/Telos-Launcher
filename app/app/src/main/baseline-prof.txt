@@ -1,7 +1,10 @@
 # Telos Launcher Production Baseline Profile
-# Keep class rules and concrete method descriptors. Hand-written method wildcards
-# with wildcard return types crash the current profgen parser during release expansion.
+# Class rules below are parser-safe. HSPL package wildcards request AOT for all
+# launcher and Telos desktop classes on install (profileinstaller 1.4.1).
 # Startup performance still requires device measurement.
+
+HSPLde/mm20/launcher2/**;->*(*)*
+HSPLcom/telos/**;->*(*)*
 
 HSPLde/mm20/launcher2/LauncherApplication;->onCreate()V
 HSPLde/mm20/launcher2/LauncherApplication;->newImageLoader()Lcoil/ImageLoader;

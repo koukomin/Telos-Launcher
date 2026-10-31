@@ -42,6 +42,7 @@ import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.Tag
+import de.mm20.launcher2.coroutines.TelosDispatchers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -74,7 +75,7 @@ class IconService(
         }
     }
 
-    private val scope = CoroutineScope(Job() + Dispatchers.Default)
+    private val scope = CoroutineScope(Job() + TelosDispatchers.Icon)
 
     private val cache = LruCache<String, LauncherIcon>(200)
 

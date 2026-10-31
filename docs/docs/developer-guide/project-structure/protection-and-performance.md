@@ -74,6 +74,13 @@ decoder or of the torrent engine then ends that process, not the launcher.
 SIP and the photo editor still run in the launcher process. SIP would need a service with an
 interface between the processes.
 
+## Runtime dispatchers, bitmaps, and ART baseline profiles
+
+- `TelosDispatchers.Icon` and `TelosDispatchers.Disk` (`core/base/.../coroutines/TelosDispatchers.kt`) cap icon baking and file/database work at four threads each (`Dispatchers.Default` / `Dispatchers.IO` with `limitedParallelism(4)`).
+- Opaque wallpaper glass and media thumbnails decode as `RGB_565` and blur after `inSampleSize = 8`. Adaptive icons keep `ARGB_8888`.
+- Package metadata is read from `TelosPackageRepository` on the disk dispatcher; Compose grids use cached labels/icons. `PackageManager` / `LauncherApps` Binder calls stay off the UI thread during scrolling.
+- `app/app/src/main/baseline-prof.txt` plus `androidx.profileinstaller` AOT-compile `de.mm20.launcher2` and `com.telos` launcher classes on install.
+
 ## ART App Optimizer and Dex2Oat Architecture
 
 The ART App Optimizer subsystem resides in `:services:app-management` (`de.mm20.launcher2.appmanagement.art`) with UI in `:app:ui`:

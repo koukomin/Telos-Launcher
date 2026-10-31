@@ -22,7 +22,7 @@ object NetworkTrafficStats {
     fun aggregate(entries: List<ConnectionLogEntry>, sinceMs: Long, untilMs: Long): NetworkTrafficTotals {
         var received = 0L; var sent = 0L; var metered = 0L; var unmetered = 0L; var unknown = 0L
         var connections = 0; var blocked = 0
-        val apps = HashMap<Int, AppTrafficTotals>()
+        val apps = androidx.collection.SparseArrayCompat<AppTrafficTotals>()
         for (entry in entries) {
             if (entry.timeMs !in sinceMs..untilMs) continue
             val rx = entry.bytesReceived.coerceAtLeast(0)
@@ -37,9 +37,12 @@ object NetworkTrafficStats {
             connections++
             if (entry.verdict == Verdict.Block) blocked++
             val appId = if (entry.uid < 0) -1 else entry.uid % 100000
-            val previous = apps[appId] ?: AppTrafficTotals(appId, 0, 0, 0)
-            apps[appId] = previous.copy(received = saturatingBytes(previous.received, rx), sent = saturatingBytes(previous.sent, tx), connections = previous.connections + 1)
+            val previous = apps.get(appId) ?: AppTrafficTotals(appId, 0, 0, 0)
+            apps.put(appId, previous.copy(received = saturatingBytes(previous.received, rx), sent = saturatingBytes(previous.sent, tx), connections = previous.connections + 1))
         }
-        return NetworkTrafficTotals(received, sent, metered, unmetered, unknown, connections, blocked, apps.values.sortedByDescending { it.bytes })
+        val appList = ArrayList<AppTrafficTotals>(apps.size())
+        for (i in 0 until apps.size()) appList.add(apps.valueAt(i))
+        appList.sortByDescending { it.bytes }
+        return NetworkTrafficTotals(received, sent, metered, unmetered, unknown, connections, blocked, appList)
     }
 }

@@ -25,7 +25,7 @@ import de.mm20.launcher2.icons.loaders.AppFilterIconPackInstaller
 import de.mm20.launcher2.icons.loaders.GrayscaleMapIconPackInstaller
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.randomElementOrNull
-import kotlinx.coroutines.Dispatchers
+import de.mm20.launcher2.coroutines.TelosDispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
@@ -44,7 +44,7 @@ class IconPackManager(
     }
 
     suspend fun getIconPack(packageName: String): IconPack? {
-        return withContext(Dispatchers.IO) {
+        return withContext(TelosDispatchers.Disk) {
             appDatabase.iconDao().getIconPack(packageName)?.let {
                 IconPack(it)
             }
@@ -90,7 +90,7 @@ class IconPackManager(
         packageName: String,
         activityName: String?,
         allowThemed: Boolean = true
-    ): LauncherIcon? = withContext(Dispatchers.IO) {
+    ): LauncherIcon? = withContext(TelosDispatchers.Disk) {
         val res = try {
             context.packageManager.getResourcesForApplication(iconPack)
         } catch (e: PackageManager.NameNotFoundException) {
@@ -116,7 +116,7 @@ class IconPackManager(
         iconPack: String,
         icon: IconPackAppIcon,
         allowThemed: Boolean,
-    ): LauncherIcon? = withContext(Dispatchers.IO) {
+    ): LauncherIcon? = withContext(TelosDispatchers.Disk) {
         val res = try {
             context.packageManager.getResourcesForApplication(iconPack)
         } catch (e: PackageManager.NameNotFoundException) {
@@ -138,7 +138,7 @@ class IconPackManager(
         iconPack: String,
         baseIcon: Drawable,
         size: Int
-    ): LauncherIcon? = withContext(Dispatchers.IO) {
+    ): LauncherIcon? = withContext(TelosDispatchers.Disk) {
         val back = getIconBack(iconPack)
         val upon = getIconUpon(iconPack)
         val mask = getIconMask(iconPack)

@@ -23,7 +23,7 @@ internal class DynamicCalendarIcon(
         if (resourceIds.size < 31) throw IllegalArgumentException("DynamicCalendarIcon resourceIds must at least have 31 items")
     }
 
-    override suspend fun getIcon(time: Long): StaticLauncherIcon = withContext(Dispatchers.IO) {
+    override suspend fun getIcon(time: Long): StaticLauncherIcon = withContext(de.mm20.launcher2.coroutines.TelosDispatchers.Icon) {
         val day = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).dayOfMonth
         val resId = resourceIds[day - 1]
 

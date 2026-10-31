@@ -160,9 +160,43 @@ fun ShapedLauncherIcon(
         }
     }
 
+    val _badge = badge()
+    val numericBadge = _badge != null &&
+        _badge.icon == null &&
+        _badge.progress == null &&
+        (_badge.number ?: 0) in 1..99
+    val numericBadgeValue = _badge?.number ?: 0
+    val badgeColor = LocalBadgeColor.current ?: MaterialTheme.colorScheme.tertiary
+    val onBadgeColor = LocalBadgeColor.current?.let {
+        if (it.luminance() > 0.5f) Color.Black else Color.White
+    } ?: MaterialTheme.colorScheme.onTertiary
     Box(
         modifier = modifier
             .size(size)
+            .then(
+                if (numericBadge) {
+                    Modifier.drawWithCache {
+                        val radius = this.size.minDimension * 0.165f
+                        val center = Offset(this.size.width - radius, this.size.height - radius)
+                        val label = numericBadgeValue.toString()
+                        val textPaint = android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
+                            color = onBadgeColor.toArgb()
+                            textAlign = android.graphics.Paint.Align.CENTER
+                            textSize = radius
+                        }
+                        onDrawWithContent {
+                            drawContent()
+                            drawCircle(color = badgeColor, radius = radius, center = center)
+                            drawContext.canvas.nativeCanvas.drawText(
+                                label,
+                                center.x,
+                                center.y + radius * 0.35f,
+                                textPaint,
+                            )
+                        }
+                    }
+                } else Modifier
+            )
     ) {
         Box(
             modifier = Modifier
@@ -265,12 +299,7 @@ fun ShapedLauncherIcon(
                 }
             }
         }
-        val _badge = badge()
-        if (_badge != null) {
-            val badgeColor = LocalBadgeColor.current ?: MaterialTheme.colorScheme.tertiary
-            val onBadgeColor = LocalBadgeColor.current?.let {
-                if (it.luminance() > 0.5f) Color.Black else Color.White
-            } ?: MaterialTheme.colorScheme.onTertiary
+        if (_badge != null && !numericBadge) {
             Surface(
                 tonalElevation = 1.dp,
                 modifier = Modifier

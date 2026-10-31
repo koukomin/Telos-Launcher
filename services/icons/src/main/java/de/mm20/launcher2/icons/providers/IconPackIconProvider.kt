@@ -24,7 +24,7 @@ class IconPackIconProvider(
             ?: iconPackManager.generateIcon(
                 context,
                 iconPack.packageName,
-                baseIcon = withContext(Dispatchers.IO) {
+                baseIcon = withContext(de.mm20.launcher2.coroutines.TelosDispatchers.Icon) {
                     val ai = context.getSystemService<LauncherApps>()?.resolveActivity(
                         Intent().setComponent(searchable.componentName),
                         searchable.user

@@ -61,7 +61,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
     }
     LaunchedEffect(showSystem, revision) {
         loading = true
-        apps = withContext(Dispatchers.IO) {
+        apps = withContext(de.mm20.launcher2.coroutines.TelosDispatchers.Disk) {
             freeze.refreshBackendState()
             val pm = context.packageManager
             pm.getInstalledApplications(PackageManager.MATCH_DISABLED_COMPONENTS)

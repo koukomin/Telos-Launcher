@@ -154,7 +154,10 @@ internal object FileThumbs {
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
         BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
         if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return null
-        val opts = BitmapFactory.Options().apply { inSampleSize = sampleFor(bounds.outWidth, bounds.outHeight, req) }
+        val opts = BitmapFactory.Options().apply {
+            inSampleSize = sampleFor(bounds.outWidth, bounds.outHeight, req)
+            inPreferredConfig = Bitmap.Config.RGB_565
+        }
         val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size, opts) ?: return null
         return squareFit(bmp, req)
     }
@@ -204,7 +207,10 @@ internal object FileThumbs {
             RawHeic.embeddedJpeg(file)?.let { return decodeBytes(it, req) }
             return null
         }
-        val opts = BitmapFactory.Options().apply { inSampleSize = sampleFor(bounds.outWidth, bounds.outHeight, req) }
+        val opts = BitmapFactory.Options().apply {
+            inSampleSize = sampleFor(bounds.outWidth, bounds.outHeight, req)
+            inPreferredConfig = Bitmap.Config.RGB_565
+        }
         var bmp = BitmapFactory.decodeFile(file.path, opts) ?: return null
         if (file.extension.lowercase() in setOf("jpg", "jpeg")) {
             val orientation = runCatching { ExifInterface(file.path).getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL) }

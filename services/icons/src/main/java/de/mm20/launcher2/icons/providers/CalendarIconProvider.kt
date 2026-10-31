@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CalendarIconProvider(val context: Context, val themed: Boolean): IconProvider {
-    override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? = withContext(Dispatchers.IO) {
+    override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? = withContext(de.mm20.launcher2.coroutines.TelosDispatchers.Icon) {
         if(searchable !is Application) return@withContext null
         val component = searchable.componentName
         val pm = context.packageManager

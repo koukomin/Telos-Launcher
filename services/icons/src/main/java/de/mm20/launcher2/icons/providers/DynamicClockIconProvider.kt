@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class DynamicClockIconProvider(val context: Context, private val themed: Boolean) : IconProvider {
-    override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? = withContext(Dispatchers.IO) {
+    override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? = withContext(de.mm20.launcher2.coroutines.TelosDispatchers.Icon) {
         if (searchable !is Application) return@withContext null
         val pm = context.packageManager
         val appInfo = try {

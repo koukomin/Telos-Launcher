@@ -3,12 +3,15 @@ package de.mm20.launcher2.wallpapers
 /** Bounded, separable box blur. Work and memory are independent of the source photo size. */
 internal object GlassPixels {
     const val MAX_EDGE = 512
+    /** Extra downsample before CPU/GPU blur (~1/8 linear, ~98% fewer pixels). */
+    const val BLUR_SAMPLE = 8
     fun sampleSize(width: Int, height: Int): Int {
         require(width > 0 && height > 0 && width.toLong() * height <= 100_000_000L)
         var sample = 1
         while ((maxOf(width, height) + sample - 1) / sample > MAX_EDGE) sample *= 2
         return sample
     }
+    fun blurSampleSize(width: Int, height: Int): Int = maxOf(sampleSize(width, height), BLUR_SAMPLE)
     fun sourceRadius(radiusDp: Int, imageWidth: Int, imageHeight: Int, windowWidthDp: Int, windowHeightDp: Int): Int {
         require(minOf(imageWidth, imageHeight, windowWidthDp, windowHeightDp) > 0)
         if (radiusDp <= 0) return 0
