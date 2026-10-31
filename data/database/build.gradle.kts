@@ -50,6 +50,9 @@ android {
 
 dependencies {
 
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation("androidx.test:runner:1.7.0")
+
     implementation(libs.kotlin.stdlib)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)

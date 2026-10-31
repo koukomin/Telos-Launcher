@@ -1453,3 +1453,5 @@ Camera recognizes QR and common barcodes and offers private multipage PDF scans 
 Release validation and device/account limitations are recorded in [the integration record](docs/docs/developer-guide/system-network-integration-work.md). The current PR is not a published release.
 
 Translation status for the upcoming AppOps release: Greek has complete inventoried changed-string coverage. Other locales retain existing translations and use English fallback for missing new strings, as explicitly authorized by the user. See the [partial translation report](docs/docs/developer-guide/partial-translations-2026-10-28.md). Live Shizuku/root and Stremio/Trakt account interoperability remain device-unverified.
+
+SQLite startup config reads the result of `PRAGMA mmap_size` through a cursor, preventing the `SQLITE_OK` startup crash while preserving existing launcher data. Android instrumentation checks fresh database opening and reopening with retained records.

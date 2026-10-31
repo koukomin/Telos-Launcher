@@ -44,3 +44,19 @@ exactly the selected ABI. Packaging exclusions follow `telos.abi`, including
 CodeQL uses a manual, uncached compilation with incremental compilation disabled.
 Restoring compiled Gradle outputs would leave CodeQL without compiler activity
 and fail analysis with "No source code was seen during the build".
+
+## SQLite startup regression
+
+The production `AppDatabase.onOpen` callback must execute `PRAGMA mmap_size = N`
+as a query and consume/close its cursor. Even the assignment form returns a row;
+Android `execSQL()` rejects it with `unknown error (code 0 SQLITE_OK)`. This crash
+was reproduced on an Android 37.1 emulator before the fix. The instrumentation
+test opens the real production database callback, checks seeded search actions,
+writes a record, closes/reopens the helper, and verifies the record remains.
+No schema migration or database reset is part of this fix.
+
+Local verification on a fresh Android 37.1 x86_64 emulator: the unchanged code
+failed with the exact `SQLiteException: unknown error (code 0 SQLITE_OK)` at the
+mmap statement in `AppDatabase.onOpen`; after the cursor fix,
+`DatabaseStartupTest.productionDatabaseOpensAndReopensWithoutLosingData` passed.
+The CI startup instrumentation matrix also covers API 26 and API 35.
