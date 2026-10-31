@@ -197,8 +197,11 @@ fun MusicScreen(
                     ) { Text(stringResource(I18nR.string.hc_allow)) }
                 }
             } else {
-                if (group == null && !showNowPlaying) de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(I18nR.string.tsm_search_music),
-                    expanded = searchExpanded, onClose = { query = ""; searchExpanded = false })
+                if (group == null && !showNowPlaying) {
+                    de.mm20.launcher2.ui.media.AudioSpectrumVisualizer(isPlaying = playing, modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp))
+                    de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(I18nR.string.tsm_search_music),
+                        expanded = searchExpanded, onClose = { query = ""; searchExpanded = false })
+                }
                 val current = group
                 if (current != null) {
                     GroupPage(

@@ -692,7 +692,8 @@ private fun RecordingPage(state: VoiceRecorderState, onPauseResume: () -> Unit, 
 
 @Composable
 private fun Waveform(amplitudes: List<Int>, modifier: Modifier) {
-    val color = MaterialTheme.colorScheme.primary
+    val cyan = Color(0xFF00F2FE)
+    val pink = Color(0xFFFF007F)
     Canvas(modifier) {
         val barWidth = 5.dp.toPx()
         val gap = 3.dp.toPx()
@@ -700,8 +701,13 @@ private fun Waveform(amplitudes: List<Int>, modifier: Modifier) {
         val visible = amplitudes.takeLast(count)
         var x = size.width - visible.size * (barWidth + gap)
         for (amp in visible) {
-            val h = (amp / 32768f).coerceIn(0.03f, 1f) * size.height
-            drawRoundRect(color, Offset(x, (size.height - h) / 2), Size(barWidth, h), CornerRadius(barWidth / 2))
+            val h = (amp / 32768f).coerceIn(0.05f, 1f) * size.height
+            drawRoundRect(
+                brush = Brush.verticalGradient(listOf(pink, cyan)),
+                topLeft = Offset(x, (size.height - h) / 2),
+                size = Size(barWidth, h),
+                cornerRadius = CornerRadius(barWidth / 2)
+            )
             x += barWidth + gap
         }
     }
