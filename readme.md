@@ -165,6 +165,7 @@ Telos YouTube and Telos YouTube Music provide video/music search, direct video l
 
 Stable releases contain signed Android APKs and Linux desktop artifacts under one version.
 Development builds upload debug-signed APKs to Actions artifacts for testing.
+Linux release validation includes archive round trips, split volumes and rejection of absolute/traversal entry paths.
 
 - [Stable releases](https://github.com/koukomin/Telos-Launcher/releases/latest)
 - [Development APK artifacts](https://github.com/koukomin/Telos-Launcher/actions/workflows/build-debug.yml)

@@ -32,3 +32,7 @@ not an application release. Historical tags/releases are retained.
 Download `telos-arm64-v8a.apk` for modern ARM phones or `telos-armeabi-v7a.apk`
 for 32-bit ARM. Linux users need the JAR, launcher script, and Java 21 or newer;
 Linux session scripts are supplied in `telos-linux-session.tar.gz`.
+
+Full Linux validation also checks archive paths: absolute paths and traversal
+entries are rejected. Split-archive fixtures use stored data so the test actually
+creates multiple volumes; ACE-root tests create the required archive fixture.

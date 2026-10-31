@@ -65,7 +65,9 @@ class ZipArchivesTest {
         net.lingala.zip4j.ZipFile(zip).use { z ->
             z.createSplitZipFile(
                 listOf(src),
-                net.lingala.zip4j.model.ZipParameters(),
+                net.lingala.zip4j.model.ZipParameters().apply {
+                    compressionMethod = net.lingala.zip4j.model.enums.CompressionMethod.STORE
+                },
                 true,
                 65_536,
             )
@@ -77,7 +79,8 @@ class ZipArchivesTest {
         assertTrue(kids.any { it.name == "blob.bin" })
         assertEquals(null, ZipArchives.safeInner("..\\ace"))
         assertTrue(ZipArchives.isArchive(File(root, "x.ace").apply { writeText("x") }))
-        assertEquals(File("/tmp/pack.ace"), ZipArchives.archiveRoot(File("/tmp/pack.c00")))
+        val ace = File(root, "pack.ace").apply { writeText("fixture") }
+        assertEquals(ace, ZipArchives.archiveRoot(File(root, "pack.c00")))
     }
 
     @Test
