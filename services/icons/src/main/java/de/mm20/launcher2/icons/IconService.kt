@@ -408,8 +408,9 @@ class IconService(
 
                 val icon = providers.getFirstIcon(searchable, size) ?: return@mapNotNull null
 
+                val transformed = icon.transform(defaultTransformations)
                 CustomIconWithPreview(
-                    preview = icon.transform(defaultTransformations),
+                    preview = (transformed as? StaticLauncherIcon)?.hardware() ?: transformed,
                     customIcon = it,
                 )
 
@@ -428,7 +429,7 @@ class IconService(
             ?.transform(transformations.first()) ?: return null
         return CustomIconWithPreview(
             customIcon = null,
-            preview = icon
+            preview = (icon as? StaticLauncherIcon)?.hardware() ?: icon
         )
     }
 
@@ -437,10 +438,10 @@ class IconService(
         val iconPackIcons = iconPackManager.searchIconPackIcon(query, iconPack).flatMap {
             val themedIcon = if (it.themed) {
                 iconPackManager.getIcon(it.iconPack, it, true)
-                    ?.transform(transformations)
+                    ?.transform(transformations)?.let { ic -> (ic as? StaticLauncherIcon)?.hardware() ?: ic }
             } else null
             val unthemedIcon = iconPackManager.getIcon(it.iconPack, it, false)
-                ?.transform(transformations)
+                ?.transform(transformations)?.let { ic -> (ic as? StaticLauncherIcon)?.hardware() ?: ic }
 
             buildList {
                 val ent = it.toDatabaseEntity()

@@ -97,6 +97,12 @@ data class StaticLauncherIcon(
                     )
                 }
             }
+            is BitmapLayer -> {
+                val scale = minOf(canvas.width.toFloat() / layer.bitmap.width, canvas.height.toFloat() / layer.bitmap.height)
+                canvas.withScale(scale, scale, canvas.width / 2f, canvas.height / 2f) {
+                    canvas.drawBitmap(layer.bitmap, canvas.width / 2f - layer.bitmap.width / 2f, canvas.height / 2f - layer.bitmap.height / 2f, null)
+                }
+            }
             is TextLayer -> {
                 val paint = Paint().apply {
                     color = if (layer.color == 0) themeColor else getTone(layer.color, tone)
@@ -127,6 +133,17 @@ data class StaticLauncherIcon(
         return TonalPalette
             .fromInt(argb)
             .tone(tone)
+    }
+
+    suspend fun hardware(): StaticLauncherIcon = withContext(Dispatchers.Default) {
+        val bmp = render(LauncherIconRenderSettings(192, 0, 0, 10, 90))
+        if (bmp.config != Bitmap.Config.HARDWARE) {
+            val hBmp = bmp.copy(Bitmap.Config.HARDWARE, false)
+            if (hBmp != null) {
+                return@withContext StaticLauncherIcon(BitmapLayer(hBmp), TransparentLayer)
+            }
+        }
+        this@StaticLauncherIcon
     }
 }
 

@@ -40,7 +40,12 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun TelosNotesApp() {
     var text by remember { mutableStateOf("") }
-    de.mm20.launcher2.uikmp.SharedNotesScreen(t("notes_title"), t("notes_widget_placeholder"), text) { text = it }
+    de.mm20.launcher2.uikmp.SharedNotesScreen(
+        title = t("notes_title"),
+        placeholder = t("notes_widget_placeholder"),
+        text = text,
+        onText = { text = it },
+    )
 }
 
 @Composable
@@ -54,10 +59,14 @@ fun TelosCalendarApp() {
 fun TelosCalculatorApp() {
     val engine = remember { de.mm20.launcher2.uikmp.CalculatorEngine() }
     var display by remember { mutableStateOf(engine.display) }
-    de.mm20.launcher2.uikmp.SharedCalculatorScreen(t("calculator_title"), display) { key ->
-        engine.key(key)
-        display = engine.display
-    }
+    de.mm20.launcher2.uikmp.SharedCalculatorScreen(
+        title = t("calculator_title"),
+        display = display,
+        onKey = { key ->
+            engine.key(key)
+            display = engine.display
+        },
+    )
 }
 
 @Composable

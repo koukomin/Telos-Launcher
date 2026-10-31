@@ -11,14 +11,15 @@ plugins {
 }
 
 kotlin {
+    jvmToolchain(21)
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
+        jvmTarget.set(JvmTarget.JVM_21)
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 // === TELOS_PENDING_REVIEW_START: telos_window_drag_and_ui_fix ===
@@ -73,6 +74,7 @@ tasks.withType<Jar> {
 
 val composeJarsDir = layout.buildDirectory.dir("compose/jars")
 tasks.matching { it.name == "packageUberJarForCurrentOS" }.configureEach {
+    notCompatibleWithConfigurationCache("unsigned jar rewrite copies session files at execution time")
     val jarsDir = composeJarsDir
     doLast {
         val dir = jarsDir.get().asFile

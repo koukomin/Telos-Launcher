@@ -47,4 +47,4 @@ if [ -z "${TELOS_JAR:-}" ] || [ ! -f "$TELOS_JAR" ]; then
   echo "telos autostart: TELOS_JAR missing" >&2
   exit 1
 fi
-exec java -Xms256m -Xmx2048m -XX:+UseG1GC -jar "$TELOS_JAR" --session --already-unlocked
+exec java -Xms512m -Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+ZGenerational -XX:+UseStringDeduplication -XX:+AlwaysPreTouch -Dsun.java2d.opengl=true -jar "$TELOS_JAR" --session --already-unlocked

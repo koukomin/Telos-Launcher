@@ -77,9 +77,18 @@ sudo tee /usr/local/bin/telos-desktop-test >/dev/null << 'EOF'
 ulimit -c 0 2>/dev/null || true
 export _JAVA_AWT_WM_NONREPARENTING=1
 export SKIKO_RENDER_API=OPENGL
-exec java -Xms256m -Xmx2048m -XX:+UseG1GC -jar /opt/telos-desktop/telos-desktop.jar
+exec java -Xms512m -Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+ZGenerational -XX:+UseStringDeduplication -XX:+AlwaysPreTouch -Dsun.java2d.opengl=true -jar /opt/telos-desktop/telos-desktop.jar
 EOF
 sudo chmod 755 /usr/local/bin/telos-desktop-test
+
+sudo tee /usr/local/bin/start-telos-de >/dev/null << 'EOF'
+#!/bin/sh
+export TELOS_JAR="${TELOS_JAR:-/opt/telos-desktop/telos-desktop.jar}"
+export _JAVA_AWT_WM_NONREPARENTING=1
+export SKIKO_RENDER_API=OPENGL
+exec java -Xms512m -Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+ZGenerational -XX:+UseStringDeduplication -XX:+AlwaysPreTouch -Dsun.java2d.opengl=true -jar "$TELOS_JAR"
+EOF
+sudo chmod 755 /usr/local/bin/start-telos-de
 
 sudo tee /usr/local/bin/update-telos >/dev/null << EOF
 #!/bin/bash

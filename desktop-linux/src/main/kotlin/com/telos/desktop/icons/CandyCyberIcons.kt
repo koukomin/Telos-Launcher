@@ -1,9 +1,10 @@
 package com.telos.desktop.icons
 
-import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -27,24 +28,30 @@ private val core = Color(0xFF181623)
 
 @Composable
 fun CandyCyberIcon(kind: CandyIcon, size: Dp = 22.dp, modifier: Modifier = Modifier) {
-    Canvas(modifier.size(size)) {
-        when (kind) {
-            CandyIcon.TelosLogo -> logo()
-            CandyIcon.AppGrid -> grid()
-            CandyIcon.Terminal -> terminal()
-            CandyIcon.Monitor -> monitor()
-            CandyIcon.Volume -> volume()
-            CandyIcon.Network -> network()
-            CandyIcon.Battery -> battery()
-            CandyIcon.Power -> power()
-            CandyIcon.Settings -> settings()
-            CandyIcon.Folder -> folder()
-            CandyIcon.Tray -> tray()
-            CandyIcon.Clip -> clip()
-            CandyIcon.Bell -> bell()
-            CandyIcon.Shot -> shot()
-        }
-    }
+    Box(
+        modifier.size(size).drawWithCache {
+            val path = Path()
+            onDrawBehind {
+                path.reset()
+                when (kind) {
+                    CandyIcon.TelosLogo -> logo()
+                    CandyIcon.AppGrid -> grid()
+                    CandyIcon.Terminal -> terminal()
+                    CandyIcon.Monitor -> monitor()
+                    CandyIcon.Volume -> volume()
+                    CandyIcon.Network -> network()
+                    CandyIcon.Battery -> battery()
+                    CandyIcon.Power -> power()
+                    CandyIcon.Settings -> settings()
+                    CandyIcon.Folder -> folder()
+                    CandyIcon.Tray -> tray()
+                    CandyIcon.Clip -> clip()
+                    CandyIcon.Bell -> bell()
+                    CandyIcon.Shot -> shot()
+                }
+            }
+        },
+    )
 }
 
 private fun DrawScope.logo() {

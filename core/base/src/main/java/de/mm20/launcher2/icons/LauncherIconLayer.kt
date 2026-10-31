@@ -60,4 +60,8 @@ data class GridLayer(
     val layers: List<LauncherIconLayer>,
 ) : LauncherIconLayer
 
+data class BitmapLayer(
+    val bitmap: android.graphics.Bitmap
+) : LauncherIconLayer
+
 object TransparentLayer : LauncherIconLayer

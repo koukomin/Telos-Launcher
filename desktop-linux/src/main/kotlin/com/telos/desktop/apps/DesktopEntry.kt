@@ -1,11 +1,13 @@
 package com.telos.desktop.apps
 
+import androidx.compose.runtime.Immutable
 import java.io.File
 
 enum class TelosAppCategory {
     System, Utility, Development, Network, AudioVideo, Graphics, Game, Office, Settings, Other
 }
 
+@Immutable
 data class DesktopEntry(
     val file: File,
     val name: String,

@@ -162,6 +162,14 @@ abstract class AppDatabase : RoomDatabase() {
                                 )
                             )
                         }
+
+                        override fun onOpen(db: SupportSQLiteDatabase) {
+                            super.onOpen(db)
+                            // SQLite performance optimizations
+                            db.execSQL("PRAGMA synchronous = NORMAL")
+                            db.execSQL("PRAGMA temp_store = MEMORY")
+                            db.execSQL("PRAGMA mmap_size = 67108864") // 64MB mmap
+                        }
                     })
                     .addMigrations(
                         Migration_6_7(),

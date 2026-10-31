@@ -1,5 +1,6 @@
 package com.telos.desktop.monitor
 
+import com.telos.desktop.linux.ProcByteReader
 import com.telos.desktop.linux.Sys
 import java.io.File
 import java.nio.file.FileSystems
@@ -88,6 +89,9 @@ data class SystemSnapshot(
 class LinuxSystemTelemetryEngine(
     var intervalMs: Long = 1000L,
 ) {
+    private val statReader = ProcByteReader("/proc/stat")
+    private val memReader = ProcByteReader("/proc/meminfo")
+    private val cpuScratch = ArrayList<LongArray>(64)
     private var lastCpu: List<LongArray> = emptyList()
     private var lastDisk: Map<String, Pair<Long, Long>> = emptyMap()
     private var lastNet: Map<String, Pair<Long, Long>> = emptyMap()
@@ -128,15 +132,36 @@ class LinuxSystemTelemetryEngine(
     }
 
     private fun readCpu(dt: Double): CpuSample {
-        val lines = File("/proc/stat").takeIf { it.isFile }?.readLines().orEmpty()
-        val cpuLines = lines.filter { it.startsWith("cpu") && !it.startsWith("cpu ") || it.startsWith("cpu ") }
-        val cores = lines.filter { it.matches(Regex("cpu\\d+.*")) }
-        fun parse(line: String): LongArray {
-            val p = line.split(Regex("\\s+")).drop(1).mapNotNull { it.toLongOrNull() }
-            return longArrayOf(p.getOrElse(0) { 0 }, p.getOrElse(1) { 0 }, p.getOrElse(2) { 0 }, p.getOrElse(3) { 0 }, p.sum())
+        statReader.refresh()
+        cpuScratch.clear()
+        statReader.forEachLine { start, end ->
+            if (!statReader.startsWith(start, "cpu")) return@forEachLine
+            var i = statReader.skipToken(start, end)
+            var user = 0L
+            var nice = 0L
+            var sys = 0L
+            var idle = 0L
+            var sum = 0L
+            var field = 0
+            while (i < end) {
+                val (n, next) = statReader.parseLong(i, end)
+                if (next == i) break
+                sum += n
+                when (field) {
+                    0 -> user = n
+                    1 -> nice = n
+                    2 -> sys = n
+                    3 -> idle = n
+                }
+                field++
+                i = next
+            }
+            cpuScratch += longArrayOf(user, nice, sys, idle, sum)
         }
-        val all = listOf(lines.first { it.startsWith("cpu ") }) + cores
-        val parsed = all.map { parse(it) }
+        val parsed = cpuScratch.toList()
+        if (parsed.isEmpty()) {
+            return CpuSample(0.0, emptyList(), emptyList(), null, null, 0.0, 0.0, 0.0, 0.0, "CPU")
+        }
         val percents = if (lastCpu.size == parsed.size) {
             parsed.mapIndexed { i, cur ->
                 val prev = lastCpu[i]
@@ -199,14 +224,26 @@ class LinuxSystemTelemetryEngine(
     }
 
     private fun readMem(): MemSample {
-        val map = HashMap<String, Long>()
-        File("/proc/meminfo").takeIf { it.isFile }?.forEachLine { line ->
-            val k = line.substringBefore(':').trim()
-            val v = line.substringAfter(':').trim().substringBefore(' ').toLongOrNull() ?: 0L
-            map[k] = v
+        var total = 0L
+        var avail = 0L
+        var buffers = 0L
+        var cached = 0L
+        var swapTotal = 0L
+        var swapFree = 0L
+        memReader.refresh()
+        memReader.forEachLine { start, end ->
+            val colon = memReader.indexOf(start, end, ':')
+            if (colon < 0) return@forEachLine
+            val (n, _) = memReader.parseLong(colon + 1, end)
+            when {
+                memReader.asciiEquals(start, colon, "MemTotal") -> total = n
+                memReader.asciiEquals(start, colon, "MemAvailable") -> avail = n
+                memReader.asciiEquals(start, colon, "Buffers") -> buffers = n
+                memReader.asciiEquals(start, colon, "Cached") -> cached = n
+                memReader.asciiEquals(start, colon, "SwapTotal") -> swapTotal = n
+                memReader.asciiEquals(start, colon, "SwapFree") -> swapFree = n
+            }
         }
-        val total = map["MemTotal"] ?: 0
-        val avail = map["MemAvailable"] ?: 0
         var zram = 0L
         File("/proc/swaps").takeIf { it.isFile }?.readLines()?.drop(1)?.forEach { line ->
             val p = line.split(Regex("\\s+"))
@@ -216,10 +253,10 @@ class LinuxSystemTelemetryEngine(
             totalKb = total,
             availableKb = avail,
             usedKb = (total - avail).coerceAtLeast(0),
-            buffersKb = map["Buffers"] ?: 0,
-            cachedKb = map["Cached"] ?: 0,
-            swapTotalKb = map["SwapTotal"] ?: 0,
-            swapFreeKb = map["SwapFree"] ?: 0,
+            buffersKb = buffers,
+            cachedKb = cached,
+            swapTotalKb = swapTotal,
+            swapFreeKb = swapFree,
             zramUsedKb = zram,
         )
     }

@@ -1,9 +1,18 @@
 package com.telos.desktop.apps
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.util.Locale
+import java.util.concurrent.ConcurrentHashMap
 
 object LinuxAppScanner {
+    private data class Cached(val mtime: Long, val entry: DesktopEntry?)
+
+    private val fileCache = ConcurrentHashMap<String, Cached>()
+
     private val searchDirs: List<File>
         get() {
             val home = System.getProperty("user.home")
@@ -19,17 +28,38 @@ object LinuxAppScanner {
     fun scan(locale: Locale = Locale.getDefault()): List<DesktopEntry> {
         val localeKeys = localeNameKeys(locale)
         val seen = LinkedHashMap<String, DesktopEntry>()
-        for (dir in searchDirs) {
-            if (!dir.isDirectory) continue
-            val files = dir.listFiles { f -> f.isFile && f.name.endsWith(".desktop") } ?: continue
-            for (file in files) {
-                val parsed = DesktopFileParser.parse(file, localeKeys) ?: continue
-                if (parsed.noDisplay) continue
-                if (parsed.exec.isBlank()) continue
-                seen.putIfAbsent(file.name, parsed)
+        val parsed = runBlocking(Dispatchers.Default) {
+            searchDirs.map { dir ->
+                async(Dispatchers.IO) { scanDir(dir, localeKeys) }
+            }.awaitAll()
+        }
+        for (list in parsed) {
+            for (entry in list) {
+                seen.putIfAbsent(entry.file.name, entry)
             }
         }
         return seen.values.sortedBy { it.name.lowercase(locale) }
+    }
+
+    private fun scanDir(dir: File, localeKeys: List<String>): List<DesktopEntry> {
+        if (!dir.isDirectory) return emptyList()
+        val files = dir.listFiles { f -> f.isFile && f.name.endsWith(".desktop") } ?: return emptyList()
+        val out = ArrayList<DesktopEntry>(files.size)
+        for (file in files) {
+            val mtime = file.lastModified()
+            val path = file.absolutePath
+            val cached = fileCache[path]
+            val entry = if (cached != null && cached.mtime == mtime) {
+                cached.entry
+            } else {
+                val parsed = DesktopFileParser.parse(file, localeKeys)
+                val keep = parsed?.takeUnless { it.noDisplay || it.exec.isBlank() }
+                fileCache[path] = Cached(mtime, keep)
+                keep
+            }
+            if (entry != null) out += entry
+        }
+        return out
     }
 
     fun mapCategory(freedesktop: List<String>): TelosAppCategory {
