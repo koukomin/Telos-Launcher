@@ -40,3 +40,7 @@ creates multiple volumes; ACE-root tests create the required archive fixture.
 Both PR and production builds verify that the APK contains `.so` files for
 exactly the selected ABI. Packaging exclusions follow `telos.abi`, including
 `armeabi-v7a`; a Java-only APK cannot pass the release gate.
+
+CodeQL uses a manual, uncached compilation with incremental compilation disabled.
+Restoring compiled Gradle outputs would leave CodeQL without compiler activity
+and fail analysis with "No source code was seen during the build".
