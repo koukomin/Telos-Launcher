@@ -43,7 +43,7 @@ jobs:
           test -f desktop-linux/session/labwc/rc.xml
           test -f desktop-linux/session/niri/config.kdl
           test -f desktop-linux/session/telos.desktop
-          ./gradlew :ui-kmp:jvmTest :desktop-linux:test --stacktrace
+          ./gradlew :ui-kmp:test :desktop-linux:test --stacktrace
 
   build-linux-desktop:
     if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
