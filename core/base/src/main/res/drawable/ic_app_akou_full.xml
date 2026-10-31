@@ -4,11 +4,11 @@
     android:viewportWidth="48"
     android:viewportHeight="48">
     <path
-        android:fillColor="#D81B60"
+        android:fillColor="#8E24AA"
         android:pathData="M24,2A22,22 0 1,0 24,46A22,22 0 1,0 24,2Z" />
     <path
-        android:fillColor="#20000000"
-        android:pathData="M16,14 L34,32 L28,44 L12,28 Z" />
+        android:fillColor="#AB47BC"
+        android:pathData="M24,6A18,18 0 1,1 24,42A18,18 0 1,1 24,6Z" />
     <group
         android:translateX="9"
         android:translateY="9"

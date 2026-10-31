@@ -25,6 +25,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalConfiguration
@@ -100,15 +102,128 @@ fun ClockScreen() {
             Icon(painterResource(BaseR.drawable.light_mode_24px), stringResource(I18nR.string.clock_night))
         } }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent))
     }) { padding ->
-        Column(Modifier.fillMaxSize().padding(padding)) {
+        Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = 16.dp)) {
+            CyberAnalogClock(now, Modifier.padding(vertical = 8.dp))
+
             val titles = listOf(I18nR.string.clock_world, I18nR.string.clock_alarm, I18nR.string.clock_timer, I18nR.string.clock_stopwatch)
-            Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 titles.forEachIndexed { index, title -> FilterChip(selectedTab == index, { selectedTab = index }, { Text(stringResource(title)) }) }
             }
-            Box(Modifier.fillMaxSize().padding(16.dp)) {
+            Box(Modifier.fillMaxSize().padding(top = 8.dp)) {
                 when (selectedTab) { 0 -> WorldClockTab(); 1 -> AlarmTab(); 2 -> TimerTab(); else -> StopwatchTab() }
             }
         }
+    }
+}
+
+@Composable
+private fun CyberAnalogClock(now: ZonedDateTime, modifier: Modifier = Modifier) {
+    val cyan = Color(0xFF00F2FE)
+    val pink = Color(0xFFFF007F)
+    val darkBg = Color(0xFF0D0E15)
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(20.dp))
+            .background(darkBg.copy(alpha = 0.85f))
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.size(140.dp)) {
+            androidx.compose.foundation.Canvas(modifier = Modifier.size(140.dp)) {
+                val center = Offset(size.width / 2, size.height / 2)
+                val radius = size.minDimension / 2 - 8.dp.toPx()
+
+                // Dial track
+                drawCircle(
+                    color = Color.White.copy(alpha = 0.08f),
+                    radius = radius,
+                    center = center,
+                    style = androidx.compose.ui.graphics.drawscope.Stroke(width = 4.dp.toPx())
+                )
+
+                // Outer neon ring
+                drawCircle(
+                    brush = androidx.compose.ui.graphics.Brush.sweepGradient(
+                        0.0f to cyan,
+                        0.5f to pink,
+                        1.0f to cyan
+                    ),
+                    radius = radius,
+                    center = center,
+                    style = androidx.compose.ui.graphics.drawscope.Stroke(width = 2.dp.toPx())
+                )
+
+                // Hour ticks
+                for (i in 0 until 12) {
+                    val angle = Math.toRadians((i * 30).toDouble())
+                    val startX = center.x + (radius - 10.dp.toPx()) * Math.cos(angle).toFloat()
+                    val startY = center.y + (radius - 10.dp.toPx()) * Math.sin(angle).toFloat()
+                    val endX = center.x + radius * Math.cos(angle).toFloat()
+                    val endY = center.y + radius * Math.sin(angle).toFloat()
+                    drawLine(
+                        color = if (i % 3 == 0) cyan else Color.White.copy(alpha = 0.3f),
+                        start = Offset(startX, startY),
+                        end = Offset(endX, endY),
+                        strokeWidth = if (i % 3 == 0) 3.dp.toPx() else 1.5.dp.toPx(),
+                        cap = androidx.compose.ui.graphics.StrokeCap.Round
+                    )
+                }
+
+                // Hours hand
+                val hourAngle = Math.toRadians(((now.hour % 12 + now.minute / 60f) * 30 - 90).toDouble())
+                val hourLength = radius * 0.5f
+                drawLine(
+                    color = Color.White,
+                    start = center,
+                    end = Offset(center.x + hourLength * Math.cos(hourAngle).toFloat(), center.y + hourLength * Math.sin(hourAngle).toFloat()),
+                    strokeWidth = 4.dp.toPx(),
+                    cap = androidx.compose.ui.graphics.StrokeCap.Round
+                )
+
+                // Minutes hand
+                val minAngle = Math.toRadians(((now.minute + now.second / 60f) * 6 - 90).toDouble())
+                val minLength = radius * 0.75f
+                drawLine(
+                    color = cyan,
+                    start = center,
+                    end = Offset(center.x + minLength * Math.cos(minAngle).toFloat(), center.y + minLength * Math.sin(minAngle).toFloat()),
+                    strokeWidth = 3.dp.toPx(),
+                    cap = androidx.compose.ui.graphics.StrokeCap.Round
+                )
+
+                // Seconds hand
+                val secAngle = Math.toRadians((now.second * 6 - 90).toDouble())
+                val secLength = radius * 0.85f
+                drawLine(
+                    color = pink,
+                    start = center,
+                    end = Offset(center.x + secLength * Math.cos(secAngle).toFloat(), center.y + secLength * Math.sin(secAngle).toFloat()),
+                    strokeWidth = 1.5.dp.toPx(),
+                    cap = androidx.compose.ui.graphics.StrokeCap.Round
+                )
+
+                drawCircle(color = pink, radius = 5.dp.toPx(), center = center)
+            }
+        }
+
+        Spacer(Modifier.height(8.dp))
+
+        Text(
+            text = now.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Black,
+            fontFamily = FontFamily.Monospace,
+            color = Color.White,
+            letterSpacing = 2.sp
+        )
+        Text(
+            text = now.format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy")),
+            style = MaterialTheme.typography.bodyMedium,
+            color = cyan,
+            fontFamily = FontFamily.Monospace
+        )
     }
 }
 
