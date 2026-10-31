@@ -20,9 +20,14 @@ jobs:
 
       - name: Validate XML Strings Syntax & Format Specifiers
         run: |
-          echo "Auditing string resource XML files across core/i18n and data/i18n..."
-          find core/i18n data/i18n -name "strings.xml" -type f | while read file; do
-            echo "Checking $file..."
-            xmllint --noout "$file" || exit 1
-          done
-          echo "All strings.xml files are syntactically valid!"
+          python3 - <<'PYXML'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          files = [file for root in ['core/i18n', 'data/i18n']
+                   for file in Path(root).rglob('strings.xml')]
+          if not files:
+              raise SystemExit("No XML resources found")
+          for file in files:
+              ET.parse(file)
+          print(f"Validated {len(files)} XML resource files")
+          PYXML
