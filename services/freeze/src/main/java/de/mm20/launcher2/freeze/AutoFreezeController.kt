@@ -237,6 +237,15 @@ class AutoFreezeController internal constructor(
                 settings.setScreenOffPending(pending, bootCount())
             } finally { screenOffMutex.unlock() }
             dispatchScreenOffAlarm()
+
+            // Continuous ticker while screen remains off to guarantee auto-freeze
+            // even if AlarmManager exact alarms are throttled or delayed by Doze mode.
+            while (!isScreenOn() && screenCycle.get() == cycle) {
+                delay(10_000L)
+                if (!isScreenOn() && screenCycle.get() == cycle) {
+                    dispatchScreenOffAlarm()
+                }
+            }
         }
     }
 

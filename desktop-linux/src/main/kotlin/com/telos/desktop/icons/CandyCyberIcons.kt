@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 
 enum class CandyIcon {
     TelosLogo, AppGrid, Terminal, Monitor, Volume, Network, Battery, Power, Settings, Folder,
-    Tray, Clip, Bell, Shot,
+    Tray, Clip, Bell, Shot, Notes, Calendar, Calculator, Clock, Trash, Music, Photos, Download, Radio, Search, File,
 }
 
 private val neon = Brush.linearGradient(listOf(Color(0xFFFF007F), Color(0xFF00F0FF)))
@@ -48,6 +48,17 @@ fun CandyCyberIcon(kind: CandyIcon, size: Dp = 22.dp, modifier: Modifier = Modif
                     CandyIcon.Clip -> clip()
                     CandyIcon.Bell -> bell()
                     CandyIcon.Shot -> shot()
+                    CandyIcon.Notes -> notes()
+                    CandyIcon.Calendar -> calendar()
+                    CandyIcon.Calculator -> calculator()
+                    CandyIcon.Clock -> clock()
+                    CandyIcon.Trash -> trash()
+                    CandyIcon.Music -> music()
+                    CandyIcon.Photos -> photos()
+                    CandyIcon.Download -> download()
+                    CandyIcon.Radio -> radio()
+                    CandyIcon.Search -> search()
+                    CandyIcon.File -> file()
                 }
             }
         },
@@ -166,4 +177,104 @@ private fun DrawScope.shot() {
     drawCircle(neon, size.minDimension * 0.22f, Offset(center.x, center.y + 2f), style = Stroke(2.4f))
     drawRoundRect(Color(0xFF00F0FF), Offset(6f, size.height * 0.28f), Size(size.width - 12f, size.height * 0.5f), CornerRadius(4f, 4f), style = Stroke(2f))
     drawCircle(Color(0xFFFF007F), 3f, Offset(size.width * 0.72f, size.height * 0.38f))
+}
+
+private fun DrawScope.notes() {
+    drawRoundRect(neon, Offset(4f, 2f), Size(size.width - 8f, size.height - 4f), CornerRadius(4f, 4f), style = Stroke(2.2f))
+    drawLine(Color(0xFF00F0FF), Offset(10f, size.height * 0.3f), Offset(size.width - 10f, size.height * 0.3f), 2f, StrokeCap.Round)
+    drawLine(Color(0xFF00F0FF), Offset(10f, size.height * 0.5f), Offset(size.width - 10f, size.height * 0.5f), 2f, StrokeCap.Round)
+    drawLine(Color(0xFFFF007F), Offset(10f, size.height * 0.7f), Offset(size.width * 0.6f, size.height * 0.7f), 2f, StrokeCap.Round)
+}
+
+private fun DrawScope.calendar() {
+    drawRoundRect(neon, Offset(4f, 6f), Size(size.width - 8f, size.height - 10f), CornerRadius(4f, 4f), style = Stroke(2.2f))
+    drawLine(Color(0xFFFF007F), Offset(4f, size.height * 0.35f), Offset(size.width - 4f, size.height * 0.35f), 2.2f)
+    drawLine(Color(0xFF00F0FF), Offset(size.width * 0.3f, 2f), Offset(size.width * 0.3f, 8f), 2.5f, StrokeCap.Round)
+    drawLine(Color(0xFF00F0FF), Offset(size.width * 0.7f, 2f), Offset(size.width * 0.7f, 8f), 2.5f, StrokeCap.Round)
+}
+
+private fun DrawScope.calculator() {
+    drawRoundRect(neon, Offset(4f, 2f), Size(size.width - 8f, size.height - 4f), CornerRadius(5f, 5f), style = Stroke(2.2f))
+    drawRoundRect(Color(0xFF00F0FF), Offset(8f, 6f), Size(size.width - 16f, size.height * 0.25f), CornerRadius(2f, 2f), style = Stroke(1.8f))
+    drawCircle(Color(0xFFFF007F), 2.5f, Offset(size.width * 0.3f, size.height * 0.55f))
+    drawCircle(Color(0xFFFF007F), 2.5f, Offset(size.width * 0.7f, size.height * 0.55f))
+    drawCircle(Color(0xFF00F0FF), 2.5f, Offset(size.width * 0.3f, size.height * 0.78f))
+    drawCircle(Color(0xFF00F0FF), 2.5f, Offset(size.width * 0.7f, size.height * 0.78f))
+}
+
+private fun DrawScope.clock() {
+    drawCircle(neon, size.minDimension * 0.42f, center, style = Stroke(2.5f))
+    drawLine(Color(0xFF00F0FF), center, Offset(center.x, size.height * 0.25f), 2.5f, StrokeCap.Round)
+    drawLine(Color(0xFFFF007F), center, Offset(size.width * 0.72f, center.y), 2.5f, StrokeCap.Round)
+}
+
+private fun DrawScope.trash() {
+    val p = Path().apply {
+        moveTo(6f, size.height * 0.3f)
+        lineTo(size.width * 0.18f, size.height * 0.9f)
+        lineTo(size.width * 0.82f, size.height * 0.9f)
+        lineTo(size.width - 6f, size.height * 0.3f)
+        close()
+    }
+    drawPath(p, neon, style = Stroke(2.2f))
+    drawLine(Color(0xFF00F0FF), Offset(3f, size.height * 0.3f), Offset(size.width - 3f, size.height * 0.3f), 2.5f, StrokeCap.Round)
+    drawArc(Color(0xFFFF007F), 180f, 180f, false, topLeft = Offset(size.width * 0.35f, size.height * 0.15f), size = Size(size.width * 0.3f, size.height * 0.25f), style = Stroke(2f))
+}
+
+private fun DrawScope.music() {
+    drawCircle(neon, 4f, Offset(size.width * 0.3f, size.height * 0.72f))
+    drawCircle(neon, 4f, Offset(size.width * 0.7f, size.height * 0.62f))
+    drawLine(Color(0xFF00F0FF), Offset(size.width * 0.34f, size.height * 0.72f), Offset(size.width * 0.34f, size.height * 0.2f), 2.2f)
+    drawLine(Color(0xFF00F0FF), Offset(size.width * 0.74f, size.height * 0.62f), Offset(size.width * 0.74f, size.height * 0.1f), 2.2f)
+    drawLine(Color(0xFFFF007F), Offset(size.width * 0.34f, size.height * 0.2f), Offset(size.width * 0.74f, size.height * 0.1f), 3f)
+}
+
+private fun DrawScope.photos() {
+    drawRoundRect(neon, Offset(4f, 4f), Size(size.width - 8f, size.height - 8f), CornerRadius(4f, 4f), style = Stroke(2.2f))
+    drawCircle(Color(0xFFFF007F), 3.5f, Offset(size.width * 0.3f, size.height * 0.32f))
+    val p = Path().apply {
+        moveTo(6f, size.height * 0.78f)
+        lineTo(size.width * 0.38f, size.height * 0.48f)
+        lineTo(size.width * 0.62f, size.height * 0.68f)
+        lineTo(size.width * 0.78f, size.height * 0.55f)
+        lineTo(size.width - 6f, size.height * 0.78f)
+        close()
+    }
+    drawPath(p, Color(0xFF00F0FF))
+}
+
+private fun DrawScope.download() {
+    drawRoundRect(neon, Offset(4f, size.height * 0.72f), Size(size.width - 8f, size.height * 0.22f), CornerRadius(3f, 3f), style = Stroke(2f))
+    drawLine(Color(0xFF00F0FF), Offset(center.x, 2f), Offset(center.x, size.height * 0.58f), 3f, StrokeCap.Round)
+    val p = Path().apply {
+        moveTo(size.width * 0.28f, size.height * 0.4f)
+        lineTo(center.x, size.height * 0.62f)
+        lineTo(size.width * 0.72f, size.height * 0.4f)
+    }
+    drawPath(p, neon, style = Stroke(2.8f, cap = StrokeCap.Round))
+}
+
+private fun DrawScope.radio() {
+    drawRoundRect(neon, Offset(4f, size.height * 0.32f), Size(size.width - 8f, size.height * 0.58f), CornerRadius(5f, 5f), style = Stroke(2.2f))
+    drawLine(Color(0xFF00F0FF), Offset(size.width * 0.25f, size.height * 0.32f), Offset(size.width * 0.75f, size.height * 0.08f), 2.2f, StrokeCap.Round)
+    drawCircle(Color(0xFFFF007F), size.minDimension * 0.18f, Offset(size.width * 0.35f, size.height * 0.61f), style = Stroke(2f))
+    drawCircle(Color(0xFF00F0FF), 3f, Offset(size.width * 0.72f, size.height * 0.5f))
+    drawCircle(Color(0xFF00F0FF), 3f, Offset(size.width * 0.72f, size.height * 0.72f))
+}
+
+private fun DrawScope.search() {
+    drawCircle(neon, size.minDimension * 0.3f, Offset(size.width * 0.42f, size.height * 0.42f), style = Stroke(2.5f))
+    drawLine(Color(0xFF00F0FF), Offset(size.width * 0.62f, size.height * 0.62f), Offset(size.width * 0.88f, size.height * 0.88f), 3f, StrokeCap.Round)
+}
+
+private fun DrawScope.file() {
+    val p = Path().apply {
+        moveTo(6f, 2f)
+        lineTo(size.width * 0.62f, 2f)
+        lineTo(size.width - 6f, size.height * 0.28f)
+        lineTo(size.width - 6f, size.height - 2f)
+        lineTo(6f, size.height - 2f)
+        close()
+    }
+    drawPath(p, neon, style = Stroke(2.2f))
 }

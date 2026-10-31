@@ -37,9 +37,10 @@ object VirtualAppAppearance {
         "telos_notes_app" -> R.drawable.ic_app_notes_fg
         "telos_calendar_app" -> R.drawable.ic_app_calendar_fg
         "telos_downloads_app" -> R.drawable.ic_app_downloads_fg
-        "telos_network_app", "telos_system_app" -> R.drawable.ic_app_network_fg
+        "telos_network_app" -> R.drawable.ic_app_network_fg
+        "telos_system_app" -> R.drawable.ic_app_system_fg
         "telos_media_app" -> R.drawable.ic_app_media_fg
-        "telos_store_app" -> R.drawable.local_convenience_store_24px
+        "telos_store_app" -> R.drawable.ic_app_store_fg
         "telos_akou_app" -> R.drawable.ic_app_akou_fg
         "telos_sync_app" -> R.drawable.ic_app_sync_fg
         "telos_backup_app" -> R.drawable.ic_app_backup_fg

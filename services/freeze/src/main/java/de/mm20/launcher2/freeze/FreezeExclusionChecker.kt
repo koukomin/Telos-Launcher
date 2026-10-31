@@ -55,8 +55,10 @@ internal class FreezeExclusionChecker(
         ) return true
 
         if (settings.excludeForeground.first() && isForeground(packageName)) return true // optional rule 1
-        // Screen-off clears usage "foreground"; still skip the window that was in front.
-        if (pinnedScreenOffPackage == packageName) return true
+        // Screen-off clears usage "foreground"; only skip the pinned foreground app if screen is still interactive/on.
+        val powerManager = context.getSystemService<android.os.PowerManager>()
+        val screenOn = powerManager?.isInteractive != false
+        if (screenOn && pinnedScreenOffPackage == packageName) return true
 
         if (settings.excludeMusic.first() && isMusicActive()) return true
         if (settings.excludeNetwork.first() && isNetworkActive(packageName)) return true
