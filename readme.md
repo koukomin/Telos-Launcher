@@ -16,7 +16,7 @@ Telos is a personal fork of [Kvaesitso](https://github.com/MM2-0/Kvaesitso). It 
 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE.txt)
 [![Platform: Android](https://img.shields.io/badge/platform-Android-3DDC84.svg)](https://github.com/koukomin/Telos-Launcher/releases)
-[![Latest dev build](https://img.shields.io/badge/latest-dev%20build-orange.svg)](https://github.com/koukomin/Telos-Launcher/releases)
+[![Development artifacts](https://img.shields.io/badge/development-Actions%20artifacts-orange.svg)](https://github.com/koukomin/Telos-Launcher/actions/workflows/build-debug.yml)
 
 <p align="center">
   <a href="https://obtainium.imranr.dev/add?url=https://github.com/koukomin/Telos-Launcher">
@@ -29,6 +29,9 @@ Telos is a personal fork of [Kvaesitso](https://github.com/MM2-0/Kvaesitso). It 
 </p>
 
 [**Documentation**](https://koukomin.github.io/Telos-Launcher/) &nbsp;|&nbsp; [**Download**](https://github.com/koukomin/Telos-Launcher/releases) &nbsp;|&nbsp; [**The launcher**](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/) &nbsp;|&nbsp; [**Built-in apps**](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/) &nbsp;|&nbsp; [**Changelog**](CHANGELOG.md)
+
+Stable Android and Linux releases share the version in `version.properties` and are published together by one workflow after all builds pass. Development APKs are available as Actions artifacts. See [release procedure](docs/docs/developer-guide/releases.md).
+
 
 The documentation site is published via GitHub Pages at <https://koukomin.github.io/Telos-Launcher/>.
 
@@ -160,10 +163,12 @@ Telos YouTube and Telos YouTube Music provide video/music search, direct video l
 
 ## Download
 
-Every successful build of the development branch is published automatically as a debug-signed
-pre-release (testing only):
+Stable releases contain signed Android APKs and Linux desktop artifacts under one version.
+Development builds upload debug-signed APKs to Actions artifacts for testing.
+Linux release validation includes archive round trips, split volumes and rejection of absolute/traversal entry paths.
 
-- [Latest dev builds (APK)](https://github.com/koukomin/Telos-Launcher/releases)
+- [Stable releases](https://github.com/koukomin/Telos-Launcher/releases/latest)
+- [Development APK artifacts](https://github.com/koukomin/Telos-Launcher/actions/workflows/build-debug.yml)
 
 ---
 

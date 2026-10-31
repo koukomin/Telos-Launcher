@@ -60,7 +60,7 @@ object ZipArchives {
     }
 
     fun safeInner(path: String): String? {
-        val n = path.replace('\\', '/').trimStart('/')
+        val n = path.replace('\\', '/')
         if (n.isEmpty() || n.startsWith("/") || n.split('/').any { it == ".." }) return null
         return n
     }
