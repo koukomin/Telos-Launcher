@@ -30,6 +30,9 @@ Telos is a personal fork of [Kvaesitso](https://github.com/MM2-0/Kvaesitso). It 
 
 [**Documentation**](https://koukomin.github.io/Telos-Launcher/) &nbsp;|&nbsp; [**Download**](https://github.com/koukomin/Telos-Launcher/releases) &nbsp;|&nbsp; [**The launcher**](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/) &nbsp;|&nbsp; [**Built-in apps**](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/) &nbsp;|&nbsp; [**Changelog**](CHANGELOG.md)
 
+Stable Android and Linux releases share the version in `version.properties` and are published together by one workflow after all builds pass. Development APKs are available as Actions artifacts. See [release procedure](docs/docs/developer-guide/releases.md).
+
+
 The documentation site is published via GitHub Pages at <https://koukomin.github.io/Telos-Launcher/>.
 
 </div>

@@ -1,9 +1,14 @@
+import java.util.Properties
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
+}
+
+val releaseVersion = Properties().apply {
+    rootProject.file("version.properties").reader().use { load(it) }
 }
 
 // see services/downloads/build.gradle.kts: the yt-dlp runtime is only built in with -Ptelos.media=true
@@ -75,9 +80,9 @@ android {
         applicationId = "com.dimitris.telos"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026110505
-        // release builds get the version of their tag (v1.41.0 -> 1.41.0), otherwise the update check would always find the tag newer
-        versionName = System.getenv("VERSION_NAME_OVERRIDE")?.takeIf { it.isNotBlank() } ?: "1.43.81"
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: releaseVersion.getProperty("versionCode").toInt()
+        // Stable Android, desktop and GitHub tags share version.properties.
+        versionName = System.getenv("VERSION_NAME_OVERRIDE")?.takeIf { it.isNotBlank() } ?: releaseVersion.getProperty("versionName")
         signingConfig = signingConfigs.getByName("debug")
 
         // Only the CPU types we ship: without this the x86 and x86_64 builds of the FFmpeg decoders

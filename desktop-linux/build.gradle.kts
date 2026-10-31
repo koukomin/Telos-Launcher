@@ -1,3 +1,4 @@
+import java.util.Properties
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.zip.ZipEntry
@@ -8,6 +9,10 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.jetbrains.compose)
+}
+
+val releaseVersion = Properties().apply {
+    rootProject.file("version.properties").reader().use { load(it) }
 }
 
 kotlin {
@@ -72,6 +77,11 @@ tasks.withType<Jar> {
     exclude("META-INF/*.SF", "META-INF/*.RSA", "META-INF/*.DSA", "META-INF/*.sig")
 }
 
+version = releaseVersion.getProperty("versionName")
+tasks.withType<Jar>().configureEach {
+    manifest.attributes["Implementation-Version"] = project.version.toString()
+}
+
 val composeJarsDir = layout.buildDirectory.dir("compose/jars")
 tasks.matching { it.name == "packageUberJarForCurrentOS" }.configureEach {
     notCompatibleWithConfigurationCache("unsigned jar rewrite copies session files at execution time")
@@ -125,7 +135,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.AppImage, TargetFormat.Deb, TargetFormat.Rpm)
             packageName = "telos-desktop"
-            packageVersion = "1.0.0"
+            packageVersion = releaseVersion.getProperty("versionName")
             description = "Telos Linux Desktop Environment"
             vendor = "Telos"
             linux {

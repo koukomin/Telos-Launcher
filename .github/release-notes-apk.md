@@ -19,3 +19,7 @@ Install only one of them. They are signed with the same key, so you can later sw
 See the [UI validation record](https://github.com/koukomin/Telos-Launcher/blob/main/docs/docs/developer-guide/ui-validation.md)
 for automated evidence and outstanding device checks. Builds and policy tests alone do not
 certify every screen, live wallpaper, hardware or account state visually.
+
+## Linux desktop
+
+Download `telos-linux-desktop.jar` and `start-telos-desktop.sh` into the same directory. Run `bash start-telos-desktop.sh` with Java 21 or newer. `telos-linux-session.tar.gz` contains the Linux session scripts. Android and Linux use the same release version.
