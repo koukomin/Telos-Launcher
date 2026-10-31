@@ -16,7 +16,7 @@ Telos is a personal fork of [Kvaesitso](https://github.com/MM2-0/Kvaesitso). It 
 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE.txt)
 [![Platform: Android](https://img.shields.io/badge/platform-Android-3DDC84.svg)](https://github.com/koukomin/Telos-Launcher/releases)
-[![Latest dev build](https://img.shields.io/badge/latest-dev%20build-orange.svg)](https://github.com/koukomin/Telos-Launcher/releases)
+[![Development artifacts](https://img.shields.io/badge/development-Actions%20artifacts-orange.svg)](https://github.com/koukomin/Telos-Launcher/actions/workflows/build-debug.yml)
 
 <p align="center">
   <a href="https://obtainium.imranr.dev/add?url=https://github.com/koukomin/Telos-Launcher">
@@ -163,10 +163,11 @@ Telos YouTube and Telos YouTube Music provide video/music search, direct video l
 
 ## Download
 
-Every successful build of the development branch is published automatically as a debug-signed
-pre-release (testing only):
+Stable releases contain signed Android APKs and Linux desktop artifacts under one version.
+Development builds upload debug-signed APKs to Actions artifacts for testing.
 
-- [Latest dev builds (APK)](https://github.com/koukomin/Telos-Launcher/releases)
+- [Stable releases](https://github.com/koukomin/Telos-Launcher/releases/latest)
+- [Development APK artifacts](https://github.com/koukomin/Telos-Launcher/actions/workflows/build-debug.yml)
 
 ---
 
