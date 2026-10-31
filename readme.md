@@ -1461,3 +1461,5 @@ including `setup-java@v6`. Docs use the latest Node.js LTS. Daily Dependabot che
 propose future Action updates through CI-tested PRs; fork owners must enable
 Dependabot version updates in repository settings. See the
 [maintenance procedure](docs/docs/developer-guide/releases.md#github-actions-runtime-maintenance).
+
+SQLite startup config reads the result of `PRAGMA mmap_size` through a cursor, preventing the `SQLITE_OK` startup crash while preserving existing launcher data. Android instrumentation checks fresh database opening and reopening with retained records.

@@ -168,7 +168,9 @@ abstract class AppDatabase : RoomDatabase() {
                             // SQLite performance optimizations
                             db.execSQL("PRAGMA synchronous = NORMAL")
                             db.execSQL("PRAGMA temp_store = MEMORY")
-                            db.execSQL("PRAGMA mmap_size = 67108864") // 64MB mmap
+                            // mmap_size returns a row even when setting the limit. execSQL()
+                            // rejects result-producing statements with code 0 SQLITE_OK.
+                            db.query("PRAGMA mmap_size = 67108864").use { it.moveToFirst() }
                         }
                     })
                     .addMigrations(

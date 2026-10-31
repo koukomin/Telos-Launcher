@@ -70,3 +70,19 @@ commercial enhanced caching component introduced in v6.
 Upstream references: [setup-java](https://github.com/actions/setup-java),
 [Gradle Actions](https://github.com/gradle/actions), and
 [Dependabot Actions updates](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/auto-update-actions).
+
+## SQLite startup regression
+
+The production `AppDatabase.onOpen` callback must execute `PRAGMA mmap_size = N`
+as a query and consume/close its cursor. Even the assignment form returns a row;
+Android `execSQL()` rejects it with `unknown error (code 0 SQLITE_OK)`. This crash
+was reproduced on an Android 37.1 emulator before the fix. The instrumentation
+test opens the real production database callback, checks seeded search actions,
+writes a record, closes/reopens the helper, and verifies the record remains.
+No schema migration or database reset is part of this fix.
+
+Local verification on a fresh Android 37.1 x86_64 emulator: the unchanged code
+failed with the exact `SQLiteException: unknown error (code 0 SQLITE_OK)` at the
+mmap statement in `AppDatabase.onOpen`; after the cursor fix,
+`DatabaseStartupTest.productionDatabaseOpensAndReopensWithoutLosingData` passed.
+The CI startup instrumentation matrix also covers API 26 and API 35.
