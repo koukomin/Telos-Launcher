@@ -254,25 +254,26 @@ internal class FreezeMaintenance(
             if (user == Process.myUserHandle()) {
                 val entry = withContext(Dispatchers.IO) { capture(packageName) }
                 if (entry != null) {
-                    val backend = provider(null)?.second ?: return@withLock false
-                    if (!withContext(Dispatchers.IO) { thaw(entry, backend, allowProtected = true) }) return@withLock false
+                    val backend = provider(null)?.second
+                    if (backend != null) {
+                        withContext(Dispatchers.IO) { thaw(entry, backend, allowProtected = true) }
+                    }
                 }
             } else {
-                val info = apps.getApplicationInfo(packageName, flags, user)
-                if (!info.enabled || !apps.isPackageEnabled(packageName, user) ||
+                val info = runCatching { apps.getApplicationInfo(packageName, flags, user) }.getOrNull()
+                if (info == null || !info.enabled || !apps.isPackageEnabled(packageName, user) ||
                     info.flags and ApplicationInfo.FLAG_SUSPENDED != 0) {
-                    val (name, backend) = provider(null) ?: return@withLock false
-                    if (name != "Root" && name != "Shizuku") return@withLock false
-                    val targetUser = user.hashCode()
-                    if (packageName !in transitionFreezeState(listOf(packageName), false,
-                        suspendPackages = { names, value -> backend.setPackagesSuspended(names, value, targetUser) },
-                        enablePackages = { names, value -> backend.setPackagesEnabled(names, value, targetUser) })) return@withLock false
+                    val (_, backend) = provider(null) ?: (null to null)
+                    if (backend != null) {
+                        val targetUser = user.hashCode()
+                        transitionFreezeState(listOf(packageName), false,
+                            suspendPackages = { names, value -> backend.setPackagesSuspended(names, value, targetUser) },
+                            enablePackages = { names, value -> backend.setPackagesEnabled(names, value, targetUser) })
+                    }
                 }
             }
             launchWhenReady(
                 find = {
-                    // A listed launcher activity can still be suspended. Do not invoke Android's
-                    // unavailable-app dialog while package state is propagating after thawing.
                     val ready = runCatching {
                         val info = apps.getApplicationInfo(packageName, flags, user)
                         info.enabled && apps.isPackageEnabled(packageName, user) &&
@@ -281,8 +282,11 @@ internal class FreezeMaintenance(
                     val activities = if (ready) runCatching {
                         apps.getActivityList(packageName, user)
                     }.getOrDefault(emptyList()) else emptyList()
-                    activities.firstOrNull { it.componentName == preferred }?.componentName
+                    val found = activities.firstOrNull { it.componentName == preferred }?.componentName
                         ?: activities.firstOrNull()?.componentName
+                    found ?: runCatching {
+                        context.packageManager.getLaunchIntentForPackage(packageName)?.component
+                    }.getOrNull() ?: preferred
                 }, launch = launch,
             )
         }
