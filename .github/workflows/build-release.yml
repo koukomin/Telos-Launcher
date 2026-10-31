@@ -29,7 +29,7 @@ jobs:
       tag: ${{ steps.v.outputs.tag }}
       publish: ${{ steps.v.outputs.publish }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - id: v
@@ -48,17 +48,18 @@ jobs:
       matrix:
         abi: [arm64-v8a, armeabi-v7a]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           java-version: '21'
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
         with:
+          cache-provider: basic
           cache-read-only: false
       - name: Prepare repository signing key
         if: github.event_name != 'pull_request'
@@ -139,7 +140,7 @@ jobs:
 
       - name: Upload APK artifact
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: telos-${{ matrix.abi }}
           if-no-files-found: error
@@ -148,7 +149,7 @@ jobs:
             ${{ runner.temp }}/out/telos-${{ matrix.abi }}.apk.idsig
 
       - name: Upload R8 mapping
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: mapping-${{ matrix.abi }}
           path: app/app/build/outputs/mapping/defaultRelease/mapping.txt
@@ -158,12 +159,14 @@ jobs:
     needs: version
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           java-version: '21'
           distribution: 'temurin'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
       - name: Test and build Linux
         run: ./gradlew :ui-kmp:test :desktop-linux:test :desktop-linux:packageUberJarForCurrentOS --stacktrace
       - name: Package Linux artifacts
@@ -176,7 +179,7 @@ jobs:
           unzip -p linux-out/telos-linux-desktop.jar META-INF/MANIFEST.MF | grep -F "Implementation-Version: $VERSION_NAME"
           cp tools/start-telos-desktop.sh linux-out/
           tar -czf linux-out/telos-linux-session.tar.gz -C desktop-linux session
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: telos-linux
           path: linux-out/*
@@ -192,10 +195,10 @@ jobs:
       TAG: ${{ needs.version.outputs.tag }}
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: release-assets
           pattern: telos-*

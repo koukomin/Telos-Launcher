@@ -20,10 +20,10 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           submodules: true
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Provision disposable native build runner
@@ -39,7 +39,7 @@ jobs:
       - name: Build full Fenix browser and hardened engine
         run: python3 ironewolf/engine.py build --project browser --arch arm64
       - name: Upload unsigned browser and provenance
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ironewolf-arm64-unsigned
           path: |
@@ -48,7 +48,7 @@ jobs:
           if-no-files-found: error
       - name: Preserve diagnostic logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ironewolf-native-logs
           path: |

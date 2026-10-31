@@ -16,7 +16,7 @@ jobs:
   build-pwa-manifests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Verify PWA Web App Shortcuts Manifests
         run: |

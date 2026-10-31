@@ -44,3 +44,29 @@ exactly the selected ABI. Packaging exclusions follow `telos.abi`, including
 CodeQL uses a manual, uncached compilation with incremental compilation disabled.
 Restoring compiled Gradle outputs would leave CodeQL without compiler activity
 and fail analysis with "No source code was seen during the build".
+
+## GitHub Actions runtime maintenance
+
+All JavaScript Actions use Node.js 24 runtimes. Current supported majors are
+checkout v7, setup-java v6, setup-node/setup-python/setup-go v7, Gradle setup v6,
+cache v6, upload-artifact v7, download-artifact v8, CodeQL v4, stale v11,
+upload-pages-artifact v5 and deploy-pages v5. The emulator runner's v2 major
+already uses Node.js 24. Action major versions are independent of the installed
+JDK: Android and Linux continue to build with the project's JDK 21 toolchain.
+
+Documentation builds select `lts/*` with `check-latest: true` for the installed
+Node.js version. Actions use their maintained major tags to receive compatible
+patch/minor updates. `.github/dependabot.yml` checks for new Action versions daily
+at 06:00 Europe/Athens, including major updates, and groups them into a PR for CI.
+On forks, enable **Settings > Advanced Security > Dependabot version updates**
+once; committing a config alone does not activate version updates on a fork.
+
+The runtime compatibility workflow exercises Java, Node, Python, Go, Gradle,
+cache, artifact upload/download and Pages artifact packaging, and builds the docs.
+It never deploys Pages or publishes a release. Gradle v6 explicitly selects
+`cache-provider: basic`, its open-source cache provider; it does not select the
+commercial enhanced caching component introduced in v6.
+
+Upstream references: [setup-java](https://github.com/actions/setup-java),
+[Gradle Actions](https://github.com/gradle/actions), and
+[Dependabot Actions updates](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/auto-update-actions).
