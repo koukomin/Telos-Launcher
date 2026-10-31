@@ -218,7 +218,9 @@ fun CameraScreen() {
     }
     Scaffold(containerColor = Color.Black, contentColor = Color.White, topBar = {
         TopAppBar(title = { Text("TELOS", color = Color.White) }, navigationIcon = {
-            IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back), tint = Color.White) }
+            if (backStack.size > 1) {
+                IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back), tint = Color.White) }
+            }
         }, actions = {
             IconButton(onClick = { reviewScan = true }, enabled = !busy && !recording) {
                 BadgedBox(badge = { if (scanPages.isNotEmpty()) Badge { Text(scanPages.size.toString()) } }) {

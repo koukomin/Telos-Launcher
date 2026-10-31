@@ -304,8 +304,10 @@ fun FlashlightScreen() {
             TopAppBar(
                 title = { Text(stringResource(I18nR.string.telos_flashlight_app_label), color = MaterialTheme.colorScheme.onSurface) },
                 navigationIcon = {
-                    IconButton(onClick = { backStack.removeLastOrNull() }) {
-                        Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back), tint = MaterialTheme.colorScheme.onSurface)
+                    if (backStack.size > 1) {
+                        IconButton(onClick = { backStack.removeLastOrNull() }) {
+                            Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back), tint = MaterialTheme.colorScheme.onSurface)
+                        }
                     }
                 },
                 actions = {

@@ -93,7 +93,9 @@ fun ClockScreen() {
     }
     Scaffold(containerColor = Color.Transparent, topBar = {
         TopAppBar(title = { Text(stringResource(I18nR.string.preference_screen_clockwidget)) }, navigationIcon = {
-            IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back)) }
+            if (backStack.size > 1) {
+                IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back)) }
+            }
         }, actions = { IconButton(onClick = { night = true }) {
             Icon(painterResource(BaseR.drawable.light_mode_24px), stringResource(I18nR.string.clock_night))
         } }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent))

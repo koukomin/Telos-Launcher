@@ -189,10 +189,12 @@ fun SystemDashboardScreen() {
         }
         Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Vertical))) {
             Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = { backStack.removeLastOrNull() }) {
-                    Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
+                if (backStack.size > 1) {
+                    IconButton(onClick = { backStack.removeLastOrNull() }) {
+                        Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
+                    }
                 }
-                Text(stringResource(I18nR.string.telos_system_label), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                Text(stringResource(I18nR.string.telos_system_label), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f).padding(start = if (backStack.size > 1) 0.dp else 8.dp))
                 IconButton(onClick = { showFontDialog = true }) {
                     Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = "Font Settings")
                 }

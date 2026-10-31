@@ -91,8 +91,10 @@ fun WeatherScreen() {
                         )
                     },
                     navigationIcon = {
-                        IconButton(onClick = { backStack.removeLastOrNull() }) {
-                            Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = "Back")
+                        if (backStack.size > 1) {
+                            IconButton(onClick = { backStack.removeLastOrNull() }) {
+                                Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = "Back")
+                            }
                         }
                     },
                     actions = {

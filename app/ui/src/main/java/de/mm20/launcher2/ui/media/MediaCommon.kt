@@ -99,8 +99,10 @@ fun MediaFrame(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
                 title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 navigationIcon = {
-                    IconButton(onClick = { backStack.removeLastOrNull() }) {
-                        Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back))
+                    if (backStack.size > 1) {
+                        IconButton(onClick = { backStack.removeLastOrNull() }) {
+                            Icon(painterResource(BaseR.drawable.arrow_back_24px), contentDescription = stringResource(I18nR.string.hc_back))
+                        }
                     }
                 },
                 actions = actions,

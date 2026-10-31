@@ -79,8 +79,10 @@ fun AkouScreen() {
     DisposableEffect(Unit) { onDispose { job?.cancel() } }
     Scaffold(containerColor = MaterialTheme.colorScheme.surface, topBar = {
         TopAppBar(title = { Text(stringResource(I18nR.string.telos_akou_app_label)) }, navigationIcon = {
-            IconButton(onClick = { backStack.removeLastOrNull() }) {
-                Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
+            if (backStack.size > 1) {
+                IconButton(onClick = { backStack.removeLastOrNull() }) {
+                    Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
+                }
             }
         }, actions = {
             IconButton(onClick = { showAbout = true }) {

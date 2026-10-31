@@ -55,11 +55,13 @@ internal fun MediaToolbarHeader(
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onBack) {
-                    Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
+                val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
+                if (backStack.size > 1) {
+                    IconButton(onClick = onBack) {
+                        Icon(painterResource(BaseR.drawable.arrow_back_24px), stringResource(I18nR.string.hc_back))
+                    }
+                    Spacer(Modifier.width(4.dp))
                 }
-
-                Spacer(Modifier.width(4.dp))
 
                 // Sleek animated glowing laser stroke icon
                 Box {
