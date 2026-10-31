@@ -1,6 +1,6 @@
 Builds:
-  - versionName: 1.43.97
-    versionCode: 2026110521
+  - versionName: 1.43.98
+    versionCode: 2026110522
     commit: main
     subdir: app
     sudo:
@@ -16,5 +16,5 @@ Builds:
 
 AutoUpdateMode: None
 UpdateCheckMode: None
-CurrentVersion: 1.43.97
-CurrentVersionCode: 2026110521
+CurrentVersion: 1.43.98
+CurrentVersionCode: 2026110522

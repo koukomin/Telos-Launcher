@@ -56,7 +56,8 @@ internal class VirtualClockApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.schedule_24px) ?: return null
+        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain) ?: de.mm20.launcher2.base.R.drawable.schedule_24px
+        val drawable = ContextCompat.getDrawable(context, res) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
             backgroundLayer = TransparentLayer
@@ -107,7 +108,8 @@ internal class VirtualAkouApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg) ?: return null
+        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain) ?: de.mm20.launcher2.base.R.drawable.ic_app_akou_full
+        val drawable = ContextCompat.getDrawable(context, res) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
             backgroundLayer = TransparentLayer
@@ -158,7 +160,8 @@ internal class VirtualMagnifierApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.search_24px) ?: return null
+        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain) ?: de.mm20.launcher2.base.R.drawable.search_24px
+        val drawable = ContextCompat.getDrawable(context, res) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
             backgroundLayer = TransparentLayer
@@ -209,7 +212,8 @@ internal class VirtualFlashlightApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.light_mode_24px) ?: return null
+        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain) ?: de.mm20.launcher2.base.R.drawable.light_mode_24px
+        val drawable = ContextCompat.getDrawable(context, res) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
             backgroundLayer = TransparentLayer
