@@ -21,3 +21,7 @@
 #-renamesourcefileattribute SourceFile
 # AnyAscii loads Unicode blocks relative to this class package via getResourceAsStream.
 -keepnames class com.anyascii.AnyAscii
+
+# Preserve Compose Material Icons (AutoMirrored / Rounded)
+-keep class androidx.compose.material.icons.** { *; }
+-dontwarn androidx.compose.material.icons.**

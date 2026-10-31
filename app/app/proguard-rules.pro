@@ -5,6 +5,10 @@
 # Preserve Shizuku internal methods accessed via reflection by SmartFreezeService and TelosShellEngine
 -keep class rikka.shizuku.** { *; }
 
+# Preserve Compose Material Icons (AutoMirrored / Rounded)
+-keep class androidx.compose.material.icons.** { *; }
+-dontwarn androidx.compose.material.icons.**
+
 -keep public class de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM {
     public <init>();
 }
