@@ -116,12 +116,10 @@ class TelosPackageInstaller(
                     InstallResult.Success
                 }
                 is BackendInstallResult.Failed -> {
-                    // A privileged backend being available but still failing (e.g. OEM-specific
-                    // `pm install` quirk) isn't worth falling through for - it already bypassed
-                    // the user, so silently handing off to a second, *prompting* install would
-                    // be a confusing surprise. Report the failure instead.
                     CrashReporter.logException(Exception("${backend::class.simpleName}: ${installed.reason}", installed.cause))
-                    failed(installed.cause, installed.reason)
+                    // Fall back to the default package installer prompt if privileged install fails
+                    android.util.Log.w("TelosPackageInstaller", "Privileged install failed, falling back to session installer")
+                    break // breaks the 'for (backend in ...)' loop to fall through to sessionApi
                 }
             }
         }
