@@ -1191,11 +1191,6 @@ Some features are new and not tested on every device. This is what the project's
 
 ## Planned
 
-- **Ironewolf browser:** preserve the complete IronFox/Fenix UI and hardened engine as a built-in
-  browser. [Source/build tooling and capability-gated launcher dispatch](ironewolf/README.md) are
-  available. The embedded Fenix runtime is not bundled yet; current builds retain WebView and
-  do not show an unusable Ironewolf entry.
-
 - SIP: text messages, video and Bluetooth routing, and Android Telecom integration (SIP calls are
   handled by their own call screen for now)
 
