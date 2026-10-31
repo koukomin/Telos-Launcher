@@ -2,6 +2,8 @@ package de.mm20.launcher2.ui.settings.freeze
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
 
+import android.content.Intent
+import de.mm20.launcher2.ui.settings.SettingsActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -208,6 +210,18 @@ private fun FreezeSettingsContent(section: Int, tabs: @Composable () -> Unit) {
                         }
                     )
                 }
+                Preference(
+                    icon = BaseR.drawable.download_24px,
+                    title = stringResource(I18nR.string.freeze_download_external_apps),
+                    summary = stringResource(I18nR.string.freeze_download_external_apps_summary),
+                    onClick = {
+                        context.startActivity(
+                            Intent(context, SettingsActivity::class.java)
+                                .putExtra(SettingsActivity.EXTRA_ROUTE, SettingsActivity.ROUTE_STORE)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                    }
+                )
                 Preference(
                     icon = BaseR.drawable.lock_24px,
                     title = stringResource(I18nR.string.freeze_device_owner_setup_title),

@@ -1056,6 +1056,8 @@
     <string name="preference_freeze_auto_enabled">Ενεργοποίηση αυτόματου παγώματος</string>
     <string name="preference_freeze_auto_enabled_summary">Αυτόματο πάγωμα των παρακάτω επιλεγμένων εφαρμογών</string>
     <string name="preference_freeze_backend">Backend πάγωσης</string>
+    <string name="freeze_download_external_apps">Λήψη Εξωτερικών Εφαρμογών Πάγωματος από το Store</string>
+    <string name="freeze_download_external_apps_summary">Κατεβάστε αυτόνομα Shizuku, Dhizuku ή Island από το Telos Store</string>
     <string name="preference_freeze_backend_category">Υποσύστημα</string>
     <string name="preference_freeze_dashboard">Πίνακας ελέγχου</string>
     <string name="preference_freeze_dashboard_summary">Παγωμένες εφαρμογές αυτή τη στιγμή και ιστορικό παγώματος</string>

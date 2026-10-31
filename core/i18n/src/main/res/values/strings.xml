@@ -678,6 +678,8 @@
     <string name="preference_freeze_dashboard">Dashboard</string>
     <string name="preference_freeze_dashboard_summary">Currently frozen apps and freeze history</string>
     <string name="preference_freeze_backend">Freeze backend</string>
+    <string name="freeze_download_external_apps">Get External Freeze Apps from Store</string>
+    <string name="freeze_download_external_apps_summary">Download standalone Shizuku, Dhizuku or Island from Telos Store</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
     <string name="freeze_backend_amarok">Amarok</string>
