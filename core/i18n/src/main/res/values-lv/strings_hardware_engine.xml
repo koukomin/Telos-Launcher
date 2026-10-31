@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dinamisks aparatūra</string>
+    <string name="hardware_master">Aparatūras ieslēgšana uzreiz</string>
+    <string name="hardware_master_summary">Piešķir kameru, mikrofonu vai GPS, kad konfigurētā lietotne nonāk priekšplānā, un atsauc izejot</string>
+    <string name="hardware_force_mic">Mikrofons tālruņa un VoIP zvanos</string>
+    <string name="hardware_force_mic_summary">Atbloķē RECORD_AUDIO zvanu lietotnei zvana vai sarunas laikā</string>
+    <string name="hardware_search">Meklēt aparatūras lietotnes</string>
+    <string name="hardware_cam">Kamera uzreiz</string>
+    <string name="hardware_mic">Mikrofons uzreiz</string>
+    <string name="hardware_gps">GPS uzreiz</string>
+    <string name="command_palette_title">Komandu palete</string>
+    <string name="command_palette_hint">Meklēt lietotnes un komandas</string>
+    <string name="command_palette_flashlight">Lukturītis</string>
+    <string name="command_palette_flashlight_sub">Atvērt Telos lukturīti</string>
+    <string name="command_palette_voice">Diktofons</string>
+    <string name="command_palette_voice_sub">Sākt ierakstu</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Atvērt kameras lupu</string>
+    <string name="command_palette_settings">Palaidēja iestatījumi</string>
+    <string name="command_palette_settings_sub">Pielāgot Telos</string>
+</resources>

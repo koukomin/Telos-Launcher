@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">डायनामिक हार्डवेयर</string>
+    <string name="hardware_master">तुरंत हार्डवेयर चालू करें</string>
+    <string name="hardware_master_summary">कॉन्फ़िगर ऐप अग्रभूमि में आने पर कैमरा, माइक या GPS दें और बाहर निकलने पर वापस लें</string>
+    <string name="hardware_force_mic">फ़ोन और VoIP कॉल में माइक चालू</string>
+    <string name="hardware_force_mic_summary">घंटी या कॉल के दौरान कॉल ऐप के लिए RECORD_AUDIO खोलता है</string>
+    <string name="hardware_search">हार्डवेयर ऐप खोजें</string>
+    <string name="hardware_cam">तुरंत कैमरा</string>
+    <string name="hardware_mic">तुरंत माइक</string>
+    <string name="hardware_gps">तुरंत GPS</string>
+    <string name="command_palette_title">कमांड पैलेट</string>
+    <string name="command_palette_hint">ऐप और कमांड खोजें</string>
+    <string name="command_palette_flashlight">टॉर्च</string>
+    <string name="command_palette_flashlight_sub">Telos टॉर्च खोलें</string>
+    <string name="command_palette_voice">वॉइस रिकॉर्डर</string>
+    <string name="command_palette_voice_sub">रिकॉर्डिंग शुरू करें</string>
+    <string name="command_palette_magnifier">आवर्धक</string>
+    <string name="command_palette_magnifier_sub">कैमरा आवर्धक खोलें</string>
+    <string name="command_palette_settings">लॉन्चर सेटिंग्स</string>
+    <string name="command_palette_settings_sub">Telos अनुकूलित करें</string>
+</resources>

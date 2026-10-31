@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dynamische Hardware</string>
+    <string name="hardware_master">Hardware bei Bedarf aktivieren</string>
+    <string name="hardware_master_summary">Kamera, Mikrofon oder GPS gewähren, wenn eine konfigurierte App in den Vordergrund kommt, und beim Verlassen entziehen</string>
+    <string name="hardware_force_mic">Mikrofon bei Telefon- und VoIP-Anrufen einschalten</string>
+    <string name="hardware_force_mic_summary">RECORD_AUDIO für die Anruf-App während Klingeln oder Gespräch freigeben</string>
+    <string name="hardware_search">Apps für Hardware-Trigger suchen</string>
+    <string name="hardware_cam">Kamera bei Bedarf</string>
+    <string name="hardware_mic">Mikrofon bei Bedarf</string>
+    <string name="hardware_gps">GPS bei Bedarf</string>
+    <string name="command_palette_title">Befehlspalette</string>
+    <string name="command_palette_hint">Apps und Befehle suchen</string>
+    <string name="command_palette_flashlight">Taschenlampe umschalten</string>
+    <string name="command_palette_flashlight_sub">Telos-Taschenlampe öffnen</string>
+    <string name="command_palette_voice">Sprachrekorder</string>
+    <string name="command_palette_voice_sub">Audioaufnahme starten</string>
+    <string name="command_palette_magnifier">Lupe</string>
+    <string name="command_palette_magnifier_sub">Kameralupe öffnen</string>
+    <string name="command_palette_settings">Launcher-Einstellungen</string>
+    <string name="command_palette_settings_sub">Telos anpassen</string>
+</resources>

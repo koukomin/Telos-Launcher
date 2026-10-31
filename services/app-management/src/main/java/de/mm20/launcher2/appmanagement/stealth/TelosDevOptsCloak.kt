@@ -49,12 +49,15 @@ object TelosDevOptsCloak {
         AppLaunchGate.preLaunch = { ctx, pkg ->
             cloakIfNeeded(ctx, pkg)
             de.mm20.launcher2.appmanagement.clipboard.TelosClipboardShield.onPreLaunch(ctx, pkg)
+            de.mm20.launcher2.appmanagement.hardware.TelosContextHardwareEngine.onPreLaunch(ctx, pkg)
         }
         AppLaunchGate.onHomeResumed = { ctx ->
             restoreIfNeeded(ctx)
             de.mm20.launcher2.appmanagement.clipboard.TelosClipboardShield.onHomeResumed(ctx)
+            de.mm20.launcher2.appmanagement.hardware.TelosContextHardwareEngine.onHomeResumed(ctx)
         }
         de.mm20.launcher2.appmanagement.clipboard.TelosClipboardShield.start(app)
+        de.mm20.launcher2.appmanagement.hardware.TelosContextHardwareEngine.start(app)
         scope.launch {
             TelosPrivilegedDaemon.grantWriteSecureSettings(app)
             if (isPermanent(app)) applyHidden(app, persistSaved = false)

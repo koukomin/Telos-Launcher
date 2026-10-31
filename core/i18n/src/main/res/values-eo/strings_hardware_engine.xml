@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dinamika aparataro</string>
+    <string name="hardware_master">Aktivigo de aparataro tuj</string>
+    <string name="hardware_master_summary">Donas fotilon, mikrofonon aŭ GPS kiam agordita aplikaĵo venas malfonen kaj revokas ĉe eliro</string>
+    <string name="hardware_force_mic">Mikrofono dum telefonaj kaj VoIP-vokoj</string>
+    <string name="hardware_force_mic_summary">Malŝlosas RECORD_AUDIO por la voka aplikaĵo dum sonorado aŭ voko</string>
+    <string name="hardware_search">Serĉi aparataraĵajn aplikaĵojn</string>
+    <string name="hardware_cam">Fotilo tuj</string>
+    <string name="hardware_mic">Mikrofono tuj</string>
+    <string name="hardware_gps">GPS tuj</string>
+    <string name="command_palette_title">Komandpaletro</string>
+    <string name="command_palette_hint">Serĉi aplikaĵojn kaj komandojn</string>
+    <string name="command_palette_flashlight">Lampeto</string>
+    <string name="command_palette_flashlight_sub">Malfermi Telos-lampeton</string>
+    <string name="command_palette_voice">Voĉregistrilo</string>
+    <string name="command_palette_voice_sub">Komenci registradon</string>
+    <string name="command_palette_magnifier">Lupeo</string>
+    <string name="command_palette_magnifier_sub">Malfermi kameran lupeon</string>
+    <string name="command_palette_settings">Agordoj de lanĉilo</string>
+    <string name="command_palette_settings_sub">Personecigi Telos</string>
+</resources>

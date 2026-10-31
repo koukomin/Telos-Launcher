@@ -41,8 +41,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
+import androidx.compose.material3.Checkbox
 import de.mm20.launcher2.appmanagement.clipboard.ClipboardScrubMode
 import de.mm20.launcher2.appmanagement.clipboard.TelosClipboardShield
+import de.mm20.launcher2.appmanagement.hardware.HardwareProfile
+import de.mm20.launcher2.appmanagement.hardware.TelosContextHardwareEngine
 import de.mm20.launcher2.appmanagement.shizuku.TelosShizukuManager
 import de.mm20.launcher2.appmanagement.stealth.TelosDevOptsCloak
 import de.mm20.launcher2.appmanagement.stealth.TelosStealthBlacklist
@@ -83,6 +86,8 @@ fun TelosSecurityHubBody() {
         TelosDevOptsCloak.refreshStatus(context)
         TelosStealthBlacklist.refresh(context)
         TelosShizukuManager.scanClientApps(context)
+        TelosContextHardwareEngine.start(context)
+        TelosContextHardwareEngine.refreshRows(context)
     }
 
     Column(Modifier.fillMaxWidth()) {
@@ -143,12 +148,14 @@ fun TelosSecurityHubBody() {
             Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(I18nR.string.security_hub_tab_shizuku)) })
             Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(I18nR.string.security_hub_tab_cloak)) })
             Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(I18nR.string.security_hub_tab_clipboard)) })
+            Tab(selected = tab == 3, onClick = { tab = 3 }, text = { Text(stringResource(I18nR.string.hardware_tab)) })
         }
 
         when (tab) {
             0 -> ShizukuAppsTab()
             1 -> BankingCloakTab()
-            else -> ClipboardShieldTab()
+            2 -> ClipboardShieldTab()
+            else -> HardwareTriggersTab()
         }
     }
 }
@@ -364,6 +371,108 @@ private fun ClipboardShieldTab() {
                     checked = on,
                     onCheckedChange = { TelosClipboardShield.setBlocked(context, row.packageName, it) },
                 )
+            }
+        }
+    }
+}
+
+@Composable
+private fun HardwareTriggersTab() {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val master by TelosContextHardwareEngine.master.collectAsStateWithLifecycle()
+    val forceMic by TelosContextHardwareEngine.forceMicOnCalls.collectAsStateWithLifecycle()
+    val rows by TelosContextHardwareEngine.rows.collectAsStateWithLifecycle()
+    val catalog by TelosStealthBlacklist.rows.collectAsStateWithLifecycle()
+    var query by rememberSaveable { mutableStateOf("") }
+    val visible = remember(rows, catalog, query) {
+        val t = query.trim()
+        if (t.isEmpty()) {
+            rows
+        } else {
+            val fromHub = rows.filter { it.label.contains(t, true) || it.packageName.contains(t, true) }
+            val extra = catalog.filter { it.label.contains(t, true) || it.packageName.contains(t, true) }
+                .map {
+                    de.mm20.launcher2.appmanagement.hardware.HardwareAppRow(
+                        packageName = it.packageName,
+                        label = it.label,
+                        profile = TelosContextHardwareEngine.profileFor(context, it.packageName),
+                        seeded = false,
+                    )
+                }
+            (fromHub + extra).distinctBy { it.packageName }
+        }
+    }
+    Column(Modifier.fillMaxWidth().padding(bottom = 16.dp)) {
+        SwitchPreference(
+            title = stringResource(I18nR.string.hardware_master),
+            summary = stringResource(I18nR.string.hardware_master_summary),
+            value = master,
+            onValueChanged = { TelosContextHardwareEngine.setMaster(context, it) },
+        )
+        SwitchPreference(
+            title = stringResource(I18nR.string.hardware_force_mic),
+            summary = stringResource(I18nR.string.hardware_force_mic_summary),
+            value = forceMic,
+            onValueChanged = { TelosContextHardwareEngine.setForceMicOnCalls(context, it) },
+        )
+        OutlinedTextField(
+            value = query,
+            onValueChange = { query = it },
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            singleLine = true,
+            label = { Text(stringResource(I18nR.string.hardware_search)) },
+        )
+        visible.forEach { row ->
+            Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    HubIcon(row.packageName)
+                    Column(Modifier.weight(1f).padding(horizontal = 12.dp)) {
+                        Text(row.label, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodyLarge)
+                        Text(row.packageName, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodySmall)
+                    }
+                }
+                Row(
+                    Modifier.horizontalScroll(rememberScrollState()),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Checkbox(
+                        checked = row.profile.camera,
+                        onCheckedChange = {
+                            TelosContextHardwareEngine.setProfile(
+                                context,
+                                row.packageName,
+                                row.profile.copy(camera = it),
+                            )
+                            scope.launch { TelosContextHardwareEngine.refreshRows(context) }
+                        },
+                    )
+                    Text(stringResource(I18nR.string.hardware_cam), style = MaterialTheme.typography.bodySmall)
+                    Checkbox(
+                        checked = row.profile.microphone,
+                        onCheckedChange = {
+                            TelosContextHardwareEngine.setProfile(
+                                context,
+                                row.packageName,
+                                row.profile.copy(microphone = it),
+                            )
+                            scope.launch { TelosContextHardwareEngine.refreshRows(context) }
+                        },
+                    )
+                    Text(stringResource(I18nR.string.hardware_mic), style = MaterialTheme.typography.bodySmall)
+                    Checkbox(
+                        checked = row.profile.location,
+                        onCheckedChange = {
+                            TelosContextHardwareEngine.setProfile(
+                                context,
+                                row.packageName,
+                                row.profile.copy(location = it),
+                            )
+                            scope.launch { TelosContextHardwareEngine.refreshRows(context) }
+                        },
+                    )
+                    Text(stringResource(I18nR.string.hardware_gps), style = MaterialTheme.typography.bodySmall)
+                }
             }
         }
     }

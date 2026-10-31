@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dynamisk hårdvara</string>
+    <string name="hardware_master">Aktivera hårdvara i farten</string>
+    <string name="hardware_master_summary">Ger kamera, mikrofon eller GPS när en konfigurerad app kommer i förgrunden och återkallar vid avslut</string>
+    <string name="hardware_force_mic">Mikrofon under telefon- och VoIP-samtal</string>
+    <string name="hardware_force_mic_summary">Låser upp RECORD_AUDIO för samtalsappen under ringsignal eller samtal</string>
+    <string name="hardware_search">Sök hårdvaruappar</string>
+    <string name="hardware_cam">Kamera i farten</string>
+    <string name="hardware_mic">Mikrofon i farten</string>
+    <string name="hardware_gps">GPS i farten</string>
+    <string name="command_palette_title">Kommandopalett</string>
+    <string name="command_palette_hint">Sök appar och kommandon</string>
+    <string name="command_palette_flashlight">Ficklampa</string>
+    <string name="command_palette_flashlight_sub">Öppna Telos ficklampa</string>
+    <string name="command_palette_voice">Röstinspelare</string>
+    <string name="command_palette_voice_sub">Starta inspelning</string>
+    <string name="command_palette_magnifier">Förstoringsglas</string>
+    <string name="command_palette_magnifier_sub">Öppna kamerans lupp</string>
+    <string name="command_palette_settings">Launcher-inställningar</string>
+    <string name="command_palette_settings_sub">Anpassa Telos</string>
+</resources>

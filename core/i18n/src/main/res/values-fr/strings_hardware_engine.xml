@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Matériel dynamique</string>
+    <string name="hardware_master">Activation du matériel à la volée</string>
+    <string name="hardware_master_summary">Accorde caméra, micro ou GPS quand une appli configurée passe au premier plan, puis révoque à la sortie</string>
+    <string name="hardware_force_mic">Micro activé pendant les appels et le VoIP</string>
+    <string name="hardware_force_mic_summary">Débloque RECORD_AUDIO pour l’appli d’appel pendant la sonnerie ou l’appel</string>
+    <string name="hardware_search">Rechercher les applis matériel</string>
+    <string name="hardware_cam">Caméra à la volée</string>
+    <string name="hardware_mic">Micro à la volée</string>
+    <string name="hardware_gps">GPS à la volée</string>
+    <string name="command_palette_title">Palette de commandes</string>
+    <string name="command_palette_hint">Rechercher applis et commandes</string>
+    <string name="command_palette_flashlight">Lampe torche</string>
+    <string name="command_palette_flashlight_sub">Ouvrir la lampe Telos</string>
+    <string name="command_palette_voice">Enregistreur vocal</string>
+    <string name="command_palette_voice_sub">Démarrer l’enregistrement</string>
+    <string name="command_palette_magnifier">Loupe</string>
+    <string name="command_palette_magnifier_sub">Ouvrir la loupe caméra</string>
+    <string name="command_palette_settings">Réglages du lanceur</string>
+    <string name="command_palette_settings_sub">Personnaliser Telos</string>
+</resources>

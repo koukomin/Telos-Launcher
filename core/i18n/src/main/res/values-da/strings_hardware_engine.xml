@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dynamisk hardware</string>
+    <string name="hardware_master">Hardwareaktivering i farten</string>
+    <string name="hardware_master_summary">Giver kamera, mikrofon eller GPS, når en konfigureret app kommer i forgrunden, og tilbagekalder ved afslutning</string>
+    <string name="hardware_force_mic">Mikrofon under telefon- og VoIP-opkald</string>
+    <string name="hardware_force_mic_summary">Låser RECORD_AUDIO op for opkaldsappen under ringning eller samtale</string>
+    <string name="hardware_search">Søg hardware-apps</string>
+    <string name="hardware_cam">Kamera i farten</string>
+    <string name="hardware_mic">Mikrofon i farten</string>
+    <string name="hardware_gps">GPS i farten</string>
+    <string name="command_palette_title">Kommandopalet</string>
+    <string name="command_palette_hint">Søg apps og kommandoer</string>
+    <string name="command_palette_flashlight">Lommelygte</string>
+    <string name="command_palette_flashlight_sub">Åbn Telos-lommelygten</string>
+    <string name="command_palette_voice">Stemmeoptager</string>
+    <string name="command_palette_voice_sub">Start optagelse</string>
+    <string name="command_palette_magnifier">Forstørrelsesglas</string>
+    <string name="command_palette_magnifier_sub">Åbn kameraets lup</string>
+    <string name="command_palette_settings">Launcher-indstillinger</string>
+    <string name="command_palette_settings_sub">Tilpas Telos</string>
+</resources>

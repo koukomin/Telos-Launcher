@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Дынамічнае абсталяванне</string>
+    <string name="hardware_master">Уключэнне абсталявання на лёце</string>
+    <string name="hardware_master_summary">Дае камеру, мікрафон або GPS, калі наладжанае прыкладанне выходзіць на пярэдні план, і адклікае пры выхадзе</string>
+    <string name="hardware_force_mic">Мікрафон падчас тэлефонных і VoIP выклікаў</string>
+    <string name="hardware_force_mic_summary">Разблакуе RECORD_AUDIO для прыкладання выкліку падчас званка або размовы</string>
+    <string name="hardware_search">Пошук прыкладанняў абсталявання</string>
+    <string name="hardware_cam">Камера на лёце</string>
+    <string name="hardware_mic">Мікрафон на лёце</string>
+    <string name="hardware_gps">GPS на лёце</string>
+    <string name="command_palette_title">Палітра каманд</string>
+    <string name="command_palette_hint">Пошук прыкладанняў і каманд</string>
+    <string name="command_palette_flashlight">Ліхтарык</string>
+    <string name="command_palette_flashlight_sub">Адкрыць ліхтарык Telos</string>
+    <string name="command_palette_voice">Дыктафон</string>
+    <string name="command_palette_voice_sub">Пачаць запіс</string>
+    <string name="command_palette_magnifier">Лупа</string>
+    <string name="command_palette_magnifier_sub">Адкрыць лупу камеры</string>
+    <string name="command_palette_settings">Налады запускальніка</string>
+    <string name="command_palette_settings_sub">Наладзіць Telos</string>
+</resources>

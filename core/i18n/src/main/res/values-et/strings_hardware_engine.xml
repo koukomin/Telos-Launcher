@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dünaamiline riistvara</string>
+    <string name="hardware_master">Riistvara aktiveerimine lennult</string>
+    <string name="hardware_master_summary">Annab kaamera, mikrofoni või GPS-i, kui seadistatud rakendus tuleb esiplaanile, ja tühistab väljumisel</string>
+    <string name="hardware_force_mic">Mikrofon telefoni- ja VoIP-kõnedes</string>
+    <string name="hardware_force_mic_summary">Avab RECORD_AUDIO kõnerakendusele helina või kõne ajal</string>
+    <string name="hardware_search">Otsi riistvararakendusi</string>
+    <string name="hardware_cam">Kaamera lennult</string>
+    <string name="hardware_mic">Mikrofon lennult</string>
+    <string name="hardware_gps">GPS lennult</string>
+    <string name="command_palette_title">Käsupalett</string>
+    <string name="command_palette_hint">Otsi rakendusi ja käske</string>
+    <string name="command_palette_flashlight">Taskulamp</string>
+    <string name="command_palette_flashlight_sub">Ava Telose taskulamp</string>
+    <string name="command_palette_voice">Diktofon</string>
+    <string name="command_palette_voice_sub">Alusta salvestust</string>
+    <string name="command_palette_magnifier">Luup</string>
+    <string name="command_palette_magnifier_sub">Ava kaamera luup</string>
+    <string name="command_palette_settings">Käivitaja seaded</string>
+    <string name="command_palette_settings_sub">Kohanda Telost</string>
+</resources>

@@ -220,6 +220,7 @@ The **Shizuku & Privacy Shield** hub lives in Settings → Advanced, as the **Pr
 | Shizuku apps | Installed packages that request `API_V23` or declare `moe.shizuku.client.V3_SUPPORT`; grant or revoke API access, launch, force-stop, and grant or revoke `WRITE_SECURE_SETTINGS` / `DUMP` / `PACKAGE_USAGE_STATS` |
 | Banking cloak | Same Developer Options / ADB hide list as Stealth cloak, including Greek banks, Revolut and wallets |
 | Clipboard shield | Strict or smart scrub (IBAN, cards, wallets, OTP, password-like text) into an in-memory vault, optional 60s auto-clear, `READ_CLIPBOARD` app-op ignore for blocked apps |
+| Dynamic hardware | On-the-fly camera, microphone and GPS grants for configured apps (WhatsApp/Zoom video, Maps GPS, phone/VoIP mic), revoked when the app leaves or the call ends |
 
 Long-press an app icon to toggle **Stealth cloak** and **Block clipboard access** for that package. Returning to the home screen can restore the vaulted clip.
 

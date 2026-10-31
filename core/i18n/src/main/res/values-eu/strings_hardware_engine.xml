@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Hardware dinamikoa</string>
+    <string name="hardware_master">Hardwarea unean aktibatu</string>
+    <string name="hardware_master_summary">Kamera, mikrofonoa edo GPS ematen du konfiguratutako app bat aurrera datorrenean eta irtetean kendu</string>
+    <string name="hardware_force_mic">Mikrofonoa telefono eta VoIP deietan</string>
+    <string name="hardware_force_mic_summary">RECORD_AUDIO desblokeatzen du dei-app-arentzat jotzen edo hizketan dagoenean</string>
+    <string name="hardware_search">Hardware app-ak bilatu</string>
+    <string name="hardware_cam">Kamera unean</string>
+    <string name="hardware_mic">Mikrofonoa unean</string>
+    <string name="hardware_gps">GPS unean</string>
+    <string name="command_palette_title">Komando paleta</string>
+    <string name="command_palette_hint">Appak eta komandoak bilatu</string>
+    <string name="command_palette_flashlight">Linterna</string>
+    <string name="command_palette_flashlight_sub">Telos linterna ireki</string>
+    <string name="command_palette_voice">Ahots grabagailua</string>
+    <string name="command_palette_voice_sub">Grabaketa hasi</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Kameraren lupa ireki</string>
+    <string name="command_palette_settings">Abiarazlearen ezarpenak</string>
+    <string name="command_palette_settings_sub">Telos pertsonalizatu</string>
+</resources>

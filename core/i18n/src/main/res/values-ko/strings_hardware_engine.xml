@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">동적 하드웨어</string>
+    <string name="hardware_master">즉석 하드웨어 활성화</string>
+    <string name="hardware_master_summary">설정된 앱이 포그라운드로 오면 카메라, 마이크 또는 GPS를 허용하고 종료 시 철회</string>
+    <string name="hardware_force_mic">전화 및 VoIP 통화 중 마이크 켜기</string>
+    <string name="hardware_force_mic_summary">벨이 울리거나 통화 중일 때 통화 앱의 RECORD_AUDIO를 해제</string>
+    <string name="hardware_search">하드웨어 앱 검색</string>
+    <string name="hardware_cam">즉석 카메라</string>
+    <string name="hardware_mic">즉석 마이크</string>
+    <string name="hardware_gps">즉석 GPS</string>
+    <string name="command_palette_title">명령 팔레트</string>
+    <string name="command_palette_hint">앱 및 명령 검색</string>
+    <string name="command_palette_flashlight">손전등</string>
+    <string name="command_palette_flashlight_sub">Telos 손전등 열기</string>
+    <string name="command_palette_voice">음성 녹음기</string>
+    <string name="command_palette_voice_sub">녹음 시작</string>
+    <string name="command_palette_magnifier">돋보기</string>
+    <string name="command_palette_magnifier_sub">카메라 돋보기 열기</string>
+    <string name="command_palette_settings">런처 설정</string>
+    <string name="command_palette_settings_sub">Telos 사용자 지정</string>
+</resources>

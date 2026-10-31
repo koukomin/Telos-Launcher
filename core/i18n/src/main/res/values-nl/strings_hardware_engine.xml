@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dynamische hardware</string>
+    <string name="hardware_master">Hardware on-the-fly inschakelen</string>
+    <string name="hardware_master_summary">Geeft camera, microfoon of gps wanneer een ingestelde app op de voorgrond komt en trekt in bij sluiten</string>
+    <string name="hardware_force_mic">Microfoon aan tijdens telefoon- en VoIP-gesprekken</string>
+    <string name="hardware_force_mic_summary">Deblokkeert RECORD_AUDIO voor de bel-app tijdens rinkelen of gesprek</string>
+    <string name="hardware_search">Hardware-apps zoeken</string>
+    <string name="hardware_cam">Camera on-the-fly</string>
+    <string name="hardware_mic">Microfoon on-the-fly</string>
+    <string name="hardware_gps">Gps on-the-fly</string>
+    <string name="command_palette_title">Opdrachtpalet</string>
+    <string name="command_palette_hint">Apps en opdrachten zoeken</string>
+    <string name="command_palette_flashlight">Zaklamp</string>
+    <string name="command_palette_flashlight_sub">Telos-zaklamp openen</string>
+    <string name="command_palette_voice">Voice-recorder</string>
+    <string name="command_palette_voice_sub">Opname starten</string>
+    <string name="command_palette_magnifier">Vergrootglas</string>
+    <string name="command_palette_magnifier_sub">Cameralens openen</string>
+    <string name="command_palette_settings">Launcher-instellingen</string>
+    <string name="command_palette_settings_sub">Telos aanpassen</string>
+</resources>

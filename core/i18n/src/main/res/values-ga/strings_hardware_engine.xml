@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Crua-earraí dinimiciúla</string>
+    <string name="hardware_master">Gníomhachtú crua-earraí ar an toirt</string>
+    <string name="hardware_master_summary">Deonaíonn ceamara, micreafón nó GPS nuair a thagann aip chumraithe chun tosaigh agus cúlghaireann ar fhágáil</string>
+    <string name="hardware_force_mic">Micreafón le linn glaonna gutháin agus VoIP</string>
+    <string name="hardware_force_mic_summary">Díghlasálann RECORD_AUDIO don aip ghlao agus í ag bualadh nó i nglao</string>
+    <string name="hardware_search">Cuardaigh aipeanna crua-earraí</string>
+    <string name="hardware_cam">Ceamara ar an toirt</string>
+    <string name="hardware_mic">Micreafón ar an toirt</string>
+    <string name="hardware_gps">GPS ar an toirt</string>
+    <string name="command_palette_title">Pailéad ordaithe</string>
+    <string name="command_palette_hint">Cuardaigh aipeanna agus orduithe</string>
+    <string name="command_palette_flashlight">Tóirse</string>
+    <string name="command_palette_flashlight_sub">Oscail tóirse Telos</string>
+    <string name="command_palette_voice">Taifeadán gutha</string>
+    <string name="command_palette_voice_sub">Tosaigh taifeadadh</string>
+    <string name="command_palette_magnifier">Formhéadaitheoir</string>
+    <string name="command_palette_magnifier_sub">Oscail formhéadaitheoir an cheamara</string>
+    <string name="command_palette_settings">Socruithe an tosaitheora</string>
+    <string name="command_palette_settings_sub">Saincheap Telos</string>
+</resources>

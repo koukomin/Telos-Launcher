@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dinamikus hardver</string>
+    <string name="hardware_master">Hardver azonnali engedélyezése</string>
+    <string name="hardware_master_summary">Kamerát, mikrofont vagy GPS-t ad, ha a beállított alkalmazás előtérbe kerül, kilépéskor visszavonja</string>
+    <string name="hardware_force_mic">Mikrofon telefon- és VoIP-hívásoknál</string>
+    <string name="hardware_force_mic_summary">Feloldja a hívóalkalmazás RECORD_AUDIO jogosultságát csörgés vagy hívás közben</string>
+    <string name="hardware_search">Hardveralkalmazások keresése</string>
+    <string name="hardware_cam">Kamera azonnal</string>
+    <string name="hardware_mic">Mikrofon azonnal</string>
+    <string name="hardware_gps">GPS azonnal</string>
+    <string name="command_palette_title">Parancspaletta</string>
+    <string name="command_palette_hint">Alkalmazások és parancsok keresése</string>
+    <string name="command_palette_flashlight">Zseblámpa</string>
+    <string name="command_palette_flashlight_sub">Telos zseblámpa megnyitása</string>
+    <string name="command_palette_voice">Diktafon</string>
+    <string name="command_palette_voice_sub">Felvétel indítása</string>
+    <string name="command_palette_magnifier">Nagyító</string>
+    <string name="command_palette_magnifier_sub">Kamera nagyítójának megnyitása</string>
+    <string name="command_palette_settings">Indító beállításai</string>
+    <string name="command_palette_settings_sub">Telos testreszabása</string>
+</resources>

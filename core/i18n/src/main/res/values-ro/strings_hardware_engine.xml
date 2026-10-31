@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Hardware dinamic</string>
+    <string name="hardware_master">Activare hardware din mers</string>
+    <string name="hardware_master_summary">Acordă cameră, microfon sau GPS când o aplicație configurată trece în prim-plan și revocă la ieșire</string>
+    <string name="hardware_force_mic">Microfon pornit la apeluri și VoIP</string>
+    <string name="hardware_force_mic_summary">Deblochează RECORD_AUDIO pentru aplicația de apel în timpul soneriei sau apelului</string>
+    <string name="hardware_search">Caută aplicații hardware</string>
+    <string name="hardware_cam">Cameră din mers</string>
+    <string name="hardware_mic">Microfon din mers</string>
+    <string name="hardware_gps">GPS din mers</string>
+    <string name="command_palette_title">Paletă de comenzi</string>
+    <string name="command_palette_hint">Caută aplicații și comenzi</string>
+    <string name="command_palette_flashlight">Lanternă</string>
+    <string name="command_palette_flashlight_sub">Deschide lanterna Telos</string>
+    <string name="command_palette_voice">Înregistrator vocal</string>
+    <string name="command_palette_voice_sub">Pornește înregistrarea</string>
+    <string name="command_palette_magnifier">Lupă</string>
+    <string name="command_palette_magnifier_sub">Deschide lupa camerei</string>
+    <string name="command_palette_settings">Setări launcher</string>
+    <string name="command_palette_settings_sub">Personalizează Telos</string>
+</resources>

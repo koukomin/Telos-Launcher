@@ -97,7 +97,16 @@ Code: `services/app-management/.../shizuku/TelosShizukuManager.kt`, `.../clipboa
 - Client scan uses `GET_PERMISSIONS` and `GET_META_DATA` for `moe.shizuku.manager.permission.API_V23`, `rikka.shizuku.permission.API_V23`, and `moe.shizuku.client.V3_SUPPORT`.
 - Package enable/disable, `pm grant`/`revoke`, `am force-stop`, and `cmd appops set READ_CLIPBOARD` run on `TelosDispatchers.Disk` through `TelosPrivilegedDaemon` / `TelosShellEngine`.
 - Pre-launch clipboard work stays on the launch path (ClipboardManager). Pattern matching is compiled once. The vault is process memory only.
-- `AppLaunchGate.preLaunch` chains cloak then clipboard scrub; `onHomeResumed` restores cloak flags and optionally the vault.
+- `AppLaunchGate.preLaunch` chains cloak, clipboard scrub, then on-the-fly hardware grants; `onHomeResumed` restores cloak flags, optionally the vault, and revokes hardware grants when no call is active.
+
+## Context hardware engine
+
+Code: `services/app-management/.../hardware/TelosContextHardwareEngine.kt`, Security Hub tab **Dynamic hardware**.
+
+- Master switch (on by default) plus per-app camera / microphone / GPS checkboxes. Seeded profiles: dialer/phone (mic), WhatsApp/Viber/Telegram/Zoom (camera+mic), Maps/Waze (GPS).
+- Launch from the home grid calls `AppLaunchGate` then grants `pm grant` + `cmd appops set allow` on `TelosDispatchers.Disk`. Foreground polling (Usage Access) and telephony/VoIP audio mode re-apply while a call is live and revoke on background, home resume, or call end.
+- Force-microphone-on-calls (on by default) keeps `RECORD_AUDIO` allowed for the call app while ringing or `AudioManager` is in `MODE_IN_CALL` / `MODE_IN_COMMUNICATION`.
+- Privileged `pm` / app-ops need a live Shizuku or root session. Speaker routing of third-party apps is not rewritten.
 
 ## ART App Optimizer and Dex2Oat Architecture
 

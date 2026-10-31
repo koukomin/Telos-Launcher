@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Δυναμικό υλικό</string>
+    <string name="hardware_master">Ενεργοποίηση υλικού την ώρα της χρήσης</string>
+    <string name="hardware_master_summary">Χορήγηση κάμερας, μικροφώνου ή GPS όταν ανοίγει ρυθμισμένη εφαρμογή και ανάκληση στην έξοδο</string>
+    <string name="hardware_force_mic">Μικρόφωνο ανοιχτό σε κλήσεις τηλεφώνου και VoIP</string>
+    <string name="hardware_force_mic_summary">Ξεκλειδώνει το RECORD_AUDIO για την εφαρμογή κλήσης όσο χτυπά ή μιλάτε</string>
+    <string name="hardware_search">Αναζήτηση εφαρμογών υλικού</string>
+    <string name="hardware_cam">Κάμερα την ώρα της χρήσης</string>
+    <string name="hardware_mic">Μικρόφωνο την ώρα της χρήσης</string>
+    <string name="hardware_gps">GPS την ώρα της χρήσης</string>
+    <string name="command_palette_title">Παλέτα εντολών</string>
+    <string name="command_palette_hint">Αναζήτηση εφαρμογών και εντολών</string>
+    <string name="command_palette_flashlight">Φακός</string>
+    <string name="command_palette_flashlight_sub">Άνοιγμα φακού Telos</string>
+    <string name="command_palette_voice">Εγγραφή φωνής</string>
+    <string name="command_palette_voice_sub">Έναρξη εγγραφής ήχου</string>
+    <string name="command_palette_magnifier">Μεγεθυντικός φακός</string>
+    <string name="command_palette_magnifier_sub">Άνοιγμα μεγεθυντικού φακού κάμερας</string>
+    <string name="command_palette_settings">Ρυθμίσεις εκκινητή</string>
+    <string name="command_palette_settings_sub">Προσαρμογή Telos</string>
+</resources>

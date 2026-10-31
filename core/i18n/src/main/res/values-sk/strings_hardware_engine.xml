@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dynamický hardvér</string>
+    <string name="hardware_master">Aktivácia hardvéru za behu</string>
+    <string name="hardware_master_summary">Udelí kameru, mikrofón alebo GPS, keď nakonfigurovaná aplikácia príde do popredia, a pri odchode odoberie</string>
+    <string name="hardware_force_mic">Zapnúť mikrofón pri hovoroch a VoIP</string>
+    <string name="hardware_force_mic_summary">Odblokuje RECORD_AUDIO aplikácie hovorov počas zvonenia alebo hovoru</string>
+    <string name="hardware_search">Hľadať hardvérové aplikácie</string>
+    <string name="hardware_cam">Kamera za behu</string>
+    <string name="hardware_mic">Mikrofón za behu</string>
+    <string name="hardware_gps">GPS za behu</string>
+    <string name="command_palette_title">Paleta príkazov</string>
+    <string name="command_palette_hint">Hľadať aplikácie a príkazy</string>
+    <string name="command_palette_flashlight">Baterka</string>
+    <string name="command_palette_flashlight_sub">Otvoriť baterku Telos</string>
+    <string name="command_palette_voice">Záznamník</string>
+    <string name="command_palette_voice_sub">Spustiť nahrávanie</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Otvoriť lupu fotoaparátu</string>
+    <string name="command_palette_settings">Nastavenia launchera</string>
+    <string name="command_palette_settings_sub">Prispôsobiť Telos</string>
+</resources>

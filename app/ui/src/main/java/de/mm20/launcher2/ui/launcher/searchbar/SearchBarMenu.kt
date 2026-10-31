@@ -46,6 +46,7 @@ import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.launcher.scaffold.components.currentHomeScreenWidgetScopeId
 import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
 import de.mm20.launcher2.ui.launcher.widgets.WidgetsVM
+import de.mm20.launcher2.ui.launcher.search.palette.CommandPaletteDialog
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
@@ -59,6 +60,7 @@ fun RowScope.SearchBarMenu(
     val context = LocalContext.current
     val density = LocalDensity.current
     var showOverflowMenu by remember { mutableStateOf(false) }
+    var showCommandPalette by remember { mutableStateOf(false) }
     val rightIcon = AnimatedImageVector.animatedVectorResource(BaseR.drawable.anim_ic_menu_clear)
 
     // Same "whichever home screen page is currently visible" targeting as the long-press home
@@ -147,6 +149,19 @@ fun RowScope.SearchBarMenu(
                 DropdownMenuItem(
                     shape = MenuDefaults.middleItemShape,
                     onClick = {
+                        showOverflowMenu = false
+                        showCommandPalette = true
+                    },
+                    text = {
+                        Text(stringResource(I18nR.string.command_palette_title))
+                    },
+                    leadingIcon = {
+                        Icon(painterResource(BaseR.drawable.search_24px), contentDescription = null)
+                    }
+                )
+                DropdownMenuItem(
+                    shape = MenuDefaults.middleItemShape,
+                    onClick = {
                         context.startActivity(
                             Intent(context, SettingsActivity::class.java)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -224,4 +239,7 @@ fun RowScope.SearchBarMenu(
             showWidgetPicker = false
         },
     )
+    if (showCommandPalette) {
+        CommandPaletteDialog(onDismissRequest = { showCommandPalette = false })
+    }
 }

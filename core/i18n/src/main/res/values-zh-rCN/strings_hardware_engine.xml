@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">动态硬件</string>
+    <string name="hardware_master">即时启用硬件</string>
+    <string name="hardware_master_summary">当前台打开已配置的应用时授予相机、麦克风或 GPS，退出后收回</string>
+    <string name="hardware_force_mic">通话和 VoIP 时打开麦克风</string>
+    <string name="hardware_force_mic_summary">在响铃或通话期间为通话应用解除 RECORD_AUDIO</string>
+    <string name="hardware_search">搜索硬件应用</string>
+    <string name="hardware_cam">即时相机</string>
+    <string name="hardware_mic">即时麦克风</string>
+    <string name="hardware_gps">即时 GPS</string>
+    <string name="command_palette_title">命令面板</string>
+    <string name="command_palette_hint">搜索应用和命令</string>
+    <string name="command_palette_flashlight">手电筒</string>
+    <string name="command_palette_flashlight_sub">打开 Telos 手电筒</string>
+    <string name="command_palette_voice">录音机</string>
+    <string name="command_palette_voice_sub">开始录音</string>
+    <string name="command_palette_magnifier">放大镜</string>
+    <string name="command_palette_magnifier_sub">打开相机放大镜</string>
+    <string name="command_palette_settings">启动器设置</string>
+    <string name="command_palette_settings_sub">自定义 Telos</string>
+</resources>

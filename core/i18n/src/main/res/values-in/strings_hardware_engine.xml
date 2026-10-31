@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Perangkat dinamis</string>
+    <string name="hardware_master">Aktifkan perangkat saat dipakai</string>
+    <string name="hardware_master_summary">Memberi kamera, mikrofon, atau GPS saat aplikasi terkonfigurasi ke depan dan mencabut saat keluar</string>
+    <string name="hardware_force_mic">Mikrofon saat panggilan telepon dan VoIP</string>
+    <string name="hardware_force_mic_summary">Membuka RECORD_AUDIO aplikasi panggilan saat berdering atau berbicara</string>
+    <string name="hardware_search">Cari aplikasi perangkat</string>
+    <string name="hardware_cam">Kamera saat dipakai</string>
+    <string name="hardware_mic">Mikrofon saat dipakai</string>
+    <string name="hardware_gps">GPS saat dipakai</string>
+    <string name="command_palette_title">Palet perintah</string>
+    <string name="command_palette_hint">Cari aplikasi dan perintah</string>
+    <string name="command_palette_flashlight">Senter</string>
+    <string name="command_palette_flashlight_sub">Buka senter Telos</string>
+    <string name="command_palette_voice">Perekam suara</string>
+    <string name="command_palette_voice_sub">Mulai rekaman</string>
+    <string name="command_palette_magnifier">Kaca pembesar</string>
+    <string name="command_palette_magnifier_sub">Buka kaca pembesar kamera</string>
+    <string name="command_palette_settings">Pengaturan peluncur</string>
+    <string name="command_palette_settings_sub">Sesuaikan Telos</string>
+</resources>

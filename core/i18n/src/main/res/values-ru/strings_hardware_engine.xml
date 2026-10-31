@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Динамическое оборудование</string>
+    <string name="hardware_master">Включение оборудования по запросу</string>
+    <string name="hardware_master_summary">Выдаёт камеру, микрофон или GPS, когда настроенное приложение выходит на передний план, и отзывает при выходе</string>
+    <string name="hardware_force_mic">Включать микрофон во время звонков и VoIP</string>
+    <string name="hardware_force_mic_summary">Разблокирует RECORD_AUDIO для приложения звонка во время вызова</string>
+    <string name="hardware_search">Поиск приложений оборудования</string>
+    <string name="hardware_cam">Камера по запросу</string>
+    <string name="hardware_mic">Микрофон по запросу</string>
+    <string name="hardware_gps">GPS по запросу</string>
+    <string name="command_palette_title">Палитра команд</string>
+    <string name="command_palette_hint">Поиск приложений и команд</string>
+    <string name="command_palette_flashlight">Фонарик</string>
+    <string name="command_palette_flashlight_sub">Открыть фонарик Telos</string>
+    <string name="command_palette_voice">Диктофон</string>
+    <string name="command_palette_voice_sub">Начать запись</string>
+    <string name="command_palette_magnifier">Лупа</string>
+    <string name="command_palette_magnifier_sub">Открыть лупу камеры</string>
+    <string name="command_palette_settings">Настройки лаунчера</string>
+    <string name="command_palette_settings_sub">Настроить Telos</string>
+</resources>

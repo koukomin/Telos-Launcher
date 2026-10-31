@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dinamična strojna oprema</string>
+    <string name="hardware_master">Vklop strojne opreme sproti</string>
+    <string name="hardware_master_summary">Podeli kamero, mikrofon ali GPS, ko konfigurirana aplikacija pride v ospredje, in ob izhodu prekliče</string>
+    <string name="hardware_force_mic">Mikrofon med klici in VoIP</string>
+    <string name="hardware_force_mic_summary">Odklene RECORD_AUDIO aplikacije za klic med zvonjenjem ali pogovorom</string>
+    <string name="hardware_search">Iskanje aplikacij strojne opreme</string>
+    <string name="hardware_cam">Kamera sproti</string>
+    <string name="hardware_mic">Mikrofon sproti</string>
+    <string name="hardware_gps">GPS sproti</string>
+    <string name="command_palette_title">Paleta ukazov</string>
+    <string name="command_palette_hint">Iskanje aplikacij in ukazov</string>
+    <string name="command_palette_flashlight">Svetilka</string>
+    <string name="command_palette_flashlight_sub">Odpri Telos svetilko</string>
+    <string name="command_palette_voice">Diktafon</string>
+    <string name="command_palette_voice_sub">Začni snemanje</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Odpri lupo kamere</string>
+    <string name="command_palette_settings">Nastavitve zaganjalnika</string>
+    <string name="command_palette_settings_sub">Prilagodi Telos</string>
+</resources>

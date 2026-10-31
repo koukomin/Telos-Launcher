@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dinamički hardver</string>
+    <string name="hardware_master">Uključivanje hardvera u letu</string>
+    <string name="hardware_master_summary">Dodjeljuje kameru, mikrofon ili GPS kad konfigurirana aplikacija dođe u prednji plan i opoziva pri izlasku</string>
+    <string name="hardware_force_mic">Mikrofon tijekom poziva i VoIP-a</string>
+    <string name="hardware_force_mic_summary">Otključava RECORD_AUDIO aplikacije poziva tijekom zvona ili razgovora</string>
+    <string name="hardware_search">Pretraži hardverske aplikacije</string>
+    <string name="hardware_cam">Kamera u letu</string>
+    <string name="hardware_mic">Mikrofon u letu</string>
+    <string name="hardware_gps">GPS u letu</string>
+    <string name="command_palette_title">Paleta naredbi</string>
+    <string name="command_palette_hint">Pretraži aplikacije i naredbe</string>
+    <string name="command_palette_flashlight">Svjetiljka</string>
+    <string name="command_palette_flashlight_sub">Otvori Telos svjetiljku</string>
+    <string name="command_palette_voice">Diktafon</string>
+    <string name="command_palette_voice_sub">Započni snimanje</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Otvori lupu kamere</string>
+    <string name="command_palette_settings">Postavke pokretača</string>
+    <string name="command_palette_settings_sub">Prilagodi Telos</string>
+</resources>

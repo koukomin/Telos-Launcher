@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">ডায়নামিক হার্ডওয়্যার</string>
+    <string name="hardware_master">তাৎক্ষণিক হার্ডওয়্যার চালু</string>
+    <string name="hardware_master_summary">কনফিগার করা অ্যাপ সামনে এলে ক্যামেরা, মাইক বা GPS দেয় এবং বের হলে ফিরিয়ে নেয়</string>
+    <string name="hardware_force_mic">ফোন ও VoIP কলে মাইক চালু</string>
+    <string name="hardware_force_mic_summary">রিং বা কলের সময় কল অ্যাপের RECORD_AUDIO খুলে দেয়</string>
+    <string name="hardware_search">হার্ডওয়্যার অ্যাপ খুঁজুন</string>
+    <string name="hardware_cam">তাৎক্ষণিক ক্যামেরা</string>
+    <string name="hardware_mic">তাৎক্ষণিক মাইক</string>
+    <string name="hardware_gps">তাৎক্ষণিক GPS</string>
+    <string name="command_palette_title">কমান্ড প্যালেট</string>
+    <string name="command_palette_hint">অ্যাপ ও কমান্ড খুঁজুন</string>
+    <string name="command_palette_flashlight">টর্চ</string>
+    <string name="command_palette_flashlight_sub">Telos টর্চ খুলুন</string>
+    <string name="command_palette_voice">ভয়েস রেকর্ডার</string>
+    <string name="command_palette_voice_sub">রেকর্ডিং শুরু</string>
+    <string name="command_palette_magnifier">ম্যাগনিফায়ার</string>
+    <string name="command_palette_magnifier_sub">ক্যামেরা ম্যাগনিফায়ার খুলুন</string>
+    <string name="command_palette_settings">লঞ্চার সেটিংস</string>
+    <string name="command_palette_settings_sub">Telos কাস্টমাইজ করুন</string>
+</resources>

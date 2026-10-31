@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Instrumentum dynamicum</string>
+    <string name="hardware_master">Activatio instrumenti statim</string>
+    <string name="hardware_master_summary">Dat cameram, microphonum vel GPS cum applicatio ordinata in frontem venit et revocat in exitu</string>
+    <string name="hardware_force_mic">Microphonum in vocibus et VoIP</string>
+    <string name="hardware_force_mic_summary">RECORD_AUDIO aperit applicationi vocis</string>
+    <string name="hardware_search">Quaere applicationes</string>
+    <string name="hardware_cam">Camera statim</string>
+    <string name="hardware_mic">Microphonum statim</string>
+    <string name="hardware_gps">GPS statim</string>
+    <string name="command_palette_title">Paleta mandatorum</string>
+    <string name="command_palette_hint">Quaere applicationes et mandata</string>
+    <string name="command_palette_flashlight">Lucerna</string>
+    <string name="command_palette_flashlight_sub">Aperi lucernam Telos</string>
+    <string name="command_palette_voice">Commentarius vocis</string>
+    <string name="command_palette_voice_sub">Incipe notationem</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Aperi lupam camerae</string>
+    <string name="command_palette_settings">Optiones launcher</string>
+    <string name="command_palette_settings_sub">Adcommoda Telos</string>
+</resources>

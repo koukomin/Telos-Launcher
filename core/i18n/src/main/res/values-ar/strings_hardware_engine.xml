@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">عتاد ديناميكي</string>
+    <string name="hardware_master">تفعيل العتاد فورًا</string>
+    <string name="hardware_master_summary">يمنح الكاميرا أو الميكروفون أو GPS عندما يأتي تطبيق مضبوط إلى المقدمة ويسحبها عند الخروج</string>
+    <string name="hardware_force_mic">تشغيل الميكروفون أثناء المكالمات وVoIP</string>
+    <string name="hardware_force_mic_summary">يفتح RECORD_AUDIO لتطبيق المكالمة أثناء الرنين أو المكالمة</string>
+    <string name="hardware_search">البحث عن تطبيقات العتاد</string>
+    <string name="hardware_cam">كاميرا فورية</string>
+    <string name="hardware_mic">ميكروفون فوري</string>
+    <string name="hardware_gps">GPS فوري</string>
+    <string name="command_palette_title">لوحة الأوامر</string>
+    <string name="command_palette_hint">البحث عن تطبيقات وأوامر</string>
+    <string name="command_palette_flashlight">المصباح</string>
+    <string name="command_palette_flashlight_sub">فتح مصباح Telos</string>
+    <string name="command_palette_voice">مسجّل الصوت</string>
+    <string name="command_palette_voice_sub">بدء التسجيل</string>
+    <string name="command_palette_magnifier">العدسة المكبرة</string>
+    <string name="command_palette_magnifier_sub">فتح عدسة الكاميرا</string>
+    <string name="command_palette_settings">إعدادات المشغّل</string>
+    <string name="command_palette_settings_sub">تخصيص Telos</string>
+</resources>

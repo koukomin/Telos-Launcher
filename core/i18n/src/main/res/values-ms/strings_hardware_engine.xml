@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Perkakasan dinamik</string>
+    <string name="hardware_master">Aktifkan perkakasan serta-merta</string>
+    <string name="hardware_master_summary">Memberi kamera, mikrofon atau GPS apabila apl dikonfigurasi datang ke hadapan dan menarik balik semasa keluar</string>
+    <string name="hardware_force_mic">Mikrofon semasa panggilan telefon dan VoIP</string>
+    <string name="hardware_force_mic_summary">Membuka RECORD_AUDIO apl panggilan semasa berdering atau bercakap</string>
+    <string name="hardware_search">Cari apl perkakasan</string>
+    <string name="hardware_cam">Kamera serta-merta</string>
+    <string name="hardware_mic">Mikrofon serta-merta</string>
+    <string name="hardware_gps">GPS serta-merta</string>
+    <string name="command_palette_title">Palet perintah</string>
+    <string name="command_palette_hint">Cari apl dan perintah</string>
+    <string name="command_palette_flashlight">Lampu suluh</string>
+    <string name="command_palette_flashlight_sub">Buka lampu suluh Telos</string>
+    <string name="command_palette_voice">Perakam suara</string>
+    <string name="command_palette_voice_sub">Mula rakaman</string>
+    <string name="command_palette_magnifier">Kanta pembesar</string>
+    <string name="command_palette_magnifier_sub">Buka kanta pembesar kamera</string>
+    <string name="command_palette_settings">Tetapan pelancar</string>
+    <string name="command_palette_settings_sub">Sesuaikan Telos</string>
+</resources>

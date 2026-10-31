@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Hardware dynamic</string>
+    <string name="hardware_master">Activation de hardware in volo</string>
+    <string name="hardware_master_summary">Concede camera, microphono o GPS quando un app configurate veni al fronte e revoca al exito</string>
+    <string name="hardware_force_mic">Microphono durante appellos e VoIP</string>
+    <string name="hardware_force_mic_summary">Disbloca RECORD_AUDIO pro le app de appello durante soneria o conversation</string>
+    <string name="hardware_search">Cerca apps de hardware</string>
+    <string name="hardware_cam">Camera in volo</string>
+    <string name="hardware_mic">Microphono in volo</string>
+    <string name="hardware_gps">GPS in volo</string>
+    <string name="command_palette_title">Paletta de commandos</string>
+    <string name="command_palette_hint">Cerca apps e commandos</string>
+    <string name="command_palette_flashlight">Lanterna</string>
+    <string name="command_palette_flashlight_sub">Aperi le lanterna Telos</string>
+    <string name="command_palette_voice">Registrator de voce</string>
+    <string name="command_palette_voice_sub">Initia registration</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Aperi le lupa del camera</string>
+    <string name="command_palette_settings">Configurationes del lanceator</string>
+    <string name="command_palette_settings_sub">Personalisa Telos</string>
+</resources>

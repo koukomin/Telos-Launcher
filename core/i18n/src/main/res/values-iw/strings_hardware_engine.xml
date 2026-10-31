@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">חומרה דינמית</string>
+    <string name="hardware_master">הפעלת חומרה בזמן אמת</string>
+    <string name="hardware_master_summary">מעניק מצלמה, מיקרופון או GPS כשאפליקציה מוגדרת עולה לחזית ומבטל ביציאה</string>
+    <string name="hardware_force_mic">מיקרופון בשיחות טלפון ו-VoIP</string>
+    <string name="hardware_force_mic_summary">פותח RECORD_AUDIO לאפליקציית השיחה בזמן צלצול או שיחה</string>
+    <string name="hardware_search">חיפוש אפליקציות חומרה</string>
+    <string name="hardware_cam">מצלמה בזמן אמת</string>
+    <string name="hardware_mic">מיקרופון בזמן אמת</string>
+    <string name="hardware_gps">GPS בזמן אמת</string>
+    <string name="command_palette_title">לוח פקודות</string>
+    <string name="command_palette_hint">חיפוש אפליקציות ופקודות</string>
+    <string name="command_palette_flashlight">פנס</string>
+    <string name="command_palette_flashlight_sub">פתיחת פנס Telos</string>
+    <string name="command_palette_voice">מקליט קול</string>
+    <string name="command_palette_voice_sub">התחלת הקלטה</string>
+    <string name="command_palette_magnifier">זכוכית מגדלת</string>
+    <string name="command_palette_magnifier_sub">פתיחת זכוכית מגדלת של המצלמה</string>
+    <string name="command_palette_settings">הגדרות המשגר</string>
+    <string name="command_palette_settings_sub">התאמת Telos</string>
+</resources>

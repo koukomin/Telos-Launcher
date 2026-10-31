@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Sprzęt dynamiczny</string>
+    <string name="hardware_master">Włączanie sprzętu w locie</string>
+    <string name="hardware_master_summary">Przyznaje kamerę, mikrofon lub GPS, gdy skonfigurowana aplikacja wejdzie na pierwszy plan, i cofa przy wyjściu</string>
+    <string name="hardware_force_mic">Włącz mikrofon podczas połączeń i VoIP</string>
+    <string name="hardware_force_mic_summary">Odblokowuje RECORD_AUDIO aplikacji połączeń podczas dzwonienia lub rozmowy</string>
+    <string name="hardware_search">Szukaj aplikacji sprzętu</string>
+    <string name="hardware_cam">Kamera w locie</string>
+    <string name="hardware_mic">Mikrofon w locie</string>
+    <string name="hardware_gps">GPS w locie</string>
+    <string name="command_palette_title">Paleta poleceń</string>
+    <string name="command_palette_hint">Szukaj aplikacji i poleceń</string>
+    <string name="command_palette_flashlight">Latarka</string>
+    <string name="command_palette_flashlight_sub">Otwórz latarkę Telos</string>
+    <string name="command_palette_voice">Dyktafon</string>
+    <string name="command_palette_voice_sub">Rozpocznij nagrywanie</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Otwórz lupę kamery</string>
+    <string name="command_palette_settings">Ustawienia launchera</string>
+    <string name="command_palette_settings_sub">Dostosuj Telos</string>
+</resources>

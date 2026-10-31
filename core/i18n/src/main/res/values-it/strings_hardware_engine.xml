@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Hardware dinamico</string>
+    <string name="hardware_master">Attivazione hardware al volo</string>
+    <string name="hardware_master_summary">Concede fotocamera, microfono o GPS quando un’app configurata va in primo piano e li revoca all’uscita</string>
+    <string name="hardware_force_mic">Microfono attivo durante chiamate e VoIP</string>
+    <string name="hardware_force_mic_summary">Sblocca RECORD_AUDIO per l’app di chiamata durante squillo o conversazione</string>
+    <string name="hardware_search">Cerca app hardware</string>
+    <string name="hardware_cam">Fotocamera al volo</string>
+    <string name="hardware_mic">Microfono al volo</string>
+    <string name="hardware_gps">GPS al volo</string>
+    <string name="command_palette_title">Tavolozza comandi</string>
+    <string name="command_palette_hint">Cerca app e comandi</string>
+    <string name="command_palette_flashlight">Torcia</string>
+    <string name="command_palette_flashlight_sub">Apri la torcia Telos</string>
+    <string name="command_palette_voice">Registratore vocale</string>
+    <string name="command_palette_voice_sub">Avvia registrazione audio</string>
+    <string name="command_palette_magnifier">Lente</string>
+    <string name="command_palette_magnifier_sub">Apri la lente della fotocamera</string>
+    <string name="command_palette_settings">Impostazioni launcher</string>
+    <string name="command_palette_settings_sub">Personalizza Telos</string>
+</resources>

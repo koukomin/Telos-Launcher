@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">سخت‌افزار پویا</string>
+    <string name="hardware_master">فعال‌سازی فوری سخت‌افزار</string>
+    <string name="hardware_master_summary">وقتی برنامه پیکربندی‌شده جلو می‌آید دوربین، میکروفون یا GPS می‌دهد و هنگام خروج پس می‌گیرد</string>
+    <string name="hardware_force_mic">میکروفون هنگام تماس تلفنی و VoIP</string>
+    <string name="hardware_force_mic_summary">RECORD_AUDIO برنامه تماس را هنگام زنگ یا مکالمه باز می‌کند</string>
+    <string name="hardware_search">جستجوی برنامه‌های سخت‌افزار</string>
+    <string name="hardware_cam">دوربین فوری</string>
+    <string name="hardware_mic">میکروفون فوری</string>
+    <string name="hardware_gps">GPS فوری</string>
+    <string name="command_palette_title">پالت فرمان</string>
+    <string name="command_palette_hint">جستجوی برنامه و فرمان</string>
+    <string name="command_palette_flashlight">چراغ‌قوه</string>
+    <string name="command_palette_flashlight_sub">باز کردن چراغ‌قوه Telos</string>
+    <string name="command_palette_voice">ضبط صدا</string>
+    <string name="command_palette_voice_sub">شروع ضبط</string>
+    <string name="command_palette_magnifier">ذره‌بین</string>
+    <string name="command_palette_magnifier_sub">باز کردن ذره‌بین دوربین</string>
+    <string name="command_palette_settings">تنظیمات راه‌انداز</string>
+    <string name="command_palette_settings_sub">سفارشی‌سازی Telos</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dynamic hardware</string>
+    <string name="hardware_master">On-the-fly hardware activation</string>
+    <string name="hardware_master_summary">Grant camera, microphone or GPS when a configured app comes to the foreground, then revoke on exit</string>
+    <string name="hardware_force_mic">Force microphone on during phone and VoIP calls</string>
+    <string name="hardware_force_mic_summary">Unblock RECORD_AUDIO for the call app while ringing or in a call</string>
+    <string name="hardware_search">Search hardware trigger apps</string>
+    <string name="hardware_cam">Cam on-the-fly</string>
+    <string name="hardware_mic">Mic on-the-fly</string>
+    <string name="hardware_gps">GPS on-the-fly</string>
+    <string name="command_palette_title">Command palette</string>
+    <string name="command_palette_hint">Search apps and commands</string>
+    <string name="command_palette_flashlight">Toggle flashlight</string>
+    <string name="command_palette_flashlight_sub">Open the Telos flashlight</string>
+    <string name="command_palette_voice">Voice recorder</string>
+    <string name="command_palette_voice_sub">Start recording audio</string>
+    <string name="command_palette_magnifier">Magnifier</string>
+    <string name="command_palette_magnifier_sub">Open the camera magnifier</string>
+    <string name="command_palette_settings">Launcher settings</string>
+    <string name="command_palette_settings_sub">Customize Telos</string>
+</resources>

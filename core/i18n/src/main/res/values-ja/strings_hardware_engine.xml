@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">動的ハードウェア</string>
+    <string name="hardware_master">その場でハードウェアを有効化</string>
+    <string name="hardware_master_summary">設定したアプリが前面に出たらカメラ・マイク・GPS を許可し、終了時に取り消します</string>
+    <string name="hardware_force_mic">通話と VoIP でマイクをオン</string>
+    <string name="hardware_force_mic_summary">着信中または通話中に通話アプリの RECORD_AUDIO を解除</string>
+    <string name="hardware_search">ハードウェアアプリを検索</string>
+    <string name="hardware_cam">その場でカメラ</string>
+    <string name="hardware_mic">その場でマイク</string>
+    <string name="hardware_gps">その場で GPS</string>
+    <string name="command_palette_title">コマンドパレット</string>
+    <string name="command_palette_hint">アプリとコマンドを検索</string>
+    <string name="command_palette_flashlight">フラッシュライト</string>
+    <string name="command_palette_flashlight_sub">Telos のライトを開く</string>
+    <string name="command_palette_voice">ボイスレコーダー</string>
+    <string name="command_palette_voice_sub">録音を開始</string>
+    <string name="command_palette_magnifier">拡大鏡</string>
+    <string name="command_palette_magnifier_sub">カメラ拡大鏡を開く</string>
+    <string name="command_palette_settings">ランチャー設定</string>
+    <string name="command_palette_settings_sub">Telos をカスタマイズ</string>
+</resources>

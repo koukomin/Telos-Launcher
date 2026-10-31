@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Hardware dinâmico</string>
+    <string name="hardware_master">Ativação de hardware no momento</string>
+    <string name="hardware_master_summary">Concede câmara, microfone ou GPS quando uma app configurada passa para primeiro plano e revoga ao sair</string>
+    <string name="hardware_force_mic">Forçar microfone em chamadas e VoIP</string>
+    <string name="hardware_force_mic_summary">Desbloqueia RECORD_AUDIO da app de chamada enquanto toca ou está em curso</string>
+    <string name="hardware_search">Procurar apps de hardware</string>
+    <string name="hardware_cam">Câmara no momento</string>
+    <string name="hardware_mic">Microfone no momento</string>
+    <string name="hardware_gps">GPS no momento</string>
+    <string name="command_palette_title">Paleta de comandos</string>
+    <string name="command_palette_hint">Procurar apps e comandos</string>
+    <string name="command_palette_flashlight">Lanterna</string>
+    <string name="command_palette_flashlight_sub">Abrir a lanterna Telos</string>
+    <string name="command_palette_voice">Gravador de voz</string>
+    <string name="command_palette_voice_sub">Iniciar gravação de áudio</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Abrir a lupa da câmara</string>
+    <string name="command_palette_settings">Definições do launcher</string>
+    <string name="command_palette_settings_sub">Personalizar o Telos</string>
+</resources>

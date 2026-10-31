@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dynamický hardware</string>
+    <string name="hardware_master">Aktivace hardwaru za běhu</string>
+    <string name="hardware_master_summary">Udělí kameru, mikrofon nebo GPS, když nakonfigurovaná aplikace přijde do popředí, a při odchodu odejme</string>
+    <string name="hardware_force_mic">Zapnout mikrofon při hovorech a VoIP</string>
+    <string name="hardware_force_mic_summary">Odblokuje RECORD_AUDIO aplikace hovorů během zvonění nebo hovoru</string>
+    <string name="hardware_search">Hledat hardwarové aplikace</string>
+    <string name="hardware_cam">Kamera za běhu</string>
+    <string name="hardware_mic">Mikrofon za běhu</string>
+    <string name="hardware_gps">GPS za běhu</string>
+    <string name="command_palette_title">Paleta příkazů</string>
+    <string name="command_palette_hint">Hledat aplikace a příkazy</string>
+    <string name="command_palette_flashlight">Svítilna</string>
+    <string name="command_palette_flashlight_sub">Otevřít svítilnu Telos</string>
+    <string name="command_palette_voice">Záznamník</string>
+    <string name="command_palette_voice_sub">Spustit nahrávání</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Otevřít lupu fotoaparátu</string>
+    <string name="command_palette_settings">Nastavení launcheru</string>
+    <string name="command_palette_settings_sub">Přizpůsobit Telos</string>
+</resources>

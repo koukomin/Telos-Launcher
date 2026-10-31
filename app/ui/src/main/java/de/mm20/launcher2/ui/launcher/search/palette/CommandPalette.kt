@@ -18,10 +18,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.i18n.R as I18nR
 
 @Composable
 fun CommandPaletteDialog(
@@ -50,7 +52,7 @@ fun CommandPaletteDialog(
                     .fillMaxWidth()
                     .heightIn(max = 400.dp)
                     .clip(RoundedCornerShape(16.dp)),
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.surfaceContainer,
                 tonalElevation = 6.dp,
                 shadowElevation = 8.dp
             ) {
@@ -61,11 +63,11 @@ fun CommandPaletteDialog(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp),
-                        placeholder = { Text("Search for apps, contacts, commands...") },
+                        placeholder = { Text(stringResource(I18nR.string.command_palette_hint)) },
                         leadingIcon = {
                             Icon(
                                 painterResource(de.mm20.launcher2.base.R.drawable.search_24px),
-                                contentDescription = "Search"
+                                contentDescription = stringResource(I18nR.string.command_palette_title),
                             )
                         },
                         singleLine = true,

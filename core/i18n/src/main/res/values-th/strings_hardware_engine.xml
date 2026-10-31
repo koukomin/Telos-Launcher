@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">ฮาร์ดแวร์แบบไดนามิก</string>
+    <string name="hardware_master">เปิดฮาร์ดแวร์ทันที</string>
+    <string name="hardware_master_summary">ให้กล้อง ไมค์ หรือ GPS เมื่อแอปที่ตั้งค่ามาอยู่เบื้องหน้า และเพิกถอนเมื่อออก</string>
+    <string name="hardware_force_mic">เปิดไมค์ระหว่างสายโทรและ VoIP</string>
+    <string name="hardware_force_mic_summary">ปลด RECORD_AUDIO ของแอปโทรขณะดังหรือระหว่างสาย</string>
+    <string name="hardware_search">ค้นหาแอปฮาร์ดแวร์</string>
+    <string name="hardware_cam">กล้องทันที</string>
+    <string name="hardware_mic">ไมค์ทันที</string>
+    <string name="hardware_gps">GPS ทันที</string>
+    <string name="command_palette_title">จานคำสั่ง</string>
+    <string name="command_palette_hint">ค้นหาแอปและคำสั่ง</string>
+    <string name="command_palette_flashlight">ไฟฉาย</string>
+    <string name="command_palette_flashlight_sub">เปิดไฟฉาย Telos</string>
+    <string name="command_palette_voice">เครื่องอัดเสียง</string>
+    <string name="command_palette_voice_sub">เริ่มอัด</string>
+    <string name="command_palette_magnifier">แว่นขยาย</string>
+    <string name="command_palette_magnifier_sub">เปิดแว่นขยายกล้อง</string>
+    <string name="command_palette_settings">การตั้งค่าตัวเปิด</string>
+    <string name="command_palette_settings_sub">ปรับแต่ง Telos</string>
+</resources>

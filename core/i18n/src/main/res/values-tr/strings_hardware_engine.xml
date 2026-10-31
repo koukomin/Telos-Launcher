@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dinamik donanım</string>
+    <string name="hardware_master">Anında donanım etkinleştirme</string>
+    <string name="hardware_master_summary">Yapılandırılmış bir uygulama öne gelince kamera, mikrofon veya GPS verir, çıkışta geri alır</string>
+    <string name="hardware_force_mic">Telefon ve VoIP aramalarında mikrofonu aç</string>
+    <string name="hardware_force_mic_summary">Arama uygulaması için RECORD_AUDIO iznini çalma veya görüşme sırasında açar</string>
+    <string name="hardware_search">Donanım uygulamalarını ara</string>
+    <string name="hardware_cam">Anında kamera</string>
+    <string name="hardware_mic">Anında mikrofon</string>
+    <string name="hardware_gps">Anında GPS</string>
+    <string name="command_palette_title">Komut paleti</string>
+    <string name="command_palette_hint">Uygulama ve komut ara</string>
+    <string name="command_palette_flashlight">El feneri</string>
+    <string name="command_palette_flashlight_sub">Telos el fenerini aç</string>
+    <string name="command_palette_voice">Ses kaydı</string>
+    <string name="command_palette_voice_sub">Kaydı başlat</string>
+    <string name="command_palette_magnifier">Büyüteç</string>
+    <string name="command_palette_magnifier_sub">Kamera büyütecini aç</string>
+    <string name="command_palette_settings">Başlatıcı ayarları</string>
+    <string name="command_palette_settings_sub">Telos’u özelleştir</string>
+</resources>

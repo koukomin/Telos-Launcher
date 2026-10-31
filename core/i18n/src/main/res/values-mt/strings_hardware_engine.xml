@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Hardware dinamiku</string>
+    <string name="hardware_master">Attivazzjoni tal-hardware mill-ewwel</string>
+    <string name="hardware_master_summary">Jagħti kamera, mikrofonu jew GPS meta app ikkonfigurata tiġi quddiem u jirrevoka meta toħroġ</string>
+    <string name="hardware_force_mic">Mikrofonu waqt telefonati u VoIP</string>
+    <string name="hardware_force_mic_summary">Jiftaħ RECORD_AUDIO għall-app tat-telefonata waqt iċ-ċekċik jew is-sejħa</string>
+    <string name="hardware_search">Fittex apps tal-hardware</string>
+    <string name="hardware_cam">Kamera mill-ewwel</string>
+    <string name="hardware_mic">Mikrofonu mill-ewwel</string>
+    <string name="hardware_gps">GPS mill-ewwel</string>
+    <string name="command_palette_title">Paletta tal-kmandi</string>
+    <string name="command_palette_hint">Fittex apps u kmandi</string>
+    <string name="command_palette_flashlight">Torch</string>
+    <string name="command_palette_flashlight_sub">Iftaħ it-torch Telos</string>
+    <string name="command_palette_voice">Reġistratur tal-vuċi</string>
+    <string name="command_palette_voice_sub">Ibda r-reġistrazzjoni</string>
+    <string name="command_palette_magnifier">Lenti</string>
+    <string name="command_palette_magnifier_sub">Iftaħ il-lenti tal-kamera</string>
+    <string name="command_palette_settings">Settings tal-launcher</string>
+    <string name="command_palette_settings_sub">Ippersonalizza Telos</string>
+</resources>

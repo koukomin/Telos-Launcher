@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Maquinari dinàmic</string>
+    <string name="hardware_master">Activació de maquinari al moment</string>
+    <string name="hardware_master_summary">Concedeix càmera, micròfon o GPS quan una app configurada passa a primer pla i els revoca en sortir</string>
+    <string name="hardware_force_mic">Força el micròfon en trucades i VoIP</string>
+    <string name="hardware_force_mic_summary">Desbloqueja RECORD_AUDIO de l’app de trucada mentre sona o està en curs</string>
+    <string name="hardware_search">Cerca apps de maquinari</string>
+    <string name="hardware_cam">Càmera al moment</string>
+    <string name="hardware_mic">Micròfon al moment</string>
+    <string name="hardware_gps">GPS al moment</string>
+    <string name="command_palette_title">Paleta d’ordres</string>
+    <string name="command_palette_hint">Cerca apps i ordres</string>
+    <string name="command_palette_flashlight">Llanterna</string>
+    <string name="command_palette_flashlight_sub">Obre la llanterna Telos</string>
+    <string name="command_palette_voice">Enregistradora de veu</string>
+    <string name="command_palette_voice_sub">Comença a enregistrar</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Obre la lupa de la càmera</string>
+    <string name="command_palette_settings">Ajustos del llançador</string>
+    <string name="command_palette_settings_sub">Personalitza Telos</string>
+</resources>

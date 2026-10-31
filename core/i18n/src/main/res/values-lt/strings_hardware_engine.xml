@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dinaminė aparatūra</string>
+    <string name="hardware_master">Aparatūros įjungimas skrydžio metu</string>
+    <string name="hardware_master_summary">Suteikia kamerą, mikrofoną ar GPS, kai sukonfigūruota programėlė ateina į priekį, ir atšaukia išeinant</string>
+    <string name="hardware_force_mic">Mikrofonas telefono ir VoIP skambučiuose</string>
+    <string name="hardware_force_mic_summary">Atrakina RECORD_AUDIO skambučių programėlei skambant ar pokalbio metu</string>
+    <string name="hardware_search">Ieškoti aparatūros programėlių</string>
+    <string name="hardware_cam">Kamera skrydžio metu</string>
+    <string name="hardware_mic">Mikrofonas skrydžio metu</string>
+    <string name="hardware_gps">GPS skrydžio metu</string>
+    <string name="command_palette_title">Komandų paletė</string>
+    <string name="command_palette_hint">Ieškoti programėlių ir komandų</string>
+    <string name="command_palette_flashlight">Žibintuvėlis</string>
+    <string name="command_palette_flashlight_sub">Atidaryti Telos žibintuvėlį</string>
+    <string name="command_palette_voice">Diktofonas</string>
+    <string name="command_palette_voice_sub">Pradėti įrašymą</string>
+    <string name="command_palette_magnifier">Lupa</string>
+    <string name="command_palette_magnifier_sub">Atidaryti kameros lupą</string>
+    <string name="command_palette_settings">Paleidiklio nustatymai</string>
+    <string name="command_palette_settings_sub">Tinkinti Telos</string>
+</resources>

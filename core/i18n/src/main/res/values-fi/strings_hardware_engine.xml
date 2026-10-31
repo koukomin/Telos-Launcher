@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Dynaaminen laitteisto</string>
+    <string name="hardware_master">Laitteiston aktivointi lennossa</string>
+    <string name="hardware_master_summary">Myöntää kameran, mikrofonin tai GPS:n, kun määritetty sovellus tulee etualalle, ja peruu poistuttaessa</string>
+    <string name="hardware_force_mic">Mikrofoni puhelin- ja VoIP-puheluissa</string>
+    <string name="hardware_force_mic_summary">Avaa RECORD_AUDIO-oikeuden soitto-sovellukselle soittoäänen tai puhelun aikana</string>
+    <string name="hardware_search">Hae laitteistosovelluksia</string>
+    <string name="hardware_cam">Kamera lennossa</string>
+    <string name="hardware_mic">Mikrofoni lennossa</string>
+    <string name="hardware_gps">GPS lennossa</string>
+    <string name="command_palette_title">Komentopaletti</string>
+    <string name="command_palette_hint">Hae sovelluksia ja komentoja</string>
+    <string name="command_palette_flashlight">Taskulamppu</string>
+    <string name="command_palette_flashlight_sub">Avaa Telos-taskulamppu</string>
+    <string name="command_palette_voice">Ääninauhuri</string>
+    <string name="command_palette_voice_sub">Aloita tallennus</string>
+    <string name="command_palette_magnifier">Suurennuslasi</string>
+    <string name="command_palette_magnifier_sub">Avaa kameran suurennin</string>
+    <string name="command_palette_settings">Käynnistimen asetukset</string>
+    <string name="command_palette_settings_sub">Mukauta Telos</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Динамичен хардуер</string>
+    <string name="hardware_master">Включване на хардуер при нужда</string>
+    <string name="hardware_master_summary">Дава камера, микрофон или GPS, когато настроено приложение излезе на преден план, и отнема при изход</string>
+    <string name="hardware_force_mic">Микрофон при телефонни и VoIP обаждания</string>
+    <string name="hardware_force_mic_summary">Отключва RECORD_AUDIO за приложението за обаждания по време на звънене или разговор</string>
+    <string name="hardware_search">Търсене на хардуерни приложения</string>
+    <string name="hardware_cam">Камера при нужда</string>
+    <string name="hardware_mic">Микрофон при нужда</string>
+    <string name="hardware_gps">GPS при нужда</string>
+    <string name="command_palette_title">Палитра с команди</string>
+    <string name="command_palette_hint">Търсене на приложения и команди</string>
+    <string name="command_palette_flashlight">Фенерче</string>
+    <string name="command_palette_flashlight_sub">Отваряне на фенерчето на Telos</string>
+    <string name="command_palette_voice">Диктофон</string>
+    <string name="command_palette_voice_sub">Начало на запис</string>
+    <string name="command_palette_magnifier">Лупа</string>
+    <string name="command_palette_magnifier_sub">Отваряне на лупата на камерата</string>
+    <string name="command_palette_settings">Настройки на стартера</string>
+    <string name="command_palette_settings_sub">Персонализиране на Telos</string>
+</resources>

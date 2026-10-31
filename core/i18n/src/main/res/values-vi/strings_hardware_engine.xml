@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Phần cứng động</string>
+    <string name="hardware_master">Bật phần cứng tức thì</string>
+    <string name="hardware_master_summary">Cấp camera, mic hoặc GPS khi ứng dụng đã cấu hình ra tiền cảnh và thu hồi khi thoát</string>
+    <string name="hardware_force_mic">Bật mic trong cuộc gọi điện thoại và VoIP</string>
+    <string name="hardware_force_mic_summary">Mở RECORD_AUDIO cho ứng dụng gọi khi reo hoặc đang gọi</string>
+    <string name="hardware_search">Tìm ứng dụng phần cứng</string>
+    <string name="hardware_cam">Camera tức thì</string>
+    <string name="hardware_mic">Mic tức thì</string>
+    <string name="hardware_gps">GPS tức thì</string>
+    <string name="command_palette_title">Bảng lệnh</string>
+    <string name="command_palette_hint">Tìm ứng dụng và lệnh</string>
+    <string name="command_palette_flashlight">Đèn pin</string>
+    <string name="command_palette_flashlight_sub">Mở đèn pin Telos</string>
+    <string name="command_palette_voice">Máy ghi âm</string>
+    <string name="command_palette_voice_sub">Bắt đầu ghi</string>
+    <string name="command_palette_magnifier">Kính lúp</string>
+    <string name="command_palette_magnifier_sub">Mở kính lúp camera</string>
+    <string name="command_palette_settings">Cài đặt trình khởi chạy</string>
+    <string name="command_palette_settings_sub">Tùy chỉnh Telos</string>
+</resources>

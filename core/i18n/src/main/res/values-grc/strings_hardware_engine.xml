@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hardware_tab">Δυναμικὸν ὄργανον</string>
+    <string name="hardware_master">Ἐνεργοποίησις ὀργάνου παραχρῆμα</string>
+    <string name="hardware_master_summary">Δίδωσι κάμεραν, μικρόφωνον ἢ GPS ὅταν ἡ τεταγμένη ἐφαρμογὴ πρόεισιν, ἀνακαλεῖται δὲ ἐξελθούσης</string>
+    <string name="hardware_force_mic">Μικρόφωνον ἐν ταῖς κλήσεσιν</string>
+    <string name="hardware_force_mic_summary">Ἀνοίγει τὸ RECORD_AUDIO τῆς κλήσεως</string>
+    <string name="hardware_search">Ζήτησις ἐφαρμογῶν</string>
+    <string name="hardware_cam">Κάμερα παραχρῆμα</string>
+    <string name="hardware_mic">Μικρόφωνον παραχρῆμα</string>
+    <string name="hardware_gps">GPS παραχρῆμα</string>
+    <string name="command_palette_title">Πίναξ ἐντολῶν</string>
+    <string name="command_palette_hint">Ζήτησις ἐφαρμογῶν καὶ ἐντολῶν</string>
+    <string name="command_palette_flashlight">Λαμπάς</string>
+    <string name="command_palette_flashlight_sub">Ἄνοιξον λαμπάδα Telos</string>
+    <string name="command_palette_voice">Φωνογράφος</string>
+    <string name="command_palette_voice_sub">Ἄρξαι ἐγγραφήν</string>
+    <string name="command_palette_magnifier">Μεγεθυντικός</string>
+    <string name="command_palette_magnifier_sub">Ἄνοιξον μεγεθυντικόν</string>
+    <string name="command_palette_settings">Ῥυθμίσεις</string>
+    <string name="command_palette_settings_sub">Προσαρμογὴ Telos</string>
+</resources>
