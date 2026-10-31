@@ -141,6 +141,7 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
     var addPrefill by remember { mutableStateOf("") }
     var showSettings by remember { mutableStateOf(false) }
     var showInstalled by remember { mutableStateOf(false) }
+    var showTerminal by remember { mutableStateOf(false) }
     var menuOpen by remember { mutableStateOf(false) }
 
     // an address that opened the Store is handled once, not again after a rotation
@@ -202,6 +203,9 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                 } else {
                     Icon(painterResource(BaseR.drawable.download_24px), contentDescription = stringResource(I18nR.string.hc_check_for_updates))
                 }
+            }
+            IconButton(onClick = { showTerminal = true }) {
+                Icon(painterResource(BaseR.drawable.terminal_24px), contentDescription = "Terminal Logs", tint = Color(0xFF00F2FE))
             }
             Box {
                 IconButton(onClick = { menuOpen = true }) {
@@ -270,6 +274,27 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                         )
                     }
                 }
+                if (tab == 0 && categories.isNotEmpty()) {
+                    LazyRow(
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        item {
+                            FilterChip(
+                                selected = category == null,
+                                onClick = { viewModel.category.value = null },
+                                label = { Text("[ALL]", fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold) }
+                            )
+                        }
+                        items(categories) { cat ->
+                            FilterChip(
+                                selected = category == cat,
+                                onClick = { viewModel.category.value = if (category == cat) null else cat },
+                                label = { Text(cat.uppercase(), fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold) }
+                            )
+                        }
+                    }
+                }
                 if (tab == 0) {
                     AppsTab(
                         rows = rows,
@@ -333,6 +358,7 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
     }
 
     StoreUpdateConsent(viewModel)
+    CyberTerminalSheet(showTerminal, onDismiss = { showTerminal = false })
     if (showAdd) AddAppDialog(viewModel, addPrefill) { showAdd = false }
     if (showSettings) StoreSettingsDialog(viewModel) { showSettings = false }
     if (showInstalled) InstalledAppsDialog(viewModel) { showInstalled = false }

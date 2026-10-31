@@ -65,17 +65,30 @@ class TelosPackageInstaller(
     private suspend fun installOnIo(apk: File, packageName: String): InstallResult {
         if (freezeManager.hasPendingFrozenUpdate(packageName)) return InstallResult.Failed(context.getString(de.mm20.launcher2.i18n.R.string.hf_store_installing))
         
-        // Run Antivirus & Malware Security Scan on APK before installation
+        StoreTerminalLogs.log("SECURITY", "Scanning APK $packageName...")
         val securityReport = de.mm20.launcher2.data.store.security.ApkSecurityScanner.scanApk(context, apk)
-        if (securityReport != null && securityReport.riskLevel == de.mm20.launcher2.data.store.security.ApkSecurityReport.RiskLevel.HIGH) {
-            android.util.Log.w("TelosPackageInstaller", "High security risk detected for package $packageName: ${securityReport.warnings.joinToString()}")
+        if (securityReport != null) {
+            StoreTerminalLogs.log("SECURITY", "Risk Level: ${securityReport.riskLevel.name}")
         }
 
-        // Verify Certificate Signature Match against installed app before update
+        StoreTerminalLogs.log("SIGNATURE", "Verifying certificate signature match for $packageName...")
         val signatureMatch = de.mm20.launcher2.data.store.security.ApkSecurityScanner.verifyInstalledSignatureMatch(context, apk)
         if (!signatureMatch) {
-            android.util.Log.e("TelosPackageInstaller", "APK signature mismatch for package $packageName! Update blocked for security.")
+            StoreTerminalLogs.log("ERROR", "Signature mismatch for $packageName! Install blocked.")
             return failed(IllegalStateException("APK signature does not match installed application! Update blocked for security."))
+        }
+
+        // Automatic Pre-Update Rollback Backup
+        runCatching {
+            val pm = context.packageManager
+            val info = pm.getApplicationInfo(packageName, 0)
+            val installedApk = File(info.sourceDir)
+            if (installedApk.exists()) {
+                val backupDir = File(context.cacheDir, "apk-backups").apply { mkdirs() }
+                val backupFile = File(backupDir, "$packageName-backup.apk")
+                installedApk.copyTo(backupFile, overwrite = true)
+                StoreTerminalLogs.log("BACKUP", "Created pre-update rollback backup for $packageName")
+            }
         }
 
         val archive = context.packageManager.getPackageArchiveInfo(apk.path, 0)
