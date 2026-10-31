@@ -124,6 +124,12 @@ jobs:
           # Verify signature schemes
           "$APKSIGNER" verify --verbose --print-certs "$FINAL_APK"
 
+          VERSION_NAME=$(sed -n 's/^versionName=//p' version.properties)
+          VERSION_CODE=$(sed -n 's/^versionCode=//p' version.properties)
+          BADGING=$("$BUILD_TOOLS/aapt" dump badging "$FINAL_APK")
+          [[ "$BADGING" == *"versionName='$VERSION_NAME'"* ]]
+          [[ "$BADGING" == *"versionCode='$VERSION_CODE'"* ]]
+
           # Verify ABI restrictions
           ABIS=$(unzip -Z1 "$FINAL_APK" 'lib/*' | cut -d/ -f2 | sort -u | tr '\n' ' ')
           echo "Native library folders in APK: $ABIS"
@@ -166,6 +172,8 @@ jobs:
           mapfile -t JARS < <(find desktop-linux/build/compose/jars -maxdepth 1 -name '*.jar')
           test "${#JARS[@]}" -eq 1
           cp "${JARS[0]}" linux-out/telos-linux-desktop.jar
+          VERSION_NAME=$(sed -n 's/^versionName=//p' version.properties)
+          unzip -p linux-out/telos-linux-desktop.jar META-INF/MANIFEST.MF | grep -F "Implementation-Version: $VERSION_NAME"
           cp tools/start-telos-desktop.sh linux-out/
           tar -czf linux-out/telos-linux-session.tar.gz -C desktop-linux session
       - uses: actions/upload-artifact@v4
