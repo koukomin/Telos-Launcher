@@ -8,6 +8,9 @@ on:
       - 'tools/release-*'
       - 'version.properties'
       - 'app/app/src/main/baseline-prof.txt'
+      - 'app/app/build.gradle.kts'
+      - 'desktop-linux/**'
+      - 'ui-kmp/**'
   push:
     tags: ['v*']
   workflow_dispatch:
