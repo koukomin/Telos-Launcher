@@ -95,8 +95,15 @@ object TelosClipboardShield {
     }
 
     fun setAppOpsLockdown(context: Context, enabled: Boolean) {
-        prefs(context).edit().putBoolean(KEY_APPOPS, enabled).apply()
+        val app = context.applicationContext
+        prefs(app).edit().putBoolean(KEY_APPOPS, enabled).apply()
         _appOpsLockdown.value = enabled
+        val blocked = blockedSet(app)
+        scope.launch(TelosDispatchers.Disk) {
+            for (pkg in blocked) {
+                applyReadClipboardAppOp(pkg, ignore = enabled)
+            }
+        }
     }
 
     fun isBlocked(context: Context, packageName: String): Boolean {
@@ -205,7 +212,10 @@ object TelosClipboardShield {
         }.onFailure { Log.w(TAG, "clearPrimaryClip failed", it) }
     }
 
+    private val SAFE_PKG = Regex("^[a-zA-Z0-9._]+$")
+
     private suspend fun applyReadClipboardAppOp(packageName: String, ignore: Boolean) {
+        if (!SAFE_PKG.matches(packageName)) return
         val mode = if (ignore) "ignore" else "allow"
         TelosPrivilegedDaemon.exec("cmd appops set $packageName READ_CLIPBOARD $mode")
     }

@@ -88,7 +88,7 @@ Code: `services/app-management/.../stealth/` (`TelosPrivilegedDaemon`, `TelosSte
 - `TelosPrivilegedDaemonService` is not exported. Binder callers must be the Telos UID (`Binder.getCallingUid() == Process.myUid()`).
 - Commands run through the existing Telos `ShizukuCommandService` UserService (Telos package name, shell UID 2000) or Shizuku/root fallback. That UserService is the internal daemon; the `moe.shizuku.privileged.api` UI can be hidden after it is bound.
 - Before a protected app is launched from the launcher, `AppLaunchGate` cloaks `development_settings_enabled`, `adb_enabled` and `adb_wifi_enabled`. With `WRITE_SECURE_SETTINGS` this is a Java `Settings.Global.putInt`. Returning to the home screen restores the previous values unless permanent stealth is on.
-- The seeded package list covers Greek banks/gov, common fintech, Play/GMS/Intune/Authenticator, and several anti-cheat titles. Heuristics (`CATEGORY_FINANCE` and bank/wallet/pay/gov/intune/authenticator labels) add further packages. Users can toggle any installed app.
+- The seeded package list covers Greek banks/gov, common fintech, Play/GMS/Intune/Authenticator, and several anti-cheat titles. Heuristics match bank/wallet/pay/gov/intune/authenticator in the package name or label. Users can toggle any installed app from search.
 
 ## Shizuku manager and clipboard shield
 

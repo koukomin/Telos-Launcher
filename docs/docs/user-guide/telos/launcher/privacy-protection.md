@@ -217,7 +217,7 @@ The **Shizuku & Privacy Shield** hub lives in Settings → Advanced, as the **Pr
 | --- | --- |
 | Shizuku engine status | Shows binder alive state, UID, version and SELinux context, plus Telos's in-package shell session |
 | Freeze external Shizuku | `pm disable-user` / hide `moe.shizuku.privileged.api` while Telos keeps privileged commands |
-| Shizuku apps | Installed packages that request `API_V23` or declare `moe.shizuku.client.V3_SUPPORT`; grant or revoke and force-stop |
+| Shizuku apps | Installed packages that request `API_V23` or declare `moe.shizuku.client.V3_SUPPORT`; grant or revoke API access, launch, force-stop, and grant or revoke `WRITE_SECURE_SETTINGS` / `DUMP` / `PACKAGE_USAGE_STATS` |
 | Banking cloak | Same Developer Options / ADB hide list as Stealth cloak, including Greek banks, Revolut and wallets |
 | Clipboard shield | Strict or smart scrub (IBAN, cards, wallets, OTP, password-like text) into an in-memory vault, optional 60s auto-clear, `READ_CLIPBOARD` app-op ignore for blocked apps |
 

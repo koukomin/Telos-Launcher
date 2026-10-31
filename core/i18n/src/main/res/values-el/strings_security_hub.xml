@@ -11,6 +11,8 @@
     <string name="security_hub_freeze_shizuku">Πάγωμα εξωτερικής εφαρμογής Shizuku</string>
     <string name="security_hub_freeze_shizuku_summary">Απενεργοποιεί ή κρύβει το moe.shizuku.privileged.api ενώ το Telos κρατά το κέλυφος</string>
     <string name="security_hub_grant_self">Χορήγηση προνομίων Telos</string>
+    <string name="security_hub_grant_privs">Χορήγηση προνομίων</string>
+    <string name="security_hub_revoke_privs">Ανάκληση προνομίων</string>
     <string name="security_hub_restore_clip">Επαναφορά προχείρου</string>
     <string name="security_hub_tab_shizuku">Εφαρμογές Shizuku</string>
     <string name="security_hub_tab_cloak">Απόκρυψη τραπεζών</string>
@@ -33,8 +35,8 @@
     <string name="security_hub_appops_summary">cmd appops set READ_CLIPBOARD ignore για αποκλεισμένες εφαρμογές</string>
     <string name="security_hub_search_blocked">Αναζήτηση κανόνων προχείρου</string>
     <string name="security_hub_read_clipboard_rule">Αποκλεισμός READ_CLIPBOARD</string>
-    <string name="security_hub_cloak_on">Stealth cloak ενεργό</string>
-    <string name="security_hub_cloak_off">Stealth cloak</string>
+    <string name="security_hub_cloak_on">Πέπλο ενεργό</string>
+    <string name="security_hub_cloak_off">Πέπλο stealth</string>
     <string name="security_hub_clip_on">Πρόχειρο αποκλεισμένο</string>
     <string name="security_hub_clip_off">Αποκλεισμός πρόσβασης προχείρου</string>
 </resources>

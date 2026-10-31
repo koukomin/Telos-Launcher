@@ -157,11 +157,11 @@ object TelosShizukuManager {
         val verb = if (grant) "grant" else "revoke"
         var ok = true
         for (perm in PRIVILEGED_PERMS) {
-            val r = TelosShellEngine.execArgsResult(
-                arrayOf("pm", verb, packageName, perm),
-                timeoutMs = 10_000L,
-            )
-            if (!r.isSuccess) ok = false
+            val r = TelosPrivilegedDaemon.exec("pm $verb $packageName $perm")
+            if (!r.isSuccess) {
+                Log.w(TAG, "pm $verb $packageName $perm: ${r.stderr}")
+                ok = false
+            }
         }
         refreshStatus(context)
         return ok

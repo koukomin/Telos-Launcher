@@ -10,6 +10,8 @@
     <string name="security_hub_selinux">SELinux: %1$s</string>
     <string name="security_hub_freeze_shizuku">Freeze external Shizuku app</string>
     <string name="security_hub_freeze_shizuku_summary">Disable or hide moe.shizuku.privileged.api while Telos keeps the shell session</string>
+    <string name="security_hub_grant_privs">Udělit privilegovaná oprávnění</string>
+    <string name="security_hub_revoke_privs">Odebrat privilegovaná oprávnění</string>
     <string name="security_hub_grant_self">Grant Telos privileged settings</string>
     <string name="security_hub_restore_clip">Restore clipboard</string>
     <string name="security_hub_tab_shizuku">Shizuku apps</string>

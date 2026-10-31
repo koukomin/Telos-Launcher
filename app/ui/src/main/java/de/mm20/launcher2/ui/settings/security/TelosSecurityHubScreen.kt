@@ -5,6 +5,8 @@ import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -203,7 +205,12 @@ private fun ShizukuAppsTab() {
                     },
                 )
             }
-            Row(Modifier.padding(start = 68.dp, bottom = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(
+                Modifier
+                    .padding(start = 68.dp, bottom = 8.dp)
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
                 TextButton(onClick = {
                     val launch = context.packageManager.getLaunchIntentForPackage(row.packageName)
                     if (launch != null) {
@@ -214,6 +221,12 @@ private fun ShizukuAppsTab() {
                 TextButton(onClick = {
                     scope.launch { TelosShizukuManager.forceStop(row.packageName) }
                 }) { Text(stringResource(I18nR.string.security_hub_force_stop)) }
+                TextButton(onClick = {
+                    scope.launch { TelosShizukuManager.grantPrivilegedPerms(context, row.packageName, true) }
+                }) { Text(stringResource(I18nR.string.security_hub_grant_privs)) }
+                TextButton(onClick = {
+                    scope.launch { TelosShizukuManager.grantPrivilegedPerms(context, row.packageName, false) }
+                }) { Text(stringResource(I18nR.string.security_hub_revoke_privs)) }
             }
         }
     }
@@ -222,26 +235,31 @@ private fun ShizukuAppsTab() {
 @Composable
 private fun BankingCloakTab() {
     val context = LocalContext.current
+    val cloak by TelosDevOptsCloak.status.collectAsStateWithLifecycle()
     val rows by TelosStealthBlacklist.rows.collectAsStateWithLifecycle()
     val newly by TelosStealthBlacklist.newlyDetected.collectAsStateWithLifecycle()
     var query by rememberSaveable { mutableStateOf("") }
     val visible = remember(rows, query) {
         val t = query.trim()
-        if (t.isEmpty()) rows
-        else rows.filter { it.label.contains(t, true) || it.packageName.contains(t, true) }
+        val base = if (t.isEmpty()) {
+            rows.filter { it.protected || it.seeded || it.heuristic }
+        } else {
+            rows.filter { it.label.contains(t, true) || it.packageName.contains(t, true) }
+        }
+        base
     }
     Column(Modifier.fillMaxWidth().padding(bottom = 16.dp)) {
         SwitchPreference(
             title = stringResource(I18nR.string.stealth_cloak_permanent),
             summary = stringResource(I18nR.string.stealth_cloak_permanent_summary),
             icon = BaseR.drawable.lock_24px,
-            value = TelosDevOptsCloak.status.value.permanent,
+            value = cloak.permanent,
             onValueChanged = { TelosDevOptsCloak.setPermanent(context, it) },
         )
         SwitchPreference(
             title = stringResource(I18nR.string.stealth_cloak_hide_shizuku_auto),
             summary = stringResource(I18nR.string.stealth_cloak_hide_shizuku_auto_summary),
-            value = TelosDevOptsCloak.status.value.hideShizuku,
+            value = cloak.hideShizuku,
             onValueChanged = { TelosDevOptsCloak.setHideShizukuOnCloak(context, it) },
         )
         if (newly.isNotEmpty()) {

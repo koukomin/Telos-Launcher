@@ -10,6 +10,8 @@
     <string name="security_hub_selinux">SELinux: %1$s</string>
     <string name="security_hub_freeze_shizuku">Externe Shizuku-App einfrieren</string>
     <string name="security_hub_freeze_shizuku_summary">Deaktiviert oder versteckt moe.shizuku.privileged.api, während Telos die Shell behält</string>
+    <string name="security_hub_grant_privs">Privilegierte Rechte erteilen</string>
+    <string name="security_hub_revoke_privs">Privilegierte Rechte entziehen</string>
     <string name="security_hub_grant_self">Telos privilegierte Rechte erteilen</string>
     <string name="security_hub_restore_clip">Zwischenablage wiederherstellen</string>
     <string name="security_hub_tab_shizuku">Shizuku-Apps</string>
