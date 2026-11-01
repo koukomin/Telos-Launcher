@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.plugin.compose) apply false
     alias(libs.plugins.jetbrains.compose) apply false
+    alias(libs.plugins.hidden.refine) apply false
     alias(libs.plugins.dokka) apply true
 }
 

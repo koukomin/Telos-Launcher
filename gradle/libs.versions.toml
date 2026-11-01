@@ -69,6 +69,7 @@ espressoCore = "3.7.0"
 osmOpeningHours = "0.4.0"
 
 shizuku = "13.1.5"
+hidden-refine = "4.4.0"
 dhizuku = "2.7.0"
 
 sqlcipher = "4.20.0"
@@ -228,3 +229,4 @@ dokka = { id = "org.jetbrains.dokka", version = "2.2.0" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 jetbrains-compose = { id = "org.jetbrains.compose", version = "1.12.2" }
+hidden-refine = { id = "dev.rikka.tools.refine", version.ref = "hidden-refine" }

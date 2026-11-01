@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.hidden.refine)
 }
 
 android {
@@ -57,5 +58,7 @@ dependencies {
     implementation("dev.rikka.rikkax.parcelablelist:parcelablelist:2.0.1")
     implementation("dev.rikka.hidden:compat:4.4.0")
     compileOnly("dev.rikka.hidden:stub:4.4.0")
+    compileOnly("dev.rikka.tools.refine:annotation:${libs.versions.hidden.refine.get()}")
+    annotationProcessor("dev.rikka.tools.refine:annotation-processor:${libs.versions.hidden.refine.get()}")
     compileOnly(libs.androidx.core)
 }

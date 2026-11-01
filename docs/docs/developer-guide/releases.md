@@ -52,6 +52,8 @@ compilation disabled. Restoring compiled Gradle outputs would leave CodeQL
 without compiler activity and fail analysis with "No source code was seen
 during the build". The Actions language uses `build-mode: none` so GitHub can
 build overlay databases on pull requests (`manual` cannot overlay).
+`:libs:shizuku-next` applies HiddenApiRefinePlugin so `ContextHidden` /
+`UserHandleHidden` / `ActivityManagerHidden` compile against the public SDK.
 
 ## GitHub Actions runtime maintenance
 

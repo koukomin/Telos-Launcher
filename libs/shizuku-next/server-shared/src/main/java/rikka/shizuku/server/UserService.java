@@ -6,7 +6,6 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.ContextHidden;
 import android.ddm.DdmHandleAppName;
-import android.os.Build;
 import android.os.IBinder;
 import android.os.UserHandle;
 import android.os.UserHandleHidden;
@@ -61,9 +60,8 @@ public class UserService {
 
             DdmHandleAppName.setAppName(name != null ? name : pkg + ":user_service", userId);
 
-            UserHandle userHandle = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-                    ? UserHandleHidden.of(userId)
-                    : new UserHandleHidden(userId);
+            // minSdk 26: UserHandle.of exists. Refine maps UserHandleHidden onto UserHandle.
+            UserHandle userHandle = UserHandleHidden.of(userId);
             Context context = ((ContextHidden) systemContext).createPackageContextAsUser(
                     pkg, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY, userHandle);
 
