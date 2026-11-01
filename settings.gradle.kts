@@ -19,15 +19,12 @@ dependencyResolutionManagement {
 }
 
 // Dependabot maps plugin-classpath transitives to this file (guava 33.4.0-jre,
-// jackson 2.15.3, freemarker 2.3.32, bcprov 1.80.2, jsoup 1.16.1, jose4j 0.9.5,
-// jdom2 2.0.6, commons-lang3 3.16.0, httpclient 4.5.6). Force patched versions
-// on every project buildscript; Android app graphs keep guava -android in root
-// subprojects resolutionStrategy.
+// freemarker 2.3.32, bcprov 1.80.2, jsoup 1.16.1, jose4j 0.9.5, jdom2 2.0.6,
+// commons-lang3 3.16.0, httpclient 4.5.6). Do not force Jackson here: Dokka's
+// BOM already selects 2.22.x and forcing jackson-annotations:2.22.4 fails
+// resolution. Android app graphs keep guava -android in root subprojects.
 val telosPluginCvePins = listOf(
     "com.google.guava:guava:33.7.2-jre",
-    "com.fasterxml.jackson.core:jackson-core:2.22.4",
-    "com.fasterxml.jackson.core:jackson-databind:2.22.4",
-    "com.fasterxml.jackson.core:jackson-annotations:2.22.4",
     "org.jsoup:jsoup:1.23.2",
     "org.freemarker:freemarker:2.3.35",
     "org.bouncycastle:bcprov-jdk18on:1.86",
@@ -47,9 +44,6 @@ gradle.beforeProject {
                 when {
                     requested.group == "com.google.guava" && requested.name == "guava" ->
                         useVersion("33.7.2-jre")
-                    requested.group.startsWith("com.fasterxml.jackson") &&
-                        requested.name.startsWith("jackson-") ->
-                        useVersion("2.22.4")
                     requested.group == "org.jsoup" && requested.name == "jsoup" ->
                         useVersion("1.23.2")
                     requested.group == "org.freemarker" && requested.name == "freemarker" ->
