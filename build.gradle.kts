@@ -17,11 +17,11 @@ subprojects {
         resolutionStrategy.eachDependency {
             when {
                 requested.group == "com.fasterxml.jackson.core" &&
-                    requested.name in setOf("jackson-core", "jackson-databind", "jackson-annotations") ->
+                    requested.name in setOf("jackson-core", "jackson-databind") ->
                     useVersion(libs.versions.jacksonCore.get())
-                requested.group.startsWith("com.fasterxml.jackson") &&
-                    requested.name.startsWith("jackson-") ->
-                    useVersion(libs.versions.jacksonCore.get())
+                requested.group == "com.fasterxml.jackson.dataformat" &&
+                    requested.name == "jackson-dataformat-yaml" ->
+                    useVersion(libs.versions.jacksonDataformatYaml.get())
                 requested.group == "org.jsoup" && requested.name == "jsoup" ->
                     useVersion(libs.versions.jsoup.get())
                 requested.group == "org.bitbucket.b_c" && requested.name == "jose4j" ->
