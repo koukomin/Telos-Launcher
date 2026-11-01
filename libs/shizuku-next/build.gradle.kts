@@ -18,7 +18,7 @@ android {
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
     }
     buildFeatures {
-        aidl = true
+        aidl = false
         buildConfig = true
     }
     compileOptions {
@@ -44,7 +44,6 @@ android {
             )
             java.setSrcDirs(roots)
             kotlin.setSrcDirs(roots)
-            aidl.setSrcDirs(listOf("aidl/src/main/aidl"))
         }
     }
 }
@@ -62,4 +61,5 @@ dependencies {
     // Client types (BinderContainer, ShizukuApiConstants) come from Maven api/provider.
     compileOnly(libs.shizuku.api)
     compileOnly(libs.shizuku.provider)
+    compileOnly(libs.shizuku.aidl)
 }

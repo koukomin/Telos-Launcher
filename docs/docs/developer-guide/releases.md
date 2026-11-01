@@ -55,9 +55,10 @@ build overlay databases on pull requests (`manual` cannot overlay).
 `:libs:shizuku-next` applies HiddenApiRefinePlugin for `ActivityManagerHidden`
 and similar stub types. `UserService` calls `UserHandle.of` and
 `Context.createPackageContextAsUser` through reflection so javac never casts
-`Context` to `ContextHidden` against `android.jar`. Maven `dev.rikka.shizuku:api` / `provider` supply `ShizukuApiConstants` and
-`BinderContainer`. Those vendored sources are not compiled into
-`:libs:shizuku-next`, so R8 does not see the classes twice.
+`Context` to `ContextHidden` against `android.jar`. Maven `dev.rikka.shizuku:api`, `provider`, and `aidl` supply client types
+(`ShizukuApiConstants`, `BinderContainer`, `IRemoteProcess`). Those vendored
+sources are not compiled into `:libs:shizuku-next`, so R8 does not see the
+classes twice.
 
 ## GitHub Actions runtime maintenance
 
