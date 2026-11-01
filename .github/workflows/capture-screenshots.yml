@@ -4,6 +4,7 @@ on:
     paths:
       - '.github/workflows/capture-screenshots.yml'
       - '.github/scripts/capture_screenshots.py'
+      - 'docs/scripts/capture_development_screenshots.py'
   workflow_dispatch:
 permissions:
   contents: read

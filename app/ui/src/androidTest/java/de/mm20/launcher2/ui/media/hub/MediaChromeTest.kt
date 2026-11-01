@@ -39,7 +39,13 @@ class MediaChromeTest {
         var wide by mutableStateOf(false)
         compose.setContent {
             val density = LocalDensity.current
-            CompositionLocalProvider(LocalDensity provides Density(density.density, if (large) 2f else 1f)) {
+            val stack = androidx.navigation3.runtime.rememberNavBackStack(
+                de.mm20.launcher2.ui.settings.main.MainRoute
+            )
+            CompositionLocalProvider(
+                LocalDensity provides Density(density.density, if (large) 2f else 1f),
+                de.mm20.launcher2.ui.locals.LocalBackStack provides stack,
+            ) {
                 MaterialTheme(colorScheme = if (light) lightColorScheme() else darkColorScheme()) {
                     Surface(Modifier.requiredSize(if (wide) 720.dp else 320.dp, if (wide) 420.dp else 800.dp).testTag("media-chrome")) {
                         Column {
