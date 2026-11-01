@@ -184,11 +184,14 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
             .setContentIntent(openApp())
         if (uri != null && uri.scheme == "content" && task.torrent == null) {
             val mime = task.mimeType ?: "*/*"
-            val view = Intent(Intent.ACTION_VIEW).setDataAndType(uri, mime).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
-            val send = Intent.createChooser(
-                Intent(Intent.ACTION_SEND).setType(mime).putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
-                null,
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            val view = Intent(context, DownloadNotificationActionActivity::class.java)
+                .setAction(DownloadNotificationActionActivity.ACTION_OPEN)
+                .setDataAndType(uri, mime)
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+            val send = Intent(context, DownloadNotificationActionActivity::class.java)
+                .setAction(DownloadNotificationActionActivity.ACTION_SHARE)
+                .setDataAndType(uri, mime)
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
             b.addAction(0, context.getString(I18nR.string.dl_open), PendingIntent.getActivity(context, notificationId(task.id), view, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
             b.addAction(0, context.getString(I18nR.string.dl_share), PendingIntent.getActivity(context, notificationId(task.id) + 1, send, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT))
         }

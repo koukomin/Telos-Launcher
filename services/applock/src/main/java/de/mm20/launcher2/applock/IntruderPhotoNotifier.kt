@@ -29,7 +29,10 @@ class IntruderPhotoNotifier(private val context: Context) {
             context,
             NOTIFICATION_ID,
             Intent().apply {
-                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                component = android.content.ComponentName(
+                    context.packageName,
+                    SettingsDeepLinkContract.ACTIVITY_CLASS_NAME,
+                )
                 putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_INTRUDER_PHOTOS)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             },

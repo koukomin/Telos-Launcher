@@ -112,7 +112,7 @@ private fun constantTimeEquals(a: String, b: String): Boolean {
 
 private fun authenticatorsFor(method: SettingsLockMethod): Int = when (method) {
     SettingsLockMethod.DeviceCredential ->
-        Authenticators.BIOMETRIC_WEAK or Authenticators.DEVICE_CREDENTIAL
+        Authenticators.BIOMETRIC_STRONG or Authenticators.DEVICE_CREDENTIAL
 
     SettingsLockMethod.BiometricsOnly -> Authenticators.BIOMETRIC_STRONG
 }
@@ -151,7 +151,7 @@ fun authenticateSettings(
         ContextCompat.getMainExecutor(activity),
         object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                onResult(true)
+                onResult(de.mm20.launcher2.comms.BiometricCryptoAuth.confirmed(result))
             }
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
@@ -179,8 +179,13 @@ fun authenticateSettings(
         }
         .build()
 
+    val cipher = de.mm20.launcher2.comms.BiometricCryptoAuth.encryptCipher()
+    if (cipher == null) {
+        onResult(false)
+        return
+    }
     try {
-        prompt.authenticate(promptInfo)
+        prompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
     } catch (e: Exception) {
         onResult(false)
     }

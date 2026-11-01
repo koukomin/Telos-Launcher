@@ -7,7 +7,6 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 
@@ -16,8 +15,19 @@ class CallbackReminderReceiver : BroadcastReceiver() {
         val number = intent.getStringExtra(CallbackReminder.EXTRA_NUMBER).orEmpty()
         if (number.isBlank()) return
         val name = intent.getStringExtra(CallbackReminder.EXTRA_NAME)?.takeIf { it.isNotBlank() } ?: number
-        val dial = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", number, null))
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val dial = Intent().apply {
+            component = android.content.ComponentName(
+                context.packageName,
+                de.mm20.launcher2.applock.SettingsDeepLinkContract.ACTIVITY_CLASS_NAME,
+            )
+            putExtra(
+                de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_ROUTE,
+                de.mm20.launcher2.applock.SettingsDeepLinkContract.ROUTE_COMMS,
+            )
+            putExtra(de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_COMMS_TAB, "dialpad")
+            putExtra(de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_DIAL_NUMBER, number)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
         val pending = PendingIntent.getActivity(
             context,
             number.hashCode(),

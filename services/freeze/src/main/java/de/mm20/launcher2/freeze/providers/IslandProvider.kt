@@ -118,11 +118,11 @@ internal class IslandProvider(private val context: Context) {
         val action = if (suspended) ACTION_FREEZE else ACTION_UNFREEZE
         val intent = Intent(action).apply {
             data = Uri.parse("packages:" + packageNames.joinToString(","))
-            `package` = ISLAND_PACKAGE
+            setPackage(ISLAND_PACKAGE)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        // If Island doesn't handle the action (wrong/old version), don't claim success.
-        if (intent.resolveActivity(context.packageManager) == null) return null
+        val component = intent.resolveActivity(context.packageManager) ?: return null
+        intent.component = component
         return intent
     }
 

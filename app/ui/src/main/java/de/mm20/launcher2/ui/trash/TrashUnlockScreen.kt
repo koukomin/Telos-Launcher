@@ -46,7 +46,7 @@ fun TrashUnlockScreen() {
             androidx.biometric.BiometricPrompt(host, androidx.core.content.ContextCompat.getMainExecutor(host),
                 object : androidx.biometric.BiometricPrompt.AuthenticationCallback() {
                     override fun onAuthenticationSucceeded(result: androidx.biometric.BiometricPrompt.AuthenticationResult) {
-                        state.unlocked = true
+                        state.unlocked = de.mm20.launcher2.comms.BiometricCryptoAuth.confirmed(result)
                     }
                     override fun onAuthenticationError(code: Int, message: CharSequence) {
                         if (!host.isChangingConfigurations) { state.started = false; backStack.removeLastOrNull() }
@@ -61,10 +61,20 @@ fun TrashUnlockScreen() {
             if (android.os.Build.VERSION.SDK_INT >= 30) setAllowedAuthenticators(
                 androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG or
                     androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL)
-            else { @Suppress("DEPRECATION") setDeviceCredentialAllowed(true) }
+            else {
+                setAllowedAuthenticators(androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG)
+                setNegativeButtonText(activity.getString(android.R.string.cancel))
+            }
         }.build()
+        val cipher = de.mm20.launcher2.comms.BiometricCryptoAuth.encryptCipher()
+        if (cipher == null) {
+            state.started = false
+            backStack.removeLastOrNull()
+            return@LaunchedEffect
+        }
         state.started = true
-        runCatching { prompt.authenticate(info) }.onFailure { state.started = false; backStack.removeLastOrNull() }
+        runCatching { prompt.authenticate(info, androidx.biometric.BiometricPrompt.CryptoObject(cipher)) }
+            .onFailure { state.started = false; backStack.removeLastOrNull() }
     }
     if (!unlocked) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

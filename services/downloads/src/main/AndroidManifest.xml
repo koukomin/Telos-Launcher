@@ -12,5 +12,11 @@
             android:name="de.mm20.launcher2.downloads.DownloadService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
+        <activity
+            android:name="de.mm20.launcher2.downloads.DownloadNotificationActionActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.NoDisplay" />
     </application>
 </manifest>

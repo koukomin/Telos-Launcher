@@ -27,7 +27,7 @@ class AuthManager : KoinComponent {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    if (cont.isActive) cont.resume(true)
+                    if (cont.isActive) cont.resume(BiometricCryptoAuth.confirmed(result))
                 }
 
                 override fun onAuthenticationFailed() {
@@ -42,15 +42,18 @@ class AuthManager : KoinComponent {
                 BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
             )
         } else {
-            // BIOMETRIC_STRONG or DEVICE_CREDENTIAL is not supported on API 28-29: the (deprecated)
-            // device credential flag is the supported way to allow PIN/pattern/password there
-            @Suppress("DEPRECATION")
-            builder.setDeviceCredentialAllowed(true)
+            builder.setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+            builder.setNegativeButtonText(activity.getString(android.R.string.cancel))
         }
         val promptInfo = builder.build()
 
+        val cipher = BiometricCryptoAuth.encryptCipher()
+        if (cipher == null) {
+            if (cont.isActive) cont.resume(false)
+            return@suspendCancellableCoroutine
+        }
         try {
-            biometricPrompt.authenticate(promptInfo)
+            biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
         } catch (e: Exception) {
             if (cont.isActive) cont.resume(false)
         }

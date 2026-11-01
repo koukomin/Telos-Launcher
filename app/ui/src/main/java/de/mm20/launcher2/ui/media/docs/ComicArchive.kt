@@ -104,7 +104,7 @@ internal object ComicArchive {
         ZipFile(file).use { z ->
             val entries = z.entries().toList().filter { e -> !e.isDirectory && isImage(e.name) }
             for (e in entries) {
-                val dest = File(outDir, File(e.name).name)
+                val dest = safeDest(outDir, e.name) ?: continue
                 z.getInputStream(e).use { input -> dest.outputStream().use { input.copyTo(it) } }
                 out += dest
             }
@@ -119,7 +119,7 @@ internal object ComicArchive {
             while (true) {
                 val e = session.next() ?: break
                 if (e.isDir || e.isLink || e.encrypted || !isImage(e.path)) continue
-                val dest = File(outDir, File(e.path).name)
+                val dest = safeDest(outDir, e.path) ?: continue
                 session.copyCurrentTo(dest)
                 out += dest
             }
@@ -133,7 +133,7 @@ internal object ComicArchive {
             while (true) {
                 val e = tar.nextEntry ?: break
                 if (e.isDirectory || !isImage(e.name)) continue
-                val dest = File(outDir, File(e.name).name)
+                val dest = safeDest(outDir, e.name) ?: continue
                 dest.outputStream().use { tar.copyTo(it) }
                 out += dest
             }
@@ -147,7 +147,7 @@ internal object ComicArchive {
             while (true) {
                 val e = z.nextEntry ?: break
                 if (e.isDirectory || !isImage(e.name)) continue
-                val dest = File(outDir, File(e.name).name)
+                val dest = safeDest(outDir, e.name) ?: continue
                 dest.outputStream().use { z.getInputStream(e).copyTo(it) }
                 out += dest
             }
@@ -157,4 +157,16 @@ internal object ComicArchive {
 
     private fun isImage(path: String) =
         path.substringAfterLast('.', "").lowercase(Locale.ROOT) in images && !path.startsWith(".") && !path.contains("/.")
+
+    /** Basename only, then canonical-path check so Zip Slip (`../`) cannot leave [outDir]. */
+    private fun safeDest(outDir: File, entryName: String): File? {
+        val base = entryName.substringAfterLast('/').substringAfterLast('\\')
+        if (base.isEmpty() || base == "." || base == ".." || base.contains("..")) return null
+        val dest = File(outDir, base)
+        val root = outDir.canonicalFile
+        val resolved = dest.canonicalFile
+        val prefix = root.path + File.separator
+        if (resolved != root && !resolved.path.startsWith(prefix)) return null
+        return dest
+    }
 }
