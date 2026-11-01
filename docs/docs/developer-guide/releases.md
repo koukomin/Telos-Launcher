@@ -42,8 +42,10 @@ exactly the selected ABI. Packaging exclusions follow `telos.abi`, including
 `armeabi-v7a`; a Java-only APK cannot pass the release gate.
 
 APK size is measured by `measure-apk-size.yml` on packaging-related PRs (debug
-signed, not a merge gate). The old `apk-size-guard.yml` job built a full
-release on every PR without signing and failed for unrelated Gradle errors.
+signed, not a merge gate). Compile-only gates that ran `compileDefaultDebugSources`
+on every push (`apk-size-guard`, Visual Regression Guard, Edge-to-Edge Insets
+Audit, Shizuku IPC compile) were removed; they failed for unrelated Gradle
+errors and did not test size, layout, insets or Shizuku.
 
 CodeQL uses a manual, uncached compilation with incremental compilation disabled.
 Restoring compiled Gradle outputs would leave CodeQL without compiler activity
