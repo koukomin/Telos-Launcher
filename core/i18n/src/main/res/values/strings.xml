@@ -666,6 +666,7 @@
     <string name="preference_freeze_advanced_features">Advanced Features</string>
     <string name="preference_freeze_advanced_features_summary">Unlocks Freeze, Force Stop and Clear Cache actions in app context menus (Requires Shizuku or Root)</string>
     <string name="preference_freeze_hide_from_launcher">Hide frozen apps</string>
+    <string name="preference_freeze_show_in_launcher">Show frozen apps</string>
     <string name="preference_freeze_hide_from_launcher_summary">Frozen apps are removed from the home screen, app drawer and search entirely, instead of shown grayed out. They stay fully manageable here in Freeze Manager.</string>
     <string name="menu_freeze">Freeze</string>
     <string name="menu_unfreeze">Unfreeze</string>
@@ -677,6 +678,23 @@
     <string name="preference_freeze_dashboard">Dashboard</string>
     <string name="preference_freeze_dashboard_summary">Currently frozen apps and freeze history</string>
     <string name="preference_freeze_backend">Freeze backend</string>
+    <string name="freeze_download_external_apps" translatable="false">Get External Freeze Apps from Store</string>
+    <string name="freeze_download_external_apps_summary" translatable="false">Download standalone Shizuku, Dhizuku or Island from Telos Store</string>
+    <string name="dhizuku_hub_title" translatable="false">Dhizuku Device Policy Hub</string>
+    <string name="dhizuku_status" translatable="false">Dhizuku Status</string>
+    <string name="dhizuku_not_running" translatable="false">Dhizuku is not running or selected. Install and set up Dhizuku from Store to grant Device Owner delegation.</string>
+    <string name="dhizuku_get_from_store" translatable="false">Get Dhizuku from Telos Store</string>
+    <string name="dhizuku_download_summary" translatable="false">Download and install the official Dhizuku app</string>
+    <string name="dhizuku_active_title" translatable="false">Dhizuku Device Owner Active</string>
+    <string name="dhizuku_capabilities" translatable="false">Device Owner Delegated Capabilities</string>
+    <string name="dhizuku_suspension_hiding" translatable="false">App Suspension &amp; Hiding</string>
+    <string name="dhizuku_suspension_summary" translatable="false">Suspend and hide applications via Dhizuku DevicePolicyManager</string>
+    <string name="store_terminal_ready" translatable="false">&gt; System ready. Awaiting Store events...</string>
+    <string name="store_security_audit_title" translatable="false">Security &amp; Architecture Audit</string>
+    <string name="store_similar_apps_title" translatable="false">Recommended Similar Apps</string>
+    <string name="net_waveform_title" translatable="false">NETWORK TRAFFIC WAVEFORM</string>
+    <string name="weather_radar_title" translatable="false">[ATMOSPHERIC_RADAR]</string>
+    <string name="weather_radar_sweep" translatable="false">[SWEEP: LIVE]</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
     <string name="freeze_backend_amarok">Amarok</string>

@@ -73,6 +73,7 @@ private fun RadioDashboardContent(
     val sleepEndsAt by playerViewModel.sleepEndsAt.collectAsStateWithLifecycle()
     val recordingState by playerViewModel.recordingState.collectAsStateWithLifecycle()
     val isRecording = recordingState is de.mm20.launcher2.comms.radio.RadioRecorder.State.Recording
+    val isRadioPlaying by playerViewModel.isPlaying.collectAsStateWithLifecycle()
 
     var selectedTabIndex by de.mm20.launcher2.ui.component.rememberPersistentUiState("radio.tab", 0)
     var searchExpanded by rememberSaveable { mutableStateOf(false) }
@@ -217,6 +218,7 @@ private fun RadioDashboardContent(
     }) {
     Column(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.weight(1f).fillMaxWidth()) {
+        de.mm20.launcher2.ui.media.AudioSpectrumVisualizer(isPlaying = isRadioPlaying, modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp))
 
 
         when (if (searchExpanded) 1 else selectedTabIndex) {

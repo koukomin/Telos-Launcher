@@ -29,8 +29,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
@@ -138,6 +141,7 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
     var addPrefill by remember { mutableStateOf("") }
     var showSettings by remember { mutableStateOf(false) }
     var showInstalled by remember { mutableStateOf(false) }
+    var showTerminal by remember { mutableStateOf(false) }
     var menuOpen by remember { mutableStateOf(false) }
 
     // an address that opened the Store is handled once, not again after a rotation
@@ -199,6 +203,9 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                 } else {
                     Icon(painterResource(BaseR.drawable.download_24px), contentDescription = stringResource(I18nR.string.hc_check_for_updates))
                 }
+            }
+            IconButton(onClick = { showTerminal = true }) {
+                Icon(painterResource(BaseR.drawable.terminal_24px), contentDescription = "Terminal Logs", tint = Color(0xFF00F2FE))
             }
             Box {
                 IconButton(onClick = { menuOpen = true }) {
@@ -267,6 +274,27 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
                         )
                     }
                 }
+                if (tab == 0 && categories.isNotEmpty()) {
+                    LazyRow(
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        item {
+                            FilterChip(
+                                selected = category == null,
+                                onClick = { viewModel.category.value = null },
+                                label = { Text("[ALL]", fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold) }
+                            )
+                        }
+                        items(categories) { cat ->
+                            FilterChip(
+                                selected = category == cat,
+                                onClick = { viewModel.category.value = if (category == cat) null else cat },
+                                label = { Text(cat.uppercase(), fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold) }
+                            )
+                        }
+                    }
+                }
                 if (tab == 0) {
                     AppsTab(
                         rows = rows,
@@ -330,6 +358,7 @@ fun StoreDashboardScreen(initialLink: String = "", initialQuery: String = "") {
     }
 
     StoreUpdateConsent(viewModel)
+    CyberTerminalSheet(showTerminal, onDismiss = { showTerminal = false })
     if (showAdd) AddAppDialog(viewModel, addPrefill) { showAdd = false }
     if (showSettings) StoreSettingsDialog(viewModel) { showSettings = false }
     if (showInstalled) InstalledAppsDialog(viewModel) { showInstalled = false }
@@ -742,11 +771,20 @@ internal fun StoreItemRow(
     val context = LocalContext.current
     val scope = androidx.compose.runtime.rememberCoroutineScope()
     var menu by remember { mutableStateOf(false) }
+    val cyan = Color(0xFF00F2FE)
+    val pink = Color(0xFFFF007F)
+    val darkCard = Color(0xFF0D0E15)
+
     Box {
     Surface(
         shape = RoundedCornerShape(20.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        color = darkCard.copy(alpha = 0.85f),
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)
+            .border(
+                1.dp,
+                if (row.updateAvailable) pink.copy(alpha = 0.6f) else cyan.copy(alpha = 0.3f),
+                RoundedCornerShape(20.dp)
+            )
             .combinedClickable(onClick = onClick, onLongClick = { menu = true }),
     ) {
         Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -754,14 +792,32 @@ internal fun StoreItemRow(
                 AppIcon(item.packageName, item.displayName, 48, item.installedVersionCode, item.source)
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(item.displayName, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                    Text(item.versionLine(row.updateAvailable), style = MaterialTheme.typography.bodySmall,
-                        color = if (row.updateAvailable) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(item.displayName, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                        if (row.updateAvailable) {
+                            Spacer(Modifier.width(8.dp))
+                            Text(
+                                "[UPDATE]",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = pink,
+                                fontWeight = FontWeight.Black,
+                                fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
+                            )
+                        }
+                    }
+                    Text(
+                        item.versionLine(row.updateAvailable),
+                        style = MaterialTheme.typography.bodySmall,
+                        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+                        color = if (row.updateAvailable) pink else cyan
+                    )
                     val sizeText = item.latestRelease?.size?.let { formatBytes(it) }
                     Text(listOfNotNull(item.source.summary(), sizeText, row.options.category.ifBlank { null },
                         if (row.options.trackOnly) stringResource(I18nR.string.hf_store_track_only) else null,
                         if (row.options.pinned) stringResource(I18nR.string.au_store_pinned) else null).joinToString(" · "),
-                        style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        style = MaterialTheme.typography.labelMedium,
+                        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+                        color = Color.White.copy(alpha = 0.7f))
                 }
             }
             StoreTransferProgress(item.id)

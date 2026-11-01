@@ -2,7 +2,10 @@ package de.mm20.launcher2.ui.weather
 import de.mm20.launcher2.base.R as BaseR
 
 import android.content.Context
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -16,11 +19,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -119,6 +125,9 @@ fun WeatherScreen() {
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                // Cyber Radar HUD Banner
+                CyberWeatherRadarHUD()
+
                 // Today Weather Hero Card
                 TodayHeroCard(currentForecast, unitSystem)
 
@@ -450,5 +459,78 @@ private fun formatTemp(celsius: Double, system: MeasurementSystem): String {
         "${((celsius * 9 / 5) + 32).roundToInt()}°F"
     } else {
         "${celsius.roundToInt()}°C"
+    }
+}
+
+@Composable
+private fun CyberWeatherRadarHUD(modifier: Modifier = Modifier) {
+    val cyan = Color(0xFF00F2FE)
+    val darkBg = Color(0xFF0D0E15)
+
+    val transition = rememberInfiniteTransition(label = "radar")
+    val angle by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 2000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "angle"
+    )
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(20.dp))
+            .background(darkBg.copy(alpha = 0.85f))
+            .border(1.dp, cyan.copy(alpha = 0.4f), RoundedCornerShape(20.dp))
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                "[ATMOSPHERIC_RADAR]",
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace,
+                color = cyan,
+                letterSpacing = 1.5.sp
+            )
+            Text(
+                "[SWEEP: LIVE]",
+                style = MaterialTheme.typography.labelSmall,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace,
+                color = Color(0xFFFF007F)
+            )
+        }
+
+        Spacer(Modifier.height(12.dp))
+
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.size(120.dp)) {
+            Canvas(modifier = Modifier.size(120.dp)) {
+                val center = Offset(size.width / 2, size.height / 2)
+                val radius = size.minDimension / 2 - 4.dp.toPx()
+
+                // Radar rings
+                drawCircle(color = cyan.copy(alpha = 0.15f), radius = radius, center = center, style = Stroke(width = 1.5.dp.toPx()))
+                drawCircle(color = cyan.copy(alpha = 0.15f), radius = radius * 0.66f, center = center, style = Stroke(width = 1.dp.toPx()))
+                drawCircle(color = cyan.copy(alpha = 0.15f), radius = radius * 0.33f, center = center, style = Stroke(width = 1.dp.toPx()))
+
+                // Radar crosshairs
+                drawLine(color = cyan.copy(alpha = 0.2f), start = Offset(center.x, 0f), end = Offset(center.x, size.height), strokeWidth = 1.dp.toPx())
+                drawLine(color = cyan.copy(alpha = 0.2f), start = Offset(0f, center.y), end = Offset(size.width, center.y), strokeWidth = 1.dp.toPx())
+
+                // Radar sweep line
+                val rad = Math.toRadians((angle - 90).toDouble())
+                val endX = center.x + radius * Math.cos(rad).toFloat()
+                val endY = center.y + radius * Math.sin(rad).toFloat()
+                drawLine(color = cyan, start = center, end = Offset(endX, endY), strokeWidth = 2.dp.toPx())
+            }
+        }
     }
 }

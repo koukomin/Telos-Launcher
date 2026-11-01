@@ -174,7 +174,7 @@ fun MagnifierScreen() {
                     )
                     surfaceTextureListener = object : TextureView.SurfaceTextureListener {
                         override fun onSurfaceTextureAvailable(surfaceTexture: SurfaceTexture, width: Int, height: Int) {
-                            if (!cameraActive) return
+                            if (ContextCompat.checkSelfPermission(ctx, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) return
                             val manager = ctx.getSystemService(Context.CAMERA_SERVICE) as CameraManager
                             val cameraId = manager.cameraIdList.firstOrNull { id ->
                                 manager.getCameraCharacteristics(id).get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_BACK

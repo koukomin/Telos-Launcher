@@ -45,6 +45,8 @@ class FreezeManager internal constructor(
         "com.android.server.telecom",
         "com.google.android.gms",
         "com.android.vending",
+        "moe.shizuku.privileged.api",
+        "io.github.muntashirakon.dhizuku",
         context.packageName
     )
     // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===

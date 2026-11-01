@@ -39,8 +39,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.WidgetScreenTarget
+import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.launcher.scaffold.components.currentHomeScreenWidgetScopeId
@@ -50,6 +52,7 @@ import de.mm20.launcher2.ui.launcher.search.palette.CommandPaletteDialog
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
+import org.koin.compose.koinInject
 import java.util.UUID
 
 @Composable
@@ -59,6 +62,8 @@ fun RowScope.SearchBarMenu(
 ) {
     val context = LocalContext.current
     val density = LocalDensity.current
+    val freezeSettings: FreezeSettings = koinInject()
+    val hideFrozenInDrawer by freezeSettings.hideFromLauncher.collectAsStateWithLifecycle(false)
     var showOverflowMenu by remember { mutableStateOf(false) }
     var showCommandPalette by remember { mutableStateOf(false) }
     val rightIcon = AnimatedImageVector.animatedVectorResource(BaseR.drawable.anim_ic_menu_clear)
@@ -157,6 +162,27 @@ fun RowScope.SearchBarMenu(
                     },
                     leadingIcon = {
                         Icon(painterResource(BaseR.drawable.search_24px), contentDescription = null)
+                    }
+                )
+                DropdownMenuItem(
+                    shape = MenuDefaults.middleItemShape,
+                    onClick = {
+                        freezeSettings.setHideFromLauncher(!hideFrozenInDrawer)
+                        showOverflowMenu = false
+                    },
+                    text = {
+                        Text(
+                            stringResource(
+                                if (hideFrozenInDrawer) I18nR.string.preference_freeze_show_in_launcher
+                                else I18nR.string.preference_freeze_hide_from_launcher
+                            )
+                        )
+                    },
+                    leadingIcon = {
+                        Icon(
+                            painterResource(BaseR.drawable.ac_unit_24px),
+                            contentDescription = null
+                        )
                     }
                 )
                 DropdownMenuItem(

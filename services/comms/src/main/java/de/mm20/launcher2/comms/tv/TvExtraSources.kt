@@ -91,15 +91,7 @@ class TvExtraSources(
                 tvgId = "skai.gr",
                 logo = "https://i.imgur.com/8QzXkQx.png",
                 group = "General",
-                url = "https://skai-live.siliconweb.com/media/skai/skai.m3u8"
-            ),
-            TvM3uEntry(
-                name = "ΣΚΑΪ (Fallback)",
-                tvgName = "SKAI",
-                tvgId = "skai.gr",
-                logo = "https://i.imgur.com/8QzXkQx.png",
-                group = "General",
-                url = "https://skai-live-gr.siliconweb.com/media/skai/skai.m3u8"
+                url = "https://skai-live.siliconweb.com/media/cambria4/index.m3u8"
             ),
             TvM3uEntry(
                 name = "ERT 1",
@@ -139,7 +131,7 @@ class TvExtraSources(
                 tvgId = "ant1.gr",
                 logo = "https://i.imgur.com/Ant1Logo.png",
                 group = "General",
-                url = "https://mcdn.antennaplus.gr/live/smil:ant1.smil/playlist.m3u8"
+                url = "https://mcdn.antennaplus.gr/live/media0/Ant1/HLS/Ant1.m3u8"
             ),
             TvM3uEntry(
                 name = "ALPHA",
@@ -147,15 +139,7 @@ class TvExtraSources(
                 tvgId = "alphatv.gr",
                 logo = "https://i.imgur.com/Y34YQzZ.png",
                 group = "General",
-                url = "https://alphatvlive.yospace.com/stream/alphatv/live.m3u8"
-            ),
-            TvM3uEntry(
-                name = "ALPHA (Fallback)",
-                tvgName = "ALPHA",
-                tvgId = "alphatv.gr",
-                logo = "https://i.imgur.com/Y34YQzZ.png",
-                group = "General",
-                url = "https://alphatvlive2.siliconweb.com/media/alpha/alpha.m3u8"
+                url = "https://alphatvlive2.siliconweb.com/alphatvlive/live_abr/playlist.m3u8"
             ),
             TvM3uEntry(
                 name = "MEGA",
@@ -163,7 +147,7 @@ class TvExtraSources(
                 tvgId = "megatv.gr",
                 logo = "https://i.imgur.com/7A2xL3a.png",
                 group = "General",
-                url = "https://megatvlive.yospace.com/stream/megatv/live.m3u8"
+                url = "http://cdn.smart-tv-data.com/mega/MegaCosmos/mpeg.2ts"
             ),
             TvM3uEntry(
                 name = "STAR",
@@ -171,15 +155,7 @@ class TvExtraSources(
                 tvgId = "startv.gr",
                 logo = "https://i.imgur.com/6X9mQ3b.png",
                 group = "General",
-                url = "https://startvlive.yospace.com/stream/startv/live.m3u8"
-            ),
-            TvM3uEntry(
-                name = "STAR (Fallback)",
-                tvgName = "STAR",
-                tvgId = "startv.gr",
-                logo = "https://i.imgur.com/6X9mQ3b.png",
-                group = "General",
-                url = "https://livestar.siliconweb.com/media/star/star.m3u8"
+                url = "https://livestar.siliconweb.com/starvod/star4/star4.m3u8"
             ),
             TvM3uEntry(
                 name = "OPEN BEYOND",
@@ -187,15 +163,15 @@ class TvExtraSources(
                 tvgId = "opentv.gr",
                 logo = "https://i.imgur.com/9B2yX4c.png",
                 group = "General",
-                url = "https://opentvlive.yospace.com/stream/opentv/live.m3u8"
+                url = "https://liveopen.siliconweb.com/openTvLive/liveopen/playlist.m3u8"
             ),
             TvM3uEntry(
-                name = "OPEN BEYOND (Fallback)",
-                tvgName = "OPEN",
-                tvgId = "opentv.gr",
-                logo = "https://i.imgur.com/9B2yX4c.png",
+                name = "Epsilon",
+                tvgName = "Epsilon",
+                tvgId = "epsilontv.gr",
+                logo = "https://i.imgur.com/vUQSDvZ.png",
                 group = "General",
-                url = "https://liveopen.siliconweb.com/media/open/open.m3u8"
+                url = "https://neon.streams.gr:8081/epsilontv/index.m3u8"
             )
         )
 

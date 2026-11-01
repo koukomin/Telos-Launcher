@@ -56,7 +56,8 @@ internal class VirtualTrashApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.delete_24px) ?: return null
+        val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(Domain) ?: de.mm20.launcher2.base.R.drawable.delete_24px
+        val drawable = ContextCompat.getDrawable(context, res) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
             backgroundLayer = TransparentLayer

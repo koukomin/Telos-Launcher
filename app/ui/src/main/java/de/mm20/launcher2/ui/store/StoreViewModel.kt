@@ -202,11 +202,14 @@ class StoreViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    /** Adds an app of the recommended list; [onResult] gets null on success, otherwise the reason */
+    /** Adds an app of the recommended list and immediately triggers direct installation */
     fun addRecommended(app: de.mm20.launcher2.store.catalog.RecommendedApp, onResult: (String?) -> Unit) {
         viewModelScope.launch {
             val result = runCatching { tools.addSource(app.source, app.name, app.packageName) }.getOrElse { Result.failure(it) }
-            result.onSuccess { onResult(null) }.onFailure { onResult(it.message ?: str(I18nR.string.au_store_msg_add_failed)) }
+            result.onSuccess { item ->
+                item?.let { performUpdates(listOf(it)) }
+                onResult(null)
+            }.onFailure { onResult(it.message ?: str(I18nR.string.au_store_msg_add_failed)) }
         }
     }
 
