@@ -54,16 +54,17 @@ fun TrashUnlockScreen() {
                 })
         }
     }
-    LaunchedEffect(prompt) {
+    LaunchedEffect(prompt, activity) {
         if (state.unlocked || state.started) return@LaunchedEffect
-        if (prompt == null) { backStack.removeLastOrNull(); return@LaunchedEffect }
+        val host = activity
+        if (prompt == null || host == null) { backStack.removeLastOrNull(); return@LaunchedEffect }
         val info = androidx.biometric.BiometricPrompt.PromptInfo.Builder().setTitle(title).apply {
             if (android.os.Build.VERSION.SDK_INT >= 30) setAllowedAuthenticators(
                 androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG or
                     androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL)
             else {
                 setAllowedAuthenticators(androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG)
-                setNegativeButtonText(activity.getString(android.R.string.cancel))
+                setNegativeButtonText(host.getString(android.R.string.cancel))
             }
         }.build()
         val cipher = de.mm20.launcher2.comms.BiometricCryptoAuth.encryptCipher()
