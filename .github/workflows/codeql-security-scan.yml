@@ -22,7 +22,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ['java-kotlin']
+        include:
+          - language: java-kotlin
+            build-mode: manual
+          - language: actions
+            build-mode: none
 
     steps:
       - name: Checkout repository
@@ -32,21 +36,25 @@ jobs:
         uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
-          build-mode: manual
+          build-mode: ${{ matrix.build-mode }}
 
       - name: Set up JDK 21
+        if: matrix.build-mode == 'manual'
         uses: actions/setup-java@v6
         with:
           java-version: '21'
           distribution: 'temurin'
 
       - name: Setup Gradle
+        if: matrix.build-mode == 'manual'
         uses: gradle/actions/setup-gradle@v6
         with:
           cache-provider: basic
 
       - name: Build Debug Sources
+        if: matrix.build-mode == 'manual'
         # CodeQL must observe compilation, not restore compiled output from Gradle caches.
+        # Actions language uses build-mode none (overlay PRs). Manual is only for Java/Kotlin.
         # https://docs.github.com/en/code-security/reference/code-scanning/troubleshoot-analysis-errors/no-source-code-seen-during-build
         run: >-
           ./gradlew compileDefaultDebugSources --no-daemon --no-build-cache
@@ -54,3 +62,5 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{ matrix.language }}"

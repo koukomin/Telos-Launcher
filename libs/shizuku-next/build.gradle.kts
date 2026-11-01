@@ -33,7 +33,7 @@ android {
     sourceSets {
         getByName("main") {
             manifest.srcFile("src/main/AndroidManifest.xml")
-            java.srcDirs(
+            val roots = listOf(
                 "src/main/java",
                 "server/src/main/java",
                 "starter/src/main/java",
@@ -43,12 +43,15 @@ android {
                 "rish/src/main/java",
                 "provider/src/main/java",
             )
-            aidl.srcDirs("aidl/src/main/aidl")
+            java.setSrcDirs(roots)
+            kotlin.setSrcDirs(roots)
+            aidl.setSrcDirs(listOf("aidl/src/main/aidl"))
         }
     }
 }
 
 dependencies {
+    implementation(libs.kotlin.stdlib)
     implementation("androidx.annotation:annotation:1.9.1")
     implementation("com.google.code.gson:gson:2.13.1")
     implementation("dev.rikka.rikkax.parcelablelist:parcelablelist:2.0.1")

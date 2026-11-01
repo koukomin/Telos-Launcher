@@ -112,6 +112,30 @@ from Telos Store.
 | **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps, and lists Play Store apps when Play is installed. Opening Store with Play installed goes to Play updates, scans, and **Unfreeze and update in Play Store** thaws frozen apps, can block their network, and opens Play on the updates list | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
 | **Smart Freeze** | Freeze or hide apps through Shizuku, root, device owner or Island (a launcher feature in Settings, not a Telos app) | [Smart Freeze](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/) |
 
+### Built-in Shizuku (no extra Shizuku app)
+
+Telos includes the Shizuku **server** (starter + `libshizuku.so`, from [Shizuku-Next](https://github.com/rushiranpise/Shizuku-Next), Apache-2.0) inside the launcher. Freeze, Store privileged installs, Network Wi-Fi DNS, call recording `CAPTURE_AUDIO_OUTPUT`, and Files privileged paths use this binder. You do not install `moe.shizuku.privileged.api`. Open **Telos System → Shizuku**.
+
+| How | What you do |
+| --- | --- |
+| **Root** | Tap **Start with root**. Enable Autostart so it comes back after reboot. |
+| **Wireless (phone only)** | Enable the Telos **pairing accessibility** service. Developer options → Wireless debugging → **Pair device with pairing code**. Leave that Settings dialog open; Telos reads the 6-digit code from it (same method as Shizuku-Next, not AI). Grant permission. Autostart afterwards. Pairing is once per ADB key. |
+| **Computer ADB** | USB debugging on, authorize the PC, then the command shown on the Shizuku tab (copy it — paths change per install): |
+
+```bash
+adb shell /data/app/~~HASH~~/com.dimitris.telos-XXXX/lib/arm64/libshizuku.so --apk=/data/app/~~HASH~~/com.dimitris.telos-XXXX/base.apk
+```
+
+Pairing from a computer (once):
+
+```bash
+adb pair IP:PAIRING_PORT
+# type the 6-digit code from the wireless debugging pairing dialog
+adb shell …/libshizuku.so --apk=…/base.apk
+```
+
+`IP:PAIRING_PORT` is on the pairing dialog. The connect port on the wireless debugging page is a different number. Docs: [Telos System](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/system/).
+
 Telos Phone now reads the full Android contact list across synced accounts, including email-only contacts, rather than seeding its directory only from phone-number rows.
 
 Built-in apps display short localized names such as **Phone / Τηλέφωνο** and **Files / Αρχεία**, without the Telos prefix. Searching `telos` still finds them, and English/Greek aliases work independently of the display language. Stable virtual keys preserve dock/favorites/gesture entries. Built-in artwork takes priority over generated icon-pack fallbacks; explicit user-selected icons remain supported. Recents use explicit icon resources that survive release shrinking. Virtual entries keep their own internal launch routes; frozen-package recovery only applies to real Android applications.

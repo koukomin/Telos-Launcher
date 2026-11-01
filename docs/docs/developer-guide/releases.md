@@ -47,9 +47,11 @@ on every push (`apk-size-guard`, Visual Regression Guard, Edge-to-Edge Insets
 Audit, Shizuku IPC compile) were removed; they failed for unrelated Gradle
 errors and did not test size, layout, insets or Shizuku.
 
-CodeQL uses a manual, uncached compilation with incremental compilation disabled.
-Restoring compiled Gradle outputs would leave CodeQL without compiler activity
-and fail analysis with "No source code was seen during the build".
+CodeQL uses a manual, uncached compilation for Java/Kotlin, with incremental
+compilation disabled. Restoring compiled Gradle outputs would leave CodeQL
+without compiler activity and fail analysis with "No source code was seen
+during the build". The Actions language uses `build-mode: none` so GitHub can
+build overlay databases on pull requests (`manual` cannot overlay).
 
 ## GitHub Actions runtime maintenance
 
