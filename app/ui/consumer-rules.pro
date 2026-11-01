@@ -11,7 +11,7 @@
 # Compose looks up Icons$AutoMirrored$Rounded by Class.forName during draw.
 -keep class androidx.compose.material.icons.** { *; }
 -keep class androidx.compose.material.icons.Icons { *; }
--keep class androidx.compose.material.icons.Icons\$** { *; }
+-keep class androidx.compose.material.icons.Icons$$** { *; }
 
 # PersistentNavigation resolves only serializable UI NavKey routes by their stored
 # class name. Keep route names stable in minified builds; serializer members use
