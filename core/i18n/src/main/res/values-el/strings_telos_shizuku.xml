@@ -19,4 +19,10 @@
     <string name="telos_shizuku_run">Εκτέλεση</string>
     <string name="telos_shizuku_watchdog_channel">Επόπτης Shizuku</string>
     <string name="telos_shizuku_watchdog_title">Διακομιστής Shizuku του Telos</string>
+    <string name="telos_shizuku_howto_title">Πώς ξεκινάει</string>
+    <string name="telos_shizuku_howto_body">Root: πάτα Εκκίνηση με root.\nΑσύρματα (χωρίς PC μετά το πρώτο pairing): ενεργοποίησε την υπηρεσία προσβασιμότητας pairing του Telos, άνοιξε Επιλογές για προγραμματιστές → Ασύρματο debugging → Ζεύξη συσκευής με κωδικό. Ο Telos διαβάζει τον 6ψήφιο μόνο από αυτό το παράθυρο των Ρυθμίσεων.\nΥπολογιστής: USB debugging και την εντολή adb παρακάτω (οι διαδρομές είναι αυτού του install).</string>
+    <string name="telos_shizuku_copy_adb">Αντιγραφή εντολής adb</string>
+    <string name="telos_shizuku_copied">Αντιγράφηκε</string>
+    <string name="telos_shizuku_enable_a11y">Ενεργοποίηση προσβασιμότητας pairing</string>
+    <string name="telos_shizuku_code_seen">Κωδικός ζεύξης %1$s · θύρα %2$s</string>
 </resources>

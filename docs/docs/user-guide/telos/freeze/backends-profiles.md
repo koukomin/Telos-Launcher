@@ -46,13 +46,13 @@ Root availability is checked once per process; if you grant root later, restart 
 Telos includes a built-in Shizuku server (starter and server classes from
 [Shizuku-Next](https://github.com/rushiranpise/Shizuku-Next), Apache-2.0).
 
-1. Open **Telos System → Shizuku**.
-2. Tap **Start server** (root if the device is rooted, otherwise wireless debugging).
-3. Grant the Shizuku permission when asked. Freeze Manager then shows **Permission granted**.
-4. Optional: enable autostart so the watchdog starts the server on boot.
+1. Open **Telos System → Shizuku**. Follow [System → Built-in Shizuku](../system/).
+2. **Root:** Start with root. **Wireless:** enable pairing accessibility, then Developer options → Wireless debugging → Pair device with pairing code. Telos reads the 6-digit code from that Settings dialog.
+3. **Computer:** USB debugging, then the `adb shell …/libshizuku.so --apk=…/base.apk` command shown on the Shizuku tab (paths are this install only).
+4. Grant the Shizuku permission. Freeze Manager shows **Permission granted**.
+5. Optional Autostart / watchdog after reboot. Pairing is not repeated until ADB keys are reset.
 
-The standalone `moe.shizuku.privileged.api` app is no longer required. You can still freeze it
-from Privacy Shield after the Telos server is running.
+The standalone `moe.shizuku.privileged.api` app is not required. You can freeze it from Privacy Shield after the Telos server is running.
 
 ### Dhizuku
 

@@ -142,6 +142,14 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         ],
       },
       {
+        text: 'Media',
+        link: '/docs/user-guide/telos/media/',
+        collapsed: true,
+        items: [
+          { text: 'YouTube account', link: '/docs/user-guide/telos/media/youtube-account' },
+        ],
+      },
+      {
         text: 'Music',
         collapsed: true,
         link: '/docs/user-guide/telos/music/',
@@ -168,6 +176,7 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
           { text: 'Sources and updates', link: '/docs/user-guide/telos/store/sources-updates' },
         ],
       },
+      { text: 'System', link: '/docs/user-guide/telos/system/' },
       {
         text: 'Smart Freeze',
         collapsed: true,

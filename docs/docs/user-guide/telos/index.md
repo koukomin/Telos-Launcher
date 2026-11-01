@@ -33,7 +33,10 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./radio/"><b>📻 Radio</b><span>Internet radio with station search, sleep timer, NextLib decoders</span></a>
 <a href="./network/"><b>🛡️ Network</b><span>VPN based firewall and DNS filter: DNS servers, per-app rules, blocklists, WireGuard</span></a>
 <a href="./store/"><b>🛍️ Store</b><span>Install and update apps from GitHub, F-Droid and more</span></a>
+<a href="./system/"><b>⚙️ System</b><span>CPU, RAM, Wi-Fi, AppOps, built-in Shizuku server, pairing, ADB</span></a>
 <a href="./freeze/"><b>❄️ Smart Freeze</b><span>Freeze or hide apps through Shizuku, Dhizuku, root, Island or device owner</span></a>
+<a href="./media/"><b>🎬 Media</b><span>Listen / Watch / Live: music, radio, YouTube, TV, Stremio Fork</span></a>
+<a href="./linux-desktop"><b>🖥️ Linux Desktop</b><span>labwc session, vault as \$HOME</span></a>
 
 </div>
 
@@ -66,6 +69,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Radio | Internet radio | [Radio](./radio/) |
 | Telos Network | Firewall and DNS filter through the VPN service, blocklists, WireGuard, logs (early version) | [Network](./network/) |
 | Telos Store | Obtainium-like app installer and updater, manages the Telos apps | [Store](./store/) |
+| Telos System | CPU, RAM, Wi-Fi, AppOps, built-in Shizuku server and pairing | [System](./system/) |
 | Smart Freeze | Freeze or hide installed apps | [Smart Freeze](./freeze/) |
 
 ## Launcher and apps compared

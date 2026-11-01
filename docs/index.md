@@ -88,10 +88,22 @@ features:
     title: Store
     details: Discover and update apps, including opt-in frozen-app updates through authorized backends.
     link: /docs/user-guide/telos/store/
+  - icon: ⚙️
+    title: System
+    details: Device stats, saved Wi-Fi, AppOps, and a built-in Shizuku server with wireless pairing or a one-line adb command.
+    link: /docs/user-guide/telos/system/
   - icon: ❄️
     title: Smart Freeze
     details: Freeze apps, launch them on demand, and temporarily unfreeze/restore saved groups for updates.
     link: /docs/user-guide/telos/freeze/
+  - icon: 🎬
+    title: Media
+    details: Listen, Watch and Live in one app — local files, YouTube, TV, Stremio Fork, NextLib decoders.
+    link: /docs/user-guide/telos/media/
+  - icon: ✉️
+    title: Ermis
+    details: IMAP/SMTP mail with TLS, conversations, drafts and optional Google/microG consent.
+    link: /docs/user-guide/telos/ermis/
   - icon: 🛡️
     title: Privacy and crash guard
     details: No tracking by default, and a crash guard that keeps the launcher usable if something goes wrong.

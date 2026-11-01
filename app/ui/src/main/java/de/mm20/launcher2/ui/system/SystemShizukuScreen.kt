@@ -1,8 +1,11 @@
 package de.mm20.launcher2.ui.system
 import de.mm20.launcher2.i18n.R as I18nR
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.provider.Settings
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -61,6 +64,30 @@ fun SystemShizukuTab() {
                     color = MaterialTheme.colorScheme.primary,
                 )
                 Text(stringResource(I18nR.string.telos_shizuku_starter, host.starterPath.ifBlank { "—" }), style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(I18nR.string.telos_shizuku_howto_title), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(I18nR.string.telos_shizuku_howto_body), style = MaterialTheme.typography.bodySmall)
+                Text(host.pcAdbCommand.ifBlank { TelosShizukuHost.pcAdbCommand(context) }, style = MaterialTheme.typography.bodySmall)
+                OutlinedButton(onClick = {
+                    val cmd = host.pcAdbCommand.ifBlank { TelosShizukuHost.pcAdbCommand(context) }
+                    val cm = context.getSystemService(ClipboardManager::class.java)
+                    cm?.setPrimaryClip(ClipData.newPlainText("adb", cmd))
+                    Toast.makeText(context, context.getString(I18nR.string.telos_shizuku_copied), Toast.LENGTH_SHORT).show()
+                }) { Text(stringResource(I18nR.string.telos_shizuku_copy_adb)) }
+                OutlinedButton(onClick = {
+                    runCatching {
+                        context.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                    }
+                }) { Text(stringResource(I18nR.string.telos_shizuku_enable_a11y)) }
+                if (host.pairing.code.isNotBlank()) {
+                    Text(
+                        stringResource(
+                            I18nR.string.telos_shizuku_code_seen,
+                            host.pairing.code,
+                            host.pairing.port?.toString() ?: "—",
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
                 FilledTonalButton(onClick = {
                     scope.launch {
                         val r = TelosShizukuHost.start(context, TelosShizukuHost.StartMethod.Auto)

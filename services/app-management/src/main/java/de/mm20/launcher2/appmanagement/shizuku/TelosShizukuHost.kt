@@ -2,6 +2,7 @@ package de.mm20.launcher2.appmanagement.shizuku
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Settings
@@ -28,6 +29,12 @@ object TelosShizukuHost {
 
     enum class StartMethod { Auto, Wireless, Root, Usb, Tcp }
 
+    data class PairingHint(
+        val code: String = "",
+        val host: String? = null,
+        val port: Int? = null,
+    )
+
     data class HostStatus(
         val running: Boolean = false,
         val authorized: Boolean = false,
@@ -36,6 +43,10 @@ object TelosShizukuHost {
         val method: StartMethod = StartMethod.Auto,
         val lastLog: String = "",
         val starterPath: String = "",
+        val apkPath: String = "",
+        val pcAdbCommand: String = "",
+        val lastPort: Int = 0,
+        val pairing: PairingHint = PairingHint(),
     )
 
     private val _status = MutableStateFlow(HostStatus())
@@ -43,6 +54,34 @@ object TelosShizukuHost {
 
     fun starterFile(context: Context): File =
         File(context.applicationInfo.nativeLibraryDir, "libshizuku.so")
+
+    fun pcAdbCommand(context: Context): String {
+        val starter = starterFile(context).absolutePath
+        val apk = context.applicationInfo.sourceDir
+        return "adb shell $starter --apk=$apk"
+    }
+
+    private fun prefs(context: Context): SharedPreferences {
+        val app = context.applicationContext
+        val storage = if (Build.VERSION.SDK_INT >= 24) {
+            app.createDeviceProtectedStorageContext()
+        } else app
+        return storage.getSharedPreferences("telos_shizuku_host", Context.MODE_PRIVATE)
+    }
+
+    fun lastPort(context: Context): Int = prefs(context).getInt("last_port", 0)
+
+    fun saveLastPort(context: Context, port: Int) {
+        if (port > 0) prefs(context).edit().putInt("last_port", port).apply()
+    }
+
+    fun onPairingCodeRead(context: Context, code: String, host: String?, port: Int?) {
+        if (port != null) saveLastPort(context, port)
+        _status.value = _status.value.copy(
+            pairing = PairingHint(code = code, host = host, port = port),
+            lastLog = "pairing code $code" + (port?.let { " :$it" } ?: ""),
+        )
+    }
 
     fun refresh(context: Context) {
         ShizukuProcesses.init(context.applicationContext)
@@ -56,6 +95,9 @@ object TelosShizukuHost {
             uid = if (binder) runCatching { Shizuku.getUid() }.getOrDefault(-1) else -1,
             version = if (binder) runCatching { Shizuku.getVersion() }.getOrDefault(-1) else -1,
             starterPath = starterFile(context).absolutePath,
+            apkPath = context.applicationInfo.sourceDir,
+            pcAdbCommand = pcAdbCommand(context),
+            lastPort = lastPort(context),
         )
         TelosShizukuManager.refreshStatus(context)
     }

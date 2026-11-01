@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_shizuku_a11y_description">Reads the wireless debugging pairing code from the Settings pairing dialog so Telos can start its built-in Shizuku server. It only looks at the Settings app.</string>
+</resources>
