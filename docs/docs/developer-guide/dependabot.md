@@ -21,12 +21,15 @@ CRITICAL and HIGH run before unrelated feature work in the same session.
 
 ## How to fix
 
-**Gradle / Maven.** Many alerts point at `settings.gradle.kts` while the real
-version lives in `gradle/libs.versions.toml` or in a transitive graph. If the
-direct catalog version is already patched, pin every remaining copy in the root
-`subprojects { configurations.configureEach { resolutionStrategy.eachDependency } }`
-block. Keep one Bouncy Castle version (`libs.versions.bouncycastle`, currently
-1.86). App `useVersion` calls must use that catalog entry.
+**Gradle / Maven.** Many alerts point at `settings.gradle.kts` because GitHub
+attributes plugin-classpath transitives (Dokka, AGP, Kotlin) to that file.
+Pin those on `gradle.beforeProject { buildscript.configurations }` in
+`settings.gradle.kts` (Guava `-jre` on the plugin classpath). Pin app graphs in
+the root `subprojects { configurations.configureEach { resolutionStrategy.eachDependency } }`
+block (Guava `-android` there). Keep one Bouncy Castle version
+(`libs.versions.bouncycastle`, currently 1.86). App `useVersion` calls must use
+that catalog entry. `.github/workflows/dependency-graph.yml` submits the
+resolved Gradle graph so Dependabot can close alerts after the pins land.
 
 **Docs (npm).** VitePress pulls vite, esbuild, postcss, nanoid, rollup and Vue.
 Bump `docs/package.json` and set `overrides`, then regenerate

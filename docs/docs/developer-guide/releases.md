@@ -64,6 +64,9 @@ that schedule; see [Dependabot](/docs/developer-guide/dependabot).
 On forks, enable **Settings > Advanced Security > Dependabot version updates**
 once; committing a config alone does not activate version updates on a fork.
 
+The Gradle dependency-graph workflow submits the resolved plugin and project
+classpaths to GitHub so Dependabot alerts follow patched versions.
+
 The runtime compatibility workflow exercises Java, Node, Python, Go, Gradle,
 cache, artifact upload/download and Pages artifact packaging, and builds the docs.
 It never deploys Pages or publishes a release. Gradle v6 explicitly selects
