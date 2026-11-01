@@ -4,11 +4,9 @@ import android.app.ActivityThread;
 import android.app.Application;
 import android.app.Instrumentation;
 import android.content.Context;
-import android.content.ContextHidden;
 import android.ddm.DdmHandleAppName;
 import android.os.IBinder;
 import android.os.UserHandle;
-import android.os.UserHandleHidden;
 import android.util.Log;
 import android.util.Pair;
 
@@ -60,10 +58,16 @@ public class UserService {
 
             DdmHandleAppName.setAppName(name != null ? name : pkg + ":user_service", userId);
 
-            // minSdk 26: UserHandle.of exists. Refine maps UserHandleHidden onto UserHandle.
-            UserHandle userHandle = UserHandleHidden.of(userId);
-            Context context = ((ContextHidden) systemContext).createPackageContextAsUser(
-                    pkg, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY, userHandle);
+            // Hidden APIs: do not cast to *Hidden stub types against android.jar.
+            Method ofUser = UserHandle.class.getMethod("of", int.class);
+            UserHandle userHandle = (UserHandle) ofUser.invoke(null, userId);
+            Method createAsUser = Context.class.getMethod(
+                    "createPackageContextAsUser", String.class, int.class, UserHandle.class);
+            Context context = (Context) createAsUser.invoke(
+                    systemContext,
+                    pkg,
+                    Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY,
+                    userHandle);
 
             Application application = null;
             try {
