@@ -17,4 +17,9 @@
     <string name="preference_screen_icons">Icones</string>
     <string name="preference_screen_advanced">Provectus</string>
     <string name="preference_screen_about">De</string>
+    <string name="action_done">Factum</string>
+    <string name="au12_tvui_space_tv">TV</string>
+    <string name="au12_tvui_title">Telos TV</string>
+    <string name="notes_sync_settings">Synchronizatio</string>
+    <string name="preference_backup">Copiae</string>
 </resources>

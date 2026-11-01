@@ -17,4 +17,9 @@
     <string name="preference_screen_icons">Εἰκονίδια</string>
     <string name="preference_screen_advanced">Προηγμένα</string>
     <string name="preference_screen_about">Περί</string>
+    <string name="action_done">Πέρας</string>
+    <string name="au12_tvui_space_tv">TV</string>
+    <string name="au12_tvui_title">Τέλος TV</string>
+    <string name="notes_sync_settings">Σύγχροσις</string>
+    <string name="preference_backup">Ἀντίγραφα ἀσφαλείας</string>
 </resources>
