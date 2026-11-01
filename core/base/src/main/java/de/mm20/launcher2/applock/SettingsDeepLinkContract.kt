@@ -73,6 +73,8 @@ object SettingsDeepLinkContract {
         ROUTE_ERMIS -> "ermis"
         ROUTE_CALENDAR -> "calendar"
         ROUTE_DOWNLOADS -> "downloads"
+        ROUTE_SYNC -> "sync"
+        ROUTE_BACKUP -> "backup"
         "settings/clock" -> "clock"
         "settings/akou" -> "akou"
         "settings/magnifier" -> "magnifier"

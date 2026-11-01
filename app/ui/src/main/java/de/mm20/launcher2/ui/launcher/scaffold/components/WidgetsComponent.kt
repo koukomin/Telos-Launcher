@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
 import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.icons.TelosIcons
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -15,8 +16,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -169,7 +168,7 @@ internal class WidgetsComponent(
                             scope.launch { state.unlock() }
                         }
                     ) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(I18nR.string.action_done))
+                        Icon(TelosIcons.ArrowBack, stringResource(I18nR.string.action_done))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

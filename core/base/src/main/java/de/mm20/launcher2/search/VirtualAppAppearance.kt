@@ -20,7 +20,8 @@ object VirtualAppAppearance {
     @DrawableRes
     fun glyph(domain: String): Int? = when (domain) {
         "telos_phone_app" -> R.drawable.ic_app_phone_fg
-        "telos_messages_app", "telos_ermis_app" -> R.drawable.ic_app_messages_fg
+        "telos_messages_app" -> R.drawable.ic_app_messages_fg
+        "telos_ermis_app" -> R.drawable.ic_app_ermis_fg
         "telos_radio_app" -> R.drawable.ic_app_radio_fg
         "telos_music_app" -> R.drawable.ic_app_music_fg
         "telos_youtube_app" -> R.drawable.ic_app_youtube_fg
@@ -48,6 +49,8 @@ object VirtualAppAppearance {
         "telos_clock_app" -> R.drawable.ic_app_clock_fg
         "telos_magnifier_app" -> R.drawable.ic_app_magnifier_fg
         "telos_flashlight_app" -> R.drawable.ic_app_flashlight_fg
+        "telos_weather_app" -> R.drawable.ic_app_weather_fg
+        "telos_tv_app" -> R.drawable.ic_app_tv_fg
         else -> TelosAppIcons.forDomain(domain)
     }
 

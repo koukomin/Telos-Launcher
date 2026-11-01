@@ -1,5 +1,12 @@
 # AI Agent Coding Guidelines for Telos
 
+## Rondo icons on every new virtual app
+
+When you add a Telos virtual app, you also add its Rondo icon in the same
+change. Follow [ICON_DESIGN.md](/ICON_DESIGN.md) and
+[Rondo icons](/docs/developer-guide/rondo-icons). Copy Phone / Files / Messages
+(`ic_app_*_full.xml`). Do not invent a new silhouette language.
+
 ## String Resource Optimization (Deduplication)
 To keep the APK size as small as possible, **do not duplicate translated text** across different string files or within the same language file.
 

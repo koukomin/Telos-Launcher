@@ -16,6 +16,8 @@
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Preserve Compose Material Icons nested objects (see app/app/proguard-rules.pro).
+-keep class androidx.compose.material.icons.** { *; }
+-keep class androidx.compose.material.icons.Icons { *; }
+-keep class androidx.compose.material.icons.Icons\$** { *; }
+-dontwarn androidx.compose.material.icons.**

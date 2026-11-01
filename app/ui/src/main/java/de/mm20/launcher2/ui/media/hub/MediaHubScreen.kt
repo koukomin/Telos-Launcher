@@ -134,7 +134,7 @@ private enum class MediaSpace(
     Music("music", "telos_music_app://music", BaseR.drawable.headphones_24px, I18nR.string.au9_mediahub_space_music),
     Radio("radio", "telos_radio_app://radio", BaseR.drawable.ic_glyph_radio, I18nR.string.au9_mediahub_space_radio),
     Video("video", "telos_video_app://video", BaseR.drawable.video_library_24px, I18nR.string.au9_mediahub_space_video),
-    Tv("tv", "telos_tv_app://tv", BaseR.drawable.tv_24px, I18nR.string.au12_tvui_space_tv),
+    Tv("tv", "telos_tv_app://tv", BaseR.drawable.ic_app_tv_fg, I18nR.string.au12_tvui_space_tv),
     YouTube("youtube", "telos_youtube_app://youtube", de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg, I18nR.string.telos_youtube_label),
     YouTubeMusic("youtube_music", "telos_youtube_music_app://youtube_music", de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg, I18nR.string.telos_youtube_music_label),
     Stremio("stremio", "telos_media_app://stremio", BaseR.drawable.theaters_24px, I18nR.string.au22_stremio_label),

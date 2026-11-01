@@ -52,7 +52,7 @@ dependencies {
     implementation(libs.koin.android)
 
     // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
-    implementation("io.github.iamr0s:Dhizuku-API:2.6.0")
+    implementation("io.github.iamr0s:Dhizuku-API:2.7.0")
     // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
     implementation(libs.shizuku.api)

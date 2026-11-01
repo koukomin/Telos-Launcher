@@ -1191,11 +1191,6 @@ Some features are new and not tested on every device. This is what the project's
 
 ## Planned
 
-- **Ironewolf browser:** preserve the complete IronFox/Fenix UI and hardened engine as a built-in
-  browser. [Source/build tooling and capability-gated launcher dispatch](ironewolf/README.md) are
-  available. The embedded Fenix runtime is not bundled yet; current builds retain WebView and
-  do not show an unusable Ironewolf entry.
-
 - SIP: text messages, video and Bluetooth routing, and Android Telecom integration (SIP calls are
   handled by their own call screen for now)
 
@@ -1240,7 +1235,6 @@ adapted, the original license is respected.
 
 | Project | License | What Telos uses it for |
 | --- | --- | --- |
-| [IronFox](https://gitlab.com/ironfox-oss/IronFox) | AGPL-3.0-or-later build scripts; per-file MPL-2.0 / Apache-2.0 / GPL licenses | Pinned source and build preparation for Ironewolf; not shipped in the launcher APK yet |
 | [libarchive](https://libarchive.org) with [libarchive-android](https://github.com/zhanghai/libarchive-android) | BSD-2-Clause, Apache-2.0 | RAR and RAR5 reading in Telos Files (standard version only, prebuilt library, used unchanged) |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | The whole launcher, plugin SDK and architecture |
 | [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) | Apache-2.0 | JVM desktop shell in `:desktop-linux` only (not packaged in the Android APK) |

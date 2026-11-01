@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
 import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.icons.TelosIcons
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -15,8 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -176,7 +175,7 @@ internal class ClockAndWidgetsHomeComponent(
                                 }
                             ) {
                                 Icon(
-                                    Icons.AutoMirrored.Rounded.ArrowBack,
+                                    TelosIcons.ArrowBack,
                                     stringResource(I18nR.string.action_done)
                                 )
                             }

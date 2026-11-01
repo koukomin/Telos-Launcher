@@ -295,17 +295,6 @@ Copyright © 2025–2026 A-EDev. GPL-3.0. Upstream: https://github.com/Flow-Tube
 Copyright NewPipe contributors. GPL-3.0-or-later. https://github.com/TeamNewPipe/NewPipeExtractor, version v0.26.5. Used as a dependency for YouTube search, metadata and stream extraction.
 
 
-## IronFox — Ironewolf source preparation
-
-Upstream: https://gitlab.com/ironfox-oss/IronFox (read-only GitHub mirror), pinned in
-`ironewolf/source.lock.json` and `ironewolf/upstream`. IronFox build scripts are
-Copyright (C) 2024–2026 Akash Yadav, celenity, based on Fennec/Mull scripts
-Copyright (C) 2020–2024 Matías Zúñiga, Andrew Nayenko, Tavi; AGPL-3.0-or-later.
-The branding patch modifies these scripts under the same license. Other source files retain
-their original MPL-2.0, Apache-2.0, GPL and other notices; consult upstream COPYING and headers.
-Build scripts are separate tooling and are not linked into Telos. No IronFox binary is bundled
-in the launcher at this stage. Firefox and IronFox names do not imply upstream endorsement.
-
 ## Tor Android / Tor
 
 Telos uses the unmodified `info.guardianproject:tor-android:0.4.9.14` AAR

@@ -4,8 +4,6 @@ import de.mm20.launcher2.i18n.R as I18nR
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowForward
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -15,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.icons.TelosIcons
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.TextButtonWithTrailingIconContentPadding
 
@@ -31,7 +30,7 @@ fun ColumnScope.ShowAllButton(
     ) {
         Text(stringResource(I18nR.string.show_all))
         Icon(
-            Icons.AutoMirrored.Rounded.ArrowForward,
+            TelosIcons.ArrowForward,
             null,
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)

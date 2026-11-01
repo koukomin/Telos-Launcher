@@ -19,11 +19,6 @@ class TelosAppKeywordsTest {
         assertTrue("αρχεία" in TelosAppKeywords.forDomain("telos_files_app"))
         assertTrue("μουσική" in TelosAppKeywords.forDomain("telos_music_app"))
     }
-    @Test fun browserAliasesRemainAvailableAcrossDisplayLanguages() {
-        val aliases = TelosAppKeywords.forKey("telos_ironewolf_app://browser").map { it.lowercase() }
-        for (name in listOf("ironewolf", "telos ironewolf", "telos", "ironfox", "firefox", "περιηγητής"))
-            assertTrue(name, name in aliases)
-    }
     @Test fun futureVirtualAppsRetainTheTelosAliasWithoutCatalogRegistration() {
         val aliases = TelosAppKeywords.forKey("telos_future_feature_app://home")
         assertTrue("telos" in aliases)

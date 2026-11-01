@@ -49,7 +49,7 @@ tasks.withType<Test>().configureEach {
 dependencies {
     testImplementation(libs.bundles.tests)
     testImplementation("org.json:json:20260814")
-    testImplementation("io.ktor:ktor-client-mock:3.6.0")
+    testImplementation("io.ktor:ktor-client-mock:3.6.1")
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)

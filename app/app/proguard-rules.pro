@@ -1,9 +1,18 @@
--keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable,InnerClasses,EnclosingMethod,Signature
 -repackageclasses ''
 -allowaccessmodification
 
 # Preserve Shizuku internal methods accessed via reflection by SmartFreezeService and TelosShellEngine
 -keep class rikka.shizuku.** { *; }
+
+# Preserve Compose Material Icons nested objects. R8 treats `$` as end-of-string
+# in keep patterns, so inner classes must be escaped. Empty marker objects such
+# as Icons$AutoMirrored$Rounded are otherwise stripped after inlining, and
+# Compose looks them up by Class.forName during dispatchDraw.
+-keep class androidx.compose.material.icons.** { *; }
+-keep class androidx.compose.material.icons.Icons { *; }
+-keep class androidx.compose.material.icons.Icons\$** { *; }
+-dontwarn androidx.compose.material.icons.**
 
 -keep public class de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM {
     public <init>();

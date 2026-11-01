@@ -10,7 +10,6 @@ object TelosAppLabels {
         "telos_akou_app" -> I18nR.string.telos_akou_app_label
         "telos_magnifier_app" -> I18nR.string.telos_magnifier_app_label
         "telos_flashlight_app" -> I18nR.string.telos_flashlight_app_label
-        "telos_ironewolf_app" -> I18nR.string.ironewolf_name
         "telos_phone_app" -> I18nR.string.virtual_app_phone
         "telos_messages_app" -> I18nR.string.hc_messages
         "telos_radio_app" -> I18nR.string.hc_radio
@@ -36,6 +35,9 @@ object TelosAppLabels {
         "telos_system_app" -> I18nR.string.telos_system_label
         "telos_weather_app" -> I18nR.string.widget_name_weather
         "telos_trash_app" -> I18nR.string.telos_trash_title
+        "telos_tv_app" -> I18nR.string.au12_tvui_title
+        "telos_sync_app" -> I18nR.string.notes_sync_settings
+        "telos_backup_app" -> I18nR.string.preference_backup
         else -> null
     }
 

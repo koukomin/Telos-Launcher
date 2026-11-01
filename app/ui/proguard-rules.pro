@@ -21,3 +21,9 @@
 #-renamesourcefileattribute SourceFile
 # AnyAscii loads Unicode blocks relative to this class package via getResourceAsStream.
 -keepnames class com.anyascii.AnyAscii
+
+# Preserve Compose Material Icons nested objects (see app/app/proguard-rules.pro).
+-keep class androidx.compose.material.icons.** { *; }
+-keep class androidx.compose.material.icons.Icons { *; }
+-keep class androidx.compose.material.icons.Icons\$** { *; }
+-dontwarn androidx.compose.material.icons.**

@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Product names remain identical in all locales. Existing translated labels frame the selector. -->
-    <string name="ironewolf_name" translatable="false">Ironewolf</string>
     <string name="android_webview_name" translatable="false">Android WebView</string>
 </resources>

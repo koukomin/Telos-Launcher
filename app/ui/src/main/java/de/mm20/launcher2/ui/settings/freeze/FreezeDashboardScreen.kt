@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.freeze
 import de.mm20.launcher2.i18n.R as I18nR
+import de.mm20.launcher2.icons.TelosIcons
 
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -170,7 +169,7 @@ fun FreezeDashboardScreen() {
                         }
                         IconButton(onClick = { viewModel.refresh() }) {
                             Icon(
-                                Icons.Rounded.Refresh,
+                                TelosIcons.Refresh,
                                 contentDescription = stringResource(I18nR.string.freeze_dashboard_refresh),
                             )
                         }

@@ -179,7 +179,8 @@ Keep zoom and utility actions compact in landscape without shrinking touch targe
 
 Every new virtual app must be registered in SettingsDeepLinkContract.virtualAppTaskId,
 SettingsActivity task-domain mapping, its static Android activity-alias metadata,
-TelosAppLabels and TelosAppIcons. A manifest
+TelosAppLabels and TelosAppIcons, and must ship the three Rondo drawables from
+`docs/ICON_DESIGN.md`. A manifest
 label alone cannot represent several document tasks. Test launcher, notifications,
 rotation, process recreation and explicit close independently. Biometric screens
 reattach their callbacks to the retained AndroidX prompt after rotation; do not
@@ -210,14 +211,24 @@ These instructions are binding for any AI coding assistant or contributor workin
 - Support contact photo fallback to a polished initials/avatar design; never stretch low-resolution images or obscure critical actions.
 - Keep the existing call-state logic, telecom permissions, accessibility labels and functional call controls intact. Add UI previews and tests for photo/no-photo, light/dark, incoming/outgoing/active and large text.
 
-### Flat adaptive icon system
+### Rondo icon pack (mandatory on every new virtual app)
 
-- The default launcher icon is the quality baseline. All Telos virtual-app icons must form a cohesive **Telos Flat Adaptive** family.
-- Follow the detailed mandatory specification in `docs/ICON_DESIGN.md`. Do not use glossy, skeuomorphic, faux-3D, complex-gradient, shadow-heavy or inconsistent icons.
-- Implement foreground/background layers with Android adaptive icon masks, keeping recognizable content within the safe zone across circle, square, squircle, rounded-square and OEM masks. Never bake the final mask shape into the artwork.
-- Use a shared vector-based geometry and color-token system; icons must be crisp at small sizes, distinguishable from official third-party brand icons, and coherent in light/dark/monochrome modes.
-- Verify all Telos virtual apps, app drawer, dock, search results, sidebar and system surfaces use the correct icons. Where the user chooses an icon pack or custom icon, honor that selection in launcher-controlled surfaces unless a documented exception applies.
-- Before completion, produce a contact sheet showing every affected icon under multiple masks and on light/dark backgrounds; validate visually and update documentation, localization and tests where applicable.
+A new Telos app is incomplete until its Rondo icon exists. Read
+`docs/ICON_DESIGN.md` and copy **Phone / Files / Messages**, not Store or
+Weather.
+
+- Disc: `pathData="M24,2A22,22 0 1,0 24,46A22,22 0 1,0 24,2Z"` with one unused
+  saturated Material colour.
+- Long shadow: `#20000000` and `pathData="M14,14 L32,32 L26,44 L10,28 Z"`.
+- White filled 24 dp Material glyph in a group `translate 9,9` `scale 1.25`.
+- Ship three vectors in `core/base/src/main/res/drawable/`:
+  `ic_app_<slug>_full.xml` (48 dp tile), `ic_app_<slug>_fg.xml` (108 dp white
+  glyph), `ic_glyph_<slug>.xml` (24 dp). Same `pathData` on the glyph.
+- Register `TelosAppIcons`, `VirtualAppAppearance.glyph` (fg, never `_full` as
+  a notification small icon), labels, deep link, manifest `android:icon`, Store
+  catalog, user-guide and this catalog, in the same change.
+- No gloss, gradients, brand logos, baked squircles, or Material Icons
+  Extended. Honor a user-selected icon pack on launcher surfaces.
 
 ### Delivery gates
 
@@ -227,7 +238,7 @@ These instructions are binding for any AI coding assistant or contributor workin
 
 ## Mandatory UI design for all AI coding agents
 
-Before modifying virtual apps, Dialer, icons or app surfaces, read `docs/ICON_DESIGN.md` and comply with its acceptance criteria. Dialer must show a large contact photo (Google Phone-inspired prominence, no copied proprietary assets) on incoming, outgoing and active calls; provide initials fallback, responsive layout, safe controls, large-text accessibility and tests. Keep user-selected icon packs and custom icons on launcher-controlled surfaces. Update translations, README and docs with implemented changes. Never claim completion without build and visual QA.
+Before modifying virtual apps, Dialer, icons or app surfaces, read `docs/ICON_DESIGN.md` and `docs/docs/developer-guide/rondo-icons.md` and comply with their acceptance criteria. A new virtual app always includes the three Rondo drawables in the same change. Dialer must show a large contact photo (Google Phone-inspired prominence, no copied proprietary assets) on incoming, outgoing and active calls; provide initials fallback, responsive layout, safe controls, large-text accessibility and tests. Keep user-selected icon packs and custom icons on launcher-controlled surfaces. Update translations, README and docs with implemented changes. Never claim completion without build and visual QA.
 
 ## UI consistency and adaptation (mandatory)
 

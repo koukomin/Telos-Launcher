@@ -15,7 +15,7 @@ class WebAppBrowsingSettings internal constructor(
         get() = dataStore.data.map { it.webAppBrowsing.webAppEngine }.distinctUntilChanged()
 
     fun setEngine(engine: String) {
-        if (engine !in setOf("ironewolf", "webview")) return
+        if (engine != "webview") return
         dataStore.update { it.copy(webAppBrowsing = it.webAppBrowsing.copy(webAppEngine = engine)) }
     }
 

@@ -306,7 +306,7 @@
             android:targetActivity=".settings.TelosAppActivity"
             android:exported="false"
             android:label="@string/telos_trash_title"
-            android:icon="@drawable/delete_24px" />
+            android:icon="@drawable/ic_app_trash_full" />
         <activity-alias
             android:name=".settings.TelosApp_calculator"
             android:targetActivity=".settings.TelosAppActivity"
@@ -366,25 +366,43 @@
             android:targetActivity=".settings.TelosAppActivity"
             android:exported="false"
             android:label="@string/preference_screen_clockwidget"
-            android:icon="@drawable/schedule_24px" />
+            android:icon="@drawable/ic_app_clock_full" />
         <activity-alias
             android:name=".settings.TelosApp_akou"
             android:targetActivity=".settings.TelosAppActivity"
             android:exported="false"
             android:label="@string/telos_akou_app_label"
-            android:icon="@drawable/ic_app_youtube_music_full" />
+            android:icon="@drawable/ic_app_akou_full" />
         <activity-alias
             android:name=".settings.TelosApp_magnifier"
             android:targetActivity=".settings.TelosAppActivity"
             android:exported="false"
             android:label="@string/telos_magnifier_app_label"
-            android:icon="@drawable/search_24px" />
+            android:icon="@drawable/ic_app_magnifier_full" />
         <activity-alias
             android:name=".settings.TelosApp_flashlight"
             android:targetActivity=".settings.TelosAppActivity"
             android:exported="false"
             android:label="@string/telos_flashlight_app_label"
-            android:icon="@drawable/light_mode_24px" />
+            android:icon="@drawable/ic_app_flashlight_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_weather"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/widget_name_weather"
+            android:icon="@drawable/ic_app_weather_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_sync"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/notes_sync_settings"
+            android:icon="@drawable/ic_app_sync_full" />
+        <activity-alias
+            android:name=".settings.TelosApp_backup"
+            android:targetActivity=".settings.TelosAppActivity"
+            android:exported="false"
+            android:label="@string/preference_backup"
+            android:icon="@drawable/ic_app_backup_full" />
 
         <activity
             android:name=".settings.SettingsActivity"

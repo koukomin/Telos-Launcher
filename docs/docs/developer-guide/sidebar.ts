@@ -10,6 +10,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/virtual-app-surfaces',
   },
   {
+    text: 'Rondo icons',
+    link: '/docs/developer-guide/rondo-icons',
+  },
+  {
     text: 'Adaptive UI contract',
     link: '/docs/developer-guide/adaptive-ui',
   },
@@ -36,10 +40,6 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
   {
     text: 'Telos Wayland Shell',
     link: '/docs/developer-guide/telos-wayland-shell',
-  },
-  {
-    text: 'Ironewolf browser',
-    link: '/docs/developer-guide/ironewolf',
   },
   {
     text: 'External APIs',
