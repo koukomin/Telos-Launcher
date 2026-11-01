@@ -40,7 +40,6 @@ android {
                 "starter/src/main/java",
                 "common/src/main/java",
                 "server-shared/src/main/java",
-                "shared/src/main/java",
                 "rish/src/main/java",
             )
             java.setSrcDirs(roots)
@@ -60,6 +59,7 @@ dependencies {
     compileOnly("dev.rikka.tools.refine:annotation:${libs.versions.hidden.refine.get()}")
     annotationProcessor("dev.rikka.tools.refine:annotation-processor:${libs.versions.hidden.refine.get()}")
     compileOnly(libs.androidx.core)
-    // BinderContainer lives in Maven provider; do not compile the vendored copy.
+    // Client types (BinderContainer, ShizukuApiConstants) come from Maven api/provider.
+    compileOnly(libs.shizuku.api)
     compileOnly(libs.shizuku.provider)
 }
