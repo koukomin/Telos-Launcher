@@ -1,5 +1,15 @@
 # AI Agent Coding Guidelines for Telos
 
+## Dependabot alerts (do this first)
+
+Open Dependabot alerts are required work. At session start, list them from GitHub
+and apply the patched versions in order **CRITICAL → HIGH → MODERATE → LOW**.
+Do not wait for the user to mention Dependabot. Transitive Maven copies stay
+vulnerable until the root Gradle `resolutionStrategy` pin moves; a catalog bump
+alone is not enough. VitePress CVEs are fixed in `docs/package.json` `overrides`
+and `docs/package-lock.json`. Full procedure:
+[Dependabot](/docs/developer-guide/dependabot).
+
 ## Rondo icons on every new virtual app
 
 When you add a Telos virtual app, you also add its Rondo icon in the same

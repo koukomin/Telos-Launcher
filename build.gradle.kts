@@ -13,6 +13,37 @@ plugins {
 }
 
 subprojects {
+    configurations.configureEach {
+        resolutionStrategy.eachDependency {
+            when {
+                requested.group == "com.fasterxml.jackson.core" &&
+                    requested.name in setOf("jackson-core", "jackson-databind", "jackson-annotations") ->
+                    useVersion(libs.versions.jacksonCore.get())
+                requested.group.startsWith("com.fasterxml.jackson") &&
+                    requested.name.startsWith("jackson-") ->
+                    useVersion(libs.versions.jacksonCore.get())
+                requested.group == "org.jsoup" && requested.name == "jsoup" ->
+                    useVersion(libs.versions.jsoup.get())
+                requested.group == "org.bitbucket.b_c" && requested.name == "jose4j" ->
+                    useVersion(libs.versions.jose4j.get())
+                requested.group == "org.jdom" && requested.name == "jdom2" ->
+                    useVersion(libs.versions.jdom2.get())
+                requested.group == "org.freemarker" && requested.name == "freemarker" ->
+                    useVersion(libs.versions.freemarker.get())
+                requested.group == "org.apache.httpcomponents" && requested.name == "httpclient" ->
+                    useVersion(libs.versions.httpclient.get())
+                requested.group == "org.apache.commons" && requested.name == "commons-lang3" ->
+                    useVersion(libs.versions.commonsLang3.get())
+                requested.group == "com.google.guava" && requested.name == "guava" -> {
+                    val suffix = if (requested.version.orEmpty().endsWith("-jre")) "-jre" else "-android"
+                    useVersion(libs.versions.guava.get() + suffix)
+                }
+                requested.group == "org.bouncycastle" ->
+                    useVersion(libs.versions.bouncycastle.get())
+            }
+        }
+    }
+
     pluginManager.withPlugin("org.jetbrains.kotlin.plugin.compose") {
         tasks.withType<KotlinCompile>().configureEach {
             compilerOptions.freeCompilerArgs.addAll(

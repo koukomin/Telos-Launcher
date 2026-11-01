@@ -22,6 +22,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/ui-validation',
   },
   {
+    text: 'Dependabot alerts',
+    link: '/docs/developer-guide/dependabot',
+  },
+  {
     text: 'Setup',
     link: '/docs/developer-guide/setup',
   },

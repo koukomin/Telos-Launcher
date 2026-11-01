@@ -111,7 +111,7 @@ These are visible in the build files. The final size depends on the build, and n
 | `Log.v` and `Log.d` calls stripped in release builds | Less code and no logging cost |
 | R8 obfuscation is **on** in release and nightly builds | Shorter class and member names, so smaller DEX. Stack traces need the build's `mapping.txt` (kept as a CI artifact) and `retrace` to be read. `-Ptelos.keepNames=true` turns renaming off |
 | One APK, two flavors (`default` and `fdroid`) | No separate APK per feature |
-| Bouncy Castle pinned to one version | Avoids duplicated classes from different libraries |
+| Bouncy Castle pinned to 1.86 | Avoids duplicated classes and Dependabot CVEs below 1.85 |
 | Bouncy Castle keep rule limited to its security providers | R8 removes the Bouncy Castle classes that neither Telos nor the providers use |
 | Picnic lookup tables left out of the APK | About 1 MB of Bouncy Castle data files for a signature scheme Telos does not use |
 | Only the translated languages are packaged (`localeFilters`) | Library translations for languages Telos does not support are dropped from `resources.arsc`, which is stored uncompressed |

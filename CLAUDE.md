@@ -19,6 +19,10 @@ Telos — a search-focused, free and open source Android launcher (package `de.m
 - Unit tests currently only exist in `core/ktx`, `core/base`, and `data/locations` — most modules have no test suite.
 - CI (`.github/workflows/build-nightly.yml`) builds `assembleDefaultNightly` nightly.
 
+## Dependabot alerts (mandatory, high priority)
+
+Fetch open GitHub Dependabot alerts at session start (`vulnerabilityAlerts` or `/dependabot/alerts`). Fix them in this session, **CRITICAL → HIGH → MODERATE → LOW**. CRITICAL and HIGH before unrelated feature work. Pin transitives in root `resolutionStrategy.eachDependency`; keep Bouncy Castle on `libs.versions.bouncycastle` (never a stale `useVersion("1.84")`). Docs: `docs/package.json` overrides plus a regenerated lockfile and `npm audit`. Do not dismiss alerts without a written false-positive. Push to the working PR; do not merge unless asked. Details: `docs/docs/developer-guide/dependabot.md`.
+
 ## Architecture
 
 The codebase is split into ~4 dozen Gradle modules under four top-level groups, from highest to lowest level:

@@ -265,7 +265,7 @@ configurations.all {
     exclude(group = "org.bouncycastle", module = "bcpkix-jdk15to18")
     exclude(group = "org.bouncycastle", module = "bcutil-jdk15to18")
     resolutionStrategy.eachDependency {
-        if (requested.group == "org.bouncycastle") useVersion("1.84")
+        if (requested.group == "org.bouncycastle") useVersion(libs.versions.bouncycastle.get())
     }
 }
 

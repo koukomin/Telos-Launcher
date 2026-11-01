@@ -18,7 +18,18 @@ Telos — a search-focused, free and open source Android launcher (package `de.m
 - Lint is non-fatal (`lint.abortOnError = false` in `app/app/build.gradle.kts`).
 - Unit tests exist in `core/ktx`, `core/base`, `data/locations`, `services/comms`, `services/store` and `data/store`; most other modules have no test suite.
 - CI (`.github/workflows/build-nightly.yml`) builds `assembleDefaultNightly` nightly.
-- Automated Daily Dependency Check: Scheduled GitHub Action (`.github/workflows/daily-dependency-check.yml`) executes daily at 06:00 UTC and updates `.github/daily-dependency-check.json`. AI agents check this status upon connecting to the repository.
+- Automated Daily Dependency Check: Scheduled GitHub Action (`.github/workflows/daily-dependency-check.yml`) executes daily at 06:00 UTC and updates `.github/daily-dependency-check.json`. That stamp is not the vulnerability list.
+
+## Dependabot alerts (mandatory, high priority)
+
+Every coding agent (Grok, Claude, Codex, Copilot, Devin, ChatGPT) must treat open GitHub Dependabot alerts as work to do, not as optional reading.
+
+1. At the start of a session, and whenever you can call the GitHub API, list **open** Dependabot alerts for `koukomin/Telos-Launcher`. GraphQL `vulnerabilityAlerts(states: OPEN)` or REST `/repos/koukomin/Telos-Launcher/dependabot/alerts`. Do not stop at `.github/daily-dependency-check.json`.
+2. Fix them **automatically** in this session, ordered **CRITICAL → HIGH → MODERATE → LOW**. CRITICAL and HIGH go before unrelated feature work. MODERATE and LOW go in the same change when you already touch the catalog, Gradle pins, or `docs/package-lock.json`.
+3. Direct versions in `gradle/libs.versions.toml` can already be patched while transitives stay old. Check the SBOM / resolved graph. Pin transitives in the root `subprojects { configurations.configureEach { resolutionStrategy.eachDependency { … } } }` block and keep Bouncy Castle / Jackson / Guava / jsoup on one version. App modules that still `useVersion` Bouncy Castle must use `libs.versions.bouncycastle`.
+4. Docs site (`docs/package.json`): bump VitePress/Vue and `overrides` for vite, esbuild, postcss, nanoid, rollup, immutable, then regenerate `docs/package-lock.json`. Run `npm audit` in `docs/` until remaining issues are explained.
+5. Do not dismiss an alert without writing why it is a false positive. Do not upgrade a GPL-incompatible library. Do not merge or release unless the user asked.
+6. Update `readme.md`, `docs/docs/developer-guide/dependabot.md`, and `THIRD_PARTY_NOTICES.md` when a library version or license changes. Push to the working PR branch.
 
 ## Architecture
 
