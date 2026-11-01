@@ -42,7 +42,6 @@ android {
                 "server-shared/src/main/java",
                 "shared/src/main/java",
                 "rish/src/main/java",
-                "provider/src/main/java",
             )
             java.setSrcDirs(roots)
             kotlin.setSrcDirs(roots)
@@ -61,4 +60,6 @@ dependencies {
     compileOnly("dev.rikka.tools.refine:annotation:${libs.versions.hidden.refine.get()}")
     annotationProcessor("dev.rikka.tools.refine:annotation-processor:${libs.versions.hidden.refine.get()}")
     compileOnly(libs.androidx.core)
+    // BinderContainer lives in Maven provider; do not compile the vendored copy.
+    compileOnly(libs.shizuku.provider)
 }
