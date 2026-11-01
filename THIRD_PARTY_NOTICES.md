@@ -7,6 +7,7 @@ based on" table in `readme.md`.
 
 | Project | License | Copyright notice found in the project |
 | --- | --- | --- |
+| [Shizuku-Next](https://github.com/rushiranpise/Shizuku-Next) (server, starter, JNI; based on [RikkaApps/Shizuku](https://github.com/RikkaApps/Shizuku) and thedjchi's fork) | Apache-2.0 | Copyright of RikkaW / RikkaApps, thedjchi, rushiranpise and Shizuku-Next contributors. Vendored under `libs/shizuku-next`. |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | Copyright (C) 2021-2026 MM2-0 and the Kvaesitso contributors |
 | [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) | Apache-2.0 | Copyright 2020-2026 JetBrains s.r.o. and Kotlin Programming Language contributors. Used only by `:desktop-linux` |
 | [labwc](https://github.com/labwc/labwc) | GPL-2.0 | Host Wayland compositor for the Telos Linux session. Not bundled; the user installs the distro package. |

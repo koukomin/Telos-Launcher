@@ -86,7 +86,10 @@ interface between the processes.
 Code: `services/app-management/.../stealth/` (`TelosPrivilegedDaemon`, `TelosStealthBlacklist`, `TelosDevOptsCloak`), UI in Settings → Advanced → Stealth and banking cloak.
 
 - `TelosPrivilegedDaemonService` is not exported. Binder callers must be the Telos UID (`Binder.getCallingUid() == Process.myUid()`).
-- Commands run through the existing Telos `ShizukuCommandService` UserService (Telos package name, shell UID 2000) or Shizuku/root fallback. That UserService is the internal daemon; the `moe.shizuku.privileged.api` UI can be hidden after it is bound.
+- The privileged **server** lives in `:libs:shizuku-next` (Shizuku-Next Apache-2.0 server,
+  starter and `libshizuku.so`). Telos System → Shizuku starts it as shell/root and the
+  watchdog can bring it back after reboot. `ShizukuCommandService` remains the UserService
+  that the server spawns as UID 2000. The standalone manager APK is optional.
 - Before a protected app is launched from the launcher, `AppLaunchGate` cloaks `development_settings_enabled`, `adb_enabled` and `adb_wifi_enabled`. With `WRITE_SECURE_SETTINGS` this is a Java `Settings.Global.putInt`. Returning to the home screen restores the previous values unless permanent stealth is on.
 - The seeded package list covers Greek banks/gov, common fintech, Play/GMS/Intune/Authenticator, and several anti-cheat titles. Heuristics match bank/wallet/pay/gov/intune/authenticator in the package name or label. Users can toggle any installed app from search.
 

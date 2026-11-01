@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_shizuku_title">Shizuku</string>
+    <string name="telos_shizuku_status">Sisäänrakennettu palvelin: %1$s • UID %2$d</string>
+    <string name="telos_shizuku_starter">Käynnistin: %1$s</string>
+    <string name="telos_shizuku_start">Käynnistä palvelin</string>
+    <string name="telos_shizuku_start_root">Käynnistä rootilla</string>
+    <string name="telos_shizuku_start_wireless">Käynnistä langattomalla virheenkorjauksella</string>
+    <string name="telos_shizuku_stop">Pysäytä palvelin</string>
+    <string name="telos_shizuku_open_devopts">Avaa kehittäjäasetukset</string>
+    <string name="telos_shizuku_settings">Palvelimen asetukset</string>
+    <string name="telos_shizuku_autostart_summary">Käynnistää Teloksen Shizuku-palvelimen käynnistyksessä ja uudelleen, jos se pysähtyy</string>
+    <string name="telos_shizuku_labs">Labs</string>
+    <string name="telos_shizuku_reboot">Käynnistä uudelleen</string>
+    <string name="telos_shizuku_recovery">Käynnistä recoveryyn</string>
+    <string name="telos_shizuku_screen_off">Sammuta näyttö</string>
+    <string name="telos_shizuku_density_reset">Palauta näytön tiheys</string>
+    <string name="telos_shizuku_shell">Komentotulkki</string>
+    <string name="telos_shizuku_run">Suorita</string>
+    <string name="telos_shizuku_watchdog_channel">Shizuku-vahti</string>
+    <string name="telos_shizuku_watchdog_title">Teloksen Shizuku-palvelin</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_shizuku_title">Shizuku</string>
+    <string name="telos_shizuku_status">Builtin server: %1$s • UID %2$d</string>
+    <string name="telos_shizuku_starter">Starter: %1$s</string>
+    <string name="telos_shizuku_start">Start server</string>
+    <string name="telos_shizuku_start_root">Start with root</string>
+    <string name="telos_shizuku_start_wireless">Start with wireless debugging</string>
+    <string name="telos_shizuku_stop">Stop server</string>
+    <string name="telos_shizuku_open_devopts">Open developer options</string>
+    <string name="telos_shizuku_settings">Server settings</string>
+    <string name="telos_shizuku_autostart_summary">Start the Telos Shizuku server on boot and restart it if it dies</string>
+    <string name="telos_shizuku_labs">Labs</string>
+    <string name="telos_shizuku_reboot">Reboot</string>
+    <string name="telos_shizuku_recovery">Reboot to recovery</string>
+    <string name="telos_shizuku_screen_off">Turn screen off</string>
+    <string name="telos_shizuku_density_reset">Reset display density</string>
+    <string name="telos_shizuku_shell">Shell</string>
+    <string name="telos_shizuku_run">Run</string>
+    <string name="telos_shizuku_watchdog_channel">Shizuku watchdog</string>
+    <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
+</resources>

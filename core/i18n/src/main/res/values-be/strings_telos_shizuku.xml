@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_shizuku_title">Shizuku</string>
+    <string name="telos_shizuku_status">Встроенный сервер: %1$s • UID %2$d</string>
+    <string name="telos_shizuku_starter">Стартер: %1$s</string>
+    <string name="telos_shizuku_start">Запустить сервер</string>
+    <string name="telos_shizuku_start_root">Запуск от root</string>
+    <string name="telos_shizuku_start_wireless">Запуск через беспроводную отладку</string>
+    <string name="telos_shizuku_stop">Остановить сервер</string>
+    <string name="telos_shizuku_open_devopts">Открыть параметры разработчика</string>
+    <string name="telos_shizuku_settings">Настройки сервера</string>
+    <string name="telos_shizuku_autostart_summary">Запускает сервер Shizuku Telos при загрузке и перезапускает его, если он остановился</string>
+    <string name="telos_shizuku_labs">Labs</string>
+    <string name="telos_shizuku_reboot">Перезагрузка</string>
+    <string name="telos_shizuku_recovery">Перезагрузка в recovery</string>
+    <string name="telos_shizuku_screen_off">Выключить экран</string>
+    <string name="telos_shizuku_density_reset">Сбросить плотность экрана</string>
+    <string name="telos_shizuku_shell">Оболочка</string>
+    <string name="telos_shizuku_run">Выполнить</string>
+    <string name="telos_shizuku_watchdog_channel">Сторож Shizuku</string>
+    <string name="telos_shizuku_watchdog_title">Сервер Shizuku Telos</string>
+</resources>

@@ -13,6 +13,31 @@
             android:multiprocess="false"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
+        <service
+            android:name=".shizuku.TelosShizukuWatchdog"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Telos Shizuku server watchdog" />
+        </service>
+        <receiver
+            android:name=".shizuku.TelosShizukuBootReceiver"
+            android:exported="true"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".shizuku.TelosShizukuStartReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="${applicationId}.START" />
+            </intent-filter>
+        </receiver>
         <receiver
             android:name=".ObtainiumUpdateReceiver"
             android:exported="true">

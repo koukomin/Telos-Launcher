@@ -43,9 +43,16 @@ Root availability is checked once per process; if you grant root later, restart 
 
 ### Setting up Shizuku
 
-1. Install Shizuku and start it (with wireless debugging, or with root).
-2. Open Freeze Manager. The backend state says "Tap to grant permission". Tap it and allow the request.
-3. The state turns to "Permission granted".
+Telos includes a built-in Shizuku server (starter and server classes from
+[Shizuku-Next](https://github.com/rushiranpise/Shizuku-Next), Apache-2.0).
+
+1. Open **Telos System → Shizuku**.
+2. Tap **Start server** (root if the device is rooted, otherwise wireless debugging).
+3. Grant the Shizuku permission when asked. Freeze Manager then shows **Permission granted**.
+4. Optional: enable autostart so the watchdog starts the server on boot.
+
+The standalone `moe.shizuku.privileged.api` app is no longer required. You can still freeze it
+from Privacy Shield after the Telos server is running.
 
 ### Dhizuku
 

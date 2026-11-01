@@ -215,6 +215,7 @@ The **Shizuku & Privacy Shield** hub lives in Settings → Advanced, as the **Pr
 
 | Control | What it does |
 | --- | --- |
+| Built-in Shizuku server | Telos System → Shizuku starts the vendored Next server (`libshizuku.so`) with root or wireless debugging, autostart and a watchdog |
 | Shizuku engine status | Shows binder alive state, UID, version and SELinux context, plus Telos's in-package shell session |
 | Freeze external Shizuku | `pm disable-user` / hide `moe.shizuku.privileged.api` while Telos keeps privileged commands |
 | Shizuku apps | Installed packages that request `API_V23` or declare `moe.shizuku.client.V3_SUPPORT`; grant or revoke API access, launch, force-stop, and grant or revoke `WRITE_SECURE_SETTINGS` / `DUMP` / `PACKAGE_USAGE_STATS` |

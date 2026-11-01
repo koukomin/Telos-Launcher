@@ -17,7 +17,7 @@ subprojects {
         resolutionStrategy.eachDependency {
             when {
                 requested.group == "com.fasterxml.jackson.core" &&
-                    requested.name in setOf("jackson-core", "jackson-databind") ->
+                    requested.name in setOf("jackson-core", "jackson-databind", "jackson-annotations") ->
                     useVersion(libs.versions.jacksonCore.get())
                 requested.group == "com.fasterxml.jackson.dataformat" &&
                     requested.name == "jackson-dataformat-yaml" ->

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_shizuku_title">Shizuku</string>
+    <string name="telos_shizuku_status">Serveur intégré : %1$s • UID %2$d</string>
+    <string name="telos_shizuku_starter">Démarreur : %1$s</string>
+    <string name="telos_shizuku_start">Démarrer le serveur</string>
+    <string name="telos_shizuku_start_root">Démarrer avec root</string>
+    <string name="telos_shizuku_start_wireless">Démarrer avec le débogage sans fil</string>
+    <string name="telos_shizuku_stop">Arrêter le serveur</string>
+    <string name="telos_shizuku_open_devopts">Ouvrir les options pour les développeurs</string>
+    <string name="telos_shizuku_settings">Paramètres du serveur</string>
+    <string name="telos_shizuku_autostart_summary">Démarre le serveur Shizuku de Telos au démarrage et le relance s’il s’arrête</string>
+    <string name="telos_shizuku_labs">Labs</string>
+    <string name="telos_shizuku_reboot">Redémarrer</string>
+    <string name="telos_shizuku_recovery">Redémarrer en recovery</string>
+    <string name="telos_shizuku_screen_off">Éteindre l’écran</string>
+    <string name="telos_shizuku_density_reset">Réinitialiser la densité d’affichage</string>
+    <string name="telos_shizuku_shell">Shell</string>
+    <string name="telos_shizuku_run">Exécuter</string>
+    <string name="telos_shizuku_watchdog_channel">Watchdog Shizuku</string>
+    <string name="telos_shizuku_watchdog_title">Serveur Shizuku Telos</string>
+</resources>

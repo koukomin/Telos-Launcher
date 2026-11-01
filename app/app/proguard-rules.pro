@@ -4,6 +4,8 @@
 
 # Preserve Shizuku internal methods accessed via reflection by SmartFreezeService and TelosShellEngine
 -keep class rikka.shizuku.** { *; }
+-keep class moe.shizuku.** { *; }
+-keep class rikka.rish.** { *; }
 
 # Preserve Compose Material Icons nested objects. In keep patterns `$` is the
 # end-of-name token, so a literal inner-class `$` is written as `$$`. Empty

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_shizuku_title">Shizuku</string>
+    <string name="telos_shizuku_status">Indlejret server: %1$s • UID %2$d</string>
+    <string name="telos_shizuku_starter">Starter: %1$s</string>
+    <string name="telos_shizuku_start">Start server</string>
+    <string name="telos_shizuku_start_root">Start med root</string>
+    <string name="telos_shizuku_start_wireless">Start med trådløs fejlfinding</string>
+    <string name="telos_shizuku_stop">Stop server</string>
+    <string name="telos_shizuku_open_devopts">Åbn indstillinger for udviklere</string>
+    <string name="telos_shizuku_settings">Serverindstillinger</string>
+    <string name="telos_shizuku_autostart_summary">Starter Telos Shizuku-serveren ved boot og igen, hvis den stopper</string>
+    <string name="telos_shizuku_labs">Labs</string>
+    <string name="telos_shizuku_reboot">Genstart</string>
+    <string name="telos_shizuku_recovery">Genstart i recovery</string>
+    <string name="telos_shizuku_screen_off">Sluk skærmen</string>
+    <string name="telos_shizuku_density_reset">Nulstil skærmtæthed</string>
+    <string name="telos_shizuku_shell">Skal</string>
+    <string name="telos_shizuku_run">Kør</string>
+    <string name="telos_shizuku_watchdog_channel">Shizuku-watchdog</string>
+    <string name="telos_shizuku_watchdog_title">Telos Shizuku-server</string>
+</resources>

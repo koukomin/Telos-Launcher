@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_shizuku_title">Shizuku</string>
+    <string name="telos_shizuku_status">خادم مضمّن: %1$s • UID %2$d</string>
+    <string name="telos_shizuku_starter">المُشغِّل: %1$s</string>
+    <string name="telos_shizuku_start">تشغيل الخادم</string>
+    <string name="telos_shizuku_start_root">التشغيل بصلاحية root</string>
+    <string name="telos_shizuku_start_wireless">التشغيل عبر تصحيح الأخطاء اللاسلكي</string>
+    <string name="telos_shizuku_stop">إيقاف الخادم</string>
+    <string name="telos_shizuku_open_devopts">فتح خيارات المطوّر</string>
+    <string name="telos_shizuku_settings">إعدادات الخادم</string>
+    <string name="telos_shizuku_autostart_summary">يشغّل خادم Shizuku في Telos عند الإقلاع ويعيد تشغيله إذا توقف</string>
+    <string name="telos_shizuku_labs">Labs</string>
+    <string name="telos_shizuku_reboot">إعادة التشغيل</string>
+    <string name="telos_shizuku_recovery">إعادة التشغيل إلى recovery</string>
+    <string name="telos_shizuku_screen_off">إيقاف الشاشة</string>
+    <string name="telos_shizuku_density_reset">إعادة كثافة العرض</string>
+    <string name="telos_shizuku_shell">صدفة</string>
+    <string name="telos_shizuku_run">تشغيل</string>
+    <string name="telos_shizuku_watchdog_channel">مراقب Shizuku</string>
+    <string name="telos_shizuku_watchdog_title">خادم Shizuku في Telos</string>
+</resources>

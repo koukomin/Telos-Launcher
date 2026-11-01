@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_shizuku_title">Shizuku</string>
+    <string name="telos_shizuku_status">অন্তর্নির্মিত সার্ভার: %1$s • UID %2$d</string>
+    <string name="telos_shizuku_starter">স্টার্টার: %1$s</string>
+    <string name="telos_shizuku_start">সার্ভার চালু করুন</string>
+    <string name="telos_shizuku_start_root">root দিয়ে চালু</string>
+    <string name="telos_shizuku_start_wireless">ওয়্যারলেস ডিবাগিং দিয়ে চালু</string>
+    <string name="telos_shizuku_stop">সার্ভার বন্ধ</string>
+    <string name="telos_shizuku_open_devopts">ডেভেলপার অপশন খুলুন</string>
+    <string name="telos_shizuku_settings">সার্ভার সেটিংস</string>
+    <string name="telos_shizuku_autostart_summary">বুটে Telos-এর Shizuku সার্ভার চালু করে এবং থেমে গেলে আবার চালায়</string>
+    <string name="telos_shizuku_labs">Labs</string>
+    <string name="telos_shizuku_reboot">রিবুট</string>
+    <string name="telos_shizuku_recovery">recovery-তে রিবুট</string>
+    <string name="telos_shizuku_screen_off">স্ক্রিন বন্ধ</string>
+    <string name="telos_shizuku_density_reset">ডিসপ্লে ঘনত্ব রিসেট</string>
+    <string name="telos_shizuku_shell">শেল</string>
+    <string name="telos_shizuku_run">চালান</string>
+    <string name="telos_shizuku_watchdog_channel">Shizuku ওয়াচডগ</string>
+    <string name="telos_shizuku_watchdog_title">Telos Shizuku সার্ভার</string>
+</resources>

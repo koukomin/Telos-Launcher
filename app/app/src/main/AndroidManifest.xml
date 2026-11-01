@@ -50,7 +50,26 @@
     <!-- === TELOS_PENDING_REVIEW_END: desktop_taskbar_running_apps === -->
 
     <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_permissions === -->
+    <permission-group
+        android:name="moe.shizuku.manager.permission-group.API"
+        android:label="@string/telos_shizuku_title"
+        android:description="@string/telos_shizuku_autostart_summary" />
+    <permission
+        android:name="moe.shizuku.manager.permission.MANAGER"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="moe.shizuku.manager.permission.MANAGER" />
+    <permission
+        android:name="moe.shizuku.manager.permission.API_V23"
+        android:label="@string/telos_shizuku_title"
+        android:description="@string/telos_shizuku_autostart_summary"
+        android:permissionGroup="moe.shizuku.manager.permission-group.API"
+        android:protectionLevel="dangerous" />
+    <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
     <uses-permission android:name="dev.rikka.shizuku.permission.API_V23" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+    <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" android:usesPermissionFlags="neverForLocation" tools:targetApi="33" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />

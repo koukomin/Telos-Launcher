@@ -220,6 +220,11 @@ fun SystemDashboardScreen() {
                     onClick = { currentTab = 3 },
                     text = { Text(stringResource(I18nR.string.security_hub_tab_title)) }
                 )
+                androidx.compose.material3.Tab(
+                    selected = currentTab == 4,
+                    onClick = { currentTab = 4 },
+                    text = { Text(stringResource(I18nR.string.telos_shizuku_title)) }
+                )
             }
             if (currentTab == 1) {
                 SystemAppsTab(onOpenDetails = { pkg -> backStack.add(SystemAppDetailsRoute(pkg)) })
@@ -229,6 +234,8 @@ fun SystemDashboardScreen() {
                 androidx.compose.foundation.lazy.LazyColumn(Modifier.fillMaxSize()) {
                     item { de.mm20.launcher2.ui.settings.security.TelosSecurityHubBody() }
                 }
+            } else if (currentTab == 4) {
+                SystemShizukuTab()
             } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),

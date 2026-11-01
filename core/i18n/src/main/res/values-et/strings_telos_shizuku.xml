@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_shizuku_title">Shizuku</string>
+    <string name="telos_shizuku_status">Sisseehitatud server: %1$s • UID %2$d</string>
+    <string name="telos_shizuku_starter">Käivitaja: %1$s</string>
+    <string name="telos_shizuku_start">Käivita server</string>
+    <string name="telos_shizuku_start_root">Käivita rootiga</string>
+    <string name="telos_shizuku_start_wireless">Käivita juhtmevaba silumisega</string>
+    <string name="telos_shizuku_stop">Peata server</string>
+    <string name="telos_shizuku_open_devopts">Ava arendaja suvandid</string>
+    <string name="telos_shizuku_settings">Serveri seaded</string>
+    <string name="telos_shizuku_autostart_summary">Käivitab Telose Shizuku serveri alglaadimisel ja uuesti, kui see peatub</string>
+    <string name="telos_shizuku_labs">Labs</string>
+    <string name="telos_shizuku_reboot">Taaskäivita</string>
+    <string name="telos_shizuku_recovery">Taaskäivita recoverysse</string>
+    <string name="telos_shizuku_screen_off">Lülita ekraan välja</string>
+    <string name="telos_shizuku_density_reset">Lähtesta ekraani tihedus</string>
+    <string name="telos_shizuku_shell">Kest</string>
+    <string name="telos_shizuku_run">Käivita</string>
+    <string name="telos_shizuku_watchdog_channel">Shizuku valve</string>
+    <string name="telos_shizuku_watchdog_title">Telose Shizuku server</string>
+</resources>

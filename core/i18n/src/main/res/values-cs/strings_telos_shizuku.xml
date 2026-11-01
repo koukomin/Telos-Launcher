@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_shizuku_title">Shizuku</string>
+    <string name="telos_shizuku_status">Vestavěný server: %1$s • UID %2$d</string>
+    <string name="telos_shizuku_starter">Starter: %1$s</string>
+    <string name="telos_shizuku_start">Spustit server</string>
+    <string name="telos_shizuku_start_root">Spustit s root</string>
+    <string name="telos_shizuku_start_wireless">Spustit s bezdrátovým laděním</string>
+    <string name="telos_shizuku_stop">Zastavit server</string>
+    <string name="telos_shizuku_open_devopts">Otevřít možnosti pro vývojáře</string>
+    <string name="telos_shizuku_settings">Nastavení serveru</string>
+    <string name="telos_shizuku_autostart_summary">Spustí server Shizuku Telos při startu a znovu, pokud se zastaví</string>
+    <string name="telos_shizuku_labs">Labs</string>
+    <string name="telos_shizuku_reboot">Restartovat</string>
+    <string name="telos_shizuku_recovery">Restartovat do recovery</string>
+    <string name="telos_shizuku_screen_off">Vypnout obrazovku</string>
+    <string name="telos_shizuku_density_reset">Obnovit hustotu obrazovky</string>
+    <string name="telos_shizuku_shell">Shell</string>
+    <string name="telos_shizuku_run">Spustit</string>
+    <string name="telos_shizuku_watchdog_channel">Watchdog Shizuku</string>
+    <string name="telos_shizuku_watchdog_title">Server Shizuku Telos</string>
+</resources>

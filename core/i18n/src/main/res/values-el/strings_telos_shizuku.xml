@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_shizuku_title">Shizuku</string>
+    <string name="telos_shizuku_status">Ενσωματωμένος διακομιστής: %1$s • UID %2$d</string>
+    <string name="telos_shizuku_starter">Εκκινητής: %1$s</string>
+    <string name="telos_shizuku_start">Εκκίνηση διακομιστή</string>
+    <string name="telos_shizuku_start_root">Εκκίνηση με root</string>
+    <string name="telos_shizuku_start_wireless">Εκκίνηση με ασύρματο debugging</string>
+    <string name="telos_shizuku_stop">Διακοπή διακομιστή</string>
+    <string name="telos_shizuku_open_devopts">Επιλογές για προγραμματιστές</string>
+    <string name="telos_shizuku_settings">Ρυθμίσεις διακομιστή</string>
+    <string name="telos_shizuku_autostart_summary">Εκκίνηση του διακομιστή Shizuku του Telos στην εκκίνηση και επανεκκίνηση αν σταματήσει</string>
+    <string name="telos_shizuku_labs">Labs</string>
+    <string name="telos_shizuku_reboot">Επανεκκίνηση</string>
+    <string name="telos_shizuku_recovery">Επανεκκίνηση σε recovery</string>
+    <string name="telos_shizuku_screen_off">Σβήσιμο οθόνης</string>
+    <string name="telos_shizuku_density_reset">Επαναφορά πυκνότητας οθόνης</string>
+    <string name="telos_shizuku_shell">Κέλυφος</string>
+    <string name="telos_shizuku_run">Εκτέλεση</string>
+    <string name="telos_shizuku_watchdog_channel">Επόπτης Shizuku</string>
+    <string name="telos_shizuku_watchdog_title">Διακομιστής Shizuku του Telos</string>
+</resources>

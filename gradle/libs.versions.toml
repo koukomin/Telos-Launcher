@@ -1,7 +1,7 @@
 [versions]
 mustache = "0.9.14"
-jacksonCore = "2.22.4"
-jacksonDataformatYaml = "2.22.4"
+jacksonCore = "2.18.12"
+jacksonDataformatYaml = "2.18.12"
 minSdk = "26"
 compileSdk = "37"
 compileSdkMinor = "2"
