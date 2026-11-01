@@ -56,8 +56,8 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation(compose.material3)
     implementation(compose.materialIconsExtended)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.11.0")
     // === TELOS_PENDING_REVIEW_START: telos_elastic_sharded_pqc_vault ===
     implementation("org.bouncycastle:bcprov-jdk18on:1.86")
     // === TELOS_PENDING_REVIEW_END: telos_elastic_sharded_pqc_vault ===

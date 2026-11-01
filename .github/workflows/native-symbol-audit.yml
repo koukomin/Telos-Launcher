@@ -13,7 +13,7 @@ jobs:
   audit-native-symbols:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Audit Native .so Library Stripping
         run: |

@@ -1235,7 +1235,6 @@ adapted, the original license is respected.
 
 | Project | License | What Telos uses it for |
 | --- | --- | --- |
-| [IronFox](https://gitlab.com/ironfox-oss/IronFox) | AGPL-3.0-or-later build scripts; per-file MPL-2.0 / Apache-2.0 / GPL licenses | Pinned source and build preparation for Ironewolf; not shipped in the launcher APK yet |
 | [libarchive](https://libarchive.org) with [libarchive-android](https://github.com/zhanghai/libarchive-android) | BSD-2-Clause, Apache-2.0 | RAR and RAR5 reading in Telos Files (standard version only, prebuilt library, used unchanged) |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | The whole launcher, plugin SDK and architecture |
 | [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) | Apache-2.0 | JVM desktop shell in `:desktop-linux` only (not packaged in the Android APK) |
@@ -1448,5 +1447,13 @@ Camera recognizes QR and common barcodes and offers private multipage PDF scans 
 Release validation and device/account limitations are recorded in [the integration record](docs/docs/developer-guide/system-network-integration-work.md). The current PR is not a published release.
 
 Translation status for the upcoming AppOps release: Greek has complete inventoried changed-string coverage. Other locales retain existing translations and use English fallback for missing new strings, as explicitly authorized by the user. See the [partial translation report](docs/docs/developer-guide/partial-translations-2026-10-28.md). Live Shizuku/root and Stremio/Trakt account interoperability remain device-unverified.
+
+### CI runtime maintenance
+
+GitHub Actions use Node.js 24 runtimes and current maintained Action majors,
+including `setup-java@v6`. Docs use the latest Node.js LTS. Daily Dependabot checks
+propose future Action updates through CI-tested PRs; fork owners must enable
+Dependabot version updates in repository settings. See the
+[maintenance procedure](docs/docs/developer-guide/releases.md#github-actions-runtime-maintenance).
 
 SQLite startup config reads the result of `PRAGMA mmap_size` through a cursor, preventing the `SQLITE_OK` startup crash while preserving existing launcher data. Android instrumentation checks fresh database opening and reopening with retained records.

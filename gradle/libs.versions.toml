@@ -10,7 +10,7 @@ targetSdk = "36"
 pluginSdk = "2.3.0"
 
 android-gradle-plugin = "9.5.0"
-ksp-gradle-plugin = "2.3.12"
+ksp-gradle-plugin = "2.3.13"
 
 kotlin = "2.4.21"
 kotlinx-coroutines = "1.11.0"
@@ -20,7 +20,7 @@ kotlinx-serialization = "1.12.0"
 jetbrains-markdown = "0.7.18"
 
 androidx-compose = "1.12.1"
-androidx-compose-material3 = "1.5.0-beta01"
+androidx-compose-material3 = "1.5.0-beta02"
 androidx-compose-material3adaptive = "1.3.0"
 androidx-lifecycle = "2.11.0"
 androidx-core = "1.19.1"
@@ -29,20 +29,20 @@ androidx-activity = "1.13.0"
 androidx-navigation3 = "1.2.0"
 
 media3 = "1.11.1"
-nextlib = "1.11.1-0.16.0"
+nextlib = "1.11.1-0.17.0"
 
 # Careful, 2.10.0 seems to require some fixes, or jobs aren't executed
 androidx-work = "2.12.0"
 androidx-browser = "1.10.0"
-androidx-webkit = "1.17.1"
-androidx-palette = "1.0.0"
+androidx-webkit = "1.18.0"
+androidx-palette = "1.1.0"
 androidx-room = "2.8.5"
 androidx-constraint-layout = "1.1.2"
 androidx-emojipicker = "1.7.0"
 
 accompanist = "0.36.0"
 coil = "2.7.0"
-okhttp = "5.5.0"
+okhttp = "5.5.1"
 sshj = "0.41.2"
 smbj = "0.15.0"
 commons-net = "3.13.0"
@@ -54,7 +54,7 @@ bouncycastle = "1.86"
 pdfbox-android = "2.0.27.0"
 zxing = "3.5.4"
 koin = "4.2.2"
-ktor = "3.6.0"
+ktor = "3.6.1"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
@@ -62,9 +62,9 @@ espressoCore = "3.7.0"
 osmOpeningHours = "0.4.0"
 
 shizuku = "13.1.5"
-dhizuku = "2.6.0"
+dhizuku = "2.7.0"
 
-sqlcipher = "4.19.1"
+sqlcipher = "4.20.0"
 taglib = "1.0.6"
 libtorrent4j = "2.1.0-39"
 youtubedl = "0.18.1"
@@ -147,7 +147,7 @@ accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "androidx-constraint-layout" }
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version = "1.4.2" }
 androidx-securitycrypto = { group = "androidx.security", name = "security-crypto", version = "1.1.0" }
-androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.2.1" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.3.0" }
 androidx-emojipicker = { group = "androidx.emoji2", name = "emoji2-emojipicker", version.ref = "androidx-emojipicker" }
 
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
@@ -179,7 +179,7 @@ commons-text = { group = "org.apache.commons", name = "commons-text", version = 
 stringsimilarity = { group = "com.aallam.similarity", name = "string-similarity-kotlin", version = "0.1.0" }
 
 #noinspection NewerVersionAvailable 4.4.2 is the last GPL compatible version, don't update to 5.x
-mathparser = { group = "org.mariuszgromada.math", name = "MathParser.org-mXparser", version = "6.1.1" }
+mathparser = { group = "org.mariuszgromada.math", name = "MathParser.org-mXparser", version = "6.1.2" }
 
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidxcompose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
@@ -213,4 +213,4 @@ kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.re
 dokka = { id = "org.jetbrains.dokka", version = "2.2.0" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-jetbrains-compose = { id = "org.jetbrains.compose", version = "1.8.2" }
+jetbrains-compose = { id = "org.jetbrains.compose", version = "1.12.2" }

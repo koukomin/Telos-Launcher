@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -56,6 +57,7 @@ data object WebAppsSettingsRoute : NavKey
 
 @Composable
 fun WebAppsSettingsScreen() {
+    val context = LocalContext.current
     val viewModel: WebAppsSettingsScreenVM = viewModel()
     val shortcuts by viewModel.shortcuts.collectAsState()
     val direction by viewModel.direction.collectAsState()
@@ -78,7 +80,6 @@ fun WebAppsSettingsScreen() {
     var groupToDelete by remember { mutableStateOf<de.mm20.launcher2.preferences.WebAppGroup?>(null) }
     var shortcutToDelete by remember { mutableStateOf<de.mm20.launcher2.search.WebAppShortcut?>(null) }
     var presetToAdd by remember { mutableStateOf<WebAppPresetCategory?>(null) }
-    val context = androidx.compose.ui.platform.LocalContext.current
 
     PreferenceScreen(
         title = stringResource(I18nR.string.preference_screen_web_app_shortcuts),

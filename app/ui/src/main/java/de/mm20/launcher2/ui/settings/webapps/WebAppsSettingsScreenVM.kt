@@ -42,7 +42,7 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
     private val panelManager: WebAppsPanelManager by inject()
 
     val embeddedEngine = browsingSettings.engine
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "ironewolf")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "webview")
 
     fun setEmbeddedEngine(engine: String) = browsingSettings.setEngine(engine)
 

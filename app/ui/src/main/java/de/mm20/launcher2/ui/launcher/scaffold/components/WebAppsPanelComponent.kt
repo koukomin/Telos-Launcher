@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.icons.TelosIcons
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -19,8 +20,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -254,7 +253,7 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                             editMode = false
                             scope.launch { state.unlock() }
                         }) {
-                            Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(I18nR.string.action_done))
+                            Icon(TelosIcons.ArrowBack, stringResource(I18nR.string.action_done))
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(

@@ -15,7 +15,7 @@ jobs:
   update-fdroid-metadata:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Update F-Droid Recipe & Version Metadata
         run: |

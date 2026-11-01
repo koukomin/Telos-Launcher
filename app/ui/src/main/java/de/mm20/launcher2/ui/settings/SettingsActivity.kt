@@ -800,6 +800,8 @@ open class SettingsActivity : BaseActivity() {
             SettingsDeepLinkContract.ROUTE_NETWORK_PRIVATE_DNS -> "telos_network_app"
             SettingsDeepLinkContract.ROUTE_SYSTEM -> "telos_system_app"
             SettingsDeepLinkContract.ROUTE_WEATHER -> "telos_weather_app"
+            SettingsDeepLinkContract.ROUTE_SYNC -> "telos_sync_app"
+            SettingsDeepLinkContract.ROUTE_BACKUP -> "telos_backup_app"
             SettingsDeepLinkContract.ROUTE_TRASH -> "telos_trash_app"
             ROUTE_CALCULATOR -> "telos_calculator_app"
             ROUTE_VOICE_RECORDER -> "telos_voice_recorder_app"

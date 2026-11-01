@@ -1,13 +1,11 @@
 package de.mm20.launcher2.ui.system
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.base.R as BaseR
+import de.mm20.launcher2.icons.TelosIcons
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.compose.foundation.clickable
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -101,7 +99,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                         shape = MaterialTheme.shapes.extraLarge,
                         trailingIcon = {
                             IconButton(onClick = { query = ""; searchExpanded = false }) {
-                                Icon(Icons.Default.Close, contentDescription = "Close Search")
+                                Icon(TelosIcons.Close, contentDescription = "Close Search")
                             }
                         }
                     )
@@ -113,7 +111,7 @@ fun SystemAppsTab(onOpenDetails: (String) -> Unit) {
                         modifier = Modifier.weight(1f).padding(start = 8.dp)
                     )
                     IconButton(onClick = { searchExpanded = true }) {
-                        Icon(Icons.Default.Search, contentDescription = stringResource(I18nR.string.hc_search))
+                        Icon(TelosIcons.Search, contentDescription = stringResource(I18nR.string.hc_search))
                     }
                     IconButton(onClick = { frozenOnly = !frozenOnly }) {
                         Icon(

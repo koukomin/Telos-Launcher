@@ -40,7 +40,7 @@ def wait_for_rendered_ui(name, timeout=40):
     deadline = time.monotonic() + timeout
     expected = {
         "01-launcher": [], "02-media-listen": ["Music"],
-        "03-youtube-music": ["YouTube Music"], "04-youtube-video": ["YouTube"],
+        "03-youtube-music": ["YouTube Music", "YT Music"], "04-youtube-video": ["YouTube"],
         "05-stremio-fork": ["Stremio Fork"], "06-files": ["Storage"],
         "07-store": ["Telos apps"], "08-viewer": ["Photos"], "09-notes": ["Notes"],
         "10-calendar": ["Today"], "11-calculator": ["VAT"], "12-downloads": ["Downloads"],

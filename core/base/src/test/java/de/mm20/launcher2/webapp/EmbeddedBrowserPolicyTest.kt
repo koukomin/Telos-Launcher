@@ -4,25 +4,10 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class EmbeddedBrowserPolicyTest {
-    @Test fun bundledEngineIsTheDefault() {
-        assertEquals(EmbeddedBrowserPolicy.WebView,
-            EmbeddedBrowserPolicy.select(EmbeddedBrowserPolicy.Default, true))
-    }
-
-    @Test fun explicitCompatibilityChoiceIsRetained() {
-        assertEquals(EmbeddedBrowserPolicy.WebView,
-            EmbeddedBrowserPolicy.select(EmbeddedBrowserPolicy.WebView, true))
-    }
-
-    @Test fun absentRuntimeCannotBreakExistingWebApps() {
-        assertEquals(EmbeddedBrowserPolicy.WebView,
-            EmbeddedBrowserPolicy.select(EmbeddedBrowserPolicy.Default, false))
-    }
-
-    @Test fun unknownPersistedValuesUseTheAvailableDefault() {
-        assertEquals(EmbeddedBrowserPolicy.WebView,
-            EmbeddedBrowserPolicy.select("old-value", true))
-        assertEquals(EmbeddedBrowserPolicy.WebView,
-            EmbeddedBrowserPolicy.select("old-value", false))
+    @Test fun webViewIsTheOnlyEngine() {
+        assertEquals(EmbeddedBrowserPolicy.WebView, EmbeddedBrowserPolicy.select(EmbeddedBrowserPolicy.Default))
+        assertEquals(EmbeddedBrowserPolicy.WebView, EmbeddedBrowserPolicy.select(EmbeddedBrowserPolicy.WebView))
+        assertEquals(EmbeddedBrowserPolicy.WebView, EmbeddedBrowserPolicy.select("old-value"))
+        assertEquals(EmbeddedBrowserPolicy.WebView, EmbeddedBrowserPolicy.select("ironewolf"))
     }
 }

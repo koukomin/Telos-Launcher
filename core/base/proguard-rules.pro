@@ -16,6 +16,8 @@
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable
 
-# Preserve Compose Material Icons across all modules
+# Preserve Compose Material Icons nested objects ($$ = literal $). See app/app/proguard-rules.pro.
 -keep class androidx.compose.material.icons.** { *; }
+-keep class androidx.compose.material.icons.Icons { *; }
+-keep class androidx.compose.material.icons.Icons$$** { *; }
 -dontwarn androidx.compose.material.icons.**

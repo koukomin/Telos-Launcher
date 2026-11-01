@@ -16,7 +16,7 @@ jobs:
   audit-strings:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Validate XML Strings Syntax & Format Specifiers
         run: |

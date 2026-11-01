@@ -294,6 +294,7 @@ Copyright © 2025–2026 A-EDev. GPL-3.0. Upstream: https://github.com/Flow-Tube
 
 Copyright NewPipe contributors. GPL-3.0-or-later. https://github.com/TeamNewPipe/NewPipeExtractor, version v0.26.5. Used as a dependency for YouTube search, metadata and stream extraction.
 
+
 ## Tor Android / Tor
 
 Telos uses the unmodified `info.guardianproject:tor-android:0.4.9.14` AAR
