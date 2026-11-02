@@ -51,8 +51,8 @@ android {
 
 dependencies {
     implementation(libs.kotlin.stdlib)
-    implementation("androidx.annotation:annotation:1.9.1")
-    implementation("com.google.code.gson:gson:2.13.1")
+    implementation("androidx.annotation:annotation:1.11.0")
+    implementation("com.google.code.gson:gson:2.15.0")
     implementation("dev.rikka.rikkax.parcelablelist:parcelablelist:2.0.1")
     implementation("dev.rikka.hidden:compat:4.4.0")
     compileOnly("dev.rikka.hidden:stub:4.4.0")
