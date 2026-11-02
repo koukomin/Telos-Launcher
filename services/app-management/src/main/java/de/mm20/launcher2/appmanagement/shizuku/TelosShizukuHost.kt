@@ -12,6 +12,7 @@ import de.mm20.launcher2.ktx.PrivilegedShell
 import de.mm20.launcher2.ktx.ShizukuProcesses
 import de.mm20.launcher2.ktx.TelosShellEngine
 import java.io.File
+import java.util.zip.ZipFile
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -52,8 +53,43 @@ object TelosShizukuHost {
     private val _status = MutableStateFlow(HostStatus())
     val status: StateFlow<HostStatus> = _status.asStateFlow()
 
-    fun starterFile(context: Context): File =
-        File(context.applicationInfo.nativeLibraryDir, "libshizuku.so")
+    fun starterFile(context: Context): File {
+        val extracted = File(context.applicationInfo.nativeLibraryDir, "libshizuku.so")
+        if (extracted.exists()) return extracted
+        return File(context.applicationContext.filesDir, "libshizuku.so")
+    }
+
+    /** Copy libshizuku.so out of the APK when the installer left nativeLibraryDir empty. */
+    private fun ensureStarter(context: Context): File? {
+        val native = File(context.applicationInfo.nativeLibraryDir, "libshizuku.so")
+        if (native.exists() && native.length() > 0L) return native
+        val dest = File(context.applicationContext.filesDir, "libshizuku.so")
+        if (dest.exists() && dest.length() > 0L) return dest
+        val apks = buildList {
+            add(context.applicationInfo.sourceDir)
+            context.applicationInfo.publicSourceDir?.let(::add)
+            context.applicationInfo.splitSourceDirs?.forEach(::add)
+        }.map(::File).distinct()
+        val abis = Build.SUPPORTED_ABIS.toList()
+        for (apk in apks) {
+            if (!apk.isFile) continue
+            val copied = runCatching {
+                ZipFile(apk).use { zip ->
+                    val entry = abis.firstNotNullOfOrNull { zip.getEntry("lib/$it/libshizuku.so") }
+                        ?: return@use false
+                    dest.parentFile?.mkdirs()
+                    dest.outputStream().use { out -> zip.getInputStream(entry).copyTo(out) }
+                    true
+                }
+            }.getOrDefault(false)
+            if (copied && dest.length() > 0L) {
+                dest.setReadable(true, false)
+                dest.setExecutable(true, false)
+                return dest
+            }
+        }
+        return dest.takeIf { it.exists() && it.length() > 0L }
+    }
 
     fun pcAdbCommand(context: Context): String {
         val starter = starterFile(context).absolutePath
@@ -110,8 +146,9 @@ object TelosShizukuHost {
                 refresh(app)
                 return@withContext Result.success("running")
             }
-            val starter = starterFile(app)
-            if (!starter.canExecute() && !starter.exists()) {
+            val starter = ensureStarter(app)
+                ?: return@withContext Result.failure(IllegalStateException("libshizuku.so missing"))
+            if (!starter.exists() || starter.length() == 0L) {
                 return@withContext Result.failure(IllegalStateException("libshizuku.so missing"))
             }
             val apk = app.applicationInfo.sourceDir

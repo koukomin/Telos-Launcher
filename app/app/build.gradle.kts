@@ -61,8 +61,9 @@ android {
         resources.excludes.add("META-INF/*.version")
         // Picnic (legacy post-quantum signatures) lookup tables: nothing in Telos uses Picnic
         resources.excludes.add("org/bouncycastle/pqc/legacy/picnic/**")
-        // youtubedl-android runs Python and FFmpeg from the extracted native library folder
-        if (mediaRuntime) jniLibs.useLegacyPackaging = true
+        // Extract .so files so the Shizuku starter can be exec'd from nativeLibraryDir
+        // (libshizuku.so) and so youtubedl-android can run Python/FFmpeg from disk.
+        jniLibs.useLegacyPackaging = true
         
         // Keep the selected ABI's native libraries; size filtering must not empty a 32-bit APK.
         listOf("arm64-v8a", "armeabi-v7a", "x86", "x86_64")

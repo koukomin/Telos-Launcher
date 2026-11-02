@@ -17,6 +17,12 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
         consumerProguardFiles("consumer-rules.pro")
+        externalNativeBuild {
+            cmake {
+                targets("libshizuku.so")
+                arguments("-DANDROID_STL=c++_shared")
+            }
+        }
     }
     buildFeatures {
         aidl = false
@@ -29,6 +35,7 @@ android {
     kotlin {
         compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
     }
+    ndkVersion = "27.0.12077973"
     externalNativeBuild {
         cmake { path = file("jni/CMakeLists.txt") }
     }
@@ -45,7 +52,43 @@ android {
             )
             java.setSrcDirs(roots)
             kotlin.setSrcDirs(roots)
+            // AGP packages only CMake SHARED libs. The starter is add_executable
+            // named libshizuku.so so adb/root can exec it; copy it into jniLibs.
+            jniLibs.srcDir(layout.buildDirectory.dir("packagedShizukuJni"))
         }
+    }
+}
+
+val packageShizukuStarter by tasks.registering {
+    description = "Copy CMake starter executable into jniLibs as libshizuku.so"
+    dependsOn(tasks.matching { it.name.startsWith("buildCMake") })
+    val destDir = layout.buildDirectory.dir("packagedShizukuJni")
+    outputs.dir(destDir)
+    doLast {
+        val abis = setOf("arm64-v8a", "armeabi-v7a")
+        val destRoot = destDir.get().asFile
+        val roots = listOf(layout.buildDirectory.get().asFile.resolve("intermediates/cxx"), file(".cxx"))
+        var copied = 0
+        roots.filter { it.isDirectory }.forEach { root ->
+            root.walkTopDown().maxDepth(16).forEach { so ->
+                if (so.isFile && so.name == "libshizuku.so" && so.parentFile.name in abis) {
+                    val dest = destRoot.resolve(so.parentFile.name).resolve("libshizuku.so")
+                    dest.parentFile.mkdirs()
+                    so.copyTo(dest, overwrite = true)
+                    copied++
+                }
+            }
+        }
+        check(copied > 0) {
+            "libshizuku.so was not built. CMake starter output missing under ${roots.joinToString()}"
+        }
+    }
+}
+
+tasks.configureEach {
+    val n = name
+    if (n.startsWith("merge") && (n.contains("NativeLibs") || n.contains("JniLibFolders"))) {
+        dependsOn(packageShizukuStarter)
     }
 }
 

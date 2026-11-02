@@ -4,7 +4,7 @@ Telos System is a virtual app: CPU, RAM, network addresses, processes, saved Wi-
 
 ## Built-in Shizuku
 
-Telos ships the Shizuku-Next server classes and native starter (`libshizuku.so`) inside the launcher APK (`:libs:shizuku-next`, Apache-2.0). You do not need the `moe.shizuku.privileged.api` app. Freeze, Store privileged install, Network Wi-Fi DNS, call recording `CAPTURE_AUDIO_OUTPUT`, and Files privileged paths use this binder.
+Telos ships the Shizuku-Next server classes and native starter (`libshizuku.so`) inside the launcher APK (`:libs:shizuku-next`, Apache-2.0). AGP packages only CMake shared libraries, so the starter executable is copied into `jniLibs` and extracted on install (`useLegacyPackaging`) so Telos System → Shizuku can exec it. You do not need the `moe.shizuku.privileged.api` app. Freeze, Store privileged install, Network Wi-Fi DNS, call recording `CAPTURE_AUDIO_OUTPUT`, and Files privileged paths use this binder.
 
 Settings live on **Telos System → Shizuku**.
 
