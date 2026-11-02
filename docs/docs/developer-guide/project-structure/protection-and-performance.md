@@ -88,7 +88,8 @@ Code: `services/app-management/.../stealth/` (`TelosPrivilegedDaemon`, `TelosSte
 - `TelosPrivilegedDaemonService` is not exported. Binder callers must be the Telos UID (`Binder.getCallingUid() == Process.myUid()`).
 - The privileged **server** lives in `:libs:shizuku-next` (Shizuku-Next Apache-2.0 server,
   starter and `libshizuku.so`). CMake builds the starter as an executable named
-  `libshizuku.so`; Gradle copies it into `jniLibs` because AGP packages only
+  `libshizuku.so`; Gradle copies it into `build/packagedShizukuJni` (a real
+  directory, not a Provider) because AGP packages only
   shared libraries. The app uses legacy JNI packaging so the file is extracted
   and can be exec'd. Telos System → Shizuku starts it as shell/root. Pairing uses
   an accessibility service scoped to Settings (same idea as Shizuku-Next, no OCR/AI). The

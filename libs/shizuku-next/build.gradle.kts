@@ -54,7 +54,7 @@ android {
             kotlin.setSrcDirs(roots)
             // AGP packages only CMake SHARED libs. The starter is add_executable
             // named libshizuku.so so adb/root can exec it; copy it into jniLibs.
-            jniLibs.srcDir(layout.buildDirectory.dir("packagedShizukuJni"))
+            jniLibs.srcDir(file("build/packagedShizukuJni"))
         }
     }
 }
