@@ -49,6 +49,11 @@ internal object PrivilegedWifiStore {
     private const val KEY_AUTO_PERSIST = "auto_persist"
     private const val APP_ONLY_FILE = "telos_wifi_app_only.json"
 
+    private fun hiddenInvoke(clazz: Class<*>, target: Any?, method: String, vararg args: Any?): Any? {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return null
+        return hiddenInvoke(clazz, target, method, *args)
+    }
+
     fun shizukuInstalled(context: Context): Boolean =
         runCatching { context.packageManager.getPackageInfo(SHIZUKU_PACKAGE, 0); true }.getOrDefault(false)
 
@@ -150,9 +155,9 @@ internal object PrivilegedWifiStore {
         runCatching {
             awaitAction { listener ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    HiddenApiBypass.invoke(wm.javaClass, wm, "forget", netId, listener)
+                    hiddenInvoke(wm.javaClass, wm, "forget", netId, listener)
                 } else {
-                    HiddenApiBypass.invoke(wm.javaClass, wm, "forget", netId, Binder(), listener, listener.hashCode())
+                    hiddenInvoke(wm.javaClass, wm, "forget", netId, Binder(), listener, listener.hashCode())
                 }
             }
         }.getOrElse { shellForget(netId) }
@@ -161,7 +166,7 @@ internal object PrivilegedWifiStore {
     suspend fun disconnect(): Boolean = withContext(Dispatchers.IO) {
         val wm = wifiManager() ?: return@withContext PrivilegedShell.run("cmd wifi disconnect")?.exitCode == 0
         val pkg = callingPackage()
-        runCatching { HiddenApiBypass.invoke(wm.javaClass, wm, "disconnect", pkg) as Boolean }.getOrDefault(false)
+        runCatching { hiddenInvoke(wm.javaClass, wm, "disconnect", pkg) as Boolean }.getOrDefault(false)
     }
 
     suspend fun connect(netId: Int): Boolean = withContext(Dispatchers.IO) {
@@ -170,16 +175,16 @@ internal object PrivilegedWifiStore {
         runCatching {
             awaitAction { listener ->
                 when {
-                    Build.VERSION.SDK_INT >= 35 -> HiddenApiBypass.invoke(
+                    Build.VERSION.SDK_INT >= 35 -> hiddenInvoke(
                         wm.javaClass, wm, "connect", null, netId, listener, callingPackage(), extrasBundle(),
                     )
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> HiddenApiBypass.invoke(
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> hiddenInvoke(
                         wm.javaClass, wm, "connect", null, netId, listener, callingPackage(),
                     )
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> HiddenApiBypass.invoke(
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> hiddenInvoke(
                         wm.javaClass, wm, "connect", null, netId, listener,
                     )
-                    else -> HiddenApiBypass.invoke(
+                    else -> hiddenInvoke(
                         wm.javaClass, wm, "connect", null, netId, Binder(), listener, listener.hashCode(),
                     )
                 }
@@ -284,10 +289,11 @@ internal object PrivilegedWifiStore {
         if (!shizukuAuthorized() && !runCatching { Shizuku.pingBinder() }.getOrDefault(false)) return null
         if (!shizukuAuthorized()) return null
         return runCatching {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return@runCatching null
             HiddenApiBypass.addHiddenApiExemptions("Landroid/net/wifi/", "Landroid/os/")
             val binder = ShizukuBinderWrapper(SystemServiceHelper.getSystemService(Context.WIFI_SERVICE))
             val stub = Class.forName("android.net.wifi.IWifiManager\$Stub")
-            HiddenApiBypass.invoke(stub, null, "asInterface", binder)
+            hiddenInvoke(stub, null, "asInterface", binder)
         }.onFailure { Log.w(TAG, "IWifiManager unavailable", it) }.getOrNull()
     }
 
@@ -314,16 +320,16 @@ internal object PrivilegedWifiStore {
         val extras = extrasBundle()
         val slice = runCatching {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                HiddenApiBypass.invoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", privilegedUser(), callingPackage(), extras)
+                hiddenInvoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", privilegedUser(), callingPackage(), extras)
             } else {
                 runCatching {
-                    HiddenApiBypass.invoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", privilegedUser(), callingPackage())
+                    hiddenInvoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", privilegedUser(), callingPackage())
                 }.getOrElse {
-                    HiddenApiBypass.invoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", privilegedUser(), callingPackage(), extras)
+                    hiddenInvoke(wm.javaClass, wm, "getPrivilegedConfiguredNetworks", privilegedUser(), callingPackage(), extras)
                 }
             }
         }.onFailure { Log.w(TAG, "getPrivilegedConfiguredNetworks failed", it) }.getOrNull() ?: return emptyList()
-        val list = runCatching { HiddenApiBypass.invoke(slice.javaClass, slice, "getList") as? List<WifiConfiguration> }.getOrNull()
+        val list = runCatching { hiddenInvoke(slice.javaClass, slice, "getList") as? List<WifiConfiguration> }.getOrNull()
         return list.orEmpty()
     }
 
@@ -331,11 +337,11 @@ internal object PrivilegedWifiStore {
         val wm = wifiManager() ?: return false
         return runCatching {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                val result = HiddenApiBypass.invoke(wm.javaClass, wm, "addOrUpdateNetworkPrivileged", config, privilegedUser())
+                val result = hiddenInvoke(wm.javaClass, wm, "addOrUpdateNetworkPrivileged", config, privilegedUser())
                 val code = result?.javaClass?.getField("statusCode")?.getInt(result)
                 code == WifiManager.AddNetworkResult.STATUS_SUCCESS
             } else {
-                (HiddenApiBypass.invoke(wm.javaClass, wm, "addOrUpdateNetwork", config, privilegedUser()) as Int) != -1
+                (hiddenInvoke(wm.javaClass, wm, "addOrUpdateNetwork", config, privilegedUser()) as Int) != -1
             }
         }.getOrDefault(false)
     }
