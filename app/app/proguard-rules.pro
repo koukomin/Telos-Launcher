@@ -7,9 +7,23 @@
 -keep class moe.shizuku.** { *; }
 -keep class rikka.rish.** { *; }
 -keep class rikka.hidden.** { *; }
-# Hidden-compat references framework types that exist only on the device, not in android.jar.
+# Hidden-compat / Shizuku-Next reference framework types that exist on the
+# device, not in android.jar.
 -dontwarn android.app.ContentProviderHolder
+-dontwarn android.app.ActivityThread
+-dontwarn android.app.ActivityThread$*
+-dontwarn android.app.ContextImpl
+-dontwarn android.app.IProcessObserver
+-dontwarn android.app.IProcessObserver$*
+-dontwarn android.app.IUidObserver
+-dontwarn android.app.IUidObserver$*
+-dontwarn android.app.ActivityManagerHidden
 -dontwarn android.content.IContentProvider
+-dontwarn android.content.pm.UserInfo
+-dontwarn android.ddm.DdmHandleAppName
+-dontwarn android.os.SELinux
+-dontwarn android.os.ServiceManager
+-dontwarn android.os.SystemProperties
 -dontwarn rikka.hidden.**
 
 # Preserve Compose Material Icons nested objects. In keep patterns `$` is the

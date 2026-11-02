@@ -1,3 +1,16 @@
 -dontwarn android.app.ContentProviderHolder
+-dontwarn android.app.ActivityThread
+-dontwarn android.app.ActivityThread$*
+-dontwarn android.app.ContextImpl
+-dontwarn android.app.IProcessObserver
+-dontwarn android.app.IProcessObserver$*
+-dontwarn android.app.IUidObserver
+-dontwarn android.app.IUidObserver$*
+-dontwarn android.app.ActivityManagerHidden
 -dontwarn android.content.IContentProvider
+-dontwarn android.content.pm.UserInfo
+-dontwarn android.ddm.DdmHandleAppName
+-dontwarn android.os.SELinux
+-dontwarn android.os.ServiceManager
+-dontwarn android.os.SystemProperties
 -dontwarn rikka.hidden.**

@@ -58,8 +58,10 @@ and similar stub types. `UserService` calls `UserHandle.of` and
 `Context` to `ContextHidden` against `android.jar`. Maven `dev.rikka.shizuku:api`, `provider`, and `aidl` supply client types
 (`ShizukuApiConstants`, `BinderContainer`, `IRemoteProcess`). Those vendored
 sources are not compiled into `:libs:shizuku-next`, so R8 does not see the
-classes twice. Release R8 uses `-dontwarn` for hidden framework types such as
-`android.app.ContentProviderHolder` that `rikka.hidden.compat` references.
+classes twice. Release R8 uses `-dontwarn` for hidden framework types
+(`ContentProviderHolder`, `ContextImpl`, `IProcessObserver`, `SELinux`,
+`ServiceManager`, and others) that Shizuku-Next and `rikka.hidden.compat`
+reference. Those classes exist on the device, not in `android.jar`.
 
 ## GitHub Actions runtime maintenance
 
