@@ -1,0 +1,3 @@
+-dontwarn android.app.ContentProviderHolder
+-dontwarn android.content.IContentProvider
+-dontwarn rikka.hidden.**

@@ -16,6 +16,7 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+        consumerProguardFiles("consumer-rules.pro")
     }
     buildFeatures {
         aidl = false

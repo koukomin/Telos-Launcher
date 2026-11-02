@@ -6,6 +6,11 @@
 -keep class rikka.shizuku.** { *; }
 -keep class moe.shizuku.** { *; }
 -keep class rikka.rish.** { *; }
+-keep class rikka.hidden.** { *; }
+# Hidden-compat references framework types that exist only on the device, not in android.jar.
+-dontwarn android.app.ContentProviderHolder
+-dontwarn android.content.IContentProvider
+-dontwarn rikka.hidden.**
 
 # Preserve Compose Material Icons nested objects. In keep patterns `$` is the
 # end-of-name token, so a literal inner-class `$` is written as `$$`. Empty
