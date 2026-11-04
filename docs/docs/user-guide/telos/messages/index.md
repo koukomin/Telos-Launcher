@@ -130,7 +130,7 @@ your history.
 | Scheduled SMS | Phone settings > Tools > Scheduled SMS |
 | Hidden contacts and PIN | Phone settings > Privacy |
 | Secure call screen, phone lock | Phone settings > Privacy and Incoming call |
-| Enable or disable the app | [Telos Store](../store/) |
+| Enable or disable the app | [Telos Store](../store/). While Messages is off, Phone hides the SMS icon from the bottom bar |
 
 Messages has no settings screen of its own.
 

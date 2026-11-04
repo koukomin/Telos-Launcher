@@ -91,6 +91,14 @@ fun CommsDashboardScreen(
     val coroutineScope = rememberCoroutineScope()
 
     val commsSettings: CommsSettings = koinInject()
+    val disabledVirtualApps by commsSettings.disabledVirtualApps.collectAsStateWithLifecycle(emptySet())
+    val messagesEnabled = remember(disabledVirtualApps) {
+        disabledVirtualApps.none {
+            it == "telos_messages_app://messages" ||
+                it == "telos_messages_app" ||
+                it.startsWith("telos_messages_app")
+        }
+    }
     val phoneAppLock by commsSettings.phoneAppLock.collectAsStateWithLifecycle(false)
     val phoneUnlocked by de.mm20.launcher2.comms.privacy.PrivacySession.phoneUnlocked.collectAsStateWithLifecycle()
     val lockCallRecordings by commsSettings.lockCallRecordings.collectAsStateWithLifecycle(true)
@@ -108,6 +116,9 @@ fun CommsDashboardScreen(
 
     LaunchedEffect(initialNumber) {
         if (initialNumber.isNotEmpty() && initialTab.lowercase() != "messages") selectedTab = CommsTab.Keypad
+    }
+    LaunchedEffect(messagesEnabled) {
+        if (!messagesEnabled && selectedTab == CommsTab.Messages) selectedTab = CommsTab.Recents
     }
 
     if (selectedTab == CommsTab.Keypad) {
@@ -217,15 +228,17 @@ fun CommsDashboardScreen(
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
                 )
-                NavigationDrawerItem(
-                    icon = { DefaultSmsLauncherIcon() },
-                    label = { Text(stringResource(I18nR.string.hc_messages)) },
-                    selected = selectedTab == CommsTab.Messages,
-                    onClick = {
-                        coroutineScope.launch { drawerState.close() }
-                        selectedTab = CommsTab.Messages
-                    },
-                )
+                if (messagesEnabled) {
+                    NavigationDrawerItem(
+                        icon = { DefaultSmsLauncherIcon() },
+                        label = { Text(stringResource(I18nR.string.hc_messages)) },
+                        selected = selectedTab == CommsTab.Messages,
+                        onClick = {
+                            coroutineScope.launch { drawerState.close() }
+                            selectedTab = CommsTab.Messages
+                        },
+                    )
+                }
                 messengers.forEach { app ->
                     NavigationDrawerItem(
                         icon = {
@@ -313,11 +326,13 @@ fun CommsDashboardScreen(
                     AdaptiveNavigationBar(
                         containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     ) {
-                        listOf(
-                            Triple(CommsTab.Recents, BaseR.drawable.schedule_24px, CommsTab.Recents.label),
-                            Triple(CommsTab.Contacts, BaseR.drawable.person_24px, CommsTab.Contacts.label),
-                            Triple(CommsTab.Messages, BaseR.drawable.sms_24px, CommsTab.Messages.label),
-                        ).forEach { (tab, icon, label) ->
+                        buildList {
+                            add(Triple(CommsTab.Recents, BaseR.drawable.schedule_24px, CommsTab.Recents.label))
+                            add(Triple(CommsTab.Contacts, BaseR.drawable.person_24px, CommsTab.Contacts.label))
+                            if (messagesEnabled) {
+                                add(Triple(CommsTab.Messages, BaseR.drawable.sms_24px, CommsTab.Messages.label))
+                            }
+                        }.forEach { (tab, icon, label) ->
                             AdaptiveNavigationItem(
                                 selected = selectedTab == tab,
                                 onClick = { selectedTab = tab },
