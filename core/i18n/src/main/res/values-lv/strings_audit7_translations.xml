@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">Stacijas pašreizējā dziesma pēc vienas minūtes klausīšanās. Darbojas tikai ar stacijām, kas paziņo dziesmu.</string>
     <string name="au7_scrobble_status_active">Sūta uz %1$s</string>
     <string name="au7_scrobble_status_no_service">Netiek sūtīts nekas: neviens pakalpojums nav pierakstīts un ieslēgts</string>
-    <string name="au7_scrobble_status_no_source">Netiek sūtīts nekas: ieslēdziet mūzikas vai radio skroblēšanu</string>
+    <string name="au7_scrobble_status_no_source">Netiek sūtīts nekas: ieslēdziet mūzikas, YouTube Music vai radio skroblēšanu</string>
     <string name="au7_scrobble_sign_in">Pārbaudīt savienojumu un pierakstīties</string>
     <string name="au7_scrobble_lb_ok">Token ir derīgs lietotājam %1$s</string>
     <string name="au7_scrobble_https">Servera adresei jāsākas ar https:// (http ir atļauts tikai serverim jūsu pašu tīklā)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">Neviens skrobls negaida</string>
     <string name="au7_scrobble_queue_clear">Notīrīt rindu</string>
     <string name="au7_scrobble_queue_cleared">Rinda notīrīta</string>
-    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm un ListenBrainz lietotnēm Telos Music un Telos Radio</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm un ListenBrainz lietotnēm Telos Music, YouTube Music un Telos Radio</string>
     <string name="au7_trakt_open_settings">Trakt skroblēšana</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">Trakt nepieciešama jūsu pašu lietotne. Pierakstieties vietnē trakt.tv, atveriet trakt.tv/oauth/applications, izvēlieties New Application, ievadiet jebkuru nosaukumu un novirzīšanas adresi urn:ietf:wg:oauth:2.0:oob, saglabājiet to un šeit ievadiet tās client id un client secret.</string>

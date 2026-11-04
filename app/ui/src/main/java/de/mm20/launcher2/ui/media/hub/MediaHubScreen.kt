@@ -210,6 +210,7 @@ fun MediaHubScreen(initialSpace: String = "") {
     }
 
     var openMusicPlayer by remember { mutableStateOf(false) }
+    var musicNowPlayingOpen by remember { mutableStateOf(false) }
     val stateHolder = rememberSaveableStateHolder()
     val performanceSettings: PerformanceSettings = koinInject()
     // the getter builds a new flow on every call: remember it, or the collection restarts on each recomposition
@@ -245,7 +246,7 @@ fun MediaHubScreen(initialSpace: String = "") {
         val wide = useMediaRail(maxWidth.value, maxHeight.value, scale)
         Row(Modifier.fillMaxSize()) {
         if (wide && current != null) HubNavigationRail(current, groupSpaces) { dest ->
-            space = (groupSelections[dest.group] ?: dest).id
+            space = dest.id
         }
         Column(
             Modifier
@@ -297,6 +298,7 @@ fun MediaHubScreen(initialSpace: String = "") {
                                     MediaSpace.Music -> MusicScreen(
                                         openNowPlaying = openMusicPlayer,
                                         onOpenNowPlayingConsumed = { openMusicPlayer = false },
+                                        onNowPlayingOpenChange = { musicNowPlayingOpen = it },
                                     )
                                     MediaSpace.Radio -> RadioDashboardScreen()
                                     MediaSpace.Tv -> TvScreen()
@@ -314,7 +316,7 @@ fun MediaHubScreen(initialSpace: String = "") {
             if (current == MediaSpace.YouTube || current == MediaSpace.YouTubeMusic) de.mm20.launcher2.ui.media.youtube.YouTubeMiniPlayer(youtubeVm, current == MediaSpace.YouTubeMusic) { music ->
                 space = if (music) MediaSpace.YouTubeMusic.id else MediaSpace.YouTube.id
             }
-            if (current != null) {
+            if (current != null && !(current == MediaSpace.Music && musicNowPlayingOpen)) {
                 HubMiniPlayer(
                     space = current,
                     musicVm = musicVm,
@@ -334,9 +336,8 @@ fun MediaHubScreen(initialSpace: String = "") {
                     groupSpaces = groupSpaces,
                     haze = hazeState,
                     blurRadius = blurRadius,
-                    onSelect = { dest ->
-                        space = (groupSelections[dest.group] ?: dest).id
-                    },
+                    onSelect = { dest -> space = dest.id },
+                    modifier = Modifier.zIndex(1f),
                 )
             }
         }
@@ -400,6 +401,7 @@ private fun HubBottomBar(
     haze: de.mm20.launcher2.ui.component.VirtualAppBlur,
     blurRadius: Int,
     onSelect: (MediaSpace) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val isAudioMode = current.group == "listen"
     val t = MaterialTheme.transparency
@@ -407,7 +409,7 @@ private fun HubBottomBar(
     val haptic = LocalHapticFeedback.current
 
     AdaptiveNavigationBar(
-        modifier = Modifier.hubGlass(haze, blurRadius, glass),
+        modifier = modifier.hubGlass(haze, blurRadius, glass),
         containerColor = Color.Transparent,
     ) {
         if (isAudioMode) {

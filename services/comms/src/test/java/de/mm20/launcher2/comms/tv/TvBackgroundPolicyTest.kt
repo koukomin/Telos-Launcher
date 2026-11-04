@@ -14,7 +14,8 @@ class TvBackgroundPolicyTest {
 
     @org.junit.Test fun screenOffKeepsAudioEvenWithLegacyBackgroundPreferenceOff() {
         org.junit.Assert.assertFalse(TvBackgroundPolicy.pauseWhenLeaving(false, screenOff = true))
-        org.junit.Assert.assertTrue(TvBackgroundPolicy.videoDisabled(false, true, screenOff = true))
+        org.junit.Assert.assertFalse(TvBackgroundPolicy.videoDisabled(false, true, screenOff = true))
+        org.junit.Assert.assertFalse(TvBackgroundPolicy.videoDisabled(true, true, screenOff = true))
     }
 
     @Test fun pausesOnlyWhenNotAllowed() {

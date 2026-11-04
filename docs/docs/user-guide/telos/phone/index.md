@@ -36,7 +36,7 @@ This is the feature reference of Telos Phone. It is split into pages:
 ### Dialer screen (the main screen)
 
 - The title is "Dialer". Under it is a rounded **Search** field that filters the current tab.
-- A bottom bar switches between **Recents**, **Contacts** and **Messages**. The keypad is the round button. If Messages is turned off in [Telos Store](../store/), the SMS icon is hidden from that bar.
+- A bottom bar switches between **Recents**, **Contacts** and **Messages**. The keypad is the round button. If Messages is turned off in [Telos Store](../store/), the SMS icon is hidden from that bar. Long-press **Messages** on that bar to hide the SMS icon; long-press **Recents** to show it again. When another app is the default SMS app and you have not chosen yet, the SMS icon is hidden.
 - The **three-dot menu** and the drawer open **Settings**.
 - On the Recents tab the search field has a **filter** button that shows or hides the filter chips.
 - Back from the Keypad or Messages returns to Recents.

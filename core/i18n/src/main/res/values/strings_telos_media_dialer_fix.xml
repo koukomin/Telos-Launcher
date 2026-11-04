@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_music_spectrum">Spectrum</string>
+    <string name="telos_music_spectrum_on">Hide spectrum</string>
+    <string name="telos_music_spectrum_off">Show spectrum</string>
+    <string name="au7_scrobble_youtube_title">Scrobble YouTube Music</string>
+    <string name="au7_scrobble_youtube_summary">Tracks played as audio in Telos YouTube Music, after half of the song or 4 minutes</string>
+    <string name="comms_sms_tab_hidden">Messages hidden from the Phone bar. Long-press Recents to show it again</string>
+    <string name="comms_sms_tab_shown">Messages shown on the Phone bar</string>
+</resources>

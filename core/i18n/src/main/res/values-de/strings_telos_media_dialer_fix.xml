@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Spektrum</string>
+    <string name="telos_music_spectrum_on">Spektrum ausblenden</string>
+    <string name="telos_music_spectrum_off">Spektrum einblenden</string>
+    <string name="au7_scrobble_youtube_title">YouTube Music scrobbeln</string>
+    <string name="au7_scrobble_youtube_summary">Titel, die in Telos YouTube Music als Audio laufen, nach der Hälfte des Titels oder 4 Minuten</string>
+    <string name="comms_sms_tab_hidden">Nachrichten in der Telefonleiste ausgeblendet. Recents lange drücken, um sie wieder anzuzeigen</string>
+    <string name="comms_sms_tab_shown">Nachrichten in der Telefonleiste sichtbar</string>
+</resources>

@@ -217,12 +217,18 @@ class TvPlayerController(
         if (screenReceiver == null) {
             val r = object : BroadcastReceiver() {
                 override fun onReceive(context: Context?, intent: Intent?) {
-                    inBackground = intent?.action == Intent.ACTION_SCREEN_OFF || hostActivities.isEmpty()
+                    val off = intent?.action == Intent.ACTION_SCREEN_OFF
+                    if (off) {
+                        startServiceIfEnabled()
+                        exo?.let { if (it.playWhenReady || _playing.value) it.play() }
+                    }
+                    inBackground = off || hostActivities.isEmpty()
                     applyVideoDisabled()
                 }
             }
             val ok = runCatching {
-                ContextCompat.registerReceiver(app, r, IntentFilter().apply { addAction(Intent.ACTION_SCREEN_OFF); addAction(Intent.ACTION_SCREEN_ON) }, ContextCompat.RECEIVER_NOT_EXPORTED)
+                // SCREEN_OFF/ON are system implicit broadcasts; NOT_EXPORTED cannot receive them on API 33+.
+                ContextCompat.registerReceiver(app, r, IntentFilter().apply { addAction(Intent.ACTION_SCREEN_OFF); addAction(Intent.ACTION_SCREEN_ON) }, ContextCompat.RECEIVER_EXPORTED)
             }.isSuccess
             if (ok) screenReceiver = r
         }

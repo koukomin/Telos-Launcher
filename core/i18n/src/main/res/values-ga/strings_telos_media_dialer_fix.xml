@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Speictream</string>
+    <string name="telos_music_spectrum_on">Folaigh an speictream</string>
+    <string name="telos_music_spectrum_off">Taispeáin an speictream</string>
+    <string name="au7_scrobble_youtube_title">Scrobáil YouTube Music</string>
+    <string name="au7_scrobble_youtube_summary">Rianta a sheinntear mar fhuaim i Telos YouTube Music, tar éis leath an amhráin nó 4 nóiméad</string>
+    <string name="comms_sms_tab_hidden">Teachtaireachtaí folaithe ón mbarra Gutháin. Brúigh Recents fada chun iad a thaispeáint</string>
+    <string name="comms_sms_tab_shown">Teachtaireachtaí le feiceáil ar bharra an Ghutháin</string>
+</resources>

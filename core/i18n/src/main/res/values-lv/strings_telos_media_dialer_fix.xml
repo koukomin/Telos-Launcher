@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Spektrs</string>
+    <string name="telos_music_spectrum_on">Slēpt spektru</string>
+    <string name="telos_music_spectrum_off">Rādīt spektru</string>
+    <string name="au7_scrobble_youtube_title">YouTube Music skroblēšana</string>
+    <string name="au7_scrobble_youtube_summary">Telos YouTube Music audio celiņi pēc puses dziesmas vai 4 minūtēm</string>
+    <string name="comms_sms_tab_hidden">Ziņas paslēptas no Tālruņa joslas. Lai rādītu, ilgi turiet Nesenās</string>
+    <string name="comms_sms_tab_shown">Ziņas redzamas Tālruņa joslā</string>
+</resources>

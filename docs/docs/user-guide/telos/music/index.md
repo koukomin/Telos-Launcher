@@ -51,7 +51,8 @@ appear. Voice recordings and ringtones are normally excluded.
 | Search field "Search music" | Filters the current tab, see [Library and playback](./library-playback#search) |
 | Scrobbling button in the top bar | Opens the scrobble dialog |
 | Tabs **Songs**, **Albums**, **Artists** | The three views of the library |
-| Mini player at the bottom | Appears while something is loaded. Tap it to open the full player |
+| Spectrum in the top bar | Shows or hides the live audio spectrum above the library (on by default). The bars follow the playing song |
+| Mini player at the bottom | Appears while something is loaded. Tap it to open the full player. Opening the full player hides the Media hub mini player and bottom bar; Back restores them |
 
 ### Full player
 

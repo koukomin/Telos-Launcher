@@ -1,6 +1,8 @@
+@file:OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 package de.mm20.launcher2.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -38,11 +40,18 @@ fun RowScope.AdaptiveNavigationItem(
     onClick: () -> Unit,
     icon: @Composable () -> Unit,
     label: @Composable () -> Unit,
+    onLongClick: (() -> Unit)? = null,
 ) {
     val colors = MaterialTheme.colorScheme
     Column(
         Modifier.weight(1f).clip(MaterialTheme.shapes.medium)
-            .selectable(selected = selected, role = Role.Tab, onClick = onClick)
+            .then(
+                if (onLongClick != null) Modifier.combinedClickable(
+                    onClick = onClick,
+                    onLongClick = onLongClick,
+                    role = Role.Tab,
+                ) else Modifier.selectable(selected = selected, role = Role.Tab, onClick = onClick),
+            )
             .heightIn(min = UiSpacing.TouchTarget).padding(vertical = UiSpacing.Small),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp),

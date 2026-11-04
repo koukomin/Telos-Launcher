@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">Bir istasyonun geçerli parçası, bir dakika dinlendikten sonra. Yalnızca parçayı duyuran istasyonlarla çalışır.</string>
     <string name="au7_scrobble_status_active">%1$s hizmetine gönderiliyor</string>
     <string name="au7_scrobble_status_no_service">Hiçbir şey gönderilmiyor: hiçbir hizmette oturum açık ve açık değil</string>
-    <string name="au7_scrobble_status_no_source">Hiçbir şey gönderilmiyor: müzik veya radyo scrobble özelliğini açın</string>
+    <string name="au7_scrobble_status_no_source">Hiçbir şey gönderilmiyor: müzik, YouTube Music veya radyo scrobble’ını açın</string>
     <string name="au7_scrobble_sign_in">Bağlantıyı sına ve oturum aç</string>
     <string name="au7_scrobble_lb_ok">Jeton %1$s için geçerli</string>
     <string name="au7_scrobble_https">Sunucu adresi https:// ile başlamalıdır (http yalnızca kendi ağınızdaki bir sunucu için izinlidir)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">Bekleyen scrobble yok</string>
     <string name="au7_scrobble_queue_clear">Kuyruğu temizle</string>
     <string name="au7_scrobble_queue_cleared">Kuyruk temizlendi</string>
-    <string name="au7_scrobble_settings_summary">Telos Music ve Telos Radio için Last.fm, Libre.fm ve ListenBrainz</string>
+    <string name="au7_scrobble_settings_summary">Telos Music, YouTube Music ve Telos Radio için Last.fm, Libre.fm ve ListenBrainz</string>
     <string name="au7_trakt_open_settings">Trakt scrobble</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">Trakt kendi uygulamanızı gerektirir. trakt.tv’de oturum açın, trakt.tv/oauth/applications adresini açın, New Application’ı seçin, herhangi bir ad ve urn:ietf:wg:oauth:2.0:oob yönlendirme adresini girin, kaydedin ve client id ile client secret değerlerini buraya girin.</string>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Spektri</string>
+    <string name="telos_music_spectrum_on">Piilota spektri</string>
+    <string name="telos_music_spectrum_off">Näytä spektri</string>
+    <string name="au7_scrobble_youtube_title">YouTube Music -scrobblaus</string>
+    <string name="au7_scrobble_youtube_summary">Kappaleet, jotka soivat äänenä Telos YouTube Musicissa, kappaleen puolivälin tai 4 minuutin jälkeen</string>
+    <string name="comms_sms_tab_hidden">Viestit piilotettu Puhelin-palkista. Näytä pitkään painamalla Viimeisimmät</string>
+    <string name="comms_sms_tab_shown">Viestit näkyvät Puhelin-palkissa</string>
+</resources>

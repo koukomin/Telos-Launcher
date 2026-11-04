@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Spettru</string>
+    <string name="telos_music_spectrum_on">Aħbi l-ispettru</string>
+    <string name="telos_music_spectrum_off">Uri l-ispettru</string>
+    <string name="au7_scrobble_youtube_title">Scrobbling YouTube Music</string>
+    <string name="au7_scrobble_youtube_summary">Brani li jdoqqu bħala awdjo f’Telos YouTube Music, wara nofs il-kanzunetta jew 4 minuti</string>
+    <string name="comms_sms_tab_hidden">Il-messaġġi moħbija mill-bar tat-Telefon. Żomm Recenti biex turihom</string>
+    <string name="comms_sms_tab_shown">Il-messaġġi jidhru fil-bar tat-Telefon</string>
+</resources>

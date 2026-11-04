@@ -31,6 +31,7 @@ class YouTubePlayerService : MediaSessionService(), KoinComponent {
     private val library: YouTubeLibrary by inject()
     private val playbackScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private var advance: Job? = null
+    private var scrobbler: de.mm20.launcher2.comms.scrobble.ScrobbleTracker? = null
     private var session: MediaSession? = null
     private val handler = Handler(Looper.getMainLooper())
     private val idleStop = Runnable { if (session?.player?.playWhenReady != true) pauseAllPlayersAndStopSelf() }
@@ -95,6 +96,13 @@ class YouTubePlayerService : MediaSessionService(), KoinComponent {
             }
         })
         PlaybackCoordinator.register(KIND, PlaybackCoordinator.Participant({ player.playWhenReady }, { player.pause() }, { player.play() }))
+        scrobbler = runCatching {
+            de.mm20.launcher2.comms.scrobble.ScrobbleTracker(
+                this,
+                player,
+                de.mm20.launcher2.comms.scrobble.ScrobbleTracker.Source.YouTube,
+            ).also { it.attach() }
+        }.getOrNull()
         val open = Intent().setClassName(packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
             .putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_MEDIA)
             .putExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE, "youtube")
@@ -106,6 +114,8 @@ class YouTubePlayerService : MediaSessionService(), KoinComponent {
     override fun onDestroy() {
         playbackScope.cancel()
         handler.removeCallbacksAndMessages(null)
+        runCatching { scrobbler?.release() }
+        scrobbler = null
         PlaybackCoordinator.unregister(KIND)
         session?.run { de.mm20.launcher2.comms.media.MediaAudioFx.detachFromSession((player as? ExoPlayer)?.audioSessionId ?: -1); player.release(); release() }; session = null
         super.onDestroy()

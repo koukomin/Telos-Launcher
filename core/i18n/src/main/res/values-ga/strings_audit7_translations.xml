@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">Rian reatha stáisiúin, tar éis é a chloisteáil ar feadh nóiméid. Ní oibríonn sé ach le stáisiúin a fhógraíonn an rian.</string>
     <string name="au7_scrobble_status_active">Á sheoladh chuig %1$s</string>
     <string name="au7_scrobble_status_no_service">Ní sheoltar aon rud: níl aon seirbhís sínithe isteach agus casta air</string>
-    <string name="au7_scrobble_status_no_source">Ní sheoltar aon rud: cas air scrobláil ceoil nó raidió</string>
+    <string name="au7_scrobble_status_no_source">Ní sheoltar aon rud: cumhachtaigh scrobáil ceoil, YouTube Music nó raidió</string>
     <string name="au7_scrobble_sign_in">Triail an nasc agus sínigh isteach</string>
     <string name="au7_scrobble_lb_ok">Tá an comhartha bailí do %1$s</string>
     <string name="au7_scrobble_https">Caithfidh seoladh an fhreastalaí tosú le https:// (ní cheadaítear http ach le freastalaí i do líonra féin)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">Níl aon scrobláil ag fanacht</string>
     <string name="au7_scrobble_queue_clear">Glan an scuaine</string>
     <string name="au7_scrobble_queue_cleared">Glanadh an scuaine</string>
-    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm agus ListenBrainz do Telos Music agus Telos Radio</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm agus ListenBrainz do Telos Music, YouTube Music agus Telos Radio</string>
     <string name="au7_trakt_open_settings">Scrobláil Trakt</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">Teastaíonn feidhmchlár de do chuid féin ó Trakt. Sínigh isteach ar trakt.tv, oscail trakt.tv/oauth/applications, roghnaigh New Application, cuir isteach ainm ar bith agus an seoladh athsheolta urn:ietf:wg:oauth:2.0:oob, sábháil é, agus cuir isteach a client id agus a client secret anseo.</string>

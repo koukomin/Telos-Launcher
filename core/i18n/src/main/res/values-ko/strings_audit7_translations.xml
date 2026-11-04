@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">방송국의 현재 트랙, 1분간 청취한 후. 트랙을 알려 주는 방송국에서만 작동합니다.</string>
     <string name="au7_scrobble_status_active">%1$s(으)로 전송 중</string>
     <string name="au7_scrobble_status_no_service">아무것도 전송되지 않음: 로그인하고 켜져 있는 서비스가 없습니다</string>
-    <string name="au7_scrobble_status_no_source">아무것도 전송되지 않음: 음악 또는 라디오 스크로블을 켜세요</string>
+    <string name="au7_scrobble_status_no_source">전송되지 않음: 음악, YouTube Music 또는 라디오 스크로블을 켜세요</string>
     <string name="au7_scrobble_sign_in">연결 테스트 및 로그인</string>
     <string name="au7_scrobble_lb_ok">토큰이 %1$s에 유효합니다</string>
     <string name="au7_scrobble_https">서버 주소는 https://로 시작해야 합니다 (http는 사용자의 네트워크 안에 있는 서버에서만 허용됩니다)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">대기 중인 스크로블이 없습니다</string>
     <string name="au7_scrobble_queue_clear">대기열 비우기</string>
     <string name="au7_scrobble_queue_cleared">대기열을 비웠습니다</string>
-    <string name="au7_scrobble_settings_summary">Telos Music 및 Telos Radio용 Last.fm, Libre.fm, ListenBrainz</string>
+    <string name="au7_scrobble_settings_summary">Telos Music, YouTube Music, Telos Radio용 Last.fm, Libre.fm, ListenBrainz</string>
     <string name="au7_trakt_open_settings">Trakt 스크로블</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">Trakt에는 직접 만든 애플리케이션이 필요합니다. trakt.tv에 로그인하고 trakt.tv/oauth/applications를 연 다음 New Application을 선택하고, 이름은 아무거나 입력하고 리디렉션 주소로 urn:ietf:wg:oauth:2.0:oob를 입력한 뒤 저장하고, 해당 client id와 client secret을 여기에 입력하세요.</string>

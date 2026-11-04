@@ -91,6 +91,7 @@ fun CommsDashboardScreen(
     val coroutineScope = rememberCoroutineScope()
 
     val commsSettings: CommsSettings = koinInject()
+    val context = LocalContext.current
     val disabledVirtualApps by commsSettings.disabledVirtualApps.collectAsStateWithLifecycle(emptySet())
     val messagesEnabled = remember(disabledVirtualApps) {
         disabledVirtualApps.none {
@@ -99,12 +100,19 @@ fun CommsDashboardScreen(
                 it.startsWith("telos_messages_app")
         }
     }
+    val phoneShowSmsTab by commsSettings.phoneShowSmsTab.collectAsStateWithLifecycle(true)
+    val phoneShowSmsTabUserSet by commsSettings.phoneShowSmsTabUserSet.collectAsStateWithLifecycle(false)
+    var defaultSmsPackage by remember { mutableStateOf(android.provider.Telephony.Sms.getDefaultSmsPackage(context)) }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        defaultSmsPackage = android.provider.Telephony.Sms.getDefaultSmsPackage(context)
+    }
+    val telosIsDefaultSms = defaultSmsPackage == context.packageName
+    val showSmsTab = messagesEnabled && if (phoneShowSmsTabUserSet) phoneShowSmsTab else telosIsDefaultSms
     val phoneAppLock by commsSettings.phoneAppLock.collectAsStateWithLifecycle(false)
     val phoneUnlocked by de.mm20.launcher2.comms.privacy.PrivacySession.phoneUnlocked.collectAsStateWithLifecycle()
     val lockCallRecordings by commsSettings.lockCallRecordings.collectAsStateWithLifecycle(true)
     val recordingsUnlocked by de.mm20.launcher2.comms.privacy.PrivacySession.recordingsUnlocked.collectAsStateWithLifecycle()
     val simNames by commsSettings.simNames.collectAsStateWithLifecycle(emptyMap())
-    val context = LocalContext.current
     val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
 
@@ -117,8 +125,8 @@ fun CommsDashboardScreen(
     LaunchedEffect(initialNumber) {
         if (initialNumber.isNotEmpty() && initialTab.lowercase() != "messages") selectedTab = CommsTab.Keypad
     }
-    LaunchedEffect(messagesEnabled) {
-        if (!messagesEnabled && selectedTab == CommsTab.Messages) selectedTab = CommsTab.Recents
+    LaunchedEffect(messagesEnabled, showSmsTab) {
+        if ((!messagesEnabled || !showSmsTab) && selectedTab == CommsTab.Messages) selectedTab = CommsTab.Recents
     }
 
     if (selectedTab == CommsTab.Keypad) {
@@ -329,13 +337,28 @@ fun CommsDashboardScreen(
                         buildList {
                             add(Triple(CommsTab.Recents, BaseR.drawable.schedule_24px, CommsTab.Recents.label))
                             add(Triple(CommsTab.Contacts, BaseR.drawable.person_24px, CommsTab.Contacts.label))
-                            if (messagesEnabled) {
+                            if (showSmsTab) {
                                 add(Triple(CommsTab.Messages, BaseR.drawable.sms_24px, CommsTab.Messages.label))
                             }
                         }.forEach { (tab, icon, label) ->
                             AdaptiveNavigationItem(
                                 selected = selectedTab == tab,
                                 onClick = { selectedTab = tab },
+                                onLongClick = when {
+                                    tab == CommsTab.Messages && showSmsTab -> {
+                                        {
+                                            commsSettings.setPhoneShowSmsTab(false)
+                                            Toast.makeText(context, context.getString(I18nR.string.comms_sms_tab_hidden), Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                    tab == CommsTab.Recents && messagesEnabled && !showSmsTab -> {
+                                        {
+                                            commsSettings.setPhoneShowSmsTab(true)
+                                            Toast.makeText(context, context.getString(I18nR.string.comms_sms_tab_shown), Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                    else -> null
+                                },
                                 icon = {
                                     if (tab == CommsTab.Messages) {
                                         DefaultSmsLauncherIcon()

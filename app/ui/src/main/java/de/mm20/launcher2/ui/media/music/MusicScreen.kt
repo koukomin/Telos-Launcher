@@ -93,6 +93,7 @@ fun MusicScreen(
     /** Telos Media: open the full player (asked by its mini player) */
     openNowPlaying: Boolean = false,
     onOpenNowPlayingConsumed: () -> Unit = {},
+    onNowPlayingOpenChange: (Boolean) -> Unit = {},
 ) {
     val viewModel: MusicViewModel = viewModel()
     val context = LocalContext.current
@@ -143,6 +144,11 @@ fun MusicScreen(
     var searchExpanded by rememberSaveable { mutableStateOf(false) }
     var group by remember { mutableStateOf<TrackGroup?>(null) }
     var showNowPlaying by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(showNowPlaying) { onNowPlayingOpenChange(showNowPlaying) }
+    val commsSettingsEarly = koinInject<de.mm20.launcher2.preferences.comms.CommsSettings>()
+    LaunchedEffect(Unit) {
+        commsSettingsEarly.mediaMusicSpectrum.collect { de.mm20.launcher2.comms.media.PlaybackSpectrum.setEnabled(it) }
+    }
 
     LaunchedEffect(openNowPlaying) {
         if (openNowPlaying) {
@@ -178,6 +184,20 @@ fun MusicScreen(
             if (searchExpanded) query = ""
             searchExpanded = !searchExpanded
         }
+        val commsSettings = koinInject<de.mm20.launcher2.preferences.comms.CommsSettings>()
+        val spectrumOn by commsSettings.mediaMusicSpectrum.collectAsState(true)
+        IconButton(onClick = {
+            commsSettings.setMediaMusicSpectrum(!spectrumOn)
+            de.mm20.launcher2.comms.media.PlaybackSpectrum.setEnabled(!spectrumOn)
+        }) {
+            Icon(
+                painterResource(BaseR.drawable.bar_chart_24px),
+                contentDescription = stringResource(
+                    if (spectrumOn) I18nR.string.telos_music_spectrum_on else I18nR.string.telos_music_spectrum_off,
+                ),
+                tint = if (spectrumOn) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
         IconButton(onClick = { backStack.add(de.mm20.launcher2.ui.settings.comms.ScrobbleSettingsRoute) }) {
             Icon(painterResource(BaseR.drawable.settings_24px), contentDescription = stringResource(I18nR.string.hc_scrobbling))
         }
@@ -197,7 +217,9 @@ fun MusicScreen(
                     ) { Text(stringResource(I18nR.string.hc_allow)) }
                 }
             } else {
-                if (group == null && !showNowPlaying) {
+                val commsSettings = koinInject<de.mm20.launcher2.preferences.comms.CommsSettings>()
+                val spectrumOn by commsSettings.mediaMusicSpectrum.collectAsState(true)
+                if (group == null && !showNowPlaying && spectrumOn) {
                     de.mm20.launcher2.ui.media.AudioSpectrumVisualizer(isPlaying = playing, modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp))
                     de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(I18nR.string.tsm_search_music),
                         expanded = searchExpanded, onClose = { query = ""; searchExpanded = false })

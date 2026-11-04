@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">A faixa atual de uma estação, depois de ouvida por um minuto. Só funciona com estações que anunciam a faixa.</string>
     <string name="au7_scrobble_status_active">Enviando para %1$s</string>
     <string name="au7_scrobble_status_no_service">Nada é enviado: nenhum serviço está conectado e ativado</string>
-    <string name="au7_scrobble_status_no_source">Nada é enviado: ative o scrobbling de música ou rádio</string>
+    <string name="au7_scrobble_status_no_source">Nada é enviado: ative o scrobbling de música, YouTube Music ou rádio</string>
     <string name="au7_scrobble_sign_in">Testar conexão e entrar</string>
     <string name="au7_scrobble_lb_ok">O token é válido para %1$s</string>
     <string name="au7_scrobble_https">O endereço do servidor deve começar com https:// (http só é permitido para um servidor na sua própria rede)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">Nenhum scrobble aguardando</string>
     <string name="au7_scrobble_queue_clear">Limpar fila</string>
     <string name="au7_scrobble_queue_cleared">Fila limpa</string>
-    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm e ListenBrainz para o Telos Music e o Telos Radio</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm e ListenBrainz para Telos Music, YouTube Music e Telos Radio</string>
     <string name="au7_trakt_open_settings">Scrobbling do Trakt</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">O Trakt precisa de um aplicativo seu. Entre em trakt.tv, abra trakt.tv/oauth/applications, escolha New Application, informe qualquer nome e o endereço de redirecionamento urn:ietf:wg:oauth:2.0:oob, salve-o e informe aqui o client id e o client secret.</string>

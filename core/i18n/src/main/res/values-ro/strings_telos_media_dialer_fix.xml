@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Spectru</string>
+    <string name="telos_music_spectrum_on">Ascunde spectrul</string>
+    <string name="telos_music_spectrum_off">Afișează spectrul</string>
+    <string name="au7_scrobble_youtube_title">Scrobbling YouTube Music</string>
+    <string name="au7_scrobble_youtube_summary">Piese redate ca audio în Telos YouTube Music, după jumătatea piesei sau 4 minute</string>
+    <string name="comms_sms_tab_hidden">Mesajele sunt ascunse din bara Telefon. Ține apăsat Recente pentru a le afișa</string>
+    <string name="comms_sms_tab_shown">Mesajele sunt afișate în bara Telefon</string>
+</resources>

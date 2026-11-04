@@ -577,6 +577,22 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(mediaHubCompactList = compact)) }
     }
 
+    val mediaMusicSpectrum
+        get() = dataStore.data.map { it.comms.mediaMusicSpectrum }
+    fun setMediaMusicSpectrum(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(mediaMusicSpectrum = enabled)) }
+    }
+
+    val phoneShowSmsTab
+        get() = dataStore.data.map { it.comms.phoneShowSmsTab }
+    val phoneShowSmsTabUserSet
+        get() = dataStore.data.map { it.comms.phoneShowSmsTabUserSet }
+    fun setPhoneShowSmsTab(show: Boolean) {
+        dataStore.update {
+            it.copy(comms = it.comms.copy(phoneShowSmsTab = show, phoneShowSmsTabUserSet = true))
+        }
+    }
+
     fun setVirtualAppEnabled(key: String, enabled: Boolean) {
         dataStore.update { data ->
             val current = data.comms.disabledVirtualApps.split(',').filter { it.isNotBlank() }.toMutableSet()

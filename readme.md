@@ -1035,7 +1035,7 @@ A music player for the songs stored on your phone. It plays local files only: th
 **Scrobbling**
 
 - [Last.fm](https://www.last.fm), [Libre.fm](https://libre.fm) and [ListenBrainz](https://listenbrainz.org), each switched on separately, with an offline queue of up to 500 scrobbles for when you are offline (the queue is sent with the next successful scrobble)
-- A "now playing" message, and a scrobble after half the song or 4 minutes. Separate switches for music and radio; **Telos Radio** scrobbles the current track of stations that announce it (after 60 seconds of listening). A Scrobbling screen (Music top bar, Radio menu, Comms settings > Tools) with a queue count and Clear queue; servers must use https, redirects are not followed. Secrets are stored encrypted with a Keystore key.
+- A "now playing" message, and a scrobble after half the song or 4 minutes. Separate switches for music, YouTube Music and radio; **Telos Radio** scrobbles the current track of stations that announce it (after 60 seconds of listening). Last.fm needs a free API account, then **Sign in with browser** (approve on last.fm) or user name and password. A Scrobbling screen (Music top bar, Radio menu, Comms settings > Tools) with a queue count and Clear queue; servers must use https, redirects are not followed. Secrets are stored encrypted with a Keystore key.
 
 **Tag editor**
 

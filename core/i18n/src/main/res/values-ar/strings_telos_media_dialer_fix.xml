@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">الطيف</string>
+    <string name="telos_music_spectrum_on">إخفاء الطيف</string>
+    <string name="telos_music_spectrum_off">إظهار الطيف</string>
+    <string name="au7_scrobble_youtube_title">تسجيل YouTube Music</string>
+    <string name="au7_scrobble_youtube_summary">المقاطع المشغّلة كصوت في Telos YouTube Music بعد نصف الأغنية أو 4 دقائق</string>
+    <string name="comms_sms_tab_hidden">أُخفيت الرسائل من شريط الهاتف. اضغط مطولًا على الأخيرة لإظهارها</string>
+    <string name="comms_sms_tab_shown">الرسائل ظاهرة في شريط الهاتف</string>
+</resources>

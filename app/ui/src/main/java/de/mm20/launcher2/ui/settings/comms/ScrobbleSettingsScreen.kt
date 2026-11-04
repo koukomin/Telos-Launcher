@@ -46,7 +46,7 @@ import kotlinx.serialization.Serializable
 data object ScrobbleSettingsRoute : NavKey
 
 /**
- * Scrobbling of Telos Music and Telos Radio: which sources are sent, and the sign in for
+ * Scrobbling of Telos Music, YouTube Music and Telos Radio: which sources are sent, and the sign in for
  * Last.fm, Libre.fm and ListenBrainz. Secrets are stored encrypted (see [Scrobblers]).
  */
 @Composable
@@ -95,7 +95,7 @@ fun ScrobbleSettingsScreen() {
     }
     val status = when {
         active.isEmpty() -> stringResource(I18nR.string.au7_scrobble_status_no_service)
-        !config.musicEnabled && !config.radioEnabled -> stringResource(I18nR.string.au7_scrobble_status_no_source)
+        !config.musicEnabled && !config.youtubeEnabled && !config.radioEnabled -> stringResource(I18nR.string.au7_scrobble_status_no_source)
         else -> stringResource(I18nR.string.au7_scrobble_status_active, active.joinToString(", "))
     }
 
@@ -122,6 +122,12 @@ fun ScrobbleSettingsScreen() {
                     summary = stringResource(I18nR.string.au7_scrobble_music_summary),
                     value = config.musicEnabled,
                     onValueChanged = { on -> update { it.copy(musicEnabled = on) } },
+                )
+                SwitchPreference(
+                    title = stringResource(I18nR.string.au7_scrobble_youtube_title),
+                    summary = stringResource(I18nR.string.au7_scrobble_youtube_summary),
+                    value = config.youtubeEnabled,
+                    onValueChanged = { on -> update { it.copy(youtubeEnabled = on) } },
                 )
                 SwitchPreference(
                     title = stringResource(I18nR.string.au7_scrobble_radio_title),

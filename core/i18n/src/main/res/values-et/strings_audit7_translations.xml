@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">Jaama praegune lugu pärast ühte minutit kuulamist. Töötab ainult jaamadega, mis lugu teatavad.</string>
     <string name="au7_scrobble_status_active">Saadetakse teenusele %1$s</string>
     <string name="au7_scrobble_status_no_service">Midagi ei saadeta: ükski teenus pole sisse logitud ja sisse lülitatud</string>
-    <string name="au7_scrobble_status_no_source">Midagi ei saadeta: lülita sisse muusika või raadio scrobblimine</string>
+    <string name="au7_scrobble_status_no_source">Midagi ei saadeta: lülita sisse muusika, YouTube Musicu või raadio scrobblimine</string>
     <string name="au7_scrobble_sign_in">Testi ühendust ja logi sisse</string>
     <string name="au7_scrobble_lb_ok">Luba on kehtiv kasutajale %1$s</string>
     <string name="au7_scrobble_https">Serveri aadress peab algama https://-ga (http on lubatud ainult sinu enda võrgus oleva serveri jaoks)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">Ükski scrobble ei oota</string>
     <string name="au7_scrobble_queue_clear">Tühjenda järjekord</string>
     <string name="au7_scrobble_queue_cleared">Järjekord tühjendatud</string>
-    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm ja ListenBrainz rakenduste Telos Music ja Telos Radio jaoks</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm ja ListenBrainz rakendustele Telos Music, YouTube Music ja Telos Radio</string>
     <string name="au7_trakt_open_settings">Trakti scrobblimine</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">Trakt nõuab sinu enda rakendust. Logi sisse aadressil trakt.tv, ava trakt.tv/oauth/applications, vali New Application, sisesta suvaline nimi ja ümbersuunamisaadress urn:ietf:wg:oauth:2.0:oob, salvesta see ning sisesta siia selle client id ja client secret.</string>

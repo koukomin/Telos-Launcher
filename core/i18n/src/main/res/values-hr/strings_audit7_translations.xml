@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">Trenutačna pjesma postaje nakon jedne minute slušanja. Radi samo s postajama koje objavljuju pjesmu.</string>
     <string name="au7_scrobble_status_active">Slanje usluzi %1$s</string>
     <string name="au7_scrobble_status_no_service">Ništa se ne šalje: nijedna usluga nije prijavljena i uključena</string>
-    <string name="au7_scrobble_status_no_source">Ništa se ne šalje: uključite scrobblanje glazbe ili radija</string>
+    <string name="au7_scrobble_status_no_source">Ništa se ne šalje: uključite scrobblanje glazbe, YouTube Music ili radija</string>
     <string name="au7_scrobble_sign_in">Testiraj vezu i prijavi se</string>
     <string name="au7_scrobble_lb_ok">Token vrijedi za %1$s</string>
     <string name="au7_scrobble_https">Adresa poslužitelja mora počinjati s https:// (http je dopušten samo za poslužitelj u vašoj mreži)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">Nijedan scrobble ne čeka</string>
     <string name="au7_scrobble_queue_clear">Očisti red čekanja</string>
     <string name="au7_scrobble_queue_cleared">Red čekanja očišćen</string>
-    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm i ListenBrainz za Telos Music i Telos Radio</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm i ListenBrainz za Telos Music, YouTube Music i Telos Radio</string>
     <string name="au7_trakt_open_settings">Scrobblanje na Trakt</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">Trakt zahtijeva vlastitu aplikaciju. Prijavite se na trakt.tv, otvorite trakt.tv/oauth/applications, odaberite New Application, unesite bilo koji naziv i adresu preusmjeravanja urn:ietf:wg:oauth:2.0:oob, spremite je i ovdje unesite njezin client id i client secret.</string>

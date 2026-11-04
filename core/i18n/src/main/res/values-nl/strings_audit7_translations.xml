@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">Het huidige nummer van een zender, nadat het een minuut is beluisterd. Werkt alleen met zenders die het nummer doorgeven.</string>
     <string name="au7_scrobble_status_active">Verzenden naar %1$s</string>
     <string name="au7_scrobble_status_no_service">Er wordt niets verzonden: geen dienst is aangemeld en ingeschakeld</string>
-    <string name="au7_scrobble_status_no_source">Er wordt niets verzonden: schakel scrobbelen van muziek of radio in</string>
+    <string name="au7_scrobble_status_no_source">Er wordt niets verzonden: schakel scrobblen van muziek, YouTube Music of radio in</string>
     <string name="au7_scrobble_sign_in">Verbinding testen en aanmelden</string>
     <string name="au7_scrobble_lb_ok">Token is geldig voor %1$s</string>
     <string name="au7_scrobble_https">Het serveradres moet beginnen met https:// (http is alleen toegestaan voor een server in je eigen netwerk)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">Geen scrobbles in de wachtrij</string>
     <string name="au7_scrobble_queue_clear">Wachtrij wissen</string>
     <string name="au7_scrobble_queue_cleared">Wachtrij gewist</string>
-    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm en ListenBrainz voor Telos Music en Telos Radio</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm en ListenBrainz voor Telos Music, YouTube Music en Telos Radio</string>
     <string name="au7_trakt_open_settings">Trakt-scrobbelen</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">Trakt heeft een eigen applicatie nodig. Meld je aan op trakt.tv, open trakt.tv/oauth/applications, kies New Application, voer een willekeurige naam en het omleidingsadres urn:ietf:wg:oauth:2.0:oob in, sla op en voer hier de client-id en het client secret in.</string>

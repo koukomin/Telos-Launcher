@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">المقطع الحالي لمحطة، بعد الاستماع إليه لمدة دقيقة. يعمل فقط مع المحطات التي تعلن عن المقطع.</string>
     <string name="au7_scrobble_status_active">جارٍ الإرسال إلى %1$s</string>
     <string name="au7_scrobble_status_no_service">لا يُرسَل أي شيء: لا توجد خدمة مسجَّل الدخول إليها ومُشغَّلة</string>
-    <string name="au7_scrobble_status_no_source">لا يُرسَل أي شيء: فعِّل تسجيل الموسيقى أو الراديو</string>
+    <string name="au7_scrobble_status_no_source">لا يُرسل شيء: فعّل تسجيل الموسيقى أو YouTube Music أو الراديو</string>
     <string name="au7_scrobble_sign_in">اختبار الاتصال وتسجيل الدخول</string>
     <string name="au7_scrobble_lb_ok">الرمز المميز صالح لـ %1$s</string>
     <string name="au7_scrobble_https">يجب أن يبدأ عنوان الخادم بـ https:// (يُسمح بـ http فقط لخادم في شبكتك الخاصة)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">لا توجد عمليات تسجيل في الانتظار</string>
     <string name="au7_scrobble_queue_clear">مسح قائمة الانتظار</string>
     <string name="au7_scrobble_queue_cleared">تم مسح قائمة الانتظار</string>
-    <string name="au7_scrobble_settings_summary">Last.fm وLibre.fm وListenBrainz لـ Telos Music وTelos Radio</string>
+    <string name="au7_scrobble_settings_summary">Last.fm وLibre.fm وListenBrainz لتطبيقات Telos Music وYouTube Music وTelos Radio</string>
     <string name="au7_trakt_open_settings">تسجيل Trakt (Scrobble)</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">يتطلب Trakt تطبيقًا خاصًا بك. سجِّل الدخول إلى trakt.tv، وافتح trakt.tv/oauth/applications، واختر New Application، وأدخل أي اسم وعنوان إعادة التوجيه urn:ietf:wg:oauth:2.0:oob، ثم احفظه وأدخل هنا client id وclient secret الخاصين به.</string>

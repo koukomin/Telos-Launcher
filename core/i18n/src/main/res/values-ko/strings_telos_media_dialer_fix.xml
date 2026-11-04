@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">스펙트럼</string>
+    <string name="telos_music_spectrum_on">스펙트럼 숨기기</string>
+    <string name="telos_music_spectrum_off">스펙트럼 표시</string>
+    <string name="au7_scrobble_youtube_title">YouTube Music 스크로블</string>
+    <string name="au7_scrobble_youtube_summary">Telos YouTube Music에서 오디오로 재생한 트랙, 곡의 절반 또는 4분 후</string>
+    <string name="comms_sms_tab_hidden">전화 막대에서 문자를 숨겼습니다. 최근 통화를 길게 눌러 다시 표시</string>
+    <string name="comms_sms_tab_shown">문자가 전화 막대에 표시됩니다</string>
+</resources>

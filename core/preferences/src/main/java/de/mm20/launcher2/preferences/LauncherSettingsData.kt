@@ -1387,6 +1387,11 @@ data class CommsGroup(
     val mediaHubOrder: String = "",
     /** Compact list (small icons + text) for radio/TV in Telos Media */
     val mediaHubCompactList: Boolean = true,
+    /** Live FFT waveform on the Music library; default on. */
+    val mediaMusicSpectrum: Boolean = true,
+    /** Phone bottom bar SMS dest. When [phoneShowSmsTabUserSet] is false, hide if Telos is not the default SMS app. */
+    val phoneShowSmsTab: Boolean = true,
+    val phoneShowSmsTabUserSet: Boolean = false,
     /** Telos Video: online services. Keys and passwords are encrypted with the Android Keystore. */
     val tmdbApiKeyEnc: String = "",
     val subtitleApiKeyEnc: String = "",

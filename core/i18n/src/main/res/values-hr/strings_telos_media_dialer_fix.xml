@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Spektar</string>
+    <string name="telos_music_spectrum_on">Sakrij spektar</string>
+    <string name="telos_music_spectrum_off">Prikaži spektar</string>
+    <string name="au7_scrobble_youtube_title">Scrobbling YouTube Music</string>
+    <string name="au7_scrobble_youtube_summary">Pjesme reproducirane kao zvuk u Telos YouTube Music, nakon polovice pjesme ili 4 minute</string>
+    <string name="comms_sms_tab_hidden">Poruke skrivene s trake Telefona. Dugo pritisnite Nedavne da ih prikažete</string>
+    <string name="comms_sms_tab_shown">Poruke prikazane na traci Telefona</string>
+</resources>

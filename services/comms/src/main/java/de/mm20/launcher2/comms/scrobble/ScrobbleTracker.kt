@@ -12,7 +12,13 @@ import java.util.concurrent.Executors
  * that is playing right now, and a scrobble once half of the track (at most 4 minutes) was played.
  * Scrobbles that cannot be sent (no network) are kept and sent later.
  */
-class ScrobbleTracker(private val context: Context, private val player: Player) : Player.Listener {
+class ScrobbleTracker(
+    private val context: Context,
+    private val player: Player,
+    private val source: Source = Source.Music,
+) : Player.Listener {
+
+    enum class Source { Music, YouTube }
 
     private val handler = Handler(Looper.getMainLooper())
     private val network = Executors.newSingleThreadExecutor()
@@ -49,12 +55,18 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
     private fun loadTrack(item: MediaItem?) {
         trackKey = item?.mediaId
         val m = item?.mediaMetadata
-        track = if (item != null && !m?.title.isNullOrBlank() && !m?.artist.isNullOrBlank()) {
+        val rawTitle = m?.title?.toString().orEmpty()
+        val rawArtist = m?.artist?.toString().orEmpty()
+        val parsed = if (rawArtist.isNotBlank() && rawTitle.isNotBlank()) rawArtist to rawTitle
+            else RadioTitle.parse(rawTitle, rawArtist, "")
+                ?: if (source == Source.YouTube && rawTitle.isNotBlank()) "YouTube Music" to rawTitle else null
+        track = if (item != null && parsed != null) {
             ScrobbleTrack(
-                artist = m?.artist.toString(),
-                title = m?.title.toString(),
+                artist = parsed.first,
+                title = parsed.second,
                 album = m?.albumTitle?.toString().orEmpty(),
                 durationSeconds = (player.duration.takeIf { it > 0 } ?: 0L).div(1000).toInt(),
+                player = if (source == Source.YouTube) "Telos YouTube Music" else "Telos Music",
             )
         } else null
         playedMs = 0
@@ -82,7 +94,11 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
     private fun check() {
         val t = track ?: return
         val cfg = config()
-        if (!cfg.musicEnabled || !cfg.any) return
+        val sourceOn = when (source) {
+            Source.Music -> cfg.musicEnabled
+            Source.YouTube -> cfg.youtubeEnabled
+        }
+        if (!sourceOn || !cfg.any) return
         // the duration is known once playback started
         val durationSeconds = if (t.durationSeconds > 0) t.durationSeconds else (player.duration.takeIf { it > 0 } ?: 0L).div(1000).toInt()
         val withDuration = if (durationSeconds != t.durationSeconds) t.copy(durationSeconds = durationSeconds).also { track = it } else t

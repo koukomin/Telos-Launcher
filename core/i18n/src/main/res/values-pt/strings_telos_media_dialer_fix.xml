@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Espetro</string>
+    <string name="telos_music_spectrum_on">Ocultar espetro</string>
+    <string name="telos_music_spectrum_off">Mostrar espetro</string>
+    <string name="au7_scrobble_youtube_title">Scrobble do YouTube Music</string>
+    <string name="au7_scrobble_youtube_summary">Faixas reproduzidas como áudio no Telos YouTube Music, após metade da música ou 4 minutos</string>
+    <string name="comms_sms_tab_hidden">Mensagens ocultas da barra do Telefone. Prima Recentes para as mostrar</string>
+    <string name="comms_sms_tab_shown">Mensagens visíveis na barra do Telefone</string>
+</resources>

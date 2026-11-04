@@ -1,22 +1,15 @@
 package de.mm20.launcher2.ui.media
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,8 +20,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import kotlin.math.abs
-import kotlin.math.sin
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.mm20.launcher2.comms.media.PlaybackSpectrum
 
 private val CyanNeon = Color(0xFF00F2FE)
 private val PinkNeon = Color(0xFFFF007F)
@@ -37,18 +30,13 @@ private val PinkNeon = Color(0xFFFF007F)
 fun AudioSpectrumVisualizer(
     isPlaying: Boolean,
     modifier: Modifier = Modifier,
-    barCount: Int = 16,
+    barCount: Int = PlaybackSpectrum.BAR_COUNT,
 ) {
-    val transition = rememberInfiniteTransition(label = "spectrum")
-    val phase by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = (Math.PI * 2).toFloat(),
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1200, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "phase"
-    )
+    DisposableEffect(Unit) {
+        PlaybackSpectrum.addListener()
+        onDispose { PlaybackSpectrum.removeListener() }
+    }
+    val live by PlaybackSpectrum.bars.collectAsStateWithLifecycle()
 
     Box(
         modifier = modifier
@@ -65,19 +53,14 @@ fun AudioSpectrumVisualizer(
             val height = size.height
             val gap = 4.dp.toPx()
             val barWidth = (totalWidth - (gap * (barCount - 1))) / barCount
+            val n = minOf(barCount, live.size)
 
             for (i in 0 until barCount) {
-                val factor = if (isPlaying) {
-                    val raw = sin(phase + i * 0.45f)
-                    (abs(raw) * 0.85f + 0.15f).coerceIn(0.1f, 1f)
-                } else {
-                    0.08f
-                }
-
+                val sample = if (i < n) live[i] else 0f
+                val factor = if (isPlaying) sample.coerceIn(0.06f, 1f) else 0.08f
                 val barHeight = height * factor
                 val x = i * (barWidth + gap)
                 val y = height - barHeight
-
                 drawRoundRect(
                     brush = Brush.verticalGradient(listOf(PinkNeon, CyanNeon)),
                     topLeft = Offset(x, y),

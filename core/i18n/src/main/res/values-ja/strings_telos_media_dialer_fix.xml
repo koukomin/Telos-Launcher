@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">スペクトラム</string>
+    <string name="telos_music_spectrum_on">スペクトラムを隠す</string>
+    <string name="telos_music_spectrum_off">スペクトラムを表示</string>
+    <string name="au7_scrobble_youtube_title">YouTube Music をスクロブ</string>
+    <string name="au7_scrobble_youtube_summary">Telos YouTube Music で音声再生した曲。曲の半分または 4 分後</string>
+    <string name="comms_sms_tab_hidden">電話バーからメッセージを非表示にしました。再表示するには履歴を長押し</string>
+    <string name="comms_sms_tab_shown">メッセージを電話バーに表示しています</string>
+</resources>

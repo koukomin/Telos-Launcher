@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">It-traċċa preżenti ta\' stazzjon, wara li tinstema\' għal minuta. Taħdem bissma\' stazzjonijiet li jħabbru t-traċċa.</string>
     <string name="au7_scrobble_status_active">Qed jintbagħat lil %1$s</string>
     <string name="au7_scrobble_status_no_service">Xejn ma jintbagħat: l-ebda servizz mhu illoggjat u mixgħul</string>
-    <string name="au7_scrobble_status_no_source">Xejn ma jintbagħat: ixgħel l-iscrobbling tal-mużika jew tar-radju</string>
+    <string name="au7_scrobble_status_no_source">Xejn ma jintbagħat: ixgħel l-iscrobbling tal-mużika, YouTube Music jew tar-radju</string>
     <string name="au7_scrobble_sign_in">Ittestja l-konnessjoni u idħol</string>
     <string name="au7_scrobble_lb_ok">It-token huwa validu għal %1$s</string>
     <string name="au7_scrobble_https">L-indirizz tas-server irid jibda b\'https:// (http huwa permess biss għal server fin-netwerk tiegħek stess)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">L-ebda scrobble ma qed jistenna</string>
     <string name="au7_scrobble_queue_clear">Ħassar il-kju</string>
     <string name="au7_scrobble_queue_cleared">Il-kju tħassar</string>
-    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm u ListenBrainz għal Telos Music u Telos Radio</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm u ListenBrainz għal Telos Music, YouTube Music u Telos Radio</string>
     <string name="au7_trakt_open_settings">Scrobbling ta\' Trakt</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">Trakt jeħtieġ applikazzjoni tiegħek stess. Idħol fuq trakt.tv, iftaħ trakt.tv/oauth/applications, agħżel New Application, daħħal kwalunkwe isem u l-indirizz ta\' tidderieġi urn:ietf:wg:oauth:2.0:oob, issejvjah, u daħħal hawn il-client id u l-client secret tiegħu.</string>

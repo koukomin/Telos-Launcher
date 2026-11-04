@@ -66,7 +66,8 @@ Tap **Lyrics** in the full player to replace the cover with the lyrics.
 
 Scrobbling reports what you listen to. Open the **Scrobbling** screen with the button (a gear icon) in the top bar of the
 Music screen, from the overflow menu of Telos Radio, or from Settings > Comms > Tools. The screen has separate switches
-**Scrobble music** (after an upgrade it is on only if a service was already active, otherwise off) and **Scrobble radio**
+**Scrobble music** (after an upgrade it is on only if a service was already active, otherwise off), **Scrobble YouTube Music**
+(follows the music switch until you change it) and **Scrobble radio**
 (off), a status line, and the queue with **Clear queue**. Nothing is sent until a service is signed in and switched on.
 Track titles and artists go to the service you choose (opt-in network traffic). Redirects are not followed, and a
 ListenBrainz server must use https (http only for a server in your own network).

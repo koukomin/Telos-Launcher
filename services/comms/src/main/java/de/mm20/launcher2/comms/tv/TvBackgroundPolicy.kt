@@ -8,11 +8,15 @@ object TvBackgroundPolicy {
     /** Upgrade the old pause-on-leave default once; subsequent explicit opt-outs survive. */
     fun backgroundAfterUpgrade(saved: Boolean, version: Int): Boolean = version < 1 || saved
 
-    /** Leaving the app or switching the screen off pauses playback unless the user allowed background playback */
+    /** Leaving the app pauses playback unless background playback is on. Screen off never pauses a live channel. */
     fun pauseWhenLeaving(keepInBackground: Boolean, screenOff: Boolean = false): Boolean = !keepInBackground && !screenOff
 
-    /** In the background only the sound is needed: the video track is switched off to save data */
-    fun videoDisabled(keepInBackground: Boolean, inBackground: Boolean, screenOff: Boolean = false): Boolean = (keepInBackground || screenOff) && inBackground
+    /**
+     * Video is switched off only while the app is in the background with background playback on and the
+     * screen is still on. Turning the screen off keeps the video track so a live HLS/DASH stream is not torn down.
+     */
+    fun videoDisabled(keepInBackground: Boolean, inBackground: Boolean, screenOff: Boolean = false): Boolean =
+        keepInBackground && inBackground && !screenOff
 
     /**
      * True when the service should stop and release TV: nothing is playing or loading and it has been

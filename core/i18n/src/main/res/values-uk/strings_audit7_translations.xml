@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">Поточний трек станції після прослуховування протягом хвилини. Працює лише зі станціями, які передають інформацію про трек.</string>
     <string name="au7_scrobble_status_active">Надсилання до %1$s</string>
     <string name="au7_scrobble_status_no_service">Нічого не надсилається: у жоден сервіс не виконано вхід і не ввімкнено його</string>
-    <string name="au7_scrobble_status_no_source">Нічого не надсилається: увімкніть скроблінг музики або радіо</string>
+    <string name="au7_scrobble_status_no_source">Нічого не надсилається: увімкніть скроблінг музики, YouTube Music або радіо</string>
     <string name="au7_scrobble_sign_in">Перевірити з’єднання та увійти</string>
     <string name="au7_scrobble_lb_ok">Токен дійсний для %1$s</string>
     <string name="au7_scrobble_https">Адреса сервера має починатися з https:// (http дозволено лише для сервера у вашій власній мережі)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">Немає скроблів у черзі</string>
     <string name="au7_scrobble_queue_clear">Очистити чергу</string>
     <string name="au7_scrobble_queue_cleared">Чергу очищено</string>
-    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm і ListenBrainz для Telos Music і Telos Radio</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm і ListenBrainz для Telos Music, YouTube Music і Telos Radio</string>
     <string name="au7_trakt_open_settings">Скроблінг Trakt</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">Trakt потребує вашого власного застосунку. Увійдіть на trakt.tv, відкрийте trakt.tv/oauth/applications, виберіть New Application, введіть будь-яку назву та адресу перенаправлення urn:ietf:wg:oauth:2.0:oob, збережіть і введіть тут його client id та client secret.</string>

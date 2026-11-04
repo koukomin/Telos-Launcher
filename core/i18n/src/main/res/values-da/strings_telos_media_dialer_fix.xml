@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Spektrum</string>
+    <string name="telos_music_spectrum_on">Skjul spektrum</string>
+    <string name="telos_music_spectrum_off">Vis spektrum</string>
+    <string name="au7_scrobble_youtube_title">Scrobbling af YouTube Music</string>
+    <string name="au7_scrobble_youtube_summary">Numre afspillet som lyd i Telos YouTube Music, efter halvdelen af nummeret eller 4 minutter</string>
+    <string name="comms_sms_tab_hidden">Beskeder skjult fra Telefon-linjen. Tryk længe på Seneste for at vise dem</string>
+    <string name="comms_sms_tab_shown">Beskeder vist på Telefon-linjen</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Spectrum</string>
+    <string name="telos_music_spectrum_on">Spectrum verbergen</string>
+    <string name="telos_music_spectrum_off">Spectrum tonen</string>
+    <string name="au7_scrobble_youtube_title">YouTube Music scrobblen</string>
+    <string name="au7_scrobble_youtube_summary">Nummers als audio in Telos YouTube Music, na de helft van het nummer of 4 minuten</string>
+    <string name="comms_sms_tab_hidden">Berichten verborgen in de Telefoonbalk. Houd Recente lang ingedrukt om te tonen</string>
+    <string name="comms_sms_tab_shown">Berichten zichtbaar in de Telefoonbalk</string>
+</resources>

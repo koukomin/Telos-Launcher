@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Spektrum</string>
+    <string name="telos_music_spectrum_on">Spektrumu gizle</string>
+    <string name="telos_music_spectrum_off">Spektrumu göster</string>
+    <string name="au7_scrobble_youtube_title">YouTube Music scrobble</string>
+    <string name="au7_scrobble_youtube_summary">Telos YouTube Music’te ses olarak çalınan parçalar, şarkının yarısı veya 4 dakika sonra</string>
+    <string name="comms_sms_tab_hidden">Mesajlar Telefon çubuğundan gizlendi. Göstermek için Son aramaları uzun basın</string>
+    <string name="comms_sms_tab_shown">Mesajlar Telefon çubuğunda görünür</string>
+</resources>

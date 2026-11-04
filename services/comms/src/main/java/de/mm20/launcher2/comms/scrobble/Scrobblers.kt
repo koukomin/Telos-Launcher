@@ -35,6 +35,8 @@ data class ScrobbleConfig(
     val listenbrainzServer: String = "https://api.listenbrainz.org",
     /** Scrobble what Telos Music plays */
     val musicEnabled: Boolean = false,
+    /** Scrobble Telos YouTube Music audio playback */
+    val youtubeEnabled: Boolean = false,
     /** Scrobble the current track of Telos Radio */
     val radioEnabled: Boolean = false,
 ) {
@@ -66,7 +68,9 @@ object Scrobblers {
             radioEnabled = p.getBoolean("radio_on", false),
         )
         // versions before the music switch scrobbled whenever a service was switched on
-        return c.copy(musicEnabled = if (p.contains("music_on")) p.getBoolean("music_on", false) else c.any)
+        val musicOn = if (p.contains("music_on")) p.getBoolean("music_on", false) else c.any
+        val youtubeOn = if (p.contains("youtube_on")) p.getBoolean("youtube_on", false) else musicOn
+        return c.copy(musicEnabled = musicOn, youtubeEnabled = youtubeOn)
     }
 
     fun save(context: Context, c: ScrobbleConfig) {
@@ -80,6 +84,7 @@ object Scrobblers {
             .putString("librefm_user", c.librefmUser.trim())
             .putString("librefm_hash", SecretBox.encrypt(c.librefmPasswordHash))
             .putBoolean("music_on", c.musicEnabled)
+            .putBoolean("youtube_on", c.youtubeEnabled)
             .putBoolean("radio_on", c.radioEnabled)
             .putBoolean("lb_on", c.listenbrainzEnabled)
             .putString("lb_token", SecretBox.encrypt(c.listenbrainzToken.trim()))

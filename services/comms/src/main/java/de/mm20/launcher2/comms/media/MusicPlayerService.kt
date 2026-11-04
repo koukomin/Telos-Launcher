@@ -49,8 +49,10 @@ class MusicPlayerService : MediaSessionService() {
             private var effectSession = -1
             override fun onAudioSessionIdChanged(audioSessionId: Int) {
                 MediaAudioFx.detachFromSession(effectSession)
+                PlaybackSpectrum.detach(effectSession)
                 effectSession = audioSessionId
                 MediaAudioFx.attachToSession(audioSessionId)
+                PlaybackSpectrum.attach(audioSessionId)
             }
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 handler.removeCallbacks(idleStop)

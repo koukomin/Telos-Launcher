@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">電台的目前曲目，收聽一分鐘後。僅適用於會公布曲目的電台。</string>
     <string name="au7_scrobble_status_active">正在傳送到 %1$s</string>
     <string name="au7_scrobble_status_no_service">不會傳送任何內容：沒有已登入並開啟的服務</string>
-    <string name="au7_scrobble_status_no_source">不會傳送任何內容：請開啟音樂或廣播 Scrobble</string>
+    <string name="au7_scrobble_status_no_source">未傳送任何內容：請開啟音樂、YouTube Music 或廣播記錄</string>
     <string name="au7_scrobble_sign_in">測試連線並登入</string>
     <string name="au7_scrobble_lb_ok">權杖對 %1$s 有效</string>
     <string name="au7_scrobble_https">伺服器位址必須以 https:// 開頭（僅允許對你自己網路中的伺服器使用 http）</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">沒有等待傳送的 Scrobble</string>
     <string name="au7_scrobble_queue_clear">清除佇列</string>
     <string name="au7_scrobble_queue_cleared">佇列已清除</string>
-    <string name="au7_scrobble_settings_summary">適用於 Telos Music 和 Telos Radio 的 Last.fm、Libre.fm 和 ListenBrainz</string>
+    <string name="au7_scrobble_settings_summary">用於 Telos Music、YouTube Music 與 Telos Radio 的 Last.fm、Libre.fm 與 ListenBrainz</string>
     <string name="au7_trakt_open_settings">Trakt Scrobble</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">Trakt 需要你自己的應用程式。請登入 trakt.tv，開啟 trakt.tv/oauth/applications，選擇 New Application，輸入任意名稱和重新導向位址 urn:ietf:wg:oauth:2.0:oob，儲存後在此輸入其 client id 和 client secret。</string>

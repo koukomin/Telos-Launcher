@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">स्पेक्ट्रम</string>
+    <string name="telos_music_spectrum_on">स्पेक्ट्रम छिपाएँ</string>
+    <string name="telos_music_spectrum_off">स्पेक्ट्रम दिखाएँ</string>
+    <string name="au7_scrobble_youtube_title">YouTube Music स्क्रॉबल</string>
+    <string name="au7_scrobble_youtube_summary">Telos YouTube Music में ऑडियो के रूप में चले ट्रैक, गाने के आधे या 4 मिनट बाद</string>
+    <string name="comms_sms_tab_hidden">फ़ोन बार से संदेश छिपाए गए। दिखाने के लिए हालिया पर देर तक दबाएँ</string>
+    <string name="comms_sms_tab_shown">संदेश फ़ोन बार पर दिख रहे हैं</string>
+</resources>

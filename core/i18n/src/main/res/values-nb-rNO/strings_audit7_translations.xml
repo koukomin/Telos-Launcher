@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">Gjeldende spor på en stasjon, etter at det er hørt i ett minutt. Fungerer bare med stasjoner som varsler sporet.</string>
     <string name="au7_scrobble_status_active">Sender til %1$s</string>
     <string name="au7_scrobble_status_no_service">Ingenting sendes: ingen tjeneste er logget inn og slått på</string>
-    <string name="au7_scrobble_status_no_source">Ingenting sendes: slå på scrobbling av musikk eller radio</string>
+    <string name="au7_scrobble_status_no_source">Ingenting sendes: slå på scrobbling av musikk, YouTube Music eller radio</string>
     <string name="au7_scrobble_sign_in">Test tilkoblingen og logg inn</string>
     <string name="au7_scrobble_lb_ok">Tokenet er gyldig for %1$s</string>
     <string name="au7_scrobble_https">Serveradressen må begynne med https:// (http er bare tillatt for en server på ditt eget nettverk)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">Ingen scrobbles venter</string>
     <string name="au7_scrobble_queue_clear">Tøm køen</string>
     <string name="au7_scrobble_queue_cleared">Køen er tømt</string>
-    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm og ListenBrainz for Telos Music og Telos Radio</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm og ListenBrainz for Telos Music, YouTube Music og Telos Radio</string>
     <string name="au7_trakt_open_settings">Trakt-scrobbling</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">Trakt krever en egen applikasjon. Logg inn på trakt.tv, åpne trakt.tv/oauth/applications, velg New Application, skriv inn et vilkårlig navn og omdirigeringsadressen urn:ietf:wg:oauth:2.0:oob, lagre den, og skriv inn client id og client secret her.</string>

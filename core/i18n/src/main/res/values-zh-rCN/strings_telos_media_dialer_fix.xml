@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">频谱</string>
+    <string name="telos_music_spectrum_on">隐藏频谱</string>
+    <string name="telos_music_spectrum_off">显示频谱</string>
+    <string name="au7_scrobble_youtube_title">记录 YouTube Music</string>
+    <string name="au7_scrobble_youtube_summary">在 Telos YouTube Music 中以音频播放的曲目，歌曲过半或 4 分钟后</string>
+    <string name="comms_sms_tab_hidden">已从电话栏隐藏短信。长按最近通话可重新显示</string>
+    <string name="comms_sms_tab_shown">短信已显示在电话栏</string>
+</resources>

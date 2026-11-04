@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Spektrum</string>
+    <string name="telos_music_spectrum_on">Spektrum elrejtése</string>
+    <string name="telos_music_spectrum_off">Spektrum megjelenítése</string>
+    <string name="au7_scrobble_youtube_title">YouTube Music scrobbolás</string>
+    <string name="au7_scrobble_youtube_summary">A Telos YouTube Musicben hangként lejátszott számok, a dal felénél vagy 4 perc után</string>
+    <string name="comms_sms_tab_hidden">Az üzenetek elrejtve a Telefon sávjáról. Tartsa lenyomva a Legutóbbiakat a megjelenítéshez</string>
+    <string name="comms_sms_tab_shown">Az üzenetek látszanak a Telefon sávján</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Спектър</string>
+    <string name="telos_music_spectrum_on">Скриване на спектъра</string>
+    <string name="telos_music_spectrum_off">Показване на спектъра</string>
+    <string name="au7_scrobble_youtube_title">Scrobble на YouTube Music</string>
+    <string name="au7_scrobble_youtube_summary">Песни, пускани като звук в Telos YouTube Music, след половината на песента или 4 минути</string>
+    <string name="comms_sms_tab_hidden">Съобщенията са скрити от лентата на Телефона. Задръжте Скорошни, за да ги покажете</string>
+    <string name="comms_sms_tab_shown">Съобщенията се показват на лентата на Телефона</string>
+</resources>

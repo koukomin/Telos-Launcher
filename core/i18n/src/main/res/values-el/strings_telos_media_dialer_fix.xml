@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Φάσμα</string>
+    <string name="telos_music_spectrum_on">Απόκρυψη φάσματος</string>
+    <string name="telos_music_spectrum_off">Εμφάνιση φάσματος</string>
+    <string name="au7_scrobble_youtube_title">Scrobble στο YouTube Music</string>
+    <string name="au7_scrobble_youtube_summary">Κομμάτια που παίζουν ως ήχος στο Telos YouTube Music, μετά το μισό του τραγουδιού ή 4 λεπτά</string>
+    <string name="comms_sms_tab_hidden">Τα μηνύματα κρύφτηκαν από τη γραμμή του Τηλεφώνου. Πατήστε παρατεταμένα τα Πρόσφατα για να εμφανιστούν</string>
+    <string name="comms_sms_tab_shown">Τα μηνύματα εμφανίζονται στη γραμμή του Τηλεφώνου</string>
+</resources>

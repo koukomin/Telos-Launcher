@@ -8,7 +8,7 @@
     <string name="au7_scrobble_radio_summary">Az adó aktuális száma egy perc hallgatás után. Csak a számot bejelentő adókkal működik.</string>
     <string name="au7_scrobble_status_active">Küldés ide: %1$s</string>
     <string name="au7_scrobble_status_no_service">Semmi nem kerül elküldésre: nincs bejelentkezett és bekapcsolt szolgáltatás</string>
-    <string name="au7_scrobble_status_no_source">Semmi nem kerül elküldésre: kapcsolja be a zene vagy a rádió scrobblolását</string>
+    <string name="au7_scrobble_status_no_source">Semmi sem kerül elküldésre: kapcsolja be a zene, a YouTube Music vagy a rádió scrobblolását</string>
     <string name="au7_scrobble_sign_in">Kapcsolat tesztelése és bejelentkezés</string>
     <string name="au7_scrobble_lb_ok">A token érvényes ehhez: %1$s</string>
     <string name="au7_scrobble_https">A szerver címének https://-sel kell kezdődnie (http csak a saját hálózatán lévő szerverhez engedélyezett)</string>
@@ -18,7 +18,7 @@
     <string name="au7_scrobble_queue_empty">Nincs várakozó scrobble</string>
     <string name="au7_scrobble_queue_clear">Várólista törlése</string>
     <string name="au7_scrobble_queue_cleared">Várólista törölve</string>
-    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm és ListenBrainz a Telos Music és a Telos Radio számára</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm és ListenBrainz a Telos Music, YouTube Music és Telos Radio számára</string>
     <string name="au7_trakt_open_settings">Trakt scrobblolás</string>
     <string name="au7_trakt_title">Trakt</string>
     <string name="au7_trakt_howto">A Trakt saját alkalmazást igényel. Jelentkezzen be a trakt.tv oldalon, nyissa meg a trakt.tv/oauth/applications oldalt, válassza a New Application lehetőséget, adjon meg tetszőleges nevet és az urn:ietf:wg:oauth:2.0:oob átirányítási címet, mentse, majd itt adja meg a client id és a client secret értékét.</string>

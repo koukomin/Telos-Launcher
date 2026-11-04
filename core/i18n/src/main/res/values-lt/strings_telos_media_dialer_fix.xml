@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_music_spectrum">Spektras</string>
+    <string name="telos_music_spectrum_on">Slėpti spektrą</string>
+    <string name="telos_music_spectrum_off">Rodyti spektrą</string>
+    <string name="au7_scrobble_youtube_title">YouTube Music scrobblinimas</string>
+    <string name="au7_scrobble_youtube_summary">Kūriniai, grojami kaip garsas Telos YouTube Music, po dainos pusės arba 4 minučių</string>
+    <string name="comms_sms_tab_hidden">Žinutės paslėptos iš Telefono juostos. Ilgai spauskite Nesenus, kad parodytumėte</string>
+    <string name="comms_sms_tab_shown">Žinutės rodomos Telefono juostoje</string>
+</resources>
