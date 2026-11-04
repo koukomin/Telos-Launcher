@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -353,7 +354,7 @@ private fun Display(vm: CalculatorViewModel, modifier: Modifier, onHistory: () -
 @Composable
 private fun StandardKeys(vm: CalculatorViewModel, modifier: Modifier) {
     @Composable
-    fun androidx.compose.foundation.layout.ColumnScope.KeyRow(vararg keys: @Composable (Modifier) -> Unit) {
+    fun ColumnScope.KeyRow(vararg keys: @Composable (Modifier) -> Unit) {
         Row(Modifier.fillMaxWidth().weight(1f)) { keys.forEach { it(Modifier.weight(1f).fillMaxHeight()) } }
     }
     fun num(label: String, token: String = label): @Composable (Modifier) -> Unit = { m -> RoundKey(label, KeyKind.Number, m, fontSize = 26) { vm.input(token) } }
@@ -379,7 +380,7 @@ private fun StandardKeys(vm: CalculatorViewModel, modifier: Modifier) {
 @Composable
 private fun ScientificKeys(vm: CalculatorViewModel, inverse: Boolean, onInverse: () -> Unit, modifier: Modifier) {
     @Composable
-    fun androidx.compose.foundation.layout.ColumnScope.KeyRow(vararg keys: @Composable (Modifier) -> Unit) {
+    fun ColumnScope.KeyRow(vararg keys: @Composable (Modifier) -> Unit) {
         Row(Modifier.fillMaxWidth().weight(1f)) { keys.forEach { it(Modifier.weight(1f).fillMaxHeight()) } }
     }
     fun fn(label: String, token: String = label, selected: Boolean = false, onClick: (() -> Unit)? = null): @Composable (Modifier) -> Unit =
