@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.44.11
+
+- Jackson 2.22.4 / annotations 2.22, Gson 2.15, plugin-classpath CVE pins (Dependabot).
+- Linux CI: `setup-android` v4. Workflows set explicit `GITHUB_TOKEN` permissions.
+- Zip Slip guard on comic archives, explicit notification PendingIntents, biometric `Cipher.doFinal` gates.
+
 ## 1.44.10
 
 - Privacy Shield and built-in Shizuku live in Telos System. The home search-bar shield icon stays a shield and opens Telos System.
