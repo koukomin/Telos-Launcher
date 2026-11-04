@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="security_hub_title">Shizuku και ασπίδα απορρήτου</string>
-    <string name="security_hub_summary">Πελάτες Shizuku, απόκρυψη τραπεζών και απόρρητο προχείρου</string>
+    <string name="security_hub_summary">Ανοίγει το Telos System: Ασπίδα απορρήτου και ενσωματωμένο Shizuku</string>
     <string name="security_hub_tab_title">Ασπίδα απορρήτου</string>
     <string name="security_hub_engine_status">Μηχανή Shizuku: %1$s • UID %2$d</string>
     <string name="security_hub_active">Ενεργή</string>

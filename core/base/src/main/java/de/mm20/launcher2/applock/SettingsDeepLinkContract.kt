@@ -47,6 +47,8 @@ object SettingsDeepLinkContract {
     const val ROUTE_NETWORK_SPEED_TEST = "settings/network/speedtest"
     const val ROUTE_NETWORK_PRIVATE_DNS = "settings/network/private_dns"
     const val ROUTE_SYSTEM = "settings/system"
+    /** Optional System tab: `shield`, `shizuku`, `apps`, `tweaks`. Empty opens the dashboard. */
+    const val EXTRA_SYSTEM_TAB = "de.mm20.launcher2.settings.SYSTEM_TAB"
     const val ROUTE_WEATHER = "settings/weather"
     const val ROUTE_TRASH = "settings/trash"
     const val ROUTE_SYNC = "settings/sync"

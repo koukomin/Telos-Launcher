@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Vezeték nélküli ADB párosítás</string>
+    <string name="telos_shizuku_pair_notif_searching">Várakozás a kódra</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Nyisd meg a Párosítás kóddal elemet a Vezeték nélküli hibakeresésben</string>
+    <string name="telos_shizuku_pair_notif_found">Kód megadása</string>
+    <string name="telos_shizuku_pair_notif_enter">Kód megadása</string>
+</resources>

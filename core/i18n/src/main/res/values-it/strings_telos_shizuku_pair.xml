@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Associazione ADB wireless</string>
+    <string name="telos_shizuku_pair_notif_searching">In attesa del codice</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Apri Associa dispositivo con codice in Debug wireless</string>
+    <string name="telos_shizuku_pair_notif_found">Inserisci il codice</string>
+    <string name="telos_shizuku_pair_notif_enter">Inserisci codice</string>
+</resources>

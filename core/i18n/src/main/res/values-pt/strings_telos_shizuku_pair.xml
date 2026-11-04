@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Emparelhamento ADB sem fios</string>
+    <string name="telos_shizuku_pair_notif_searching">A aguardar código</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Abre Emparelhar dispositivo com código em Depuração sem fios</string>
+    <string name="telos_shizuku_pair_notif_found">Introduzir código</string>
+    <string name="telos_shizuku_pair_notif_enter">Introduzir código</string>
+</resources>

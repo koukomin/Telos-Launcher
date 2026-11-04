@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">ワイヤレス ADB ペアリング</string>
+    <string name="telos_shizuku_pair_notif_searching">ペアリングコードを待機</string>
+    <string name="telos_shizuku_pair_notif_searching_text">ワイヤレスデバッグでコードでデバイスをペア設定を開く</string>
+    <string name="telos_shizuku_pair_notif_found">コードを入力</string>
+    <string name="telos_shizuku_pair_notif_enter">コードを入力</string>
+</resources>

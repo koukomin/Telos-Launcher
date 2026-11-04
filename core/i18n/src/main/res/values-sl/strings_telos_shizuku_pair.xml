@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Seznanjanje brezžičnega ADB</string>
+    <string name="telos_shizuku_pair_notif_searching">Čakanje na kodo</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Odprite Seznani napravo s kodo v Brezžičnem odpravljanju napak</string>
+    <string name="telos_shizuku_pair_notif_found">Vnesi kodo</string>
+    <string name="telos_shizuku_pair_notif_enter">Vnesi kodo</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">WLAN-ADB-Kopplung</string>
+    <string name="telos_shizuku_pair_notif_searching">Warte auf Kopplungscode</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Öffne Gerät mit Kopplungscode koppeln in Wireless debugging</string>
+    <string name="telos_shizuku_pair_notif_found">Kopplungscode eingeben</string>
+    <string name="telos_shizuku_pair_notif_enter">Code eingeben</string>
+</resources>

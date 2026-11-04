@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">ওয়্যারলেস ADB পেয়ারিং</string>
+    <string name="telos_shizuku_pair_notif_searching">কোডের অপেক্ষা</string>
+    <string name="telos_shizuku_pair_notif_searching_text">ওয়্যারলেস ডিবাগিং-এ কোড দিয়ে ডিভাইস পেয়ার খুলুন</string>
+    <string name="telos_shizuku_pair_notif_found">কোড লিখুন</string>
+    <string name="telos_shizuku_pair_notif_enter">কোড লিখুন</string>
+</resources>

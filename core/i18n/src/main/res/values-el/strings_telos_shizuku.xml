@@ -5,7 +5,7 @@
     <string name="telos_shizuku_starter">Εκκινητής: %1$s</string>
     <string name="telos_shizuku_start">Εκκίνηση διακομιστή</string>
     <string name="telos_shizuku_start_root">Εκκίνηση με root</string>
-    <string name="telos_shizuku_start_wireless">Εκκίνηση με ασύρματο debugging</string>
+    <string name="telos_shizuku_start_wireless">Άνοιγμα ασύρματου debugging</string>
     <string name="telos_shizuku_stop">Διακοπή διακομιστή</string>
     <string name="telos_shizuku_open_devopts">Επιλογές για προγραμματιστές</string>
     <string name="telos_shizuku_settings">Ρυθμίσεις διακομιστή</string>
@@ -20,7 +20,9 @@
     <string name="telos_shizuku_watchdog_channel">Επόπτης Shizuku</string>
     <string name="telos_shizuku_watchdog_title">Διακομιστής Shizuku του Telos</string>
     <string name="telos_shizuku_howto_title">Πώς ξεκινάει</string>
-    <string name="telos_shizuku_howto_body">Root: πάτα Εκκίνηση με root.\nΑσύρματα (χωρίς PC μετά το πρώτο pairing): ενεργοποίησε την υπηρεσία προσβασιμότητας pairing του Telos, άνοιξε Επιλογές για προγραμματιστές → Ασύρματο debugging → Ζεύξη συσκευής με κωδικό. Ο Telos διαβάζει τον 6ψήφιο μόνο από αυτό το παράθυρο των Ρυθμίσεων.\nΥπολογιστής: USB debugging και την εντολή adb παρακάτω (οι διαδρομές είναι αυτού του install).</string>
+    <string name="telos_shizuku_howto_body">Root: πάτα Έναρξη με root.
+Ασύρματα: πάτα Άνοιγμα ασύρματου debugging. Το Telos ανοίγει τις ρυθμίσεις Wireless debugging και δείχνει ειδοποίηση. Όταν εμφανιστεί ο κωδικός, γράψε τα 6 ψηφία στην ειδοποίηση (όπως στο Shizuku).
+Υπολογιστής: USB debugging και την εντολή adb παρακάτω.</string>
     <string name="telos_shizuku_copy_adb">Αντιγραφή εντολής adb</string>
     <string name="telos_shizuku_copied">Αντιγράφηκε</string>
     <string name="telos_shizuku_enable_a11y">Ενεργοποίηση προσβασιμότητας pairing</string>

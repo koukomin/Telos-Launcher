@@ -172,7 +172,7 @@ fun AdvancedSettingsScreen() {
                     title = stringResource(id = I18nR.string.security_hub_title),
                     summary = stringResource(id = I18nR.string.security_hub_summary),
                     onClick = {
-                        backStack.add(de.mm20.launcher2.ui.settings.security.TelosSecurityHubRoute)
+                        backStack.add(de.mm20.launcher2.ui.system.SystemDashboardRoute("shield"))
                     }
                 )
                 Preference(

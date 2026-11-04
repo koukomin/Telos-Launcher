@@ -120,7 +120,7 @@ Telos includes the Shizuku **server** (starter + `libshizuku.so`, from [Shizuku-
 | How | What you do |
 | --- | --- |
 | **Root** | Tap **Start with root**. Enable Autostart so it comes back after reboot. |
-| **Wireless (phone only)** | Telos System → Shizuku → **Wait for pairing code**. Developer options → Wireless debugging → **Pair device with pairing code**. Leave that dialog open or type the 6 digits in Telos (same wait as Shizuku-Next, not AI). Accessibility can fill the field. Grant permission. Autostart afterwards. Pairing is once per ADB key. |
+| **Wireless (phone only)** | Telos System → Shizuku → **Open wireless debugging**. Telos opens the system Wireless debugging screen and a notification. Developer options → Wireless debugging → **Pair device with pairing code**. When the 6 digits appear, enter them in the notification (same as Shizuku). Accessibility can fill the Settings field. Then Start server and Autostart. Pairing is once per ADB key. |
 | **Computer ADB** | USB debugging on, authorize the PC, then the command shown on the Shizuku tab (copy it — paths change per install): |
 
 ```bash
@@ -638,7 +638,7 @@ Telos stays light by doing little at startup and by disabling what you do not us
 
 **Stealth and banking cloak** (Settings → Advanced) can hide Developer Options and ADB from banking, wallet, government and anti-cheat apps before they launch. Telos uses its in-package privileged UserService (shell UID 2000) or Shizuku, then `WRITE_SECURE_SETTINGS` for a same-process `Settings.Global` write. The external Shizuku app can be hidden after the daemon is running. A running shell daemon keeps working after those flags are set to 0. Instant cloak needs the grant; otherwise the write is queued on a background dispatcher.
 
-**Shizuku & Privacy Shield** (Settings → Advanced, Telos System → Privacy Shield, and the search-bar shield pill) lists Shizuku client apps, grants or revokes their API access, freezes the external Shizuku package, scrubs the clipboard before launching blocked apps (strict or smart IBAN/card/wallet/OTP patterns) into an in-memory vault, and can set `READ_CLIPBOARD` to ignore via app-ops. App long-press menus expose stealth cloak and clipboard-block toggles. The **Dynamic hardware** tab can grant camera, microphone or GPS to configured apps (WhatsApp/Zoom, Maps, dialer) at launch and revoke them when the app leaves or the call ends. The search-bar overflow menu opens a command palette (flashlight, magnifier, voice recorder, settings).
+**Shizuku & Privacy Shield** live in Telos System (Privacy Shield and Shizuku tabs). The search-bar shield icon stays a shield and opens Telos System. Settings → Advanced opens the same app. The hub lists Shizuku client apps, grants or revokes their API access, freezes the external Shizuku package, scrubs the clipboard before launching blocked apps (strict or smart IBAN/card/wallet/OTP patterns) into an in-memory vault, and can set `READ_CLIPBOARD` to ignore via app-ops. App long-press menus expose stealth cloak and clipboard-block toggles. The **Dynamic hardware** tab can grant camera, microphone or GPS to configured apps (WhatsApp/Zoom, Maps, dialer) at launch and revoke them when the app leaves or the call ends. The search-bar overflow menu opens a command palette (flashlight, magnifier, voice recorder, settings). Wireless debugging opens the system Wireless debugging page and shows a pairing-code notification like Shizuku.
 
 | Setting (Settings > Advanced > Performance) | Default | Range |
 | --- | --- | --- |

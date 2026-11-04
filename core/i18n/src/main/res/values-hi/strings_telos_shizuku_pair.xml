@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">वायरलेस ADB पेयरिंग</string>
+    <string name="telos_shizuku_pair_notif_searching">कोड की प्रतीक्षा</string>
+    <string name="telos_shizuku_pair_notif_searching_text">वायरलेस डिबगिंग में कोड से डिवाइस जोड़ें खोलें</string>
+    <string name="telos_shizuku_pair_notif_found">कोड लिखें</string>
+    <string name="telos_shizuku_pair_notif_enter">कोड लिखें</string>
+</resources>

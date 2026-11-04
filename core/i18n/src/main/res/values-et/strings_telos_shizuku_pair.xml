@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Juhtmeta ADB sidumine</string>
+    <string name="telos_shizuku_pair_notif_searching">Oodatakse koodi</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Ava Seo seade koodiga juhtmeta silumises</string>
+    <string name="telos_shizuku_pair_notif_found">Sisesta kood</string>
+    <string name="telos_shizuku_pair_notif_enter">Sisesta kood</string>
+</resources>

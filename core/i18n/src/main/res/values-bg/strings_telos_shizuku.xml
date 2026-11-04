@@ -5,7 +5,7 @@
     <string name="telos_shizuku_starter">Стартер: %1$s</string>
     <string name="telos_shizuku_start">Стартиране на сървъра</string>
     <string name="telos_shizuku_start_root">Старт с root</string>
-    <string name="telos_shizuku_start_wireless">Старт с безжично отстраняване на грешки</string>
+    <string name="telos_shizuku_start_wireless">Отвори безжичното отстраняване на грешки</string>
     <string name="telos_shizuku_stop">Спиране на сървъра</string>
     <string name="telos_shizuku_open_devopts">Отваряне на опции за разработчици</string>
     <string name="telos_shizuku_settings">Настройки на сървъра</string>
@@ -20,7 +20,9 @@
     <string name="telos_shizuku_watchdog_channel">Наблюдател Shizuku</string>
     <string name="telos_shizuku_watchdog_title">Сървър Shizuku на Telos</string>
     <string name="telos_shizuku_howto_title">How to start</string>
-    <string name="telos_shizuku_howto_body">Root: tap Start with root.\nWireless (no PC after the first pair): enable the Telos pairing accessibility service, open Developer options → Wireless debugging → Pair device with pairing code. Telos reads the 6-digit code from that Settings dialog only.\nComputer: USB debugging on, then run the adb command below (paths are for this install).</string>
+    <string name="telos_shizuku_howto_body">Root: Старт с root.
+Безжично: отвори безжичното отстраняване на грешки. Telos отваря настройките и показва известие. Въведете 6 цифри в известието.
+PC: USB и командата adb.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

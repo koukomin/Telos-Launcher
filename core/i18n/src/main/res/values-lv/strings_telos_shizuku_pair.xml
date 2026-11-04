@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Bezvadu ADB savienošana</string>
+    <string name="telos_shizuku_pair_notif_searching">Gaida kodu</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Atveriet Savienot ierīci ar kodu bezvadu atkļūdošanā</string>
+    <string name="telos_shizuku_pair_notif_found">Ievadīt kodu</string>
+    <string name="telos_shizuku_pair_notif_enter">Ievadīt kodu</string>
+</resources>

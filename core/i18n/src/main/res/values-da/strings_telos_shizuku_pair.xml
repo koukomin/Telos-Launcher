@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Trådløs ADB-parring</string>
+    <string name="telos_shizuku_pair_notif_searching">Venter på kode</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Åbn Par enhed med kode i Trådløs fejlfinding</string>
+    <string name="telos_shizuku_pair_notif_found">Indtast kode</string>
+    <string name="telos_shizuku_pair_notif_enter">Indtast kode</string>
+</resources>

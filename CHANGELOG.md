@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.44.10
+
+- Privacy Shield and built-in Shizuku live in Telos System. The home search-bar shield icon stays a shield and opens Telos System.
+- Wireless debugging opens the system Wireless debugging page. When the pairing-code dialog is shown, a notification asks for the 6 digits (Shizuku-style RemoteInput).
+
 ## 1.41.86
 
 ### Telos Media & Flow-Tube UI

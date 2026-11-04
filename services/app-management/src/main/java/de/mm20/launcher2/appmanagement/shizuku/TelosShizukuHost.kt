@@ -129,6 +129,10 @@ object TelosShizukuHost {
         )
     }
 
+    fun notifyPairingSearch() {
+        _status.value = _status.value.copy(pairing = PairingHint(phase = PairingPhase.Searching))
+    }
+
     @android.annotation.SuppressLint("NewApi")
     fun startPairingWait(context: Context) {
         stopPairingWait()

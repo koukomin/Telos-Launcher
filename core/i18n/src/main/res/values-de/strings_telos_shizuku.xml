@@ -5,7 +5,7 @@
     <string name="telos_shizuku_starter">Starter: %1$s</string>
     <string name="telos_shizuku_start">Server starten</string>
     <string name="telos_shizuku_start_root">Mit Root starten</string>
-    <string name="telos_shizuku_start_wireless">Mit Wireless Debugging starten</string>
+    <string name="telos_shizuku_start_wireless">Wireless debugging öffnen</string>
     <string name="telos_shizuku_stop">Server stoppen</string>
     <string name="telos_shizuku_open_devopts">Entwickleroptionen öffnen</string>
     <string name="telos_shizuku_settings">Servereinstellungen</string>
@@ -20,7 +20,9 @@
     <string name="telos_shizuku_watchdog_channel">Shizuku-Watchdog</string>
     <string name="telos_shizuku_watchdog_title">Telos-Shizuku-Server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
-    <string name="telos_shizuku_howto_body">Root: tap Start with root.\nWireless (no PC after the first pair): enable the Telos pairing accessibility service, open Developer options → Wireless debugging → Pair device with pairing code. Telos reads the 6-digit code from that Settings dialog only.\nComputer: USB debugging on, then run the adb command below (paths are for this install).</string>
+    <string name="telos_shizuku_howto_body">Root: Mit Root starten.
+Funk: Wireless debugging öffnen. Telos öffnet die Systemeinstellung und zeigt eine Benachrichtigung. Wenn der Kopplungsdialog erscheint, den 6-stelligen Code in der Benachrichtigung eingeben.
+PC: USB-Debugging, dann den adb-Befehl unten.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

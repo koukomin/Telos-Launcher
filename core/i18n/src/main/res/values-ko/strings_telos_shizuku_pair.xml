@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">무선 ADB 페어링</string>
+    <string name="telos_shizuku_pair_notif_searching">페어링 코드 대기</string>
+    <string name="telos_shizuku_pair_notif_searching_text">무선 디버깅에서 코드로 기기 페어링을 여세요</string>
+    <string name="telos_shizuku_pair_notif_found">코드 입력</string>
+    <string name="telos_shizuku_pair_notif_enter">코드 입력</string>
+</resources>

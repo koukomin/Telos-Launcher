@@ -389,7 +389,7 @@ open class SettingsActivity : BaseActivity() {
                 de.mm20.launcher2.ui.network.logs.NetworkLogsScreen()
             }
             entry<de.mm20.launcher2.ui.system.SystemDashboardRoute> {
-                de.mm20.launcher2.ui.system.SystemDashboardScreen()
+                de.mm20.launcher2.ui.system.SystemDashboardScreen(it.tab)
             }
             entry<de.mm20.launcher2.ui.weather.WeatherRoute> {
                 de.mm20.launcher2.ui.weather.WeatherScreen()
@@ -798,7 +798,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_FILES -> "telos_files_app"
             ROUTE_NETWORK, SettingsDeepLinkContract.ROUTE_NETWORK_SPEED_TEST,
             SettingsDeepLinkContract.ROUTE_NETWORK_PRIVATE_DNS -> "telos_network_app"
-            SettingsDeepLinkContract.ROUTE_SYSTEM -> "telos_system_app"
+            SettingsDeepLinkContract.ROUTE_SYSTEM, ROUTE_SECURITY_HUB -> "telos_system_app"
             SettingsDeepLinkContract.ROUTE_WEATHER -> "telos_weather_app"
             SettingsDeepLinkContract.ROUTE_SYNC -> "telos_sync_app"
             SettingsDeepLinkContract.ROUTE_BACKUP -> "telos_backup_app"
@@ -883,7 +883,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_SEARCH_ACTIONS -> SearchActionsSettingsRoute
             ROUTE_HIDDEN_ITEMS -> HiddenItemsSettingsRoute
             ROUTE_FLOATING_LAUNCHER -> FloatingLauncherSettingsRoute
-            ROUTE_SECURITY_HUB -> TelosSecurityHubRoute
+            ROUTE_SECURITY_HUB -> de.mm20.launcher2.ui.system.SystemDashboardRoute("shield")
             ROUTE_WALLPAPER -> WallpaperSettingsRoute
             ROUTE_WEB_APPS -> WebAppsSettingsRoute
             ROUTE_INTRUDER_PHOTOS -> IntruderPhotosRoute
@@ -919,7 +919,9 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute
             SettingsDeepLinkContract.ROUTE_NETWORK_SPEED_TEST -> de.mm20.launcher2.ui.network.NetworkSpeedTestRoute
             SettingsDeepLinkContract.ROUTE_NETWORK_PRIVATE_DNS -> de.mm20.launcher2.ui.network.PrivateDnsRoute
-            SettingsDeepLinkContract.ROUTE_SYSTEM -> de.mm20.launcher2.ui.system.SystemDashboardRoute
+            SettingsDeepLinkContract.ROUTE_SYSTEM -> de.mm20.launcher2.ui.system.SystemDashboardRoute(
+                intent.getStringExtra(SettingsDeepLinkContract.EXTRA_SYSTEM_TAB).orEmpty(),
+            )
             SettingsDeepLinkContract.ROUTE_WEATHER -> de.mm20.launcher2.ui.weather.WeatherRoute
             SettingsDeepLinkContract.ROUTE_TRASH -> de.mm20.launcher2.ui.trash.TrashUnlockRoute
             ROUTE_CALCULATOR -> de.mm20.launcher2.ui.calculator.CalculatorRoute

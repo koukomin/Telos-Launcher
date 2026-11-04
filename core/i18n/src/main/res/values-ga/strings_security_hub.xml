@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="security_hub_title">Shizuku &amp; Privacy Shield</string>
-    <string name="security_hub_summary">Shizuku clients, banking cloak, and clipboard privacy</string>
+    <string name="security_hub_summary">Osclaíonn Telos System: sciath príobháideachais agus Shizuku ionsuite</string>
     <string name="security_hub_tab_title">Privacy Shield</string>
     <string name="security_hub_engine_status">Shizuku engine: %1$s • UID %2$d</string>
     <string name="security_hub_active">Active</string>

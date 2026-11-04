@@ -19,12 +19,12 @@ Settings live on **Telos System → Shizuku**.
 
 ### Pairing (wireless, first time)
 
-There is no AI. Telos copies Shizuku-Next: **Wait for pairing code** searches `_adb-tls-pairing._tcp`, shows a 6-digit field, and an accessibility service can fill that field from the Settings pairing dialog.
+There is no AI. Telos copies Shizuku-Next: **Open wireless debugging** opens the system Wireless debugging page and starts a pairing notification. When the pairing-code dialog is shown, `_adb-tls-pairing._tcp` is found and the notification asks for the 6 digits (RemoteInput), the same way as Shizuku.
 
-1. Telos System → Shizuku → **Wait for pairing code** (optional: **Enable pairing accessibility**).
-2. **Open wireless debugging** → **Pair device with pairing code**.
-3. Leave that dialog open, or type the 6 digits in Telos. When the pairing service is found, the screen shows host:port and waits for the code.
-4. Grant the Shizuku permission when asked.
+1. Telos System → Shizuku → **Open wireless debugging** (or **Wait for pairing code**).
+2. In system Settings, **Pair device with pairing code**.
+3. When the 6-digit code is on screen, enter it in the Telos notification. Accessibility can also fill the Settings field.
+4. Grant the Shizuku permission when asked, then **Start server**.
 5. Turn on **Autostart** so the watchdog starts the server after reboot. Pairing is not needed again until you reset ADB keys.
 
 Manual fallback: type the 6-digit code on a computer with `adb pair IP:PORT`.

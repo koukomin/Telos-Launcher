@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">اقتران ADB اللاسلكي</string>
+    <string name="telos_shizuku_pair_notif_searching">بانتظار رمز الاقتران</string>
+    <string name="telos_shizuku_pair_notif_searching_text">افتح اقتران الجهاز برمز في تصحيح الأخطاء اللاسلكي</string>
+    <string name="telos_shizuku_pair_notif_found">أدخل الرمز</string>
+    <string name="telos_shizuku_pair_notif_enter">أدخل الرمز</string>
+</resources>

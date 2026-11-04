@@ -40,7 +40,8 @@ fun SecurityHubStatusPill() {
             .clickable {
                 context.startActivity(
                     Intent(context, SettingsActivity::class.java).apply {
-                        putExtra(SettingsActivity.EXTRA_ROUTE, SettingsActivity.ROUTE_SECURITY_HUB)
+                        putExtra(SettingsActivity.EXTRA_ROUTE, de.mm20.launcher2.applock.SettingsDeepLinkContract.ROUTE_SYSTEM)
+                        putExtra(de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_SYSTEM_TAB, "shield")
                     },
                 )
             },
@@ -48,7 +49,7 @@ fun SecurityHubStatusPill() {
     ) {
         Icon(
             painter = painterResource(BaseR.drawable.encrypted_24px),
-            contentDescription = stringResource(I18nR.string.security_hub_title),
+            contentDescription = stringResource(I18nR.string.telos_system_label),
             tint = if (active) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Box(

@@ -5,7 +5,7 @@
     <string name="telos_shizuku_starter">Käivitaja: %1$s</string>
     <string name="telos_shizuku_start">Käivita server</string>
     <string name="telos_shizuku_start_root">Käivita rootiga</string>
-    <string name="telos_shizuku_start_wireless">Käivita juhtmevaba silumisega</string>
+    <string name="telos_shizuku_start_wireless">Ava juhtmeta silumine</string>
     <string name="telos_shizuku_stop">Peata server</string>
     <string name="telos_shizuku_open_devopts">Ava arendaja suvandid</string>
     <string name="telos_shizuku_settings">Serveri seaded</string>
@@ -20,7 +20,9 @@
     <string name="telos_shizuku_watchdog_channel">Shizuku valve</string>
     <string name="telos_shizuku_watchdog_title">Telose Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
-    <string name="telos_shizuku_howto_body">Root: tap Start with root.\nWireless (no PC after the first pair): enable the Telos pairing accessibility service, open Developer options → Wireless debugging → Pair device with pairing code. Telos reads the 6-digit code from that Settings dialog only.\nComputer: USB debugging on, then run the adb command below (paths are for this install).</string>
+    <string name="telos_shizuku_howto_body">Root: Käivita rootiga.
+Juhtmeta: ava juhtmeta silumine. Telos avab Seaded ja näitab teavitust. Sisesta 6 numbrit teavitusse.
+PC: USB-silumine ja adb käsk.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

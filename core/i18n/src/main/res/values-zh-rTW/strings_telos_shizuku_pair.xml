@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">無線 ADB 配對</string>
+    <string name="telos_shizuku_pair_notif_searching">等待配對碼</string>
+    <string name="telos_shizuku_pair_notif_searching_text">在無線偵錯中開啟以配對碼配對裝置</string>
+    <string name="telos_shizuku_pair_notif_found">輸入配對碼</string>
+    <string name="telos_shizuku_pair_notif_enter">輸入代碼</string>
+</resources>

@@ -22,7 +22,7 @@ another way, is not stopped by them.
 | [Online results off](#network-privacy) | Your queries | The Online results filter |
 | [Crash guard](#crash-guard) | The launcher, from bugs in Telos apps | Automatic |
 | [Backup](#backup-and-restore) | Your setup | Settings > Advanced > Backup and restore |
-| [Shizuku and Privacy Shield](#shizuku-and-privacy-shield) | Clipboard, Shizuku clients, banking cloak | Settings > Advanced, Telos System, search-bar shield pill |
+| [Shizuku and Privacy Shield](#shizuku-and-privacy-shield) | Clipboard, Shizuku clients, banking cloak | Telos System (search-bar shield icon) |
 
 ## Settings lock
 
@@ -211,7 +211,7 @@ not taken from the file, and an account without its password is switched off.
 
 ## Shizuku and Privacy Shield
 
-The **Shizuku & Privacy Shield** hub lives in Settings → Advanced, as the **Privacy Shield** tab of Telos System, and behind the shield indicator on the search bar.
+The **Shizuku & Privacy Shield** screens live in **Telos System** (Privacy Shield and Shizuku tabs). The shield icon on the home search bar keeps the shield glyph and opens Telos System. Settings → Advanced uses the same System app.
 
 | Control | What it does |
 | --- | --- |

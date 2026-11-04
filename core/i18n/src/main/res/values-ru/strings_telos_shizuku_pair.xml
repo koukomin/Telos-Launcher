@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Сопряжение беспроводного ADB</string>
+    <string name="telos_shizuku_pair_notif_searching">Ожидание кода сопряжения</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Откройте Сопряжение с кодом в Беспроводной отладке</string>
+    <string name="telos_shizuku_pair_notif_found">Введите код</string>
+    <string name="telos_shizuku_pair_notif_enter">Ввести код</string>
+</resources>

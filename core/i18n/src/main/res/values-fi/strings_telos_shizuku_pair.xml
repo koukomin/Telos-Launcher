@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Langattoman ADB:n paritus</string>
+    <string name="telos_shizuku_pair_notif_searching">Odotetaan koodia</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Avaa Parita laite koodilla Langattomassa virheenkorjauksessa</string>
+    <string name="telos_shizuku_pair_notif_found">Anna koodi</string>
+    <string name="telos_shizuku_pair_notif_enter">Anna koodi</string>
+</resources>

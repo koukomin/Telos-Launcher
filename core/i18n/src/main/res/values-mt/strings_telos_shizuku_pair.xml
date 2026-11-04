@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Tqabbil ADB wireless</string>
+    <string name="telos_shizuku_pair_notif_searching">Qed nistenna l-kodiċi</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Iftaħ Qabbel apparat b’kodiċi fid-Debugging wireless</string>
+    <string name="telos_shizuku_pair_notif_found">Daħħal il-kodiċi</string>
+    <string name="telos_shizuku_pair_notif_enter">Daħħal kodiċi</string>
+</resources>

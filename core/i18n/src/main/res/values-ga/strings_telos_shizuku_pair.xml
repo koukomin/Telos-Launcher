@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Péireáil ADB gan sreang</string>
+    <string name="telos_shizuku_pair_notif_searching">Ag fanacht leis an gcód</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Oscail Péireáil gléas le cód i Dífhabhtú gan sreang</string>
+    <string name="telos_shizuku_pair_notif_found">Iontráil an cód</string>
+    <string name="telos_shizuku_pair_notif_enter">Iontráil cód</string>
+</resources>

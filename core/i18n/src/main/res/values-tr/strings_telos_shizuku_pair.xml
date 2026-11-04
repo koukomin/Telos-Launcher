@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Kablosuz ADB eşleme</string>
+    <string name="telos_shizuku_pair_notif_searching">Eşleme kodu bekleniyor</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Kablosuz hata ayıklamada Cihazı kodla eşle’yi aç</string>
+    <string name="telos_shizuku_pair_notif_found">Kodu gir</string>
+    <string name="telos_shizuku_pair_notif_enter">Kodu gir</string>
+</resources>

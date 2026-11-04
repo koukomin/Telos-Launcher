@@ -143,24 +143,14 @@ fun SystemShizukuTab() {
                         Text(stringResource(I18nR.string.telos_shizuku_pair_stop))
                     }
                 } else {
-                    FilledTonalButton(onClick = { TelosShizukuHost.startPairingWait(context) }) {
+                    FilledTonalButton(onClick = {
+                        de.mm20.launcher2.appmanagement.shizuku.TelosAdbPairingService.start(context)
+                    }) {
                         Text(stringResource(I18nR.string.telos_shizuku_pair_start))
                     }
                 }
                 OutlinedButton(onClick = {
-                    runCatching {
-                        context.startActivity(
-                            Intent("com.android.settings.WIFI_DEBUGGING_SETTINGS")
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                        )
-                    }.onFailure {
-                        runCatching {
-                            context.startActivity(
-                                Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
-                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                            )
-                        }
-                    }
+                    de.mm20.launcher2.appmanagement.shizuku.TelosAdbPairingService.start(context)
                 }) { Text(stringResource(I18nR.string.telos_shizuku_pair_open)) }
                 if (host.pairing.code.isNotBlank() && phase == TelosShizukuHost.PairingPhase.Done) {
                     Text(
@@ -185,9 +175,7 @@ fun SystemShizukuTab() {
                     }
                 }) { Text(stringResource(I18nR.string.telos_shizuku_start_root)) }
                 OutlinedButton(onClick = {
-                    scope.launch {
-                        TelosShizukuHost.start(context, TelosShizukuHost.StartMethod.Wireless)
-                    }
+                    de.mm20.launcher2.appmanagement.shizuku.TelosAdbPairingService.start(context)
                 }) { Text(stringResource(I18nR.string.telos_shizuku_start_wireless)) }
                 OutlinedButton(onClick = {
                     scope.launch { TelosShizukuHost.stop(); TelosShizukuHost.refresh(context) }

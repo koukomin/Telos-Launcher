@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Párovanie bezdrôtového ADB</string>
+    <string name="telos_shizuku_pair_notif_searching">Čakanie na kód</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Otvorte Spárovať zariadenie kódom v Bezdrôtovom ladení</string>
+    <string name="telos_shizuku_pair_notif_found">Zadať kód</string>
+    <string name="telos_shizuku_pair_notif_enter">Zadať kód</string>
+</resources>

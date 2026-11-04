@@ -22,8 +22,12 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
     private var readsLeft = 0
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        if (pairing || event == null) return
+        if (event == null) return
         if (!hostsPairingDialog(event.packageName?.toString())) return
+        pendingFill?.takeIf { it.length == 6 }?.let { code ->
+            if (fillPairingField(code)) pendingFill = null
+        }
+        if (pairing) return
         handler.removeCallbacks(readAgain)
         readsLeft = 12
         readAgain.run()
@@ -99,7 +103,34 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
         }
     }
 
+    private fun fillPairingField(code: String): Boolean {
+        val windows = runCatching { windows }.getOrNull().orEmpty()
+        for (window in windows) {
+            val root = window?.root ?: continue
+            if (setEditable(root, code)) return true
+        }
+        return false
+    }
+
+    private fun setEditable(node: AccessibilityNodeInfo, code: String): Boolean {
+        val cls = node.className?.toString().orEmpty()
+        if (node.isEditable || cls.contains("EditText")) {
+            val args = android.os.Bundle().apply {
+                putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, code)
+            }
+            if (node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)) return true
+        }
+        for (i in 0 until node.childCount) {
+            val child = node.getChild(i) ?: continue
+            val ok = setEditable(child, code)
+            child.recycle()
+            if (ok) return true
+        }
+        return false
+    }
+
     companion object {
+        @Volatile var pendingFill: String? = null
         private val CODE = Regex("^\\d{6}$")
         private val HOST_PORT = Regex("(\\d{1,3}(?:\\.\\d{1,3}){3}):(\\d{2,5})")
     }

@@ -99,12 +99,12 @@ import java.net.NetworkInterface
 import kotlin.math.sin
 
 @Serializable
-data object SystemDashboardRoute : NavKey
+data class SystemDashboardRoute(val tab: String = "") : NavKey
 
 internal data class ProcRow(val pid: Int, val name: String, val ramKb: Long?)
 
 @Composable
-fun SystemDashboardScreen() {
+fun SystemDashboardScreen(initialTab: String = "") {
     val context = LocalContext.current
     val activity = LocalActivity.current as? FragmentActivity
     val backStack = LocalBackStack.current
@@ -133,7 +133,17 @@ fun SystemDashboardScreen() {
     val dnsServer by dns.selected.collectAsState()
     var liveRenderer by remember { mutableStateOf(HwuiRenderer.MODE_DEFAULT) }
     val storeVm: de.mm20.launcher2.ui.store.StoreViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
-    var currentTab by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(0) }
+    var currentTab by androidx.compose.runtime.saveable.rememberSaveable {
+        mutableStateOf(
+            when (initialTab.lowercase()) {
+                "apps" -> 1
+                "tweaks" -> 2
+                "shield", "privacy", "security" -> 3
+                "shizuku" -> 4
+                else -> 0
+            }
+        )
+    }
     var wifiReadJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
     val pulse = rememberInfiniteTransition(label = "sysPulse")
     val t by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(2400, easing = LinearEasing), RepeatMode.Restart), label = "t")

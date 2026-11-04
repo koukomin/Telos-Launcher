@@ -70,7 +70,7 @@ internal object TelosPages {
         "telos_calendar_app://calendar" -> de.mm20.launcher2.ui.calendar.CalendarRoute
         "telos_downloads_app://downloads" -> de.mm20.launcher2.ui.downloads.DownloadsRoute()
         "telos_network_app://network" -> de.mm20.launcher2.ui.network.NetworkRoute
-        "telos_system_app://system" -> de.mm20.launcher2.ui.system.SystemDashboardRoute
+        "telos_system_app://system" -> de.mm20.launcher2.ui.system.SystemDashboardRoute()
         "telos_voice_recorder_app://voice_recorder" -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
         "telos_screen_recorder_app://screen_recorder" -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
         "telos_screenshot_app://screenshot" -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute
@@ -146,7 +146,7 @@ internal object TelosPages {
         entry<de.mm20.launcher2.ui.network.NetworkProxiesRoute> { de.mm20.launcher2.ui.network.NetworkProxiesScreen() }
         entry<de.mm20.launcher2.ui.network.NetworkStatsRoute> { de.mm20.launcher2.ui.network.NetworkStatsScreen() }
         entry<de.mm20.launcher2.ui.network.logs.NetworkLogsRoute> { de.mm20.launcher2.ui.network.logs.NetworkLogsScreen() }
-        entry<de.mm20.launcher2.ui.system.SystemDashboardRoute> { de.mm20.launcher2.ui.system.SystemDashboardScreen() }
+        entry<de.mm20.launcher2.ui.system.SystemDashboardRoute> { de.mm20.launcher2.ui.system.SystemDashboardScreen(it.tab) }
         entry<de.mm20.launcher2.ui.settings.security.TelosSecurityHubRoute> { de.mm20.launcher2.ui.settings.security.TelosSecurityHubScreen() }
         entry<de.mm20.launcher2.ui.trash.TrashUnlockRoute> { de.mm20.launcher2.ui.trash.TrashUnlockScreen() }
         entry<de.mm20.launcher2.ui.notes.NotesRoute> { de.mm20.launcher2.ui.notes.NotesScreen() }

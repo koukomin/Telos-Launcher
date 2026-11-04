@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="telos_shizuku_pair_channel">Belaidžio ADB susiejimas</string>
+    <string name="telos_shizuku_pair_notif_searching">Laukiama kodo</string>
+    <string name="telos_shizuku_pair_notif_searching_text">Atidarykite Susieti įrenginį kodu belaidžiame derinyje</string>
+    <string name="telos_shizuku_pair_notif_found">Įvesti kodą</string>
+    <string name="telos_shizuku_pair_notif_enter">Įvesti kodą</string>
+</resources>

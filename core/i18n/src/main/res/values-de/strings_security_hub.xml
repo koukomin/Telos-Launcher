@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="security_hub_title">Shizuku &amp; Datenschutzschild</string>
-    <string name="security_hub_summary">Shizuku-Clients, Banken-Tarnung und Zwischenablage-Datenschutz</string>
+    <string name="security_hub_summary">Öffnet Telos System: Privacy Shield und eingebautes Shizuku</string>
     <string name="security_hub_tab_title">Datenschutzschild</string>
     <string name="security_hub_engine_status">Shizuku-Engine: %1$s • UID %2$d</string>
     <string name="security_hub_active">Aktiv</string>
