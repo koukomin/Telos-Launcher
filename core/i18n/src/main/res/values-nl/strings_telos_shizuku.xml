@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Koppelcode</string>
+    <string name="telos_shizuku_pair_searching">Zoeken naar de koppelservice… Laat het Instellingen-dialoog open.</string>
+    <string name="telos_shizuku_pair_found">Koppelservice op %1$s:%2$d. Voer de 6-cijferige code in of laat het dialoog open.</string>
+    <string name="telos_shizuku_pair_waiting">Wachten op de koppelcode. Open Ontwikkelaarsopties → Draadloos debuggen → Koppelen met code, of typ de 6 cijfers hier.</string>
+    <string name="telos_shizuku_pair_code">6-cijferige koppelcode</string>
+    <string name="telos_shizuku_pair_submit">Koppelen</string>
+    <string name="telos_shizuku_pair_working">Koppelen…</string>
+    <string name="telos_shizuku_pair_ok">Gekoppeld. Server wordt gestart.</string>
+    <string name="telos_shizuku_pair_fail">Koppelen mislukt. Controleer de code.</string>
+    <string name="telos_shizuku_pair_start">Wachten op koppelcode</string>
+    <string name="telos_shizuku_pair_stop">Stoppen met wachten</string>
+    <string name="telos_shizuku_pair_open">Draadloos debuggen openen</string>
 </resources>

@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Eşleme kodu</string>
+    <string name="telos_shizuku_pair_searching">Eşleme hizmeti aranıyor… Ayarlar eşleme penceresini açık bırak.</string>
+    <string name="telos_shizuku_pair_found">Eşleme hizmeti %1$s:%2$d. 6 haneli kodu gir veya pencereyi açık bırak.</string>
+    <string name="telos_shizuku_pair_waiting">Eşleme kodu bekleniyor. Geliştirici seçenekleri → Kablosuz hata ayıklama → Kodla eşle, veya 6 haneyi buraya yaz.</string>
+    <string name="telos_shizuku_pair_code">6 haneli eşleme kodu</string>
+    <string name="telos_shizuku_pair_submit">Eşle</string>
+    <string name="telos_shizuku_pair_working">Eşleniyor…</string>
+    <string name="telos_shizuku_pair_ok">Eşlendi. Sunucu başlatılıyor.</string>
+    <string name="telos_shizuku_pair_fail">Eşleme başarısız. Kodu kontrol et.</string>
+    <string name="telos_shizuku_pair_start">Eşleme kodunu bekle</string>
+    <string name="telos_shizuku_pair_stop">Beklemeyi durdur</string>
+    <string name="telos_shizuku_pair_open">Kablosuz hata ayıklamayı aç</string>
 </resources>

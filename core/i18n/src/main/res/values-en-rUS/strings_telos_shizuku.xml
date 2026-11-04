@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Pairing code</string>
+    <string name="telos_shizuku_pair_searching">Searching for the pairing service… Leave the Settings pairing dialog open.</string>
+    <string name="telos_shizuku_pair_found">Pairing service at %1$s:%2$d. Enter the 6-digit code or leave the Settings dialog open.</string>
+    <string name="telos_shizuku_pair_waiting">Waiting for the pairing code. Open Developer options → Wireless debugging → Pair device with pairing code, or type the 6 digits here.</string>
+    <string name="telos_shizuku_pair_code">6-digit pairing code</string>
+    <string name="telos_shizuku_pair_submit">Pair</string>
+    <string name="telos_shizuku_pair_working">Pairing…</string>
+    <string name="telos_shizuku_pair_ok">Paired. Starting the server.</string>
+    <string name="telos_shizuku_pair_fail">Pairing failed. Check the code and try again.</string>
+    <string name="telos_shizuku_pair_start">Wait for pairing code</string>
+    <string name="telos_shizuku_pair_stop">Stop waiting</string>
+    <string name="telos_shizuku_pair_open">Open wireless debugging</string>
 </resources>

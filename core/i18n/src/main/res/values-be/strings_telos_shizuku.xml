@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Код спалучэння</string>
+    <string name="telos_shizuku_pair_searching">Пошук службы спалучэння… Пакіньце дыялог у Наладах адкрытым.</string>
+    <string name="telos_shizuku_pair_found">Служба спалучэння %1$s:%2$d. Увядзіце 6-значны код або пакіньце дыялог адкрытым.</string>
+    <string name="telos_shizuku_pair_waiting">Чаканне кода. Адкрыйце Для распрацоўшчыкаў → Бесправадное адладжанне → Спалучыць з кодам, або ўвядзіце 6 лічбаў тут.</string>
+    <string name="telos_shizuku_pair_code">6-значны код</string>
+    <string name="telos_shizuku_pair_submit">Спалучыць</string>
+    <string name="telos_shizuku_pair_working">Спалучэнне…</string>
+    <string name="telos_shizuku_pair_ok">Спалучана. Запуск сервера.</string>
+    <string name="telos_shizuku_pair_fail">Спалучэнне не ўдалося. Праверце код.</string>
+    <string name="telos_shizuku_pair_start">Чакаць код спалучэння</string>
+    <string name="telos_shizuku_pair_stop">Спыніць чаканне</string>
+    <string name="telos_shizuku_pair_open">Адкрыць бесправадное адладжанне</string>
 </resources>

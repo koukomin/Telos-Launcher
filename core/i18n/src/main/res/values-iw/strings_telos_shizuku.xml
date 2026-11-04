@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">קוד התאמה</string>
+    <string name="telos_shizuku_pair_searching">מחפש את שירות ההתאמה… השאר את תיבת ההגדרות פתוחה.</string>
+    <string name="telos_shizuku_pair_found">שירות התאמה ב-%1$s:%2$d. הזן את הקוד בן 6 הספרות או השאר את התיבה פתוחה.</string>
+    <string name="telos_shizuku_pair_waiting">ממתין לקוד. פתח אפשרויות למפתחים → ניפוי באגים אלחוטי → התאמה עם קוד, או הקלד 6 ספרות כאן.</string>
+    <string name="telos_shizuku_pair_code">קוד בן 6 ספרות</string>
+    <string name="telos_shizuku_pair_submit">התאם</string>
+    <string name="telos_shizuku_pair_working">מתאים…</string>
+    <string name="telos_shizuku_pair_ok">הותאם. מפעיל את השרת.</string>
+    <string name="telos_shizuku_pair_fail">ההתאמה נכשלה. בדוק את הקוד.</string>
+    <string name="telos_shizuku_pair_start">המתן לקוד התאמה</string>
+    <string name="telos_shizuku_pair_stop">עצור המתנה</string>
+    <string name="telos_shizuku_pair_open">פתח ניפוי באגים אלחוטי</string>
 </resources>

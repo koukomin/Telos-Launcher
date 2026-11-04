@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Koda za seznanitev</string>
+    <string name="telos_shizuku_pair_searching">Iskanje storitve za seznanitev… Pustite pogovorno okno v Nastavitvah odprto.</string>
+    <string name="telos_shizuku_pair_found">Storitev za seznanitev na %1$s:%2$d. Vnesite 6-mestno kodo ali pustite okno odprto.</string>
+    <string name="telos_shizuku_pair_waiting">Čakanje na kodo. Odprite Možnosti za razvijalce → Brezžično odpravljanje napak → Seznani s kodo, ali vnesite 6 številk tukaj.</string>
+    <string name="telos_shizuku_pair_code">6-mestna koda</string>
+    <string name="telos_shizuku_pair_submit">Seznani</string>
+    <string name="telos_shizuku_pair_working">Seznanjanje…</string>
+    <string name="telos_shizuku_pair_ok">Seznanjeno. Zagon strežnika.</string>
+    <string name="telos_shizuku_pair_fail">Seznanitev ni uspela. Preverite kodo.</string>
+    <string name="telos_shizuku_pair_start">Čakaj kodo za seznanitev</string>
+    <string name="telos_shizuku_pair_stop">Nehaj čakati</string>
+    <string name="telos_shizuku_pair_open">Odpri brezžično odpravljanje napak</string>
 </resources>

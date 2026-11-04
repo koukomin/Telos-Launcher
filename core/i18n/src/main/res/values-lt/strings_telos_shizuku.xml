@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Susiejimo kodas</string>
+    <string name="telos_shizuku_pair_searching">Ieškoma susiejimo tarnybos… Palikite Nustatymų dialogą atidarytą.</string>
+    <string name="telos_shizuku_pair_found">Susiejimo tarnyba %1$s:%2$d. Įveskite 6 skaitmenų kodą arba palikite dialogą atidarytą.</string>
+    <string name="telos_shizuku_pair_waiting">Laukiama kodo. Atidarykite Kūrėjo parinktys → Belaidis derinimas → Susieti kodu arba įveskite 6 skaitmenis čia.</string>
+    <string name="telos_shizuku_pair_code">6 skaitmenų kodas</string>
+    <string name="telos_shizuku_pair_submit">Susieti</string>
+    <string name="telos_shizuku_pair_working">Susiejama…</string>
+    <string name="telos_shizuku_pair_ok">Susieta. Paleidžiamas serveris.</string>
+    <string name="telos_shizuku_pair_fail">Susieti nepavyko. Patikrinkite kodą.</string>
+    <string name="telos_shizuku_pair_start">Laukti susiejimo kodo</string>
+    <string name="telos_shizuku_pair_stop">Stabdyti laukimą</string>
+    <string name="telos_shizuku_pair_open">Atidaryti belaidį derinimą</string>
 </resources>

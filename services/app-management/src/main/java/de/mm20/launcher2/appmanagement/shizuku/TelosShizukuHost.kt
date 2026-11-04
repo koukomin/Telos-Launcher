@@ -30,10 +30,13 @@ object TelosShizukuHost {
 
     enum class StartMethod { Auto, Wireless, Root, Usb, Tcp }
 
+    enum class PairingPhase { Idle, Searching, WaitingForCode, Working, Done, Failed }
+
     data class PairingHint(
         val code: String = "",
         val host: String? = null,
         val port: Int? = null,
+        val phase: PairingPhase = PairingPhase.Idle,
     )
 
     data class HostStatus(
@@ -52,6 +55,7 @@ object TelosShizukuHost {
 
     private val _status = MutableStateFlow(HostStatus())
     val status: StateFlow<HostStatus> = _status.asStateFlow()
+    private var pairingDiscovery: TelosAdbPairingDiscovery? = null
 
     fun starterFile(context: Context): File {
         val extracted = File(context.applicationInfo.nativeLibraryDir, "libshizuku.so")
@@ -113,10 +117,77 @@ object TelosShizukuHost {
 
     fun onPairingCodeRead(context: Context, code: String, host: String?, port: Int?) {
         if (port != null) saveLastPort(context, port)
+        val prev = _status.value.pairing
         _status.value = _status.value.copy(
-            pairing = PairingHint(code = code, host = host, port = port),
+            pairing = prev.copy(
+                code = code,
+                host = host ?: prev.host,
+                port = port ?: prev.port,
+                phase = if (code.length == 6) PairingPhase.WaitingForCode else prev.phase,
+            ),
             lastLog = "pairing code $code" + (port?.let { " :$it" } ?: ""),
         )
+    }
+
+    @android.annotation.SuppressLint("NewApi")
+    fun startPairingWait(context: Context) {
+        stopPairingWait()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            _status.value = _status.value.copy(
+                pairing = PairingHint(phase = PairingPhase.Failed),
+                lastLog = "pairing needs Android 11",
+            )
+            return
+        }
+        _status.value = _status.value.copy(
+            pairing = PairingHint(phase = PairingPhase.Searching),
+        )
+        val discovery = TelosAdbPairingDiscovery(context) { host, port ->
+            saveLastPort(context, port)
+            val prev = _status.value.pairing
+            _status.value = _status.value.copy(
+                pairing = prev.copy(
+                    host = host,
+                    port = port,
+                    phase = PairingPhase.WaitingForCode,
+                ),
+            )
+        }
+        pairingDiscovery = discovery
+        discovery.start()
+    }
+
+    fun stopPairingWait() {
+        pairingDiscovery?.stop()
+        pairingDiscovery = null
+        val prev = _status.value.pairing
+        if (prev.phase == PairingPhase.Searching || prev.phase == PairingPhase.WaitingForCode) {
+            _status.value = _status.value.copy(pairing = prev.copy(phase = PairingPhase.Idle))
+        }
+    }
+
+    fun setPairingCode(code: String) {
+        val digits = code.filter { it.isDigit() }.take(6)
+        val prev = _status.value.pairing
+        _status.value = _status.value.copy(pairing = prev.copy(code = digits))
+    }
+
+    suspend fun submitPairingCode(context: Context, code: String): Result<String> {
+        val digits = code.filter { it.isDigit() }.take(6)
+        if (digits.length != 6) {
+            return Result.failure(IllegalArgumentException("need 6 digits"))
+        }
+        val prev = _status.value.pairing
+        onPairingCodeRead(context, digits, prev.host, prev.port)
+        _status.value = _status.value.copy(pairing = _status.value.pairing.copy(phase = PairingPhase.Working))
+        val result = start(context, StartMethod.Wireless)
+        _status.value = _status.value.copy(
+            pairing = _status.value.pairing.copy(
+                phase = if (result.isSuccess) PairingPhase.Done else PairingPhase.Failed,
+            ),
+        )
+        stopPairingWait()
+        return result
     }
 
     fun refresh(context: Context) {

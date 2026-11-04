@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">पेयरिंग कोड</string>
+    <string name="telos_shizuku_pair_searching">पेयरिंग सेवा खोज रहे हैं… सेटिंग संवाद खुला रखें।</string>
+    <string name="telos_shizuku_pair_found">पेयरिंग सेवा %1$s:%2$d. 6 अंकों का कोड लिखें या संवाद खुला रखें।</string>
+    <string name="telos_shizuku_pair_waiting">पेयरिंग कोड की प्रतीक्षा। डेवलपर विकल्प → वायरलेस डीबगिंग → कोड से पेयर करें, या यहाँ 6 अंक लिखें।</string>
+    <string name="telos_shizuku_pair_code">6 अंकों का पेयरिंग कोड</string>
+    <string name="telos_shizuku_pair_submit">पेयर करें</string>
+    <string name="telos_shizuku_pair_working">पेयर हो रहा है…</string>
+    <string name="telos_shizuku_pair_ok">पेयर हो गया। सर्वर शुरू हो रहा है।</string>
+    <string name="telos_shizuku_pair_fail">पेयरिंग असफल। कोड जाँचें।</string>
+    <string name="telos_shizuku_pair_start">पेयरिंग कोड की प्रतीक्षा करें</string>
+    <string name="telos_shizuku_pair_stop">प्रतीक्षा रोकें</string>
+    <string name="telos_shizuku_pair_open">वायरलेस डीबगिंग खोलें</string>
 </resources>

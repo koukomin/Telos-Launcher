@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Sidumiskood</string>
+    <string name="telos_shizuku_pair_searching">Sidumisteenuse otsimine… Jäta Sätete dialoog avatuks.</string>
+    <string name="telos_shizuku_pair_found">Sidumisteenus aadressil %1$s:%2$d. Sisesta 6-kohaline kood või jäta dialoog avatuks.</string>
+    <string name="telos_shizuku_pair_waiting">Sidumiskoodi ootel. Ava Arendaja suvandid → Juhtmeta silumine → Seo koodiga või sisesta 6 numbrit siia.</string>
+    <string name="telos_shizuku_pair_code">6-kohaline kood</string>
+    <string name="telos_shizuku_pair_submit">Seo</string>
+    <string name="telos_shizuku_pair_working">Sidumine…</string>
+    <string name="telos_shizuku_pair_ok">Seotud. Serverit käivitatakse.</string>
+    <string name="telos_shizuku_pair_fail">Sidumine nurjus. Kontrolli koodi.</string>
+    <string name="telos_shizuku_pair_start">Oota sidumiskoodi</string>
+    <string name="telos_shizuku_pair_stop">Lõpeta ootamine</string>
+    <string name="telos_shizuku_pair_open">Ava juhtmeta silumine</string>
 </resources>

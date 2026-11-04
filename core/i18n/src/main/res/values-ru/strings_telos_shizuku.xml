@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Код сопряжения</string>
+    <string name="telos_shizuku_pair_searching">Поиск службы сопряжения… Оставьте диалог в Настройках открытым.</string>
+    <string name="telos_shizuku_pair_found">Служба сопряжения %1$s:%2$d. Введите 6-значный код или оставьте диалог открытым.</string>
+    <string name="telos_shizuku_pair_waiting">Ожидание кода сопряжения. Откройте Для разработчиков → Беспроводная отладка → Сопряжение с кодом или введите 6 цифр здесь.</string>
+    <string name="telos_shizuku_pair_code">6-значный код сопряжения</string>
+    <string name="telos_shizuku_pair_submit">Сопрячь</string>
+    <string name="telos_shizuku_pair_working">Сопряжение…</string>
+    <string name="telos_shizuku_pair_ok">Сопряжено. Запуск сервера.</string>
+    <string name="telos_shizuku_pair_fail">Сбой сопряжения. Проверьте код.</string>
+    <string name="telos_shizuku_pair_start">Ждать код сопряжения</string>
+    <string name="telos_shizuku_pair_stop">Остановить ожидание</string>
+    <string name="telos_shizuku_pair_open">Открыть беспроводную отладку</string>
 </resources>

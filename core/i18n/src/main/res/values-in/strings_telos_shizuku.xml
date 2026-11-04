@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Kode pairing</string>
+    <string name="telos_shizuku_pair_searching">Mencari layanan pairing… Biarkan dialog Setelan terbuka.</string>
+    <string name="telos_shizuku_pair_found">Layanan pairing di %1$s:%2$d. Masukkan kode 6 digit atau biarkan dialog terbuka.</string>
+    <string name="telos_shizuku_pair_waiting">Menunggu kode pairing. Buka Opsi pengembang → Debugging nirkabel → Pasangkan dengan kode, atau ketik 6 digit di sini.</string>
+    <string name="telos_shizuku_pair_code">Kode pairing 6 digit</string>
+    <string name="telos_shizuku_pair_submit">Pasangkan</string>
+    <string name="telos_shizuku_pair_working">Memasangkan…</string>
+    <string name="telos_shizuku_pair_ok">Terpasang. Memulai server.</string>
+    <string name="telos_shizuku_pair_fail">Pairing gagal. Periksa kodenya.</string>
+    <string name="telos_shizuku_pair_start">Tunggu kode pairing</string>
+    <string name="telos_shizuku_pair_stop">Berhenti menunggu</string>
+    <string name="telos_shizuku_pair_open">Buka debugging nirkabel</string>
 </resources>

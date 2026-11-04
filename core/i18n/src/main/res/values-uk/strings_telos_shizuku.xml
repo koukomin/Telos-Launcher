@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Код сполучення</string>
+    <string name="telos_shizuku_pair_searching">Пошук служби сполучення… Залиште діалог у Налаштуваннях відкритим.</string>
+    <string name="telos_shizuku_pair_found">Служба сполучення %1$s:%2$d. Введіть 6-значний код або залиште діалог відкритим.</string>
+    <string name="telos_shizuku_pair_waiting">Очікування коду. Відкрийте Для розробників → Бездротове налагодження → Сполучити з кодом, або введіть 6 цифр тут.</string>
+    <string name="telos_shizuku_pair_code">6-значний код</string>
+    <string name="telos_shizuku_pair_submit">Сполучити</string>
+    <string name="telos_shizuku_pair_working">Сполучення…</string>
+    <string name="telos_shizuku_pair_ok">Сполучено. Запуск сервера.</string>
+    <string name="telos_shizuku_pair_fail">Сполучення не вдалося. Перевірте код.</string>
+    <string name="telos_shizuku_pair_start">Чекати код сполучення</string>
+    <string name="telos_shizuku_pair_stop">Припинити очікування</string>
+    <string name="telos_shizuku_pair_open">Відкрити бездротове налагодження</string>
 </resources>

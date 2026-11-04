@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Cod de asociere</string>
+    <string name="telos_shizuku_pair_searching">Se caută serviciul de asociere… Lasă dialogul din Setări deschis.</string>
+    <string name="telos_shizuku_pair_found">Serviciu de asociere la %1$s:%2$d. Introdu codul de 6 cifre sau lasă dialogul deschis.</string>
+    <string name="telos_shizuku_pair_waiting">Se așteaptă codul. Deschide Opțiuni pentru dezvoltatori → Depanare wireless → Asociază cu cod, sau tastează cele 6 cifre aici.</string>
+    <string name="telos_shizuku_pair_code">Cod de 6 cifre</string>
+    <string name="telos_shizuku_pair_submit">Asociază</string>
+    <string name="telos_shizuku_pair_working">Se asociază…</string>
+    <string name="telos_shizuku_pair_ok">Asociat. Se pornește serverul.</string>
+    <string name="telos_shizuku_pair_fail">Asocierea a eșuat. Verifică codul.</string>
+    <string name="telos_shizuku_pair_start">Așteaptă codul de asociere</string>
+    <string name="telos_shizuku_pair_stop">Oprește așteptarea</string>
+    <string name="telos_shizuku_pair_open">Deschide depanarea wireless</string>
 </resources>

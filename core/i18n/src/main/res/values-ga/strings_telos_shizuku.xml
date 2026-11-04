@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Cód péireála</string>
+    <string name="telos_shizuku_pair_searching">Ag cuardach na seirbhíse péireála… Fág dialóg na Socruithe ar oscailt.</string>
+    <string name="telos_shizuku_pair_found">Seirbhís péireála ag %1$s:%2$d. Cuir isteach an cód 6 dhigit nó fág an dialóg ar oscailt.</string>
+    <string name="telos_shizuku_pair_waiting">Ag fanacht leis an gcód. Oscail Roghanna forbróra → Dífhabhtú gan sreang → Péireáil le cód, nó clóscríobh na 6 dhigit anseo.</string>
+    <string name="telos_shizuku_pair_code">Cód 6 dhigit</string>
+    <string name="telos_shizuku_pair_submit">Péireáil</string>
+    <string name="telos_shizuku_pair_working">Á phéireáil…</string>
+    <string name="telos_shizuku_pair_ok">Péireáilte. Ag tosú an fhreastalaí.</string>
+    <string name="telos_shizuku_pair_fail">Theip ar an bpéireáil. Seiceáil an cód.</string>
+    <string name="telos_shizuku_pair_start">Fan le cód péireála</string>
+    <string name="telos_shizuku_pair_stop">Stop ag fanacht</string>
+    <string name="telos_shizuku_pair_open">Oscail dífhabhtú gan sreang</string>
 </resources>

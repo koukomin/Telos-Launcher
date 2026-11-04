@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Párovací kód</string>
+    <string name="telos_shizuku_pair_searching">Hledání párovací služby… Nechte dialog v Nastavení otevřený.</string>
+    <string name="telos_shizuku_pair_found">Párovací služba na %1$s:%2$d. Zadejte 6místný kód nebo nechte dialog otevřený.</string>
+    <string name="telos_shizuku_pair_waiting">Čekání na párovací kód. Otevřete Možnosti pro vývojáře → Bezdrátové ladění → Párovat kódem, nebo zadejte 6 číslic zde.</string>
+    <string name="telos_shizuku_pair_code">6místný párovací kód</string>
+    <string name="telos_shizuku_pair_submit">Spárovat</string>
+    <string name="telos_shizuku_pair_working">Párování…</string>
+    <string name="telos_shizuku_pair_ok">Spárováno. Spouští se server.</string>
+    <string name="telos_shizuku_pair_fail">Párování selhalo. Zkontrolujte kód.</string>
+    <string name="telos_shizuku_pair_start">Čekat na párovací kód</string>
+    <string name="telos_shizuku_pair_stop">Přestat čekat</string>
+    <string name="telos_shizuku_pair_open">Otevřít bezdrátové ladění</string>
 </resources>

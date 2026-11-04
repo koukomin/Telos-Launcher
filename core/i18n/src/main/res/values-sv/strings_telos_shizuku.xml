@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Parkopplingskod</string>
+    <string name="telos_shizuku_pair_searching">Söker parningstjänsten… Lämna inställningsdialogen öppen.</string>
+    <string name="telos_shizuku_pair_found">Parkopplingstjänst på %1$s:%2$d. Ange den 6-siffriga koden eller lämna dialogen öppen.</string>
+    <string name="telos_shizuku_pair_waiting">Väntar på koden. Öppna Utvecklaralternativ → Trådlös felsökning → Parkoppla med kod, eller skriv de 6 siffrorna här.</string>
+    <string name="telos_shizuku_pair_code">6-siffrig kod</string>
+    <string name="telos_shizuku_pair_submit">Parkoppla</string>
+    <string name="telos_shizuku_pair_working">Parkopplar…</string>
+    <string name="telos_shizuku_pair_ok">Parkopplad. Startar servern.</string>
+    <string name="telos_shizuku_pair_fail">Parkoppling misslyckades. Kontrollera koden.</string>
+    <string name="telos_shizuku_pair_start">Vänta på parkopplingskod</string>
+    <string name="telos_shizuku_pair_stop">Sluta vänta</string>
+    <string name="telos_shizuku_pair_open">Öppna trådlös felsökning</string>
 </resources>

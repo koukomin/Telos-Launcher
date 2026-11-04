@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Codice de association</string>
+    <string name="telos_shizuku_pair_searching">Cerca le servicio de association… Lassa aperte le dialogo de Configurationes.</string>
+    <string name="telos_shizuku_pair_found">Servicio de association a %1$s:%2$d. Insere le codice de 6 cifras o lassa le dialogo aperte.</string>
+    <string name="telos_shizuku_pair_waiting">Attende le codice. Aperi Optiones de disveloppator → Depuration sin filo → Associa con codice, o scribe le 6 cifras hic.</string>
+    <string name="telos_shizuku_pair_code">Codice de 6 cifras</string>
+    <string name="telos_shizuku_pair_submit">Associar</string>
+    <string name="telos_shizuku_pair_working">Association…</string>
+    <string name="telos_shizuku_pair_ok">Associate. Initia le servitor.</string>
+    <string name="telos_shizuku_pair_fail">Association fallite. Verifica le codice.</string>
+    <string name="telos_shizuku_pair_start">Attender codice de association</string>
+    <string name="telos_shizuku_pair_stop">Cessar de attender</string>
+    <string name="telos_shizuku_pair_open">Aperir depuration sin filo</string>
 </resources>

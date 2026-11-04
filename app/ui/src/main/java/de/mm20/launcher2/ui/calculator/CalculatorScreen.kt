@@ -199,9 +199,14 @@ private fun RoundKey(
         KeyKind.Equals -> scheme.primary to scheme.onPrimary
     }
     Box(
-        modifier.padding(4.dp).heightIn(min = de.mm20.launcher2.ui.layout.UiSpacing.TouchTarget)
-            .clip(MaterialTheme.shapes.large).background(bg).clickable(onClick = onClick)
-            .padding(horizontal = 4.dp, vertical = 8.dp),
+        modifier
+            .padding(3.dp)
+            .fillMaxSize()
+            .heightIn(min = de.mm20.launcher2.ui.layout.UiSpacing.TouchTarget)
+            .clip(MaterialTheme.shapes.large)
+            .background(bg)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 2.dp, vertical = 2.dp),
         contentAlignment = Alignment.Center,
     ) {
         if (iconRes != null) {
@@ -274,30 +279,22 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
         }
 
         val keys: @Composable (Modifier) -> Unit = { modifier ->
-            BoxWithConstraints(modifier) {
-                // Scroll instead of squeezing scientific labels or shrinking the user's text.
-                val keyWidth = de.mm20.launcher2.ui.layout.AdaptiveLayoutPolicy.keypadWidth(
-                    maxWidth.value, if (scientific) 5 else 4, scale,
-                ).dp
-                Box(Modifier.horizontalScroll(rememberScrollState())) {
-                    val keyModifier = Modifier.width(keyWidth).padding(horizontal = 12.dp, vertical = 8.dp)
-                    if (scientific) ScientificKeys(vm, inverse, { inverse = !inverse }, keyModifier)
-                    else StandardKeys(vm, keyModifier)
-                }
-            }
+            val keyModifier = modifier.fillMaxSize().padding(horizontal = 8.dp, vertical = 4.dp)
+            if (scientific) ScientificKeys(vm, inverse, { inverse = !inverse }, keyModifier)
+            else StandardKeys(vm, keyModifier)
         }
         if (twoPanes) {
             Row(Modifier.fillMaxSize()) {
-                Column(Modifier.weight(1f).fillMaxHeight().verticalScroll(rememberScrollState())) {
+                Column(Modifier.weight(1f).fillMaxHeight()) {
                     topBar()
-                    Display(vm, Modifier, onHistory = { showHistory = true })
+                    Display(vm, Modifier.weight(1f), onHistory = { showHistory = true })
                 }
-                keys(Modifier.weight(1.5f).fillMaxHeight().verticalScroll(rememberScrollState()))
+                keys(Modifier.weight(1.5f).fillMaxHeight())
             }
-        } else Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+        } else Column(Modifier.fillMaxSize()) {
             topBar()
-            Display(vm, Modifier, onHistory = { showHistory = true })
-            keys(Modifier.fillMaxWidth())
+            Display(vm, Modifier.weight(0.9f), onHistory = { showHistory = true })
+            keys(Modifier.weight(1.8f).fillMaxWidth())
         }
 
         if (showHistory) {
@@ -316,7 +313,8 @@ private fun Display(vm: CalculatorViewModel, modifier: Modifier, onHistory: () -
     Column(
         modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp)
+            .fillMaxHeight()
+            .padding(horizontal = 20.dp, vertical = 4.dp)
             .pointerInput(Unit) {
                 // swipe down on the display opens the history, like in the OxygenOS calculator
                 detectVerticalDragGestures(
@@ -330,7 +328,7 @@ private fun Display(vm: CalculatorViewModel, modifier: Modifier, onHistory: () -
         Text(
             if (vm.error) stringResource(I18nR.string.calculator_invalid) else vm.expression.toDisplay(),
             modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState(), reverseScrolling = true),
-            style = MaterialTheme.typography.displayLarge.copy(fontSize = 56.sp),
+            style = MaterialTheme.typography.displayMedium,
             color = if (vm.error) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.End,
             maxLines = 1,
@@ -349,7 +347,6 @@ private fun Display(vm: CalculatorViewModel, modifier: Modifier, onHistory: () -
                 AssistChip(onClick = { vm.applyVat(remove = true) }, label = { Text(stringResource(I18nR.string.calculator_chip_remove_vat, vm.vatRate)) })
             }
         }
-        Spacer(Modifier.height(8.dp))
     }
 }
 
@@ -357,12 +354,12 @@ private fun Display(vm: CalculatorViewModel, modifier: Modifier, onHistory: () -
 private fun StandardKeys(vm: CalculatorViewModel, modifier: Modifier) {
     @Composable
     fun KeyRow(vararg keys: @Composable (Modifier) -> Unit) {
-        Row(Modifier.fillMaxWidth()) { keys.forEach { it(Modifier.weight(1f)) } }
+        Row(Modifier.fillMaxWidth().weight(1f)) { keys.forEach { it(Modifier.weight(1f).fillMaxHeight()) } }
     }
-    fun num(label: String, token: String = label): @Composable (Modifier) -> Unit = { m -> RoundKey(label, KeyKind.Number, m) { vm.input(token) } }
-    fun op(label: String): @Composable (Modifier) -> Unit = { m -> RoundKey(label, KeyKind.Operator, m, fontSize = 34) { vm.input(label) } }
+    fun num(label: String, token: String = label): @Composable (Modifier) -> Unit = { m -> RoundKey(label, KeyKind.Number, m, fontSize = 26) { vm.input(token) } }
+    fun op(label: String): @Composable (Modifier) -> Unit = { m -> RoundKey(label, KeyKind.Operator, m, fontSize = 28) { vm.input(label) } }
 
-    Column(modifier.fillMaxWidth()) {
+    Column(modifier.fillMaxSize()) {
         KeyRow(
             { m -> RoundKey("AC", KeyKind.Clear, m) { vm.clear() } },
             { m -> RoundKey("%", KeyKind.Clear, m) { vm.input("%") } },
@@ -383,15 +380,15 @@ private fun StandardKeys(vm: CalculatorViewModel, modifier: Modifier) {
 private fun ScientificKeys(vm: CalculatorViewModel, inverse: Boolean, onInverse: () -> Unit, modifier: Modifier) {
     @Composable
     fun KeyRow(vararg keys: @Composable (Modifier) -> Unit) {
-        Row(Modifier.fillMaxWidth()) { keys.forEach { it(Modifier.weight(1f)) } }
+        Row(Modifier.fillMaxWidth().weight(1f)) { keys.forEach { it(Modifier.weight(1f).fillMaxHeight()) } }
     }
     fun fn(label: String, token: String = label, selected: Boolean = false, onClick: (() -> Unit)? = null): @Composable (Modifier) -> Unit =
-        { m -> RoundKey(label, KeyKind.Function, m, fontSize = 20, selected = selected) { if (onClick != null) onClick() else vm.input(token) } }
-    fun num(label: String, token: String = label): @Composable (Modifier) -> Unit = { m -> RoundKey(label, KeyKind.Number, m, fontSize = 26) { vm.input(token) } }
-    fun op(label: String): @Composable (Modifier) -> Unit = { m -> RoundKey(label, KeyKind.Operator, m, fontSize = 28) { vm.input(label) } }
+        { m -> RoundKey(label, KeyKind.Function, m, fontSize = 16, selected = selected) { if (onClick != null) onClick() else vm.input(token) } }
+    fun num(label: String, token: String = label): @Composable (Modifier) -> Unit = { m -> RoundKey(label, KeyKind.Number, m, fontSize = 22) { vm.input(token) } }
+    fun op(label: String): @Composable (Modifier) -> Unit = { m -> RoundKey(label, KeyKind.Operator, m, fontSize = 24) { vm.input(label) } }
     val degrees = vm.degrees
 
-    Column(modifier.fillMaxWidth()) {
+    Column(modifier.fillMaxSize()) {
         KeyRow(
             if (inverse) fn("sin⁻¹", "asin(") else fn("sin", "sin("),
             if (inverse) fn("cos⁻¹", "acos(") else fn("cos", "cos("),

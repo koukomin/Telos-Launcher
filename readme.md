@@ -17,6 +17,7 @@ Telos is a personal fork of [Kvaesitso](https://github.com/MM2-0/Kvaesitso). It 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE.txt)
 [![Platform: Android](https://img.shields.io/badge/platform-Android-3DDC84.svg)](https://github.com/koukomin/Telos-Launcher/releases)
 [![Development artifacts](https://img.shields.io/badge/development-Actions%20artifacts-orange.svg)](https://github.com/koukomin/Telos-Launcher/actions/workflows/build-debug.yml)
+[![Wiki](https://img.shields.io/badge/wiki-Shizuku%20%26%20adb-informational.svg)](https://github.com/koukomin/Telos-Launcher/wiki)
 
 <p align="center">
   <a href="https://obtainium.imranr.dev/add?url=https://github.com/koukomin/Telos-Launcher">
@@ -119,7 +120,7 @@ Telos includes the Shizuku **server** (starter + `libshizuku.so`, from [Shizuku-
 | How | What you do |
 | --- | --- |
 | **Root** | Tap **Start with root**. Enable Autostart so it comes back after reboot. |
-| **Wireless (phone only)** | Enable the Telos **pairing accessibility** service. Developer options → Wireless debugging → **Pair device with pairing code**. Leave that Settings dialog open; Telos reads the 6-digit code from it (same method as Shizuku-Next, not AI). Grant permission. Autostart afterwards. Pairing is once per ADB key. |
+| **Wireless (phone only)** | Telos System → Shizuku → **Wait for pairing code**. Developer options → Wireless debugging → **Pair device with pairing code**. Leave that dialog open or type the 6 digits in Telos (same wait as Shizuku-Next, not AI). Accessibility can fill the field. Grant permission. Autostart afterwards. Pairing is once per ADB key. |
 | **Computer ADB** | USB debugging on, authorize the PC, then the command shown on the Shizuku tab (copy it — paths change per install): |
 
 ```bash

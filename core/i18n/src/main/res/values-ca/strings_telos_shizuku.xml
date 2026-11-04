@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Codi d’aparellament</string>
+    <string name="telos_shizuku_pair_searching">S’està cercant el servei d’aparellament… Deixa obert el diàleg dels Ajustos.</string>
+    <string name="telos_shizuku_pair_found">Servei d’aparellament a %1$s:%2$d. Introdueix el codi de 6 dígits o deixa el diàleg obert.</string>
+    <string name="telos_shizuku_pair_waiting">S’espera el codi. Obre Opcions de desenvolupador → Depuració sense fil → Aparella amb codi, o escriu els 6 dígits aquí.</string>
+    <string name="telos_shizuku_pair_code">Codi de 6 dígits</string>
+    <string name="telos_shizuku_pair_submit">Aparella</string>
+    <string name="telos_shizuku_pair_working">S’aparella…</string>
+    <string name="telos_shizuku_pair_ok">Aparellat. S’inicia el servidor.</string>
+    <string name="telos_shizuku_pair_fail">Ha fallat l’aparellament. Comprova el codi.</string>
+    <string name="telos_shizuku_pair_start">Espera el codi d’aparellament</string>
+    <string name="telos_shizuku_pair_stop">Deixa d’esperar</string>
+    <string name="telos_shizuku_pair_open">Obre la depuració sense fil</string>
 </resources>

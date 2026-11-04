@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Kod parowania</string>
+    <string name="telos_shizuku_pair_searching">Szukanie usługi parowania… Zostaw otwarte okno w Ustawieniach.</string>
+    <string name="telos_shizuku_pair_found">Usługa parowania %1$s:%2$d. Wpisz 6-cyfrowy kod albo zostaw okno otwarte.</string>
+    <string name="telos_shizuku_pair_waiting">Oczekiwanie na kod. Otwórz Opcje programisty → Debugowanie bezprzewodowe → Sparuj z kodem albo wpisz 6 cyfr tutaj.</string>
+    <string name="telos_shizuku_pair_code">6-cyfrowy kod parowania</string>
+    <string name="telos_shizuku_pair_submit">Sparuj</string>
+    <string name="telos_shizuku_pair_working">Parowanie…</string>
+    <string name="telos_shizuku_pair_ok">Sparowano. Uruchamianie serwera.</string>
+    <string name="telos_shizuku_pair_fail">Parowanie nie powiodło się. Sprawdź kod.</string>
+    <string name="telos_shizuku_pair_start">Czekaj na kod parowania</string>
+    <string name="telos_shizuku_pair_stop">Zakończ oczekiwanie</string>
+    <string name="telos_shizuku_pair_open">Otwórz debugowanie bezprzewodowe</string>
 </resources>

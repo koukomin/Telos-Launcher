@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Κωδικός ζεύξεως</string>
+    <string name="telos_shizuku_pair_searching">Ἀναζήτησις ὑπηρεσίας ζεύξεως… Ἄφες τὸ διάλογον τῶν Ῥυθμίσεων ἀνοικτόν.</string>
+    <string name="telos_shizuku_pair_found">Ὑπηρεσία ζεύξεως ἐν %1$s:%2$d. Εἴσαγε τὸν ἑξαψήφιον ἢ ἄφες τὸ διάλογον ἀνοικτόν.</string>
+    <string name="telos_shizuku_pair_waiting">Ἀναμονὴ κωδικοῦ. Ἄνοιξον Ἐπιλογὰς προγραμματιστῶν → Ἀσύρματον debugging → Ζεῦξις μετὰ κωδικοῦ, ἢ γράψον τὰ ἓξ ψηφία ἐνθάδε.</string>
+    <string name="telos_shizuku_pair_code">Ἑξαψήφιος κωδικός</string>
+    <string name="telos_shizuku_pair_submit">Ζεῦξις</string>
+    <string name="telos_shizuku_pair_working">Ζεύξις…</string>
+    <string name="telos_shizuku_pair_ok">Ἐζεύχθη. Ἄρχεται ὁ διακομιστής.</string>
+    <string name="telos_shizuku_pair_fail">Ἡ ζεῦξις ἀπέτυχεν. Ἔλεγξον τὸν κωδικόν.</string>
+    <string name="telos_shizuku_pair_start">Ἀναμονὴ κωδικοῦ ζεύξεως</string>
+    <string name="telos_shizuku_pair_stop">Παῦσις ἀναμονῆς</string>
+    <string name="telos_shizuku_pair_open">Ἄνοιξον ἀσύρματον debugging</string>
 </resources>

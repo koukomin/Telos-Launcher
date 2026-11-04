@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">کد جفت‌سازی</string>
+    <string name="telos_shizuku_pair_searching">در حال جستجوی سرویس جفت‌سازی… گفتگوی تنظیمات را باز بگذارید.</string>
+    <string name="telos_shizuku_pair_found">سرویس جفت‌سازی در %1$s:%2$d. کد ۶ رقمی را وارد کنید یا گفتگو را باز بگذارید.</string>
+    <string name="telos_shizuku_pair_waiting">در انتظار کد. گزینه‌های برنامه‌نویس → اشکال‌زدایی بی‌سیم → جفت‌سازی با کد را باز کنید یا ۶ رقم را اینجا بنویسید.</string>
+    <string name="telos_shizuku_pair_code">کد ۶ رقمی</string>
+    <string name="telos_shizuku_pair_submit">جفت‌سازی</string>
+    <string name="telos_shizuku_pair_working">در حال جفت‌سازی…</string>
+    <string name="telos_shizuku_pair_ok">جفت شد. راه‌اندازی سرور.</string>
+    <string name="telos_shizuku_pair_fail">جفت‌سازی ناموفق. کد را بررسی کنید.</string>
+    <string name="telos_shizuku_pair_start">انتظار کد جفت‌سازی</string>
+    <string name="telos_shizuku_pair_stop">توقف انتظار</string>
+    <string name="telos_shizuku_pair_open">باز کردن اشکال‌زدایی بی‌سیم</string>
 </resources>

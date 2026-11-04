@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">ペアリングコード</string>
+    <string name="telos_shizuku_pair_searching">ペアリングサービスを検索しています…設定のダイアログを開いたままにしてください。</string>
+    <string name="telos_shizuku_pair_found">ペアリングサービス %1$s:%2$d。6桁のコードを入力するか、ダイアログを開いたままにしてください。</string>
+    <string name="telos_shizuku_pair_waiting">ペアリングコードを待っています。開発者向けオプション → ワイヤレスデバッグ → ペアリングコードでペア設定、またはここに6桁を入力。</string>
+    <string name="telos_shizuku_pair_code">6桁のペアリングコード</string>
+    <string name="telos_shizuku_pair_submit">ペア設定</string>
+    <string name="telos_shizuku_pair_working">ペア設定中…</string>
+    <string name="telos_shizuku_pair_ok">ペア設定しました。サーバーを起動します。</string>
+    <string name="telos_shizuku_pair_fail">ペア設定に失敗しました。コードを確認してください。</string>
+    <string name="telos_shizuku_pair_start">ペアリングコードを待つ</string>
+    <string name="telos_shizuku_pair_stop">待機を停止</string>
+    <string name="telos_shizuku_pair_open">ワイヤレスデバッグを開く</string>
 </resources>

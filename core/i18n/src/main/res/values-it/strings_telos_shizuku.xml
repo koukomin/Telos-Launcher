@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Codice di associazione</string>
+    <string name="telos_shizuku_pair_searching">Ricerca del servizio di associazione… Lascia aperto il dialogo nelle Impostazioni.</string>
+    <string name="telos_shizuku_pair_found">Servizio di associazione su %1$s:%2$d. Inserisci il codice a 6 cifre o lascia aperto il dialogo.</string>
+    <string name="telos_shizuku_pair_waiting">In attesa del codice. Apri Opzioni sviluppatore → Debug wireless → Associa con codice, oppure digita le 6 cifre qui.</string>
+    <string name="telos_shizuku_pair_code">Codice a 6 cifre</string>
+    <string name="telos_shizuku_pair_submit">Associa</string>
+    <string name="telos_shizuku_pair_working">Associazione…</string>
+    <string name="telos_shizuku_pair_ok">Associato. Avvio del server.</string>
+    <string name="telos_shizuku_pair_fail">Associazione non riuscita. Controlla il codice.</string>
+    <string name="telos_shizuku_pair_start">Attendi codice di associazione</string>
+    <string name="telos_shizuku_pair_stop">Interrompi attesa</string>
+    <string name="telos_shizuku_pair_open">Apri debug wireless</string>
 </resources>

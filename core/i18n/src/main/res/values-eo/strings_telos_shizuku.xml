@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Pariga kodo</string>
+    <string name="telos_shizuku_pair_searching">Serĉas la parigan servon… Lasu la dialogon de Agordoj malfermita.</string>
+    <string name="telos_shizuku_pair_found">Pariga servo ĉe %1$s:%2$d. Enigu la 6-ciferan kodon aŭ lasu la dialogon malfermita.</string>
+    <string name="telos_shizuku_pair_waiting">Atendas la kodon. Malfermu Programistajn opciojn → Sendrata sencimigo → Parigi per kodo, aŭ tajpu la 6 ciferojn ĉi tie.</string>
+    <string name="telos_shizuku_pair_code">6-cifera kodo</string>
+    <string name="telos_shizuku_pair_submit">Parigi</string>
+    <string name="telos_shizuku_pair_working">Parigas…</string>
+    <string name="telos_shizuku_pair_ok">Parigita. Startas la servilon.</string>
+    <string name="telos_shizuku_pair_fail">Parigo malsukcesis. Kontrolu la kodon.</string>
+    <string name="telos_shizuku_pair_start">Atendi parigan kodon</string>
+    <string name="telos_shizuku_pair_stop">Ĉesi atendi</string>
+    <string name="telos_shizuku_pair_open">Malfermi sendratan sencimigon</string>
 </resources>

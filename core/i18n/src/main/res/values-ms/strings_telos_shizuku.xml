@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Kod gandingan</string>
+    <string name="telos_shizuku_pair_searching">Mencari perkhidmatan gandingan… Biarkan dialog Tetapan terbuka.</string>
+    <string name="telos_shizuku_pair_found">Perkhidmatan gandingan di %1$s:%2$d. Masukkan kod 6 digit atau biarkan dialog terbuka.</string>
+    <string name="telos_shizuku_pair_waiting">Menunggu kod. Buka Pilihan pembangun → Nyahpepijat wayarles → Ganding dengan kod, atau taip 6 digit di sini.</string>
+    <string name="telos_shizuku_pair_code">Kod 6 digit</string>
+    <string name="telos_shizuku_pair_submit">Ganding</string>
+    <string name="telos_shizuku_pair_working">Mengganding…</string>
+    <string name="telos_shizuku_pair_ok">Diganding. Memulakan pelayan.</string>
+    <string name="telos_shizuku_pair_fail">Gandingan gagal. Semak kod.</string>
+    <string name="telos_shizuku_pair_start">Tunggu kod gandingan</string>
+    <string name="telos_shizuku_pair_stop">Berhenti menunggu</string>
+    <string name="telos_shizuku_pair_open">Buka nyahpepijat wayarles</string>
 </resources>

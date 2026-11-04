@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Párosítási kód</string>
+    <string name="telos_shizuku_pair_searching">Párosítási szolgáltatás keresése… Hagyd nyitva a Beállítások párbeszédablakát.</string>
+    <string name="telos_shizuku_pair_found">Párosítási szolgáltatás: %1$s:%2$d. Írd be a 6 számjegyű kódot, vagy hagyd nyitva az ablakot.</string>
+    <string name="telos_shizuku_pair_waiting">Várakozás a kódra. Nyisd meg a Fejlesztői beállítások → Vezeték nélküli hibakeresés → Párosítás kóddal menüt, vagy írd ide a 6 számjegyet.</string>
+    <string name="telos_shizuku_pair_code">6 számjegyű kód</string>
+    <string name="telos_shizuku_pair_submit">Párosítás</string>
+    <string name="telos_shizuku_pair_working">Párosítás…</string>
+    <string name="telos_shizuku_pair_ok">Párosítva. A kiszolgáló indul.</string>
+    <string name="telos_shizuku_pair_fail">A párosítás sikertelen. Ellenőrizd a kódot.</string>
+    <string name="telos_shizuku_pair_start">Várakozás a párosítási kódra</string>
+    <string name="telos_shizuku_pair_stop">Várakozás leállítása</string>
+    <string name="telos_shizuku_pair_open">Vezeték nélküli hibakeresés megnyitása</string>
 </resources>

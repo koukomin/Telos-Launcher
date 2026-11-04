@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Código de emparejamiento</string>
+    <string name="telos_shizuku_pair_searching">Buscando el servicio de emparejamiento… Deja abierto el diálogo de emparejamiento en Ajustes.</string>
+    <string name="telos_shizuku_pair_found">Servicio de emparejamiento en %1$s:%2$d. Introduce el código de 6 dígitos o deja abierto el diálogo.</string>
+    <string name="telos_shizuku_pair_waiting">Esperando el código de emparejamiento. Abre Opciones de desarrollador → Depuración inalámbrica → Emparejar con código, o escribe los 6 dígitos aquí.</string>
+    <string name="telos_shizuku_pair_code">Código de 6 dígitos</string>
+    <string name="telos_shizuku_pair_submit">Emparejar</string>
+    <string name="telos_shizuku_pair_working">Emparejando…</string>
+    <string name="telos_shizuku_pair_ok">Emparejado. Iniciando el servidor.</string>
+    <string name="telos_shizuku_pair_fail">Error de emparejamiento. Comprueba el código.</string>
+    <string name="telos_shizuku_pair_start">Esperar código de emparejamiento</string>
+    <string name="telos_shizuku_pair_stop">Dejar de esperar</string>
+    <string name="telos_shizuku_pair_open">Abrir depuración inalámbrica</string>
 </resources>

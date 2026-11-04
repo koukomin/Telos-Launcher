@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Код за сдвояване</string>
+    <string name="telos_shizuku_pair_searching">Търсене на услугата за сдвояване… Оставете диалога в Настройки отворен.</string>
+    <string name="telos_shizuku_pair_found">Услуга за сдвояване на %1$s:%2$d. Въведете 6-цифрения код или оставете диалога отворен.</string>
+    <string name="telos_shizuku_pair_waiting">Изчакване на кода. Отворете Опции за разработчици → Безжично отстраняване на грешки → Сдвояване с код, или въведете 6 цифри тук.</string>
+    <string name="telos_shizuku_pair_code">6-цифрен код</string>
+    <string name="telos_shizuku_pair_submit">Сдвояване</string>
+    <string name="telos_shizuku_pair_working">Сдвояване…</string>
+    <string name="telos_shizuku_pair_ok">Сдвоено. Стартиране на сървъра.</string>
+    <string name="telos_shizuku_pair_fail">Неуспешно сдвояване. Проверете кода.</string>
+    <string name="telos_shizuku_pair_start">Изчакване на код за сдвояване</string>
+    <string name="telos_shizuku_pair_stop">Спиране на изчакването</string>
+    <string name="telos_shizuku_pair_open">Отваряне на безжичното отстраняване на грешки</string>
 </resources>

@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Pariliitoskoodi</string>
+    <string name="telos_shizuku_pair_searching">Etsitään pariliitospalvelua… Jätä Asetusten valintaikkuna auki.</string>
+    <string name="telos_shizuku_pair_found">Pariliitospalvelu %1$s:%2$d. Anna 6-numeroinen koodi tai jätä ikkuna auki.</string>
+    <string name="telos_shizuku_pair_waiting">Odotetaan koodia. Avaa Kehittäjäasetukset → Langaton virheenkorjaus → Muodosta pari koodilla, tai kirjoita 6 numeroa tähän.</string>
+    <string name="telos_shizuku_pair_code">6-numeroinen koodi</string>
+    <string name="telos_shizuku_pair_submit">Muodosta pari</string>
+    <string name="telos_shizuku_pair_working">Pariliitos…</string>
+    <string name="telos_shizuku_pair_ok">Pariliitetty. Käynnistetään palvelin.</string>
+    <string name="telos_shizuku_pair_fail">Pariliitos epäonnistui. Tarkista koodi.</string>
+    <string name="telos_shizuku_pair_start">Odota pariliitoskoodia</string>
+    <string name="telos_shizuku_pair_stop">Lopeta odotus</string>
+    <string name="telos_shizuku_pair_open">Avaa langaton virheenkorjaus</string>
 </resources>

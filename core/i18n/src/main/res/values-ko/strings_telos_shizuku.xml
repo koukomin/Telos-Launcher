@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">페어링 코드</string>
+    <string name="telos_shizuku_pair_searching">페어링 서비스를 찾는 중… 설정의 페어링 대화상자를 열어 두세요.</string>
+    <string name="telos_shizuku_pair_found">페어링 서비스 %1$s:%2$d. 6자리 코드를 입력하거나 대화상자를 열어 두세요.</string>
+    <string name="telos_shizuku_pair_waiting">페어링 코드를 기다리는 중. 개발자 옵션 → 무선 디버깅 → 페어링 코드로 페어링, 또는 여기에 6자리를 입력하세요.</string>
+    <string name="telos_shizuku_pair_code">6자리 페어링 코드</string>
+    <string name="telos_shizuku_pair_submit">페어링</string>
+    <string name="telos_shizuku_pair_working">페어링 중…</string>
+    <string name="telos_shizuku_pair_ok">페어링됨. 서버를 시작합니다.</string>
+    <string name="telos_shizuku_pair_fail">페어링 실패. 코드를 확인하세요.</string>
+    <string name="telos_shizuku_pair_start">페어링 코드 기다리기</string>
+    <string name="telos_shizuku_pair_stop">대기 중지</string>
+    <string name="telos_shizuku_pair_open">무선 디버깅 열기</string>
 </resources>

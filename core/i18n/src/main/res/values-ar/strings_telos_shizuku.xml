@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">رمز الاقتران</string>
+    <string name="telos_shizuku_pair_searching">جارٍ البحث عن خدمة الاقتران… اترك مربع حوار الإعدادات مفتوحًا.</string>
+    <string name="telos_shizuku_pair_found">خدمة الاقتران على %1$s:%2$d. أدخل الرمز المكوّن من 6 أرقام أو اترك الحوار مفتوحًا.</string>
+    <string name="telos_shizuku_pair_waiting">بانتظار رمز الاقتران. افتح خيارات المطوّر → تصحيح الأخطاء لاسلكيًا → الاقتران برمز، أو اكتب الأرقام الستة هنا.</string>
+    <string name="telos_shizuku_pair_code">رمز اقتران من 6 أرقام</string>
+    <string name="telos_shizuku_pair_submit">اقتران</string>
+    <string name="telos_shizuku_pair_working">جارٍ الاقتران…</string>
+    <string name="telos_shizuku_pair_ok">تم الاقتران. بدء الخادم.</string>
+    <string name="telos_shizuku_pair_fail">فشل الاقتران. تحقق من الرمز.</string>
+    <string name="telos_shizuku_pair_start">انتظار رمز الاقتران</string>
+    <string name="telos_shizuku_pair_stop">إيقاف الانتظار</string>
+    <string name="telos_shizuku_pair_open">فتح التصحيح اللاسلكي</string>
 </resources>

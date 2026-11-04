@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">配对码</string>
+    <string name="telos_shizuku_pair_searching">正在搜索配对服务…请保持设置中的配对对话框打开。</string>
+    <string name="telos_shizuku_pair_found">配对服务位于 %1$s:%2$d。输入 6 位数字，或保持对话框打开。</string>
+    <string name="telos_shizuku_pair_waiting">正在等待配对码。打开开发者选项 → 无线调试 → 使用配对码配对，或在此输入 6 位数字。</string>
+    <string name="telos_shizuku_pair_code">6 位配对码</string>
+    <string name="telos_shizuku_pair_submit">配对</string>
+    <string name="telos_shizuku_pair_working">正在配对…</string>
+    <string name="telos_shizuku_pair_ok">已配对。正在启动服务器。</string>
+    <string name="telos_shizuku_pair_fail">配对失败。请检查配对码。</string>
+    <string name="telos_shizuku_pair_start">等待配对码</string>
+    <string name="telos_shizuku_pair_stop">停止等待</string>
+    <string name="telos_shizuku_pair_open">打开无线调试</string>
 </resources>

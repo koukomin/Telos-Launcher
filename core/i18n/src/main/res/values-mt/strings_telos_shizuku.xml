@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Kodiċi ta’ tqabbil</string>
+    <string name="telos_shizuku_pair_searching">Qed infittex is-servizz ta’ tqabbil… Ħalli d-djalogu tas-Settings miftuħ.</string>
+    <string name="telos_shizuku_pair_found">Servizz ta’ tqabbil f’%1$s:%2$d. Daħħal il-kodiċi ta’ 6 ċifri jew ħalli d-djalogu miftuħ.</string>
+    <string name="telos_shizuku_pair_waiting">Nistennew il-kodiċi. Iftaħ Għażliet tal-iżviluppatur → Debugging wireless → Qabbel b’kodiċi, jew ittajpja s-6 ċifri hawn.</string>
+    <string name="telos_shizuku_pair_code">Kodiċi ta’ 6 ċifri</string>
+    <string name="telos_shizuku_pair_submit">Qabbel</string>
+    <string name="telos_shizuku_pair_working">Qed nqabbel…</string>
+    <string name="telos_shizuku_pair_ok">Imqabbel. Qed nibda s-server.</string>
+    <string name="telos_shizuku_pair_fail">It-tqabbil falliet. Iċċekkja l-kodiċi.</string>
+    <string name="telos_shizuku_pair_start">Stenna l-kodiċi ta’ tqabbil</string>
+    <string name="telos_shizuku_pair_stop">Waqqaf l-istennija</string>
+    <string name="telos_shizuku_pair_open">Iftaħ debugging wireless</string>
 </resources>

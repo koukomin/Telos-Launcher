@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Parekatzeko kodea</string>
+    <string name="telos_shizuku_pair_searching">Parekatzeko zerbitzua bilatzen… Utzi Ezarpenen elkarrizketa irekita.</string>
+    <string name="telos_shizuku_pair_found">Parekatzeko zerbitzua %1$s:%2$d. Idatzi 6 digituko kodea edo utzi elkarrizketa irekita.</string>
+    <string name="telos_shizuku_pair_waiting">Kodearen zain. Ireki Garatzaile-aukerak → Haririk gabeko arazketa → Parekatu kodearekin, edo idatzi 6 zenbakiak hemen.</string>
+    <string name="telos_shizuku_pair_code">6 digituko kodea</string>
+    <string name="telos_shizuku_pair_submit">Parekatu</string>
+    <string name="telos_shizuku_pair_working">Parekatzen…</string>
+    <string name="telos_shizuku_pair_ok">Parekatuta. Zerbitzaria abiarazten.</string>
+    <string name="telos_shizuku_pair_fail">Parekatzeak huts egin du. Egiaztatu kodea.</string>
+    <string name="telos_shizuku_pair_start">Parekatzeko kodearen zain</string>
+    <string name="telos_shizuku_pair_stop">Utzi zain</string>
+    <string name="telos_shizuku_pair_open">Ireki haririk gabeko arazketa</string>
 </resources>

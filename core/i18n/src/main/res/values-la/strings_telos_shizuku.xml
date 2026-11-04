@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Codex copulationis</string>
+    <string name="telos_shizuku_pair_searching">Servitium copulationis quaeritur… Dialogum Optionum apertum relinque.</string>
+    <string name="telos_shizuku_pair_found">Servitium copulationis ad %1$s:%2$d. Codex 6 notarum insere aut dialogum apertum relinque.</string>
+    <string name="telos_shizuku_pair_waiting">Codicem exspectat. Optiones tectoris → Emendatio sine filo → Copia cum codice, aut hic 6 notas scribe.</string>
+    <string name="telos_shizuku_pair_code">Codex 6 notarum</string>
+    <string name="telos_shizuku_pair_submit">Copia</string>
+    <string name="telos_shizuku_pair_working">Copulatur…</string>
+    <string name="telos_shizuku_pair_ok">Copulatum. Servitorem incipit.</string>
+    <string name="telos_shizuku_pair_fail">Copulatio defecit. Codicem inspice.</string>
+    <string name="telos_shizuku_pair_start">Codicem copulationis exspecta</string>
+    <string name="telos_shizuku_pair_stop">Desine exspectare</string>
+    <string name="telos_shizuku_pair_open">Emendationem sine filo aperi</string>
 </resources>

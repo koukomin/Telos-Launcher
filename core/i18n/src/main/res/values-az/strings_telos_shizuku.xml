@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Cütləşmə kodu</string>
+    <string name="telos_shizuku_pair_searching">Cütləşmə xidməti axtarılır… Parametrlər dialoqunu açıq saxla.</string>
+    <string name="telos_shizuku_pair_found">Cütləşmə xidməti %1$s:%2$d. 6 rəqəmli kodu daxil et və ya dialoqu açıq saxla.</string>
+    <string name="telos_shizuku_pair_waiting">Kod gözlənilir. Tərtibatçı seçimləri → Simsiz sazlama → Kodla cütləşdir, və ya 6 rəqəmi bura yaz.</string>
+    <string name="telos_shizuku_pair_code">6 rəqəmli kod</string>
+    <string name="telos_shizuku_pair_submit">Cütləşdir</string>
+    <string name="telos_shizuku_pair_working">Cütləşdirilir…</string>
+    <string name="telos_shizuku_pair_ok">Cütləşdirildi. Server başladı.</string>
+    <string name="telos_shizuku_pair_fail">Cütləşmə uğursuz oldu. Kodu yoxla.</string>
+    <string name="telos_shizuku_pair_start">Cütləşmə kodunu gözlə</string>
+    <string name="telos_shizuku_pair_stop">Gözləməni dayandır</string>
+    <string name="telos_shizuku_pair_open">Simsiz sazlamanı aç</string>
 </resources>

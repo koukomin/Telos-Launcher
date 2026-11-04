@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Parringskode</string>
+    <string name="telos_shizuku_pair_searching">Søger efter parringstjenesten… Lad indstillingsdialogen være åben.</string>
+    <string name="telos_shizuku_pair_found">Parringstjeneste på %1$s:%2$d. Indtast den 6-cifrede kode, eller lad dialogen være åben.</string>
+    <string name="telos_shizuku_pair_waiting">Venter på parringskoden. Åbn Udviklerindstillinger → Trådløs fejlfinding → Par med kode, eller skriv de 6 cifre her.</string>
+    <string name="telos_shizuku_pair_code">6-cifret parringskode</string>
+    <string name="telos_shizuku_pair_submit">Par</string>
+    <string name="telos_shizuku_pair_working">Parrer…</string>
+    <string name="telos_shizuku_pair_ok">Parrret. Starter serveren.</string>
+    <string name="telos_shizuku_pair_fail">Parring mislykkedes. Tjek koden.</string>
+    <string name="telos_shizuku_pair_start">Vent på parringskode</string>
+    <string name="telos_shizuku_pair_stop">Stop venten</string>
+    <string name="telos_shizuku_pair_open">Åbn trådløs fejlfinding</string>
 </resources>

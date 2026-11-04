@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Savienošanas kods</string>
+    <string name="telos_shizuku_pair_searching">Meklē savienošanas pakalpojumu… Atstāj Iestatījumu dialogu atvērtu.</string>
+    <string name="telos_shizuku_pair_found">Savienošanas pakalpojums %1$s:%2$d. Ievadi 6 ciparu kodu vai atstāj dialogu atvērtu.</string>
+    <string name="telos_shizuku_pair_waiting">Gaida kodu. Atver Izstrādātāja opcijas → Bezvadu atkļūdošana → Savienot ar kodu vai ieraksti 6 ciparus šeit.</string>
+    <string name="telos_shizuku_pair_code">6 ciparu kods</string>
+    <string name="telos_shizuku_pair_submit">Savienot</string>
+    <string name="telos_shizuku_pair_working">Savieno…</string>
+    <string name="telos_shizuku_pair_ok">Savienots. Palaiž serveri.</string>
+    <string name="telos_shizuku_pair_fail">Savienošana neizdevās. Pārbaudi kodu.</string>
+    <string name="telos_shizuku_pair_start">Gaidīt savienošanas kodu</string>
+    <string name="telos_shizuku_pair_stop">Pārtraukt gaidīšanu</string>
+    <string name="telos_shizuku_pair_open">Atvērt bezvadu atkļūdošanu</string>
 </resources>

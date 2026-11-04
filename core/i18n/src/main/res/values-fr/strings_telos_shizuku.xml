@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Code d’appairage</string>
+    <string name="telos_shizuku_pair_searching">Recherche du service d’appairage… Laissez le dialogue des Paramètres ouvert.</string>
+    <string name="telos_shizuku_pair_found">Service d’appairage à %1$s:%2$d. Saisissez le code à 6 chiffres ou laissez le dialogue ouvert.</string>
+    <string name="telos_shizuku_pair_waiting">En attente du code d’appairage. Ouvrez Options pour les développeurs → Débogage sans fil → Associer avec un code, ou saisissez les 6 chiffres ici.</string>
+    <string name="telos_shizuku_pair_code">Code d’appairage à 6 chiffres</string>
+    <string name="telos_shizuku_pair_submit">Associer</string>
+    <string name="telos_shizuku_pair_working">Association…</string>
+    <string name="telos_shizuku_pair_ok">Associé. Démarrage du serveur.</string>
+    <string name="telos_shizuku_pair_fail">Échec de l’association. Vérifiez le code.</string>
+    <string name="telos_shizuku_pair_start">Attendre le code d’appairage</string>
+    <string name="telos_shizuku_pair_stop">Arrêter d’attendre</string>
+    <string name="telos_shizuku_pair_open">Ouvrir le débogage sans fil</string>
 </resources>

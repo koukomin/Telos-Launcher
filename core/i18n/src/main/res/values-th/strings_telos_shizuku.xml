@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">รหัสจับคู่</string>
+    <string name="telos_shizuku_pair_searching">กำลังค้นหาบริการจับคู่… ให้กล่องโต้ตอบในการตั้งค่าเปิดไว้</string>
+    <string name="telos_shizuku_pair_found">บริการจับคู่ที่ %1$s:%2$d กรอกรหัส 6 หลักหรือเปิดกล่องโต้ตอบไว้</string>
+    <string name="telos_shizuku_pair_waiting">รอรหัสจับคู่ เปิดตัวเลือกนักพัฒนา → การดีบักไร้สาย → จับคู่ด้วยรหัส หรือพิมพ์ 6 หลักที่นี่</string>
+    <string name="telos_shizuku_pair_code">รหัส 6 หลัก</string>
+    <string name="telos_shizuku_pair_submit">จับคู่</string>
+    <string name="telos_shizuku_pair_working">กำลังจับคู่…</string>
+    <string name="telos_shizuku_pair_ok">จับคู่แล้ว กำลังเริ่มเซิร์ฟเวอร์</string>
+    <string name="telos_shizuku_pair_fail">จับคู่ไม่สำเร็จ ตรวจสอบรหัส</string>
+    <string name="telos_shizuku_pair_start">รอรหัสจับคู่</string>
+    <string name="telos_shizuku_pair_stop">หยุดรอ</string>
+    <string name="telos_shizuku_pair_open">เปิดการดีบักไร้สาย</string>
 </resources>

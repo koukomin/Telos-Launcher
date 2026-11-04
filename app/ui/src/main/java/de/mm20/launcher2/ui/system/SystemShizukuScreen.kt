@@ -14,7 +14,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -49,6 +53,19 @@ fun SystemShizukuTab() {
     var shellCmd by remember { mutableStateOf("id") }
     var shellOut by remember { mutableStateOf("") }
     LaunchedEffect(Unit) { TelosShizukuHost.refresh(context) }
+    DisposableEffect(Unit) { onDispose { TelosShizukuHost.stopPairingWait() } }
+    var autoPaired by remember { mutableStateOf("") }
+    LaunchedEffect(host.pairing.code, host.pairing.phase, host.pairing.host, host.pairing.port) {
+        if (host.pairing.phase == TelosShizukuHost.PairingPhase.WaitingForCode &&
+            host.pairing.code.length == 6
+        ) {
+            val sig = "${host.pairing.code}:${host.pairing.host}:${host.pairing.port}"
+            if (sig == autoPaired) return@LaunchedEffect
+            autoPaired = sig
+            val r = TelosShizukuHost.submitPairingCode(context, host.pairing.code)
+            log = r.getOrElse { it.message.orEmpty() }
+        }
+    }
 
     LazyColumn(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         item {
@@ -78,7 +95,74 @@ fun SystemShizukuTab() {
                         context.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                     }
                 }) { Text(stringResource(I18nR.string.telos_shizuku_enable_a11y)) }
-                if (host.pairing.code.isNotBlank()) {
+                Text(stringResource(I18nR.string.telos_shizuku_pair_title), style = MaterialTheme.typography.titleSmall)
+                val phase = host.pairing.phase
+                val pairStatus = when (phase) {
+                    TelosShizukuHost.PairingPhase.Searching ->
+                        stringResource(I18nR.string.telos_shizuku_pair_searching)
+                    TelosShizukuHost.PairingPhase.WaitingForCode ->
+                        if (host.pairing.host != null && host.pairing.port != null) {
+                            stringResource(
+                                I18nR.string.telos_shizuku_pair_found,
+                                host.pairing.host ?: "",
+                                host.pairing.port ?: 0,
+                            )
+                        } else stringResource(I18nR.string.telos_shizuku_pair_waiting)
+                    TelosShizukuHost.PairingPhase.Working ->
+                        stringResource(I18nR.string.telos_shizuku_pair_working)
+                    TelosShizukuHost.PairingPhase.Done ->
+                        stringResource(I18nR.string.telos_shizuku_pair_ok)
+                    TelosShizukuHost.PairingPhase.Failed ->
+                        stringResource(I18nR.string.telos_shizuku_pair_fail)
+                    TelosShizukuHost.PairingPhase.Idle -> null
+                }
+                if (pairStatus != null) {
+                    Text(pairStatus, style = MaterialTheme.typography.bodySmall)
+                }
+                if (phase == TelosShizukuHost.PairingPhase.Searching ||
+                    phase == TelosShizukuHost.PairingPhase.WaitingForCode
+                ) {
+                    OutlinedTextField(
+                        value = host.pairing.code,
+                        onValueChange = { TelosShizukuHost.setPairingCode(it) },
+                        label = { Text(stringResource(I18nR.string.telos_shizuku_pair_code)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+                    )
+                    FilledTonalButton(
+                        onClick = {
+                            scope.launch {
+                                val r = TelosShizukuHost.submitPairingCode(context, host.pairing.code)
+                                log = r.getOrElse { it.message.orEmpty() }
+                            }
+                        },
+                        enabled = host.pairing.code.length == 6,
+                    ) { Text(stringResource(I18nR.string.telos_shizuku_pair_submit)) }
+                    OutlinedButton(onClick = { TelosShizukuHost.stopPairingWait() }) {
+                        Text(stringResource(I18nR.string.telos_shizuku_pair_stop))
+                    }
+                } else {
+                    FilledTonalButton(onClick = { TelosShizukuHost.startPairingWait(context) }) {
+                        Text(stringResource(I18nR.string.telos_shizuku_pair_start))
+                    }
+                }
+                OutlinedButton(onClick = {
+                    runCatching {
+                        context.startActivity(
+                            Intent("com.android.settings.WIFI_DEBUGGING_SETTINGS")
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        )
+                    }.onFailure {
+                        runCatching {
+                            context.startActivity(
+                                Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
+                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                            )
+                        }
+                    }
+                }) { Text(stringResource(I18nR.string.telos_shizuku_pair_open)) }
+                if (host.pairing.code.isNotBlank() && phase == TelosShizukuHost.PairingPhase.Done) {
                     Text(
                         stringResource(
                             I18nR.string.telos_shizuku_code_seen,

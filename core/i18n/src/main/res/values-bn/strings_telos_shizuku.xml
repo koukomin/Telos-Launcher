@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">পেয়ারিং কোড</string>
+    <string name="telos_shizuku_pair_searching">পেয়ারিং পরিষেবা খোঁজা হচ্ছে… সেটিংস ডায়ালগ খোলা রাখুন।</string>
+    <string name="telos_shizuku_pair_found">পেয়ারিং পরিষেবা %1$s:%2$d। ৬ অঙ্কের কোড লিখুন বা ডায়ালগ খোলা রাখুন।</string>
+    <string name="telos_shizuku_pair_waiting">পেয়ারিং কোডের অপেক্ষা। ডেভেলপার অপশন → ওয়্যারলেস ডিবাগিং → কোড দিয়ে পেয়ার, অথবা এখানে ৬ অঙ্ক লিখুন।</string>
+    <string name="telos_shizuku_pair_code">৬ অঙ্কের পেয়ারিং কোড</string>
+    <string name="telos_shizuku_pair_submit">পেয়ার</string>
+    <string name="telos_shizuku_pair_working">পেয়ার হচ্ছে…</string>
+    <string name="telos_shizuku_pair_ok">পেয়ার হয়েছে। সার্ভার চালু হচ্ছে।</string>
+    <string name="telos_shizuku_pair_fail">পেয়ারিং ব্যর্থ। কোড দেখুন।</string>
+    <string name="telos_shizuku_pair_start">পেয়ারিং কোডের অপেক্ষা</string>
+    <string name="telos_shizuku_pair_stop">অপেক্ষা থামান</string>
+    <string name="telos_shizuku_pair_open">ওয়্যারলেস ডিবাগিং খুলুন</string>
 </resources>

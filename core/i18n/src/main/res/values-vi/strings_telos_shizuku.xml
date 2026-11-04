@@ -25,4 +25,16 @@
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
     <string name="telos_shizuku_code_seen">Pairing code %1$s · port %2$s</string>
+    <string name="telos_shizuku_pair_title">Mã ghép nối</string>
+    <string name="telos_shizuku_pair_searching">Đang tìm dịch vụ ghép nối… Để hộp thoại Cài đặt mở.</string>
+    <string name="telos_shizuku_pair_found">Dịch vụ ghép nối tại %1$s:%2$d. Nhập mã 6 chữ số hoặc để hộp thoại mở.</string>
+    <string name="telos_shizuku_pair_waiting">Đang chờ mã. Mở Tùy chọn nhà phát triển → Gỡ lỗi không dây → Ghép nối bằng mã, hoặc nhập 6 chữ số tại đây.</string>
+    <string name="telos_shizuku_pair_code">Mã 6 chữ số</string>
+    <string name="telos_shizuku_pair_submit">Ghép nối</string>
+    <string name="telos_shizuku_pair_working">Đang ghép nối…</string>
+    <string name="telos_shizuku_pair_ok">Đã ghép nối. Đang khởi động máy chủ.</string>
+    <string name="telos_shizuku_pair_fail">Ghép nối thất bại. Kiểm tra mã.</string>
+    <string name="telos_shizuku_pair_start">Chờ mã ghép nối</string>
+    <string name="telos_shizuku_pair_stop">Dừng chờ</string>
+    <string name="telos_shizuku_pair_open">Mở gỡ lỗi không dây</string>
 </resources>
