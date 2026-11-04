@@ -39,7 +39,7 @@ object PlaybackSpectrum {
         if (listeners == 0) releaseVisualizer()
     }
 
-    @Synchronized fun setEnabled(on: Boolean) {
+    @Synchronized fun setCaptureEnabled(on: Boolean) {
         enabled = on
         if (!on) {
             releaseVisualizer()

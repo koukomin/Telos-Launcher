@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.44.12
+
+- Compile: androidx RemoteInput for wireless ADB pairing notification; rename PlaybackSpectrum capture toggle (JVM clash).
+- Release CI allows a GitHub Release created on the same tag commit so APKs can attach.
+
 ## 1.44.11
 
 - Jackson 2.22.4 / annotations 2.22, Gson 2.15, plugin-classpath CVE pins (Dependabot).

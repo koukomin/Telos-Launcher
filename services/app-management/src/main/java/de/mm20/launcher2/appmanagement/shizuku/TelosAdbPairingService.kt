@@ -4,7 +4,6 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.RemoteInput
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -13,6 +12,7 @@ import android.os.Build
 import android.os.IBinder
 import android.provider.Settings
 import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 import androidx.core.app.ServiceCompat
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.base.R as BaseR

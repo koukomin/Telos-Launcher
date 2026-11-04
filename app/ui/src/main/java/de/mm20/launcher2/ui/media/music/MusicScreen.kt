@@ -147,7 +147,7 @@ fun MusicScreen(
     LaunchedEffect(showNowPlaying) { onNowPlayingOpenChange(showNowPlaying) }
     val commsSettingsEarly = koinInject<de.mm20.launcher2.preferences.comms.CommsSettings>()
     LaunchedEffect(Unit) {
-        commsSettingsEarly.mediaMusicSpectrum.collect { de.mm20.launcher2.comms.media.PlaybackSpectrum.setEnabled(it) }
+        commsSettingsEarly.mediaMusicSpectrum.collect { de.mm20.launcher2.comms.media.PlaybackSpectrum.setCaptureEnabled(it) }
     }
 
     LaunchedEffect(openNowPlaying) {
@@ -188,7 +188,7 @@ fun MusicScreen(
         val spectrumOn by commsSettings.mediaMusicSpectrum.collectAsState(true)
         IconButton(onClick = {
             commsSettings.setMediaMusicSpectrum(!spectrumOn)
-            de.mm20.launcher2.comms.media.PlaybackSpectrum.setEnabled(!spectrumOn)
+            de.mm20.launcher2.comms.media.PlaybackSpectrum.setCaptureEnabled(!spectrumOn)
         }) {
             Icon(
                 painterResource(BaseR.drawable.bar_chart_24px),

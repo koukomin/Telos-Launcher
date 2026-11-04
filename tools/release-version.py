@@ -64,7 +64,11 @@ def main():
         ], text=True))
         for release in (release for page in releases for release in page):
             if release['tag_name'] == tag and not release['draft']:
-                raise ValueError(f'{tag} is already published; bump version.properties')
+                # GitHub Release is often created on the same commit before CI attaches APKs.
+                tagged = subprocess.check_output(
+                    ['git', 'rev-parse', f'{tag}^{{commit}}'], text=True).strip()
+                if tagged != head:
+                    raise ValueError(f'{tag} is already published; bump version.properties')
     print(f'tag={tag}')
     print(f'publish={str(publish).lower()}')
 

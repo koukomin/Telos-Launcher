@@ -25,6 +25,12 @@ class ReleaseVersionTest(unittest.TestCase):
     def test_pr_never_publishes(self):
         self.assertFalse(module.validate(self.props, 'pull_request', 'refs/pull/1/merge', [])[1])
 
+    def test_same_commit_published_release_is_allowed(self):
+        self.assertEqual(
+            module.validate(self.props, 'push', 'refs/tags/v1.43.82', ['v1.43.81', 'v1.43.82']),
+            ('v1.43.82', True),
+        )
+
     def test_bad_version_or_code_fails(self):
         for props in [dict(self.props, versionName='1.2'), dict(self.props, versionCode='0')]:
             with self.assertRaises(ValueError):
