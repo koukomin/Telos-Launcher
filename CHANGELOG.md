@@ -4,6 +4,7 @@
 
 - Privacy Shield and built-in Shizuku live in Telos System. The home search-bar shield icon stays a shield and opens Telos System.
 - Wireless debugging opens the system Wireless debugging page. When the pairing-code dialog is shown, a notification asks for the 6 digits (Shizuku-style RemoteInput).
+- CI: `setup-android` v4 (Ubuntu 26 runners). Jackson 2.22.4 / annotations 2.22, Gson 2.15, plugin-classpath CVE pins. Workflows set explicit `GITHUB_TOKEN` permissions. Zip Slip, explicit notification PendingIntents, biometric `Cipher.doFinal` gates.
 
 ## 1.41.86
 

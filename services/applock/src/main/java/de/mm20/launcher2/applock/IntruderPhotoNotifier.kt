@@ -28,14 +28,10 @@ class IntruderPhotoNotifier(private val context: Context) {
         val openGallery = PendingIntent.getActivity(
             context,
             NOTIFICATION_ID,
-            Intent().apply {
-                component = android.content.ComponentName(
-                    context.packageName,
-                    SettingsDeepLinkContract.ACTIVITY_CLASS_NAME,
-                )
-                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_INTRUDER_PHOTOS)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            },
+            Intent().setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                .setPackage(context.packageName)
+                .putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_INTRUDER_PHOTOS)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
 

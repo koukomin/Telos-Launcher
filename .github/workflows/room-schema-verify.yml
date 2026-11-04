@@ -12,6 +12,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   verify-schema:
     runs-on: ubuntu-latest

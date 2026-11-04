@@ -18,11 +18,8 @@ dependencyResolutionManagement {
     }
 }
 
-// Dependabot maps plugin-classpath transitives to this file (guava 33.4.0-jre,
-// freemarker 2.3.32, bcprov 1.80.2, jsoup 1.16.1, jose4j 0.9.5, jdom2 2.0.6,
-// commons-lang3 3.16.0, httpclient 4.5.6). Do not force Jackson here: Dokka's
-// BOM already selects 2.22.x and forcing jackson-annotations:2.22.4 fails
-// resolution. Android app graphs keep guava -android in root subprojects.
+// Dependabot maps plugin-classpath transitives to this file. Pin CVE-patched
+// versions here. jackson-annotations has no 2.22.4 artifact — use 2.22.
 val telosPluginCvePins = listOf(
     "com.google.guava:guava:33.7.2-jre",
     "org.jsoup:jsoup:1.23.2",
@@ -32,6 +29,12 @@ val telosPluginCvePins = listOf(
     "org.bouncycastle:bcutil-jdk18on:1.86",
     "org.jdom:jdom2:2.0.6.1",
     "org.apache.httpcomponents:httpclient:4.5.14",
+    "org.bitbucket.b_c:jose4j:0.9.7",
+    "org.apache.commons:commons-lang3:3.21.0",
+    "com.fasterxml.jackson.core:jackson-core:2.22.4",
+    "com.fasterxml.jackson.core:jackson-databind:2.22.4",
+    "com.fasterxml.jackson.core:jackson-annotations:2.22",
+    "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.22.4",
 )
 
 gradle.beforeProject {
@@ -52,6 +55,19 @@ gradle.beforeProject {
                         useVersion("2.0.6.1")
                     requested.group == "org.apache.httpcomponents" && requested.name == "httpclient" ->
                         useVersion("4.5.14")
+                    requested.group == "org.bitbucket.b_c" && requested.name == "jose4j" ->
+                        useVersion("0.9.7")
+                    requested.group == "org.apache.commons" && requested.name == "commons-lang3" ->
+                        useVersion("3.21.0")
+                    requested.group == "com.fasterxml.jackson.core" &&
+                        requested.name in setOf("jackson-core", "jackson-databind") ->
+                        useVersion("2.22.4")
+                    requested.group == "com.fasterxml.jackson.core" &&
+                        requested.name == "jackson-annotations" ->
+                        useVersion("2.22")
+                    requested.group == "com.fasterxml.jackson.dataformat" &&
+                        requested.name == "jackson-dataformat-yaml" ->
+                        useVersion("2.22.4")
                 }
             }
         }

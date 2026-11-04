@@ -85,10 +85,11 @@ internal class IslandProvider(private val context: Context) {
             )
         }
 
+        val explicit = Intent(intent).setPackage(ISLAND_PACKAGE).setComponent(intent.component)
         val pendingIntent = PendingIntent.getActivity(
             context,
             NOTIFICATION_ID,
-            intent,
+            explicit,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
 

@@ -24,9 +24,9 @@ CRITICAL and HIGH run before unrelated feature work in the same session.
 **Gradle / Maven.** Many alerts point at `settings.gradle.kts` because GitHub
 attributes plugin-classpath transitives (Dokka, AGP, Kotlin) to that file.
 Pin those on `gradle.beforeProject { buildscript.configurations }` in
-`settings.gradle.kts` (Guava `-jre` on the plugin classpath). Do not force Jackson 2.22.4: `jackson-annotations` has no 2.22.4 module (2.22
-is the last 2.x annotations line). App pins stay on 2.18.12, which includes the
-CVE patches. Pin app graphs in
+`settings.gradle.kts` (Guava `-jre` on the plugin classpath). Jackson core/databind may be 2.22.4; pin `jackson-annotations` to `2.22`
+(there is no 2.22.4 annotations artifact). Do not `useVersion` the core patch
+onto annotations. Pin app graphs in
 the root `subprojects { configurations.configureEach { resolutionStrategy.eachDependency } }`
 block (Guava `-android` there). Keep one Bouncy Castle version
 (`libs.versions.bouncycastle`, currently 1.86). App `useVersion` calls must use

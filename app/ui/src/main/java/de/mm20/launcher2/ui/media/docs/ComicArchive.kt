@@ -5,6 +5,8 @@ import de.mm20.launcher2.ui.files.RarBackend
 import org.apache.commons.compress.archivers.sevenz.SevenZFile
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
 import java.util.zip.ZipFile
 import java.util.Locale
 
@@ -100,13 +102,14 @@ internal object ComicArchive {
     }
 
     private fun zip(file: File, outDir: File): List<File> {
+        val root = outDir.toPath().toAbsolutePath().normalize()
         val out = ArrayList<File>()
         ZipFile(file).use { z ->
             val entries = z.entries().toList().filter { e -> !e.isDirectory && isImage(e.name) }
             for (e in entries) {
-                val dest = safeDest(outDir, e.name) ?: continue
-                z.getInputStream(e).use { input -> dest.outputStream().use { input.copyTo(it) } }
-                out += dest
+                val dest = slipSafe(root, e.name) ?: continue
+                z.getInputStream(e).use { input -> Files.newOutputStream(dest).use { input.copyTo(it) } }
+                out += dest.toFile()
             }
         }
         return out
@@ -114,42 +117,45 @@ internal object ComicArchive {
 
     private fun rar(file: File, outDir: File): List<File> {
         if (!RarBackend.isAvailable) throw ArchiveRarUnavailableException()
+        val root = outDir.toPath().toAbsolutePath().normalize()
         val out = ArrayList<File>()
         RarBackend.open(file).use { session ->
             while (true) {
                 val e = session.next() ?: break
                 if (e.isDir || e.isLink || e.encrypted || !isImage(e.path)) continue
-                val dest = safeDest(outDir, e.path) ?: continue
-                session.copyCurrentTo(dest)
-                out += dest
+                val dest = slipSafe(root, e.path) ?: continue
+                session.copyCurrentTo(dest.toFile())
+                out += dest.toFile()
             }
         }
         return out
     }
 
     private fun tar(file: File, outDir: File): List<File> {
+        val root = outDir.toPath().toAbsolutePath().normalize()
         val out = ArrayList<File>()
         TarArchiveInputStream(file.inputStream().buffered()).use { tar ->
             while (true) {
                 val e = tar.nextEntry ?: break
                 if (e.isDirectory || !isImage(e.name)) continue
-                val dest = safeDest(outDir, e.name) ?: continue
-                dest.outputStream().use { tar.copyTo(it) }
-                out += dest
+                val dest = slipSafe(root, e.name) ?: continue
+                Files.newOutputStream(dest).use { tar.copyTo(it) }
+                out += dest.toFile()
             }
         }
         return out
     }
 
     private fun seven(file: File, outDir: File): List<File> {
+        val root = outDir.toPath().toAbsolutePath().normalize()
         val out = ArrayList<File>()
         SevenZFile(file).use { z ->
             while (true) {
                 val e = z.nextEntry ?: break
                 if (e.isDirectory || !isImage(e.name)) continue
-                val dest = safeDest(outDir, e.name) ?: continue
-                dest.outputStream().use { z.getInputStream(e).copyTo(it) }
-                out += dest
+                val dest = slipSafe(root, e.name) ?: continue
+                Files.newOutputStream(dest).use { z.getInputStream(e).copyTo(it) }
+                out += dest.toFile()
             }
         }
         return out
@@ -158,15 +164,12 @@ internal object ComicArchive {
     private fun isImage(path: String) =
         path.substringAfterLast('.', "").lowercase(Locale.ROOT) in images && !path.startsWith(".") && !path.contains("/.")
 
-    /** Basename only, then canonical-path check so Zip Slip (`../`) cannot leave [outDir]. */
-    private fun safeDest(outDir: File, entryName: String): File? {
-        val base = entryName.substringAfterLast('/').substringAfterLast('\\')
-        if (base.isEmpty() || base == "." || base == ".." || base.contains("..")) return null
-        val dest = File(outDir, base)
-        val root = outDir.canonicalFile
-        val resolved = dest.canonicalFile
-        val prefix = root.path + File.separator
-        if (resolved != root && !resolved.path.startsWith(prefix)) return null
+    /** Basename only, then Path.startsWith so Zip Slip (`../`) cannot leave [root]. */
+    private fun slipSafe(root: Path, entryName: String): Path? {
+        val base = File(entryName).name
+        if (base.isEmpty() || base == "." || base == "..") return null
+        val dest = root.resolve(base).normalize()
+        if (!dest.startsWith(root)) return null
         return dest
     }
 }
