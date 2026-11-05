@@ -9,7 +9,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
+import de.mm20.launcher2.preferences.tweaks.TweaksSettings
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import rikka.shizuku.Shizuku
 
 data class TweaksState(
@@ -28,9 +32,12 @@ data class TweaksState(
     val caffeinate: Boolean = false,
     val mobileDataAlwaysOn: Boolean = false,
     val alwaysOnDisplay: Boolean = false,
+    val persistOnBoot: Boolean = false,
 )
 
-class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(application) {
+class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(application), KoinComponent {
+    private val tweaksSettings: TweaksSettings by inject()
+
 
     private val _state = MutableStateFlow(TweaksState())
     val state: StateFlow<TweaksState> = _state.asStateFlow()
@@ -49,21 +56,32 @@ class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(applic
                 isShizukuAvailable = shizuku,
                 isRootAvailable = root,
             )
+            val saved = tweaksSettings.data.first()
             val snapshot = _state.value
             _state.value = snapshot.copy(
-                clockSeconds = execute("settings get secure clock_seconds")?.trim() == "1",
-                mobileDataAlwaysOn = execute("settings get global mobile_data_always_on")?.trim() == "1",
-                alwaysOnDisplay = execute("settings get secure doze_always_on")?.trim() == "1",
-                callVibrateConnect = execute("settings get system vibrate_on_call_connected")?.trim() == "1",
-                peakRefresh120 = execute("settings get system peak_refresh_rate")?.trim()?.toFloatOrNull()?.let { it >= 120f } == true,
+                persistOnBoot = saved.persistOnBoot,
+                clockSeconds = execute("settings get secure clock_seconds")?.trim() == "1" || saved.clockSeconds,
+                mobileDataAlwaysOn = execute("settings get global mobile_data_always_on")?.trim() == "1" || saved.mobileDataAlwaysOn,
+                alwaysOnDisplay = execute("settings get secure doze_always_on")?.trim() == "1" || saved.alwaysOnDisplay,
+                callVibrateConnect = execute("settings get system vibrate_on_call_connected")?.trim() == "1" || saved.callVibrateConnect,
+                peakRefresh120 = execute("settings get system peak_refresh_rate")?.trim()?.toFloatOrNull()?.let { it >= 120f } == true || saved.peakRefresh120,
+                disableSafeVolume = execute("settings get global audio_safe_volume_state")?.trim() == "2" || saved.disableSafeVolume,
             )
             } finally { commands.unlock() }
         }
     }
 
+    fun togglePersistOnBoot(enabled: Boolean) {
+        tweaksSettings.setPersistOnBoot(enabled)
+        _state.value = _state.value.copy(persistOnBoot = enabled)
+    }
+
     fun toggleClockSeconds(enabled: Boolean) {
         val cmd = "settings put secure clock_seconds ${if (enabled) 1 else 0}"
-        runCommand(cmd) { _state.value = _state.value.copy(clockSeconds = enabled) }
+        runCommand(cmd) {
+            tweaksSettings.setClockSeconds(enabled)
+            _state.value = _state.value.copy(clockSeconds = enabled)
+        }
     }
 
     fun toggleHideNavPill(enabled: Boolean) {
@@ -77,7 +95,10 @@ class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(applic
 
     fun togglePeakRefresh120(enabled: Boolean) {
         val cmd = "settings put system peak_refresh_rate ${if (enabled) 120.0 else 60.0}"
-        runCommand(cmd) { _state.value = _state.value.copy(peakRefresh120 = enabled) }
+        runCommand(cmd) {
+            tweaksSettings.setPeakRefresh120(enabled)
+            _state.value = _state.value.copy(peakRefresh120 = enabled)
+        }
     }
 
     fun toggleVolume30Steps(enabled: Boolean) {
@@ -87,7 +108,10 @@ class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(applic
 
     fun toggleDisableSafeVolume(enabled: Boolean) {
         val cmd = "settings put global audio_safe_volume_state ${if (enabled) 2 else 1}"
-        runCommand(cmd) { _state.value = _state.value.copy(disableSafeVolume = enabled) }
+        runCommand(cmd) {
+            tweaksSettings.setDisableSafeVolume(enabled)
+            _state.value = _state.value.copy(disableSafeVolume = enabled)
+        }
     }
 
     fun toggleForceDoze(enabled: Boolean) {
@@ -101,7 +125,10 @@ class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(applic
 
     fun toggleCallVibrateConnect(enabled: Boolean) {
         val cmd = "settings put system vibrate_on_call_connected ${if (enabled) 1 else 0}"
-        runCommand(cmd) { _state.value = _state.value.copy(callVibrateConnect = enabled) }
+        runCommand(cmd) {
+            tweaksSettings.setCallVibrateConnect(enabled)
+            _state.value = _state.value.copy(callVibrateConnect = enabled)
+        }
     }
 
     fun toggleFlashPulseCall(enabled: Boolean) {
@@ -118,12 +145,18 @@ class TweaksSettingsScreenVM(application: Application) : AndroidViewModel(applic
 
     fun toggleMobileDataAlwaysOn(enabled: Boolean) {
         val cmd = "settings put global mobile_data_always_on ${if (enabled) 1 else 0}"
-        runCommand(cmd) { _state.value = _state.value.copy(mobileDataAlwaysOn = enabled) }
+        runCommand(cmd) {
+            tweaksSettings.setMobileDataAlwaysOn(enabled)
+            _state.value = _state.value.copy(mobileDataAlwaysOn = enabled)
+        }
     }
 
     fun toggleAlwaysOnDisplay(enabled: Boolean) {
         val cmd = "settings put secure doze_always_on ${if (enabled) 1 else 0}"
-        runCommand(cmd) { _state.value = _state.value.copy(alwaysOnDisplay = enabled) }
+        runCommand(cmd) {
+            tweaksSettings.setAlwaysOnDisplay(enabled)
+            _state.value = _state.value.copy(alwaysOnDisplay = enabled)
+        }
     }
 
     private val commands = kotlinx.coroutines.sync.Mutex()

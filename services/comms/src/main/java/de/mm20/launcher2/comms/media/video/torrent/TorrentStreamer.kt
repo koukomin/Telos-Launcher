@@ -118,18 +118,19 @@ object TorrentStreamer {
                 val sm = TorrentSession.acquire(context, this@TorrentStreamer)
 
                 startedAt = android.os.SystemClock.elapsedRealtime()
-                if (source.startsWith("magnet:", ignoreCase = true)) {
+                val torrentSource = enrichMagnet(source)
+                if (torrentSource.startsWith("magnet:", ignoreCase = true)) {
                     val ec = org.libtorrent4j.swig.error_code()
-                    val params = org.libtorrent4j.swig.libtorrent.parse_magnet_uri(source, ec)
+                    val params = org.libtorrent4j.swig.libtorrent.parse_magnet_uri(torrentSource, ec)
                     if (ec.value() == 0) metadataHash = org.libtorrent4j.Sha1Hash(params.getInfo_hashes().get_best())
                 }
                 val data: ByteArray = when {
-                    source.startsWith("magnet:", ignoreCase = true) ->
-                        sm.fetchMagnet(source, 90, File(dir, "meta").apply { mkdirs() })
+                    torrentSource.startsWith("magnet:", ignoreCase = true) ->
+                        sm.fetchMagnet(torrentSource, 180, File(dir, "meta").apply { mkdirs() })
                             ?: fail("No answer from peers, the link may be dead")
-                    source.startsWith("content:") || source.startsWith("file:") ->
-                        context.contentResolver.openInputStream(Uri.parse(source))!!.use { readLimited(it) }
-                    else -> (URL(source).openConnection() as java.net.HttpURLConnection).run {
+                    torrentSource.startsWith("content:") || torrentSource.startsWith("file:") ->
+                        context.contentResolver.openInputStream(Uri.parse(torrentSource))!!.use { readLimited(it) }
+                    else -> (URL(torrentSource).openConnection() as java.net.HttpURLConnection).run {
                         connectTimeout = 15_000
                         readTimeout = 30_000
                         try {
@@ -165,6 +166,11 @@ object TorrentStreamer {
                 h.setFlags(TorrentFlags.SEQUENTIAL_DOWNLOAD)
                 // not part of the queue of the session (its limits are for the downloads), and not paused by it
                 h.unsetFlags(TorrentFlags.AUTO_MANAGED)
+                BOOTSTRAP_TRACKERS.forEach { url ->
+                    runCatching { h.addTracker(org.libtorrent4j.AnnounceEntry(url)) }
+                }
+                runCatching { h.forceReannounce() }
+                runCatching { h.forceDHTAnnounce() }
                 h.resume()
                 handle = h
 
@@ -198,6 +204,27 @@ object TorrentStreamer {
         }
 
     private const val MAX_TORRENT_FILE = 8_000_000
+
+    private val BOOTSTRAP_TRACKERS = listOf(
+        "udp://tracker.opentrackr.org:1337/announce",
+        "udp://open.stealth.si:80/announce",
+        "udp://tracker.torrent.eu.org:451/announce",
+        "udp://exodus.desync.com:6969/announce",
+        "udp://open.demonii.com:1337/announce",
+        "udp://tracker.openbittorrent.com:6969/announce",
+        "udp://www.torrent.eu.org:451/announce",
+        "udp://tracker.moeking.me:6969/announce",
+        "http://tracker.openbittorrent.com:80/announce",
+        "udp://tracker1.bt.moack.co.kr:80/announce",
+    )
+
+    private fun enrichMagnet(source: String): String {
+        if (!source.startsWith("magnet:", ignoreCase = true)) return source
+        val extra = BOOTSTRAP_TRACKERS
+            .filter { tracker -> !source.contains(tracker, ignoreCase = true) }
+            .joinToString("") { "&tr=" + java.net.URLEncoder.encode(it, Charsets.UTF_8.name()) }
+        return source + extra
+    }
 
     /** A .torrent file is small; a stream of unknown length must not fill the memory */
     private fun readLimited(input: java.io.InputStream, blockedMessage: String = "", allowed: () -> Boolean = { true }): ByteArray {

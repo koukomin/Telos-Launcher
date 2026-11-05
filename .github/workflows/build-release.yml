@@ -210,9 +210,9 @@ jobs:
             test -s "release-assets/$FILE"
           done
           bash tools/release-notes.sh "$TAG" "$RUNNER_TEMP/notes.md"
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            test "$(gh release view "$TAG" --json isDraft --jq .isDraft)" = true
-          else
+          # A GitHub Release may already exist (created with the tag). Attach APKs
+          # even when it is not a draft.
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" --draft --target "$GITHUB_SHA" \
               --title "Telos $TAG (Android & Linux DE)" --notes-file "$RUNNER_TEMP/notes.md"
           fi

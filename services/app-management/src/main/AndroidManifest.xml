@@ -28,6 +28,13 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/telos_adb_pairing_accessibility" />
         </service>
+        <activity
+            android:name=".shizuku.TelosAdbPairingPromptActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:showOnLockScreen="true"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.Alert"
+            android:taskAffinity="" />
         <service
             android:name=".shizuku.TelosAdbPairingService"
             android:exported="false"

@@ -66,8 +66,7 @@ class TelosAdbPairingService : Service() {
                 val port = intent.getIntExtra(EXTRA_PORT, foundPort ?: -1).takeIf { it > 0 }
                 show(workingNotification())
                 scope.launch {
-                    TelosAdbPairingAccessibilityService.pendingFill = code.filter { it.isDigit() }.take(6)
-                    val r = TelosShizukuHost.submitPairingCode(this@TelosAdbPairingService, code)
+                    val r = TelosShizukuHost.submitPairingCode(this@TelosAdbPairingService, code, host, port)
                     show(if (r.isSuccess) doneNotification() else failNotification(r.exceptionOrNull()?.message))
                     if (r.isSuccess) {
                         stopSearch()
@@ -100,6 +99,12 @@ class TelosAdbPairingService : Service() {
             foundPort = port
             TelosShizukuHost.onPairingCodeRead(this, TelosShizukuHost.status.value.pairing.code, host, port)
             show(inputNotification(host, port))
+            TelosAdbPairingPromptActivity.launch(
+                this,
+                TelosShizukuHost.status.value.pairing.code,
+                host,
+                port,
+            )
         }
         discovery = d
         d.start()
@@ -124,7 +129,8 @@ class TelosAdbPairingService : Service() {
         NotificationCompat.Builder(this, CHANNEL)
             .setSmallIcon(BaseR.drawable.ic_glyph_system)
             .setOngoing(true)
-            .setOnlyAlertOnce(true)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setContentIntent(openSystemPending())
 
     private fun searchingNotification(): Notification = base()
@@ -134,15 +140,27 @@ class TelosAdbPairingService : Service() {
         .build()
 
     private fun inputNotification(host: String, port: Int): Notification {
-        val reply = PendingIntent.getService(
-            this,
-            2,
-            Intent(this, TelosAdbPairingService::class.java)
-                .setAction(ACTION_REPLY)
-                .putExtra(EXTRA_HOST, host)
-                .putExtra(EXTRA_PORT, port),
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE,
-        )
+        val reply = if (Build.VERSION.SDK_INT >= 26) {
+            PendingIntent.getForegroundService(
+                this,
+                2,
+                Intent(this, TelosAdbPairingService::class.java)
+                    .setAction(ACTION_REPLY)
+                    .putExtra(EXTRA_HOST, host)
+                    .putExtra(EXTRA_PORT, port),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE,
+            )
+        } else {
+            PendingIntent.getService(
+                this,
+                2,
+                Intent(this, TelosAdbPairingService::class.java)
+                    .setAction(ACTION_REPLY)
+                    .putExtra(EXTRA_HOST, host)
+                    .putExtra(EXTRA_PORT, port),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE,
+            )
+        }
         val remote = RemoteInput.Builder(KEY_CODE)
             .setLabel(getString(I18nR.string.telos_shizuku_pair_code))
             .build()
@@ -151,9 +169,20 @@ class TelosAdbPairingService : Service() {
             getString(I18nR.string.telos_shizuku_pair_notif_enter),
             reply,
         ).addRemoteInput(remote).build()
+        val prompt = PendingIntent.getActivity(
+            this,
+            6,
+            Intent(this, TelosAdbPairingPromptActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra(TelosAdbPairingPromptActivity.EXTRA_HOST, host)
+                .putExtra(TelosAdbPairingPromptActivity.EXTRA_PORT, port),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
         return base()
             .setContentTitle(getString(I18nR.string.telos_shizuku_pair_notif_found))
             .setContentText(getString(I18nR.string.telos_shizuku_pair_found, host, port))
+            .setOnlyAlertOnce(false)
+            .setFullScreenIntent(prompt, true)
             .addAction(action)
             .addAction(stopAction())
             .build()

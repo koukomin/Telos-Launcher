@@ -5,5 +5,4 @@
     android:accessibilityFlags="flagRetrieveInteractiveWindows|flagIncludeNotImportantViews"
     android:canRetrieveWindowContent="true"
     android:description="@string/telos_shizuku_a11y_description"
-    android:notificationTimeout="80"
-    android:packageNames="com.android.settings,com.android.settings.intelligence,com.samsung.android.settings,com.miui.securitycenter,com.android.phone" />
+    android:notificationTimeout="80" />

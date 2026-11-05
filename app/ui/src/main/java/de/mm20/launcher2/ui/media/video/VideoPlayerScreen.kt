@@ -710,7 +710,9 @@ private fun PlayerContent(
                     setShowSubtitleButton(true)
                     setShowNextButton(true)
                     setShowPreviousButton(true)
-                    controllerShowTimeoutMs = 3000
+                    controllerAutoShow = false
+                    controllerShowTimeoutMs = 2500
+                    hideController()
                     setControllerVisibilityListener(PlayerView.ControllerVisibilityListener { visibility ->
                         controlsVisible = visibility == View.VISIBLE
                         context.findActivity()?.window?.let { window ->
@@ -797,7 +799,7 @@ private fun PlayerContent(
         if (isTorrent && !inPictureInPicture && !playbackError && playbackStage == Player.STATE_BUFFERING) {
             TorrentConnectionCard(torrent, Modifier.align(Alignment.Center).padding(horizontal = 24.dp))
         }
-        if (isTorrent && !inPictureInPicture && (controlsVisible || torrent.downloadBytesPerSecond < 50_000)) {
+        if (isTorrent && !inPictureInPicture && controlsVisible) {
             Text(
                 text = stringResource(
                     I18nR.string.au_video_torrent_stats, torrent.peers, torrent.downloadBytesPerSecond / 1024, (torrent.progress * 100).toInt()

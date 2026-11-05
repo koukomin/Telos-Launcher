@@ -81,6 +81,18 @@ fun TweaksSettingsScreen() {
         }
 
         item {
+            PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_boot)) {
+                SwitchPreference(
+                    title = stringResource(I18nR.string.tweaks_persist_boot),
+                    summary = stringResource(I18nR.string.tweaks_persist_boot_sum),
+                    value = state.persistOnBoot,
+                    enabled = hasPrivilegedBackend,
+                    onValueChanged = { vm.togglePersistOnBoot(it) },
+                )
+            }
+        }
+
+        item {
             PreferenceCategory(title = stringResource(I18nR.string.tweaks_cat_display)) {
                 SwitchPreference(
                     title = "Show Seconds in Status Bar Clock",

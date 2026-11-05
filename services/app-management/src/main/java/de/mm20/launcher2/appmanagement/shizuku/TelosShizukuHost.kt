@@ -176,14 +176,29 @@ object TelosShizukuHost {
         _status.value = _status.value.copy(pairing = prev.copy(code = digits))
     }
 
-    suspend fun submitPairingCode(context: Context, code: String): Result<String> {
+    suspend fun submitPairingCode(
+        context: Context,
+        code: String,
+        host: String? = null,
+        port: Int? = null,
+    ): Result<String> {
         val digits = code.filter { it.isDigit() }.take(6)
         if (digits.length != 6) {
             return Result.failure(IllegalArgumentException("need 6 digits"))
         }
         val prev = _status.value.pairing
-        onPairingCodeRead(context, digits, prev.host, prev.port)
+        val useHost = host ?: prev.host
+        val usePort = port ?: prev.port
+        onPairingCodeRead(context, digits, useHost, usePort)
         _status.value = _status.value.copy(pairing = _status.value.pairing.copy(phase = PairingPhase.Working))
+        val paired = TelosAdbPairer.pair(context, digits, useHost, usePort)
+        if (paired.isFailure) {
+            _status.value = _status.value.copy(
+                pairing = _status.value.pairing.copy(phase = PairingPhase.Failed),
+                lastLog = paired.exceptionOrNull()?.message.orEmpty(),
+            )
+            return Result.failure(paired.exceptionOrNull() ?: IllegalStateException("pair failed"))
+        }
         val result = start(context, StartMethod.Wireless)
         _status.value = _status.value.copy(
             pairing = _status.value.pairing.copy(
@@ -192,6 +207,11 @@ object TelosShizukuHost {
         )
         stopPairingWait()
         return result
+    }
+
+    fun showPairingPrompt(context: Context, code: String, host: String?, port: Int?) {
+        onPairingCodeRead(context, code, host, port)
+        TelosAdbPairingPromptActivity.launch(context, code, host ?: _status.value.pairing.host, port ?: _status.value.pairing.port)
     }
 
     fun refresh(context: Context) {

@@ -1192,6 +1192,9 @@
     <string name="settings_shizuku_step3_title">Step 3 (Preventing OS Background Killing):</string>
     <string name="tweaks_title" translatable="false">@string/preference_screen_tweaks</string>
     <string name="tweaks_banner">Essential tools, mods and performance optimizations.</string>
+    <string name="tweaks_cat_boot">After reboot</string>
+    <string name="tweaks_persist_boot">Apply saved tweaks on boot</string>
+    <string name="tweaks_persist_boot_sum">When a tweak is on and working, Telos reapplies it after each reboot (needs Root or Shizuku)</string>
     <string name="tweaks_cat_display">Status Bar &amp; Display Tweaks</string>
     <string name="tweaks_cat_sound">Sound &amp; Haptics Tweaks</string>
     <string name="tweaks_cat_notifications">Notifications &amp; Torch Alerts</string>

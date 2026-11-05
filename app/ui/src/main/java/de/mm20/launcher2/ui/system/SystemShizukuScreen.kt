@@ -1,25 +1,36 @@
 package de.mm20.launcher2.ui.system
 import de.mm20.launcher2.i18n.R as I18nR
 
+import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,8 +40,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.mm20.launcher2.appmanagement.shizuku.TelosAdbPairingService
 import de.mm20.launcher2.appmanagement.shizuku.TelosShizukuHost
 import de.mm20.launcher2.appmanagement.shizuku.TelosShizukuWatchdog
 import de.mm20.launcher2.ktx.ShizukuProcesses
@@ -52,76 +66,124 @@ fun SystemShizukuTab() {
     var log by remember { mutableStateOf("") }
     var shellCmd by remember { mutableStateOf("id") }
     var shellOut by remember { mutableStateOf("") }
-    LaunchedEffect(Unit) { TelosShizukuHost.refresh(context) }
-    DisposableEffect(Unit) { onDispose { TelosShizukuHost.stopPairingWait() } }
-    var autoPaired by remember { mutableStateOf("") }
-    LaunchedEffect(host.pairing.code, host.pairing.phase, host.pairing.host, host.pairing.port) {
-        if (host.pairing.phase == TelosShizukuHost.PairingPhase.WaitingForCode &&
-            host.pairing.code.length == 6
+    val notifPerm = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { }
+    LaunchedEffect(Unit) {
+        TelosShizukuHost.refresh(context)
+        if (Build.VERSION.SDK_INT >= 33 &&
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) !=
+            PackageManager.PERMISSION_GRANTED
         ) {
-            val sig = "${host.pairing.code}:${host.pairing.host}:${host.pairing.port}"
-            if (sig == autoPaired) return@LaunchedEffect
-            autoPaired = sig
-            val r = TelosShizukuHost.submitPairingCode(context, host.pairing.code)
-            log = r.getOrElse { it.message.orEmpty() }
+            notifPerm.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
+    DisposableEffect(Unit) { onDispose { TelosShizukuHost.stopPairingWait() } }
 
-    LazyColumn(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    val running = host.running
+    LazyColumn(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item {
-            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(stringResource(I18nR.string.telos_shizuku_title), style = MaterialTheme.typography.titleMedium)
-                Text(
-                    stringResource(
-                        I18nR.string.telos_shizuku_status,
-                        if (host.running) stringResource(I18nR.string.security_hub_active) else stringResource(I18nR.string.security_hub_inactive),
-                        host.uid,
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-                Text(stringResource(I18nR.string.telos_shizuku_starter, host.starterPath.ifBlank { "—" }), style = MaterialTheme.typography.bodySmall)
-                Text(stringResource(I18nR.string.telos_shizuku_howto_title), style = MaterialTheme.typography.titleSmall)
+            Card(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp).fillMaxWidth(),
+                shape = RoundedCornerShape(24.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = if (running) MaterialTheme.colorScheme.primaryContainer
+                    else MaterialTheme.colorScheme.surfaceContainerHigh,
+                ),
+            ) {
+                Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        if (running) stringResource(I18nR.string.telos_shizuku_running)
+                        else stringResource(I18nR.string.telos_shizuku_stopped),
+                        style = MaterialTheme.typography.headlineSmall,
+                    )
+                    Text(
+                        stringResource(
+                            I18nR.string.telos_shizuku_status,
+                            if (running) stringResource(I18nR.string.security_hub_active)
+                            else stringResource(I18nR.string.security_hub_inactive),
+                            host.uid,
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Button(onClick = {
+                            scope.launch {
+                                val r = TelosShizukuHost.start(context, TelosShizukuHost.StartMethod.Auto)
+                                log = r.getOrElse { it.message.orEmpty() }
+                                TelosShizukuWatchdog.start(context)
+                            }
+                        }) { Text(stringResource(I18nR.string.telos_shizuku_card_start)) }
+                        OutlinedButton(onClick = {
+                            scope.launch { TelosShizukuHost.stop(); TelosShizukuHost.refresh(context) }
+                        }) { Text(stringResource(I18nR.string.telos_shizuku_card_stop)) }
+                        OutlinedButton(onClick = {
+                            scope.launch {
+                                TelosShizukuHost.stop()
+                                val r = TelosShizukuHost.start(context, TelosShizukuHost.StartMethod.Auto)
+                                log = r.getOrElse { it.message.orEmpty() }
+                            }
+                        }) { Text(stringResource(I18nR.string.telos_shizuku_card_restart)) }
+                    }
+                }
+            }
+        }
+        item {
+            Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(stringResource(I18nR.string.telos_shizuku_howto_title), style = MaterialTheme.typography.titleMedium)
                 Text(stringResource(I18nR.string.telos_shizuku_howto_body), style = MaterialTheme.typography.bodySmall)
-                Text(host.pcAdbCommand.ifBlank { TelosShizukuHost.pcAdbCommand(context) }, style = MaterialTheme.typography.bodySmall)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                    OutlinedButton(
+                        onClick = {
+                            TelosAdbPairingService.start(context)
+                        },
+                        modifier = Modifier.weight(1f),
+                    ) { Text(stringResource(I18nR.string.telos_shizuku_pair_start)) }
+                    OutlinedButton(
+                        onClick = {
+                            runCatching {
+                                context.startActivity(
+                                    Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                )
+                            }
+                        },
+                        modifier = Modifier.weight(1f),
+                    ) { Text(stringResource(I18nR.string.telos_shizuku_enable_a11y)) }
+                }
                 OutlinedButton(onClick = {
-                    val cmd = host.pcAdbCommand.ifBlank { TelosShizukuHost.pcAdbCommand(context) }
-                    val cm = context.getSystemService(ClipboardManager::class.java)
-                    cm?.setPrimaryClip(ClipData.newPlainText("adb", cmd))
-                    Toast.makeText(context, context.getString(I18nR.string.telos_shizuku_copied), Toast.LENGTH_SHORT).show()
-                }) { Text(stringResource(I18nR.string.telos_shizuku_copy_adb)) }
+                    TelosAdbPairingService.openWirelessDebugging(context)
+                }, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(I18nR.string.telos_shizuku_wireless))
+                }
                 OutlinedButton(onClick = {
                     runCatching {
-                        context.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                        context.startActivity(
+                            Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        )
                     }
-                }) { Text(stringResource(I18nR.string.telos_shizuku_enable_a11y)) }
-                Text(stringResource(I18nR.string.telos_shizuku_pair_title), style = MaterialTheme.typography.titleSmall)
+                }, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(I18nR.string.telos_shizuku_open_devopts))
+                }
+                OutlinedButton(onClick = {
+                    scope.launch { TelosShizukuHost.start(context, TelosShizukuHost.StartMethod.Root) }
+                }, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(I18nR.string.telos_shizuku_start_root))
+                }
                 val phase = host.pairing.phase
-                val pairStatus = when (phase) {
-                    TelosShizukuHost.PairingPhase.Searching ->
-                        stringResource(I18nR.string.telos_shizuku_pair_searching)
-                    TelosShizukuHost.PairingPhase.WaitingForCode ->
-                        if (host.pairing.host != null && host.pairing.port != null) {
-                            stringResource(
-                                I18nR.string.telos_shizuku_pair_found,
-                                host.pairing.host ?: "",
-                                host.pairing.port ?: 0,
-                            )
-                        } else stringResource(I18nR.string.telos_shizuku_pair_waiting)
-                    TelosShizukuHost.PairingPhase.Working ->
-                        stringResource(I18nR.string.telos_shizuku_pair_working)
-                    TelosShizukuHost.PairingPhase.Done ->
-                        stringResource(I18nR.string.telos_shizuku_pair_ok)
-                    TelosShizukuHost.PairingPhase.Failed ->
-                        stringResource(I18nR.string.telos_shizuku_pair_fail)
-                    TelosShizukuHost.PairingPhase.Idle -> null
-                }
-                if (pairStatus != null) {
-                    Text(pairStatus, style = MaterialTheme.typography.bodySmall)
-                }
                 if (phase == TelosShizukuHost.PairingPhase.Searching ||
-                    phase == TelosShizukuHost.PairingPhase.WaitingForCode
+                    phase == TelosShizukuHost.PairingPhase.WaitingForCode ||
+                    phase == TelosShizukuHost.PairingPhase.Working
                 ) {
+                    Text(
+                        when (phase) {
+                            TelosShizukuHost.PairingPhase.Searching ->
+                                stringResource(I18nR.string.telos_shizuku_pair_searching)
+                            TelosShizukuHost.PairingPhase.Working ->
+                                stringResource(I18nR.string.telos_shizuku_pair_working)
+                            else -> stringResource(I18nR.string.telos_shizuku_pair_waiting)
+                        },
+                        style = MaterialTheme.typography.bodySmall,
+                    )
                     OutlinedTextField(
                         value = host.pairing.code,
                         onValueChange = { TelosShizukuHost.setPairingCode(it) },
@@ -138,53 +200,21 @@ fun SystemShizukuTab() {
                             }
                         },
                         enabled = host.pairing.code.length == 6,
+                        modifier = Modifier.fillMaxWidth(),
                     ) { Text(stringResource(I18nR.string.telos_shizuku_pair_submit)) }
-                    OutlinedButton(onClick = { TelosShizukuHost.stopPairingWait() }) {
-                        Text(stringResource(I18nR.string.telos_shizuku_pair_stop))
-                    }
-                } else {
-                    FilledTonalButton(onClick = {
-                        de.mm20.launcher2.appmanagement.shizuku.TelosAdbPairingService.start(context)
-                    }) {
-                        Text(stringResource(I18nR.string.telos_shizuku_pair_start))
-                    }
+                }
+                if (host.pairing.phase == TelosShizukuHost.PairingPhase.Done) {
+                    Text(stringResource(I18nR.string.telos_shizuku_pair_ok), color = MaterialTheme.colorScheme.primary)
+                }
+                if (host.pairing.phase == TelosShizukuHost.PairingPhase.Failed) {
+                    Text(stringResource(I18nR.string.telos_shizuku_pair_fail), color = MaterialTheme.colorScheme.error)
                 }
                 OutlinedButton(onClick = {
-                    de.mm20.launcher2.appmanagement.shizuku.TelosAdbPairingService.start(context)
-                }) { Text(stringResource(I18nR.string.telos_shizuku_pair_open)) }
-                if (host.pairing.code.isNotBlank() && phase == TelosShizukuHost.PairingPhase.Done) {
-                    Text(
-                        stringResource(
-                            I18nR.string.telos_shizuku_code_seen,
-                            host.pairing.code,
-                            host.pairing.port?.toString() ?: "—",
-                        ),
-                        style = MaterialTheme.typography.bodySmall,
-                    )
-                }
-                FilledTonalButton(onClick = {
-                    scope.launch {
-                        val r = TelosShizukuHost.start(context, TelosShizukuHost.StartMethod.Auto)
-                        log = r.getOrElse { it.message.orEmpty() }
-                        TelosShizukuWatchdog.start(context)
-                    }
-                }) { Text(stringResource(I18nR.string.telos_shizuku_start)) }
-                OutlinedButton(onClick = {
-                    scope.launch {
-                        TelosShizukuHost.start(context, TelosShizukuHost.StartMethod.Root)
-                    }
-                }) { Text(stringResource(I18nR.string.telos_shizuku_start_root)) }
-                OutlinedButton(onClick = {
-                    de.mm20.launcher2.appmanagement.shizuku.TelosAdbPairingService.start(context)
-                }) { Text(stringResource(I18nR.string.telos_shizuku_start_wireless)) }
-                OutlinedButton(onClick = {
-                    scope.launch { TelosShizukuHost.stop(); TelosShizukuHost.refresh(context) }
-                }) { Text(stringResource(I18nR.string.telos_shizuku_stop)) }
-                OutlinedButton(onClick = {
-                    runCatching {
-                        context.startActivity(Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                    }
-                }) { Text(stringResource(I18nR.string.telos_shizuku_open_devopts)) }
+                    val cmd = host.pcAdbCommand.ifBlank { TelosShizukuHost.pcAdbCommand(context) }
+                    context.getSystemService(ClipboardManager::class.java)
+                        ?.setPrimaryClip(ClipData.newPlainText("adb", cmd))
+                    Toast.makeText(context, context.getString(I18nR.string.telos_shizuku_copied), Toast.LENGTH_SHORT).show()
+                }) { Text(stringResource(I18nR.string.telos_shizuku_copy_adb)) }
                 if (log.isNotBlank()) Text(log, style = MaterialTheme.typography.bodySmall)
             }
         }
@@ -204,19 +234,7 @@ fun SystemShizukuTab() {
         item {
             PreferenceCategory(title = stringResource(I18nR.string.telos_shizuku_labs)) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedButton(onClick = {
-                        scope.launch { TelosShellEngine.execResult("reboot", timeoutMs = 8_000L) }
-                    }) { Text(stringResource(I18nR.string.telos_shizuku_reboot)) }
-                    OutlinedButton(onClick = {
-                        scope.launch { TelosShellEngine.execResult("reboot recovery", timeoutMs = 8_000L) }
-                    }) { Text(stringResource(I18nR.string.telos_shizuku_recovery)) }
-                    OutlinedButton(onClick = {
-                        scope.launch { TelosShellEngine.execResult("input keyevent 26", timeoutMs = 5_000L) }
-                    }) { Text(stringResource(I18nR.string.telos_shizuku_screen_off)) }
-                    OutlinedButton(onClick = {
-                        scope.launch { TelosShellEngine.execResult("wm density reset", timeoutMs = 8_000L) }
-                    }) { Text(stringResource(I18nR.string.telos_shizuku_density_reset)) }
-                    androidx.compose.material3.OutlinedTextField(
+                    OutlinedTextField(
                         value = shellCmd,
                         onValueChange = { if (it.length < 512) shellCmd = it },
                         label = { Text(stringResource(I18nR.string.telos_shizuku_shell)) },
@@ -234,5 +252,6 @@ fun SystemShizukuTab() {
             }
         }
         item { TelosSecurityHubBody() }
+        item { Spacer(Modifier.height(24.dp)) }
     }
 }

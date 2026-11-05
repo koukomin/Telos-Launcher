@@ -5,18 +5,14 @@ import android.os.Handler
 import android.os.Looper
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+
 
 /**
- * Reads the wireless-debugging pairing dialog (Settings only) the same way Shizuku-Next
- * does: 6-digit code and optional host:port from the accessibility tree. No OCR, no AI.
+ * Reads the wireless-debugging pairing dialog the same way Shizuku-Next does,
+ * then pairs with [TelosAdbPairer] and pops a code dialog if the user still needs to confirm.
  */
 class TelosAdbPairingAccessibilityService : AccessibilityService() {
     private val handler = Handler(Looper.getMainLooper())
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private var pairing = false
     private var lastAttempt: String? = null
     private var readsLeft = 0
@@ -24,12 +20,8 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
         if (!hostsPairingDialog(event.packageName?.toString())) return
-        pendingFill?.takeIf { it.length == 6 }?.let { code ->
-            if (fillPairingField(code)) pendingFill = null
-        }
-        if (pairing) return
         handler.removeCallbacks(readAgain)
-        readsLeft = 12
+        readsLeft = 15
         readAgain.run()
     }
 
@@ -39,32 +31,27 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
         override fun run() {
             if (pairing) return
             val dialog = readPairingDialog() ?: run {
-                if (readsLeft-- > 0) handler.postDelayed(this, 80)
+                if (readsLeft-- > 0) handler.postDelayed(this, 400)
                 return
             }
             val signature = listOfNotNull(dialog.code, dialog.host, dialog.port?.toString()).joinToString(":")
             if (signature == lastAttempt) return
             lastAttempt = signature
             pairing = true
-            TelosShizukuHost.onPairingCodeRead(
+            TelosShizukuHost.showPairingPrompt(
                 this@TelosAdbPairingAccessibilityService,
                 dialog.code,
                 dialog.host,
                 dialog.port,
             )
-            scope.launch {
-                TelosShizukuHost.start(this@TelosAdbPairingAccessibilityService, TelosShizukuHost.StartMethod.Wireless)
-                pairing = false
-            }
+            pairing = false
         }
     }
 
     private fun hostsPairingDialog(pkg: String?): Boolean {
         if (pkg.isNullOrBlank()) return false
-        return pkg == "com.android.settings" ||
-            pkg == "com.android.settings.intelligence" ||
-            pkg == "com.samsung.android.settings" ||
-            pkg.contains("settings", ignoreCase = true)
+        return pkg.contains("settings", ignoreCase = true) ||
+            pkg.contains("debug", ignoreCase = true)
     }
 
     private data class Dialog(val code: String, val host: String?, val port: Int?)
@@ -76,13 +63,15 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
             if (!hostsPairingDialog(root.packageName?.toString())) continue
             val texts = mutableListOf<String>()
             collectText(root, texts)
-            if (texts.none {
-                    it.contains("pairing code", ignoreCase = true) ||
-                        it.contains("pair with device", ignoreCase = true) ||
-                        it.contains("κωδικός", ignoreCase = true)
+            if (texts.none { looksLikePairingDialog(it) }) continue
+            val code = texts.firstOrNull { CODE.matches(it.filter { ch -> ch.isDigit() } ) && it.filter { ch -> ch.isDigit() }.length == 6 }
+                ?.filter { it.isDigit() }
+                ?: texts.map { it.filter { ch -> ch.isDigit() } }.firstOrNull { it.length == 6 }
+                ?: run {
+                    val joined = texts.joinToString("") { it.filter { ch -> ch.isDigit() } }
+                    Regex("(\\d{6})").find(joined)?.groupValues?.get(1)
                 }
-            ) continue
-            val code = texts.firstOrNull { CODE.matches(it) } ?: continue
+                ?: continue
             val hostPort = texts.asSequence().mapNotNull { HOST_PORT.find(it) }.firstOrNull()
             return Dialog(
                 code = code,
@@ -91,6 +80,17 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
             )
         }
         return null
+    }
+
+    private fun looksLikePairingDialog(text: String): Boolean {
+        val t = text.lowercase()
+        return t.contains("pairing code") ||
+            t.contains("pair with device") ||
+            t.contains("wifi pairing") ||
+            t.contains("wi-fi pairing") ||
+            t.contains("κωδικ") ||
+            t.contains("σύζευξ") ||
+            t.contains("pairing")
     }
 
     private fun collectText(node: AccessibilityNodeInfo, out: MutableList<String>) {
@@ -103,34 +103,7 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
         }
     }
 
-    private fun fillPairingField(code: String): Boolean {
-        val windows = runCatching { windows }.getOrNull().orEmpty()
-        for (window in windows) {
-            val root = window?.root ?: continue
-            if (setEditable(root, code)) return true
-        }
-        return false
-    }
-
-    private fun setEditable(node: AccessibilityNodeInfo, code: String): Boolean {
-        val cls = node.className?.toString().orEmpty()
-        if (node.isEditable || cls.contains("EditText")) {
-            val args = android.os.Bundle().apply {
-                putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, code)
-            }
-            if (node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)) return true
-        }
-        for (i in 0 until node.childCount) {
-            val child = node.getChild(i) ?: continue
-            val ok = setEditable(child, code)
-            child.recycle()
-            if (ok) return true
-        }
-        return false
-    }
-
     companion object {
-        @Volatile var pendingFill: String? = null
         private val CODE = Regex("^\\d{6}$")
         private val HOST_PORT = Regex("(\\d{1,3}(?:\\.\\d{1,3}){3}):(\\d{2,5})")
     }

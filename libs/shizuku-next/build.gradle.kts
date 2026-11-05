@@ -1,9 +1,21 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.hidden.refine)
+}
+
+val telosNdkVersion = "27.0.12077973"
+val telosNdkHome: File? = run {
+    val env = System.getenv("ANDROID_NDK_HOME")?.takeIf { it.isNotBlank() }?.let(::File)
+    if (env?.isDirectory == true) return@run env
+    val sdk = File(rootProject.file("local.properties").takeIf { it.isFile }?.let {
+        Properties().apply { it.reader().use(::load) }.getProperty("sdk.dir")
+    } ?: System.getenv("ANDROID_SDK_ROOT") ?: System.getenv("ANDROID_HOME") ?: "")
+    File(sdk, "ndk/$telosNdkVersion").takeIf { it.isDirectory }
+        ?: sdk.resolve("ndk").listFiles()?.firstOrNull { it.isDirectory }
 }
 
 android {
@@ -15,12 +27,14 @@ android {
     }
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
         consumerProguardFiles("consumer-rules.pro")
-        externalNativeBuild {
-            cmake {
-                targets("libshizuku.so")
-                arguments("-DANDROID_STL=c++_shared")
+        if (telosNdkHome != null) {
+            ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+            externalNativeBuild {
+                cmake {
+                    targets("libshizuku.so")
+                    arguments("-DANDROID_STL=c++_shared")
+                }
             }
         }
     }
@@ -35,9 +49,11 @@ android {
     kotlin {
         compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
     }
-    ndkVersion = "27.0.12077973"
-    externalNativeBuild {
-        cmake { path = file("jni/CMakeLists.txt") }
+    if (telosNdkHome != null) {
+        ndkVersion = telosNdkVersion
+        externalNativeBuild {
+            cmake { path = file("jni/CMakeLists.txt") }
+        }
     }
     sourceSets {
         getByName("main") {

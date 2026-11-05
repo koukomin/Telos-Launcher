@@ -75,6 +75,7 @@ data class LauncherSettingsData internal constructor(
     val contextProfiles: ContextProfilesGroup = ContextProfilesGroup(),
     val desktopMode: DesktopModeGroup = DesktopModeGroup(),
     val agents: AgentsGroup = AgentsGroup(),
+    val tweaks: TweaksGroup = TweaksGroup(),
     // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
     val comms: CommsGroup = CommsGroup(),
     // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
@@ -828,6 +829,18 @@ data class AgentsGroup(
     /** If true, Enter sends a sentence (3+ words) to the agent instead of launching the top app. */
     val agentsSendSentences: Boolean = true,
     val searchBarVoice: Boolean = true,
+)
+
+@Serializable
+data class TweaksGroup(
+    /** Re-run saved tweaks after reboot (needs root or Shizuku). */
+    val persistOnBoot: Boolean = false,
+    val clockSeconds: Boolean = false,
+    val peakRefresh120: Boolean = false,
+    val disableSafeVolume: Boolean = false,
+    val callVibrateConnect: Boolean = false,
+    val mobileDataAlwaysOn: Boolean = false,
+    val alwaysOnDisplay: Boolean = false,
 )
 
 @Serializable

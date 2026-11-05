@@ -18,6 +18,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -79,6 +80,14 @@ class TelosShizukuBootReceiver : BroadcastReceiver() {
             action != Intent.ACTION_MY_PACKAGE_REPLACED
         ) return
         TelosShizukuWatchdog.start(context.applicationContext)
+        val pending = goAsync()
+        kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
+            try {
+                de.mm20.launcher2.appmanagement.tweaks.TweaksApplier.applySavedOnBoot(context.applicationContext)
+            } finally {
+                pending.finish()
+            }
+        }
     }
 }
 

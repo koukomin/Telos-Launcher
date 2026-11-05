@@ -1,9 +1,16 @@
 # Changelog
 
+## 1.44.13
+
+- System tweaks: save working tweaks and optionally re-apply them on every boot (Root/Shizuku).
+- Telos Media / Stremio player: hide controls and stats until the screen is tapped.
+- Torrents: extra public trackers, longer magnet wait, DHT reannounce to find seeders faster.
+- Shizuku pairing popup when the wireless ADB code is on screen; Gradle no longer hangs waiting for NDK download.
+
 ## 1.44.12
 
 - Compile: androidx RemoteInput for wireless ADB pairing notification; rename PlaybackSpectrum capture toggle (JVM clash).
-- Release CI allows a GitHub Release created on the same tag commit so APKs can attach.
+- Release CI allows a GitHub Release created on the same tag commit so APKs can attach, including a non-draft release.
 
 ## 1.44.11
 
