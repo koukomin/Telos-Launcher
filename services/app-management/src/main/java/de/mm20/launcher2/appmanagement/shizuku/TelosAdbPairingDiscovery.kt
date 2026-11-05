@@ -13,9 +13,11 @@ import androidx.annotation.RequiresApi
 @RequiresApi(Build.VERSION_CODES.R)
 internal class TelosAdbPairingDiscovery(
     context: Context,
+    private val serviceType: String = TYPE,
     private val onFound: (host: String, port: Int) -> Unit,
 ) {
-    private val nsd = context.applicationContext.getSystemService(NsdManager::class.java)
+    private val contextApp = context.applicationContext
+    private val nsd = contextApp.getSystemService(NsdManager::class.java)
     private var running = false
 
     private val listener = object : NsdManager.DiscoveryListener {
@@ -31,6 +33,8 @@ internal class TelosAdbPairingDiscovery(
                 override fun onServiceResolved(resolved: NsdServiceInfo) {
                     if (!running) return
                     val host = resolved.host?.hostAddress ?: return
+                    val address = resolved.host ?: return
+                    if (!address.isLoopbackAddress && java.net.NetworkInterface.getByInetAddress(address) == null) return
                     val port = resolved.port
                     if (port in 1..65535) onFound(host, port)
                 }
@@ -40,8 +44,9 @@ internal class TelosAdbPairingDiscovery(
 
     fun start() {
         if (running) return
+        if (Build.VERSION.SDK_INT >= 37 && contextApp.checkSelfPermission("android.permission.ACCESS_LOCAL_NETWORK") != android.content.pm.PackageManager.PERMISSION_GRANTED) return
         running = true
-        runCatching { nsd.discoverServices(TYPE, NsdManager.PROTOCOL_DNS_SD, listener) }
+        runCatching { nsd.discoverServices(serviceType, NsdManager.PROTOCOL_DNS_SD, listener) }
     }
 
     fun stop() {

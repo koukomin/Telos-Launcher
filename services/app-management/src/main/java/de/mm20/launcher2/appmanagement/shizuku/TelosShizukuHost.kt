@@ -14,10 +14,19 @@ import de.mm20.launcher2.ktx.TelosShellEngine
 import java.io.File
 import java.util.zip.ZipFile
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.sync.withLock
 import rikka.shizuku.Shizuku
 
 /**
@@ -33,6 +42,7 @@ object TelosShizukuHost {
     enum class PairingPhase { Idle, Searching, WaitingForCode, Working, Done, Failed }
 
     data class PairingHint(
+        val automatic: Boolean = true,
         val code: String = "",
         val host: String? = null,
         val port: Int? = null,
@@ -55,6 +65,9 @@ object TelosShizukuHost {
 
     private val _status = MutableStateFlow(HostStatus())
     val status: StateFlow<HostStatus> = _status.asStateFlow()
+    private val pairingScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private var pairingTask: Deferred<Result<String>>? = null
+    private val pairingMutex = kotlinx.coroutines.sync.Mutex()
     private var pairingDiscovery: TelosAdbPairingDiscovery? = null
 
     fun starterFile(context: Context): File {
@@ -116,7 +129,6 @@ object TelosShizukuHost {
     }
 
     fun onPairingCodeRead(context: Context, code: String, host: String?, port: Int?) {
-        if (port != null) saveLastPort(context, port)
         val prev = _status.value.pairing
         _status.value = _status.value.copy(
             pairing = prev.copy(
@@ -125,12 +137,18 @@ object TelosShizukuHost {
                 port = port ?: prev.port,
                 phase = if (code.length == 6) PairingPhase.WaitingForCode else prev.phase,
             ),
-            lastLog = "pairing code $code" + (port?.let { " :$it" } ?: ""),
         )
     }
 
-    fun notifyPairingSearch() {
-        _status.value = _status.value.copy(pairing = PairingHint(phase = PairingPhase.Searching))
+    internal var wirelessNavigationRequestedAt = 0L
+        private set
+
+    fun requestWirelessNavigation() {
+        wirelessNavigationRequestedAt = android.os.SystemClock.elapsedRealtime()
+    }
+
+    fun notifyPairingSearch(automatic: Boolean = true) {
+        _status.value = _status.value.copy(pairing = PairingHint(automatic = automatic, phase = PairingPhase.Searching))
     }
 
     @android.annotation.SuppressLint("NewApi")
@@ -147,7 +165,6 @@ object TelosShizukuHost {
             pairing = PairingHint(phase = PairingPhase.Searching),
         )
         val discovery = TelosAdbPairingDiscovery(context) { host, port ->
-            saveLastPort(context, port)
             val prev = _status.value.pairing
             _status.value = _status.value.copy(
                 pairing = prev.copy(
@@ -182,9 +199,37 @@ object TelosShizukuHost {
         host: String? = null,
         port: Int? = null,
     ): Result<String> {
+        val app = context.applicationContext
+        val task = synchronized(pairingScope) {
+            pairingTask?.takeIf { it.isActive } ?: pairingScope.async {
+                try {
+                    withTimeout(60_000L) { performPairing(app, code, host, port) }
+                } catch (error: TimeoutCancellationException) {
+                    _status.value = _status.value.copy(pairing = _status.value.pairing.copy(code = "", phase = PairingPhase.Failed), lastLog = "Pairing timed out; reopen the Settings pairing dialog")
+                    Result.failure(error)
+                } catch (error: CancellationException) {
+                    _status.value = _status.value.copy(pairing = PairingHint())
+                    throw error
+                } catch (error: Exception) {
+                    _status.value = _status.value.copy(pairing = _status.value.pairing.copy(code = "", phase = PairingPhase.Failed), lastLog = error.message.orEmpty())
+                    Result.failure(error)
+                }
+            }.also { pairingTask = it }
+        }
+        // Closing/rebinding an overlay must not cancel an in-flight pairing transaction.
+        return task.await()
+    }
+
+    fun cancelPairing() {
+        synchronized(pairingScope) { pairingTask?.cancel() }
+        _status.value = _status.value.copy(pairing = PairingHint())
+    }
+
+    private suspend fun performPairing(context: Context, code: String, host: String?, port: Int?): Result<String> = pairingMutex.withLock {
+        if (_status.value.pairing.phase == PairingPhase.Done) return@withLock Result.success("running")
         val digits = code.filter { it.isDigit() }.take(6)
         if (digits.length != 6) {
-            return Result.failure(IllegalArgumentException("need 6 digits"))
+            return@withLock Result.failure(IllegalArgumentException("need 6 digits"))
         }
         val prev = _status.value.pairing
         val useHost = host ?: prev.host
@@ -194,19 +239,20 @@ object TelosShizukuHost {
         val paired = TelosAdbPairer.pair(context, digits, useHost, usePort)
         if (paired.isFailure) {
             _status.value = _status.value.copy(
-                pairing = _status.value.pairing.copy(phase = PairingPhase.Failed),
+                pairing = _status.value.pairing.copy(code = "", phase = PairingPhase.Failed),
                 lastLog = paired.exceptionOrNull()?.message.orEmpty(),
             )
-            return Result.failure(paired.exceptionOrNull() ?: IllegalStateException("pair failed"))
+            return@withLock Result.failure(paired.exceptionOrNull() ?: IllegalStateException("pair failed"))
         }
         val result = start(context, StartMethod.Wireless)
         _status.value = _status.value.copy(
             pairing = _status.value.pairing.copy(
+                code = "",
                 phase = if (result.isSuccess) PairingPhase.Done else PairingPhase.Failed,
             ),
         )
         stopPairingWait()
-        return result
+        result
     }
 
     fun showPairingPrompt(context: Context, code: String, host: String?, port: Int?) {
@@ -256,16 +302,16 @@ object TelosShizukuHost {
             val ok = when (chosen) {
                 StartMethod.Root -> {
                     log.appendLine("root $cmd")
-                    val r = TelosShellEngine.execResult("su -c '$cmd'", timeoutMs = 45_000L)
+                    val r = TelosShellEngine.execResult(cmd, timeoutMs = 45_000L)
                     log.append(r.stdout).append(r.stderr)
-                    r.isSuccess || waitBinder()
+                    waitBinder()
                 }
                 StartMethod.Wireless, StartMethod.Usb, StartMethod.Tcp -> {
                     enableWirelessDebugging(app)
                     log.appendLine("wireless $cmd")
-                    val r = TelosShellEngine.execResult(cmd, timeoutMs = 45_000L)
-                    log.append(r.stdout).append(r.stderr)
-                    waitBinder() || r.isSuccess
+                    val r = TelosWirelessAdb.start(app, cmd)
+                    log.append(r.getOrElse { it.message.orEmpty() })
+                    r.isSuccess && waitBinder()
                 }
                 else -> false
             }

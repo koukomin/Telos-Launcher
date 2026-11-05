@@ -35,3 +35,17 @@ adb shell …/libshizuku.so --apk=…/base.apk
 `IP:PAIRING_PORT` is on the pairing dialog. The connect port on the wireless debugging page is a different number.
 
 Full page: [Telos System](/docs/user-guide/telos/system/).
+
+## Pairing input
+
+On Android 17, allow the local-network permission when starting pairing. With Telos pairing
+accessibility enabled, leave the Settings pairing dialog visible for automatic code reading.
+The floating pill stays collapsed until you tap it. Manual input also works from the notification;
+it does not require accessibility. Tap Pair or the keyboard Done/Enter key; the keyboard closes
+before connecting. Stop waiting cancels the session. Without accessibility, a floating pill
+requires the system draw-over-other-apps grant; notification input remains available.
+
+The [implementation audit](/docs/developer-guide/shizuku-pairing) explains the transport, Android 17
+permission, ColorOS navigation fallback, and which Next/Plus manager features are separate.
+
+Choose **Enter code** for a manual session even with accessibility enabled; **Wait for pairing code** enables optional automatic reading.

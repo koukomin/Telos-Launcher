@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application>
+        <!-- The isolated harness has no launcher Koin application or boot-autostart policy. -->
+        <receiver android:name="de.mm20.launcher2.appmanagement.shizuku.TelosShizukuBootReceiver" tools:node="remove" />
+        <receiver android:name="de.mm20.launcher2.appmanagement.shizuku.TelosShizukuStartReceiver" tools:node="remove" />
+        <service android:name="de.mm20.launcher2.appmanagement.shizuku.TelosShizukuWatchdog" tools:node="remove" />
+        <activity android:name="de.mm20.launcher2.appmanagement.shizuku.PairingTestActivity"
+            android:exported="true" android:theme="@android:style/Theme.DeviceDefault" />
+    </application>
+</manifest>

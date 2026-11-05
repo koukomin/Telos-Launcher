@@ -223,8 +223,9 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
             {"nativeDestroy",     "(J)V",    (void *) PairingContext_Destroy},
     };
 
-    env->RegisterNatives(env->FindClass("moe/shizuku/manager/adb/PairingContext"), methods_PairingContext,
-                         sizeof(methods_PairingContext) / sizeof(JNINativeMethod));
+    auto clazz = env->FindClass("de/mm20/launcher2/appmanagement/shizuku/PairingContext");
+    if (clazz == nullptr || env->RegisterNatives(clazz, methods_PairingContext,
+            sizeof(methods_PairingContext) / sizeof(JNINativeMethod)) != JNI_OK) return JNI_ERR;
 
     return JNI_VERSION_1_6;
 }

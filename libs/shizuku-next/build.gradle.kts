@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.library)
@@ -8,15 +7,6 @@ plugins {
 }
 
 val telosNdkVersion = "27.0.12077973"
-val telosNdkHome: File? = run {
-    val env = System.getenv("ANDROID_NDK_HOME")?.takeIf { it.isNotBlank() }?.let(::File)
-    if (env?.isDirectory == true) return@run env
-    val sdk = File(rootProject.file("local.properties").takeIf { it.isFile }?.let {
-        Properties().apply { it.reader().use(::load) }.getProperty("sdk.dir")
-    } ?: System.getenv("ANDROID_SDK_ROOT") ?: System.getenv("ANDROID_HOME") ?: "")
-    File(sdk, "ndk/$telosNdkVersion").takeIf { it.isDirectory }
-        ?: sdk.resolve("ndk").listFiles()?.firstOrNull { it.isDirectory }
-}
 
 android {
     namespace = "rikka.shizuku.server"
@@ -28,17 +18,18 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         consumerProguardFiles("consumer-rules.pro")
-        if (telosNdkHome != null) {
-            ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
-            externalNativeBuild {
-                cmake {
-                    targets("libshizuku.so")
-                    arguments("-DANDROID_STL=c++_shared")
-                }
+        ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+        externalNativeBuild {
+            cmake {
+                targets("libshizuku.so", "adb", "rish")
+                // app_process must not resolve a different system C++ runtime.
+                // JNI libraries exchange only Java values, never C++ objects.
+                arguments("-DANDROID_STL=c++_static")
             }
         }
     }
     buildFeatures {
+        prefab = true
         aidl = false
         buildConfig = true
     }
@@ -49,11 +40,9 @@ android {
     kotlin {
         compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
     }
-    if (telosNdkHome != null) {
-        ndkVersion = telosNdkVersion
-        externalNativeBuild {
-            cmake { path = file("jni/CMakeLists.txt") }
-        }
+    ndkVersion = telosNdkVersion
+    externalNativeBuild {
+        cmake { path = file("jni/CMakeLists.txt") }
     }
     sourceSets {
         getByName("main") {
@@ -73,6 +62,8 @@ android {
 }
 
 dependencies {
+    // Current Apache-2.0 BoringSSL; non-LTO archive works with the pinned NDK.
+    implementation("io.github.vvb2060.ndk:boringssl:20251124")
     implementation(libs.kotlin.stdlib)
     implementation("androidx.annotation:annotation:1.11.0")
     implementation("com.google.code.gson:gson:2.15.0")

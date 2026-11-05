@@ -68,3 +68,15 @@ Privacy Shield (clients, freeze external Shizuku, banking cloak, clipboard) stay
 | Tweaks | System tweaks |
 | Privacy Shield | Shizuku clients, cloak, clipboard |
 | Shizuku | Built-in server, pairing, ADB command, labs |
+
+## Wireless Shizuku setup
+
+Open the Shizuku tab and start waiting for a pairing code. On Android 17, grant local-network
+access first. The floating pill waits without opening the keyboard. With the optional Telos
+pairing accessibility service enabled, the code is read only from the Settings pairing dialog
+during that session. Otherwise use the pill (requires overlay permission) or the notification
+reply. Done/Enter and Pair submit the same code and dismiss the keyboard before connecting.
+Use Stop waiting to cancel. See [Shizuku](/docs/wiki/shizuku) and the
+[implementation/feature audit](/docs/developer-guide/shizuku-pairing).
+
+Choose **Enter code** for a manual session even with accessibility enabled; **Wait for pairing code** enables optional automatic reading.
