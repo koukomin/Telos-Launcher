@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">خادم Shizuku في Telos</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: ابدأ بالروت.
-لاسلكي: افتح تصحيح الأخطاء اللاسلكي. يفتح Telos الإعدادات ويعرض إشعارًا. عند ظهور الرمز أدخِل الأرقام الستة في الإشعار.
-حاسوب: تصحيح USB وأمر adb.</string>
+لاسلكي: فعّل إمكانية وصول الاقتران، اضغط انتظار رمز الاقتران، ثم خيارات المطوّر → تصحيح لاسلكي → إقران الجهاز برمز. ابقَ في ذلك الحوار. يقرأ Telos الرمز المكوّن من 6 أرقام ويعرض حقلاً عائمًا وإشعارًا لكتابته دون مغادرة الإعدادات (المغادرة تلغي الرمز).
+حاسوب: تصحيح USB ثم أمر adb أدناه.</string>
+    <string name="telos_shizuku_pair_prompt_body">اكتب هنا رمز ADB اللاسلكي المكوّن من 6 أرقام. أبقِ حوار الاقتران في الإعدادات على الشاشة؛ المغادرة تلغي الرمز.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

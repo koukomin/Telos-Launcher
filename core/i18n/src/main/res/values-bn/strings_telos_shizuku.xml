@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku সার্ভার</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: রুট দিয়ে শুরু।
-ওয়্যারলেস: ওয়্যারলেস ডিবাগিং খুলুন। Telos সেটিংস খুলবে ও বিজ্ঞপ্তি দেখাবে। কোড এলে বিজ্ঞপ্তিতে ৬ সংখ্যা লিখুন।
-PC: USB ডিবাগিং ও adb কমান্ড।</string>
+ওয়্যারলেস: পেয়ারিং অ্যাক্সেসিবিলিটি চালু করুন, পেয়ারিং কোডের অপেক্ষা ট্যাপ করুন, তারপর ডেভেলপার অপশন → ওয়্যারলেস ডিবাগিং → কোড দিয়ে ডিভাইস পেয়ার। সেই ডায়ালগে থাকুন। Telos ৬ সংখ্যার কোড পড়ে এবং সেটিংস না ছেড়ে টাইপ করার জন্য ভাসমান ফিল্ড ও নোটিফিকেশন দেখায় (ছেড়ে গেলে কোড বাতিল হয়)।
+কম্পিউটার: USB ডিবাগিং এবং নিচের adb কমান্ড।</string>
+    <string name="telos_shizuku_pair_prompt_body">এখানে ৬ সংখ্যার ওয়্যারলেস ADB কোড লিখুন। সেটিংসের পেয়ারিং ডায়ালগ পর্দায় রাখুন; চলে গেলে কোড বাতিল হয়।</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

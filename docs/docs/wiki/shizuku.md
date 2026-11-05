@@ -13,7 +13,7 @@ The standalone Shizuku app is a separate manager. Telos already needs a privileg
 | Method | What you do |
 | --- | --- |
 | **Root** | **Start with root**. Turn on Autostart. |
-| **Wireless (phone)** | **Open wireless debugging**. Telos opens the system Wireless debugging page and a notification. Pair device with pairing code; when the 6 digits appear, enter them in the notification (Shizuku-style). Accessibility can fill the Settings field. Then Start server and Autostart. Pairing is once per ADB key. |
+| **Wireless (phone)** | Enable pairing accessibility, tap **Wait for pairing code**, then Pair device with pairing code. Stay on that Settings dialog. Telos reads the 6 digits automatically; otherwise type them in the floating field or notification. Then Start server and Autostart. Pairing is once per ADB key. |
 | **Computer ADB** | USB debugging on, then the command on the Shizuku tab. |
 
 ## Computer ADB

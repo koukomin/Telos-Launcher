@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Indítás roottal.
-Vezeték nélkül: nyisd meg a hibakeresést. A Telos megnyitja a beállításokat és értesítést mutat. Írd be a 6 számjegyet az értesítésbe.
-PC: USB hibakeresés és az adb parancs.</string>
+Vezeték nélkül: kapcsold be a párosítás akadálymentességét, koppints a Kód várása gombra, majd Fejlesztői opciók → Vezeték nélküli hibakeresés → Párosítás kóddal. Maradj abban a párbeszédablakban. A Telos beolvassa a 6 számjegyű kódot, és lebegő mezőt plusz értesítést mutat, hogy a Beállítások elhagyása nélkül írd be (elhagyás törli a kódot).
+Számítógép: USB hibakeresés és az alábbi adb parancs.</string>
+    <string name="telos_shizuku_pair_prompt_body">Írd ide a 6 számjegyű vezeték nélküli ADB-kódot. Tartsd a Beállítások párosítási ablakát a képernyőn; elhagyás törli a kódot.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

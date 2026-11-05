@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku-server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Start med root.
-Trådløst: åbn trådløs fejlfinding. Telos åbner Indstillinger og viser en notifikation. Indtast de 6 cifre i notifikationen.
-PC: USB-fejlfinding og adb-kommandoen.</string>
+Trådløst: slå parrings-tilgængelighed til, tryk på Vent på parringskode, derefter Udviklerindstillinger → Trådløs fejlfinding → Par enhed med kode. Bliv i den dialog. Telos læser den 6-cifrede kode og viser et flydende felt plus en notifikation, så du kan taste den uden at forlade Indstillinger (at forlade annullerer koden).
+Computer: USB-fejlfinding og adb-kommandoen nedenfor.</string>
+    <string name="telos_shizuku_pair_prompt_body">Skriv den 6-cifrede trådløse ADB-kode her. Hold parringsdialogen i Indstillinger på skærmen; at forlade annullerer koden.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

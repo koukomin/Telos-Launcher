@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: 루트로 시작.
-무선: 무선 디버깅을 엽니다. Telos가 설정을 열고 알림을 표시합니다. 코드가 나오면 알림에 6자리를 입력하세요.
-PC: USB 디버깅과 adb 명령.</string>
+무선: 페어링 접근성을 켜고 페어링 코드 대기를 누른 다음 개발자 옵션 → 무선 디버깅 → 페어링 코드로 기기 페어링. 그 대화상자에 머무르세요. Telos가 6자리 코드를 읽고 설정을 떠나지 않고 입력할 수 있도록 떠 있는 필드와 알림을 표시합니다(떠나면 코드가 취소됩니다).
+컴퓨터: USB 디버깅을 켠 다음 아래 adb 명령을 실행.</string>
+    <string name="telos_shizuku_pair_prompt_body">여기에 6자리 무선 ADB 코드를 입력하세요. 설정의 페어링 대화상자를 화면에 유지하세요. 떠나면 코드가 취소됩니다.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

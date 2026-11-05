@@ -19,9 +19,10 @@
     <string name="telos_shizuku_run">Εκτέλεση</string>
     <string name="telos_shizuku_watchdog_channel">Επόπτης Shizuku</string>
     <string name="telos_shizuku_watchdog_title">Διακομιστής Shizuku του Telos</string>
+    <string name="telos_shizuku_pair_prompt_body">Γράψε εδώ τον 6ψήφιο κωδικό ασύρματου ADB. Κράτα ανοιχτό το παράθυρο ζεύξης στις Ρυθμίσεις· αν φύγεις, ο κωδικός ακυρώνεται.</string>
     <string name="telos_shizuku_howto_title">Πώς ξεκινάει</string>
     <string name="telos_shizuku_howto_body">Root: πάτα Έναρξη με root.
-Ασύρματα: πάτα Άνοιγμα ασύρματου debugging. Το Telos ανοίγει τις ρυθμίσεις Wireless debugging και δείχνει ειδοποίηση. Όταν εμφανιστεί ο κωδικός, γράψε τα 6 ψηφία στην ειδοποίηση (όπως στο Shizuku).
+Ασύρματα: ενεργοποίησε την προσβασιμότητα ζεύξης, πάτα Αναμονή κωδικού ζεύξης, μετά Επιλογές για προγραμματιστές → Ασύρματο debugging → Ζεύξη συσκευής με κωδικό. Μείνε σε αυτό το παράθυρο. Το Telos διαβάζει αυτόματα τον 6ψήφιο και δείχνει πεδίο πάνω από τις Ρυθμίσεις και πεδίο στην ειδοποίηση, ώστε να μην φύγεις (αν φύγεις ο κωδικός ακυρώνεται).
 Υπολογιστής: USB debugging και την εντολή adb παρακάτω.</string>
     <string name="telos_shizuku_copy_adb">Αντιγραφή εντολής adb</string>
     <string name="telos_shizuku_copied">Αντιγράφηκε</string>

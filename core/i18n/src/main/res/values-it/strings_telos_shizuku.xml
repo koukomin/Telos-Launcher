@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Avvia con root.
-Wireless: Apri debug wireless. Telos apre Impostazioni e mostra una notifica. Quando compare il codice, inseriscilo nella notifica.
-PC: debug USB e il comando adb.</string>
+Wireless: attiva l’accessibilità di associazione, tocca Attendi codice, poi Opzioni sviluppatore → Debug wireless → Associa dispositivo con codice. Resta su quella finestra. Telos legge il codice a 6 cifre e mostra un campo flottante e una notifica per digitarlo senza uscire da Impostazioni (uscire annulla il codice).
+Computer: debug USB, poi il comando adb sotto.</string>
+    <string name="telos_shizuku_pair_prompt_body">Digita qui il codice ADB wireless a 6 cifre. Tieni visibile la finestra di associazione in Impostazioni; uscirne annulla il codice.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

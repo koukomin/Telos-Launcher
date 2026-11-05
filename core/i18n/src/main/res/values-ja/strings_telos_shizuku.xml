@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: root で開始。
-ワイヤレス: ワイヤレスデバッグを開く。Telos は設定を開き通知を出します。コードが表示されたら通知に 6 桁を入力。
-PC: USB デバッグと adb コマンド。</string>
+ワイヤレス: ペアリングのユーザー補助を有効にし、「ペアリングコードを待つ」をタップしてから、開発者向けオプション → ワイヤレスデバッグ → ペアリングコードでデバイスをペア設定。そのダイアログに留まります。Telos は 6 桁コードを読み取り、設定を離れずに入力できるフローティング欄と通知を表示します（離れるとコードは無効になります）。
+パソコン: USB デバッグをオンにし、下の adb コマンドを実行。</string>
+    <string name="telos_shizuku_pair_prompt_body">ここに 6 桁のワイヤレス ADB コードを入力してください。設定のペアリングダイアログを画面に残してください。離れるとコードは無効になります。</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

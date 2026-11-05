@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Iniciar com root.
-Sem fios: Abrir depuração sem fios. O Telos abre as definições e mostra uma notificação. Quando o código aparecer, introduza-o na notificação.
-PC: depuração USB e o comando adb.</string>
+Sem fios: ativa a acessibilidade de emparelhamento, toca em Aguardar código e depois Opções de programador → Depuração sem fios → Emparelhar dispositivo com código. Fica nesse diálogo. O Telos lê o código de 6 dígitos e mostra um campo flutuante e uma notificação para o escreveres sem sair das Definições (sair cancela o código).
+Computador: depuração USB e o comando adb abaixo.</string>
+    <string name="telos_shizuku_pair_prompt_body">Escreve aqui o código ADB sem fios de 6 dígitos. Mantém o diálogo de emparelhamento das Definições no ecrã; sair cancela o código.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

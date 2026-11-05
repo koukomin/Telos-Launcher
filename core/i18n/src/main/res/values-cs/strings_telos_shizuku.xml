@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Server Shizuku Telos</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Spustit s rootem.
-Bezdrátově: otevřít bezdrátové ladění. Telos otevře nastavení a ukáže oznámení. Zadejte 6 číslic do oznámení.
-PC: USB ladění a příkaz adb.</string>
+Bezdrátově: zapněte přístupnost párování, klepněte na Čekat na kód, pak Možnosti pro vývojáře → Bezdrátové ladění → Párovat zařízení kódem. Zůstaňte v tom dialogu. Telos přečte 6místný kód a zobrazí plovoucí pole a oznámení, abyste ho zadali bez opuštění Nastavení (odchod kód zruší).
+Počítač: ladění USB a příkaz adb níže.</string>
+    <string name="telos_shizuku_pair_prompt_body">Zadejte sem 6místný kód bezdrátového ADB. Nechte dialog párování v Nastavení na obrazovce; odchod kód zruší.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

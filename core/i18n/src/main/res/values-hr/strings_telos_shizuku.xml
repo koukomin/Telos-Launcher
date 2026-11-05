@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Pokreni s rootom.
-Bežično: otvori bežično ispravljanje. Telos otvara postavke i pokazuje obavijest. Unesite 6 znamenki u obavijest.
-PC: USB i naredba adb.</string>
+Bežično: uključi pristupačnost uparivanja, dodirni Čekaj kod, zatim Opcije za programere → Bežično otklanjanje pogrešaka → Upari uređaj kodom. Ostani na tom dijalogu. Telos čita 6-znamenkasti kod i prikazuje plutajuće polje i obavijest da ga upišeš bez napuštanja Postavki (izlazak poništava kod).
+Računalo: USB otklanjanje pogrešaka i naredba adb ispod.</string>
+    <string name="telos_shizuku_pair_prompt_body">Upiši ovdje 6-znamenkasti kod bežičnog ADB-a. Drži dijalog uparivanja u Postavkama na zaslonu; izlazak poništava kod.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

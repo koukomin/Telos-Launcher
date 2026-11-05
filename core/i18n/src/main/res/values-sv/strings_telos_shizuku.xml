@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Starta med root.
-Trådlöst: öppna trådlös felsökning. Telos öppnar Inställningar och visar en avisering. Ange de 6 siffrorna i aviseringen.
-PC: USB-felsökning och adb-kommandot.</string>
+Trådlöst: aktivera parningstillgänglighet, tryck på Vänta på parningskod, sedan Utvecklaralternativ → Trådlös felsökning → Para enhet med kod. Stanna i den dialogrutan. Telos läser den 6-siffriga koden och visar ett flytande fält plus en avisering så du kan skriva den utan att lämna Inställningar (att lämna avbryter koden).
+Dator: USB-felsökning och adb-kommandot nedan.</string>
+    <string name="telos_shizuku_pair_prompt_body">Skriv den 6-siffriga trådlösa ADB-koden här. Håll parningsdialogrutan i Inställningar synlig; att lämna avbryter koden.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

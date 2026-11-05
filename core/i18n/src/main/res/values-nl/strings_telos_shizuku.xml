@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Starten met root.
-Draadloos: open draadloos debuggen. Telos opent Instellingen en toont een melding. Typ de 6 cijfers in de melding.
-PC: USB-debuggen en het adb-commando.</string>
+Draadloos: zet koppeltoegankelijkheid aan, tik op Wachten op koppelcode, daarna Opties voor ontwikkelaars → Draadloos debuggen → Koppelen met code. Blijf in dat dialoogvenster. Telos leest de 6-cijferige code en toont een zwevend veld plus melding zodat je hem kunt typen zonder Instellingen te verlaten (verlaten annuleert de code).
+Computer: USB-foutopsporing en het adb-commando hieronder.</string>
+    <string name="telos_shizuku_pair_prompt_body">Typ hier de 6-cijferige draadloze ADB-code. Houd het koppelvenster in Instellingen zichtbaar; verlaten annuleert de code.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

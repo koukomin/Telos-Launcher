@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Uruchom z rootem.
-Bezprzewodowo: otwórz debugowanie. Telos otworzy ustawienia i pokaże powiadomienie. Wpisz 6 cyfr w powiadomieniu.
-PC: debug USB i polecenie adb.</string>
+Bezprzewodowo: włącz ułatwienia parowania, stuknij Czekaj na kod, potem Opcje programisty → Debugowanie bezprzewodowe → Sparuj urządzenie kodem. Zostań w tym oknie. Telos odczytuje 6-cyfrowy kod i pokazuje pływające pole oraz powiadomienie, by wpisać go bez opuszczania Ustawień (wyjście anuluje kod).
+Komputer: debugowanie USB i polecenie adb poniżej.</string>
+    <string name="telos_shizuku_pair_prompt_body">Wpisz tutaj 6-cyfrowy kod bezprzewodowego ADB. Nie zamykaj okna parowania w Ustawieniach; wyjście anuluje kod.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

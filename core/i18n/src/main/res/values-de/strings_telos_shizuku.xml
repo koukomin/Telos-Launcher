@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos-Shizuku-Server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Mit Root starten.
-Funk: Wireless debugging öffnen. Telos öffnet die Systemeinstellung und zeigt eine Benachrichtigung. Wenn der Kopplungsdialog erscheint, den 6-stelligen Code in der Benachrichtigung eingeben.
-PC: USB-Debugging, dann den adb-Befehl unten.</string>
+Funk: Pairing-Bedienungshilfe einschalten, auf Pairing-Code abwarten tippen, dann Entwickleroptionen → Wireless debugging → Mit Pairing-Code koppeln. Im Dialog bleiben. Telos liest den 6-stelligen Code und zeigt ein schwebendes Feld plus Benachrichtigung, damit du ihn ohne Verlassen der Einstellungen eingeben kannst (Verlassen bricht den Code ab).
+PC: USB-Debugging an, dann den adb-Befehl unten.</string>
+    <string name="telos_shizuku_pair_prompt_body">Gib hier den 6-stelligen Wireless-ADB-Code ein. Lass den Pairing-Dialog in den Einstellungen geöffnet; Verlassen bricht den Code ab.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

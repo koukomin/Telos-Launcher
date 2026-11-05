@@ -32,6 +32,7 @@ class TelosAdbPairingService : Service() {
     private var discovery: TelosAdbPairingDiscovery? = null
     private var foundHost: String? = null
     private var foundPort: Int? = null
+    private var overlay: TelosAdbPairingOverlay? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -99,12 +100,7 @@ class TelosAdbPairingService : Service() {
             foundPort = port
             TelosShizukuHost.onPairingCodeRead(this, TelosShizukuHost.status.value.pairing.code, host, port)
             show(inputNotification(host, port))
-            TelosAdbPairingPromptActivity.launch(
-                this,
-                TelosShizukuHost.status.value.pairing.code,
-                host,
-                port,
-            )
+            showOverlay(TelosShizukuHost.status.value.pairing.code, host, port)
         }
         discovery = d
         d.start()
@@ -113,7 +109,15 @@ class TelosAdbPairingService : Service() {
     private fun stopSearch() {
         discovery?.stop()
         discovery = null
+        overlay?.dismiss()
+        overlay = null
         TelosShizukuHost.stopPairingWait()
+    }
+
+    private fun showOverlay(code: String, host: String, port: Int) {
+        val type = TelosAdbPairingOverlay.overlayTypeFor(this, accessibility = false) ?: return
+        val sheet = overlay ?: TelosAdbPairingOverlay(this, type).also { overlay = it }
+        sheet.show(code, host, port)
     }
 
     private fun show(n: Notification) {
@@ -169,20 +173,10 @@ class TelosAdbPairingService : Service() {
             getString(I18nR.string.telos_shizuku_pair_notif_enter),
             reply,
         ).addRemoteInput(remote).build()
-        val prompt = PendingIntent.getActivity(
-            this,
-            6,
-            Intent(this, TelosAdbPairingPromptActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .putExtra(TelosAdbPairingPromptActivity.EXTRA_HOST, host)
-                .putExtra(TelosAdbPairingPromptActivity.EXTRA_PORT, port),
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-        )
         return base()
             .setContentTitle(getString(I18nR.string.telos_shizuku_pair_notif_found))
             .setContentText(getString(I18nR.string.telos_shizuku_pair_found, host, port))
             .setOnlyAlertOnce(false)
-            .setFullScreenIntent(prompt, true)
             .addAction(action)
             .addAction(stopAction())
             .build()

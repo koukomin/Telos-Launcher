@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Pornește cu root.
-Wireless: deschide depanarea wireless. Telos deschide Setări și arată o notificare. Introdu cele 6 cifre în notificare.
-PC: depanare USB și comanda adb.</string>
+Fără fir: activează accesibilitatea de asociere, apasă Așteaptă codul, apoi Opțiuni dezvoltator → Depanare wireless → Asociază dispozitivul cu un cod. Rămâi pe acel dialog. Telos citește codul de 6 cifre și arată un câmp plutitor plus o notificare ca să-l tastezi fără să părăsești Setările (ieșirea anulează codul).
+Computer: depanare USB și comanda adb de mai jos.</string>
+    <string name="telos_shizuku_pair_prompt_body">Tastează aici codul ADB wireless de 6 cifre. Păstrează dialogul de asociere din Setări pe ecran; ieșirea anulează codul.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: रूट से शुरू करें.
-वायरलेस: वायरलेस डिबगिंग खोलें। Telos सेटिंग्स खोलेगा और सूचना दिखाएगा। कोड आने पर सूचना में 6 अंक लिखें.
-PC: USB डिबगिंग और adb कमांड।</string>
+वायरलेस: पेयरिंग सुलभता चालू करें, पेयरिंग कोड की प्रतीक्षा पर टैप करें, फिर डेवलपर विकल्प → वायरलेस डीबगिंग → कोड से डिवाइस पेयर करें। उसी डायलॉग पर रहें। Telos 6 अंकों का कोड पढ़ता है और सेटिंग्स छोड़े बिना लिखने के लिए तैरता फ़ील्ड और सूचना दिखाता है (छोड़ने से कोड रद्द हो जाता है)।
+कंप्यूटर: USB डीबगिंग और नीचे adb कमांड।</string>
+    <string name="telos_shizuku_pair_prompt_body">यहाँ 6 अंकों का वायरलेस ADB कोड लिखें। सेटिंग्स का पेयरिंग डायलॉग स्क्रीन पर रखें; छोड़ने से कोड रद्द हो जाता है।</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

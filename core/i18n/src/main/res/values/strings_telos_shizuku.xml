@@ -20,8 +20,8 @@
     <string name="telos_shizuku_watchdog_channel">Shizuku watchdog</string>
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
-    <string name="telos_shizuku_howto_body">Root: tap Start with root.\nWireless: enable pairing accessibility, tap Pair wirelessly, then Developer options → Wireless debugging → Pair device with pairing code. Telos reads the 6-digit code and opens a popup (and a notification) so you can confirm it while the Settings dialog is still open.\nComputer: USB debugging on, then run the adb command below.</string>
-    <string name="telos_shizuku_pair_prompt_body">Type the 6-digit code from the Wireless debugging dialog. Leave that dialog open until pairing finishes.</string>
+    <string name="telos_shizuku_howto_body">Root: tap Start with root.\nWireless: enable pairing accessibility, tap Wait for pairing code, then Developer options → Wireless debugging → Pair device with pairing code. Stay on that Settings dialog. Telos reads the 6-digit code automatically and shows a floating field plus a notification input so you can type it without leaving Settings (leaving cancels the code).\nComputer: USB debugging on, then run the adb command below.</string>
+    <string name="telos_shizuku_pair_prompt_body">Type the 6-digit wireless ADB code here. Keep the Settings pairing dialog on screen; leaving it cancels the code.</string>
     <string name="telos_shizuku_running">Shizuku is running</string>
     <string name="telos_shizuku_stopped">Shizuku is not running</string>
     <string name="telos_shizuku_card_start">Start</string>

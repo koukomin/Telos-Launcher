@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Root ile başlat.
-Kablosuz: Kablosuz hata ayıklamayı aç. Telos Ayarlar’ı açar ve bildirim gösterir. Kod görünince 6 haneyi bildirime yazın.
-PC: USB hata ayıklama ve adb komutu.</string>
+Kablosuz: eşleme erişilebilirliğini aç, Eşleme kodunu bekle’ye dokun, sonra Geliştirici seçenekleri → Kablosuz hata ayıklama → Eşleme koduyla cihaz eşle. Bu pencerede kal. Telos 6 haneli kodu okur ve Ayarlar’dan çıkmadan yazman için yüzen bir alan ve bildirim gösterir (çıkmak kodu iptal eder).
+Bilgisayar: USB hata ayıklama ve aşağıdaki adb komutu.</string>
+    <string name="telos_shizuku_pair_prompt_body">6 haneli kablosuz ADB kodunu buraya yaz. Ayarlar’daki eşleme penceresini açık tut; ayrılmak kodu iptal eder.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

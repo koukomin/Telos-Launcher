@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Сървър Shizuku на Telos</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Старт с root.
-Безжично: отвори безжичното отстраняване на грешки. Telos отваря настройките и показва известие. Въведете 6 цифри в известието.
-PC: USB и командата adb.</string>
+Безжично: включете достъпността за сдвояване, докоснете Изчакване на код, после Опции за разработчици → Безжично отстраняване на грешки → Сдвояване с код. Останете в този диалог. Telos чете 6-цифрения код и показва плаващо поле и известие, за да го въведете без да напускате Настройки (излизането отменя кода).
+Компютър: USB отстраняване на грешки и командата adb по-долу.</string>
+    <string name="telos_shizuku_pair_prompt_body">Въведете тук 6-цифрения код за безжичен ADB. Оставете диалога за сдвояване в Настройки на екрана; излизането отменя кода.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Freastalaí Shizuku Telos</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Tosaigh le root.
-Gan sreang: oscail dífhabhtú gan sreang. Osclaíonn Telos Socruithe agus taispeánann fógra. Cuir na 6 dhigit san fhógra.
-PC: dífhabhtú USB agus an t-ordú adb.</string>
+Gan sreang: cumasaigh inrochtaineacht péireála, tapáil Fan ar chód péireála, ansin Roghanna forbróra → Dífhabhtú gan sreang → Péireáil gléas le cód. Fan ar an dialóg sin. Léann Telos an cód 6 dhigit agus taispeánann réimse snámhach agus fógra chun é a chlóscríobh gan na Socruithe a fhágáil (má fhágann tú, cealaítear an cód).
+Ríomhaire: dífhabhtú USB agus an t-ordú adb thíos.</string>
+    <string name="telos_shizuku_pair_prompt_body">Clóscríobh an cód ADB gan sreang 6 dhigit anseo. Coinnigh dialóg péireála na Socruithe ar an scáileán; má fhágann tú, cealaítear an cód.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

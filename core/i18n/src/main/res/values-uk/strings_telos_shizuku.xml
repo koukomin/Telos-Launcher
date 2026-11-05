@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Запуск з root.
-Бездротово: відкрийте бездротове налагодження. Telos відкриє параметри й покаже сповіщення. Введіть 6 цифр у сповіщенні.
-ПК: USB-налагодження і команда adb.</string>
+Бездротово: увімкніть доступність спарювання, натисніть Очікування коду, потім Для розробників → Бездротове налагодження → Зіставити пристрій з кодом. Залишайтеся в цьому вікні. Telos читає 6-значний код і показує плаваюче поле та сповіщення, щоб ввести його, не залишаючи Налаштування (вихід скасовує код).
+Комп’ютер: USB-налагодження та команда adb нижче.</string>
+    <string name="telos_shizuku_pair_prompt_body">Введіть тут 6-значний код бездротового ADB. Тримайте вікно спарювання в Налаштуваннях на екрані; вихід скасовує код.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

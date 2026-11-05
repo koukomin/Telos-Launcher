@@ -211,7 +211,6 @@ object TelosShizukuHost {
 
     fun showPairingPrompt(context: Context, code: String, host: String?, port: Int?) {
         onPairingCodeRead(context, code, host, port)
-        TelosAdbPairingPromptActivity.launch(context, code, host ?: _status.value.pairing.host, port ?: _status.value.pairing.port)
     }
 
     fun refresh(context: Context) {

@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Ibda bir-root.
-Wireless: iftaħ debugging wireless. Telos jiftaħ Settings u juri notifika. Daħħal is-6 ċifri fin-notifika.
-PC: debugging USB u l-kmand adb.</string>
+Wireless: ixgħel l-aċċessibbiltà tal-pairing, agħfas Stenna l-kodiċi, imbagħad Għażliet għall-iżviluppaturi → Debugging wireless → Għaqqad apparat b’kodiċi. Ibqa’ f’dak id-djalogu. Telos jaqra l-kodiċi ta’ 6 ċifri u juri qasam f’wiċċ l-ilma u notifika biex tiktbu mingħajr ma toħroġ mis-Settings (ħruġ jikkanċella l-kodiċi).
+Kompjuter: debugging USB u l-kmand adb hawn taħt.</string>
+    <string name="telos_shizuku_pair_prompt_body">Ikteb hawn il-kodiċi ADB wireless ta’ 6 ċifri. Żomm id-djalogu tal-pairing tas-Settings fuq l-iskrin; ħruġ jikkanċella l-kodiċi.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

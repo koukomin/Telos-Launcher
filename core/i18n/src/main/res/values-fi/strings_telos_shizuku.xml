@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Teloksen Shizuku-palvelin</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Käynnistä rootilla.
-Langaton: avaa langaton virheenkorjaus. Telos avaa Asetukset ja näyttää ilmoituksen. Kirjoita 6 numeroa ilmoitukseen.
-PC: USB-virheenkorjaus ja adb-komento.</string>
+Langaton: ota pariliitoksen esteettömyys käyttöön, napauta Odota pariliitoskoodia, sitten Kehittäjäasetukset → Langaton virheenkorjaus → Liitä laite koodilla. Pysy siinä valintaikkunassa. Telos lukee 6-numeroisen koodin ja näyttää kelluvan kentän sekä ilmoituksen, jotta voit kirjoittaa sen poistumatta Asetuksista (poistuminen peruuttaa koodin).
+Tietokone: USB-virheenkorjaus ja alla oleva adb-komento.</string>
+    <string name="telos_shizuku_pair_prompt_body">Kirjoita 6-numeroinen langaton ADB-koodi tähän. Pidä Asetusten pariliitosikkuna näytöllä; poistuminen peruuttaa koodin.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

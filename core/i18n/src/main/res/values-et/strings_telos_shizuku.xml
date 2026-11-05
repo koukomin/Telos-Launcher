@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telose Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Käivita rootiga.
-Juhtmeta: ava juhtmeta silumine. Telos avab Seaded ja näitab teavitust. Sisesta 6 numbrit teavitusse.
-PC: USB-silumine ja adb käsk.</string>
+Juhtmevaba: lülita sidumise hõlbustus sisse, toksa Oota sidumiskoodi, siis Arendaja valikud → Juhtmevaba silumine → Seo seade koodiga. Jää sellesse dialoogi. Telos loeb 6-kohalise koodi ja näitab ujuvat välja ning teavitust, et saad selle sisestada Seadeid sulgemata (lahkumine tühistab koodi).
+Arvuti: USB-silumine ja allpool olev adb-käsk.</string>
+    <string name="telos_shizuku_pair_prompt_body">Sisesta siia 6-kohaline juhtmevaba ADB kood. Hoia Seadete sidumisdialoog ekraanil; lahkumine tühistab koodi.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

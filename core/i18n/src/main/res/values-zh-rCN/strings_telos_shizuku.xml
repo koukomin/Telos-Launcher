@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root：用 root 启动。
-无线：打开无线调试。Telos 会打开系统设置并显示通知。出现配对码后，在通知中输入 6 位数字。
-电脑：USB 调试后运行 adb 命令。</string>
+无线：启用配对无障碍，点按等待配对码，然后开发者选项 → 无线调试 → 使用配对码配对设备。留在该对话框。Telos 会读取 6 位码，并显示悬浮输入框和通知，以便在不离开设置的情况下输入（离开会取消该码）。
+电脑：打开 USB 调试，然后运行下方 adb 命令。</string>
+    <string name="telos_shizuku_pair_prompt_body">在此输入 6 位无线 ADB 配对码。请保持设置中的配对对话框在屏幕上；离开会取消该码。</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

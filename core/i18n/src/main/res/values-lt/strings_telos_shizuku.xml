@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Paleisti su root.
-Belaidis: atidarykite belaidį derinimą. Telos atidaro Nustatymus ir rodo pranešimą. Įveskite 6 skaitmenis pranešime.
-PC: USB derinimas ir adb komanda.</string>
+Belaidis: įjunkite susiejimo pritaikymą neįgaliesiems, bakstelėkite Laukite kodo, tada Kūrėjo parinktys → Belaidis derinimas → Susieti įrenginį kodu. Likite tame dialogo lange. Telos nuskaito 6 skaitmenų kodą ir rodo slankųjį lauką bei pranešimą, kad įvestumėte jo neišeidami iš Nustatymų (išėjimas atšaukia kodą).
+Kompiuteris: USB derinimas ir adb komanda žemiau.</string>
+    <string name="telos_shizuku_pair_prompt_body">Įveskite čia 6 skaitmenų belaidžio ADB kodą. Palikite Nustatymų susiejimo langą ekrane; išėjimas atšaukia kodą.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

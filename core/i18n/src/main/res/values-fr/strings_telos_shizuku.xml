@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Serveur Shizuku Telos</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root : Démarrer avec root.
-Sans fil : Ouvrir le débogage sans fil. Telos ouvre Réglages et affiche une notification. Quand le code apparaît, saisissez-le dans la notification.
-PC : débogage USB puis la commande adb.</string>
+Sans fil : activez l’accessibilité de jumelage, appuyez sur Attendre le code, puis Options pour les développeurs → Débogage sans fil → Associer l’appareil avec un code. Restez sur cette boîte. Telos lit le code à 6 chiffres et affiche un champ flottant plus une notification pour le saisir sans quitter Paramètres (quitter annule le code).
+Ordinateur : débogage USB, puis la commande adb ci-dessous.</string>
+    <string name="telos_shizuku_pair_prompt_body">Saisissez ici le code ADB sans fil à 6 chiffres. Gardez la boîte de jumelage des Paramètres à l’écran ; la quitter annule le code.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

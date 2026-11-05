@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Telos Shizuku server</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Zaženi z root.
-Brezžično: odpri brezžično odpravljanje napak. Telos odpre nastavitve in pokaže obvestilo. Vnesite 6 številk v obvestilo.
-PC: USB in ukaz adb.</string>
+Brezžično: vklopi dostopnost seznanjanja, tapni Čakaj na kodo, nato Možnosti za razvijalce → Brezžično odpravljanje napak → Seznani napravo s kodo. Ostani v tem pogovornem oknu. Telos prebere 6-mestno kodo in pokaže plavajoče polje ter obvestilo, da jo vpišeš brez zapuščanja Nastavitev (izhod prekliče kodo).
+Računalnik: odpravljanje napak USB in ukaz adb spodaj.</string>
+    <string name="telos_shizuku_pair_prompt_body">Vpiši sem 6-mestno kodo brezžičnega ADB. Drži pogovorno okno seznanjanja v Nastavitvah na zaslonu; izhod prekliče kodo.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>

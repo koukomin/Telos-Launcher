@@ -21,8 +21,9 @@
     <string name="telos_shizuku_watchdog_title">Servidor Shizuku de Telos</string>
     <string name="telos_shizuku_howto_title">How to start</string>
     <string name="telos_shizuku_howto_body">Root: Iniciar con root.
-Inalámbrico: Abrir depuración inalámbrica. Telos abre Ajustes y muestra una notificación. Cuando aparezca el código, escríbelo en la notificación.
-PC: depuración USB y el comando adb.</string>
+Inalámbrico: activa la accesibilidad de emparejamiento, pulsa Esperar código de emparejamiento y luego Opciones de desarrollador → Depuración inalámbrica → Emparejar dispositivo con código. Quédate en ese diálogo. Telos lee el código de 6 dígitos y muestra un campo flotante y una notificación para escribirlo sin salir de Ajustes (salir cancela el código).
+Ordenador: depuración USB y el comando adb de abajo.</string>
+    <string name="telos_shizuku_pair_prompt_body">Escribe aquí el código ADB inalámbrico de 6 dígitos. Mantén el diálogo de emparejamiento de Ajustes en pantalla; salir lo cancela.</string>
     <string name="telos_shizuku_copy_adb">Copy adb command</string>
     <string name="telos_shizuku_copied">Copied</string>
     <string name="telos_shizuku_enable_a11y">Enable pairing accessibility</string>
