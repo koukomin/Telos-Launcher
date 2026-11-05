@@ -7,10 +7,14 @@ import android.provider.Settings
 import android.text.InputFilter
 import android.text.InputType
 import android.view.Gravity
+import android.view.KeyEvent
+import android.view.inputmethod.InputMethodManager
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -38,6 +42,9 @@ internal class TelosAdbPairingOverlay(
     private var input: EditText? = null
     private var host: String? = null
     private var port: Int? = null
+    private var pairButton: Button? = null
+    private var submitting = false
+    private var params: WindowManager.LayoutParams? = null
 
     fun isShowing(): Boolean = root != null
 
@@ -58,8 +65,17 @@ internal class TelosAdbPairingOverlay(
         }
         val density = context.resources.displayMetrics.density
         val pad = (16 * density).toInt()
-        val field = EditText(context).apply {
+        val field = object : EditText(context) {
+            override fun onKeyPreIme(keyCode: Int, event: KeyEvent): Boolean {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+                    collapse()
+                    return true
+                }
+                return super.onKeyPreIme(keyCode, event)
+            }
+        }.apply {
             inputType = InputType.TYPE_CLASS_NUMBER
+            setSingleLine(true)
             filters = arrayOf(InputFilter.LengthFilter(6))
             hint = context.getString(I18nR.string.telos_shizuku_pair_code)
             imeOptions = EditorInfo.IME_ACTION_DONE
@@ -72,38 +88,67 @@ internal class TelosAdbPairingOverlay(
             text = context.getString(I18nR.string.telos_shizuku_pair_submit)
             setOnClickListener { submit() }
         }
-        field.setOnEditorActionListener { _, action, _ ->
-            if (action == EditorInfo.IME_ACTION_DONE) {
+        pairButton = pair
+        field.setOnEditorActionListener { _, action, event ->
+            if (action == EditorInfo.IME_ACTION_DONE ||
+                (event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP)) {
                 submit()
                 true
             } else false
         }
+        val pill = Button(context).apply {
+            text = context.getString(I18nR.string.telos_shizuku_pair_code)
+            setOnClickListener {
+                field.visibility = View.VISIBLE
+                pair.visibility = View.VISIBLE
+                params?.let { it.flags = it.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv() }
+                root?.let { wm.updateViewLayout(it, params) }
+                field.requestFocus()
+                showKeyboardWhenReady(field)
+            }
+        }
+        field.visibility = View.GONE
+        pair.visibility = View.GONE
         val box = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(pad, pad, pad, pad)
-            setBackgroundColor(0xF2222222.toInt())
-            addView(
-                TextView(context).apply {
-                    text = context.getString(I18nR.string.telos_shizuku_pair_prompt_body)
-                    setTextColor(0xFFFFFFFF.toInt())
-                },
-            )
+            val backgroundColor = android.util.TypedValue().also {
+                context.theme.resolveAttribute(android.R.attr.colorBackground, it, true)
+            }.data
+            background = GradientDrawable().apply { setColor(backgroundColor); cornerRadius = 28 * density }
+            addView(LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                addView(pill, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+                addView(ImageButton(context).apply {
+                    setImageResource(android.R.drawable.ic_menu_close_clear_cancel)
+                    contentDescription = context.getString(I18nR.string.telos_shizuku_pair_stop)
+                    minimumWidth = (48 * density).toInt()
+                    minimumHeight = (48 * density).toInt()
+                    setOnClickListener {
+                        context.startService(TelosAdbPairingService.stopIntent(context))
+                        dismiss()
+                    }
+                })
+            })
             addView(field)
             addView(pair)
         }
         val flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
             WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
-            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
         val lp = WindowManager.LayoutParams(
-            WindowManager.LayoutParams.MATCH_PARENT,
+            (320 * density).toInt().coerceAtMost(context.resources.displayMetrics.widthPixels - 2 * pad),
             WindowManager.LayoutParams.WRAP_CONTENT,
             windowType,
             flags,
             PixelFormat.TRANSLUCENT,
         ).apply {
-            gravity = Gravity.BOTTOM
+            gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+            y = (72 * density).toInt()
+            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
             title = "telos-adb-pairing"
         }
+        params = lp
         runCatching {
             wm.addView(box, lp)
             root = box
@@ -114,6 +159,7 @@ internal class TelosAdbPairingOverlay(
     }
 
     fun dismiss() {
+        hideKeyboard()
         val view = root
         root = null
         input = null
@@ -121,12 +167,44 @@ internal class TelosAdbPairingOverlay(
         scope.cancel()
     }
 
+    private fun showKeyboardWhenReady(field: EditText, attempts: Int = 10) {
+        // Updating NOT_FOCUSABLE does not transfer window focus synchronously.
+        field.postDelayed({
+            if (input !== field || field.visibility != View.VISIBLE) return@postDelayed
+            if (field.hasWindowFocus()) {
+                context.getSystemService(InputMethodManager::class.java)?.showSoftInput(field, InputMethodManager.SHOW_IMPLICIT)
+            } else if (attempts > 0) showKeyboardWhenReady(field, attempts - 1)
+        }, 100)
+    }
+
+    private fun hideKeyboard() {
+        input?.let { field ->
+            context.getSystemService(InputMethodManager::class.java)?.hideSoftInputFromWindow(field.windowToken, 0)
+            field.clearFocus()
+        }
+    }
+
+    private fun collapse() {
+        hideKeyboard()
+        input?.visibility = View.GONE
+        pairButton?.visibility = View.GONE
+        root?.let { view ->
+            params?.let { lp ->
+                lp.flags = lp.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                wm.updateViewLayout(view, lp)
+            }
+        }
+    }
+
     private fun submit() {
+        if (submitting) return
         val code = input?.text?.toString().orEmpty().filter { it.isDigit() }.take(6)
         if (code.length != 6) {
             input?.error = context.getString(I18nR.string.telos_shizuku_pair_code)
             return
         }
+        submitting = true
+        collapse()
         scope.launch {
             val r = TelosShizukuHost.submitPairingCode(app, code, host, port)
             Toast.makeText(
@@ -135,6 +213,7 @@ internal class TelosAdbPairingOverlay(
                 else r.exceptionOrNull()?.message ?: app.getString(I18nR.string.telos_shizuku_pair_fail),
                 Toast.LENGTH_LONG,
             ).show()
+            submitting = false
             if (r.isSuccess) dismiss()
         }
     }

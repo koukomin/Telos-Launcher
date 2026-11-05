@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 
 /**
  * Shizuku-style wireless pairing: a foreground notification searches `_adb-tls-pairing._tcp`,
@@ -38,6 +39,30 @@ class TelosAdbPairingService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        scope.launch {
+            TelosShizukuHost.status.collect { state ->
+                when (state.pairing.phase) {
+                    TelosShizukuHost.PairingPhase.Done -> {
+                        stopSearch()
+                        stopForeground(STOP_FOREGROUND_REMOVE)
+                        stopSelf()
+                    }
+                    TelosShizukuHost.PairingPhase.Working -> show(workingNotification())
+                    TelosShizukuHost.PairingPhase.Failed -> {
+                        overlay?.dismiss()
+                        overlay = null
+                        show(failNotification(state.lastLog))
+                    }
+                    else -> Unit
+                }
+            }
+        }
+        scope.launch {
+            delay(180_000)
+            TelosShizukuHost.cancelPairing()
+            stopForeground(STOP_FOREGROUND_REMOVE)
+            stopSelf()
+        }
         if (Build.VERSION.SDK_INT >= 26) {
             getSystemService(NotificationManager::class.java)?.createNotificationChannel(
                 NotificationChannel(
@@ -55,6 +80,7 @@ class TelosAdbPairingService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             ACTION_STOP -> {
+                TelosShizukuHost.cancelPairing()
                 stopSearch()
                 stopForeground(STOP_FOREGROUND_REMOVE)
                 stopSelf()
@@ -74,16 +100,16 @@ class TelosAdbPairingService : Service() {
                         stopSelf()
                     }
                 }
-                return START_REDELIVER_INTENT
+                return START_NOT_STICKY
             }
             else -> {
-                TelosShizukuHost.notifyPairingSearch()
+                TelosShizukuHost.notifyPairingSearch(intent?.getBooleanExtra(EXTRA_AUTOMATIC, true) ?: true)
                 startSearch()
                 show(searchingNotification())
-                openWirelessDebugging(this)
+                showOverlay("", "", -1)
             }
         }
-        return START_REDELIVER_INTENT
+        return START_NOT_STICKY
     }
 
     override fun onDestroy() {
@@ -96,6 +122,7 @@ class TelosAdbPairingService : Service() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
         if (discovery != null) return
         val d = TelosAdbPairingDiscovery(this) { host, port ->
+            if (TelosShizukuHost.status.value.pairing.phase !in setOf(TelosShizukuHost.PairingPhase.Searching, TelosShizukuHost.PairingPhase.WaitingForCode)) return@TelosAdbPairingDiscovery
             foundHost = host
             foundPort = port
             TelosShizukuHost.onPairingCodeRead(this, TelosShizukuHost.status.value.pairing.code, host, port)
@@ -115,6 +142,7 @@ class TelosAdbPairingService : Service() {
     }
 
     private fun showOverlay(code: String, host: String, port: Int) {
+        if (TelosAdbPairingAccessibilityService.connected) return
         val type = TelosAdbPairingOverlay.overlayTypeFor(this, accessibility = false) ?: return
         val sheet = overlay ?: TelosAdbPairingOverlay(this, type).also { overlay = it }
         sheet.show(code, host, port)
@@ -237,28 +265,34 @@ class TelosAdbPairingService : Service() {
         private const val ACTION_STOP = "de.mm20.launcher2.shizuku.PAIR_STOP"
         private const val ACTION_REPLY = "de.mm20.launcher2.shizuku.PAIR_REPLY"
         private const val KEY_CODE = "pairing_code"
+        private const val EXTRA_AUTOMATIC = "automatic"
         private const val EXTRA_HOST = "host"
         private const val EXTRA_PORT = "port"
 
-        fun startIntent(context: Context) =
-            Intent(context, TelosAdbPairingService::class.java).setAction(ACTION_START)
+        fun startIntent(context: Context, automatic: Boolean = true) =
+            Intent(context, TelosAdbPairingService::class.java).setAction(ACTION_START).putExtra(EXTRA_AUTOMATIC, automatic)
 
         fun stopIntent(context: Context) =
             Intent(context, TelosAdbPairingService::class.java).setAction(ACTION_STOP)
 
-        fun start(context: Context) {
+        fun start(context: Context, automatic: Boolean = true) {
             val app = context.applicationContext
-            val i = startIntent(app)
+            val i = startIntent(app, automatic)
+            TelosShizukuHost.notifyPairingSearch(automatic)
             if (Build.VERSION.SDK_INT >= 26) app.startForegroundService(i) else app.startService(i)
+            // Launch while the initiating Activity is visible, before background-start limits apply.
+            openWirelessDebugging(context)
         }
 
         fun openWirelessDebugging(context: Context) {
-            val flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            val flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            TelosShizukuHost.requestWirelessNavigation()
             val tries = listOf(
-                Intent("com.android.settings.WIFI_DEBUGGING_SETTINGS").addFlags(flags),
-                Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS).addFlags(flags),
-                Intent().setClassName("com.android.settings", "com.android.settings.Settings\$DevelopmentSettingsDashboardActivity").addFlags(flags),
                 Intent().setClassName("com.android.settings", "com.android.settings.development.WirelessDebuggingActivity").addFlags(flags),
+                Intent().setClassName("com.android.settings", "com.android.settings.Settings\$DevelopmentSettingsDashboardActivity")
+                    .putExtra(":settings:fragment_args_key", "toggle_adb_wireless").addFlags(flags),
+                Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
+                    .putExtra(":settings:fragment_args_key", "toggle_adb_wireless").addFlags(flags),
             )
             for (intent in tries) {
                 if (runCatching { context.startActivity(intent) }.isSuccess) return

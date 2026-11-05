@@ -380,3 +380,29 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 - [Tesseract4Android 4.9.0](https://github.com/adaptech-cz/Tesseract4Android/tree/4.9.0), Copyright Adaptech s.r.o., Robert Pösel, Google Inc., Robert Theis and contributors, Apache-2.0. Used as a pinned Android dependency for local OCR and searchable PDF rendering. The Apache-2.0, Leptonica, libpng and Independent JPEG Group license texts are retained explicitly in `app/app/src/main/assets/licenses/tesseract4android-4.9.0-NOTICES.txt`, independently of META-INF packaging exclusions.
 - [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast/tree/87416418657359cb625c412a48b6e1d6d41c29bd), Tesseract contributors, Apache-2.0. Language models are optional verified downloads, not bundled APK assets. The glyphless PDF font comes from [tessconfigs](https://github.com/tesseract-ocr/tessconfigs/tree/3decf1c8252ba6dbeef0bf908f4b0aab7f18d113), under its upstream Apache-2.0 distribution.
 - [ZXing 3.5.4](https://github.com/zxing/zxing), Copyright ZXing authors, Apache-2.0. The existing dependency is reused for CameraX QR/linear/matrix-code decoding.
+
+### Wireless ADB pairing
+
+The existing Shizuku-Next JNI pairing code is built and bound to Telos's `PairingContext`.
+Protocol and lifecycle behavior were reviewed against Shizuku-Next
+`8508e1d50a293cec82eb60465bcc17022d7a5926` and Shizuku+
+`80330704be4ebc46e282334b9c542d4a7d071b1b` (Apache-2.0; RikkaW/RikkaApps and their fork contributors).
+The Telos ADB transport and UI changes are GPL-3.0-or-later.
+
+`io.github.vvb2060.ndk:boringssl:20251124` supplies the static crypto prefab for SPAKE2.
+The packaging repository is https://github.com/vvb2060/BoringSSL_Android; its source submodule is
+BoringSSL `79048f1f1d8e6b7f9ca59b95c24486c8149122a4`. The compiled headers carry Apache-2.0
+notices (BoringSSL Authors/OpenSSL Project Authors). Its Maven POM still lists the older
+OpenSSL/ISC license metadata; the pinned source and shipped license are authoritative.
+The library uses the non-LTO artifact with the pinned NDK. See bundled BoringSSL license and AUTHORS.
+
+The encrypted software-RSA identity follows Shizuku-Next's `AdbKey` approach; no private-key
+logging is carried over. Certificate construction uses the project's existing pinned Bouncy Castle
+`bcpkix-jdk18on` version (`libs.versions.bouncycastle`), under the Bouncy Castle MIT-style license.
+No separate crypto version is introduced.
+
+The now-built `rish` JNI library comes from the Shizuku API/Rish project (MIT, copyright RikkaW,
+2021); its full license is retained under `libs/shizuku-next/rish/LICENSE` and in APK assets.
+The Apache-2.0 Shizuku-Next license is included in full. Statically linked NDK 27 C++ runtime
+licenses (Apache-2.0 with LLVM exceptions and legacy notices) are reproduced in the bundled
+NDK consolidated notices; this asset is retained to preserve all runtime attributions.

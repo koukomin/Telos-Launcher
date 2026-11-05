@@ -153,3 +153,13 @@ The implementation scope expanded before merge: repository-wide Shizuku private-
 Native run `40652059321` at `2d80bdc22ba4bbbd2de32589984c0f0d0674fef8` passed compilation/unit checks and 32 Android tests with no failures/errors/skips. Artifact `12800199089` (SHA-256 `570e7356e42ea2bb1828c90ea24142965f9d9f4d26105b7eb9c6feafb6e975c9`) contains the AppOps and scanner light/dark compact/wide screenshots. Inspection found poor mid-word wrapping in narrow AppOps navigation/tabs and showed that the scanner Dialog fixture did not inherit the test's font density. Passing assertions alone therefore did not establish large-font completion.
 
 AppOps navigation now uses two rows when narrow and tall, or accessible compact icons when narrow and short, while wide windows retain labels in one row. Browse tabs scroll instead of breaking words. Scanner retains the caller's actual font density across its separate Dialog window; a text-layout assertion verifies fontScale 2. The AppOps fixture waits for the loaded search surface before capturing. These corrections require a fresh instrumented run and screenshot inspection. No physical camera, root/Shizuku grant or live account behavior is inferred from these tests.
+
+### Shizuku pairing pill — 2026-11-05
+
+Physical OnePlus 15 / ColorOS Android 17, portrait, dark, font scale 1.15: collapsed pill,
+manual input, hardware Enter and user-operated software Done were exercised with the isolated
+app-management test APK. Automatic and manual flows reached a live shell-UID Shizuku binder;
+IME was hidden after submission. The production launcher was retained. See
+[transport audit and evidence](./shizuku-pairing.md). This does not certify landscape, light mode
+or the full font/display-size matrix. Device screenshots are not published because they contain
+private Settings/device data.

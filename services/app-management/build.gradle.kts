@@ -39,6 +39,11 @@ android {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
+    packaging {
+        jniLibs.useLegacyPackaging = true
+        resources.merges += setOf("META-INF/LICENSE.md", "META-INF/NOTICE.md")
+        resources.excludes += setOf("META-INF/versions/**", "META-INF/DEPENDENCIES", "META-INF/INDEX.LIST")
+    }
     namespace = "de.mm20.launcher2.appmanagement"
 }
 
@@ -55,6 +60,7 @@ dependencies {
     implementation(libs.shizuku.api)
     implementation(libs.shizuku.provider)
     implementation(libs.hiddenapibypass)
+    implementation("org.bouncycastle:bcpkix-jdk18on:${libs.versions.bouncycastle.get()}")
 
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))
@@ -62,4 +68,6 @@ dependencies {
     implementation(project(":core:preferences"))
     implementation(project(":libs:shizuku-next"))
     testImplementation(libs.bundles.tests)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation("androidx.test:runner:1.7.0")
 }

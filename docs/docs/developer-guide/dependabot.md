@@ -43,3 +43,17 @@ GPL-incompatible upgrade. Do not merge or release unless the user asked.
 
 Dependabot version updates (`.github/dependabot.yml`) cover GitHub Actions,
 Gradle and the docs npm lockfile on a daily Europe/Athens schedule.
+
+## Built-in Shizuku pairing crypto
+
+Pairing builds `io.github.vvb2060.ndk:boringssl:20251124` (non-LTO prefab) for the pinned
+NDK. The packaged headers and pinned source carry Apache-2.0 notices; the Maven POM's
+older OpenSSL/ISC license metadata is stale. Source revision and full license/author notices
+are recorded in `THIRD_PARTY_NOTICES.md` and APK assets. Do not replace it with the older
+20250114 artifact without checking its different licensing.
+
+Certificate construction uses `bcpkix-jdk18on` at `libs.versions.bouncycastle`, with the
+existing root resolution pin keeping Bouncy Castle modules at one version. The existing
+Jackson/jsoup/FreeMarker security pins are retained. The pairing regression workflow checks
+both ARM native payloads and compiles the actual UI; physical-device evidence is recorded in
+the [pairing audit](./shizuku-pairing.md).

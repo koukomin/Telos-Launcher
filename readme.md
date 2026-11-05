@@ -115,7 +115,7 @@ from Telos Store.
 
 ### Built-in Shizuku (no extra Shizuku app)
 
-Telos includes the Shizuku **server** (starter + `libshizuku.so`, from [Shizuku-Next](https://github.com/rushiranpise/Shizuku-Next), Apache-2.0) inside the launcher. Freeze, Store privileged installs, Network Wi-Fi DNS, call recording `CAPTURE_AUDIO_OUTPUT`, and Files privileged paths use this binder. You do not install `moe.shizuku.privileged.api`. Open **Telos System → Shizuku**.
+Telos includes the Shizuku **server** (starter + `libshizuku.so`, from [Shizuku-Next](https://github.com/rushiranpise/Shizuku-Next), Apache-2.0) inside the launcher. Freeze, Store privileged installs, Network Wi-Fi DNS, call recording `CAPTURE_AUDIO_OUTPUT`, and Files privileged paths use this binder. You do not install `moe.shizuku.privileged.api`. Open **Telos System → Shizuku**. Wireless setup uses a collapsed pairing pill, optional Settings-only automatic code reading, and notification/manual input. Android 17 requests local-network access before discovery. See the [pairing audit and feature scope](docs/docs/developer-guide/shizuku-pairing.md).
 
 | How | What you do |
 | --- | --- |

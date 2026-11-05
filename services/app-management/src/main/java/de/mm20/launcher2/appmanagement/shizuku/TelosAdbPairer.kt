@@ -12,6 +12,7 @@ import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.math.BigInteger
 import java.net.Socket
+import java.net.InetSocketAddress
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.security.KeyFactory
@@ -68,11 +69,15 @@ object TelosAdbPairer {
         }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    private suspend fun discover(context: Context, timeoutMs: Long = 8_000L): Pair<String, Int>? {
+    internal suspend fun discover(context: Context, timeoutMs: Long = 8_000L): Pair<String, Int>? {
         return withTimeoutOrNull(timeoutMs) {
             suspendCancellableCoroutine { cont ->
-                val mdns = TelosAdbPairingDiscovery(context) { host, port ->
-                    if (port > 0 && cont.isActive) cont.resume(host to port)
+                lateinit var mdns: TelosAdbPairingDiscovery
+                mdns = TelosAdbPairingDiscovery(context) { host, port ->
+                    if (port > 0 && cont.isActive) {
+                        mdns.stop()
+                        cont.resume(host to port)
+                    }
                 }
                 cont.invokeOnCancellation { mdns.stop() }
                 mdns.start()
@@ -127,9 +132,13 @@ internal class TelosAdbPairingClient(
     }
 
     private fun setupTls() {
-        socket = Socket(host, port)
+        socket = Socket().apply {
+            connect(InetSocketAddress(host, this@TelosAdbPairingClient.port), 5_000)
+            soTimeout = 15_000
+        }
         socket.tcpNoDelay = true
         val ssl = key.sslContext.socketFactory.createSocket(socket, host, port, true) as SSLSocket
+        ssl.soTimeout = 15_000
         ssl.startHandshake()
         inputStream = DataInputStream(ssl.inputStream)
         outputStream = DataOutputStream(ssl.outputStream)
@@ -142,6 +151,7 @@ internal class TelosAdbPairingClient(
     }
 
     private fun exportKeyingMaterial(ssl: SSLSocket): ByteArray {
+        org.lsposed.hiddenapibypass.HiddenApiBypass.addHiddenApiExemptions("Lcom/android/org/conscrypt/Conscrypt;")
         val conscrypt = Class.forName("com.android.org.conscrypt.Conscrypt")
         val method = conscrypt.getMethod(
             "exportKeyingMaterial",
@@ -198,50 +208,26 @@ internal class TelosAdbPairingClient(
         runCatching { inputStream.close() }
         runCatching { outputStream.close() }
         runCatching { socket.close() }
-        if (started) runCatching { pairingContext.destroy() }
+        if (::pairingContext.isInitialized) runCatching { pairingContext.destroy() }
     }
 
 }
 
 internal class TelosAdbKey(context: Context) {
-    private val alias = "telos_adb_pair"
     private val privateKey: PrivateKey
     private val certificate: X509Certificate
     private val publicKey: RSAPublicKey
 
     init {
-        val ks = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
-        if (!ks.containsAlias(alias)) {
-            val kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore")
-            kpg.initialize(
-                KeyGenParameterSpec.Builder(
-                    alias,
-                    KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT,
-                )
-                    .setAlgorithmParameterSpec(RSAKeyGenParameterSpec(2048, RSAKeyGenParameterSpec.F4))
-                    .setDigests(KeyProperties.DIGEST_SHA256)
-                    .setSignaturePaddings(KeyProperties.SIGNATURE_PADDING_RSA_PKCS1)
-                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
-                    .setCertificateSubject(X500Principal("CN=00"))
-                    .setCertificateSerialNumber(BigInteger.ONE)
-                    .setKeySize(2048)
-                    .build(),
-            )
-            kpg.generateKeyPair()
-        }
-        val entry = ks.getEntry(alias, null) as KeyStore.PrivateKeyEntry
-        privateKey = entry.privateKey
-        certificate = entry.certificate as X509Certificate
-        publicKey = (certificate.publicKey as? RSAPublicKey)
-            ?: KeyFactory.getInstance("RSA").generatePublic(
-                RSAPublicKeySpec(
-                    (certificate.publicKey as RSAPublicKey).modulus,
-                    RSAKeyGenParameterSpec.F4,
-                ),
-            ) as RSAPublicKey
+        // Conscrypt needs a software RSA key for TLS signing on some OEMs. Protect its
+        // persisted encoding with a non-exportable Android Keystore AES-GCM key.
+        val identity = TelosAdbIdentity.load(context)
+        privateKey = identity.first
+        certificate = identity.second
+        publicKey = certificate.publicKey as RSAPublicKey
     }
 
-    val adbPublicKey: ByteArray = publicKey.adbEncoded("telos")
+    val adbPublicKey: ByteArray = publicKey.adbEncoded(if (context.packageName.endsWith(".test")) "telos-pairing-test" else "telos")
 
     private val keyManager = object : X509ExtendedKeyManager() {
         override fun chooseClientAlias(keyTypes: Array<out String>, issuers: Array<out Principal>?, socket: Socket?) =
