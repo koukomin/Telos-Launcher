@@ -123,7 +123,7 @@ Telos includes the Shizuku **server** (starter + `libshizuku.so`, from [Shizuku-
 | How | What you do |
 | --- | --- |
 | **Root** | Tap **Start with root**. Enable Autostart so it comes back after reboot. |
-| **Wireless (phone only)** | Telos System → Shizuku → **Open wireless debugging**. Telos opens the system Wireless debugging screen and a notification. Developer options → Wireless debugging → **Pair device with pairing code**. When the 6 digits appear, enter them in the notification (same as Shizuku). Accessibility can fill the Settings field. Then Start server and Autostart. Pairing is once per ADB key. |
+| **Wireless (phone only)** | Telos System → Shizuku → **Open wireless debugging**. Telos opens the system Wireless debugging screen and a notification. Developer options → Wireless debugging → **Pair device with pairing code**. When the 6 digits appear, enter them in the notification (same as Shizuku). The optional accessibility reader can read the Settings pairing code automatically. Then Start server and Autostart. Pairing is once per ADB key. |
 | **Computer ADB** | USB debugging on, authorize the PC, then the command shown on the Shizuku tab (copy it — paths change per install): |
 
 ```bash

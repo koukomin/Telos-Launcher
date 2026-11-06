@@ -51,7 +51,12 @@ adb shell …libshizuku.so --apk=…/base.apk
 
 ### Autostart and watchdog
 
-Autostart runs on `BOOT_COMPLETED` / `LOCKED_BOOT_COMPLETED` and after Telos updates. The watchdog is a foreground service that starts the server again if the binder dies. Root starts do not need Wi-Fi. Wireless starts need Developer options / wireless debugging (or `WRITE_SECURE_SETTINGS` so Telos can set `adb_wifi_enabled`).
+Autostart is opt-in. Telos attempts reconnection when the launcher opens and after
+`BOOT_COMPLETED` or a Telos update, subject to Android foreground-service restrictions. It does
+not run at locked boot. The watchdog stops when Autostart is off and backs off failed attempts.
+Root starts do not need wireless debugging. Without root, enable Wireless debugging and approve
+the current Wi-Fi after reboot; Telos reconnects using the saved pairing identity. Telos does not
+silently enable this Android setting. See [startup requirements](/docs/developer-guide/startup-scripts).
 
 ### Labs
 
