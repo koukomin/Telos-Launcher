@@ -1225,8 +1225,13 @@ Some features are new and not tested on every device. This is what the project's
 ## Build
 
 Telos is a Kotlin/Gradle multi-module Android project (package `de.mm20.launcher2`). It needs a JDK 21
-toolchain and Gradle 9.4.1 via the wrapper. Build variants combine a build type (`debug`, `release`,
+toolchain and Gradle 9.8.2 via the wrapper. Build variants combine a build type (`debug`, `release`,
 `nightly`) with a product flavor (`default`, `fdroid`).
+
+Dependency resolution keeps Guava 33.8.0 (`-android` in the app, `-jre` in build
+tools) and jsoup 1.24.1 aligned across the version catalog and transitive pins.
+See [dependency security checks](docs/docs/developer-guide/dependabot.md) and
+[the security reporting policy](SECURITY.md).
 
 ```sh
 ./gradlew assembleDefaultDebug      # build a debug APK

@@ -7,6 +7,8 @@ based on" table in `readme.md`.
 
 | Project | License | Copyright notice found in the project |
 | --- | --- | --- |
+| [Guava 33.8.0](https://github.com/google/guava) | Apache-2.0 | Copyright The Guava Authors. Used as unmodified Maven artifacts: `-android` in application dependencies and `-jre` in build-tool dependencies. The full upstream license is retained in `app/app/src/main/assets/licenses/guava-33.8.0-LICENSE.txt`. |
+| [jsoup 1.24.1](https://github.com/jhy/jsoup) | MIT | Copyright (c) 2009–2026 Jonathan Hedley. Used as an unmodified Maven dependency. The full upstream copyright and license are retained in `app/app/src/main/assets/licenses/jsoup-1.24.1-LICENSE.txt`. |
 | [Shizuku-Next](https://github.com/rushiranpise/Shizuku-Next) (server, starter, JNI; based on [RikkaApps/Shizuku](https://github.com/RikkaApps/Shizuku) and thedjchi's fork) | Apache-2.0 | Copyright of RikkaW / RikkaApps, thedjchi, rushiranpise and Shizuku-Next contributors. Vendored under `libs/shizuku-next`. |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | Copyright (C) 2021-2026 MM2-0 and the Kvaesitso contributors |
 | [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) | Apache-2.0 | Copyright 2020-2026 JetBrains s.r.o. and Kotlin Programming Language contributors. Used only by `:desktop-linux` |

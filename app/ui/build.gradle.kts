@@ -232,7 +232,7 @@ dependencies {
     implementation(libs.androidx.media3.rtsp)
     implementation(libs.androidx.media3.common)
     implementation(libs.androidx.exifinterface)
-    implementation("com.google.guava:guava:33.8.0-android")
+    implementation(libs.guava.android)
     // === TELOS_PENDING_REVIEW_END: radio_mini_player ===
 
     androidTestImplementation(libs.androidx.compose.uitestjunit4)

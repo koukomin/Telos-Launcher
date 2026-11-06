@@ -14,7 +14,9 @@ plugins {
 }
 
 subprojects {
+    val targetProject = this
     configurations.configureEach {
+        val isApplicationClasspath = name.endsWith("RuntimeClasspath") || name.endsWith("CompileClasspath")
         resolutionStrategy.eachDependency {
             when {
                 requested.group == "com.fasterxml.jackson.core" &&
@@ -39,7 +41,14 @@ subprojects {
                 requested.group == "org.apache.commons" && requested.name == "commons-lang3" ->
                     useVersion(libs.versions.commonsLang3.get())
                 requested.group == "com.google.guava" && requested.name == "guava" -> {
-                    val suffix = if (requested.version.orEmpty().endsWith("-jre")) "-jre" else "-android"
+                    // A transitive -jre request must not switch an Android app to
+                    // Guava's JRE artifact. Compiler/tool configurations still use JRE.
+                    val androidClasspath = isApplicationClasspath && (
+                        targetProject.plugins.hasPlugin("com.android.application") ||
+                            targetProject.plugins.hasPlugin("com.android.library") ||
+                            targetProject.plugins.hasPlugin("com.android.kotlin.multiplatform.library")
+                        )
+                    val suffix = if (androidClasspath) "-android" else "-jre"
                     useVersion(libs.versions.guava.get() + suffix)
                 }
                 requested.group == "org.bouncycastle" ->

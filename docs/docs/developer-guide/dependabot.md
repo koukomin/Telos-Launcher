@@ -44,6 +44,38 @@ GPL-incompatible upgrade. Do not merge or release unless the user asked.
 Dependabot version updates (`.github/dependabot.yml`) cover GitHub Actions,
 Gradle and the docs npm lockfile on a daily Europe/Athens schedule.
 
+## Verify dependency upgrades
+
+Guava is pinned to **33.8.0** and jsoup to **1.24.1**. The app uses Guava's
+`-android` artifact; Gradle's plugin classpath uses `-jre`. Update both the
+`telosPluginCvePins` list and its `eachDependency` rules in `settings.gradle.kts`,
+as well as the catalog entries. Leaving an old resolution rule behind silently
+undoes a dependency upgrade. App modules should reference `libs.guava.android`
+instead of declaring a separate literal version.
+
+The root rule also selects the Android artifact for Android compile/runtime
+classpaths even when a transitive dependency requests `-jre`. JVM modules and
+compiler/tool classpaths retain `-jre`. Verify the selected artifact in
+`dependencyInsight`; the declaration alone does not establish which artifact won.
+
+Inspect the resolved versions, not just Dependabot's manifest diff:
+
+```sh
+./gradlew :app:app:dependencyInsight --dependency com.google.guava:guava --configuration defaultDebugRuntimeClasspath
+./gradlew :app:app:dependencyInsight --dependency org.jsoup:jsoup --configuration defaultDebugRuntimeClasspath
+./gradlew buildEnvironment
+./gradlew :core:base:testDebugUnitTest :services:app-management:testDebugUnitTest
+npm ci --prefix docs
+npm audit --prefix docs
+npm run docs:build --prefix docs
+```
+
+A successful docs audit does not establish that GitHub's Dependabot, code
+scanning, or code quality alerts are closed. Read those reports separately with
+authorized GitHub access and recheck their status after the PR's checks finish.
+The daily dependency stamp and a successful CodeQL workflow are not substitutes
+for reading the alert list.
+
 ## Built-in Shizuku pairing crypto
 
 Pairing builds `io.github.vvb2060.ndk:boringssl:20251124` (non-LTO prefab) for the pinned
