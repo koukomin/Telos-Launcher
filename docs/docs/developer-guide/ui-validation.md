@@ -163,3 +163,11 @@ IME was hidden after submission. The production launcher was retained. See
 [transport audit and evidence](./shizuku-pairing.md). This does not certify landscape, light mode
 or the full font/display-size matrix. Device screenshots are not published because they contain
 private Settings/device data.
+
+### Shizuku notification reply — 1.44.15
+
+Supersedes the experimental floating pairing pill. The 1.44.14 production overlay was confirmed
+via ADB to hold focus over another app and overlap navigation. It was disabled on the reported
+OnePlus while preparing this fix. Telos pairing now creates no WindowManager views; manual input
+is Android SystemUI notification RemoteInput. Validation for the notification flow is recorded
+in the pairing audit; earlier overlay test results must not be read as certification of this flow.

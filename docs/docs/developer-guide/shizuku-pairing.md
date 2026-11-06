@@ -1,5 +1,22 @@
 # Built-in Shizuku pairing audit
 
+## Current notification-based flow (1.44.15)
+
+The floating overlay and prompt Activity have been removed. Both manual entry points use Android
+notification `RemoteInput`; only SystemUI owns the reply field and IME. Notification permission
+is requested before starting, and repeated mDNS results are deduplicated. Automatic pairing is
+optional and reads only Settings during an explicit session. Reads are coalesced instead of
+walking the window tree on every accessibility event; navigation attempts are throttled.
+
+On the installed 1.44.14 OnePlus build, ADB confirmed a `telos-adb-pairing` window holding focus
+above the browser and covering the system navigation bar. Disabling only pairing accessibility
+removed that window. CPU was not saturated at the time; GPU/input timing from mixed app windows
+is not a controlled performance comparison. The previous isolated overlay tests below did not
+certify the installed production version or every IME/navigation interaction. The notification
+implementation supersedes that approach.
+
+The following sections retain the original transport audit and historical validation record.
+
 This audit compares the actual Telos manager and server, not just the vendored source tree,
 with Shizuku-Next `8508e1d50a293cec82eb60465bcc17022d7a5926` and Shizuku+
 `80330704be4ebc46e282334b9c542d4a7d071b1b`. Both references were cloned with their API

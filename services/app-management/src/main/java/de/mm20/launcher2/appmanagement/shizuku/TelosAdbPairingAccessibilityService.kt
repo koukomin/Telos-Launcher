@@ -15,8 +15,8 @@ import kotlinx.coroutines.launch
 
 /**
  * Reads the Wireless debugging pairing dialog (Shizuku-Next style) and pairs
- * without leaving that Settings screen. A TYPE_ACCESSIBILITY_OVERLAY field
- * stays on top if the user still needs to type the 6 digits.
+ * without leaving Settings. Manual input is owned by SystemUI notification RemoteInput;
+ * this service never creates windows or requests keyboard focus.
  */
 class TelosAdbPairingAccessibilityService : AccessibilityService() {
     private val handler = Handler(Looper.getMainLooper())
@@ -24,7 +24,8 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
     private var pairing = false
     private var lastAttempt: String? = null
     private var readsLeft = 0
-    private var overlay: TelosAdbPairingOverlay? = null
+    private var readScheduled = false
+    private var lastNavigationAttempt = 0L
 
     override fun onServiceConnected() {
         super.onServiceConnected()
@@ -32,13 +33,10 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
         scope.launch {
             TelosShizukuHost.status.collect { status ->
                 if (status.pairing.phase == TelosShizukuHost.PairingPhase.Searching) lastAttempt = null
-                if (status.pairing.phase in setOf(TelosShizukuHost.PairingPhase.Idle, TelosShizukuHost.PairingPhase.Done, TelosShizukuHost.PairingPhase.Failed)) {
-                    overlay?.dismiss()
-                    overlay = null
-                } else if (status.pairing.phase != TelosShizukuHost.PairingPhase.Working) {
-                    val type = TelosAdbPairingOverlay.overlayTypeFor(this@TelosAdbPairingAccessibilityService, true)!!
-                    val sheet = overlay ?: TelosAdbPairingOverlay(this@TelosAdbPairingAccessibilityService, type).also { overlay = it }
-                    sheet.show("", status.pairing.host, status.pairing.port)
+                if (status.pairing.phase !in setOf(TelosShizukuHost.PairingPhase.Searching, TelosShizukuHost.PairingPhase.WaitingForCode)) {
+                    handler.removeCallbacks(readAgain)
+                    readScheduled = false
+                    readsLeft = 0
                 }
             }
         }
@@ -47,7 +45,9 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null || pairing || event.packageName?.toString() != "com.android.settings") return
         val age = android.os.SystemClock.elapsedRealtime() - TelosShizukuHost.wirelessNavigationRequestedAt
-        if (age in 0..15_000 && TelosShizukuHost.wirelessNavigationRequestedAt != 0L) {
+        val now = android.os.SystemClock.elapsedRealtime()
+        if (age in 0..15_000 && TelosShizukuHost.wirelessNavigationRequestedAt != 0L && now - lastNavigationAttempt >= 500) {
+            lastNavigationAttempt = now
             rootInActiveWindow?.takeIf { it.packageName?.toString() == "com.android.settings" }?.let { root ->
                 val resources = packageManager.getResourcesForApplication("com.android.settings")
                 val id = resources.getIdentifier("enable_adb_wireless", "string", "com.android.settings")
@@ -63,9 +63,10 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
         val phase = TelosShizukuHost.status.value.pairing.phase
         if (!TelosShizukuHost.status.value.pairing.automatic) return
         if (phase != TelosShizukuHost.PairingPhase.Searching && phase != TelosShizukuHost.PairingPhase.WaitingForCode) return
-        handler.removeCallbacks(readAgain)
+        if (readScheduled) return
         readsLeft = 20
-        readAgain.run()
+        readScheduled = true
+        handler.postDelayed(readAgain, 120)
     }
 
     override fun onInterrupt() = Unit
@@ -73,21 +74,20 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
     override fun onDestroy() {
         connected = false
         handler.removeCallbacksAndMessages(null)
-        overlay?.dismiss()
-        overlay = null
         scope.cancel()
         super.onDestroy()
     }
 
     private val readAgain = object : Runnable {
         override fun run() {
-            if (!TelosShizukuHost.status.value.pairing.automatic) return
-            if (pairing || TelosShizukuHost.status.value.pairing.phase !in setOf(TelosShizukuHost.PairingPhase.Searching, TelosShizukuHost.PairingPhase.WaitingForCode)) return
+            if (!TelosShizukuHost.status.value.pairing.automatic) { readScheduled = false; return }
+            if (pairing || TelosShizukuHost.status.value.pairing.phase !in setOf(TelosShizukuHost.PairingPhase.Searching, TelosShizukuHost.PairingPhase.WaitingForCode)) { readScheduled = false; return }
             val dialog = readPairingDialog()
             if (dialog == null) {
-                if (readsLeft-- > 0) handler.postDelayed(this, 250)
+                if (readsLeft-- > 0) handler.postDelayed(this, 250) else readScheduled = false
                 return
             }
+            readScheduled = false
             val signature = listOfNotNull(dialog.code, dialog.host, dialog.port?.toString()).joinToString(":")
             if (signature == lastAttempt) return
             if (dialog.code.length != 6) return
@@ -107,21 +107,9 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
                     else r.exceptionOrNull()?.message ?: getString(I18nR.string.telos_shizuku_pair_fail),
                     Toast.LENGTH_LONG,
                 ).show()
-                if (r.isSuccess) {
-                    overlay?.dismiss()
-                    overlay = null
-                } else {
-                    // Retry only a new code or a new user-initiated session.
-                }
                 pairing = false
             }
         }
-    }
-
-    private fun ensureOverlay(dialog: Dialog) {
-        val type = TelosAdbPairingOverlay.overlayTypeFor(this, accessibility = true) ?: return
-        val sheet = overlay ?: TelosAdbPairingOverlay(this, type).also { overlay = it }
-        sheet.show(dialog.code, dialog.host, dialog.port)
     }
 
     private data class Dialog(val code: String, val host: String?, val port: Int?)
@@ -177,8 +165,6 @@ class TelosAdbPairingAccessibilityService : AccessibilityService() {
     }
 
     companion object {
-        private val CODE = Regex("^\\d{6}$")
-        private val SPACED_CODE = Regex("^\\d{3}\\s*\\d{3}$")
         @Volatile internal var connected = false
             private set
         private val HOST_PORT = Regex("(\\d{1,3}(?:\\.\\d{1,3}){3}):(\\d{2,5})")

@@ -13,7 +13,7 @@ The standalone Shizuku app is a separate manager. Telos already needs a privileg
 | Method | What you do |
 | --- | --- |
 | **Root** | **Start with root**. Turn on Autostart. |
-| **Wireless (phone)** | Enable pairing accessibility, tap **Wait for pairing code**, then Pair device with pairing code. Stay on that Settings dialog. Telos reads the 6 digits automatically; otherwise type them in the floating field or notification. Then Start server and Autostart. Pairing is once per ADB key. |
+| **Wireless (phone)** | Enable pairing accessibility, tap **Wait for pairing code**, then Pair device with pairing code. Stay on that Settings dialog. Telos reads the 6 digits automatically; otherwise use the notification reply. Then Start server and Autostart. Pairing is once per ADB key. |
 | **Computer ADB** | USB debugging on, then the command on the Shizuku tab. |
 
 ## Computer ADB
@@ -38,14 +38,16 @@ Full page: [Telos System](/docs/user-guide/telos/system/).
 
 ## Pairing input
 
-On Android 17, allow the local-network permission when starting pairing. With Telos pairing
-accessibility enabled, leave the Settings pairing dialog visible for automatic code reading.
-The floating pill stays collapsed until you tap it. Manual input also works from the notification;
-it does not require accessibility. Tap Pair or the keyboard Done/Enter key; the keyboard closes
-before connecting. Stop waiting cancels the session. Without accessibility, a floating pill
-requires the system draw-over-other-apps grant; notification input remains available.
+On Android 17, allow local-network access if requested. Pairing also needs notification permission:
+Telos posts a high-priority system notification while it searches for the pairing service.
+Open **Pair device with pairing code** in Wireless debugging, expand the notification and tap
+**Enter code**. Type the six digits in Android's notification reply and send. SystemUI owns the
+keyboard; Telos creates no floating input window and cannot cover the navigation bar.
 
-The [implementation audit](/docs/developer-guide/shizuku-pairing) explains the transport, Android 17
-permission, ColorOS navigation fallback, and which Next/Plus manager features are separate.
+**Wait for pairing code** enables optional automatic code reading when the Settings-only Telos
+pairing accessibility service is enabled. **Enter code** starts a manual notification session
+even with accessibility enabled. Stop waiting cancels the session. No overlay permission is
+required. Notification appearance follows Android/ColorOS settings and Do Not Disturb.
 
-Choose **Enter code** for a manual session even with accessibility enabled; **Wait for pairing code** enables optional automatic reading.
+The [implementation audit](/docs/developer-guide/shizuku-pairing) records the transport and
+feature scope. Version 1.44.15 replaces the old focus-stealing overlay entirely.
